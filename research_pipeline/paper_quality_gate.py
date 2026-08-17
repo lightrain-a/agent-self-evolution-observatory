@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+from pathlib import Path
 from typing import Any, Iterable
 
 
@@ -82,6 +84,8 @@ POLICY: dict[str, Any] = {
     "quantitative_visuals_require_versioned_data_and_figure_qa": True,
     "negative_failure_or_boundary_evidence_must_be_visually_exposed": True,
     "manuscript_ready_requires_visual_artifact_data_script_caption_binding": True,
+    "paper_ready_content_addressed_mode_rejects_missing_stale_or_path_traversal_artifacts": True,
+    "claim_adjudication_may_reference_only_registered_completed_evidence_ids": True,
     "quality_gate_cannot_authorize_method_experiment_p0_or_gpu": True,
 }
 
@@ -371,7 +375,79 @@ def audit_paper_evidence_plan(quality: dict[str, Any] | None, *, method_componen
     }
 
 
-def audit_manuscript_evidence_completion(quality: dict[str, Any] | None, completion: dict[str, Any] | None, *, method_components: int = 0) -> dict[str, Any]:
+def _sha256(path: Path) -> str:
+    try:
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    except OSError:
+        return ""
+
+
+def _completion_file_refs(completion: dict[str, Any]) -> set[str]:
+    refs: set[str] = set()
+    for row in _rows(completion.get("evidence")):
+        refs.update(_list_text(row.get("artifact_refs")))
+    for row in _rows(completion.get("visualizations")):
+        for key in ("artifact_refs", "data_refs", "script_refs"):
+            refs.update(_list_text(row.get(key)))
+    refs.update(_list_text(completion.get("manuscript_refs")))
+    return refs
+
+
+def audit_content_addressed_completion(
+    completion: dict[str, Any] | None,
+    source_sha256: dict[str, Any] | None,
+    project_root: Path | None,
+) -> dict[str, Any]:
+    completion = completion if isinstance(completion, dict) else {}
+    registry = source_sha256 if isinstance(source_sha256, dict) else {}
+    blockers: list[str] = []
+    refs = sorted(_completion_file_refs(completion))
+    root = project_root.resolve() if isinstance(project_root, Path) else None
+    if not refs:
+        blockers.append("paper-quality-content-addressed-artifact-refs-missing")
+    if root is None:
+        blockers.append("paper-quality-content-addressed-project-root-missing")
+    for ref in refs:
+        rel = Path(ref)
+        if rel.is_absolute() or ".." in rel.parts:
+            blockers.append(f"paper-quality-artifact-ref-unsafe:{ref}")
+            continue
+        expected = _text(registry.get(ref)).lower()
+        if len(expected) != 64 or any(ch not in "0123456789abcdef" for ch in expected):
+            blockers.append(f"paper-quality-artifact-digest-missing-or-invalid:{ref}")
+            continue
+        if root is None:
+            continue
+        target = (root / rel).resolve()
+        try:
+            target.relative_to(root)
+        except ValueError:
+            blockers.append(f"paper-quality-artifact-ref-escapes-root:{ref}")
+            continue
+        if not target.is_file():
+            blockers.append(f"paper-quality-artifact-file-missing:{ref}")
+            continue
+        actual = _sha256(target)
+        if actual != expected:
+            blockers.append(f"paper-quality-artifact-digest-mismatch:{ref}")
+    return {
+        "required": True,
+        "passed": not blockers,
+        "status": "PASS_CONTENT_ADDRESSED_COMPLETION" if not blockers else "HOLD_CONTENT_ADDRESSED_COMPLETION",
+        "blockers": sorted(set(blockers)),
+        "summary": {"referenced_files": len(refs), "registered_digests": len(registry)},
+    }
+
+
+def audit_manuscript_evidence_completion(
+    quality: dict[str, Any] | None,
+    completion: dict[str, Any] | None,
+    *,
+    method_components: int = 0,
+    source_sha256: dict[str, Any] | None = None,
+    project_root: Path | None = None,
+    require_content_addressed: bool = False,
+) -> dict[str, Any]:
     plan = audit_paper_evidence_plan(quality, method_components=method_components)
     completion = completion if isinstance(completion, dict) else {}
     blockers = list(plan.get("blockers") or [])
@@ -434,6 +510,7 @@ def audit_manuscript_evidence_completion(quality: dict[str, Any] | None, complet
 
     claim_rows = _rows((quality or {}).get("claims"))
     claim_completion = completion.get("claims") if isinstance(completion.get("claims"), dict) else {}
+    registered_evidence_ids = set().union(*required_ids.values())
     for row in claim_rows:
         cid = _text(row.get("id"))
         if not cid:
@@ -441,8 +518,28 @@ def audit_manuscript_evidence_completion(quality: dict[str, Any] | None, complet
         state = claim_completion.get(cid) if isinstance(claim_completion.get(cid), dict) else {}
         if _text(state.get("status")) not in {"SUPPORTED", "SUPPORTED_NARROWLY", "REFUTED", "INCONCLUSIVE"}:
             blockers.append(f"paper-quality-claim-adjudication-missing:{cid}")
-        if not _list_text(state.get("evidence_ids")):
+        claim_evidence_ids = _list_text(state.get("evidence_ids"))
+        if not claim_evidence_ids:
             blockers.append(f"paper-quality-claim-evidence-trace-missing:{cid}")
+        else:
+            linked_evidence_ids = set(
+                _list_text(row.get("baseline_ids"))
+                + _list_text(row.get("ablation_ids"))
+                + _list_text(row.get("analysis_ids"))
+                + _list_text(row.get("output_ids"))
+            )
+            for evidence_id in claim_evidence_ids:
+                if evidence_id not in registered_evidence_ids:
+                    blockers.append(f"paper-quality-claim-evidence-id-unregistered:{cid}:{evidence_id}")
+                elif evidence_id not in linked_evidence_ids:
+                    blockers.append(f"paper-quality-claim-evidence-id-not-linked:{cid}:{evidence_id}")
+                elif evidence_id not in completed_by_id:
+                    blockers.append(f"paper-quality-claim-evidence-id-not-completed:{cid}:{evidence_id}")
+
+    content_addressed = {"required": False, "passed": True, "status": "NOT_REQUIRED", "blockers": [], "summary": {"referenced_files": 0, "registered_digests": 0}}
+    if require_content_addressed:
+        content_addressed = audit_content_addressed_completion(completion, source_sha256, project_root)
+        blockers.extend(content_addressed.get("blockers") or [])
 
     passed = not blockers
     return {
@@ -458,7 +555,10 @@ def audit_manuscript_evidence_completion(quality: dict[str, Any] | None, complet
             "completed_evidence_rows": len(completed),
             "claim_adjudications": len(claim_completion),
             "completed_visualizations": len(visual_completion),
+            "content_addressed_required": bool(require_content_addressed),
+            "content_addressed_referenced_files": int((content_addressed.get("summary") or {}).get("referenced_files") or 0),
         },
+        "content_addressed_completion": content_addressed,
         "policy": dict(POLICY),
         "scientific_authority": False,
         "authority": {"method": False, "experiment": False, "p0": False, "gpu": False},

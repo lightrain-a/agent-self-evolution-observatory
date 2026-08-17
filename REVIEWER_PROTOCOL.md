@@ -53,7 +53,7 @@ For every empirical performance, mechanism, system, robustness, or cost claim, r
 - explicit failure analysis, sensitivity or robustness analysis, and uncertainty for headline empirical comparisons;
 - claim-to-artifact links for the main comparison, ablations, mechanism analysis, failure analysis, and sensitivity analysis.
 
-A planned baseline or ablation does not count as manuscript evidence. Each planned evidence item must resolve to `PASS`, `FAIL`, `INCONCLUSIVE`, or justified `NOT_APPLICABLE` with a versioned artifact. Failed and inconclusive experiments remain visible in the evidence chain instead of being silently dropped.
+A planned baseline or ablation does not count as manuscript evidence. Each planned evidence item must resolve to `PASS`, `FAIL`, `INCONCLUSIVE`, or justified `NOT_APPLICABLE` with a versioned artifact. In paper-ready mode, every referenced evidence/data/script/figure/manuscript file must be a safe in-project path with a frozen SHA256 receipt that still matches the file on disk; plausible-looking path strings, missing files, path traversal, and stale artifacts fail closed. Claim adjudications may cite only registered evidence IDs that actually appear in the completed evidence package. Failed and inconclusive experiments remain visible in the evidence chain instead of being silently dropped.
 
 For theory/certificate papers, an analytical simplification and assumption-boundary stress test may replace a conventional component ablation only when the non-applicability is explicit. Mechanical manuscript QA, venue-format QA, compilation, and supplement reproduction can never substitute for this scientific evidence review.
 
@@ -93,7 +93,7 @@ A direction is considered ready only when:
 - no reviewer identifies a direct method collision;
 - all blocking experimental objections have a planned test;
 - the D0 continuation criteria are satisfied;
-- Paper Evidence Quality v2.1 passes with completed claim-matched baseline/ablation/analysis artifacts and source-bound visual evidence;
+- Paper Evidence Quality v2.1 passes with completed claim-matched baseline/ablation/analysis artifacts, source-bound visual evidence, and content-addressed completion receipts for every referenced manuscript evidence file;
 - the claim is reduced to the lowest contribution level supported by evidence;
 - unresolved limitations are documented rather than hidden.
 

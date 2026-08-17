@@ -654,6 +654,8 @@ def build_research_system_state() -> dict[str, Any]:
             "asset_first_stri_human_signoff_pending":int((asset_first_stri_paper_ready.get("summary") or {}).get("human_signoff_pending") or 0),
             "asset_first_stri_paper_quality_v2_passed":int((asset_first_stri_paper_ready.get("summary") or {}).get("paper_quality_v2_passed") or 0),
             "asset_first_stri_paper_quality_source_binding":int((asset_first_stri_paper_ready.get("summary") or {}).get("paper_quality_source_binding") or 0),
+            "asset_first_stri_paper_quality_content_addressed_completion":int((asset_first_stri_paper_ready.get("summary") or {}).get("paper_quality_content_addressed_completion") or 0),
+            "asset_first_stri_paper_quality_content_addressed_files":int((asset_first_stri_paper_ready.get("summary") or {}).get("paper_quality_content_addressed_files") or 0),
             "asset_first_stri_paper_quality_evidence_debt":int((asset_first_stri_paper_ready.get("summary") or {}).get("paper_quality_evidence_debt") or 0),
             "asset_first_stri_main_visualizations":int((asset_first_stri_paper_ready.get("summary") or {}).get("paper_quality_main_visualizations") or 0),
             "asset_first_stri_canonical_problem_gate_added":int((asset_first_stri_paper_ready.get("summary") or {}).get("canonical_problem_gate_pass_added") or 0),

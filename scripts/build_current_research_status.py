@@ -111,7 +111,7 @@ state = {
     "schema_version": "1.0",
     "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     "source_revision": git_head(),
-    "as_of_date": "2026-08-16",
+    "as_of_date": datetime.now(timezone.utc).date().isoformat(),
     "headline": {
         "paper_ready": int(bool(stri_summary.get("paper_ready"))),
         "paper_quality_hold": int(bool(sys_stri) and not bool(stri_summary.get("paper_quality_v2_passed", False))),
@@ -158,6 +158,8 @@ state = {
         "human_signoff_pending": bool(stri_summary.get("human_signoff_pending", True)),
         "new_gpu_evidence_required": bool(stri_summary.get("new_gpu_evidence_required", False)),
         "paper_quality_v2_passed": bool(stri_summary.get("paper_quality_v2_passed", False)),
+        "paper_quality_content_addressed_completion": bool(stri_summary.get("paper_quality_content_addressed_completion", False)),
+        "paper_quality_content_addressed_files": int(stri_summary.get("paper_quality_content_addressed_files", 0)),
         "paper_quality_evidence_debt": int(stri_summary.get("paper_quality_evidence_debt", 0)),
         "paper_quality_missing_ids": list(stri_summary.get("paper_quality_missing_ids", [])),
         "paper_quality_schema_version": (paper_quality.get("quality_contract") or {}).get("schema_version"),

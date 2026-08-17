@@ -666,6 +666,8 @@
         "quantitative_visuals_require_versioned_data_and_figure_qa": true,
         "negative_failure_or_boundary_evidence_must_be_visually_exposed": true,
         "manuscript_ready_requires_visual_artifact_data_script_caption_binding": true,
+        "paper_ready_content_addressed_mode_rejects_missing_stale_or_path_traversal_artifacts": true,
+        "claim_adjudication_may_reference_only_registered_completed_evidence_ids": true,
         "quality_gate_cannot_authorize_method_experiment_p0_or_gpu": true
       },
       "scientific_authority": false,
@@ -698,7 +700,19 @@
       ],
       "completed_evidence_rows": 15,
       "claim_adjudications": 3,
-      "completed_visualizations": 4
+      "completed_visualizations": 4,
+      "content_addressed_required": true,
+      "content_addressed_referenced_files": 14
+    },
+    "content_addressed_completion": {
+      "required": true,
+      "passed": true,
+      "status": "PASS_CONTENT_ADDRESSED_COMPLETION",
+      "blockers": [],
+      "summary": {
+        "referenced_files": 14,
+        "registered_digests": 17
+      }
     },
     "policy": {
       "schema_version": "2.1",
@@ -716,6 +730,8 @@
       "quantitative_visuals_require_versioned_data_and_figure_qa": true,
       "negative_failure_or_boundary_evidence_must_be_visually_exposed": true,
       "manuscript_ready_requires_visual_artifact_data_script_caption_binding": true,
+      "paper_ready_content_addressed_mode_rejects_missing_stale_or_path_traversal_artifacts": true,
+      "claim_adjudication_may_reference_only_registered_completed_evidence_ids": true,
       "quality_gate_cannot_authorize_method_experiment_p0_or_gpu": true
     },
     "scientific_authority": false,

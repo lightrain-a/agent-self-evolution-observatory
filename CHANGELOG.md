@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-08-17 · Content-addressed manuscript evidence completion
+
+- Closed a generic Paper Quality loophole in which plausible-looking artifact path strings could satisfy manuscript completion without proving that the referenced files existed or still matched the frozen evidence receipt.
+- Added fail-closed content-addressed completion: every completed baseline, ablation, analysis, output, figure, figure-data source, and generation script used by paper-ready mode must resolve to a safe in-project file with a matching SHA256 receipt; missing files, stale digests, absolute/path-traversal references, and unregistered claim evidence IDs block readiness.
+- Replayed the stronger gate on STRI: 14 actually referenced manuscript/evidence/visual files are SHA-bound, Paper Quality remains `PASS_MANUSCRIPT_EVIDENCE`, evidence debt remains zero, and the paper remains `READY_NARROW_ICLR` without changing any scientific claim or experiment result.
+- Exposed content-addressed completion in the public STRI projection and System Overview, and recorded the closed local gap under the Science One Chain-of-Evidence learning entry.
+
 ## 2026-08-17 · Fresh Phenomenon Portfolio and evidence-echo F0
 
 - Added a zero-authority Fresh Phenomenon Portfolio between primary-source discovery and canonical Problem Gate. The portfolio permits at most one `ACTIVE_F0`; a candidate may occupy that slot only when it already has a provenance-audited local substrate and a frozen same-information falsifier. Source-only ideas remain support HOLDs and cannot consume experiment/GPU budget.

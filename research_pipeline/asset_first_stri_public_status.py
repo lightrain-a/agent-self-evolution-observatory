@@ -63,6 +63,7 @@ POLICY = {
     "paper_ready_requires_paper_quality_v2": True,
     "paper_ready_requires_visual_evidence_contract": True,
     "paper_quality_receipt_is_content_addressed": True,
+    "paper_ready_requires_content_addressed_manuscript_completion": True,
     "mechanical_and_format_qa_cannot_substitute_for_scientific_evidence_completeness": True,
     "dynamic_p0_is_not_required_for_the_narrow_claim_scope": True,
     "dynamic_qualification_failure_is_not_positive_or_negative_narrow_evidence": True,
@@ -142,7 +143,9 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
     )
     quality_sources = [str(rel) for rel in (paper_quality.get("source_artifacts") or []) if str(rel)]
     quality_source_sha = paper_quality.get("source_sha256") if isinstance(paper_quality.get("source_sha256"), dict) else {}
-    quality_plan_summary = ((((paper_quality.get("audit") or {}).get("plan") or {}).get("summary")) or {})
+    quality_audit = paper_quality.get("audit") if isinstance(paper_quality.get("audit"), dict) else {}
+    quality_plan_summary = (((quality_audit.get("plan") or {}).get("summary")) or {})
+    quality_content_addressed = quality_audit.get("content_addressed_completion") if isinstance(quality_audit.get("content_addressed_completion"), dict) else {}
     paper_quality_source_binding = (
         bool(quality_sources)
         and set(quality_source_sha) == set(quality_sources)
@@ -162,6 +165,7 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
         "paper_design": str(design.get("submission_readiness") or "").startswith("READY_NARROW_ICLR"),
         "paper_quality_v2": paper_quality.get("paper_quality_gate_passed") is True and paper_quality.get("status") == "PASS_MANUSCRIPT_EVIDENCE",
         "paper_quality_source_binding": paper_quality_source_binding,
+        "paper_quality_content_addressed_completion": quality_content_addressed.get("passed") is True and quality_content_addressed.get("status") == "PASS_CONTENT_ADDRESSED_COMPLETION",
         "official_iclr2027_format": official_final.get("status") == "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW" and official_qa.get("status") == "PASS" and official_qa_total > 0 and official_qa_passed == official_qa_total,
         "anonymous_supplement": supplement.get("status") == "PASS" and (supplement.get("isolated_verification") or {}).get("fresh_extract_manifest") == "PASS" and (supplement.get("isolated_verification") or {}).get("reproduce_py") == "PASS",
         "public_download_assets": public_downloads_ready,
@@ -205,8 +209,10 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
             "human_signoff_pending": 1 if openreview.get("status") == "MACHINE_READY_HUMAN_SIGNOFF_REQUIRED" else 0,
             "new_gpu_evidence_required": 1 if official_final.get("new_gpu_evidence_required_for_current_claim_scope") is True else 0,
             "final_review_confidence": float(final.get("confidence") or 0.0),
-            "paper_quality_v2_passed": 1 if gates["paper_quality_v2"] and gates["paper_quality_source_binding"] else 0,
+            "paper_quality_v2_passed": 1 if gates["paper_quality_v2"] and gates["paper_quality_source_binding"] and gates["paper_quality_content_addressed_completion"] else 0,
             "paper_quality_source_binding": 1 if gates["paper_quality_source_binding"] else 0,
+            "paper_quality_content_addressed_completion": 1 if gates["paper_quality_content_addressed_completion"] else 0,
+            "paper_quality_content_addressed_files": int((quality_content_addressed.get("summary") or {}).get("referenced_files") or 0),
             "paper_quality_evidence_debt": len(((paper_quality.get("evidence_debt") or {}).get("missing_or_incomplete_ids") or [])),
             "paper_quality_missing_ids": list(((paper_quality.get("evidence_debt") or {}).get("missing_or_incomplete_ids") or [])),
             "paper_quality_visualizations": int(quality_plan_summary.get("visualizations") or 0),
@@ -318,7 +324,7 @@ def validate_asset_first_stri_public_status(state: dict[str, Any]) -> list[str]:
     ready = state.get("status") == "READY_NARROW_ICLR"
     if ready:
         if not all(gates.get(key) is True for key in (
-            "final_review", "claim_coherence", "submission_qa", "current_source", "superseding_reduction", "paper_design", "paper_quality_v2", "paper_quality_source_binding",
+            "final_review", "claim_coherence", "submission_qa", "current_source", "superseding_reduction", "paper_design", "paper_quality_v2", "paper_quality_source_binding", "paper_quality_content_addressed_completion",
             "official_iclr2027_format", "anonymous_supplement", "public_download_assets", "openreview_machine_handoff",
         )):
             errors.append("READY_NARROW_ICLR requires every cross-validated paper-ready/submission gate")

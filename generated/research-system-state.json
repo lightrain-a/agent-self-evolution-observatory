@@ -6308,10 +6308,10 @@
     "paper_first_discovery_frontier_external_triggers": 5,
     "paper_first_discovery_frontier_model_calls": 0,
     "paper_first_discovery_frontier_evidence_open": 0,
-    "paper_first_fresh_phenomenon_status": "F0_EXECUTION_HOLD",
+    "paper_first_fresh_phenomenon_status": "NO_ACTIVE_F0",
     "paper_first_fresh_phenomenon_candidates": 4,
     "paper_first_fresh_phenomenon_active_f0": 0,
-    "paper_first_fresh_phenomenon_support_holds": 3,
+    "paper_first_fresh_phenomenon_support_holds": 1,
     "paper_first_fresh_phenomenon_ready_problem_review": 0,
     "paper_first_evidence_migration_status": "NOT_RUN",
     "asset_first_stri_status": "READY_NARROW_ICLR",
@@ -6510,8 +6510,10 @@
     "mem_xfer_second_model_status": "second_model_hold",
     "architecture_temporal_stages": 11,
     "architecture_functional_layers": 6,
-    "paper_first_fresh_phenomenon_design_ready_f0": 1,
-    "paper_first_fresh_phenomenon_execution_holds": 1
+    "paper_first_fresh_phenomenon_design_ready_f0": 0,
+    "paper_first_fresh_phenomenon_execution_holds": 0,
+    "asset_first_stri_paper_quality_content_addressed_completion": 1,
+    "asset_first_stri_paper_quality_content_addressed_files": 14
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -35817,6 +35819,7 @@
       "paper_design": true,
       "paper_quality_v2": true,
       "paper_quality_source_binding": true,
+      "paper_quality_content_addressed_completion": true,
       "official_iclr2027_format": true,
       "anonymous_supplement": true,
       "public_download_assets": true,
@@ -35856,6 +35859,8 @@
       "final_review_confidence": 0.92,
       "paper_quality_v2_passed": 1,
       "paper_quality_source_binding": 1,
+      "paper_quality_content_addressed_completion": 1,
+      "paper_quality_content_addressed_files": 14,
       "paper_quality_evidence_debt": 0,
       "paper_quality_missing_ids": [],
       "paper_quality_visualizations": 4,
@@ -35886,8 +35891,26 @@
       "gpu_authorized": 0
     },
     "submission_handoff": {
-      "abstract_deadline_aoe": "2026-09-18",
-      "full_paper_deadline_aoe": "2026-09-25",
+      "recorded_author_guide_abstract_deadline_aoe": "2026-09-18",
+      "recorded_author_guide_full_paper_deadline_aoe": "2026-09-25",
+      "official_source_conflict": true,
+      "official_source_conflict_status": "HUMAN_VERIFICATION_REQUIRED",
+      "conflicting_official_dates": {
+        "author_guidelines": {
+          "abstract": "2026-09-18",
+          "full_paper": "2026-09-25"
+        },
+        "dates_cfp_conference_pages": {
+          "abstract": "2026-09-11",
+          "full_paper": "2026-09-16"
+        }
+      },
+      "operational_safe_abstract_deadline_aoe": "2026-09-11",
+      "operational_safe_full_paper_deadline_aoe": "2026-09-16",
+      "author_membership_freezes_at_abstract_deadline": true,
+      "title_freezes_at_full_paper_deadline": true,
+      "deadline_source_verified_on": "2026-08-17",
+      "deadline_human_action": "Confirm the live OpenReview/ICLR deadline before submission; until resolved, plan against the earlier published official dates.",
       "pdf_sha256": "15f02bcaef727853e6fa0a4387c22950fa9f82db83bb54bafceb8686c6b69589",
       "source_zip_sha256": "84ad1b0cff9504b9bebfc8b2178c6143f34a3bd34c063b562bcd25e551bee0f3",
       "supplement_zip_sha256": "ab38373f19c38a09de528ec2daac21c359cc819d970edb7594379e4913edfb5f",
@@ -35945,7 +35968,7 @@
       },
       "paper_quality_v2": {
         "path": "generated/asset-first-stri-paper-quality-v2-20260816.json",
-        "sha256": "e7b5855fc0ba9177250b91dd3bcdf5bbddf82b304d28dc783268c978879002ff",
+        "sha256": "e51406d092557f717353f1d8b353dc1d0c5919cbe61989524ab52d6794c2f3c6",
         "present": true
       },
       "current_source_review": {
@@ -35996,6 +36019,7 @@
       "paper_ready_requires_paper_quality_v2": true,
       "paper_ready_requires_visual_evidence_contract": true,
       "paper_quality_receipt_is_content_addressed": true,
+      "paper_ready_requires_content_addressed_manuscript_completion": true,
       "mechanical_and_format_qa_cannot_substitute_for_scientific_evidence_completeness": true,
       "dynamic_p0_is_not_required_for_the_narrow_claim_scope": true,
       "dynamic_qualification_failure_is_not_positive_or_negative_narrow_evidence": true,
@@ -36005,7 +36029,12 @@
       "official_submission_ready_requires_iclr2027_format_qa": true,
       "official_submission_ready_requires_anonymous_supplement_reproduction": true,
       "public_downloads_are_anonymous_submission_assets": true,
-      "human_author_signoff_cannot_be_auto_authorized": true
+      "human_author_signoff_cannot_be_auto_authorized": true,
+      "abstract_deadline_freezes_author_membership": true,
+      "full_paper_deadline_freezes_title": true,
+      "official_deadline_source_conflict_must_be_visible": true,
+      "deadline_source_conflict_fails_safe_to_earliest_published_official_date": true,
+      "human_deadline_verification_cannot_be_auto_authorized": true
     },
     "scientific_authority": false,
     "authority": {
@@ -42774,10 +42803,15 @@
       {
         "system": "Science One Framework",
         "design": "bind manuscript claims to evidence chains and audit score, reference, and method-code alignment",
-        "gap": "visual evidence can drift from the exact data/script/caption that produced a paper claim even when textual claim provenance is correct",
-        "local_mapping": "content-addressed visual receipt binds data artifact + generation script + rendered figure + caption to the claim evidence chain",
+        "gap": "a paper-completion agent could previously satisfy generic evidence completion with plausible-looking artifact path strings or cite an unregistered evidence ID even when the underlying file was missing or stale",
+        "local_mapping": "Paper Evidence Quality content-addressed completion now binds every completed baseline/ablation/analysis/output and quantitative visual to in-root files with SHA256 receipts; claim adjudications may cite only registered completed evidence IDs",
         "status": "adopted",
-        "source": "https://research.google/blog/science-one-framework-a-verifiable-autonomous-research-framework-via-chain-of-evidence/"
+        "source": "https://research.google/blog/science-one-framework-a-verifiable-autonomous-research-framework-via-chain-of-evidence/",
+        "local_gap_test": {
+          "before": "synthetic completion passed with nonexistent generated/*.json and paper/*.pdf path strings",
+          "after": "the same completion fails unless every referenced artifact/data/script exists under the project root and matches its frozen SHA256; fake claim evidence IDs are rejected",
+          "verdict": "gap-confirmed-and-closed"
+        }
       },
       {
         "system": "SAGE-MHFA",
@@ -75286,8 +75320,8 @@
   },
   "paper_first_fresh_phenomenon_portfolio": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T19:51:47+00:00",
-    "status": "F0_EXECUTION_HOLD",
+    "generated_at": "2026-08-17T05:10:06+00:00",
+    "status": "NO_ACTIVE_F0",
     "policy": {
       "portfolio_is_outside_canonical_problem_queue": true,
       "fresh_quantitative_phenomenon_precedes_method_ideation": true,
@@ -75309,13 +75343,13 @@
     "summary": {
       "candidates": 4,
       "active_f0": 0,
-      "design_ready_f0": 1,
+      "design_ready_f0": 0,
       "scout_asset": 0,
-      "hold_support": 3,
-      "hold_execution": 1,
+      "hold_support": 1,
+      "hold_execution": 0,
       "hold_reduction": 0,
       "ready_for_problem_review": 0,
-      "stop_reduction": 0,
+      "stop_reduction": 3,
       "primary_verified": 32,
       "primary_empirical_fact_candidates": 107,
       "canonical_problem_gate_added": 0,
@@ -75334,10 +75368,10 @@
         "phenomenon": "On 64 benchmark-unanswerable units with raw visible pages locked across policies, adding an extractive persistent note raised false-answer rate from 10.9% to 21.9%; the paired naive-summary transition was 7 induced versus 0 repaired false answers (exact p=0.015625), with zero net exact-accuracy gain on the 64 answerable units.",
         "strongest_reduction": "generic prompt salience/repetition, correlated-evidence double counting, extra decision opportunity, context-length effects, or ordinary calibration shift under redundant context",
         "cheapest_falsifier": "Keep raw pages, retrieval ranking, model, temperature, and two-step budget fixed; compare RAW_ONLY vs ECHO_EXTRACTIVE vs VERBATIM_DUPLICATE vs TOKEN_MATCHED_NEUTRAL vs DEDUP_WARNING on the frozen unanswerable/answerable units.",
-        "support_status": "PROVENANCE_AUDITED_LOCAL_SUBSTRATE",
-        "status": "HOLD_EXECUTION",
+        "support_status": "F0_REDUCED_BY_GENERIC_PROMPT_EFFECT",
+        "status": "STOP_REDUCTION",
         "priority": 100,
-        "why_now": "This is the only current scout with a real matched substrate, a nonzero paired residual, and a falsifier that changes one representation axis without requiring a new benchmark.",
+        "why_now": "The authorized five-arm F0 is complete and does not support a distinct Evidence-Echo mechanism: ECHO_EXTRACTIVE is only +3.125pp over RAW_ONLY/TOKEN_MATCHED_NEUTRAL with paired p=0.6875, while VERBATIM_DUPLICATE is +9.375pp with paired p=0.03125 and DEDUP_WARNING does not recover safety.",
         "substrate": {
           "host": "52",
           "run": "p06-coverage-starvation-v2-exec-20260816",
@@ -75346,14 +75380,43 @@
           "second_retrieval_ranking_locked_across_active_policies": true
         },
         "evidence": {
-          "baseline_false_answer_rate": 0.109375,
-          "naive_summary_false_answer_rate": 0.21875,
-          "induced_false": 7,
-          "repaired_false": 0,
-          "paired_p": 0.015625,
-          "answerable_exact_net_delta": 0.0
+          "f0_scientific_status": "STOP_GENERIC_PROMPT_REDUCTION_NOT_BEATEN",
+          "false_answer_rate": {
+            "RAW_ONLY": 0.140625,
+            "ECHO_EXTRACTIVE": 0.171875,
+            "VERBATIM_DUPLICATE": 0.234375,
+            "TOKEN_MATCHED_NEUTRAL": 0.140625,
+            "DEDUP_WARNING": 0.28125
+          },
+          "effects": {
+            "echo_minus_raw_false": 0.03125,
+            "echo_minus_neutral_false": 0.03125,
+            "verbatim_minus_raw_false": 0.09375,
+            "echo_minus_dedup_false_recovery": -0.109375,
+            "dedup_answerable_exact_loss_vs_echo": 0.03125
+          },
+          "paired_tests": {
+            "raw_to_echo": {
+              "discordant": 6,
+              "exact_two_sided_p": 0.6875
+            },
+            "neutral_to_echo": {
+              "discordant": 6,
+              "exact_two_sided_p": 0.6875
+            },
+            "raw_to_verbatim": {
+              "discordant": 6,
+              "exact_two_sided_p": 0.03125
+            },
+            "echo_to_dedup": {
+              "discordant": 7,
+              "exact_two_sided_p": 0.015625
+            }
+          },
+          "analysis_sha256": "afecaf19d84572c51fc70cd0fb3ef264791be57167bc900b8d3a7fc4f20db3c9",
+          "rows_sha256": "b3b20243cfee5af796e5254e92c295cb8a2888d4365b5a6ad74d6ecc08357f26"
         },
-        "reopen_only_if": "Execution requires a controller-verified experiment authority bound to the repaired F0 plan plus matching active GPU lease(s), with CUDA-visible GPU UUIDs exactly covered by those leases. If the F0 is reduced by token-matched neutral padding or the paired effect disappears, archive. If redundant evidence remains uniquely harmful and DEDUP_WARNING selectively recovers safety, then run current-source collision review before any Problem-Gate submission.",
+        "reopen_only_if": "Reopen only with a preregistered matched intervention that holds evidence content, repetition count, token budget, ordering, and generic instruction effects fixed while changing only the hypothesized representation, and shows a replicated residual plus mechanism-specific recovery.",
         "paper_problem_claimed": false,
         "scientific_authority": false,
         "authority": {
@@ -75365,9 +75428,9 @@
           "gpu": false,
           "full_experiment": false
         },
-        "f0_design_ready": true,
+        "f0_design_ready": false,
         "execution_readiness": {
-          "operationalization_ready": true,
+          "operationalization_ready": false,
           "controller_verified_capability_present": false,
           "execution_ready": false,
           "required_plan_sha256": "f7c1b8cce177a0efff84cfcf404ef436cf89ead1648548bcd6d633aa3c80a621",
@@ -75387,13 +75450,13 @@
         "phenomenon": "Under the same five-round defense-evolution budget, the reported backbone ablation lowers attack success while one backbone yields only 7.2% utility accuracy, showing a sharp security/utility mismatch.",
         "strongest_reduction": "ordinary constrained optimization / security-utility Pareto trade-off and conservative policy bias",
         "cheapest_falsifier": "Requires paired evolution histories with matched current ASR/utility and candidate patch benefit but different accumulated restrictiveness; no such current released unit is available.",
-        "support_status": "SUPPORT_UNAVAILABLE",
-        "status": "HOLD_SUPPORT",
+        "support_status": "PRINCIPLE_CLOSED_SAME_INFORMATION_REDUCTION",
+        "status": "STOP_REDUCTION",
         "priority": 70,
-        "why_now": "Strong quantitative failure boundary, but it must not consume compute before the required history-level asset exists.",
+        "why_now": "Scoped principle readjudication already reduces the reported 7.2% utility point to a same-information security-utility Pareto/overblocking operating point; spending compute on the same standalone claim is forbidden.",
         "substrate": {},
         "evidence": {},
-        "reopen_only_if": "Author release exposes replayable evolution histories with rule/patch lineage.",
+        "reopen_only_if": "Reopen only if a preregistered matched experiment holds the execution agent, attack/benign task mix, security and utility evaluators, pre-update performance, feedback information, update budget, and objective weights/information fixed, while a self-evolution-specific structural variable yields a different ex-ante security-utility outcome that the strongest same-information Pareto/constrained-optimization, calibration, and overblocking baselines cannot express. A different evolution backbone, another extreme UA value, or a new scalarization is insufficient.",
         "paper_problem_claimed": false,
         "scientific_authority": false,
         "authority": {
@@ -75415,13 +75478,13 @@
         "phenomenon": "HarnessBank reports a GDPval train/test ranking disagreement and 62-76% phantom-progress rounds under weaker crediting rules after convergence, suggesting a selection-stability boundary.",
         "strongest_reduction": "small-n ranking noise, winner's curse, adaptive validation, and ordinary selection bias",
         "cheapest_falsifier": "Sweep the frozen verification rule on released paired gene histories while matching candidate count, selection pressure, and deployment n; the required histories are not released.",
-        "support_status": "SUPPORT_UNAVAILABLE",
+        "support_status": "HOLD_SUPPORT_NO_RELEASED_REQUIRED_UNIT",
         "status": "HOLD_SUPPORT",
         "priority": 60,
-        "why_now": "Potentially strong self-evolution-specific selection phenomenon, but support is still source-only.",
+        "why_now": "Primary-source code disclosure remains future/conditional, and the bounded current release audit found no first-party replay substrate exposing the paired gene histories required to distinguish verification-selection inversion from survivorship/selection bias.",
         "substrate": {},
         "evidence": {},
-        "reopen_only_if": "HarnessBank releases paired run histories/outcomes.",
+        "reopen_only_if": "A first-party release exposes replayable paired gene histories/outcomes and verification lineage sufficient to reconstruct the frozen selected-versus-rejected decision unit without substituting synthetic or inferred histories.",
         "paper_problem_claimed": false,
         "scientific_authority": false,
         "authority": {
@@ -75443,13 +75506,13 @@
         "phenomenon": "Spatial Memory Agent reports baseline and memory-agent failures even with high-quality relevant memories (TRS >= 0.6), separating memory relevance from executability/grounding.",
         "strongest_reduction": "base-model visual grounding failure or ordinary retrieval/execution mismatch",
         "cheapest_falsifier": "Needs query-level retrieved lesson identities/text, TRS/relevance metadata, and outcomes to construct matched conflicting versus non-conflicting procedure sets.",
-        "support_status": "SUPPORT_UNAVAILABLE",
-        "status": "HOLD_SUPPORT",
+        "support_status": "PRINCIPLE_CLOSED_VISUAL_GROUNDING_REDUCTION",
+        "status": "STOP_REDUCTION",
         "priority": 50,
-        "why_now": "Good reserve phenomenon but no independent query-level support asset is currently available.",
+        "why_now": "The primary paper itself isolates the cited TRS>=0.6 cases as base-model visual-grounding failures: both baseline and SMA fail after the response attempts to use the retrieved procedure. The high-relevance failure therefore does not establish a separate procedure-conflict mechanism.",
         "substrate": {},
         "evidence": {},
-        "reopen_only_if": "Authors release query-level retrieval logs and outcomes.",
+        "reopen_only_if": "Reopen only with provenance-audited query-level matched units that hold visual-grounding correctness, query/image evidence, base model, retrieval budget, semantic relevance, and TRS information fixed while retrieved procedures differ in an independently defined executable-compatibility variable, and that variable predicts a downstream residual not absorbed by same-information grounding, retrieval-quality, or ordinary execution-mismatch baselines.",
         "paper_problem_claimed": false,
         "scientific_authority": false,
         "authority": {
@@ -75484,13 +75547,38 @@
         "guarded_runtime_sha256": "5c5e25957388b723a301cac7e78c81d972b77eb0dc62b8bb53343318c6ea6ab3",
         "repaired_plan_canonical_sha256": "f7c1b8cce177a0efff84cfcf404ef436cf89ead1648548bcd6d633aa3c80a621"
       },
+      "evidence_echo_f0_authorized_result": {
+        "path": "generated/paper-first-evidence-echo-f0-authorized-result-20260817.json",
+        "sha256": "274d6b12e321895e96c47324811e2c80b4c9b2e3a94d31a2a5942ae9ee68fafb",
+        "scientific_status": "STOP_GENERIC_PROMPT_REDUCTION_NOT_BEATEN",
+        "execution_complete": true,
+        "generic_reduction_beaten": false
+      },
+      "defense_restrictiveness_principle_readjudication": {
+        "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
+        "sha256": "74ff4a2746d500a372b6ab63cf3958271ec244e1a1c02f0016beae47195713e6",
+        "principle_dead_end_certified": true,
+        "same_information_reduction_verified": true
+      },
+      "spatial_memory_principle_readjudication": {
+        "path": "generated/spatial-memory-high-trs-grounding-principle-readjudication-20260817.json",
+        "sha256": "87c372d19faeede0fd2eb225d89fefdb9f16ae6b96042340bd7fd3e1145e02ee",
+        "principle_dead_end_certified": true,
+        "same_information_reduction_verified": true
+      },
+      "harnessbank_support_audit": {
+        "path": "generated/harnessbank-support-audit-20260817.json",
+        "sha256": "a00b2b9c7e3778c6974f996c7fb7d3af7d9a5d141862563d1a486ba047a3bafc",
+        "status": "HOLD_SUPPORT_NO_RELEASED_REQUIRED_UNIT",
+        "required_unit": "paired per-gene harness evolution histories and downstream outcomes under the frozen verification rule, with enough lineage to reconstruct selected-versus-rejected verification decisions"
+      },
       "primary_state": {
         "path": "generated/paper-first-primary-evidence-state.json",
         "sha256": "d61b944ab553d023fd4169a067121dda4ca1c45dad8234deafd5c1ed6b83d4d9"
       },
       "dead_end_memory": {
         "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-        "sha256": "013b7c30c83b52fc9364c434d9ec15361a2d1513df0b21b15f84daba90f36c72"
+        "sha256": "2cf7a428422628fd598e6e3042f35e19f11a53ccd5cc0898216ee29f73705a57"
       }
     },
     "scientific_authority": false

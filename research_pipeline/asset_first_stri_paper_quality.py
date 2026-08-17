@@ -169,14 +169,21 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
 def build_asset_first_stri_paper_quality(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     quality = build_stri_quality_contract()
     completion = build_stri_completion(project_root)
-    audit = audit_manuscript_evidence_completion(quality, completion, method_components=0)
+    source_artifacts = [REDUCTION, COHERENCE, FINAL_REVIEW, PAPER_ANALYSIS, PRUNING_BASELINE, P0E_DIAGNOSIS, P0E_PRINCIPLE, PAPER_BODY, PAPER_TABLES, FIG_OVERVIEW, FIG_WITNESS, FIG_BOUNDARY, FIG_ABLATION, PLOT_OVERVIEW, PLOT_WITNESS, PLOT_BOUNDARY, PLOT_ABLATION]
+    source_sha256 = {rel: _sha256(project_root / rel) for rel in source_artifacts}
+    audit = audit_manuscript_evidence_completion(
+        quality,
+        completion,
+        method_components=0,
+        source_sha256=source_sha256,
+        project_root=project_root,
+        require_content_addressed=True,
+    )
     missing = sorted({
         blocker.split(":")[-1]
         for blocker in audit.get("blockers") or []
         if str(blocker).startswith("paper-quality-evidence-not-completed:")
     })
-    source_artifacts = [REDUCTION, COHERENCE, FINAL_REVIEW, PAPER_ANALYSIS, PRUNING_BASELINE, P0E_DIAGNOSIS, P0E_PRINCIPLE, PAPER_BODY, PAPER_TABLES, FIG_OVERVIEW, FIG_WITNESS, FIG_BOUNDARY, FIG_ABLATION, PLOT_OVERVIEW, PLOT_WITNESS, PLOT_BOUNDARY, PLOT_ABLATION]
-    source_sha256 = {rel: _sha256(project_root / rel) for rel in source_artifacts}
     return {
         "schema_version": "1.0",
         "paper_id": "STRI",

@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 import copy
+import hashlib
+import tempfile
 import unittest
+from pathlib import Path
 
 from .paper_design_contract import audit_paper_design_contract
 from .paper_quality_gate import audit_manuscript_evidence_completion, audit_paper_evidence_plan
@@ -60,6 +63,25 @@ def method_quality() -> dict:
             {"id": "V4", "placement": "main", "visual_type": "distribution", "panel_roles": ["sensitivity"], "target_claim_ids": ["C1"], "source_evidence_ids": ["S1", "O5"], "reviewer_question": "Does the conclusion survive registered perturbations?", "takeaway": "The conclusion is shown across the sensitivity family.", "quantitative": True, "uncertainty_required": False, "negative_or_failure_visible": False},
         ],
     }
+
+
+def completed_quality(quality: dict) -> dict:
+    evidence = [{"id": row["id"], "status": "PASS", "artifact_refs": [f"generated/{row['id']}.json"]} for row in quality["baselines"] + quality["ablations"] + quality["analyses"] + quality["planned_outputs"]]
+    visualizations = []
+    for row in quality["visualizations"]:
+        review = {
+            "caption_claim_aligned": True,
+            "legible_labels": True,
+            "legend_or_direct_labels": True,
+            "non_deceptive_scale": True,
+            "source_data_versioned": True,
+        }
+        if row["uncertainty_required"]:
+            review["uncertainty_visible"] = True
+        if row["negative_or_failure_visible"]:
+            review["negative_or_failure_visible"] = True
+        visualizations.append({"id": row["id"], "status": "PASS", "artifact_refs": [f"paper/{row['id']}.pdf"], "data_refs": [f"generated/{row['id']}.json"], "script_refs": [f"paper/{row['id']}.py"], "caption_ref": f"fig:{row['id']}", "visual_review": review})
+    return {"evidence": evidence, "visualizations": visualizations, "claims": {"C1": {"status": "SUPPORTED", "evidence_ids": [row["id"] for row in evidence]}}}
 
 
 def paper_design_with_quality() -> dict:
@@ -170,6 +192,62 @@ class PaperQualityGateTest(unittest.TestCase):
         completion = {"evidence": evidence, "visualizations": visualizations, "claims": {"C1": {"status": "SUPPORTED", "evidence_ids": [row["id"] for row in evidence]}}}
         passed = audit_manuscript_evidence_completion(quality, completion, method_components=2)
         self.assertTrue(passed["passed"], passed["blockers"])
+
+    def test_claim_adjudication_rejects_unregistered_evidence_id(self) -> None:
+        quality = method_quality()
+        completion = completed_quality(quality)
+        completion["claims"]["C1"]["evidence_ids"] = ["FAKE-EVIDENCE"]
+        audit = audit_manuscript_evidence_completion(quality, completion, method_components=2)
+        self.assertFalse(audit["passed"])
+        self.assertIn("paper-quality-claim-evidence-id-unregistered:C1:FAKE-EVIDENCE", audit["blockers"])
+
+    def test_claim_adjudication_rejects_registered_but_unlinked_evidence_id(self) -> None:
+        quality = method_quality()
+        quality["planned_outputs"].append({"id": "O-OTHER", "output_type": "failure", "purpose": "Evidence registered for another claim or auxiliary analysis."})
+        completion = completed_quality(quality)
+        completion["claims"]["C1"]["evidence_ids"] = ["O-OTHER"]
+        audit = audit_manuscript_evidence_completion(quality, completion, method_components=2)
+        self.assertFalse(audit["passed"])
+        self.assertIn("paper-quality-claim-evidence-id-not-linked:C1:O-OTHER", audit["blockers"])
+
+    def test_content_addressed_completion_rejects_missing_or_stale_artifacts(self) -> None:
+        quality = method_quality()
+        completion = completed_quality(quality)
+        refs = set()
+        for row in completion["evidence"]:
+            refs.update(row.get("artifact_refs") or [])
+        for row in completion["visualizations"]:
+            for key in ("artifact_refs", "data_refs", "script_refs"):
+                refs.update(row.get(key) or [])
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            registry = {}
+            for ref in sorted(refs):
+                path = root / ref
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(f"bound:{ref}\n", encoding="utf-8")
+                registry[ref] = hashlib.sha256(path.read_bytes()).hexdigest()
+            passed = audit_manuscript_evidence_completion(
+                quality,
+                completion,
+                method_components=2,
+                source_sha256=registry,
+                project_root=root,
+                require_content_addressed=True,
+            )
+            self.assertTrue(passed["passed"], passed["blockers"])
+            victim = sorted(refs)[0]
+            (root / victim).write_text("mutated after receipt\n", encoding="utf-8")
+            stale = audit_manuscript_evidence_completion(
+                quality,
+                completion,
+                method_components=2,
+                source_sha256=registry,
+                project_root=root,
+                require_content_addressed=True,
+            )
+            self.assertFalse(stale["passed"])
+            self.assertIn(f"paper-quality-artifact-digest-mismatch:{victim}", stale["blockers"])
 
     def test_missing_visual_reviewer_question_blocks(self) -> None:
         quality = method_quality()
