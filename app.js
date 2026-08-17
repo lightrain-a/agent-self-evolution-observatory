@@ -2130,7 +2130,8 @@ function syncFilterUrl() {
 function buildToc() {
   const container = document.getElementById("page-toc");
   if (!container) return;
-  const headings = [...document.querySelectorAll("#dynamic-page h2, #dynamic-page h3, #dynamic-page h4")].filter((heading) => heading.dataset.toc !== "false" && !heading.closest(".review-trace-fold,.review-archive-fold,.system-deep-dive") && (heading.id || heading.closest(".panel, .page-chapter, .merged-group, .direction-cluster, .idea-macro-cluster")));
+  const tocSelector = pageId === "system-overview" ? "#dynamic-page h2" : "#dynamic-page h2, #dynamic-page h3, #dynamic-page h4";
+  const headings = [...document.querySelectorAll(tocSelector)].filter((heading) => heading.dataset.toc !== "false" && !heading.closest(".review-trace-fold,.review-archive-fold,.system-deep-dive") && (heading.id || heading.closest(".panel, .page-chapter, .merged-group, .direction-cluster, .idea-macro-cluster")));
   headings.forEach((heading, index) => { if (!heading.id) heading.id = `${slugify(heading.textContent)}-${index + 1}`; });
   const root = [];
   const stack = [{level:1, children:root}];
