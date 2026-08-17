@@ -245,6 +245,7 @@ def main() -> None:
         time.sleep(1)
         zh_system = execute(session_id, """return {
           readerText: [...document.querySelectorAll('.reader-roadmap,.reader-phase,.reader-authority')].map(x=>x.textContent||'').join(' '),
+          bodyText: document.querySelector('#dynamic-page')?.textContent || '',
           toc2: document.querySelectorAll('.toc-level-2').length,
           toc3: document.querySelectorAll('.toc-level-3').length,
           toc4: document.querySelectorAll('.toc-level-4').length,
@@ -261,6 +262,16 @@ def main() -> None:
         require(all(marker in zh_system["readerText"] for marker in ("输入","核心判断","阶段产出","第一手证据","成熟归约","资源经济 5/5","协议有效性","方法冻结","主文证据图","系统回放","统一权限模型")), "Chinese reader flow still exposes too much untranslated UI terminology")
         require("自动执行" in zh_system["automationText"] and "条件自动" in zh_system["automationText"] and "人工控制" in zh_system["automationText"], "Chinese automation boundary headings are incomplete")
         require("主张与训练目标对齐" in zh_system["preflightText"] and "方法与最强简化会做出不同决策" in zh_system["preflightText"] and "小样本可拟合性" in zh_system["preflightText"], "Chinese Pre-P0 hard gates are incomplete")
+        system_ui_leaks = (
+            "CURRENT RESEARCH OS", "EVIDENCE → HYPOTHESIS", "GPU-0 · SURVIVOR GATE",
+            "PAPER-FIRST · BEFORE IMPLEMENTATION", "PRINCIPLE · BEFORE EXPERIMENT DESIGN",
+            "PROTOCOL VALIDITY · BEFORE SCIENTIFIC INTERPRETATION", "PRE-EXPERIMENT COMPILER · GATE 1–8",
+            "DECISION → LEARN → PUBLISH", "SELF-EVOLVING RESEARCH OS",
+            "after-evidence-before-hypothesis-freeze", "attack the scientific formulation before implementation begins",
+        )
+        require(not any(marker in zh_system["bodyText"] for marker in system_ui_leaks), f"Chinese system overview still leaks English flow/UI labels: {[m for m in system_ui_leaks if m in zh_system['bodyText']]}")
+        system_ui_zh = ("证据 → 假设","论文优先 · 实现前","原理 · 实验设计前","协议有效性 · 科学解释前","实验前编译器 · Gate 1–8","裁决 → 沉淀 → 发布","自进化科研操作系统","证据完成后、研究假设冻结前")
+        require(all(marker in zh_system["bodyText"] for marker in system_ui_zh), f"Chinese system overview display-label localization is incomplete: {[m for m in system_ui_zh if m not in zh_system['bodyText']]}")
         require("先定位失败发生在哪一层" in zh_system["semanticsText"] and "核心原理层" in zh_system["semanticsText"], "Chinese failure-layer semantics are incomplete")
         require("引文与证据图谱" in zh_system["componentText"] and "Citation and evidence graph" not in zh_system["componentText"], "backend component name did not switch to Chinese")
         require(all(card["scroll"] <= card["client"] + 2 for card in zh_system["cards"]), "Chinese system cards overflow horizontally")
@@ -506,10 +517,17 @@ def main() -> None:
         require("Self-Evolution Should Not Depend on How Skills Are Split" in selected["title"] and ("当前选中论文" in selected["text"] or "CURRENT SELECTED PAPER" in selected["text"]) and "2026-09-11" in selected["text"] and "2026-09-16" in selected["text"] and "2026-09-18" in selected["text"] and "2026-09-25" in selected["text"] and ("Official ICLR pages currently conflict" in selected["text"] or "官方页面日期目前冲突" in selected["text"]) and ("Former Regression-Gated Self-Evolution workspace" in selected["text"] or "旧 Regression-Gated Self-Evolution 工作区" in selected["text"]), f"selected-paper current/historical hierarchy or deadline handoff is wrong: {selected}")
         require("only permits a new shadow qualification" not in selected["text"] and "Historical ICLR Paper Workspace" not in selected["title"] and "[object Object]" not in selected["text"], f"selected-paper leaked stale shadow, nested-boundary rendering, or historical-primary framing: {selected}")
         require(all(marker in selected["text"] for marker in ("科学主张","论文证据质量 v2","ICLR 投稿包","可视化证据","人工提交交接","已发布控制平面上的表示敏感性","求解器新颖性","等待人工签字")), "selected-paper Chinese-first current-paper UI is incomplete")
+        require("作者必须在提交前人工核验实时 ICLR/OpenReview 截止日期" in selected["text"] and "Human authors must verify the live ICLR/OpenReview deadline" not in selected["text"], "Selected Paper Chinese deadline handoff leaked the raw English next_action")
 
         navigate("/experiments.html", 4)
         experiments_zh = execute(session_id, "return document.body.textContent || ''")
         require(all(marker in experiments_zh for marker in ("当前论文 / 残余证据","STRI · P0-A 动态证据","STRI · P0-E 最终策略","记忆 · 已归档正向残余","0 个正式实验可启动")), "Experiments Chinese-first current-evidence UI is incomplete")
+        experiment_disposition_leaks = (
+            "Use frozen existing P0 evidence; do not rerun identical compute.",
+            "Merge branch soft-audit into research-system scheduling; stop standalone A-1 repair and do not spend GPU unless a materially new observable/substrate is proposed.",
+            "Merge evidence-depth scheduling into A-1/system soft audit; stop standalone A-2 repair and do not launch controller GPU training.",
+        )
+        require(not any(marker in experiments_zh for marker in experiment_disposition_leaks), f"Experiments Chinese view still leaks historical English dispositions: {[m for m in experiment_disposition_leaks if m in experiments_zh]}")
 
         navigate("/bibliography.html", 8)
         bibliography_zh = execute(session_id, "return document.body.textContent || ''")

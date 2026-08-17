@@ -221,6 +221,18 @@ def main() -> None:
             fail(f"hierarchical renderer is missing {marker}")
     if 'const tocSelector = "#dynamic-page h2, #dynamic-page h3, #dynamic-page h4"' in app_text:
         fail("canonical sidebar TOCs must stop at H3")
+    display_localization_pairs = (
+        ("Use frozen existing P0 evidence; do not rerun identical compute.", "使用已冻结的现有 P0 证据；不要重复运行相同计算。"),
+        ("Merge branch soft-audit into research-system scheduling; stop standalone A-1 repair and do not spend GPU unless a materially new observable/substrate is proposed.", "把分支 soft-audit 并入科研系统调度"),
+        ("Merge evidence-depth scheduling into A-1/system soft audit; stop standalone A-2 repair and do not launch controller GPU training.", "把 evidence-depth 调度并入 A-1/系统 soft audit"),
+        ("Human authors must verify the live ICLR/OpenReview deadline because official ICLR pages currently conflict.", "作者必须在提交前人工核验实时 ICLR/OpenReview 截止日期"),
+        ("DECISION → LEARN → PUBLISH", "裁决 → 沉淀 → 发布"),
+        ("SELF-EVOLVING RESEARCH OS", "自进化科研操作系统"),
+        ("PRE-EXPERIMENT COMPILER · GATE 1–8", "实验前编译器 · Gate 1–8"),
+    )
+    for source, localized in display_localization_pairs:
+        if source not in app_text or localized not in app_text:
+            fail(f"display localization mapping is incomplete: {source}")
     for page_id in CANONICAL_PAGES.values():
         if page_id != "home" and f'"{page_id}"' not in combined and f'.{page_id}' not in combined:
             fail(f"no content configuration found for canonical page {page_id}")

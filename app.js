@@ -614,6 +614,74 @@ const ZH_PURE_TEXT = new Map([
   ["2E · RELATION DELTA PREFLIGHT","2E · 关系增量前置检查"],
   ["2F · MANUAL RELATION SCAN ADMISSION","2F · 人工关系扫描准入"],
   ["3 · SEMANTIC BLOCKER","3 · 语义阻断器"],
+  ["CURRENT RESEARCH OS","当前科研操作系统"],
+  ["EVIDENCE → HYPOTHESIS","证据 → 假设"],
+  ["DECISION → LEARN → PUBLISH","裁决 → 沉淀 → 发布"],
+  ["SELF-EVOLVING RESEARCH OS","自进化科研操作系统"],
+  ["DECISION LEDGER","决策账本"],
+  ["REPAIR","修复"],
+  ["AUTOMATION","自动化"],
+  ["SCIENTIFIC META-TRACE","科学元轨迹"],
+  ["FAILURE ASSETS","失败资产"],
+  ["EXPERIMENT VALUE","实验价值"],
+  ["CAPABILITY REGISTRY","能力注册表"],
+  ["LITERATURE AUDIT","文献审计"],
+  ["EVIDENCE INTEGRITY","证据完整性"],
+  ["EXTERNAL SYSTEM LEARNING","外部系统学习"],
+  ["LOCAL VALIDATION SUB-MACHINE · P0-SYSTEM v2","局部验证子状态机 · P0-SYSTEM v2"],
+  ["REPAIR BUDGET","修复预算"],
+  ["PRE-MODEL LOAD","模型加载前检查"],
+  ["REQUIRED","必须"],
+  ["RAW TRACE","原始轨迹"],
+  ["MANDATORY","强制"],
+  ["GPU LEASE","GPU 租约"],
+  ["GPU-0 · SURVIVOR GATE","GPU-0 · 存活方向准入"],
+  ["AI CONSULTATION CLINIC · CROSS-CUTTING","AI 会诊 · 跨阶段"],
+  ["PAPER-FIRST · BEFORE IMPLEMENTATION","论文优先 · 实现前"],
+  ["PRINCIPLE · BEFORE EXPERIMENT DESIGN","原理 · 实验设计前"],
+  ["PROTOCOL VALIDITY · BEFORE SCIENTIFIC INTERPRETATION","协议有效性 · 科学解释前"],
+  ["UPDATER · BEFORE GATE 1","更新器 · Gate 1 前"],
+  ["RESEARCH EXECUTION PLAN · DERIVED, NOT A GATE","科研执行计划 · 派生接口，非新增门"],
+  ["PRE-EXPERIMENT COMPILER · GATE 1–8","实验前编译器 · Gate 1–8"],
+  ["GATE 3 · IDENTIFIABILITY SUB-AUDIT","Gate 3 · 可辨识性子审计"],
+  ["A-1 · PROMPT PATCH","A-1 · 提示词补丁"],
+  ["A-2 · UPDATE STREAM","A-2 · 更新流"],
+  ["STATISTICAL RESOLUTION","统计分辨率"],
+  ["MEASURED THROUGHPUT","实测吞吐"],
+  ["SEALED HIDDEN","密封隐藏集"],
+  ["NO EVALUATOR LEAK","无评测器泄漏"],
+  ["INDEPENDENT TRUTH","独立真值"],
+  ["MATCHED INFORMATION","信息匹配"],
+  ["CLAIM ↔ METRIC","主张 ↔ 指标"],
+  ["VERSIONED EVALUATOR","版本化评测器"],
+  ["SHORTCUT AUDIT","捷径审计"],
+  ["OBJECTIVE / PREDICTION","目标 / 预测"],
+  ["DEPENDENCIES / CHECKPOINTS","依赖 / 检查点"],
+  ["CAPABILITIES / ARTIFACTS","能力 / 工件"],
+  ["FALLBACK","回退策略"],
+  ["1 · PAPER NOVELTY","1 · 论文新颖性"],
+  ["2 · METHOD DESIGN","2 · 方法设计"],
+  ["3 · EXPERIMENT BLUEPRINT","3 · 实验蓝图"],
+  ["4 · PAPER EVIDENCE QUALITY V2.1","4 · 论文证据质量 V2.1"],
+  ["5 · VISUAL EVIDENCE CONTRACT","5 · 可视化证据合同"],
+  ["6 · RESET ON CORE CHANGE","6 · 核心变化即重置"],
+  ["1 · PRIMITIVES / ASSUMPTIONS","1 · 基本对象 / 假设"],
+  ["2 · MECHANISM / PREDICTIONS","2 · 机制 / 预测"],
+  ["3 · OPERATIONALIZATION","3 · 操作化"],
+  ["4 · FAILURE UPDATE","4 · 失败更新"],
+  ["after-evidence-before-hypothesis-freeze","证据完成后、研究假设冻结前"],
+  ["before-p0-economy-freeze","P0 资源经济冻结前"],
+  ["after-economy-pass-before-first-expensive-launch","资源经济通过后、首次高成本运行前"],
+  ["after-screening-or-nonpositive-pilot-before-repair","筛查/非正向局部试验后、修复前"],
+  ["before-full-p0-second-backbone-p1-or-paper-claim-expansion","全量 P0、第二主干模型、P1 或论文主张扩展前"],
+  ["attack the scientific formulation before implementation begins","在实现开始前攻击科学问题表述"],
+  ["find cheap ways to kill or simplify the method before GPU work","在 GPU 工作前寻找低成本证伪或简化方法的路径"],
+  ["red-team the exact frozen experiment contract, not the idea wording","红队审查冻结的精确实验合同，而不是研究方向措辞"],
+  ["separate formulation, substrate, representation, optimization, baseline, and execution failures before another run","在再次运行前区分表述、底座、表示、优化、对照与执行失败"],
+  ["recheck novelty and marginal value before multiplying compute","在扩大算力前重新核验新颖性与边际价值"],
+  ["Use frozen existing P0 evidence; do not rerun identical compute.","使用已冻结的现有 P0 证据；不要重复运行相同计算。"],
+  ["Merge branch soft-audit into research-system scheduling; stop standalone A-1 repair and do not spend GPU unless a materially new observable/substrate is proposed.","把分支 soft-audit 并入科研系统调度；停止独立 A-1 修复，除非提出实质全新的可观测量/实验底座，否则不再消耗 GPU。"],
+  ["Merge evidence-depth scheduling into A-1/system soft audit; stop standalone A-2 repair and do not launch controller GPU training.","把 evidence-depth 调度并入 A-1/系统 soft audit；停止独立 A-2 修复，不启动控制器 GPU 训练。"],
   ["4 · GATED INBOX","4 · 门控收件箱"],
 ]);
 function localizeZhInline(value = "") {
@@ -634,6 +702,13 @@ function localizeZhInline(value = "") {
     .replace(/\b[a-f0-9]{12,64}\b/g, protect);
   ZH_INLINE_TEXT.forEach(([pattern,replacement]) => { text = text.replace(pattern,replacement); });
   return text.replace(/⟦M(\d+)⟧/g, (_, index) => protectedTokens[Number(index)] || _);
+}
+function localizedDisplayText(value = "") {
+  const raw = String(value ?? "");
+  if (language !== "zh") return raw;
+  const trimmed = raw.trim();
+  if (ZH_PURE_TEXT.has(trimmed)) return raw.replace(trimmed, ZH_PURE_TEXT.get(trimmed));
+  return localizeZhInline(raw);
 }
 function textOf(value) {
   if (typeof value === "string") return value;
