@@ -959,10 +959,27 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         and tuple(discovery_policy.get("search_portfolio_primitives") or ()) == SEARCH_PORTFOLIO_PRIMITIVES
     )
     generator_operator_version = str(generator_policy.get("discovery_operator_version") or "").strip()
+    generator_status = str((state.get("paper_first_problem_generator") or {}).get("status") or "")
+    generator_closed_historical_receipt = bool(
+        generator_operator_version
+        and generator_operator_version != DISCOVERY_OPERATOR_VERSION
+        and generator_status in {
+            "GENERATED_ZERO_CANDIDATES",
+            "GENERATED_AWAIT_PROBLEM_GATE",
+            "SKIPPED_SOURCE_COVERAGE_SATURATED",
+            "SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE",
+            "SKIPPED_SOURCE_CARRIER_PROBE_PENDING",
+            "SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE",
+            "SKIPPED_STALE_PRIMARY_EVIDENCE",
+        }
+        and generator_policy.get("source_coverage_saturation_reopens_once_on_operator_change") is True
+        and generator_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator") is True
+        and generator_policy.get("source_coverage_saturation_operator_upgrade_recompile_is_explicit_exception") is True
+    )
     generator_operator_contract_ok = bool(
         not generator_operator_version
         or (
-            generator_operator_version == DISCOVERY_OPERATOR_VERSION
+            (generator_operator_version == DISCOVERY_OPERATOR_VERSION or generator_closed_historical_receipt)
             and generator_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator") is True
             and generator_policy.get("source_coverage_saturation_reopens_once_on_operator_change") is True
             and generator_policy.get("source_coverage_saturation_operator_upgrade_recompile_is_explicit_exception") is True
@@ -1329,10 +1346,31 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if "canonical_transaction_forbids_search_portfolio" in generator_policy and generator_policy.get("canonical_transaction_forbids_search_portfolio") is not True: errors.append("canonical generator policy must keep Search Portfolio out of the live transaction")
     if "one_content_addressed_pool_allows_at_most_one_live_generator_call" in generator_policy and generator_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call") is not True: errors.append("canonical generator policy must preserve one-live-call-per-new-pool semantics")
     generator_operator_version = str(generator_policy.get("discovery_operator_version") or "").strip()
+    # The public canonical generator state is a historical transaction receipt, not a
+    # mutable declaration of the currently installed discovery operator. When the
+    # operator changes, the old closed receipt must remain labeled with its original
+    # version; admission logic may then allow one new operator-qualified transaction.
+    # Accept that explicit historical state here without relabeling it as current.
+    generator_closed_historical_receipt = bool(
+        generator_operator_version
+        and generator_operator_version != DISCOVERY_OPERATOR_VERSION
+        and generator.get("status") in {
+            "GENERATED_ZERO_CANDIDATES",
+            "GENERATED_AWAIT_PROBLEM_GATE",
+            "SKIPPED_SOURCE_COVERAGE_SATURATED",
+            "SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE",
+            "SKIPPED_SOURCE_CARRIER_PROBE_PENDING",
+            "SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE",
+            "SKIPPED_STALE_PRIMARY_EVIDENCE",
+        }
+        and generator_policy.get("source_coverage_saturation_reopens_once_on_operator_change") is True
+        and generator_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator") is True
+        and generator_policy.get("source_coverage_saturation_operator_upgrade_recompile_is_explicit_exception") is True
+    )
     generator_operator_contract_ok = bool(
         not generator_operator_version
         or (
-            generator_operator_version == DISCOVERY_OPERATOR_VERSION
+            (generator_operator_version == DISCOVERY_OPERATOR_VERSION or generator_closed_historical_receipt)
             and generator_policy.get("source_coverage_saturation_skips_model_call_after_current_operator_receipt") is True
             and generator_policy.get("source_coverage_saturation_operator_upgrade_recompile_is_explicit_exception") is True
             and generator_policy.get("source_coverage_saturation_reopens_once_on_operator_change") is True
