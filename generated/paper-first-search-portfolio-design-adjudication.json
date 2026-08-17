@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T21:00:04+00:00",
+  "generated_at": "2026-08-17T06:35:22+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T21:00:04+00:00",
+    "generated_at": "2026-08-17T06:35:22+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -405,6 +405,129 @@
         "scientific_authority": false
       },
       {
+        "source_candidate_id": "EVODRC-BLOCK7-STALL",
+        "basin": "principle-readjudication-20c094ccebb9ff70",
+        "search_primitive": "",
+        "title": "Block7 rule persistence does not identify failed skill transfer when repair feasibility changes with geometry and coupled constraints",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Block7 rule persistence does not identify failed skill transfer when repair feasibility changes with geometry and coupled constraints",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "A DRC rule label is not a matched repair state. EvoDRC's released Block7 traces show that the residual occurs despite continuing knowledge updates and despite the violations being included in repair units. More importantly, the first-party proposals expose direct feasibility and constraint-coupling witnesses. In iter4, an M1.S.2 case has a 252-dbu notch while the via M1 land plus two required 100-dbu clearances needs 272 dbu, so a simple placement satisfying both sides is geometrically impossible without merging geometry or creating another violation. In iter5, one V1/M1 repair explicitly accepts a declared-debt M1.S.2 violation, another plan that would clear 117 target violations is deferred because it would introduce more than 110 new violations, and the contested-unit DRC gate rejects a candidate with delta_total=+64. Thus the cross-block persistence is positively explained by changed feasible-action support and coupled-constraint repair debt rather than by evidence that the same executable skill failed to transfer to an otherwise matched state.",
+        "current_source_refs": [
+          "arXiv:2607.20019"
+        ],
+        "evidence_basis": [
+          "arXiv:2607.20019",
+          "primary-fulltext:arXiv:2607.20019#sha256=145c5a5b4fb6faa1662661eadf998ddd65d394a0650f316cb508af533df578c5",
+          "first-party-repo:EvoDRC@0a9b4c732cadce7a0718467aa10ef8a741da369a",
+          "generated/evodrc-block7-repairability-first-party-manifest-20260817.json#sha256=730e612ab66036ee23212604b4a284cf4ffe51116704dd49b308f648126284e5"
+        ],
+        "problem_text": "The standalone claim that M1.S.2 and V1.M1.EN.1 clearing rapidly on Block3/Block5 but persisting on Block7 establishes a new self-evolution or skill-transfer failure merely because the DRC rule identifier is the same across blocks.",
+        "reason": "EvoDRC's released traces show that some large-block residual violations persist even while knowledge evolves and repair units are attempted, but the cited cross-block count difference does not identify failed skill transfer because first-party proposals directly expose geometry-dependent infeasibility and cross-rule repair debt.",
+        "reopen_only_if": "Reopen only with provenance-audited matched units where rule identity, local geometry and neighboring-constraint context, crop/decomposition coverage, observable repair information, candidate operation support, and independent feasibility are comparable, and where a legal repair with nonpositive global violation debt exists. Require a repeatable held-out difference attributable to evolved skill/policy state beyond constrained optimization, geometric feasibility, and repair-debt baselines.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "IMPOSSIBILITY_OR_INVARIANCE",
+          "statement": "A DRC rule label is not a matched repair state. EvoDRC's released Block7 traces show that the residual occurs despite continuing knowledge updates and despite the violations being included in repair units. More importantly, the first-party proposals expose direct feasibility and constraint-coupling witnesses. In iter4, an M1.S.2 case has a 252-dbu notch while the via M1 land plus two required 100-dbu clearances needs 272 dbu, so a simple placement satisfying both sides is geometrically impossible without merging geometry or creating another violation. In iter5, one V1/M1 repair explicitly accepts a declared-debt M1.S.2 violation, another plan that would clear 117 target violations is deferred because it would introduce more than 110 new violations, and the contested-unit DRC gate rejects a candidate with delta_total=+64. Thus the cross-block persistence is positively explained by changed feasible-action support and coupled-constraint repair debt rather than by evidence that the same executable skill failed to transfer to an otherwise matched state.",
+          "opposite_prediction": "Conditioned on the same named DRC rule, residual repair probability should depend on local geometry, available edit slack, coupling to neighboring rule constraints, and the existence of a legal operation with nonpositive global violation debt. Knowledge may continue to improve while residual violations persist when the feasible intervention set shrinks or every local repair creates compensating violations elsewhere.",
+          "opposite_principle": "Self-evolution cannot repair states whose feasible intervention set does not contain a globally acceptable action; rule identity or accumulated procedural knowledge does not equal repairability.",
+          "opposite_search_seed": "Search only for matched violations with the same rule, comparable local geometry/constraint neighborhood, the same observable repair information and candidate operation support, and an independently verified feasible repair. Then ask whether differing evolved knowledge or policy state predicts success after feasibility, repair debt, crop coverage, and constraint coupling are matched. Do not reopen from another larger block or from another same-rule count plateau without a feasibility-matched witness.",
+          "scope": "EvoDRC arXiv:2607.20019 and first-party repository commit 0a9b4c732cadce7a0718467aa10ef8a741da369a, restricted to the Block3/5 versus Block7 M1.S.2 and V1.M1.EN.1 persistence claim.",
+          "same_information_or_scope_matched": true,
+          "proof_or_structural_witness": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2607.20019",
+            "primary-fulltext:arXiv:2607.20019#sha256=145c5a5b4fb6faa1662661eadf998ddd65d394a0650f316cb508af533df578c5",
+            "first-party-repo:EvoDRC@0a9b4c732cadce7a0718467aa10ef8a741da369a",
+            "generated/evodrc-block7-repairability-first-party-manifest-20260817.json#sha256=730e612ab66036ee23212604b4a284cf4ffe51116704dd49b308f648126284e5"
+          ],
+          "alternative_explanations_ruled_out": [
+            "The Block7 residual is simply never presented to repair units: false; the released iter4/iter5 decomposition includes the persistent M1/V1 violations in gated repair units.",
+            "The knowledge base stops evolving before the plateau: false; M1/V1 knowledge updates and new records continue through the late iterations.",
+            "A same rule identifier implies the same feasible repair action across blocks: false; the released proposal gives an explicit 252-dbu versus 272-dbu infeasibility witness and multiple repair-debt tradeoffs.",
+            "The remaining repair proposals are harmless but ignored: false; first-party gates record candidates that introduce large numbers of compensating violations and reject at least one net-positive violation change."
+          ],
+          "reopen_condition": "Reopen only with provenance-audited matched units where rule identity, local geometry and neighboring-constraint context, crop/decomposition coverage, observable repair information, candidate operation support, and independent feasibility are comparable, and where a legal repair with nonpositive global violation debt exists. Require a repeatable held-out difference attributable to evolved skill/policy state beyond constrained optimization, geometric feasibility, and repair-debt baselines."
+        },
+        "source_readjudication_artifact": "generated/evodrc-block7-stall-principle-readjudication-20260817.json",
+        "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {
+          "source_ref": "arXiv:2607.20019",
+          "closed_evidence_sha256": [
+            "54661276749c97ebe2983af7c7b538c03d26437132754304095a64db48afdbb1"
+          ],
+          "closure_scope": "the reported cross-block persistence of M1.S.2 and V1.M1.EN.1 violations only",
+          "source_readjudication_artifact": "generated/evodrc-block7-stall-principle-readjudication-20260817.json",
+          "scientific_authority": false
+        },
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "LOPD-LATENT-RETRIEVAL-PLATEAU",
+        "basin": "principle-readjudication-233291a84475c283",
+        "search_primitive": "",
+        "title": "LOPD latent-token and retrieval-count plateaus reduce to capacity saturation and marginal-information redundancy",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: LOPD latent-token and retrieval-count plateaus reduce to capacity saturation and marginal-information redundancy",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "LOPD's own construction makes both sensitivity curves direct instances of mature capacity and marginal-information effects. The latent composer compresses variable-length task-experience representations into a fixed number of learned latent tokens, so increasing that token count increases representation capacity and a rise followed by saturation is predicted by information-bottleneck/rate-distortion behavior. Separately, retrieval is exact cosine-similarity top-n over a frozen successful-trajectory bank. Increasing n_ret therefore nests lower-ranked experiences into the retrieved set; each additional item is separately encoded/compressed and then contributes additional latent context. A gain from the first few nearest experiences followed by a plateau or fluctuation is predicted by diminishing marginal relevance, correlated/redundant evidence, and context-capacity tradeoffs. The reported curves do not hold total latent budget fixed while independently varying number of experiences versus tokens per experience, so they cannot identify a new decomposition-specific mechanism.",
+        "current_source_refs": [
+          "arXiv:2608.13040"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.13040",
+          "primary-fulltext:arXiv:2608.13040#sha256=149cbbd1fc5ae506dd1189936968a671a347e412689510f4c42c37b33134fcf8"
+        ],
+        "problem_text": "The standalone claim that LOPD's reward jump around 32 latent tokens and its lack of monotonic benefit beyond three retrieved experiences identify a new agent self-evolution threshold or retrieval-dose mechanism merely from the reported sensitivity curves.",
+        "reason": "LOPD reports useful sensitivity curves, but the current token-count and retrieval-count plateaus are already predicted by mature representation-capacity and diminishing-marginal-information principles. A new mechanism would require a matched fixed-budget decomposition residual.",
+        "reopen_only_if": "Reopen only if a source-faithful or independently reviewed experiment fixes total latent information/context budget and frozen retrieval support, independently changes the experience-count versus per-experience-capacity decomposition, matches compute and update information, and yields a repeatable held-out residual beyond rate-distortion, marginal-information, redundancy/correlation, retrieval-rank, and context-budget baselines.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "LOPD's own construction makes both sensitivity curves direct instances of mature capacity and marginal-information effects. The latent composer compresses variable-length task-experience representations into a fixed number of learned latent tokens, so increasing that token count increases representation capacity and a rise followed by saturation is predicted by information-bottleneck/rate-distortion behavior. Separately, retrieval is exact cosine-similarity top-n over a frozen successful-trajectory bank. Increasing n_ret therefore nests lower-ranked experiences into the retrieved set; each additional item is separately encoded/compressed and then contributes additional latent context. A gain from the first few nearest experiences followed by a plateau or fluctuation is predicted by diminishing marginal relevance, correlated/redundant evidence, and context-capacity tradeoffs. The reported curves do not hold total latent budget fixed while independently varying number of experiences versus tokens per experience, so they cannot identify a new decomposition-specific mechanism.",
+          "opposite_prediction": "Under the same frozen bank, similarity ranking, composer family, task distribution, and training objective, performance should improve while additional representation capacity or additional high-ranked experience contributes useful information, then saturate or fluctuate as marginal information falls or redundant context accumulates. The location of the empirical optimum can move with task/model/bank statistics without constituting a new causal primitive.",
+          "opposite_principle": "Latent-context utility is governed first by information capacity and marginal nonredundant evidence; a plateau in token count or nested top-k retrieval is not a new self-evolution mechanism unless a matched information-budget decomposition leaves a residual.",
+          "opposite_search_seed": "Reopen only with a preregistered same-information experiment that fixes total latent-token/context budget and the frozen experience bank while independently varying experience count and tokens per experience (or an equivalent decomposition), matches training/update compute, and shows a held-out difference that rate-distortion, marginal-information, redundancy/correlation, retrieval-rank, and context-budget baselines cannot express. Do not reopen from another unbudgeted K or top-n sensitivity curve.",
+          "scope": "LOPD arXiv:2608.13040, especially the learnable latent context construction, Appendix retrieval definition, and EnvScaler sensitivity analysis.",
+          "same_information_or_scope_matched": true,
+          "same_information_reduction_verified": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2608.13040",
+            "primary-fulltext:arXiv:2608.13040#sha256=149cbbd1fc5ae506dd1189936968a671a347e412689510f4c42c37b33134fcf8"
+          ],
+          "alternative_explanations_ruled_out": [
+            "n_ret changes only the number of independent trials while information is fixed: false; the released method retrieves a nested top-n set and adds lower-ranked experience content.",
+            "latent-token K is unrelated to representation capacity: false; K is the number of learned latent tokens produced by the compressor and used as privileged context.",
+            "The published curves isolate experience count from total latent-context budget: false; increasing retrieved items while per-item compression is fixed also changes total composed latent context.",
+            "The closure says LOPD's learned context is ineffective: false; it closes only a standalone novelty claim based on the two sensitivity plateaus."
+          ],
+          "reopen_condition": "Reopen only if a source-faithful or independently reviewed experiment fixes total latent information/context budget and frozen retrieval support, independently changes the experience-count versus per-experience-capacity decomposition, matches compute and update information, and yields a repeatable held-out residual beyond rate-distortion, marginal-information, redundancy/correlation, retrieval-rank, and context-budget baselines."
+        },
+        "source_readjudication_artifact": "generated/lopd-latent-retrieval-plateau-principle-readjudication-20260817.json",
+        "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {
+          "source_ref": "arXiv:2608.13040",
+          "closed_evidence_sha256": [
+            "35344d8632103dc760d58176a749b31ce6392a8d1af21206c8ef130d6db6670e",
+            "b5057e11b858c2cfd1a28a311248b27cd9e698c56586b89264a4401be50d9cd1"
+          ],
+          "closure_scope": "the reported latent-token capacity plateau and retrieval-count plateau only",
+          "source_readjudication_artifact": "generated/lopd-latent-retrieval-plateau-principle-readjudication-20260817.json",
+          "scientific_authority": false
+        },
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
         "source_candidate_id": "SKILLSP-SELF-EVOLUTION-BOOTSTRAP-GAP",
         "basin": "principle-readjudication-35a7566d1232ae7c",
         "search_primitive": "",
@@ -604,6 +727,65 @@
         "source_readjudication_artifact": "generated/p06-relevance-conditioned-evidence-debt-principle-readjudication-20260816.json",
         "opposite_search_asset_evidence": {},
         "fresh_phenomenon_closure": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SKILLSP-ROUTING-FROZEN-SKILLS-ABLATION",
+        "basin": "principle-readjudication-39bb7acbc9a666af",
+        "search_primitive": "",
+        "title": "Uniform-routing and frozen-skill drops do not identify a new co-evolution interaction",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Uniform-routing and frozen-skill drops do not identify a new co-evolution interaction",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "The two ablations remove different ordinary resources. Uniform routing weakens query/task-conditioned curriculum allocation while retaining the evolving skill mechanism; Frozen skills holds the available skill library fixed while retaining skill-guided generation. Large marginal drops from weakening allocation and from weakening the available expert/curriculum set are both predicted by standard expert-set quality plus gating/allocation decompositions and do not identify an interaction term. The same paper's policy co-evolution ablation is consistent with this interpretation: Frozen proposer causes a 2.1-point drop, Frozen feedback solver a 3.0-point drop, and Frozen both a 3.2-point drop, which is not evidence of a super-additive co-evolution cliff and is compatible with overlapping/complementary resources.",
+        "current_source_refs": [
+          "arXiv:2607.22529"
+        ],
+        "evidence_basis": [
+          "arXiv:2607.22529",
+          "primary-fulltext:arXiv:2607.22529#sha256=9f4aa516220cb30d62990d63398ad3c5c28aea3633a6b1b374eb980eedc309ab"
+        ],
+        "problem_text": "The standalone claim that Skill Self-Play's Uniform routing and Frozen skills ablation drops identify a new nonseparable skill-router or skill-curriculum co-evolution mechanism merely because each ablation reduces final accuracy.",
+        "reason": "Skill Self-Play provides evidence that both dynamic skill evolution and non-uniform curriculum allocation contribute to performance. The cited pair of marginal ablations does not by itself establish a new nonseparable co-evolution mechanism.",
+        "reopen_only_if": "Reopen only with a preregistered matched factorial comparison that independently varies skill/library evolution and routing/allocation under comparable task distribution, backbone, candidate-set information, training/evaluation budget, and supervision, and shows a repeatable non-additive held-out interaction that same-information expert-set quality, contextual routing, mixture-of-experts gating, curriculum allocation, and selector-regret models cannot express.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "The two ablations remove different ordinary resources. Uniform routing weakens query/task-conditioned curriculum allocation while retaining the evolving skill mechanism; Frozen skills holds the available skill library fixed while retaining skill-guided generation. Large marginal drops from weakening allocation and from weakening the available expert/curriculum set are both predicted by standard expert-set quality plus gating/allocation decompositions and do not identify an interaction term. The same paper's policy co-evolution ablation is consistent with this interpretation: Frozen proposer causes a 2.1-point drop, Frozen feedback solver a 3.0-point drop, and Frozen both a 3.2-point drop, which is not evidence of a super-additive co-evolution cliff and is compatible with overlapping/complementary resources.",
+          "opposite_prediction": "With task information and training budget fixed, final utility can fall either because the evolving skill/curriculum set contains worse or less diverse training opportunities, or because the allocation policy selects those opportunities poorly. Both marginal effects can be substantial without a new nonseparable self-evolution primitive. A genuine interaction requires a matched factorial contrast that cannot be represented by skill-set quality plus allocation/selector regret under the same information.",
+          "opposite_principle": "Skill-set quality and curriculum/routing quality are separable resources until a matched same-information factorial demonstrates a residual interaction; separate component ablations do not establish co-evolutionary nonseparability.",
+          "opposite_search_seed": "Search only for a preregistered matched 2x2 design that independently varies library evolution and routing/allocation while holding backbone, task distribution, candidate skill contents where required, proposer/solver information, training tokens, and evaluation budget comparable. Require a repeatable held-out non-additive interaction beyond same-information expert-set quality, contextual routing, mixture-of-experts gating, curriculum allocation, and selector-regret baselines. Do not reopen from another pair of large marginal ablation drops.",
+          "scope": "Skill Self-Play arXiv:2607.22529, especially Table 3 Static skill orchestration and Table 4 Co-evolutionary updates.",
+          "same_information_or_scope_matched": true,
+          "same_information_reduction_verified": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2607.22529",
+            "primary-fulltext:arXiv:2607.22529#sha256=9f4aa516220cb30d62990d63398ad3c5c28aea3633a6b1b374eb980eedc309ab"
+          ],
+          "alternative_explanations_ruled_out": [
+            "Uniform routing and Frozen skills are symmetric interventions on one variable: false; one changes allocation and the other changes the available/evolving skill set.",
+            "The two Table 3 drops estimate a factorial interaction: false; they are separate one-factor ablations.",
+            "The policy co-evolution ablation demonstrates super-additivity: the reported Frozen both drop is 3.2 points versus 2.1 and 3.0 points for the individual policy freezes, which does not establish a super-additive interaction.",
+            "The closure implies dynamic skills or routing are unnecessary: false; both can be useful while the standalone interaction claim remains unidentified."
+          ],
+          "reopen_condition": "Reopen only with a preregistered matched factorial comparison that independently varies skill/library evolution and routing/allocation under comparable task distribution, backbone, candidate-set information, training/evaluation budget, and supervision, and shows a repeatable non-additive held-out interaction that same-information expert-set quality, contextual routing, mixture-of-experts gating, curriculum allocation, and selector-regret models cannot express."
+        },
+        "source_readjudication_artifact": "generated/skillsp-routing-frozen-skills-ablation-principle-readjudication-20260817.json",
+        "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {
+          "source_ref": "arXiv:2607.22529",
+          "closed_evidence_sha256": [
+            "4a13422adf4cd9b36d595706c8f492fe6fe477564ea0c293e4a4f027a3a17493"
+          ],
+          "closure_scope": "the reported Uniform routing and Frozen skills accuracy drops only",
+          "source_readjudication_artifact": "generated/skillsp-routing-frozen-skills-ablation-principle-readjudication-20260817.json",
+          "scientific_authority": false
+        },
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -860,6 +1042,66 @@
         "source_readjudication_artifact": "generated/positive-residual-memory-treatment-semantics-principle-readjudication-20260816.json",
         "opposite_search_asset_evidence": {},
         "fresh_phenomenon_closure": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "DOCATLAS-OBSERVATION-INDEX-ABLATIONS",
+        "basin": "principle-readjudication-6a047bd37b0be16b",
+        "search_primitive": "",
+        "title": "DocAtlas image and tree ablation drops identify information availability and indexing value, not a new self-evolution mechanism",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: DocAtlas image and tree ablation drops identify information availability and indexing value, not a new self-evolution mechanism",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "The two ablations remove ordinary information resources rather than isolating a new self-evolution primitive. Layout images and cropped sub-images supply task-relevant visual evidence for figures, charts, and spatial document structure; removing them directly reduces observability/evidence sufficiency. Tree annotations are part of DocAtlas's mutable search/index representation and alter the information available to later retrieval; removing them degrades All-Hit and page-F1 as expected when an index/search state loses structured navigation signals. These effects are fully expressible by information availability, retrieval/index quality, and observability baselines unless information content and query budget are matched while only the evolving representation changes.",
+        "current_source_refs": [
+          "arXiv:2608.07527"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.07527",
+          "primary-fulltext:arXiv:2608.07527#sha256=dff07ace568986e957e6eb2d2f995938fd20dedc6d052d0eaa7e1f6813ca09d2"
+        ],
+        "problem_text": "The standalone claim that DocAtlas's performance drops after removing layout/cropped images or tree annotations establish a new memory/self-evolution mechanism merely because the mutable system outperforms these component ablations.",
+        "reason": "DocAtlas's ablations show that visual evidence and structured mutable indexing are useful. Those drops are already predicted by ordinary information-availability and search-quality principles and do not by themselves identify a new self-evolution mechanism.",
+        "reopen_only_if": "Reopen only with a same-information, matched-search-budget comparison that holds document/visual evidence and candidate support fixed while varying the evolving memory/index representation, and yields a repeatable held-out residual beyond information sufficiency, observability, retrieval/index quality, and active-search baselines.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "The two ablations remove ordinary information resources rather than isolating a new self-evolution primitive. Layout images and cropped sub-images supply task-relevant visual evidence for figures, charts, and spatial document structure; removing them directly reduces observability/evidence sufficiency. Tree annotations are part of DocAtlas's mutable search/index representation and alter the information available to later retrieval; removing them degrades All-Hit and page-F1 as expected when an index/search state loses structured navigation signals. These effects are fully expressible by information availability, retrieval/index quality, and observability baselines unless information content and query budget are matched while only the evolving representation changes.",
+          "opposite_prediction": "With model and query fixed, removing task-relevant visual evidence should reduce performance most on visually grounded questions, and removing structured index/navigation state should reduce retrieval recall/precision. Both effects can be large without implying a distinct self-evolution mechanism.",
+          "opposite_principle": "A component that exposes additional task evidence or improves search/index state can improve an agent through ordinary observability and retrieval quality; component-removal drops are not evidence of a new evolving-memory mechanism unless the same information and search budget are preserved.",
+          "opposite_search_seed": "Reopen only with a preregistered same-information comparison that preserves the same visual/document evidence, query budget, and candidate pages while changing only the mutable memory/index representation, and shows a held-out decision or retrieval residual beyond information sufficiency, observability, indexing/search quality, and ordinary active-retrieval baselines. Do not reopen from another missing-modality or missing-index ablation.",
+          "scope": "DocAtlas arXiv:2608.07527, especially the layout-image/crop and mutable-tree ablations.",
+          "same_information_or_scope_matched": true,
+          "same_information_reduction_verified": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2608.07527",
+            "primary-fulltext:arXiv:2608.07527#sha256=dff07ace568986e957e6eb2d2f995938fd20dedc6d052d0eaa7e1f6813ca09d2"
+          ],
+          "alternative_explanations_ruled_out": [
+            "The image ablation preserves all task evidence and only changes memory formatting: false; it removes layout images/cropped visual evidence used by figure/chart questions.",
+            "The tree ablation changes only a cosmetic note format: false; the reported raw-search All-Hit and page-F1 changes show that it changes later retrieval/index behavior.",
+            "Large component ablation drops identify a self-evolution interaction: false; the cited ablations do not match information content or estimate a factorial interaction.",
+            "The closure says mutable document memory is useless: false; it closes only a standalone novelty claim from these information-removal ablations."
+          ],
+          "reopen_condition": "Reopen only with a same-information, matched-search-budget comparison that holds document/visual evidence and candidate support fixed while varying the evolving memory/index representation, and yields a repeatable held-out residual beyond information sufficiency, observability, retrieval/index quality, and active-search baselines."
+        },
+        "source_readjudication_artifact": "generated/docatlas-observation-index-ablation-principle-readjudication-20260817.json",
+        "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {
+          "source_ref": "arXiv:2608.07527",
+          "closed_evidence_sha256": [
+            "0871ff366adf0adb721059c08f1cc1b6b98146d2180ff3b4b60f601498f39156",
+            "770cfb54e13f752e2a7cef4fd797db61e4d7aae4a576197ef228302938f06f20"
+          ],
+          "closure_scope": "the layout/cropped-image removal and tree-annotation removal ablation drops only",
+          "source_readjudication_artifact": "generated/docatlas-observation-index-ablation-principle-readjudication-20260817.json",
+          "scientific_authority": false
+        },
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -1246,6 +1488,68 @@
         "scientific_authority": false
       },
       {
+        "source_candidate_id": "SEED-ONPOLICY-SFT-ABLATIONS",
+        "basin": "principle-readjudication-cd09a736250b7526",
+        "search_primitive": "",
+        "title": "SEED on-policy and hindsight-SFT ablation drops reduce to occupancy matching and cold-start capability",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: SEED on-policy and hindsight-SFT ablation drops reduce to occupancy matching and cold-start capability",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "SEED's own theory and ablation interpretation supply mature explanations for both drops. Appendix A.1 explicitly motivates on-policy hindsight as an occupancy-matched adaptive target: skills extracted from the current policy's own trajectories track its current state-action occupancy and failure modes, whereas a static offline library can be distribution-mismatched as the policy evolves. The 7.4-point static-library drop is therefore directly expressible by ordinary distribution/occupancy shift and stale-supervision principles. Separately, hindsight-skill SFT is the initialization that teaches the actor/analyzer to perform trajectory analysis before the self-evolving RL stage. Removing it changes cold-start representation/competence, so the 5.8-point drop is predicted by initialization and prerequisite-capability effects unless initial analyzer competence and supervised information are matched. Neither one-factor ablation by itself identifies a new causal primitive of self-evolution.",
+        "current_source_refs": [
+          "arXiv:2607.14777"
+        ],
+        "evidence_basis": [
+          "arXiv:2607.14777",
+          "primary-fulltext:arXiv:2607.14777#sha256=31bf76e8aa8dbcb587b48ceb3a96fb64e26315ad4e6424459c1604df783c7cda",
+          "first-party-repo:SEED@2cf2fadca3c5aba28da68e8e1405182ba8d90e6c"
+        ],
+        "problem_text": "The standalone claim that SEED's 7.4-point drop with a static offline skill library or 5.8-point drop without hindsight-skill SFT identifies a new self-evolution mechanism merely from those component ablations.",
+        "reason": "SEED provides evidence that current-policy skills and hindsight-SFT are useful. The cited ablation drops are already predicted by occupancy matching and cold-start capability principles and therefore do not by themselves establish a new self-evolution mechanism.",
+        "reopen_only_if": "Reopen the on-policy residual only with occupancy/support/skill-quality/size and information matched between on-policy and offline libraries; reopen the SFT residual only with initial trajectory-analysis competence, supervised information budget, and downstream optimization budget matched. In either case require a repeatable held-out difference beyond distribution shift, stale supervision, cold-start initialization, and optimization-path dependence.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "SEED's own theory and ablation interpretation supply mature explanations for both drops. Appendix A.1 explicitly motivates on-policy hindsight as an occupancy-matched adaptive target: skills extracted from the current policy's own trajectories track its current state-action occupancy and failure modes, whereas a static offline library can be distribution-mismatched as the policy evolves. The 7.4-point static-library drop is therefore directly expressible by ordinary distribution/occupancy shift and stale-supervision principles. Separately, hindsight-skill SFT is the initialization that teaches the actor/analyzer to perform trajectory analysis before the self-evolving RL stage. Removing it changes cold-start representation/competence, so the 5.8-point drop is predicted by initialization and prerequisite-capability effects unless initial analyzer competence and supervised information are matched. Neither one-factor ablation by itself identifies a new causal primitive of self-evolution.",
+          "opposite_prediction": "Holding policy occupancy fixed, guidance derived from a mismatched offline distribution can underperform guidance aligned to current trajectories even without a new mechanism; holding downstream RL fixed, weakening the initial analyzer/actor competence can lower later performance through ordinary initialization and optimization path dependence. Both effects should shrink when occupancy/support and initial competence/supervised information are matched.",
+          "opposite_principle": "On-policy skill benefit is first an occupancy-matching problem, while hindsight-SFT benefit is first a cold-start capability problem; component ablation drops are not new self-evolution mechanisms unless those mature sources of advantage are matched and a residual remains.",
+          "opposite_search_seed": "For the on-policy claim, compare libraries with matched task/trajectory support, skill quality, size, recency information, and policy occupancy while varying only the mechanism of skill generation; require a held-out residual beyond distribution shift, stale supervision, and support mismatch. For the SFT claim, match initial analyzer/actor trajectory-analysis competence, supervised token/information budget, and downstream RL budget while varying the initialization path; require a residual beyond initialization and optimization-path baselines. Do not reopen from another unmatched static-vs-on-policy or with-vs-without-pretraining ablation.",
+          "scope": "SEED arXiv:2607.14777, especially Section 4.6 ablations and Appendix A.1/A.3 on occupancy-matched hindsight and analyzer synchronization.",
+          "same_information_or_scope_matched": true,
+          "same_information_reduction_verified": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2607.14777",
+            "primary-fulltext:arXiv:2607.14777#sha256=31bf76e8aa8dbcb587b48ceb3a96fb64e26315ad4e6424459c1604df783c7cda",
+            "first-party-repo:SEED@2cf2fadca3c5aba28da68e8e1405182ba8d90e6c"
+          ],
+          "alternative_explanations_ruled_out": [
+            "The static offline library and on-policy library are distribution-matched treatments: false; the paper explicitly motivates current-policy trajectories as better reflecting evolving behavior/failure modes and develops occupancy-matching theory.",
+            "Removing hindsight-skill SFT changes only a label while preserving initial analyzer competence: false; the paper states that SFT equips actor/analyzer with trajectory-analysis capability before subsequent self-evolution.",
+            "The ablation drops estimate an interaction unique to self-evolution: false; they are one-factor removals without same-information matching of occupancy or initial capability.",
+            "The closure implies SEED is ineffective: false; it closes only standalone novelty claims inferred from these two ablation drops."
+          ],
+          "reopen_condition": "Reopen the on-policy residual only with occupancy/support/skill-quality/size and information matched between on-policy and offline libraries; reopen the SFT residual only with initial trajectory-analysis competence, supervised information budget, and downstream optimization budget matched. In either case require a repeatable held-out difference beyond distribution shift, stale supervision, cold-start initialization, and optimization-path dependence."
+        },
+        "source_readjudication_artifact": "generated/seed-onpolicy-sft-ablation-principle-readjudication-20260817.json",
+        "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {
+          "source_ref": "arXiv:2607.14777",
+          "closed_evidence_sha256": [
+            "3674c02b73dc04c9cf6c654315e9d5df4ae73557e4cce9bb46fc6a7fa056d7f2",
+            "e58496693d03bc97f5545712cb64433fc5114364fc1562aa3d36e01dcf55527c"
+          ],
+          "closure_scope": "the static-offline-skill and no-hindsight-skill-SFT ablation drops only",
+          "source_readjudication_artifact": "generated/seed-onpolicy-sft-ablation-principle-readjudication-20260817.json",
+          "scientific_authority": false
+        },
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
         "source_candidate_id": "POSITIVE-RESIDUAL-MEMORY-TEMPORAL-EXPOSURE",
         "basin": "principle-readjudication-d3aaccb079ad3e38",
         "search_primitive": "",
@@ -1298,6 +1602,68 @@
         "source_readjudication_artifact": "generated/positive-residual-memory-temporal-exposure-principle-readjudication-20260816.json",
         "opposite_search_asset_evidence": {},
         "fresh_phenomenon_closure": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "DOUBLE-RATCHET-WEAK-METRIC-VALIDITY",
+        "basin": "principle-readjudication-d76e9b470846c2d6",
+        "search_primitive": "",
+        "title": "Double Ratchet weak-metric robustness and locked-reference validity are already explained by richer feedback and the source paper's own validity distinction",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Double Ratchet weak-metric robustness and locked-reference validity are already explained by richer feedback and the source paper's own validity distinction",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "The weak-metric observation does not isolate invariance to evaluator quality because the binary pass/fail metric is not the only training signal. The source explicitly states that a failed attempt still contributes concrete error text to skill synthesis, so label degradation is compensated by a richer feedback channel. This is ordinary information redundancy/multi-channel supervision: corrupting one channel need not reduce learning when another channel preserves error-localizing information. Separately, the distinction between task score and metric validity is already the source paper's central evaluation claim and protocol: metric validity is measured against a locked reference that metric evolution never reads, while task score is used only for downstream sufficiency. Recasting that same distinction as a new problem would be a direct current-source collision rather than unexplained negative space.",
+        "current_source_refs": [
+          "arXiv:2607.12790"
+        ],
+        "evidence_basis": [
+          "arXiv:2607.12790",
+          "primary-fulltext:arXiv:2607.12790#sha256=a10f0a0904a31cd3e4f5810216c0fb398758f5a3c26ac0a86a60dc28492481ff",
+          "repo:generated/double-ratchet-heldout-cliff-principle-readjudication-20260817.json"
+        ],
+        "problem_text": "Standalone new-paper claims inferred from (i) weak-metric Spider 2.0 seeds reaching the same peak as the two-op metric sibling, or (ii) the observation that task score cannot certify an evolved metric and validity must be assessed against a locked reference unseen by metric evolution.",
+        "reason": "Double Ratchet's weak-metric robustness is consistent with redundant rich error feedback, while its task-score/locked-reference distinction is already an explicit source-paper claim. Neither cited statement supplies a new standalone paper problem.",
+        "reopen_only_if": "Reopen the weak-metric object only with coarse-metric quality and rich error-feedback availability independently varied under matched tasks, skill synthesis budget, and information, with a residual beyond multi-channel redundancy. Reopen evaluator-validity only with a genuinely new operational condition and independent truth that makes a distinct ex-ante prediction from Double Ratchet's locked-reference validity framework.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "The weak-metric observation does not isolate invariance to evaluator quality because the binary pass/fail metric is not the only training signal. The source explicitly states that a failed attempt still contributes concrete error text to skill synthesis, so label degradation is compensated by a richer feedback channel. This is ordinary information redundancy/multi-channel supervision: corrupting one channel need not reduce learning when another channel preserves error-localizing information. Separately, the distinction between task score and metric validity is already the source paper's central evaluation claim and protocol: metric validity is measured against a locked reference that metric evolution never reads, while task score is used only for downstream sufficiency. Recasting that same distinction as a new problem would be a direct current-source collision rather than unexplained negative space.",
+          "opposite_prediction": "When skill synthesis receives concrete error text or other high-information failure feedback, weakening a coarse binary metric can have little endpoint effect until the richer channel is also removed or made uninformative. Metric validity and downstream task utility can also diverge because utility is not an independent ground-truth measure of evaluator agreement; a locked external reference is required if the scientific object is evaluator validity itself.",
+          "opposite_principle": "Robustness to a noisy coarse metric is expected when richer redundant feedback remains, and task utility cannot identify evaluator validity without independent truth; neither fact constitutes a new self-evolution mechanism when those information channels and the validity distinction are already explicit in the source system.",
+          "opposite_search_seed": "For weak-metric robustness, reopen only with a same-information factorial that independently varies coarse metric quality and rich error-feedback availability, and require a residual interaction beyond multi-channel information redundancy and supervision sufficiency. For evaluator validity, reopen only under a new bounded operational condition not already covered by Double Ratchet's locked-reference validity setup, with independent truth and a prediction distinct from task-score/validity separation.",
+          "scope": "Double Ratchet arXiv:2607.12790, restricted to the cited Spider weak-metric robustness statement and the paper's locked-reference metric-validity distinction.",
+          "same_information_or_scope_matched": true,
+          "same_information_reduction_verified": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2607.12790",
+            "primary-fulltext:arXiv:2607.12790#sha256=a10f0a0904a31cd3e4f5810216c0fb398758f5a3c26ac0a86a60dc28492481ff",
+            "repo:generated/double-ratchet-heldout-cliff-principle-readjudication-20260817.json"
+          ],
+          "alternative_explanations_ruled_out": [
+            "The weak metric is the only feedback available to skill synthesis: false; the source explicitly identifies concrete error text from failed attempts as retained training information.",
+            "Equal endpoint peaks prove evaluator quality is irrelevant: false; redundant richer feedback can mask degradation of the coarse metric channel.",
+            "The task-score versus locked-validity distinction is an unclaimed residual left by the source: false; it is the paper's stated two-axis evaluation design and central validity claim.",
+            "The closure says metric quality never matters: false; it closes only novelty claims that ignore the retained richer feedback channel or duplicate the source's own validity distinction."
+          ],
+          "reopen_condition": "Reopen the weak-metric object only with coarse-metric quality and rich error-feedback availability independently varied under matched tasks, skill synthesis budget, and information, with a residual beyond multi-channel redundancy. Reopen evaluator-validity only with a genuinely new operational condition and independent truth that makes a distinct ex-ante prediction from Double Ratchet's locked-reference validity framework."
+        },
+        "source_readjudication_artifact": "generated/double-ratchet-weak-metric-validity-principle-readjudication-20260817.json",
+        "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {
+          "source_ref": "arXiv:2607.12790",
+          "closed_evidence_sha256": [
+            "1106cfcbe46d1a63785121459c7959895fdf05ba86370721bf777329f06a9bb9",
+            "9de90c921d6bbda7941592e6da40c20e3e5f8e3dc0c0974505635cf65fcbb166"
+          ],
+          "closure_scope": "the weak-metric Spider robustness statement and the locked-reference metric-validity statement only",
+          "source_readjudication_artifact": "generated/double-ratchet-weak-metric-validity-principle-readjudication-20260817.json",
+          "scientific_authority": false
+        },
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -1612,12 +1978,39 @@
         "hold_reason": "The revised sufficient-skill-set identifiability problem still requires provenance-audited query-level support and therefore has not earned a principle dead-end or principle pass.",
         "reopen_only_if": "A new provenance-audited query-level unit shows that the same observable or information-equivalent query is compatible with multiple task semantics requiring incompatible sufficient skill sets, and a generic partial-identification/clarification baseline using the same information cannot absorb the claim.",
         "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "PA-03-HARNESS-SELECTION-INVERSION",
+        "basin": "fresh-phenomenon-support-hold-1881f99d41a67383",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "memory_class": "REOPENABLE_HOLD",
+        "dead_end_certified": false,
+        "strongest_reduction": "support unavailable; no scientific reduction authorized",
+        "current_source_refs": [
+          "arXiv:2607.13683"
+        ],
+        "evidence_basis": [
+          "arXiv:2607.13683",
+          "repo:generated/harnessbank-support-audit-20260817.json#sha256=a00b2b9c7e3778c6974f996c7fb7d3af7d9a5d141862563d1a486ba047a3bafc"
+        ],
+        "reason": "The aggregate SWE-bench train/test uplift is insufficient to distinguish verification-selection inversion from small-n ranking noise, winner's curse, survivorship, or ordinary adaptive selection. The primary paper declares code release as future/conditional and the bounded release audit found no replayable first-party gene histories.",
+        "reopen_only_if": "A first-party release exposes replayable paired gene histories/outcomes and verification lineage sufficient to reconstruct the frozen selected-versus-rejected decision unit without substituting synthetic or inferred histories. A release-surface change requests re-audit only and does not automatically clear this hold or authorize scientific progression.",
+        "required_unit": "paired per-gene harness evolution histories and downstream outcomes under the frozen verification rule, with enough lineage to reconstruct selected-versus-rejected verification decisions",
+        "fresh_phenomenon_hold": {
+          "source_ref": "arXiv:2607.13683",
+          "evidence_sha256": "03bd345821be718b2b342e2348ab18c44a91146219bdde5db2d909336cb8ce52",
+          "support_audit_artifact": "generated/harnessbank-support-audit-20260817.json",
+          "support_audit_sha256": "a00b2b9c7e3778c6974f996c7fb7d3af7d9a5d141862563d1a486ba047a3bafc",
+          "scientific_authority": false
+        },
+        "source_hold_artifact": "generated/harnessbank-fresh-phenomenon-support-hold-20260817.json",
+        "scientific_authority": false
       }
     ],
-    "principle_dead_end_count": 23,
-    "principle_readjudication_dead_end_count": 19,
-    "fresh_phenomenon_closure_count": 9,
-    "fresh_phenomenon_closed_evidence_count": 17,
+    "principle_dead_end_count": 29,
+    "principle_readjudication_dead_end_count": 25,
+    "fresh_phenomenon_closure_count": 15,
+    "fresh_phenomenon_closed_evidence_count": 27,
     "inversion_asset_evidence": [
       {
         "asset_ref": "first-party-asset:autoskill@94c47ca488d4ba4117d20272e66d49b9877e68cf",
@@ -1773,7 +2166,7 @@
     "positive_residual_asset_evidence_count": 1,
     "positive_residual_search_active_count": 0,
     "positive_residual_asset_registry_id": "positive-residual-search-assets-v4",
-    "hold_object_count": 2,
+    "hold_object_count": 3,
     "current_source_hard_veto_count": 0,
     "current_source_hard_veto_added_from_latest_run": 0,
     "current_source_hard_veto_added_from_terminal_run": 0,
@@ -1840,9 +2233,9 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 23,
-    "principle_readjudication_dead_ends": 19,
-    "shadow_hold_objects": 2,
+    "shadow_dead_end_objects": 29,
+    "principle_readjudication_dead_ends": 25,
+    "shadow_hold_objects": 3,
     "current_source_hard_veto_dead_ends": 0,
     "current_source_hard_veto_added_from_latest_run": 0,
     "current_source_hard_veto_added_from_terminal_run": 0,
