@@ -1626,21 +1626,29 @@ def validate_state(state: dict[str, Any]) -> list[str]:
                         errors.append("completed delta-only relation scan must preserve prior-scan provenance and endpoint count")
     relation_freshness=state.get("paper_first_global_relation_freshness") or {};fresh_policy=relation_freshness.get("policy") or {};fresh_summary=relation_freshness.get("summary") or {}
     if relation_freshness:
-        if relation_freshness.get("scientific_authority") is not False or fresh_policy.get("deterministic_digest_comparison_only") is not True or fresh_policy.get("stale_scan_is_historical_not_current_negative_evidence") is not True or fresh_policy.get("stale_scan_cannot_reopen_focused_generator") is not True or fresh_policy.get("model_scan_deferred_is_not_relation_exhaustion") is not True:
-            errors.append("Global Relation Recall freshness must remain deterministic zero-authority compute control")
+        if relation_freshness.get("scientific_authority") is not False or fresh_policy.get("deterministic_digest_comparison_only") is not True or fresh_policy.get("stale_scan_is_historical_not_current_negative_evidence") is not True or fresh_policy.get("stale_scan_cannot_reopen_focused_generator") is not True or fresh_policy.get("model_scan_deferred_is_not_relation_exhaustion") is not True or fresh_policy.get("portable_review_receipts_are_scheduler_metadata_only") is not True or fresh_policy.get("scheduler_topology_only_drift_does_not_require_model_rescan") is not True or fresh_policy.get("source_set_change_or_unreconstructable_boundary_remains_stale") is not True:
+            errors.append("Global Relation Recall freshness must remain deterministic zero-authority compute control and ignore scheduler-only topology drift")
         if bool(fresh_summary.get("universe_stale")) and (fresh_summary.get("current_not_reduced_unknown") is not True or fresh_summary.get("focused_problem_generator_reopen_allowed") is not False):
             errors.append("stale Global Relation Recall cannot support a current negative or focused-generator reopen")
         if str(relation_freshness.get("current_relation_universe_digest") or "") and len(str(relation_freshness.get("current_relation_universe_digest") or "")) != 64:
             errors.append("current relation-universe digest invalid")
         if str(relation_freshness.get("last_scanned_relation_universe_digest") or "") and len(str(relation_freshness.get("last_scanned_relation_universe_digest") or "")) != 64:
             errors.append("last scanned relation-universe digest invalid")
+        for key in ("current_source_universe_digest","last_scanned_source_universe_digest"):
+            value=str(relation_freshness.get(key) or "")
+            if value and len(value)!=64: errors.append(f"{key} invalid")
+        if fresh_summary.get("scheduler_topology_only_drift") is True:
+            if relation_freshness.get("status")!="CURRENT_RELATION_UNIVERSE" or fresh_summary.get("raw_topology_digest_changed") is not True or fresh_summary.get("source_boundary_reconstructable") is not True or fresh_summary.get("universe_stale") is not False or fresh_summary.get("current_not_reduced_unknown") is not False or fresh_summary.get("model_scan_deferred") is not False or not str(relation_freshness.get("current_source_universe_digest") or "") or relation_freshness.get("current_source_universe_digest")!=relation_freshness.get("last_scanned_source_universe_digest"):
+                errors.append("scheduler-only relation topology drift must remain current and zero-provider")
         expected_freshness=relation_recall_freshness(state.get("paper_first_problem_generator") or {}, relation)
         expected_summary=expected_freshness.get("summary") or {}
-        freshness_summary_keys=("current_reviewed_sources","last_scanned_sources","current_possible_pairs","current_coobserved_pairs","current_pair_coverage_fraction","last_pair_coverage_fraction","current_relation_blind_spot","universe_stale","current_not_reduced_unknown","model_scan_deferred","focused_problem_generator_reopen_allowed")
+        freshness_summary_keys=("current_reviewed_sources","last_scanned_sources","current_possible_pairs","current_coobserved_pairs","current_pair_coverage_fraction","last_pair_coverage_fraction","current_relation_blind_spot","raw_topology_digest_changed","source_boundary_reconstructable","scheduler_topology_only_drift","universe_stale","current_not_reduced_unknown","model_scan_deferred","focused_problem_generator_reopen_allowed")
         freshness_matches=(
             relation_freshness.get("status")==expected_freshness.get("status")
             and str(relation_freshness.get("current_relation_universe_digest") or "")==str(expected_freshness.get("current_relation_universe_digest") or "")
             and str(relation_freshness.get("last_scanned_relation_universe_digest") or "")==str(expected_freshness.get("last_scanned_relation_universe_digest") or "")
+            and str(relation_freshness.get("current_source_universe_digest") or "")==str(expected_freshness.get("current_source_universe_digest") or "")
+            and str(relation_freshness.get("last_scanned_source_universe_digest") or "")==str(expected_freshness.get("last_scanned_source_universe_digest") or "")
             and all(fresh_summary.get(key)==expected_summary.get(key) for key in freshness_summary_keys)
         )
         if not freshness_matches:

@@ -23,6 +23,7 @@ class PaperFirstRelationCoverageTest(unittest.TestCase):
                 "focused_problem_generator_reopen_required": reopen,
             },
             "last_completed_scan": {
+                "run_id": max((str(row.get("run_id") or "") for row in receipts), default=""),
                 "relation_universe_digest": relation_universe_digest(receipts),
                 "relation_coverage": {
                     "reviewed_receipt_sources": len(refs),
@@ -51,6 +52,22 @@ class PaperFirstRelationCoverageTest(unittest.TestCase):
         self.assertEqual((state["summary"]["last_scanned_sources"], state["summary"]["current_reviewed_sources"]), (2, 3))
         self.assertNotEqual(state["last_scanned_relation_universe_digest"], state["current_relation_universe_digest"])
         self.assertFalse(state["scientific_authority"])
+
+    def test_scheduler_only_coobservation_drift_does_not_trigger_model_rescan(self) -> None:
+        old=[self.receipt("r1",["arXiv:A","arXiv:B"]),self.receipt("r2",["arXiv:A","arXiv:C"])]
+        current=[*old,self.receipt("r3",["arXiv:B","arXiv:C"])]
+        state=relation_recall_freshness(self.generator(current),self.relation(old,not_reduced=0))
+        self.assertEqual(state["status"],"CURRENT_RELATION_UNIVERSE")
+        self.assertTrue(state["summary"]["raw_topology_digest_changed"])
+        self.assertTrue(state["summary"]["source_boundary_reconstructable"])
+        self.assertTrue(state["summary"]["scheduler_topology_only_drift"])
+        self.assertFalse(state["summary"]["universe_stale"])
+        self.assertFalse(state["summary"]["current_not_reduced_unknown"])
+        self.assertFalse(state["summary"]["model_scan_deferred"])
+        self.assertEqual(state["current_source_universe_digest"],state["last_scanned_source_universe_digest"])
+        self.assertNotEqual(state["current_relation_universe_digest"],state["last_scanned_relation_universe_digest"])
+        self.assertTrue(state["policy"]["portable_review_receipts_are_scheduler_metadata_only"])
+        self.assertTrue(state["policy"]["scheduler_topology_only_drift_does_not_require_model_rescan"])
 
     def test_same_relation_universe_keeps_completed_scan_current(self) -> None:
         receipts = [self.receipt("r1", ["arXiv:A", "arXiv:B", "arXiv:C"])]
