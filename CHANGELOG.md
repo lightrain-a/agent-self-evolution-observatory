@@ -8,6 +8,7 @@
 - Simplified the start page to six architecture statistics, six research invariants, a seven-chapter roadmap, and one three-level authority model. The sidebar now keeps the seven chapter H2 headings plus visible H3 section headings, while H4 and collapsed machine-detail headings remain excluded so the TOC shows useful second/third-level structure without becoming an engineering dump.
 - Reworked the Chinese reader layer to use Chinese-first terminology for `Input → Decision → Output`, problem discovery/reduction, Economy/Protocol/Updater admission, method freeze, paper-evidence closure, system replay, authority examples, roadmap outputs, and deep-dive summaries. English is retained only where a code/status/paper term benefits from an explicit parenthetical anchor.
 - Preserved all existing machine-level content and selectors for auditability; focused, system-only, and full-site real-browser smoke tests continue to pass, including Chinese switching and mobile navigation.
+- Added a page-scoped readability floor after computed-font auditing: default visible text is at least 11.5px, prose/table explanations at least 12px, mobile prose at least 12.5px, and expanded machine-detail sections are covered by the same browser regression check.
 
 ## 2026-08-17 · Content-addressed manuscript evidence completion
 

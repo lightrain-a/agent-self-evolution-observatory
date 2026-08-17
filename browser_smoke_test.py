@@ -190,12 +190,15 @@ def main() -> None:
               passIdeas: document.querySelectorAll('.system-decision-summary .verdict-pass').length,
               reviseIdeas: document.querySelectorAll('.system-decision-summary .verdict-revise').length,
               advisorText: /师兄汇报|希望师兄|advisor brief|advisor judgment/i.test(document.body.textContent || ''),
+              minVisibleFont: (()=>{const xs=[...document.querySelectorAll('#dynamic-page *')].filter(e=>{const r=e.getBoundingClientRect();return (e.textContent||'').trim()&&r.width>0&&r.height>0&&getComputedStyle(e).visibility!=='hidden'&&e.children.length===0}).map(e=>parseFloat(getComputedStyle(e).fontSize)).filter(Number.isFinite);return xs.length?Math.min(...xs):0})(),
+              minVisibleProseFont: (()=>{const xs=[...document.querySelectorAll('#dynamic-page p,#dynamic-page li,#dynamic-page dt,#dynamic-page dd,#dynamic-page td,#dynamic-page th')].filter(e=>{const r=e.getBoundingClientRect();return (e.textContent||'').trim()&&r.width>0&&r.height>0&&getComputedStyle(e).visibility!=='hidden'}).map(e=>parseFloat(getComputedStyle(e).fontSize)).filter(Number.isFinite);return xs.length?Math.min(...xs):0})(),
               links: [...document.querySelectorAll('a')].map(x=>x.getAttribute('href')||''),
               text: document.body.textContent || ''
             };""",
         )
         require(system_overview["chapters"] == 7 and system_overview["readerChapters"] == 7 and system_overview["readerPhases"] == 6 and system_overview["deepDives"] == 4 and system_overview["authorityCards"] == 3, f"system overview reading framework is incomplete: chapters={system_overview['chapters']} roadmap={system_overview['readerChapters']} phases={system_overview['readerPhases']} deep={system_overview['deepDives']} authority={system_overview['authorityCards']}")
         require(system_overview["toc2"] == 8 and system_overview["toc3"] >= 10 and system_overview["toc4"] == 0, f"system overview TOC must expose chapter + section hierarchy without machine-level h4 noise: {system_overview['toc2']}/{system_overview['toc3']}/{system_overview['toc4']}")
+        require(system_overview["minVisibleFont"] >= 11.5 and system_overview["minVisibleProseFont"] >= 12, f"system overview readability floor regressed: visible={system_overview['minVisibleFont']} prose={system_overview['minVisibleProseFont']}")
         require(system_overview["stats"] == 6, f"research-system hero statistics are incomplete: {system_overview['stats']}")
         require(system_overview["readerChapters"] == 7 and system_overview["responsibilityLayers"] == 6 and system_overview["lifecycleSteps"] == 11 and system_overview["componentLayerHeaders"] == 6, f"canonical architecture is incomplete: reader={system_overview['readerChapters']} layers={system_overview['responsibilityLayers']} stages={system_overview['lifecycleSteps']} component-groups={system_overview['componentLayerHeaders']}")
         require((system_overview["architectureSummary"].get("temporal_stages"),system_overview["architectureSummary"].get("reader_chapters"),system_overview["architectureSummary"].get("reader_stage_coverage"),system_overview["architectureSummary"].get("reader_stage_missing"),system_overview["architectureSummary"].get("reader_stage_duplicates"),system_overview["architectureSummary"].get("reader_stage_extra"),system_overview["architectureSummary"].get("functional_layers"),system_overview["architectureSummary"].get("assigned_components"),system_overview["architectureSummary"].get("unassigned_components"),system_overview["architectureSummary"].get("cross_cutting_controls"),system_overview["architectureSummary"].get("orphan_cross_cutting_controls")) == (11,7,11,0,0,0,6,27,0,3,0), f"backend architecture manifest is stale in browser state: {system_overview['architectureSummary']}")
@@ -214,6 +217,9 @@ def main() -> None:
         require("Main ICLR idea bank" not in system_overview["text"] and "Final advisor gate" not in system_overview["text"] and "主 ICLR Idea Bank" not in system_overview["text"] and "最终师兄讨论门槛" not in system_overview["text"], "current idea portfolio remains on the research-system page")
         require(("8 / 8" in system_overview["text"] or "8/8" in system_overview["text"]) and ("10 / 10" in system_overview["text"] or "10/10" in system_overview["text"]), "eight-gate Pre-Experiment compiler or ten-check identifiability sub-audit is not visible")
         require("SUPPORT_INSUFFICIENT" in system_overview["text"] and "P0-S" in system_overview["text"] and "P0-M" in system_overview["text"], "P0-System v2 support/method separation is not visible")
+        deep_font_floor = execute(session_id, """document.querySelectorAll('.system-deep-dive').forEach(x=>x.open=true); const xs=[...document.querySelectorAll('#dynamic-page *')].filter(e=>{const r=e.getBoundingClientRect();return (e.textContent||'').trim()&&r.width>0&&r.height>0&&getComputedStyle(e).visibility!=='hidden'&&e.children.length===0}).map(e=>parseFloat(getComputedStyle(e).fontSize)).filter(Number.isFinite); return xs.length?Math.min(...xs):0;""")
+        require(deep_font_floor >= 11.5, f"expanded machine-detail readability floor regressed: {deep_font_floor}")
+        execute(session_id, "document.querySelectorAll('.system-deep-dive').forEach(x=>x.open=false)")
         execute(session_id, "document.querySelector('.language-toggle')?.click();")
         time.sleep(1)
         zh_system = execute(session_id, """return {
@@ -226,9 +232,11 @@ def main() -> None:
           semanticsText: document.querySelector('.system-semantics')?.textContent || '',
           componentText: document.querySelector('.system-components-panel')?.textContent || '',
           cards: [...document.querySelectorAll('.system-boundary-card,.preflight-gate,.system-failure-layer')].map(x=>({client:x.clientWidth,scroll:x.scrollWidth,text:x.textContent})),
+          minVisibleFont: (()=>{const xs=[...document.querySelectorAll('#dynamic-page *')].filter(e=>{const r=e.getBoundingClientRect();return (e.textContent||'').trim()&&r.width>0&&r.height>0&&getComputedStyle(e).visibility!=='hidden'&&e.children.length===0}).map(e=>parseFloat(getComputedStyle(e).fontSize)).filter(Number.isFinite);return xs.length?Math.min(...xs):0})(),
           pageOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2
         };""")
         require((zh_system["toc2"], zh_system["toc4"]) == (8,0) and zh_system["toc3"] >= 10, f"Chinese system TOC must expose second/third-level headings: {zh_system['toc2']}/{zh_system['toc3']}/{zh_system['toc4']}")
+        require(zh_system["minVisibleFont"] >= 11.5, f"Chinese system overview readability floor regressed: {zh_system['minVisibleFont']}")
         require(all(marker in zh_system["readerText"] for marker in ("输入","核心判断","阶段产出","第一手证据","成熟归约","资源经济 5/5","协议有效性","方法冻结","主文证据图","系统回放","统一权限模型")), "Chinese reader flow still exposes too much untranslated UI terminology")
         require("自动执行" in zh_system["automationText"] and "条件自动" in zh_system["automationText"] and "人工控制" in zh_system["automationText"], "Chinese automation boundary headings are incomplete")
         require("主张与训练目标对齐" in zh_system["preflightText"] and "方法与最强简化会做出不同决策" in zh_system["preflightText"] and "小样本可拟合性" in zh_system["preflightText"], "Chinese Pre-P0 hard gates are incomplete")
@@ -484,6 +492,9 @@ def main() -> None:
             require(redirected.endswith(expected_suffix), f"{old_path} did not redirect to {expected_suffix}")
 
         request("POST", f"/session/{session_id}/window/rect", {"width": 390, "height": 844, "x": 0, "y": 0})
+        navigate("/system-overview.html", 4)
+        mobile_system = execute(session_id, """const xs=[...document.querySelectorAll('#dynamic-page *')].filter(e=>{const r=e.getBoundingClientRect();return (e.textContent||'').trim()&&r.width>0&&r.height>0&&getComputedStyle(e).visibility!=='hidden'&&e.children.length===0}).map(e=>parseFloat(getComputedStyle(e).fontSize)).filter(Number.isFinite); return {minFont:xs.length?Math.min(...xs):0,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2};""")
+        require(mobile_system["minFont"] >= 11.5 and not mobile_system["overflow"], f"mobile system overview readability/overflow regression: {mobile_system}")
         navigate("/index.html", 5)
         mobile = execute(
             session_id,
