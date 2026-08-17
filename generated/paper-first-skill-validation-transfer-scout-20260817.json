@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T07:51:42+00:00",
+  "generated_at": "2026-08-17T08:24:36+00:00",
   "candidate_id": "PA-05-SKILL-VALIDATION-TRANSFER",
   "status": "DESIGN_READY_EXECUTION_ENV_HOLD",
   "scientific_authority": false,
@@ -143,7 +143,7 @@
     },
     "runtime_audit": {
       "path": "generated/paper-first-skill-validation-transfer-runtime-audit-20260817.json",
-      "sha256": "1001d9edbaa7979304412332ede33e7e8a35ea7244b0b3e5be872f84bacbfd92"
+      "sha256": "6d142b2b216d9496223cb5683b2926a36ce03a4d78612652077fc329722fcba8"
     },
     "plan_sha256": "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c"
   }

@@ -63,5 +63,6 @@
   },
   "runtime_infrastructure_ready": true,
   "provider_credential_ready": false,
-  "audit_sha256": "a5e9a1b3e7fd2e46ce791cf108f4f68113a80710de65d001a6117fd2e91d3a76"
+  "runtime_contract_sha256": "82c2755d937b67f15b9d09fe65343ce717146cd87c88aca1513e409df95ddb7f",
+  "audit_sha256": "fee61f3ba1162849b4ba2058e7d0797ac2d3a088ceeadddc33b50a68a62e51e9"
 }

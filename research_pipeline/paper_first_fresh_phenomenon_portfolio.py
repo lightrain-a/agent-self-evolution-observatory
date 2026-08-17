@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import PROJECT_ROOT
+from .paper_first_skill_validation_transfer_execution_capability import load_execution_capability
 from .paper_first_skill_validation_transfer_scout import (
     DEFAULT_JSON as SKILL_VALIDATION_SCOUT_JSON,
     F0_HARNESS as SKILL_VALIDATION_F0_HARNESS,
@@ -152,7 +153,10 @@ def build_fresh_phenomenon_portfolio(
     spatial_readjudication = spatial_readjudication or _load(SPATIAL_MEMORY_READJUDICATION)
     harnessbank_support_audit = harnessbank_support_audit or _load(HARNESSBANK_SUPPORT_AUDIT)
     skill_validation_scout = _load(SKILL_VALIDATION_SCOUT_JSON) if skill_validation_scout is None else skill_validation_scout
-    skill_execution_capability = skill_execution_capability or {}
+    if skill_execution_capability is None:
+        skill_execution_capability = load_execution_capability()
+    else:
+        skill_execution_capability = skill_execution_capability or {}
     ps = primary_state.get("summary") or {}
     defense_reduction = _load(DEFENSE_PRINCIPLE_REDUCTION_JSON)
     defense_reduction_certified = bool(
@@ -436,13 +440,15 @@ def build_fresh_phenomenon_portfolio(
             reopen_only_if=(
                 (
                     f"On audited runtime host {skill_env.get('host')}, load the frozen Gemini credential shared by the agent and host-side SkillAuthor route, "
-                    "then obtain a separate controller-issued execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus "
+                    "then supply an external human single-attempt F0 permit that records the launch-time provider-price recheck; the controller may only then issue "
+                    "a live execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus "
                     "current-source review; it never authorizes Problem Gate, method design, or full experiments by itself."
                 )
                 if skill_env.get("runtime_infrastructure_ready") is True
                 else (
-                    "Provision an exact first-party benchmark runtime (Harbor + agent-runtime image + strict preflight), then load the frozen Gemini credential "
-                    "and obtain a separate controller-issued execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus "
+                    "Provision an exact first-party benchmark runtime (Harbor + agent-runtime image + strict preflight), then load the frozen Gemini credential, "
+                    "supply an external human single-attempt F0 permit with a launch-time provider-price recheck, and only then allow the controller to issue a live "
+                    "execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus "
                     "current-source review; it never authorizes Problem Gate, method design, or full experiments by itself."
                 )
             ),
@@ -589,7 +595,8 @@ def build_fresh_phenomenon_portfolio(
                 )
             )
         ),
-        "hold_reason": list(skill_env.get("hold_reason") or []),
+        "hold_reason": list(skill_env.get("hold_reason") or [])
+        + ([] if skill_execution_ready else ["external human single-attempt F0 permit and live controller experiment authority not present"]),
     }
 
     active = [row for row in candidates if row["status"] == "ACTIVE_F0"]

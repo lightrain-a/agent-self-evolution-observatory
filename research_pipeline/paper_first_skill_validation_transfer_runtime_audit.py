@@ -35,6 +35,37 @@ def _canonical_sha(payload: Any) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
+def runtime_contract_payload(state: dict[str, Any]) -> dict[str, Any]:
+    python = state.get("python") or {}
+    image = state.get("runtime_image") or {}
+    preflight = state.get("exact_first_party_preflight") or {}
+    return {
+        "candidate_id": state.get("candidate_id"),
+        "host": state.get("host"),
+        "source": state.get("source"),
+        "provider_contract": state.get("provider_contract"),
+        "python": {
+            "version": python.get("version"),
+            "benchmark_dependencies_present": python.get("benchmark_dependencies_present"),
+            "harbor_importable": python.get("harbor_importable"),
+        },
+        "runtime_image": {
+            "tag": image.get("tag"),
+            "builder": image.get("builder"),
+            "status": image.get("status"),
+            "observable": image.get("observable"),
+            "present": image.get("present"),
+            "image_id": image.get("image_id"),
+            "repo_tags": image.get("repo_tags") or [],
+        },
+        "exact_first_party_preflight": preflight,
+    }
+
+
+def runtime_contract_sha256(state: dict[str, Any]) -> str:
+    return _canonical_sha(runtime_contract_payload(state))
+
+
 def _importable(module: str) -> bool:
     try:
         return importlib.util.find_spec(module) is not None
@@ -244,6 +275,7 @@ def build_runtime_audit(
         "model_calls_executed": 0,
         "task_trials_executed": 0,
     }
+    payload["runtime_contract_sha256"] = runtime_contract_sha256(payload)
     payload["audit_sha256"] = _canonical_sha({k: v for k, v in payload.items() if k != "audit_sha256"})
     return payload
 
@@ -296,6 +328,9 @@ def validate_runtime_audit(state: dict[str, Any]) -> list[str]:
         errors.append("runtime audit must remain pre-model and pre-trial")
     if state.get("scientific_authority") is not False or state.get("experiment_authority") is not False:
         errors.append("runtime audit cannot carry scientific/experiment authority")
+    expected_contract = runtime_contract_sha256(state)
+    if state.get("runtime_contract_sha256") != expected_contract:
+        errors.append("runtime contract hash mismatch")
     expected = _canonical_sha({k: v for k, v in state.items() if k != "audit_sha256"})
     if state.get("audit_sha256") != expected:
         errors.append("runtime audit receipt hash mismatch")
