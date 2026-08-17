@@ -250,6 +250,31 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertTrue(state["policy"]["one_generator_call_max"])
         self.assertTrue(state["policy"]["one_semantic_reviewer_call_max"])
 
+    def test_deferred_reviewer_never_calls_reviewer_and_keeps_candidate_unreviewed(self) -> None:
+        reviewer_calls=[]
+        def reviewer(**kwargs):
+            reviewer_calls.append(1)
+            raise AssertionError("reviewer must be deferred")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);auto=root/"auto.json"
+            state=run_problem_generator(
+                storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=auto,
+                generator_responder=self.gen([self.raw_candidate()],notes="One structurally reviewable candidate survives."),
+                reviewer_responder=reviewer,now=now,defer_reviewer=True,strict_provider=True,
+            )
+            inbox=json.loads(auto.read_text())
+        self.assertEqual(reviewer_calls,[])
+        self.assertEqual(state["status"],"GENERATED_AWAIT_SEMANTIC_REVIEW")
+        self.assertEqual(state["summary"]["structurally_reviewable"],1)
+        self.assertEqual(state["summary"]["semantic_review_unavailable"],1)
+        self.assertEqual(state["summary"]["written_to_auto_inbox"],0)
+        self.assertEqual(state["candidates"][0]["semantic_verdict"],"UNREVIEWED")
+        self.assertEqual(inbox["candidates"],[])
+        self.assertTrue(state["policy"]["strict_provider_transport"])
+        self.assertTrue(state["policy"]["semantic_reviewer_deferred"])
+        self.assertFalse(state["policy"]["transport_only_no_output_fallback_allowed"])
+        self.assertEqual(state["policy"]["transport_fallback_max_additional_provider_attempts"],0)
+
     def test_identical_zero_candidate_pool_is_remembered_but_not_auto_authorized(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);storage=self.storage(root);pool=self.pool(root,now)
@@ -285,6 +310,24 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertEqual(result["transport_attempts"][0]["provider_receipt"]["response_id"],"resp_glm")
         self.assertEqual(result["transport_attempts"][0]["provider_receipt"]["status"],"incomplete")
         self.assertEqual(result["resolved_model"],"kimi-k3")
+
+    def test_strict_provider_disables_transport_fallback_after_incomplete(self) -> None:
+        from .ark_provider import ArkResponseStateError,ArkSettings
+        settings=ArkSettings(api_key="test-key",base_url="https://example.invalid",default_model="glm-5.3",timeout_seconds=120,max_retries=0)
+        incomplete=ArkResponseStateError(
+            "Ark response incomplete before assistant output; response_id=resp_glm_strict; reason=length; requested_model=glm-5.3",
+            {"id":"resp_glm_strict","status":"incomplete","model":"glm-5.3-260817","incomplete_details":{"reason":"length"}},
+            "glm-5.3",
+        )
+        with patch("research_pipeline.paper_first_problem_generator.ArkSettings.from_env",return_value=settings), patch(
+            "research_pipeline.paper_first_problem_generator.ArkResponsesClient.respond",
+            side_effect=incomplete,
+        ) as respond:
+            with self.assertRaisesRegex(RuntimeError,"failed before an auditable assistant output") as caught:
+                _ark(prompt="test",model="glm-5.3",max_output_tokens=64,temperature=0.0,stage="problem_generation",allow_transport_fallback=False)
+        self.assertEqual(respond.call_count,1)
+        self.assertEqual(len(caught.exception.transport_attempts),1)
+        self.assertEqual(caught.exception.transport_attempts[0]["provider_receipt"]["response_id"],"resp_glm_strict")
 
     def test_pending_provider_receipt_does_not_fallback_or_repost(self) -> None:
         from .ark_provider import ArkResponseStateError,ArkSettings

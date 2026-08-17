@@ -249,12 +249,12 @@ def _transport_no_output_error(error: Exception) -> str:
     return ""
 
 
-def _ark(*,prompt,model,max_output_tokens,temperature=0.0,stage="problem_generation"):
+def _ark(*,prompt,model,max_output_tokens,temperature=0.0,stage="problem_generation",allow_transport_fallback=True):
     base=ArkSettings.from_env(required=False)
     if not base.api_key: raise RuntimeError("ARK_API_KEY_NOT_CONFIGURED")
     settings=ArkSettings(api_key=base.api_key,base_url=base.base_url,default_model=base.default_model,timeout_seconds=min(max(base.timeout_seconds,90.0),180.0),max_retries=0)
     priorities=list(stage_model_priority(stage))
-    candidates=[model]+[candidate for candidate in priorities if candidate!=model][:1]
+    candidates=[model] if not allow_transport_fallback else [model]+[candidate for candidate in priorities if candidate!=model][:1]
     attempts=[]
     for index,candidate in enumerate(candidates):
         try:
@@ -446,7 +446,7 @@ def _empty_summary(primary_evidence_records=0):
     return {"primary_evidence_records":primary_evidence_records,"raw_seeds":0,"semantic_unique_seeds":0,"unique_problem_families":0,"breadth_archive":0,"archive_pairwise_distance":0.0,"evolved_branches":0,"max_branch_depth":0,"portfolio_calls":0,"generated":0,"structurally_reviewable":0,"semantic_clear":0,"semantic_blocked":0,"written_to_auto_inbox":0,"generated_by_lane":dict(lanes),"structurally_reviewable_by_lane":dict(lanes),"semantic_clear_by_lane":dict(lanes),"semantic_blocked_by_lane":dict(lanes)}
 
 
-def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=None,saturation_ledger_path=None,generator_model=None,reviewer_model=None,generator_responder:Responder|None=None,reviewer_responder:Responder|None=None,now=None,pool_max_age_hours=MAX_POOL_AGE_HOURS,max_candidates=MAX_CANDIDATES,blocked_problem_memory:dict[str,Any]|None=None,portfolio_mode:bool|None=None,target_raw_seeds:int=DEFAULT_RAW_SEEDS):
+def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=None,saturation_ledger_path=None,generator_model=None,reviewer_model=None,generator_responder:Responder|None=None,reviewer_responder:Responder|None=None,now=None,pool_max_age_hours=MAX_POOL_AGE_HOURS,max_candidates=MAX_CANDIDATES,blocked_problem_memory:dict[str,Any]|None=None,portfolio_mode:bool|None=None,target_raw_seeds:int=DEFAULT_RAW_SEEDS,strict_provider:bool=False,defer_reviewer:bool=False):
     storage=storage or StorageSettings.from_env();primary_pool_path=primary_pool_path or private_primary_pool_path(storage);auto_inbox_path=auto_inbox_path or default_auto_inbox_path(storage)
     generator_model=generator_model or os.getenv("PAPER_FIRST_PROBLEM_GENERATOR_MODEL",GENERATOR_MODEL);reviewer_model=reviewer_model or os.getenv("PAPER_FIRST_PROBLEM_REVIEW_MODEL",REVIEWER_MODEL);current=(now or _now_dt()).astimezone(timezone.utc);run_id=current.strftime("%Y%m%dT%H%M%SZ");portfolio_mode=False if portfolio_mode is None else bool(portfolio_mode)
     if portfolio_mode:
@@ -455,7 +455,11 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
     inherited_receipts=[dict(row) for row in ((pool.get("source_coverage") or {}).get("portable_review_receipts") or []) if isinstance(row,dict)]
     blocked_problem_memory=blocked_problem_memory or _public_blocked_problem_memory(storage)
     dead_end_prompt_memory=_private_dead_end_prompt_memory(storage,blocked_problem_memory)
-    state={"schema_version":"2.5","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":_base_policy(portfolio=False),"summary":_empty_summary(len(reg)),"raw_artifacts":{},"generation_notes":"","search_diagnostics":{"lane_search_priority":list(dead_end_prompt_memory.get("lane_search_priority") or DISCOVERY_LANES),"lane_search_complete":False,"lane_search":[],"last_completed_lane_search":{},"scientific_authority":False},"saturation_memory":{"ledger_entries":len(_load_saturation_ledger(storage,saturation_ledger_path)),"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":inherited_receipts[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"blocked_problem_memory":blocked_problem_memory,"scientific_authority":False},"candidates":[]}
+    policy=_base_policy(portfolio=False)
+    policy["strict_provider_transport"]=bool(strict_provider);policy["semantic_reviewer_deferred"]=bool(defer_reviewer)
+    if strict_provider:
+        policy["transport_only_no_output_fallback_allowed"]=False;policy["transport_fallback_max_additional_provider_attempts"]=0
+    state={"schema_version":"2.5","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":policy,"summary":_empty_summary(len(reg)),"raw_artifacts":{},"generation_notes":"","search_diagnostics":{"lane_search_priority":list(dead_end_prompt_memory.get("lane_search_priority") or DISCOVERY_LANES),"lane_search_complete":False,"lane_search":[],"last_completed_lane_search":{},"scientific_authority":False},"saturation_memory":{"ledger_entries":len(_load_saturation_ledger(storage,saturation_ledger_path)),"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":inherited_receipts[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"blocked_problem_memory":blocked_problem_memory,"scientific_authority":False},"candidates":[]}
     def finish(status,cands=[]): state["status"]=status;_write_inbox(auto_inbox_path,run_id,status,cands,psha);_record_saturation_run(storage,state,psha,reg,saturation_ledger_path);return state
     if pool.get("status")!="READY" or len(reg)<4:return finish("SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE")
     if age is None or age>pool_max_age_hours:state["primary_pool_age_hours"]=age;return finish("SKIPPED_STALE_PRIMARY_EVIDENCE")
@@ -473,7 +477,7 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
             state["coverage_skip_reason"]="No unreviewed freshness/relevance-qualified source remains and this exact evidence pool has already completed the current discovery operator; generation resumes when evidence, the mature-reduction ledger, or the discovery operator changes."
             return finish("SKIPPED_SOURCE_COVERAGE_SATURATED")
         state["operator_recompile_reason"]="Source coverage is saturated, but this evidence pool has no completed receipt for the current anomaly-first discovery operator. One bounded recompilation is allowed; scientific gates are unchanged."
-    call=generator_responder or (lambda **kwargs:_ark(stage="problem_generation",**kwargs));rows=[];generator_resolved_models=[]
+    call=generator_responder or (lambda **kwargs:_ark(stage="problem_generation",allow_transport_fallback=not strict_provider,**kwargs));rows=[];generator_resolved_models=[]
     if portfolio_mode:
         provenance=[]
         def portfolio_call(*,role,prompt,model,max_output_tokens):
@@ -512,8 +516,12 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
         state["search_diagnostics"].update({"lane_search_complete":True,"lane_search":lane_search});reviewable=[c for c in cands if _reviewable(c,reg)];state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
     if portfolio_mode:
         cands=[_normalize(r,reg) for r in rows];reviewable=[c for c in cands if _reviewable(c,reg)];state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
+    if reviewable and defer_reviewer:
+        state["summary"].update({"semantic_clear":0,"semantic_blocked":0,"semantic_review_unavailable":len(reviewable),"written_to_auto_inbox":0,"semantic_clear_by_lane":_count_by_lane([]),"semantic_blocked_by_lane":_count_by_lane([]),"semantic_review_unavailable_by_lane":_count_by_lane(reviewable)})
+        state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"source_branch_id":c.get("source_branch_id") or "","source_refs":[c["empirical_evidence"]["source_a"]["ref"],c["empirical_evidence"]["source_b"]["ref"]],"semantic_verdict":"UNREVIEWED","lane_contract_verified":False,"matched_patterns":[]} for c in cands]
+        return finish("GENERATED_AWAIT_SEMANTIC_REVIEW",[])
     if reviewable:
-        call2=reviewer_responder or (lambda **kwargs:_ark(stage="semantic_review",**kwargs));batch_size=6 if portfolio_mode else max(1,len(reviewable));review_receipts=[];gen_resolved="|".join(sorted(set(generator_resolved_models))) or generator_model
+        call2=reviewer_responder or (lambda **kwargs:_ark(stage="semantic_review",allow_transport_fallback=not strict_provider,**kwargs));batch_size=6 if portfolio_mode else max(1,len(reviewable));review_receipts=[];gen_resolved="|".join(sorted(set(generator_resolved_models))) or generator_model
         for start in range(0,len(reviewable),batch_size):
             batch=reviewable[start:start+batch_size]
             try:
