@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T13:45:19+00:00",
+  "generated_at": "2026-08-17T16:29:16+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T13:45:19+00:00",
+    "generated_at": "2026-08-17T16:29:16+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -1562,6 +1562,67 @@
         "scientific_authority": false
       },
       {
+        "source_candidate_id": "AUTO-1-STATIC-PROCEDURAL-PRIOR-CROSS-REGIME",
+        "basin": "principle-readjudication-9cf5536340bd08e1",
+        "search_primitive": "CONTRADICTION",
+        "title": "Cross-regime static-procedural sign contradiction collapses because the two papers intervene on different causal surfaces",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Cross-regime static-procedural sign contradiction collapses because the two papers intervene on different causal surfaces",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "The proposed CONTRADICTION requires the two reported signs to estimate the same treatment under a shared operationalization, but the primary papers intervene on different causal surfaces. MetaSkill-Evolve's Static Skill loads a fixed skill into a frozen Gemma-4 31B agent and compares held-out task accuracy against the same no-skill executor; on ALFWorld that inference-time skill changes 92.31% to 90.38% (-1.93 points). SkillCoach's R0 result is not an inference-time static-context effect: R0 is a task-level process rubric used to score and filter verifier-passing trajectories, and the reported 8->16 and 14->28 gains are measured after supervised fine-tuning on the filtered demonstrations. That intervention changes the training set and then model parameters. Opposite signs across an inference-time frozen-agent skill treatment and a rubric-filtered SFT treatment do not constitute incompatible outcomes under one treatment contract, so the claimed cross-regime sign contradiction is not identified before either headroom or applicability theory is tested.",
+        "current_source_refs": [
+          "arXiv:2607.01874",
+          "arXiv:2607.05297"
+        ],
+        "evidence_basis": [
+          "arXiv:2607.05297",
+          "primary-fulltext:arXiv:2607.05297#sha256=84e40d16a13395870ca336bd8999e727d20aacc134f1fb821292a7452bc6fb8a",
+          "arXiv:2607.01874",
+          "primary-fulltext:arXiv:2607.01874#sha256=98e09b6cf2748867e3843fe1ace5525225b0d87a2821316614b6942be12fd728",
+          "canonical-generator-raw:sha256=b921767ef4674142af7d6b3124786e2f71dd9cabcee0eac31bd8eb088f578deb",
+          "canonical-discovery-transaction:2975a3f837b4577abf958e5e021c4f85f7f097c36f4d7563f29353529f84fdf5"
+        ],
+        "problem_text": "Canonical transaction 2975a3f8..., AUTO-1 CONTRADICTION combining MetaSkill-Evolve arXiv:2607.05297 Static Skill on ALFWorld with SkillCoach arXiv:2607.01874 R0-filtered SFT, restricted to the claim that these two reported signs instantiate one shared static-procedural-prior treatment and motivate a pre-deployment regime-conditioned sign certificate.",
+        "reason": "The two source results are individually real, but they are effects of different interventions. MetaSkill-Evolve reports a small negative inference-time Static Skill effect on near-ceiling ALFWorld, while SkillCoach reports positive downstream gains after R0-based trajectory filtering and SFT. These values cannot by themselves define a contradiction or a common sign certificate for one frozen procedural-context treatment.",
+        "reopen_only_if": "Reopen only with primary or first-party evidence containing at least two regimes that share an identical static-procedural-artifact intervention on the same frozen executor, identical no-artifact comparator, endpoint, rollout/compute budget, and treatment timing; base/headroom must be matched within sampling error and the within-regime treatment deltas must have reproducibly opposite signs. Any residual sign predictor must then beat a same-information conditional-treatment/domain-shift baseline using only pre-deployment observables.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "NECESSARY_ASSUMPTION_REFUTED",
+          "necessary_assumption_id": "shared-static-procedural-artifact-treatment",
+          "necessity_established": true,
+          "assumption_refuted": true,
+          "statement": "The proposed CONTRADICTION requires the two reported signs to estimate the same treatment under a shared operationalization, but the primary papers intervene on different causal surfaces. MetaSkill-Evolve's Static Skill loads a fixed skill into a frozen Gemma-4 31B agent and compares held-out task accuracy against the same no-skill executor; on ALFWorld that inference-time skill changes 92.31% to 90.38% (-1.93 points). SkillCoach's R0 result is not an inference-time static-context effect: R0 is a task-level process rubric used to score and filter verifier-passing trajectories, and the reported 8->16 and 14->28 gains are measured after supervised fine-tuning on the filtered demonstrations. That intervention changes the training set and then model parameters. Opposite signs across an inference-time frozen-agent skill treatment and a rubric-filtered SFT treatment do not constitute incompatible outcomes under one treatment contract, so the claimed cross-regime sign contradiction is not identified before either headroom or applicability theory is tested.",
+          "opposite_prediction": "If procedural interventions are typed by causal surface, inference-time static context, data-selection/filtering, parameter training, and artifact evolution may have different signed effects without contradiction. A genuine cross-regime sign reversal must first hold the treatment definition fixed: the same frozen executor must receive the same kind of static procedural artifact with the same no-artifact comparator and endpoint, and only the task regime may vary. Under the current two papers, treatment-surface differences alone permit the observed -1.93 and positive SFT gains.",
+          "opposite_principle": "Treatment-effect signs are only comparable after intervention semantics are aligned. Cross-paper sign differences cannot define a regime-conditioned certificate when one effect is an inference-time context intervention on a frozen policy and the other is a trajectory-selection intervention followed by parameter updating. Treatment typing precedes effect-heterogeneity or sign-certificate claims.",
+          "opposite_search_seed": "Search only for first-party matched cells where an identically defined static procedural artifact is applied to the same frozen executor with an identical no-artifact control, endpoint, and budget across at least two task regimes. Match base/headroom within sampling error, then ask whether the within-regime treatment deltas have reproducibly opposite signs and whether pre-deployment artifact/regime features predict that interaction beyond ordinary conditional treatment-effect or domain-shift baselines. Do not reopen by comparing inference-time skills with rubric-filtered SFT, prompt tuning, parameter training, or another update surface.",
+          "scope": "Canonical transaction 2975a3f8..., AUTO-1 CONTRADICTION combining MetaSkill-Evolve arXiv:2607.05297 Static Skill on ALFWorld with SkillCoach arXiv:2607.01874 R0-filtered SFT, restricted to the claim that these two reported signs instantiate one shared static-procedural-prior treatment and motivate a pre-deployment regime-conditioned sign certificate.",
+          "same_information_or_scope_matched": true,
+          "evidence_refs": [
+            "arXiv:2607.05297",
+            "primary-fulltext:arXiv:2607.05297#sha256=84e40d16a13395870ca336bd8999e727d20aacc134f1fb821292a7452bc6fb8a",
+            "arXiv:2607.01874",
+            "primary-fulltext:arXiv:2607.01874#sha256=98e09b6cf2748867e3843fe1ace5525225b0d87a2821316614b6942be12fd728",
+            "canonical-generator-raw:sha256=b921767ef4674142af7d6b3124786e2f71dd9cabcee0eac31bd8eb088f578deb",
+            "canonical-discovery-transaction:2975a3f837b4577abf958e5e021c4f85f7f097c36f4d7563f29353529f84fdf5"
+          ],
+          "alternative_explanations_ruled_out": [
+            "The -1.93 ALFWorld sign was fabricated: false; MetaSkill-Evolve explicitly reports 92.31% no-skill versus 90.38% static skill and describes the static skill as slightly regressing in the near-ceiling regime.",
+            "SkillCoach's +8/+14 numbers are the direct effect of placing R0 into the frozen executor context: false; the paper states that R0 scores trajectories, filters verifier-passing demonstrations, and the reported gains are downstream results of rubric-filtered supervised fine-tuning.",
+            "Both papers merely use different names for the same procedural artifact intervention: false; one changes inference-time context while keeping model parameters frozen, whereas the other changes the training examples used for SFT and therefore the learned parameter state.",
+            "A matched-base/headroom test can rescue the current contradiction without treatment alignment: false; matching baseline accuracy does not make two different interventions estimate the same causal effect."
+          ],
+          "reopen_condition": "Reopen only with primary or first-party evidence containing at least two regimes that share an identical static-procedural-artifact intervention on the same frozen executor, identical no-artifact comparator, endpoint, rollout/compute budget, and treatment timing; base/headroom must be matched within sampling error and the within-regime treatment deltas must have reproducibly opposite signs. Any residual sign predictor must then beat a same-information conditional-treatment/domain-shift baseline using only pre-deployment observables."
+        },
+        "source_readjudication_artifact": "generated/static-procedural-prior-cross-regime-contradiction-principle-readjudication-20260817.json",
+        "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
         "source_candidate_id": "SHADOW-P01-C01",
         "basin": "principle-readjudication-be427ffeba8d130f",
         "search_primitive": "",
@@ -2297,8 +2358,8 @@
         "scientific_authority": false
       }
     ],
-    "principle_dead_end_count": 33,
-    "principle_readjudication_dead_end_count": 29,
+    "principle_dead_end_count": 34,
+    "principle_readjudication_dead_end_count": 30,
     "fresh_phenomenon_closure_count": 17,
     "fresh_phenomenon_closed_evidence_count": 31,
     "inversion_asset_evidence": [
@@ -2523,8 +2584,8 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 33,
-    "principle_readjudication_dead_ends": 29,
+    "shadow_dead_end_objects": 34,
+    "principle_readjudication_dead_ends": 30,
     "shadow_hold_objects": 2,
     "current_source_hard_veto_dead_ends": 0,
     "current_source_hard_veto_added_from_latest_run": 0,

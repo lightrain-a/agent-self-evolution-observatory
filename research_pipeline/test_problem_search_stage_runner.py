@@ -155,6 +155,46 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         different["empirical_evidence"]["source_a"]["claim"]="runtime grows with larger batches";different["empirical_evidence"]["source_b"]["claim"]="memory use grows with larger batches"
         self.assertIsNone(runner._semantic_dead_end_seed_blocker(different,memory,"b"*64))
 
+    def test_cross_treatment_sign_contradiction_machine_blocks_same_problem_but_reopens_new_evidence(self) -> None:
+        scope="Canonical AUTO-1 contradiction claiming a common sign certificate from MetaSkill-Evolve inference-time Static Skill and SkillCoach rubric-filtered SFT despite the interventions acting on different causal surfaces."
+        memory={"blocked_objects":[{
+            "source_candidate_id":"AUTO-1-STATIC-PROCEDURAL-PRIOR-CROSS-REGIME",
+            "basin":"principle-readjudication-9cf5536340bd08e1",
+            "search_primitive":"CONTRADICTION",
+            "current_source_refs":["arXiv:2607.01874","arXiv:2607.05297"],
+            "title":"Cross-regime static-procedural sign contradiction collapses because the two papers intervene on different causal surfaces",
+            "problem_text":scope,
+            "dead_end_certified":True,
+            "memory_class":"PRINCIPLE_DEAD_END",
+            "scientific_authority":False,
+        }]}
+        seed={
+            "discovery_lane":"CONTRADICTION",
+            "title":"Static procedural priors flip sign across task regimes",
+            "problem_seed":scope,
+            "scientific_tension":"MetaSkill static context is negative while SkillCoach R0 pipeline is positive, suggesting a sign certificate.",
+            "structural_signature":"static-procedural|sign|regime",
+            "empirical_evidence":{
+                "source_a":{"ref":"arXiv:2607.05297","claim":"Static Skill changes ALFWorld from 92.31 to 90.38."},
+                "source_b":{"ref":"arXiv:2607.01874","claim":"R0-filtered SFT improves Qwen3.5 held-out performance."},
+            },
+        }
+        blocked=runner._semantic_dead_end_seed_blocker(seed,memory,"a"*64)
+        self.assertIsNotNone(blocked)
+        self.assertEqual(blocked["source_candidate_id"],"AUTO-1-STATIC-PROCEDURAL-PRIOR-CROSS-REGIME")
+        self.assertIn("persisted principle dead-end",blocked["reason"])
+        new_primary=json.loads(json.dumps(seed));new_primary["empirical_evidence"]["source_b"]["ref"]="arXiv:2608.99999"
+        self.assertIsNone(runner._semantic_dead_end_seed_blocker(new_primary,memory,"b"*64))
+        different=json.loads(json.dumps(seed));different.update({
+            "title":"MetaSkill latency overhead under large skill files",
+            "problem_seed":"How does static skill file size affect wall-clock latency?",
+            "scientific_tension":"Larger files increase context cost.",
+            "structural_signature":"latency|context-size",
+        })
+        different["empirical_evidence"]["source_a"]["claim"]="Static skill files increase prompt length."
+        different["empirical_evidence"]["source_b"]["claim"]="Rubric files have different token costs."
+        self.assertIsNone(runner._semantic_dead_end_seed_blocker(different,memory,"b"*64))
+
     def test_principle_exact_evidence_closure_blocks_rephrased_same_evidence_but_not_adjacent_boundary(self) -> None:
         closed_text="Train selection is a lower bound on what generalizes: on GDPval a variant ranked below the winner on train scored highest on test (+11.5% vs. +9.2%)."
         closed_sha=runner._fresh_evidence_sha({"text":closed_text})

@@ -48,6 +48,22 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertTrue(row.get("reopen_only_if"))
         self.assertEqual(row.get("current_source_refs"),["arXiv:2607.20019"])
 
+    def test_static_procedural_cross_regime_contradiction_is_in_persistent_principle_memory(self) -> None:
+        memory=self.state["shadow_dead_end_memory"]
+        hits=[row for row in memory.get("blocked_objects") or [] if row.get("source_candidate_id")=="AUTO-1-STATIC-PROCEDURAL-PRIOR-CROSS-REGIME"]
+        self.assertEqual(len(hits),1)
+        row=hits[0]
+        self.assertEqual(row["memory_class"],"PRINCIPLE_DEAD_END")
+        self.assertTrue(row["dead_end_certified"]);self.assertFalse(row["scientific_authority"])
+        self.assertEqual(row["search_primitive"],"CONTRADICTION")
+        self.assertEqual(row["current_source_refs"],["arXiv:2607.01874","arXiv:2607.05297"])
+        self.assertEqual(row["source_readjudication_artifact"],"generated/static-procedural-prior-cross-regime-contradiction-principle-readjudication-20260817.json")
+        counter=row.get("counter_explanation") or {}
+        self.assertEqual(counter.get("type"),"NECESSARY_ASSUMPTION_REFUTED")
+        self.assertEqual(counter.get("necessary_assumption_id"),"shared-static-procedural-artifact-treatment")
+        self.assertTrue(counter.get("assumption_refuted"))
+        self.assertIn("identical static-procedural-artifact intervention",row["reopen_only_if"])
+
     def test_pa05_skill_validation_transfer_is_in_persistent_principle_memory(self) -> None:
         memory=self.state["shadow_dead_end_memory"]
         hits=[row for row in memory.get("blocked_objects") or [] if row.get("source_candidate_id")=="PA-05-SKILL-VALIDATION-TRANSFER"]
