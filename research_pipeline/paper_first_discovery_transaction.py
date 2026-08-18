@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import errno
 import fcntl
 import hashlib
 import json
@@ -31,6 +32,7 @@ from .paper_first_problem_generator import (
     _normalize_last_completed_lane_search_receipt,
     _pool_sha,
     _saturation_ledger_path,
+    public_problem_generator_state,
     write_problem_generator_state,
     write_replayed_problem_generator_state,
 )
@@ -435,13 +437,43 @@ def _rewrite_staged_queue_public_projection(
     return public
 
 
+def _replace_staged_file(source: Path, target: Path) -> None:
+    """Move a staged file into place, preserving atomicity across filesystems.
+
+    Discovery public artifacts normally stage beside the repository while private
+    research state may live on a separate data disk. ``os.replace`` is atomic only
+    within one filesystem; on EXDEV, first copy the complete source into a temporary
+    file beside the target, fsync it, then atomically replace the target locally.
+    """
+    try:
+        os.replace(source, target)
+        return
+    except OSError as error:
+        if error.errno != errno.EXDEV:
+            raise
+    temporary: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(prefix=f".{target.name}.", suffix=".txn", dir=target.parent, delete=False) as handle:
+            temporary = Path(handle.name)
+            with source.open("rb") as staged:
+                shutil.copyfileobj(staged, handle)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, target)
+        temporary = None
+        source.unlink()
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+
+
 def _commit_files(temp_targets: list[tuple[Path, Path]]) -> None:
     backups: dict[Path, bytes | None] = {target: (target.read_bytes() if target.exists() else None) for _, target in temp_targets}
     replaced: list[Path] = []
     try:
         for source, target in temp_targets:
             target.parent.mkdir(parents=True, exist_ok=True)
-            os.replace(source, target)
+            _replace_staged_file(source, target)
             replaced.append(target)
     except Exception:
         for target in replaced:
@@ -839,6 +871,165 @@ def recompile_primary_typed_evidence_with_generator_replay_transaction(
             (run_root/f"{txn_id}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return record
         except Exception as error:
             record.update({"status":"ABORTED_TYPED_EVIDENCE_RECOMPILE_PUBLIC_STATE_PRESERVED","completed_at":_now(),"error":f"{type(error).__name__}: {error}","stage_diagnostics":{"generator_status":str((generator_internal or {}).get("status") or "NOT_REACHED"),"generator_run_id":str((generator_internal or {}).get("run_id") or ""),"queue_reached":queue_internal is not None,"queue_audited":int((((queue_internal or {}).get("summary") or {}).get("audited")) or 0),"scientific_authority":False},"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}});stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ");(run_root/f"aborted-typed-recompile-{stamp}-{os.getpid()}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raise
+        finally:
+            shutil.rmtree(temp_root,ignore_errors=True)
+
+
+def replay_archived_problem_discovery_transaction(
+    *,
+    generator_raw_path: Path,
+    generator_raw_sha256: str,
+    generator_requested_model: str,
+    generator_resolved_model: str,
+    semantic_raw_path: Path | None = None,
+    semantic_raw_sha256: str = "",
+    semantic_requested_model: str = "",
+    semantic_resolved_model: str = "",
+    source_generator_run_id: str = "",
+    expected_generator_prompt_sha256: str = "",
+    storage: StorageSettings | None = None,
+    primary_json: Path = PRIMARY_JSON,
+    primary_js: Path = PRIMARY_JS,
+    generator_json: Path = GENERATOR_JSON,
+    generator_js: Path = GENERATOR_JS,
+    queue_json: Path = QUEUE_JSON,
+    queue_js: Path = QUEUE_JS,
+    primary_kwargs: dict[str, Any] | None = None,
+    queue_kwargs: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Recover a completed discovery call from content-addressed raw outputs.
+
+    This path is for failures *after* provider completion (for example a final
+    filesystem commit error). Primary evidence is rebuilt normally, but Generator
+    and semantic-review outputs are supplied only from archived raw bytes. Exact
+    raw SHA checks and an optional Generator prompt SHA prevent replay against a
+    different evidence/control state. No model provider can be called from here.
+    """
+    storage = storage or StorageSettings.from_env(); storage.ensure()
+    generator_raw_path = Path(generator_raw_path)
+    try:
+        generator_raw = generator_raw_path.read_text(encoding="utf-8")
+    except OSError as error:
+        raise RuntimeError(f"archived Generator raw unavailable: {type(error).__name__}") from error
+    actual_generator_sha = hashlib.sha256(generator_raw.encode("utf-8")).hexdigest()
+    if not re.fullmatch(r"[0-9a-f]{64}", str(generator_raw_sha256 or "")) or actual_generator_sha != str(generator_raw_sha256):
+        raise RuntimeError("archived Generator raw SHA mismatch")
+
+    semantic_raw = ""
+    if semantic_raw_path is not None:
+        semantic_raw_path = Path(semantic_raw_path)
+        try:
+            semantic_raw = semantic_raw_path.read_text(encoding="utf-8")
+        except OSError as error:
+            raise RuntimeError(f"archived semantic-review raw unavailable: {type(error).__name__}") from error
+        actual_semantic_sha = hashlib.sha256(semantic_raw.encode("utf-8")).hexdigest()
+        if not re.fullmatch(r"[0-9a-f]{64}", str(semantic_raw_sha256 or "")) or actual_semantic_sha != str(semantic_raw_sha256):
+            raise RuntimeError("archived semantic-review raw SHA mismatch")
+    elif semantic_raw_sha256:
+        raise RuntimeError("semantic-review SHA supplied without archived raw path")
+
+    def generator_replay_responder(**_: Any) -> dict[str, Any]:
+        return {"text": generator_raw, "resolved_model": str(generator_resolved_model or generator_requested_model)}
+
+    def semantic_replay_responder(**_: Any) -> dict[str, Any]:
+        if not semantic_raw:
+            raise RuntimeError("archived semantic-review raw required by replayed Generator output")
+        return {"text": semantic_raw, "resolved_model": str(semantic_resolved_model or semantic_requested_model)}
+
+    run_root = storage.run_dir / "paper-first-discovery-transactions"; run_root.mkdir(parents=True, exist_ok=True)
+    started = _now()
+    with _transaction_lock(storage):
+        primary_json.parent.mkdir(parents=True, exist_ok=True)
+        temp_root = Path(tempfile.mkdtemp(prefix=".paper-first-raw-replay-", dir=str(primary_json.parent)))
+        p_json=temp_root/"primary.json";p_js=temp_root/"primary.js";g_json=temp_root/"generator.json";g_js=temp_root/"generator.js";q_json=temp_root/"queue.json";q_js=temp_root/"queue.js"
+        staged_private=temp_root/"primary-private.json";staged_auto=temp_root/"auto-candidate-inbox.json";staged_ledger=temp_root/"discovery-saturation-ledger.json"
+        target_private=private_primary_pool_path(storage);target_auto=default_auto_inbox_path(storage);target_ledger=_saturation_ledger_path(storage)
+        if target_auto.exists(): shutil.copyfile(target_auto,staged_auto)
+        if target_ledger.exists(): shutil.copyfile(target_ledger,staged_ledger)
+        primary_internal: dict[str, Any] | None = None
+        generator_internal: dict[str, Any] | None = None
+        queue_internal: dict[str, Any] | None = None
+        record: dict[str, Any] = {
+            "schema_version":"1.0","started_at":started,"status":"running","replay_mode":"archived-provider-raw",
+            "source_generator_run_id":str(source_generator_run_id or ""),"provider_calls_authorized":0,"scientific_authority":False,
+        }
+        try:
+            pkw=dict(primary_kwargs or {});pkw.update({"storage":storage,"json_path":p_json,"js_path":p_js,"portable_generator_state_path":generator_json,"portable_primary_state_path":primary_json,"private_pool_output_path":staged_private})
+            primary_internal=write_primary_evidence_pool(**pkw)
+            gkw={
+                "storage":storage,"json_path":g_json,"js_path":g_js,"previous_public_state_path":generator_json,
+                "primary_pool_path":staged_private,"auto_inbox_path":staged_auto,"saturation_ledger_path":staged_ledger,
+                "generator_model":str(generator_requested_model or generator_resolved_model),
+                "reviewer_model":str(semantic_requested_model or semantic_resolved_model or "deepseek-v4-pro"),
+                "generator_responder":generator_replay_responder,"reviewer_responder":semantic_replay_responder,
+            }
+            generator_internal=write_problem_generator_state(**gkw)
+            generator_artifacts=(generator_internal.get("raw_artifacts") or {}).get("generator") or {}
+            if str(generator_artifacts.get("sha256") or "") != actual_generator_sha:
+                raise RuntimeError("replayed Generator artifact SHA diverged from archived raw")
+            prompt_sha=str((generator_internal.get("generator_request_audit") or {}).get("prompt_sha256") or "")
+            if expected_generator_prompt_sha256 and prompt_sha != str(expected_generator_prompt_sha256):
+                raise RuntimeError("replayed Generator prompt SHA diverged from archived request")
+            semantic_artifacts=(generator_internal.get("raw_artifacts") or {}).get("semantic_reviewer") or {}
+            if semantic_raw:
+                if str(semantic_artifacts.get("sha256") or "") != str(semantic_raw_sha256):
+                    raise RuntimeError("replayed semantic-review artifact SHA diverged from archived raw")
+            elif semantic_artifacts.get("sha256"):
+                raise RuntimeError("replay unexpectedly required semantic-review raw")
+
+            generator_internal.setdefault("policy",{}).update({
+                "archived_provider_raw_replay":True,"automatic_provider_calls_authorized":0,
+                "generator_raw_sha256_verified":True,"semantic_raw_sha256_verified":bool(semantic_raw),
+            })
+            generator_internal["provider_calls_executed"]=0;generator_internal["semantic_reviewer_calls_executed"]=0
+            for role, origin in (("generator",generator_raw_path),("semantic_reviewer",semantic_raw_path)):
+                artifact=(generator_internal.get("raw_artifacts") or {}).get(role)
+                if isinstance(artifact,dict) and artifact.get("sha256"):
+                    artifact["raw_replayed_without_provider"]=True;artifact["provider_calls_executed"]=0
+                    if origin is not None: artifact["raw_origin_path"]=str(origin)
+            generator_public=public_problem_generator_state(generator_internal,storage=storage)
+            g_json.write_text(json.dumps(generator_public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+            g_js.write_text("window.PAPER_FIRST_PROBLEM_GENERATOR = "+json.dumps(generator_public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
+
+            qkw=dict(queue_kwargs or {});qkw.update({"storage":storage,"json_path":q_json,"js_path":q_js,"primary_pool_path":staged_private,"auto_inbox_path":staged_auto})
+            queue_internal=write_problem_gate_queue(**qkw)
+            primary_public=_load(p_json);generator_public=_load(g_json);queue_public=_load(q_json)
+            errors=_validate(primary_public,generator_public,queue_public)
+            if errors: raise RuntimeError("paper-first archived-raw replay transaction invalid: "+",".join(errors))
+            generator_calls,semantic_calls=_provider_call_accounting(generator_internal)
+            if generator_calls or semantic_calls:
+                raise RuntimeError("archived-raw replay attempted provider accounting")
+            transaction_operator=_generator_operator_version(generator_public);receipt=_generator_receipt(generator_public);material=_receipt_material(receipt)
+            source_pool=load_private_primary_pool(staged_private) or {};source_pool_sha=_pool_sha(source_pool)
+            if not material or material.get("pool_sha256")!=source_pool_sha or material.get("discovery_operator_version")!=transaction_operator or material.get("raw_sha256")!=actual_generator_sha or material.get("scientific_authority") is not False:
+                raise RuntimeError("archived-raw replay receipt does not bind frozen pool/raw/operator")
+            txn_id=_transaction_id(primary_public,generator_public,queue_public)
+            primary_public=_stamp(p_json,p_js,"PAPER_FIRST_PRIMARY_EVIDENCE",txn_id,"primary")
+            generator_public=_stamp(g_json,g_js,"PAPER_FIRST_PROBLEM_GENERATOR",txn_id,"generator")
+            queue_public=_stamp(q_json,q_js,"PAPER_FIRST_PROBLEM_GATE_QUEUE",txn_id,"queue")
+            private_targets=[(staged_private,target_private),(staged_auto,target_auto)]
+            if staged_ledger.exists(): private_targets.append((staged_ledger,target_ledger))
+            _commit_files([(p_json,primary_json),(p_js,primary_js),(g_json,generator_json),(g_js,generator_js),(q_json,queue_json),(q_js,queue_js),*private_targets])
+            record.update({
+                "status":"COMMITTED_ARCHIVED_RAW_ZERO_PROVIDER_REPLAY","completed_at":_now(),"transaction_id":txn_id,
+                "source_pool_sha256":source_pool_sha,"discovery_operator_version":transaction_operator,
+                "generator_receipt_sha256":_receipt_sha256(receipt),"generator_receipt_raw_sha256":actual_generator_sha,
+                "semantic_review_raw_sha256":str(semantic_raw_sha256 or ""),"provider_calls_executed":0,
+                "generator_provider_calls_executed":0,"semantic_reviewer_calls_executed":0,
+                "summary":{"primary_status":primary_public.get("status"),"verified":(primary_public.get("summary") or {}).get("verified",0),"generator_status":generator_public.get("status"),"generated":(generator_public.get("summary") or {}).get("generated",0),"semantic_clear":(generator_public.get("summary") or {}).get("semantic_clear",0),"semantic_blocked":(generator_public.get("summary") or {}).get("semantic_blocked",0),"queue_submitted":(queue_public.get("summary") or {}).get("submitted",0),"queue_passed":(queue_public.get("summary") or {}).get("passed_problem_gate",0),"queue_blocked":(queue_public.get("summary") or {}).get("blocked_problem_gate",0)},
+                "authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+            })
+            (run_root/f"{txn_id}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+            return record
+        except Exception as error:
+            record.update({
+                "status":"ABORTED_ARCHIVED_RAW_REPLAY_PUBLIC_STATE_PRESERVED","completed_at":_now(),"error":f"{type(error).__name__}: {error}",
+                "stage_diagnostics":{"primary_status":str((primary_internal or {}).get("status") or "NOT_REACHED"),"generator_status":str((generator_internal or {}).get("status") or "NOT_REACHED"),"queue_reached":queue_internal is not None,"queue_audited":int((((queue_internal or {}).get("summary") or {}).get("audited")) or 0),"scientific_authority":False},
+                "provider_calls_executed":0,"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+            })
+            stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+            (run_root/f"aborted-raw-replay-{stamp}-{os.getpid()}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+            raise
         finally:
             shutil.rmtree(temp_root,ignore_errors=True)
 

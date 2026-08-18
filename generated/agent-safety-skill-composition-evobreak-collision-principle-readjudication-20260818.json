@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "AGENT-SAFETY-SKILL-COMPOSITION-EVOBREAK-COLLISION",
+  "search_primitive": "LONGITUDINAL_EMERGENCE",
+  "title": "Super-linear harm from composing individually benign persistent skills is already inside EvoBreak's general experience-composition object",
+  "adjudication_date": "2026-08-18",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "broader_compositional_agent_safety_problem_falsified": false,
+  "dead_end_scope": "The standalone SHADOW-P01-C01 claim that fresh-session harm from multiple persistent skills requires a new causal object consisting of additive per-skill risk plus positive pairwise or higher-order interaction coefficients and super-linear harm growth with skill-library size, when the composed skills are individually benign or individually non-harmful.",
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "EvoBreak already defines the broader composition object that contains the candidate as a special case: multiple persistent experiences may each be benign in isolation yet jointly activate complementary harmful behavior, reusable skills are explicitly within the persistent-experience representation class, harm increases as more retained experiences are jointly available, and the framework permits sequential, parallel, hierarchical, and conditional composition over an arbitrary retained set. A pairwise interaction regression or a super-linear library-size term is therefore a parameterization of EvoBreak's owned composition mechanism rather than a distinct scientific object.",
+      "opposite_prediction": "Under the same persistent-experience contents, retrieval/composition state, task information, and execution budget, EvoBreak's composition object predicts that jointly activating a larger or more complete set of individually benign experience fragments can produce harm exceeding the individual fragments' effects and can accelerate as complementary pieces accumulate. A positive pairwise or higher-order interaction coefficient is compatible with that existing object and does not distinguish a new mechanism.",
+      "opposite_principle": "Benign-in-isolation persistent experience can become harmful through complementary composition; novelty cannot be claimed merely by rewriting that composition as pairwise interaction coefficients, a super-linear cardinality curve, or a skill-library version of the same retained-experience mechanism.",
+      "opposite_search_seed": "Search only for a composition phenomenon with a preregistered observable that EvoBreak's general retained-experience composition model cannot express under the same information. A promising residual would require positive primary evidence from naturally occurring non-adversarial self-evolution and a specific interaction topology, timing law, or intervention response that differs from adversarially induced complementary experience composition rather than merely changing the representation name to skills.",
+      "scope": "SHADOW-P01-C01 / AGENT-SAFETY-SKILL-COMPOSITION-EVOBREAK-COLLISION only: additive-plus-interaction or super-linear harm amplification from multiple individually benign persistent skills as standalone novelty. This closure does not say compositional agent harm is unimportant or that naturally emerging composition effects cannot contain a future residual.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2608.01759",
+        "arXiv:2608.12851",
+        "review:deepseek-v4-pro-260425:evobreak-current-source-principle#sha256=e405d912b4e69bc59c754cb9cedccf3711d5bb8f3f1235197f5b65343d892b69"
+      ],
+      "alternative_explanations_ruled_out": [
+        "Restricting the example to pairwise-safe but triple-harmful skills does not define a new object: it is a narrower cardinality/topology instance of the same general complementary-composition mechanism.",
+        "Replacing persistent experiences with reusable skills does not escape the collision because EvoBreak's scope explicitly includes reusable skill-like persistent representations.",
+        "The candidate's proposed Harm = additive terms + interaction terms decomposition does not add an ex-ante prediction unavailable to EvoBreak; it only selects a parametric statistical representation of the existing mechanism.",
+        "SkillMisevo supplies strong malicious-exposure lifecycle evidence but does not positively support a materially distinct naturally occurring non-adversarial composition law. The lack of such support cannot itself create novelty.",
+        "A larger N sweep or a stronger super-linear coefficient would increase evidence for composition but would not separate the candidate from EvoBreak under the same information."
+      ],
+      "reopen_condition": "Reopen only with positive primary evidence of naturally occurring, non-adversarial benign self-evolution that creates a composition residual under no attacker-selected tasks, no attack-target decomposition, and no target-query reformulation, together with a concrete pre-registered observable or intervention response that EvoBreak's general retained-experience composition object cannot express under identical persistent-state, retrieval, task, and execution information."
+    }
+  },
+  "independent_review": {
+    "reviewer_model": "deepseek-v4-pro-260425",
+    "verdict": "STOP_CURRENT_PRIMARY_COLLISION",
+    "confidence": 0.94,
+    "raw_sha256": "6d6b41c86f6ea23f952b91fa6f2ea17999d1477d4902ad9ecb5273aec465c629",
+    "review_artifact_sha256": "e405d912b4e69bc59c754cb9cedccf3711d5bb8f3f1235197f5b65343d892b69",
+    "scientific_authority": false
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "compositional skill harm is already fully solved",
+      "natural non-adversarial composition cannot be novel",
+      "SkillMisevo and EvoBreak are the same paper problem",
+      "pairwise interaction analysis is useless"
+    ],
+    "safe_claim": "The current standalone proposal does not survive novelty review because its central object—individually benign persistent components becoming harmful through joint composition with accelerating harm as the set grows—is already owned at a more general level by EvoBreak. A future safety paper must expose a residual composition phenomenon that makes a distinct same-information prediction, not merely reparameterize the existing object with skill-level interaction coefficients.",
+    "new_search_basin": "natural-nonadversarial-composition-residual-beyond-evobreak"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "same_information_current_source_reduction_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

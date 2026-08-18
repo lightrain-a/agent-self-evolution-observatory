@@ -11,7 +11,7 @@ from pathlib import Path
 from .config import StorageSettings
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES
 from .paper_first_problem_gate_queue import build_problem_gate_queue
-from .paper_first_problem_generator import _ark, _durable_principle_dead_end_examples, _evidence_excerpt_matches, _normalize_lane_search, _principle_dead_end_reentry_audit, _provider_request_audit, _repair_block_only_reviewer_outer_braces, recover_archived_block_only_reviewer_raw, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
+from .paper_first_problem_generator import _ark, _durable_principle_dead_end_examples, _evidence_excerpt_matches, _extract_generator_payload, _normalize_lane_search, _principle_dead_end_reentry_audit, _provider_request_audit, _repair_block_only_reviewer_outer_braces, recover_archived_block_only_reviewer_raw, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
 from .paper_first_problem_generator_prompts import generator_prompt, reviewer_prompt
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
@@ -1076,6 +1076,44 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertFalse(review["independent_resolved_model"])
         self.assertEqual(review["verdict"], "BLOCK")
         self.assertEqual(state["summary"]["semantic_clear"], 0)
+
+    def test_generator_parser_repairs_only_premature_root_and_stray_array_close(self) -> None:
+        payload={
+            "lane_search":[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair survives."} for lane in DISCOVERY_LANES],
+            "candidates":[{"candidate_id":"X","nested":{"text":"candidate bytes stay exact"}}],
+            "generation_notes":"complete trailing notes",
+        }
+        valid=json.dumps(payload,separators=(",",":"))
+        malformed=valid.replace('],"generation_notes"',']}],"generation_notes"',1)
+        parsed,repair=_extract_generator_payload(malformed)
+        self.assertEqual(parsed,payload)
+        self.assertIsNotNone(repair)
+        self.assertEqual(repair["removed_chars"],"}]")
+        self.assertEqual(repair["removed_char_count"],2)
+        self.assertTrue(repair["scientific_field_values_equal"])
+        self.assertFalse(repair["string_content_mutated"])
+        self.assertFalse(repair["scientific_array_bytes_mutated"])
+
+    def test_generator_parser_refuses_same_delimiters_before_unapproved_field(self) -> None:
+        payload={
+            "lane_search":[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair survives."} for lane in DISCOVERY_LANES],
+            "candidates":[],
+            "notes":"not the approved generator trailing field",
+        }
+        valid=json.dumps(payload,separators=(",",":"))
+        malformed=valid.replace('],"notes"',']}],"notes"',1)
+        with self.assertRaises(json.JSONDecodeError):
+            _extract_generator_payload(malformed)
+
+    def test_generator_parser_refuses_truncation_inside_scientific_array(self) -> None:
+        payload={
+            "lane_search":[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair survives."} for lane in DISCOVERY_LANES],
+            "candidates":[{"candidate_id":"X","text":"complete"}],
+            "generation_notes":"notes",
+        }
+        malformed=json.dumps(payload,separators=(",",":"))[:-25]
+        with self.assertRaises(json.JSONDecodeError):
+            _extract_generator_payload(malformed)
 
     def test_generator_raw_replay_is_zero_provider_and_recompiles_lane_search_against_current_pool(self) -> None:
         with tempfile.TemporaryDirectory() as td:

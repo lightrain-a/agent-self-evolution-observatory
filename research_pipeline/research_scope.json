@@ -11,6 +11,7 @@
     "embodied agents and world models",
     "agent memory and skill consolidation",
     "self-correction and evaluator learning",
+    "agent safety under persistent self-evolution",
     "continual and reinforcement learning",
     "causal reasoning and constrained optimization"
   ],
@@ -37,7 +38,19 @@
     "SELF-EVOLVED REWARD LEARNING FOR LLMS",
     "Benchmarking Agentic Workflow Generation",
     "Web Agents with World Models: Learning and Leveraging Environment Dynamics in Web Navigation",
-    "AgentRefine: Enhancing Agent Generalization through Refinement Tuning"
+    "AgentRefine: Enhancing Agent Generalization through Refinement Tuning",
+    "Benign Alone, Harmful Together: Exploiting Experience Composition in Self-Evolving LLM Agents",
+    "When Self-Evolution Backfires: Pre-Commit Gating against Skill Contamination in LLM Agents",
+    "Practice Makes Unsafe: Skill Misevolution in Self-Improving LLM Agents",
+    "On Safety Risks in Experience-Driven Self-Evolving Agents",
+    "Towards Healthy Evolution: Exploring the Role and Mechanisms of Human-Agent Interaction in Self-Evolving Systems"
+  ],
+  "exact_seed_arxiv_ids": [
+    "2604.16968",
+    "2606.06114",
+    "2608.01759",
+    "2608.05810",
+    "2608.12851"
   ],
   "year_range": "2022-2026",
   "fields_of_study": [
@@ -52,6 +65,8 @@
     ],
     "failure": [
       "self improving agents collapse drift reward hacking negative transfer",
+      "self evolving agent safety drift unsafe persistent updates skill contamination",
+      "benign experience composition safety self evolving agent attack",
       "agent memory interference harmful updates forgetting retrieval failure",
       "self correction distribution mismatch confirmation bias evaluator contamination",
       "workflow optimization overfitting held out generalization agent"
@@ -59,6 +74,8 @@
     "mechanism": [
       "causal credit assignment failed trajectories agent learning",
       "constrained policy improvement regression tests autonomous agents",
+      "prospective safety stability survival hazard benign self evolution agents",
+      "pre commit gating persistent skill safety self improving agents",
       "curriculum generation failure frontier online reinforcement learning agents",
       "memory consolidation counterexamples applicability boundaries agents",
       "world model learning irreversible actions web embodied agents"

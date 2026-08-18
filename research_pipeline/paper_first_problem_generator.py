@@ -621,6 +621,49 @@ def _count_by_lane(cands):
 LANE_SEARCH_STATUSES={"NO_PAIR","REDUCIBLE","CANDIDATE"}
 
 
+def _generator_json_candidate(text:str)->str:
+    candidate=str(text or "").strip()
+    if candidate.startswith("```"):
+        lines=candidate.splitlines()
+        if lines and lines[0].startswith("```"):lines=lines[1:]
+        if lines and lines[-1].strip()=="```":lines=lines[:-1]
+        candidate="\n".join(lines).strip()
+    return candidate
+
+
+def _extract_generator_payload(raw:str)->tuple[dict[str,Any],dict[str,Any]|None]:
+    """Parse Generator JSON with one bounded two-delimiter compatibility repair.
+
+    The only accepted malformed shape is a fully closed root containing complete
+    `lane_search` and `candidates`, immediately followed by one unmatched `]` and
+    then the intended trailing `generation_notes` field. Repair removes exactly
+    the premature root `}` plus that unmatched `]`. No string/scientific-array
+    bytes may change, and repaired `lane_search`/`candidates` must equal the
+    already-complete prefix object exactly.
+    """
+    try:return extract_json_object(raw),None
+    except json.JSONDecodeError as original:
+        candidate=_generator_json_candidate(raw);decoder=json.JSONDecoder()
+        try:prefix,end=decoder.raw_decode(candidate)
+        except Exception:raise original
+        suffix=candidate[end:]
+        if not isinstance(prefix,dict) or not isinstance(prefix.get("lane_search"),list) or not isinstance(prefix.get("candidates"),list):raise original
+        if end<1 or candidate[end-1]!="}" or not re.match(r'^\]\s*,\s*"generation_notes"\s*:',suffix):raise original
+        repaired=candidate[:end-1]+candidate[end+1:]
+        try:payload=json.loads(repaired)
+        except Exception:raise original
+        if not isinstance(payload,dict) or payload.get("lane_search")!=prefix.get("lane_search") or payload.get("candidates")!=prefix.get("candidates"):raise original
+        if not isinstance(payload.get("generation_notes"),str) or not payload.get("generation_notes","").strip():raise original
+        receipt={
+            "schema_version":"1.0","status":"PARSE_REPAIRED_CONTAINER_DELIMITERS_ONLY_ZERO_AUTHORITY",
+            "repair_type":"PREMATURE_ROOT_CLOSE_PLUS_STRAY_ARRAY_CLOSE_BEFORE_GENERATION_NOTES",
+            "raw_sha256":_sha(str(raw or "")),"repaired_sha256":_sha(repaired),"removed_chars":"}]","removed_char_count":2,
+            "scientific_fields_preserved":["lane_search","candidates"],"scientific_field_values_equal":True,
+            "string_content_mutated":False,"scientific_array_bytes_mutated":False,"scientific_authority":False,
+        }
+        return payload,receipt
+
+
 def _normalize_lane_search(raw:Any,registry:dict[str,dict[str,Any]],expected_priority:list[str]|tuple[str,...]|None=None)->list[dict[str,Any]]:
     if not isinstance(raw,list): raise ValueError("generator-lane-search-array-required")
     rows=[];seen=set()
@@ -736,7 +779,9 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
             res=call(prompt=generator_prompt_text,model=generator_model,max_output_tokens=generator_max_output_tokens);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);generator_resolved_models=[resolved];transport_attempts=list(res.get("transport_attempts") or []);safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,"generator",transport_attempts);orphan_audits=_archive_provider_orphans(storage,run_id,"problem_generation",transport_attempts);state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved,"transport_attempts":safe_attempts,"transport_fallback_used":bool(res.get("transport_fallback_used"))};
             if receipt_audits:state["raw_artifacts"]["generator"]["provider_receipt_audits"]=receipt_audits
             if orphan_audits:state["provider_orphan_audits"]=orphan_audits
-            payload=extract_json_object(raw);state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip();lane_search=_normalize_lane_search(payload.get("lane_search"),reg,state["search_diagnostics"]["lane_search_priority"]);rows=payload.get("candidates") or []
+            payload,parse_repair=_extract_generator_payload(raw)
+            if parse_repair:state["raw_artifacts"]["generator"]["parse_repair"]=parse_repair
+            state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip();lane_search=_normalize_lane_search(payload.get("lane_search"),reg,state["search_diagnostics"]["lane_search_priority"]);rows=payload.get("candidates") or []
             if not isinstance(rows,list) or len(rows)>max_candidates or any(not isinstance(r,dict) for r in rows):raise ValueError("generator-candidate-array-invalid")
             if not rows and not state["generation_notes"]:raise ValueError("zero-candidate-generation-notes-required")
         except Exception as e:
@@ -804,7 +849,8 @@ def resume_semantic_reviewer(*,storage=None,primary_pool_path:Path,generator_raw
     actual_raw_sha=_sha(raw)
     if not generator_raw_sha256 or actual_raw_sha!=str(generator_raw_sha256):state["error"]="generator-raw-sha-mismatch";return finish("REVIEWER_RESUME_INPUT_INVALID")
     try:
-        payload=extract_json_object(raw);rows=payload.get("candidates") or []
+        payload,parse_repair=_extract_generator_payload(raw);rows=payload.get("candidates") or []
+        if parse_repair:state["raw_artifacts"]["generator"]={"path":str(generator_raw_path),"sha256":actual_raw_sha,"requested_model":generator_requested_model,"resolved_model":generator_resolved_model,"raw_replayed_without_provider":True,"parse_repair":parse_repair,"provider_calls_executed":0}
         if not isinstance(rows,list) or len(rows)>MAX_CANDIDATES or any(not isinstance(row,dict) for row in rows):raise ValueError("generator-candidate-array-invalid")
         normalized=[_normalize(row,reg) for row in rows];prior_grounding={}
         if prior_reviewer_raw_path is not None or prior_reviewer_raw_sha256:
@@ -993,7 +1039,7 @@ def replay_problem_generator_raw(
     actual_sha=_sha(raw)
     if not re.fullmatch(r"[0-9a-f]{64}",str(generator_raw_sha256 or "")) or actual_sha!=str(generator_raw_sha256):state["error"]="raw-sha-mismatch";return finish("REPLAY_INPUT_INVALID")
     try:
-        payload=extract_json_object(raw); rows=payload.get("candidates") or []
+        payload,parse_repair=_extract_generator_payload(raw); rows=payload.get("candidates") or []
         if not isinstance(rows,list) or len(rows)>max_candidates or any(not isinstance(row,dict) for row in rows):raise ValueError("generator-candidate-array-invalid")
         state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip()
         lane_search=_normalize_lane_search(payload.get("lane_search"),reg,state["search_diagnostics"]["lane_search_priority"])
@@ -1009,6 +1055,7 @@ def replay_problem_generator_raw(
     state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
     archived_path,archived_sha=_write_raw(storage,run_id,"generator-replay",str(generator_requested_model or "unknown"),raw)
     state["raw_artifacts"]["generator"]={"path":archived_path,"sha256":archived_sha,"requested_model":str(generator_requested_model or ""),"resolved_model":str(generator_resolved_model or generator_requested_model or ""),"raw_replayed_without_provider":True,"raw_origin_path":str(generator_raw_path),"raw_origin_run_id":str(source_generator_run_id or ""),"raw_origin_discovery_operator_version":str(source_discovery_operator_version or ""),"provider_calls_executed":0}
+    if parse_repair:state["raw_artifacts"]["generator"]["parse_repair"]=parse_repair
     if reviewable:
         blocked_before_review=[candidate for candidate in cands if candidate not in reviewable];reviewable_ids={id(candidate) for candidate in reviewable}
         state["summary"].update({"semantic_clear":0,"semantic_blocked":len(blocked_before_review),"semantic_review_unavailable":len(reviewable),"written_to_auto_inbox":0,"semantic_clear_by_lane":_count_by_lane([]),"semantic_blocked_by_lane":_count_by_lane(blocked_before_review),"semantic_review_unavailable_by_lane":_count_by_lane(reviewable)})

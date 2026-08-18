@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import errno
 import json
 import os
 import tempfile
@@ -10,7 +11,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from .config import StorageSettings
-from .paper_first_discovery_transaction import close_existing_problem_discovery_transaction, recompile_existing_problem_discovery_transaction, recompile_primary_typed_evidence_with_generator_replay_transaction, _transaction_id, _transaction_lock, _transaction_lock_path, _validate, write_problem_discovery_transaction
+from .paper_first_discovery_transaction import close_existing_problem_discovery_transaction, recompile_existing_problem_discovery_transaction, recompile_primary_typed_evidence_with_generator_replay_transaction, replay_archived_problem_discovery_transaction, _replace_staged_file, _transaction_id, _transaction_lock, _transaction_lock_path, _validate, write_problem_discovery_transaction
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION
 from .paper_first_problem_generator import _pool_sha
 
@@ -22,6 +23,27 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
             paper_dir=root/"data"/"papers", index_dir=root/"data"/"indexes", run_dir=root/"data"/"runs",
             cache_dir=root/"data"/"cache", lock_dir=root/"data"/"locks", site_artifact_dir=root/"site",
         )
+
+    def test_cross_filesystem_staged_replace_uses_target_local_atomic_fallback(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);source=root/"stage"/"state.json";target=root/"data"/"state.json"
+            source.parent.mkdir(parents=True);target.parent.mkdir(parents=True)
+            source.write_text("new-state",encoding="utf-8");target.write_text("old-state",encoding="utf-8")
+            real_replace=os.replace
+            calls=[]
+            def simulated_replace(src, dst):
+                calls.append((Path(src),Path(dst)))
+                if Path(src)==source:
+                    raise OSError(errno.EXDEV,"Invalid cross-device link")
+                return real_replace(src,dst)
+            with patch("research_pipeline.paper_first_discovery_transaction.os.replace",side_effect=simulated_replace):
+                _replace_staged_file(source,target)
+            self.assertEqual(target.read_text(encoding="utf-8"),"new-state")
+            self.assertFalse(source.exists())
+            self.assertEqual(len(calls),2)
+            self.assertEqual(calls[0],(source,target))
+            self.assertEqual(calls[1][1],target)
+            self.assertEqual(calls[1][0].parent,target.parent)
 
     def test_transaction_lock_is_host_shared_across_worktree_storage_dirs(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -76,7 +98,7 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
     def run_txn(self, root: Path, storage: StorageSettings, targets: dict[str,Path], now: datetime):
         return write_problem_discovery_transaction(
             storage=storage,**targets,
-            primary_kwargs={"corpus_path":self.corpus(root,now),"requester":self.requester,"augment_fresh_corpus_with_arxiv":False,"max_papers":4,"lane_floor":0,"coverage_anchor_count":0,"now":now,"min_interval_seconds":0},
+            primary_kwargs={"corpus_path":self.corpus(root,now),"requester":self.requester,"exact_seed_arxiv_ids":(),"augment_fresh_corpus_with_arxiv":False,"max_papers":4,"lane_floor":0,"coverage_anchor_count":0,"now":now,"min_interval_seconds":0},
             generator_kwargs={"generator_responder":self.generator,"now":now},
         )
 
@@ -110,6 +132,31 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         self.assertEqual((result["generator_provider_calls_executed"],result["semantic_reviewer_calls_executed"]),(1,0))
         self.assertEqual(result["provider_calls_executed"],1)
         self.assertEqual(result["authority"],{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False})
+
+    def test_archived_raw_transaction_replay_executes_zero_provider_calls(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);source_storage=self.storage(root/"source");source_targets=self.targets(root/"source");now=datetime(2026,8,13,12,0,tzinfo=timezone.utc)
+            first=self.run_txn(root/"source",source_storage,source_targets,now)
+            generator=json.loads(source_targets["generator_json"].read_text())
+            raw_sha=generator["raw_artifacts"]["generator"]["sha256"]
+            raw_path=next((source_storage.data_root/"paper-first-problem-discovery"/"raw-generations").glob(f"*generator-*{raw_sha[:12]}*.txt"))
+            replay_storage=self.storage(root/"replay");replay_targets=self.targets(root/"replay")
+            result=replay_archived_problem_discovery_transaction(
+                storage=replay_storage,**replay_targets,
+                generator_raw_path=raw_path,generator_raw_sha256=raw_sha,
+                generator_requested_model=generator["raw_artifacts"]["generator"]["requested_model"],
+                generator_resolved_model=generator["raw_artifacts"]["generator"]["resolved_model"],
+                source_generator_run_id=generator["run_id"],
+                expected_generator_prompt_sha256=generator["generator_request_audit"]["prompt_sha256"],
+                primary_kwargs={"corpus_path":self.corpus(root/"replay",now),"requester":self.requester,"exact_seed_arxiv_ids":(),"augment_fresh_corpus_with_arxiv":False,"max_papers":4,"lane_floor":0,"coverage_anchor_count":0,"now":now,"min_interval_seconds":0},
+            )
+            replayed=json.loads(replay_targets["generator_json"].read_text())
+        self.assertEqual(result["status"],"COMMITTED_ARCHIVED_RAW_ZERO_PROVIDER_REPLAY")
+        self.assertEqual(result["provider_calls_executed"],0)
+        self.assertEqual((result["generator_provider_calls_executed"],result["semantic_reviewer_calls_executed"]),(0,0))
+        self.assertTrue(replayed["policy"]["archived_provider_raw_replay"])
+        self.assertTrue(replayed["raw_artifacts"]["generator"]["raw_replayed_without_provider"])
+        self.assertEqual(replayed["raw_artifacts"]["generator"]["sha256"],raw_sha)
 
     def test_close_existing_transaction_replays_exact_private_pool_without_rerunning_scheduler(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -338,7 +385,7 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError,"generator-did-not-complete-discovery-transaction"):
                 write_problem_discovery_transaction(
                     storage=storage,**targets,
-                    primary_kwargs={"corpus_path":self.corpus(root,now),"requester":self.requester,"augment_fresh_corpus_with_arxiv":False,"max_papers":4,"lane_floor":0,"coverage_anchor_count":0,"now":now,"min_interval_seconds":0},
+                    primary_kwargs={"corpus_path":self.corpus(root,now),"requester":self.requester,"exact_seed_arxiv_ids":(),"augment_fresh_corpus_with_arxiv":False,"max_papers":4,"lane_floor":0,"coverage_anchor_count":0,"now":now,"min_interval_seconds":0},
                     generator_kwargs={"generator_responder":bad_generator,"now":now},
                 )
             after={key:path.read_bytes() for key,path in {**targets,**private_paths}.items()}
@@ -366,13 +413,13 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
             corpus=self.corpus(root,now)
             first=write_problem_discovery_transaction(
                 storage=storage,**targets,
-                primary_kwargs={"corpus_path":corpus,"requester":self.requester,"augment_fresh_corpus_with_arxiv":False,"max_papers":4,"lane_floor":0,"coverage_anchor_count":1,"now":now,"min_interval_seconds":0},
+                primary_kwargs={"corpus_path":corpus,"requester":self.requester,"exact_seed_arxiv_ids":(),"augment_fresh_corpus_with_arxiv":False,"max_papers":4,"lane_floor":0,"coverage_anchor_count":1,"now":now,"min_interval_seconds":0},
                 generator_kwargs={"generator_responder":self.generator,"now":now},
             )
             first_generator=json.loads(targets["generator_json"].read_text());first_run_id=first_generator["run_id"]
             result=write_problem_discovery_transaction(
                 storage=storage,**targets,
-                primary_kwargs={"corpus_path":corpus,"requester":self.requester,"augment_fresh_corpus_with_arxiv":False,"max_papers":4,"lane_floor":0,"coverage_anchor_count":1,"now":now+timedelta(minutes=1),"min_interval_seconds":0},
+                primary_kwargs={"corpus_path":corpus,"requester":self.requester,"exact_seed_arxiv_ids":(),"augment_fresh_corpus_with_arxiv":False,"max_papers":4,"lane_floor":0,"coverage_anchor_count":1,"now":now+timedelta(minutes=1),"min_interval_seconds":0},
                 generator_kwargs={"generator_responder":forbidden_generator,"reviewer_responder":forbidden_generator,"now":now+timedelta(minutes=1)},
             )
             primary=json.loads(targets["primary_json"].read_text());generator=json.loads(targets["generator_json"].read_text());queue=json.loads(targets["queue_json"].read_text())
@@ -407,7 +454,7 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
                 aid=url.rsplit('/',1)[-1];idx=int(aid[-1])
                 if '/html/' in url:return SimpleNamespace(status_code=200,text='<html><body><section><h2>Experimental Results</h2><p>We find verified performance improves by 10.0 percent on held-out tasks.</p></section></body></html>')
                 return SimpleNamespace(status_code=200,text=f'<meta name="citation_title" content="{titles[idx]}"><blockquote class="abstract mathjax">Abstract: {abstracts[idx]}</blockquote>')
-            result=write_problem_discovery_transaction(storage=storage,**targets,primary_kwargs={"corpus_path":corpus,"requester":requester,"augment_fresh_corpus_with_arxiv":False,"max_papers":5,"lane_floor":0,"coverage_anchor_count":2,"carrier_probe_limit":1,"now":now,"min_interval_seconds":0},generator_kwargs={"generator_responder":forbidden,"reviewer_responder":forbidden,"now":now})
+            result=write_problem_discovery_transaction(storage=storage,**targets,primary_kwargs={"corpus_path":corpus,"requester":requester,"exact_seed_arxiv_ids":(),"augment_fresh_corpus_with_arxiv":False,"max_papers":5,"lane_floor":0,"coverage_anchor_count":2,"carrier_probe_limit":1,"now":now,"min_interval_seconds":0},generator_kwargs={"generator_responder":forbidden,"reviewer_responder":forbidden,"now":now})
             primary=json.loads(targets["primary_json"].read_text());generator=json.loads(targets["generator_json"].read_text());queue=json.loads(targets["queue_json"].read_text())
         self.assertEqual(model_calls,[])
         self.assertEqual(result["status"],"COMMITTED")

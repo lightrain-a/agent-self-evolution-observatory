@@ -42,7 +42,7 @@ PRIMARY_EVIDENCE_CONTEXT_TAGS: tuple[dict[str, Any], ...] = (
     {"key":"runtime_deployment","terms":("runtime","deployment","production agent","customer support","long-horizon agent","monitoring","runtime contract")},
 )
 PRIMARY_EVIDENCE_PROPERTY_TAGS: tuple[dict[str, Any], ...] = (
-    {"key":"safety_reliability","terms":("agent safety","safety harness","reliability","robustness","adversarial","security","failure")},
+    {"key":"safety_reliability","terms":("agent safety","safety harness","safety","unsafe","harmful","harm","reliability","robustness","adversarial","security","failure")},
 )
 PRIMARY_EVIDENCE_LANES = PRIMARY_EVIDENCE_OBJECT_LANES + PRIMARY_EVIDENCE_CONTEXT_TAGS + PRIMARY_EVIDENCE_PROPERTY_TAGS
 DEFAULT_MAX_CORPUS_AGE_DAYS = 10.0
@@ -56,6 +56,7 @@ DEFAULT_ARXIV_PER_QUERY = 48
 DEFAULT_ARXIV_MAX_PAGES = 4
 DEFAULT_ARXIV_RATE_LIMIT_COOLDOWN_SECONDS = 1800
 DEFAULT_ARXIV_RATE_LIMIT_MAX_COOLDOWN_SECONDS = 21600
+DEFAULT_RESEARCH_SCOPE_JSON = PROJECT_ROOT / "research_pipeline" / "research_scope.json"
 EMPIRICAL_FACT_EXTRACTION_VERSION = "precision-v2"
 TYPED_EVIDENCE_EXTRACTION_VERSION = "typed-v2"
 DEFAULT_ARXIV_QUERIES = (
@@ -69,6 +70,8 @@ DEFAULT_ARXIV_QUERIES = (
     '(all:"scientific agent" OR all:"research agent" OR all:"symbolic regression") AND (all:evolution OR all:"self-evolving")',
     '(all:runtime OR all:deployment) AND all:agent AND (all:evolution OR all:"self-improving")',
     '(all:safety OR all:reliability) AND all:agent AND (all:evolution OR all:"self-improving")',
+    '(all:unsafe OR all:"safety drift" OR all:contamination) AND all:agent AND (all:evolution OR all:"self-evolving" OR all:"self-improving")',
+    '(all:attack OR all:adversarial OR all:security) AND all:agent AND (all:experience OR all:skill) AND (all:evolution OR all:"self-improving")',
 )
 
 _RELEVANCE_TERMS = (
@@ -87,6 +90,20 @@ _RELEVANCE_TERMS = (
     "world model",
     "embodied agent",
 )
+
+
+def _configured_exact_seed_arxiv_ids(path: Path = DEFAULT_RESEARCH_SCOPE_JSON) -> tuple[str, ...]:
+    try:
+        payload=json.loads(path.read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError):
+        return ()
+    values=[];seen=set()
+    for value in payload.get("exact_seed_arxiv_ids") or []:
+        arxiv_id=str(value or "").strip().removeprefix("arXiv:")
+        if not re.fullmatch(r"\d{4}\.\d{4,5}",arxiv_id) or arxiv_id in seen:
+            continue
+        seen.add(arxiv_id);values.append(arxiv_id)
+    return tuple(values)
 
 
 def _now() -> str:
@@ -160,6 +177,55 @@ def parse_arxiv_page(page: str) -> dict[str, str]:
     abstract = _strip_html(abstract_match.group(1)) if abstract_match else ""
     abstract = re.sub(r"^Abstract:\s*", "", abstract, flags=re.I).strip()
     return {"title": title, "abstract": abstract}
+
+
+def discover_exact_arxiv_seeds(
+    arxiv_ids: tuple[str, ...] | list[str],
+    *,
+    requester: Callable[..., Any] | None = None,
+    min_interval_seconds: float = DEFAULT_MIN_INTERVAL_SECONDS,
+) -> tuple[list[dict[str, Any]], list[str]]:
+    """Resolve explicitly configured seed papers from first-party arXiv abs pages.
+
+    This is a recall mechanism, not a freshness relaxation for ordinary discovery.
+    Exact seeds are tagged so downstream selection/auditing can distinguish the
+    explicit age exemption from the normal <=60-day fresh-paper window.
+    """
+    fetch=requester or _default_requester
+    rows=[];errors=[];last_request_at=0.0
+    seen=set()
+    for raw_id in arxiv_ids:
+        arxiv_id=str(raw_id or "").strip().removeprefix("arXiv:")
+        if not re.fullmatch(r"\d{4}\.\d{4,5}",arxiv_id) or arxiv_id in seen:
+            continue
+        seen.add(arxiv_id)
+        wait=max(0.0,float(min_interval_seconds)-(time.monotonic()-last_request_at))
+        if wait>0:time.sleep(wait)
+        try:
+            response=fetch(f"https://arxiv.org/abs/{arxiv_id}",timeout=25.0,headers={"User-Agent":"Agent-Self-Evolution-Observatory/exact-seed-primary"})
+            last_request_at=time.monotonic()
+            if int(getattr(response,"status_code",0) or 0)>=400:
+                raise RuntimeError(f"HTTP {getattr(response,'status_code',0)}")
+            page=str(getattr(response,"text","") or "")
+            parsed=parse_arxiv_page(page)
+            if not parsed.get("title") or not parsed.get("abstract"):
+                raise RuntimeError("exact-seed-primary-page-unparseable")
+            citation_date=_meta_content(page,"citation_date").replace("/","-")
+            if not re.fullmatch(r"\d{4}-\d{2}-\d{2}",citation_date):
+                # arXiv YYMM identifiers give only a lower-resolution fallback; keep the
+                # missing date explicit rather than inventing a day.
+                citation_date=""
+            year=int(citation_date[:4]) if citation_date else 2000+int(arxiv_id[:2])
+            paper={
+                "paper_id":f"arxiv:{arxiv_id}","title":parsed["title"],"year":year,"venue":"arXiv",
+                "abstract":parsed["abstract"],"url":f"https://arxiv.org/abs/{arxiv_id}",
+                "metadata":{"externalIds":{"ArXiv":arxiv_id},"publicationDate":citation_date,"citationCount":0,"retrievalScore":0.0,"retrievedAt":_now(),"matches":[{"route":"exact-seed"}]},
+                "_paper_first_exact_seed":True,
+            }
+            rows.append(paper)
+        except Exception as error:
+            errors.append(f"arXiv:{arxiv_id}:{type(error).__name__}:{str(error)[:180]}")
+    return rows,errors
 
 
 _FULLTEXT_SECTION_TERMS = (
@@ -553,18 +619,19 @@ def select_primary_candidates(
         arxiv_id = _arxiv_id(paper)
         abstract = str(paper.get("abstract") or "").strip()
         score = _relevance_score(paper)
-        if not arxiv_id or not abstract or score < 2 or arxiv_id in seen:
+        exact_seed = paper.get("_paper_first_exact_seed") is True
+        if not arxiv_id or not abstract or (score < 2 and not exact_seed) or arxiv_id in seen:
             continue
         seen.add(arxiv_id)
         metadata = paper.get("metadata") or {}
         publication_date = str(metadata.get("publicationDate") or "")
         publication_age = _age_days(publication_date, current)
-        if publication_age is None or publication_age > max_publication_age_days:
+        if (publication_age is None or publication_age > max_publication_age_days) and not exact_seed:
             continue
         year = int(paper.get("year") or 0)
         citation_count = int(metadata.get("citationCount") or 0)
         retrieval_score = float(metadata.get("retrievalScore") or 0.0)
-        rank_key = (publication_date, year, score, retrieval_score, citation_count, str(paper.get("title") or ""))
+        rank_key = (int(exact_seed), publication_date, year, score, retrieval_score, citation_count, str(paper.get("title") or ""))
         ranked.append((rank_key, paper))
     ranked.sort(key=lambda item: item[0], reverse=True)
     limit = max(0, int(max_papers))
@@ -904,7 +971,14 @@ def _augment_discovery_corpus(corpus: dict[str, Any], augmentation: list[dict[st
         if not isinstance(paper, dict):
             continue
         arxiv_id = _arxiv_id(paper)
-        if not arxiv_id or arxiv_id in merged:
+        if not arxiv_id:
+            continue
+        if arxiv_id in merged:
+            if paper.get("_paper_first_exact_seed") is True:
+                existing=dict(merged[arxiv_id]);existing["_paper_first_exact_seed"]=True
+                metadata=dict(existing.get("metadata") or {});matches=list(metadata.get("matches") or [])
+                if not any(isinstance(row,dict) and row.get("route")=="exact-seed" for row in matches):matches.append({"route":"exact-seed"})
+                metadata["matches"]=matches;existing["metadata"]=metadata;merged[arxiv_id]=existing
             continue
         merged[arxiv_id] = paper
         added += 1
@@ -1355,6 +1429,7 @@ def build_primary_evidence_pool(
     requester: Callable[..., Any] | None = None,
     arxiv_search_requester: Callable[..., Any] | None = None,
     arxiv_queries: tuple[str, ...] = DEFAULT_ARXIV_QUERIES,
+    exact_seed_arxiv_ids: tuple[str, ...] = (),
     arxiv_query_interval_seconds: float = DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS,
     arxiv_rate_limit_state_path: Path | None = None,
     arxiv_rate_limit_cooldown_seconds: int = DEFAULT_ARXIV_RATE_LIMIT_COOLDOWN_SECONDS,
@@ -1371,6 +1446,8 @@ def build_primary_evidence_pool(
     corpus_path = corpus_path or storage.corpus_dir / "semantic-scholar-corpus.json"
     corpus = load_live_corpus(corpus_path)
     current = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
+    exact_seed_ids=tuple(exact_seed_arxiv_ids)
+    fetch = requester or _default_requester
     private_pool_path, default_cache = _private_paths(storage)
     cache_dir = cache_dir or default_cache
     arxiv_rate_limit_state_path = arxiv_rate_limit_state_path or (storage.data_root / "paper-first-problem-discovery" / "arxiv-rate-limit-state.json")
@@ -1402,6 +1479,10 @@ def build_primary_evidence_pool(
             "arxiv_fallback_is_primary_metadata_not_a_scientific_claim": True,
             "primary_publication_age_is_bounded": True,
             "maximum_publication_age_days": max_publication_age_days,
+            "exact_seed_arxiv_ids": list(exact_seed_ids),
+            "exact_seed_discovery_bypasses_freshness_only_not_primary_verification": True,
+            "exact_seed_age_exemption_is_explicit_and_auditable": True,
+            "exact_seed_records_do_not_claim_freshness": True,
             "no_parallel_primary_fetch": True,
             "recent_verified_cache_reuse_hours": float(recent_verified_cache_reuse_hours),
             "recent_fulltext_failure_cooldown_hours": float(recent_fulltext_failure_cooldown_hours),
@@ -1460,6 +1541,12 @@ def build_primary_evidence_pool(
             "discovery_mode": "none",
             "augmentation_discovered": 0,
             "augmentation_added": 0,
+            "exact_seed_configured": len(exact_seed_ids),
+            "exact_seed_discovered": 0,
+            "exact_seed_added": 0,
+            "exact_seed_selected": 0,
+            "exact_seed_verified": 0,
+            "exact_seed_fetch_errors": 0,
             "selected": 0,
             "verified": 0,
             "fetch_errors": 0,
@@ -1526,6 +1613,7 @@ def build_primary_evidence_pool(
         "errors": [],
         "fulltext_errors": [],
         "discovery_errors": [],
+        "exact_seed": {"configured":list(exact_seed_ids),"discovered":0,"added":0,"errors":[],"scientific_authority":False},
         "carrier_probe": {"enabled":False,"required":False,"attempted":0,"reused":0,"rescued":0,"pending":0,"errors":[],"portable_receipts":[],"private_receipts":[],"scientific_authority":False},
         "source_coverage": {"scheduler_active": False, "saturation_ledger_runs": 0, "portable_review_receipts_merged": 0, "prior_reviewed_sources": 0, "eligible_unreviewed": 0, "eligible_lane_unreviewed": 0, "eligible_no_lane_unreviewed": 0, "carrier_probe_required":False, "carrier_probe_pending":0, "carrier_probe_complete":True, "eligible_lane_linked_sources": 0, "reviewed_lane_linked_sources": 0, "unreviewed_lane_linked_sources": 0, "unreviewed_no_lane_sources": 0, "coverage_exhausted": False, "coverage_anchor_count": int(coverage_anchor_count), "selected": [], "scientific_authority": False},
     }
@@ -1578,6 +1666,17 @@ def build_primary_evidence_pool(
         public_state["discovery_errors"] = discovery_errors
         private["discovery_errors"] = discovery_errors
 
+    exact_seed_rows,exact_seed_errors=discover_exact_arxiv_seeds(
+        exact_seed_ids,requester=fetch,min_interval_seconds=min_interval_seconds,
+    ) if exact_seed_ids else ([],[])
+    discovery_corpus,exact_seed_added=_augment_discovery_corpus(discovery_corpus,exact_seed_rows)
+    public_state["summary"].update({
+        "exact_seed_discovered":len(exact_seed_rows),"exact_seed_added":exact_seed_added,
+        "exact_seed_fetch_errors":len(exact_seed_errors),
+    })
+    public_state["exact_seed_errors"]=exact_seed_errors
+    private["exact_seed"]={"configured":list(exact_seed_ids),"discovered":len(exact_seed_rows),"added":exact_seed_added,"errors":exact_seed_errors,"scientific_authority":False}
+
     source_retrieval_complete = not discovery_errors
     source_exposure_counts, saturation_ledger_runs, portable_review_receipts_merged, portable_review_receipts = _source_exposure_state(
         storage,
@@ -1592,7 +1691,6 @@ def build_primary_evidence_pool(
         max_publication_age_days=max_publication_age_days,
         lane_floor=0,
     )
-    fetch = requester or _default_requester
     preprobe_unreviewed_lane_refs={_source_ref(paper) for paper in eligible_candidates if _paper_lane_keys(paper) and int(source_exposure_counts.get(_source_ref(paper),0))==0}
     preprobe_unreviewed_no_lane_refs={_source_ref(paper) for paper in eligible_candidates if not _paper_lane_keys(paper) and int(source_exposure_counts.get(_source_ref(paper),0))==0}
     carrier_probe_required=bool(enable_no_lane_carrier_probe and source_scheduler_active and source_retrieval_complete and not preprobe_unreviewed_lane_refs and preprobe_unreviewed_no_lane_refs)
@@ -1726,12 +1824,21 @@ def build_primary_evidence_pool(
         "source_retrieval_complete": source_retrieval_complete,
         "coverage_anchor_count": min(max(0, int(coverage_anchor_count)), len(candidates)),
         "selected": [
-            {"ref": _source_ref(paper), "prior_review_exposure": selected_exposures.get(_source_ref(paper), 0), "global_rank": eligible_rank.get(_source_ref(paper))}
+            {"ref": _source_ref(paper), "prior_review_exposure": selected_exposures.get(_source_ref(paper), 0), "global_rank": eligible_rank.get(_source_ref(paper)), "exact_seed":paper.get("_paper_first_exact_seed") is True}
             for paper in candidates
         ],
         "scientific_authority": False,
     }
     candidate_lane_by_ref = {f"arXiv:{_arxiv_id(paper)}": _paper_lane_keys(paper) for paper in candidates}
+    candidate_exact_seed_by_ref = {f"arXiv:{_arxiv_id(paper)}": paper.get("_paper_first_exact_seed") is True for paper in candidates}
+    candidate_exact_seed_age_exemption_by_ref = {
+        f"arXiv:{_arxiv_id(paper)}": bool(
+            paper.get("_paper_first_exact_seed") is True
+            and ((_age_days(str((paper.get("metadata") or {}).get("publicationDate") or ""),current) is None)
+                 or (_age_days(str((paper.get("metadata") or {}).get("publicationDate") or ""),current) or 0)>max_publication_age_days)
+        )
+        for paper in candidates
+    }
     fetch = requester or _default_requester
     cache_dir.mkdir(parents=True, exist_ok=True)
     last_fetch_started: float | None = None
@@ -1764,6 +1871,8 @@ def build_primary_evidence_pool(
                 "s2_paper_id": paper.get("paper_id"),
                 "s2_retrieved_at": (paper.get("metadata") or {}).get("retrievedAt"),
                 "lane_keys": list(candidate_lane_by_ref.get(ref, ())),
+                "exact_seed": bool(candidate_exact_seed_by_ref.get(ref,False)),
+                "exact_seed_age_exemption": bool(candidate_exact_seed_age_exemption_by_ref.get(ref,False)),
             })
             verified.append(record)
             fulltext_verified += 1
@@ -1897,6 +2006,8 @@ def build_primary_evidence_pool(
                 "empirical_fact_extraction_version": EMPIRICAL_FACT_EXTRACTION_VERSION,
                 "typed_evidence_extraction_version": TYPED_EVIDENCE_EXTRACTION_VERSION,
                 "lane_keys": list(candidate_lane_by_ref.get(f"arXiv:{arxiv_id}", ())),
+                "exact_seed": bool(candidate_exact_seed_by_ref.get(f"arXiv:{arxiv_id}",False)),
+                "exact_seed_age_exemption": bool(candidate_exact_seed_age_exemption_by_ref.get(f"arXiv:{arxiv_id}",False)),
             }
             verified.append(record)
         except Exception as error:  # network/provider failures are evidence absence, not scientific negatives
@@ -1926,6 +2037,8 @@ def build_primary_evidence_pool(
     public_state["summary"].update(
         {
             "verified": len(verified),
+            "exact_seed_selected": sum(paper.get("_paper_first_exact_seed") is True for paper in candidates),
+            "exact_seed_verified": sum(record.get("exact_seed") is True for record in verified),
             "fetch_errors": sum(1 for row in errors if row.get("error") != "title-mismatch"),
             "title_mismatches": title_mismatches,
             "fulltext_verified": fulltext_verified,
@@ -1948,6 +2061,8 @@ def build_primary_evidence_pool(
             "fulltext_sha256": str(row.get("fulltext_sha256") or ""),
             "empirical_fact_count": len(row.get("empirical_facts") or []),
             "typed_evidence_counts": {key: len((row.get("typed_evidence") or {}).get(key) or []) for key in ("operational_assumptions", "measured_failures", "boundary_observations")},
+            "exact_seed": bool(row.get("exact_seed")),
+            "exact_seed_age_exemption": bool(row.get("exact_seed_age_exemption")),
         }
         for row in verified
     ]
@@ -1987,6 +2102,7 @@ def write_primary_evidence_pool(
     requester: Callable[..., Any] | None = None,
     arxiv_search_requester: Callable[..., Any] | None = None,
     arxiv_queries: tuple[str, ...] = DEFAULT_ARXIV_QUERIES,
+    exact_seed_arxiv_ids: tuple[str, ...] | None = None,
     arxiv_query_interval_seconds: float = DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS,
     augment_fresh_corpus_with_arxiv: bool = True,
     now: datetime | None = None,
@@ -2012,6 +2128,7 @@ def write_primary_evidence_pool(
         requester=requester,
         arxiv_search_requester=arxiv_search_requester,
         arxiv_queries=arxiv_queries,
+        exact_seed_arxiv_ids=tuple(exact_seed_arxiv_ids) if exact_seed_arxiv_ids is not None else _configured_exact_seed_arxiv_ids(),
         arxiv_query_interval_seconds=arxiv_query_interval_seconds,
         augment_fresh_corpus_with_arxiv=augment_fresh_corpus_with_arxiv,
         now=now,

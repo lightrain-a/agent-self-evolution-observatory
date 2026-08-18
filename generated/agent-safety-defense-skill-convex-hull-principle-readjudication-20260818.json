@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "AGENT-SAFETY-DEFENSE-SKILL-CONVEX-HULL-PLATEAU",
+  "search_primitive": "COMPOSITION_INTERACTION",
+  "title": "Joint defense-skill co-evolution has no convex-hull invariant without an affine mixture construction",
+  "adjudication_date": "2026-08-18",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": true,
+  "experiment_alone_authorizes_dead_end": false,
+  "broader_defense_skill_interaction_falsified": false,
+  "dead_end_scope": "The standalone SHADOW-P05-C01 formulation whose distinguishing prediction requires the final joint defense-skill (security, utility) point to lie strictly inside the convex hull of the defense-only and skill-only endpoints and requires a positive defense-restrictiveness/skill-diversity squeeze trajectory as a necessary signature of the claimed mutual-constraint plateau.",
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "NECESSARY_ASSUMPTION_REFUTED",
+    "counter_explanation": {
+      "type": "NECESSARY_ASSUMPTION_REFUTED",
+      "necessary_assumption_id": "ASSUMPTION-CONVEX-HULL-AFFINE-MIXTURE",
+      "necessity_established": true,
+      "assumption_refuted": true,
+      "statement": "The candidate's exact convex-hull prediction is valid only if the joint system is literally a randomized mixture of the two frozen single-arm endpoint policies or if the policy-to-(security, utility) outcome map is affine along the joint update path. Neither condition is implied by HARD, SkillCommit, or generic co-evolution. Joint defense and skill updates change each other's feasible action support and optimization landscape, introducing non-affine interaction cross-terms; therefore the joint reachable point may lie outside the line segment between the two single-arm endpoints. The claimed positive restrictiveness-diversity squeeze is likewise not a structural invariant: stronger defense can contract the executed action support and reduce realized skill diversity.",
+      "opposite_prediction": "Under coupled defense-skill dynamics with changing feasible action sets, the joint endpoint may lie outside the two-point convex hull, and defense restrictiveness may be negatively rather than positively associated with executed skill diversity. A generic coupled multi-objective system should therefore not be expected to satisfy the candidate's convex-hull or squeeze signatures unless a separate affine-mixture architecture is explicitly imposed.",
+      "opposite_principle": "Coupled multi-objective optimization with endogenous feasible-set changes is non-affine in general. Convex-hull membership of endpoint metrics is guaranteed only by an explicit mixture/affinity construction, not by the fact that two components are individually beneficial or jointly optimized.",
+      "opposite_search_seed": "If defense-skill interaction remains interesting, search for a matched 2x2 factorial or another independently manipulable interaction variable that estimates a genuine cross-term under identical information and budget. Do not require convex-hull membership. A valid next object should either identify an architecture-derived invariant of the feasible action set under joint updates or demonstrate a residual interaction beyond a same-information coupled-dynamics model without assuming the sign or geometry in advance.",
+      "scope": "SHADOW-P05-C01 / AGENT-SAFETY-DEFENSE-SKILL-CONVEX-HULL-PLATEAU only: the current convex-hull and positive-squeeze realization of a defense-skill mutual-constraint plateau. The broader question of non-additive defense-skill interaction remains open.",
+      "same_information_or_scope_matched": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2608.12977",
+        "arXiv:2608.15165",
+        "run:/data/wyt/agent-safety-discovery-20260818/shadow-agent-safety-20260818-r4/defense-skill-composition-f0-analysis.json#sha256=6a7f3e3aedcba9cf5add51ea2be13a47a03ef96395702a4fbc7f38bef9a97876",
+        "review:deepseek-v4-pro-260425:defense-skill-convex-hull#sha256=1040e984024863b1e1d1adf391bb4e53f187fe66f1e5b84aef8f5c7437518dba"
+      ],
+      "alternative_explanations_ruled_out": [
+        "The dead-end is not authorized by the negative F0 alone. The required convex-hull signature is structurally unjustified before any experiment because no mixture or affine metric map is part of the scientific object.",
+        "The defense-only and skill-only endpoints do not span the full set of jointly reachable policies when joint updates change the feasible action set; therefore leaving their line segment does not by itself imply a novel plateau mechanism.",
+        "The negative restrictiveness-diversity correlations observed in all three bounded R4 units are consistent with the opposite principle but are supporting evidence only, not the source of the structural conclusion.",
+        "Increasing learning rate, exploration noise, or seed count cannot restore a convex-hull invariant absent an affine-mixture construction.",
+        "Replacing the endpoint hull with a larger empirical polygon built from more single-arm checkpoints would change the proposed invariant and still would not be guaranteed under non-affine joint updates."
+      ],
+      "reopen_condition": "Reopen only with a new formulation that drops convex-hull membership as a necessary signature and supplies a preregistered interaction prediction justified by the actual agent architecture. Acceptable routes include a same-information 2x2 factorial cross-term, an independently measured feasible-action-set invariant, or a stated architectural constraint that mathematically forces a specific defense-restrictiveness/skill-diversity relation. More seeds, a different toy domain, or another joint endpoint outside/inside the same hull does not reopen the current realization."
+    }
+  },
+  "independent_review": {
+    "reviewer_model": "deepseek-v4-pro-260425",
+    "verdict": "PRINCIPLE_DEAD_END_CURRENT_REALIZATION",
+    "confidence": 0.94,
+    "raw_sha256": "773feef5c427d8eee3561cab956a4b9c4c56a4ddab939fd2f09694953f568b0c",
+    "review_artifact_sha256": "1040e984024863b1e1d1adf391bb4e53f187fe66f1e5b84aef8f5c7437518dba",
+    "scientific_authority": false
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "defense and skill evolution do not interact",
+      "joint defense-skill evolution cannot plateau",
+      "the R4 experiment falsified all defense-skill composition ideas",
+      "coupled dynamics guarantees a specific alternative endpoint"
+    ],
+    "safe_claim": "The current defense-skill plateau realization is closed because its decisive convex-hull and positive-squeeze signatures depend on an affine-mixture invariant not supplied by the component systems or by generic coupled dynamics. The broader interaction problem remains open and should be reformulated around an independently justified cross-term or feasible-set invariant rather than endpoint hull geometry.",
+    "new_search_basin": "defense-skill-factorial-cross-term-or-feasible-set-invariant"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "necessary_assumption_refutation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

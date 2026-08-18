@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "AGENT-SAFETY-DUAL-LOOP-RHO-CRITICAL",
+  "search_primitive": "COMPOSITION_INTERACTION",
+  "title": "Writable-support overlap is not an independently manipulable composition variable for a fixed pair of self-evolution loops",
+  "adjudication_date": "2026-08-18",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": true,
+  "experiment_alone_authorizes_dead_end": false,
+  "broader_multi_loop_interference_falsified": false,
+  "dead_end_scope": "The standalone SHADOW-P02-C01 formulation that treats rho = |S_A intersect S_B| / |S_A union S_B|, where S_A and S_B are the writable supports defining two independently validated self-evolution loop update operators, as a pre-composition variable that can be varied for that fixed loop pair to identify a rho-critical boundary between additive improvement, dominance, and mutual degradation.",
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "IMPOSSIBILITY_OR_INVARIANCE",
+    "counter_explanation": {
+      "type": "IMPOSSIBILITY_OR_INVARIANCE",
+      "statement": "For a fixed pair of self-evolution loops whose treatment identities include their writable supports S_A and S_B, rho is a deterministic function of those supports. Holding both component identities fixed therefore fixes rho. Any empirical intervention that changes rho must change at least one support and hence at least one component treatment, unless an additional support-exchangeability or symmetry invariant is assumed. The strongest outcome-independent repair matched A and B marginal support within 20 strata defined only by frozen no-loop baseline visitation, hazard entry, and goal-progress class, held A support fixed, counterbalanced masks, and varied only within-stratum intersection. Even under that repair, B isolated utility remained strongly support-identity dependent while A stayed invariant. The exchangeability required to interpret rho as the causal treatment is therefore not available in the current object.",
+      "opposite_prediction": "If rho were an independently manipulable property of one fixed loop pair, then a support-matched intervention that holds A fixed and replaces only B coordinates with pre-composition-equivalent coordinates while changing overlap would preserve B isolated utility up to sampling noise. Instead, at tau=1 the support-matched R6 B isolated gain changes from about -0.131 at rho=0 to +0.308 at rho=1 while A remains about +0.276 across the same rho sweep.",
+      "opposite_principle": "A derived overlap statistic of two fixed treatment-defining sets is not a free causal variable. Composition structure can be studied causally only through a pre-composition variable that is independently manipulable while component identities remain fixed, or under an explicit and validated exchangeability/symmetry construction that makes support identity irrelevant.",
+      "opposite_search_seed": "Search for a multi-loop composition variable with an actual do-intervention that preserves the exact two loop update operators and their individually validated behavior. Promising objects must change coupling through an external interface, communication edge, scheduling relation, arbitration rule, or another independently manipulable connection while keeping each component treatment fixed; do not revive another overlap score that is mathematically determined by treatment-defining supports.",
+      "scope": "SHADOW-P02-C01 / AGENT-SAFETY-DUAL-LOOP-RHO-CRITICAL only: the rho-critical causal boundary based on writable-support Jaccard overlap for a fixed pair of independently validated self-evolution loops. This closure does not assert that multi-loop interference is absent, unimportant, or fully explained by generic coupled dynamics.",
+      "same_information_or_scope_matched": true,
+      "proof_or_structural_witness": true,
+      "structural_witness": "Let loop A be the update operator F_A(x; S_A) and loop B be F_B(x; S_B), with writable supports S_A and S_B part of their treatment definitions. The proposed rho is J(S_A,S_B). Under fixed F_A including S_A and fixed F_B including S_B, J(S_A,S_B) is invariant. Thus no do(rho=r') exists within the same treatment pair for r' != rho. Changing rho requires changing S_A or S_B. R6 additionally falsifies the only attempted nuisance-exchangeability bridge: exact B support membership remains outcome-relevant after pre-composition semantic/visitation matching.",
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2608.16590",
+        "arXiv:2608.16114",
+        "run:/data/wyt/agent-safety-discovery-20260818/shadow-agent-safety-20260818-r6/dual-loop-gridworld-r6-treatment-identity-diagnostic.json#sha256=667b2023346548c3afefec833ccd71d5547ab68cc36537a285f1c4dfa1813b3d",
+        "run:/data/wyt/agent-safety-discovery-20260818/shadow-agent-safety-20260818-r6/dual-loop-gridworld-f0-result-r6.json#sha256=b92385f6f354519eb7d1de893d393b239f9c0ffaad80b0eaf3c5ee5e2dc005c3",
+        "review:deepseek-v4-pro-260425:rho-treatment-identity#sha256=51675bf0560698d6a0f0648de037449bb9fffaacaa4bff81488e0d727a6bcf50"
+      ],
+      "alternative_explanations_ruled_out": [
+        "Insufficient replication is not the authorizing reason: the dead end follows algebraically from rho being a deterministic function of the treatment-defining supports; the R6 run is supporting evidence only.",
+        "A simple unmatched-mask artifact was addressed: R6 held both loops' marginal writable counts fixed within 20 pre-composition baseline-visitation, hazard-entry, and goal-progress strata, used common random numbers across rho, and held A exact support fixed.",
+        "Better outcome-independent strata do not restore an independent intervention unless they establish support exchangeability. R6 directly shows that support identity remains behaviorally relevant after the reviewed matching bridge.",
+        "Randomizing support pairs and averaging changes the estimand from one fixed pair of independently validated loops to a population over changing loop identities.",
+        "Selecting supports to equalize isolated utility conditions on performance when constructing the component treatments and changes the fixed-pair object; it is not a do-intervention on rho for the original pair.",
+        "Adding duplicated or symmetry-enforced coordinates would introduce a new exchangeability construction and therefore a different scientific object rather than rescue the current one.",
+        "Changing the toy environment or adding more seeds cannot make J(S_A,S_B) independently manipulable when S_A and S_B themselves define the fixed components."
+      ],
+      "reopen_condition": "Reopen only after reformulating the object around a pre-composition structural variable that admits an explicit intervention while the exact component update operators, support identities, independently validated behaviors, information, and budgets remain fixed; or after making an exchangeability/symmetry construction an explicit part of a new scientific object and independently validating that support identity is outcome-invariant. Another support-overlap statistic, finer matching, more seeds, outcome-selected masks, or a symmetry-enforced toy substrate does not reopen the current rho-critical formulation."
+    }
+  },
+  "independent_review": {
+    "reviewer_model": "deepseek-v4-pro-260425",
+    "verdict": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "confidence": "high",
+    "raw_sha256": "85b5076f828ac270d8075e5add6d15b1de04464ec6ccaaa381cf5c33191dc6d2",
+    "review_artifact_sha256": "51675bf0560698d6a0f0648de037449bb9fffaacaa4bff81488e0d727a6bcf50",
+    "transport_fallback_used": false,
+    "provider_calls_executed": 1,
+    "experiment_is_only_support_not_authority": true,
+    "scientific_authority": false
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "multi-loop self-evolution interference does not exist",
+      "coupled dynamics fully explains every composition failure",
+      "the rho-critical paper problem failed merely because the toy F0 was inconclusive",
+      "more compute or more mask matching could rescue the same fixed-pair rho treatment"
+    ],
+    "safe_claim": "The broader observation that independently useful self-evolution loops may interfere remains scientifically open. What is closed is the current standalone causal formulation that uses writable-support Jaccard overlap rho as an independently varying property of a fixed loop pair: rho is fixed by the treatment-defining supports, and changing it changes at least one component identity. The R6 support-matched evidence independently confirms that support identity is behaviorally consequential rather than an exchangeable nuisance.",
+    "new_search_basin": "independently-manipulable-coupling-variable-for-fixed-self-evolution-components"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "structural_invariance_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

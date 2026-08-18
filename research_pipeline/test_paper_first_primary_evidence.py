@@ -11,7 +11,7 @@ from unittest.mock import patch
 import requests
 
 from .config import StorageSettings
-from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, EMPIRICAL_FACT_EXTRACTION_VERSION, TYPED_EVIDENCE_EXTRACTION_VERSION, _default_requester, _paper_lane_keys, _paper_object_lane_keys, _source_exposure_state, build_primary_evidence_pool, discover_arxiv_fallback, extract_empirical_fact_candidates, extract_typed_evidence_candidates, parse_arxiv_atom, parse_arxiv_page, project_recompiled_primary_public_state, recompile_frozen_primary_typed_evidence, select_primary_candidates
+from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, EMPIRICAL_FACT_EXTRACTION_VERSION, TYPED_EVIDENCE_EXTRACTION_VERSION, _default_requester, _paper_lane_keys, _paper_object_lane_keys, _source_exposure_state, build_primary_evidence_pool, discover_arxiv_fallback, discover_exact_arxiv_seeds, extract_empirical_fact_candidates, extract_typed_evidence_candidates, parse_arxiv_atom, parse_arxiv_page, project_recompiled_primary_public_state, recompile_frozen_primary_typed_evidence, select_primary_candidates
 
 
 class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
@@ -96,6 +96,12 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertIn("parametric_model_state",_paper_object_lane_keys(param))
         self.assertNotIn("parametric_model_state",_paper_object_lane_keys(frozen))
 
+    def test_safety_property_lane_recalls_safety_drift_and_harm_language(self) -> None:
+        drift={"title":"Towards Healthy Evolution","abstract":"We measure safety drift during autonomous self-evolution."}
+        harm={"title":"Benign Alone Harmful Together","abstract":"Individually benign experiences compose into harmful agent behavior."}
+        self.assertIn("safety_reliability",_paper_lane_keys(drift))
+        self.assertIn("safety_reliability",_paper_lane_keys(harm))
+
     def test_source_scheduler_prefers_object_grounded_exploration_over_context_only(self) -> None:
         papers=[
             {"paper_id":"anchor","title":"Agent Skill Harness Anchor","abstract":"A self-evolving agent skill harness.","year":2026,"metadata":{"externalIds":{"ArXiv":"2608.41001"},"publicationDate":"2026-08-13","citationCount":0,"retrievalScore":0,"matches":[{"route":"topic"}]}},
@@ -109,6 +115,27 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
     def test_parse_arxiv_page_extracts_title_and_abstract(self) -> None:
         parsed = parse_arxiv_page('<meta name="citation_title" content="Paper A"><blockquote class="abstract mathjax">Abstract: hello <b>world</b></blockquote>')
         self.assertEqual(parsed, {"title":"Paper A","abstract":"hello world"})
+
+    def test_exact_seed_discovery_uses_first_party_abs_page_and_marks_seed(self) -> None:
+        def requester(url: str, *, timeout: float, headers: dict[str,str]):
+            self.assertEqual(url,"https://arxiv.org/abs/2604.16968")
+            return SimpleNamespace(status_code=200,text='''<html><head><meta name="citation_title" content="On Safety Risks in Experience-Driven Self-Evolving Agents"><meta name="citation_date" content="2026/04/18"></head><body><blockquote class="abstract mathjax">Abstract: We study safety risks in experience-driven self-evolving agents and find benign experience can degrade safety.</blockquote></body></html>''')
+        rows,errors=discover_exact_arxiv_seeds(("2604.16968",),requester=requester,min_interval_seconds=0)
+        self.assertEqual(errors,[])
+        self.assertEqual(len(rows),1)
+        row=rows[0]
+        self.assertTrue(row["_paper_first_exact_seed"])
+        self.assertEqual((row["metadata"] or {})["publicationDate"],"2026-04-18")
+        self.assertEqual(((row["metadata"] or {})["externalIds"] or {})["ArXiv"],"2604.16968")
+        self.assertEqual(((row["metadata"] or {})["matches"] or [])[0]["route"],"exact-seed")
+
+    def test_exact_seed_can_bypass_age_without_relaxing_ordinary_freshness(self) -> None:
+        current=datetime(2026,8,18,tzinfo=timezone.utc)
+        exact={"paper_id":"exact","title":"On Safety Risks in Experience-Driven Self-Evolving Agents","abstract":"Self-evolving agent safety and experience adaptation.","year":2026,"_paper_first_exact_seed":True,"metadata":{"externalIds":{"ArXiv":"2604.16968"},"publicationDate":"2026-04-18","citationCount":0,"retrievalScore":0,"matches":[{"route":"exact-seed"}]}}
+        old={"paper_id":"old","title":"Old Self-Evolving Agent Safety","abstract":"Self-evolving agent safety and experience adaptation.","year":2026,"metadata":{"externalIds":{"ArXiv":"2604.10000"},"publicationDate":"2026-04-18","citationCount":0,"retrievalScore":0,"matches":[{"route":"topic"}]}}
+        fresh={"paper_id":"fresh","title":"Fresh Self-Evolving Agent Safety","abstract":"Self-evolving agent safety and experience adaptation.","year":2026,"metadata":{"externalIds":{"ArXiv":"2608.10000"},"publicationDate":"2026-08-10","citationCount":0,"retrievalScore":0,"matches":[{"route":"topic"}]}}
+        selected=select_primary_candidates({"papers":[old,fresh,exact]},max_papers=3,lane_floor=0,now=current,max_publication_age_days=60)
+        self.assertEqual([row["paper_id"] for row in selected],["exact","fresh"])
 
     def test_fulltext_empirical_fact_extraction_is_section_and_cue_bounded(self) -> None:
         page='''<html><body><section><h2>Experimental Results</h2><p>We find that the verified skill improves held-out success by 17.5% across five tasks, while the unverified ablation fails on two tasks.</p></section><section><h2>Related Work</h2><p>We find many papers interesting but this is not an experimental result.</p></section></body></html>'''
