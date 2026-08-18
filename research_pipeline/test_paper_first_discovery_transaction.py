@@ -449,13 +449,14 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         queue={"audited":[]}
         self.assertNotEqual(_transaction_id(base,generator,queue),_transaction_id(advanced,generator,queue))
 
-    def test_validator_rejects_portfolio_as_canonical_transaction_generator(self) -> None:
+    def test_validator_rejects_incomplete_double_funnel_contract(self) -> None:
         primary={"status":"READY","summary":{"verified":4}}
         generator={"schema_version":"3.2","status":"GENERATED_ZERO_CANDIDATES","summary":{"primary_evidence_records":4,"generated":0,"written_to_auto_inbox":0,"semantic_clear":0,"semantic_blocked":0},"policy":{"search_portfolio_enabled":True,"one_generator_call_max":False,"one_semantic_reviewer_call_max":False,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"candidates":[]}
         queue={"summary":{"primary_evidence_records":4,"submitted":0,"audited":0,"passed_problem_gate":0,"blocked_problem_gate":0,"inbox_errors":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0},"audited":[]}
         errors=_validate(primary,generator,queue)
-        self.assertIn("canonical-transaction-forbids-search-portfolio",errors)
-        self.assertIn("canonical-transaction-requires-single-call-budget",errors)
+        self.assertIn("canonical-double-funnel-shadow-provenance-boundary-invalid",errors)
+        self.assertIn("canonical-double-funnel-transaction-budget-policy-missing",errors)
+        self.assertIn("canonical-double-funnel-scientific-gates-missing",errors)
 
     def test_validator_rejects_saturation_skip_when_unreviewed_lane_source_remains(self) -> None:
         primary={"status":"READY","summary":{"verified":4}}

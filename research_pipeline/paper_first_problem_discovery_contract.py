@@ -5,7 +5,25 @@ from typing import Any
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS, REDUCTION_FALSIFIABILITY_CONTRACT, reduction_pattern_audit
 
 
-DISCOVERY_OPERATOR_VERSION = "fresh-phenomenon-treatment-aligned-deadend-aware-v16"
+DISCOVERY_OPERATOR_VERSION = "double-funnel-paperability-evolution-v17"
+
+# Paperability is broader than principle novelty. These axes are search/triage
+# coordinates only: none grants Method, Experiment, P0, GPU, or Paper authority.
+PAPERABILITY_AXES: dict[str, str] = {
+    "P": "principle_or_problem_formulation",
+    "M": "method_or_method_boundary",
+    "E": "empirical_phenomenon",
+    "B": "benchmark_or_evaluation",
+    "T": "theory_or_guarantee",
+    "S": "system_or_capability",
+}
+PAPERABILITY_AXIS_STATUSES: tuple[str, ...] = (
+    "SUPPORTED",
+    "PLAUSIBLE",
+    "OPEN",
+    "REDUCED",
+    "NOT_CLAIMED",
+)
 
 DISCOVERY_LANES: tuple[str, ...] = (
     "CONTRADICTION",
@@ -14,9 +32,10 @@ DISCOVERY_LANES: tuple[str, ...] = (
     "UNEXPLAINED_BOUNDARY",
 )
 
-# Search Portfolio may explore a broader structural vocabulary, but these are
-# shadow search primitives rather than live Problem-Gate lane types. Any branch
-# that cannot be formulated under one of DISCOVERY_LANES remains shadow-only.
+# The canonical double-funnel may explore this broader structural vocabulary
+# upstream, but final Problem-Gate candidates must still normalize to one of
+# DISCOVERY_LANES. The historical pre-split Search Portfolio publication remains
+# a shadow provenance artifact and is never retroactively promoted.
 SEARCH_PORTFOLIO_PRIMITIVES: tuple[str, ...] = (
     *DISCOVERY_LANES,
     "IDENTIFIABILITY_GAP",
@@ -160,11 +179,25 @@ POLICY: dict[str, Any] = {
     "search_portfolio_primitives": list(SEARCH_PORTFOLIO_PRIMITIVES),
     "forbidden_discovery_lanes": list(FORBIDDEN_DISCOVERY_LANES),
     "lane_specific_machine_evidence_contract_required": True,
+    # Legacy/public Search Portfolio artifacts remain shadow-only. New canonical
+    # discovery reuses the same breadth-search engine *inside* one atomic live
+    # discovery transaction instead of promoting any historical shadow result.
     "search_portfolio_required": False,
     "search_portfolio_is_shadow_only": True,
     "search_portfolio_cannot_publish_canonical_generator_or_queue": True,
-    "one_content_addressed_pool_allows_at_most_one_live_generator_call": True,
-    "one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator": True,
+    "canonical_double_funnel_required": True,
+    "canonical_double_funnel_reuses_portfolio_engine": True,
+    "historical_search_portfolio_remains_shadow_only": True,
+    "one_content_addressed_pool_allows_at_most_one_live_generator_call": False,
+    "one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator": False,
+    "one_content_addressed_pool_allows_at_most_one_discovery_transaction": True,
+    "bounded_provider_subcalls_inside_discovery_transaction": True,
+    "attack_repair_split_before_terminal_review": True,
+    "paperability_axes": dict(PAPERABILITY_AXES),
+    "principle_reduction_does_not_auto_close_other_paperability_axes": True,
+    "cheap_problem_falsifier_may_precede_exact_reduction": True,
+    "pre_f0_evidence_acquisition_has_zero_scientific_authority": True,
+    "exact_reduction_required_before_final_problem_gate": True,
     "source_coverage_saturation_reopens_once_on_operator_change": True,
     "expansion_reduction_separated": True,
     "mature_theory_veto_delayed_until_formulated_branch": True,

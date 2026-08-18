@@ -11,7 +11,7 @@ from pathlib import Path
 from .config import StorageSettings
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES
 from .paper_first_problem_gate_queue import build_problem_gate_queue
-from .paper_first_problem_generator import _ark, _durable_principle_dead_end_examples, _evidence_excerpt_matches, _normalize_lane_search, _principle_dead_end_reentry_audit, _provider_request_audit, _repair_block_only_reviewer_outer_braces, recover_archived_block_only_reviewer_raw, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
+from .paper_first_problem_generator import _ark, _durable_principle_dead_end_examples, _evidence_excerpt_matches, _normalize_lane_search, _pre_f0_route, _principle_dead_end_reentry_audit, _provider_request_audit, _repair_block_only_reviewer_outer_braces, recover_archived_block_only_reviewer_raw, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
 from .paper_first_problem_generator_prompts import generator_prompt, reviewer_prompt
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
@@ -345,11 +345,36 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertIn("inference-time conditioning versus parameter-updated/SFT training",prompt)
         self.assertIn("cross-treatment contrast",prompt)
 
-    def test_explicit_portfolio_mode_is_not_a_live_generator_path(self) -> None:
+    def test_pre_f0_allows_p_reduced_only_when_non_principle_axis_survives(self) -> None:
+        base={"candidate_id":"X","cheapest_problem_falsifier":"Run 12 matched units.","paperability_axes":{"P":{"status":"REDUCED"},"E":{"status":"SUPPORTED"}}}
+        with patch("research_pipeline.paper_first_problem_generator.audit_problem_candidate",return_value={"passed":False,"blockers":["mature-theory-valid-hard-veto:0"]}):
+            route=_pre_f0_route(base,{})
+            self.assertTrue(route["eligible"])
+            self.assertEqual(route["route_reason"],"P_REDUCED_NON_P_AXIS_SURVIVES")
+            only_p={**base,"paperability_axes":{"P":{"status":"REDUCED"}}}
+            self.assertFalse(_pre_f0_route(only_p,{})["eligible"])
+
+    def test_pending_exact_reduction_can_reach_zero_authority_pre_f0(self) -> None:
+        candidate={"candidate_id":"X","cheapest_problem_falsifier":"Run the cheapest matched falsifier.","paperability_axes":{"P":{"status":"PLAUSIBLE"}}}
+        with patch("research_pipeline.paper_first_problem_generator.audit_problem_candidate",return_value={"passed":False,"blockers":["unresolved-exact-reduction-test:0"]}):
+            route=_pre_f0_route(candidate,{})
+        self.assertTrue(route["eligible"])
+        self.assertEqual(route["route_reason"],"EXACT_REDUCTION_PENDING")
+        self.assertFalse(route["scientific_authority"])
+
+    def test_explicit_portfolio_mode_is_canonical_double_funnel_but_zero_authority(self) -> None:
+        portfolio={"schema_version":"3.0-double-funnel","policy":{"scientific_authority":False},"config":{},"summary":{"raw_seeds":0,"semantic_unique":0,"unique_problem_families":0,"breadth_archive":0,"mean_archive_pairwise_distance":0.0,"evolved_branches":0,"max_branch_depth":0,"reviewer_attacks":0,"repair_children":0,"formulated_candidates":0,"portfolio_calls":0},"lane_counts":{},"archive_lane_counts":{},"family_counts":{},"archives":{},"formulated_candidates":[],"scientific_authority":False}
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc)
-            with self.assertRaises(ValueError):
-                run_problem_generator(storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",portfolio_mode=True,now=now)
+            with patch("research_pipeline.paper_first_problem_generator.run_search_portfolio",return_value=portfolio):
+                state=run_problem_generator(storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",portfolio_mode=True,now=now)
+        self.assertEqual(state["status"],"GENERATED_ZERO_CANDIDATES")
+        self.assertTrue(state["policy"]["search_portfolio_enabled"])
+        self.assertFalse(state["policy"]["search_portfolio_is_shadow_only"])
+        self.assertTrue(state["policy"]["legacy_published_search_portfolio_remains_shadow_only"])
+        self.assertTrue(state["policy"]["bounded_provider_subcalls_inside_discovery_transaction"])
+        self.assertTrue(state["policy"]["exact_reduction_required_before_final_problem_gate"])
+        self.assertFalse(state["scientific_authority"] if "scientific_authority" in state else False)
 
     def test_unexplained_boundary_lane_search_accepts_one_primary_ref_but_other_lanes_do_not(self) -> None:
         registry={f"arXiv:2608.0000{i}":{} for i in range(1,5)}

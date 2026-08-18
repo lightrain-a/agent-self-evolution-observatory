@@ -13,6 +13,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from research_pipeline.asset_first_stri_public_status import build_asset_first_stri_public_status, validate_asset_first_stri_public_status
+from research_pipeline.paper_first_problem_discovery_contract import build_problem_discovery_contract_state
+from research_pipeline.paper_first_pre_f0_queue import load_pre_f0_queue
 
 GEN = ROOT / "generated"
 
@@ -31,6 +33,8 @@ def git_head() -> str:
 system = load("research-system-state.json")
 problem_generator = load("paper-first-problem-generator-state.json")
 problem_queue = load("paper-first-problem-gate-queue.json")
+pre_f0_queue = load_pre_f0_queue()
+discovery_contract = build_problem_discovery_contract_state()
 paper_backlog = load("paper-first-paper-design-backlog.json")
 p0_ledger = load("p0-decision-ledger.json")
 program_final = load("persistent-updater-program-final.json")
@@ -69,6 +73,10 @@ sp15_summary = sp15.get("summary", {})
 quality_debt = paper_quality.get("evidence_debt", {})
 shadow_admission_summary = shadow_admission.get("summary", {})
 fresh_phenomenon_summary = fresh_phenomenon.get("summary", {})
+generator_summary = problem_generator.get("summary", {})
+generator_policy = problem_generator.get("policy", {})
+pre_f0_summary = pre_f0_queue.get("summary", {})
+discovery_policy = discovery_contract.get("policy", {})
 
 shadow_rows = []
 for row in shadow.get("rows", []):
@@ -119,6 +127,12 @@ state = {
         "canonical_live_ideas": int(queue_summary.get("paper_design_eligible", 0)),
         "canonical_problem_gate_pass": int(queue_summary.get("passed_problem_gate", 0)),
         "canonical_paper_design_backlog": int(backlog_summary.get("pending_human_paper_design", 0)),
+        "idea_search_raw_seeds": int(generator_summary.get("raw_seeds", 0)),
+        "idea_search_semantic_unique": int(generator_summary.get("semantic_unique_seeds", 0)),
+        "idea_search_evolved_branches": int(generator_summary.get("evolved_branches", 0)),
+        "idea_search_reviewer_attacks": int(generator_summary.get("reviewer_attacks", 0)),
+        "idea_search_repair_children": int(generator_summary.get("repair_children", 0)),
+        "idea_search_pre_f0": int(pre_f0_summary.get("queued", 0)),
         "legacy_p0_lifecycle": int(p0_summary.get("active_p0", 0)),
         "legacy_p0_experiment_stopped": int(p0_summary.get("experiment_stopped", 0)),
         "legacy_p0_merged": int(p0_summary.get("experiment_merged", 0)),
@@ -189,9 +203,42 @@ state = {
         ),
         "claim_boundary": sys_stri.get("claim_boundary", {}),
     },
+    "idea_search_funnel": {
+        "installed_operator_version": discovery_policy.get("discovery_operator_version"),
+        "installed_mode": "CANONICAL_DOUBLE_FUNNEL" if bool(discovery_policy.get("canonical_double_funnel_required")) else "LEGACY",
+        "next_canonical_transaction_uses_double_funnel": bool(discovery_policy.get("canonical_double_funnel_required")),
+        "historical_shadow_portfolio_remains_shadow_only": bool(discovery_policy.get("historical_search_portfolio_remains_shadow_only")),
+        "search_primitives": list(discovery_policy.get("search_portfolio_primitives") or []),
+        "paperability_axes": dict(discovery_policy.get("paperability_axes") or {}),
+        "last_completed_generator_operator_version": generator_policy.get("discovery_operator_version"),
+        "last_completed_generator_mode": "CANONICAL_DOUBLE_FUNNEL" if bool(generator_policy.get("search_portfolio_enabled")) else "LEGACY_SINGLE_PASS",
+        "last_completed_generator_status": problem_generator.get("status"),
+        "last_completed_raw_seeds": int(generator_summary.get("raw_seeds", 0)),
+        "last_completed_semantic_unique": int(generator_summary.get("semantic_unique_seeds", 0)),
+        "last_completed_evolved_branches": int(generator_summary.get("evolved_branches", 0)),
+        "last_completed_reviewer_attacks": int(generator_summary.get("reviewer_attacks", 0)),
+        "last_completed_repair_children": int(generator_summary.get("repair_children", 0)),
+        "pre_f0_status": pre_f0_queue.get("status"),
+        "pre_f0_queued": int(pre_f0_summary.get("queued", 0)),
+        "pre_f0_scientific_authority": bool(pre_f0_queue.get("scientific_authority", False)),
+        "final_problem_gate_pass": int(queue_summary.get("passed_problem_gate", 0)),
+        "exact_reduction_required_before_final_problem_gate": bool(discovery_policy.get("exact_reduction_required_before_final_problem_gate")),
+        "principle_reduction_does_not_auto_close_other_axes": bool(discovery_policy.get("principle_reduction_does_not_auto_close_other_paperability_axes")),
+        "reviewer_attack_repair_split_enabled": bool(discovery_policy.get("attack_repair_split_before_terminal_review")),
+        "scientific_authority": False,
+    },
     "canonical_live": {
         "generator_status": problem_generator.get("status"),
-        "generated": int((problem_generator.get("summary") or {}).get("generated", 0)),
+        "generator_operator_version": generator_policy.get("discovery_operator_version"),
+        "installed_operator_version": discovery_policy.get("discovery_operator_version"),
+        "installed_double_funnel": bool(discovery_policy.get("canonical_double_funnel_required")),
+        "generated": int(generator_summary.get("generated", 0)),
+        "raw_seeds": int(generator_summary.get("raw_seeds", 0)),
+        "semantic_unique_seeds": int(generator_summary.get("semantic_unique_seeds", 0)),
+        "evolved_branches": int(generator_summary.get("evolved_branches", 0)),
+        "reviewer_attacks": int(generator_summary.get("reviewer_attacks", 0)),
+        "repair_children": int(generator_summary.get("repair_children", 0)),
+        "pre_f0_eligible": int(pre_f0_summary.get("queued", 0)),
         "queue_submitted": int(queue_summary.get("submitted", 0)),
         "problem_gate_pass": int(queue_summary.get("passed_problem_gate", 0)),
         "paper_design_eligible": int(queue_summary.get("paper_design_eligible", 0)),
@@ -200,7 +247,7 @@ state = {
         "experiment_authorized": int(queue_summary.get("experiment_authorized", 0)),
         "p0_authorized": int(queue_summary.get("p0_authorized", 0)),
         "gpu_authorized": int(backlog_summary.get("gpu_authorized", 0)),
-        "note": "The canonical live generator/queue remains empty; asset-first STRI is a separate paper track and does not mutate canonical authority.",
+        "note": "The installed discovery operator is now the canonical double funnel. The last completed generator receipt may still be a legacy receipt until the next canonical transaction; historical Search Portfolio results remain shadow-only and are not retroactively promoted.",
     },
     "fresh_phenomenon_portfolio": {
         "status": fresh_phenomenon.get("status"),
@@ -333,6 +380,11 @@ state = {
         "shadow_hold_is_not_dead_end": True,
         "qualification_failure_is_not_scientific_negative": True,
         "diagnostic_only_artifacts_cannot_create_authority": True,
+        "installed_discovery_operator_can_differ_from_last_completed_receipt": True,
+        "historical_shadow_portfolio_is_not_retroactively_canonical": True,
+        "pre_f0_is_evidence_acquisition_not_problem_gate": True,
+        "positive_pre_f0_requires_exact_reduction_recheck": True,
+        "principle_reduction_does_not_auto_close_method_empirical_benchmark_theory_system_axes": True,
     },
 }
 

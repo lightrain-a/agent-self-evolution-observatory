@@ -24,8 +24,16 @@ class SearchPortfolioTest(unittest.TestCase):
             parents=json.loads(prompt.split("PARENTS=",1)[1].split(". Return JSON only:",1)[0]);children=[]
             for p in parents:children.append({"parent_id":p["seed_id"],"title":p["title"]+" child","problem_seed":p["problem_seed"]+" with changed regime","scientific_tension":p["scientific_tension"]+" sharpened","problem_family":p["problem_family"],"structural_signature":p["structural_signature"]+"|child","agent_specific_constraint":p["agent_specific_constraint"],"changed_assumption":"one assumption","why_deeper":"more precise","scores":{"importance":85,"specificity":85,"seed_distance":85,"evidence_grounding":85}})
             return {"text":json.dumps({"children":children}),"resolved_model":"doubao-seed-evolving"}
+        if role.startswith("repair-"):
+            parents=json.loads(prompt.split("PARENTS=",1)[1].split(". Return JSON only:",1)[0]);repairs=[]
+            for p in parents:
+                children=[]
+                for j in range(2):
+                    children.append({"repair_axis":f"measurement-{j}","title":p["title"]+f" repair {j}","problem_seed":p["problem_seed"]+f" repaired {j}","scientific_tension":p["scientific_tension"]+" after reviewer attack","problem_family":p["problem_family"],"structural_signature":p["structural_signature"]+f"|repair-{j}","agent_specific_constraint":p["agent_specific_constraint"],"paperability_axes":{"P":{"status":"OPEN","rationale":"principle unresolved"},"M":{"status":"PLAUSIBLE","rationale":"distinct method boundary"},"E":{"status":"SUPPORTED","rationale":"grounded phenomenon"}},"why_attack_no_longer_applies":"changes the measured object","scores":{"importance":88,"specificity":88,"seed_distance":88,"evidence_grounding":88}})
+                repairs.append({"parent_id":p["seed_id"],"attack":"closest-work collision on the original object","attack_class":"CLOSEST_WORK","children":children})
+            return {"text":json.dumps({"repairs":repairs}),"resolved_model":"doubao-seed-evolving"}
         if role.startswith("formulate-"):
-            branches=json.loads(prompt.split("BRANCHES=",1)[1].split(". DEAD_END_MEMORY=",1)[0]);rows=[{"candidate_id":f"PORT-{i}","source_branch_id":b["seed_id"],"title":b["title"],"discovery_lane":b["discovery_lane"]} for i,b in enumerate(branches)]
+            branches=json.loads(prompt.split("BRANCHES=",1)[1].split(". DEAD_END_MEMORY=",1)[0]);rows=[{"candidate_id":f"PORT-{i}","source_branch_id":b["seed_id"],"title":b["title"],"discovery_lane":b["discovery_lane"],"paperability_axes":b.get("paperability_axes") or {"E":{"status":"SUPPORTED","rationale":"grounded phenomenon"}}} for i,b in enumerate(branches)]
             return {"text":json.dumps({"candidates":rows,"rejected":[]}),"resolved_model":"doubao-seed-evolving"}
         raise AssertionError(role)
 
@@ -42,6 +50,10 @@ class SearchPortfolioTest(unittest.TestCase):
         self.assertEqual(state["summary"]["archive_lane_coverage"],len(SEARCH_PORTFOLIO_PRIMITIVES))
         self.assertGreater(state["summary"]["evolved_branches"],0)
         self.assertGreaterEqual(state["summary"]["max_branch_depth"],1)
+        self.assertGreater(state["summary"]["reviewer_attacks"],0)
+        self.assertGreater(state["summary"]["repair_children"],0)
+        self.assertTrue(state["policy"]["attack_repair_split_before_formulation"])
+        self.assertTrue(state["policy"]["principle_reduction_does_not_auto_close_other_paperability_axes"])
         self.assertGreater(state["summary"]["formulated_candidates"],0)
         self.assertFalse(state["scientific_authority"])
 
@@ -175,7 +187,9 @@ class SearchPortfolioTest(unittest.TestCase):
         prompt=_formulation_prompt([branch],registry,{})
         self.assertIn("never set all_exact_reduction_tests_resolved=true while any pending pattern",prompt)
         self.assertIn("Do not manufacture a reduction resolution from absence of evidence",prompt)
-        self.assertIn("zero-authority reduction-pending hold",prompt)
+        self.assertIn("zero-authority pre-F0 evidence-acquisition hold",prompt)
+        self.assertIn("P/M/E/B/T/S",prompt)
+        self.assertIn("exact same-information reduction must be rerun",prompt)
 
     def test_every_current_reduction_pattern_has_nonautomatic_audit_class(self):
         rows=reduction_pattern_audit();self.assertEqual(len(rows),34);self.assertTrue(all(row["automatic_veto"] is False for row in rows));self.assertEqual({row["audit_class"] for row in rows},{"VALID_HARD_VETO","SOFT_COLLISION","NEEDS_EXACT_REDUCTION_TEST","TOO_GENERIC_TO_VETO"})

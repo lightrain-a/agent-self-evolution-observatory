@@ -11,6 +11,7 @@ from .paper_first_fresh_saturation import reduction_pattern_audit
 from .premium_model_policy import preferred_model
 from .paper_first_problem_discovery_contract import (
     DISCOVERY_LANES, SEARCH_PORTFOLIO_PRIMITIVES, LANE_DISTINCT_SOURCE_MINIMUM, LANE_EVIDENCE_REQUIRED, LANE_MACHINE_CONTRACTS, LANE_SOURCE_ROLES,
+    PAPERABILITY_AXES, PAPERABILITY_AXIS_STATUSES,
 )
 
 PortfolioCaller = Callable[..., dict[str, Any]]
@@ -19,6 +20,8 @@ DEFAULT_ARCHIVE_CAPACITY=48
 DEFAULT_EVOLUTION_PARENTS=24
 DEFAULT_SECOND_GENERATION=12
 DEFAULT_FORMULATION_BUDGET=24
+DEFAULT_REPAIR_PARENTS=12
+DEFAULT_REPAIR_CHILDREN_PER_PARENT=2
 DEFAULT_EXPANSION_SHARD_SIZE=6
 DEFAULT_MAX_PARALLEL_CALLS=2
 CROSS_DOMAIN_STRUCTURES=(
@@ -431,6 +434,53 @@ def _evolution_prompt(parents,generation):
         f"PARENTS={json.dumps(compact,ensure_ascii=False,separators=(',',':'))}. Return JSON only: {json.dumps(shape,ensure_ascii=False,separators=(',',':'))}"
     )
 
+
+def _normalize_paperability_axes(value):
+    value=value if isinstance(value,dict) else {}
+    out={}
+    allowed=set(PAPERABILITY_AXIS_STATUSES)
+    for axis,label in PAPERABILITY_AXES.items():
+        item=value.get(axis) or {}
+        if isinstance(item,str): item={"status":item}
+        if not isinstance(item,dict): item={}
+        status=str(item.get("status") or "OPEN").strip().upper()
+        if status not in allowed: status="OPEN"
+        out[axis]={
+            "label":label,
+            "status":status,
+            "rationale":" ".join(str(item.get("rationale") or "").split())[:700],
+        }
+    return out
+
+
+def _paperability_survives(axes):
+    return any((axes.get(axis) or {}).get("status") in {"SUPPORTED","PLAUSIBLE"} for axis in PAPERABILITY_AXES)
+
+
+def _attack_repair_prompt(parents,children_per_parent=DEFAULT_REPAIR_CHILDREN_PER_PARENT):
+    compact=[{k:p.get(k) for k in ("seed_id","parent_id","branch_depth","discovery_lane","title","problem_seed","scientific_tension","problem_family","structural_signature","agent_specific_constraint","empirical_evidence","lane_evidence","cross_domain_origin","scores")} for p in parents]
+    axes={axis:label for axis,label in PAPERABILITY_AXES.items()}
+    shape={"repairs":[{
+        "parent_id":"...",
+        "attack":"single strongest scientific objection, stated concretely",
+        "attack_class":"CLOSEST_WORK|MATURE_REDUCTION|UNDERFORMED|MEASUREMENT|SUPPORT|PROTOCOL|OTHER",
+        "children":[{
+            "repair_axis":"change exactly one scientific axis",
+            "title":"...","problem_seed":"...","scientific_tension":"...","problem_family":"...","structural_signature":"...","agent_specific_constraint":"...",
+            "paperability_axes":{axis:{"status":"SUPPORTED|PLAUSIBLE|OPEN|REDUCED|NOT_CLAIMED","rationale":"..."} for axis in PAPERABILITY_AXES},
+            "why_attack_no_longer_applies":"...","scores":{"importance":75,"specificity":75,"seed_distance":75,"evidence_grounding":75}
+        }]
+    }]}
+    return (
+        "EVOLUTIONARY REVIEW stage for a scientific Idea portfolio. This is NOT the final semantic/reduction reviewer and has zero scientific authority. "
+        "For each parent, first ATTACK it with the single strongest concrete objection, then REPAIR/SPLIT it into materially different child problems instead of issuing a terminal rejection. "
+        f"Return exactly {children_per_parent} repair children per parent when possible. Each child must change exactly one scientific axis (object, mechanism, decision, measurement, regime, information set, or intervention) while inheriting the parent's grounded evidence and lane contract. "
+        "Do not evade an objection by wording changes, a new dataset name, or a generic domain transfer. Do not claim an exact mature reduction is defeated without evidence. A possible principle reduction closes only the P axis; it does NOT by itself close method-boundary, empirical-phenomenon, benchmark/evaluation, theory/guarantee, or system/capability paperability. "
+        "This stage cannot certify PRINCIPLE_STOP or persistent dead-end. If the attack looks fatal, produce children that explicitly move to a different paperability axis or return no child only when the object is malformed/provenance-invalid. "
+        f"Paperability axes are {json.dumps(axes,ensure_ascii=False,separators=(',',':'))}; they are search coordinates only and grant zero Method/Experiment/P0/GPU authority. "
+        f"PARENTS={json.dumps(compact,ensure_ascii=False,separators=(',',':'))}. Return JSON only: {json.dumps(shape,ensure_ascii=False,separators=(',',':'))}"
+    )
+
 def _closest_work_candidates(branch,registry,limit=5):
     excluded=set(_source_refs(branch));scored=[]
     for ref,record in registry.items():
@@ -448,6 +498,8 @@ def _formulation_prompt(branches,registry,dead_end_memory=None):
     shape={"candidates":[{
         "candidate_id":"PORT-1","source_branch_id":"...","title":"...","discovery_lane":"...","empirical_evidence":{"source_a":{"ref":"arXiv:...","claim":"...","evidence_role":"..."},"source_b":{"ref":"arXiv:...","claim":"...","evidence_role":"..."},"relation":"..."},"lane_evidence":{},
         "irreducible_object":"precise scientific problem/object","novelty_category":"problem-formulation|identification|method-boundary|mechanism|failure-regime|protocol|representation|causal-decomposition|phenomenon",
+        "paperability_axes":{axis:{"status":"SUPPORTED|PLAUSIBLE|OPEN|REDUCED|NOT_CLAIMED","rationale":"why this exact paper contribution axis survives or does not"} for axis in PAPERABILITY_AXES},
+        "paperability_claim":"which surviving axis makes a cheap falsifier worth running; zero downstream authority",
         "closest_work":{"ref":"arXiv:...","title":"...","shared_structure":"...","distinguishing_gap":"...","search_scope":"fresh-verified-primary-pool"},"closest_work_distance":0.0,
         "mature_theory_baselines":[{"name":"...","same_information_projection":"...","ex_ante_prediction":"...","distinguishing_prediction":"...","cannot_express":"...","reduction_class":"SOFT_COLLISION|NEEDS_EXACT_REDUCTION_TEST|TOO_GENERIC_TO_VETO|VALID_HARD_VETO","exact_reduction_test":"..."}],
         "reduction_falsifiability_contract":{"same_observable_information_checked":True,"ex_ante_exact_prediction_checked":True,"distinguishing_prediction_checked":True,"scope_boundary_checked":True,"all_exact_reduction_tests_resolved":True},
@@ -455,20 +507,21 @@ def _formulation_prompt(branches,registry,dead_end_memory=None):
         "saturation_scan":{"checked":True,"matched_patterns":[],"pending_patterns":[],"rejected_patterns":[{"key":"known-key","reason":"why broad similarity does not establish exact reduction"}]},"cheapest_problem_falsifier":"...","endpoint_headroom_requirement":"...","importance":"...","likely_iclr_story":"..."
     }],"rejected":[{"source_branch_id":"...","reason":"...","matched_mature_theory":"...","reduction_class":"VALID_HARD_VETO|NEEDS_EXACT_REDUCTION_TEST|CLOSEST_WORK_COLLISION|UNDERFORMED","exact_reduction_test":"..."}],"notes":"..."}
     return (
-        "FORMULATION + REDUCTION stage. Expansion/evolution are over; now be ruthless. Convert only genuinely promising branches into final paper-problem candidates. "
+        "FORMULATION stage after breadth search and evolutionary attack/repair. Convert genuinely promising branches into concrete paper-problem candidates, but do not confuse a provisional pre-F0 route with final scientific clearance. "
         "The ICLR novelty bar is high but does NOT require a new scientific ontology: acceptable novelty includes a genuinely new problem formulation, identification result, method boundary, theoretically grounded mechanism, measurable failure regime, enabling protocol/representation, causal decomposition with nontrivial prediction, or strong empirical phenomenon. "
         "Domain transfer, renaming, metric/benchmark/taxonomy-only novelty, or simple composition of occupied atoms is not novelty. "
-        "A mature theory can HARD-VETO only under the Reduction Falsifiability Contract: same observable information, an ex-ante exact candidate-level prediction, a testable distinguishing/reduction prediction, and explicit scope boundary. A generic label such as CATE, dynamical systems, transfer, continual learning, nonmonotonicity, or information theory is not itself a veto. "
+        "Assess paperability on six independent axes P/M/E/B/T/S. A mature theory may reduce the P (principle/problem-formulation) axis without automatically erasing a genuinely different Method/Method-boundary, Empirical phenomenon, Benchmark/evaluation, Theory/guarantee, or System/capability contribution. Conversely, a surviving non-P axis must be concrete and testable; it cannot be a relabeling escape. Paperability axes are search/triage coordinates only and grant zero Method/Experiment/P0/GPU authority. "
+        "A mature theory can HARD-VETO a claimed axis only under the Reduction Falsifiability Contract: same observable information, an ex-ante exact candidate-level prediction, a testable distinguishing/reduction prediction, and explicit scope boundary. A generic label such as CATE, dynamical systems, transfer, continual learning, nonmonotonicity, or information theory is not itself a veto. "
         "Use matched_patterns ONLY for a proven exact hard reduction. Use pending_patterns only when an exact reduction test is genuinely unresolved AND the branch is otherwise complete enough for a concrete problem-falsifier preflight; never set all_exact_reduction_tests_resolved=true while any pending pattern or NEEDS_EXACT_REDUCTION_TEST baseline remains. Use rejected_patterns when a broad ledger pattern was considered and the supplied frozen evidence is sufficient to show it cannot exactly reduce the candidate. "
-        "Do not manufacture a reduction resolution from absence of evidence. If an unresolved exact reduction is the only remaining blocker, keep the full problem object, exact prediction, strongest same-information baseline, and cheapest falsifier concrete; the deterministic compiler will route it to a zero-authority reduction-pending hold rather than semantic review. If the branch also lacks lane grounding, provenance, same-information nonreducibility, domain-transfer separation, or a concrete falsifier, return it in rejected. "
+        "Do not manufacture a reduction resolution from absence of evidence. If an unresolved exact reduction is the only remaining blocker, OR if P is reduced but at least one distinct non-P paperability axis remains concrete, keep the full problem object, paperability_axes, exact prediction, strongest same-information baseline, and cheapest falsifier concrete. The deterministic compiler may route it to a zero-authority pre-F0 evidence-acquisition hold before final exact reduction. This is not a Problem-Gate pass. If the branch also lacks lane grounding, provenance, a testable surviving axis, domain-transfer separation, or a concrete falsifier, return it in rejected. "
         "Inspect branch-local closest_work_candidates. A duplicate/collision or VALID_HARD_VETO branch must be returned in rejected rather than silently omitted. If a branch follows a certified dead-end inversion prior, explicitly verify that fresh primary evidence grounds the opposite principle and that the formulation satisfies the recorded reopen condition; otherwise reject or hold it rather than rewarding inversion wording. When first-party code directly determines the dependency graph, the graph fact itself is not an identifiability contribution: require a downstream decision/utility/regret consequence and explicitly test generic distribution-shift, stale-supervisor, online-adaptation, or alternating-optimization reductions before keeping the branch. If a branch follows a POSITIVE_RESIDUAL_ASSET, require one prospective pre-outcome prediction that jointly explains the surviving phenomenon and every named failed mechanism; reject endpoint-leaking features, post-hoc full-trajectory geometry, or a renamed K-step mediator unless independent pre-outcome evidence distinguishes it from the failed first-action mechanism. "
-        "Prefer a residual whose cheapest falsifier is an actual controlled comparison we can materialize quickly from released units, first-party code, or an existing provenance-audited substrate. Do not claim such support exists unless the supplied evidence establishes it; missing support should be an explicit preflight dependency, not a fabricated PASS. "
+        "Prefer a residual whose cheapest falsifier is an actual controlled comparison we can materialize quickly from released units, first-party code, or an existing provenance-audited substrate. Cheap falsification may precede final exact reduction only as zero-authority evidence acquisition; after a positive residual, the exact same-information reduction must be rerun before live Problem Gate/Paper Design eligibility. Do not claim support exists unless the supplied evidence establishes it; missing support is SUPPORT_STOP/HOLD, never a scientific negative. "
         "Preserve the inherited typed evidence/lane contract and source refs. "
         f"BRANCHES={json.dumps(compact,ensure_ascii=False,separators=(',',':'))}. DEAD_END_MEMORY={json.dumps(_prompt_dead_end_memory(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. CERTIFIED_DEAD_END_INVERSION_PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_PRIORS={json.dumps(_positive_residual_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. PRIMARY_EVIDENCE={json.dumps(evidence,ensure_ascii=False,separators=(',',':'))}. REDUCTION_LEDGER={json.dumps(reduction_pattern_audit(),ensure_ascii=False,separators=(',',':'))}. "
         f"Return JSON only: {json.dumps(shape,ensure_ascii=False,separators=(',',':'))}"
     )
 
-def run_search_portfolio(*,records:list[dict[str,Any]],call:PortfolioCaller,model:str,target_raw_seeds:int=DEFAULT_RAW_SEEDS,archive_capacity:int=DEFAULT_ARCHIVE_CAPACITY,evolution_parents:int=DEFAULT_EVOLUTION_PARENTS,second_generation:int=DEFAULT_SECOND_GENERATION,formulation_budget:int=DEFAULT_FORMULATION_BUDGET,max_parallel_calls:int=DEFAULT_MAX_PARALLEL_CALLS,dead_end_memory:dict[str,Any]|None=None)->dict[str,Any]:
+def run_search_portfolio(*,records:list[dict[str,Any]],call:PortfolioCaller,model:str,target_raw_seeds:int=DEFAULT_RAW_SEEDS,archive_capacity:int=DEFAULT_ARCHIVE_CAPACITY,evolution_parents:int=DEFAULT_EVOLUTION_PARENTS,second_generation:int=DEFAULT_SECOND_GENERATION,repair_parents:int=DEFAULT_REPAIR_PARENTS,repair_children_per_parent:int=DEFAULT_REPAIR_CHILDREN_PER_PARENT,formulation_budget:int=DEFAULT_FORMULATION_BUDGET,max_parallel_calls:int=DEFAULT_MAX_PARALLEL_CALLS,dead_end_memory:dict[str,Any]|None=None)->dict[str,Any]:
     effective_records=list(_search_asset_records(dead_end_memory))+list(records);reg={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};per_lane=max(1,int(math.ceil(target_raw_seeds/max(1,len(SEARCH_PORTFOLIO_PRIMITIVES)))))
     raw=[];errors=[];calls=0
     def expand_one(lane,part,count):
@@ -519,17 +572,50 @@ def run_search_portfolio(*,records:list[dict[str,Any]],call:PortfolioCaller,mode
             try:evolved.extend(fut.result());calls+=1
             except Exception as exc:errors.append(f"{jobs[fut]}:{type(exc).__name__}:{str(exc)[:180]}")
 
-    formulation_pool=_maxmin_select(evolved+parents,min(formulation_budget,len(evolved)+len(parents)));formulated=[];rejected=[]
+    # Evolutionary reviewer: attack each selected branch, then repair/split it.
+    # This stage is deliberately non-terminal and has zero scientific authority.
+    repair_parent_rows=_maxmin_select(evolved+parents,min(repair_parents,len(evolved)+len(parents)));repaired=[];repair_attacks=[]
+    def repair_one(batch,label):
+        res=call(role=label,prompt=_attack_repair_prompt(batch,repair_children_per_parent),model=preferred_model("portfolio_evolve",model),max_output_tokens=7000);payload=extract_json_object(str(res.get("text") or ""));groups=payload.get("repairs") or []
+        if not isinstance(groups,list):raise ValueError("repairs-must-be-array")
+        pmap={p["seed_id"]:p for p in batch};out=[];attacks=[]
+        for group in groups:
+            if not isinstance(group,dict):continue
+            parent=pmap.get(str(group.get("parent_id") or ""))
+            if not parent:continue
+            attack=" ".join(str(group.get("attack") or "").split())[:900];attack_class=str(group.get("attack_class") or "OTHER").strip().upper();children=group.get("children") or []
+            if not isinstance(children,list):continue
+            attacks.append({"parent_id":parent["seed_id"],"attack":attack,"attack_class":attack_class,"scientific_authority":False})
+            for child_index,ch in enumerate(children[:repair_children_per_parent],1):
+                if not isinstance(ch,dict):continue
+                merged={**parent,**ch,"empirical_evidence":parent["empirical_evidence"],"lane_evidence":parent["lane_evidence"],"discovery_lane":parent["discovery_lane"],"cross_domain_origin":parent.get("cross_domain_origin","")}
+                row=_normalize_seed(merged,parent["discovery_lane"],child_index);row["seed_id"]=f"{parent['seed_id']}-R{child_index}";row["parent_id"]=parent["seed_id"];row["branch_depth"]=int(parent.get("branch_depth") or 0)+1
+                row["reviewer_attack"]=attack;row["reviewer_attack_class"]=attack_class;row["repair_axis"]=" ".join(str(ch.get("repair_axis") or "").split())[:500];row["why_attack_no_longer_applies"]=" ".join(str(ch.get("why_attack_no_longer_applies") or "").split())[:900];row["paperability_axes"]=_normalize_paperability_axes(ch.get("paperability_axes"));row["paperability_survives"]=_paperability_survives(row["paperability_axes"])
+                if _valid_seed(row,reg) and row["paperability_survives"]:out.append(row)
+        return out,attacks
+    r_jobs=[(repair_parent_rows[i:i+4],f"repair-{i//4+1}") for i in range(0,len(repair_parent_rows),4) if repair_parent_rows[i:i+4]]
+    with ThreadPoolExecutor(max_workers=min(max_parallel_calls,max(1,len(r_jobs)))) as ex:
+        jobs={ex.submit(repair_one,*job):job[1] for job in r_jobs}
+        for fut in as_completed(jobs):
+            try:
+                children,attacks=fut.result();repaired.extend(children);repair_attacks.extend(attacks);calls+=1
+            except Exception as exc:errors.append(f"{jobs[fut]}:{type(exc).__name__}:{str(exc)[:180]}")
+
+    formulation_source=repaired+evolved+parents
+    formulation_pool=_maxmin_select(formulation_source,min(formulation_budget,len(formulation_source)),required_ids=[row["seed_id"] for row in repaired[:min(len(repaired),formulation_budget)]]);formulated=[];rejected=[]
     def formulate_one(batch,label):
         res=call(role=label,prompt=_formulation_prompt(batch,reg,dead_end_memory),model=preferred_model("portfolio_formulate",model),max_output_tokens=5600);payload=extract_json_object(str(res.get("text") or ""));live=payload.get("candidates") or [];dead=payload.get("rejected") or []
         if not isinstance(live,list) or not isinstance(dead,list):raise ValueError("formulation-arrays-invalid")
-        parents={row["seed_id"]:row for row in batch};normalized=[]
+        parents={row["seed_id"]:row for row in batch};normalized=[];local_dead=[x for x in dead if isinstance(x,dict)]
         for item in live:
             if not isinstance(item,dict):continue
             parent=parents.get(str(item.get("source_branch_id") or ""))
             if not parent:continue
-            row=dict(item);row["source_branch_id"]=parent["seed_id"];row["branch_depth"]=parent.get("branch_depth",0);row["discovery_lane"]=parent["discovery_lane"];row["empirical_evidence"]=parent["empirical_evidence"];row["lane_evidence"]=parent["lane_evidence"];normalized.append(row)
-        return normalized,[x for x in dead if isinstance(x,dict)]
+            row=dict(item);row["source_branch_id"]=parent["seed_id"];row["branch_depth"]=parent.get("branch_depth",0);row["discovery_lane"]=parent["discovery_lane"];row["empirical_evidence"]=parent["empirical_evidence"];row["lane_evidence"]=parent["lane_evidence"]
+            row["paperability_axes"]=_normalize_paperability_axes(item.get("paperability_axes") or parent.get("paperability_axes"));row["paperability_survives"]=_paperability_survives(row["paperability_axes"]);row["reviewer_attack"]=parent.get("reviewer_attack") or "";row["reviewer_attack_class"]=parent.get("reviewer_attack_class") or "";row["repair_axis"]=parent.get("repair_axis") or "";row["why_attack_no_longer_applies"]=parent.get("why_attack_no_longer_applies") or ""
+            if row["paperability_survives"]:normalized.append(row)
+            else:local_dead.append({"source_branch_id":parent["seed_id"],"reason":"no concrete SUPPORTED/PLAUSIBLE paperability axis survived formulation","reduction_class":"UNDERFORMED","scientific_authority":False})
+        return normalized,local_dead
     f_jobs=[(formulation_pool[i:i+2],f"formulate-{i//2+1}") for i in range(0,len(formulation_pool),2) if formulation_pool[i:i+2]]
     with ThreadPoolExecutor(max_workers=min(2,max(1,len(f_jobs)))) as ex:
         jobs={ex.submit(formulate_one,*job):job[1] for job in f_jobs}
@@ -541,9 +627,10 @@ def run_search_portfolio(*,records:list[dict[str,Any]],call:PortfolioCaller,mode
     for index,row in enumerate(formulated,1):row["candidate_id"]=f"PORT-{index:03d}"
     lane_counts=Counter(r["discovery_lane"] for r in raw);archive_lanes=Counter(by_id[x]["discovery_lane"] for x in archives["breadth"] if x in by_id);family_counts=Counter(r["problem_family"] for r in unique)
     sample=[by_id[x] for x in archives["breadth"] if x in by_id];dist=[1-_jaccard(sample[i],sample[j]) for i in range(len(sample)) for j in range(i+1,len(sample))]
+    axis_coverage={axis:sum((row.get("paperability_axes") or {}).get(axis,{}).get("status") in {"SUPPORTED","PLAUSIBLE"} for row in formulated) for axis in PAPERABILITY_AXES}
     return {
-        "schema_version":"2.1","policy":{"expansion_precedes_reduction":True,"parallel_breadth_search":True,"max_parallel_calls":max_parallel_calls,"contradiction_is_one_lane_not_required":True,"low_score_high_diversity_branches_can_survive_expansion":True,"mature_theory_veto_delayed_until_formulation":True,"cross_domain_analogy_is_search_primitive_not_novelty":True,"scientific_authority":False},
-        "config":{"requested_raw_seeds":target_raw_seeds,"per_lane":per_lane,"expansion_shard_size":DEFAULT_EXPANSION_SHARD_SIZE,"archive_capacity":archive_capacity,"evolution_parents":evolution_parents,"second_generation":second_generation,"formulation_budget":formulation_budget,"max_parallel_calls":max_parallel_calls},
-        "summary":{"raw_seeds":len(raw),"semantic_unique":len(unique),"duplicate_or_near_duplicate":len(dups),"structural_clusters":cluster_count,"unique_problem_families":cluster_count,"model_named_problem_families":len(family_counts),"archive_lane_coverage":len(archive_lanes),"breadth_archive":len(archives["breadth"]),"evolved_branches":len(evolved),"max_branch_depth":max([r.get("branch_depth",0) for r in evolved] or [0]),"formulated_candidates":len(formulated),"formulation_rejected":len(rejected),"portfolio_calls":calls,"mean_archive_pairwise_distance":round(sum(dist)/len(dist),4) if dist else 0.0,"errors":len(errors)},
-        "lane_counts":dict(sorted(lane_counts.items())),"archive_lane_counts":dict(sorted(archive_lanes.items())),"family_counts":dict(family_counts.most_common()),"archives":archives,"duplicate_log":dups[:200],"errors":errors,"raw_seeds":raw,"unique_seeds":unique,"evolved":evolved,"formulated_candidates":formulated,"formulation_rejections":rejected,"scientific_authority":False,
+        "schema_version":"3.0-double-funnel","policy":{"expansion_precedes_reduction":True,"parallel_breadth_search":True,"max_parallel_calls":max_parallel_calls,"contradiction_is_one_lane_not_required":True,"low_score_high_diversity_branches_can_survive_expansion":True,"attack_repair_split_before_formulation":True,"reviewer_objection_is_evolution_input_not_terminal_stop":True,"paperability_axes":dict(PAPERABILITY_AXES),"principle_reduction_does_not_auto_close_other_paperability_axes":True,"cheap_problem_falsifier_may_precede_final_exact_reduction":True,"pre_f0_route_has_zero_scientific_authority":True,"exact_reduction_still_required_before_final_problem_gate":True,"mature_theory_veto_delayed_until_formulation":True,"cross_domain_analogy_is_search_primitive_not_novelty":True,"scientific_authority":False},
+        "config":{"requested_raw_seeds":target_raw_seeds,"per_lane":per_lane,"expansion_shard_size":DEFAULT_EXPANSION_SHARD_SIZE,"archive_capacity":archive_capacity,"evolution_parents":evolution_parents,"second_generation":second_generation,"repair_parents":repair_parents,"repair_children_per_parent":repair_children_per_parent,"formulation_budget":formulation_budget,"max_parallel_calls":max_parallel_calls},
+        "summary":{"raw_seeds":len(raw),"semantic_unique":len(unique),"duplicate_or_near_duplicate":len(dups),"structural_clusters":cluster_count,"unique_problem_families":cluster_count,"model_named_problem_families":len(family_counts),"archive_lane_coverage":len(archive_lanes),"breadth_archive":len(archives["breadth"]),"evolved_branches":len(evolved),"max_branch_depth":max([r.get("branch_depth",0) for r in evolved+repaired] or [0]),"reviewer_attacks":len(repair_attacks),"repair_children":len(repaired),"paperability_axis_coverage":axis_coverage,"formulated_candidates":len(formulated),"formulation_rejected":len(rejected),"portfolio_calls":calls,"mean_archive_pairwise_distance":round(sum(dist)/len(dist),4) if dist else 0.0,"errors":len(errors)},
+        "lane_counts":dict(sorted(lane_counts.items())),"archive_lane_counts":dict(sorted(archive_lanes.items())),"family_counts":dict(family_counts.most_common()),"archives":archives,"duplicate_log":dups[:200],"errors":errors,"raw_seeds":raw,"unique_seeds":unique,"evolved":evolved,"repair_attacks":repair_attacks,"repaired":repaired,"formulated_candidates":formulated,"formulation_rejections":rejected,"scientific_authority":False,
     }

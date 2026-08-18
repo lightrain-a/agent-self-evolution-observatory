@@ -422,8 +422,14 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(discovery["policy"]["search_portfolio_primitives"],["CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY","IDENTIFIABILITY_GAP","MISSING_DECISION_OBJECT","COMPOSITION_INTERACTION","CROSS_DOMAIN_STRUCTURAL_ANALOGY","NEW_CAPABILITY_QUESTION","LONGITUDINAL_EMERGENCE"])
         self.assertTrue(discovery["policy"]["search_portfolio_is_shadow_only"])
         self.assertTrue(discovery["policy"]["search_portfolio_cannot_publish_canonical_generator_or_queue"])
-        self.assertTrue(discovery["policy"]["one_content_addressed_pool_allows_at_most_one_live_generator_call"])
-        self.assertTrue(discovery["policy"]["one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator"])
+        self.assertFalse(discovery["policy"]["one_content_addressed_pool_allows_at_most_one_live_generator_call"])
+        self.assertTrue(discovery["policy"]["one_content_addressed_pool_allows_at_most_one_discovery_transaction"])
+        self.assertTrue(discovery["policy"]["bounded_provider_subcalls_inside_discovery_transaction"])
+        self.assertTrue(discovery["policy"]["canonical_double_funnel_required"])
+        self.assertTrue(discovery["policy"]["canonical_double_funnel_reuses_portfolio_engine"])
+        self.assertTrue(discovery["policy"]["attack_repair_split_before_terminal_review"])
+        self.assertTrue(discovery["policy"]["principle_reduction_does_not_auto_close_other_paperability_axes"])
+        self.assertTrue(discovery["policy"]["exact_reduction_required_before_final_problem_gate"])
         self.assertTrue(discovery["policy"]["source_coverage_saturation_reopens_once_on_operator_change"])
         self.assertTrue(discovery["policy"]["single_source_anomaly_first_search_enabled"])
         self.assertTrue(discovery["policy"]["principle_dead_end_inversion_search_enabled"])
@@ -438,7 +444,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(discovery["policy"]["observed_dependency_graph_is_not_an_identifiability_gap"])
         self.assertTrue(discovery["policy"]["reciprocal_coupling_claim_requires_downstream_residual_beyond_distribution_shift"])
         self.assertTrue(discovery["policy"]["feedback_mechanism_requires_causal_write_path_before_experiment"])
-        self.assertEqual(discovery["policy"]["discovery_operator_version"],"fresh-phenomenon-treatment-aligned-deadend-aware-v16")
+        self.assertEqual(discovery["policy"]["discovery_operator_version"],"double-funnel-paperability-evolution-v17")
         self.assertTrue(discovery["policy"]["inactive_search_assets_hidden_from_generator"])
         self.assertTrue(discovery["policy"]["no_active_asset_fallback_requires_latest_primary_quantitative_anomaly"])
         self.assertTrue(discovery["policy"]["fresh_phenomenon_seed_must_name_measured_boundary_or_failure"])
@@ -590,10 +596,10 @@ class ResearchSystemTest(unittest.TestCase):
     def test_live_problem_discovery_rejects_shadow_portfolio_authority_leak(self) -> None:
         broken=copy.deepcopy(self.state)
         broken["paper_first_problem_discovery_contract"]["policy"]["search_portfolio_is_shadow_only"]=False
-        self.assertTrue(any("shadow layer" in error for error in validate_state(broken)))
+        self.assertTrue(any("shadow-only" in error for error in validate_state(broken)))
         leaked=copy.deepcopy(self.state)
         leaked["paper_first_problem_generator"]["policy"]["search_portfolio_enabled"]=True
-        self.assertTrue(any("canonical problem generator" in error for error in validate_state(leaked)))
+        self.assertTrue(any("double-funnel" in error for error in validate_state(leaked)))
         multi=copy.deepcopy(self.state)
         multi["paper_first_problem_generator"]["policy"]["one_generator_call_max"]=False
         self.assertTrue(any("at most one generator call" in error for error in validate_state(multi)))

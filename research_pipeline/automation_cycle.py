@@ -55,6 +55,7 @@ from .published_experiment_audit import write_audit as write_published_audit
 from .paper_first_idea_incubation import write_paper_first_idea_incubation
 from .paper_first_fresh_saturation import write_fresh_saturation_state
 from .paper_first_discovery_transaction import write_problem_discovery_transaction
+from .paper_first_pre_f0_queue import write_pre_f0_queue
 from .paper_first_discovery_frontier import build_paper_first_discovery_frontier
 from .paper_first_legacy_reduction_migration import load_public_migration
 from .paper_first_global_relation_recall import load_global_relation_recall_state, write_global_relation_recall_state
@@ -289,11 +290,14 @@ def run_cycle(
             report["steps"].append(_step("literature-sync", _sync_literature))
         if mode in {"weekly", "manual"}:
             # Preserve already-passed Problem-Gate candidates before the volatile discovery queue can refresh.
-            # Canonical live discovery remains the four-lane atomic transaction; the ten-primitive Search Portfolio is shadow-only.
-            # Global Relation Recall supplements cross-tranche live-lane pair recall without gaining canonical Problem-Gate authority.
+            # Canonical live discovery now uses one atomic double-funnel transaction: ten-primitive breadth search ->
+            # diversity/evolution -> attack/repair/split -> paperability triage -> zero-authority pre-F0 when needed ->
+            # exact reduction -> the same strict four-lane Problem Gate. Historical published Search Portfolio runs remain shadow-only.
+            # Global Relation Recall supplements cross-tranche recall without gaining canonical Problem-Gate authority.
             report["steps"].append(_step("paper-design-backlog-pre-discovery", write_paper_design_backlog))
             report["steps"].append(_step("paper-first-fresh-saturation", write_fresh_saturation_state))
-            report["steps"].append(_step("paper-first-discovery-transaction", write_problem_discovery_transaction))
+            report["steps"].append(_step("paper-first-discovery-transaction", lambda: write_problem_discovery_transaction(storage=storage,generator_kwargs={"portfolio_mode":True})))
+            report["steps"].append(_step("paper-first-pre-f0-queue", write_pre_f0_queue))
             report["steps"].append(_step("paper-first-shadow-search-admission", _run_shadow_search_admission_control))
             # Shadow scientific-object recall is strictly downstream of the live atomic transaction.
             # It only runs when live source coverage is fully closed and cannot mutate canonical Primary/Generator/Queue.

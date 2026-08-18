@@ -22,7 +22,7 @@ from .paper_first_primary_evidence import (
     recompile_frozen_primary_typed_evidence,
     write_primary_evidence_pool,
 )
-from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION
+from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, SEARCH_PORTFOLIO_PRIMITIVES
 from .paper_first_problem_generator import (
     DEFAULT_JSON as GENERATOR_JSON,
     DEFAULT_JS as GENERATOR_JS,
@@ -98,7 +98,7 @@ def _receipt_sha256(receipt: dict[str, Any]) -> str:
 def _provider_call_accounting(generator_internal: dict[str, Any] | None) -> tuple[int, int]:
     artifacts = (generator_internal or {}).get("raw_artifacts") or {}
     raw = artifacts.get("generator") or {}
-    generator_calls = int(raw.get("provider_calls_executed") or 0) if isinstance(raw, dict) else 0
+    generator_calls = int(raw.get("provider_calls_executed") or raw.get("calls") or 0) if isinstance(raw, dict) else 0
     if not generator_calls and isinstance(raw, dict):
         generator_calls = len(raw.get("transport_attempts") or [])
         if not generator_calls and raw.get("sha256") and raw.get("raw_replayed_without_provider") is not True:
@@ -282,15 +282,38 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
                 errors.append("primary-carrier-probe-created-unknown-object"); break
     generator_status = str(generator.get("status") or "")
     generator_policy = generator.get("policy") or {}
-    if generator_policy.get("search_portfolio_enabled") is True:
-        errors.append("canonical-transaction-forbids-search-portfolio")
-    if generator_policy.get("one_generator_call_max") is not True or generator_policy.get("one_semantic_reviewer_call_max") is not True:
-        errors.append("canonical-transaction-requires-single-call-budget")
-    allowed_generator_statuses = {"GENERATED_ZERO_CANDIDATES", "GENERATED_AWAIT_PROBLEM_GATE", "SKIPPED_SOURCE_COVERAGE_SATURATED", "SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE", "SKIPPED_SOURCE_CARRIER_PROBE_PENDING"}
+    portfolio_enabled=generator_policy.get("search_portfolio_enabled") is True
+    if portfolio_enabled:
+        if generator_policy.get("search_portfolio_is_shadow_only") is not False or generator_policy.get("legacy_published_search_portfolio_remains_shadow_only") is not True:
+            errors.append("canonical-double-funnel-shadow-provenance-boundary-invalid")
+        if generator_policy.get("canonical_transaction_forbids_search_portfolio") is not False:
+            errors.append("canonical-double-funnel-not-enabled-for-transaction")
+        if generator_policy.get("one_content_addressed_pool_allows_at_most_one_discovery_transaction") is not True or generator_policy.get("bounded_provider_subcalls_inside_discovery_transaction") is not True:
+            errors.append("canonical-double-funnel-transaction-budget-policy-missing")
+        if generator_policy.get("one_generator_call_max") is not False or generator_policy.get("one_semantic_reviewer_call_max") is not False:
+            errors.append("canonical-double-funnel-still-claims-single-call-budget")
+        if generator_policy.get("attack_repair_split_before_formulation") is not True or generator_policy.get("principle_reduction_does_not_auto_close_other_paperability_axes") is not True or generator_policy.get("exact_reduction_required_before_final_problem_gate") is not True:
+            errors.append("canonical-double-funnel-scientific-gates-missing")
+    else:
+        if generator_policy.get("one_generator_call_max") is not True or generator_policy.get("one_semantic_reviewer_call_max") is not True:
+            errors.append("legacy-canonical-transaction-requires-single-call-budget")
+    allowed_generator_statuses = {"GENERATED_ZERO_CANDIDATES", "GENERATED_PRE_F0_EVIDENCE_ACQUISITION", "GENERATED_AWAIT_PROBLEM_GATE", "SKIPPED_SOURCE_COVERAGE_SATURATED", "SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE", "SKIPPED_SOURCE_CARRIER_PROBE_PENDING"}
     if generator_status not in allowed_generator_statuses:
         errors.append("generator-did-not-complete-discovery-transaction")
     generator_schema=str(generator.get("schema_version") or "0")
     generated = int(gs.get("generated") or 0)
+    if portfolio_enabled:
+        artifacts=generator.get("raw_artifacts") or {};generator_artifact=artifacts.get("generator") or {};semantic_artifact=artifacts.get("semantic_reviewer") or {}
+        actual_generator_subcalls=int(generator_artifact.get("calls") or 0);actual_semantic_subcalls=int(semantic_artifact.get("calls") or 0)
+        generator_budget=int(generator_policy.get("portfolio_generator_subcall_budget") or 0);semantic_budget=int(generator_policy.get("portfolio_semantic_reviewer_subcall_budget") or 0)
+        if generator_budget<=0 or actual_generator_subcalls>generator_budget:errors.append("canonical-double-funnel-generator-subcall-budget-invalid")
+        if semantic_budget<=0 or actual_semantic_subcalls>semantic_budget:errors.append("canonical-double-funnel-reviewer-subcall-budget-invalid")
+        pre_f0=[row for row in generator.get("pre_f0_candidates") or [] if isinstance(row,dict)]
+        if int(gs.get("pre_f0_eligible") or 0)!=len(pre_f0):errors.append("canonical-double-funnel-pre-f0-accounting-mismatch")
+        for row in pre_f0:
+            authority=row.get("authority") or {}
+            if row.get("scientific_authority") is not False or any(authority.get(key) is not False for key in ("paper_design","method","experiment","p0","gpu")) or str(row.get("post_f0_requirement") or "")!="RERUN_EXACT_SAME_INFORMATION_REDUCTION_BEFORE_PROBLEM_GATE":
+                errors.append("canonical-double-funnel-pre-f0-authority-leak");break
     if int(gs.get("primary_evidence_records") or 0) != verified:
         errors.append("generator-primary-count-mismatch")
     if int(qs.get("primary_evidence_records") or 0) != verified:
@@ -299,22 +322,26 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
         errors.append("generator-auto-inbox-count-mismatch")
     if int(gs.get("semantic_clear") or 0) + int(gs.get("semantic_blocked") or 0) != generated:
         errors.append("generator-semantic-accounting-mismatch")
-    if generator_schema >= "2.4" and generator_status in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}:
+    if generator_schema >= "2.4" and generator_status in {"GENERATED_ZERO_CANDIDATES","GENERATED_PRE_F0_EVIDENCE_ACQUISITION","GENERATED_AWAIT_PROBLEM_GATE"}:
         diagnostics=generator.get("search_diagnostics") or {}; gp=generator.get("policy") or {}
         lane_rows=[row for row in diagnostics.get("lane_search") or [] if isinstance(row,dict)];lane_names={str(row.get("lane") or "") for row in lane_rows};lane_statuses={str(row.get("status") or "") for row in lane_rows}
+        expected_lanes=SEARCH_PORTFOLIO_PRIMITIVES if gp.get("search_portfolio_enabled") is True else DISCOVERY_LANES
         allowed_statuses={"EXPANDED","EMPTY"} if gp.get("search_portfolio_enabled") is True else {"NO_PAIR","REDUCIBLE","CANDIDATE"}
-        if diagnostics.get("scientific_authority") is not False or diagnostics.get("lane_search_complete") is not True or len(lane_rows)!=len(DISCOVERY_LANES) or lane_names!=set(DISCOVERY_LANES) or not lane_statuses.issubset(allowed_statuses):
+        if diagnostics.get("scientific_authority") is not False or diagnostics.get("lane_search_complete") is not True or len(lane_rows)!=len(expected_lanes) or lane_names!=set(expected_lanes) or not lane_statuses.issubset(allowed_statuses):
             errors.append("generator-lane-search-audit-incomplete")
     if generator_schema >= "2.5":
         gp=generator.get("policy") or {}; diagnostics=generator.get("search_diagnostics") or {}; last=diagnostics.get("last_completed_lane_search") or {}
         normalized_last=_normalize_last_completed_lane_search_receipt(last) if last else {}
         if gp.get("last_completed_lane_search_is_portable_zero_authority_receipt") is not True or gp.get("terminal_zero_call_skip_preserves_last_completed_lane_search") is not True: errors.append("generator-last-lane-search-receipt-policy-missing")
         if last and not normalized_last: errors.append("generator-last-lane-search-receipt-invalid")
-        if generator_status in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}:
+        if generator_status in {"GENERATED_ZERO_CANDIDATES","GENERATED_PRE_F0_EVIDENCE_ACQUISITION","GENERATED_AWAIT_PROBLEM_GATE"}:
             current_rows=[row for row in diagnostics.get("lane_search") or [] if isinstance(row,dict)]
             if not normalized_last or str(normalized_last.get("run_id") or "")!=str(generator.get("run_id") or "") or normalized_last.get("lane_search")!=current_rows: errors.append("generator-last-lane-search-receipt-not-current")
-    if generator_status == "GENERATED_ZERO_CANDIDATES" and generated != 0:
-        errors.append("zero-status-with-nonzero-candidates")
+    if generator_status == "GENERATED_ZERO_CANDIDATES":
+        if generated != 0:errors.append("zero-status-with-nonzero-candidates")
+        if portfolio_enabled and int(gs.get("pre_f0_eligible") or 0)>0:errors.append("zero-status-hides-pre-f0-candidates")
+    if generator_status == "GENERATED_PRE_F0_EVIDENCE_ACQUISITION":
+        if generated != 0 or int(gs.get("pre_f0_eligible") or 0)<=0:errors.append("pre-f0-status-accounting-invalid")
     if generator_status == "GENERATED_AWAIT_PROBLEM_GATE" and generated <= 0:
         errors.append("await-gate-status-with-zero-candidates")
     if generator_status == "SKIPPED_SOURCE_COVERAGE_SATURATED":
@@ -371,6 +398,8 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
         errors.append("queue-accounting-mismatch")
     if generator_status in {"SKIPPED_SOURCE_COVERAGE_SATURATED","SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE","SKIPPED_SOURCE_CARRIER_PROBE_PENDING"} and any(value != 0 for value in (submitted, audited_count, passed, blocked)):
         errors.append("coverage-skip-queue-must-be-empty")
+    if generator_status=="GENERATED_PRE_F0_EVIDENCE_ACQUISITION" and any(value != 0 for value in (submitted,audited_count,passed,blocked)):
+        errors.append("pre-f0-candidates-cannot-enter-problem-gate-queue")
     if any(int(qs.get(key) or 0) != 0 for key in ("method_authorized", "experiment_authorized", "p0_authorized")):
         errors.append("queue-illegal-downstream-authority")
     gp = generator.get("policy") or {}

@@ -144,7 +144,7 @@ def valid_candidate(lane: str = "CONTRADICTION") -> dict:
 
 
 class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
-    def test_contract_keeps_four_live_lanes_and_shadow_portfolio_primitives(self) -> None:
+    def test_contract_keeps_four_final_lanes_but_enables_canonical_double_funnel(self) -> None:
         state = build_problem_discovery_contract_state()
         policy = state["policy"]
         self.assertTrue(policy["multi_lane_discovery_required"])
@@ -153,7 +153,14 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
         self.assertEqual(tuple(policy["allowed_discovery_lanes"]), DISCOVERY_LANES)
         self.assertEqual(tuple(policy["forbidden_discovery_lanes"]), FORBIDDEN_DISCOVERY_LANES)
         self.assertTrue(policy["lane_specific_machine_evidence_contract_required"])
-        self.assertFalse(policy["search_portfolio_required"]); self.assertTrue(policy["search_portfolio_is_shadow_only"]); self.assertTrue(policy["search_portfolio_cannot_publish_canonical_generator_or_queue"]); self.assertTrue(policy["one_content_addressed_pool_allows_at_most_one_live_generator_call"])
+        # These three search_portfolio flags describe the historical published
+        # pre-split artifact only; canonical discovery reuses the engine inside
+        # one new atomic double-funnel transaction without promoting history.
+        self.assertFalse(policy["search_portfolio_required"]); self.assertTrue(policy["search_portfolio_is_shadow_only"]); self.assertTrue(policy["search_portfolio_cannot_publish_canonical_generator_or_queue"])
+        self.assertTrue(policy["canonical_double_funnel_required"]);self.assertTrue(policy["canonical_double_funnel_reuses_portfolio_engine"]);self.assertTrue(policy["historical_search_portfolio_remains_shadow_only"])
+        self.assertFalse(policy["one_content_addressed_pool_allows_at_most_one_live_generator_call"]);self.assertTrue(policy["one_content_addressed_pool_allows_at_most_one_discovery_transaction"]);self.assertTrue(policy["bounded_provider_subcalls_inside_discovery_transaction"])
+        self.assertTrue(policy["attack_repair_split_before_terminal_review"]);self.assertTrue(policy["principle_reduction_does_not_auto_close_other_paperability_axes"]);self.assertTrue(policy["cheap_problem_falsifier_may_precede_exact_reduction"]);self.assertTrue(policy["exact_reduction_required_before_final_problem_gate"])
+        self.assertEqual(set(policy["paperability_axes"]),{"P","M","E","B","T","S"})
         self.assertEqual(tuple(policy["search_portfolio_primitives"]), SEARCH_PORTFOLIO_PRIMITIVES)
         self.assertTrue(policy["expansion_reduction_separated"]); self.assertTrue(policy["mature_theory_veto_delayed_until_formulated_branch"]); self.assertTrue(policy["reduction_falsifiability_contract_required"]); self.assertTrue(policy["generic_theory_label_cannot_veto"])
         self.assertTrue(policy["no_lane_specific_downstream_relaxation"])
