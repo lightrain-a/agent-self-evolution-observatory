@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-18T10:17:59+00:00",
+  "status": "QUARANTINED_TITLE_ARXIV_MISMATCH",
+  "claimed_identity": {
+    "title": "Great Theorem Prover",
+    "ref": "arXiv:2608.14744",
+    "normalized_ref": "arXiv:2608.14744",
+    "arxiv_id": "2608.14744"
+  },
+  "official_identity": {
+    "ref": "arXiv:2608.14744",
+    "arxiv_id": "2608.14744",
+    "title": "Iterative Refinement Diffusion for Super-Resolved Data Assimilation of Multiscale Physical Systems",
+    "publication_date": "2026-08-13",
+    "primary_url": "https://arxiv.org/abs/2608.14744"
+  },
+  "identity_check": {
+    "primary_metadata_source": "https://export.arxiv.org/api/query",
+    "title_match_threshold": 0.72,
+    "title_similarity": 0.152542,
+    "ref_resolves": true,
+    "claimed_title_matches_resolved_ref": false,
+    "primary_metadata_sha256": "26ba7e992e8f0ede74f91fe368ce1d2884ba0f6a074cdfd333676d0dbe66f109",
+    "identity_binding_sha256": "8516d33e6028c1f6b1e73c879ff09e01ea08fecee500bf67810aabc19c8df25f",
+    "http_status": 200,
+    "resolved_records": 1
+  },
+  "identity_recovery": {
+    "title_search_attempted": true,
+    "matching_candidates": [],
+    "matching_candidate_count": 0,
+    "claimed_title_primary_identity_status": "UNRESOLVED_NO_PRIMARY_TITLE_MATCH",
+    "http_status": 200,
+    "search_metadata_sha256": "2bbaa4ae752ee177c49d6246074b7417904941cd1f0356d63b5ed23757acd6ca"
+  },
+  "next_action": "recover-primary-paper-identifier",
+  "asset_audit_authorized": false,
+  "provider_calls_authorized": false,
+  "method_authorized": false,
+  "experiment_authorized": false,
+  "p0_authorized": false,
+  "gpu_authorized": false,
+  "scientific_authority": false,
+  "policy": {
+    "asset_audit_requires_verified_bibliographic_identity_receipt": true,
+    "title_and_ref_must_resolve_to_the_same_primary_record": true,
+    "title_ref_mismatch_is_quarantine_not_scientific_negative": true,
+    "unverified_identity_cannot_start_asset_or_experiment_execution": true,
+    "bibliographic_verification_grants_read_only_asset_audit_only": true,
+    "bibliographic_verification_never_grants_scientific_or_experiment_authority": true
+  }
+}

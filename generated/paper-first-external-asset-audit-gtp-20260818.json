@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-18T10:21:35+00:00",
+  "status": "HOLD_BIBLIOGRAPHIC_IDENTITY",
+  "source_identity": {
+    "status": "QUARANTINED_TITLE_ARXIV_MISMATCH",
+    "ref": "arXiv:2608.14744",
+    "title": "Iterative Refinement Diffusion for Super-Resolved Data Assimilation of Multiscale Physical Systems",
+    "primary_url": "https://arxiv.org/abs/2608.14744",
+    "identity_binding_sha256": "8516d33e6028c1f6b1e73c879ff09e01ea08fecee500bf67810aabc19c8df25f",
+    "verified": false
+  },
+  "primary_page": {},
+  "declared_asset_endpoints": [],
+  "summary": {
+    "identity_verified": 0,
+    "primary_page_verified": 0,
+    "declared_asset_endpoints": 0,
+    "github_endpoints": 0,
+    "huggingface_endpoints": 0,
+    "project_page_endpoints": 0
+  },
+  "next_action": "repair-bibliographic-identity",
+  "asset_content_review_authorized": false,
+  "provider_calls_authorized": false,
+  "method_authorized": false,
+  "experiment_authorized": false,
+  "p0_authorized": false,
+  "gpu_authorized": false,
+  "scientific_authority": false,
+  "policy": {
+    "verified_bibliographic_identity_required_before_network_asset_probe": true,
+    "official_primary_page_is_asset_declaration_carrier": true,
+    "repository_or_model_url_guess_is_not_first_party_provenance": true,
+    "only_primary_declared_asset_endpoints_are_forwarded": true,
+    "no_declared_endpoint_is_evidence_absence_not_scientific_negative": true,
+    "asset_audit_never_authorizes_experiment_execution": true
+  }
+}

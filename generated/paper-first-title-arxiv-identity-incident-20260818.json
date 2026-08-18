@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-18T10:17:59+00:00",
+  "status": "ROOT_CAUSE_TRACED_AND_BAD_IDENTITY_QUARANTINED",
+  "incident": {
+    "claimed_title": "Great Theorem Prover",
+    "claimed_ref": "arXiv:2608.14744",
+    "observed_origin_kind": "external-conversational-handoff",
+    "canonical_primary_intake_record_found": false,
+    "git_exact_title_found": false,
+    "git_exact_ref_found": false,
+    "public_primary_state_found": false,
+    "public_fresh_portfolio_found": false,
+    "public_research_system_state_found": false
+  },
+  "official_resolution": {
+    "claimed_ref_resolves": true,
+    "resolved_ref": "arXiv:2608.14744",
+    "resolved_title": "Iterative Refinement Diffusion for Super-Resolved Data Assimilation of Multiscale Physical Systems",
+    "claimed_vs_resolved_title_similarity": 0.152542,
+    "title_match_threshold": 0.72,
+    "claimed_title_exact_primary_search_attempted": true,
+    "claimed_title_matching_primary_candidates": 0,
+    "claimed_title_primary_identity_status": "UNRESOLVED_NO_PRIMARY_TITLE_MATCH",
+    "identity_receipt": "generated/paper-first-external-paper-identity-gtp-2608-14744-20260818.json"
+  },
+  "root_cause": {
+    "classification": "UNVERIFIED_EXTERNAL_PAPER_HANDOFF_BYPASSED_BIBLIOGRAPHIC_IDENTITY_RECEIPT",
+    "canonical_primary_gate_was_bypassed": true,
+    "canonical_primary_gate_itself_accepts_this_mismatch": false,
+    "why": "The canonical Primary intake already verifies the candidate title against the official arXiv page and rejects title similarity below 0.72. The bad title-ref pair was not present in Git history or the public authoritative Primary/Fresh/System states, so the incorrect association occurred before canonical intake, during an external paper-to-asset-triage handoff that had no standalone bibliographic identity receipt.",
+    "not_a_dedup_failure": true,
+    "prior_dedup_should_be_reused": true
+  },
+  "remediation": {
+    "identity_module": "research_pipeline.paper_first_external_paper_identity",
+    "asset_audit_module": "research_pipeline.paper_first_external_asset_audit",
+    "tests": [
+      "research_pipeline.test_paper_first_external_paper_identity",
+      "research_pipeline.test_paper_first_external_asset_audit"
+    ],
+    "identity_gate": "A title-ref pair must resolve through official arXiv metadata and meet the title-similarity threshold before any read-only first-party asset audit is authorized.",
+    "mismatch_behavior": "Quarantine the pair, preserve the official identity of the supplied ref, run a title-only official recovery search, and never silently retarget to a semantically similar paper.",
+    "recovery_behavior": "A unique title-search candidate is only a rebind candidate; asset audit remains blocked until the recovered ref is re-verified as a matching title-ref pair.",
+    "asset_handoff_gate": "The official asset audit performs zero network asset probes until the identity receipt is VERIFIED_BIBLIOGRAPHIC_IDENTITY; only primary-page-declared GitHub, Hugging Face, or project endpoints can be forwarded for read-only content review.",
+    "experiment_behavior": "Bibliographic verification never grants Method, Experiment, P0, GPU, or scientific authority."
+  },
+  "current_disposition": {
+    "gtp_identity": "UNRESOLVED_QUARANTINED",
+    "arxiv_2608_14744_identity": "RESOLVED_TO_DIFFUSION_DATA_ASSIMILATION_PAPER",
+    "gtp_official_asset_audit_authorized": false,
+    "gtp_experiment_authorized": false,
+    "next_action": "Obtain a primary identifier for the intended GTP paper. Re-run the bibliographic identity gate; only a VERIFIED_BIBLIOGRAPHIC_IDENTITY receipt may hand off directly to official GitHub/Hugging Face/project/Lean-verifier asset audit. Do not redo prior deduplication."
+  },
+  "scientific_authority": false
+}

@@ -65,6 +65,7 @@ These controls inherit authority from their owner component. Their current state
 | Current experiment authority | `p0_decision_ledger.py` |
 | Runtime orchestration | `experiment_orchestrator.py`, resource/authority lease modules |
 | Evidence graph / collision / lineage | `evidence_graph.py`, `idea_collision.py`, `idea_lineage.py` |
+| External paper bibliographic intake / official asset handoff | `paper_first_external_paper_identity.py`, `paper_first_external_asset_audit.py` |
 | Scientific memory | `scientific_meta_trace.py`, `failure_asset_library.py` |
 | Experiment value advisory | `experiment_value_scheduler.py` |
 | System replay / external learning | `research_system_replay.py`, `external_system_learning.py` |
@@ -177,6 +178,7 @@ Automatically allowed:
 
 - deterministic rebuilds, caching, deduplication, schema validation;
 - literature/evidence snapshots;
+- external-paper title↔arXiv verification; a mismatched pair is quarantined, and only a verified bibliographic receipt may trigger read-only inspection of primary-declared GitHub/Hugging Face/project endpoints;
 - preflight/runtime checks and resource discovery;
 - content-addressed AI consultation triggers;
 - structured result ingestion after validation;
@@ -235,6 +237,16 @@ python -m research_pipeline --research-system-status
 python -m research_pipeline --build-research-system
 python -m research_pipeline.automation_cycle --mode manual
 python -m research_pipeline --check
+
+# External paper intake must bind title and arXiv identity before asset inspection.
+python -m research_pipeline.paper_first_external_paper_identity \
+  --title "<paper title>" --ref "arXiv:<id>" \
+  --output generated/external-paper-identity.json
+python -m research_pipeline.paper_first_external_asset_audit \
+  --identity-receipt generated/external-paper-identity.json \
+  --output generated/external-paper-asset-audit.json
 ```
+
+The second command is fail-closed: it performs no asset-network probe unless the identity receipt is `VERIFIED_BIBLIOGRAPHIC_IDENTITY`. Bibliographic verification grants only read-only asset-audit progression; it never grants Method, Experiment, P0, GPU, or scientific authority.
 
 A release is complete only when backend tests, state validation, static-site build, real-browser smoke, deployment, and live-site verification all agree on the same architecture and scientific state.
