@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T18:32:46+00:00",
+  "generated_at": "2026-08-18T18:31:24+00:00",
   "paper_id": "trajectory-mediated-memory-effect-transport",
   "decision": "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM",
   "reason": "All ten strict C2 units are execution-valid and the full pre-divergence policy decision context is reproducible, yet only 2/10 controlled action contrasts are nonzero and the preregistered same-memory cross-context sign reversal is absent. The earliest-divergent-action controlled-mediator mechanism is therefore unsupported by its local falsifier.",
