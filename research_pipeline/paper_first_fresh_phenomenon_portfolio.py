@@ -121,8 +121,8 @@ def _candidate(
 
 
 def _memory_hold(memory: dict[str, Any], source_candidate_id: str) -> dict[str, Any]:
-    dead = memory.get("shadow_dead_end_memory") or {}
-    rows = [row for row in dead.get("hold_objects") or [] if isinstance(row, dict)]
+    search = memory.get("shadow_search_memory") or memory.get("shadow_dead_end_memory") or {}
+    rows = [row for row in search.get("hold_objects") or [] if isinstance(row, dict)]
     return next((row for row in rows if str(row.get("source_candidate_id") or "") == source_candidate_id), {})
 
 
@@ -402,7 +402,7 @@ def build_fresh_phenomenon_portfolio(
     spatial_hold = next(
         (
             row
-            for row in ((dead_end_memory.get("shadow_dead_end_memory") or {}).get("hold_objects") or [])
+            for row in ((dead_end_memory.get("shadow_search_memory") or dead_end_memory.get("shadow_dead_end_memory") or {}).get("hold_objects") or [])
             if isinstance(row, dict)
             and str(row.get("title") or "").startswith("Procedural-composition transfer-calibration boundary")
         ),

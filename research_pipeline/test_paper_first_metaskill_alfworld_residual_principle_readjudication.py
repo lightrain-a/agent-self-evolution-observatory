@@ -42,9 +42,10 @@ class MetaSkillAlfworldResidualPrincipleReadjudicationTest(unittest.TestCase):
             rows = _principle_readjudication_rows([path])
         self.assertEqual(len(rows), 1)
         row = rows[0]
-        self.assertTrue(row["dead_end_certified"])
-        self.assertEqual(row["memory_class"], "METHOD_FORMULATION_STOP")
-        self.assertEqual(row["failure_layer"], "METHOD_FORMULATION")
+        self.assertTrue(row["search_closure_certified"])
+        self.assertFalse(row["dead_end_certified"])
+        self.assertEqual(row["memory_class"], "METHOD_REALIZATION_STOP")
+        self.assertEqual(row["failure_layer"], "method_realization")
         self.assertFalse(row["broader_core_principle_falsified"])
         self.assertEqual(row["fresh_phenomenon_closure"]["source_ref"], SOURCE_REF)
         memory = {"blocked_objects": rows}

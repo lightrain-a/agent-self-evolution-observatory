@@ -233,23 +233,23 @@ def _shadow_dead_end_memory(path:Path|None)->dict:
     resolved=path or DEFAULT_SHADOW_DEAD_END_MEMORY_PATH
     if not resolved.exists():return {}
     payload=json.loads(resolved.read_text(encoding="utf-8"))
-    memory=payload.get("shadow_dead_end_memory") if isinstance(payload,dict) else None
+    memory=(payload.get("shadow_search_memory") or payload.get("shadow_dead_end_memory")) if isinstance(payload,dict) else None
     if not isinstance(memory,dict):memory=payload if isinstance(payload,dict) else {}
     if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True:
-        raise ValueError("shadow dead-end memory must be zero-authority and unable to mutate canonical discovery")
+        raise ValueError("shadow search-control memory must be zero-authority and unable to mutate canonical discovery")
     # Defensive migration for old snapshots: lane-contract failures, support holds,
     # and unresolved exact-reduction tests used to live in blocked_objects. Only
     # an affirmative current/mature reduction certificate may remain blocking.
-    all_rows=[dict(row) for row in list(memory.get("blocked_objects") or [])+list(memory.get("hold_objects") or []) if isinstance(row,dict)]
+    all_rows=[dict(row) for row in list(memory.get("closed_objects") or memory.get("blocked_objects") or [])+list(memory.get("hold_objects") or []) if isinstance(row,dict)]
     blocked=[];holds=[]
     for row in all_rows:
         basin=str(row.get("basin") or "");disposition=str(row.get("disposition") or "")
-        certified=row.get("dead_end_certified") is True or basin.startswith("current-source-hard-veto-") or disposition in {"STOP_CURRENT_PRIMARY_COLLISION","STOP_MATURE_THEORY_REDUCTION"}
+        certified=row.get("search_closure_certified") is True or row.get("dead_end_certified") is True or basin.startswith("current-source-hard-veto-") or disposition in {"STOP_CURRENT_PRIMARY_COLLISION","STOP_MATURE_THEORY_REDUCTION"}
         if certified:
-            row["dead_end_certified"]=True;blocked.append(normalize_closed_row(row))
+            row=normalize_closed_row(row);row["search_closure_certified"]=True;row["dead_end_certified"]=bool(row.get("failure_layer")=="core_principle" and row.get("principle_update_allowed") is True);blocked.append(row)
         else:
             row["dead_end_certified"]=False;row.setdefault("memory_class","REOPENABLE_HOLD");holds.append(row)
-    memory=dict(memory);memory["blocked_objects"]=blocked;memory["hold_objects"]=holds
+    memory=dict(memory);memory["blocked_objects"]=blocked;memory["closed_objects"]=blocked;memory["hold_objects"]=holds
     return memory
 
 
@@ -285,7 +285,7 @@ def _semantic_dead_end_seed_blocker(seed:dict,memory:dict,pool_sha:str,registry:
     claims=" ".join(str((evidence.get(key) or {}).get("claim") or "") for key in ("source_a","source_b"))
     problem=" ".join(str(seed.get(key) or "") for key in ("title","problem_seed","scientific_tension","structural_signature","irreducible_object","exact_prediction"))
     for row in memory.get("blocked_objects") or []:
-        if not isinstance(row,dict) or row.get("dead_end_certified") is not True:continue
+        if not isinstance(row,dict) or not (row.get("search_closure_certified") is True or row.get("dead_end_certified") is True):continue
         basin=str(row.get("basin") or "")
         row_lane=str(row.get("search_primitive") or "").strip().upper()
         memory_refs=sorted({str(ref) for ref in row.get("current_source_refs") or [] if str(ref)})

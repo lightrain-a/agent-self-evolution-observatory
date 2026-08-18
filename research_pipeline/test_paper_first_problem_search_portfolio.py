@@ -179,7 +179,7 @@ class SearchPortfolioTest(unittest.TestCase):
         self.assertEqual(priors[0]["source_candidate_id"],"D1")
         prompt=_expansion_prompt("CONTRADICTION",self.records(),1,memory)
         self.assertIn("CLOSED-BASIN INVERSION is a search prior, never authority",prompt)
-        self.assertIn("PRINCIPLE_STOP",prompt)
+        self.assertIn("core_principle",prompt)
         self.assertIn("relevance-conditioned evidence debt",prompt)
         self.assertNotIn("must not appear",prompt.split("LAYER-TYPED CLOSED-BASIN INVERSION PRIORS=",1)[1].split(". CLOSED-BASIN SEARCH MEMORY",1)[0])
 

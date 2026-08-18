@@ -838,7 +838,8 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertEqual(memory["top_reduction_basin"]["count"],5)
         self.assertTrue(memory["repeated_reduction_basin"]); self.assertTrue(memory["search_escape_required"])
         self.assertIn("LAYER-TYPED CLOSED-BASIN MEMORY",captured["prompt"])
-        self.assertIn("PRINCIPLE_STOP",captured["prompt"])
+        self.assertIn("core_principle",captured["prompt"])
+        self.assertIn("experiment_identifiability",captured["prompt"])
         self.assertIn("procedural-memory-nonmonotonicity",captured["prompt"])
 
     def test_portable_blocked_problem_memory_survives_host_switch(self) -> None:

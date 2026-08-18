@@ -1523,7 +1523,8 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         errors.append("research-system embedded Search Portfolio state cannot verify current durable artifact")
     else:
         if (
-            sp_design.get("shadow_dead_end_memory") != persisted_sp_design.get("shadow_dead_end_memory")
+            sp_design.get("shadow_search_memory") != persisted_sp_design.get("shadow_search_memory")
+            or sp_design.get("shadow_dead_end_memory") != persisted_sp_design.get("shadow_dead_end_memory")
             or sp_design_summary != (persisted_sp_design.get("summary") or {})
             or sp_design.get("rows") != persisted_sp_design.get("rows")
         ):

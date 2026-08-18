@@ -33,9 +33,9 @@ class PaceBenchMechanismRedesignPrincipleReadjudicationTest(unittest.TestCase):
         ]
         self.assertEqual(1, len(rows))
         self.assertTrue(rows[0]["dead_end_certified"])
-        self.assertEqual("PRINCIPLE_STOP", rows[0]["memory_class"])
-        self.assertEqual("PRINCIPLE", rows[0]["failure_layer"])
-        self.assertTrue(rows[0]["principle_layer_closed"])
+        self.assertEqual("CORE_PRINCIPLE_STOP", rows[0]["memory_class"])
+        self.assertEqual("core_principle", rows[0]["failure_layer"])
+        self.assertTrue(rows[0]["principle_update_allowed"])
         self.assertFalse(rows[0]["broader_core_principle_falsified"])
         self.assertIn("generic feedback-guided program synthesis/repair", rows[0]["strongest_reduction"])
         self.assertIn("same known repair surface", rows[0]["reopen_only_if"])

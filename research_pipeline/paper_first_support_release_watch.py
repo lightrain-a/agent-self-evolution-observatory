@@ -63,8 +63,8 @@ def _terminal_support_holds(design_state: dict[str, Any]) -> list[dict[str, Any]
     provenance-bearing terminal-hold identity rather than candidate id alone
     (shadow candidate ids are reused across runs).
     """
-    memory = design_state.get("shadow_dead_end_memory") or {}
-    rows = list(memory.get("blocked_objects") or []) + list(memory.get("hold_objects") or [])
+    memory = design_state.get("shadow_search_memory") or design_state.get("shadow_dead_end_memory") or {}
+    rows = list(memory.get("closed_objects") or memory.get("blocked_objects") or []) + list(memory.get("hold_objects") or [])
     out: list[dict[str, Any]] = []
     seen: set[tuple[str, str, str]] = set()
     for row in rows:

@@ -9,12 +9,16 @@ from typing import Any
 
 from .config import PROJECT_ROOT
 from .dead_end_failure_layers import (
-    FAILURE_LAYERS,
-    MEMORY_CLASS_BY_LAYER,
+    CLOSURE_LAYERS,
+    MEMORY_CLASS_BY_CLOSURE_LAYER,
+    PROBLEM_NOVELTY,
+    SCIENTIFIC_FAILURE_LAYERS,
+    audit_closed_row_layer,
     classify_readjudication,
     normalize_closed_row,
     problem_novelty_classification,
-    summarize_failure_layers,
+    summarize_closure_layers,
+    summarize_scientific_failure_layers,
 )
 from .paper_first_shadow_near_miss_preflight import build_shadow_near_miss_preflight, compile_shadow_dead_end_rows
 from .principle_adjudication import audit_dead_end_counter_explanation
@@ -127,7 +131,12 @@ SHADOW_MEMORY_MAINTENANCE_POLICY = {
     "lane_contract_failure_is_a_reopenable_hold_not_dead_end": True,
     "unresolved_exact_reduction_test_is_a_hold_not_dead_end": True,
     "persistent_dead_end_requires_positive_counter_explanation": True,
-    "closed_basin_must_name_failure_layer": True,
+    "search_control_closure_is_not_scientific_dead_end": True,
+    "only_core_principle_enters_shadow_dead_end_memory": True,
+    "holds_live_only_in_shadow_search_memory": True,
+    "closed_basin_must_name_closure_layer": True,
+    "scientific_closed_basin_must_use_canonical_failure_layer": True,
+    "problem_novelty_stop_is_upstream_not_experimental_failure_layer": True,
     "scoped_closed_basin_is_not_automatically_principle_stop": True,
     "principle_stop_does_not_imply_benchmark_level_dead_end": True,
     "principle_stop_requires_explicit_stop_class_or_broader_falsification": True,
@@ -136,7 +145,10 @@ SHADOW_MEMORY_MAINTENANCE_POLICY = {
 
 
 BASE_SHADOW_DEAD_END_MEMORY = {
-    "memory_id": "shadow-paper-design-principle-memory-20260816-v2",
+    # Legacy constant name retained while the persisted state is split below into
+    # shadow_search_memory (all exact formulation closures/HOLDs) and
+    # shadow_dead_end_memory (core_principle only).
+    "memory_id": "shadow-paper-design-search-memory-20260818-v4",
     "scientific_authority": False,
     "live_source_coverage_effect": False,
     "cannot_mutate_canonical_generator_or_queue": True,
@@ -153,7 +165,8 @@ BASE_SHADOW_DEAD_END_MEMORY = {
             ],
             "strongest_reduction": "generic contextual constrained governance using the same model, trigger, workflow, security, and utility information",
             "current_source_refs": ["arXiv:2602.12430", "arXiv:2607.01136", "arXiv:2608.09732", "arXiv:2605.30723"],
-            "dead_end_certified": True,
+            "search_closure_certified": True,
+            "dead_end_certified": False,
             **problem_novelty_classification(basis="historical-paper-design-collision-re-review-2026-08-18"),
             "counter_explanation": {
                 "type": "SAME_INFORMATION_REDUCTION",
@@ -194,11 +207,68 @@ BASE_SHADOW_DEAD_END_MEMORY = {
 }
 
 
+def _state_search_memory(state: dict[str, Any]) -> dict[str, Any]:
+    """Read canonical search-control memory with legacy dead-end-memory fallback."""
+    memory = state.get("shadow_search_memory") if isinstance(state, dict) else None
+    if isinstance(memory, dict) and memory:
+        return memory
+    legacy = state.get("shadow_dead_end_memory") if isinstance(state, dict) else None
+    return legacy if isinstance(legacy, dict) else {}
+
+
+def _closed_objects(memory: dict[str, Any]) -> list[dict[str, Any]]:
+    rows = memory.get("closed_objects") if isinstance(memory, dict) else None
+    if not isinstance(rows, list):
+        rows = memory.get("blocked_objects") if isinstance(memory, dict) else None
+    return [row for row in (rows or []) if isinstance(row, dict)]
+
+
+def _canonical_search_memory(memory: dict[str, Any]) -> dict[str, Any]:
+    """Persist search-control closures/HOLDs without calling them scientific dead ends."""
+    out = json.loads(json.dumps(memory, ensure_ascii=False))
+    out["memory_id"] = "shadow-paper-design-search-control-memory-20260818-v4"
+    closed = []
+    for source in _closed_objects(out):
+        row = dict(source)
+        row["search_closure_certified"] = True
+        # Legacy field is scientific-dead-end semantics only in canonical state.
+        row["dead_end_certified"] = bool(row.get("failure_layer") == "core_principle" and row.get("principle_update_allowed") is True)
+        closed.append(row)
+    out["closed_objects"] = closed
+    out.pop("blocked_objects", None)
+    out["search_control_only"] = True
+    out["closed_object_count"] = len(out["closed_objects"])
+    out["scientific_authority"] = False
+    out["cannot_mutate_canonical_generator_or_queue"] = True
+    return out
+
+
+def _principle_dead_end_projection(search_memory: dict[str, Any]) -> dict[str, Any]:
+    rows = [
+        dict(row)
+        for row in _closed_objects(search_memory)
+        if row.get("failure_layer") == "core_principle"
+        and row.get("principle_update_allowed") is True
+        and row.get("search_closure_certified") is True
+    ]
+    return {
+        "memory_id": "shadow-paper-design-core-principle-dead-end-memory-20260818-v1",
+        "scientific_authority": False,
+        "persistent_dead_end_authority_scope": "core_principle-only",
+        "only_principle_stop_may_enter_persistent_dead_end_memory": True,
+        "blocked_objects": rows,
+        "hold_objects": [],
+        "principle_dead_end_count": len(rows),
+        "scientific_authority_for_live_discovery": False,
+        "cannot_mutate_canonical_generator_or_queue": True,
+    }
+
+
 def _prior_current_source_hard_veto_rows(path: Path = DEFAULT_JSON) -> list[dict[str, Any]]:
     prior = _load_json(path)
-    memory = prior.get("shadow_dead_end_memory") or {}
+    memory = _state_search_memory(prior)
     rows = []
-    for row in list(memory.get("blocked_objects") or []) + list(memory.get("hold_objects") or []):
+    for row in _closed_objects(memory) + list(memory.get("hold_objects") or []):
         if not isinstance(row, dict) or not str(row.get("basin") or "").startswith("current-source-hard-veto-"):
             continue
         if row.get("scientific_authority") is not False or not str(row.get("strongest_reduction") or "").strip() or not row.get("current_source_refs") or not str(row.get("reopen_only_if") or "").strip():
@@ -209,9 +279,9 @@ def _prior_current_source_hard_veto_rows(path: Path = DEFAULT_JSON) -> list[dict
 
 def _prior_semantic_block_rows(path: Path = DEFAULT_JSON) -> list[dict[str, Any]]:
     prior = _load_json(path)
-    memory = prior.get("shadow_dead_end_memory") or {}
+    memory = _state_search_memory(prior)
     rows = []
-    for row in list(memory.get("blocked_objects") or []) + list(memory.get("hold_objects") or []):
+    for row in _closed_objects(memory) + list(memory.get("hold_objects") or []):
         basin = str(row.get("basin") or "") if isinstance(row, dict) else ""
         if not basin.startswith(("semantic-exact-reduction-", "semantic-lane-contract-")):
             continue
@@ -223,9 +293,9 @@ def _prior_semantic_block_rows(path: Path = DEFAULT_JSON) -> list[dict[str, Any]
 
 def _prior_near_miss_rows(path: Path = DEFAULT_JSON) -> list[dict[str, Any]]:
     prior = _load_json(path)
-    memory = prior.get("shadow_dead_end_memory") or {}
+    memory = _state_search_memory(prior)
     rows = []
-    for row in list(memory.get("blocked_objects") or []) + list(memory.get("hold_objects") or []):
+    for row in _closed_objects(memory) + list(memory.get("hold_objects") or []):
         basin = str(row.get("basin") or "") if isinstance(row, dict) else ""
         if not basin.startswith("near-miss-"):
             continue
@@ -479,8 +549,8 @@ def _principle_readjudication_rows(paths: list[Path] | None = None) -> list[dict
             "search_primitive": str(payload.get("search_primitive") or ""),
             "title": title,
             "avoid": [
-                f"re-proposing the certified-dead-end mechanism without satisfying its reopen condition: {title}",
-                "using the negative experiment metric alone as the reason for the dead end",
+                f"re-proposing the certified scoped closure without satisfying its reopen condition: {title}",
+                "using the negative experiment metric alone as the reason for a scientific dead end",
                 "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary",
             ],
             "strongest_reduction": str(counter.get("statement") or ""),
@@ -489,7 +559,8 @@ def _principle_readjudication_rows(paths: list[Path] | None = None) -> list[dict
             "problem_text": scope,
             "reason": str((payload.get("scientific_interpretation") or {}).get("safe_claim") or counter.get("statement") or ""),
             "reopen_only_if": reopen,
-            "dead_end_certified": True,
+            "search_closure_certified": True,
+            "dead_end_certified": failure_layer.get("failure_layer") == "core_principle",
             **failure_layer,
             "counter_explanation": dict(counter),
             "source_readjudication_artifact": artifact_ref,
@@ -597,7 +668,8 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
             "current_source_refs": refs,
             "reason": reason,
             "reopen_only_if": "New primary evidence supplies an ex-ante same-information prediction that the recorded current-source reduction cannot express under matched information, budget, and operational scope; renaming components, changing application domain, or proposing an unexecuted ablation does not reopen the basin.",
-            "dead_end_certified": True,
+            "search_closure_certified": True,
+            "dead_end_certified": False,
             **problem_novelty_classification(basis="current-primary-collision-re-review-2026-08-18"),
             "counter_explanation": {
                 "type": "SAME_INFORMATION_REDUCTION",
@@ -710,7 +782,7 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
             near_by_key[near_key(row)] = dict(row)
     near_miss_rows = [near_by_key[key] for key in sorted(near_by_key)]
     memory["blocked_objects"].extend(near_miss_rows)
-    readjudication_rows = [dict(row) for row in (principle_readjudication_rows or []) if isinstance(row, dict) and row.get("dead_end_certified") is True]
+    readjudication_rows = [dict(row) for row in (principle_readjudication_rows or []) if isinstance(row, dict) and (row.get("search_closure_certified") is True or row.get("dead_end_certified") is True)]
     readjudication_by_basin = {str(row.get("basin") or ""): row for row in readjudication_rows if str(row.get("basin") or "")}
     memory["blocked_objects"].extend(readjudication_by_basin[key] for key in sorted(readjudication_by_basin))
     # A certified scoped closure supersedes an older support-unavailable hold for
@@ -748,10 +820,11 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
         basin = str(item.get("basin") or "")
         disposition = str(item.get("disposition") or "")
         legacy_reduction_dead_end = basin.startswith("current-source-hard-veto-") or disposition in {"STOP_CURRENT_PRIMARY_COLLISION", "STOP_MATURE_THEORY_REDUCTION"}
-        certified = item.get("dead_end_certified") is True or legacy_reduction_dead_end
+        certified = item.get("search_closure_certified") is True or item.get("dead_end_certified") is True or legacy_reduction_dead_end
         if certified:
-            item["dead_end_certified"] = True
             item = normalize_closed_row(item)
+            item["search_closure_certified"] = True
+            item["dead_end_certified"] = bool(item.get("failure_layer") == "core_principle" and item.get("principle_update_allowed") is True)
             strongest = str(item.get("strongest_reduction") or "").strip()
             refs = list(item.get("current_source_refs") or item.get("evidence_basis") or [])
             reopen = str(item.get("reopen_only_if") or "").strip()
@@ -782,24 +855,34 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
                 item["memory_class"] = "REOPENABLE_HOLD"
             hold_rows.append(item)
 
+    # Compatibility return view: callers of the historical helper still receive
+    # blocked_objects, but canonical persistence below uses closed_objects under
+    # shadow_search_memory. Scientific dead-end persistence is projected separately.
     memory["blocked_objects"] = certified_rows
+    memory["closed_objects"] = certified_rows
     memory["hold_objects"] = hold_rows
-    memory["memory_id"] = "shadow-paper-design-layer-typed-closed-basins-and-holds-v3"
-    layer_counts = summarize_failure_layers(certified_rows)
+    memory["memory_id"] = "shadow-paper-design-search-control-memory-compat-v4"
+    closure_counts = summarize_closure_layers(certified_rows)
+    scientific_counts = summarize_scientific_failure_layers(certified_rows)
     memory["closed_basin_count"] = len(certified_rows)
-    memory["failure_layer_counts"] = layer_counts
-    memory["problem_novelty_stop_count"] = layer_counts["PROBLEM_NOVELTY"]
-    memory["operationalization_identifiability_stop_count"] = layer_counts["OPERATIONALIZATION_IDENTIFIABILITY"]
-    memory["method_formulation_stop_count"] = layer_counts["METHOD_FORMULATION"]
-    memory["assumption_scope_stop_count"] = layer_counts["ASSUMPTION_SCOPE"]
-    memory["principle_stop_count"] = layer_counts["PRINCIPLE"]
+    memory["closure_layer_counts"] = closure_counts
+    memory["failure_layer_counts"] = scientific_counts
+    memory["problem_novelty_stop_count"] = closure_counts["problem_novelty"]
+    memory["execution_stop_count"] = scientific_counts["execution"]
+    memory["experiment_identifiability_stop_count"] = scientific_counts["experiment_identifiability"]
+    memory["optimization_stop_count"] = scientific_counts["optimization"]
+    memory["operationalization_stop_count"] = scientific_counts["operationalization"]
+    memory["method_realization_stop_count"] = scientific_counts["method_realization"]
+    memory["assumption_scope_stop_count"] = scientific_counts["assumption_scope"]
+    memory["core_principle_stop_count"] = scientific_counts["core_principle"]
     memory["broader_core_principle_falsification_count"] = sum(row.get("broader_core_principle_falsified") is True for row in certified_rows)
-    # Compatibility fields: principle_dead_end_count means scoped PRINCIPLE_STOP;
-    # core_principle_dead_end_count is kept only for explicit broader/core falsification.
-    memory["principle_dead_end_count"] = layer_counts["PRINCIPLE"]
-    memory["core_principle_dead_end_count"] = memory["broader_core_principle_falsification_count"]
+    # Legacy compatibility: a principle dead end is now exactly a canonical
+    # core_principle-layer scoped stop, while broader benchmark/phenomenon
+    # falsification is counted separately above.
+    memory["principle_dead_end_count"] = scientific_counts["core_principle"]
+    memory["core_principle_dead_end_count"] = scientific_counts["core_principle"]
     memory["principle_readjudication_closed_basin_count"] = sum(str(row.get("basin") or "").startswith("principle-readjudication-") for row in certified_rows)
-    memory["principle_readjudication_dead_end_count"] = sum(str(row.get("basin") or "").startswith("principle-readjudication-") and row.get("failure_layer") == "PRINCIPLE" for row in certified_rows)
+    memory["principle_readjudication_dead_end_count"] = sum(str(row.get("basin") or "").startswith("principle-readjudication-") and row.get("failure_layer") == "core_principle" for row in certified_rows)
     closure_rows=[row.get("fresh_phenomenon_closure") or {} for row in certified_rows if isinstance(row.get("fresh_phenomenon_closure"),dict) and row.get("fresh_phenomenon_closure")]
     memory["fresh_phenomenon_closure_count"] = len(closure_rows)
     memory["fresh_phenomenon_closed_evidence_count"] = sum(len(row.get("closed_evidence_sha256") or []) for row in closure_rows)
@@ -861,8 +944,8 @@ def merge_shadow_terminal_run_memory(state: dict[str, Any], terminal_run: dict[s
         raise ValueError("terminal shadow run memory ingestion requires stage manifest provenance")
 
     merged = json.loads(json.dumps(state, ensure_ascii=False))
-    prior_memory = merged.get("shadow_dead_end_memory") or {}
-    prior_rows = [row for row in list(prior_memory.get("blocked_objects") or []) + list(prior_memory.get("hold_objects") or []) if isinstance(row, dict)]
+    prior_memory = _state_search_memory(merged)
+    prior_rows = [row for row in _closed_objects(prior_memory) + list(prior_memory.get("hold_objects") or []) if isinstance(row, dict)]
     prior_hard = [dict(row) for row in prior_rows if str(row.get("basin") or "").startswith("current-source-hard-veto-")]
     prior_semantic = [dict(row) for row in prior_rows if str(row.get("basin") or "").startswith(("semantic-exact-reduction-", "semantic-lane-contract-"))]
     prior_near = [dict(row) for row in prior_rows if str(row.get("basin") or "").startswith("near-miss-")]
@@ -872,7 +955,7 @@ def merge_shadow_terminal_run_memory(state: dict[str, Any], terminal_run: dict[s
     extra_near = _terminal_support_hold_rows(preflight, run_id=run_id, stage_manifest_sha256=stage_manifest_sha256)
     extra_near.extend(_terminal_evidence_hold_rows(evidence_plan, run_id=run_id, stage_manifest_sha256=stage_manifest_sha256, fallback_primary_refs=evidence_fallback_primary_refs))
 
-    memory = _shadow_dead_end_memory(
+    memory_compat = _shadow_dead_end_memory(
         {"latest_run": terminal_run},
         near_miss_state=merged.get("shadow_near_miss_preflight") or build_shadow_near_miss_preflight(),
         prior_hard_veto_rows=prior_hard,
@@ -881,18 +964,25 @@ def merge_shadow_terminal_run_memory(state: dict[str, Any], terminal_run: dict[s
         extra_near_miss_rows=extra_near,
         principle_readjudication_rows=[principle_by_basin[key] for key in sorted(principle_by_basin)],
     )
-    merged["shadow_dead_end_memory"] = memory
+    search_memory = _canonical_search_memory(memory_compat)
+    dead_end_memory = _principle_dead_end_projection(search_memory)
+    merged["shadow_search_memory"] = search_memory
+    merged["shadow_dead_end_memory"] = dead_end_memory
+    memory = search_memory
     summary = merged.setdefault("summary", {})
     summary.update({
-        "shadow_dead_end_objects": len(memory.get("blocked_objects") or []),
+        "shadow_dead_end_objects": len(dead_end_memory.get("blocked_objects") or []),
         "shadow_closed_basins": int(memory.get("closed_basin_count") or 0),
         "principle_readjudication_dead_ends": int(memory.get("principle_readjudication_dead_end_count") or 0),
         "principle_readjudication_closed_basins": int(memory.get("principle_readjudication_closed_basin_count") or 0),
         "problem_novelty_stops": int(memory.get("problem_novelty_stop_count") or 0),
-        "operationalization_identifiability_stops": int(memory.get("operationalization_identifiability_stop_count") or 0),
-        "method_formulation_stops": int(memory.get("method_formulation_stop_count") or 0),
+        "execution_stops": int(memory.get("execution_stop_count") or 0),
+        "experiment_identifiability_stops": int(memory.get("experiment_identifiability_stop_count") or 0),
+        "optimization_stops": int(memory.get("optimization_stop_count") or 0),
+        "operationalization_stops": int(memory.get("operationalization_stop_count") or 0),
+        "method_realization_stops": int(memory.get("method_realization_stop_count") or 0),
         "assumption_scope_stops": int(memory.get("assumption_scope_stop_count") or 0),
-        "principle_stops": int(memory.get("principle_stop_count") or 0),
+        "core_principle_stops": int(memory.get("core_principle_stop_count") or 0),
         "broader_core_principle_falsifications": int(memory.get("broader_core_principle_falsification_count") or 0),
         "core_principle_dead_ends": int(memory.get("core_principle_dead_end_count") or 0),
         "shadow_hold_objects": len(memory.get("hold_objects") or []),
@@ -1103,7 +1193,9 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
     for row in rows:
         counts[row["verdict"]] = counts.get(row["verdict"], 0) + 1
     near_miss_preflight = build_shadow_near_miss_preflight()
-    dead_end_memory = _shadow_dead_end_memory(portfolio, near_miss_preflight, principle_readjudication_rows=_principle_readjudication_rows())
+    memory_compat = _shadow_dead_end_memory(portfolio, near_miss_preflight, principle_readjudication_rows=_principle_readjudication_rows())
+    search_memory = _canonical_search_memory(memory_compat)
+    dead_end_memory = _principle_dead_end_projection(search_memory)
     prior_maintenance = prior_state.get("shadow_memory_maintenance") or {}
     maintenance = json.loads(json.dumps(prior_maintenance, ensure_ascii=False)) if prior_maintenance else {
         "policy": dict(SHADOW_MEMORY_MAINTENANCE_POLICY),
@@ -1130,7 +1222,12 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "semantic_lane_or_pending_reduction_is_not_a_dead_end": True,
             "semantic_soft_collision_alone_is_not_a_dead_end": True,
             "persistent_dead_end_requires_positive_counter_explanation": True,
-            "closed_basin_must_name_failure_layer": True,
+            "search_control_closure_is_not_scientific_dead_end": True,
+            "only_core_principle_enters_shadow_dead_end_memory": True,
+            "holds_live_only_in_shadow_search_memory": True,
+            "closed_basin_must_name_closure_layer": True,
+            "scientific_closed_basin_must_use_canonical_failure_layer": True,
+            "problem_novelty_stop_is_upstream_not_experimental_failure_layer": True,
             "scoped_closed_basin_is_not_automatically_principle_stop": True,
             "principle_stop_does_not_imply_benchmark_level_dead_end": True,
             "principle_stop_requires_explicit_stop_class_or_broader_falsification": True,
@@ -1148,6 +1245,7 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
         "advisory_consultation": ADVISORY_CONSULTATION,
         "shadow_near_miss_preflight": near_miss_preflight,
         "shadow_memory_maintenance": maintenance,
+        "shadow_search_memory": search_memory,
         "shadow_dead_end_memory": dead_end_memory,
         "shadow_source": {
             "portfolio_status": portfolio.get("status"),
@@ -1165,29 +1263,32 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "stop_standalone": counts.get("STOP_STANDALONE_COLLISION_KEEP_CONTEXT_RISK_AXIS", 0),
             "support_inventory_required": counts.get("REVISE_PAPER_PROBLEM_SUPPORT_INVENTORY_REQUIRED", 0),
             "shadow_dead_end_objects": len(dead_end_memory.get("blocked_objects") or []),
-            "shadow_closed_basins": int(dead_end_memory.get("closed_basin_count") or 0),
-            "principle_readjudication_dead_ends": int(dead_end_memory.get("principle_readjudication_dead_end_count") or 0),
-            "principle_readjudication_closed_basins": int(dead_end_memory.get("principle_readjudication_closed_basin_count") or 0),
-            "problem_novelty_stops": int(dead_end_memory.get("problem_novelty_stop_count") or 0),
-            "operationalization_identifiability_stops": int(dead_end_memory.get("operationalization_identifiability_stop_count") or 0),
-            "method_formulation_stops": int(dead_end_memory.get("method_formulation_stop_count") or 0),
-            "assumption_scope_stops": int(dead_end_memory.get("assumption_scope_stop_count") or 0),
-            "principle_stops": int(dead_end_memory.get("principle_stop_count") or 0),
-            "broader_core_principle_falsifications": int(dead_end_memory.get("broader_core_principle_falsification_count") or 0),
-            "core_principle_dead_ends": int(dead_end_memory.get("core_principle_dead_end_count") or 0),
-            "shadow_hold_objects": len(dead_end_memory.get("hold_objects") or []),
-            "current_source_hard_veto_dead_ends": int(dead_end_memory.get("current_source_hard_veto_count") or 0),
-            "current_source_hard_veto_added_from_latest_run": int(dead_end_memory.get("current_source_hard_veto_added_from_latest_run") or 0),
-            "current_source_hard_veto_added_from_terminal_run": int(dead_end_memory.get("current_source_hard_veto_added_from_terminal_run") or 0),
-            "current_source_hard_veto_inherited": int(dead_end_memory.get("current_source_hard_veto_inherited") or 0),
+            "shadow_closed_basins": int(search_memory.get("closed_basin_count") or 0),
+            "principle_readjudication_dead_ends": int(search_memory.get("principle_readjudication_dead_end_count") or 0),
+            "principle_readjudication_closed_basins": int(search_memory.get("principle_readjudication_closed_basin_count") or 0),
+            "problem_novelty_stops": int(search_memory.get("problem_novelty_stop_count") or 0),
+            "execution_stops": int(search_memory.get("execution_stop_count") or 0),
+            "experiment_identifiability_stops": int(search_memory.get("experiment_identifiability_stop_count") or 0),
+            "optimization_stops": int(search_memory.get("optimization_stop_count") or 0),
+            "operationalization_stops": int(search_memory.get("operationalization_stop_count") or 0),
+            "method_realization_stops": int(search_memory.get("method_realization_stop_count") or 0),
+            "assumption_scope_stops": int(search_memory.get("assumption_scope_stop_count") or 0),
+            "core_principle_stops": int(search_memory.get("core_principle_stop_count") or 0),
+            "broader_core_principle_falsifications": int(search_memory.get("broader_core_principle_falsification_count") or 0),
+            "core_principle_dead_ends": int(dead_end_memory.get("principle_dead_end_count") or 0),
+            "shadow_hold_objects": len(search_memory.get("hold_objects") or []),
+            "current_source_hard_veto_dead_ends": int(search_memory.get("current_source_hard_veto_count") or 0),
+            "current_source_hard_veto_added_from_latest_run": int(search_memory.get("current_source_hard_veto_added_from_latest_run") or 0),
+            "current_source_hard_veto_added_from_terminal_run": int(search_memory.get("current_source_hard_veto_added_from_terminal_run") or 0),
+            "current_source_hard_veto_inherited": int(search_memory.get("current_source_hard_veto_inherited") or 0),
             "semantic_blocker_dead_ends": 0,
-            "semantic_hold_objects": int(dead_end_memory.get("semantic_hold_count") or 0),
-            "semantic_hold_added_from_latest_run": int(dead_end_memory.get("semantic_hold_added_from_latest_run") or 0),
-            "semantic_hold_added_from_terminal_run": int(dead_end_memory.get("semantic_hold_added_from_terminal_run") or 0),
-            "semantic_hold_inherited": int(dead_end_memory.get("semantic_hold_inherited") or 0),
-            "near_miss_preflight_dead_ends": int(dead_end_memory.get("near_miss_preflight_count") or 0),
-            "near_miss_holds": int(dead_end_memory.get("near_miss_hold_count") or 0),
-            "near_miss_terminal_support_holds": int(dead_end_memory.get("near_miss_terminal_support_hold_count") or 0),
+            "semantic_hold_objects": int(search_memory.get("semantic_hold_count") or 0),
+            "semantic_hold_added_from_latest_run": int(search_memory.get("semantic_hold_added_from_latest_run") or 0),
+            "semantic_hold_added_from_terminal_run": int(search_memory.get("semantic_hold_added_from_terminal_run") or 0),
+            "semantic_hold_inherited": int(search_memory.get("semantic_hold_inherited") or 0),
+            "near_miss_preflight_dead_ends": int(search_memory.get("near_miss_preflight_count") or 0),
+            "near_miss_holds": int(search_memory.get("near_miss_hold_count") or 0),
+            "near_miss_terminal_support_holds": int(search_memory.get("near_miss_terminal_support_hold_count") or 0),
             "near_miss_support_holds": int((near_miss_preflight.get("summary") or {}).get("support_holds") or 0),
             "near_miss_current_primary_stops": int((near_miss_preflight.get("summary") or {}).get("current_primary_stops") or 0),
             "near_miss_mature_theory_stops": int((near_miss_preflight.get("summary") or {}).get("mature_theory_stops") or 0),
@@ -1217,41 +1318,46 @@ def validate_search_portfolio_design_adjudication(state: dict[str, Any]) -> list
         errors.append("SP design adjudication cannot authorize downstream work")
     if policy.get("this_is_a_substate_not_a_new_backend_component") is not True or policy.get("paper_problem_support_inventory_precedes_method_design_when_identifiability_is_claimed") is not True:
         errors.append("SP design must remain a Paper Design substate and gate identifiability on support inventory")
-    if policy.get("source_is_shadow_search_portfolio") is not True or policy.get("shadow_queue_has_zero_paper_design_authority") is not True or policy.get("cannot_grant_or_revoke_live_paper_design_authority") is not True or policy.get("current_source_hard_veto_memory_persists_across_shadow_runs") is not True or policy.get("semantic_hold_memory_persists_across_shadow_runs") is not True or policy.get("semantic_lane_or_pending_reduction_is_not_a_dead_end") is not True or policy.get("persistent_dead_end_requires_positive_counter_explanation") is not True or policy.get("closed_basin_must_name_failure_layer") is not True or policy.get("scoped_closed_basin_is_not_automatically_principle_stop") is not True or policy.get("principle_stop_does_not_imply_benchmark_level_dead_end") is not True or policy.get("principle_stop_requires_explicit_stop_class_or_broader_falsification") is not True or policy.get("principle_readjudications_feed_opposite_search_control_only") is not True or policy.get("semantic_soft_collision_alone_is_not_a_dead_end") is not True:
-        errors.append("SP design audit must remain retrospective zero-authority search control and every closed basin must be typed by its actual scientific failure layer")
+    if policy.get("source_is_shadow_search_portfolio") is not True or policy.get("shadow_queue_has_zero_paper_design_authority") is not True or policy.get("cannot_grant_or_revoke_live_paper_design_authority") is not True or policy.get("current_source_hard_veto_memory_persists_across_shadow_runs") is not True or policy.get("semantic_hold_memory_persists_across_shadow_runs") is not True or policy.get("semantic_lane_or_pending_reduction_is_not_a_dead_end") is not True or policy.get("persistent_dead_end_requires_positive_counter_explanation") is not True or policy.get("search_control_closure_is_not_scientific_dead_end") is not True or policy.get("only_core_principle_enters_shadow_dead_end_memory") is not True or policy.get("holds_live_only_in_shadow_search_memory") is not True or policy.get("closed_basin_must_name_closure_layer") is not True or policy.get("scientific_closed_basin_must_use_canonical_failure_layer") is not True or policy.get("problem_novelty_stop_is_upstream_not_experimental_failure_layer") is not True or policy.get("scoped_closed_basin_is_not_automatically_principle_stop") is not True or policy.get("principle_stop_does_not_imply_benchmark_level_dead_end") is not True or policy.get("principle_stop_requires_explicit_stop_class_or_broader_falsification") is not True or policy.get("principle_readjudications_feed_opposite_search_control_only") is not True or policy.get("semantic_soft_collision_alone_is_not_a_dead_end") is not True:
+        errors.append("SP design audit must remain retrospective zero-authority search control; upstream problem/novelty stops are separate and all scientific closures must use the canonical failure-layer schema")
     if (state.get("advisory_consultation") or {}).get("scientific_authority") is not False or (state.get("advisory_consultation") or {}).get("failed_or_missing_review_is_not_pass") is not True:
         errors.append("unavailable AI premortem reviewers must remain zero-authority and cannot count as PASS")
-    memory = state.get("shadow_dead_end_memory") or {}; blocked_objects=[row for row in memory.get("blocked_objects") or [] if isinstance(row,dict)]; hold_objects=[row for row in memory.get("hold_objects") or [] if isinstance(row,dict)]; blocked_ids={str(row.get("source_candidate_id") or "") for row in blocked_objects}; hold_ids={str(row.get("source_candidate_id") or "") for row in hold_objects}
-    if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True or "SP-09" not in blocked_ids or "SP-15" not in hold_ids or "SP-15" in blocked_ids:
-        errors.append("Paper Design memory must retain SP-09 as a problem/novelty stop and SP-15 only as a reopenable hold")
-    if any(row.get("dead_end_certified") is not True or str(row.get("failure_layer") or "") not in FAILURE_LAYERS or row.get("memory_class") != MEMORY_CLASS_BY_LAYER.get(str(row.get("failure_layer") or "")) or row.get("principle_layer_closed") is not (str(row.get("failure_layer") or "") == "PRINCIPLE") or row.get("broader_core_principle_falsified") not in {True,False} or not isinstance(row.get("counter_explanation"),dict) or not str((row.get("counter_explanation") or {}).get("statement") or "").strip() or not str((row.get("counter_explanation") or {}).get("opposite_principle") or "").strip() or not str((row.get("counter_explanation") or {}).get("opposite_search_seed") or "").strip() or not (row.get("counter_explanation") or {}).get("evidence_refs") or not str(row.get("reopen_only_if") or "").strip() for row in blocked_objects):
-        errors.append("every persistent blocked object must carry a valid failure layer/memory class plus an affirmative counter-explanation and reopen condition")
-    layer_counts = summarize_failure_layers(blocked_objects)
-    broader_count=sum(row.get("broader_core_principle_falsified") is True for row in blocked_objects)
-    if int(memory.get("closed_basin_count") or 0) != len(blocked_objects) or dict(memory.get("failure_layer_counts") or {}) != layer_counts or int(memory.get("problem_novelty_stop_count") or 0) != layer_counts["PROBLEM_NOVELTY"] or int(memory.get("operationalization_identifiability_stop_count") or 0) != layer_counts["OPERATIONALIZATION_IDENTIFIABILITY"] or int(memory.get("method_formulation_stop_count") or 0) != layer_counts["METHOD_FORMULATION"] or int(memory.get("assumption_scope_stop_count") or 0) != layer_counts["ASSUMPTION_SCOPE"] or int(memory.get("principle_stop_count") or 0) != layer_counts["PRINCIPLE"] or int(memory.get("principle_dead_end_count") or 0) != layer_counts["PRINCIPLE"] or int(memory.get("broader_core_principle_falsification_count") or 0) != broader_count or int(memory.get("core_principle_dead_end_count") or 0) != broader_count:
-        errors.append("closed-basin failure-layer accounting must match typed blocked objects; PRINCIPLE_STOP and broader benchmark/core falsification are tracked separately")
-    readjudicated=[row for row in blocked_objects if str(row.get("basin") or "").startswith("principle-readjudication-")]
-    readjudicated_principle=[row for row in readjudicated if row.get("failure_layer")=="PRINCIPLE"]
-    if int(memory.get("principle_readjudication_closed_basin_count") or 0)!=len(readjudicated) or int(memory.get("principle_readjudication_dead_end_count") or 0)!=len(readjudicated_principle) or any(not str(row.get("source_readjudication_artifact") or "").strip() or row.get("scientific_authority") is not False for row in readjudicated):
-        errors.append("principle readjudications must enter persistent memory as provenance-bound layer-typed zero-authority closed-basin control; only explicit PRINCIPLE_STOP rows count as readjudication principle dead ends")
-    closures=[row.get("fresh_phenomenon_closure") or {} for row in blocked_objects if isinstance(row.get("fresh_phenomenon_closure"),dict) and row.get("fresh_phenomenon_closure")]
-    if int(memory.get("fresh_phenomenon_closure_count") or 0)!=len(closures) or int(memory.get("fresh_phenomenon_closed_evidence_count") or 0)!=sum(len(row.get("closed_evidence_sha256") or []) for row in closures) or any(not str(row.get("source_ref") or "").startswith("arXiv:") or not row.get("closed_evidence_sha256") or row.get("scientific_authority") is not False or any(not re.fullmatch(r"[0-9a-f]{64}",str(value or "")) for value in row.get("closed_evidence_sha256") or []) for row in closures):
-        errors.append("fresh phenomenon closures must be exact evidence-SHA, source-bounded, provenance-preserving zero-authority search control")
+    search_memory = state.get("shadow_search_memory") or {}; closed_objects=_closed_objects(search_memory); hold_objects=[row for row in search_memory.get("hold_objects") or [] if isinstance(row,dict)]; closed_ids={str(row.get("source_candidate_id") or "") for row in closed_objects}; hold_ids={str(row.get("source_candidate_id") or "") for row in hold_objects}
+    dead_memory = state.get("shadow_dead_end_memory") or {}; dead_objects=[row for row in dead_memory.get("blocked_objects") or [] if isinstance(row,dict)]
+    if search_memory.get("scientific_authority") is not False or search_memory.get("live_source_coverage_effect") is not False or search_memory.get("cannot_mutate_canonical_generator_or_queue") is not True or search_memory.get("search_control_only") is not True or "blocked_objects" in search_memory or "SP-09" not in closed_ids or "SP-15" not in hold_ids or "SP-15" in closed_ids:
+        errors.append("canonical shadow_search_memory must hold SP-09 as an upstream problem/novelty closure and SP-15 only as a reopenable HOLD, without using scientific dead-end container semantics")
+    if any(row.get("search_closure_certified") is not True or audit_closed_row_layer(row).get("passed") is not True or row.get("dead_end_certified") is not (row.get("failure_layer") == "core_principle") or not isinstance(row.get("counter_explanation"),dict) or not str((row.get("counter_explanation") or {}).get("statement") or "").strip() or not str((row.get("counter_explanation") or {}).get("opposite_principle") or "").strip() or not str((row.get("counter_explanation") or {}).get("opposite_search_seed") or "").strip() or not (row.get("counter_explanation") or {}).get("evidence_refs") or not str(row.get("reopen_only_if") or "").strip() for row in closed_objects):
+        errors.append("every search closure must carry a valid closure/failure layer and reopen contract; only core_principle closures may retain dead_end_certified=true")
+    closure_counts = summarize_closure_layers(closed_objects)
+    scientific_counts = summarize_scientific_failure_layers(closed_objects)
+    broader_count=sum(row.get("broader_core_principle_falsified") is True for row in closed_objects)
+    if int(search_memory.get("closed_basin_count") or 0) != len(closed_objects) or int(search_memory.get("closed_object_count") or 0) != len(closed_objects) or dict(search_memory.get("closure_layer_counts") or {}) != closure_counts or dict(search_memory.get("failure_layer_counts") or {}) != scientific_counts or int(search_memory.get("problem_novelty_stop_count") or 0) != closure_counts["problem_novelty"] or int(search_memory.get("execution_stop_count") or 0) != scientific_counts["execution"] or int(search_memory.get("experiment_identifiability_stop_count") or 0) != scientific_counts["experiment_identifiability"] or int(search_memory.get("optimization_stop_count") or 0) != scientific_counts["optimization"] or int(search_memory.get("operationalization_stop_count") or 0) != scientific_counts["operationalization"] or int(search_memory.get("method_realization_stop_count") or 0) != scientific_counts["method_realization"] or int(search_memory.get("assumption_scope_stop_count") or 0) != scientific_counts["assumption_scope"] or int(search_memory.get("core_principle_stop_count") or 0) != scientific_counts["core_principle"] or int(search_memory.get("broader_core_principle_falsification_count") or 0) != broader_count:
+        errors.append("shadow_search_memory accounting must match upstream problem/novelty closures plus the canonical seven scientific failure layers")
+    readjudicated=[row for row in closed_objects if str(row.get("basin") or "").startswith("principle-readjudication-")]
+    readjudicated_core=[row for row in readjudicated if row.get("failure_layer")=="core_principle"]
+    if int(search_memory.get("principle_readjudication_closed_basin_count") or 0)!=len(readjudicated) or int(search_memory.get("principle_readjudication_dead_end_count") or 0)!=len(readjudicated_core) or any(not str(row.get("source_readjudication_artifact") or "").strip() or row.get("scientific_authority") is not False for row in readjudicated):
+        errors.append("principle readjudications must enter search memory as provenance-bound typed closures; only core_principle rows may project into scientific dead-end memory")
+    closures=[row.get("fresh_phenomenon_closure") or {} for row in closed_objects if isinstance(row.get("fresh_phenomenon_closure"),dict) and row.get("fresh_phenomenon_closure")]
+    if int(search_memory.get("fresh_phenomenon_closure_count") or 0)!=len(closures) or int(search_memory.get("fresh_phenomenon_closed_evidence_count") or 0)!=sum(len(row.get("closed_evidence_sha256") or []) for row in closures) or any(not str(row.get("source_ref") or "").startswith("arXiv:") or not row.get("closed_evidence_sha256") or row.get("scientific_authority") is not False or any(not re.fullmatch(r"[0-9a-f]{64}",str(value or "")) for value in row.get("closed_evidence_sha256") or []) for row in closures):
+        errors.append("fresh phenomenon closures must remain exact-evidence, provenance-preserving search control")
+    expected_dead=[row for row in closed_objects if row.get("failure_layer")=="core_principle" and row.get("principle_update_allowed") is True]
+    if dead_memory.get("scientific_authority") is not False or dead_memory.get("persistent_dead_end_authority_scope") != "core_principle-only" or dead_memory.get("only_principle_stop_may_enter_persistent_dead_end_memory") is not True or dead_memory.get("hold_objects") not in ([],None) or int(dead_memory.get("principle_dead_end_count") or 0)!=len(expected_dead) or dead_objects!=expected_dead or any(row.get("failure_layer")!="core_principle" or row.get("principle_update_allowed") is not True or row.get("dead_end_certified") is not True for row in dead_objects):
+        errors.append("shadow_dead_end_memory must be a core_principle-only projection of shadow_search_memory and must never contain HOLD or non-principle closures")
     if any(row.get("dead_end_certified") is not False for row in hold_objects):
-        errors.append("reopenable hold objects cannot be marked as dead ends")
-    dynamic=[row for row in blocked_objects if str(row.get("basin") or "").startswith("current-source-hard-veto-")]
-    hard_added=int(memory.get("current_source_hard_veto_added_from_terminal_run",memory.get("current_source_hard_veto_added_from_latest_run",0)) or 0)
-    if int(memory.get("current_source_hard_veto_count") or 0)!=len(dynamic) or hard_added+int(memory.get("current_source_hard_veto_inherited") or 0)!=len(dynamic) or any(not str(row.get("strongest_reduction") or "").strip() or not row.get("current_source_refs") or not str(row.get("reopen_only_if") or "").strip() or row.get("scientific_authority") is not False for row in dynamic):
-        errors.append("current-source hard vetoes must persist as bounded zero-authority shadow dead-end fingerprints")
-    semantic_dead=[row for row in blocked_objects if str(row.get("basin") or "").startswith(("semantic-exact-reduction-","semantic-lane-contract-"))]
+        errors.append("reopenable HOLD objects cannot be scientific dead ends")
+    dynamic=[row for row in closed_objects if str(row.get("basin") or "").startswith("current-source-hard-veto-")]
+    hard_added=int(search_memory.get("current_source_hard_veto_added_from_terminal_run",search_memory.get("current_source_hard_veto_added_from_latest_run",0)) or 0)
+    if int(search_memory.get("current_source_hard_veto_count") or 0)!=len(dynamic) or hard_added+int(search_memory.get("current_source_hard_veto_inherited") or 0)!=len(dynamic) or any(not str(row.get("strongest_reduction") or "").strip() or not row.get("current_source_refs") or not str(row.get("reopen_only_if") or "").strip() or row.get("scientific_authority") is not False for row in dynamic):
+        errors.append("current-source hard vetoes must persist as bounded zero-authority search-closure fingerprints")
+    semantic_dead=[row for row in closed_objects if str(row.get("basin") or "").startswith(("semantic-exact-reduction-","semantic-lane-contract-"))]
     semantic_holds=[row for row in hold_objects if str(row.get("basin") or "").startswith(("semantic-exact-reduction-","semantic-lane-contract-"))]
-    semantic_hold_added=int(memory.get("semantic_hold_added_from_terminal_run",memory.get("semantic_hold_added_from_latest_run",0)) or 0)
-    if semantic_dead or int(memory.get("semantic_blocker_count") or 0)!=0 or int(memory.get("semantic_hold_count") or 0)!=len(semantic_holds) or semantic_hold_added+int(memory.get("semantic_hold_inherited") or 0)!=len(semantic_holds) or any(row.get("scientific_authority") is not False or row.get("dead_end_certified") is not False or not str(row.get("strongest_reduction") or "").strip() or not str(row.get("reason") or "").strip() or not str(row.get("reopen_only_if") or "").strip() for row in semantic_holds):
+    semantic_hold_added=int(search_memory.get("semantic_hold_added_from_terminal_run",search_memory.get("semantic_hold_added_from_latest_run",0)) or 0)
+    if semantic_dead or int(search_memory.get("semantic_blocker_count") or 0)!=0 or int(search_memory.get("semantic_hold_count") or 0)!=len(semantic_holds) or semantic_hold_added+int(search_memory.get("semantic_hold_inherited") or 0)!=len(semantic_holds) or any(row.get("scientific_authority") is not False or row.get("dead_end_certified") is not False or not str(row.get("strongest_reduction") or "").strip() or not str(row.get("reason") or "").strip() or not str(row.get("reopen_only_if") or "").strip() for row in semantic_holds):
         errors.append("lane-contract and unresolved exact-reduction records must persist only as zero-authority reopenable holds")
-    near_miss=state.get("shadow_near_miss_preflight") or {}; near_dead=[row for row in blocked_objects if str(row.get("basin") or "").startswith("near-miss-")]; near_holds=[row for row in hold_objects if str(row.get("basin") or "").startswith("near-miss-")]
-    base_near=int(memory.get("near_miss_base_preflight_count",(near_miss.get("summary") or {}).get("receipts",0)) or 0);terminal_holds=int(memory.get("near_miss_terminal_support_hold_count") or 0)
-    if int(memory.get("near_miss_preflight_count") or 0)!=len(near_dead) or int(memory.get("near_miss_hold_count") or 0)!=len(near_holds) or int((near_miss.get("summary") or {}).get("receipts") or 0)!=base_near or terminal_holds>len(near_holds) or any(row.get("scientific_authority") is not False or not str(row.get("reopen_only_if") or "").strip() for row in near_dead+near_holds):
-        errors.append("near-miss reductions/collisions must split into certified dead ends while support-unavailable records remain holds")
+    near_miss=state.get("shadow_near_miss_preflight") or {}; near_dead=[row for row in closed_objects if str(row.get("basin") or "").startswith("near-miss-")]; near_holds=[row for row in hold_objects if str(row.get("basin") or "").startswith("near-miss-")]
+    base_near=int(search_memory.get("near_miss_base_preflight_count",(near_miss.get("summary") or {}).get("receipts",0)) or 0);terminal_holds=int(search_memory.get("near_miss_terminal_support_hold_count") or 0)
+    if int(search_memory.get("near_miss_preflight_count") or 0)!=len(near_dead) or int(search_memory.get("near_miss_hold_count") or 0)!=len(near_holds) or int((near_miss.get("summary") or {}).get("receipts") or 0)!=base_near or terminal_holds>len(near_holds) or any(row.get("scientific_authority") is not False or not str(row.get("reopen_only_if") or "").strip() for row in near_dead+near_holds):
+        errors.append("near-miss reductions/collisions must split into certified search closures while support-unavailable records remain holds")
     maintenance=state.get("shadow_memory_maintenance") or {}
     if maintenance and (maintenance.get("scientific_authority") is not False or (maintenance.get("policy") or {}).get("terminal_run_ingestion_is_zero_authority_search_control") is not True or (maintenance.get("policy") or {}).get("canonical_generator_and_queue_untouched") is not True or any(row.get("scientific_authority") is not False or not row.get("run_id") or not row.get("stage_manifest_sha256") for row in maintenance.get("receipts") or [] if isinstance(row,dict))):
         errors.append("terminal shadow-run memory maintenance must remain bounded zero-authority search control")

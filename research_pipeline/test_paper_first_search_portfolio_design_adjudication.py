@@ -64,28 +64,28 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertFalse(hold["scientific_authority"])
 
     def test_evodrc_feasibility_credit_is_in_persistent_principle_memory(self) -> None:
-        memory=self.state["shadow_dead_end_memory"]
-        hits=[row for row in memory.get("blocked_objects") or [] if row.get("source_candidate_id")=="EVODRC-FEASIBILITY-CREDIT"]
+        memory=self.state["shadow_search_memory"]
+        hits=[row for row in memory.get("closed_objects") or [] if row.get("source_candidate_id")=="EVODRC-FEASIBILITY-CREDIT"]
         self.assertEqual(len(hits),1)
         row=hits[0]
-        self.assertEqual(row["memory_class"],"METHOD_FORMULATION_STOP")
-        self.assertEqual(row["failure_layer"],"METHOD_FORMULATION")
+        self.assertEqual(row["memory_class"],"METHOD_REALIZATION_STOP")
+        self.assertEqual(row["failure_layer"],"method_realization")
         self.assertFalse(row["broader_core_principle_falsified"])
-        self.assertTrue(row["dead_end_certified"]);self.assertFalse(row["scientific_authority"])
+        self.assertTrue(row["search_closure_certified"]);self.assertFalse(row["dead_end_certified"]);self.assertFalse(row["scientific_authority"])
         self.assertEqual(row["search_primitive"],"UNEXPLAINED_BOUNDARY")
         self.assertEqual(row["source_readjudication_artifact"],"generated/evodrc-feasibility-credit-principle-readjudication-20260817.json")
         self.assertTrue(row.get("reopen_only_if"))
         self.assertEqual(row.get("current_source_refs"),["arXiv:2607.20019"])
 
     def test_static_procedural_cross_regime_contradiction_is_in_persistent_principle_memory(self) -> None:
-        memory=self.state["shadow_dead_end_memory"]
-        hits=[row for row in memory.get("blocked_objects") or [] if row.get("source_candidate_id")=="AUTO-1-STATIC-PROCEDURAL-PRIOR-CROSS-REGIME"]
+        memory=self.state["shadow_search_memory"]
+        hits=[row for row in memory.get("closed_objects") or [] if row.get("source_candidate_id")=="AUTO-1-STATIC-PROCEDURAL-PRIOR-CROSS-REGIME"]
         self.assertEqual(len(hits),1)
         row=hits[0]
         self.assertEqual(row["memory_class"],"ASSUMPTION_SCOPE_STOP")
-        self.assertEqual(row["failure_layer"],"ASSUMPTION_SCOPE")
+        self.assertEqual(row["failure_layer"],"assumption_scope")
         self.assertFalse(row["broader_core_principle_falsified"])
-        self.assertTrue(row["dead_end_certified"]);self.assertFalse(row["scientific_authority"])
+        self.assertTrue(row["search_closure_certified"]);self.assertFalse(row["dead_end_certified"]);self.assertFalse(row["scientific_authority"])
         self.assertEqual(row["search_primitive"],"CONTRADICTION")
         self.assertEqual(row["current_source_refs"],["arXiv:2607.01874","arXiv:2607.05297"])
         self.assertEqual(row["source_readjudication_artifact"],"generated/static-procedural-prior-cross-regime-contradiction-principle-readjudication-20260817.json")
@@ -96,14 +96,14 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertIn("identical static-procedural-artifact intervention",row["reopen_only_if"])
 
     def test_pa05_skill_validation_transfer_is_in_persistent_principle_memory(self) -> None:
-        memory=self.state["shadow_dead_end_memory"]
-        hits=[row for row in memory.get("blocked_objects") or [] if row.get("source_candidate_id")=="PA-05-SKILL-VALIDATION-TRANSFER"]
+        memory=self.state["shadow_search_memory"]
+        hits=[row for row in memory.get("closed_objects") or [] if row.get("source_candidate_id")=="PA-05-SKILL-VALIDATION-TRANSFER"]
         self.assertEqual(len(hits),1)
         row=hits[0]
-        self.assertEqual(row["memory_class"],"METHOD_FORMULATION_STOP")
-        self.assertEqual(row["failure_layer"],"METHOD_FORMULATION")
+        self.assertEqual(row["memory_class"],"METHOD_REALIZATION_STOP")
+        self.assertEqual(row["failure_layer"],"method_realization")
         self.assertFalse(row["broader_core_principle_falsified"])
-        self.assertTrue(row["dead_end_certified"]);self.assertFalse(row["scientific_authority"])
+        self.assertTrue(row["search_closure_certified"]);self.assertFalse(row["dead_end_certified"]);self.assertFalse(row["scientific_authority"])
         self.assertEqual(row["search_primitive"],"UNEXPLAINED_BOUNDARY")
         self.assertEqual(row["source_readjudication_artifact"],"generated/skill-validation-transfer-distribution-shift-principle-readjudication-20260817.json")
         self.assertTrue(row.get("reopen_only_if"))
@@ -122,14 +122,14 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertFalse(closure.get("scientific_authority"))
 
     def test_aborted_auto1_relevant_skill_misexecution_is_scoped_principle_dead_end(self) -> None:
-        memory=self.state["shadow_dead_end_memory"]
-        hits=[row for row in memory.get("blocked_objects") or [] if row.get("source_candidate_id")=="AUTO-1-RELEVANT-SKILL-MISEXECUTION"]
+        memory=self.state["shadow_search_memory"]
+        hits=[row for row in memory.get("closed_objects") or [] if row.get("source_candidate_id")=="AUTO-1-RELEVANT-SKILL-MISEXECUTION"]
         self.assertEqual(len(hits),1)
         row=hits[0]
-        self.assertEqual(row["memory_class"],"METHOD_FORMULATION_STOP")
-        self.assertEqual(row["failure_layer"],"METHOD_FORMULATION")
+        self.assertEqual(row["memory_class"],"METHOD_REALIZATION_STOP")
+        self.assertEqual(row["failure_layer"],"method_realization")
         self.assertFalse(row["broader_core_principle_falsified"])
-        self.assertTrue(row["dead_end_certified"]);self.assertFalse(row["scientific_authority"])
+        self.assertTrue(row["search_closure_certified"]);self.assertFalse(row["dead_end_certified"]);self.assertFalse(row["scientific_authority"])
         self.assertEqual(row["search_primitive"],"CONVERGENT_FAILURE")
         self.assertEqual(row["source_readjudication_artifact"],"generated/auto1-relevant-skill-misexecution-principle-readjudication-20260817.json")
         self.assertEqual(row["current_source_refs"],["arXiv:2608.11888","arXiv:2608.14036"])
@@ -150,31 +150,43 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertIn("point-identifiable", rows["SP-15"]["revised_problem"])
 
     def test_current_closed_basins_are_typed_by_actual_failure_layer(self) -> None:
-        memory = self.state["shadow_dead_end_memory"]
+        memory = self.state["shadow_search_memory"]
         self.assertEqual(memory["closed_basin_count"], 40)
+        self.assertEqual(memory["closure_layer_counts"], {
+            "problem_novelty": 4,
+            "execution": 0,
+            "experiment_identifiability": 2,
+            "optimization": 0,
+            "operationalization": 3,
+            "method_realization": 28,
+            "assumption_scope": 2,
+            "core_principle": 1,
+        })
         self.assertEqual(memory["failure_layer_counts"], {
-            "PROBLEM_NOVELTY": 4,
-            "OPERATIONALIZATION_IDENTIFIABILITY": 5,
-            "METHOD_FORMULATION": 28,
-            "ASSUMPTION_SCOPE": 2,
-            "PRINCIPLE": 1,
+            "execution": 0,
+            "experiment_identifiability": 2,
+            "optimization": 0,
+            "operationalization": 3,
+            "method_realization": 28,
+            "assumption_scope": 2,
+            "core_principle": 1,
         })
         self.assertEqual(memory["principle_dead_end_count"], 1)
-        self.assertEqual(memory["principle_stop_count"], 1)
+        self.assertEqual(memory["core_principle_stop_count"], 1)
         self.assertEqual(memory["broader_core_principle_falsification_count"], 0)
-        self.assertEqual(memory["core_principle_dead_end_count"], 0)
+        self.assertEqual(memory["core_principle_dead_end_count"], 1)
         self.assertEqual(len(memory["hold_objects"]), 7)
         self.assertTrue(all(row.get("dead_end_certified") is False for row in memory["hold_objects"]))
-        pace = next(row for row in memory["blocked_objects"] if row.get("source_candidate_id") == "PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY")
-        self.assertEqual(pace["failure_layer"], "PRINCIPLE")
-        self.assertEqual(pace["memory_class"], "PRINCIPLE_STOP")
-        self.assertTrue(pace["principle_layer_closed"])
+        pace = next(row for row in memory["closed_objects"] if row.get("source_candidate_id") == "PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY")
+        self.assertEqual(pace["failure_layer"], "core_principle")
+        self.assertEqual(pace["memory_class"], "CORE_PRINCIPLE_STOP")
+        self.assertTrue(pace["principle_update_allowed"])
         self.assertFalse(pace["broader_core_principle_falsified"])
-        pa01 = next(row for row in memory["blocked_objects"] if row.get("source_candidate_id") == "PA-01-EVIDENCE-ECHO")
-        self.assertEqual(pa01["memory_class"], "METHOD_FORMULATION_STOP")
+        pa01 = next(row for row in memory["closed_objects"] if row.get("source_candidate_id") == "PA-01-EVIDENCE-ECHO")
+        self.assertEqual(pa01["memory_class"], "METHOD_REALIZATION_STOP")
         self.assertTrue(pa01["experiment_run_for_this_readjudication"])
         self.assertFalse(pa01["experiment_alone_authorizes_closure"])
-        sp09 = next(row for row in memory["blocked_objects"] if row.get("source_candidate_id") == "SP-09")
+        sp09 = next(row for row in memory["closed_objects"] if row.get("source_candidate_id") == "SP-09")
         self.assertEqual(sp09["memory_class"], "PROBLEM_NOVELTY_STOP")
 
     def test_shadow_counterfactual_pass_does_not_leak_downstream_authority(self) -> None:
@@ -190,15 +202,25 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         for key in ("method_design_authorized", "experiment_blueprint_authorized", "local_validation_authorized", "p0_authorized", "gpu_authorized"):
             self.assertEqual(self.state["summary"][key], 0)
 
-    def test_shadow_dead_end_memory_cannot_touch_live_discovery(self) -> None:
-        memory = self.state["shadow_dead_end_memory"]
+    def test_search_closure_memory_and_scientific_dead_end_memory_are_separate(self) -> None:
+        memory = self.state["shadow_search_memory"]
+        dead = self.state["shadow_dead_end_memory"]
         self.assertFalse(memory["scientific_authority"])
         self.assertFalse(memory["live_source_coverage_effect"])
         self.assertTrue(memory["cannot_mutate_canonical_generator_or_queue"])
-        self.assertIn("SP-09", {row["source_candidate_id"] for row in memory["blocked_objects"]})
-        self.assertNotIn("SP-15", {row["source_candidate_id"] for row in memory["blocked_objects"]})
+        self.assertTrue(memory["search_control_only"])
+        self.assertNotIn("blocked_objects", memory)
+        self.assertIn("SP-09", {row["source_candidate_id"] for row in memory["closed_objects"]})
+        self.assertNotIn("SP-15", {row["source_candidate_id"] for row in memory["closed_objects"]})
         self.assertIn("SP-15", {row["source_candidate_id"] for row in memory["hold_objects"]})
-        self.assertTrue(all(row["dead_end_certified"] is True and row.get("counter_explanation") for row in memory["blocked_objects"]))
+        self.assertTrue(all(row["search_closure_certified"] is True and row.get("counter_explanation") for row in memory["closed_objects"]))
+        self.assertEqual(sum(row.get("dead_end_certified") is True for row in memory["closed_objects"]), 1)
+        self.assertFalse(dead["scientific_authority"])
+        self.assertEqual(dead["persistent_dead_end_authority_scope"], "core_principle-only")
+        self.assertTrue(dead["only_principle_stop_may_enter_persistent_dead_end_memory"])
+        self.assertEqual(dead.get("hold_objects"), [])
+        self.assertEqual([row.get("source_candidate_id") for row in dead.get("blocked_objects") or []], ["PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY"])
+        self.assertTrue(all(row.get("failure_layer")=="core_principle" and row.get("dead_end_certified") is True for row in dead.get("blocked_objects") or []))
         self.assertEqual(memory.get("inversion_asset_evidence_count"),len(memory.get("inversion_asset_evidence") or []))
         self.assertEqual(memory.get("inversion_asset_search_active_count"),0)
         p01_assets=[row for row in memory.get("inversion_asset_evidence") or [] if str(row.get("asset_ref") or "").startswith("first-party-asset:double-ratchet@")]
@@ -221,8 +243,8 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertTrue((positive[0].get("search_contract") or {}).get("prospective_prediction_required"))
         self.assertTrue((positive[0].get("search_contract") or {}).get("temporal_exposure_standalone_branch_closed"))
         self.assertTrue((positive[0].get("search_contract") or {}).get("treatment_semantics_standalone_branch_closed"))
-        temporal=[row for row in memory.get("blocked_objects") or [] if row.get("source_candidate_id")=="POSITIVE-RESIDUAL-MEMORY-TEMPORAL-EXPOSURE"]
-        semantics=[row for row in memory.get("blocked_objects") or [] if row.get("source_candidate_id")=="POSITIVE-RESIDUAL-MEMORY-TREATMENT-SEMANTICS"]
+        temporal=[row for row in memory.get("closed_objects") or [] if row.get("source_candidate_id")=="POSITIVE-RESIDUAL-MEMORY-TEMPORAL-EXPOSURE"]
+        semantics=[row for row in memory.get("closed_objects") or [] if row.get("source_candidate_id")=="POSITIVE-RESIDUAL-MEMORY-TREATMENT-SEMANTICS"]
         self.assertEqual(len(temporal),1)
         self.assertEqual(len(semantics),1)
         self.assertEqual((temporal[0].get("counter_explanation") or {}).get("opposite_principle"),"Persistent context is a repeated intervention, not a new causal primitive.")
@@ -259,14 +281,14 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         blocked=[row for row in memory["blocked_objects"] if row.get("source_candidate_id")=="PA-03-HARNESS-SELECTION-INVERSION"]
         holds=[row for row in memory["hold_objects"] if row.get("source_candidate_id")=="PA-03-HARNESS-SELECTION-INVERSION"]
         self.assertEqual(len(blocked),1)
-        self.assertEqual(blocked[0]["memory_class"],"METHOD_FORMULATION_STOP")
-        self.assertEqual(blocked[0]["failure_layer"],"METHOD_FORMULATION")
+        self.assertEqual(blocked[0]["memory_class"],"METHOD_REALIZATION_STOP")
+        self.assertEqual(blocked[0]["failure_layer"],"method_realization")
         self.assertFalse(blocked[0]["broader_core_principle_falsified"])
         self.assertEqual(holds,[])
 
     def test_r2_near_miss_preflight_compiles_into_future_shadow_search_memory(self) -> None:
-        memory=self.state["shadow_dead_end_memory"]
-        rows=[row for row in list(memory["blocked_objects"])+list(memory["hold_objects"]) if str(row.get("basin") or "").startswith("near-miss-")]
+        memory=self.state["shadow_search_memory"]
+        rows=[row for row in list(memory["closed_objects"])+list(memory["hold_objects"]) if str(row.get("basin") or "").startswith("near-miss-")]
         by_candidate={}
         for row in rows:
             by_candidate.setdefault(row["source_candidate_id"],[]).append(row)
@@ -289,7 +311,7 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
             if disposition == "HOLD_SUPPORT_UNAVAILABLE":
                 self.assertTrue(all(row["dead_end_certified"] is False for row in matches))
             else:
-                self.assertTrue(all(row["dead_end_certified"] is True and row.get("counter_explanation") for row in matches))
+                self.assertTrue(all(row["search_closure_certified"] is True and row["dead_end_certified"] is False and row.get("counter_explanation") for row in matches))
 
     def test_current_source_hard_veto_compiles_into_future_shadow_search_memory(self) -> None:
         memory=_shadow_dead_end_memory({"latest_run":{"candidates":[{"candidate_id":"SHADOW-X","title":"Retrieval attribution gap","search_primitive":"IDENTIFIABILITY_GAP","current_source_status":"complete","current_source_verdict":"BLOCK","current_source_reduction_class":"VALID_HARD_VETO","current_source_strongest_reduction":"generic identifiability over an omitted compiled-context variable","current_source_reason":"Current primary work already exposes retrieval and compilation as separate pipeline objects.","current_source_source_refs":["arXiv:2605.10114","arXiv:2608.05604"]}]}},prior_hard_veto_rows=[])
@@ -341,8 +363,8 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         baseline_terminal_holds=int(self.state["summary"].get("near_miss_terminal_support_holds") or 0)
         first=merge_shadow_terminal_run_memory(self.state,terminal,preflight)
         self.assertEqual(validate_search_portfolio_design_adjudication(first),[])
-        memory=first["shadow_dead_end_memory"]
-        hard=[row for row in memory["blocked_objects"] if row.get("source_run_id")=="shadow-parallel-r4b" and str(row.get("basin") or "").startswith("current-source-hard-veto-")]
+        memory=first["shadow_search_memory"]
+        hard=[row for row in memory["closed_objects"] if row.get("source_run_id")=="shadow-parallel-r4b" and str(row.get("basin") or "").startswith("current-source-hard-veto-")]
         holds=[row for row in memory["hold_objects"] if row.get("source_run_id")=="shadow-parallel-r4b" and str(row.get("basin") or "").startswith("near-miss-terminal-support-hold-")]
         self.assertEqual((len(hard),len(holds)),(1,1))
         self.assertEqual(first["summary"]["current_source_hard_veto_added_from_latest_run"],0)

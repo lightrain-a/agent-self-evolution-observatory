@@ -58,8 +58,8 @@ def _support_hold_key(row: dict[str, Any]) -> str:
 
 def _current_holds(design_state: dict[str, Any]) -> dict[str, dict[str, Any]]:
     """Return provenance-keyed unresolved support holds across memory schemas."""
-    memory = design_state.get("shadow_dead_end_memory") or {}
-    rows = list(memory.get("blocked_objects") or []) + list(memory.get("hold_objects") or [])
+    memory = design_state.get("shadow_search_memory") or design_state.get("shadow_dead_end_memory") or {}
+    rows = list(memory.get("closed_objects") or memory.get("blocked_objects") or []) + list(memory.get("hold_objects") or [])
     out: dict[str, dict[str, Any]] = {}
     for row in rows:
         if not isinstance(row, dict):

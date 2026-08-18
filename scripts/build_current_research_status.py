@@ -90,6 +90,28 @@ for row in shadow.get("rows", []):
         "method_design_authorized": bool(row.get("method_design_authorized", False)),
     })
 
+shadow_closed_rows = []
+shadow_memory = shadow.get("shadow_search_memory") or shadow.get("shadow_dead_end_memory") or {}
+for row in (shadow_memory.get("closed_objects") or shadow_memory.get("blocked_objects") or []):
+    if not isinstance(row, dict):
+        continue
+    shadow_closed_rows.append({
+        "candidate_id": row.get("source_candidate_id"),
+        "title": row.get("title") or row.get("problem_text") or row.get("source_candidate_id"),
+        "closure_layer": row.get("closure_layer"),
+        "failure_layer": row.get("failure_layer"),
+        "memory_class": row.get("memory_class"),
+        "source_stop_class": row.get("source_stop_class"),
+        "reason": row.get("reason"),
+        "strongest_reduction": row.get("strongest_reduction"),
+        "reopen_only_if": row.get("reopen_only_if"),
+        "experiment_run_for_this_readjudication": bool(row.get("experiment_run_for_this_readjudication", False)),
+        "experiment_alone_authorizes_closure": bool(row.get("experiment_alone_authorizes_closure", False)),
+        "principle_update_allowed": bool(row.get("principle_update_allowed", False)),
+        "broader_core_principle_falsified": bool(row.get("broader_core_principle_falsified", False)),
+        "source_readjudication_artifact": row.get("source_readjudication_artifact"),
+    })
+
 paper_first_terminal = [
     {
         "id": "PF-1",
@@ -142,10 +164,13 @@ state = {
         "shadow_dead_ends": int(shadow_summary.get("shadow_dead_end_objects", 0)),
         "shadow_closed_basins": int(shadow_summary.get("shadow_closed_basins", shadow_summary.get("shadow_dead_end_objects", 0))),
         "shadow_problem_novelty_stops": int(shadow_summary.get("problem_novelty_stops", 0)),
-        "shadow_operationalization_stops": int(shadow_summary.get("operationalization_identifiability_stops", 0)),
-        "shadow_method_formulation_stops": int(shadow_summary.get("method_formulation_stops", 0)),
+        "shadow_execution_stops": int(shadow_summary.get("execution_stops", 0)),
+        "shadow_experiment_identifiability_stops": int(shadow_summary.get("experiment_identifiability_stops", 0)),
+        "shadow_optimization_stops": int(shadow_summary.get("optimization_stops", 0)),
+        "shadow_operationalization_stops": int(shadow_summary.get("operationalization_stops", 0)),
+        "shadow_method_realization_stops": int(shadow_summary.get("method_realization_stops", 0)),
         "shadow_assumption_scope_stops": int(shadow_summary.get("assumption_scope_stops", 0)),
-        "shadow_principle_stops": int(shadow_summary.get("principle_stops", 0)),
+        "shadow_core_principle_stops": int(shadow_summary.get("core_principle_stops", 0)),
         "shadow_broader_core_principle_falsifications": int(shadow_summary.get("broader_core_principle_falsifications", 0)),
         "shadow_core_principle_dead_ends": int(shadow_summary.get("core_principle_dead_ends", 0)),
         "shadow_holds": int(shadow_summary.get("shadow_hold_objects", 0)),
@@ -322,10 +347,13 @@ state = {
         "dead_end_objects": int(shadow_summary.get("shadow_dead_end_objects", 0)),
         "closed_basins": int(shadow_summary.get("shadow_closed_basins", shadow_summary.get("shadow_dead_end_objects", 0))),
         "problem_novelty_stops": int(shadow_summary.get("problem_novelty_stops", 0)),
-        "operationalization_identifiability_stops": int(shadow_summary.get("operationalization_identifiability_stops", 0)),
-        "method_formulation_stops": int(shadow_summary.get("method_formulation_stops", 0)),
+        "execution_stops": int(shadow_summary.get("execution_stops", 0)),
+        "experiment_identifiability_stops": int(shadow_summary.get("experiment_identifiability_stops", 0)),
+        "optimization_stops": int(shadow_summary.get("optimization_stops", 0)),
+        "operationalization_stops": int(shadow_summary.get("operationalization_stops", 0)),
+        "method_realization_stops": int(shadow_summary.get("method_realization_stops", 0)),
         "assumption_scope_stops": int(shadow_summary.get("assumption_scope_stops", 0)),
-        "principle_stops": int(shadow_summary.get("principle_stops", 0)),
+        "core_principle_stops": int(shadow_summary.get("core_principle_stops", 0)),
         "broader_core_principle_falsifications": int(shadow_summary.get("broader_core_principle_falsifications", 0)),
         "core_principle_dead_ends": int(shadow_summary.get("core_principle_dead_ends", 0)),
         "principle_readjudication_dead_ends": int(shadow_summary.get("principle_readjudication_dead_ends", 0)),
@@ -337,6 +365,7 @@ state = {
         "explicit_release_targets": int((support_release.get("summary") or {}).get("explicit_release_targets", 0)),
         "scientific_authority": False,
         "rows": shadow_rows,
+        "closed_rows": shadow_closed_rows,
         "sp15_support": {
             "decision": sp15.get("decision"),
             "support_status": sp15_summary.get("support_status"),

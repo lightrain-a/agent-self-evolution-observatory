@@ -384,6 +384,11 @@ def _opposite_search_priors(dead_end_memory,limit=8):
             "source_candidate_id":str(row.get("source_candidate_id") or ""),
             "basin":str(row.get("basin") or ""),
             "counter_explanation_type":str(counter.get("type") or ""),
+            "closure_layer":str(row.get("closure_layer") or ""),
+            "failure_layer":str(row.get("failure_layer") or ""),
+            "memory_class":str(row.get("memory_class") or ""),
+            "principle_update_allowed":row.get("principle_update_allowed") is True,
+            "broader_core_principle_falsified":row.get("broader_core_principle_falsified") is True,
             "opposite_principle":principle,
             "opposite_search_seed":seed,
             "reopen_condition":str(counter.get("reopen_condition") or row.get("reopen_only_if") or ""),
@@ -415,7 +420,7 @@ def _expansion_prompt(lane,records,count,dead_end_memory=None,fresh_target_ref="
         "This is exploration, not adjudication: DO NOT apply mature-theory, closest-work, domain-transfer, or Negative-Space novelty vetoes here. "
         "Do not invent open-world missing-cell claims. Preserve structurally unusual seeds even if their final novelty is uncertain. "
         "ANOMALY-FIRST SEARCH: actively inspect source-local sign reversals, nonmonotonicity, thresholds, plateaus, history dependence, composition effects, and bounded failure transitions; do not wait for a second paper to have used the same metric when this lane permits one source. When equally grounded seeds compete, prefer an operational core whose decisive comparison could plausibly be materialized on released units, first-party code, or an existing provenance-audited agent substrate. Support feasibility is a search priority only and never novelty evidence. "
-        "DEAD-END INVERSION is a search prior, never authority: a principle-certified dead end may contribute its opposite principle/search seed, but only generate an inversion seed when the supplied fresh primary evidence independently grounds it and the seed escapes the certified basin/reopen condition. Never turn a dead-end inversion into an automatic survivor or fabricate support merely to reuse it. "+asset_requirement+positive_requirement+fresh_requirement+
+        "CLOSED-BASIN INVERSION is a search prior, never authority: a layer-typed scoped closure may contribute its opposite principle/search seed, but only generate an inversion seed when the supplied fresh primary evidence independently grounds it and the seed escapes the recorded basin/reopen condition. Preserve closure_layer/failure_layer exactly. problem_novelty is an upstream literature/theory stop, not an experimental failure layer. Scientific closures use only execution, experiment_identifiability, optimization, operationalization, method_realization, assumption_scope, or core_principle; only core_principle may enter persistent scientific dead-end memory or update the scoped principle, and broader benchmark/phenomenon falsification remains a separate flag. Never turn a closed-basin inversion into an automatic survivor or fabricate support merely to reuse it. "+asset_requirement+positive_requirement+fresh_requirement+
         f"Generate exactly {count} materially distinct grounded seeds for lane {lane}. The lane machine contract is {json.dumps(contract,ensure_ascii=False)}. "
         f"Use two grounded evidence items and at least {LANE_DISTINCT_SOURCE_MINIMUM[lane]} distinct primary source ref(s), following the lane contract; obey evidence roles. Claims must be supported by supplied primary text. "
         "Vary problem families and structural signatures; avoid paraphrase-only variants. "

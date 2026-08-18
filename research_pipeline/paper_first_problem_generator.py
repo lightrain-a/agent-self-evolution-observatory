@@ -227,10 +227,10 @@ def _public_blocked_problem_memory(storage:StorageSettings,previous_public_state
 def _durable_principle_dead_end_examples(path:Path=DURABLE_PRINCIPLE_DEAD_END_JSON,limit:int=12,current_refs:set[str]|None=None)->list[dict[str,Any]]:
     try: payload=json.loads(Path(path).read_text(encoding="utf-8"))
     except (OSError,json.JSONDecodeError): return []
-    memory=payload.get("shadow_dead_end_memory") or {};rows=memory.get("blocked_objects") or []
+    memory=payload.get("shadow_search_memory") or payload.get("shadow_dead_end_memory") or {};rows=memory.get("closed_objects") or memory.get("blocked_objects") or []
     examples=[]
     for order,row in enumerate(rows):
-        if not isinstance(row,dict) or row.get("dead_end_certified") is not True: continue
+        if not isinstance(row,dict) or not (row.get("search_closure_certified") is True or row.get("dead_end_certified") is True): continue
         counter=row.get("counter_explanation") or {}
         if not isinstance(counter,dict): counter={}
         refs=[str(ref) for ref in (row.get("current_source_refs") or []) if str(ref)][:4]
@@ -243,11 +243,13 @@ def _durable_principle_dead_end_examples(path:Path=DURABLE_PRINCIPLE_DEAD_END_JS
             "opposite_principle":str(counter.get("opposite_principle") or "")[:500],
             "opposite_search_seed":str(counter.get("opposite_search_seed") or "")[:700],
             "reopen_condition":str(counter.get("reopen_condition") or row.get("reopen_only_if") or "")[:700],
+            "closure_layer":str(row.get("closure_layer") or ""),
             "failure_layer":str(row.get("failure_layer") or ""),
             "memory_class":str(row.get("memory_class") or ""),
-            "principle_layer_closed":row.get("principle_layer_closed") is True,
+            "principle_update_allowed":row.get("principle_update_allowed") is True,
             "broader_core_principle_falsified":row.get("broader_core_principle_falsified") is True,
-            "dead_end_certified":True,
+            "search_closure_certified":True,
+            "dead_end_certified":row.get("dead_end_certified") is True,
             "scientific_authority":False,
             "_order":order,
         })
@@ -268,8 +270,9 @@ def _principle_dead_end_reentry_audit(candidate:dict[str,Any],path:Path=DURABLE_
     try: payload=json.loads(Path(path).read_text(encoding="utf-8"))
     except (OSError,json.JSONDecodeError): payload={}
     matches=[]
-    for row in ((payload.get("shadow_dead_end_memory") or {}).get("blocked_objects") or []):
-        if not isinstance(row,dict) or row.get("dead_end_certified") is not True: continue
+    memory=payload.get("shadow_search_memory") or payload.get("shadow_dead_end_memory") or {}
+    for row in (memory.get("closed_objects") or memory.get("blocked_objects") or []):
+        if not isinstance(row,dict) or not (row.get("search_closure_certified") is True or row.get("dead_end_certified") is True): continue
         primitive=str(row.get("search_primitive") or "").strip().upper();dead_refs={str(ref).strip() for ref in (row.get("current_source_refs") or []) if str(ref).strip()}
         if lane and primitive==lane and refs and dead_refs==refs:
             matches.append({"source_candidate_id":str(row.get("source_candidate_id") or ""),"match_kind":"TYPED_EXACT_SOURCE_SCOPE","reopen_condition":str(((row.get("counter_explanation") or {}).get("reopen_condition")) or row.get("reopen_only_if") or "")[:700],"source_refs":sorted(dead_refs)})

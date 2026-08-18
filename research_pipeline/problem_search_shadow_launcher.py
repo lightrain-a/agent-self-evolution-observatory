@@ -92,15 +92,15 @@ def _frozen_memory_payload(memory_path: Path) -> dict[str, Any]:
     try:
         payload=json.loads(memory_path.read_text(encoding="utf-8"))
     except (OSError,json.JSONDecodeError) as error:
-        raise ValueError(f"shadow dead-end memory unreadable: {error}") from error
-    memory=payload.get("shadow_dead_end_memory") if isinstance(payload,dict) else None
+        raise ValueError(f"shadow search-control memory unreadable: {error}") from error
+    memory=(payload.get("shadow_search_memory") or payload.get("shadow_dead_end_memory")) if isinstance(payload,dict) else None
     if not isinstance(memory,dict):
         memory=payload if isinstance(payload,dict) else {}
     if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True:
-        raise ValueError("shadow dead-end memory must be zero-authority and unable to mutate canonical discovery")
-    rows=memory.get("blocked_objects") or []
+        raise ValueError("shadow search-control memory must be zero-authority and unable to mutate canonical discovery")
+    rows=memory.get("closed_objects") or memory.get("blocked_objects") or []
     if not isinstance(rows,list) or any(not isinstance(row,dict) for row in rows):
-        raise ValueError("shadow dead-end memory blocked_objects must be a list of objects")
+        raise ValueError("shadow search-control memory closed_objects must be a list of objects")
     return json.loads(json.dumps(memory,ensure_ascii=False))
 
 

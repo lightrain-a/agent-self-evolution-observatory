@@ -73,18 +73,19 @@ class ResearchSystemTest(unittest.TestCase):
     def test_embedded_search_portfolio_must_match_current_durable_artifact(self) -> None:
         stale=copy.deepcopy(self.state)
         sp=stale["paper_first_search_portfolio_design_adjudication"]
-        memory=sp["shadow_dead_end_memory"]
-        memory["blocked_objects"]=[
-            row for row in memory["blocked_objects"]
+        memory=sp["shadow_search_memory"]
+        memory["closed_objects"]=[
+            row for row in memory["closed_objects"]
             if row.get("source_candidate_id")!="AUTO-1-RELEVANT-SKILL-MISEXECUTION"
         ]
         memory["closed_basin_count"]-=1
-        memory["failure_layer_counts"]["METHOD_FORMULATION"]-=1
-        memory["method_formulation_stop_count"]-=1
+        memory["closed_object_count"]-=1
+        memory["closure_layer_counts"]["method_realization"]-=1
+        memory["failure_layer_counts"]["method_realization"]-=1
+        memory["method_realization_stop_count"]-=1
         memory["principle_readjudication_closed_basin_count"]-=1
-        sp["summary"]["shadow_dead_end_objects"]-=1
         sp["summary"]["shadow_closed_basins"]-=1
-        sp["summary"]["method_formulation_stops"]-=1
+        sp["summary"]["method_realization_stops"]-=1
         sp["summary"]["principle_readjudication_closed_basins"]-=1
         errors=validate_state(stale)
         self.assertIn(

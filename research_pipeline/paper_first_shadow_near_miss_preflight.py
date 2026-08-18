@@ -124,7 +124,8 @@ def compile_shadow_dead_end_rows(state: dict[str, Any]) -> list[dict[str, Any]]:
             "support_status": str(receipt.get("support_status") or ""),
             "reason": str(receipt.get("reason") or ""),
             "reopen_only_if": reopen,
-            "dead_end_certified": certified,
+            "search_closure_certified": certified,
+            "dead_end_certified": False,
             **(problem_novelty_classification(basis="near-miss-primary-or-mature-reduction-re-review-2026-08-18") if certified else {"memory_class": "REOPENABLE_HOLD"}),
             "scientific_authority": False,
         }
