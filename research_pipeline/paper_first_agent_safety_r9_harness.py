@@ -308,13 +308,54 @@ def _verification_files_manifest(files: list[dict[str, Any]]) -> tuple[list[dict
         seen.add(path)
         size = item.get("size")
         sha = str(item.get("sha256") or "").strip().lower()
-        source_sha = str(item.get("source_sha256") or "").strip().lower()
         if not isinstance(size, int) or size <= 0:
             raise ValueError("verification file sizes must be positive integers")
-        if not re.fullmatch(r"[0-9a-f]{64}", sha) or not re.fullmatch(r"[0-9a-f]{64}", source_sha):
+        if not re.fullmatch(r"[0-9a-f]{64}", sha):
             raise ValueError("verification file digests must be 64-hex sha256")
-        normalized.append({"path": path, "size": size, "sha256": sha, "source_sha256": source_sha})
+        normalized.append({"path": path, "size": size, "sha256": sha})
     normalized.sort(key=lambda row: row["path"])
+    return normalized, _canonical_sha(normalized)
+
+
+def _git_blob_sha1(raw: bytes) -> str:
+    header = f"blob {len(raw)}\0".encode("ascii")
+    return hashlib.sha1(header + raw).hexdigest()
+
+
+def _hf_source_manifest(payload: dict[str, Any], required_files: set[str]) -> tuple[list[dict[str, Any]], str]:
+    by_name = {}
+    for item in payload.get("siblings") or payload.get("files") or []:
+        if not isinstance(item, dict):
+            continue
+        name = str(item.get("rfilename") or item.get("path") or item.get("filename") or item.get("name") or "").strip()
+        if not name or name not in required_files:
+            continue
+        size = item.get("size")
+        lfs = item.get("lfs") if isinstance(item.get("lfs"), dict) else {}
+        lfs_sha = str(lfs.get("sha256") or "").strip().lower()
+        blob_id = str(item.get("blobId") or item.get("blob_id") or "").strip().lower()
+        if re.fullmatch(r"[0-9a-f]{64}", lfs_sha):
+            source_kind = "lfs-sha256"
+            source_digest = lfs_sha
+            source_size = lfs.get("size") if isinstance(lfs.get("size"), int) else size
+        elif re.fullmatch(r"[0-9a-f]{40}", blob_id):
+            source_kind = "git-blob-sha1"
+            source_digest = blob_id
+            source_size = size
+        else:
+            raise ValueError(f"HF source metadata lacks content identity for required file:{name}")
+        if not isinstance(source_size, int) or source_size <= 0:
+            raise ValueError(f"HF source metadata lacks positive size for required file:{name}")
+        by_name[name] = {
+            "path": name,
+            "size": source_size,
+            "source_kind": source_kind,
+            "source_digest": source_digest,
+        }
+    missing = sorted(required_files - set(by_name))
+    if missing:
+        raise ValueError("HF source metadata missing required files:" + ",".join(missing))
+    normalized = [by_name[name] for name in sorted(by_name)]
     return normalized, _canonical_sha(normalized)
 
 
@@ -363,8 +404,10 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
             "revision_match": False,
             "verification_receipt_digest_match": False,
             "source_metadata_digest_match": False,
+            "source_manifest_digest_match": False,
             "required_file_set_complete": False,
             "local_file_hashes_match": False,
+            "source_content_matches_local": False,
             "hf_exact_revision_verified": False,
         }
         role_failures: list[str] = []
@@ -389,12 +432,15 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
             receipt_name = str(marker_payload.get("verification_receipt") or "").strip()
             marker_receipt_sha = str(marker_payload.get("verification_receipt_sha256") or "").strip().lower()
             marker_manifest_sha = str(marker_payload.get("files_manifest_sha256") or "").strip().lower()
+            marker_source_manifest_sha = str(marker_payload.get("source_manifest_sha256") or "").strip().lower()
             if receipt_name != R9_MODEL_VERIFICATION_RECEIPT:
                 role_failures.append("verification-receipt-reference-invalid")
             if not re.fullmatch(r"[0-9a-f]{64}", marker_receipt_sha):
                 role_failures.append("verification-receipt-digest-invalid")
             if not re.fullmatch(r"[0-9a-f]{64}", marker_manifest_sha):
                 role_failures.append("files-manifest-digest-invalid")
+            if not re.fullmatch(r"[0-9a-f]{64}", marker_source_manifest_sha):
+                role_failures.append("source-manifest-digest-invalid")
 
             receipt: dict[str, Any] = {}
             if not receipt_path.is_file():
@@ -451,6 +497,8 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
                     except (OSError, json.JSONDecodeError):
                         role_failures.append("source-metadata-invalid")
                         source_metadata = {}
+                source_manifest: list[dict[str, Any]] = []
+                source_manifest_sha = ""
                 if source_metadata:
                     source_id, source_revision, source_files = _hf_metadata_identity(source_metadata)
                     row["source_metadata_model_id"] = source_id
@@ -461,6 +509,20 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
                     row["required_files_missing_from_source_metadata"] = missing_from_hf_metadata
                     if missing_from_hf_metadata:
                         role_failures.append("required-files-missing-from-source-metadata")
+                    try:
+                        source_manifest, source_manifest_sha = _hf_source_manifest(source_metadata, required_files)
+                    except ValueError:
+                        source_manifest, source_manifest_sha = [], ""
+                        role_failures.append("source-file-manifest-invalid")
+                    row["source_manifest_sha256"] = source_manifest_sha
+                    receipt_source_manifest_sha = str(receipt.get("source_manifest_sha256") or "").strip().lower()
+                    row["source_manifest_digest_match"] = bool(
+                        source_manifest_sha
+                        and source_manifest_sha == marker_source_manifest_sha
+                        and source_manifest_sha == receipt_source_manifest_sha
+                    )
+                    if not row["source_manifest_digest_match"]:
+                        role_failures.append("source-manifest-digest-mismatch")
 
                 try:
                     verification_files, manifest_sha = _verification_files_manifest(list(receipt.get("files") or []))
@@ -479,24 +541,37 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
 
                 local_mismatch = []
                 source_mismatch = []
-                if not missing_required:
+                source_by_path = {item["path"]: item for item in source_manifest}
+                if not missing_required and source_manifest:
                     for filename in sorted(required_files):
                         item = by_path[filename]
+                        source_item = source_by_path.get(filename) or {}
                         local = root / filename
                         if not local.is_file():
                             local_mismatch.append(filename + ":missing")
                             continue
-                        if local.stat().st_size != item["size"]:
-                            local_mismatch.append(filename + ":size")
-                            continue
+                        local_size = local.stat().st_size
+                        if local_size != item["size"]:
+                            local_mismatch.append(filename + ":receipt-size")
+                        if local_size != source_item.get("size"):
+                            source_mismatch.append(filename + ":source-size")
                         actual_sha = _sha_file(local)
                         if actual_sha != item["sha256"]:
-                            local_mismatch.append(filename + ":sha256")
-                        if item["source_sha256"] != item["sha256"]:
-                            source_mismatch.append(filename)
+                            local_mismatch.append(filename + ":receipt-sha256")
+                        source_kind = str(source_item.get("source_kind") or "")
+                        source_digest = str(source_item.get("source_digest") or "")
+                        if source_kind == "lfs-sha256":
+                            if actual_sha != source_digest:
+                                source_mismatch.append(filename + ":lfs-sha256")
+                        elif source_kind == "git-blob-sha1":
+                            if _git_blob_sha1(local.read_bytes()) != source_digest:
+                                source_mismatch.append(filename + ":git-blob-sha1")
+                        else:
+                            source_mismatch.append(filename + ":source-kind")
                 row["local_file_mismatches"] = local_mismatch
-                row["source_vs_local_sha_mismatches"] = source_mismatch
+                row["source_vs_local_content_mismatches"] = source_mismatch
                 row["local_file_hashes_match"] = not missing_required and not local_mismatch
+                row["source_content_matches_local"] = bool(source_manifest) and not source_mismatch
                 if local_mismatch:
                     role_failures.append("local-runtime-file-content-mismatch")
                 if source_mismatch:
@@ -506,9 +581,10 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
                     row["revision_match"]
                     and row["verification_receipt_digest_match"]
                     and row["source_metadata_digest_match"]
+                    and row["source_manifest_digest_match"]
                     and row["required_file_set_complete"]
                     and row["local_file_hashes_match"]
-                    and not source_mismatch
+                    and row["source_content_matches_local"]
                     and source_domain == "huggingface.co"
                     and exact_verified
                     and source_metadata
@@ -532,7 +608,8 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
             "content_addressed_hf_receipt_required": True,
             "exact_hf_revision_metadata_required": True,
             "complete_role_runtime_file_set_required": True,
-            "source_and_local_sha256_must_match": True,
+            "lfs_files_must_match_hf_metadata_sha256": True,
+            "git_files_must_match_hf_metadata_blob_id": True,
         },
         "model_assets": rows,
         "blockers": failures,
