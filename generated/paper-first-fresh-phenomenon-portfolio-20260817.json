@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T06:18:05+00:00",
+  "generated_at": "2026-08-18T06:24:58+00:00",
   "status": "NO_ACTIVE_F0",
   "policy": {
     "portfolio_is_outside_canonical_problem_queue": true,
@@ -24,7 +24,7 @@
     "scientific_authority": false
   },
   "summary": {
-    "candidates": 5,
+    "candidates": 6,
     "active_f0": 0,
     "design_ready_f0": 0,
     "scout_asset": 0,
@@ -33,6 +33,7 @@
     "hold_reduction": 0,
     "ready_for_problem_review": 0,
     "stop_reduction": 5,
+    "archived": 1,
     "primary_verified": 32,
     "primary_empirical_fact_candidates": 114,
     "canonical_problem_gate_added": 0,
@@ -194,6 +195,57 @@
         "unauthorized_partial_run_ingestable": false,
         "status": "STOP_PRINCIPLE_REDUCTION_NO_EXECUTION",
         "hold_reason": []
+      }
+    },
+    {
+      "candidate_id": "PA-06-PACE-SEARCH-CONTROL-TRANSPORT",
+      "title": "Does Search-Strategy Utility Reverse Across PACE-Bench Physics Mutations?",
+      "source_refs": [
+        "arXiv:2608.14441"
+      ],
+      "phenomenon": "A frozen six-task PACE-Bench panel compared Tree-of-Thoughts and CodeEvolve on the same tasks at Stage-1 and Stage-4. All 24 preregistered task×stage×strategy cells completed, but only 1/6 tasks was non-tied at both stages and there were zero strict strategy-rank reversals; the preregistered bidirectional transport-failure prediction therefore failed.",
+      "strongest_reduction": "The current panel is dominated by floor/ceiling ties and is consistent with ordinary task difficulty plus global/stage-conditioned search-control performance. A task-specific transport mechanism is not identified without substantially more non-tied target variation and a residual beyond same-information domain-shift/conditional-treatment baselines.",
+      "cheapest_falsifier": "Completed: outcome-blind first task from each of six PACE categories, fixed DeepSeek-v4-pro provider/model, attempts=6, one run, Tree-of-Thoughts versus CodeEvolve, Stage-1 versus Stage-4. GO required >=6 strict non-tied tasks, >=2 strict reversals, reversal rate >=0.25, and both reversal directions.",
+      "support_status": "REGISTERED_F0_STOP_NO_BIDIRECTIONAL_RANK_REVERSAL",
+      "status": "ARCHIVED",
+      "priority": 85,
+      "why_now": "The executable primary substrate was tested rather than merely brainstormed. The complete 24-cell manifest has one strict non-tied task, zero strict reversals, and no bidirectional reversal. CodeEvolve also produced a positive Stage-1 revision on only 2/6 panel tasks, so the current panel does not support a new same-patch transport study without post-hoc support expansion. Archive this registered realization and spend no more API budget on the same rank-reversal contract.",
+      "substrate": {
+        "upstream_commit": "7a95349321a944ffe90e379021d6fc2fba4690f3",
+        "task_count": 36,
+        "result_manifest_sha256": "e465357faf543a989753003f4f882c30ae0d2f30195a40ce5d1d274fc1938568",
+        "valid_result_cells": 24,
+        "real_provider_result_records": 24
+      },
+      "evidence": {
+        "registered_prediction_rejected": true,
+        "principle_dead_end_certified": false,
+        "strict_non_tied_tasks": 1,
+        "strict_reversals": 0,
+        "strict_reversal_rate": 0.0,
+        "bidirectional_reversal": false,
+        "positive_source_revision_units": 2,
+        "eligible_source_stage_units": 6,
+        "aggregate_token_usage": {
+          "prompt_tokens": 1011399,
+          "completion_tokens": 279467,
+          "total_tokens": 1290866
+        },
+        "provider_call_count_provable_lower_bound": 138,
+        "exact_provider_response_receipts_complete": false,
+        "analysis_provider_calls": 0
+      },
+      "reopen_only_if": "Do not rerun or enlarge the same ToT-vs-CodeEvolve rank-reversal panel after seeing these outcomes. Reopen PACE only under a new preregistered paper contract with a distinct treatment-aligned object and adequate support known before target outcomes—for example, same-patch cross-stage transport only after >=6 independently positive source-stage updates are selected outcome-blind, with a same-information domain-shift/conditional-treatment baseline frozen before Stage-4 replay.",
+      "paper_problem_claimed": false,
+      "scientific_authority": false,
+      "authority": {
+        "problem_gate": false,
+        "paper_design": false,
+        "method": false,
+        "experiment": false,
+        "p0": false,
+        "gpu": false,
+        "full_experiment": false
       }
     },
     {
@@ -364,6 +416,14 @@
       "sha256": "8d6c35e2aac51327b6203c102646ddf364293fd218d13ef0abce05716010bced",
       "principle_dead_end_certified": true,
       "same_information_reduction_verified": true
+    },
+    "pace_search_control_transport_f0": {
+      "path": "generated/pace-bench-search-control-transport-f0-20260818.json",
+      "sha256": "fa09fd3868672dd045acb28f9503dd0b81b14dde94c1fe5560c7f5988d3e33ff",
+      "decision": "STOP_OR_REDUCE_TO_STAGE_CONDITIONED_GLOBAL_SEARCH_CONTROL",
+      "registered_prediction_rejected": true,
+      "principle_dead_end_certified": false,
+      "result_manifest_sha256": "e465357faf543a989753003f4f882c30ae0d2f30195a40ce5d1d274fc1938568"
     }
   },
   "scientific_authority": false

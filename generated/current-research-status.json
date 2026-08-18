@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T06:18:39+00:00",
-  "source_revision": "e3d7958050e20926e39c633df9b1385a026bdf73",
+  "generated_at": "2026-08-18T06:25:38+00:00",
+  "source_revision": "696246e2fecdf56eddcc0b0b3c1a9cb8ad9f4e94",
   "as_of_date": "2026-08-18",
   "headline": {
     "paper_ready": 1,
@@ -179,6 +179,19 @@
           "status": "STOP_PRINCIPLE_REDUCTION_NO_EXECUTION",
           "hold_reason": []
         },
+        "paper_problem_claimed": false
+      },
+      {
+        "candidate_id": "PA-06-PACE-SEARCH-CONTROL-TRANSPORT",
+        "title": "Does Search-Strategy Utility Reverse Across PACE-Bench Physics Mutations?",
+        "status": "ARCHIVED",
+        "support_status": "REGISTERED_F0_STOP_NO_BIDIRECTIONAL_RANK_REVERSAL",
+        "phenomenon": "A frozen six-task PACE-Bench panel compared Tree-of-Thoughts and CodeEvolve on the same tasks at Stage-1 and Stage-4. All 24 preregistered task×stage×strategy cells completed, but only 1/6 tasks was non-tied at both stages and there were zero strict strategy-rank reversals; the preregistered bidirectional transport-failure prediction therefore failed.",
+        "strongest_reduction": "The current panel is dominated by floor/ceiling ties and is consistent with ordinary task difficulty plus global/stage-conditioned search-control performance. A task-specific transport mechanism is not identified without substantially more non-tied target variation and a residual beyond same-information domain-shift/conditional-treatment baselines.",
+        "cheapest_falsifier": "Completed: outcome-blind first task from each of six PACE categories, fixed DeepSeek-v4-pro provider/model, attempts=6, one run, Tree-of-Thoughts versus CodeEvolve, Stage-1 versus Stage-4. GO required >=6 strict non-tied tasks, >=2 strict reversals, reversal rate >=0.25, and both reversal directions.",
+        "why_now": "The executable primary substrate was tested rather than merely brainstormed. The complete 24-cell manifest has one strict non-tied task, zero strict reversals, and no bidirectional reversal. CodeEvolve also produced a positive Stage-1 revision on only 2/6 panel tasks, so the current panel does not support a new same-patch transport study without post-hoc support expansion. Archive this registered realization and spend no more API budget on the same rank-reversal contract.",
+        "f0_design_ready": false,
+        "execution_readiness": {},
         "paper_problem_claimed": false
       },
       {
