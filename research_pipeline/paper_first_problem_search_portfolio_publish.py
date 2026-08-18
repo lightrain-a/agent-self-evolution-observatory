@@ -325,7 +325,7 @@ def _latest_shadow_run(root:Path)->dict:
     evidence_unresolved=_evidence_unresolved_count(summary)
     if evidence_present and (evidence_internal_open or evidence_unresolved):terminal_status='SHADOW_EVIDENCE_ACQUISITION_PENDING'
     elif not evidence_present and falsifier_resolved!=falsifier_eligible:terminal_status='SHADOW_TERMINAL_INCOMPLETE_PROBLEM_FALSIFIER_PREFLIGHT'
-    stage_runner_schema=str(qualification.get('stage_runner_required_schema') or '');control_snapshot_sha=str(qualification.get('control_snapshot_sha256') or '');control_bound=stage_runner_schema=='1.5' and bool(re.fullmatch(r'[0-9a-f]{64}',control_snapshot_sha));control_terminal_verified=False
+    stage_runner_schema=str(qualification.get('stage_runner_required_schema') or '');control_snapshot_sha=str(qualification.get('control_snapshot_sha256') or '');control_bound=stage_runner_schema in {'1.4','1.5'} and bool(re.fullmatch(r'[0-9a-f]{64}',control_snapshot_sha));control_terminal_verified=False
     if control_bound:
         for label,payload in (('machine-audit',machine),('shadow-final-audit',final),('shadow-terminal-current-source-gate',terminal)):
             if str(payload.get('control_snapshot_sha256') or '')!=control_snapshot_sha:raise ValueError(f'qualified shadow public projection control mismatch:{label}')
