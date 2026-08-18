@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "status": "READY_FOR_SHADOW_QUALIFICATION",
-  "reason": "Canonical discovery is closed and the discovery operator changed since the latest terminal shadow run, so one new qualified shadow transaction is allowed on the same frozen evidence.",
+  "status": "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL",
+  "reason": "The current canonical source transaction already has a terminal shadow search result under the current discovery operator; repeating model calls would be redundant.",
   "policy": {
     "scientific_authority": false,
     "admission_is_deterministic_search_control_only": true,
@@ -18,11 +18,11 @@
     "latest_shadow_terminal": true,
     "same_source_transaction": true,
     "current_discovery_operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
-    "latest_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
-    "same_discovery_operator_version": false,
-    "operator_upgrade_recompile": true,
+    "latest_discovery_operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
+    "same_discovery_operator_version": true,
+    "operator_upgrade_recompile": false,
     "source_identity_conflict": false,
-    "qualification_allowed": true,
+    "qualification_allowed": false,
     "automatic_provider_calls_authorized": 0,
     "checks": 14,
     "passed_checks": 14,
@@ -32,14 +32,14 @@
     "current_source_generated_at": "2026-08-17T16:17:14+00:00",
     "current_source_set_sha256": "60b9c55d7ca585bd8590a6d7c69e9587fc0ab211ec24d80c3ba3c4651481ff56",
     "current_primary_content_sha256": "0df29b9cbd111a85eb5caece3c5fd2ce148ebb587fae140c3de4ce58a7d05e9c",
-    "latest_run_id": "shadow-auto-677e25972cd14bfb",
+    "latest_run_id": "shadow-auto-3eb8aa25b7961110",
     "latest_status": "SHADOW_TERMINAL_COMPLETE",
     "latest_source_generated_at": "2026-08-17T16:17:14+00:00",
     "latest_source_set_sha256": "60b9c55d7ca585bd8590a6d7c69e9587fc0ab211ec24d80c3ba3c4651481ff56",
     "latest_primary_content_sha256": "0df29b9cbd111a85eb5caece3c5fd2ce148ebb587fae140c3de4ce58a7d05e9c",
-    "latest_source_pool_sha256": "c4a42abe9f66a2ceafdb673f4e7778632406aaa65c9ca21c081221b22d36c2f6",
+    "latest_source_pool_sha256": "9e0709de686961619df7c0d478b20a6562e83a6a656a76578e67d4f1f3b68678",
     "current_discovery_operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
-    "latest_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13"
+    "latest_discovery_operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16"
   },
   "scientific_authority": false
 }

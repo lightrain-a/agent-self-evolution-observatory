@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T06:18:04+00:00",
+  "generated_at": "2026-08-18T07:49:56+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-18T06:18:04+00:00",
+    "generated_at": "2026-08-18T07:49:56+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -188,9 +188,20 @@
       "persistent_dead_end_requires_positive_counter_explanation": true,
       "canonical_generator_and_queue_untouched": true
     },
-    "last_ingested_run_id": "",
-    "last_ingested_stage_manifest_sha256": "",
-    "receipts": [],
+    "last_ingested_run_id": "shadow-auto-3eb8aa25b7961110",
+    "last_ingested_stage_manifest_sha256": "134455840dda0adb81570843095a0c5e4325d1b0412a68afc4265b49fc000c97",
+    "receipts": [
+      {
+        "run_id": "shadow-auto-3eb8aa25b7961110",
+        "stage_manifest_sha256": "134455840dda0adb81570843095a0c5e4325d1b0412a68afc4265b49fc000c97",
+        "terminal_generated_at": "2026-08-18T07:47:31+00:00",
+        "hard_veto_added": 0,
+        "semantic_blocker_added": 0,
+        "semantic_hold_added": 0,
+        "support_hold_added": 2,
+        "scientific_authority": false
+      }
+    ],
     "scientific_authority": false
   },
   "shadow_dead_end_memory": {
@@ -2683,6 +2694,66 @@
         "scientific_authority": false
       },
       {
+        "source_candidate_id": "SHADOW-P01-C01",
+        "basin": "near-miss-terminal-support-hold-2a6c6049ef581eb4",
+        "title": "Capability Inversion Under Temporal Grounding: Why High-Cost Frontier Models Underperform on Forward-Looking Time Series Analysis",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "support_status": "SOURCE_SPECIFIC_PRIMARY_ASSET_UNAVAILABLE",
+        "required_unit": "Execute the three released model APIs (Sonnet-4.6, GPT-5.4, Qwen-3.5-397B) on a stratified sample of TimeSage-EV Hard-tier tasks, controlling for identical temporal cutoff dates, data access, prompt templates, output parsing, and evaluation rubric. Stratify tasks by temporal-grounding requirement (cautious forward-looking analysis vs. other Hard-tier reasoning). If Sonnet-4.6 leads or ties on temporal-grounding tasks, the phenomenon is falsified. If the inversion appears on all Hard-tier tasks regardless of temporal grounding, the temporal-grounding specificity is falsified.",
+        "evidence_basis": [
+          "arXiv:2608.14270"
+        ],
+        "strongest_reduction": "the proposed residual remains unresolved until the frozen same-information falsifier can be executed on source-faithful or independently equivalent assets",
+        "reason": "The frozen C01 intervention requires the first-party TimeSage-EV evaluation substrate, including stable task IDs, scorer/schema, factual event context, and the exact condition construction needed for the 64-example paired intervention. The current arXiv source names official GitHub/Hugging Face release locations, but the official GitHub repository is presently an empty placeholder and the exact TimeSage-EV dataset release could not be verified as available from the execution host. The frozen design also requires Sonnet-4.6, GPT-5.4, and Qwen-3.5-397B under matched decoding; this server currently exposes only the Ark credential path and has no integrated exact endpoints for those three identities. The contract explicitly forbids substituting smaller or different models, so the 256-call rollout is not executable without changing the scientific object.",
+        "avoid": [
+          "re-proposing the unsupported problem object without resolving its frozen asset dependency: Capability Inversion Under Temporal Grounding: Why High-Cost Frontier Models Underperform on Forward-Looking Time Series Analysis",
+          "substituting a locally invented, randomly initialized, differently trained, or outcome-tuned asset for the source-specific scientific object",
+          "treating missing source assets as scientific evidence for or against the proposed residual"
+        ],
+        "reopen_only_if": "Reopen only when the source-specific/released assets required by the frozen falsifier become available with provenance sufficient to execute the same scientific object, or when an independently reviewed operationalization proves equivalent without changing the frozen prediction, same-information baseline, or causal unit.",
+        "source_run_id": "shadow-auto-3eb8aa25b7961110",
+        "source_stage_manifest_sha256": "134455840dda0adb81570843095a0c5e4325d1b0412a68afc4265b49fc000c97",
+        "hold_origin": "bounded-evidence-acquisition",
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P01-C02",
+        "basin": "near-miss-terminal-support-hold-c5be78568fb874db",
+        "title": "History-Dependent Skill-Induced Failure: Why the Same Skill Causes Different Failure Modes Across Tasks",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "support_status": "SOURCE_SPECIFIC_PRIMARY_ASSET_UNAVAILABLE",
+        "required_unit": "Use the released SkillsBench or SWE-Skills-Bench datasets to identify matched task pairs where the same loaded skill causes a Task-Implementation Fault in both tasks. Control for task-requirement-level compatibility and skill content. If the failure mode (IRF vs. RRO) is identical across all matched pairs, the context-sensitive uptake mechanism is falsified. If failure modes vary but are predicted by static compatibility alone, the mechanism is falsified.",
+        "evidence_basis": [
+          "arXiv:2608.11888"
+        ],
+        "strongest_reduction": "the proposed residual remains unresolved until the frozen same-information falsifier can be executed on source-faithful or independently equivalent assets",
+        "reason": "The frozen C02 falsifier requires author-assigned per-case IRF/RRO root-cause labels joined to stable skill identity and host-task identity. The current arXiv v1 source reports 125 manually confirmed functional failures (46 IRF, 36 RRO) and describes the manual consensus labeling procedure, but the arXiv landing page/source exposes no author code/data repository and no per-case annotation table. Base SkillsBench/SWE-Skills-Bench task/skill assets cannot substitute for these manual root-cause labels without changing independent truth; LLM- or rule-inferred replacement labels are forbidden by the frozen contract.",
+        "avoid": [
+          "re-proposing the unsupported problem object without resolving its frozen asset dependency: History-Dependent Skill-Induced Failure: Why the Same Skill Causes Different Failure Modes Across Tasks",
+          "substituting a locally invented, randomly initialized, differently trained, or outcome-tuned asset for the source-specific scientific object",
+          "treating missing source assets as scientific evidence for or against the proposed residual"
+        ],
+        "reopen_only_if": "Reopen only when the source-specific/released assets required by the frozen falsifier become available with provenance sufficient to execute the same scientific object, or when an independently reviewed operationalization proves equivalent without changing the frozen prediction, same-information baseline, or causal unit.",
+        "source_run_id": "shadow-auto-3eb8aa25b7961110",
+        "source_stage_manifest_sha256": "134455840dda0adb81570843095a0c5e4325d1b0412a68afc4265b49fc000c97",
+        "hold_origin": "bounded-evidence-acquisition",
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
+      },
+      {
         "source_candidate_id": "SP-15",
         "basin": "implicit-query-decomposition-skill-routing",
         "avoid": [
@@ -2939,7 +3010,7 @@
     "positive_residual_asset_evidence_count": 1,
     "positive_residual_search_active_count": 0,
     "positive_residual_asset_registry_id": "positive-residual-search-assets-v4",
-    "hold_object_count": 5,
+    "hold_object_count": 7,
     "current_source_hard_veto_count": 0,
     "current_source_hard_veto_added_from_latest_run": 0,
     "current_source_hard_veto_added_from_terminal_run": 0,
@@ -2953,9 +3024,9 @@
     "semantic_hold_added_from_terminal_run": 0,
     "semantic_hold_inherited": 0,
     "near_miss_preflight_count": 3,
-    "near_miss_hold_count": 1,
+    "near_miss_hold_count": 3,
     "near_miss_base_preflight_count": 4,
-    "near_miss_terminal_support_hold_count": 0
+    "near_miss_terminal_support_hold_count": 2
   },
   "shadow_source": {
     "portfolio_status": "SHADOW_PORTFOLIO_IMPORTED_FROM_PRE_SPLIT_RUN",
@@ -3008,7 +3079,7 @@
     "support_inventory_required": 1,
     "shadow_dead_end_objects": 39,
     "principle_readjudication_dead_ends": 35,
-    "shadow_hold_objects": 5,
+    "shadow_hold_objects": 7,
     "current_source_hard_veto_dead_ends": 0,
     "current_source_hard_veto_added_from_latest_run": 0,
     "current_source_hard_veto_added_from_terminal_run": 0,
@@ -3019,8 +3090,8 @@
     "semantic_hold_added_from_terminal_run": 0,
     "semantic_hold_inherited": 0,
     "near_miss_preflight_dead_ends": 3,
-    "near_miss_holds": 1,
-    "near_miss_terminal_support_holds": 0,
+    "near_miss_holds": 3,
+    "near_miss_terminal_support_holds": 2,
     "near_miss_support_holds": 1,
     "near_miss_current_primary_stops": 2,
     "near_miss_mature_theory_stops": 1,
