@@ -95,17 +95,33 @@ def _receipt_sha256(receipt: dict[str, Any]) -> str:
     return hashlib.sha256(json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
 
 
+def _persist_abort_recovery_bundle(run_root:Path,stamp:str,pid:int,artifacts:dict[str,Path])->dict[str,dict[str,str]]:
+    """Persist private staged transaction inputs/outputs before temp cleanup."""
+    recovery_root=run_root/f"aborted-recovery-{stamp}-{pid}";written={}
+    try: recovery_root.mkdir(parents=True,exist_ok=True)
+    except OSError:return {}
+    for key,source in artifacts.items():
+        try:
+            if not source.is_file():continue
+            target=recovery_root/source.name;shutil.copyfile(source,target);digest=hashlib.sha256(target.read_bytes()).hexdigest()
+            written[key]={"path":str(target),"sha256":digest}
+        except OSError:continue
+    return written
+
+
 def _provider_call_accounting(generator_internal: dict[str, Any] | None) -> tuple[int, int]:
     artifacts = (generator_internal or {}).get("raw_artifacts") or {}
     raw = artifacts.get("generator") or {}
-    generator_calls = int(raw.get("provider_calls_executed") or raw.get("calls") or 0) if isinstance(raw, dict) else 0
-    if not generator_calls and isinstance(raw, dict):
+    generator_explicit = isinstance(raw, dict) and "provider_calls_executed" in raw
+    generator_calls = (int(raw.get("provider_calls_executed") or 0) if generator_explicit else int(raw.get("calls") or 0)) if isinstance(raw, dict) else 0
+    if not generator_calls and isinstance(raw, dict) and not generator_explicit:
         generator_calls = len(raw.get("transport_attempts") or [])
         if not generator_calls and raw.get("sha256") and raw.get("raw_replayed_without_provider") is not True:
             generator_calls = 1
     semantic = artifacts.get("semantic_reviewer") or {}
-    semantic_calls = int(semantic.get("provider_calls_executed") or semantic.get("calls") or 0) if isinstance(semantic, dict) else 0
-    if not semantic_calls and isinstance(semantic, dict) and semantic.get("sha256") and semantic.get("raw_replayed_without_provider") is not True:
+    semantic_explicit = isinstance(semantic, dict) and "provider_calls_executed" in semantic
+    semantic_calls = (int(semantic.get("provider_calls_executed") or 0) if semantic_explicit else int(semantic.get("calls") or 0)) if isinstance(semantic, dict) else 0
+    if not semantic_calls and isinstance(semantic, dict) and not semantic_explicit and semantic.get("sha256") and semantic.get("raw_replayed_without_provider") is not True:
         semantic_calls = 1
     return generator_calls, semantic_calls
 
@@ -969,27 +985,47 @@ def write_problem_discovery_transaction(
             generator_artifacts=(generator_internal or {}).get("raw_artifacts") or {}
             generator_raw=generator_artifacts.get("generator") or {}
             transport_attempts=list(generator_raw.get("transport_attempts") or []) if isinstance(generator_raw,dict) else []
+            portfolio_provenance=[dict(row) for row in (generator_internal or {}).get("portfolio_provenance") or [] if isinstance(row,dict)][-64:]
+            reviewer_batches=[dict(row) for row in (generator_internal or {}).get("semantic_reviewer_batches") or [] if isinstance(row,dict)][-16:]
+            staged_pool=load_private_primary_pool(staged_private) or {}
+            staged_pool_sha=_pool_sha(staged_pool) if staged_pool else ""
+            stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+            recovery_bundle=_persist_abort_recovery_bundle(run_root,stamp,os.getpid(),{
+                "primary_public":p_json,
+                "primary_private":staged_private,
+                "generator_public":g_json,
+                "queue_public":q_json,
+                "auto_inbox":staged_auto,
+                "saturation_ledger":staged_ledger,
+            })
             record.update({
                 "status":"ABORTED_PUBLIC_STATE_PRESERVED",
                 "completed_at":_now(),
                 "error":f"{type(error).__name__}: {error}",
+                "recovery_bundle":recovery_bundle,
                 "stage_diagnostics":{
                     "primary_status":str((primary_internal or {}).get("status") or "NOT_REACHED"),
                     "primary_verified":int(primary_summary.get("verified") or 0),
                     "primary_selected_unreviewed":int(primary_summary.get("selected_unreviewed") or 0),
                     "primary_unreviewed_lane_linked_sources":int(primary_summary.get("unreviewed_lane_linked_sources") or 0),
+                    "staged_source_pool_sha256":staged_pool_sha,
                     "generator_status":str((generator_internal or {}).get("status") or "NOT_REACHED"),
                     "generator_run_id":str((generator_internal or {}).get("run_id") or ""),
                     "generator_error":" ".join(str((generator_internal or {}).get("error") or "").split())[:500],
                     "generator_raw_output_present":bool(isinstance(generator_raw,dict) and generator_raw.get("sha256")),
                     "generator_transport_attempts":transport_attempts[:2],
+                    "portfolio_subcalls_completed":len(portfolio_provenance),
+                    "portfolio_provider_calls_executed":sum(int(row.get("provider_calls_executed") or 0) for row in portfolio_provenance),
+                    "portfolio_provenance":portfolio_provenance,
+                    "semantic_reviewer_batches_completed":len(reviewer_batches),
+                    "semantic_reviewer_provider_calls_executed":sum(int(row.get("provider_calls_executed") or 0) for row in reviewer_batches),
+                    "semantic_reviewer_batches":reviewer_batches,
                     "queue_reached":queue_internal is not None,
                     "queue_audited":int((((queue_internal or {}).get("summary") or {}).get("audited")) or 0),
                     "scientific_authority":False,
                 },
                 "authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False},
             })
-            stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
             (run_root/f"aborted-{stamp}-{os.getpid()}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
             raise
         finally:

@@ -9,9 +9,9 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from .config import StorageSettings
-from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES
+from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES, SEARCH_PORTFOLIO_PRIMITIVES
 from .paper_first_problem_gate_queue import build_problem_gate_queue
-from .paper_first_problem_generator import _ark, _durable_principle_dead_end_examples, _evidence_excerpt_matches, _normalize_lane_search, _pre_f0_route, _principle_dead_end_reentry_audit, _provider_request_audit, _repair_block_only_reviewer_outer_braces, recover_archived_block_only_reviewer_raw, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
+from .paper_first_problem_generator import _archived_replay_metadata, _ark, _durable_principle_dead_end_examples, _evidence_excerpt_matches, _normalize_lane_search, _normalize_last_completed_lane_search_receipt, _pre_f0_route, _principle_dead_end_reentry_audit, _provider_request_audit, _repair_block_only_reviewer_outer_braces, recover_archived_block_only_reviewer_raw, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
 from .paper_first_problem_generator_prompts import generator_prompt, reviewer_prompt
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
@@ -361,6 +361,15 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertTrue(route["eligible"])
         self.assertEqual(route["route_reason"],"EXACT_REDUCTION_PENDING")
         self.assertFalse(route["scientific_authority"])
+
+    def test_archived_replay_requires_exact_raw_and_request_fingerprint(self) -> None:
+        sha="a"*64;fingerprint="b"*64
+        meta=_archived_replay_metadata({"raw_replayed_without_provider":True,"raw_origin_run_id":"origin-run","raw_origin_sha256":sha,"raw_origin_request_fingerprint":fingerprint,"transport_attempts":[]},sha,"portfolio:expand",expected_request_fingerprint=fingerprint)
+        self.assertEqual(meta["provider_calls_executed"],0);self.assertTrue(meta["raw_replayed_without_provider"])
+        with self.assertRaisesRegex(ValueError,"request-fingerprint-mismatch"):
+            _archived_replay_metadata({"raw_replayed_without_provider":True,"raw_origin_run_id":"origin-run","raw_origin_sha256":sha,"raw_origin_request_fingerprint":"c"*64,"transport_attempts":[]},sha,"portfolio:expand",expected_request_fingerprint=fingerprint)
+        with self.assertRaisesRegex(ValueError,"cannot-carry-transport-attempts"):
+            _archived_replay_metadata({"raw_replayed_without_provider":True,"raw_origin_run_id":"origin-run","raw_origin_sha256":sha,"raw_origin_request_fingerprint":fingerprint,"transport_attempts":[{"status":"success"}]},sha,"portfolio:expand",expected_request_fingerprint=fingerprint)
 
     def test_explicit_portfolio_mode_is_canonical_double_funnel_but_zero_authority(self) -> None:
         portfolio={"schema_version":"3.0-double-funnel","policy":{"scientific_authority":False},"config":{},"summary":{"raw_seeds":0,"semantic_unique":0,"unique_problem_families":0,"breadth_archive":0,"mean_archive_pairwise_distance":0.0,"evolved_branches":0,"max_branch_depth":0,"reviewer_attacks":0,"repair_children":0,"formulated_candidates":0,"portfolio_calls":0},"lane_counts":{},"archive_lane_counts":{},"family_counts":{},"archives":{},"formulated_candidates":[],"scientific_authority":False}
@@ -881,6 +890,16 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         normalized=_normalize_last_completed_lane_search_receipt(legacy)
         self.assertEqual(normalized["mode"],"legacy_pair_audit")
         self.assertEqual(normalized["discovery_operator_version"],"")
+
+    def test_portfolio_lane_receipt_accepts_all_ten_primitives_and_is_idempotent(self) -> None:
+        priority=list(SEARCH_PORTFOLIO_PRIMITIVES)
+        rows=[{"lane":lane,"status":"EXPANDED" if index==0 else "EMPTY","raw_seed_count":1 if index==0 else 0,"reason":("a "*300) if index==0 else "No machine-valid grounded seed survived expansion contract."} for index,lane in enumerate(priority)]
+        receipt={"run_id":"portfolio-run","generator_status":"GENERATED_ZERO_CANDIDATES","generated_at":"2026-08-18T00:00:00+00:00","mode":"portfolio_expansion","discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"lane_search_priority":priority,"lane_search":rows,"generation_notes":"Double-funnel audit complete.","scientific_authority":False}
+        normalized=_normalize_last_completed_lane_search_receipt(receipt)
+        self.assertEqual([row["lane"] for row in normalized["lane_search"]],priority)
+        self.assertEqual(len(normalized["lane_search"]),10)
+        self.assertFalse(normalized["lane_search"][0]["reason"].endswith(" "))
+        self.assertEqual(_normalize_last_completed_lane_search_receipt(normalized),normalized)
 
     def test_completed_lane_search_becomes_portable_zero_authority_receipt(self) -> None:
         with tempfile.TemporaryDirectory() as td:

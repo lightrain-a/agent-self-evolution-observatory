@@ -39,6 +39,21 @@ def _provider_request_audit(*,stage:str,prompt:str,model:str,max_output_tokens:i
     thinking_profile="provider-default" if str(model).lower().startswith("glm") else "disabled"
     material={"stage":stage,"prompt_sha256":_sha(prompt),"requested_model":str(model),"max_output_tokens":int(max_output_tokens),"temperature":float(temperature),"thinking_profile":thinking_profile}
     return {**material,"request_fingerprint":_sha(json.dumps(material,sort_keys=True,separators=(",",":"),ensure_ascii=False)),"scientific_authority":False}
+
+def _archived_replay_metadata(result:dict[str,Any],raw_sha256:str,stage:str,*,expected_request_fingerprint:str="")->dict[str,Any]:
+    """Validate an explicitly archived provider response used with zero new provider calls."""
+    if result.get("raw_replayed_without_provider") is not True:
+        return {}
+    origin_run_id=str(result.get("raw_origin_run_id") or "").strip();origin_sha=str(result.get("raw_origin_sha256") or "").strip().lower();origin_request=str(result.get("raw_origin_request_fingerprint") or "").strip().lower()
+    expected=str(expected_request_fingerprint or "").strip().lower()
+    if not origin_run_id or not re.fullmatch(r"[0-9a-f]{64}",origin_sha) or origin_sha!=str(raw_sha256 or "").strip().lower():
+        raise ValueError(f"{stage}-archived-replay-provenance-invalid")
+    if expected and (not re.fullmatch(r"[0-9a-f]{64}",origin_request) or origin_request!=expected):
+        raise ValueError(f"{stage}-archived-replay-request-fingerprint-mismatch")
+    if list(result.get("transport_attempts") or []):
+        raise ValueError(f"{stage}-archived-replay-cannot-carry-transport-attempts")
+    return {"raw_replayed_without_provider":True,"provider_calls_executed":0,"raw_origin_run_id":origin_run_id,"raw_origin_sha256":origin_sha,"raw_origin_request_fingerprint":origin_request}
+
 def _provider_error_audit(error:Exception)->dict[str,Any]:
     text=str(error or "");match=re.search(r"Ark HTTP\s+(\d{3})",text,re.IGNORECASE)
     return {"exception_type":type(error).__name__,"http_status":int(match.group(1)) if match else None,"detail_sha256":_sha(text),"scientific_authority":False}
@@ -669,7 +684,7 @@ def _normalize_lane_search(raw:Any,registry:dict[str,dict[str,Any]],expected_pri
     rows=[];seen=set()
     for item in raw:
         if not isinstance(item,dict): raise ValueError("generator-lane-search-entry-invalid")
-        lane=str(item.get("lane") or "").strip().upper();status=str(item.get("status") or "").strip().upper();reason=" ".join(str(item.get("reason") or "").split())[:500]
+        lane=str(item.get("lane") or "").strip().upper();status=str(item.get("status") or "").strip().upper();reason=" ".join(str(item.get("reason") or "").split())[:500].rstrip()
         refs=[str(ref or "").strip() for ref in (item.get("source_refs") or []) if str(ref or "").strip()]
         if lane not in DISCOVERY_LANES or lane in seen: raise ValueError("generator-lane-search-lane-invalid-or-duplicate")
         if status not in LANE_SEARCH_STATUSES: raise ValueError("generator-lane-search-status-invalid")
@@ -775,7 +790,9 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
             try:res=call(prompt=prompt,model=model,max_output_tokens=max_output_tokens,temperature=temperature)
             except Exception as error:
                 attempts=list(getattr(error,"transport_attempts",[]) or []);_archive_provider_orphans(storage,run_id,f"portfolio:{role}",attempts);raise
-            raw=str(res.get("text") or "");path,sha=_write_raw(storage,run_id,role,model,raw);resolved=str(res.get("resolved_model") or model);generator_resolved_models.append(resolved);attempts=list(res.get("transport_attempts") or []);safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,role,attempts);orphan_audits=_archive_provider_orphans(storage,run_id,f"portfolio:{role}",attempts);entry={"role":role,"sha256":sha,"requested_model":model,"resolved_model":resolved,"temperature":temperature,"request_fingerprint":request_audit["request_fingerprint"],"transport_attempts":safe_attempts,"scientific_authority":False}
+            raw=str(res.get("text") or "");path,sha=_write_raw(storage,run_id,role,model,raw);resolved=str(res.get("resolved_model") or model);generator_resolved_models.append(resolved);attempts=list(res.get("transport_attempts") or []);safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,role,attempts);orphan_audits=_archive_provider_orphans(storage,run_id,f"portfolio:{role}",attempts)
+            replay_meta=_archived_replay_metadata(res,sha,f"portfolio:{role}",expected_request_fingerprint=request_audit["request_fingerprint"])
+            entry={"role":role,"sha256":sha,"requested_model":model,"resolved_model":resolved,"temperature":temperature,"request_fingerprint":request_audit["request_fingerprint"],"transport_attempts":safe_attempts,"provider_calls_executed":0 if replay_meta else 1,"scientific_authority":False,**replay_meta}
             if receipt_audits:entry["provider_receipt_audits"]=receipt_audits
             if orphan_audits:entry["provider_orphan_audits"]=orphan_audits
             provenance.append(entry);return res
@@ -802,11 +819,11 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
             ps=portfolio.get("summary") or {};ps["machine_reviewable"]=len(machine_reviewable);ps["pre_f0_eligible"]=len(pre_f0_eligible);ps["machine_reduction_blocked"]=len(machine_blocked);state["search_portfolio"]["summary"]=ps;state["summary"].update({"raw_seeds":ps.get("raw_seeds",0),"semantic_unique_seeds":ps.get("semantic_unique",0),"unique_problem_families":ps.get("unique_problem_families",0),"breadth_archive":ps.get("breadth_archive",0),"archive_pairwise_distance":ps.get("mean_archive_pairwise_distance",0.0),"evolved_branches":ps.get("evolved_branches",0),"max_branch_depth":ps.get("max_branch_depth",0),"reviewer_attacks":ps.get("reviewer_attacks",0),"repair_children":ps.get("repair_children",0),"pre_f0_eligible":len(pre_f0_eligible),"portfolio_calls":ps.get("portfolio_calls",0)})
             lane_counts=portfolio.get("lane_counts") or {};priority=list(state["search_diagnostics"]["lane_search_priority"]);state["search_diagnostics"].update({"lane_search_complete":True,"lane_search":[{"lane":lane,"status":"EXPANDED" if int(lane_counts.get(lane) or 0)>0 else "EMPTY","raw_seed_count":int(lane_counts.get(lane) or 0),"reason":"Search Portfolio expansion shard produced grounded seeds." if int(lane_counts.get(lane) or 0)>0 else "No machine-valid grounded seed survived expansion contract."} for lane in priority]})
             state["generation_notes"]=(f"Canonical double funnel expanded {ps.get('raw_seeds',0)} grounded raw seeds into {ps.get('semantic_unique',0)} semantic-unique / {ps.get('unique_problem_families',0)} structural families, evolved {ps.get('evolved_branches',0)} branches, issued {ps.get('reviewer_attacks',0)} attacks and {ps.get('repair_children',0)} repair children, formulated {ps.get('formulated_candidates',0)}, routed {len(pre_f0_eligible)} to zero-authority pre-F0 evidence acquisition, and left {len(machine_reviewable)} candidates eligible for independent semantic review after exact machine reduction. Pre-F0 is not a Problem-Gate pass; exact same-information reduction remains mandatory before Paper Design.")
-            synth=_sha(json.dumps({"portfolio_sha256":private_sha,"calls":[x["sha256"] for x in provenance]},sort_keys=True,separators=(",",":")));resolved_join="|".join(sorted(set(generator_resolved_models))) or generator_model;state["raw_artifacts"]["generator"]={"sha256":synth,"requested_model":generator_model,"resolved_model":resolved_join,"portfolio":True,"portfolio_sha256":private_sha,"calls":len(provenance)}
+            synth=_sha(json.dumps({"portfolio_sha256":private_sha,"calls":[x["sha256"] for x in provenance]},sort_keys=True,separators=(",",":")));resolved_join="|".join(sorted(set(generator_resolved_models))) or generator_model;state["raw_artifacts"]["generator"]={"sha256":synth,"requested_model":generator_model,"resolved_model":resolved_join,"portfolio":True,"portfolio_sha256":private_sha,"calls":len(provenance),"provider_calls_executed":sum(int(x.get("provider_calls_executed") or 0) for x in provenance),"archived_replay_subcalls":sum(x.get("raw_replayed_without_provider") is True for x in provenance)}
         except Exception as e:state["error"]=f"{type(e).__name__}:{str(e)[:300]}";state["portfolio_provenance"]=provenance;return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
     else:
         try:
-            res=call(prompt=generator_prompt_text,model=generator_model,max_output_tokens=generator_max_output_tokens);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);generator_resolved_models=[resolved];transport_attempts=list(res.get("transport_attempts") or []);safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,"generator",transport_attempts);orphan_audits=_archive_provider_orphans(storage,run_id,"problem_generation",transport_attempts);state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved,"transport_attempts":safe_attempts,"transport_fallback_used":bool(res.get("transport_fallback_used"))};
+            res=call(prompt=generator_prompt_text,model=generator_model,max_output_tokens=generator_max_output_tokens);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);generator_resolved_models=[resolved];transport_attempts=list(res.get("transport_attempts") or []);safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,"generator",transport_attempts);orphan_audits=_archive_provider_orphans(storage,run_id,"problem_generation",transport_attempts);replay_meta=_archived_replay_metadata(res,sha,"generator",expected_request_fingerprint=generator_request_audit["request_fingerprint"]);state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved,"transport_attempts":safe_attempts,"transport_fallback_used":bool(res.get("transport_fallback_used")),"provider_calls_executed":0 if replay_meta else 1,**replay_meta};
             if receipt_audits:state["raw_artifacts"]["generator"]["provider_receipt_audits"]=receipt_audits
             if orphan_audits:state["provider_orphan_audits"]=orphan_audits
             payload=extract_json_object(raw);state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip();lane_search=_normalize_lane_search(payload.get("lane_search"),reg,state["search_diagnostics"]["lane_search_priority"]);rows=payload.get("candidates") or []
@@ -832,7 +849,8 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
         for start in range(0,len(reviewable),batch_size):
             batch=reviewable[start:start+batch_size]
             try:
-                res=call2(prompt=reviewer_prompt(batch,reg),model=reviewer_model,max_output_tokens=5200 if portfolio_mode else 4200);raw=str(res.get("text") or "");role=f"semantic-review-{start//batch_size+1}" if portfolio_mode else "semantic-review";p,sha=_write_raw(storage,run_id,role,reviewer_model,raw);rresolved=str(res.get("resolved_model") or reviewer_model);safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,role,list(res.get("transport_attempts") or []));review_receipt={"sha256":sha,"requested_model":reviewer_model,"resolved_model":rresolved,"transport_attempts":safe_attempts,"transport_fallback_used":bool(res.get("transport_fallback_used"))};
+                role=f"semantic-review-{start//batch_size+1}" if portfolio_mode else "semantic-review";review_prompt_text=reviewer_prompt(batch,reg);review_max_tokens=5200 if portfolio_mode else 4200;review_request_audit=_provider_request_audit(stage="semantic_review",prompt=review_prompt_text,model=reviewer_model,max_output_tokens=review_max_tokens,temperature=0.0)
+                res=call2(prompt=review_prompt_text,model=reviewer_model,max_output_tokens=review_max_tokens);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,role,reviewer_model,raw);rresolved=str(res.get("resolved_model") or reviewer_model);safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,role,list(res.get("transport_attempts") or []));replay_meta=_archived_replay_metadata(res,sha,role,expected_request_fingerprint=review_request_audit["request_fingerprint"]);review_receipt={"sha256":sha,"requested_model":reviewer_model,"resolved_model":rresolved,"request_fingerprint":review_request_audit["request_fingerprint"],"transport_attempts":safe_attempts,"transport_fallback_used":bool(res.get("transport_fallback_used")),"provider_calls_executed":0 if replay_meta else 1,**replay_meta};
                 if receipt_audits:review_receipt["provider_receipt_audits"]=receipt_audits
                 review_receipts.append(review_receipt);_apply_reviews(batch,extract_json_object(raw),reviewer_model,rresolved,gen_resolved,sha,reg)
             except Exception as e:
@@ -842,7 +860,7 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
                 _apply_reviews(batch,None,reviewer_model,"",gen_resolved,"",reg)
         if portfolio_mode:
             state["semantic_reviewer_batches"]=review_receipts
-            if review_receipts:state["raw_artifacts"]["semantic_reviewer"]={"sha256":_sha("|".join(str(row.get("sha256") or "") for row in review_receipts)),"requested_model":reviewer_model,"resolved_model":"|".join(sorted({str(row.get('resolved_model') or '') for row in review_receipts if row.get('resolved_model')})),"calls":len(review_receipts)}
+            if review_receipts:state["raw_artifacts"]["semantic_reviewer"]={"sha256":_sha("|".join(str(row.get("sha256") or "") for row in review_receipts)),"requested_model":reviewer_model,"resolved_model":"|".join(sorted({str(row.get('resolved_model') or '') for row in review_receipts if row.get('resolved_model')})),"calls":len(review_receipts),"provider_calls_executed":sum(int(row.get("provider_calls_executed") or 0) for row in review_receipts),"archived_replay_subcalls":sum(row.get("raw_replayed_without_provider") is True for row in review_receipts)}
         elif review_receipts:state["raw_artifacts"]["semantic_reviewer"]={**review_receipts[0]}
         if state.get("semantic_review_errors"):
             unavailable=[c for c in reviewable if not (c.get("semantic_reduction_review") or {}).get("reviewed")];reviewed=[c for c in reviewable if c not in unavailable];clear_reviewed=[c for c in reviewed if (c.get("semantic_reduction_review") or {}).get("verdict")=="CLEAR"];blocked_reviewed=[c for c in reviewed if c not in clear_reviewed]
@@ -970,8 +988,8 @@ def _normalize_last_completed_lane_search_receipt(value:Any)->dict[str,Any]:
     rows=[]; statuses=set()
     for item in raw_rows:
         if not isinstance(item,dict): return {}
-        lane=str(item.get("lane") or "").strip().upper(); status=str(item.get("status") or "").strip().upper(); reason=" ".join(str(item.get("reason") or "").split())[:500]
-        if lane not in DISCOVERY_LANES or not reason: return {}
+        lane=str(item.get("lane") or "").strip().upper(); status=str(item.get("status") or "").strip().upper(); reason=" ".join(str(item.get("reason") or "").split())[:500].rstrip()
+        if lane not in expected_lanes or not reason: return {}
         statuses.add(status)
         if status in {"EXPANDED","EMPTY"}:
             rows.append({"lane":lane,"status":status,"raw_seed_count":max(0,int(item.get("raw_seed_count") or 0)),"reason":reason}); continue

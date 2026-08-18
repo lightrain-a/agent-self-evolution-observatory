@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import tempfile
@@ -10,7 +11,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from .config import StorageSettings
-from .paper_first_discovery_transaction import close_existing_problem_discovery_transaction, recompile_existing_problem_discovery_transaction, recompile_primary_typed_evidence_with_generator_replay_transaction, _transaction_id, _transaction_lock, _transaction_lock_path, _validate, write_problem_discovery_transaction
+from .paper_first_discovery_transaction import close_existing_problem_discovery_transaction, recompile_existing_problem_discovery_transaction, recompile_primary_typed_evidence_with_generator_replay_transaction, _provider_call_accounting, _transaction_id, _transaction_lock, _transaction_lock_path, _validate, write_problem_discovery_transaction
 from .paper_first_primary_evidence import TYPED_EVIDENCE_EXTRACTION_VERSION
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION
 from .paper_first_problem_generator import _pool_sha
@@ -23,6 +24,12 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
             paper_dir=root/"data"/"papers", index_dir=root/"data"/"indexes", run_dir=root/"data"/"runs",
             cache_dir=root/"data"/"cache", lock_dir=root/"data"/"locks", site_artifact_dir=root/"site",
         )
+
+    def test_provider_call_accounting_respects_explicit_zero_for_archived_portfolio_replay(self) -> None:
+        generator={"raw_artifacts":{"generator":{"sha256":"a"*64,"calls":12,"provider_calls_executed":0,"archived_replay_subcalls":12},"semantic_reviewer":{"sha256":"b"*64,"calls":2,"provider_calls_executed":0,"archived_replay_subcalls":2}}}
+        self.assertEqual(_provider_call_accounting(generator),(0,0))
+        live={"raw_artifacts":{"generator":{"sha256":"a"*64,"calls":12,"provider_calls_executed":7},"semantic_reviewer":{"sha256":"b"*64,"calls":2,"provider_calls_executed":1}}}
+        self.assertEqual(_provider_call_accounting(live),(7,1))
 
     def test_transaction_lock_is_host_shared_across_worktree_storage_dirs(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -346,6 +353,10 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
             aborted=sorted((storage.run_dir/"paper-first-discovery-transactions").glob("aborted-*.json"),key=lambda path:path.stat().st_mtime,reverse=True)
             self.assertTrue(aborted)
             receipt=json.loads(aborted[0].read_text())
+            recovery=receipt.get("recovery_bundle") or {}
+            self.assertTrue({"primary_public","primary_private","generator_public","queue_public","auto_inbox","saturation_ledger"}.issubset(recovery))
+            for row in recovery.values():
+                recovery_path=Path(row["path"]);self.assertTrue(recovery_path.is_file());self.assertEqual(hashlib.sha256(recovery_path.read_bytes()).hexdigest(),row["sha256"])
         self.assertEqual(after,before)
         diagnostics=receipt["stage_diagnostics"]
         self.assertEqual(diagnostics["primary_status"],"READY")
@@ -354,6 +365,11 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         self.assertIn("provider-down",diagnostics["generator_error"])
         self.assertFalse(diagnostics["generator_raw_output_present"])
         self.assertEqual(diagnostics["generator_transport_attempts"],[])
+        self.assertTrue(len(diagnostics["staged_source_pool_sha256"])==64)
+        self.assertEqual(diagnostics["portfolio_subcalls_completed"],0)
+        self.assertEqual(diagnostics["portfolio_provider_calls_executed"],0)
+        self.assertEqual(diagnostics["semantic_reviewer_batches_completed"],0)
+        self.assertEqual(diagnostics["semantic_reviewer_provider_calls_executed"],0)
         self.assertTrue(diagnostics["queue_reached"])
         self.assertEqual(diagnostics["queue_audited"],0)
         self.assertFalse(diagnostics["scientific_authority"])
