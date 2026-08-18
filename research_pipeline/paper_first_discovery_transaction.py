@@ -26,6 +26,7 @@ from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_O
 from .paper_first_problem_generator import (
     DEFAULT_JSON as GENERATOR_JSON,
     DEFAULT_JS as GENERATOR_JS,
+    _completed_lane_search_receipt_from_state,
     _load_saturation_ledger,
     _normalize_last_completed_lane_search_receipt,
     _pool_sha,
@@ -108,6 +109,61 @@ def _provider_call_accounting(generator_internal: dict[str, Any] | None) -> tupl
     return generator_calls, semantic_calls
 
 
+def _repair_close_envelope_generator_provenance(generator: dict[str, Any]) -> dict[str, Any]:
+    """Rebuild a missing portable lane receipt from one frozen completed Generator state.
+
+    Historical standalone Generator runs may predate the writer-side projection that
+    copied a completed lane audit into ``last_completed_lane_search``. Closing such a
+    run must not call a provider or reinterpret it under the runtime operator. The
+    reconstruction is allowed only when the Generator's own current review receipt
+    binds the same run, status, and declared operator and the completed lane audit can
+    be normalized deterministically from the frozen state itself.
+    """
+    repaired = json.loads(json.dumps(generator, ensure_ascii=False))
+    if str(repaired.get("schema_version") or "0") < "2.5":
+        return repaired
+    status = str(repaired.get("status") or "")
+    if status not in {"GENERATED_ZERO_CANDIDATES", "GENERATED_AWAIT_PROBLEM_GATE"}:
+        return repaired
+    diagnostics = repaired.get("search_diagnostics") or {}
+    if diagnostics.get("last_completed_lane_search"):
+        return repaired
+    if diagnostics.get("lane_search_complete") is not True:
+        return repaired
+    operator = _generator_operator_version(repaired)
+    receipt = _receipt_material(_generator_receipt(repaired))
+    if (
+        not operator
+        or receipt.get("scientific_authority") is not False
+        or receipt.get("run_id") != str(repaired.get("run_id") or "")
+        or receipt.get("status") != status
+        or receipt.get("discovery_operator_version") != operator
+    ):
+        return repaired
+    projected = _completed_lane_search_receipt_from_state(repaired)
+    if (
+        not projected
+        or str(projected.get("run_id") or "") != str(repaired.get("run_id") or "")
+        or str(projected.get("discovery_operator_version") or "") != operator
+        or projected.get("lane_search") != diagnostics.get("lane_search")
+        or projected.get("scientific_authority") is not False
+    ):
+        return repaired
+    diagnostics["last_completed_lane_search"] = projected
+    diagnostics["scientific_authority"] = False
+    repaired["search_diagnostics"] = diagnostics
+    repaired["provenance_replay"] = {
+        "mode": "completed-lane-search-receipt-from-frozen-generator-state",
+        "source_generator_run_id": str(repaired.get("run_id") or ""),
+        "discovery_operator_version": operator,
+        "runtime_discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
+        "provider_calls_executed": 0,
+        "source_scheduler_runs_executed": 0,
+        "scientific_authority": False,
+    }
+    return repaired
+
+
 def _transaction_lock_path(storage: StorageSettings) -> Path:
     """Return one host-wide lock shared by all checkouts/worktrees of this research system."""
     override = str(os.getenv("PAPER_FIRST_DISCOVERY_TRANSACTION_LOCK") or "").strip()
@@ -178,6 +234,8 @@ def _transaction_material(primary: dict[str, Any], generator: dict[str, Any], qu
         "generator_status": generator.get("status"),
         "generator_discovery_operator_version": _generator_operator_version(generator),
         "generator_review_receipt": _receipt_material(_generator_receipt(generator)),
+        "generator_last_completed_lane_search": (generator.get("search_diagnostics") or {}).get("last_completed_lane_search") or {},
+        "generator_provenance_replay": generator.get("provenance_replay") or {},
         "generator_raw_sha256": (generator_raw.get("generator") or {}).get("sha256"),
         "semantic_review_raw_sha256": (generator_raw.get("semantic_reviewer") or {}).get("sha256"),
         "queue_audited": audited,
@@ -373,7 +431,7 @@ def close_existing_problem_discovery_transaction(
     may stamp the existing closed state.
     """
     storage = storage or StorageSettings.from_env(); storage.ensure()
-    primary = _load(primary_json); generator = _load(generator_json); queue = _load(queue_json)
+    primary = _load(primary_json); generator = _repair_close_envelope_generator_provenance(_load(generator_json)); queue = _load(queue_json)
     errors = _validate(primary, generator, queue)
     if errors:
         raise RuntimeError("existing paper-first discovery state invalid: " + ",".join(errors))

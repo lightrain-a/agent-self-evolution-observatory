@@ -139,6 +139,7 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
             first=self.run_txn(root,storage,targets,now)
             generator=json.loads(targets["generator_json"].read_text());generator["policy"]["discovery_operator_version"]=historical_operator
             receipt=generator["saturation_memory"]["current_review_receipt"];receipt["discovery_operator_version"]=historical_operator
+            generator["search_diagnostics"]["last_completed_lane_search"]={}
             targets["generator_json"].write_text(json.dumps(generator),encoding="utf-8")
             targets["generator_js"].write_text("window.PAPER_FIRST_PROBLEM_GENERATOR = "+json.dumps(generator,separators=(",",":"))+";\n",encoding="utf-8")
             ledger_path=storage.data_root/"paper-first-problem-discovery"/"discovery-saturation-ledger.json"
@@ -160,6 +161,9 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         self.assertTrue(result["operator_version_replayed_without_provider"])
         self.assertEqual(result["generator_receipt_run_id"],closed_generator["run_id"])
         self.assertEqual(len(result["generator_receipt_sha256"]),64)
+        self.assertTrue((closed_generator.get("search_diagnostics") or {}).get("last_completed_lane_search"))
+        self.assertEqual((closed_generator.get("provenance_replay") or {}).get("mode"),"completed-lane-search-receipt-from-frozen-generator-state")
+        self.assertEqual((closed_generator.get("provenance_replay") or {}).get("provider_calls_executed"),0)
         replay=rebound["transaction_replay"]
         self.assertEqual(replay["discovery_operator_version"],historical_operator)
         self.assertEqual(replay["runtime_discovery_operator_version"],DISCOVERY_OPERATOR_VERSION)
