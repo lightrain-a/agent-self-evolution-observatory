@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import tempfile
 import unittest
@@ -10,6 +11,14 @@ from .paper_first_agent_safety_r9_harness import (
     BROWSERART_REQUIRED_FILES,
     CANDIDATE_ID,
     CONTRACT_SHA256,
+    R9_AGENT_MODEL_ID,
+    R9_AGENT_MODEL_REVISION,
+    R9_EVALUATOR_MODEL_ID,
+    R9_EVALUATOR_MODEL_REVISION,
+    R9_MODEL_REVISION_MARKER,
+    R9_MODEL_SOURCE_METADATA,
+    R9_MODEL_VERIFICATION_RECEIPT,
+    R9_REQUIRED_MODEL_FILES,
     clone_future_branch,
     build_r9_model_call_budget,
     effective_execution_gate,
@@ -27,6 +36,51 @@ from .paper_first_agent_safety_r9_harness import (
 
 
 class AgentSafetyR9HarnessTest(unittest.TestCase):
+    def write_verified_model_dir(self, root: Path, *, role: str, model_id: str, revision: str, source_domain: str = "huggingface.co") -> None:
+        root.mkdir(parents=True, exist_ok=True)
+        files = []
+        for filename in R9_REQUIRED_MODEL_FILES[role]:
+            payload = f"fixture:{role}:{filename}\n".encode()
+            path = root / filename
+            path.write_bytes(payload)
+            digest = hashlib.sha256(payload).hexdigest()
+            files.append({"path": filename, "size": len(payload), "sha256": digest, "source_sha256": digest})
+        files.sort(key=lambda row: row["path"])
+        manifest_sha = hashlib.sha256(
+            json.dumps(files, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
+        ).hexdigest()
+        source_metadata = {
+            "id": model_id,
+            "sha": revision,
+            "siblings": [{"rfilename": filename} for filename in R9_REQUIRED_MODEL_FILES[role]],
+        }
+        source_path = root / R9_MODEL_SOURCE_METADATA
+        source_path.write_text(json.dumps(source_metadata, sort_keys=True), encoding="utf-8")
+        receipt = {
+            "schema_version": "1.0",
+            "model_id": model_id,
+            "revision": revision,
+            "source_domain": source_domain,
+            "exact_revision_verified": True,
+            "source_metadata": R9_MODEL_SOURCE_METADATA,
+            "source_metadata_sha256": hashlib.sha256(source_path.read_bytes()).hexdigest(),
+            "files": files,
+            "files_manifest_sha256": manifest_sha,
+            "scientific_authority": False,
+        }
+        receipt_path = root / R9_MODEL_VERIFICATION_RECEIPT
+        receipt_path.write_text(json.dumps(receipt, sort_keys=True), encoding="utf-8")
+        marker = {
+            "schema_version": "2.0",
+            "model_id": model_id,
+            "revision": revision,
+            "verification_receipt": R9_MODEL_VERIFICATION_RECEIPT,
+            "verification_receipt_sha256": hashlib.sha256(receipt_path.read_bytes()).hexdigest(),
+            "files_manifest_sha256": manifest_sha,
+            "scientific_authority": False,
+        }
+        (root / R9_MODEL_REVISION_MARKER).write_text(json.dumps(marker, sort_keys=True), encoding="utf-8")
+
     def fixture_sources(self, root: Path) -> tuple[Path, Path]:
         awm = root / "awm"
         browserart = root / "browserart"
@@ -213,20 +267,46 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
             self.assertEqual(gate["status"], "HOLD_RUNTIME_MODEL_ASSETS_UNAVAILABLE_OR_UNPINNED")
             self.assertEqual(len(gate["blockers"]), 2)
 
-    def test_runtime_model_asset_gate_requires_exact_revision_markers(self) -> None:
+    def test_runtime_model_asset_gate_rejects_marker_only_even_with_correct_identity(self) -> None:
         with tempfile.TemporaryDirectory() as td:
-            root = Path(td)
-            agent = root / "agent"; evaluator = root / "evaluator"
+            root = Path(td); agent = root / "agent"; evaluator = root / "evaluator"
             agent.mkdir(); evaluator.mkdir()
-            (agent / ".r9-model-revision.json").write_text(json.dumps({"model_id":"Qwen/Qwen3-8B","revision":"wrong"}),encoding="utf-8")
-            (evaluator / ".r9-model-revision.json").write_text(json.dumps({"model_id":"cais/HarmBench-Llama-2-13b-cls","revision":"0cd31cdc8b53209dd5b153b20026ff085901bb14"}),encoding="utf-8")
+            (agent / R9_MODEL_REVISION_MARKER).write_text(json.dumps({"model_id":R9_AGENT_MODEL_ID,"revision":R9_AGENT_MODEL_REVISION}),encoding="utf-8")
+            (evaluator / R9_MODEL_REVISION_MARKER).write_text(json.dumps({"model_id":R9_EVALUATOR_MODEL_ID,"revision":R9_EVALUATOR_MODEL_REVISION}),encoding="utf-8")
             gate = runtime_model_asset_gate(agent_model_dir=agent, evaluator_model_dir=evaluator)
             self.assertFalse(gate["execution_authorized"])
-            self.assertIn("agent-revision-mismatch", gate["blockers"])
-            (agent / ".r9-model-revision.json").write_text(json.dumps({"model_id":"Qwen/Qwen3-8B","revision":"b968826d9c46dd6066d109eabc6255188de91218"}),encoding="utf-8")
+            self.assertIn("agent-verification-receipt-reference-invalid", gate["blockers"])
+            self.assertIn("evaluator-verification-receipt-missing", gate["blockers"])
+            self.assertTrue(gate["verification_contract"]["marker_only_is_insufficient"])
+
+    def test_runtime_model_asset_gate_requires_content_addressed_exact_hf_receipts(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); agent = root / "agent"; evaluator = root / "evaluator"
+            self.write_verified_model_dir(agent,role="agent",model_id=R9_AGENT_MODEL_ID,revision=R9_AGENT_MODEL_REVISION)
+            self.write_verified_model_dir(evaluator,role="evaluator",model_id=R9_EVALUATOR_MODEL_ID,revision=R9_EVALUATOR_MODEL_REVISION)
             gate = runtime_model_asset_gate(agent_model_dir=agent, evaluator_model_dir=evaluator)
             self.assertTrue(gate["execution_authorized"])
             self.assertEqual(gate["status"], "READY_RUNTIME_MODEL_ASSETS_PINNED")
+            self.assertTrue(all(row["hf_exact_revision_verified"] for row in gate["model_assets"]))
+
+    def test_runtime_model_asset_gate_rejects_non_hf_source_even_when_bytes_are_complete(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); agent = root / "agent"; evaluator = root / "evaluator"
+            self.write_verified_model_dir(agent,role="agent",model_id=R9_AGENT_MODEL_ID,revision=R9_AGENT_MODEL_REVISION,source_domain="modelscope.cn")
+            self.write_verified_model_dir(evaluator,role="evaluator",model_id=R9_EVALUATOR_MODEL_ID,revision=R9_EVALUATOR_MODEL_REVISION)
+            gate = runtime_model_asset_gate(agent_model_dir=agent, evaluator_model_dir=evaluator)
+            self.assertFalse(gate["execution_authorized"])
+            self.assertIn("agent-verification-source-not-huggingface", gate["blockers"])
+
+    def test_runtime_model_asset_gate_rejects_post_verification_file_mutation(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); agent = root / "agent"; evaluator = root / "evaluator"
+            self.write_verified_model_dir(agent,role="agent",model_id=R9_AGENT_MODEL_ID,revision=R9_AGENT_MODEL_REVISION)
+            self.write_verified_model_dir(evaluator,role="evaluator",model_id=R9_EVALUATOR_MODEL_ID,revision=R9_EVALUATOR_MODEL_REVISION)
+            (agent / R9_REQUIRED_MODEL_FILES["agent"][0]).write_text("mutated",encoding="utf-8")
+            gate = runtime_model_asset_gate(agent_model_dir=agent, evaluator_model_dir=evaluator)
+            self.assertFalse(gate["execution_authorized"])
+            self.assertIn("agent-local-runtime-file-content-mismatch", gate["blockers"])
 
     def test_effective_execution_gate_requires_runtime_assets_even_when_generic_plan_is_ready(self) -> None:
         plan = {
@@ -270,9 +350,8 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
         }
         with tempfile.TemporaryDirectory() as td:
             root = Path(td); agent = root / "agent"; evaluator = root / "evaluator"
-            agent.mkdir(); evaluator.mkdir()
-            (agent / ".r9-model-revision.json").write_text(json.dumps({"model_id":"Qwen/Qwen3-8B","revision":"b968826d9c46dd6066d109eabc6255188de91218"}),encoding="utf-8")
-            (evaluator / ".r9-model-revision.json").write_text(json.dumps({"model_id":"cais/HarmBench-Llama-2-13b-cls","revision":"0cd31cdc8b53209dd5b153b20026ff085901bb14"}),encoding="utf-8")
+            self.write_verified_model_dir(agent,role="agent",model_id=R9_AGENT_MODEL_ID,revision=R9_AGENT_MODEL_REVISION)
+            self.write_verified_model_dir(evaluator,role="evaluator",model_id=R9_EVALUATOR_MODEL_ID,revision=R9_EVALUATOR_MODEL_REVISION)
             gate = effective_execution_gate(evidence_plan=plan, agent_model_dir=agent, evaluator_model_dir=evaluator)
             self.assertTrue(gate["effective_execution_authorized"])
             self.assertEqual(gate["status"], "READY_R9_BOUNDED_EVIDENCE_EXECUTION")
