@@ -9,10 +9,12 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "generated" / "asset-first-stri-paper-analysis-suite-20260816.json"
+REVIEWER_EXT = ROOT / "generated" / "asset-first-stri-reviewer-extensions-20260819.json"
 OUT_DIR = Path(__file__).resolve().parent / "figures"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 payload = json.loads(DATA.read_text(encoding="utf-8"))
+reviewer = json.loads(REVIEWER_EXT.read_text(encoding="utf-8"))
 level1 = payload["taxonomy_perturbation_ablation"]["level1_all"]
 clone = level1["clone_controls"]
 sensitivity = payload["failure_and_sensitivity"]
@@ -76,7 +78,8 @@ ax.set_xlabel("Level-1 tools (count)")
 ax.set_title("C  Failure / boundary map", loc="left", fontsize=9.5, fontweight="bold")
 for yi, value in zip(y, values, strict=True):
     ax.text(value + 0.5, yi, str(value), va="center", fontsize=7)
-ax.text(0.02, -0.29, "No witness ≠ equalizable; defer to exact LP", transform=ax.transAxes, fontsize=6.2)
+per_tool = reviewer["per_tool_exact_lp"]["overlap_without_singleton_witness"]
+ax.text(0.02, -0.29, f"Exact LP: {per_tool['equalizable_by_exact_lp']}/{per_tool['tools']} equalizable", transform=ax.transAxes, fontsize=6.2)
 ax.grid(axis="x", linewidth=0.35, alpha=0.3)
 
 for ax in axes:

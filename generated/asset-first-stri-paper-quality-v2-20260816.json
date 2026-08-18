@@ -50,8 +50,8 @@
       {
         "id": "N2",
         "claim_type": "theory",
-        "statement": "STRI-Cert defines a support-equivalence sensitivity certificate under the frozen support matrix and package constraints.",
-        "why_better_or_why_matters": "The certificate makes the representation assumptions explicit and exposes which overlap conclusions survive admissible support-preserving reductions.",
+        "statement": "STRI-Cert exactly decides package-only exposure equalizability; its LP dual gives general lower-bound witnesses and linear extensions expose support uncertainty and controller-feasible-set assumptions.",
+        "why_better_or_why_matters": "The primal/dual certificate makes representation assumptions explicit, while box-robust and max-share variants separate support uncertainty from controller constraints without changing the claim into a new optimization algorithm.",
         "alternative_explanations": [
           "the certificate is merely a restatement of raw overlap under another weighting"
         ],
@@ -410,6 +410,7 @@
         "status": "PASS",
         "artifact_refs": [
           "generated/asset-first-stri-paper-analysis-suite-20260816.json",
+          "generated/asset-first-stri-reviewer-extensions-20260819.json",
           "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json"
         ]
       },
@@ -426,6 +427,7 @@
         "status": "PASS",
         "artifact_refs": [
           "generated/asset-first-stri-paper-analysis-suite-20260816.json",
+          "generated/asset-first-stri-reviewer-extensions-20260819.json",
           "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json"
         ]
       },
@@ -434,6 +436,7 @@
         "status": "PASS",
         "artifact_refs": [
           "generated/asset-first-stri-paper-analysis-suite-20260816.json",
+          "generated/asset-first-stri-reviewer-extensions-20260819.json",
           "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json"
         ]
       },
@@ -442,6 +445,7 @@
         "status": "PASS",
         "artifact_refs": [
           "generated/asset-first-stri-paper-analysis-suite-20260816.json",
+          "generated/asset-first-stri-reviewer-extensions-20260819.json",
           "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json"
         ]
       },
@@ -450,6 +454,7 @@
         "status": "PASS",
         "artifact_refs": [
           "generated/asset-first-stri-paper-analysis-suite-20260816.json",
+          "generated/asset-first-stri-reviewer-extensions-20260819.json",
           "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json"
         ]
       },
@@ -466,7 +471,8 @@
         "artifact_refs": [
           "paper_drafts/stri-20260816-narrow-body.tex",
           "paper_drafts/stri-20260816-tables.tex",
-          "generated/asset-first-stri-paper-analysis-suite-20260816.json"
+          "generated/asset-first-stri-paper-analysis-suite-20260816.json",
+          "generated/asset-first-stri-reviewer-extensions-20260819.json"
         ]
       },
       {
@@ -483,7 +489,8 @@
         "artifact_refs": [
           "paper_drafts/stri-20260816-narrow-body.tex",
           "paper_drafts/stri-20260816-tables.tex",
-          "generated/asset-first-stri-paper-analysis-suite-20260816.json"
+          "generated/asset-first-stri-paper-analysis-suite-20260816.json",
+          "generated/asset-first-stri-reviewer-extensions-20260819.json"
         ]
       },
       {
@@ -492,7 +499,8 @@
         "artifact_refs": [
           "paper_drafts/stri-20260816-narrow-body.tex",
           "paper_drafts/stri-20260816-tables.tex",
-          "generated/asset-first-stri-paper-analysis-suite-20260816.json"
+          "generated/asset-first-stri-paper-analysis-suite-20260816.json",
+          "generated/asset-first-stri-reviewer-extensions-20260819.json"
         ]
       }
     ],
@@ -702,7 +710,7 @@
       "claim_adjudications": 3,
       "completed_visualizations": 4,
       "content_addressed_required": true,
-      "content_addressed_referenced_files": 14
+      "content_addressed_referenced_files": 15
     },
     "content_addressed_completion": {
       "required": true,
@@ -710,8 +718,8 @@
       "status": "PASS_CONTENT_ADDRESSED_COMPLETION",
       "blockers": [],
       "summary": {
-        "referenced_files": 14,
-        "registered_digests": 17
+        "referenced_files": 15,
+        "registered_digests": 18
       }
     },
     "policy": {
@@ -754,6 +762,7 @@
     "generated/asset-first-stri-narrow-paper-coherence-20260816.json",
     "generated/asset-first-stri-narrow-final-review-20260816.json",
     "generated/asset-first-stri-paper-analysis-suite-20260816.json",
+    "generated/asset-first-stri-reviewer-extensions-20260819.json",
     "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json",
     "generated/asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json",
     "generated/asset-first-stri-skillrl-final-policy-p0e-principle-disposition-20260817.json",
@@ -773,19 +782,20 @@
     "generated/asset-first-stri-narrow-paper-coherence-20260816.json": "676930281c919bcf937cdfca375a90f053c6216b474770e153ddc2a349b8cdef",
     "generated/asset-first-stri-narrow-final-review-20260816.json": "9af211d9482130f74c9bacf067b5bcf0d1fc3442e36d6488c31ccd3a5e1aa66d",
     "generated/asset-first-stri-paper-analysis-suite-20260816.json": "ff9477c181f01896063019d969265fa65660ea238f0966da7e221825c02d3fba",
+    "generated/asset-first-stri-reviewer-extensions-20260819.json": "5aa737f9490531be8c10888c5847bb8e1b9d3eb96ba51116581af2974ef76952",
     "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json": "c0a7761fde29b4d3e5f2c5dde752cfed2b5fe8693d1c229bb6e01a0971c86df2",
     "generated/asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json": "5b5827579df4824dea0be8f62ff7c0e2a1757e1cb81c071006e127ef3ba8437a",
     "generated/asset-first-stri-skillrl-final-policy-p0e-principle-disposition-20260817.json": "e4ab9861c8705be4f27abe589d8348c983f4ac2a53d1f17cbd0bd096d7c625d7",
-    "paper_drafts/stri-20260816-narrow-body.tex": "fa0a1aacd0e6b8af854167d8fe3e8f512023e8697c9151b8c7b5596874ac9097",
-    "paper_drafts/stri-20260816-tables.tex": "652f2d0f79a40624449042f64ae087b6a7fdbc0b41ae2fc0a18ac8879fe3d62a",
+    "paper_drafts/stri-20260816-narrow-body.tex": "45ff560833502ecdc3bfb21611bcdca04b10387e586b3c265de52e3a726f5a92",
+    "paper_drafts/stri-20260816-tables.tex": "c73c2d6c0c294ed359a7b1d16d4b6405d3538c4dfc8755cc4bb3ef2e6048603e",
     "paper_drafts/figures/stri-overview.pdf": "dcb62917f4394ecc5e486220d9d411d0afc9028f8f11525831efb4c3b41aebf9",
     "paper_drafts/figures/stri-factor2-witnesses.pdf": "ed10fb150579d42027e6bb24a773d3a17bd6fa2cadc845099f54d7772bb1506d",
     "paper_drafts/figures/stri-rstar-boundary.pdf": "70225e96d5c2c2a56fafbcf4d713415537e9ee8b93987cabfa4cb8812fa9ac02",
-    "paper_drafts/figures/stri-ablation-robustness.pdf": "fa47cec4d82263f8b5976b2d73d05950c2129e94c34bb7096a3bdb7bcbd05542",
+    "paper_drafts/figures/stri-ablation-robustness.pdf": "5e843e7fe31b25fdbdc17375eab21d85cdabe7d71d0d1cb4982b6ecf5966fd66",
     "paper_drafts/stri-20260816-plot-overview.py": "38c672cbdb7afa06de6dfde3faa75bf5beb704bde06b46b9778f845112c7edef",
     "paper_drafts/stri-20260816-plot-witnesses.py": "35e8fe8793f47b46d1ff3efc0a3dff2b67479aa7636dc653f16404979c72dfa3",
     "paper_drafts/stri-20260816-plot-boundary.py": "46fc03a500b09b2bc70fdae24e964e76963e7709fc184c88ebb99834363fde25",
-    "paper_drafts/stri-20260816-plot-ablation-robustness.py": "f8201eb55bf6778014f7cf1b9fc5d7f2c6d218c77061013d8bf98980ac88f262"
+    "paper_drafts/stri-20260816-plot-ablation-robustness.py": "aeeff9148322c044e3f1c38c2b451c80b4c64ffd02edc3003b1229a2a665fa8b"
   },
   "scientific_authority": false,
   "authority": {

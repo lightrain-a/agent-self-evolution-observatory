@@ -3,16 +3,16 @@
 
 \begin{table}[t]
 \centering
-\caption{Released-system evidence for package-identity representation sensitivity. The two systems expose different control channels; only Skill-SP supplies the support matrix used by STRI-Cert.}
+\caption{Two-stage audit across released systems. We test observable identity sensitivity first and run STRI-Cert only when independent support truth exists; absence of a support contract is not repaired with candidate-defined labels.}
 \label{tab:released-systems}
 \small
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{p{0.20\linewidth}p{0.29\linewidth}p{0.43\linewidth}}
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{p{0.16\linewidth}p{0.33\linewidth}p{0.18\linewidth}p{0.25\linewidth}}
 \toprule
-System & Control surface & Released evidence \\
+System & Identity perturbation & Independent $A$? & Audit role \\
 \midrule
-Skill Self-Play (tool-call) & Pre-task skill sampling and skill-ID feedback/refinement & 183 multi-membership Level-1 rows among 314 covered rows; the released text duplicate filter misses all 5/5 observed specific--generic support-overlap pairs; exact-support whole-package pruning still leaves 71 overlap rows. \\
-SkillRL & Fixed-budget template-mode dynamic skill retrieval & 12/12 exact-content fresh-ID clones are admitted; 11/12 clone targets change the unique semantic retrieval set over 223 released ALFWorld task descriptions; 5/12 reduce the number of unique general-skill contents. \\
+Skill-SP & Package sampling; partial overlap survives exact-cover pruning (183$\to$71 multi rows) & Yes: released validators & Phenotype + exact/dual STRI-Cert + robustness \\
+SkillRL & Fresh-ID exact clones: 11/12 change semantic retrieval over 223 tasks & No explicit support contract & Phenotype + qualified downstream bridge; no $R^*$ \\
 \bottomrule
 \end{tabular}
 \end{table}

@@ -15,23 +15,65 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
-def optimal_global_package_ratio(rows: list[dict[str, Any]]) -> dict[str, Any]:
+def support_matrix(rows: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[str], np.ndarray]:
+    """Return covered rows, active package IDs, and the binary support matrix."""
     covered = [row for row in rows if row.get("accepted_skill_ids")]
     skills = sorted({str(skill) for row in covered for skill in row.get("accepted_skill_ids") or []})
+    A = np.asarray(
+        [
+            [1.0 if skill in set(map(str, row.get("accepted_skill_ids") or [])) else 0.0 for skill in skills]
+            for row in covered
+        ],
+        dtype=float,
+    )
+    return covered, skills, A
+
+
+def optimal_global_package_ratio(rows: list[dict[str, Any]], *, max_share: float | None = None) -> dict[str, Any]:
+    """Solve R*(A), optionally with the homogeneous cap w_j <= rho * sum_k w_k."""
+    covered, skills, A = support_matrix(rows)
     if not covered:
         return {"pass": False, "reason": "no-covered-rows", "ratio": None, "skills": []}
-    A = np.asarray([[1.0 if skill in set(map(str, row.get("accepted_skill_ids") or [])) else 0.0 for skill in skills] for row in covered])
+    if max_share is not None and not (0.0 < float(max_share) <= 1.0):
+        raise ValueError("max_share must lie in (0, 1]")
+
     n = len(skills)
-    c = np.zeros(n + 1); c[-1] = 1.0
-    A_ub = []; b_ub = []
+    c = np.zeros(n + 1)
+    c[-1] = 1.0
+    A_ub: list[np.ndarray] = []
+    b_ub: list[float] = []
     for incidence in A:
-        A_ub.append(np.r_[-incidence, 0.0]); b_ub.append(-1.0)
-        A_ub.append(np.r_[incidence, -1.0]); b_ub.append(0.0)
-    result = linprog(c, A_ub=np.asarray(A_ub), b_ub=np.asarray(b_ub), bounds=[(0, None)] * n + [(0, None)], method="highs")
+        A_ub.append(np.r_[-incidence, 0.0])
+        b_ub.append(-1.0)
+        A_ub.append(np.r_[incidence, -1.0])
+        b_ub.append(0.0)
+    if max_share is not None:
+        rho = float(max_share)
+        for j in range(n):
+            cap = np.zeros(n + 1)
+            cap[j] = 1.0
+            cap[:n] -= rho
+            A_ub.append(cap)
+            b_ub.append(0.0)
+
+    result = linprog(
+        c,
+        A_ub=np.asarray(A_ub),
+        b_ub=np.asarray(b_ub),
+        bounds=[(0, None)] * n + [(0, None)],
+        method="highs",
+    )
     if not result.success:
-        return {"pass": False, "reason": str(result.message), "ratio": None, "skills": skills}
+        return {
+            "pass": False,
+            "reason": str(result.message),
+            "ratio": None,
+            "skills": skills,
+            "max_share": max_share,
+        }
     weights = result.x[:n]
     exposures = A @ weights
+    total_mass = float(weights.sum())
     return {
         "pass": True,
         "ratio": float(result.x[-1]),
@@ -39,6 +81,122 @@ def optimal_global_package_ratio(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "maximum_exposure": float(exposures.max()),
         "weights": {skill: float(weights[i]) for i, skill in enumerate(skills)},
         "skills": skills,
+        "max_share": max_share,
+        "attained_max_share": float(weights.max() / total_mass) if total_mass > 0 else None,
+    }
+
+
+def dual_global_package_ratio(rows: list[dict[str, Any]], *, tolerance: float = 1e-9) -> dict[str, Any]:
+    """Solve the LP dual of R*(A) and return a general lower-bound certificate.
+
+    For primal min t s.t. 1 <= Aw <= t1, w,t >= 0, the dual is
+    max 1^T alpha s.t. A^T(beta-alpha) >= 0, 1^T beta <= 1,
+    alpha,beta >= 0.  Any feasible dual pair is therefore a certified lower
+    bound; strong LP duality makes the optimum equal R*(A).
+    """
+    covered, skills, A = support_matrix(rows)
+    if not covered:
+        return {"pass": False, "reason": "no-covered-rows", "lower_bound": None, "skills": []}
+    nr, nc = A.shape
+    objective = np.r_[-np.ones(nr), np.zeros(nr)]
+    A_ub: list[np.ndarray] = []
+    b_ub: list[float] = []
+    for j in range(nc):
+        A_ub.append(np.r_[A[:, j], -A[:, j]])
+        b_ub.append(0.0)
+    A_ub.append(np.r_[np.zeros(nr), np.ones(nr)])
+    b_ub.append(1.0)
+    result = linprog(
+        objective,
+        A_ub=np.asarray(A_ub),
+        b_ub=np.asarray(b_ub),
+        bounds=[(0, None)] * (2 * nr),
+        method="highs",
+    )
+    if not result.success:
+        return {"pass": False, "reason": str(result.message), "lower_bound": None, "skills": skills}
+
+    alpha = result.x[:nr]
+    beta = result.x[nr:]
+    package_slack = A.T @ (beta - alpha)
+
+    def nonzero_rows(values: np.ndarray) -> list[dict[str, Any]]:
+        out: list[dict[str, Any]] = []
+        for i in np.where(values > tolerance)[0]:
+            row = covered[int(i)]
+            out.append(
+                {
+                    "matrix_row": int(i),
+                    "value": float(values[i]),
+                    "level": row.get("level"),
+                    "index": row.get("index"),
+                    "tool": row.get("tool"),
+                    "source_skill_id": row.get("source_skill_id"),
+                    "accepted_skill_ids": list(row.get("accepted_skill_ids") or []),
+                }
+            )
+        return out
+
+    return {
+        "pass": True,
+        "lower_bound": float(-result.fun),
+        "sum_beta": float(beta.sum()),
+        "minimum_package_slack": float(package_slack.min()) if len(package_slack) else None,
+        "alpha_rows": nonzero_rows(alpha),
+        "beta_rows": nonzero_rows(beta),
+        "skills": skills,
+    }
+
+
+def robust_interval_package_ratio(
+    lower_support: np.ndarray,
+    upper_support: np.ndarray,
+    *,
+    skills: list[str] | None = None,
+) -> dict[str, Any]:
+    """Exact box-robust extension for independently bounded additive support.
+
+    With nonnegative w and elementwise L <= A <= U, the worst lower exposure is
+    Lw and the worst upper exposure is Uw, so robust STRI is the LP
+    min t s.t. Lw >= 1 and Uw <= t1.
+    """
+    lower = np.asarray(lower_support, dtype=float)
+    upper = np.asarray(upper_support, dtype=float)
+    if lower.ndim != 2 or lower.shape != upper.shape:
+        raise ValueError("lower_support and upper_support must be same-shape matrices")
+    if np.any(lower < 0) or np.any(upper < lower):
+        raise ValueError("support interval must satisfy 0 <= lower <= upper")
+    nr, nc = lower.shape
+    names = list(skills) if skills is not None else [f"package_{j}" for j in range(nc)]
+    if len(names) != nc:
+        raise ValueError("skills length must match support columns")
+    if nr == 0 or nc == 0:
+        return {"pass": False, "reason": "empty-support-interval", "ratio": None, "skills": names}
+
+    c = np.zeros(nc + 1)
+    c[-1] = 1.0
+    A_ub: list[np.ndarray] = []
+    b_ub: list[float] = []
+    for lo, hi in zip(lower, upper):
+        A_ub.append(np.r_[-lo, 0.0])
+        b_ub.append(-1.0)
+        A_ub.append(np.r_[hi, -1.0])
+        b_ub.append(0.0)
+    result = linprog(
+        c,
+        A_ub=np.asarray(A_ub),
+        b_ub=np.asarray(b_ub),
+        bounds=[(0, None)] * nc + [(0, None)],
+        method="highs",
+    )
+    if not result.success:
+        return {"pass": False, "reason": str(result.message), "ratio": None, "skills": names}
+    weights = result.x[:nc]
+    return {
+        "pass": True,
+        "ratio": float(result.x[-1]),
+        "weights": {name: float(weights[i]) for i, name in enumerate(names)},
+        "skills": names,
     }
 
 

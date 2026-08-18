@@ -45,8 +45,8 @@ for regime, (covered, multi, rstar) in expected.items():
 # Required paper literals are intentionally exact for high-load-bearing results.
 for literal in [
     "314", "183", "47", "33", "52", "38", "34", "127/128", "R^*=2", "R^*=1",
-    "14/24", "5/24", "8/24", "16/source",
-    "INCONCLUSIVE\\_\\allowbreak PROPOSER\\_\\allowbreak QUALIFICATION\\_\\allowbreak FAILED",
+    "14/24", "5/24", "8/24", "1,387", "366", "127/595", "R^*_{0.75}=4/3",
+    "D^*(A)", "R^*_{[L,U]}",
 ]:
     check(f"paper_literal_{literal}", literal in body or literal in tables, literal)
 
@@ -64,7 +64,8 @@ required_boundaries = [
     "We \\textbf{do not} claim that a positive certificate causes task failure",
     "STRI-Cert is computationally novel relative to linear programming",
     "Support-Quotient Control has been empirically validated",
-    "no dynamic witness statistic is scientifically admissible",
+    "make no dynamic claim from this bank",
+    "not a population-level no-effect theorem",
 ]
 for text in required_boundaries:
     check(f"boundary_{text[:24]}", text in body)
@@ -87,7 +88,7 @@ ledger_keys = {str(e["key"]) for e in sources.get("entries", [])}
 check("all_cites_in_bib", cite_keys <= bib_keys, str(sorted(cite_keys - bib_keys)))
 check("all_cites_in_ledger", cite_keys <= ledger_keys, str(sorted(cite_keys - ledger_keys)))
 check("bib_entries_have_ledger", bib_keys <= ledger_keys, str(sorted(bib_keys - ledger_keys)))
-check("all_11_entries_cited", len(cite_keys) == 11 and cite_keys == bib_keys, f"cites={len(cite_keys)} bib={len(bib_keys)}")
+check("all_15_entries_cited", len(cite_keys) == 15 and cite_keys == bib_keys, f"cites={len(cite_keys)} bib={len(bib_keys)}")
 check("ledger_zero_authority", sources.get("scientific_authority") is False)
 
 # Build health.

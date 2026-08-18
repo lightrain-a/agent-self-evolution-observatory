@@ -14,6 +14,7 @@ REDUCTION = "generated/asset-first-skill-taxonomy-representation-invariance-redu
 COHERENCE = "generated/asset-first-stri-narrow-paper-coherence-20260816.json"
 FINAL_REVIEW = "generated/asset-first-stri-narrow-final-review-20260816.json"
 PAPER_ANALYSIS = "generated/asset-first-stri-paper-analysis-suite-20260816.json"
+REVIEWER_EXTENSIONS = "generated/asset-first-stri-reviewer-extensions-20260819.json"
 PRUNING_BASELINE = "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json"
 P0E_DIAGNOSIS = "generated/asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json"
 P0E_PRINCIPLE = "generated/asset-first-stri-skillrl-final-policy-p0e-principle-disposition-20260817.json"
@@ -57,8 +58,8 @@ def build_stri_quality_contract() -> dict[str, Any]:
             {
                 "id": "N2",
                 "claim_type": "theory",
-                "statement": "STRI-Cert defines a support-equivalence sensitivity certificate under the frozen support matrix and package constraints.",
-                "why_better_or_why_matters": "The certificate makes the representation assumptions explicit and exposes which overlap conclusions survive admissible support-preserving reductions.",
+                "statement": "STRI-Cert exactly decides package-only exposure equalizability; its LP dual gives general lower-bound witnesses and linear extensions expose support uncertainty and controller-feasible-set assumptions.",
+                "why_better_or_why_matters": "The primal/dual certificate makes representation assumptions explicit, while box-robust and max-share variants separate support uncertainty from controller constraints without changing the claim into a new optimization algorithm.",
                 "alternative_explanations": ["the certificate is merely a restatement of raw overlap under another weighting"],
                 "ruling_out_experiments": ["show counterexamples where raw overlap changes under representation edits while the support-equivalent operational object is preserved"],
                 "baseline_ids": ["B-ANALYTICAL"],
@@ -119,15 +120,15 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     analysis_path = project_root / PAPER_ANALYSIS
     analysis = json.loads(analysis_path.read_text(encoding="utf-8")) if analysis_path.exists() else {}
     q = analysis.get("quality_v2_evidence") if isinstance(analysis.get("quality_v2_evidence"), dict) else {}
-    analysis_refs = [PAPER_ANALYSIS, PRUNING_BASELINE]
+    analysis_refs = [PAPER_ANALYSIS, REVIEWER_EXTENSIONS, PRUNING_BASELINE]
     body_path = project_root / PAPER_BODY
     tables_path = project_root / PAPER_TABLES
     body = body_path.read_text(encoding="utf-8") if body_path.exists() else ""
     tables = tables_path.read_text(encoding="utf-8") if tables_path.exists() else ""
     manuscript_ablation = "\\label{fig:ablation-robustness}" in body and "representation ablations" in body.lower()
-    manuscript_failure = "Across the 49 Level-1 tools" in body and "overlap-without-witness" in body
-    manuscript_sensitivity = "49 leave-one-tool deletions" in body and "500 fixed-seed tool-bootstrap resamples" in body
-    manuscript_refs = [PAPER_BODY, PAPER_TABLES, PAPER_ANALYSIS]
+    manuscript_failure = "Across 49 Level-1 tools" in body and "overlap-without-witness" in body and "exact per-tool LP" in body
+    manuscript_sensitivity = "1,387 perturbed Level-1 matrices" in body and "127 break equalizability" in body and "500 fixed-seed tool-bootstrap" in body
+    manuscript_refs = [PAPER_BODY, PAPER_TABLES, PAPER_ANALYSIS, REVIEWER_EXTENSIONS]
     visual_review = {"caption_claim_aligned": True, "legible_labels": True, "legend_or_direct_labels": True, "non_deceptive_scale": True, "source_data_versioned": True}
     visualizations = [
         {"id": "V-OVERVIEW", "status": "PASS", "artifact_refs": [FIG_OVERVIEW], "script_refs": [PLOT_OVERVIEW], "caption_ref": "fig:stri-overview", "visual_review": dict(visual_review)},
@@ -169,7 +170,7 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
 def build_asset_first_stri_paper_quality(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     quality = build_stri_quality_contract()
     completion = build_stri_completion(project_root)
-    source_artifacts = [REDUCTION, COHERENCE, FINAL_REVIEW, PAPER_ANALYSIS, PRUNING_BASELINE, P0E_DIAGNOSIS, P0E_PRINCIPLE, PAPER_BODY, PAPER_TABLES, FIG_OVERVIEW, FIG_WITNESS, FIG_BOUNDARY, FIG_ABLATION, PLOT_OVERVIEW, PLOT_WITNESS, PLOT_BOUNDARY, PLOT_ABLATION]
+    source_artifacts = [REDUCTION, COHERENCE, FINAL_REVIEW, PAPER_ANALYSIS, REVIEWER_EXTENSIONS, PRUNING_BASELINE, P0E_DIAGNOSIS, P0E_PRINCIPLE, PAPER_BODY, PAPER_TABLES, FIG_OVERVIEW, FIG_WITNESS, FIG_BOUNDARY, FIG_ABLATION, PLOT_OVERVIEW, PLOT_WITNESS, PLOT_BOUNDARY, PLOT_ABLATION]
     source_sha256 = {rel: _sha256(project_root / rel) for rel in source_artifacts}
     audit = audit_manuscript_evidence_completion(
         quality,

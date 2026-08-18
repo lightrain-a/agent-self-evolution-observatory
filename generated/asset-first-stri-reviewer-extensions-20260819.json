@@ -1,0 +1,1183 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "analysis_type": "reviewer-requested dual/constrained/support-perturbation extensions",
+  "contexts": {
+    "api_bank_level1_all": {
+      "context_id": "api_bank_level1_all",
+      "covered_rows": 314,
+      "active_skills": [
+        "skill_001",
+        "skill_002",
+        "skill_003",
+        "skill_004",
+        "skill_005",
+        "skill_015"
+      ],
+      "support_shape": [
+        314,
+        6
+      ],
+      "R_star": 2.0,
+      "dual": {
+        "lower_bound": 2.0,
+        "primal_dual_gap": 0.0,
+        "sum_beta": 1.0,
+        "minimum_package_slack": 0.0,
+        "alpha_rows": [
+          {
+            "matrix_row": 10,
+            "value": 1.0,
+            "level": 1,
+            "index": 12,
+            "tool": "EmergencyKnowledge",
+            "source_skill_id": null,
+            "accepted_skill_ids": [
+              "skill_015"
+            ]
+          },
+          {
+            "matrix_row": 41,
+            "value": 1.0,
+            "level": 1,
+            "index": 44,
+            "tool": "ModifyRegistration",
+            "source_skill_id": null,
+            "accepted_skill_ids": [
+              "skill_003"
+            ]
+          }
+        ],
+        "beta_rows": [
+          {
+            "matrix_row": 0,
+            "value": 1.0,
+            "level": 1,
+            "index": 0,
+            "tool": "ModifyRegistration",
+            "source_skill_id": null,
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ]
+          }
+        ]
+      },
+      "max_share_scan": {
+        "1.000": {
+          "feasible": true,
+          "R_star_rho": 2.0,
+          "attained_max_share": 0.3333333333333333,
+          "weights": {
+            "skill_001": 0.0,
+            "skill_002": 0.0,
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_005": 0.0,
+            "skill_015": 1.0
+          },
+          "reason": null
+        },
+        "0.750": {
+          "feasible": true,
+          "R_star_rho": 2.0,
+          "attained_max_share": 0.3333333333333333,
+          "weights": {
+            "skill_001": 0.0,
+            "skill_002": 0.0,
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_005": 0.0,
+            "skill_015": 1.0
+          },
+          "reason": null
+        },
+        "0.500": {
+          "feasible": true,
+          "R_star_rho": 2.0,
+          "attained_max_share": 0.3333333333333333,
+          "weights": {
+            "skill_001": 0.0,
+            "skill_002": 0.0,
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_005": 0.0,
+            "skill_015": 1.0
+          },
+          "reason": null
+        },
+        "0.250": {
+          "feasible": true,
+          "R_star_rho": 2.0,
+          "attained_max_share": 0.25,
+          "weights": {
+            "skill_001": 1.0,
+            "skill_002": 0.0,
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_005": 0.0,
+            "skill_015": 1.0
+          },
+          "reason": null
+        },
+        "0.125": {
+          "feasible": false,
+          "R_star_rho": null,
+          "attained_max_share": null,
+          "weights": null,
+          "reason": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)"
+        }
+      },
+      "single_edge_support_stability": {
+        "pass": true,
+        "base_R_star": 2.0,
+        "covered_rows": 314,
+        "active_skills": [
+          "skill_001",
+          "skill_002",
+          "skill_003",
+          "skill_004",
+          "skill_005",
+          "skill_015"
+        ],
+        "support_additions": {
+          "perturbations": 1387,
+          "minimum_R_star": 2.0,
+          "maximum_R_star": 3.0,
+          "residual_count": 1387,
+          "equalizable_count": 0,
+          "same_original_class_count": 1387,
+          "same_original_class_fraction": 1.0
+        },
+        "support_deletions_that_keep_row_covered": {
+          "perturbations": 366,
+          "minimum_R_star": 2.0,
+          "maximum_R_star": 2.0,
+          "residual_count": 366,
+          "equalizable_count": 0,
+          "same_original_class_count": 366,
+          "same_original_class_fraction": 1.0
+        },
+        "support_deletions_that_would_uncover_row": 131,
+        "interpretation": "Exact exhaustive one-cell stress test on the frozen binary matrix; this is not a learned-support calibration experiment."
+      }
+    },
+    "api_bank_level1_calibration_tools": {
+      "context_id": "api_bank_level1_calibration_tools",
+      "covered_rows": 47,
+      "active_skills": [
+        "skill_003",
+        "skill_004",
+        "skill_015"
+      ],
+      "support_shape": [
+        47,
+        3
+      ],
+      "R_star": 2.0,
+      "dual": {
+        "lower_bound": 2.0,
+        "primal_dual_gap": 0.0,
+        "sum_beta": 1.0,
+        "minimum_package_slack": 0.0,
+        "alpha_rows": [
+          {
+            "matrix_row": 15,
+            "value": 1.0,
+            "level": 1,
+            "index": 98,
+            "tool": "RecordHealthData",
+            "source_skill_id": null,
+            "accepted_skill_ids": [
+              "skill_004"
+            ]
+          },
+          {
+            "matrix_row": 16,
+            "value": 1.0,
+            "level": 1,
+            "index": 109,
+            "tool": "RecordHealthData",
+            "source_skill_id": null,
+            "accepted_skill_ids": [
+              "skill_015"
+            ]
+          }
+        ],
+        "beta_rows": [
+          {
+            "matrix_row": 1,
+            "value": 1.0,
+            "level": 1,
+            "index": 1,
+            "tool": "QueryHealthData",
+            "source_skill_id": null,
+            "accepted_skill_ids": [
+              "skill_004",
+              "skill_015"
+            ]
+          }
+        ]
+      },
+      "max_share_scan": {
+        "1.000": {
+          "feasible": true,
+          "R_star_rho": 2.0,
+          "attained_max_share": 0.3333333333333333,
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          },
+          "reason": null
+        },
+        "0.750": {
+          "feasible": true,
+          "R_star_rho": 2.0,
+          "attained_max_share": 0.3333333333333333,
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          },
+          "reason": null
+        },
+        "0.500": {
+          "feasible": true,
+          "R_star_rho": 2.0,
+          "attained_max_share": 0.3333333333333333,
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          },
+          "reason": null
+        },
+        "0.250": {
+          "feasible": false,
+          "R_star_rho": null,
+          "attained_max_share": null,
+          "weights": null,
+          "reason": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)"
+        },
+        "0.125": {
+          "feasible": false,
+          "R_star_rho": null,
+          "attained_max_share": null,
+          "weights": null,
+          "reason": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)"
+        }
+      },
+      "single_edge_support_stability": {
+        "pass": true,
+        "base_R_star": 2.0,
+        "covered_rows": 47,
+        "active_skills": [
+          "skill_003",
+          "skill_004",
+          "skill_015"
+        ],
+        "support_additions": {
+          "perturbations": 61,
+          "minimum_R_star": 2.0,
+          "maximum_R_star": 3.0,
+          "residual_count": 61,
+          "equalizable_count": 0,
+          "same_original_class_count": 61,
+          "same_original_class_fraction": 1.0
+        },
+        "support_deletions_that_keep_row_covered": {
+          "perturbations": 66,
+          "minimum_R_star": 2.0,
+          "maximum_R_star": 2.0,
+          "residual_count": 66,
+          "equalizable_count": 0,
+          "same_original_class_count": 66,
+          "same_original_class_fraction": 1.0
+        },
+        "support_deletions_that_would_uncover_row": 14,
+        "interpretation": "Exact exhaustive one-cell stress test on the frozen binary matrix; this is not a learned-support calibration experiment."
+      }
+    },
+    "api_bank_level1_heldout_tools": {
+      "context_id": "api_bank_level1_heldout_tools",
+      "covered_rows": 52,
+      "active_skills": [
+        "skill_003",
+        "skill_004",
+        "skill_015"
+      ],
+      "support_shape": [
+        52,
+        3
+      ],
+      "R_star": 2.0,
+      "dual": {
+        "lower_bound": 2.0,
+        "primal_dual_gap": 0.0,
+        "sum_beta": 1.0,
+        "minimum_package_slack": 0.0,
+        "alpha_rows": [
+          {
+            "matrix_row": 4,
+            "value": 1.0,
+            "level": 1,
+            "index": 12,
+            "tool": "EmergencyKnowledge",
+            "source_skill_id": null,
+            "accepted_skill_ids": [
+              "skill_015"
+            ]
+          },
+          {
+            "matrix_row": 28,
+            "value": 1.0,
+            "level": 1,
+            "index": 276,
+            "tool": "QueryRegistration",
+            "source_skill_id": null,
+            "accepted_skill_ids": [
+              "skill_003"
+            ]
+          }
+        ],
+        "beta_rows": [
+          {
+            "matrix_row": 0,
+            "value": 1.0,
+            "level": 1,
+            "index": 2,
+            "tool": "CancelRegistration",
+            "source_skill_id": null,
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ]
+          }
+        ]
+      },
+      "max_share_scan": {
+        "1.000": {
+          "feasible": true,
+          "R_star_rho": 2.0,
+          "attained_max_share": 0.3333333333333333,
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          },
+          "reason": null
+        },
+        "0.750": {
+          "feasible": true,
+          "R_star_rho": 2.0,
+          "attained_max_share": 0.3333333333333333,
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          },
+          "reason": null
+        },
+        "0.500": {
+          "feasible": true,
+          "R_star_rho": 2.0,
+          "attained_max_share": 0.3333333333333333,
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          },
+          "reason": null
+        },
+        "0.250": {
+          "feasible": false,
+          "R_star_rho": null,
+          "attained_max_share": null,
+          "weights": null,
+          "reason": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)"
+        },
+        "0.125": {
+          "feasible": false,
+          "R_star_rho": null,
+          "attained_max_share": null,
+          "weights": null,
+          "reason": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)"
+        }
+      },
+      "single_edge_support_stability": {
+        "pass": true,
+        "base_R_star": 2.0,
+        "covered_rows": 52,
+        "active_skills": [
+          "skill_003",
+          "skill_004",
+          "skill_015"
+        ],
+        "support_additions": {
+          "perturbations": 66,
+          "minimum_R_star": 2.0,
+          "maximum_R_star": 3.0,
+          "residual_count": 66,
+          "equalizable_count": 0,
+          "same_original_class_count": 66,
+          "same_original_class_fraction": 1.0
+        },
+        "support_deletions_that_keep_row_covered": {
+          "perturbations": 76,
+          "minimum_R_star": 2.0,
+          "maximum_R_star": 2.0,
+          "residual_count": 76,
+          "equalizable_count": 0,
+          "same_original_class_count": 76,
+          "same_original_class_fraction": 1.0
+        },
+        "support_deletions_that_would_uncover_row": 14,
+        "interpretation": "Exact exhaustive one-cell stress test on the frozen binary matrix; this is not a learned-support calibration experiment."
+      }
+    },
+    "api_bank_level3_negative_control": {
+      "context_id": "api_bank_level3_negative_control",
+      "covered_rows": 34,
+      "active_skills": [
+        "skill_006",
+        "skill_008",
+        "skill_009",
+        "skill_010"
+      ],
+      "support_shape": [
+        34,
+        4
+      ],
+      "R_star": 1.0,
+      "dual": {
+        "lower_bound": 1.0,
+        "primal_dual_gap": 0.0,
+        "sum_beta": 1.0,
+        "minimum_package_slack": 0.0,
+        "alpha_rows": [
+          {
+            "matrix_row": 29,
+            "value": 1.0,
+            "level": 3,
+            "index": 112,
+            "tool": "TaxCalculator",
+            "source_skill_id": null,
+            "accepted_skill_ids": [
+              "skill_010"
+            ]
+          }
+        ],
+        "beta_rows": [
+          {
+            "matrix_row": 30,
+            "value": 1.0,
+            "level": 3,
+            "index": 114,
+            "tool": "TaxCalculator",
+            "source_skill_id": null,
+            "accepted_skill_ids": [
+              "skill_010"
+            ]
+          }
+        ]
+      },
+      "max_share_scan": {
+        "1.000": {
+          "feasible": true,
+          "R_star_rho": 1.0,
+          "attained_max_share": 0.25,
+          "weights": {
+            "skill_006": 1.0,
+            "skill_008": 1.0,
+            "skill_009": 1.0,
+            "skill_010": 1.0
+          },
+          "reason": null
+        },
+        "0.750": {
+          "feasible": true,
+          "R_star_rho": 1.0,
+          "attained_max_share": 0.25,
+          "weights": {
+            "skill_006": 1.0,
+            "skill_008": 1.0,
+            "skill_009": 1.0,
+            "skill_010": 1.0
+          },
+          "reason": null
+        },
+        "0.500": {
+          "feasible": true,
+          "R_star_rho": 1.0,
+          "attained_max_share": 0.25,
+          "weights": {
+            "skill_006": 1.0,
+            "skill_008": 1.0,
+            "skill_009": 1.0,
+            "skill_010": 1.0
+          },
+          "reason": null
+        },
+        "0.250": {
+          "feasible": true,
+          "R_star_rho": 1.0,
+          "attained_max_share": 0.25,
+          "weights": {
+            "skill_006": 1.0,
+            "skill_008": 1.0,
+            "skill_009": 1.0,
+            "skill_010": 1.0
+          },
+          "reason": null
+        },
+        "0.125": {
+          "feasible": false,
+          "R_star_rho": null,
+          "attained_max_share": null,
+          "weights": null,
+          "reason": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)"
+        }
+      },
+      "single_edge_support_stability": {
+        "pass": true,
+        "base_R_star": 1.0,
+        "covered_rows": 34,
+        "active_skills": [
+          "skill_006",
+          "skill_008",
+          "skill_009",
+          "skill_010"
+        ],
+        "support_additions": {
+          "perturbations": 102,
+          "minimum_R_star": 2.0,
+          "maximum_R_star": 2.0,
+          "residual_count": 102,
+          "equalizable_count": 0,
+          "same_original_class_count": 0,
+          "same_original_class_fraction": 0.0
+        },
+        "support_deletions_that_keep_row_covered": {
+          "perturbations": 0,
+          "minimum_R_star": null,
+          "maximum_R_star": null,
+          "residual_count": 0,
+          "equalizable_count": 0,
+          "same_original_class_count": 0,
+          "same_original_class_fraction": null
+        },
+        "support_deletions_that_would_uncover_row": 34,
+        "interpretation": "Exact exhaustive one-cell stress test on the frozen binary matrix; this is not a learned-support calibration experiment."
+      }
+    },
+    "logical_compiler_validation": {
+      "context_id": "logical_compiler_validation",
+      "covered_rows": 128,
+      "active_skills": [
+        "skill_001",
+        "skill_002",
+        "skill_003",
+        "skill_004",
+        "skill_005",
+        "skill_006",
+        "skill_007",
+        "skill_008"
+      ],
+      "support_shape": [
+        128,
+        8
+      ],
+      "R_star": 1.0,
+      "dual": {
+        "lower_bound": 1.0,
+        "primal_dual_gap": 0.0,
+        "sum_beta": 1.0,
+        "minimum_package_slack": 0.0,
+        "alpha_rows": [
+          {
+            "matrix_row": 113,
+            "value": 1.0,
+            "level": 0,
+            "index": 113,
+            "tool": "zebra_3x3",
+            "source_skill_id": "skill_008",
+            "accepted_skill_ids": [
+              "skill_008"
+            ]
+          }
+        ],
+        "beta_rows": [
+          {
+            "matrix_row": 0,
+            "value": 1.0,
+            "level": 0,
+            "index": 0,
+            "tool": "zebra_3x3",
+            "source_skill_id": "skill_001",
+            "accepted_skill_ids": [
+              "skill_001",
+              "skill_003",
+              "skill_008"
+            ]
+          }
+        ]
+      },
+      "max_share_scan": {
+        "1.000": {
+          "feasible": true,
+          "R_star_rho": 1.0,
+          "attained_max_share": 1.0,
+          "weights": {
+            "skill_001": 0.0,
+            "skill_002": 0.0,
+            "skill_003": 0.0,
+            "skill_004": 0.0,
+            "skill_005": 0.0,
+            "skill_006": 0.0,
+            "skill_007": 0.0,
+            "skill_008": 1.0
+          },
+          "reason": null
+        },
+        "0.750": {
+          "feasible": true,
+          "R_star_rho": 1.3333333333333333,
+          "attained_max_share": 0.75,
+          "weights": {
+            "skill_001": -0.0,
+            "skill_002": -0.0,
+            "skill_003": 0.0,
+            "skill_004": -0.0,
+            "skill_005": -0.0,
+            "skill_006": 0.3333333333333333,
+            "skill_007": 0.0,
+            "skill_008": 1.0
+          },
+          "reason": null
+        },
+        "0.500": {
+          "feasible": true,
+          "R_star_rho": 2.0,
+          "attained_max_share": 0.5,
+          "weights": {
+            "skill_001": -0.0,
+            "skill_002": -0.0,
+            "skill_003": 0.0,
+            "skill_004": -0.0,
+            "skill_005": -0.0,
+            "skill_006": 1.0,
+            "skill_007": 0.0,
+            "skill_008": 1.0
+          },
+          "reason": null
+        },
+        "0.250": {
+          "feasible": true,
+          "R_star_rho": 4.0,
+          "attained_max_share": 0.25,
+          "weights": {
+            "skill_001": -0.0,
+            "skill_002": -0.0,
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_005": -0.0,
+            "skill_006": 1.0,
+            "skill_007": 0.0,
+            "skill_008": 1.0
+          },
+          "reason": null
+        },
+        "0.125": {
+          "feasible": true,
+          "R_star_rho": 8.0,
+          "attained_max_share": 0.125,
+          "weights": {
+            "skill_001": 1.0,
+            "skill_002": 1.0,
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_005": 1.0,
+            "skill_006": 1.0,
+            "skill_007": 1.0,
+            "skill_008": 1.0
+          },
+          "reason": null
+        }
+      },
+      "single_edge_support_stability": {
+        "pass": true,
+        "base_R_star": 1.0,
+        "covered_rows": 128,
+        "active_skills": [
+          "skill_001",
+          "skill_002",
+          "skill_003",
+          "skill_004",
+          "skill_005",
+          "skill_006",
+          "skill_007",
+          "skill_008"
+        ],
+        "support_additions": {
+          "perturbations": 428,
+          "minimum_R_star": 1.0,
+          "maximum_R_star": 1.0,
+          "residual_count": 0,
+          "equalizable_count": 428,
+          "same_original_class_count": 428,
+          "same_original_class_fraction": 1.0
+        },
+        "support_deletions_that_keep_row_covered": {
+          "perturbations": 595,
+          "minimum_R_star": 1.0,
+          "maximum_R_star": 2.0,
+          "residual_count": 127,
+          "equalizable_count": 468,
+          "same_original_class_count": 468,
+          "same_original_class_fraction": 0.7865546218487395
+        },
+        "support_deletions_that_would_uncover_row": 1,
+        "interpretation": "Exact exhaustive one-cell stress test on the frozen binary matrix; this is not a learned-support calibration experiment."
+      }
+    }
+  },
+  "per_tool_exact_lp": {
+    "tool_count": 49,
+    "no_support_tools": 15,
+    "equalizable_tools": 30,
+    "residual_tools": 4,
+    "overlap_without_singleton_witness": {
+      "tools": 10,
+      "equalizable_by_exact_lp": 10,
+      "residual_by_exact_lp": 0
+    },
+    "records": [
+      {
+        "tool": "AddAgenda",
+        "covered_rows": 13,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "AddAlarm",
+        "covered_rows": 3,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "AddMeeting",
+        "covered_rows": 3,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "AddReminder",
+        "covered_rows": 5,
+        "multi_membership_rows": 1,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "AppointmentRegistration",
+        "covered_rows": 11,
+        "multi_membership_rows": 8,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "BookHotel",
+        "covered_rows": 0,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": null,
+        "decision": "UNRESOLVED_SUPPORT_OPTIMIZATION_OR_EMPTY_CONTEXT"
+      },
+      {
+        "tool": "Calculator",
+        "covered_rows": 5,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "CancelRegistration",
+        "covered_rows": 13,
+        "multi_membership_rows": 9,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "CancelTimedSwitch",
+        "covered_rows": 0,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": null,
+        "decision": "UNRESOLVED_SUPPORT_OPTIMIZATION_OR_EMPTY_CONTEXT"
+      },
+      {
+        "tool": "DeleteAccount",
+        "covered_rows": 14,
+        "multi_membership_rows": 14,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "DeleteAgenda",
+        "covered_rows": 5,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "DeleteAlarm",
+        "covered_rows": 4,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "DeleteMeeting",
+        "covered_rows": 1,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "DeleteReminder",
+        "covered_rows": 1,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "DeleteScene",
+        "covered_rows": 0,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": null,
+        "decision": "UNRESOLVED_SUPPORT_OPTIMIZATION_OR_EMPTY_CONTEXT"
+      },
+      {
+        "tool": "Dictionary",
+        "covered_rows": 0,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": null,
+        "decision": "UNRESOLVED_SUPPORT_OPTIMIZATION_OR_EMPTY_CONTEXT"
+      },
+      {
+        "tool": "DocumentQA",
+        "covered_rows": 0,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": null,
+        "decision": "UNRESOLVED_SUPPORT_OPTIMIZATION_OR_EMPTY_CONTEXT"
+      },
+      {
+        "tool": "EmergencyKnowledge",
+        "covered_rows": 18,
+        "multi_membership_rows": 16,
+        "witness_count": 1,
+        "R_star": 2.0,
+        "decision": "CERTIFIED_IRREDUCIBLE_PACKAGE_ONLY_REPRESENTATION_RESIDUAL_WITH_CLOSED_FORM_WITNESS"
+      },
+      {
+        "tool": "ForgotPassword",
+        "covered_rows": 4,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "GetToday",
+        "covered_rows": 0,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": null,
+        "decision": "UNRESOLVED_SUPPORT_OPTIMIZATION_OR_EMPTY_CONTEXT"
+      },
+      {
+        "tool": "GetUserToken",
+        "covered_rows": 82,
+        "multi_membership_rows": 76,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "ImageCaption",
+        "covered_rows": 0,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": null,
+        "decision": "UNRESOLVED_SUPPORT_OPTIMIZATION_OR_EMPTY_CONTEXT"
+      },
+      {
+        "tool": "ModifyAgenda",
+        "covered_rows": 2,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "ModifyAlarm",
+        "covered_rows": 6,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "ModifyMeeting",
+        "covered_rows": 5,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "ModifyPassword",
+        "covered_rows": 6,
+        "multi_membership_rows": 6,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "ModifyRegistration",
+        "covered_rows": 14,
+        "multi_membership_rows": 9,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "ModifyReminder",
+        "covered_rows": 8,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "OpenBankAccount",
+        "covered_rows": 9,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "PlayMusic",
+        "covered_rows": 0,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": null,
+        "decision": "UNRESOLVED_SUPPORT_OPTIMIZATION_OR_EMPTY_CONTEXT"
+      },
+      {
+        "tool": "QueryAgenda",
+        "covered_rows": 1,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "QueryAlarm",
+        "covered_rows": 1,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "QueryBalance",
+        "covered_rows": 13,
+        "multi_membership_rows": 13,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "QueryHealthData",
+        "covered_rows": 5,
+        "multi_membership_rows": 3,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "QueryHistoryToday",
+        "covered_rows": 5,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "QueryMeeting",
+        "covered_rows": 3,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "QueryRegistration",
+        "covered_rows": 15,
+        "multi_membership_rows": 9,
+        "witness_count": 1,
+        "R_star": 2.0,
+        "decision": "CERTIFIED_IRREDUCIBLE_PACKAGE_ONLY_REPRESENTATION_RESIDUAL_WITH_CLOSED_FORM_WITNESS"
+      },
+      {
+        "tool": "QueryReminder",
+        "covered_rows": 4,
+        "multi_membership_rows": 2,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "QueryScene",
+        "covered_rows": 0,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": null,
+        "decision": "UNRESOLVED_SUPPORT_OPTIMIZATION_OR_EMPTY_CONTEXT"
+      },
+      {
+        "tool": "QueryStock",
+        "covered_rows": 11,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "RecordHealthData",
+        "covered_rows": 17,
+        "multi_membership_rows": 13,
+        "witness_count": 1,
+        "R_star": 2.0,
+        "decision": "CERTIFIED_IRREDUCIBLE_PACKAGE_ONLY_REPRESENTATION_RESIDUAL_WITH_CLOSED_FORM_WITNESS"
+      },
+      {
+        "tool": "RegisterUser",
+        "covered_rows": 1,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": 1.0,
+        "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+      },
+      {
+        "tool": "SearchEngine",
+        "covered_rows": 0,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": null,
+        "decision": "UNRESOLVED_SUPPORT_OPTIMIZATION_OR_EMPTY_CONTEXT"
+      },
+      {
+        "tool": "SendEmail",
+        "covered_rows": 0,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": null,
+        "decision": "UNRESOLVED_SUPPORT_OPTIMIZATION_OR_EMPTY_CONTEXT"
+      },
+      {
+        "tool": "SpeechRecognition",
+        "covered_rows": 0,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": null,
+        "decision": "UNRESOLVED_SUPPORT_OPTIMIZATION_OR_EMPTY_CONTEXT"
+      },
+      {
+        "tool": "SymptomSearch",
+        "covered_rows": 6,
+        "multi_membership_rows": 4,
+        "witness_count": 1,
+        "R_star": 2.0,
+        "decision": "CERTIFIED_IRREDUCIBLE_PACKAGE_ONLY_REPRESENTATION_RESIDUAL_WITH_CLOSED_FORM_WITNESS"
+      },
+      {
+        "tool": "TimedSwitch",
+        "covered_rows": 0,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": null,
+        "decision": "UNRESOLVED_SUPPORT_OPTIMIZATION_OR_EMPTY_CONTEXT"
+      },
+      {
+        "tool": "Translate",
+        "covered_rows": 0,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": null,
+        "decision": "UNRESOLVED_SUPPORT_OPTIMIZATION_OR_EMPTY_CONTEXT"
+      },
+      {
+        "tool": "Wiki",
+        "covered_rows": 0,
+        "multi_membership_rows": 0,
+        "witness_count": 0,
+        "R_star": null,
+        "decision": "UNRESOLVED_SUPPORT_OPTIMIZATION_OR_EMPTY_CONTEXT"
+      }
+    ]
+  },
+  "headline_checks": {
+    "all_primal_dual_gaps_le_1e_8": true,
+    "level1_residual_survives_all_single_support_additions": true,
+    "level1_residual_survives_all_nonuncovering_single_support_deletions": true,
+    "logical_unrestricted_equalizable": true,
+    "logical_rho_075_not_equalizable": true,
+    "logical_single_deletions_can_break_equalizability": true,
+    "all_overlap_without_simple_witness_tools_resolve_equalizable": true
+  },
+  "claim_boundary": {
+    "supported": [
+      "the LP dual gives a complete lower-bound certificate and has zero numerical duality gap on all five audited regimes",
+      "the Level-1 positive residual is stable to every exhaustive one-cell support addition and every one-cell deletion that keeps the affected row covered",
+      "the logical-compiler R*=1 solution is operationally concentrated: imposing a 75% package-mass cap makes the constrained optimum exceed one",
+      "the logical-compiler negative boundary is asymmetric under support error: some single support deletions break equalizability"
+    ],
+    "not_supported": [
+      "learned support estimators are calibrated",
+      "arbitrary multi-cell support noise preserves the certificate",
+      "static exposure distortion causes downstream utility harm",
+      "constrained equalization is a new optimization algorithm"
+    ]
+  },
+  "scientific_authority": false,
+  "authority": {
+    "paper_claim_expansion": false,
+    "dynamic_claim": false,
+    "gpu": false
+  },
+  "inputs": {
+    "membership_sha256": "b73d86370e06e83179a1ce4c7f26431c58b27f7958722974e96a4c316f2e17d4",
+    "logical_support_sha256": "87cb13220c88aabe43b895a6217583523d1e60299da32d1ffd71b2b3a22a419f"
+  }
+}
