@@ -31,6 +31,7 @@ from .paper_first_problem_generator import (
     _normalize_last_completed_lane_search_receipt,
     _pool_sha,
     _saturation_ledger_path,
+    write_archived_portfolio_ingestion_replay_state,
     write_problem_generator_state,
     write_replayed_problem_generator_state,
 )
@@ -793,6 +794,49 @@ def recompile_existing_problem_discovery_transaction(
             raise
         finally:
             shutil.rmtree(temp_root,ignore_errors=True)
+
+
+def replay_archived_portfolio_ingestion_transaction(
+    *,
+    storage:StorageSettings|None=None,
+    primary_json:Path=PRIMARY_JSON,primary_js:Path=PRIMARY_JS,
+    generator_json:Path=GENERATOR_JSON,generator_js:Path=GENERATOR_JS,
+    queue_json:Path=QUEUE_JSON,queue_js:Path=QUEUE_JS,
+    private_pool_source:Path|None=None,
+    queue_kwargs:dict[str,Any]|None=None,
+)->dict[str,Any]:
+    """Atomically repair archived double-funnel formulation ingestion with zero provider calls."""
+    storage=storage or StorageSettings.from_env();storage.ensure();primary=_load(primary_json);previous_generator=_load(generator_json);previous_queue=_load(queue_json);errors=_validate(primary,previous_generator,previous_queue)
+    if errors:raise RuntimeError("existing paper-first discovery state invalid: "+",".join(errors))
+    primary_tx=str(primary.get("discovery_transaction_id") or "");generator_tx=str(previous_generator.get("discovery_transaction_id") or "");queue_tx=str(previous_queue.get("discovery_transaction_id") or "")
+    if not re.fullmatch(r"[0-9a-f]{64}",primary_tx) or primary_tx!=generator_tx or primary_tx!=queue_tx:raise RuntimeError("portfolio-ingestion replay requires one closed canonical transaction")
+    if previous_generator.get("status")!="GENERATED_ZERO_CANDIDATES" or (previous_generator.get("policy") or {}).get("search_portfolio_enabled") is not True or _generator_operator_version(previous_generator)!=DISCOVERY_OPERATOR_VERSION:raise RuntimeError("portfolio-ingestion replay requires current-operator zero-candidate double-funnel state")
+    pqs=previous_queue.get("summary") or {}
+    if int(pqs.get("passed_problem_gate") or 0)!=0 or int(pqs.get("paper_design_eligible") or 0)!=0:raise RuntimeError("portfolio-ingestion replay cannot supersede a Problem-Gate survivor")
+    public_records=[row for row in primary.get("records") or [] if isinstance(row,dict)];public_manifest=[(str(row.get("ref") or ""),str(row.get("source_sha256") or ""),str(row.get("fulltext_sha256") or "")) for row in public_records];source_path=Path(private_pool_source) if private_pool_source is not None else private_primary_pool_path(storage);source_pool=load_private_primary_pool(source_path) or {};source_records=[row for row in source_pool.get("records") or [] if isinstance(row,dict)];source_manifest=[(str(row.get("ref") or ""),str(row.get("source_sha256") or ""),str(row.get("fulltext_sha256") or "")) for row in source_records]
+    if source_pool.get("status")!="READY" or not public_manifest or source_manifest!=public_manifest:raise RuntimeError("portfolio-ingestion replay private Primary does not match public manifest")
+    source_pool_sha=_pool_sha(source_pool);prior_receipt=_generator_receipt(previous_generator);prior_material=_receipt_material(prior_receipt)
+    if not prior_material or prior_material.get("pool_sha256")!=source_pool_sha or prior_material.get("discovery_operator_version")!=DISCOVERY_OPERATOR_VERSION or prior_material.get("scientific_authority") is not False:raise RuntimeError("portfolio-ingestion replay prior receipt does not bind exact pool/operator")
+    run_root=storage.run_dir/"paper-first-discovery-transactions";run_root.mkdir(parents=True,exist_ok=True);started=_now()
+    with _transaction_lock(storage):
+        temp_root=Path(tempfile.mkdtemp(prefix=".paper-first-ingestion-replay-",dir=str(primary_json.parent)));p_json=temp_root/"primary.json";p_js=temp_root/"primary.js";g_json=temp_root/"generator.json";g_js=temp_root/"generator.js";q_json=temp_root/"queue.json";q_js=temp_root/"queue.js";staged_private=temp_root/"primary-private.json";staged_auto=temp_root/"auto-candidate-inbox.json";target_private=private_primary_pool_path(storage);target_auto=default_auto_inbox_path(storage);record={"schema_version":"1.0","started_at":started,"status":"running","prior_transaction_id":primary_tx,"source_pool_sha256":source_pool_sha,"provider_calls_authorized":0,"scientific_authority":False};generator_internal=None;queue_internal=None
+        try:
+            staged_pool=json.loads(json.dumps(source_pool,ensure_ascii=False));staged_pool["generated_at"]=str(primary.get("generated_at") or staged_pool.get("generated_at") or "");staged_pool["portfolio_ingestion_replay"]={"prior_transaction_id":primary_tx,"source_generator_run_id":str(previous_generator.get("run_id") or ""),"provider_calls_executed":0,"scientific_authority":False}
+            if _pool_sha(staged_pool)!=source_pool_sha:raise RuntimeError("portfolio-ingestion replay changed content-addressed Primary pool")
+            staged_private.write_text(json.dumps(staged_pool,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");clean_primary=dict(primary);clean_primary.pop("discovery_transaction_id",None);clean_primary.pop("discovery_transaction_role",None);p_json.write_text(json.dumps(clean_primary,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");p_js.write_text("window.PAPER_FIRST_PRIMARY_EVIDENCE = "+json.dumps(clean_primary,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
+            generator_internal=write_archived_portfolio_ingestion_replay_state(json_path=g_json,js_path=g_js,previous_public_state_path=generator_json,storage=storage,primary_pool_path=staged_private,auto_inbox_path=staged_auto);gcalls,scalls=_provider_call_accounting(generator_internal)
+            if gcalls or scalls or int(((generator_internal.get("portfolio_ingestion_recovery") or {}).get("provider_calls_executed")) or 0)!=0:raise RuntimeError("portfolio-ingestion replay attempted provider execution")
+            qkw=dict(queue_kwargs or {});qkw.update({"storage":storage,"json_path":q_json,"js_path":q_js,"primary_pool_path":staged_private,"auto_inbox_path":staged_auto});queue_internal=write_problem_gate_queue(**qkw);_rewrite_staged_queue_public_projection(queue_internal=queue_internal,q_json=q_json,q_js=q_js,storage=storage,staged_private=staged_private,target_private=target_private,staged_auto=staged_auto,target_auto=target_auto)
+            primary_public=_load(p_json);generator_public=_load(g_json);queue_public=_load(q_json);validation=_validate(primary_public,generator_public,queue_public)
+            if validation:raise RuntimeError("portfolio-ingestion replay transaction invalid: "+",".join(validation))
+            if generator_public.get("status")!="GENERATED_PRE_F0_EVIDENCE_ACQUISITION" or int((generator_public.get("summary") or {}).get("pre_f0_eligible") or 0)<=0:raise RuntimeError("portfolio-ingestion replay did not recover Pre-F0 rows")
+            new_receipt=_generator_receipt(generator_public);material=_receipt_material(new_receipt)
+            if not material or material.get("pool_sha256")!=source_pool_sha or material.get("status")!="GENERATED_PRE_F0_EVIDENCE_ACQUISITION" or material.get("scientific_authority") is not False:raise RuntimeError("portfolio-ingestion replay receipt is not provenance-bound")
+            txn_id=_transaction_id(primary_public,generator_public,queue_public);primary_public=_stamp(p_json,p_js,"PAPER_FIRST_PRIMARY_EVIDENCE",txn_id,"primary");generator_public=_stamp(g_json,g_js,"PAPER_FIRST_PROBLEM_GENERATOR",txn_id,"generator");queue_public=_stamp(q_json,q_js,"PAPER_FIRST_PROBLEM_GATE_QUEUE",txn_id,"queue");_commit_files([(p_json,primary_json),(p_js,primary_js),(g_json,generator_json),(g_js,generator_js),(q_json,queue_json),(q_js,queue_js),(staged_private,target_private),(staged_auto,target_auto)])
+            recovery=generator_internal.get("portfolio_ingestion_recovery") or {};record.update({"status":"COMMITTED_PORTFOLIO_INGESTION_ZERO_PROVIDER_REPLAY","completed_at":_now(),"transaction_id":txn_id,"generator_receipt_sha256":_receipt_sha256(new_receipt),"generator_receipt_raw_sha256":str(material.get("raw_sha256") or ""),"provider_calls_executed":0,"generator_provider_calls_executed":0,"semantic_reviewer_calls_executed":0,"recovered_from_generator_run_id":str(recovery.get("source_generator_run_id") or ""),"source_portfolio_sha256":str(recovery.get("source_portfolio_sha256") or ""),"summary":{"pre_f0_eligible":int((generator_public.get("summary") or {}).get("pre_f0_eligible") or 0),"recovered_candidates":int(recovery.get("recovered_candidates") or 0),"queue_submitted":int((queue_public.get("summary") or {}).get("submitted") or 0),"queue_passed":int((queue_public.get("summary") or {}).get("passed_problem_gate") or 0)},"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}});(run_root/f"{txn_id}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return record
+        except Exception as error:
+            record.update({"status":"ABORTED_PORTFOLIO_INGESTION_REPLAY_PUBLIC_STATE_PRESERVED","completed_at":_now(),"error":f"{type(error).__name__}: {error}","authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}});stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ");(run_root/f"aborted-ingestion-replay-{stamp}-{os.getpid()}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raise
+        finally:shutil.rmtree(temp_root,ignore_errors=True)
 
 
 def recompile_primary_typed_evidence_with_generator_replay_transaction(

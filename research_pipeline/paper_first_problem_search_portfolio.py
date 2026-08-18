@@ -24,6 +24,7 @@ DEFAULT_REPAIR_PARENTS=12
 DEFAULT_REPAIR_CHILDREN_PER_PARENT=2
 DEFAULT_EXPANSION_SHARD_SIZE=6
 DEFAULT_MAX_PARALLEL_CALLS=2
+FORMULATION_SERIALIZATION_RECOVERY_VERSION="bounded-complete-object-v1"
 CROSS_DOMAIN_STRUCTURES=(
     "continual learning / stability-plasticity", "online algorithms / regret and switching cost",
     "distributed systems / consistency and partial failure", "fault-tolerant systems / rollback and irreversible effects",
@@ -36,6 +37,74 @@ CROSS_DOMAIN_STRUCTURES=(
 )
 
 def _norm(x:Any)->str:return " ".join(re.sub(r"[^a-z0-9]+"," ",str(x or "").lower()).split())
+
+def _strip_json_fence(text:str)->str:
+    candidate=str(text or "").strip()
+    if candidate.startswith("```"):
+        lines=candidate.splitlines()
+        if lines and lines[0].startswith("```"):lines=lines[1:]
+        if lines and lines[-1].strip()=="```":lines=lines[:-1]
+        candidate="\n".join(lines).strip()
+    return candidate
+
+def _complete_json_array_objects(text:str,key:str)->list[dict[str,Any]]:
+    """Recover only individually complete strict-JSON objects from one top-level array.
+
+    The scanner never repairs object contents and drops the first incomplete/truncated
+    object plus everything after it. This is deliberately narrower than a tolerant JSON
+    parser so archived provider bytes cannot silently acquire invented fields.
+    """
+    candidate=_strip_json_fence(text);match=re.search(r'"'+re.escape(key)+r'"\s*:\s*\[',candidate)
+    if not match:return []
+    i=match.end();out=[];n=len(candidate)
+    while i<n:
+        while i<n and candidate[i] in " \t\r\n,":i+=1
+        if i>=n or candidate[i]=="]":break
+        if candidate[i]!="{":break
+        start=i;depth=0;in_string=False;escaped=False
+        while i<n:
+            ch=candidate[i]
+            if in_string:
+                if escaped:escaped=False
+                elif ch=="\\":escaped=True
+                elif ch=='"':in_string=False
+            else:
+                if ch=='"':in_string=True
+                elif ch=="{":depth+=1
+                elif ch=="}":
+                    depth-=1
+                    if depth==0:
+                        fragment=candidate[start:i+1]
+                        try:row=json.loads(fragment)
+                        except json.JSONDecodeError:return out
+                        if not isinstance(row,dict):return out
+                        out.append(row);i+=1;break
+            i+=1
+        if depth!=0:break
+    return out
+
+def recover_archived_formulation_payload(text:str)->tuple[dict[str,Any],dict[str,Any]]:
+    """Bounded zero-provider recovery for archived formulation serialization failures."""
+    raw=str(text or "");raw_sha=hashlib.sha256(raw.encode()).hexdigest()
+    try:
+        payload=extract_json_object(raw)
+        if not isinstance(payload.get("candidates") or [],list) or not isinstance(payload.get("rejected") or [],list):raise ValueError("formulation-arrays-invalid")
+        return payload,{"recovery_version":FORMULATION_SERIALIZATION_RECOVERY_VERSION,"mode":"STRICT","raw_sha256":raw_sha,"replacements":0,"complete_candidates":len(payload.get("candidates") or []),"complete_rejected":len(payload.get("rejected") or []),"scientific_authority":False}
+    except (json.JSONDecodeError,ValueError):
+        pass
+    # Observed provider serialization defect: one extra quote-colon prefix on this
+    # already-declared string field. Only this exact token is repairable.
+    fixed,replacements=re.subn(r'"why_not_domain_transfer"\s*:\s*":', '"why_not_domain_transfer":',raw)
+    try:
+        payload=extract_json_object(fixed)
+        if not isinstance(payload.get("candidates") or [],list) or not isinstance(payload.get("rejected") or [],list):raise ValueError("formulation-arrays-invalid")
+        repaired_sha=hashlib.sha256(fixed.encode()).hexdigest()
+        return payload,{"recovery_version":FORMULATION_SERIALIZATION_RECOVERY_VERSION,"mode":"EXACT_TOKEN_REPAIR","raw_sha256":raw_sha,"repaired_sha256":repaired_sha,"replacements":replacements,"complete_candidates":len(payload.get("candidates") or []),"complete_rejected":len(payload.get("rejected") or []),"scientific_authority":False}
+    except (json.JSONDecodeError,ValueError):
+        candidates=_complete_json_array_objects(fixed,"candidates");rejected=_complete_json_array_objects(fixed,"rejected")
+        if not candidates and not rejected:raise ValueError("archived-formulation-has-no-complete-recoverable-objects")
+        repaired_sha=hashlib.sha256(fixed.encode()).hexdigest()
+        return {"candidates":candidates,"rejected":rejected,"notes":""},{"recovery_version":FORMULATION_SERIALIZATION_RECOVERY_VERSION,"mode":"COMPLETE_OBJECT_PREFIX_ONLY","raw_sha256":raw_sha,"repaired_sha256":repaired_sha,"replacements":replacements,"complete_candidates":len(candidates),"complete_rejected":len(rejected),"truncated_tail_discarded":True,"scientific_authority":False}
 def _tokens(r):
     text=" ".join(str(r.get(k) or "") for k in ("title","problem_seed","scientific_tension","problem_family","agent_specific_constraint","structural_signature"))
     return {t for t in _norm(text).split() if len(t)>=3}

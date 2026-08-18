@@ -15,7 +15,7 @@ from .paper_first_primary_evidence import load_private_primary_pool,private_prim
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, LANE_DISTINCT_SOURCE_MINIMUM, PAPERABILITY_AXES, audit_problem_candidate
 from .paper_first_problem_gate_queue import default_auto_inbox_path
 from .paper_first_problem_generator_prompts import generator_prompt,reviewer_prompt
-from .paper_first_problem_search_portfolio import DEFAULT_RAW_SEEDS, run_search_portfolio
+from .paper_first_problem_search_portfolio import DEFAULT_FORMULATION_BUDGET, DEFAULT_RAW_SEEDS, _maxmin_select, _normalize_paperability_axes, _paperability_survives, recover_archived_formulation_payload, run_search_portfolio
 from .premium_model_policy import preferred_model, stage_model_priority
 from .public_state_redaction import redact_private_paths
 
@@ -569,6 +569,14 @@ def _pre_f0_route(candidate:dict[str,Any],registry:dict[str,dict[str,Any]])->dic
         "scientific_authority":False,
     }
 
+def _pre_f0_candidate_row(normalized:dict[str,Any],route:dict[str,Any])->dict[str,Any]:
+    return {
+        "candidate_id":normalized.get("candidate_id"),"title":normalized.get("title"),"discovery_lane":normalized.get("discovery_lane"),"source_branch_id":normalized.get("source_branch_id"),
+        "paperability_axes":normalized.get("paperability_axes") or {},"surviving_paperability_axes":route.get("surviving_axes") or [],"non_principle_surviving_axes":route.get("non_principle_surviving_axes") or [],"route_reason":route.get("route_reason"),"reduction_blockers":route.get("reduction_blockers") or [],
+        "exact_prediction":normalized.get("exact_prediction"),"strongest_same_information_baseline":normalized.get("strongest_same_information_baseline"),"cheapest_problem_falsifier":normalized.get("cheapest_problem_falsifier"),"endpoint_headroom_requirement":normalized.get("endpoint_headroom_requirement"),
+        "post_f0_requirement":"RERUN_EXACT_SAME_INFORMATION_REDUCTION_BEFORE_PROBLEM_GATE","scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+    }
+
 def _norm_text(value:str)->str:
     return " ".join(str(value or "").lower().split())
 
@@ -869,12 +877,7 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
                     machine_reviewable.append(raw_candidate);continue
                 pre_f0=_pre_f0_route(normalized,reg)
                 if pre_f0.get("eligible"):
-                    pre_f0_eligible.append({
-                        "candidate_id":normalized.get("candidate_id"),"title":normalized.get("title"),"discovery_lane":normalized.get("discovery_lane"),"source_branch_id":normalized.get("source_branch_id"),
-                        "paperability_axes":normalized.get("paperability_axes") or {},"surviving_paperability_axes":pre_f0.get("surviving_axes") or [],"non_principle_surviving_axes":pre_f0.get("non_principle_surviving_axes") or [],"route_reason":pre_f0.get("route_reason"),"reduction_blockers":pre_f0.get("reduction_blockers") or [],
-                        "exact_prediction":normalized.get("exact_prediction"),"strongest_same_information_baseline":normalized.get("strongest_same_information_baseline"),"cheapest_problem_falsifier":normalized.get("cheapest_problem_falsifier"),"endpoint_headroom_requirement":normalized.get("endpoint_headroom_requirement"),
-                        "post_f0_requirement":"RERUN_EXACT_SAME_INFORMATION_REDUCTION_BEFORE_PROBLEM_GATE","scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False},
-                    });continue
+                    pre_f0_eligible.append(_pre_f0_candidate_row(normalized,pre_f0));continue
                 machine_blocked.append({"candidate_id":normalized.get("candidate_id"),"title":normalized.get("title"),"discovery_lane":normalized.get("discovery_lane"),"blockers":audit.get("blockers") or [],"surviving_paperability_axes":pre_f0.get("surviving_axes") or []})
             rows=machine_reviewable;state["pre_f0_candidates"]=pre_f0_eligible;portfolio["machine_reduction_audit"]={"reviewable":len(machine_reviewable),"pre_f0_eligible":len(pre_f0_eligible),"blocked":len(machine_blocked),"pre_f0_rows":pre_f0_eligible,"blocked_rows":machine_blocked,"scientific_authority":False}
             private_dir=_root(storage)/"search-portfolios";private_dir.mkdir(parents=True,exist_ok=True);private_path=private_dir/f"{run_id}-portfolio.json";private_text=json.dumps(portfolio,ensure_ascii=False,indent=2)+"\n";private_path.write_text(private_text,encoding="utf-8");private_sha=_sha(private_text)
@@ -994,6 +997,59 @@ def resume_semantic_reviewer(*,storage=None,primary_pool_path:Path,generator_raw
     return finish("GENERATED_AWAIT_PROBLEM_GATE",reviewable)
 
 
+def recover_archived_portfolio_ingestion(*,storage:StorageSettings|None=None,primary_pool_path:Path,source_generator_state:dict[str,Any])->dict[str,Any]:
+    """Re-run only formulation ingestion from one content-addressed canonical portfolio.
+
+    Upstream expansion/evolution/repair membership is frozen to the archived private
+    portfolio. Provider bytes are never regenerated. Bounded serialization recovery may
+    expose reduction-limited pre-F0 rows, but any machine-reviewable recovered candidate
+    fail-closes because an independent semantic reviewer would still be required.
+    """
+    storage=storage or StorageSettings.from_env();pool=load_private_primary_pool(Path(primary_pool_path)) or {};reg={str(row.get("ref") or ""):row for row in pool.get("records") or [] if isinstance(row,dict) and row.get("ref")}
+    source=source_generator_state if isinstance(source_generator_state,dict) else {};policy=source.get("policy") or {};summary=source.get("summary") or {};run_id=str(source.get("run_id") or "").strip();receipt=(source.get("saturation_memory") or {}).get("current_review_receipt") or {}
+    if source.get("status")!="GENERATED_ZERO_CANDIDATES" or policy.get("search_portfolio_enabled") is not True or not run_id:raise ValueError("portfolio-ingestion-replay-requires-canonical-zero-candidate-double-funnel")
+    pool_sha=_pool_sha(pool)
+    if pool.get("status")!="READY" or len(reg)<4 or str(receipt.get("pool_sha256") or "")!=pool_sha or str(receipt.get("discovery_operator_version") or "")!=DISCOVERY_OPERATOR_VERSION:raise ValueError("portfolio-ingestion-replay-primary-or-receipt-mismatch")
+    generator_artifact=(source.get("raw_artifacts") or {}).get("generator") or {};portfolio_sha=str(generator_artifact.get("portfolio_sha256") or "").strip().lower();portfolio_path=_root(storage)/"search-portfolios"/f"{run_id}-portfolio.json"
+    if not re.fullmatch(r"[0-9a-f]{64}",portfolio_sha) or not portfolio_path.is_file() or hashlib.sha256(portfolio_path.read_bytes()).hexdigest()!=portfolio_sha:raise ValueError("portfolio-ingestion-replay-private-portfolio-mismatch")
+    portfolio=json.loads(portfolio_path.read_text(encoding="utf-8"));parents={str(row.get("seed_id") or ""):row for row in [*(portfolio.get("repaired") or []),*(portfolio.get("evolved") or []),*(portfolio.get("unique_seeds") or [])] if isinstance(row,dict) and row.get("seed_id")}
+    provenance=[row for row in source.get("portfolio_provenance") or [] if isinstance(row,dict) and str(row.get("role") or "").startswith("formulate-")]
+    provenance.sort(key=lambda row:int(str(row.get("role") or "formulate-999").rsplit("-",1)[-1]))
+    raw_dir=_root(storage)/"raw-generations";recovered=[];recovery_audits=[]
+    for prov in provenance:
+        role=str(prov.get("role") or "");sha=str(prov.get("sha256") or "").strip().lower();model=str(prov.get("requested_model") or "")
+        if not re.fullmatch(r"[0-9a-f]{64}",sha):raise ValueError("portfolio-ingestion-replay-formulation-sha-missing")
+        matches=list(raw_dir.glob(f"{run_id}-{role}-{model}-{sha[:12]}.txt"))
+        if len(matches)!=1 or hashlib.sha256(matches[0].read_bytes()).hexdigest()!=sha:raise ValueError(f"portfolio-ingestion-replay-raw-mismatch:{role}")
+        payload,audit=recover_archived_formulation_payload(matches[0].read_text(encoding="utf-8",errors="replace"));audit={**audit,"role":role,"source_raw_sha256":sha,"requested_model":model,"resolved_model":str(prov.get("resolved_model") or ""),"request_fingerprint":str(prov.get("request_fingerprint") or ""),"scientific_authority":False};recovery_audits.append(audit)
+        for item in payload.get("candidates") or []:
+            if not isinstance(item,dict):continue
+            parent=parents.get(str(item.get("source_branch_id") or ""))
+            if not parent:raise ValueError(f"portfolio-ingestion-replay-parent-missing:{role}")
+            row=dict(item);row["source_branch_id"]=parent["seed_id"];row["branch_depth"]=parent.get("branch_depth",0);row["discovery_lane"]=parent["discovery_lane"];row["empirical_evidence"]=parent["empirical_evidence"];row["lane_evidence"]=parent["lane_evidence"];row["paperability_axes"]=_normalize_paperability_axes(item.get("paperability_axes") or parent.get("paperability_axes"));row["paperability_survives"]=_paperability_survives(row["paperability_axes"]);row["reviewer_attack"]=parent.get("reviewer_attack") or "";row["reviewer_attack_class"]=parent.get("reviewer_attack_class") or "";row["repair_axis"]=parent.get("repair_axis") or "";row["why_attack_no_longer_applies"]=parent.get("why_attack_no_longer_applies") or "";recovered.append(row)
+    for index,row in enumerate(recovered,1):row["candidate_id"]=f"PORT-{index:03d}"
+    machine_reviewable=[];pre_f0=[];blocked=[]
+    for raw_candidate in recovered:
+        normalized=_normalize(raw_candidate,reg);audit=audit_problem_candidate(normalized,primary_evidence_by_ref=reg,require_primary_registry=True,require_semantic_review=False)
+        if audit.get("passed"):machine_reviewable.append({"candidate_id":normalized.get("candidate_id"),"title":normalized.get("title"),"source_branch_id":normalized.get("source_branch_id")});continue
+        route=_pre_f0_route(normalized,reg)
+        if route.get("eligible"):pre_f0.append(_pre_f0_candidate_row(normalized,route));continue
+        blocked.append({"candidate_id":normalized.get("candidate_id"),"title":normalized.get("title"),"source_branch_id":normalized.get("source_branch_id"),"blockers":audit.get("blockers") or [],"surviving_paperability_axes":route.get("surviving_axes") or []})
+    if machine_reviewable:raise ValueError("portfolio-ingestion-replay-requires-semantic-review:"+",".join(str(row.get("candidate_id") or "") for row in machine_reviewable))
+    if not pre_f0:raise ValueError("portfolio-ingestion-replay-recovers-no-pre-f0-candidates")
+    new_run_id=_now_dt().strftime("%Y%m%dT%H%M%SZ")+"-ingestion-replay";recovery_material={"source_run_id":run_id,"source_portfolio_sha256":portfolio_sha,"pool_sha256":pool_sha,"recovery_audits":recovery_audits,"pre_f0_candidate_ids":[row["candidate_id"] for row in pre_f0]};recovery_sha=_sha(json.dumps(recovery_material,ensure_ascii=False,sort_keys=True,separators=(",",":")))
+    state=json.loads(json.dumps(source,ensure_ascii=False));state.pop("discovery_transaction_id",None);state.pop("discovery_transaction_role",None);state["run_id"]=new_run_id;state["generated_at"]=_now();state["status"]="GENERATED_PRE_F0_EVIDENCE_ACQUISITION";state["candidates"]=[];state["pre_f0_candidates"]=pre_f0;state["policy"]["archived_portfolio_ingestion_replay_zero_provider"]=True;state["policy"]["formulation_serialization_recovery_is_bounded_complete_object_only"]=True
+    state["summary"].update({"pre_f0_eligible":len(pre_f0),"generated":0,"structurally_reviewable":0,"semantic_clear":0,"semantic_blocked":0,"written_to_auto_inbox":0})
+    sp=state.setdefault("search_portfolio",{}).setdefault("summary",{});sp.update({"recovered_formulated_candidates":len(recovered),"recovered_pre_f0_eligible":len(pre_f0),"recovered_machine_blocked":len(blocked),"recovery_provider_calls_executed":0})
+    state["portfolio_ingestion_recovery"]={"source_generator_run_id":run_id,"source_transaction_id":str(source.get("discovery_transaction_id") or ""),"source_portfolio_sha256":portfolio_sha,"recovery_sha256":recovery_sha,"formulation_receipts":recovery_audits,"recovered_candidates":len(recovered),"pre_f0_eligible":len(pre_f0),"blocked_rows":blocked,"provider_calls_executed":0,"semantic_reviewer_calls_executed":0,"scientific_authority":False}
+    source_raw_sha=str(generator_artifact.get("sha256") or "");state["raw_artifacts"]["generator"]={"sha256":recovery_sha,"requested_model":str(generator_artifact.get("requested_model") or ""),"resolved_model":str(generator_artifact.get("resolved_model") or ""),"portfolio":True,"portfolio_sha256":portfolio_sha,"calls":0,"provider_calls_executed":0,"archived_replay_subcalls":len(recovery_audits),"raw_replayed_without_provider":True,"raw_origin_run_id":run_id,"raw_origin_sha256":source_raw_sha}
+    state.pop("semantic_reviewer_batches",None);state["raw_artifacts"].pop("semantic_reviewer",None)
+    diagnostics=state.setdefault("search_diagnostics",{});last=dict(diagnostics.get("last_completed_lane_search") or {});last.update({"run_id":new_run_id,"generator_status":state["status"],"generated_at":state["generated_at"],"scientific_authority":False});diagnostics["last_completed_lane_search"]=_normalize_last_completed_lane_search_receipt(last)
+    source_refs=sorted(reg);new_receipt={"run_id":new_run_id,"pool_sha256":pool_sha,"negative_space_sha256":str(receipt.get("negative_space_sha256") or ""),"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"source_refs":source_refs,"status":state["status"],"requested_model":str(generator_artifact.get("requested_model") or ""),"resolved_model":str(generator_artifact.get("resolved_model") or ""),"raw_sha256":recovery_sha,"scientific_authority":False};sat=state.setdefault("saturation_memory",{});sat["current_review_receipt"]=new_receipt;portable=[dict(row) for row in sat.get("portable_review_receipts") or [] if isinstance(row,dict)];portable=[row for row in portable if str(row.get("run_id") or "")!=new_run_id];portable.append(dict(new_receipt));sat["portable_review_receipts"]=portable[-PORTABLE_REVIEW_RECEIPT_LIMIT:];sat["portable_review_receipt_count"]=len(sat["portable_review_receipts"]);sat["current_run_recorded"]=True;sat["scientific_authority"]=False
+    state["generation_notes"]=(f"Zero-provider archived formulation-ingestion replay recovered {len(recovered)} complete formulation candidates from the source double-funnel transaction; {len(pre_f0)} are reduction-limited Pre-F0 evidence-acquisition rows, {len(blocked)} remain machine-blocked, and no semantic-review-required candidate was silently downgraded. Exact same-information reduction remains mandatory before Problem Gate.")
+    return state
+
+
 def public_problem_generator_state(state:dict[str,Any],storage:StorageSettings|None=None)->dict[str,Any]:
     public=json.loads(json.dumps(state,ensure_ascii=False))
     for key in ("primary_pool_path","auto_inbox_path","archived_previous_auto_inbox","search_portfolio_private_path"):
@@ -1001,6 +1057,10 @@ def public_problem_generator_state(state:dict[str,Any],storage:StorageSettings|N
     for artifact in (public.get("raw_artifacts") or {}).values():
         if isinstance(artifact,dict):artifact.pop("path",None)
     return redact_private_paths(public,storage=storage or StorageSettings.from_env())
+
+
+def write_archived_portfolio_ingestion_replay_state(json_path=DEFAULT_JSON,js_path=DEFAULT_JS,previous_public_state_path=None,*,storage:StorageSettings|None=None,primary_pool_path:Path,auto_inbox_path:Path|None=None):
+    storage=storage or StorageSettings.from_env();previous_path=Path(previous_public_state_path) if previous_public_state_path is not None else Path(json_path);source=load_problem_generator_state(previous_path);state=recover_archived_portfolio_ingestion(storage=storage,primary_pool_path=Path(primary_pool_path),source_generator_state=source);pool=load_private_primary_pool(Path(primary_pool_path)) or {};psha=_pool_sha(pool);auto=Path(auto_inbox_path) if auto_inbox_path is not None else default_auto_inbox_path(storage);_write_inbox(auto,state["run_id"],state["status"],[],psha);public=public_problem_generator_state(state,storage=storage);Path(json_path).parent.mkdir(parents=True,exist_ok=True);Path(json_path).write_text(json.dumps(public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");Path(js_path).write_text("window.PAPER_FIRST_PROBLEM_GENERATOR = "+json.dumps(public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8");return state
 
 
 def _empty_state(status):

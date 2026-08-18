@@ -3,7 +3,7 @@ from __future__ import annotations
 import json,re,unittest
 
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES,SEARCH_PORTFOLIO_PRIMITIVES,LANE_EVIDENCE_REQUIRED,LANE_SOURCE_ROLES
-from .paper_first_problem_search_portfolio import DEFAULT_MAX_PARALLEL_CALLS,_expansion_prompt,_formulation_prompt,_fresh_phenomenon_priors,_fresh_phenomenon_target,_inversion_asset_records,_opposite_search_priors,_valid_seed,run_search_portfolio
+from .paper_first_problem_search_portfolio import DEFAULT_MAX_PARALLEL_CALLS,_expansion_prompt,_formulation_prompt,_fresh_phenomenon_priors,_fresh_phenomenon_target,_inversion_asset_records,_opposite_search_priors,_valid_seed,recover_archived_formulation_payload,run_search_portfolio
 from .paper_first_fresh_saturation import reduction_pattern_audit
 
 
@@ -39,6 +39,16 @@ class SearchPortfolioTest(unittest.TestCase):
 
     def test_default_parallelism_is_provider_burst_safe(self):
         self.assertEqual(DEFAULT_MAX_PARALLEL_CALLS,2)
+
+    def test_archived_formulation_recovery_repairs_only_known_token_and_complete_prefix(self):
+        exact='''```json\n{"candidates":[{"source_branch_id":"A","domain_transfer_audit":{"why_not_domain_transfer":": "kept"}}],"rejected":[]}\n```'''
+        payload,audit=recover_archived_formulation_payload(exact)
+        self.assertEqual(audit["mode"],"EXACT_TOKEN_REPAIR");self.assertEqual(audit["replacements"],1);self.assertEqual(payload["candidates"][0]["domain_transfer_audit"]["why_not_domain_transfer"],"kept")
+        truncated='''{"candidates":[{"source_branch_id":"A","domain_transfer_audit":{"why_not_domain_transfer":": "kept"}},{"source_branch_id":"B","title":"cut'''
+        payload,audit=recover_archived_formulation_payload(truncated)
+        self.assertEqual(audit["mode"],"COMPLETE_OBJECT_PREFIX_ONLY");self.assertTrue(audit["truncated_tail_discarded"]);self.assertEqual([row["source_branch_id"] for row in payload["candidates"]],["A"])
+        with self.assertRaisesRegex(ValueError,"no-complete-recoverable"):
+            recover_archived_formulation_payload('{"candidates":[{"source_branch_id":"cut')
 
     def test_search_portfolio_expands_diversifies_and_evolves_before_reduction(self):
         state=run_search_portfolio(records=self.records(),call=self.caller,model="ark-code-latest",target_raw_seeds=20,archive_capacity=16,evolution_parents=8,second_generation=4,formulation_budget=8,max_parallel_calls=3)
