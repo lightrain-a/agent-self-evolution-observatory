@@ -11,7 +11,7 @@ from pathlib import Path
 from .config import StorageSettings
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES
 from .paper_first_problem_gate_queue import build_problem_gate_queue
-from .paper_first_problem_generator import _ark, _durable_principle_dead_end_examples, _normalize_lane_search, _principle_dead_end_reentry_audit, _provider_request_audit, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
+from .paper_first_problem_generator import _ark, _durable_principle_dead_end_examples, _evidence_excerpt_matches, _normalize_lane_search, _principle_dead_end_reentry_audit, _provider_request_audit, _repair_block_only_reviewer_outer_braces, recover_archived_block_only_reviewer_raw, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
 from .paper_first_problem_generator_prompts import generator_prompt, reviewer_prompt
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
@@ -146,6 +146,39 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             }
         return responder
 
+    def test_render_normalized_excerpt_match_ignores_only_numeric_duplication(self) -> None:
+        excerpt="EnvScaler reward remains near 0.56 with 8 or 16 tokens per experience, rises sharply to 0.637 with 32"
+        rendered="EnvScaler reward remains near 0.560.56 with 88 or 1616 tokens per experience, rises sharply to 0.6370.637 with 3232, and then fluctuates."
+        paraphrase="EnvScaler performance is roughly flat at small context sizes before improving near a larger latent capacity."
+        self.assertTrue(_evidence_excerpt_matches(excerpt,rendered))
+        self.assertFalse(_evidence_excerpt_matches(paraphrase,rendered))
+
+    def test_block_only_reviewer_recovery_inserts_only_missing_outer_braces(self) -> None:
+        raw='```json\n{"reviews":[{"candidate_id":"AUTO-1","verdict":"BLOCK","reason":"first"},{"candidate_id":"AUTO-2","verdict":"BLOCK","reason":"second"}]}\n```'
+        malformed=raw.replace('"reason":"first"}', '"reason":"first"', 1).replace('"reason":"second"}', '"reason":"second"', 1)
+        payload,repaired,offsets=_repair_block_only_reviewer_outer_braces(malformed)
+        self.assertEqual([row["candidate_id"] for row in payload["reviews"]],["AUTO-1","AUTO-2"])
+        self.assertEqual(len(offsets),2)
+        self.assertTrue(all(row["verdict"]=="BLOCK" for row in json.loads(repaired)["reviews"]))
+        self.assertIn('"reason":"first"',repaired);self.assertIn('"reason":"second"',repaired)
+
+    def test_block_only_reviewer_recovery_refuses_clear_or_inner_truncation(self) -> None:
+        clear='{"reviews":[{"candidate_id":"AUTO-1","verdict":"CLEAR","reason":"clear" ]}'
+        truncated='{"reviews":[{"candidate_id":"AUTO-1","verdict":"BLOCK","reason":"cut]}'
+        self.assertIsNone(_repair_block_only_reviewer_outer_braces(clear)[0])
+        self.assertIsNone(_repair_block_only_reviewer_outer_braces(truncated)[0])
+
+    def test_archived_block_only_reviewer_recovery_writes_zero_authority_receipt(self) -> None:
+        malformed='{"reviews":[{"candidate_id":"AUTO-1","verdict":"BLOCK","reason":"first",{"candidate_id":"AUTO-2","verdict":"BLOCK","reason":"second"]}'
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);raw_path=root/"review.txt";raw_path.write_text(malformed);sha=hashlib.sha256(malformed.encode()).hexdigest()
+            receipt=recover_archived_block_only_reviewer_raw(storage=self.storage(root),reviewer_raw_path=raw_path,reviewer_raw_sha256=sha,resolved_model="minimax-m3",run_id="recover-test")
+            receipts=list((root/"paper-first-problem-discovery"/"reviewer-recoveries").glob("*-receipt.json"))
+        self.assertEqual(receipt["status"],"PARSE_REPAIRED_MISSING_REVIEW_OUTER_BRACES_BLOCK_ONLY_ZERO_AUTHORITY")
+        self.assertEqual(receipt["inserted_closing_brace_count"],2)
+        self.assertEqual(receipt["provider_calls_executed"],0);self.assertFalse(receipt["scientific_authority"])
+        self.assertEqual(len(receipts),1)
+
     def test_durable_principle_dead_end_memory_prioritizes_current_source_overlap(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             path=Path(td)/"memory.json"
@@ -171,6 +204,29 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         result=audit_problem_candidate(candidate,require_semantic_review=False,allow_pending_reduction_for_semantic_review=True)
         self.assertFalse(result["passed"])
         self.assertIn("principle-dead-end-exact-source-reentry:OLD-BASIN",result["blockers"])
+
+    def test_legacy_principle_closure_blocks_only_exact_reverified_evidence(self) -> None:
+        candidate=self.raw_candidate("UNEXPLAINED_BOUNDARY");ref=candidate["empirical_evidence"]["source_a"]["ref"]
+        candidate["empirical_evidence"]["source_b"]["ref"]=ref
+        closed_a="d"*64;closed_b="e"*64
+        grounding={
+            "source_a":{"ref":ref,"grounded":True,"evidence_sha256":closed_a,"evidence_sha256_verified":True},
+            "source_b":{"ref":ref,"grounded":True,"evidence_sha256":closed_b,"evidence_sha256_verified":True},
+        }
+        with tempfile.TemporaryDirectory() as td:
+            path=Path(td)/"memory.json"
+            path.write_text(json.dumps({"shadow_dead_end_memory":{"blocked_objects":[{
+                "source_candidate_id":"LEGACY-CLOSURE","search_primitive":"","current_source_refs":[ref],"dead_end_certified":True,
+                "fresh_phenomenon_closure":{"source_ref":ref,"closed_evidence_sha256":[closed_a,closed_b]},
+                "counter_explanation":{"reopen_condition":"new exact evidence"},
+            }]}}),encoding="utf-8")
+            exact=_principle_dead_end_reentry_audit(candidate,path,grounding)
+            fresh_grounding=json.loads(json.dumps(grounding));fresh_grounding["source_b"]["evidence_sha256"]="f"*64
+            fresh=_principle_dead_end_reentry_audit(candidate,path,fresh_grounding)
+        self.assertTrue(exact["blocked"])
+        self.assertEqual(exact["matches"][0]["match_kind"],"CERTIFIED_EXACT_EVIDENCE_CLOSURE")
+        self.assertEqual(set(exact["matches"][0]["grounded_evidence_sha256"]),{closed_a,closed_b})
+        self.assertFalse(fresh["blocked"])
 
     def test_durable_principle_dead_end_memory_preserves_reopen_contract(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -911,6 +967,23 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertEqual(queue["summary"]["passed_problem_gate"],0)
         self.assertIn("unresolved-exact-reduction-test:2",queue["blocked"][0]["blockers"])
 
+    def test_reviewer_only_resume_reverifies_prior_grounding_without_reusing_prior_verdict(self) -> None:
+        candidate=self.raw_candidate("CONTRADICTION");generator=self.gen([candidate],resolved="kimi-k3",notes="One reviewable candidate survives.")
+        old_reviewer=self.review("BLOCK",resolved="old-reviewer",use_fulltext=True);new_reviewer=self.review("CLEAR",resolved="deepseek-v4-pro",use_fulltext=True)
+        calls=[]
+        def counted_reviewer(**kwargs):calls.append(1);return new_reviewer(**kwargs)
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);storage=self.storage(root);pool=self.pool(root,now)
+            generator_raw=generator(prompt="unused",model="kimi-k3",max_output_tokens=10)["text"];generator_path=root/"generator.txt";generator_path.write_text(generator_raw);generator_sha=hashlib.sha256(generator_raw.encode()).hexdigest()
+            prior_raw=old_reviewer(prompt="unused",model="old-reviewer",max_output_tokens=10)["text"];prior_path=root/"prior-reviewer.txt";prior_path.write_text(prior_raw);prior_sha=hashlib.sha256(prior_raw.encode()).hexdigest()
+            state=resume_semantic_reviewer(storage=storage,primary_pool_path=pool,generator_raw_path=generator_path,generator_raw_sha256=generator_sha,generator_requested_model="kimi-k3",generator_resolved_model="kimi-k3",source_generator_run_id="GEN-1",reviewer_model="deepseek-v4-pro",auto_inbox_path=root/"auto.json",reviewer_responder=counted_reviewer,prior_reviewer_raw_path=prior_path,prior_reviewer_raw_sha256=prior_sha,now=now)
+        self.assertEqual(calls,[1])
+        self.assertEqual(state["status"],"GENERATED_AWAIT_PROBLEM_GATE")
+        self.assertEqual(state["summary"]["semantic_clear"],1)
+        self.assertEqual(state["prior_reviewer_grounding_audit"]["candidate_exact_evidence_grounding_verified"],1)
+        self.assertFalse(state["prior_reviewer_grounding_audit"]["prior_verdict_reused"])
+        self.assertTrue(state["policy"]["prior_reviewer_verdict_reuse_forbidden"])
+
     def test_reviewer_only_resume_bad_generator_sha_makes_zero_reviewer_calls(self) -> None:
         reviewer_calls=[]
         def reviewer(**kwargs): reviewer_calls.append(1); raise AssertionError
@@ -979,6 +1052,9 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         review = inbox["candidates"][0]["semantic_reduction_review"]
         self.assertTrue(review["source_claims_grounded"])
         self.assertEqual(review["source_claim_grounding"]["source_a"]["evidence_source"], "fulltext")
+        self.assertEqual(review["source_claim_grounding"]["source_a"]["evidence_sha256"], "6"*64)
+        self.assertTrue(review["source_claim_grounding"]["source_a"]["evidence_sha256_verified"])
+        self.assertEqual(review["source_claim_grounding"]["source_b"]["evidence_sha256"], "7"*64)
         self.assertEqual(review["verdict"], "CLEAR")
         self.assertEqual(state["summary"]["semantic_clear"], 1)
 

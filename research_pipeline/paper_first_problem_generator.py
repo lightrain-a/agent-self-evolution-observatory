@@ -241,9 +241,10 @@ def _durable_principle_dead_end_examples(path:Path=DURABLE_PRINCIPLE_DEAD_END_JS
     return chosen
 
 
-def _principle_dead_end_reentry_audit(candidate:dict[str,Any],path:Path=DURABLE_PRINCIPLE_DEAD_END_JSON)->dict[str,Any]:
+def _principle_dead_end_reentry_audit(candidate:dict[str,Any],path:Path=DURABLE_PRINCIPLE_DEAD_END_JSON,prior_source_grounding:dict[str,Any]|None=None)->dict[str,Any]:
     lane=str(candidate.get("discovery_lane") or "").strip().upper();evidence=candidate.get("empirical_evidence") or {}
     refs={str((evidence.get(key) or {}).get("ref") or "").strip() for key in ("source_a","source_b") if str((evidence.get(key) or {}).get("ref") or "").strip()}
+    grounding=prior_source_grounding if isinstance(prior_source_grounding,dict) else {}
     try: payload=json.loads(Path(path).read_text(encoding="utf-8"))
     except (OSError,json.JSONDecodeError): payload={}
     matches=[]
@@ -251,7 +252,16 @@ def _principle_dead_end_reentry_audit(candidate:dict[str,Any],path:Path=DURABLE_
         if not isinstance(row,dict) or row.get("dead_end_certified") is not True: continue
         primitive=str(row.get("search_primitive") or "").strip().upper();dead_refs={str(ref).strip() for ref in (row.get("current_source_refs") or []) if str(ref).strip()}
         if lane and primitive==lane and refs and dead_refs==refs:
-            matches.append({"source_candidate_id":str(row.get("source_candidate_id") or ""),"reopen_condition":str(((row.get("counter_explanation") or {}).get("reopen_condition")) or row.get("reopen_only_if") or "")[:700],"source_refs":sorted(dead_refs)})
+            matches.append({"source_candidate_id":str(row.get("source_candidate_id") or ""),"match_kind":"TYPED_EXACT_SOURCE_SCOPE","reopen_condition":str(((row.get("counter_explanation") or {}).get("reopen_condition")) or row.get("reopen_only_if") or "")[:700],"source_refs":sorted(dead_refs)})
+            continue
+        closure=row.get("fresh_phenomenon_closure") or {}
+        closure_ref=str(closure.get("source_ref") or "").strip();closed_hashes={str(value).strip() for value in (closure.get("closed_evidence_sha256") or []) if re.fullmatch(r"[0-9a-f]{64}",str(value).strip())}
+        grounded_rows=[grounding.get(key) or {} for key in ("source_a","source_b")]
+        exact_grounding=bool(grounded_rows and all(item.get("grounded") is True and item.get("evidence_sha256_verified") is True and re.fullmatch(r"[0-9a-f]{64}",str(item.get("evidence_sha256") or "")) for item in grounded_rows))
+        grounded_refs={str(item.get("ref") or "").strip() for item in grounded_rows if str(item.get("ref") or "").strip()}
+        grounded_hashes={str(item.get("evidence_sha256") or "").strip() for item in grounded_rows if str(item.get("evidence_sha256") or "").strip()}
+        if closure_ref and closed_hashes and refs==dead_refs==grounded_refs=={closure_ref} and exact_grounding and grounded_hashes and grounded_hashes.issubset(closed_hashes):
+            matches.append({"source_candidate_id":str(row.get("source_candidate_id") or ""),"match_kind":"CERTIFIED_EXACT_EVIDENCE_CLOSURE","reopen_condition":str(((row.get("counter_explanation") or {}).get("reopen_condition")) or row.get("reopen_only_if") or "")[:700],"source_refs":sorted(dead_refs),"grounded_evidence_sha256":sorted(grounded_hashes),"closed_evidence_sha256":sorted(closed_hashes)})
     return {"checked":True,"blocked":bool(matches),"matched_source_candidate_ids":[row["source_candidate_id"] for row in matches if row["source_candidate_id"]],"matches":matches,"reopen_requires_new_evidence":True,"scientific_authority":False}
 
 
@@ -436,9 +446,11 @@ def _pre_review_blockers(c,reg):
         hard.append(blocker)
     return sorted(set(hard))
 
-def _annotate_principle_dead_end_reentry(cands:list[dict[str,Any]])->list[dict[str,Any]]:
+def _annotate_principle_dead_end_reentry(cands:list[dict[str,Any]],prior_grounding_by_candidate:dict[str,dict[str,Any]]|None=None)->list[dict[str,Any]]:
+    prior=prior_grounding_by_candidate if isinstance(prior_grounding_by_candidate,dict) else {}
     for candidate in cands:
-        candidate["principle_dead_end_reentry_audit"]=_principle_dead_end_reentry_audit(candidate)
+        candidate_id=str(candidate.get("candidate_id") or "")
+        candidate["principle_dead_end_reentry_audit"]=_principle_dead_end_reentry_audit(candidate,prior_source_grounding=prior.get(candidate_id) or {})
     return cands
 
 
@@ -447,6 +459,18 @@ def _reviewable(c,reg):
 def _norm_text(value:str)->str:
     return " ".join(str(value or "").lower().split())
 
+def _evidence_excerpt_matches(excerpt:str,evidence_text:str)->bool:
+    excerpt_norm=_norm_text(excerpt);evidence_norm=_norm_text(evidence_text)
+    if not excerpt_norm or not evidence_norm:return False
+    if excerpt_norm in evidence_norm:return True
+    # arXiv HTML/math extraction can duplicate rendered numerals (for example 8 -> 88 or
+    # 0.56 -> 0.560.56). Ignore only numeric/formula rendering while requiring the lexical
+    # word sequence itself to remain a contiguous exact span; this is not semantic/fuzzy match.
+    excerpt_words=re.findall(r"[a-z]+(?:-[a-z]+)*",excerpt_norm);evidence_words=re.findall(r"[a-z]+(?:-[a-z]+)*",evidence_norm)
+    if len(excerpt_words)<4 or len(excerpt_words)>len(evidence_words):return False
+    width=len(excerpt_words)
+    return any(evidence_words[index:index+width]==excerpt_words for index in range(len(evidence_words)-width+1))
+
 def _source_grounding(review:dict[str,Any],candidate:dict[str,Any],registry:dict[str,dict[str,Any]])->tuple[dict[str,Any],bool]:
     support=review.get("source_claim_support") or {};out={};all_grounded=True
     evidence=candidate.get("empirical_evidence") or {}
@@ -454,9 +478,10 @@ def _source_grounding(review:dict[str,Any],candidate:dict[str,Any],registry:dict
         source=evidence.get(key) or {};ref=str(source.get("ref") or "").strip();record=registry.get(ref) or {}
         item=support.get(key) or {};supported=item.get("supported") is True;excerpt=str(item.get("evidence_excerpt") or "").strip();declared_source=str(item.get("evidence_source") or "").strip().lower()
         words=excerpt.split();excerpt_norm=_norm_text(excerpt);abstract=_norm_text(record.get("abstract") or "");role=str(source.get("evidence_role") or "").strip().upper()
-        facts=[_norm_text(str(fact.get("text") or "")) for fact in (record.get("empirical_facts") or []) if isinstance(fact,dict)]
-        typed=record.get("typed_evidence") or {};assumptions=[_norm_text(str(fact.get("text") or "")) for fact in typed.get("operational_assumptions") or [] if isinstance(fact,dict)];failures=[_norm_text(str(fact.get("text") or "")) for fact in typed.get("measured_failures") or [] if isinstance(fact,dict)];boundaries=[_norm_text(str(fact.get("text") or "")) for fact in typed.get("boundary_observations") or [] if isinstance(fact,dict)]
-        abstract_match=bool(excerpt_norm and excerpt_norm in abstract);fact_match=bool(excerpt_norm and any(excerpt_norm in fact for fact in facts));assumption_match=bool(excerpt_norm and any(excerpt_norm in fact for fact in assumptions));failure_match=bool(excerpt_norm and any(excerpt_norm in fact for fact in failures));boundary_match=bool(excerpt_norm and any(excerpt_norm in fact for fact in boundaries))
+        fact_rows=[fact for fact in (record.get("empirical_facts") or []) if isinstance(fact,dict)]
+        typed=record.get("typed_evidence") or {};assumption_rows=[fact for fact in typed.get("operational_assumptions") or [] if isinstance(fact,dict)];failure_rows=[fact for fact in typed.get("measured_failures") or [] if isinstance(fact,dict)];boundary_rows=[fact for fact in typed.get("boundary_observations") or [] if isinstance(fact,dict)]
+        facts=[_norm_text(str(fact.get("text") or "")) for fact in fact_rows];assumptions=[_norm_text(str(fact.get("text") or "")) for fact in assumption_rows];failures=[_norm_text(str(fact.get("text") or "")) for fact in failure_rows];boundaries=[_norm_text(str(fact.get("text") or "")) for fact in boundary_rows]
+        abstract_match=_evidence_excerpt_matches(excerpt,record.get("abstract") or "");fact_match=bool(excerpt_norm and any(_evidence_excerpt_matches(excerpt,str(fact.get("text") or "")) for fact in fact_rows));assumption_match=bool(excerpt_norm and any(_evidence_excerpt_matches(excerpt,str(fact.get("text") or "")) for fact in assumption_rows));failure_match=bool(excerpt_norm and any(_evidence_excerpt_matches(excerpt,str(fact.get("text") or "")) for fact in failure_rows));boundary_match=bool(excerpt_norm and any(_evidence_excerpt_matches(excerpt,str(fact.get("text") or "")) for fact in boundary_rows))
         if assumption_match:evidence_kind="operational_assumption"
         elif failure_match:evidence_kind="measured_failure"
         elif boundary_match:evidence_kind="boundary_observation"
@@ -469,9 +494,97 @@ def _source_grounding(review:dict[str,Any],candidate:dict[str,Any],registry:dict
         role_consistent=(role=="OPERATIONAL_ASSUMPTION" and assumption_match) or (role=="EMPIRICAL_FACT" and (abstract_match or fact_match or failure_match or boundary_match))
         excerpt_verified=bool(4<=len(words)<=30 and evidence_source and role_consistent)
         grounded=bool(supported and excerpt_verified and record.get("primary_source_verified") is True)
-        out[key]={"ref":ref,"supported":supported,"evidence_role":role,"evidence_kind":evidence_kind,"evidence_source":evidence_source,"declared_evidence_source":declared_source,"declared_source_valid":declared_source_valid,"declared_source_matches":declared_source_matches,"evidence_excerpt":excerpt,"excerpt_verified":excerpt_verified,"grounded":grounded}
+        eligible_rows=assumption_rows if role=="OPERATIONAL_ASSUMPTION" else (fact_rows+failure_rows+boundary_rows)
+        matched_hashes=sorted({str(row.get("text_sha256") or "").strip() for row in eligible_rows if _evidence_excerpt_matches(excerpt,str(row.get("text") or "")) and re.fullmatch(r"[0-9a-f]{64}",str(row.get("text_sha256") or "").strip())})
+        evidence_sha256=matched_hashes[0] if grounded and len(matched_hashes)==1 else ""
+        out[key]={"ref":ref,"supported":supported,"evidence_role":role,"evidence_kind":evidence_kind,"evidence_source":evidence_source,"declared_evidence_source":declared_source,"declared_source_valid":declared_source_valid,"declared_source_matches":declared_source_matches,"evidence_excerpt":excerpt,"excerpt_verified":excerpt_verified,"grounded":grounded,"evidence_sha256":evidence_sha256,"evidence_sha256_verified":bool(evidence_sha256)}
         all_grounded=all_grounded and grounded
     return out,all_grounded
+
+
+def _load_prior_reviewer_grounding(*,raw_path:Path,expected_raw_sha256:str,candidates:list[dict[str,Any]],registry:dict[str,dict[str,Any]])->tuple[dict[str,dict[str,Any]],dict[str,Any]]:
+    """Reuse only source excerpts from an archived reviewer, never its scientific judgment."""
+    path=Path(raw_path);raw=path.read_text(encoding="utf-8");actual_sha=_sha(raw)
+    if not re.fullmatch(r"[0-9a-f]{64}",str(expected_raw_sha256 or "")) or actual_sha!=str(expected_raw_sha256):raise ValueError("prior-reviewer-raw-sha-mismatch")
+    payload=extract_json_object(raw);reviews={str(row.get("candidate_id") or ""):row for row in (payload.get("reviews") or []) if isinstance(row,dict)}
+    out={};verified=0
+    for candidate in candidates:
+        candidate_id=str(candidate.get("candidate_id") or "");review=reviews.get(candidate_id) or {}
+        grounding,_=_source_grounding(review,candidate,registry);out[candidate_id]=grounding
+        if grounding and all((grounding.get(key) or {}).get("evidence_sha256_verified") is True for key in ("source_a","source_b")):verified+=1
+    audit={"raw_sha256":actual_sha,"candidate_grounding_checked":len(candidates),"candidate_exact_evidence_grounding_verified":verified,"prior_verdict_reused":False,"prior_lane_contract_reused":False,"prior_reduction_judgment_reused":False,"scientific_authority":False}
+    return out,audit
+
+
+def _strip_json_fence(raw:str)->str:
+    text=str(raw or "").strip()
+    if text.startswith("```"):
+        newline=text.find("\n")
+        if newline<0:return text
+        text=text[newline+1:]
+        if text.rstrip().endswith("```"):text=text.rstrip()[:-3]
+    return text.strip()
+
+
+def _repair_block_only_reviewer_outer_braces(raw:str)->tuple[dict[str,Any]|None,str,list[int]]:
+    """Repair only missing outer `}` delimiters around complete BLOCK review objects.
+
+    The review strings and nested scientific fields are never edited. Each review fragment must
+    become independently valid JSON by appending exactly one closing brace, and the recovered
+    payload is accepted only when every verdict is BLOCK. CLEAR-capable recovery remains fail-closed.
+    """
+    text=_strip_json_fence(raw)
+    try:
+        payload=json.loads(text)
+        if isinstance(payload,dict):return payload,text,[]
+    except json.JSONDecodeError:
+        pass
+    prefix=re.match(r'^\{\s*"reviews"\s*:\s*\[',text)
+    if not prefix:return None,"",[]
+    starts=[match.start() for match in re.finditer(r'\{\s*"candidate_id"\s*:',text)]
+    array_close=text.rfind("]");root_close=text.rfind("}")
+    if not starts or array_close<starts[-1] or root_close<array_close or text[array_close+1:root_close].strip() or text[root_close+1:].strip():return None,"",[]
+    insertions=[]
+    for index,start in enumerate(starts):
+        if index+1<len(starts):
+            boundary=starts[index+1]-1
+            while boundary>=0 and text[boundary].isspace():boundary-=1
+            if boundary<start or text[boundary]!=",":return None,"",[]
+        else:boundary=array_close
+        fragment=text[start:boundary].strip()
+        try:
+            parsed=json.loads(fragment);needs_close=False
+        except json.JSONDecodeError:
+            try:parsed=json.loads(fragment+"}");needs_close=True
+            except json.JSONDecodeError:return None,"",[]
+        if not isinstance(parsed,dict) or not str(parsed.get("candidate_id") or "").strip() or str(parsed.get("verdict") or "").strip().upper()!="BLOCK":return None,"",[]
+        if needs_close:insertions.append(boundary)
+    if not insertions:return None,"",[]
+    repaired=text
+    for offset in sorted(insertions,reverse=True):repaired=repaired[:offset]+"}"+repaired[offset:]
+    try:payload=json.loads(repaired)
+    except json.JSONDecodeError:return None,"",[]
+    reviews=payload.get("reviews") if isinstance(payload,dict) else None
+    if set(payload or {})!={"reviews"} or not isinstance(reviews,list) or len(reviews)!=len(starts) or any(not isinstance(row,dict) or str(row.get("verdict") or "").strip().upper()!="BLOCK" for row in reviews):return None,"",[]
+    candidate_ids=[str(row.get("candidate_id") or "").strip() for row in reviews]
+    if any(not value for value in candidate_ids) or len(candidate_ids)!=len(set(candidate_ids)):return None,"",[]
+    return payload,repaired,insertions
+
+
+def recover_archived_block_only_reviewer_raw(*,storage:StorageSettings,reviewer_raw_path:Path,reviewer_raw_sha256:str,resolved_model:str="",run_id:str="archived-reviewer-recovery")->dict[str,Any]:
+    """Create a zero-provider audit receipt for a malformed archived BLOCK-only reviewer raw."""
+    path=Path(reviewer_raw_path);raw=path.read_text(encoding="utf-8");actual_sha=_sha(raw)
+    if not re.fullmatch(r"[0-9a-f]{64}",str(reviewer_raw_sha256 or "")) or actual_sha!=str(reviewer_raw_sha256):raise ValueError("reviewer-raw-sha-mismatch")
+    payload,repaired,offsets=_repair_block_only_reviewer_outer_braces(raw)
+    if payload is None or not offsets:raise ValueError("reviewer-raw-not-safe-block-only-punctuation-repair")
+    repaired_sha=_sha(repaired);root=_root(storage)/"reviewer-recoveries";root.mkdir(parents=True,exist_ok=True)
+    repaired_path=root/f"{run_id}-{actual_sha[:12]}-repaired.json";receipt_path=root/f"{run_id}-{actual_sha[:12]}-receipt.json"
+    repaired_path.write_text(repaired+"\n",encoding="utf-8")
+    candidate_ids=[str(row.get("candidate_id") or "") for row in payload.get("reviews") or []]
+    receipt={"schema_version":"1.0","run_id":run_id,"status":"PARSE_REPAIRED_MISSING_REVIEW_OUTER_BRACES_BLOCK_ONLY_ZERO_AUTHORITY","resolved_model":str(resolved_model or ""),"raw_sha256":actual_sha,"repaired_sha256":repaired_sha,"repair_type":"MISSING_REVIEW_OUTER_CLOSING_BRACES","inserted_closing_brace_count":len(offsets),"insertion_offsets_in_stripped_json":offsets,"candidate_ids":candidate_ids,"all_recovered_verdicts_block":True,"review_string_content_mutated":False,"nested_review_fields_mutated":False,"provider_calls_executed":0,"scientific_authority":False,"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+    receipt_path.write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    return receipt
+
 
 def _apply_reviews(cands,payload,requested,resolved,generator_resolved,raw_sha,registry):
     by={str(r.get("candidate_id") or ""):r for r in (payload or {}).get("reviews") or [] if isinstance(r,dict)};known={r["key"] for r in REDUCTION_PATTERNS};generator_models={x for x in str(generator_resolved or "").split("|") if x};ind=bool(resolved and generator_models and resolved not in generator_models)
@@ -671,7 +784,7 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
     return finish("GENERATED_ZERO_CANDIDATES" if not cands else "GENERATED_AWAIT_PROBLEM_GATE",cands)
 
 
-def resume_semantic_reviewer(*,storage=None,primary_pool_path:Path,generator_raw_path:Path,generator_raw_sha256:str,generator_requested_model:str,generator_resolved_model:str,source_generator_run_id:str,reviewer_model:str|None=None,auto_inbox_path:Path|None=None,reviewer_responder:Responder|None=None,strict_provider:bool=True,expected_pool_sha256:str="",now=None)->dict[str,Any]:
+def resume_semantic_reviewer(*,storage=None,primary_pool_path:Path,generator_raw_path:Path,generator_raw_sha256:str,generator_requested_model:str,generator_resolved_model:str,source_generator_run_id:str,reviewer_model:str|None=None,auto_inbox_path:Path|None=None,reviewer_responder:Responder|None=None,strict_provider:bool=True,expected_pool_sha256:str="",prior_reviewer_raw_path:Path|None=None,prior_reviewer_raw_sha256:str="",now=None)->dict[str,Any]:
     """Resume only the independent semantic reviewer from archived Generator output.
 
     This path never invokes the Generator. It reconstructs machine-reviewable candidates from the
@@ -681,7 +794,7 @@ def resume_semantic_reviewer(*,storage=None,primary_pool_path:Path,generator_raw
     storage=storage or StorageSettings.from_env();reviewer_model=reviewer_model or os.getenv("PAPER_FIRST_PROBLEM_REVIEW_MODEL",REVIEWER_MODEL);current=(now or _now_dt()).astimezone(timezone.utc);run_id=current.strftime("%Y%m%dT%H%M%SZ")
     primary_pool_path=Path(primary_pool_path);generator_raw_path=Path(generator_raw_path);auto_inbox_path=Path(auto_inbox_path) if auto_inbox_path is not None else _root(storage)/"semantic-review-resume-inbox.json"
     pool=load_private_primary_pool(primary_pool_path) or {};reg=_registry(pool);psha=_pool_sha(pool) if pool else ""
-    state={"schema_version":"1.0","generated_at":_now(),"run_id":run_id,"source_generator_run_id":str(source_generator_run_id or ""),"source_generator_raw_sha256":str(generator_raw_sha256 or ""),"generator_requested_model":str(generator_requested_model or ""),"generator_resolved_model":str(generator_resolved_model or ""),"reviewer_model":reviewer_model,"primary_pool_sha256":psha,"policy":{"reviewer_only_resume":True,"generator_calls_authorized":0,"one_semantic_reviewer_call_max":True,"strict_provider_transport":bool(strict_provider),"same_resolved_model_cannot_count_as_independent_review":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False,"automatic_gpu_authority":False},"summary":_empty_summary(len(reg)),"raw_artifacts":{},"candidates":[],"scientific_authority":False}
+    state={"schema_version":"1.0","generated_at":_now(),"run_id":run_id,"source_generator_run_id":str(source_generator_run_id or ""),"source_generator_raw_sha256":str(generator_raw_sha256 or ""),"generator_requested_model":str(generator_requested_model or ""),"generator_resolved_model":str(generator_resolved_model or ""),"reviewer_model":reviewer_model,"primary_pool_sha256":psha,"policy":{"reviewer_only_resume":True,"generator_calls_authorized":0,"one_semantic_reviewer_call_max":True,"strict_provider_transport":bool(strict_provider),"same_resolved_model_cannot_count_as_independent_review":True,"prior_reviewer_grounding_may_be_reverified":True,"prior_reviewer_verdict_reuse_forbidden":True,"exact_evidence_closure_blocks_redundant_review":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False,"automatic_gpu_authority":False},"summary":_empty_summary(len(reg)),"raw_artifacts":{},"candidates":[],"scientific_authority":False}
     def finish(status,cands=[]):
         state["status"]=status;_write_inbox(auto_inbox_path,source_generator_run_id or run_id,status,cands,psha);return state
     if pool.get("status")!="READY" or len(reg)<4:return finish("SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE")
@@ -693,7 +806,11 @@ def resume_semantic_reviewer(*,storage=None,primary_pool_path:Path,generator_raw
     try:
         payload=extract_json_object(raw);rows=payload.get("candidates") or []
         if not isinstance(rows,list) or len(rows)>MAX_CANDIDATES or any(not isinstance(row,dict) for row in rows):raise ValueError("generator-candidate-array-invalid")
-        cands=_annotate_principle_dead_end_reentry([_normalize(row,reg) for row in rows]);reviewable=[c for c in cands if _reviewable(c,reg)]
+        normalized=[_normalize(row,reg) for row in rows];prior_grounding={}
+        if prior_reviewer_raw_path is not None or prior_reviewer_raw_sha256:
+            if prior_reviewer_raw_path is None or not prior_reviewer_raw_sha256:raise ValueError("prior-reviewer-grounding-provenance-incomplete")
+            prior_grounding,grounding_audit=_load_prior_reviewer_grounding(raw_path=Path(prior_reviewer_raw_path),expected_raw_sha256=prior_reviewer_raw_sha256,candidates=normalized,registry=reg);state["prior_reviewer_grounding_audit"]=grounding_audit
+        cands=_annotate_principle_dead_end_reentry(normalized,prior_grounding);reviewable=[c for c in cands if _reviewable(c,reg)]
     except Exception as e:state["error"]=f"generator-raw-parse-error:{type(e).__name__}:{str(e)[:240]}";return finish("REVIEWER_RESUME_INPUT_INVALID")
     state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
     if not reviewable:
@@ -829,6 +946,8 @@ def replay_problem_generator_raw(
     auto_inbox_path: Path | None = None,
     saturation_ledger_path: Path | None = None,
     blocked_problem_memory: dict[str, Any] | None = None,
+    prior_reviewer_raw_path: Path | None = None,
+    prior_reviewer_raw_sha256: str = "",
     now=None,
     max_candidates: int = MAX_CANDIDATES,
 ) -> dict[str, Any]:
@@ -852,6 +971,9 @@ def replay_problem_generator_raw(
         "generator_replay_requires_exact_raw_sha256": True,
         "generator_replay_rechecks_current_machine_contract": True,
         "generator_replay_cannot_invoke_semantic_reviewer": True,
+        "prior_reviewer_grounding_may_be_reverified": True,
+        "prior_reviewer_verdict_reuse_forbidden": True,
+        "exact_evidence_closure_blocks_redundant_review": True,
         "automatic_provider_calls_authorized": 0,
     })
     state={
@@ -875,7 +997,11 @@ def replay_problem_generator_raw(
         if not isinstance(rows,list) or len(rows)>max_candidates or any(not isinstance(row,dict) for row in rows):raise ValueError("generator-candidate-array-invalid")
         state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip()
         lane_search=_normalize_lane_search(payload.get("lane_search"),reg,state["search_diagnostics"]["lane_search_priority"])
-        cands=_annotate_principle_dead_end_reentry([_normalize(row,reg) for row in rows]);_validate_lane_search_candidates(lane_search,cands)
+        normalized=[_normalize(row,reg) for row in rows];prior_grounding={}
+        if prior_reviewer_raw_path is not None or prior_reviewer_raw_sha256:
+            if prior_reviewer_raw_path is None or not prior_reviewer_raw_sha256:raise ValueError("prior-reviewer-grounding-provenance-incomplete")
+            prior_grounding,grounding_audit=_load_prior_reviewer_grounding(raw_path=Path(prior_reviewer_raw_path),expected_raw_sha256=prior_reviewer_raw_sha256,candidates=normalized,registry=reg);state["prior_reviewer_grounding_audit"]=grounding_audit
+        cands=_annotate_principle_dead_end_reentry(normalized,prior_grounding);_validate_lane_search_candidates(lane_search,cands)
     except Exception as error:
         state["error"]=f"raw-recompile-error:{type(error).__name__}:{str(error)[:300]}";return finish("REPLAY_INPUT_INVALID")
     reviewable=[candidate for candidate in cands if _reviewable(candidate,reg)]
@@ -884,8 +1010,9 @@ def replay_problem_generator_raw(
     archived_path,archived_sha=_write_raw(storage,run_id,"generator-replay",str(generator_requested_model or "unknown"),raw)
     state["raw_artifacts"]["generator"]={"path":archived_path,"sha256":archived_sha,"requested_model":str(generator_requested_model or ""),"resolved_model":str(generator_resolved_model or generator_requested_model or ""),"raw_replayed_without_provider":True,"raw_origin_path":str(generator_raw_path),"raw_origin_run_id":str(source_generator_run_id or ""),"raw_origin_discovery_operator_version":str(source_discovery_operator_version or ""),"provider_calls_executed":0}
     if reviewable:
-        state["summary"].update({"semantic_clear":0,"semantic_blocked":0,"semantic_review_unavailable":len(reviewable),"written_to_auto_inbox":0,"semantic_clear_by_lane":_count_by_lane([]),"semantic_blocked_by_lane":_count_by_lane([]),"semantic_review_unavailable_by_lane":_count_by_lane(reviewable)})
-        state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"semantic_verdict":"UNREVIEWED_REPLAY_REQUIRES_REVIEWER","lane_contract_verified":False,"matched_patterns":[]} for c in cands]
+        blocked_before_review=[candidate for candidate in cands if candidate not in reviewable];reviewable_ids={id(candidate) for candidate in reviewable}
+        state["summary"].update({"semantic_clear":0,"semantic_blocked":len(blocked_before_review),"semantic_review_unavailable":len(reviewable),"written_to_auto_inbox":0,"semantic_clear_by_lane":_count_by_lane([]),"semantic_blocked_by_lane":_count_by_lane(blocked_before_review),"semantic_review_unavailable_by_lane":_count_by_lane(reviewable)})
+        state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"semantic_verdict":"UNREVIEWED_REPLAY_REQUIRES_REVIEWER" if id(c) in reviewable_ids else "BLOCK_PRE_REVIEW_REPLAY","lane_contract_verified":False,"matched_patterns":[],"principle_dead_end_reentry_audit":c.get("principle_dead_end_reentry_audit") or {}} for c in cands]
         return finish("REPLAY_REQUIRES_SEMANTIC_REVIEW",[])
     for candidate in cands:
         candidate["semantic_reduction_review"].update({"reviewed":False,"verdict":"BLOCK","lane_contract_verified":False,"lane_contract_reason":"current-machine-contract-blocked-before-review","strongest_reduction":"current-machine-contract-blocked-before-review"})
