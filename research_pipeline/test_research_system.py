@@ -5,6 +5,7 @@ import json
 import unittest
 
 from .paper_first_primary_evidence import SUPPORTED_TYPED_EVIDENCE_SNAPSHOT_VERSIONS, TYPED_EVIDENCE_EXTRACTION_VERSION
+from .paper_first_problem_discovery_contract import SEARCH_PORTFOLIO_PRIMITIVES
 from .paper_first_relation_coverage import relation_recall_freshness
 from .paper_first_discovery_frontier import build_paper_first_discovery_frontier
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier
@@ -386,7 +387,7 @@ class ResearchSystemTest(unittest.TestCase):
             self.assertGreaterEqual(int(primary["policy"]["lane_floor"]),1)
             self.assertEqual(primary["summary"]["undercovered_lanes"],[])
         generator=self.state["paper_first_problem_generator"]
-        self.assertIn(generator["status"],{"NOT_RUN","SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE","SKIPPED_STALE_PRIMARY_EVIDENCE","SKIPPED_SOURCE_COVERAGE_SATURATED","SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE","SKIPPED_SOURCE_CARRIER_PROBE_PENDING","GENERATOR_ERROR_ZERO_AUTHORITY","GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE","STATE_UNREADABLE"})
+        self.assertIn(generator["status"],{"NOT_RUN","SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE","SKIPPED_STALE_PRIMARY_EVIDENCE","SKIPPED_SOURCE_COVERAGE_SATURATED","SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE","SKIPPED_SOURCE_CARRIER_PROBE_PENDING","GENERATOR_ERROR_ZERO_AUTHORITY","GENERATED_ZERO_CANDIDATES","GENERATED_PRE_F0_EVIDENCE_ACQUISITION","GENERATED_AWAIT_PROBLEM_GATE","STATE_UNREADABLE"})
         self.assertTrue(generator["policy"]["zero_candidates_is_valid"])
         self.assertTrue(generator["policy"]["semantic_reviewer_is_block_only"])
         self.assertTrue(generator["policy"]["candidate_inbox_has_zero_scientific_authority"])
@@ -398,9 +399,15 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(generator["policy"]["multi_lane_discovery_enabled"])
         self.assertEqual(generator["policy"]["allowed_discovery_lanes"],["CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY"])
         self.assertEqual(generator["policy"]["forbidden_discovery_lanes"],["MISSING_CELL","SHARED_LIMITATION","PURE_TOPIC_BRAINSTORM"])
-        self.assertIsNot(generator["policy"].get("search_portfolio_enabled"),True)
-        self.assertTrue(generator["policy"].get("one_generator_call_max",True))
-        self.assertTrue(generator["policy"].get("one_semantic_reviewer_call_max",True))
+        if generator["policy"].get("search_portfolio_enabled") is True:
+            self.assertFalse(generator["policy"].get("search_portfolio_is_shadow_only"))
+            self.assertFalse(generator["policy"].get("canonical_transaction_forbids_search_portfolio"))
+            self.assertFalse(generator["policy"].get("one_generator_call_max"))
+            self.assertFalse(generator["policy"].get("one_semantic_reviewer_call_max"))
+            self.assertTrue(generator["policy"].get("bounded_provider_subcalls_inside_discovery_transaction"))
+        else:
+            self.assertTrue(generator["policy"].get("one_generator_call_max",True))
+            self.assertTrue(generator["policy"].get("one_semantic_reviewer_call_max",True))
         self.assertTrue(generator["policy"]["independent_reviewer_must_verify_lane_contract"])
         self.assertTrue(generator["policy"]["source_coverage_saturation_skips_model_call"])
         self.assertTrue(generator["policy"]["source_coverage_saturation_is_compute_control_not_scientific_negative"])
@@ -563,7 +570,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual((stri.get("summary") or {}).get("paper_quality_v2_passed"),1)
         self.assertEqual((stri.get("summary") or {}).get("paper_quality_source_binding"),1)
         self.assertEqual((stri.get("summary") or {}).get("paper_quality_content_addressed_completion"),1)
-        self.assertEqual((stri.get("summary") or {}).get("paper_quality_content_addressed_files"),14)
+        self.assertEqual((stri.get("summary") or {}).get("paper_quality_content_addressed_files"),15)
         self.assertEqual((stri.get("summary") or {}).get("paper_quality_evidence_debt"),0)
         self.assertEqual((stri.get("summary") or {}).get("paper_quality_main_visualizations"),4)
         self.assertIn("failure", (stri.get("summary") or {}).get("paper_quality_main_visual_roles") or [])
@@ -575,7 +582,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_v2_passed"],1)
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_source_binding"],1)
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_content_addressed_completion"],1)
-        self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_content_addressed_files"],14)
+        self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_content_addressed_files"],15)
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_evidence_debt"],0)
         self.assertEqual(self.state["summary"]["asset_first_stri_official_qa_checks_passed"],self.state["summary"]["asset_first_stri_official_qa_checks_total"])
         self.assertEqual((self.state["summary"]["asset_first_stri_main_text_pages"],self.state["summary"]["asset_first_stri_main_text_page_limit"]),(9,9))
@@ -603,11 +610,11 @@ class ResearchSystemTest(unittest.TestCase):
         broken["paper_first_problem_discovery_contract"]["policy"]["search_portfolio_is_shadow_only"]=False
         self.assertTrue(any("shadow-only" in error for error in validate_state(broken)))
         leaked=copy.deepcopy(self.state)
-        leaked["paper_first_problem_generator"]["policy"]["search_portfolio_enabled"]=True
-        self.assertTrue(any("double-funnel" in error for error in validate_state(leaked)))
+        leaked["paper_first_problem_generator"]["policy"]["search_portfolio_is_shadow_only"]=True
+        self.assertTrue(any("canonical double-funnel" in error for error in validate_state(leaked)))
         multi=copy.deepcopy(self.state)
-        multi["paper_first_problem_generator"]["policy"]["one_generator_call_max"]=False
-        self.assertTrue(any("at most one generator call" in error for error in validate_state(multi)))
+        multi["paper_first_problem_generator"]["policy"]["one_generator_call_max"]=True
+        self.assertTrue(any("one bounded discovery transaction" in error for error in validate_state(multi)))
 
     def test_shadow_search_admission_is_zero_provider_search_control(self) -> None:
         admission=self.state["paper_first_shadow_search_admission"];summary=admission.get("summary") or {}
@@ -972,17 +979,28 @@ class ResearchSystemTest(unittest.TestCase):
     def test_v24_generated_problem_state_requires_complete_zero_authority_lane_search(self) -> None:
         state=copy.deepcopy(self.state); generator=state["paper_first_problem_generator"]
         generator["schema_version"]="2.4"; generator["status"]="GENERATED_ZERO_CANDIDATES"; generator["generation_notes"]="All four lanes were audited and none survives."
-        generator["policy"].update({"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"one_generator_call_must_audit_all_discovery_lanes":True,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True})
+        generator["policy"].update({"search_portfolio_enabled":False,"search_portfolio_is_shadow_only":True,"canonical_transaction_forbids_search_portfolio":True,"bounded_provider_subcalls_inside_discovery_transaction":False,"one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator":True,"one_generator_call_max":True,"one_semantic_reviewer_call_max":True,"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"one_generator_call_must_audit_all_discovery_lanes":True,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True})
         generator["search_diagnostics"]={"lane_search_priority":["CONTRADICTION","CONVERGENT_FAILURE","UNEXPLAINED_BOUNDARY","ASSUMPTION_BREAK"],"lane_search_complete":True,"lane_search":[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair."} for lane in ("CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY")],"scientific_authority":False}
         self.sync_discovery_frontier(state)
         self.assertEqual(validate_state(state),[])
         broken=copy.deepcopy(state); broken["paper_first_problem_generator"]["search_diagnostics"]["lane_search"].pop()
         self.assertTrue(any("complete machine-audited status" in error for error in validate_state(broken)))
 
+    def test_v17_double_funnel_pre_f0_receipt_uses_full_search_vocabulary(self) -> None:
+        state=copy.deepcopy(self.state);generator=state["paper_first_problem_generator"]
+        if (generator.get("policy") or {}).get("search_portfolio_enabled") is not True:
+            self.skipTest("current durable state is not a canonical double-funnel receipt")
+        self.assertEqual(generator.get("status"),"GENERATED_PRE_F0_EVIDENCE_ACQUISITION")
+        diagnostics=generator.get("search_diagnostics") or {};last=diagnostics.get("last_completed_lane_search") or {}
+        self.assertEqual(set(diagnostics.get("lane_search_priority") or []),set(SEARCH_PORTFOLIO_PRIMITIVES));self.assertEqual(len(last.get("lane_search") or []),len(SEARCH_PORTFOLIO_PRIMITIVES));self.assertTrue(all(str(row.get("status") or "") in {"EXPANDED","EMPTY"} for row in last.get("lane_search") or []))
+        self.assertEqual(validate_state(state),[])
+        broken=copy.deepcopy(state);broken["paper_first_problem_generator"]["search_diagnostics"]["last_completed_lane_search"]["lane_search"].pop()
+        self.assertTrue(any("last completed lane-search receipt is invalid" in error for error in validate_state(broken)))
+
     def test_v25_last_completed_lane_search_is_zero_authority_portable_receipt(self) -> None:
         state=copy.deepcopy(self.state);generator=state["paper_first_problem_generator"]
         generator["schema_version"]="2.5";generator["status"]="GENERATED_ZERO_CANDIDATES";generator["generation_notes"]="All four lanes were audited and none survives."
-        generator["policy"].update({"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"one_generator_call_must_audit_all_discovery_lanes":True,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True,"last_completed_lane_search_is_portable_zero_authority_receipt":True,"terminal_zero_call_skip_preserves_last_completed_lane_search":True})
+        generator["policy"].update({"search_portfolio_enabled":False,"search_portfolio_is_shadow_only":True,"canonical_transaction_forbids_search_portfolio":True,"bounded_provider_subcalls_inside_discovery_transaction":False,"one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator":True,"one_generator_call_max":True,"one_semantic_reviewer_call_max":True,"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"one_generator_call_must_audit_all_discovery_lanes":True,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True,"last_completed_lane_search_is_portable_zero_authority_receipt":True,"terminal_zero_call_skip_preserves_last_completed_lane_search":True})
         priority=["CONTRADICTION","CONVERGENT_FAILURE","UNEXPLAINED_BOUNDARY","ASSUMPTION_BREAK"];rows=[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair."} for lane in priority]
         receipt={"run_id":generator.get("run_id") or "v25-run","generator_status":"GENERATED_ZERO_CANDIDATES","generated_at":"2026-08-13T14:12:22+00:00","lane_search_priority":priority,"lane_search":rows,"generation_notes":"All four lanes audited.","scientific_authority":False}
         generator["run_id"]=receipt["run_id"];generator["search_diagnostics"]={"lane_search_priority":priority,"lane_search_complete":True,"lane_search":rows,"last_completed_lane_search":receipt,"scientific_authority":False}

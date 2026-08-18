@@ -56,6 +56,7 @@ from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_O
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
 from .paper_first_pre_f0_queue import load_pre_f0_queue
+from .paper_first_problem_falsifier_preflight import load_pre_f0_problem_falsifier_preflight
 from .paper_first_shadow_search_admission import DEFAULT_JSON as SHADOW_SEARCH_ADMISSION_JSON, build_shadow_search_admission, public_shadow_search_admission_summary, validate_shadow_search_admission, write_shadow_search_admission
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier, validate_shadow_continuation_frontier
 from .paper_first_search_portfolio_design_adjudication import DEFAULT_JSON as SEARCH_PORTFOLIO_DESIGN_JSON, build_search_portfolio_design_adjudication, validate_search_portfolio_design_adjudication, write_search_portfolio_design_adjudication
@@ -333,6 +334,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_problem_discovery_contract = build_problem_discovery_contract_state()
     paper_first_problem_generator = load_problem_generator_state()
     paper_first_pre_f0_queue = load_pre_f0_queue()
+    paper_first_pre_f0_problem_falsifier_preflight = load_pre_f0_problem_falsifier_preflight()
     paper_first_problem_memory = ((paper_first_problem_generator.get("saturation_memory") or {}).get("blocked_problem_memory") or {})
     paper_first_lane_search = paper_first_problem_generator.get("search_diagnostics") or {}
     paper_first_last_lane_search = paper_first_lane_search.get("last_completed_lane_search") or {}
@@ -535,6 +537,9 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_problem_generator_pre_f0_eligible":(paper_first_problem_generator.get("summary") or {}).get("pre_f0_eligible",0),
             "paper_first_pre_f0_queue_status":paper_first_pre_f0_queue.get("status"),
             "paper_first_pre_f0_queue_queued":(paper_first_pre_f0_queue.get("summary") or {}).get("queued",0),
+            "paper_first_pre_f0_support_status":paper_first_pre_f0_problem_falsifier_preflight.get("status"),
+            "paper_first_pre_f0_support_ready":(paper_first_pre_f0_problem_falsifier_preflight.get("summary") or {}).get("support_qualified",0),
+            "paper_first_pre_f0_support_holds":(paper_first_pre_f0_problem_falsifier_preflight.get("summary") or {}).get("hold_support_unavailable",0),
             "paper_first_problem_generator_semantic_clear":(paper_first_problem_generator.get("summary") or {}).get("semantic_clear",0),
             "paper_first_problem_generator_semantic_blocked":(paper_first_problem_generator.get("summary") or {}).get("semantic_blocked",0),
             "paper_first_problem_generator_saturation_entries":(paper_first_problem_generator.get("saturation_memory") or {}).get("ledger_entries",0),
@@ -875,6 +880,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_problem_discovery_contract":paper_first_problem_discovery_contract,
         "paper_first_problem_generator":paper_first_problem_generator,
         "paper_first_pre_f0_queue":paper_first_pre_f0_queue,
+        "paper_first_pre_f0_problem_falsifier_preflight":paper_first_pre_f0_problem_falsifier_preflight,
         "paper_first_problem_gate_queue":paper_first_problem_gate_queue,
         "paper_first_search_portfolio_design_adjudication":paper_first_search_portfolio_design,
         "paper_first_support_release_watch":paper_first_support_release_watch,
@@ -1484,18 +1490,26 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         if pre_f0_policy.get("cheap_falsifier_is_evidence_acquisition_not_problem_gate") is not True or pre_f0_policy.get("positive_f0_requires_exact_same_information_reduction_recheck") is not True or pre_f0_policy.get("exact_reduction_required_before_problem_gate") is not True or pre_f0_policy.get("pre_f0_cannot_enter_persistent_dead_end_memory") is not True: errors.append("canonical pre-F0 queue must preserve evidence-acquisition and post-F0 exact-reduction boundaries")
         if any(row.get("scientific_authority") is not False or any((row.get("authority") or {}).get(key) is not False for key in ("problem_gate","paper_design","method","experiment","p0","gpu")) or str(row.get("next_if_positive") or "")!="RERUN_EXACT_SAME_INFORMATION_REDUCTION" for row in pre_f0_rows): errors.append("canonical pre-F0 row leaks authority or bypasses exact-reduction recheck")
         if generator_double_funnel and int(generator_summary.get("pre_f0_eligible") or 0)!=int(pre_f0_summary.get("queued") or 0): errors.append("canonical generator and pre-F0 queue accounting must match")
-    if generator_schema >= "2.4" and generator.get("status") in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}:
+    pre_f0_support=state.get("paper_first_pre_f0_problem_falsifier_preflight") or {};pre_f0_support_summary=pre_f0_support.get("summary") or {};pre_f0_support_authority=pre_f0_support.get("authority") or {}
+    if pre_f0_support:
+        if pre_f0_support.get("scientific_authority") is not False or any(pre_f0_support_authority.get(key) is not False for key in ("canonical_generator","canonical_problem_gate","paper_design","method","experiment","p0","gpu")): errors.append("canonical Pre-F0 support preflight must remain zero-authority")
+        if pre_f0_support.get("status") == "PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE":
+            support_queued=int(pre_f0_support_summary.get("queued") or 0);support_ready=int(pre_f0_support_summary.get("support_qualified") or 0);support_hold=int(pre_f0_support_summary.get("hold_support_unavailable") or 0);executed=int(pre_f0_support_summary.get("falsifier_executed") or 0)
+            if support_queued!=int(pre_f0_summary.get("queued") or 0) or support_ready+support_hold!=support_queued or executed!=0: errors.append("canonical Pre-F0 support preflight must cover the queue exactly without executing a falsifier")
+    generated_discovery_statuses={"GENERATED_ZERO_CANDIDATES","GENERATED_PRE_F0_EVIDENCE_ACQUISITION","GENERATED_AWAIT_PROBLEM_GATE"}
+    expected_lane_statuses={"EXPANDED","EMPTY"} if generator_double_funnel else {"NO_PAIR","REDUCIBLE","CANDIDATE"}
+    if generator_schema >= "2.4" and generator.get("status") in generated_discovery_statuses:
         lane_rows=[row for row in lane_search.get("lane_search") or [] if isinstance(row,dict)]
         lane_names=[str(row.get("lane") or "") for row in lane_rows]
         lane_statuses=[str(row.get("status") or "") for row in lane_rows]
-        if lane_search.get("lane_search_complete") is not True or len(lane_rows)!=len(DISCOVERY_LANES) or set(lane_names)!=set(DISCOVERY_LANES) or any(status not in {"NO_PAIR","REDUCIBLE","CANDIDATE"} for status in lane_statuses): errors.append("generated problem state must preserve one complete machine-audited status for every discovery lane")
+        if lane_search.get("lane_search_complete") is not True or len(lane_rows)!=len(expected_search_lanes) or set(lane_names)!=set(expected_search_lanes) or any(status not in expected_lane_statuses for status in lane_statuses): errors.append("generated problem state must preserve one complete machine-audited status for every active discovery search lane")
     if generator_schema >= "2.5":
         last_lane_search=lane_search.get("last_completed_lane_search") or {}
         if generator_policy.get("last_completed_lane_search_is_portable_zero_authority_receipt") is not True or generator_policy.get("terminal_zero_call_skip_preserves_last_completed_lane_search") is not True: errors.append("problem generator must preserve the last completed lane search only as a portable zero-authority receipt")
         if last_lane_search:
             last_rows=[row for row in last_lane_search.get("lane_search") or [] if isinstance(row,dict)];last_priority=[str(x or "") for x in last_lane_search.get("lane_search_priority") or []]
-            if last_lane_search.get("scientific_authority") is not False or not str(last_lane_search.get("run_id") or "") or len(last_rows)!=len(DISCOVERY_LANES) or set(last_priority)!=set(DISCOVERY_LANES) or [str(row.get("lane") or "") for row in last_rows]!=last_priority or any(str(row.get("status") or "") not in {"NO_PAIR","REDUCIBLE","CANDIDATE"} for row in last_rows): errors.append("last completed lane-search receipt is invalid")
-        if generator.get("status") in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"} and (not last_lane_search or str(last_lane_search.get("run_id") or "")!=str(generator.get("run_id") or "")): errors.append("generated problem state must refresh the last completed lane-search receipt")
+            if last_lane_search.get("scientific_authority") is not False or not str(last_lane_search.get("run_id") or "") or len(last_rows)!=len(expected_search_lanes) or set(last_priority)!=set(expected_search_lanes) or [str(row.get("lane") or "") for row in last_rows]!=last_priority or any(str(row.get("status") or "") not in expected_lane_statuses for row in last_rows): errors.append("last completed lane-search receipt is invalid")
+        if generator.get("status") in generated_discovery_statuses and (not last_lane_search or str(last_lane_search.get("run_id") or "")!=str(generator.get("run_id") or "")): errors.append("generated problem state must refresh the last completed lane-search receipt")
     saturation_memory = generator.get("saturation_memory") or {}
     if saturation_memory.get("scientific_authority") is not False: errors.append("problem-discovery saturation memory cannot carry scientific authority")
     blocked_memory = saturation_memory.get("blocked_problem_memory") or {}

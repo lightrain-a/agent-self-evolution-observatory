@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T13:35:05+00:00",
-  "source_generator_run_id": "20260817T203424Z-replay",
-  "source_generator_status": "GENERATED_AWAIT_PROBLEM_GATE",
-  "status": "PRE_F0_QUEUE_EMPTY",
+  "generated_at": "2026-08-18T16:43:15+00:00",
+  "source_generator_run_id": "20260818T164230Z-ingestion-replay",
+  "source_generator_status": "GENERATED_PRE_F0_EVIDENCE_ACQUISITION",
+  "status": "PRE_F0_QUEUE_READY",
   "policy": {
     "canonical_double_funnel_pre_f0_queue": true,
     "source_must_be_canonical_problem_generator": true,
@@ -24,7 +24,7 @@
     "automatic_gpu_authority": false
   },
   "summary": {
-    "queued": 0,
+    "queued": 2,
     "problem_gate_authorized": 0,
     "paper_design_authorized": 0,
     "method_authorized": 0,
@@ -32,7 +32,154 @@
     "p0_authorized": 0,
     "gpu_authorized": 0
   },
-  "rows": [],
+  "rows": [
+    {
+      "candidate_id": "PORT-001",
+      "title": "Rank-inverted skill harm across harnesses as a non-composability witness",
+      "discovery_lane": "ASSUMPTION_BREAK",
+      "source_branch_id": "ASSUMPTION_BREAK-P2-001-R1",
+      "primary_refs": [
+        "arXiv:2608.08303",
+        "arXiv:2608.14036"
+      ],
+      "paperability_axes": {
+        "P": {
+          "label": "principle_or_problem_formulation",
+          "status": "OPEN",
+          "rationale": "The separability/irreducibility question (is the library-harness joint object a non-composability witness or a measurable interaction term?) is a genuine new problem formulation that has not been posed this way; it requires matched-invocation-statistics evaluation to separate interaction from irreducibility. Not fully supported yet because no published work has stated this exact witness or designed the matched-invocation protocol."
+        },
+        "M": {
+          "label": "method_or_method_boundary",
+          "status": "PLAUSIBLE",
+          "rationale": "A method-axis contribution is conceivable as a matched-retrieval-statistics evaluation protocol (instrumenting the harness retrieval-to-action boundary to record hit rate, context distribution, and invocation depth, then computing rank correlations across harnesses). This is a concrete, testable method but not yet established as superior to existing cross-harness transfer protocols in arXiv:2608.14036."
+        },
+        "E": {
+          "label": "empirical_phenomenon",
+          "status": "PLAUSIBLE",
+          "rationale": "An empirical phenomenon axis (rank inversion under matched retrieval statistics) is testable: the experiment holds the library fixed, varies the harness, and measures whether the harm ranking inverts. This is the cheapest falsifier and the most concrete surviving axis."
+        },
+        "B": {
+          "label": "benchmark_or_evaluation",
+          "status": "OPEN",
+          "rationale": "A benchmark/evaluation axis could emerge if a matched-invocation protocol becomes a reusable artifact, but the current branch does not yet propose a benchmark; only an evaluation protocol."
+        },
+        "T": {
+          "label": "theory_or_guarantee",
+          "status": "REDUCED",
+          "rationale": "The theory axis is reduced by the interaction-effect / CATE mature theory: a monotone composition function with harness-specific invocation rates is a standard interaction-term model, so the theory contribution cannot survive without an irreducibility result."
+        },
+        "S": {
+          "label": "system_or_capability",
+          "status": "NOT_CLAIMED",
+          "rationale": "No system capability is claimed."
+        }
+      },
+      "surviving_paperability_axes": [
+        "M",
+        "E"
+      ],
+      "non_principle_surviving_axes": [
+        "M",
+        "E"
+      ],
+      "route_reason": "EXACT_REDUCTION_PENDING",
+      "reduction_blockers": [
+        "saturation-exact-reduction-pending:harness-update-scope-heterogeneity",
+        "unresolved-exact-reduction-test:1"
+      ],
+      "exact_prediction": "If a fixed TBA-poisoned library from arXiv:2608.08303 is evaluated on two harnesses (Codex, Gemini-CLI) with matched retrieval-hit-rate, context distribution, and invocation depth, the harm ranking of triggered tasks will either (a) remain stable, in which case the cross-harness divergence in arXiv:2608.14036 is a measurable interaction term, or (b) invert, in which case the joint object is non-composable and the separability assumption is empirically broken.",
+      "strongest_same_information_baseline": "A monotone composition function h(L, H) = f(L) + g(H) + α(L)·β(H) where f is library harm, g is harness baseline harm, and α·β is the interaction term, fit to the same matched-statistics data. If this baseline reproduces the observed cross-harness ranking, irreducibility is refuted.",
+      "cheapest_problem_falsifier": "Take a frozen TBA-poisoned library from arXiv:2608.08303, instrument two harnesses (Codex, Gemini-CLI) to record retrieval-hit-rate, context distribution, and invocation depth, then evaluate the library on the same task suite with matched statistics. If the harm ranking is stable, irreducibility is refuted and the branch returns to 'measurable interaction term.' If the ranking inverts, the joint object is non-composable and the candidate survives.",
+      "endpoint_headroom_requirement": "Requires running a controlled matched-invocation experiment, which depends on access to both harnesses and the ability to instrument the retrieval-invocation boundary. This is non-trivial but within reach of the paper's authors if they have framework access.",
+      "next_if_positive": "RERUN_EXACT_SAME_INFORMATION_REDUCTION",
+      "next_if_support_missing": "SUPPORT_STOP_OR_BOUNDED_SUPPORT_ACQUISITION",
+      "next_if_protocol_invalid": "PROTOCOL_STOP_AND_REPAIR",
+      "next_if_realization_fails": "REALIZATION_STOP_AND_REPAIR",
+      "scientific_authority": false,
+      "authority": {
+        "problem_gate": false,
+        "paper_design": false,
+        "method": false,
+        "experiment": false,
+        "p0": false,
+        "gpu": false
+      }
+    },
+    {
+      "candidate_id": "PORT-003",
+      "title": "Timescale-isolated ablation of action-frequency governance on a frozen skill set",
+      "discovery_lane": "ASSUMPTION_BREAK",
+      "source_branch_id": "ASSUMPTION_BREAK-P2-004-R1",
+      "primary_refs": [
+        "arXiv:2608.09096",
+        "arXiv:2608.16590"
+      ],
+      "paperability_axes": {
+        "P": {
+          "label": "principle_or_problem_formulation",
+          "status": "REDUCED",
+          "rationale": "The principle that closed-loop self-evolution is regime-dependent is already stated in arXiv:2608.16590 itself; the problem is not to argue the principle but to test it under a controlled ablation the source omits."
+        },
+        "M": {
+          "label": "method_or_method_boundary",
+          "status": "SUPPORTED",
+          "rationale": "The methodological move is concrete and fresh: a four-arm timescale-isolated ablation (A post-hoc only, B episode-level+retrieval, C skill-level closed-loop, D full Zetta) holding skill library, base policy, compute, and task suite fixed, where C is a standalone insertable module. This is not a generic ablation; it specifically isolates the fast-timescale contribution that no current source implements as a separately testable module."
+        },
+        "E": {
+          "label": "empirical_phenomenon",
+          "status": "SUPPORTED",
+          "rationale": "The empirical phenomenon — a monotone A<B<C<D ordering with a dominant C→D jump on a frozen skill library and frozen base policy — is a falsifiable, measurable prediction. If C→D is the dominant contributor on the released GR00T+LIBERO-Pro+RoboCasa suite, the primitive is supported; if B→C dominates and C→D is near zero, the primitive is falsified."
+        },
+        "B": {
+          "label": "benchmark_or_evaluation",
+          "status": "OPEN",
+          "rationale": "A new evaluation protocol (timescale-isolated ablation harness) is implicitly proposed, but its portability beyond the Zetta/GR00T substrate is unverified; status kept OPEN because the contribution can stand on M+E without a standalone B claim."
+        },
+        "T": {
+          "label": "theory_or_guarantee",
+          "status": "OPEN",
+          "rationale": "No formal guarantee is claimed. A theoretical account of why action-frequency governance is necessary could be added (e.g., under what R ratio it is needed), but the candidate as stated is empirical."
+        },
+        "S": {
+          "label": "system_or_capability",
+          "status": "NOT_CLAIMED",
+          "rationale": "No new system or capability is being released; the contribution is an evaluation artifact on top of released infrastructure."
+        }
+      },
+      "surviving_paperability_axes": [
+        "M",
+        "E"
+      ],
+      "non_principle_surviving_axes": [
+        "M",
+        "E"
+      ],
+      "route_reason": "EXACT_REDUCTION_PENDING",
+      "reduction_blockers": [
+        "saturation-exact-reduction-pending:harness-update-scope-heterogeneity",
+        "saturation-exact-reduction-pending:persistent-update-vs-test-time-compute",
+        "unresolved-exact-reduction-test:1",
+        "unresolved-exact-reduction-test:2"
+      ],
+      "exact_prediction": "On the released frozen GR00T + LIBERO-Pro + RoboCasa substrate with matched skill library, base policy, and compute, the C→D contribution will be ≥5pp macro-average success and will exceed the matched-frequency HRL baseline's C→D contribution by ≥2pp; if either inequality fails, the primitive claim is falsified.",
+      "strongest_same_information_baseline": "A hierarchical-RL controller with matched fast-timescale decision frequency, matched slow-timescale structure, matched skill library, matched base policy, and matched per-action compute, but no governance/closed-loop module — the strongest same-information baseline that does not implement the claimed primitive.",
+      "cheapest_problem_falsifier": "Run the four-arm ablation (A, B, C, D) on the released GR00T + LIBERO-Pro subset (or a smaller frozen-skill frozen-base-policy subset thereof) with matched compute, matched skill library, and matched per-action re-ranking baseline. If C→D < 2pp or if the matched-frequency HRL baseline reproduces ≥90% of the C→D gap, the primitive claim is falsified. Estimated cost: small relative to full Zetta training because the base policy and skill library are frozen.",
+      "endpoint_headroom_requirement": "The C→D contribution must be measured on tasks where the full Zetta D has not yet saturated (e.g., tasks where D is in the 70–90% range), not on tasks where D is at ceiling; otherwise the gap is unmeasurable.",
+      "next_if_positive": "RERUN_EXACT_SAME_INFORMATION_REDUCTION",
+      "next_if_support_missing": "SUPPORT_STOP_OR_BOUNDED_SUPPORT_ACQUISITION",
+      "next_if_protocol_invalid": "PROTOCOL_STOP_AND_REPAIR",
+      "next_if_realization_fails": "REALIZATION_STOP_AND_REPAIR",
+      "scientific_authority": false,
+      "authority": {
+        "problem_gate": false,
+        "paper_design": false,
+        "method": false,
+        "experiment": false,
+        "p0": false,
+        "gpu": false
+      }
+    }
+  ],
   "scientific_authority": false,
   "authority": {
     "problem_gate": false,

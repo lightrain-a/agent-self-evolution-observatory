@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0-pre-f0",
+  "generated_at": "2026-08-18T16:43:50+00:00",
+  "run_id": "20260818T164230Z-ingestion-replay",
+  "status": "PROBLEM_FALSIFIER_SUPPORT_INVENTORY_REQUEST_READY",
+  "source": "CANONICAL_PRE_F0_QUEUE",
+  "policy": {
+    "problem_falsifier_queue_is_zero_authority": true,
+    "support_inventory_precedes_falsifier_execution": true,
+    "support_inventory_request_cannot_claim_asset_availability": true,
+    "synthetic_or_invented_units_cannot_substitute_for_required_source_units": true,
+    "support_unavailable_is_not_scientific_falsification": true,
+    "direct_released_unit_table_not_required_for_reconstructible_truth": true,
+    "first_party_code_may_materialize_independent_support_truth": true,
+    "existing_provenance_substrate_may_materialize_independent_support_truth": true,
+    "reconstruction_must_freeze_operationalization_before_outcome_readout": true,
+    "reconstruction_cannot_use_synthetic_substitution_or_candidate_mechanism_injection": true,
+    "reconstruction_cannot_retune_on_hidden_outcomes_or_change_candidate_pool": true,
+    "support_inventory_is_one_acquisition_route_not_a_global_prerequisite": true,
+    "support_unavailable_may_route_to_bounded_first_party_evidence_design": true,
+    "first_party_evidence_requires_independent_truth_and_same_information_baseline": true,
+    "canonical_generator_and_queue_untouched": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_paper_design_authority": false,
+    "automatic_method_authority": false,
+    "automatic_experiment_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false
+  },
+  "summary": {
+    "queued": 2,
+    "inventory_requests": 2,
+    "problem_gate_authorized": 0,
+    "paper_design_authorized": 0,
+    "method_authorized": 0,
+    "experiment_authorized": 0,
+    "p0_authorized": 0,
+    "gpu_authorized": 0
+  },
+  "rows": [
+    {
+      "candidate_id": "PORT-001",
+      "title": "Rank-inverted skill harm across harnesses as a non-composability witness",
+      "discovery_lane": "ASSUMPTION_BREAK",
+      "source_branch_id": "ASSUMPTION_BREAK-P2-001-R1",
+      "primary_refs": [
+        "arXiv:2608.08303",
+        "arXiv:2608.14036"
+      ],
+      "exact_prediction": "If a fixed TBA-poisoned library from arXiv:2608.08303 is evaluated on two harnesses (Codex, Gemini-CLI) with matched retrieval-hit-rate, context distribution, and invocation depth, the harm ranking of triggered tasks will either (a) remain stable, in which case the cross-harness divergence in arXiv:2608.14036 is a measurable interaction term, or (b) invert, in which case the joint object is non-composable and the separability assumption is empirically broken.",
+      "strongest_same_information_baseline": "A monotone composition function h(L, H) = f(L) + g(H) + α(L)·β(H) where f is library harm, g is harness baseline harm, and α·β is the interaction term, fit to the same matched-statistics data. If this baseline reproduces the observed cross-harness ranking, irreducibility is refuted.",
+      "falsifier_expression": "Take a frozen TBA-poisoned library from arXiv:2608.08303, instrument two harnesses (Codex, Gemini-CLI) to record retrieval-hit-rate, context distribution, and invocation depth, then evaluate the library on the same task suite with matched statistics. If the harm ranking is stable, irreducibility is refuted and the branch returns to 'measurable interaction term.' If the ranking inverts, the joint object is non-composable and the candidate survives.",
+      "support_inventory_question": "Determine whether primary/author-released artifacts directly expose the observational/interventional units and fields needed for this frozen Pre-F0 falsifier, or whether author-released first-party code / an existing provenance-audited substrate can materialize those units as independent truth under the frozen operationalization. Reconstructed support is admissible only after materialization and provenance hashing, without synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.",
+      "required_receipt_dispositions": [
+        "HOLD_SUPPORT_UNAVAILABLE",
+        "SUPPORT_QUALIFIED"
+      ],
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "PORT-003",
+      "title": "Timescale-isolated ablation of action-frequency governance on a frozen skill set",
+      "discovery_lane": "ASSUMPTION_BREAK",
+      "source_branch_id": "ASSUMPTION_BREAK-P2-004-R1",
+      "primary_refs": [
+        "arXiv:2608.09096",
+        "arXiv:2608.16590"
+      ],
+      "exact_prediction": "On the released frozen GR00T + LIBERO-Pro + RoboCasa substrate with matched skill library, base policy, and compute, the C→D contribution will be ≥5pp macro-average success and will exceed the matched-frequency HRL baseline's C→D contribution by ≥2pp; if either inequality fails, the primitive claim is falsified.",
+      "strongest_same_information_baseline": "A hierarchical-RL controller with matched fast-timescale decision frequency, matched slow-timescale structure, matched skill library, matched base policy, and matched per-action compute, but no governance/closed-loop module — the strongest same-information baseline that does not implement the claimed primitive.",
+      "falsifier_expression": "Run the four-arm ablation (A, B, C, D) on the released GR00T + LIBERO-Pro subset (or a smaller frozen-skill frozen-base-policy subset thereof) with matched compute, matched skill library, and matched per-action re-ranking baseline. If C→D < 2pp or if the matched-frequency HRL baseline reproduces ≥90% of the C→D gap, the primitive claim is falsified. Estimated cost: small relative to full Zetta training because the base policy and skill library are frozen.",
+      "support_inventory_question": "Determine whether primary/author-released artifacts directly expose the observational/interventional units and fields needed for this frozen Pre-F0 falsifier, or whether author-released first-party code / an existing provenance-audited substrate can materialize those units as independent truth under the frozen operationalization. Reconstructed support is admissible only after materialization and provenance hashing, without synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.",
+      "required_receipt_dispositions": [
+        "HOLD_SUPPORT_UNAVAILABLE",
+        "SUPPORT_QUALIFIED"
+      ],
+      "scientific_authority": false
+    }
+  ],
+  "authority": {
+    "canonical_generator": false,
+    "canonical_problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  },
+  "scientific_authority": false
+}

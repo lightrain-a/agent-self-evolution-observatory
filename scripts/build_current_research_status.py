@@ -15,6 +15,7 @@ if str(ROOT) not in sys.path:
 from research_pipeline.asset_first_stri_public_status import build_asset_first_stri_public_status, validate_asset_first_stri_public_status
 from research_pipeline.paper_first_problem_discovery_contract import build_problem_discovery_contract_state
 from research_pipeline.paper_first_pre_f0_queue import load_pre_f0_queue
+from research_pipeline.paper_first_problem_falsifier_preflight import load_pre_f0_problem_falsifier_preflight
 
 GEN = ROOT / "generated"
 
@@ -34,6 +35,7 @@ system = load("research-system-state.json")
 problem_generator = load("paper-first-problem-generator-state.json")
 problem_queue = load("paper-first-problem-gate-queue.json")
 pre_f0_queue = load_pre_f0_queue()
+pre_f0_support = load_pre_f0_problem_falsifier_preflight()
 discovery_contract = build_problem_discovery_contract_state()
 paper_backlog = load("paper-first-paper-design-backlog.json")
 p0_ledger = load("p0-decision-ledger.json")
@@ -76,6 +78,7 @@ fresh_phenomenon_summary = fresh_phenomenon.get("summary", {})
 generator_summary = problem_generator.get("summary", {})
 generator_policy = problem_generator.get("policy", {})
 pre_f0_summary = pre_f0_queue.get("summary", {})
+pre_f0_support_summary = pre_f0_support.get("summary", {})
 discovery_policy = discovery_contract.get("policy", {})
 
 shadow_rows = []
@@ -155,6 +158,8 @@ state = {
         "idea_search_reviewer_attacks": int(generator_summary.get("reviewer_attacks", 0)),
         "idea_search_repair_children": int(generator_summary.get("repair_children", 0)),
         "idea_search_pre_f0": int(pre_f0_summary.get("queued", 0)),
+        "idea_search_pre_f0_support_ready": int(pre_f0_support_summary.get("support_qualified", 0)),
+        "idea_search_pre_f0_support_holds": int(pre_f0_support_summary.get("hold_support_unavailable", 0)),
         "legacy_p0_lifecycle": int(p0_summary.get("active_p0", 0)),
         "legacy_p0_experiment_stopped": int(p0_summary.get("experiment_stopped", 0)),
         "legacy_p0_merged": int(p0_summary.get("experiment_merged", 0)),
@@ -253,6 +258,9 @@ state = {
         "last_completed_repair_children": int(generator_summary.get("repair_children", 0)),
         "pre_f0_status": pre_f0_queue.get("status"),
         "pre_f0_queued": int(pre_f0_summary.get("queued", 0)),
+        "pre_f0_support_status": pre_f0_support.get("status"),
+        "pre_f0_support_ready": int(pre_f0_support_summary.get("support_qualified", 0)),
+        "pre_f0_support_holds": int(pre_f0_support_summary.get("hold_support_unavailable", 0)),
         "pre_f0_scientific_authority": bool(pre_f0_queue.get("scientific_authority", False)),
         "final_problem_gate_pass": int(queue_summary.get("passed_problem_gate", 0)),
         "exact_reduction_required_before_final_problem_gate": bool(discovery_policy.get("exact_reduction_required_before_final_problem_gate")),
@@ -280,7 +288,7 @@ state = {
         "experiment_authorized": int(queue_summary.get("experiment_authorized", 0)),
         "p0_authorized": int(queue_summary.get("p0_authorized", 0)),
         "gpu_authorized": int(backlog_summary.get("gpu_authorized", 0)),
-        "note": "The installed discovery operator is now the canonical double funnel. The last completed generator receipt may still be a legacy receipt until the next canonical transaction; historical Search Portfolio results remain shadow-only and are not retroactively promoted.",
+        "note": "The latest completed canonical generator receipt is a v17 double-funnel receipt. Historical Search Portfolio results remain shadow-only and are not retroactively promoted; current Pre-F0 support readiness is reported separately from queue size and from formal Problem-Gate passes.",
     },
     "fresh_phenomenon_portfolio": {
         "status": fresh_phenomenon.get("status"),
