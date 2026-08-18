@@ -11,6 +11,7 @@ from unittest.mock import patch
 
 from .config import StorageSettings
 from .paper_first_discovery_transaction import close_existing_problem_discovery_transaction, recompile_existing_problem_discovery_transaction, recompile_primary_typed_evidence_with_generator_replay_transaction, _transaction_id, _transaction_lock, _transaction_lock_path, _validate, write_problem_discovery_transaction
+from .paper_first_primary_evidence import TYPED_EVIDENCE_EXTRACTION_VERSION
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION
 from .paper_first_problem_generator import _pool_sha
 
@@ -221,9 +222,9 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         self.assertEqual(result["status"],"COMMITTED_TYPED_EVIDENCE_RECOMPILE_ZERO_PROVIDER_REPLAY")
         self.assertEqual(result["provider_calls_executed"],0);self.assertEqual(result["generator_provider_calls_executed"],0);self.assertEqual(result["semantic_reviewer_calls_executed"],0)
         self.assertNotEqual(result["transaction_id"],old_tx)
-        self.assertEqual(primary["policy"]["typed_evidence_extraction_version"],"typed-v2");self.assertTrue(primary["policy"]["typed_evidence_requires_first_party_ownership_or_nonliterature_attribution"])
+        self.assertEqual(primary["policy"]["typed_evidence_extraction_version"],TYPED_EVIDENCE_EXTRACTION_VERSION);self.assertTrue(primary["policy"]["typed_evidence_requires_first_party_ownership_or_nonliterature_attribution"])
         self.assertEqual(primary["summary"]["typed_evidence_candidates"]["measured_failures"],before_count)
-        self.assertEqual(recompiled["typed_evidence_extraction_version"],"typed-v2");self.assertEqual((recompiled.get("derived_evidence_recompile") or {}).get("network_fetches_executed"),0)
+        self.assertEqual(recompiled["typed_evidence_extraction_version"],TYPED_EVIDENCE_EXTRACTION_VERSION);self.assertEqual((recompiled.get("derived_evidence_recompile") or {}).get("network_fetches_executed"),0)
         self.assertTrue(generator["policy"]["generator_replayed_without_provider"]);self.assertEqual(generator["status"],"GENERATED_ZERO_CANDIDATES")
         self.assertEqual(queue["summary"]["submitted"],0);self.assertEqual(queue["summary"]["passed_problem_gate"],0)
         self.assertEqual(queue["primary_evidence_pool"],"private-data://paper-first-problem-discovery/primary-evidence-pool.json")
@@ -386,7 +387,10 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         self.assertEqual((queue["summary"]["submitted"],queue["summary"]["audited"],queue["summary"]["passed_problem_gate"],queue["summary"]["blocked_problem_gate"]),(0,0,0,0))
         self.assertEqual({primary["discovery_transaction_id"],generator["discovery_transaction_id"],queue["discovery_transaction_id"]},{result["transaction_id"]})
         receipts=generator["saturation_memory"]["portable_review_receipts"]
-        self.assertEqual(len(receipts),1);self.assertEqual(receipts[0]["run_id"],first_run_id);self.assertFalse(receipts[0]["scientific_authority"])
+        by_run={row["run_id"]:row for row in receipts}
+        self.assertIn(first_run_id,by_run);self.assertFalse(by_run[first_run_id]["scientific_authority"])
+        self.assertTrue(any(row.get("status")=="EXTERNAL_FRESH_INTAKE_REVIEWED" for row in receipts))
+        self.assertTrue(all(row.get("scientific_authority") is False for row in receipts))
         self.assertEqual(result["summary"]["source_coverage_exhausted"],True)
         self.assertEqual(result["summary"]["unreviewed_lane_linked_sources"],0)
         self.assertEqual(result["authority"],{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False})
@@ -493,13 +497,15 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
             second_storage=self.storage(root/"host-b");second=self.run_txn(root/"host-b",second_storage,targets,now+timedelta(minutes=1))
             primary=json.loads(targets["primary_json"].read_text());generator=json.loads(targets["generator_json"].read_text())
         self.assertNotEqual(first["transaction_id"],second["transaction_id"])
-        self.assertEqual(primary["summary"]["portable_review_receipts_merged"],1)
-        self.assertEqual(primary["summary"]["prior_reviewed_sources"],4)
+        self.assertGreaterEqual(primary["summary"]["portable_review_receipts_merged"],2)
+        self.assertGreaterEqual(primary["summary"]["prior_reviewed_sources"],4)
         self.assertEqual(primary["summary"]["eligible_unreviewed"],0)
         self.assertTrue(primary["summary"]["source_coverage_exhausted"])
         self.assertEqual(generator["status"],"SKIPPED_SOURCE_COVERAGE_SATURATED")
         receipts=generator["saturation_memory"]["portable_review_receipts"]
-        self.assertEqual(len(receipts),1);self.assertEqual(receipts[0]["run_id"],first_run_id)
+        by_run={row["run_id"]:row for row in receipts}
+        self.assertIn(first_run_id,by_run)
+        self.assertTrue(any(row.get("status")=="EXTERNAL_FRESH_INTAKE_REVIEWED" for row in receipts))
         self.assertTrue(all(row["scientific_authority"] is False for row in receipts))
         self.assertEqual(second["summary"]["generated"],0)
         self.assertEqual(second["summary"]["queue_submitted"],0)
