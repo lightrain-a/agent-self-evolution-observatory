@@ -20,6 +20,8 @@ def _lane_contract_payload(*, shadow_mode: bool = False) -> list[dict[str, Any]]
         {
             "lane": lane,
             "source_roles": list(LANE_SOURCE_ROLES[lane]),
+            "distinct_source_minimum": int(LANE_DISTINCT_SOURCE_MINIMUM[lane]),
+            "same_primary_source_allowed": int(LANE_DISTINCT_SOURCE_MINIMUM[lane]) == 1,
             "required_lane_evidence": list(LANE_EVIDENCE_REQUIRED[lane]),
             "machine_contract": LANE_MACHINE_CONTRACTS[lane],
         }

@@ -218,6 +218,16 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertIn("full-parameter SFT are distinct interventions",prompt)
 
 
+    def test_reviewer_prompt_exposes_numeric_lane_source_minima(self) -> None:
+        candidate=self.raw_candidate("UNEXPLAINED_BOUNDARY")
+        evidence={
+            "arXiv:2608.00001":{"ref":"arXiv:2608.00001","title":"A","source_sha256":"1"*64,"abstract":"Primary abstract fact 1 about self-evolving agents and bounded deployment evidence."},
+            "arXiv:2608.00002":{"ref":"arXiv:2608.00002","title":"B","source_sha256":"2"*64,"abstract":"Primary abstract fact 2 about self-evolving agents and bounded deployment evidence."},
+        }
+        prompt=reviewer_prompt([candidate],evidence)
+        self.assertIn('"lane":"UNEXPLAINED_BOUNDARY","source_roles":["EMPIRICAL_FACT","EMPIRICAL_FACT"],"distinct_source_minimum":1,"same_primary_source_allowed":true',prompt)
+        self.assertIn('"lane":"CONVERGENT_FAILURE","source_roles":["EMPIRICAL_FACT","EMPIRICAL_FACT"],"distinct_source_minimum":2,"same_primary_source_allowed":false',prompt)
+
     def test_reviewer_prompt_requires_matched_contradiction_treatment_semantics(self) -> None:
         candidate=self.raw_candidate("CONTRADICTION")
         evidence={
