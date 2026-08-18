@@ -251,7 +251,7 @@ def validate_shadow_run_control(*, run_root: Path, pool_path: Path | None = None
             raise ValueError("shadow frozen-pool provenance-kind drift detected")
     if memory_path is not None:
         if str(receipt.get("memory_sha256") or "") != memory_sha256(memory_path):
-            raise ValueError("shadow dead-end memory digest drift detected")
+            raise ValueError("shadow search memory digest drift detected")
     authority = receipt.get("authority") or {}
     if any(authority.get(key) is not False for key in AUTHORITY):
         raise ValueError("shadow run qualification cannot carry canonical or downstream authority")
