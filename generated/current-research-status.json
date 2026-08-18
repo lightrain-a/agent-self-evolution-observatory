@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T06:14:34+00:00",
-  "source_revision": "418e483c36b8ac17051941d72af2a4cbbca90794",
+  "generated_at": "2026-08-18T06:18:39+00:00",
+  "source_revision": "e3d7958050e20926e39c633df9b1385a026bdf73",
   "as_of_date": "2026-08-18",
   "headline": {
     "paper_ready": 1,
@@ -17,7 +17,7 @@
     "legacy_p0_method_stop": 1,
     "launchable_formal_experiments": 0,
     "shadow_dead_ends": 39,
-    "shadow_holds": 3,
+    "shadow_holds": 5,
     "shadow_method_ready": 0,
     "shadow_qualification_ready": 1,
     "fresh_active_f0": 0,
@@ -283,7 +283,7 @@
     "stop_standalone": 1,
     "dead_end_objects": 39,
     "principle_readjudication_dead_ends": 35,
-    "hold_objects": 3,
+    "hold_objects": 5,
     "semantic_holds": 0,
     "near_miss_holds": 1,
     "support_release_holds": 4,

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T06:06:00+00:00",
+  "generated_at": "2026-08-18T06:18:04+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-18T06:05:59+00:00",
+    "generated_at": "2026-08-18T06:18:04+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -2724,6 +2724,60 @@
         },
         "source_hold_artifact": "generated/comfyclaw-skill-uptake-fresh-phenomenon-support-hold-20260818.json",
         "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "QWEN-HARNESS-BUDGETED-REGRESSION-SENTINEL:cb77635e719c",
+        "basin": "fresh-phenomenon-support-hold-b89b60f4b4446939",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "memory_class": "REOPENABLE_HOLD",
+        "dead_end_certified": false,
+        "strongest_reduction": "support unavailable; no scientific reduction authorized",
+        "current_source_refs": [
+          "arXiv:2607.03691"
+        ],
+        "evidence_basis": [
+          "arXiv:2607.03691",
+          "repo:generated/qwen-harness-regression-support-audit-20260818.json#sha256=c67341bd5668ef0adb394158bdb976297452d15cba0a2364d6edb4bb29fa7348"
+        ],
+        "reason": "The frozen primary paper reports 35 releases × 50 tasks × 2 runs and says its replication package includes all versions, inference/evaluation scripts, and raw results, but the same primary version states that the package is to be made publicly available upon acceptance. The aggregate release curves and hand-traced PR case studies are enough to establish the regression phenomena and several source-internal explanations, but not enough to simulate a low-budget held-out probe policy or compare it fairly with random/stratified probes and pre-outcome change-risk baselines. Missing released raw units is therefore an execution/support hold, not scientific negative evidence. Exact held target: The mid-cycle ~217K-token trough followed by renewed token growth in later harness releases.",
+        "reopen_only_if": "Reopen when the authors publish the promised replication package, or an equivalent first-party export, containing joinable raw per-version × task × run outcomes and execution-cost logs sufficient to evaluate a preregistered budgeted regression sentinel prospectively across held-out releases. Aggregate Figure 6/8 values, isolated case studies, future-running scripts without the paper-run outputs, or inferred values from plots are insufficient. A release-surface change requests re-audit only and does not automatically authorize Problem Gate, Method, P0, or GPU.",
+        "required_unit": "A provenance-audited per-version × task × run table for the paper's 35 Qwen Code releases and 50 SWE-bench Verified tasks, including release/version or commit identity, task identity, run identity, resolved/pass outcome, token consumption, tool-call count, conversation-turn count, and enough pre-outcome release metadata to reconstruct the paper's project/component change features. The unit must permit temporal train/validation/test splits and simulation of a small probe subset against the full 50-task outcome so random/stratified probes, historical task-sensitivity, and change-risk-only baselines can be matched without reading held-out release outcomes.",
+        "fresh_phenomenon_hold": {
+          "source_ref": "arXiv:2607.03691",
+          "evidence_sha256": "cb77635e719c0bb77e64e86690c8db49a7e38b25508ea685a045c716c51faacc",
+          "support_audit_artifact": "generated/qwen-harness-regression-support-audit-20260818.json",
+          "support_audit_sha256": "c67341bd5668ef0adb394158bdb976297452d15cba0a2364d6edb4bb29fa7348",
+          "scientific_authority": false
+        },
+        "source_hold_artifact": "generated/qwen-harness-token-reversal-fresh-phenomenon-support-hold-20260818.json",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "QWEN-HARNESS-BUDGETED-REGRESSION-SENTINEL:8e81f6a0255f",
+        "basin": "fresh-phenomenon-support-hold-c00266ba3bdd60e3",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "memory_class": "REOPENABLE_HOLD",
+        "dead_end_certified": false,
+        "strongest_reduction": "support unavailable; no scientific reduction authorized",
+        "current_source_refs": [
+          "arXiv:2607.03691"
+        ],
+        "evidence_basis": [
+          "arXiv:2607.03691",
+          "repo:generated/qwen-harness-regression-support-audit-20260818.json#sha256=c67341bd5668ef0adb394158bdb976297452d15cba0a2364d6edb4bb29fa7348"
+        ],
+        "reason": "The frozen primary paper reports 35 releases × 50 tasks × 2 runs and says its replication package includes all versions, inference/evaluation scripts, and raw results, but the same primary version states that the package is to be made publicly available upon acceptance. The aggregate release curves and hand-traced PR case studies are enough to establish the regression phenomena and several source-internal explanations, but not enough to simulate a low-budget held-out probe policy or compare it fairly with random/stratified probes and pre-outcome change-risk baselines. Missing released raw units is therefore an execution/support hold, not scientific negative evidence. Exact held target: The post-v0.3.0 quality plateau with isolated regressions such as the v0.5.0 regression.",
+        "reopen_only_if": "Reopen when the authors publish the promised replication package, or an equivalent first-party export, containing joinable raw per-version × task × run outcomes and execution-cost logs sufficient to evaluate a preregistered budgeted regression sentinel prospectively across held-out releases. Aggregate Figure 6/8 values, isolated case studies, future-running scripts without the paper-run outputs, or inferred values from plots are insufficient. A release-surface change requests re-audit only and does not automatically authorize Problem Gate, Method, P0, or GPU.",
+        "required_unit": "A provenance-audited per-version × task × run table for the paper's 35 Qwen Code releases and 50 SWE-bench Verified tasks, including release/version or commit identity, task identity, run identity, resolved/pass outcome, token consumption, tool-call count, conversation-turn count, and enough pre-outcome release metadata to reconstruct the paper's project/component change features. The unit must permit temporal train/validation/test splits and simulation of a small probe subset against the full 50-task outcome so random/stratified probes, historical task-sensitivity, and change-risk-only baselines can be matched without reading held-out release outcomes.",
+        "fresh_phenomenon_hold": {
+          "source_ref": "arXiv:2607.03691",
+          "evidence_sha256": "8e81f6a0255f3165206886f73a7745c82db6c89fcb778fc0e65a5673aa124346",
+          "support_audit_artifact": "generated/qwen-harness-regression-support-audit-20260818.json",
+          "support_audit_sha256": "c67341bd5668ef0adb394158bdb976297452d15cba0a2364d6edb4bb29fa7348",
+          "scientific_authority": false
+        },
+        "source_hold_artifact": "generated/qwen-harness-quality-plateau-fresh-phenomenon-support-hold-20260818.json",
+        "scientific_authority": false
       }
     ],
     "principle_dead_end_count": 39,
@@ -2885,7 +2939,7 @@
     "positive_residual_asset_evidence_count": 1,
     "positive_residual_search_active_count": 0,
     "positive_residual_asset_registry_id": "positive-residual-search-assets-v4",
-    "hold_object_count": 3,
+    "hold_object_count": 5,
     "current_source_hard_veto_count": 0,
     "current_source_hard_veto_added_from_latest_run": 0,
     "current_source_hard_veto_added_from_terminal_run": 0,
@@ -2954,7 +3008,7 @@
     "support_inventory_required": 1,
     "shadow_dead_end_objects": 39,
     "principle_readjudication_dead_ends": 35,
-    "shadow_hold_objects": 3,
+    "shadow_hold_objects": 5,
     "current_source_hard_veto_dead_ends": 0,
     "current_source_hard_veto_added_from_latest_run": 0,
     "current_source_hard_veto_added_from_terminal_run": 0,
