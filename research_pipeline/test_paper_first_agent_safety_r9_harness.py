@@ -19,6 +19,7 @@ from .paper_first_agent_safety_r9_harness import (
     R9_MODEL_SOURCE_METADATA,
     R9_MODEL_VERIFICATION_RECEIPT,
     R9_REQUIRED_MODEL_FILES,
+    acquire_and_prepare_hf_model_provenance,
     clone_future_branch,
     build_r9_model_call_budget,
     effective_execution_gate,
@@ -67,11 +68,15 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
         source_metadata = {"id": model_id, "sha": revision, "siblings": siblings}
         source_path = root / R9_MODEL_SOURCE_METADATA
         source_path.write_text(json.dumps(source_metadata, sort_keys=True), encoding="utf-8")
+        source_url=f"https://huggingface.co/api/models/{model_id}/revision/{revision}?blobs=true"
         receipt = {
-            "schema_version": "1.0",
+            "schema_version": "2.0",
             "model_id": model_id,
             "revision": revision,
             "source_domain": source_domain,
+            "source_url": source_url,
+            "source_final_url": source_url,
+            "source_http_status": 200,
             "exact_revision_verified": True,
             "source_metadata": R9_MODEL_SOURCE_METADATA,
             "source_metadata_sha256": hashlib.sha256(source_path.read_bytes()).hexdigest(),
@@ -270,6 +275,51 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
         self.assertFalse(bad["protocol_valid"])
         self.assertFalse(bad["cap_relaxation_allowed"])
 
+
+    def test_provenance_preparer_uses_literal_official_hf_and_stages_only_source_verified_cache(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); model_dir=root/"model"; cache=root/"cache"; model_dir.mkdir(); cache.mkdir()
+            siblings=[]
+            for filename in R9_REQUIRED_MODEL_FILES["agent"]:
+                payload=f"official-fixture:{filename}\n".encode()
+                target=model_dir/filename if filename.endswith(".safetensors") else cache/filename
+                target.write_bytes(payload)
+                if filename.endswith(".safetensors"):
+                    digest=hashlib.sha256(payload).hexdigest()
+                    siblings.append({"rfilename":filename,"size":len(payload),"lfs":{"sha256":digest,"size":len(payload)}})
+                else:
+                    blob=hashlib.sha1(f"blob {len(payload)}\0".encode("ascii")+payload).hexdigest()
+                    siblings.append({"rfilename":filename,"size":len(payload),"blobId":blob})
+            metadata={"id":R9_AGENT_MODEL_ID,"sha":R9_AGENT_MODEL_REVISION,"siblings":siblings}
+            expected_url=f"https://huggingface.co/api/models/{R9_AGENT_MODEL_ID}/revision/{R9_AGENT_MODEL_REVISION}?blobs=true"
+            calls=[]
+            def requester(url):
+                calls.append(url)
+                return {"status":200,"final_url":expected_url,"content":json.dumps(metadata).encode()}
+            result=acquire_and_prepare_hf_model_provenance(role="agent",model_dir=model_dir,ancillary_cache_dir=cache,requester=requester)
+            self.assertEqual(calls,[expected_url])
+            self.assertEqual(result["status"],"R9_HF_MODEL_PROVENANCE_PREPARED")
+            self.assertEqual(set(result["staged_from_ancillary_cache"]),{f for f in R9_REQUIRED_MODEL_FILES["agent"] if not f.endswith(".safetensors")})
+            self.assertTrue((model_dir/R9_MODEL_REVISION_MARKER).is_file())
+            self.assertTrue((model_dir/R9_MODEL_VERIFICATION_RECEIPT).is_file())
+            self.assertTrue((model_dir/R9_MODEL_SOURCE_METADATA).is_file())
+
+    def test_provenance_preparer_rejects_mirror_final_url_without_writing_marker(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); model_dir=root/"model"; cache=root/"cache"; model_dir.mkdir(); cache.mkdir()
+            siblings=[]
+            for filename in R9_REQUIRED_MODEL_FILES["agent"]:
+                payload=f"official-fixture:{filename}\n".encode(); (model_dir/filename).write_bytes(payload)
+                if filename.endswith(".safetensors"):
+                    digest=hashlib.sha256(payload).hexdigest(); siblings.append({"rfilename":filename,"size":len(payload),"lfs":{"sha256":digest,"size":len(payload)}})
+                else:
+                    blob=hashlib.sha1(f"blob {len(payload)}\0".encode("ascii")+payload).hexdigest(); siblings.append({"rfilename":filename,"size":len(payload),"blobId":blob})
+            metadata={"id":R9_AGENT_MODEL_ID,"sha":R9_AGENT_MODEL_REVISION,"siblings":siblings}
+            def requester(url): return {"status":200,"final_url":url.replace("huggingface.co","hf-mirror.com"),"content":json.dumps(metadata).encode()}
+            with self.assertRaisesRegex(RuntimeError,"redirected away from huggingface.co"):
+                acquire_and_prepare_hf_model_provenance(role="agent",model_dir=model_dir,ancillary_cache_dir=cache,requester=requester)
+            self.assertFalse((model_dir/R9_MODEL_REVISION_MARKER).exists())
+            self.assertFalse((model_dir/R9_MODEL_VERIFICATION_RECEIPT).exists())
 
     def test_runtime_model_asset_gate_fails_closed_when_models_missing(self) -> None:
         with tempfile.TemporaryDirectory() as td:
