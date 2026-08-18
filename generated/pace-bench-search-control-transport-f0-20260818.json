@@ -1,0 +1,511 @@
+{
+  "schema_version": "1.1",
+  "generated_at": "2026-08-17T19:20:03+00:00",
+  "stage": "PACE_BENCH_SEARCH_CONTROL_TRANSPORT_F0",
+  "candidate_id": "pace-search-control-transport",
+  "contract_version": "pace-search-control-transport-f0-v1",
+  "primary_ref": "arXiv:2608.14441",
+  "zero_gpu": true,
+  "analysis_provider_calls": 0,
+  "source_experiment_used_real_provider": true,
+  "training_steps": 0,
+  "scientific_authority": false,
+  "authority": {
+    "canonical_generator": false,
+    "canonical_problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  },
+  "policy": {
+    "source_pool_exposure_is_not_executable_asset_review": true,
+    "mock_trajectory_is_plumbing_only": true,
+    "released_failure_taxonomy_cannot_be_reclaimed_as_novelty": true,
+    "released_endpoint_strategy_complementarity_cannot_be_reclaimed_as_novelty": true,
+    "generic_refine_explore_routing_is_reduced_by_progress_aware_adaptive_search": true,
+    "same_task_cross_stage_transport_is_the_surviving_falsifier_object": true,
+    "real_same_model_same_provider_same_budget_multistrategy_results_required": true,
+    "bidirectional_stage1_to_stage4_rank_reversal_required_for_go": true,
+    "no_method_or_p0_authority_from_this_receipt": true
+  },
+  "upstream_release_receipt": {
+    "primary_ref": "arXiv:2608.14441",
+    "upstream_git_head": "7a95349321a944ffe90e379021d6fc2fba4690f3",
+    "task_count": 36,
+    "literal_four_stage_file_count": 35,
+    "runtime_four_stage_task_count": 36,
+    "source_target_pair_count": 144,
+    "method_adapter_count": 10,
+    "method_adapters": [
+      "ace",
+      "codeevolve",
+      "expel",
+      "ragen",
+      "reasoning_bank",
+      "reflexion",
+      "seal",
+      "self_refine",
+      "tree_of_thoughts",
+      "ttt_discover"
+    ],
+    "executable_release_static_contract": true,
+    "static_literal_stage_false_negative_expected": true,
+    "result_schema_has_attempt_trajectory": true,
+    "built_in_failure_taxonomy": true,
+    "built_in_strategy_complementarity_kappa": true,
+    "built_in_strategy_by_stage_transport": false,
+    "github_released_result_json_count": 0,
+    "github_released_author_trajectories": false,
+    "huggingface_dataset_declared": true,
+    "huggingface_dataset_url": "https://huggingface.co/datasets/YuhaoZhan/PACE-Bench",
+    "huggingface_manifest_status": "UNVERIFIED_NETWORK_TIMEOUT",
+    "released_tasks_note_extra_difficulty_pass": true,
+    "contracts_validation": {
+      "present": true,
+      "sha256": "e6ddf4491afec40bfc199301f8e4ec509f64e56af70b1628dac11dbc4cc5943b",
+      "tasks": 36,
+      "failures": 0,
+      "all_pass": true,
+      "status": "PARSED"
+    }
+  },
+  "collision_audit": {
+    "pace_bench_own_failure_taxonomy": true,
+    "pace_bench_own_endpoint_strategy_complementarity": true,
+    "pace_bench_own_strategy_by_stage_transport": false,
+    "generic_adaptive_search_closest_reduction": {
+      "ref": "arXiv:2601.10657",
+      "boundary": "progress-aware backtracking and self-adaptive exploration/exploitation coordination already reduce a generic early-stagnation search router"
+    },
+    "surviving_object": "Within one fixed task/model/provider/budget, does relative search-strategy utility reverse from mild Stage-1 mutation to severe Stage-4 mutation in both directions across tasks?"
+  },
+  "f0_contract": {
+    "causal_unit": "same PACE task under Stage-1 and Stage-4 target mutations",
+    "comparison_unit": "same pair of search strategies, same provider/model/mode/attempt budget",
+    "primary_endpoint": "strict sign reversal of mean best-score difference between the two strategies",
+    "go_thresholds": {
+      "minimum_comparable_non_tied_tasks": 6,
+      "minimum_strict_reversals": 2,
+      "minimum_strict_reversal_rate": 0.25,
+      "bidirectional_reversal_required": true
+    },
+    "strongest_same_information_reduction": "A global stage-conditioned strategy prior. Bidirectional within-stage task heterogeneity is required before any task-conditioned router is considered.",
+    "recommended_low_cost_panel": {
+      "tasks": [
+        "S_01",
+        "K_01",
+        "D_01",
+        "F_01",
+        "C_01",
+        "E_01"
+      ],
+      "selection": "first registered task in each of six PACE categories; outcome-blind",
+      "stages": [
+        "Stage-1",
+        "Stage-4"
+      ],
+      "strategies": [
+        "tree_of_thoughts",
+        "codeevolve"
+      ],
+      "runs": 1,
+      "attempt_budget": 6,
+      "real_model_required": true
+    },
+    "next_only_if_go": "Freeze an early-trajectory predictor of Stage-4 strategy utility and beat score-only, failure-label-only, global-stage-prior, and progress-aware adaptive-search reductions under the same information and verifier budget before method design."
+  },
+  "input_receipt": {
+    "present": true,
+    "json_files": 24,
+    "valid_pace_results": 24,
+    "invalid_or_nonresult_json": 0,
+    "manifest_sha256": "e465357faf543a989753003f4f882c30ae0d2f30195a40ce5d1d274fc1938568"
+  },
+  "source_experiment_provenance": {
+    "real_provider_result_records": 24,
+    "attempt_generation_records": 138,
+    "provider_call_count_exact": null,
+    "provider_call_count_provable_lower_bound": 138,
+    "aggregate_token_usage": {
+      "prompt_tokens": 1011399,
+      "completion_tokens": 279467,
+      "total_tokens": 1290866
+    },
+    "resolved_models_in_attempt_records": {
+      "deepseek-v4-pro-260425": 138
+    },
+    "exact_provider_response_receipts_complete": false,
+    "receipt_limitation": "Compact result files preserve model/token provenance but not a complete external response-id receipt ledger; do not infer exact provider call count.",
+    "scientific_authority": false
+  },
+  "secondary_source_revision_support": {
+    "strategy": "codeevolve",
+    "eligible_source_stage_units": 6,
+    "positive_source_revision_units": 2,
+    "positive_source_revision_fraction": 0.3333333333333333,
+    "units": [
+      {
+        "task_id": "C_01",
+        "reference_score": 0.0,
+        "best_revision_score": 0.0,
+        "source_revision_effect": 0.0,
+        "positive_source_revision": false
+      },
+      {
+        "task_id": "D_01",
+        "reference_score": 0.0,
+        "best_revision_score": 0.0,
+        "source_revision_effect": 0.0,
+        "positive_source_revision": false
+      },
+      {
+        "task_id": "E_01",
+        "reference_score": 0.0,
+        "best_revision_score": 100.0,
+        "source_revision_effect": 100.0,
+        "positive_source_revision": true
+      },
+      {
+        "task_id": "F_01",
+        "reference_score": 0.0,
+        "best_revision_score": 0.0,
+        "source_revision_effect": 0.0,
+        "positive_source_revision": false
+      },
+      {
+        "task_id": "K_01",
+        "reference_score": 30.114924748738606,
+        "best_revision_score": 0.0,
+        "source_revision_effect": -30.114924748738606,
+        "positive_source_revision": false
+      },
+      {
+        "task_id": "S_01",
+        "reference_score": -14.28571428571429,
+        "best_revision_score": 0.0,
+        "source_revision_effect": 14.28571428571429,
+        "positive_source_revision": true
+      }
+    ],
+    "interpretation": "Diagnostic support audit only. It does not create a new cross-stage patch-transport hypothesis or authorize more provider calls.",
+    "scientific_authority": false
+  },
+  "analysis": {
+    "real_result_count": 24,
+    "mock_or_synthetic_result_count": 0,
+    "real_tasks": [
+      "C_01",
+      "D_01",
+      "E_01",
+      "F_01",
+      "K_01",
+      "S_01"
+    ],
+    "real_strategies": [
+      "codeevolve",
+      "tree_of_thoughts"
+    ],
+    "real_stages": [
+      1,
+      4
+    ],
+    "pair_reports": [
+      {
+        "cohort": {
+          "provider": "research_pipeline.pace_ark_provider:PaceArkProvider",
+          "model": "deepseek-v4-pro",
+          "mode": "adaptation",
+          "attempt_budget": 6
+        },
+        "left_strategy": "codeevolve",
+        "right_strategy": "tree_of_thoughts",
+        "comparable_tasks": 6,
+        "strict_non_tied_tasks": 1,
+        "strict_reversals": 0,
+        "strict_reversal_rate": 0.0,
+        "reversal_directions": {},
+        "bidirectional_reversal": false,
+        "stage1_winner_transport_accuracy": 1.0,
+        "stage4_global_winner_loo_baseline": {
+          "predicted_tasks": 2,
+          "correct_tasks": 0,
+          "accuracy": 0.0
+        },
+        "units": [
+          {
+            "task_id": "C_01",
+            "stage1_score_delta_left_minus_right": 0.0,
+            "stage4_score_delta_left_minus_right": 0.0,
+            "strict_comparison": false,
+            "strict_reversal": false,
+            "reversal_direction": "",
+            "stage1_failure_labels": {
+              "codeevolve": "stagnation",
+              "tree_of_thoughts": "stagnation"
+            },
+            "stage4_failure_labels": {
+              "codeevolve": "stagnation",
+              "tree_of_thoughts": "stagnation"
+            },
+            "stage1_early_prefix_best_scores": {
+              "codeevolve": 0.0,
+              "tree_of_thoughts": 0.0
+            }
+          },
+          {
+            "task_id": "D_01",
+            "stage1_score_delta_left_minus_right": 0.0,
+            "stage4_score_delta_left_minus_right": 0.0,
+            "strict_comparison": false,
+            "strict_reversal": false,
+            "reversal_direction": "",
+            "stage1_failure_labels": {
+              "codeevolve": "stagnation",
+              "tree_of_thoughts": "stagnation"
+            },
+            "stage4_failure_labels": {
+              "codeevolve": "stagnation",
+              "tree_of_thoughts": "stagnation"
+            },
+            "stage1_early_prefix_best_scores": {
+              "codeevolve": 0.0,
+              "tree_of_thoughts": 0.0
+            }
+          },
+          {
+            "task_id": "E_01",
+            "stage1_score_delta_left_minus_right": 0.0,
+            "stage4_score_delta_left_minus_right": 0.0,
+            "strict_comparison": false,
+            "strict_reversal": false,
+            "reversal_direction": "",
+            "stage1_failure_labels": {
+              "codeevolve": "success",
+              "tree_of_thoughts": "success"
+            },
+            "stage4_failure_labels": {
+              "codeevolve": "stagnation",
+              "tree_of_thoughts": "stagnation"
+            },
+            "stage1_early_prefix_best_scores": {
+              "codeevolve": 0.0,
+              "tree_of_thoughts": 100.0
+            }
+          },
+          {
+            "task_id": "F_01",
+            "stage1_score_delta_left_minus_right": 0.0,
+            "stage4_score_delta_left_minus_right": 0.0,
+            "strict_comparison": false,
+            "strict_reversal": false,
+            "reversal_direction": "",
+            "stage1_failure_labels": {
+              "codeevolve": "constraint_violation",
+              "tree_of_thoughts": "constraint_violation"
+            },
+            "stage4_failure_labels": {
+              "codeevolve": "constraint_violation",
+              "tree_of_thoughts": "constraint_violation"
+            },
+            "stage1_early_prefix_best_scores": {
+              "codeevolve": -50.0,
+              "tree_of_thoughts": 0.0
+            }
+          },
+          {
+            "task_id": "K_01",
+            "stage1_score_delta_left_minus_right": 0.0,
+            "stage4_score_delta_left_minus_right": 43.26200485229493,
+            "strict_comparison": false,
+            "strict_reversal": false,
+            "reversal_direction": "",
+            "stage1_failure_labels": {
+              "codeevolve": "budget_exhaustion",
+              "tree_of_thoughts": "budget_exhaustion"
+            },
+            "stage4_failure_labels": {
+              "codeevolve": "budget_exhaustion",
+              "tree_of_thoughts": "budget_exhaustion"
+            },
+            "stage1_early_prefix_best_scores": {
+              "codeevolve": 0.0,
+              "tree_of_thoughts": 0.0
+            }
+          },
+          {
+            "task_id": "S_01",
+            "stage1_score_delta_left_minus_right": -100.0,
+            "stage4_score_delta_left_minus_right": -114.28571428571429,
+            "strict_comparison": true,
+            "strict_reversal": false,
+            "reversal_direction": "",
+            "stage1_failure_labels": {
+              "codeevolve": "exploration",
+              "tree_of_thoughts": "success"
+            },
+            "stage4_failure_labels": {
+              "codeevolve": "constraint_violation",
+              "tree_of_thoughts": "success"
+            },
+            "stage1_early_prefix_best_scores": {
+              "codeevolve": 0.0,
+              "tree_of_thoughts": -14.28571428571429
+            }
+          }
+        ]
+      }
+    ],
+    "best_supported_strategy_pair": {
+      "cohort": {
+        "provider": "research_pipeline.pace_ark_provider:PaceArkProvider",
+        "model": "deepseek-v4-pro",
+        "mode": "adaptation",
+        "attempt_budget": 6
+      },
+      "left_strategy": "codeevolve",
+      "right_strategy": "tree_of_thoughts",
+      "comparable_tasks": 6,
+      "strict_non_tied_tasks": 1,
+      "strict_reversals": 0,
+      "strict_reversal_rate": 0.0,
+      "reversal_directions": {},
+      "bidirectional_reversal": false,
+      "stage1_winner_transport_accuracy": 1.0,
+      "stage4_global_winner_loo_baseline": {
+        "predicted_tasks": 2,
+        "correct_tasks": 0,
+        "accuracy": 0.0
+      },
+      "units": [
+        {
+          "task_id": "C_01",
+          "stage1_score_delta_left_minus_right": 0.0,
+          "stage4_score_delta_left_minus_right": 0.0,
+          "strict_comparison": false,
+          "strict_reversal": false,
+          "reversal_direction": "",
+          "stage1_failure_labels": {
+            "codeevolve": "stagnation",
+            "tree_of_thoughts": "stagnation"
+          },
+          "stage4_failure_labels": {
+            "codeevolve": "stagnation",
+            "tree_of_thoughts": "stagnation"
+          },
+          "stage1_early_prefix_best_scores": {
+            "codeevolve": 0.0,
+            "tree_of_thoughts": 0.0
+          }
+        },
+        {
+          "task_id": "D_01",
+          "stage1_score_delta_left_minus_right": 0.0,
+          "stage4_score_delta_left_minus_right": 0.0,
+          "strict_comparison": false,
+          "strict_reversal": false,
+          "reversal_direction": "",
+          "stage1_failure_labels": {
+            "codeevolve": "stagnation",
+            "tree_of_thoughts": "stagnation"
+          },
+          "stage4_failure_labels": {
+            "codeevolve": "stagnation",
+            "tree_of_thoughts": "stagnation"
+          },
+          "stage1_early_prefix_best_scores": {
+            "codeevolve": 0.0,
+            "tree_of_thoughts": 0.0
+          }
+        },
+        {
+          "task_id": "E_01",
+          "stage1_score_delta_left_minus_right": 0.0,
+          "stage4_score_delta_left_minus_right": 0.0,
+          "strict_comparison": false,
+          "strict_reversal": false,
+          "reversal_direction": "",
+          "stage1_failure_labels": {
+            "codeevolve": "success",
+            "tree_of_thoughts": "success"
+          },
+          "stage4_failure_labels": {
+            "codeevolve": "stagnation",
+            "tree_of_thoughts": "stagnation"
+          },
+          "stage1_early_prefix_best_scores": {
+            "codeevolve": 0.0,
+            "tree_of_thoughts": 100.0
+          }
+        },
+        {
+          "task_id": "F_01",
+          "stage1_score_delta_left_minus_right": 0.0,
+          "stage4_score_delta_left_minus_right": 0.0,
+          "strict_comparison": false,
+          "strict_reversal": false,
+          "reversal_direction": "",
+          "stage1_failure_labels": {
+            "codeevolve": "constraint_violation",
+            "tree_of_thoughts": "constraint_violation"
+          },
+          "stage4_failure_labels": {
+            "codeevolve": "constraint_violation",
+            "tree_of_thoughts": "constraint_violation"
+          },
+          "stage1_early_prefix_best_scores": {
+            "codeevolve": -50.0,
+            "tree_of_thoughts": 0.0
+          }
+        },
+        {
+          "task_id": "K_01",
+          "stage1_score_delta_left_minus_right": 0.0,
+          "stage4_score_delta_left_minus_right": 43.26200485229493,
+          "strict_comparison": false,
+          "strict_reversal": false,
+          "reversal_direction": "",
+          "stage1_failure_labels": {
+            "codeevolve": "budget_exhaustion",
+            "tree_of_thoughts": "budget_exhaustion"
+          },
+          "stage4_failure_labels": {
+            "codeevolve": "budget_exhaustion",
+            "tree_of_thoughts": "budget_exhaustion"
+          },
+          "stage1_early_prefix_best_scores": {
+            "codeevolve": 0.0,
+            "tree_of_thoughts": 0.0
+          }
+        },
+        {
+          "task_id": "S_01",
+          "stage1_score_delta_left_minus_right": -100.0,
+          "stage4_score_delta_left_minus_right": -114.28571428571429,
+          "strict_comparison": true,
+          "strict_reversal": false,
+          "reversal_direction": "",
+          "stage1_failure_labels": {
+            "codeevolve": "exploration",
+            "tree_of_thoughts": "success"
+          },
+          "stage4_failure_labels": {
+            "codeevolve": "constraint_violation",
+            "tree_of_thoughts": "success"
+          },
+          "stage1_early_prefix_best_scores": {
+            "codeevolve": 0.0,
+            "tree_of_thoughts": -14.28571428571429
+          }
+        }
+      ]
+    },
+    "decision": "STOP_OR_REDUCE_TO_STAGE_CONDITIONED_GLOBAL_SEARCH_CONTROL",
+    "scientific_result_available": true
+  },
+  "decision": "STOP_OR_REDUCE_TO_STAGE_CONDITIONED_GLOBAL_SEARCH_CONTROL",
+  "registered_prediction_rejected": true,
+  "principle_dead_end_certified": false,
+  "f0_plumbing_ready": true
+}

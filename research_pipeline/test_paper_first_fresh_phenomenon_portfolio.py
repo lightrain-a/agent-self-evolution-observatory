@@ -256,6 +256,27 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         self.assertEqual(0, state["summary"]["canonical_problem_gate_added"])
         self.assertTrue(all(row["scientific_authority"] is False for row in state["candidates"]))
 
+    def test_pace_registered_negative_is_archived_without_principle_dead_end(self) -> None:
+        state = self.build()
+        self.assertEqual([], validate_fresh_phenomenon_portfolio(state))
+        pace = next(row for row in state["candidates"] if row["candidate_id"] == "PA-06-PACE-SEARCH-CONTROL-TRANSPORT")
+        self.assertEqual("ARCHIVED", pace["status"])
+        self.assertEqual("REGISTERED_F0_STOP_NO_BIDIRECTIONAL_RANK_REVERSAL", pace["support_status"])
+        self.assertTrue(pace["evidence"]["registered_prediction_rejected"])
+        self.assertFalse(pace["evidence"]["principle_dead_end_certified"])
+        self.assertEqual(24, pace["substrate"]["valid_result_cells"])
+        self.assertEqual("7a95349321a944ffe90e379021d6fc2fba4690f3", pace["substrate"]["upstream_commit"])
+        self.assertEqual(1, pace["evidence"]["strict_non_tied_tasks"])
+        self.assertEqual(0, pace["evidence"]["strict_reversals"])
+        self.assertEqual(1, state["summary"]["archived"])
+        self.assertEqual(0, pace["evidence"]["analysis_provider_calls"])
+        self.assertFalse(pace["authority"]["problem_gate"])
+
+    def test_pace_binding_tamper_fails_closed(self) -> None:
+        state = self.build()
+        state["source_bindings"]["pace_search_control_transport_f0"]["sha256"] = "0" * 64
+        self.assertIn("PA-06 PACE transport F0 binding is stale", validate_fresh_phenomenon_portfolio(state))
+
     def test_controller_verified_capability_consumes_single_active_f0_slot(self) -> None:
         state = self.build(execution_capability=self.execution_capability())
         self.assertEqual([], validate_fresh_phenomenon_portfolio(state))

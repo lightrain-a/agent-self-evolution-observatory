@@ -39,6 +39,7 @@ EXPECTED_EVIDENCE_ECHO_F0_PLAN_SHA256 = "f7c1b8cce177a0efff84cfcf404ef436cf89ead
 PRIMARY_STATE_JSON = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.json"
 DEAD_END_MEMORY_JSON = PROJECT_ROOT / "generated" / "paper-first-search-portfolio-design-adjudication.json"
 DEFENSE_PRINCIPLE_REDUCTION_JSON = PROJECT_ROOT / "generated" / "hard-security-utility-collapse-principle-readjudication-20260817.json"
+PACE_TRANSPORT_F0_JSON = PROJECT_ROOT / "generated" / "pace-bench-search-control-transport-f0-20260818.json"
 
 SCHEMA_VERSION = "1.0"
 AUDITED_SUBSTRATE_STATUSES = {
@@ -137,6 +138,7 @@ def build_fresh_phenomenon_portfolio(
     skill_validation_scout: dict[str, Any] | None = None,
     skill_validation_readjudication: dict[str, Any] | None = None,
     skill_execution_capability: dict[str, Any] | None = None,
+    pace_transport_f0: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Compile multiple paper scouts without letting unsupported ideas consume experiment slots.
 
@@ -167,6 +169,7 @@ def build_fresh_phenomenon_portfolio(
         skill_execution_capability = load_execution_capability()
     else:
         skill_execution_capability = skill_execution_capability or {}
+    pace_transport_f0 = _load(PACE_TRANSPORT_F0_JSON) if pace_transport_f0 is None else (pace_transport_f0 or {})
     ps = primary_state.get("summary") or {}
     defense_reduction = _load(DEFENSE_PRINCIPLE_REDUCTION_JSON)
     defense_reduction_certified = bool(
@@ -224,6 +227,25 @@ def build_fresh_phenomenon_portfolio(
         and skill_diagnosis.get("same_information_reduction_verified") is True
         and skill_diagnosis.get("positive_support") is True
         and ((skill_validation_readjudication.get("authority") or {}).get("experiment_alone_authorizes_dead_end") is False)
+    )
+    pace_analysis = pace_transport_f0.get("analysis") or {}
+    pace_pair = pace_analysis.get("best_supported_strategy_pair") or {}
+    pace_input = pace_transport_f0.get("input_receipt") or {}
+    pace_cost = pace_transport_f0.get("source_experiment_provenance") or {}
+    pace_revision_support = pace_transport_f0.get("secondary_source_revision_support") or {}
+    pace_f0_complete_stop = bool(
+        pace_transport_f0.get("candidate_id") == "pace-search-control-transport"
+        and pace_transport_f0.get("primary_ref") == "arXiv:2608.14441"
+        and pace_transport_f0.get("decision") == "STOP_OR_REDUCE_TO_STAGE_CONDITIONED_GLOBAL_SEARCH_CONTROL"
+        and pace_transport_f0.get("registered_prediction_rejected") is True
+        and pace_transport_f0.get("principle_dead_end_certified") is False
+        and pace_transport_f0.get("analysis_provider_calls") == 0
+        and int(pace_input.get("valid_pace_results") or 0) == 24
+        and int(pace_pair.get("strict_non_tied_tasks") or 0) == 1
+        and int(pace_pair.get("strict_reversals") or 0) == 0
+        and pace_pair.get("bidirectional_reversal") is False
+        and int(pace_cost.get("real_provider_result_records") or 0) == 24
+        and pace_cost.get("scientific_authority") is False
     )
 
     echo_signal = evidence_echo.get("observed_signal") or {}
@@ -514,6 +536,64 @@ def build_fresh_phenomenon_portfolio(
             ),
         ),
         _candidate(
+            candidate_id="PA-06-PACE-SEARCH-CONTROL-TRANSPORT",
+            title="Does Search-Strategy Utility Reverse Across PACE-Bench Physics Mutations?",
+            source_refs=["arXiv:2608.14441"],
+            phenomenon=(
+                "A frozen six-task PACE-Bench panel compared Tree-of-Thoughts and CodeEvolve on the same tasks at Stage-1 and Stage-4. "
+                "All 24 preregistered task×stage×strategy cells completed, but only 1/6 tasks was non-tied at both stages and there were zero strict "
+                "strategy-rank reversals; the preregistered bidirectional transport-failure prediction therefore failed."
+            ),
+            strongest_reduction=(
+                "The current panel is dominated by floor/ceiling ties and is consistent with ordinary task difficulty plus global/stage-conditioned search-control "
+                "performance. A task-specific transport mechanism is not identified without substantially more non-tied target variation and a residual beyond "
+                "same-information domain-shift/conditional-treatment baselines."
+            ),
+            cheapest_falsifier=(
+                "Completed: outcome-blind first task from each of six PACE categories, fixed DeepSeek-v4-pro provider/model, attempts=6, one run, "
+                "Tree-of-Thoughts versus CodeEvolve, Stage-1 versus Stage-4. GO required >=6 strict non-tied tasks, >=2 strict reversals, reversal rate >=0.25, "
+                "and both reversal directions."
+            ),
+            support_status=("REGISTERED_F0_STOP_NO_BIDIRECTIONAL_RANK_REVERSAL" if pace_f0_complete_stop else "PACE_F0_RECEIPT_INCOMPLETE"),
+            status="ARCHIVED" if pace_f0_complete_stop else "HOLD_SUPPORT",
+            priority=85,
+            why_now=(
+                "The executable primary substrate was tested rather than merely brainstormed. The complete 24-cell manifest has one strict non-tied task, zero "
+                "strict reversals, and no bidirectional reversal. CodeEvolve also produced a positive Stage-1 revision on only 2/6 panel tasks, so the current "
+                "panel does not support a new same-patch transport study without post-hoc support expansion. Archive this registered realization and spend no more API "
+                "budget on the same rank-reversal contract."
+                if pace_f0_complete_stop
+                else "PACE-Bench is executable, but the bound F0 receipt is missing or incomplete; do not infer a scientific negative from partial runtime state."
+            ),
+            substrate={
+                "upstream_commit": ((pace_transport_f0.get("upstream_release_receipt") or {}).get("upstream_git_head")),
+                "task_count": ((pace_transport_f0.get("upstream_release_receipt") or {}).get("task_count")),
+                "result_manifest_sha256": pace_input.get("manifest_sha256"),
+                "valid_result_cells": pace_input.get("valid_pace_results"),
+                "real_provider_result_records": pace_cost.get("real_provider_result_records"),
+            },
+            evidence={
+                "registered_prediction_rejected": pace_transport_f0.get("registered_prediction_rejected") is True,
+                "principle_dead_end_certified": pace_transport_f0.get("principle_dead_end_certified") is True,
+                "strict_non_tied_tasks": pace_pair.get("strict_non_tied_tasks"),
+                "strict_reversals": pace_pair.get("strict_reversals"),
+                "strict_reversal_rate": pace_pair.get("strict_reversal_rate"),
+                "bidirectional_reversal": pace_pair.get("bidirectional_reversal"),
+                "positive_source_revision_units": pace_revision_support.get("positive_source_revision_units"),
+                "eligible_source_stage_units": pace_revision_support.get("eligible_source_stage_units"),
+                "aggregate_token_usage": pace_cost.get("aggregate_token_usage"),
+                "provider_call_count_provable_lower_bound": pace_cost.get("provider_call_count_provable_lower_bound"),
+                "exact_provider_response_receipts_complete": pace_cost.get("exact_provider_response_receipts_complete"),
+                "analysis_provider_calls": pace_transport_f0.get("analysis_provider_calls"),
+            },
+            reopen_only_if=(
+                "Do not rerun or enlarge the same ToT-vs-CodeEvolve rank-reversal panel after seeing these outcomes. Reopen PACE only under a new preregistered paper "
+                "contract with a distinct treatment-aligned object and adequate support known before target outcomes—for example, same-patch cross-stage transport only "
+                "after >=6 independently positive source-stage updates are selected outcome-blind, with a same-information domain-shift/conditional-treatment baseline "
+                "frozen before Stage-4 replay."
+            ),
+        ),
+        _candidate(
             candidate_id="PA-02-DEFENSE-RESTRICTIVENESS",
             title="Failure-Driven Defense Can Improve Security While Collapsing Utility",
             source_refs=["arXiv:2608.12977"],
@@ -709,6 +789,7 @@ def build_fresh_phenomenon_portfolio(
         "hold_reduction": sum(row["status"] == "HOLD_REDUCTION" for row in candidates),
         "ready_for_problem_review": sum(row["status"] == "READY_FOR_PROBLEM_REVIEW" for row in candidates),
         "stop_reduction": sum(row["status"] == "STOP_REDUCTION" for row in candidates),
+        "archived": sum(row["status"] == "ARCHIVED" for row in candidates),
         "primary_verified": int(ps.get("verified") or 0),
         "primary_empirical_fact_candidates": int(ps.get("empirical_fact_candidates") or 0),
         "canonical_problem_gate_added": 0,
@@ -829,6 +910,14 @@ def build_fresh_phenomenon_portfolio(
                 "principle_dead_end_certified": skill_principle_closed,
                 "same_information_reduction_verified": skill_diagnosis.get("same_information_reduction_verified") is True,
             },
+            "pace_search_control_transport_f0": {
+                "path": str(PACE_TRANSPORT_F0_JSON.relative_to(PROJECT_ROOT)),
+                "sha256": _sha(PACE_TRANSPORT_F0_JSON),
+                "decision": pace_transport_f0.get("decision"),
+                "registered_prediction_rejected": pace_transport_f0.get("registered_prediction_rejected") is True,
+                "principle_dead_end_certified": pace_transport_f0.get("principle_dead_end_certified") is True,
+                "result_manifest_sha256": pace_input.get("manifest_sha256"),
+            },
         },
         "scientific_authority": False,
     }
@@ -869,6 +958,9 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
     execution_holds = [row for row in rows if row.get("status") == "HOLD_EXECUTION"]
     if int(summary.get("hold_execution") or 0) != len(execution_holds):
         errors.append("HOLD_EXECUTION summary mismatch")
+    archived = [row for row in rows if row.get("status") == "ARCHIVED"]
+    if int(summary.get("archived") or 0) != len(archived):
+        errors.append("ARCHIVED summary mismatch")
     if int(summary.get("design_ready_f0") or 0) != sum(bool(row.get("f0_design_ready")) for row in rows):
         errors.append("design-ready F0 summary mismatch")
     if int(summary.get("candidates") or 0) != len(rows):
@@ -935,6 +1027,40 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
             or guard_binding.get("repaired_plan_canonical_sha256") != EXPECTED_EVIDENCE_ECHO_F0_PLAN_SHA256
         ):
             errors.append("design-ready Evidence Echo F0 lacks the execution-governance guard binding")
+    pace_binding = bindings.get("pace_search_control_transport_f0") or {}
+    pace_rows = [row for row in rows if row.get("candidate_id") == "PA-06-PACE-SEARCH-CONTROL-TRANSPORT"]
+    if pace_rows:
+        bound_pace = _load(PACE_TRANSPORT_F0_JSON)
+        bound_analysis = bound_pace.get("analysis") or {}
+        bound_pair = bound_analysis.get("best_supported_strategy_pair") or {}
+        bound_input = bound_pace.get("input_receipt") or {}
+        complete_stop = bool(
+            bound_pace.get("candidate_id") == "pace-search-control-transport"
+            and bound_pace.get("primary_ref") == "arXiv:2608.14441"
+            and bound_pace.get("decision") == "STOP_OR_REDUCE_TO_STAGE_CONDITIONED_GLOBAL_SEARCH_CONTROL"
+            and bound_pace.get("registered_prediction_rejected") is True
+            and bound_pace.get("principle_dead_end_certified") is False
+            and bound_pace.get("analysis_provider_calls") == 0
+            and int(bound_input.get("valid_pace_results") or 0) == 24
+            and int(bound_pair.get("strict_non_tied_tasks") or 0) == 1
+            and int(bound_pair.get("strict_reversals") or 0) == 0
+            and bound_pair.get("bidirectional_reversal") is False
+        )
+        if (
+            pace_binding.get("sha256") != _sha(PACE_TRANSPORT_F0_JSON)
+            or pace_binding.get("decision") != bound_pace.get("decision")
+            or pace_binding.get("result_manifest_sha256") != bound_input.get("manifest_sha256")
+            or pace_binding.get("registered_prediction_rejected") is not (bound_pace.get("registered_prediction_rejected") is True)
+            or pace_binding.get("principle_dead_end_certified") is not (bound_pace.get("principle_dead_end_certified") is True)
+        ):
+            errors.append("PA-06 PACE transport F0 binding is stale")
+        if complete_stop:
+            if pace_rows[0].get("status") != "ARCHIVED" or pace_rows[0].get("support_status") != "REGISTERED_F0_STOP_NO_BIDIRECTIONAL_RANK_REVERSAL":
+                errors.append("PA-06 complete registered F0 must remain archived negative search control")
+            if (pace_rows[0].get("evidence") or {}).get("principle_dead_end_certified") is not False:
+                errors.append("PA-06 registered prediction rejection cannot be promoted to principle dead end")
+        elif pace_rows[0].get("status") != "HOLD_SUPPORT":
+            errors.append("PA-06 incomplete F0 receipt cannot be archived as a scientific negative")
     skill_binding = bindings.get("skill_validation_transfer_scout") or {}
     skill_harness_binding = bindings.get("skill_validation_transfer_f0_harness") or {}
     skill_rows = [row for row in rows if row.get("candidate_id") == "PA-05-SKILL-VALIDATION-TRANSFER"]

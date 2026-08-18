@@ -639,6 +639,7 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_fresh_phenomenon_support_holds":int((paper_first_fresh_phenomenon_portfolio.get("summary") or {}).get("hold_support") or 0),
             "paper_first_fresh_phenomenon_execution_holds":int((paper_first_fresh_phenomenon_portfolio.get("summary") or {}).get("hold_execution") or 0),
             "paper_first_fresh_phenomenon_ready_problem_review":int((paper_first_fresh_phenomenon_portfolio.get("summary") or {}).get("ready_for_problem_review") or 0),
+            "paper_first_fresh_phenomenon_archived":int((paper_first_fresh_phenomenon_portfolio.get("summary") or {}).get("archived") or 0),
             "paper_first_evidence_migration_status":paper_first_evidence_migration.get("status","NOT_RUN"),
             "asset_first_stri_status":asset_first_stri_paper_ready.get("status","HOLD_ASSET_FIRST_PAPER_NOT_READY"),
             "asset_first_stri_paper_ready":int((asset_first_stri_paper_ready.get("summary") or {}).get("paper_ready") or 0),
