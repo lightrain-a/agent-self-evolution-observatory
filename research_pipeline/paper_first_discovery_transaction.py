@@ -249,6 +249,13 @@ def _transaction_id(primary: dict[str, Any], generator: dict[str, Any], queue: d
     return hashlib.sha256(encoded).hexdigest()
 
 
+def _shared_existing_transaction_id(*states: dict[str, Any]) -> str:
+    ids=[str(state.get("discovery_transaction_id") or "").strip() for state in states]
+    if ids and len(set(ids))==1 and re.fullmatch(r"[0-9a-f]{64}",ids[0]):
+        return ids[0]
+    return ""
+
+
 def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     ps = primary.get("summary") or {}; gs = generator.get("summary") or {}; qs = queue.get("summary") or {}
@@ -470,6 +477,7 @@ def close_existing_problem_discovery_transaction(
     """
     storage = storage or StorageSettings.from_env(); storage.ensure()
     primary = _load(primary_json); generator = _repair_close_envelope_generator_provenance(_load(generator_json)); queue = _load(queue_json)
+    prior_transaction_id=_shared_existing_transaction_id(primary,generator,queue)
     errors = _validate(primary, generator, queue)
     if errors:
         raise RuntimeError("existing paper-first discovery state invalid: " + ",".join(errors))
@@ -527,6 +535,7 @@ def close_existing_problem_discovery_transaction(
     replay_pool["generated_at"] = str(primary.get("generated_at") or "")
     replay_pool["transaction_replay"] = {
         "mode": "existing-closed-state-envelope",
+        "prior_transaction_id": prior_transaction_id,
         "source_generated_at": str(source_pool.get("generated_at") or ""),
         "source_pool_sha256": source_pool_sha,
         "generator_receipt_run_id": generator_run_id,
@@ -590,6 +599,7 @@ def close_existing_problem_discovery_transaction(
         "completed_at": _now(),
         "status": "COMMITTED_EXISTING_CLOSED_STATE",
         "transaction_id": txn_id,
+        "prior_transaction_id": prior_transaction_id,
         "source_pool_sha256": source_pool_sha,
         "generator_receipt_run_id": generator_run_id,
         "generator_receipt_sha256": _receipt_sha256(generator_receipt),
