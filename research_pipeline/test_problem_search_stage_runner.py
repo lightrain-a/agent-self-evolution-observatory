@@ -548,6 +548,22 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
             error=json.loads(next(root.glob("error-formulate-p1-*.json")).read_text(encoding="utf-8"))
         self.assertEqual(error["status"],"PARSE_ERROR_ZERO_AUTHORITY")
 
+    def test_expansion_parser_salvages_only_truncated_optional_notes(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);raw='```json\n{"seeds":[{"seed_id":"S1","title":"complete scientific seed"}],\n  "notes": "optional metadata was cut'
+            payload,sha=runner._parse_archived_json(root,"expand-UNEXPLAINED_BOUNDARY-p1",raw,"kimi-k3")
+            receipt=json.loads(next(root.glob("repair-expand-UNEXPLAINED_BOUNDARY-p1-*.json")).read_text(encoding="utf-8"))
+        self.assertEqual(payload["seeds"][0]["title"],"complete scientific seed")
+        self.assertEqual(receipt["raw_sha256"],sha);self.assertEqual(receipt["repair_type"],"TRUNCATED_OPTIONAL_TRAILING_NOTES");self.assertEqual(receipt["scientific_fields_preserved"],["seeds"]);self.assertFalse(receipt["scientific_array_bytes_mutated"]);self.assertFalse(receipt["string_content_mutation_allowed"])
+
+    def test_expansion_parser_does_not_salvage_truncated_scientific_array(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);raw='{"seeds":[{"seed_id":"S1","title":"cut'
+            with self.assertRaises((ValueError,json.JSONDecodeError)):runner._parse_archived_json(root,"expand-UNEXPLAINED_BOUNDARY-p1",raw,"kimi-k3")
+            self.assertEqual(list(root.glob("repair-expand-UNEXPLAINED_BOUNDARY-p1-*.json")),[])
+            error=json.loads(next(root.glob("error-expand-UNEXPLAINED_BOUNDARY-p1-*.json")).read_text(encoding="utf-8"))
+        self.assertEqual(error["status"],"PARSE_ERROR_ZERO_AUTHORITY")
+
     def test_evidence_design_parser_repairs_only_impossible_array_colon_delimiter(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);raw='{"designs":[{"anti_bake_in_controls":["first":"second"],"decision_rule":{"INCONCLUSIVE":"hold"}}]}'
