@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "status": "HOLD_SUPPORT_NO_RELEASED_REQUIRED_UNIT",
+  "candidate_id": "QWEN-HARNESS-BUDGETED-REGRESSION-SENTINEL:8e81f6a0255f",
+  "title": "Qwen harness quality-plateau regression support hold",
+  "source_ref": "arXiv:2607.03691",
+  "phenomenon_id": "8e81f6a0255f3165206886f73a7745c82db6c89fcb778fc0e65a5673aa124346",
+  "required_unit": "A provenance-audited per-version × task × run table for the paper's 35 Qwen Code releases and 50 SWE-bench Verified tasks, including release/version or commit identity, task identity, run identity, resolved/pass outcome, token consumption, tool-call count, conversation-turn count, and enough pre-outcome release metadata to reconstruct the paper's project/component change features. The unit must permit temporal train/validation/test splits and simulation of a small probe subset against the full 50-task outcome so random/stratified probes, historical task-sensitivity, and change-risk-only baselines can be matched without reading held-out release outcomes.",
+  "reason": "The frozen primary paper reports 35 releases × 50 tasks × 2 runs and says its replication package includes all versions, inference/evaluation scripts, and raw results, but the same primary version states that the package is to be made publicly available upon acceptance. The aggregate release curves and hand-traced PR case studies are enough to establish the regression phenomena and several source-internal explanations, but not enough to simulate a low-budget held-out probe policy or compare it fairly with random/stratified probes and pre-outcome change-risk baselines. Missing released raw units is therefore an execution/support hold, not scientific negative evidence. Exact held target: The post-v0.3.0 quality plateau with isolated regressions such as the v0.5.0 regression.",
+  "reopen_only_if": "Reopen when the authors publish the promised replication package, or an equivalent first-party export, containing joinable raw per-version × task × run outcomes and execution-cost logs sufficient to evaluate a preregistered budgeted regression sentinel prospectively across held-out releases. Aggregate Figure 6/8 values, isolated case studies, future-running scripts without the paper-run outputs, or inferred values from plots are insufficient. A release-surface change requests re-audit only and does not automatically authorize Problem Gate, Method, P0, or GPU.",
+  "support_audit_artifact": "generated/qwen-harness-regression-support-audit-20260818.json",
+  "support_audit_sha256": "f92b0d768615df5d5de23563207fefbf4d5eb355d9732027936cf8105176a46b",
+  "scientific_authority": false,
+  "authority": {
+    "dead_end": false,
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false,
+    "automatic_release_reopen": false
+  }
+}
