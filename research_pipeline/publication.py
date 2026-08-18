@@ -90,6 +90,8 @@ DAILY_ARTIFACTS = (
     "generated/paper-first-fresh-saturation.json",
     "generated/paper-first-fresh-saturation.js",
     "generated/paper-first-evidence-echo-retrospective-20260817.json",
+    "generated/pace-bench-principle-evidence-audit-20260818.json",
+    "generated/pace-bench-mechanism-redesign-principle-readjudication-20260818.json",
     "generated/paper-first-fresh-phenomenon-portfolio-20260817.json",
     "generated/paper-first-fresh-phenomenon-portfolio-20260817.js",
     "generated/paper-first-skill-validation-transfer-scout-20260817.json",

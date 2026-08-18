@@ -1,0 +1,150 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-18T09:12:03+00:00",
+  "candidate_id": "PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY",
+  "parent_source": "arXiv:2608.14441",
+  "title": "Surface-conditioned mechanism/program redesign identifiability reduces to generic feedback-guided program synthesis under the same information",
+  "search_primitive": "IDENTIFIABILITY_GAP",
+  "principle_dead_end_certified": true,
+  "stop_class": "PRINCIPLE_STOP",
+  "benchmark_level_dead_end_certified": false,
+  "dead_end_scope": "Surface-conditioned mechanism/program redesign identifiability as a standalone PACE paper problem: after the broad repair surface is already known, finite verifier feedback is claimed to identify which concrete redesign should be taken.",
+  "experiment_run_for_this_readjudication": false,
+  "old_rank_reversal_child": {
+    "candidate_id": "PA-06-PACE-SEARCH-CONTROL-TRANSPORT",
+    "status": "ARCHIVED_INVALID_OPERATIONALIZATION",
+    "stop_class": "PROTOCOL_STOP",
+    "secondary_failure_class": "REALIZATION_STOP",
+    "registered_prediction_rejected_in_old_measurement": true,
+    "principle_dead_end_certified": false,
+    "strict_non_tied_tasks": 1,
+    "strict_reversals": 0,
+    "reason": "The old rank-reversal child cannot carry scientific STOP authority: Stage-1 to Stage-4 is not one aligned treatment dose, best_score is heavily reference-censored, the six-attempt execution truncates a twenty-attempt paper protocol, and the benchmark overwhelmingly requires structural program redesign rather than a scalar stage-depth response."
+  },
+  "primary_evidence": {
+    "stage1_stage4_same_changed_key_sets": 3,
+    "stage1_stage4_tasks": 36,
+    "changed_key_jaccard_median": 0.30952380952380953,
+    "reference_censored_cells": 17,
+    "real_cells": 24,
+    "run_attempt_budget": 6,
+    "paper_attempt_budget": 20,
+    "parameter_only_oracle_pairs": 4,
+    "structural_oracle_pairs": 140,
+    "source_target_pairs": 144,
+    "old_operationalization_primary_stop_class": "PROTOCOL_STOP"
+  },
+  "residual_formulation_tested": {
+    "question": "Given the correct broad repair surface and the verifier feedback observed so far, is the successful concrete mechanism/program redesign itself identifiable?",
+    "required_novelty_boundary": "A PACE-specific structural fact must force a different ex-ante repair/search/convergence decision from the strongest generic program-synthesis/program-repair model when both receive exactly the same surface, candidate programs, verifier history, target specification, and budget."
+  },
+  "same_information_contract": {
+    "known_repair_surface": "The broad writable source/program surface is already known and held fixed; the reduction is not a repair-surface router.",
+    "candidate_state": "The current candidate program/code and all previous candidate programs are available to both formulations.",
+    "feedback": "The complete verifier/test/physics feedback transcript observed so far is identical.",
+    "budget": "The same remaining verifier and generation-call budget is available.",
+    "specification": "The same target environment, success criteria, constraints, and executable interfaces are available.",
+    "generator_capability": "The same LLM/program proposal mechanism is available; the candidate claim receives no hidden oracle reference program or privileged target outcome."
+  },
+  "exact_reduction": {
+    "status": "SAME_INFORMATION_REDUCTION_VERIFIED",
+    "baseline_family": "generic counterexample/feedback-guided program synthesis and budgeted iterative program repair",
+    "formal_correspondence": {
+      "PACE_candidate_program": "synthesis hypothesis h in H_surface",
+      "PACE_verifier_feedback_history": "counterexample/test-feedback transcript F_1:t",
+      "PACE_remaining_redesigns_consistent_with_feedback": "version/compatible set V_t = {h in H_surface : h is not ruled out by F_1:t}",
+      "PACE_next_revision_choice": "query/search policy over V_t or over refinement-tree arms",
+      "PACE_success": "find any h satisfying the executable specification and physical constraints"
+    },
+    "why_identifiability_collapses": "Finite verifier feedback can leave multiple candidate programs compatible with the transcript; that is ordinary version-space/partial-identification uncertainty. Program synthesis does not require point-identifying the unique hidden reference implementation: it requires finding any satisfying program. When the practical question is which candidate to refine under a finite call budget, the object becomes the established explore-exploit/search-allocation problem rather than a new identifiability primitive.",
+    "decision_equivalence": "Under the same information contract, a generic synthesis/repair controller can represent the same compatible candidate set, the same ambiguity, the same failed-feedback history, and the same budgeted choice among refinement branches. The current PACE formulation introduces no additional pre-outcome structural constraint that changes those decisions."
+  },
+  "mature_boundary_audit": {
+    "REx": {
+      "ref": "arXiv:2405.17503",
+      "role": "direct reduction for budgeted LLM code refinement: failed tests guide repeated refinement and the remaining problem is exploration versus exploitation among candidate programs",
+      "closes_by_itself": false,
+      "combined_reduction_role": "load-bearing search-allocation reduction"
+    },
+    "CEGIS_program_synthesis": {
+      "ref": "mature counterexample-guided inductive synthesis family",
+      "role": "direct formal reduction for learner-proposes/verifier-falsifies iteration and version-space elimination",
+      "closes_by_itself": false,
+      "combined_reduction_role": "load-bearing identification/specification reduction"
+    },
+    "generic_agentic_program_repair": {
+      "refs": [
+        "arXiv:2403.17134"
+      ],
+      "role": "shows autonomous repair already interleaves information gathering, candidate repair, validation, and feedback-conditioned tool use",
+      "combined_reduction_role": "scope/precedent support"
+    },
+    "MOSS": {
+      "ref": "arXiv:2409.16120",
+      "role": "establishes broad source/code-driven evolution capability and runtime context management, but does not by itself identify which within-surface redesign will satisfy a physical specification",
+      "direct_collision": false
+    },
+    "PF2": {
+      "ref": "generated/paper-first-pf2-method-adjudication.json",
+      "role": "PF-2 concerns where to repair and already reduces its RSIC method to generic partial identification; the current PACE residual conditions on the surface being known, so PF-2 is adjacent rather than the direct closure",
+      "direct_collision": false,
+      "pf2_method_status": "TERMINATED_BEFORE_EXPERIMENT_BLUEPRINT"
+    }
+  },
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "Once the broad repair surface is conditioned on, the current PACE residual is isomorphic to generic feedback-guided program synthesis/repair: a learner searches candidate programs under an executable specification while verifier feedback eliminates or reprioritizes candidates. Non-uniqueness of the hidden successful redesign is not itself a failure of synthesis, and budget-limited inability to find a satisfying redesign is already a search/query-allocation problem.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2608.14441",
+        "arXiv:2405.17503",
+        "arXiv:2403.17134",
+        "arXiv:2409.16120",
+        "generated/pace-bench-principle-evidence-audit-20260818.json",
+        "generated/paper-first-pf2-method-adjudication.json"
+      ],
+      "alternative_explanations_ruled_out": [
+        "Repair-surface identification is the missing novelty: ruled out because the residual explicitly conditions on the broad repair surface already being known, while PF-2 separately covers where-to-repair ambiguity.",
+        "The unique official reference implementation is the scientific target: ruled out because PACE success is executable specification satisfaction, so synthesis needs any satisfying program rather than recovery of one hidden reference code artifact.",
+        "Six-attempt non-convergence proves an intrinsic redesign impossibility: ruled out because the paper protocol uses twenty attempts and the old execution is computationally censored.",
+        "Stage depth is a valid common treatment dose that can define transport: ruled out by the 3/36 equal changed-key sets and median changed-key Jaccard near 0.31.",
+        "MOSS source-level editability alone creates a new identifiability object: ruled out because editability enlarges the action space but does not change the same-information compatible-program/search-state reduction."
+      ],
+      "opposite_prediction": "If two repair controllers receive the same known surface, target specification, candidate/history state, verifier transcript, generator, and budget, then a PACE-specific identifiability label alone should not predict a different optimal next refinement or convergence outcome beyond a sufficiently expressive generic synthesis/search model.",
+      "opposite_principle": "Within a known program-repair surface, finite verifier feedback defines a compatible-program/search state, not a new point-identification primitive. Scientific novelty requires a domain-specific structural constraint that changes an ex-ante decision or attainable guarantee under identical information.",
+      "opposite_search_seed": "Search PACE only for a pre-outcome physics/program structural variable that changes the value of a verifier feedback item, the reachable satisfying-program set, or the optimal refinement action while the generic synthesis/search baseline receives exactly the same observable transcript and budget. Do not use unique-reference recovery, broad repair-surface labels, stage depth, or another search scheduler as the novelty axis.",
+      "scope": "surface-conditioned mechanism/program redesign identifiability as a standalone PACE paper problem",
+      "reopen_condition": "Reopen only if first-party or independently verified PACE evidence supplies matched states with the same known repair surface, target specification, complete pre-outcome verifier transcript, candidate-program/refinement history, generator capability, and remaining budget, yet a preregistered physics/program structural variable forces a different ex-ante next-repair or success/reachability prediction that generic CEGIS/version-space, REx-style search allocation, and standard program-repair models with the same information cannot express."
+    }
+  },
+  "scientific_interpretation": {
+    "pace_source_still_useful": true,
+    "pace_benchmark_scientifically_exhausted": false,
+    "current_residual_active": false,
+    "revised_f0_authorized": false,
+    "provider_formulation_review_required": false,
+    "reason_provider_review_not_run": "The exact same-information reduction closes the current formulation before formulation/reviewer provider calls; provider review is reserved for a residual that survives reduction.",
+    "next_action": "Archive the invalid rank-reversal child separately, persist this scoped principle closure, and return PACE to evidence-asset status until a genuinely different same-information residual is found."
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "same_information_counter_explanation_authorizes_scoped_dead_end": true,
+    "benchmark_level_dead_end": false,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_experiment_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  },
+  "source_artifact_sha256": {
+    "evidence_audit": "a029db3da642707cd47d0e0d5d6894fa7d232ec333053e187cc5838aea14d682",
+    "old_rank_reversal_f0": "fa09fd3868672dd045acb28f9503dd0b81b14dde94c1fe5560c7f5988d3e33ff",
+    "pf2_method_adjudication": "97767ed720df4b91999440d9427ca7c6cbc9c71238e5afee0f4f1cb7c783cfc7"
+  }
+}

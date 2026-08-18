@@ -1,7 +1,7 @@
 from __future__ import annotations
 import json,tempfile,unittest
 from pathlib import Path
-from .governance_protocol import evaluate_stage_contract,infer_stage,record_repair
+from .governance_protocol import STOP_CLASSES,build_governance_state,evaluate_stage_contract,infer_stage,record_repair
 
 class GovernanceProtocolTest(unittest.TestCase):
  def test_stage_mapping_and_support_gate(self):
@@ -25,4 +25,15 @@ class GovernanceProtocolTest(unittest.TestCase):
    self.assertTrue(evaluate_stage_contract('idea',cfg,root)['execution_authorized'])
    record_repair(root,'idea','prompt','objective','r2')
    row=evaluate_stage_contract('idea',cfg,root); self.assertFalse(row['execution_authorized']); self.assertTrue(row['repair_budget']['exhausted'])
+
+ def test_stop_taxonomy_only_principle_is_persistent_dead_end(self):
+  state=build_governance_state()
+  self.assertEqual(set(state["stop_classes"]),{"REALIZATION_STOP","SUPPORT_STOP","PROTOCOL_STOP","PRINCIPLE_STOP"})
+  self.assertFalse(STOP_CLASSES["REALIZATION_STOP"]["persistent_dead_end_authority"])
+  self.assertFalse(STOP_CLASSES["SUPPORT_STOP"]["persistent_dead_end_authority"])
+  self.assertFalse(STOP_CLASSES["PROTOCOL_STOP"]["persistent_dead_end_authority"])
+  self.assertTrue(STOP_CLASSES["PRINCIPLE_STOP"]["persistent_dead_end_authority"])
+  self.assertTrue(state["policy"]["stop_class_required_for_any_stop"])
+  self.assertTrue(state["policy"]["only_principle_stop_may_enter_persistent_dead_end_memory"])
+
 if __name__=='__main__': unittest.main()

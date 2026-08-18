@@ -8,6 +8,12 @@ from typing import Any
 from .system_architecture import TEMPORAL_FLOW
 
 STAGES=("problem","substrate","f0-identifiability","p0-support","p0-method","p1-replication","paper-experiment")
+STOP_CLASSES={
+ "REALIZATION_STOP":{"persistent_dead_end_authority":False,"next_action":"repair-realization-and-rerun-or-reframe","meaning":"The concrete implementation, operationalization, method realization, or bounded execution failed; the scientific principle is not closed."},
+ "SUPPORT_STOP":{"persistent_dead_end_authority":False,"next_action":"repair-or-acquire-support-before-continuing","meaning":"Required evidence, substrate support, overlap, or statistical resolution is insufficient; absence of support is not a scientific negative."},
+ "PROTOCOL_STOP":{"persistent_dead_end_authority":False,"next_action":"repair-protocol-provenance-or-measurement-before-reinterpretation","meaning":"The protocol, measurement, provenance, treatment semantics, or evaluation contract is invalid for the intended scientific inference."},
+ "PRINCIPLE_STOP":{"persistent_dead_end_authority":True,"next_action":"archive-scoped-principle-and-search-opposite-basin","meaning":"A scope-matched positive counter-explanation or exact same-information reduction closes the scientific principle itself."},
+}
 FAILURES={
  "FAIL_PROBLEM":(True,"stop-or-reframe",False),"FAIL_SUBSTRATE":(False,"change-substrate",False),
  "FAIL_TARGET_DEGENERACY":(False,"repair-target-construction",False),"FAIL_REPRESENTATION":(False,"atomic-representation-repair",False),
@@ -27,6 +33,10 @@ POLICY={
  "raw_trace_is_mandatory_for_gpu_runs":True,"pre_model_load_audit_required":True,"f0_required_before_p0_support":True,
  "experimental_failure_class_cannot_authorize_persistent_dead_end":True,
  "persistent_dead_end_requires_principle_counter_explanation":True,
+ "stop_class_required_for_any_stop":True,
+ "only_principle_stop_may_enter_persistent_dead_end_memory":True,
+ "realization_support_protocol_stop_are_repairable_not_dead_end":True,
+ "principle_stop_requires_same_information_or_scope_matched_counter_explanation":True,
 }
 PASS_TOKENS={"pass","support-pass","support_qualification_pass","consensus_support_pass","consensus_full_pass","method-pass","qualified"}
 PREDECESSOR_EVIDENCE={"substrate":"problem_evidence","f0-identifiability":"substrate_evidence","p0-support":"f0_evidence","p0-method":"support_evidence","p1-replication":"method_evidence","paper-experiment":"p1_evidence"}
@@ -99,7 +109,7 @@ def evaluate_stage_contract(idea_id:str,config:dict[str,Any],root:Path)->dict[st
  return {"schema_version":"2.0","idea_id":idea_id,"stage":stage,"stage_index":STAGES.index(stage),"predecessor_authorization":predecessor,"support_authorization":support,"repair_budget":budget,"execution_authorized":not blockers,"blockers":blockers,"policy":POLICY}
 
 def build_governance_state()->dict[str,Any]:
- return {"schema_version":"2.3","generated_at":_now(),"policy":POLICY,"paper_first_macro_stages":[str(row["key"]) for row in TEMPORAL_FLOW],"stages":[{"index":i,"key":k} for i,k in enumerate(STAGES)],"predecessor_evidence":PREDECESSOR_EVIDENCE,"failure_classes":{k:{"belief_authority":v[0],"next_action":v[1],"persistent_dead_end_authority":v[2]} for k,v in FAILURES.items()},"stage_scope_note":"The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle; experimental failure classes may update scoped belief or routing but cannot create persistent dead ends without principle-level counter-explanation certification."}
+ return {"schema_version":"2.4","generated_at":_now(),"policy":POLICY,"stop_classes":STOP_CLASSES,"paper_first_macro_stages":[str(row["key"]) for row in TEMPORAL_FLOW],"stages":[{"index":i,"key":k} for i,k in enumerate(STAGES)],"predecessor_evidence":PREDECESSOR_EVIDENCE,"failure_classes":{k:{"belief_authority":v[0],"next_action":v[1],"persistent_dead_end_authority":v[2]} for k,v in FAILURES.items()},"stage_scope_note":"The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle. Every STOP must be typed as REALIZATION_STOP, SUPPORT_STOP, PROTOCOL_STOP, or PRINCIPLE_STOP; only PRINCIPLE_STOP may enter persistent dead-end memory, and only after a scope-matched positive counter-explanation or exact same-information reduction."}
 
 def write_governance_state(json_path:Path,js_path:Path)->dict[str,Any]:
  row=build_governance_state(); _atomic(json_path,row); js_path.parent.mkdir(parents=True,exist_ok=True)

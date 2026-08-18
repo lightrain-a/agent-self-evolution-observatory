@@ -40,6 +40,8 @@ PRIMARY_STATE_JSON = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-
 DEAD_END_MEMORY_JSON = PROJECT_ROOT / "generated" / "paper-first-search-portfolio-design-adjudication.json"
 DEFENSE_PRINCIPLE_REDUCTION_JSON = PROJECT_ROOT / "generated" / "hard-security-utility-collapse-principle-readjudication-20260817.json"
 PACE_TRANSPORT_F0_JSON = PROJECT_ROOT / "generated" / "pace-bench-search-control-transport-f0-20260818.json"
+PACE_PRINCIPLE_EVIDENCE_JSON = PROJECT_ROOT / "generated" / "pace-bench-principle-evidence-audit-20260818.json"
+PACE_REDESIGN_READJUDICATION_JSON = PROJECT_ROOT / "generated" / "pace-bench-mechanism-redesign-principle-readjudication-20260818.json"
 
 SCHEMA_VERSION = "1.0"
 AUDITED_SUBSTRATE_STATUSES = {
@@ -139,6 +141,8 @@ def build_fresh_phenomenon_portfolio(
     skill_validation_readjudication: dict[str, Any] | None = None,
     skill_execution_capability: dict[str, Any] | None = None,
     pace_transport_f0: dict[str, Any] | None = None,
+    pace_principle_evidence: dict[str, Any] | None = None,
+    pace_redesign_readjudication: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Compile multiple paper scouts without letting unsupported ideas consume experiment slots.
 
@@ -170,6 +174,8 @@ def build_fresh_phenomenon_portfolio(
     else:
         skill_execution_capability = skill_execution_capability or {}
     pace_transport_f0 = _load(PACE_TRANSPORT_F0_JSON) if pace_transport_f0 is None else (pace_transport_f0 or {})
+    pace_principle_evidence = _load(PACE_PRINCIPLE_EVIDENCE_JSON) if pace_principle_evidence is None else (pace_principle_evidence or {})
+    pace_redesign_readjudication = _load(PACE_REDESIGN_READJUDICATION_JSON) if pace_redesign_readjudication is None else (pace_redesign_readjudication or {})
     ps = primary_state.get("summary") or {}
     defense_reduction = _load(DEFENSE_PRINCIPLE_REDUCTION_JSON)
     defense_reduction_certified = bool(
@@ -246,6 +252,29 @@ def build_fresh_phenomenon_portfolio(
         and pace_pair.get("bidirectional_reversal") is False
         and int(pace_cost.get("real_provider_result_records") or 0) == 24
         and pace_cost.get("scientific_authority") is False
+    )
+    pace_counter = ((pace_redesign_readjudication.get("principle_diagnosis") or {}).get("counter_explanation") or {})
+    pace_old_child = pace_redesign_readjudication.get("old_rank_reversal_child") or {}
+    pace_primary_evidence = pace_redesign_readjudication.get("primary_evidence") or {}
+    pace_principle_closed = bool(
+        pace_f0_complete_stop
+        and pace_redesign_readjudication.get("candidate_id") == "PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY"
+        and pace_redesign_readjudication.get("principle_dead_end_certified") is True
+        and pace_redesign_readjudication.get("stop_class") == "PRINCIPLE_STOP"
+        and pace_redesign_readjudication.get("benchmark_level_dead_end_certified") is False
+        and ((pace_redesign_readjudication.get("exact_reduction") or {}).get("status")) == "SAME_INFORMATION_REDUCTION_VERIFIED"
+        and pace_counter.get("same_information_or_scope_matched") is True
+        and pace_counter.get("same_information_reduction_verified") is True
+        and pace_counter.get("positive_support") is True
+        and pace_old_child.get("status") == "ARCHIVED_INVALID_OPERATIONALIZATION"
+        and pace_old_child.get("stop_class") == "PROTOCOL_STOP"
+        and pace_old_child.get("principle_dead_end_certified") is False
+        and pace_primary_evidence.get("stage1_stage4_same_changed_key_sets") == 3
+        and pace_primary_evidence.get("reference_censored_cells") == 17
+        and pace_primary_evidence.get("run_attempt_budget") == 6
+        and pace_primary_evidence.get("paper_attempt_budget") == 20
+        and pace_primary_evidence.get("parameter_only_oracle_pairs") == 4
+        and pace_primary_evidence.get("structural_oracle_pairs") == 140
     )
 
     echo_signal = evidence_echo.get("observed_signal") or {}
@@ -536,62 +565,65 @@ def build_fresh_phenomenon_portfolio(
             ),
         ),
         _candidate(
-            candidate_id="PA-06-PACE-SEARCH-CONTROL-TRANSPORT",
-            title="Does Search-Strategy Utility Reverse Across PACE-Bench Physics Mutations?",
-            source_refs=["arXiv:2608.14441"],
+            candidate_id="PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY",
+            title="Does Verifier Feedback Identify a Successful Redesign Once the Repair Surface Is Known?",
+            source_refs=["arXiv:2608.14441", "arXiv:2405.17503", "arXiv:2403.17134", "arXiv:2409.16120"],
             phenomenon=(
-                "A frozen six-task PACE-Bench panel compared Tree-of-Thoughts and CodeEvolve on the same tasks at Stage-1 and Stage-4. "
-                "All 24 preregistered task×stage×strategy cells completed, but only 1/6 tasks was non-tied at both stages and there were zero strict "
-                "strategy-rank reversals; the preregistered bidirectional transport-failure prediction therefore failed."
+                "PACE is overwhelmingly a structural redesign benchmark rather than a parameter-tuning benchmark: the first-party reference oracle has only 4/144 "
+                "parameter-only Initial-to-Stage adaptations and 140/144 structural adaptations. The old six-attempt rank-reversal child is not a scientific negative: "
+                "Stage-1 and Stage-4 share the same changed physical-variable set on only 3/36 tasks (median changed-key Jaccard 0.3095), and 17/24 real cells are "
+                "censored at the shared reference score. The remaining question was whether, after conditioning on the correct broad repair surface, finite verifier "
+                "feedback identifies which concrete mechanism/program redesign will satisfy the target physics."
             ),
             strongest_reduction=(
-                "The current panel is dominated by floor/ceiling ties and is consistent with ordinary task difficulty plus global/stage-conditioned search-control "
-                "performance. A task-specific transport mechanism is not identified without substantially more non-tied target variation and a residual beyond "
-                "same-information domain-shift/conditional-treatment baselines."
+                "Same-information generic feedback-guided program synthesis / iterative program repair. With the same known surface, candidate-program history, verifier "
+                "transcript, executable specification, generator, and budget, the residual is a compatible-program/version-space state plus a budgeted search policy. "
+                "REx already formalizes failed-test-guided refinement as exploration versus exploitation; generic CEGIS-style synthesis already formalizes candidate proposal "
+                "plus verifier counterexamples. Point-identifying one hidden reference implementation is not required to solve the synthesis task."
             ),
             cheapest_falsifier=(
-                "Completed: outcome-blind first task from each of six PACE categories, fixed DeepSeek-v4-pro provider/model, attempts=6, one run, "
-                "Tree-of-Thoughts versus CodeEvolve, Stage-1 versus Stage-4. GO required >=6 strict non-tied tasks, >=2 strict reversals, reversal rate >=0.25, "
-                "and both reversal directions."
+                "Completed as an exact reduction rather than another provider run: require a PACE-specific pre-outcome structural variable that forces a different next-repair, "
+                "reachability, or convergence prediction from generic version-space/CEGIS and REx-style search allocation when both receive exactly the same surface, "
+                "candidate history, full verifier transcript, target specification, generator, and remaining budget. No such variable is present in the current formulation."
             ),
-            support_status=("REGISTERED_F0_STOP_NO_BIDIRECTIONAL_RANK_REVERSAL" if pace_f0_complete_stop else "PACE_F0_RECEIPT_INCOMPLETE"),
-            status="ARCHIVED" if pace_f0_complete_stop else "HOLD_SUPPORT",
+            support_status=("PRINCIPLE_CLOSED_GENERIC_PROGRAM_SYNTHESIS_REDUCTION" if pace_principle_closed else "HOLD_REDUCTION_EXACT_TEST_INCOMPLETE"),
+            status="STOP_REDUCTION" if pace_principle_closed else "HOLD_REDUCTION",
             priority=85,
             why_now=(
-                "The executable primary substrate was tested rather than merely brainstormed. The complete 24-cell manifest has one strict non-tied task, zero "
-                "strict reversals, and no bidirectional reversal. CodeEvolve also produced a positive Stage-1 revision on only 2/6 panel tasks, so the current "
-                "panel does not support a new same-patch transport study without post-hoc support expansion. Archive this registered realization and spend no more API "
-                "budget on the same rank-reversal contract."
-                if pace_f0_complete_stop
-                else "PACE-Bench is executable, but the bound F0 receipt is missing or incomplete; do not infer a scientific negative from partial runtime state."
+                "The root-cause audit invalidates the old operationalization but also makes the deeper boundary precise. The new surface-conditioned identifiability formulation "
+                "does not survive same-information reduction: non-unique redesigns are ordinary compatible-program uncertainty, while failure to locate any satisfying redesign "
+                "under finite verifier/generation calls is a mature program-synthesis/search-allocation problem. Therefore no Kimi/GPT formulation call or revised F0 is authorized "
+                "for this residual. PACE remains a useful evidence source, not a benchmark-level dead end."
+                if pace_principle_closed
+                else "The old rank-reversal child is invalid operationalization, but the parent must remain HOLD_REDUCTION until the new same-information reduction receipt is complete."
             ),
             substrate={
                 "upstream_commit": ((pace_transport_f0.get("upstream_release_receipt") or {}).get("upstream_git_head")),
                 "task_count": ((pace_transport_f0.get("upstream_release_receipt") or {}).get("task_count")),
+                "source_target_pairs": pace_primary_evidence.get("source_target_pairs"),
                 "result_manifest_sha256": pace_input.get("manifest_sha256"),
                 "valid_result_cells": pace_input.get("valid_pace_results"),
                 "real_provider_result_records": pace_cost.get("real_provider_result_records"),
             },
             evidence={
-                "registered_prediction_rejected": pace_transport_f0.get("registered_prediction_rejected") is True,
-                "principle_dead_end_certified": pace_transport_f0.get("principle_dead_end_certified") is True,
-                "strict_non_tied_tasks": pace_pair.get("strict_non_tied_tasks"),
-                "strict_reversals": pace_pair.get("strict_reversals"),
-                "strict_reversal_rate": pace_pair.get("strict_reversal_rate"),
-                "bidirectional_reversal": pace_pair.get("bidirectional_reversal"),
-                "positive_source_revision_units": pace_revision_support.get("positive_source_revision_units"),
-                "eligible_source_stage_units": pace_revision_support.get("eligible_source_stage_units"),
-                "aggregate_token_usage": pace_cost.get("aggregate_token_usage"),
-                "provider_call_count_provable_lower_bound": pace_cost.get("provider_call_count_provable_lower_bound"),
-                "exact_provider_response_receipts_complete": pace_cost.get("exact_provider_response_receipts_complete"),
-                "analysis_provider_calls": pace_transport_f0.get("analysis_provider_calls"),
+                "principle_dead_end_certified": pace_redesign_readjudication.get("principle_dead_end_certified") is True,
+                "stop_class": pace_redesign_readjudication.get("stop_class"),
+                "benchmark_level_dead_end_certified": pace_redesign_readjudication.get("benchmark_level_dead_end_certified") is True,
+                "same_information_reduction_status": ((pace_redesign_readjudication.get("exact_reduction") or {}).get("status")),
+                "stage1_stage4_same_changed_key_sets": pace_primary_evidence.get("stage1_stage4_same_changed_key_sets"),
+                "changed_key_jaccard_median": pace_primary_evidence.get("changed_key_jaccard_median"),
+                "reference_censored_cells": pace_primary_evidence.get("reference_censored_cells"),
+                "real_cells": pace_primary_evidence.get("real_cells"),
+                "run_attempt_budget": pace_primary_evidence.get("run_attempt_budget"),
+                "paper_attempt_budget": pace_primary_evidence.get("paper_attempt_budget"),
+                "parameter_only_oracle_pairs": pace_primary_evidence.get("parameter_only_oracle_pairs"),
+                "structural_oracle_pairs": pace_primary_evidence.get("structural_oracle_pairs"),
+                "historical_child": pace_old_child,
+                "analysis_provider_calls_for_old_f0": pace_transport_f0.get("analysis_provider_calls"),
+                "provider_formulation_review_required": ((pace_redesign_readjudication.get("scientific_interpretation") or {}).get("provider_formulation_review_required")),
+                "revised_f0_authorized": ((pace_redesign_readjudication.get("scientific_interpretation") or {}).get("revised_f0_authorized")),
             },
-            reopen_only_if=(
-                "Do not rerun or enlarge the same ToT-vs-CodeEvolve rank-reversal panel after seeing these outcomes. Reopen PACE only under a new preregistered paper "
-                "contract with a distinct treatment-aligned object and adequate support known before target outcomes—for example, same-patch cross-stage transport only "
-                "after >=6 independently positive source-stage updates are selected outcome-blind, with a same-information domain-shift/conditional-treatment baseline "
-                "frozen before Stage-4 replay."
-            ),
+            reopen_only_if=str(pace_counter.get("reopen_condition") or "Complete the exact same-information reduction before any revised PACE F0."),
         ),
         _candidate(
             candidate_id="PA-02-DEFENSE-RESTRICTIVENESS",
@@ -820,7 +852,8 @@ def build_fresh_phenomenon_portfolio(
             "support_unavailable_is_hold_not_scientific_failure": True,
             "positive_f0_does_not_grant_problem_gate_or_paper_design": True,
             "f0_must_test_strongest_generic_reduction_before_novelty_claim": True,
-            "failed_f0_is_archived_as_negative_search_control": True,
+            "valid_failed_f0_may_be_archived_as_negative_search_control_but_cannot_create_principle_dead_end": True,
+            "invalid_operationalization_is_protocol_stop_not_scientific_negative": True,
             "paper_problem_claim_requires_separate_current_source_collision_review": True,
             "scientific_authority": False,
         },
@@ -917,6 +950,21 @@ def build_fresh_phenomenon_portfolio(
                 "registered_prediction_rejected": pace_transport_f0.get("registered_prediction_rejected") is True,
                 "principle_dead_end_certified": pace_transport_f0.get("principle_dead_end_certified") is True,
                 "result_manifest_sha256": pace_input.get("manifest_sha256"),
+            },
+            "pace_principle_evidence_audit": {
+                "path": str(PACE_PRINCIPLE_EVIDENCE_JSON.relative_to(PROJECT_ROOT)),
+                "sha256": _sha(PACE_PRINCIPLE_EVIDENCE_JSON),
+                "parameter_only_oracle_pairs": ((pace_principle_evidence.get("reference_solution_ast_oracle") or {}).get("parameter_only")),
+                "structural_oracle_pairs": ((pace_principle_evidence.get("reference_solution_ast_oracle") or {}).get("structural_total")),
+                "reference_censored_cells": ((pace_principle_evidence.get("real_trajectory_audit") or {}).get("final_best_equals_reference")),
+            },
+            "pace_mechanism_redesign_principle_readjudication": {
+                "path": str(PACE_REDESIGN_READJUDICATION_JSON.relative_to(PROJECT_ROOT)),
+                "sha256": _sha(PACE_REDESIGN_READJUDICATION_JSON),
+                "principle_dead_end_certified": pace_redesign_readjudication.get("principle_dead_end_certified") is True,
+                "stop_class": pace_redesign_readjudication.get("stop_class"),
+                "same_information_reduction_verified": pace_counter.get("same_information_reduction_verified") is True,
+                "old_child_status": pace_old_child.get("status"),
             },
         },
         "scientific_authority": False,
@@ -1028,39 +1076,63 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
         ):
             errors.append("design-ready Evidence Echo F0 lacks the execution-governance guard binding")
     pace_binding = bindings.get("pace_search_control_transport_f0") or {}
-    pace_rows = [row for row in rows if row.get("candidate_id") == "PA-06-PACE-SEARCH-CONTROL-TRANSPORT"]
+    pace_evidence_binding = bindings.get("pace_principle_evidence_audit") or {}
+    pace_principle_binding = bindings.get("pace_mechanism_redesign_principle_readjudication") or {}
+    pace_rows = [row for row in rows if row.get("candidate_id") == "PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY"]
     if pace_rows:
         bound_pace = _load(PACE_TRANSPORT_F0_JSON)
-        bound_analysis = bound_pace.get("analysis") or {}
-        bound_pair = bound_analysis.get("best_supported_strategy_pair") or {}
         bound_input = bound_pace.get("input_receipt") or {}
-        complete_stop = bool(
-            bound_pace.get("candidate_id") == "pace-search-control-transport"
-            and bound_pace.get("primary_ref") == "arXiv:2608.14441"
-            and bound_pace.get("decision") == "STOP_OR_REDUCE_TO_STAGE_CONDITIONED_GLOBAL_SEARCH_CONTROL"
-            and bound_pace.get("registered_prediction_rejected") is True
-            and bound_pace.get("principle_dead_end_certified") is False
-            and bound_pace.get("analysis_provider_calls") == 0
-            and int(bound_input.get("valid_pace_results") or 0) == 24
-            and int(bound_pair.get("strict_non_tied_tasks") or 0) == 1
-            and int(bound_pair.get("strict_reversals") or 0) == 0
-            and bound_pair.get("bidirectional_reversal") is False
-        )
+        bound_evidence = _load(PACE_PRINCIPLE_EVIDENCE_JSON)
+        bound_oracle = bound_evidence.get("reference_solution_ast_oracle") or {}
+        bound_traj = bound_evidence.get("real_trajectory_audit") or {}
+        bound_principle = _load(PACE_REDESIGN_READJUDICATION_JSON)
+        bound_counter = ((bound_principle.get("principle_diagnosis") or {}).get("counter_explanation") or {})
+        bound_child = bound_principle.get("old_rank_reversal_child") or {}
         if (
             pace_binding.get("sha256") != _sha(PACE_TRANSPORT_F0_JSON)
-            or pace_binding.get("decision") != bound_pace.get("decision")
             or pace_binding.get("result_manifest_sha256") != bound_input.get("manifest_sha256")
-            or pace_binding.get("registered_prediction_rejected") is not (bound_pace.get("registered_prediction_rejected") is True)
-            or pace_binding.get("principle_dead_end_certified") is not (bound_pace.get("principle_dead_end_certified") is True)
+            or pace_binding.get("principle_dead_end_certified") is not False
         ):
-            errors.append("PA-06 PACE transport F0 binding is stale")
-        if complete_stop:
-            if pace_rows[0].get("status") != "ARCHIVED" or pace_rows[0].get("support_status") != "REGISTERED_F0_STOP_NO_BIDIRECTIONAL_RANK_REVERSAL":
-                errors.append("PA-06 complete registered F0 must remain archived negative search control")
-            if (pace_rows[0].get("evidence") or {}).get("principle_dead_end_certified") is not False:
-                errors.append("PA-06 registered prediction rejection cannot be promoted to principle dead end")
-        elif pace_rows[0].get("status") != "HOLD_SUPPORT":
-            errors.append("PA-06 incomplete F0 receipt cannot be archived as a scientific negative")
+            errors.append("PA-06 historical PACE transport F0 binding is stale")
+        if (
+            pace_evidence_binding.get("sha256") != _sha(PACE_PRINCIPLE_EVIDENCE_JSON)
+            or pace_evidence_binding.get("parameter_only_oracle_pairs") != bound_oracle.get("parameter_only")
+            or pace_evidence_binding.get("structural_oracle_pairs") != bound_oracle.get("structural_total")
+            or pace_evidence_binding.get("reference_censored_cells") != bound_traj.get("final_best_equals_reference")
+        ):
+            errors.append("PA-06 PACE principle evidence binding is stale")
+        principle_closed = bool(
+            bound_principle.get("principle_dead_end_certified") is True
+            and bound_principle.get("stop_class") == "PRINCIPLE_STOP"
+            and bound_principle.get("benchmark_level_dead_end_certified") is False
+            and ((bound_principle.get("exact_reduction") or {}).get("status")) == "SAME_INFORMATION_REDUCTION_VERIFIED"
+            and bound_counter.get("same_information_or_scope_matched") is True
+            and bound_counter.get("same_information_reduction_verified") is True
+            and bound_counter.get("positive_support") is True
+            and bound_child.get("status") == "ARCHIVED_INVALID_OPERATIONALIZATION"
+            and bound_child.get("stop_class") == "PROTOCOL_STOP"
+            and bound_child.get("principle_dead_end_certified") is False
+        )
+        if (
+            pace_principle_binding.get("sha256") != _sha(PACE_REDESIGN_READJUDICATION_JSON)
+            or pace_principle_binding.get("principle_dead_end_certified") is not principle_closed
+            or pace_principle_binding.get("same_information_reduction_verified") is not principle_closed
+            or pace_principle_binding.get("old_child_status") != bound_child.get("status")
+        ):
+            errors.append("PA-06 PACE redesign principle binding is stale")
+        if principle_closed:
+            if pace_rows[0].get("status") != "STOP_REDUCTION" or pace_rows[0].get("support_status") != "PRINCIPLE_CLOSED_GENERIC_PROGRAM_SYNTHESIS_REDUCTION":
+                errors.append("PA-06 reduced redesign-identifiability residual must be STOP_REDUCTION")
+            evidence = pace_rows[0].get("evidence") or {}
+            if evidence.get("stop_class") != "PRINCIPLE_STOP" or evidence.get("benchmark_level_dead_end_certified") is not False:
+                errors.append("PA-06 scoped principle stop leaked benchmark-level dead-end semantics")
+            child = evidence.get("historical_child") or {}
+            if child.get("status") != "ARCHIVED_INVALID_OPERATIONALIZATION" or child.get("principle_dead_end_certified") is not False:
+                errors.append("PA-06 old rank-reversal child lost invalid-operationalization status")
+            if evidence.get("revised_f0_authorized") is not False or evidence.get("provider_formulation_review_required") is not False:
+                errors.append("PA-06 reduced residual cannot authorize revised F0/provider formulation")
+        elif pace_rows[0].get("status") != "HOLD_REDUCTION":
+            errors.append("PA-06 unresolved redesign-identifiability reduction must remain HOLD_REDUCTION")
     skill_binding = bindings.get("skill_validation_transfer_scout") or {}
     skill_harness_binding = bindings.get("skill_validation_transfer_f0_harness") or {}
     skill_rows = [row for row in rows if row.get("candidate_id") == "PA-05-SKILL-VALIDATION-TRANSFER"]

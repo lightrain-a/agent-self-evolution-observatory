@@ -1,0 +1,151 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "PACE-PARENT-MECHANISM-REDESIGN",
+  "primary_ref": "arXiv:2608.14441",
+  "scientific_authority": false,
+  "upstream": {
+    "git_head": "7a95349321a944ffe90e379021d6fc2fba4690f3",
+    "benchmark_tasks": 36,
+    "source_target_pairs": 144,
+    "paper_attempt_budget": 20
+  },
+  "treatment_semantics_audit": {
+    "stage1_stage4_same_changed_key_sets": 3,
+    "tasks": 36,
+    "changed_key_jaccard_median": 0.30952380952380953,
+    "interpretation": "Stage index is not a single aligned causal-dose variable across tasks because Stage-1 and Stage-4 usually alter different physical-variable sets."
+  },
+  "reference_solution_ast_oracle": {
+    "normalization": "erase literal constant payloads and function names; preserve identifiers, calls, statements, and control-flow structure in root build_agent/agent_action functions",
+    "counts": {
+      "parameter_only": 4,
+      "build_structural": 52,
+      "control_structural": 26,
+      "mixed_structural": 62
+    },
+    "parameter_only": 4,
+    "structural_total": 140,
+    "structural_fraction": 0.9722222222222222,
+    "load_bearing_claim": "Only parameter-only versus structurally changed is used for principle evidence. The finer build/control split is root-function-only and is not used to certify the reduction because transitive helper semantics can change the finer label."
+  },
+  "real_trajectory_audit": {
+    "result_files": 24,
+    "attempt_budgets": [
+      6
+    ],
+    "final_best_equals_reference": 17,
+    "final_best_equals_zero": 15,
+    "best_revision_equals_zero": 17,
+    "positive_revision_gain": 7,
+    "reference_censor_fraction": 0.7083333333333334,
+    "result_file_hashes": [
+      {
+        "relative_path": "deepseek-v4-pro/json/Category1_Statics_Equilibrium/S_01/deepseek-v4-pro/codeevolve/run-1/Initial_to_Stage-1.json",
+        "sha256": "ce12089ead7754a4e4ae58de0982eb017639a78119ef7745bacb1044e6cbf7bc"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category1_Statics_Equilibrium/S_01/deepseek-v4-pro/codeevolve/run-1/Initial_to_Stage-4.json",
+        "sha256": "e962310194ba78df98ca704f017609e58007e059dda2d73e2835c05a082f3707"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category1_Statics_Equilibrium/S_01/deepseek-v4-pro/tree_of_thoughts/run-1/Initial_to_Stage-1.json",
+        "sha256": "356046a44647ffa45ef1956da76dd94b997d93951093d72b070d4d5dd908947b"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category1_Statics_Equilibrium/S_01/deepseek-v4-pro/tree_of_thoughts/run-1/Initial_to_Stage-4.json",
+        "sha256": "4af8dee9c6bb603ffaa4f71ffcbc139e1bd42f8ab92ca1575bbe947df3ad3921"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category2_Kinematics_Linkages/K_01/deepseek-v4-pro/codeevolve/run-1/Initial_to_Stage-1.json",
+        "sha256": "4b557b49ced6267955e96e591586a13faf3affcb19f0c73ad3283f9e1a73c95d"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category2_Kinematics_Linkages/K_01/deepseek-v4-pro/codeevolve/run-1/Initial_to_Stage-4.json",
+        "sha256": "f862de90d16efcea3c5742198cb0f7d5766f064e34976ba4b1760274373c22ea"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category2_Kinematics_Linkages/K_01/deepseek-v4-pro/tree_of_thoughts/run-1/Initial_to_Stage-1.json",
+        "sha256": "b1426f191cd220afd4018284c60b29ba9ce62240efde7d7e591765538aa3055b"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category2_Kinematics_Linkages/K_01/deepseek-v4-pro/tree_of_thoughts/run-1/Initial_to_Stage-4.json",
+        "sha256": "2dc4d5cb2569747445ad82df6f2db171fe42e5ef21503b1fc2b1358bcd3c0f70"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category3_Dynamics_Energy/D_01/deepseek-v4-pro/codeevolve/run-1/Initial_to_Stage-1.json",
+        "sha256": "9619a1df3ba95b617a73cdd12401d0f5e9d0578214e4521a075324b6aa8fa62f"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category3_Dynamics_Energy/D_01/deepseek-v4-pro/codeevolve/run-1/Initial_to_Stage-4.json",
+        "sha256": "bc23fd2c2b6560796bade8f9301893636d8cfe56f9a2569ee7a50d220a1c20b6"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category3_Dynamics_Energy/D_01/deepseek-v4-pro/tree_of_thoughts/run-1/Initial_to_Stage-1.json",
+        "sha256": "d86e867bcc7ad698dbd5c09d89064fb8aa7806ee92f9c0e5c344d8ce32b27d01"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category3_Dynamics_Energy/D_01/deepseek-v4-pro/tree_of_thoughts/run-1/Initial_to_Stage-4.json",
+        "sha256": "155927ccc6b7cb889f8aea82d1183f032ab32d058876694a994dd0c523d63291"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category4_Granular_FluidInteraction/F_01/deepseek-v4-pro/codeevolve/run-1/Initial_to_Stage-1.json",
+        "sha256": "76b15acb8f8260d0a23d00d323d741ddce17ab0cd8f5701977a30a36ef6d583f"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category4_Granular_FluidInteraction/F_01/deepseek-v4-pro/codeevolve/run-1/Initial_to_Stage-4.json",
+        "sha256": "fdb1c9e133864f2e97702145c08b1f703f8770be05b2b6bf749bf29ee2ba0602"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category4_Granular_FluidInteraction/F_01/deepseek-v4-pro/tree_of_thoughts/run-1/Initial_to_Stage-1.json",
+        "sha256": "2bcd91db330a8f61357303a5cb1a48a8cf3e47d05445b3a453882c82e5915bf1"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category4_Granular_FluidInteraction/F_01/deepseek-v4-pro/tree_of_thoughts/run-1/Initial_to_Stage-4.json",
+        "sha256": "88cd93be05ae1d975364bcaaedd2af62a4565fbd38effeb1e4b8435352816d2f"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category5_Cybernetics_Control/C_01/deepseek-v4-pro/codeevolve/run-1/Initial_to_Stage-1.json",
+        "sha256": "555b3f9d2912e1895516a9ef9071b5f232965ee3cadd1332dd1b3543a67ecb91"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category5_Cybernetics_Control/C_01/deepseek-v4-pro/codeevolve/run-1/Initial_to_Stage-4.json",
+        "sha256": "f4b346b4f7d6f89e5eea1c02bf9e49be3dfcabf1077efab38e68322e26a15b44"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category5_Cybernetics_Control/C_01/deepseek-v4-pro/tree_of_thoughts/run-1/Initial_to_Stage-1.json",
+        "sha256": "2995c84674217ac984cc3ba4dc34d4023ba0f5eb98d74212be184a48d8bbf317"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category5_Cybernetics_Control/C_01/deepseek-v4-pro/tree_of_thoughts/run-1/Initial_to_Stage-4.json",
+        "sha256": "76356d0bb6e2486cd92cf1b9541acab4959b9ab269efa923df274b81dca10bbd"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category6_ExoticPhysics/E_01/deepseek-v4-pro/codeevolve/run-1/Initial_to_Stage-1.json",
+        "sha256": "563a5b65962523ca593476fcafa35f06afda3e21dabb4e4548f843025440934f"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category6_ExoticPhysics/E_01/deepseek-v4-pro/codeevolve/run-1/Initial_to_Stage-4.json",
+        "sha256": "3800fa251af1e85c1488a839853074c10a1acb84897635dd379f3c71ff88f844"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category6_ExoticPhysics/E_01/deepseek-v4-pro/tree_of_thoughts/run-1/Initial_to_Stage-1.json",
+        "sha256": "585640f718e35662f10b0317e62201e67a6908ec6183ea20182689c5b4b13772"
+      },
+      {
+        "relative_path": "deepseek-v4-pro/json/Category6_ExoticPhysics/E_01/deepseek-v4-pro/tree_of_thoughts/run-1/Initial_to_Stage-4.json",
+        "sha256": "752d9242829e5a27b0907c742f50ed332b414f66aa26d0900f3be036907cc5ae"
+      }
+    ]
+  },
+  "operationalization_diagnosis": {
+    "old_rank_reversal_child_valid_scientific_stop": false,
+    "primary_stop_class": "PROTOCOL_STOP",
+    "secondary_realization_issue": "REALIZATION_STOP",
+    "reasons": [
+      "Stage-1 to Stage-4 is not an aligned treatment dose across tasks.",
+      "best_score frequently collapses to the shared reference/source score and therefore censors search-strategy differences.",
+      "The bounded run used six revision attempts while the paper protocol uses twenty, so convergence behavior was computationally censored.",
+      "The official reference solutions show that 140/144 source-to-stage adaptations require structural program change under the load-bearing root-AST oracle, so a rank reversal over stage depth does not isolate the benchmark's core know-how problem."
+    ]
+  }
+}

@@ -205,7 +205,7 @@
     "paper_first_fresh_phenomenon_support_holds": 0,
     "paper_first_fresh_phenomenon_execution_holds": 0,
     "paper_first_fresh_phenomenon_ready_problem_review": 0,
-    "paper_first_fresh_phenomenon_archived": 1,
+    "paper_first_fresh_phenomenon_archived": 0,
     "paper_first_evidence_migration_status": "NOT_RUN",
     "asset_first_stri_status": "READY_NARROW_ICLR",
     "asset_first_stri_paper_ready": 1,
@@ -25600,7 +25600,7 @@
   },
   "paper_first_search_portfolio_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-18T07:50:45+00:00",
+    "generated_at": "2026-08-18T09:20:22+00:00",
     "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
     "target_venue": "ICLR",
     "component_owner": "paper-design-contract",
@@ -25647,7 +25647,7 @@
     },
     "shadow_near_miss_preflight": {
       "schema_version": "1.0",
-      "generated_at": "2026-08-18T07:50:45+00:00",
+      "generated_at": "2026-08-18T09:20:22+00:00",
       "audit_id": "shadow-r2-near-miss-preflight-20260814",
       "policy": {
         "shadow_search_control_only": true,
@@ -26593,6 +26593,69 @@
             "source_readjudication_artifact": "generated/skillsp-routing-frozen-skills-ablation-principle-readjudication-20260817.json",
             "scientific_authority": false
           },
+          "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+          "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY",
+          "basin": "principle-readjudication-3c4127ae8100de54",
+          "search_primitive": "IDENTIFIABILITY_GAP",
+          "title": "Surface-conditioned mechanism/program redesign identifiability reduces to generic feedback-guided program synthesis under the same information",
+          "avoid": [
+            "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Surface-conditioned mechanism/program redesign identifiability reduces to generic feedback-guided program synthesis under the same information",
+            "using the negative experiment metric alone as the reason for the dead end",
+            "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+          ],
+          "strongest_reduction": "Once the broad repair surface is conditioned on, the current PACE residual is isomorphic to generic feedback-guided program synthesis/repair: a learner searches candidate programs under an executable specification while verifier feedback eliminates or reprioritizes candidates. Non-uniqueness of the hidden successful redesign is not itself a failure of synthesis, and budget-limited inability to find a satisfying redesign is already a search/query-allocation problem.",
+          "current_source_refs": [
+            "arXiv:2403.17134",
+            "arXiv:2405.17503",
+            "arXiv:2409.16120",
+            "arXiv:2608.14441"
+          ],
+          "evidence_basis": [
+            "arXiv:2608.14441",
+            "arXiv:2405.17503",
+            "arXiv:2403.17134",
+            "arXiv:2409.16120",
+            "generated/pace-bench-principle-evidence-audit-20260818.json",
+            "generated/paper-first-pf2-method-adjudication.json"
+          ],
+          "problem_text": "Surface-conditioned mechanism/program redesign identifiability as a standalone PACE paper problem: after the broad repair surface is already known, finite verifier feedback is claimed to identify which concrete redesign should be taken.",
+          "reason": "Once the broad repair surface is conditioned on, the current PACE residual is isomorphic to generic feedback-guided program synthesis/repair: a learner searches candidate programs under an executable specification while verifier feedback eliminates or reprioritizes candidates. Non-uniqueness of the hidden successful redesign is not itself a failure of synthesis, and budget-limited inability to find a satisfying redesign is already a search/query-allocation problem.",
+          "reopen_only_if": "Reopen only if first-party or independently verified PACE evidence supplies matched states with the same known repair surface, target specification, complete pre-outcome verifier transcript, candidate-program/refinement history, generator capability, and remaining budget, yet a preregistered physics/program structural variable forces a different ex-ante next-repair or success/reachability prediction that generic CEGIS/version-space, REx-style search allocation, and standard program-repair models with the same information cannot express.",
+          "dead_end_certified": true,
+          "memory_class": "PRINCIPLE_DEAD_END",
+          "counter_explanation": {
+            "type": "SAME_INFORMATION_REDUCTION",
+            "statement": "Once the broad repair surface is conditioned on, the current PACE residual is isomorphic to generic feedback-guided program synthesis/repair: a learner searches candidate programs under an executable specification while verifier feedback eliminates or reprioritizes candidates. Non-uniqueness of the hidden successful redesign is not itself a failure of synthesis, and budget-limited inability to find a satisfying redesign is already a search/query-allocation problem.",
+            "same_information_or_scope_matched": true,
+            "same_information_reduction_verified": true,
+            "positive_support": true,
+            "evidence_refs": [
+              "arXiv:2608.14441",
+              "arXiv:2405.17503",
+              "arXiv:2403.17134",
+              "arXiv:2409.16120",
+              "generated/pace-bench-principle-evidence-audit-20260818.json",
+              "generated/paper-first-pf2-method-adjudication.json"
+            ],
+            "alternative_explanations_ruled_out": [
+              "Repair-surface identification is the missing novelty: ruled out because the residual explicitly conditions on the broad repair surface already being known, while PF-2 separately covers where-to-repair ambiguity.",
+              "The unique official reference implementation is the scientific target: ruled out because PACE success is executable specification satisfaction, so synthesis needs any satisfying program rather than recovery of one hidden reference code artifact.",
+              "Six-attempt non-convergence proves an intrinsic redesign impossibility: ruled out because the paper protocol uses twenty attempts and the old execution is computationally censored.",
+              "Stage depth is a valid common treatment dose that can define transport: ruled out by the 3/36 equal changed-key sets and median changed-key Jaccard near 0.31.",
+              "MOSS source-level editability alone creates a new identifiability object: ruled out because editability enlarges the action space but does not change the same-information compatible-program/search-state reduction."
+            ],
+            "opposite_prediction": "If two repair controllers receive the same known surface, target specification, candidate/history state, verifier transcript, generator, and budget, then a PACE-specific identifiability label alone should not predict a different optimal next refinement or convergence outcome beyond a sufficiently expressive generic synthesis/search model.",
+            "opposite_principle": "Within a known program-repair surface, finite verifier feedback defines a compatible-program/search state, not a new point-identification primitive. Scientific novelty requires a domain-specific structural constraint that changes an ex-ante decision or attainable guarantee under identical information.",
+            "opposite_search_seed": "Search PACE only for a pre-outcome physics/program structural variable that changes the value of a verifier feedback item, the reachable satisfying-program set, or the optimal refinement action while the generic synthesis/search baseline receives exactly the same observable transcript and budget. Do not use unique-reference recovery, broad repair-surface labels, stage depth, or another search scheduler as the novelty axis.",
+            "scope": "surface-conditioned mechanism/program redesign identifiability as a standalone PACE paper problem",
+            "reopen_condition": "Reopen only if first-party or independently verified PACE evidence supplies matched states with the same known repair surface, target specification, complete pre-outcome verifier transcript, candidate-program/refinement history, generator capability, and remaining budget, yet a preregistered physics/program structural variable forces a different ex-ante next-repair or success/reachability prediction that generic CEGIS/version-space, REx-style search allocation, and standard program-repair models with the same information cannot express."
+          },
+          "source_readjudication_artifact": "generated/pace-bench-mechanism-redesign-principle-readjudication-20260818.json",
+          "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {},
           "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
           "scientific_authority": false
         },
@@ -28451,8 +28514,8 @@
           "scientific_authority": false
         }
       ],
-      "principle_dead_end_count": 39,
-      "principle_readjudication_dead_end_count": 35,
+      "principle_dead_end_count": 40,
+      "principle_readjudication_dead_end_count": 36,
       "fresh_phenomenon_closure_count": 20,
       "fresh_phenomenon_closed_evidence_count": 35,
       "inversion_asset_evidence": [
@@ -28677,8 +28740,8 @@
       "revise_paper_problem": 1,
       "stop_standalone": 1,
       "support_inventory_required": 1,
-      "shadow_dead_end_objects": 39,
-      "principle_readjudication_dead_ends": 35,
+      "shadow_dead_end_objects": 40,
+      "principle_readjudication_dead_ends": 36,
       "shadow_hold_objects": 7,
       "current_source_hard_veto_dead_ends": 0,
       "current_source_hard_veto_added_from_latest_run": 0,
@@ -29076,7 +29139,7 @@
   },
   "paper_first_fresh_phenomenon_portfolio": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-18T07:50:45+00:00",
+    "generated_at": "2026-08-18T09:24:28+00:00",
     "status": "NO_ACTIVE_F0",
     "policy": {
       "portfolio_is_outside_canonical_problem_queue": true,
@@ -29095,7 +29158,8 @@
       "support_unavailable_is_hold_not_scientific_failure": true,
       "positive_f0_does_not_grant_problem_gate_or_paper_design": true,
       "f0_must_test_strongest_generic_reduction_before_novelty_claim": true,
-      "failed_f0_is_archived_as_negative_search_control": true,
+      "valid_failed_f0_may_be_archived_as_negative_search_control_but_cannot_create_principle_dead_end": true,
+      "invalid_operationalization_is_protocol_stop_not_scientific_negative": true,
       "paper_problem_claim_requires_separate_current_source_collision_review": true,
       "scientific_authority": false
     },
@@ -29108,8 +29172,8 @@
       "hold_execution": 0,
       "hold_reduction": 0,
       "ready_for_problem_review": 0,
-      "stop_reduction": 5,
-      "archived": 1,
+      "stop_reduction": 6,
+      "archived": 0,
       "primary_verified": 32,
       "primary_empirical_fact_candidates": 114,
       "canonical_problem_gate_added": 0,
@@ -29274,44 +29338,58 @@
         }
       },
       {
-        "candidate_id": "PA-06-PACE-SEARCH-CONTROL-TRANSPORT",
-        "title": "Does Search-Strategy Utility Reverse Across PACE-Bench Physics Mutations?",
+        "candidate_id": "PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY",
+        "title": "Does Verifier Feedback Identify a Successful Redesign Once the Repair Surface Is Known?",
         "source_refs": [
-          "arXiv:2608.14441"
+          "arXiv:2608.14441",
+          "arXiv:2405.17503",
+          "arXiv:2403.17134",
+          "arXiv:2409.16120"
         ],
-        "phenomenon": "A frozen six-task PACE-Bench panel compared Tree-of-Thoughts and CodeEvolve on the same tasks at Stage-1 and Stage-4. All 24 preregistered task×stage×strategy cells completed, but only 1/6 tasks was non-tied at both stages and there were zero strict strategy-rank reversals; the preregistered bidirectional transport-failure prediction therefore failed.",
-        "strongest_reduction": "The current panel is dominated by floor/ceiling ties and is consistent with ordinary task difficulty plus global/stage-conditioned search-control performance. A task-specific transport mechanism is not identified without substantially more non-tied target variation and a residual beyond same-information domain-shift/conditional-treatment baselines.",
-        "cheapest_falsifier": "Completed: outcome-blind first task from each of six PACE categories, fixed DeepSeek-v4-pro provider/model, attempts=6, one run, Tree-of-Thoughts versus CodeEvolve, Stage-1 versus Stage-4. GO required >=6 strict non-tied tasks, >=2 strict reversals, reversal rate >=0.25, and both reversal directions.",
-        "support_status": "REGISTERED_F0_STOP_NO_BIDIRECTIONAL_RANK_REVERSAL",
-        "status": "ARCHIVED",
+        "phenomenon": "PACE is overwhelmingly a structural redesign benchmark rather than a parameter-tuning benchmark: the first-party reference oracle has only 4/144 parameter-only Initial-to-Stage adaptations and 140/144 structural adaptations. The old six-attempt rank-reversal child is not a scientific negative: Stage-1 and Stage-4 share the same changed physical-variable set on only 3/36 tasks (median changed-key Jaccard 0.3095), and 17/24 real cells are censored at the shared reference score. The remaining question was whether, after conditioning on the correct broad repair surface, finite verifier feedback identifies which concrete mechanism/program redesign will satisfy the target physics.",
+        "strongest_reduction": "Same-information generic feedback-guided program synthesis / iterative program repair. With the same known surface, candidate-program history, verifier transcript, executable specification, generator, and budget, the residual is a compatible-program/version-space state plus a budgeted search policy. REx already formalizes failed-test-guided refinement as exploration versus exploitation; generic CEGIS-style synthesis already formalizes candidate proposal plus verifier counterexamples. Point-identifying one hidden reference implementation is not required to solve the synthesis task.",
+        "cheapest_falsifier": "Completed as an exact reduction rather than another provider run: require a PACE-specific pre-outcome structural variable that forces a different next-repair, reachability, or convergence prediction from generic version-space/CEGIS and REx-style search allocation when both receive exactly the same surface, candidate history, full verifier transcript, target specification, generator, and remaining budget. No such variable is present in the current formulation.",
+        "support_status": "PRINCIPLE_CLOSED_GENERIC_PROGRAM_SYNTHESIS_REDUCTION",
+        "status": "STOP_REDUCTION",
         "priority": 85,
-        "why_now": "The executable primary substrate was tested rather than merely brainstormed. The complete 24-cell manifest has one strict non-tied task, zero strict reversals, and no bidirectional reversal. CodeEvolve also produced a positive Stage-1 revision on only 2/6 panel tasks, so the current panel does not support a new same-patch transport study without post-hoc support expansion. Archive this registered realization and spend no more API budget on the same rank-reversal contract.",
+        "why_now": "The root-cause audit invalidates the old operationalization but also makes the deeper boundary precise. The new surface-conditioned identifiability formulation does not survive same-information reduction: non-unique redesigns are ordinary compatible-program uncertainty, while failure to locate any satisfying redesign under finite verifier/generation calls is a mature program-synthesis/search-allocation problem. Therefore no Kimi/GPT formulation call or revised F0 is authorized for this residual. PACE remains a useful evidence source, not a benchmark-level dead end.",
         "substrate": {
           "upstream_commit": "7a95349321a944ffe90e379021d6fc2fba4690f3",
           "task_count": 36,
+          "source_target_pairs": 144,
           "result_manifest_sha256": "e465357faf543a989753003f4f882c30ae0d2f30195a40ce5d1d274fc1938568",
           "valid_result_cells": 24,
           "real_provider_result_records": 24
         },
         "evidence": {
-          "registered_prediction_rejected": true,
-          "principle_dead_end_certified": false,
-          "strict_non_tied_tasks": 1,
-          "strict_reversals": 0,
-          "strict_reversal_rate": 0.0,
-          "bidirectional_reversal": false,
-          "positive_source_revision_units": 2,
-          "eligible_source_stage_units": 6,
-          "aggregate_token_usage": {
-            "prompt_tokens": 1011399,
-            "completion_tokens": 279467,
-            "total_tokens": 1290866
+          "principle_dead_end_certified": true,
+          "stop_class": "PRINCIPLE_STOP",
+          "benchmark_level_dead_end_certified": false,
+          "same_information_reduction_status": "SAME_INFORMATION_REDUCTION_VERIFIED",
+          "stage1_stage4_same_changed_key_sets": 3,
+          "changed_key_jaccard_median": 0.30952380952380953,
+          "reference_censored_cells": 17,
+          "real_cells": 24,
+          "run_attempt_budget": 6,
+          "paper_attempt_budget": 20,
+          "parameter_only_oracle_pairs": 4,
+          "structural_oracle_pairs": 140,
+          "historical_child": {
+            "candidate_id": "PA-06-PACE-SEARCH-CONTROL-TRANSPORT",
+            "status": "ARCHIVED_INVALID_OPERATIONALIZATION",
+            "stop_class": "PROTOCOL_STOP",
+            "secondary_failure_class": "REALIZATION_STOP",
+            "registered_prediction_rejected_in_old_measurement": true,
+            "principle_dead_end_certified": false,
+            "strict_non_tied_tasks": 1,
+            "strict_reversals": 0,
+            "reason": "The old rank-reversal child cannot carry scientific STOP authority: Stage-1 to Stage-4 is not one aligned treatment dose, best_score is heavily reference-censored, the six-attempt execution truncates a twenty-attempt paper protocol, and the benchmark overwhelmingly requires structural program redesign rather than a scalar stage-depth response."
           },
-          "provider_call_count_provable_lower_bound": 138,
-          "exact_provider_response_receipts_complete": false,
-          "analysis_provider_calls": 0
+          "analysis_provider_calls_for_old_f0": 0,
+          "provider_formulation_review_required": false,
+          "revised_f0_authorized": false
         },
-        "reopen_only_if": "Do not rerun or enlarge the same ToT-vs-CodeEvolve rank-reversal panel after seeing these outcomes. Reopen PACE only under a new preregistered paper contract with a distinct treatment-aligned object and adequate support known before target outcomes—for example, same-patch cross-stage transport only after >=6 independently positive source-stage updates are selected outcome-blind, with a same-information domain-shift/conditional-treatment baseline frozen before Stage-4 replay.",
+        "reopen_only_if": "Reopen only if first-party or independently verified PACE evidence supplies matched states with the same known repair surface, target specification, complete pre-outcome verifier transcript, candidate-program/refinement history, generator capability, and remaining budget, yet a preregistered physics/program structural variable forces a different ex-ante next-repair or success/reachability prediction that generic CEGIS/version-space, REx-style search allocation, and standard program-repair models with the same information cannot express.",
         "paper_problem_claimed": false,
         "scientific_authority": false,
         "authority": {
@@ -29470,7 +29548,7 @@
       },
       "dead_end_memory": {
         "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-        "sha256": "35a33213fa87a112f49812f5206e5ad0f7f80c6055cfde0f3c2f0fa88db9f630"
+        "sha256": "9e4687652d19d1c40e2abbb238f492e3de1f00923f77f5438aff4a26450647a8"
       },
       "defense_principle_reduction": {
         "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
@@ -29500,6 +29578,21 @@
         "registered_prediction_rejected": true,
         "principle_dead_end_certified": false,
         "result_manifest_sha256": "e465357faf543a989753003f4f882c30ae0d2f30195a40ce5d1d274fc1938568"
+      },
+      "pace_principle_evidence_audit": {
+        "path": "generated/pace-bench-principle-evidence-audit-20260818.json",
+        "sha256": "a029db3da642707cd47d0e0d5d6894fa7d232ec333053e187cc5838aea14d682",
+        "parameter_only_oracle_pairs": 4,
+        "structural_oracle_pairs": 140,
+        "reference_censored_cells": 17
+      },
+      "pace_mechanism_redesign_principle_readjudication": {
+        "path": "generated/pace-bench-mechanism-redesign-principle-readjudication-20260818.json",
+        "sha256": "980be692f5223e4830890431ca92cd15a55c46fdbdc280fb2cdc3b447668153e",
+        "principle_dead_end_certified": true,
+        "stop_class": "PRINCIPLE_STOP",
+        "same_information_reduction_verified": true,
+        "old_child_status": "ARCHIVED_INVALID_OPERATIONALIZATION"
       }
     },
     "scientific_authority": false
@@ -39295,8 +39388,8 @@
     }
   },
   "research_governance_v2": {
-    "schema_version": "2.3",
-    "generated_at": "2026-08-18T07:50:45+00:00",
+    "schema_version": "2.4",
+    "generated_at": "2026-08-18T09:20:27+00:00",
     "policy": {
       "schema_version": "2.3",
       "paper_novelty_precedes_method_design": true,
@@ -39314,7 +39407,33 @@
       "pre_model_load_audit_required": true,
       "f0_required_before_p0_support": true,
       "experimental_failure_class_cannot_authorize_persistent_dead_end": true,
-      "persistent_dead_end_requires_principle_counter_explanation": true
+      "persistent_dead_end_requires_principle_counter_explanation": true,
+      "stop_class_required_for_any_stop": true,
+      "only_principle_stop_may_enter_persistent_dead_end_memory": true,
+      "realization_support_protocol_stop_are_repairable_not_dead_end": true,
+      "principle_stop_requires_same_information_or_scope_matched_counter_explanation": true
+    },
+    "stop_classes": {
+      "REALIZATION_STOP": {
+        "persistent_dead_end_authority": false,
+        "next_action": "repair-realization-and-rerun-or-reframe",
+        "meaning": "The concrete implementation, operationalization, method realization, or bounded execution failed; the scientific principle is not closed."
+      },
+      "SUPPORT_STOP": {
+        "persistent_dead_end_authority": false,
+        "next_action": "repair-or-acquire-support-before-continuing",
+        "meaning": "Required evidence, substrate support, overlap, or statistical resolution is insufficient; absence of support is not a scientific negative."
+      },
+      "PROTOCOL_STOP": {
+        "persistent_dead_end_authority": false,
+        "next_action": "repair-protocol-provenance-or-measurement-before-reinterpretation",
+        "meaning": "The protocol, measurement, provenance, treatment semantics, or evaluation contract is invalid for the intended scientific inference."
+      },
+      "PRINCIPLE_STOP": {
+        "persistent_dead_end_authority": true,
+        "next_action": "archive-scoped-principle-and-search-opposite-basin",
+        "meaning": "A scope-matched positive counter-explanation or exact same-information reduction closes the scientific principle itself."
+      }
     },
     "paper_first_macro_stages": [
       "scope",
@@ -39429,12 +39548,7 @@
         "persistent_dead_end_authority": true
       }
     },
-    "stage_scope_note": "The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle; experimental failure classes may update scoped belief or routing but cannot create persistent dead ends without principle-level counter-explanation certification.",
-    "runtime": {
-      "active_gpu_leases": 0,
-      "lease_root": "private-data://external/resource-leases",
-      "repair_budget_root": "private-data://external/repair-budget"
-    }
+    "stage_scope_note": "The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle. Every STOP must be typed as REALIZATION_STOP, SUPPORT_STOP, PROTOCOL_STOP, or PRINCIPLE_STOP; only PRINCIPLE_STOP may enter persistent dead-end memory, and only after a scope-matched positive counter-explanation or exact same-information reduction."
   },
   "p0_offline_qualification": {
     "summary": {

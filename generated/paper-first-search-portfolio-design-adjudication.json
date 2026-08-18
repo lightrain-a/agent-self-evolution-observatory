@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T07:49:56+00:00",
+  "generated_at": "2026-08-18T09:20:22+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-18T07:49:56+00:00",
+    "generated_at": "2026-08-18T09:20:22+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -993,6 +993,69 @@
           "source_readjudication_artifact": "generated/skillsp-routing-frozen-skills-ablation-principle-readjudication-20260817.json",
           "scientific_authority": false
         },
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY",
+        "basin": "principle-readjudication-3c4127ae8100de54",
+        "search_primitive": "IDENTIFIABILITY_GAP",
+        "title": "Surface-conditioned mechanism/program redesign identifiability reduces to generic feedback-guided program synthesis under the same information",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Surface-conditioned mechanism/program redesign identifiability reduces to generic feedback-guided program synthesis under the same information",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "Once the broad repair surface is conditioned on, the current PACE residual is isomorphic to generic feedback-guided program synthesis/repair: a learner searches candidate programs under an executable specification while verifier feedback eliminates or reprioritizes candidates. Non-uniqueness of the hidden successful redesign is not itself a failure of synthesis, and budget-limited inability to find a satisfying redesign is already a search/query-allocation problem.",
+        "current_source_refs": [
+          "arXiv:2403.17134",
+          "arXiv:2405.17503",
+          "arXiv:2409.16120",
+          "arXiv:2608.14441"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.14441",
+          "arXiv:2405.17503",
+          "arXiv:2403.17134",
+          "arXiv:2409.16120",
+          "generated/pace-bench-principle-evidence-audit-20260818.json",
+          "generated/paper-first-pf2-method-adjudication.json"
+        ],
+        "problem_text": "Surface-conditioned mechanism/program redesign identifiability as a standalone PACE paper problem: after the broad repair surface is already known, finite verifier feedback is claimed to identify which concrete redesign should be taken.",
+        "reason": "Once the broad repair surface is conditioned on, the current PACE residual is isomorphic to generic feedback-guided program synthesis/repair: a learner searches candidate programs under an executable specification while verifier feedback eliminates or reprioritizes candidates. Non-uniqueness of the hidden successful redesign is not itself a failure of synthesis, and budget-limited inability to find a satisfying redesign is already a search/query-allocation problem.",
+        "reopen_only_if": "Reopen only if first-party or independently verified PACE evidence supplies matched states with the same known repair surface, target specification, complete pre-outcome verifier transcript, candidate-program/refinement history, generator capability, and remaining budget, yet a preregistered physics/program structural variable forces a different ex-ante next-repair or success/reachability prediction that generic CEGIS/version-space, REx-style search allocation, and standard program-repair models with the same information cannot express.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "Once the broad repair surface is conditioned on, the current PACE residual is isomorphic to generic feedback-guided program synthesis/repair: a learner searches candidate programs under an executable specification while verifier feedback eliminates or reprioritizes candidates. Non-uniqueness of the hidden successful redesign is not itself a failure of synthesis, and budget-limited inability to find a satisfying redesign is already a search/query-allocation problem.",
+          "same_information_or_scope_matched": true,
+          "same_information_reduction_verified": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2608.14441",
+            "arXiv:2405.17503",
+            "arXiv:2403.17134",
+            "arXiv:2409.16120",
+            "generated/pace-bench-principle-evidence-audit-20260818.json",
+            "generated/paper-first-pf2-method-adjudication.json"
+          ],
+          "alternative_explanations_ruled_out": [
+            "Repair-surface identification is the missing novelty: ruled out because the residual explicitly conditions on the broad repair surface already being known, while PF-2 separately covers where-to-repair ambiguity.",
+            "The unique official reference implementation is the scientific target: ruled out because PACE success is executable specification satisfaction, so synthesis needs any satisfying program rather than recovery of one hidden reference code artifact.",
+            "Six-attempt non-convergence proves an intrinsic redesign impossibility: ruled out because the paper protocol uses twenty attempts and the old execution is computationally censored.",
+            "Stage depth is a valid common treatment dose that can define transport: ruled out by the 3/36 equal changed-key sets and median changed-key Jaccard near 0.31.",
+            "MOSS source-level editability alone creates a new identifiability object: ruled out because editability enlarges the action space but does not change the same-information compatible-program/search-state reduction."
+          ],
+          "opposite_prediction": "If two repair controllers receive the same known surface, target specification, candidate/history state, verifier transcript, generator, and budget, then a PACE-specific identifiability label alone should not predict a different optimal next refinement or convergence outcome beyond a sufficiently expressive generic synthesis/search model.",
+          "opposite_principle": "Within a known program-repair surface, finite verifier feedback defines a compatible-program/search state, not a new point-identification primitive. Scientific novelty requires a domain-specific structural constraint that changes an ex-ante decision or attainable guarantee under identical information.",
+          "opposite_search_seed": "Search PACE only for a pre-outcome physics/program structural variable that changes the value of a verifier feedback item, the reachable satisfying-program set, or the optimal refinement action while the generic synthesis/search baseline receives exactly the same observable transcript and budget. Do not use unique-reference recovery, broad repair-surface labels, stage depth, or another search scheduler as the novelty axis.",
+          "scope": "surface-conditioned mechanism/program redesign identifiability as a standalone PACE paper problem",
+          "reopen_condition": "Reopen only if first-party or independently verified PACE evidence supplies matched states with the same known repair surface, target specification, complete pre-outcome verifier transcript, candidate-program/refinement history, generator capability, and remaining budget, yet a preregistered physics/program structural variable forces a different ex-ante next-repair or success/reachability prediction that generic CEGIS/version-space, REx-style search allocation, and standard program-repair models with the same information cannot express."
+        },
+        "source_readjudication_artifact": "generated/pace-bench-mechanism-redesign-principle-readjudication-20260818.json",
+        "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {},
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -2851,8 +2914,8 @@
         "scientific_authority": false
       }
     ],
-    "principle_dead_end_count": 39,
-    "principle_readjudication_dead_end_count": 35,
+    "principle_dead_end_count": 40,
+    "principle_readjudication_dead_end_count": 36,
     "fresh_phenomenon_closure_count": 20,
     "fresh_phenomenon_closed_evidence_count": 35,
     "inversion_asset_evidence": [
@@ -3077,8 +3140,8 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 39,
-    "principle_readjudication_dead_ends": 35,
+    "shadow_dead_end_objects": 40,
+    "principle_readjudication_dead_ends": 36,
     "shadow_hold_objects": 7,
     "current_source_hard_veto_dead_ends": 0,
     "current_source_hard_veto_added_from_latest_run": 0,
