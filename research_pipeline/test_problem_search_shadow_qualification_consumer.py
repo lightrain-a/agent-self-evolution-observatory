@@ -74,7 +74,7 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
         }
         (run/"frozen-primary-evidence-pool.json").write_text(json.dumps(pool),encoding="utf-8")
         receipt={
-            "status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"stage_runner_required_schema":"1.4",
+            "status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"stage_runner_required_schema":"1.5",
             "source_generated_at":source["current_source_generated_at"],"source_pool_sha256":source["latest_source_pool_sha256"],
             "source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],
             "frozen_pool_sha256":frozen_sha,"discovery_operator_version":source["latest_discovery_operator_version"],
@@ -115,7 +115,7 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
             def qualify(**kwargs):
                 self.assertEqual(kwargs["admission_state"],admission)
                 run=kwargs["run_root"];run.mkdir(parents=True)
-                receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":identity["main_commit"],"discovery_operator_version":identity["discovery_operator_version"],"stage_runner_required_schema":"1.4","control_snapshot_sha256":identity["control_snapshot_sha256"],"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":identity["memory_sha256"]}
+                receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":identity["main_commit"],"discovery_operator_version":identity["discovery_operator_version"],"stage_runner_required_schema":"1.5","control_snapshot_sha256":identity["control_snapshot_sha256"],"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":identity["memory_sha256"]}
                 (run/"shadow-run-qualification.json").write_text(json.dumps(receipt),encoding="utf-8")
                 return {"status":"READY_FOR_SHADOW_EXPANSION_ZERO_PROVIDER_HANDOFF","summary":{"model_calls_executed":0}}
             result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=create,qualifier=qualify,identity_builder=lambda **kwargs:identity,target_preflight=lambda **kwargs:self.target_inventory())
@@ -124,7 +124,7 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
         self.assertEqual(result["summary"]["qualification_prepared"],1)
         self.assertEqual(result["summary"]["model_calls_executed"],0)
         self.assertEqual(result["summary"]["expansion_started"],0)
-        self.assertEqual(result["provenance"]["stage_runner_required_schema"],"1.4")
+        self.assertEqual(result["provenance"]["stage_runner_required_schema"],"1.5")
         self.assertFalse(result["scientific_authority"])
 
     def test_existing_matching_qualification_is_idempotent(self) -> None:
@@ -132,7 +132,7 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
             root=Path(td);state_path=root/"state.json";admission,_=self.write_state(state_path,same_source=False);pool=root/"primary.json";pool.write_text("{}",encoding="utf-8");parent=root/"worktrees";source=admission["source_identity"];identity=self.qualification_identity(admission)
             request=identity["request_id"]
             worktree=parent/f"agent-self-evolution-shadow-qual-{request}";run=worktree/"generated"/"research-data"/"paper-first-problem-discovery"/"search-portfolios"/f"shadow-auto-{request}";run.mkdir(parents=True)
-            receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":identity["main_commit"],"discovery_operator_version":identity["discovery_operator_version"],"stage_runner_required_schema":"1.4","control_snapshot_sha256":identity["control_snapshot_sha256"],"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":identity["memory_sha256"]}
+            receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":identity["main_commit"],"discovery_operator_version":identity["discovery_operator_version"],"stage_runner_required_schema":"1.5","control_snapshot_sha256":identity["control_snapshot_sha256"],"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":identity["memory_sha256"]}
             (run/"shadow-run-qualification.json").write_text(json.dumps(receipt),encoding="utf-8")
             result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=lambda *args:self.fail("must not recreate worktree"),qualifier=lambda **kwargs:self.fail("must not requalify"),identity_builder=lambda **kwargs:identity,target_preflight=lambda **kwargs:self.target_inventory())
         self.assertEqual(result["status"],"SHADOW_QUALIFICATION_ALREADY_PREPARED")
@@ -153,7 +153,7 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
                 created.append(target);target.mkdir(parents=True);(target/"generated").mkdir();(target/"generated"/"paper-first-search-portfolio-design-adjudication.json").write_text("{}",encoding="utf-8")
             def qualify(**kwargs):
                 run=kwargs["run_root"];run.mkdir(parents=True)
-                receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":identity["main_commit"],"discovery_operator_version":identity["discovery_operator_version"],"stage_runner_required_schema":"1.4","control_snapshot_sha256":identity["control_snapshot_sha256"],"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":identity["memory_sha256"]}
+                receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":identity["main_commit"],"discovery_operator_version":identity["discovery_operator_version"],"stage_runner_required_schema":"1.5","control_snapshot_sha256":identity["control_snapshot_sha256"],"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":identity["memory_sha256"]}
                 (run/"shadow-run-qualification.json").write_text(json.dumps(receipt),encoding="utf-8")
                 return {"status":"READY_FOR_SHADOW_EXPANSION_ZERO_PROVIDER_HANDOFF","summary":{"model_calls_executed":0}}
             result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=create,qualifier=qualify,identity_builder=lambda **kwargs:identity,target_preflight=lambda **kwargs:self.target_inventory())
@@ -180,7 +180,7 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
             def qualify(**kwargs):
                 self.assertEqual(kwargs["private_pool_path"],prior_pool);self.assertEqual(kwargs["pool_source_kind"],"prior_terminal_frozen_pool")
                 run=kwargs["run_root"];run.mkdir(parents=True)
-                receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":identity["main_commit"],"discovery_operator_version":identity["discovery_operator_version"],"stage_runner_required_schema":"1.4","control_snapshot_sha256":identity["control_snapshot_sha256"],"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":identity["memory_sha256"]}
+                receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":identity["main_commit"],"discovery_operator_version":identity["discovery_operator_version"],"stage_runner_required_schema":"1.5","control_snapshot_sha256":identity["control_snapshot_sha256"],"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":identity["memory_sha256"]}
                 (run/"shadow-run-qualification.json").write_text(json.dumps(receipt),encoding="utf-8")
                 return {"status":"READY_FOR_SHADOW_EXPANSION_ZERO_PROVIDER_HANDOFF","summary":{"model_calls_executed":0}}
             result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=canonical,worktree_parent=parent,create_worktree=create,qualifier=qualify,identity_builder=lambda **kwargs:identity,target_preflight=preflight)
