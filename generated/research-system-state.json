@@ -34413,7 +34413,7 @@
   },
   "paper_first_search_portfolio_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T20:13:49+00:00",
+    "generated_at": "2026-08-18T06:06:00+00:00",
     "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
     "target_venue": "ICLR",
     "component_owner": "paper-design-contract",
@@ -34460,7 +34460,7 @@
     },
     "shadow_near_miss_preflight": {
       "schema_version": "1.0",
-      "generated_at": "2026-08-17T20:13:49+00:00",
+      "generated_at": "2026-08-18T06:05:59+00:00",
       "audit_id": "shadow-r2-near-miss-preflight-20260814",
       "policy": {
         "shadow_search_control_only": true,
@@ -36659,6 +36659,73 @@
           "scientific_authority": false
         },
         {
+          "source_candidate_id": "AUTO-1-MEMORY-SKILL-COVERAGE-SCOPE",
+          "basin": "principle-readjudication-e037841a40393d0c",
+          "search_primitive": "ASSUMPTION_BREAK",
+          "title": "Formal memory coverage monotonicity and skill-induced execution harm live on different operational surfaces",
+          "avoid": [
+            "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Formal memory coverage monotonicity and skill-induced execution harm live on different operational surfaces",
+            "using the negative experiment metric alone as the reason for the dead end",
+            "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+          ],
+          "strongest_reduction": "The claimed assumption break compares different scientific quantities. arXiv:2608.11654 defines memory as an event subset whose generation operator produces a knowledge span, and its monotonicity assumption is a structural assumption about coverage/answerability under set inclusion. The same paper explicitly separates coverage from correctness and states that the assumptions hold only approximately in practice: real extraction is at best locally monotone and a conflicting claim can overturn earlier conclusions, including previously correct coverage. arXiv:2608.11888 instead measures end-to-end execution correctness and cost under paired skill/no-skill or matched-skill configurations. Its dominant functional failures are Task-Implementation Faults, and the paper attributes them to topically relevant reusable defaults/examples/templates that conflict with or incompletely cover task-required fields, APIs, paths, output formats, domain rules, or environment constraints. Thus the skill-harm result is real but does not falsify the formal set-coverage assumption: it changes execution utility on a different causal/measurement surface, while the formal source already records conflict-driven non-monotonic practical behavior. The remaining failure is expressible by task-skill compatibility/negative transfer plus the coverage-versus-correctness distinction without a new procedural-memory retraction primitive.",
+          "current_source_refs": [
+            "arXiv:2608.11654",
+            "arXiv:2608.11888"
+          ],
+          "evidence_basis": [
+            "arXiv:2608.11654",
+            "primary-fulltext:arXiv:2608.11654#sha256=aad633809bf2bd92f2fc9c6c63e693050a7bad5ae09808418e8374a056ea13dd",
+            "primary-evidence:arXiv:2608.11654#sha256=cf48ea56e9679e686974771a4bfb51f666f97827c115e11dee32f1bb68bf20c7",
+            "primary-evidence:arXiv:2608.11654#sha256=645dfe25fefa911e0c8cb6b03a6afc02ecf5339e1693cf8c36dd79fac51715a1",
+            "arXiv:2608.11888",
+            "primary-fulltext:arXiv:2608.11888#sha256=b59fdd9d3b2baaa6d8b453661dd29445ecddb555b13452489a815171a3b42dc9",
+            "primary-evidence:arXiv:2608.11888#sha256=38ed2a663bd34ddfd440342e0acef44ca0254a9419bd2df15a83f945c7fdced1",
+            "repo:generated/auto1-relevant-skill-misexecution-principle-readjudication-20260817.json",
+            "repo:generated/memory-monotonicity-consolidation-principle-readjudication-20260818.json"
+          ],
+          "problem_text": "AUTO-1 ASSUMPTION_BREAK restricted to arXiv:2608.11654's idealized generation-operator monotonicity ('more memory is never worse, so coverage is non-decreasing in the stored set') and arXiv:2608.11888's paired skill-induced functional failures, claiming that loading a relevant procedural skill retracts a previously correct action and therefore falsifies the formal memory assumption or defines a new procedural-memory retraction primitive.",
+          "reason": "The paired skill-induced failures are real, but they do not falsify the formal memory paper's idealized coverage monotonicity assumption. The sources measure different objects, and both sources already support conflict/compatibility explanations for practical non-monotonic execution behavior.",
+          "reopen_only_if": "Reopen only with primary or provenance-audited first-party evidence that either (a) directly measures the formal answerability/coverage utility and shows it decreases for a strict stored-event superset under the same generation operator, query distribution, conflict/correctness semantics, executor, and budget, or (b) for procedural skills, matches task-requirement-level compatibility/conflict, exact skill content, realized action-level uptake, executor, budget, and generic instruction-following difficulty yet finds a preregistered retraction feature with residual predictive power beyond same-information negative-transfer/compatibility baselines. Another aggregate or paired skill-harm count is insufficient.",
+          "dead_end_certified": true,
+          "memory_class": "PRINCIPLE_DEAD_END",
+          "counter_explanation": {
+            "type": "SAME_INFORMATION_REDUCTION",
+            "statement": "The claimed assumption break compares different scientific quantities. arXiv:2608.11654 defines memory as an event subset whose generation operator produces a knowledge span, and its monotonicity assumption is a structural assumption about coverage/answerability under set inclusion. The same paper explicitly separates coverage from correctness and states that the assumptions hold only approximately in practice: real extraction is at best locally monotone and a conflicting claim can overturn earlier conclusions, including previously correct coverage. arXiv:2608.11888 instead measures end-to-end execution correctness and cost under paired skill/no-skill or matched-skill configurations. Its dominant functional failures are Task-Implementation Faults, and the paper attributes them to topically relevant reusable defaults/examples/templates that conflict with or incompletely cover task-required fields, APIs, paths, output formats, domain rules, or environment constraints. Thus the skill-harm result is real but does not falsify the formal set-coverage assumption: it changes execution utility on a different causal/measurement surface, while the formal source already records conflict-driven non-monotonic practical behavior. The remaining failure is expressible by task-skill compatibility/negative transfer plus the coverage-versus-correctness distinction without a new procedural-memory retraction primitive.",
+            "opposite_prediction": "If the scope/measurement reduction is correct, a loaded skill may lower task execution success even when the stored event/knowledge span does not shrink: harm should concentrate where skill content introduces conflicting, partial, or over-broad procedural guidance relative to concrete task requirements. Conversely, a genuine falsification of the formal monotonicity assumption would require the framework's own answerability/coverage quantity to decrease when the stored event set is enlarged under a matched generation operator, not merely an endpoint execution failure under a different procedural configuration. The two sources report exactly the former situation, not the latter.",
+            "opposite_principle": "Representation-level coverage monotonicity is not end-to-end execution-utility monotonicity. An ASSUMPTION_BREAK requires an operational bridge showing that both sources vary and measure the same formal object; procedural skill harm cannot falsify a set-coverage assumption when correctness/conflict semantics and executor behavior are outside that monotonic quantity and are already acknowledged as non-monotonic in the formal source.",
+            "opposite_search_seed": "Search for a true coverage-level counterexample: provenance-audited matched memory sets A subset B under the same generation operator, query distribution, correctness/conflict semantics, executor, and evaluation contract, where the formal answerability/coverage utility decreases after adding B\\A. Alternatively, for procedural skills, match task-skill compatibility/conflict, skill content, realized uptake, executor, and budget and require an additional preregistered retraction variable beyond ordinary negative transfer and instruction-following. Do not reopen from another paired skill-induced endpoint failure alone.",
+            "scope": "AUTO-1 ASSUMPTION_BREAK restricted to arXiv:2608.11654's idealized generation-operator monotonicity ('more memory is never worse, so coverage is non-decreasing in the stored set') and arXiv:2608.11888's paired skill-induced functional failures, claiming that loading a relevant procedural skill retracts a previously correct action and therefore falsifies the formal memory assumption or defines a new procedural-memory retraction primitive.",
+            "same_information_or_scope_matched": true,
+            "same_information_reduction_verified": true,
+            "positive_support": true,
+            "evidence_refs": [
+              "arXiv:2608.11654",
+              "primary-fulltext:arXiv:2608.11654#sha256=aad633809bf2bd92f2fc9c6c63e693050a7bad5ae09808418e8374a056ea13dd",
+              "primary-evidence:arXiv:2608.11654#sha256=cf48ea56e9679e686974771a4bfb51f666f97827c115e11dee32f1bb68bf20c7",
+              "primary-evidence:arXiv:2608.11654#sha256=645dfe25fefa911e0c8cb6b03a6afc02ecf5339e1693cf8c36dd79fac51715a1",
+              "arXiv:2608.11888",
+              "primary-fulltext:arXiv:2608.11888#sha256=b59fdd9d3b2baaa6d8b453661dd29445ecddb555b13452489a815171a3b42dc9",
+              "primary-evidence:arXiv:2608.11888#sha256=38ed2a663bd34ddfd440342e0acef44ca0254a9419bd2df15a83f945c7fdced1",
+              "repo:generated/auto1-relevant-skill-misexecution-principle-readjudication-20260817.json",
+              "repo:generated/memory-monotonicity-consolidation-principle-readjudication-20260818.json"
+            ],
+            "alternative_explanations_ruled_out": [
+              "The formal monotonicity statement is an empirical law over end-to-end task correctness: false; the paper defines it on the generation operator's knowledge-span coverage and explicitly says coverage is not correctness.",
+              "The formal framework assumes practical extraction is globally monotone even with conflicts: false; it states real extraction is at best locally monotone and conflicting claims can overturn earlier conclusions and previously correct coverage.",
+              "The skill-induced failures are not causal or paired: false; arXiv:2608.11888 uses same-task no-skill or semantically matched-skill references as pseudo-oracles and confirms target/reference execution differences.",
+              "Topical relevance establishes formal compatibility and leaves a novel retraction mechanism unexplained: false; the skill paper's dominant TIF account and future-work guidance explicitly identify conflicting or incomplete defaults, examples, templates, paths, formats, rules, and environment assumptions as the relevant compatibility surface.",
+              "Calling a loaded skill a memory event makes the two quantities identical: false; even under that representation, the formal source separates coverage/answerability from correctness and acknowledges conflict-driven non-monotonic behavior at the end-to-end layer."
+            ],
+            "reopen_condition": "Reopen only with primary or provenance-audited first-party evidence that either (a) directly measures the formal answerability/coverage utility and shows it decreases for a strict stored-event superset under the same generation operator, query distribution, conflict/correctness semantics, executor, and budget, or (b) for procedural skills, matches task-requirement-level compatibility/conflict, exact skill content, realized action-level uptake, executor, budget, and generic instruction-following difficulty yet finds a preregistered retraction feature with residual predictive power beyond same-information negative-transfer/compatibility baselines. Another aggregate or paired skill-harm count is insufficient."
+          },
+          "source_readjudication_artifact": "generated/memory-skill-coverage-scope-principle-readjudication-20260818.json",
+          "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {},
+          "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+          "scientific_authority": false
+        },
+        {
           "source_candidate_id": "SHADOW-P01-C01",
           "basin": "principle-readjudication-e9865d17d90f9ab0",
           "search_primitive": "",
@@ -37072,8 +37139,8 @@
           "scientific_authority": false
         }
       ],
-      "principle_dead_end_count": 38,
-      "principle_readjudication_dead_end_count": 34,
+      "principle_dead_end_count": 39,
+      "principle_readjudication_dead_end_count": 35,
       "fresh_phenomenon_closure_count": 20,
       "fresh_phenomenon_closed_evidence_count": 35,
       "inversion_asset_evidence": [
@@ -37298,8 +37365,8 @@
       "revise_paper_problem": 1,
       "stop_standalone": 1,
       "support_inventory_required": 1,
-      "shadow_dead_end_objects": 38,
-      "principle_readjudication_dead_ends": 34,
+      "shadow_dead_end_objects": 39,
+      "principle_readjudication_dead_ends": 35,
       "shadow_hold_objects": 3,
       "current_source_hard_veto_dead_ends": 0,
       "current_source_hard_veto_added_from_latest_run": 0,
@@ -77788,7 +77855,7 @@
   },
   "paper_first_fresh_phenomenon_portfolio": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T20:39:55+00:00",
+    "generated_at": "2026-08-18T06:06:00+00:00",
     "status": "NO_ACTIVE_F0",
     "policy": {
       "portfolio_is_outside_canonical_problem_queue": true,
@@ -78130,7 +78197,7 @@
       },
       "dead_end_memory": {
         "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-        "sha256": "ed7a056cf993b4d280f589d5adce582b5c376e2b0a154cadf1541c336a338e6a"
+        "sha256": "3799878ff8ec402725208215616aa24c274638e864d4a6a3704d63632c519926"
       },
       "defense_principle_reduction": {
         "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",

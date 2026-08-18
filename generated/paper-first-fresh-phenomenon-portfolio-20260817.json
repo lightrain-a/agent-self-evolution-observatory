@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T20:39:55+00:00",
+  "generated_at": "2026-08-18T06:06:00+00:00",
   "status": "NO_ACTIVE_F0",
   "policy": {
     "portfolio_is_outside_canonical_problem_queue": true,
@@ -342,7 +342,7 @@
     },
     "dead_end_memory": {
       "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-      "sha256": "ed7a056cf993b4d280f589d5adce582b5c376e2b0a154cadf1541c336a338e6a"
+      "sha256": "3799878ff8ec402725208215616aa24c274638e864d4a6a3704d63632c519926"
     },
     "defense_principle_reduction": {
       "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
