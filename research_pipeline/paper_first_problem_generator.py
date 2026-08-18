@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import hashlib,json,os,re
 from collections import Counter
+from queue import Queue
 from datetime import datetime,timezone
 from pathlib import Path
-from threading import Event
+from threading import Event,Thread
 from typing import Any,Callable
 
 from .ark_provider import ArkResponsesClient,ArkSettings,extract_json_object
@@ -71,7 +72,7 @@ def _archive_provider_orphans(storage:StorageSettings,run_id:str,stage:str,attem
         audit={"request_fingerprint":fingerprint,"status":"ORPHANED_POST_NO_RECEIPT","requested_model":str(row.get("requested_model") or ""),"stage":stage,"scientific_authority":False}
         path=_provider_orphan_path(storage,fingerprint);path.parent.mkdir(parents=True,exist_ok=True)
         if not path.exists():
-            payload={"schema_version":"1.0","generated_at":_now(),"run_id":run_id,"stage":stage,"status":"ORPHANED_POST_NO_RECEIPT","request_audit":{key:row.get(key) for key in ("request_fingerprint","prompt_sha256","requested_model","max_output_tokens","temperature","thinking_profile")},"provider_error_audit":row.get("provider_error_audit") or {},"replay_policy":"BLOCK_AUTOMATIC_REPLAY_UNTIL_EXPLICIT_OPERATOR_OVERRIDE","scientific_authority":False,"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+            payload={"schema_version":"1.0","generated_at":_now(),"run_id":run_id,"stage":stage,"status":"ORPHANED_POST_NO_RECEIPT","request_audit":{key:row.get(key) for key in ("request_fingerprint","prompt_sha256","requested_model","max_output_tokens","temperature","thinking_profile","wall_clock_seconds","provider_wall_clock_timeout")},"provider_error_audit":row.get("provider_error_audit") or {},"replay_policy":"BLOCK_AUTOMATIC_REPLAY_UNTIL_EXPLICIT_OPERATOR_OVERRIDE","scientific_authority":False,"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
             path.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
         audits.append(audit)
     return audits
@@ -369,6 +370,35 @@ def _transport_no_output_error(error: Exception) -> str:
     return ""
 
 
+def _provider_wall_clock_seconds(max_output_tokens:int)->float:
+    configured=str(os.getenv("ARK_WALL_CLOCK_SECONDS") or "").strip()
+    if configured:
+        try:return min(max(float(configured),30.0),600.0)
+        except ValueError:pass
+    return 360.0 if int(max_output_tokens)>=5000 else 180.0
+
+
+def _respond_with_wall_clock_deadline(client:ArkResponsesClient,*,wall_clock_seconds:float,**kwargs):
+    """Bound one provider POST by total wall time, not only socket inactivity.
+
+    The worker is daemonized because a timed-out POST has ambiguous provider acceptance.
+    Callers must treat the timeout as an orphan and must not retry/fallback automatically.
+    """
+    result_queue=Queue(maxsize=1)
+    def worker():
+        try:result_queue.put(("result",client.respond(**kwargs)))
+        except BaseException as error:result_queue.put(("error",error))
+    thread=Thread(target=worker,daemon=True,name="ark-response-wall-clock")
+    thread.start();thread.join(max(0.01,float(wall_clock_seconds)))
+    if thread.is_alive():
+        error=RuntimeError(f"Ark provider wall-clock timeout after {float(wall_clock_seconds):.1f}s without an auditable response")
+        error.provider_wall_clock_timeout=True
+        raise error
+    kind,payload=result_queue.get_nowait()
+    if kind=="error":raise payload
+    return payload
+
+
 def _ark(*,prompt,model,max_output_tokens,temperature=0.0,stage="problem_generation",allow_transport_fallback=True):
     base=ArkSettings.from_env(required=False)
     if not base.api_key: raise RuntimeError("ARK_API_KEY_NOT_CONFIGURED")
@@ -376,13 +406,13 @@ def _ark(*,prompt,model,max_output_tokens,temperature=0.0,stage="problem_generat
     settings=ArkSettings(api_key=base.api_key,base_url=base.base_url,default_model=base.default_model,timeout_seconds=min(max(base.timeout_seconds,timeout_floor),180.0),max_retries=0)
     priorities=list(stage_model_priority(stage))
     candidates=[model] if not allow_transport_fallback else [model]+[candidate for candidate in priorities if candidate!=model][:1]
-    attempts=[]
+    attempts=[];wall_clock_seconds=_provider_wall_clock_seconds(max_output_tokens)
     for index,candidate in enumerate(candidates):
         request_audit=_provider_request_audit(stage=stage,prompt=prompt,model=candidate,max_output_tokens=max_output_tokens,temperature=temperature)
         try:
             thinking=None if str(candidate).lower().startswith("glm") else "disabled"
-            result=ArkResponsesClient(settings).respond(prompt,model=candidate,max_output_tokens=max_output_tokens,temperature=temperature,thinking=thinking,store=True,allow_thinking_compatibility_fallback=allow_transport_fallback)
-            attempts.append({**request_audit,"requested_model":candidate,"status":"success","resolved_model":str(result.get("resolved_model") or candidate),"assistant_output_present":True})
+            result=_respond_with_wall_clock_deadline(ArkResponsesClient(settings),wall_clock_seconds=wall_clock_seconds,prompt=prompt,model=candidate,max_output_tokens=max_output_tokens,temperature=temperature,thinking=thinking,store=True,allow_thinking_compatibility_fallback=allow_transport_fallback)
+            attempts.append({**request_audit,"requested_model":candidate,"status":"success","resolved_model":str(result.get("resolved_model") or candidate),"assistant_output_present":True,"wall_clock_seconds":wall_clock_seconds})
             return {**result,"logical_requested_model":model,"transport_attempts":attempts,"transport_fallback_used":index>0,"transport_fallback_stage":stage}
         except Exception as error:
             kind=_transport_no_output_error(error)
@@ -395,7 +425,8 @@ def _ark(*,prompt,model,max_output_tokens,temperature=0.0,stage="problem_generat
                 "resolved_model":str(getattr(error,"resolved_model",candidate) or candidate),
                 "incomplete_reason":str(getattr(error,"incomplete_reason","") or ""),
             } if response_id else None
-            attempt={**request_audit,"requested_model":candidate,"status":"error-no-output","error_kind":kind or "non-retryable-provider-error","assistant_output_present":False,"provider_error_audit":_provider_error_audit(error)}
+            wall_clock_timeout=getattr(error,"provider_wall_clock_timeout",False) is True
+            attempt={**request_audit,"requested_model":candidate,"status":"error-no-output","error_kind":kind or "non-retryable-provider-error","assistant_output_present":False,"provider_error_audit":_provider_error_audit(error),"wall_clock_seconds":wall_clock_seconds,"provider_wall_clock_timeout":wall_clock_timeout}
             if receipt is not None:
                 attempt["provider_receipt"]=receipt
             attempts.append(attempt)
@@ -407,10 +438,10 @@ def _ark(*,prompt,model,max_output_tokens,temperature=0.0,stage="problem_generat
                 pending.provider_receipt=receipt
                 pending.transport_attempts=attempts
                 raise pending from error
-            if not kind or index>=len(candidates)-1:
+            if wall_clock_timeout or not kind or index>=len(candidates)-1:
                 detail=";".join(f"{row['requested_model']}:{row.get('error_kind') or row['status']}" for row in attempts)
                 final=RuntimeError(f"Ark provider failed before an auditable assistant output; attempts={detail}")
-                final.transport_attempts=attempts
+                final.transport_attempts=attempts;final.provider_wall_clock_timeout=wall_clock_timeout
                 if receipt is not None:
                     final.provider_receipt=receipt
                 raise final from error

@@ -11,7 +11,7 @@ from pathlib import Path
 from .config import StorageSettings
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES, SEARCH_PORTFOLIO_PRIMITIVES
 from .paper_first_problem_gate_queue import build_problem_gate_queue
-from .paper_first_problem_generator import _archived_replay_metadata, _ark, _durable_principle_dead_end_examples, _evidence_excerpt_matches, _normalize_lane_search, _normalize_last_completed_lane_search_receipt, _pre_f0_route, _provider_request_audit, _repair_block_only_reviewer_outer_braces, _search_closure_reentry_audit, recover_archived_block_only_reviewer_raw, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
+from .paper_first_problem_generator import _archived_replay_metadata, _ark, _durable_principle_dead_end_examples, _evidence_excerpt_matches, _normalize_lane_search, _normalize_last_completed_lane_search_receipt, _pre_f0_route, _provider_request_audit, _repair_block_only_reviewer_outer_braces, _respond_with_wall_clock_deadline, _search_closure_reentry_audit, recover_archived_block_only_reviewer_raw, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
 from .paper_first_problem_generator_prompts import generator_prompt, reviewer_prompt
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
@@ -569,6 +569,26 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             result=_ark(prompt="test",model="glm-5.3",max_output_tokens=5200,temperature=0.0,stage="problem_generation",allow_transport_fallback=False)
         self.assertEqual(seen,{"timeout":180.0,"retries":0})
         self.assertEqual(result["resolved_model"],"glm-5.3")
+
+    def test_provider_wall_clock_deadline_is_a_hard_total_deadline(self) -> None:
+        import time
+        class SlowClient:
+            def respond(self,**kwargs):time.sleep(0.08);return {"text":"late"}
+        with self.assertRaisesRegex(RuntimeError,"wall-clock timeout") as caught:
+            _respond_with_wall_clock_deadline(SlowClient(),wall_clock_seconds=0.01,prompt="x",model="glm-5.3")
+        self.assertTrue(getattr(caught.exception,"provider_wall_clock_timeout",False))
+
+    def test_wall_clock_timeout_never_falls_back_to_second_model(self) -> None:
+        from .ark_provider import ArkSettings
+        base=ArkSettings(api_key="test-key",base_url="https://example.invalid",default_model="glm-5.3",timeout_seconds=120,max_retries=0)
+        timeout=RuntimeError("simulated provider wall-clock timeout");timeout.provider_wall_clock_timeout=True
+        with patch("research_pipeline.paper_first_problem_generator.ArkSettings.from_env",return_value=base), patch("research_pipeline.paper_first_problem_generator._respond_with_wall_clock_deadline",side_effect=timeout) as respond:
+            with self.assertRaisesRegex(RuntimeError,"failed before an auditable assistant output") as caught:
+                _ark(prompt="test",model="glm-5.3",max_output_tokens=5200,temperature=0.0,stage="problem_generation",allow_transport_fallback=True)
+        self.assertEqual(respond.call_count,1)
+        self.assertEqual(len(caught.exception.transport_attempts),1)
+        self.assertTrue(caught.exception.transport_attempts[0]["provider_wall_clock_timeout"])
+        self.assertEqual(caught.exception.transport_attempts[0]["wall_clock_seconds"],360.0)
 
     def test_strict_provider_disables_transport_fallback_after_incomplete(self) -> None:
         from .ark_provider import ArkResponseStateError,ArkSettings
