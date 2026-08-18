@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "AUTO-1-AGENT-SAFETY-20260818T060955Z",
+  "source_candidate_id": "AUTO-1",
+  "title": "When does frozen-executor self-evolution fail to adapt to mechanism-level environmental shifts despite verified diagnostic feedback?",
+  "source_refs": [
+    "arXiv:2608.14036",
+    "arXiv:2608.14441"
+  ],
+  "discovery_lane": "CONVERGENT_FAILURE",
+  "source_transaction": {
+    "source_generator_run_id": "20260818T060955Z",
+    "generator_requested_model": "kimi-k3",
+    "generator_resolved_model": "kimi-k3",
+    "generator_raw_sha256": "9ea2415ba3d651c5124f3276c49d284c1f32d44d0b21a982655144aab490a938",
+    "reviewer_requested_model": "deepseek-v4-pro",
+    "reviewer_resolved_model": "deepseek-v4-pro-260425",
+    "reviewer_raw_sha256": "3c0622c51ab64ba68dff0e230edbc3f5eb53e3163adb0b1eaa713d02e6a46287",
+    "reviewer_only_resume": true,
+    "generator_calls_authorized": 0,
+    "prior_reviewer_verdict_reused": false
+  },
+  "reviewer_adjudication": {
+    "semantic_verdict": "BLOCK",
+    "source_claims_grounded": true,
+    "independent_resolved_model": true,
+    "lane_contract_verified": false,
+    "lane_contract_reason": "CONVERGENT_FAILURE lane requires two independent method families showing quantitative failure under the same bounded operational condition. Source A (PACE-Bench) evaluates simulator-grounded code evolution methods; Source B (Demystifying Agent Skills) evaluates inference-time skill retrieval. These are distinct method families, satisfying independence. However, the claimed shared condition—'frozen executors facing tasks requiring mechanism-level redesign or runtime validation'—is not the same bounded operational condition. Source A's failure is specific to physics adaptation pairs where source designs succeed but mutated target environments require mechanism redesign. Source B's failure is on tasks requiring 'deeper reformulation and runtime validation' in a general agent-task setting. The candidate conflates 'mechanism redesign' (structural code changes for physics) with 'reformulation and runtime validation' (task-level reasoning changes). These are different operational conditions measured on different benchmarks with different failure taxonomies. The lane contract requires a shared condition, not an abstract analogy between different failure modes.",
+    "reduction_class": "NONE",
+    "strongest_reduction": "none",
+    "reviewer_reason": "Lane contract fails: the two empirical facts do not share the same bounded operational condition. Source A measures failure on physics adaptation pairs requiring mechanism redesign in a simulator-grounded code evolution benchmark. Source B measures failure on general agent tasks requiring reformulation and runtime validation in a skill-retrieval setting. The candidate's shared condition ('frozen executors facing tasks requiring mechanism-level redesign or runtime validation') is a post-hoc abstraction that collapses distinct failure modes (structural code redesign vs. task reformulation) across different benchmarks, different task distributions, and different operational definitions of 'mechanism-level' adaptation. CONVERGENT_FAILURE requires a common failure object under the same bounded condition, not two different failures under an analogical umbrella. Source grounding is satisfied for both claims individually, but the lane contract is not met.",
+    "matched_patterns": []
+  },
+  "failure_diagnosis": {
+    "current_disposition": "STOP_CURRENT_FORMULATION_LANE_CONTRACT",
+    "stop_class": "PROTOCOL_STOP",
+    "failure_layer": "assumption_scope",
+    "failure_subtype": "FORMULATION_LANE_MISMATCH",
+    "memory_class": "FORMULATION_HOLD",
+    "principle_dead_end_certified": false,
+    "principle_update_allowed": false,
+    "core_principle_rejected": false,
+    "reason": "The independent reviewer grounded both primary-source claims and found no mature-theory reduction, but rejected the CONVERGENT_FAILURE formulation because PACE mechanism/program redesign in dynamic physics and skill-retrieval reformulation failures are not one shared bounded operational condition or common measured failure object. This stops the current cross-source formulation only; it is not a scientific dead end.",
+    "next_action": "Do not rerun the same cross-source reviewer. Reopen the cross-source formulation only with new primary evidence that supplies one explicitly shared bounded operational condition and common measured failure object. A PACE-only child is separately constrained by the existing scoped PACE principle closure and its same-information reopen contract."
+  },
+  "pace_only_rescue_audit": {
+    "support_inventory_artifact_sha256": "4eb1fac246c90fa0b5f9eaae6f865bafc8f8a51a74ea1f9119695c1480b7498e",
+    "support_status": "INSUFFICIENT_FOR_PACE_REOPEN_CONTRACT",
+    "attempt_states": 162,
+    "same_information_duplicate_groups": 12,
+    "eligible_structural_contrast_groups": 0,
+    "same_initial_program_cross_target_groups": 6,
+    "existing_scoped_principle_closure_id": "PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY",
+    "existing_scoped_principle_closure_sha256": "980be692f5223e4830890431ca92cd15a55c46fdbdc280fb2cdc3b447668153e",
+    "existing_scoped_principle_dead_end_certified": true,
+    "pace_benchmark_dead_end_certified": false,
+    "reopen_condition": "Reopen only if first-party or independently verified PACE evidence supplies matched states with the same known repair surface, target specification, complete pre-outcome verifier transcript, candidate-program/refinement history, generator capability, and remaining budget, yet a preregistered physics/program structural variable forces a different ex-ante next-repair or success/reachability prediction that generic CEGIS/version-space, REx-style search allocation, and standard program-repair models with the same information cannot express.",
+    "interpretation": "Removing the skill paper does not automatically rescue AUTO-1. Current PACE trajectories contain no same-information matched structural contrast satisfying the existing reopen contract, and the surface-conditioned redesign-identifiability formulation is already scoped-closed by a same-information program-synthesis/search reduction."
+  },
+  "memory_projection": {
+    "basin_prefix": "semantic-lane-contract-",
+    "memory_class": "FORMULATION_HOLD",
+    "dead_end_certified": false,
+    "strongest_reduction": "no mature-theory reduction identified; the current failure is the cross-source lane-contract/formulation mismatch",
+    "reopen_only_if": "New primary evidence supplies the missing CONVERGENT_FAILURE lane-contract elements explicitly: one shared bounded operational condition, one common measured failure object, and correctly typed evidence roles; the repaired formulation must then survive same-information reduction. Alternatively, a PACE-only child must first satisfy the existing PACE principle reopen contract.",
+    "avoid": [
+      "repeating the same PACE plus skill-retrieval analogy as a CONVERGENT_FAILURE candidate",
+      "treating an independent reviewer BLOCK as a principle dead end when reduction_class is NONE",
+      "relabeling the PACE-only child without satisfying the existing same-information reopen condition"
+    ]
+  },
+  "persistent_hold": {
+    "source_candidate_id": "AUTO-1-AGENT-SAFETY-20260818T060955Z",
+    "original_candidate_id": "AUTO-1",
+    "basin": "semantic-lane-contract-56af8ab44d137292",
+    "search_primitive": "CONVERGENT_FAILURE",
+    "title": "When does frozen-executor self-evolution fail to adapt to mechanism-level environmental shifts despite verified diagnostic feedback?",
+    "disposition": "STOP_CURRENT_FORMULATION_LANE_CONTRACT",
+    "stop_class": "PROTOCOL_STOP",
+    "failure_layer": "assumption_scope",
+    "failure_subtype": "FORMULATION_LANE_MISMATCH",
+    "memory_class": "FORMULATION_HOLD",
+    "dead_end_certified": false,
+    "strongest_reduction": "no mature-theory reduction identified; the current failure is the cross-source lane-contract/formulation mismatch",
+    "reduction_class": "NONE",
+    "lane_contract_reason": "CONVERGENT_FAILURE lane requires two independent method families showing quantitative failure under the same bounded operational condition. Source A (PACE-Bench) evaluates simulator-grounded code evolution methods; Source B (Demystifying Agent Skills) evaluates inference-time skill retrieval. These are distinct method families, satisfying independence. However, the claimed shared condition—'frozen executors facing tasks requiring mechanism-level redesign or runtime validation'—is not the same bounded operational condition. Source A's failure is specific to physics adaptation pairs where source designs succeed but mutated target environments require mechanism redesign. Source B's failure is on tasks requiring 'deeper reformulation and runtime validation' in a general agent-task setting. The candidate conflates 'mechanism redesign' (structural code changes for physics) with 'reformulation and runtime validation' (task-level reasoning changes). These are different operational conditions measured on different benchmarks with different failure taxonomies. The lane contract requires a shared condition, not an abstract analogy between different failure modes.",
+    "exact_reduction_test": "none",
+    "current_source_refs": [
+      "arXiv:2608.14036",
+      "arXiv:2608.14441"
+    ],
+    "problem_text": "When does frozen-executor self-evolution fail to adapt to mechanism-level environmental shifts despite verified diagnostic feedback?",
+    "reason": "Lane contract fails: the two empirical facts do not share the same bounded operational condition. Source A measures failure on physics adaptation pairs requiring mechanism redesign in a simulator-grounded code evolution benchmark. Source B measures failure on general agent tasks requiring reformulation and runtime validation in a skill-retrieval setting. The candidate's shared condition ('frozen executors facing tasks requiring mechanism-level redesign or runtime validation') is a post-hoc abstraction that collapses distinct failure modes (structural code redesign vs. task reformulation) across different benchmarks, different task distributions, and different operational definitions of 'mechanism-level' adaptation. CONVERGENT_FAILURE requires a common failure object under the same bounded condition, not two different failures under an analogical umbrella. Source grounding is satisfied for both claims individually, but the lane contract is not met.",
+    "avoid": [
+      "repeating the same PACE plus skill-retrieval analogy as a CONVERGENT_FAILURE candidate",
+      "treating an independent reviewer BLOCK as a principle dead end when reduction_class is NONE",
+      "relabeling the PACE-only child without satisfying the existing same-information reopen condition"
+    ],
+    "reopen_only_if": "New primary evidence supplies the missing CONVERGENT_FAILURE lane-contract elements explicitly: one shared bounded operational condition, one common measured failure object, and correctly typed evidence roles; the repaired formulation must then survive same-information reduction. Alternatively, a PACE-only child must first satisfy the existing PACE principle reopen contract.",
+    "source_generator_raw_sha256": "9ea2415ba3d651c5124f3276c49d284c1f32d44d0b21a982655144aab490a938",
+    "source_reviewer_raw_sha256": "3c0622c51ab64ba68dff0e230edbc3f5eb53e3163adb0b1eaa713d02e6a46287",
+    "principle_dead_end_certified": false,
+    "scientific_authority": false
+  },
+  "authority": {
+    "paper": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  },
+  "scientific_authority": false
+}

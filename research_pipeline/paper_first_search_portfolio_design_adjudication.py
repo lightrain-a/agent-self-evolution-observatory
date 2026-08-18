@@ -18,6 +18,7 @@ SHADOW_PORTFOLIO_JSON = PROJECT_ROOT / "generated" / "paper-first-problem-search
 SHADOW_QUEUE_JSON = PROJECT_ROOT / "generated" / "paper-first-problem-search-portfolio-queue-shadow.json"
 PRINCIPLE_READJUDICATION_GLOB = "*principle-readjudication-*.json"
 FRESH_PHENOMENON_SUPPORT_HOLD_GLOB = "*fresh-phenomenon-support-hold-*.json"
+CONTINUATION_HOLD_GLOB = "*continuation-hold-*.json"
 
 PRIMARY_SOURCES: dict[str, list[dict[str, str]]] = {
     "SP-09": [
@@ -218,6 +219,52 @@ def _prior_near_miss_rows(path: Path = DEFAULT_JSON) -> list[dict[str, Any]]:
         if row.get("scientific_authority") is not False or not str(row.get("reopen_only_if") or "").strip():
             continue
         rows.append(dict(row))
+    return rows
+
+
+def _continuation_hold_rows(paths: list[Path] | None = None) -> list[dict[str, Any]]:
+    """Load provenance-bound post-transaction holds without turning them into dead ends.
+
+    A continuation artifact is produced only after a separate reviewer, replay, support
+    inventory, or source-asset audit has already finished.  Its `persistent_hold` row is
+    search-control memory: it can stop the *current formulation/execution route* and state
+    a reopen condition, but it cannot grant or revoke scientific authority and it can
+    never become a PRINCIPLE_DEAD_END merely because it is persisted here.
+    """
+    candidates = paths if paths is not None else sorted((PROJECT_ROOT / "generated").glob(CONTINUATION_HOLD_GLOB))
+    rows: list[dict[str, Any]] = []
+    for path in candidates:
+        payload = _load_json(path)
+        if payload.get("scientific_authority") is not False:
+            continue
+        authority = payload.get("authority") or {}
+        if any(bool(value) for value in authority.values()):
+            continue
+        raw = payload.get("persistent_hold") or {}
+        if not isinstance(raw, dict) or raw.get("scientific_authority") is not False or raw.get("dead_end_certified") is not False:
+            continue
+        row = dict(raw)
+        basin = str(row.get("basin") or "")
+        memory_class = str(row.get("memory_class") or "")
+        if memory_class == "FORMULATION_HOLD":
+            if not basin.startswith("semantic-lane-contract-") or not str(row.get("lane_contract_reason") or "").strip():
+                continue
+        elif memory_class == "REOPENABLE_HOLD":
+            if not basin.startswith("near-miss-terminal-support-hold-") or not str(row.get("required_unit") or "").strip():
+                continue
+        else:
+            continue
+        if not str(row.get("source_candidate_id") or "").strip() or not str(row.get("strongest_reduction") or "").strip() or not str(row.get("reason") or "").strip() or not str(row.get("reopen_only_if") or "").strip():
+            continue
+        try:
+            artifact_ref = str(path.relative_to(PROJECT_ROOT))
+        except ValueError:
+            artifact_ref = str(path)
+        row["source_hold_artifact"] = artifact_ref
+        row["source_hold_artifact_sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
+        row["scientific_authority"] = False
+        row["dead_end_certified"] = False
+        rows.append(row)
     return rows
 
 
@@ -559,6 +606,9 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
     memory["blocked_objects"].extend(hard_rows)
 
     semantic_inherited = _prior_semantic_block_rows() if prior_semantic_rows is None else [dict(row) for row in prior_semantic_rows if isinstance(row, dict)]
+    continuation_rows = _continuation_hold_rows()
+    if prior_semantic_rows is None:
+        semantic_inherited.extend(dict(row) for row in continuation_rows if str(row.get("basin") or "").startswith(("semantic-exact-reduction-", "semantic-lane-contract-")))
     semantic_by_basin = {str(row.get("basin")): row for row in semantic_inherited if str(row.get("basin") or "").startswith(("semantic-exact-reduction-", "semantic-lane-contract-")) and row.get("scientific_authority") is False}
     semantic_added = 0
     latest_pool_sha = str(latest.get("frozen_pool_sha256") or "").strip()
@@ -632,6 +682,8 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
     near_miss_state = near_miss_state or build_shadow_near_miss_preflight()
     base_near_miss_rows = compile_shadow_dead_end_rows(near_miss_state)
     near_inherited = _prior_near_miss_rows() if prior_near_miss_rows is None else [dict(row) for row in prior_near_miss_rows if isinstance(row, dict)]
+    if prior_near_miss_rows is None:
+        near_inherited.extend(dict(row) for row in continuation_rows if str(row.get("basin") or "").startswith("near-miss-"))
     def near_key(row: dict[str, Any]) -> tuple[str, str]:
         return (str(row.get("basin") or ""), str(row.get("source_candidate_id") or ""))
     near_by_key = {near_key(row): row for row in near_inherited if str(row.get("basin") or "").startswith("near-miss-") and row.get("scientific_authority") is False}

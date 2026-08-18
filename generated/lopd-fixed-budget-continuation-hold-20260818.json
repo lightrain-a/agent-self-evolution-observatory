@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "LOPD-FIXED-BUDGET-LATENT-EXPERIENCE-DECOMPOSITION",
+  "parent_closure_id": "LOPD-LATENT-RETRIEVAL-PLATEAU",
+  "primary_ref": "arXiv:2608.13040",
+  "title": "Does latent-experience decomposition matter after fixing the total latent-position budget?",
+  "frozen_problem": {
+    "causal_unit": "one LOPD task/example under one frozen experience bank and retrieval ranking",
+    "intervention": "redistribute a fixed total latent-position budget between number of retrieved experiences J and latent tokens per experience K",
+    "total_latent_positions": 64,
+    "arms": [
+      {
+        "experience_count_J": 1,
+        "latent_tokens_per_experience_K": 64,
+        "total_latent_positions_JxK": 64
+      },
+      {
+        "experience_count_J": 2,
+        "latent_tokens_per_experience_K": 32,
+        "total_latent_positions_JxK": 64
+      },
+      {
+        "experience_count_J": 4,
+        "latent_tokens_per_experience_K": 16,
+        "total_latent_positions_JxK": 64
+      },
+      {
+        "experience_count_J": 8,
+        "latent_tokens_per_experience_K": 8,
+        "total_latent_positions_JxK": 64
+      }
+    ],
+    "frozen_controls": [
+      "same base/student/self-teacher model identities",
+      "same frozen successful-trajectory experience bank",
+      "same similarity ranking and retrieval support",
+      "same task distribution and evaluation endpoint",
+      "same composer family and privileged-margin objective",
+      "matched training/update information and compute"
+    ],
+    "strongest_same_information_baselines": [
+      "rate-distortion / representation-capacity model at fixed total latent positions",
+      "marginal nonredundant-information model using retrieval rank and experience similarity/correlation",
+      "context-budget model using the same total latent positions and training/update compute"
+    ],
+    "frozen_exact_prediction": "If experience-count versus per-experience-capacity decomposition is a distinct mechanism, then at fixed J*K=64 and matched training/update information, held-out outcomes will differ repeatably across decomposition arms in a way that the same-information rate-distortion, marginal-information/redundancy, retrieval-rank, and context-budget baselines cannot express.",
+    "stop_rule": "If decomposition effects are explained by the same-information capacity/redundancy/rank/context baselines, retain the parent LOPD principle closure and do not claim a new mechanism."
+  },
+  "release_audit": {
+    "official_repository": "https://github.com/bingreeky/LOPD.git",
+    "local_head": "362d3742fc7b4dbbc0677b219990f2a4b4d0a90f",
+    "remote_head": "362d3742fc7b4dbbc0677b219990f2a4b4d0a90f",
+    "expected_initial_release_commit": "362d3742fc7b4dbbc0677b219990f2a4b4d0a90f",
+    "release_unchanged_since_initial_code_release": true,
+    "readme_sha256": "88cf6a9c98020c037f6807d7b4f8c4474f026ebac8a6722e898358c11afd0af8",
+    "inference_config_sha256": "a6bab805bca1f7b0e354127f944dff2e858fc1630ec7a282cac8de461a515ca2",
+    "qformer_sha256": "94dbf9dc0c04e5426d8a3382fa7443fd4d02f09b297b0ecf1d23c85e4f8fe860",
+    "memory_bank_sha256": "67ef296c73f9f95dca3fc0e53c3bccfa94ad461cfb63ab76eb6cddeaec9cf70d",
+    "readme_training_code_coming_soon": true,
+    "qformer_num_queries": 32,
+    "compressor_checkpoint_config": "YOUR_COMPRESSOR_CHECKPOINT",
+    "compressor_checkpoint_is_placeholder": true,
+    "inference_n_retrieve": 1,
+    "hf_checkpoint_inventory_status": "UNVERIFIED_NON_LOAD_BEARING",
+    "hf_checkpoint_inventory_note": "A Hugging Face file-list probe timed out and is not used as evidence of absence. The current hold is load-bearing on the unchanged official Git release, the explicit 'Training code coming soon' statement, and the source config requiring a compressor checkpoint. Even a K=32 checkpoint alone would not instantiate the K=8/16/64 matched training objects source-faithfully."
+  },
+  "prior_source_specific_receipt": {
+    "artifact_sha256": "5b7c23b1edc4542c7e4f8a84acead661d11034f26f50d86643c5d84a50935363",
+    "candidate_id": "SHADOW-P01-C01",
+    "contract_sha256": "a4d5c39e4ce0aa1b4fc76f80937c1da19c16a30aa0153868c0b1add7c3237334",
+    "disposition": "SOURCE_SPECIFIC_REQUIRED",
+    "reason": "The preregistered scientific comparison requires faithful reproduction of the reported tokens-per-experience sensitivity. In the first-party LOPD release at commit 362d3742fc7b4dbbc0677b219990f2a4b4d0a90f, the README explicitly states that training code is not yet released, while the EnvScaler latent inference configuration requires a compressor checkpoint but contains the placeholder YOUR_COMPRESSOR_CHECKPOINT. The token budget K is the QFormer num_queries architecture parameter. Without the source-specific trained compressor/training artifacts for the sensitivity conditions, changing K in the released code would instantiate an untrained or incompatible compressor rather than reproduce the paper intervention. A locally trained substitute, random QFormer, different model, or retuned checkpoint would change the frozen scientific object."
+  },
+  "support_diagnosis": {
+    "status": "WAIT_PRIMARY_ASSET_RELEASE",
+    "support_status": "SOURCE_SPECIFIC_PRIMARY_ASSET_UNAVAILABLE",
+    "stop_class": "SUPPORT_STOP",
+    "failure_layer": "experiment_identifiability",
+    "failure_subtype": "SOURCE_SPECIFIC_TRAINING_OBJECT_UNAVAILABLE",
+    "source_faithful_execution_available": false,
+    "principle_dead_end_certified": false,
+    "principle_update_allowed": false,
+    "reason": "The fixed-budget child requires source-faithful trained compressor conditions at multiple K values while matching the LOPD training/update object. The official repository remains at its initial release, still states that training code is coming soon, and the released inference configuration fixes qformer.num_queries=32 while requiring a placeholder compressor checkpoint. Changing K locally would therefore change or invent the training object rather than execute the frozen scientific contrast.",
+    "reopen_only_if": "Reopen when the official/source-specific training pipeline and compatible compressor artifacts become available with enough provenance to train or reproduce all fixed-budget decomposition arms under matched compute/update information, or when an independent review certifies an equivalent operationalization without changing the frozen causal unit, prediction, or strongest same-information baselines.",
+    "next_action": "Keep the fixed-budget decomposition contract as a reopenable source-asset hold. Do not substitute a random, locally invented, differently trained, or outcome-tuned compressor and do not authorize GPU execution until the source-specific dependency is resolved."
+  },
+  "memory_projection": {
+    "memory_class": "REOPENABLE_HOLD",
+    "dead_end_certified": false,
+    "hold_origin": "bounded-evidence-acquisition",
+    "required_unit": "source-faithful fixed-J*K LOPD training/evaluation arms that independently vary experience count J and latent tokens per experience K while matching total latent positions, retrieval support, compute, and update information"
+  },
+  "persistent_hold": {
+    "source_candidate_id": "LOPD-FIXED-BUDGET-LATENT-EXPERIENCE-DECOMPOSITION",
+    "basin": "near-miss-terminal-support-hold-b1753052853bbdab",
+    "title": "Does latent-experience decomposition matter after fixing the total latent-position budget?",
+    "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+    "support_status": "SOURCE_SPECIFIC_PRIMARY_ASSET_UNAVAILABLE",
+    "stop_class": "SUPPORT_STOP",
+    "failure_layer": "experiment_identifiability",
+    "failure_subtype": "SOURCE_SPECIFIC_TRAINING_OBJECT_UNAVAILABLE",
+    "memory_class": "REOPENABLE_HOLD",
+    "dead_end_certified": false,
+    "required_unit": "source-faithful fixed-J*K LOPD training/evaluation arms that independently vary experience count J and latent tokens per experience K while matching total latent positions, retrieval support, compute, and update information",
+    "evidence_basis": [
+      "arXiv:2608.13040"
+    ],
+    "strongest_reduction": "the proposed fixed-budget residual remains unresolved until source-faithful LOPD training/compressor assets can execute the frozen same-information decomposition falsifier",
+    "reason": "The official LOPD repository remains at its initial release, still states that training code is coming soon, and exposes qformer.num_queries=32 with a placeholder compressor checkpoint; locally changing K would change or invent the training object.",
+    "avoid": [
+      "substituting a random, locally invented, differently trained, or outcome-tuned compressor for the source-specific LOPD training object",
+      "treating missing released training assets as scientific evidence for or against the fixed-budget residual",
+      "reopening from another unbudgeted K or top-n sensitivity sweep"
+    ],
+    "reopen_only_if": "Reopen when the official/source-specific training pipeline and compatible compressor artifacts become available with enough provenance to train or reproduce all fixed-budget decomposition arms under matched compute/update information, or when an independent review certifies an equivalent operationalization without changing the frozen causal unit, prediction, or strongest same-information baselines.",
+    "hold_origin": "bounded-evidence-acquisition",
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_experiment_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": false
+  },
+  "authority": {
+    "paper": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  },
+  "scientific_authority": false
+}

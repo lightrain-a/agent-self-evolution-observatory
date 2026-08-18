@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from .paper_first_search_portfolio_design_adjudication import (
+    _continuation_hold_rows,
     _fresh_phenomenon_support_hold_rows,
     _principle_readjudication_rows,
     _shadow_dead_end_memory,
@@ -21,6 +22,32 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.state = build_search_portfolio_design_adjudication()
+
+    def test_continuation_holds_preserve_failure_layer_without_dead_end_authority(self) -> None:
+        root=Path(__file__).resolve().parents[1]/"generated"
+        paths=[root/"auto1-formulation-continuation-hold-20260818.json",root/"lopd-fixed-budget-continuation-hold-20260818.json"]
+        rows=_continuation_hold_rows(paths)
+        self.assertEqual(len(rows),2)
+        by_id={row["source_candidate_id"]:row for row in rows}
+        auto=by_id["AUTO-1-AGENT-SAFETY-20260818T060955Z"]
+        self.assertEqual((auto["memory_class"],auto["stop_class"],auto["failure_layer"]),("FORMULATION_HOLD","PROTOCOL_STOP","assumption_scope"))
+        self.assertTrue(auto["basin"].startswith("semantic-lane-contract-"))
+        self.assertFalse(auto["dead_end_certified"]);self.assertFalse(auto["scientific_authority"])
+        lopd=by_id["LOPD-FIXED-BUDGET-LATENT-EXPERIENCE-DECOMPOSITION"]
+        self.assertEqual((lopd["memory_class"],lopd["stop_class"],lopd["failure_layer"]),("REOPENABLE_HOLD","SUPPORT_STOP","experiment_identifiability"))
+        self.assertEqual(lopd["support_status"],"SOURCE_SPECIFIC_PRIMARY_ASSET_UNAVAILABLE")
+        self.assertTrue(lopd["basin"].startswith("near-miss-terminal-support-hold-"))
+        self.assertFalse(lopd["dead_end_certified"]);self.assertFalse(lopd["scientific_authority"])
+
+    def test_continuation_holds_enter_hold_memory_and_never_blocked_memory(self) -> None:
+        memory=self.state["shadow_dead_end_memory"]
+        blocked={row.get("source_candidate_id") for row in memory.get("blocked_objects") or []}
+        held={row.get("source_candidate_id"):row for row in memory.get("hold_objects") or []}
+        auto_id="AUTO-1-AGENT-SAFETY-20260818T060955Z";lopd_id="LOPD-FIXED-BUDGET-LATENT-EXPERIENCE-DECOMPOSITION"
+        self.assertNotIn(auto_id,blocked);self.assertNotIn(lopd_id,blocked)
+        self.assertEqual(held[auto_id]["memory_class"],"FORMULATION_HOLD")
+        self.assertEqual(held[lopd_id]["memory_class"],"REOPENABLE_HOLD")
+        self.assertFalse(held[auto_id]["dead_end_certified"]);self.assertFalse(held[lopd_id]["dead_end_certified"])
 
     def test_exact_fresh_support_hold_is_reopenable_not_dead_end(self) -> None:
         path=Path(__file__).resolve().parents[1]/"generated"/"harnessbank-fresh-phenomenon-support-hold-20260817.json"
