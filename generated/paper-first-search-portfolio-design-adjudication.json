@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T09:20:22+00:00",
+  "generated_at": "2026-08-18T12:48:46+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-18T09:20:22+00:00",
+    "generated_at": "2026-08-18T12:48:46+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -1060,6 +1060,68 @@
         "scientific_authority": false
       },
       {
+        "source_candidate_id": "AGENT-SAFETY-DUAL-LOOP-RHO-CRITICAL",
+        "basin": "principle-readjudication-3cafc0ab5f9ca51e",
+        "search_primitive": "COMPOSITION_INTERACTION",
+        "title": "Writable-support overlap is not an independently manipulable composition variable for a fixed pair of self-evolution loops",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Writable-support overlap is not an independently manipulable composition variable for a fixed pair of self-evolution loops",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "For a fixed pair of self-evolution loops whose treatment identities include their writable supports S_A and S_B, rho is a deterministic function of those supports. Holding both component identities fixed therefore fixes rho. Any empirical intervention that changes rho must change at least one support and hence at least one component treatment, unless an additional support-exchangeability or symmetry invariant is assumed. The strongest outcome-independent repair matched A and B marginal support within 20 strata defined only by frozen no-loop baseline visitation, hazard entry, and goal-progress class, held A support fixed, counterbalanced masks, and varied only within-stratum intersection. Even under that repair, B isolated utility remained strongly support-identity dependent while A stayed invariant. The exchangeability required to interpret rho as the causal treatment is therefore not available in the current object.",
+        "current_source_refs": [
+          "arXiv:2608.16114",
+          "arXiv:2608.16590"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.16590",
+          "arXiv:2608.16114",
+          "run:/data/wyt/agent-safety-discovery-20260818/shadow-agent-safety-20260818-r6/dual-loop-gridworld-r6-treatment-identity-diagnostic.json#sha256=667b2023346548c3afefec833ccd71d5547ab68cc36537a285f1c4dfa1813b3d",
+          "run:/data/wyt/agent-safety-discovery-20260818/shadow-agent-safety-20260818-r6/dual-loop-gridworld-f0-result-r6.json#sha256=b92385f6f354519eb7d1de893d393b239f9c0ffaad80b0eaf3c5ee5e2dc005c3",
+          "review:deepseek-v4-pro-260425:rho-treatment-identity#sha256=51675bf0560698d6a0f0648de037449bb9fffaacaa4bff81488e0d727a6bcf50"
+        ],
+        "problem_text": "The standalone SHADOW-P02-C01 formulation that treats rho = |S_A intersect S_B| / |S_A union S_B|, where S_A and S_B are the writable supports defining two independently validated self-evolution loop update operators, as a pre-composition variable that can be varied for that fixed loop pair to identify a rho-critical boundary between additive improvement, dominance, and mutual degradation.",
+        "reason": "The broader observation that independently useful self-evolution loops may interfere remains scientifically open. What is closed is the current standalone causal formulation that uses writable-support Jaccard overlap rho as an independently varying property of a fixed loop pair: rho is fixed by the treatment-defining supports, and changing it changes at least one component identity. The R6 support-matched evidence independently confirms that support identity is behaviorally consequential rather than an exchangeable nuisance.",
+        "reopen_only_if": "Reopen only after reformulating the object around a pre-composition structural variable that admits an explicit intervention while the exact component update operators, support identities, independently validated behaviors, information, and budgets remain fixed; or after making an exchangeability/symmetry construction an explicit part of a new scientific object and independently validating that support identity is outcome-invariant. Another support-overlap statistic, finer matching, more seeds, outcome-selected masks, or a symmetry-enforced toy substrate does not reopen the current rho-critical formulation.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "IMPOSSIBILITY_OR_INVARIANCE",
+          "statement": "For a fixed pair of self-evolution loops whose treatment identities include their writable supports S_A and S_B, rho is a deterministic function of those supports. Holding both component identities fixed therefore fixes rho. Any empirical intervention that changes rho must change at least one support and hence at least one component treatment, unless an additional support-exchangeability or symmetry invariant is assumed. The strongest outcome-independent repair matched A and B marginal support within 20 strata defined only by frozen no-loop baseline visitation, hazard entry, and goal-progress class, held A support fixed, counterbalanced masks, and varied only within-stratum intersection. Even under that repair, B isolated utility remained strongly support-identity dependent while A stayed invariant. The exchangeability required to interpret rho as the causal treatment is therefore not available in the current object.",
+          "opposite_prediction": "If rho were an independently manipulable property of one fixed loop pair, then a support-matched intervention that holds A fixed and replaces only B coordinates with pre-composition-equivalent coordinates while changing overlap would preserve B isolated utility up to sampling noise. Instead, at tau=1 the support-matched R6 B isolated gain changes from about -0.131 at rho=0 to +0.308 at rho=1 while A remains about +0.276 across the same rho sweep.",
+          "opposite_principle": "A derived overlap statistic of two fixed treatment-defining sets is not a free causal variable. Composition structure can be studied causally only through a pre-composition variable that is independently manipulable while component identities remain fixed, or under an explicit and validated exchangeability/symmetry construction that makes support identity irrelevant.",
+          "opposite_search_seed": "Search for a multi-loop composition variable with an actual do-intervention that preserves the exact two loop update operators and their individually validated behavior. Promising objects must change coupling through an external interface, communication edge, scheduling relation, arbitration rule, or another independently manipulable connection while keeping each component treatment fixed; do not revive another overlap score that is mathematically determined by treatment-defining supports.",
+          "scope": "SHADOW-P02-C01 / AGENT-SAFETY-DUAL-LOOP-RHO-CRITICAL only: the rho-critical causal boundary based on writable-support Jaccard overlap for a fixed pair of independently validated self-evolution loops. This closure does not assert that multi-loop interference is absent, unimportant, or fully explained by generic coupled dynamics.",
+          "same_information_or_scope_matched": true,
+          "proof_or_structural_witness": true,
+          "structural_witness": "Let loop A be the update operator F_A(x; S_A) and loop B be F_B(x; S_B), with writable supports S_A and S_B part of their treatment definitions. The proposed rho is J(S_A,S_B). Under fixed F_A including S_A and fixed F_B including S_B, J(S_A,S_B) is invariant. Thus no do(rho=r') exists within the same treatment pair for r' != rho. Changing rho requires changing S_A or S_B. R6 additionally falsifies the only attempted nuisance-exchangeability bridge: exact B support membership remains outcome-relevant after pre-composition semantic/visitation matching.",
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2608.16590",
+            "arXiv:2608.16114",
+            "run:/data/wyt/agent-safety-discovery-20260818/shadow-agent-safety-20260818-r6/dual-loop-gridworld-r6-treatment-identity-diagnostic.json#sha256=667b2023346548c3afefec833ccd71d5547ab68cc36537a285f1c4dfa1813b3d",
+            "run:/data/wyt/agent-safety-discovery-20260818/shadow-agent-safety-20260818-r6/dual-loop-gridworld-f0-result-r6.json#sha256=b92385f6f354519eb7d1de893d393b239f9c0ffaad80b0eaf3c5ee5e2dc005c3",
+            "review:deepseek-v4-pro-260425:rho-treatment-identity#sha256=51675bf0560698d6a0f0648de037449bb9fffaacaa4bff81488e0d727a6bcf50"
+          ],
+          "alternative_explanations_ruled_out": [
+            "Insufficient replication is not the authorizing reason: the dead end follows algebraically from rho being a deterministic function of the treatment-defining supports; the R6 run is supporting evidence only.",
+            "A simple unmatched-mask artifact was addressed: R6 held both loops' marginal writable counts fixed within 20 pre-composition baseline-visitation, hazard-entry, and goal-progress strata, used common random numbers across rho, and held A exact support fixed.",
+            "Better outcome-independent strata do not restore an independent intervention unless they establish support exchangeability. R6 directly shows that support identity remains behaviorally relevant after the reviewed matching bridge.",
+            "Randomizing support pairs and averaging changes the estimand from one fixed pair of independently validated loops to a population over changing loop identities.",
+            "Selecting supports to equalize isolated utility conditions on performance when constructing the component treatments and changes the fixed-pair object; it is not a do-intervention on rho for the original pair.",
+            "Adding duplicated or symmetry-enforced coordinates would introduce a new exchangeability construction and therefore a different scientific object rather than rescue the current one.",
+            "Changing the toy environment or adding more seeds cannot make J(S_A,S_B) independently manipulable when S_A and S_B themselves define the fixed components."
+          ],
+          "reopen_condition": "Reopen only after reformulating the object around a pre-composition structural variable that admits an explicit intervention while the exact component update operators, support identities, independently validated behaviors, information, and budgets remain fixed; or after making an exchangeability/symmetry construction an explicit part of a new scientific object and independently validating that support identity is outcome-invariant. Another support-overlap statistic, finer matching, more seeds, outcome-selected masks, or a symmetry-enforced toy substrate does not reopen the current rho-critical formulation."
+        },
+        "source_readjudication_artifact": "generated/agent-safety-dual-loop-rho-treatment-identity-principle-readjudication-20260818.json",
+        "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
         "source_candidate_id": "SHAPER-CROSS-LEVEL-SCALING-REVERSAL",
         "basin": "principle-readjudication-3d4f28ce5d4a9f85",
         "search_primitive": "",
@@ -1757,6 +1819,65 @@
         "scientific_authority": false
       },
       {
+        "source_candidate_id": "AGENT-SAFETY-DEFENSE-SKILL-CONVEX-HULL-PLATEAU",
+        "basin": "principle-readjudication-8b7f8a850fbb323e",
+        "search_primitive": "COMPOSITION_INTERACTION",
+        "title": "Joint defense-skill co-evolution has no convex-hull invariant without an affine mixture construction",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Joint defense-skill co-evolution has no convex-hull invariant without an affine mixture construction",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "The candidate's exact convex-hull prediction is valid only if the joint system is literally a randomized mixture of the two frozen single-arm endpoint policies or if the policy-to-(security, utility) outcome map is affine along the joint update path. Neither condition is implied by HARD, SkillCommit, or generic co-evolution. Joint defense and skill updates change each other's feasible action support and optimization landscape, introducing non-affine interaction cross-terms; therefore the joint reachable point may lie outside the line segment between the two single-arm endpoints. The claimed positive restrictiveness-diversity squeeze is likewise not a structural invariant: stronger defense can contract the executed action support and reduce realized skill diversity.",
+        "current_source_refs": [
+          "arXiv:2608.12977",
+          "arXiv:2608.15165"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.12977",
+          "arXiv:2608.15165",
+          "run:/data/wyt/agent-safety-discovery-20260818/shadow-agent-safety-20260818-r4/defense-skill-composition-f0-analysis.json#sha256=6a7f3e3aedcba9cf5add51ea2be13a47a03ef96395702a4fbc7f38bef9a97876",
+          "review:deepseek-v4-pro-260425:defense-skill-convex-hull#sha256=1040e984024863b1e1d1adf391bb4e53f187fe66f1e5b84aef8f5c7437518dba"
+        ],
+        "problem_text": "The standalone SHADOW-P05-C01 formulation whose distinguishing prediction requires the final joint defense-skill (security, utility) point to lie strictly inside the convex hull of the defense-only and skill-only endpoints and requires a positive defense-restrictiveness/skill-diversity squeeze trajectory as a necessary signature of the claimed mutual-constraint plateau.",
+        "reason": "The current defense-skill plateau realization is closed because its decisive convex-hull and positive-squeeze signatures depend on an affine-mixture invariant not supplied by the component systems or by generic coupled dynamics. The broader interaction problem remains open and should be reformulated around an independently justified cross-term or feasible-set invariant rather than endpoint hull geometry.",
+        "reopen_only_if": "Reopen only with a new formulation that drops convex-hull membership as a necessary signature and supplies a preregistered interaction prediction justified by the actual agent architecture. Acceptable routes include a same-information 2x2 factorial cross-term, an independently measured feasible-action-set invariant, or a stated architectural constraint that mathematically forces a specific defense-restrictiveness/skill-diversity relation. More seeds, a different toy domain, or another joint endpoint outside/inside the same hull does not reopen the current realization.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "NECESSARY_ASSUMPTION_REFUTED",
+          "necessary_assumption_id": "ASSUMPTION-CONVEX-HULL-AFFINE-MIXTURE",
+          "necessity_established": true,
+          "assumption_refuted": true,
+          "statement": "The candidate's exact convex-hull prediction is valid only if the joint system is literally a randomized mixture of the two frozen single-arm endpoint policies or if the policy-to-(security, utility) outcome map is affine along the joint update path. Neither condition is implied by HARD, SkillCommit, or generic co-evolution. Joint defense and skill updates change each other's feasible action support and optimization landscape, introducing non-affine interaction cross-terms; therefore the joint reachable point may lie outside the line segment between the two single-arm endpoints. The claimed positive restrictiveness-diversity squeeze is likewise not a structural invariant: stronger defense can contract the executed action support and reduce realized skill diversity.",
+          "opposite_prediction": "Under coupled defense-skill dynamics with changing feasible action sets, the joint endpoint may lie outside the two-point convex hull, and defense restrictiveness may be negatively rather than positively associated with executed skill diversity. A generic coupled multi-objective system should therefore not be expected to satisfy the candidate's convex-hull or squeeze signatures unless a separate affine-mixture architecture is explicitly imposed.",
+          "opposite_principle": "Coupled multi-objective optimization with endogenous feasible-set changes is non-affine in general. Convex-hull membership of endpoint metrics is guaranteed only by an explicit mixture/affinity construction, not by the fact that two components are individually beneficial or jointly optimized.",
+          "opposite_search_seed": "If defense-skill interaction remains interesting, search for a matched 2x2 factorial or another independently manipulable interaction variable that estimates a genuine cross-term under identical information and budget. Do not require convex-hull membership. A valid next object should either identify an architecture-derived invariant of the feasible action set under joint updates or demonstrate a residual interaction beyond a same-information coupled-dynamics model without assuming the sign or geometry in advance.",
+          "scope": "SHADOW-P05-C01 / AGENT-SAFETY-DEFENSE-SKILL-CONVEX-HULL-PLATEAU only: the current convex-hull and positive-squeeze realization of a defense-skill mutual-constraint plateau. The broader question of non-additive defense-skill interaction remains open.",
+          "same_information_or_scope_matched": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2608.12977",
+            "arXiv:2608.15165",
+            "run:/data/wyt/agent-safety-discovery-20260818/shadow-agent-safety-20260818-r4/defense-skill-composition-f0-analysis.json#sha256=6a7f3e3aedcba9cf5add51ea2be13a47a03ef96395702a4fbc7f38bef9a97876",
+            "review:deepseek-v4-pro-260425:defense-skill-convex-hull#sha256=1040e984024863b1e1d1adf391bb4e53f187fe66f1e5b84aef8f5c7437518dba"
+          ],
+          "alternative_explanations_ruled_out": [
+            "The dead-end is not authorized by the negative F0 alone. The required convex-hull signature is structurally unjustified before any experiment because no mixture or affine metric map is part of the scientific object.",
+            "The defense-only and skill-only endpoints do not span the full set of jointly reachable policies when joint updates change the feasible action set; therefore leaving their line segment does not by itself imply a novel plateau mechanism.",
+            "The negative restrictiveness-diversity correlations observed in all three bounded R4 units are consistent with the opposite principle but are supporting evidence only, not the source of the structural conclusion.",
+            "Increasing learning rate, exploration noise, or seed count cannot restore a convex-hull invariant absent an affine-mixture construction.",
+            "Replacing the endpoint hull with a larger empirical polygon built from more single-arm checkpoints would change the proposed invariant and still would not be guaranteed under non-affine joint updates."
+          ],
+          "reopen_condition": "Reopen only with a new formulation that drops convex-hull membership as a necessary signature and supplies a preregistered interaction prediction justified by the actual agent architecture. Acceptable routes include a same-information 2x2 factorial cross-term, an independently measured feasible-action-set invariant, or a stated architectural constraint that mathematically forces a specific defense-restrictiveness/skill-diversity relation. More seeds, a different toy domain, or another joint endpoint outside/inside the same hull does not reopen the current realization."
+        },
+        "source_readjudication_artifact": "generated/agent-safety-defense-skill-convex-hull-principle-readjudication-20260818.json",
+        "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
         "source_candidate_id": "DOUBLE-RATCHET-HELDOUT-SELECTION-CLIFF",
         "basin": "principle-readjudication-8bf944906e5e63ab",
         "search_primitive": "",
@@ -2387,6 +2508,61 @@
         "scientific_authority": false
       },
       {
+        "source_candidate_id": "AGENT-SAFETY-SKILL-COMPOSITION-EVOBREAK-COLLISION",
+        "basin": "principle-readjudication-e1626e1ac2d6e9b4",
+        "search_primitive": "LONGITUDINAL_EMERGENCE",
+        "title": "Super-linear harm from composing individually benign persistent skills is already inside EvoBreak's general experience-composition object",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Super-linear harm from composing individually benign persistent skills is already inside EvoBreak's general experience-composition object",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "EvoBreak already defines the broader composition object that contains the candidate as a special case: multiple persistent experiences may each be benign in isolation yet jointly activate complementary harmful behavior, reusable skills are explicitly within the persistent-experience representation class, harm increases as more retained experiences are jointly available, and the framework permits sequential, parallel, hierarchical, and conditional composition over an arbitrary retained set. A pairwise interaction regression or a super-linear library-size term is therefore a parameterization of EvoBreak's owned composition mechanism rather than a distinct scientific object.",
+        "current_source_refs": [
+          "arXiv:2608.01759",
+          "arXiv:2608.12851"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.01759",
+          "arXiv:2608.12851",
+          "review:deepseek-v4-pro-260425:evobreak-current-source-principle#sha256=e405d912b4e69bc59c754cb9cedccf3711d5bb8f3f1235197f5b65343d892b69"
+        ],
+        "problem_text": "The standalone SHADOW-P01-C01 claim that fresh-session harm from multiple persistent skills requires a new causal object consisting of additive per-skill risk plus positive pairwise or higher-order interaction coefficients and super-linear harm growth with skill-library size, when the composed skills are individually benign or individually non-harmful.",
+        "reason": "The current standalone proposal does not survive novelty review because its central object—individually benign persistent components becoming harmful through joint composition with accelerating harm as the set grows—is already owned at a more general level by EvoBreak. A future safety paper must expose a residual composition phenomenon that makes a distinct same-information prediction, not merely reparameterize the existing object with skill-level interaction coefficients.",
+        "reopen_only_if": "Reopen only with positive primary evidence of naturally occurring, non-adversarial benign self-evolution that creates a composition residual under no attacker-selected tasks, no attack-target decomposition, and no target-query reformulation, together with a concrete pre-registered observable or intervention response that EvoBreak's general retained-experience composition object cannot express under identical persistent-state, retrieval, task, and execution information.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "EvoBreak already defines the broader composition object that contains the candidate as a special case: multiple persistent experiences may each be benign in isolation yet jointly activate complementary harmful behavior, reusable skills are explicitly within the persistent-experience representation class, harm increases as more retained experiences are jointly available, and the framework permits sequential, parallel, hierarchical, and conditional composition over an arbitrary retained set. A pairwise interaction regression or a super-linear library-size term is therefore a parameterization of EvoBreak's owned composition mechanism rather than a distinct scientific object.",
+          "opposite_prediction": "Under the same persistent-experience contents, retrieval/composition state, task information, and execution budget, EvoBreak's composition object predicts that jointly activating a larger or more complete set of individually benign experience fragments can produce harm exceeding the individual fragments' effects and can accelerate as complementary pieces accumulate. A positive pairwise or higher-order interaction coefficient is compatible with that existing object and does not distinguish a new mechanism.",
+          "opposite_principle": "Benign-in-isolation persistent experience can become harmful through complementary composition; novelty cannot be claimed merely by rewriting that composition as pairwise interaction coefficients, a super-linear cardinality curve, or a skill-library version of the same retained-experience mechanism.",
+          "opposite_search_seed": "Search only for a composition phenomenon with a preregistered observable that EvoBreak's general retained-experience composition model cannot express under the same information. A promising residual would require positive primary evidence from naturally occurring non-adversarial self-evolution and a specific interaction topology, timing law, or intervention response that differs from adversarially induced complementary experience composition rather than merely changing the representation name to skills.",
+          "scope": "SHADOW-P01-C01 / AGENT-SAFETY-SKILL-COMPOSITION-EVOBREAK-COLLISION only: additive-plus-interaction or super-linear harm amplification from multiple individually benign persistent skills as standalone novelty. This closure does not say compositional agent harm is unimportant or that naturally emerging composition effects cannot contain a future residual.",
+          "same_information_or_scope_matched": true,
+          "same_information_reduction_verified": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2608.01759",
+            "arXiv:2608.12851",
+            "review:deepseek-v4-pro-260425:evobreak-current-source-principle#sha256=e405d912b4e69bc59c754cb9cedccf3711d5bb8f3f1235197f5b65343d892b69"
+          ],
+          "alternative_explanations_ruled_out": [
+            "Restricting the example to pairwise-safe but triple-harmful skills does not define a new object: it is a narrower cardinality/topology instance of the same general complementary-composition mechanism.",
+            "Replacing persistent experiences with reusable skills does not escape the collision because EvoBreak's scope explicitly includes reusable skill-like persistent representations.",
+            "The candidate's proposed Harm = additive terms + interaction terms decomposition does not add an ex-ante prediction unavailable to EvoBreak; it only selects a parametric statistical representation of the existing mechanism.",
+            "SkillMisevo supplies strong malicious-exposure lifecycle evidence but does not positively support a materially distinct naturally occurring non-adversarial composition law. The lack of such support cannot itself create novelty.",
+            "A larger N sweep or a stronger super-linear coefficient would increase evidence for composition but would not separate the candidate from EvoBreak under the same information."
+          ],
+          "reopen_condition": "Reopen only with positive primary evidence of naturally occurring, non-adversarial benign self-evolution that creates a composition residual under no attacker-selected tasks, no attack-target decomposition, and no target-query reformulation, together with a concrete pre-registered observable or intervention response that EvoBreak's general retained-experience composition object cannot express under identical persistent-state, retrieval, task, and execution information."
+        },
+        "source_readjudication_artifact": "generated/agent-safety-skill-composition-evobreak-collision-principle-readjudication-20260818.json",
+        "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
         "source_candidate_id": "SHADOW-P01-C01",
         "basin": "principle-readjudication-e9865d17d90f9ab0",
         "search_primitive": "",
@@ -2914,8 +3090,8 @@
         "scientific_authority": false
       }
     ],
-    "principle_dead_end_count": 40,
-    "principle_readjudication_dead_end_count": 36,
+    "principle_dead_end_count": 43,
+    "principle_readjudication_dead_end_count": 39,
     "fresh_phenomenon_closure_count": 20,
     "fresh_phenomenon_closed_evidence_count": 35,
     "inversion_asset_evidence": [
@@ -3140,8 +3316,8 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 40,
-    "principle_readjudication_dead_ends": 36,
+    "shadow_dead_end_objects": 43,
+    "principle_readjudication_dead_ends": 39,
     "shadow_hold_objects": 7,
     "current_source_hard_veto_dead_ends": 0,
     "current_source_hard_veto_added_from_latest_run": 0,
