@@ -39,21 +39,32 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
     def write_verified_model_dir(self, root: Path, *, role: str, model_id: str, revision: str, source_domain: str = "huggingface.co") -> None:
         root.mkdir(parents=True, exist_ok=True)
         files = []
+        source_manifest = []
+        siblings = []
         for filename in R9_REQUIRED_MODEL_FILES[role]:
             payload = f"fixture:{role}:{filename}\n".encode()
             path = root / filename
             path.write_bytes(payload)
             digest = hashlib.sha256(payload).hexdigest()
-            files.append({"path": filename, "size": len(payload), "sha256": digest, "source_sha256": digest})
+            files.append({"path": filename, "size": len(payload), "sha256": digest})
+            if filename.endswith(".safetensors"):
+                source_kind = "lfs-sha256"
+                source_digest = digest
+                siblings.append({"rfilename": filename, "size": len(payload), "lfs": {"sha256": digest, "size": len(payload)}})
+            else:
+                source_kind = "git-blob-sha1"
+                source_digest = hashlib.sha1(f"blob {len(payload)}\0".encode("ascii") + payload).hexdigest()
+                siblings.append({"rfilename": filename, "size": len(payload), "blobId": source_digest})
+            source_manifest.append({"path": filename, "size": len(payload), "source_kind": source_kind, "source_digest": source_digest})
         files.sort(key=lambda row: row["path"])
+        source_manifest.sort(key=lambda row: row["path"])
         manifest_sha = hashlib.sha256(
             json.dumps(files, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
         ).hexdigest()
-        source_metadata = {
-            "id": model_id,
-            "sha": revision,
-            "siblings": [{"rfilename": filename} for filename in R9_REQUIRED_MODEL_FILES[role]],
-        }
+        source_manifest_sha = hashlib.sha256(
+            json.dumps(source_manifest, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
+        ).hexdigest()
+        source_metadata = {"id": model_id, "sha": revision, "siblings": siblings}
         source_path = root / R9_MODEL_SOURCE_METADATA
         source_path.write_text(json.dumps(source_metadata, sort_keys=True), encoding="utf-8")
         receipt = {
@@ -66,6 +77,7 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
             "source_metadata_sha256": hashlib.sha256(source_path.read_bytes()).hexdigest(),
             "files": files,
             "files_manifest_sha256": manifest_sha,
+            "source_manifest_sha256": source_manifest_sha,
             "scientific_authority": False,
         }
         receipt_path = root / R9_MODEL_VERIFICATION_RECEIPT
@@ -77,6 +89,7 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
             "verification_receipt": R9_MODEL_VERIFICATION_RECEIPT,
             "verification_receipt_sha256": hashlib.sha256(receipt_path.read_bytes()).hexdigest(),
             "files_manifest_sha256": manifest_sha,
+            "source_manifest_sha256": source_manifest_sha,
             "scientific_authority": False,
         }
         (root / R9_MODEL_REVISION_MARKER).write_text(json.dumps(marker, sort_keys=True), encoding="utf-8")
@@ -307,6 +320,46 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
             gate = runtime_model_asset_gate(agent_model_dir=agent, evaluator_model_dir=evaluator)
             self.assertFalse(gate["execution_authorized"])
             self.assertIn("agent-local-runtime-file-content-mismatch", gate["blockers"])
+            self.assertIn("agent-source-vs-local-content-mismatch", gate["blockers"])
+
+    def test_runtime_model_asset_gate_derives_content_identity_from_hf_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); agent = root / "agent"; evaluator = root / "evaluator"
+            self.write_verified_model_dir(agent,role="agent",model_id=R9_AGENT_MODEL_ID,revision=R9_AGENT_MODEL_REVISION)
+            self.write_verified_model_dir(evaluator,role="evaluator",model_id=R9_EVALUATOR_MODEL_ID,revision=R9_EVALUATOR_MODEL_REVISION)
+
+            source_path = agent / R9_MODEL_SOURCE_METADATA
+            source = json.loads(source_path.read_text())
+            for item in source["siblings"]:
+                if item["rfilename"] == "config.json":
+                    item["blobId"] = "0" * 40
+            source_path.write_text(json.dumps(source,sort_keys=True),encoding="utf-8")
+            source_manifest=[]
+            for item in source["siblings"]:
+                name=item["rfilename"]
+                if "lfs" in item:
+                    source_manifest.append({"path":name,"size":item["lfs"]["size"],"source_kind":"lfs-sha256","source_digest":item["lfs"]["sha256"]})
+                else:
+                    source_manifest.append({"path":name,"size":item["size"],"source_kind":"git-blob-sha1","source_digest":item["blobId"]})
+            source_manifest.sort(key=lambda row:row["path"])
+            source_manifest_sha=hashlib.sha256(json.dumps(source_manifest,ensure_ascii=False,sort_keys=True,separators=(",", ":")).encode()).hexdigest()
+            receipt_path=agent/R9_MODEL_VERIFICATION_RECEIPT
+            receipt=json.loads(receipt_path.read_text())
+            receipt["source_metadata_sha256"]=hashlib.sha256(source_path.read_bytes()).hexdigest()
+            receipt["source_manifest_sha256"]=source_manifest_sha
+            receipt_path.write_text(json.dumps(receipt,sort_keys=True),encoding="utf-8")
+            marker_path=agent/R9_MODEL_REVISION_MARKER
+            marker=json.loads(marker_path.read_text())
+            marker["verification_receipt_sha256"]=hashlib.sha256(receipt_path.read_bytes()).hexdigest()
+            marker["source_manifest_sha256"]=source_manifest_sha
+            marker_path.write_text(json.dumps(marker,sort_keys=True),encoding="utf-8")
+
+            gate=runtime_model_asset_gate(agent_model_dir=agent,evaluator_model_dir=evaluator)
+            self.assertFalse(gate["execution_authorized"])
+            self.assertIn("agent-source-vs-local-content-mismatch",gate["blockers"])
+            agent_row=next(row for row in gate["model_assets"] if row["role"]=="agent")
+            self.assertTrue(agent_row["source_manifest_digest_match"])
+            self.assertFalse(agent_row["source_content_matches_local"])
 
     def test_effective_execution_gate_requires_runtime_assets_even_when_generic_plan_is_ready(self) -> None:
         plan = {
