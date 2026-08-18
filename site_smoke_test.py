@@ -233,6 +233,37 @@ def main() -> None:
     for source, localized in display_localization_pairs:
         if source not in app_text or localized not in app_text:
             fail(f"display localization mapping is incomplete: {source}")
+
+    # Reader-facing clarity contract: canonical entry copy must explain concrete
+    # user questions/actions before exposing internal machine terminology.
+    clarity_markers = {
+        "data.js": ("集中回答四个具体问题", "是否有新 Idea 通过正式问题检查", "现在是否还有正式实验可以启动"),
+        "content-system-overview.js": ("一个研究 Idea 怎样才能变成实验，再变成论文", "AI 评审可以指出文献撞车", "只有人工负责人可以修改核心科学主张"),
+        "system-overview-reader.js": ("这个失败真的存在吗", "这个最小实验无论成功或失败，都会改变下一步吗", "什么时候才允许说“这个原理走不通”"),
+        "system-overview-operations.js": ("长实验怎样安全启动、断线后怎样继续", "哪些文件必须留下，才能以后证明当时到底发生了什么"),
+        "content-idea-portfolio.js": ("这页不是“看起来不错的 Idea 清单”", "最近一轮问题发现又审查了 41 条草案", "第一章直接回答现在什么还能跑、为什么"),
+        "current-research-status-view.js": ("先看现在该做什么", "以前观察到的记忆效应为什么现在不继续做", "现在到底有没有实验可以正式启动"),
+        "content-selected-iclr.js": ("这个旧项目现在没有任何实验允许启动", "不能只靠追加样本或换第二个模型重开"),
+        "content-research-directions.js": ("研究方向”表示一个长期值得研究的问题", "历史项目只是过去尝试过的方案"),
+    }
+    for filename, markers in clarity_markers.items():
+        text = (ROOT / filename).read_text(encoding="utf-8")
+        missing = [marker for marker in markers if marker not in text]
+        if missing:
+            fail(f"reader-facing clarity contract is incomplete in {filename}: {missing}")
+    opaque_entry_phrases = (
+        "zero-authority positive-residual search",
+        "canonical/shadow discovery state",
+        "Six-layer research architecture from evidence and AI consultation through P0 Economy",
+        "Current idea status: current paper, archived residual, canonical, shadow, and legacy P0 are separate layers",
+    )
+    entry_sources = "\n".join((ROOT / name).read_text(encoding="utf-8", errors="ignore") for name in (
+        "data.js", "content-consolidated.js", "content-system-overview.js", "content-idea-portfolio.js"
+    ))
+    for phrase in opaque_entry_phrases:
+        if phrase in entry_sources:
+            fail(f"opaque internal terminology leaked back into canonical entry copy: {phrase}")
+
     for page_id in CANONICAL_PAGES.values():
         if page_id != "home" and f'"{page_id}"' not in combined and f'.{page_id}' not in combined:
             fail(f"no content configuration found for canonical page {page_id}")
@@ -537,7 +568,7 @@ def main() -> None:
         fail("system overview must not load current idea-bank or discussion-pool artifacts")
     system_files = ["system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-methodology.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-reader.js", "system-overview-governance-v2.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js"]
     system_text = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in system_files)
-    for marker in ("PAPER-FIRST RESEARCH OS", "READ THIS PAGE IN SEVEN CHAPTERS", "ONE AUTHORITY MODEL", "DISCOVER A REAL PROBLEM", "DESIGN THE PAPER BEFORE IMPLEMENTATION", "COMPILE BEFORE GPU", "EXECUTE, DIAGNOSE, FREEZE, THEN SCALE", "PAPER EVIDENCE → RELEASE", "LEARN WITHOUT REWRITING HISTORY", "BACKEND ARCHITECTURE MANIFEST", "CROSS-CUTTING METHODOLOGY CONTROLS", "Exploration Frontier", "Search-Time Contamination", "Reproducibility Readiness", "CANONICAL TEMPORAL FLOW", "system-layer-list", "P0 ECONOMY", "PRE-EXPERIMENT COMPILER", "8 / 8", "GATE 3 · IDENTIFIABILITY SUB-AUDIT", "10 / 10", "SHADOW SEARCH LAB", "v2.9 · MACHINE-ENFORCED", "LOCAL VALIDATION SUB-MACHINE · P0-SYSTEM v2", "system-failure-layer", "MCP-Yu + Experiment Orchestrator", "DECISION → LEARN → PUBLISH"):
+    for marker in ("PAPER-FIRST RESEARCH OS", "READ THIS PAGE IN SEVEN CHAPTERS", "ONE AUTHORITY MODEL", "DECIDE WHETHER A NEW PROBLEM EXISTS", "DESIGN THE PAPER BEFORE CODING", "CHECK THE SMALLEST TEST BEFORE GPU", "RUN SMALL, DIAGNOSE, THEN DECIDE WHETHER TO SCALE", "CHECK THAT EVERY CLAIM HAS EVIDENCE", "REMEMBER WHY WE CONTINUED OR STOPPED", "WHO OWNS EACH BACKEND JOB", "CROSS-CUTTING METHODOLOGY CONTROLS", "Are candidate problems too similar?", "Search-Time Contamination", "Can another person rerun the key result from scratch?",  "11 BACKEND STEPS FROM LITERATURE TO SUBMISSION", "system-layer-list", "P0 ECONOMY", "PRE-EXPERIMENT COMPILER", "8 / 8", "CAN THE EXPERIMENT DISTINGUISH THE MECHANISM?", "10 / 10", "SHADOW SEARCH LAB", "v2.9 · MACHINE-ENFORCED", "LOCAL VALIDATION SUB-MACHINE · P0-SYSTEM v2", "system-failure-layer", "How long experiments are launched safely and resumed after disconnects", "CURRENT DECISION → CAUSE → NEXT-RUN RULE"):
         if marker not in system_text:
             fail(f"system overview implementation is missing {marker}")
     shadow_portfolio = json.loads((ROOT / "generated" / "paper-first-problem-search-portfolio-state.json").read_text(encoding="utf-8"))
@@ -587,7 +618,7 @@ def main() -> None:
     forbidden_idea_markers = ("主 ICLR Idea Bank", "最终师兄讨论门槛", "Main ICLR idea bank", "Final advisor gate", "paper-ideas.html#discussed-ideas")
     if any(marker in system_text or marker in system_content for marker in forbidden_idea_markers):
         fail("system overview must contain only the research system, not current idea decisions")
-    for marker in ("自动执行", "条件自动", "人工控制", "8/8 Pre-Experiment", "10/10 identifiability", "从这里开始——一条科研主流程，三个系统视角", "发现真实科学问题", "实现之前先把论文设计完整", "编译最便宜的决定性实验", "执行、诊断、冻结，再扩量", "论文证据闭环与发布", "把科研结果沉淀成系统记忆", "SCIENTIFIC META-TRACE"):
+    for marker in ("自动执行", "条件自动", "人工控制", "8/8 Pre-Experiment", "10/10 identifiability", "从这里开始——一篇论文怎样一路变成可执行实验", "先判断到底有没有新的科学问题", "写代码前先把论文逻辑写完整", "找到最便宜、但足以改变结论的实验", "先小规模运行，弄清哪里失败，再决定是否扩量", "检查论文每条主张是否都有足够证据", "记住为什么继续、为什么停止", "当前科学结论记录"):
         if marker not in system_text and marker not in system_content and marker not in (ROOT / "page-architecture-data.js").read_text(encoding="utf-8"):
             fail(f"Chinese research-system documentation is missing {marker}")
 

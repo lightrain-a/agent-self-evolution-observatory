@@ -223,7 +223,7 @@ def main() -> None:
         require(system_overview["stats"] == 6, f"research-system hero statistics are incomplete: {system_overview['stats']}")
         require(system_overview["readerChapters"] == 7 and system_overview["responsibilityLayers"] == 6 and system_overview["lifecycleSteps"] == 11 and system_overview["componentLayerHeaders"] == 6, f"canonical architecture is incomplete: reader={system_overview['readerChapters']} layers={system_overview['responsibilityLayers']} stages={system_overview['lifecycleSteps']} component-groups={system_overview['componentLayerHeaders']}")
         require((system_overview["architectureSummary"].get("temporal_stages"),system_overview["architectureSummary"].get("reader_chapters"),system_overview["architectureSummary"].get("reader_stage_coverage"),system_overview["architectureSummary"].get("reader_stage_missing"),system_overview["architectureSummary"].get("reader_stage_duplicates"),system_overview["architectureSummary"].get("reader_stage_extra"),system_overview["architectureSummary"].get("functional_layers"),system_overview["architectureSummary"].get("assigned_components"),system_overview["architectureSummary"].get("unassigned_components"),system_overview["architectureSummary"].get("cross_cutting_controls"),system_overview["architectureSummary"].get("orphan_cross_cutting_controls")) == (11,7,11,0,0,0,6,27,0,3,0), f"backend architecture manifest is stale in browser state: {system_overview['architectureSummary']}")
-        require(system_overview["methodologyControls"] == 3 and "Exploration Frontier" in system_overview["text"] and "Search-Time Contamination" in system_overview["text"] and "Reproducibility Readiness" in system_overview["text"], f"cross-cutting methodology controls are missing: {system_overview['methodologyControls']}")
+        require(system_overview["methodologyControls"] == 3 and "Are candidate problems too similar?" in system_overview["text"] and "Freeze the setup before results and check leakage" in system_overview["text"] and "Can another person rerun the key result from scratch?" in system_overview["text"], f"plain-language methodology controls are missing: {system_overview['methodologyControls']}")
         require(system_overview["aiCheckpoints"] == 5, f"AI consultation checkpoint strip is incomplete: {system_overview['aiCheckpoints']}")
         require(system_overview["governanceStages"] == 7, f"P0-System v2 must expose seven scientific stages, got {system_overview['governanceStages']}")
         require(system_overview["outerGates"] == 8 and system_overview["preflightGates"] == 10 and system_overview["quantWorksheets"] == 2, f"Pre-Experiment/identifiability compiler is incomplete: {system_overview['outerGates']}/{system_overview['preflightGates']}/{system_overview['quantWorksheets']}")
@@ -259,7 +259,7 @@ def main() -> None:
         };""")
         require((zh_system["toc2"], zh_system["toc4"]) == (8,0) and zh_system["toc3"] >= 10, f"Chinese system TOC must expose second/third-level headings: {zh_system['toc2']}/{zh_system['toc3']}/{zh_system['toc4']}")
         require(zh_system["minVisibleFont"] >= 11.5, f"Chinese system overview readability floor regressed: {zh_system['minVisibleFont']}")
-        require(all(marker in zh_system["readerText"] for marker in ("输入","核心判断","阶段产出","第一手证据","成熟归约","资源经济 5/5","协议有效性","方法冻结","主文证据图","系统回放","统一权限模型")), "Chinese reader flow still exposes too much untranslated UI terminology")
+        require(all(marker in zh_system["readerText"] for marker in ("输入","核心判断","阶段产出","这个失败真的存在吗","先尝试已有解释","这个最小实验无论成功或失败，都会改变下一步吗","方法稳定后冻结版本","论文每条主张是否都有直接证据","自动重放旧案例","谁能提建议、谁能启动实验、谁能改论文结论")), "Chinese reader flow is missing the plain-language research decisions")
         require("自动执行" in zh_system["automationText"] and "条件自动" in zh_system["automationText"] and "人工控制" in zh_system["automationText"], "Chinese automation boundary headings are incomplete")
         require("主张与训练目标对齐" in zh_system["preflightText"] and "方法与最强简化会做出不同决策" in zh_system["preflightText"] and "小样本可拟合性" in zh_system["preflightText"], "Chinese Pre-P0 hard gates are incomplete")
         system_ui_leaks = (
@@ -270,8 +270,8 @@ def main() -> None:
             "after-evidence-before-hypothesis-freeze", "attack the scientific formulation before implementation begins",
         )
         require(not any(marker in zh_system["bodyText"] for marker in system_ui_leaks), f"Chinese system overview still leaks English flow/UI labels: {[m for m in system_ui_leaks if m in zh_system['bodyText']]}")
-        system_ui_zh = ("证据 → 假设","论文优先 · 实现前","原理 · 实验设计前","协议有效性 · 科学解释前","实验前编译器 · Gate 1–8","裁决 → 沉淀 → 发布","自进化科研操作系统","证据完成后、研究假设冻结前")
-        require(all(marker in zh_system["bodyText"] for marker in system_ui_zh), f"Chinese system overview display-label localization is incomplete: {[m for m in system_ui_zh if m not in zh_system['bodyText']]}")
+        system_ui_zh = ("AI 的任务是指出具体漏洞，不是投票决定通过","代码实现前先写清论文证据结构","先写清为什么应该有效","最后八项启动检查","同一个方向只显示一个当前结论","让系统记住为什么成功、为什么失败","长实验怎样安全启动、断线后怎样继续")
+        require(all(marker in zh_system["bodyText"] for marker in system_ui_zh), f"Chinese system overview plain-language labels are incomplete: {[m for m in system_ui_zh if m not in zh_system['bodyText']]}")
         require("先定位失败发生在哪一层" in zh_system["semanticsText"] and "核心原理层" in zh_system["semanticsText"], "Chinese failure-layer semantics are incomplete")
         require("引文与证据图谱" in zh_system["componentText"] and "Citation and evidence graph" not in zh_system["componentText"], "backend component name did not switch to Chinese")
         require(all(card["scroll"] <= card["client"] + 2 for card in zh_system["cards"]), "Chinese system cards overflow horizontally")
@@ -420,7 +420,7 @@ def main() -> None:
             if page == "/evaluation.html":
                 require(result["resources"] == 2, "evaluation live resource indexes are incomplete")
             if page == "/selected-paper.html":
-                require("CURRENT SELECTED PAPER" in result["text"] and "Former Regression-Gated Self-Evolution workspace" in result["text"] and "zero launchable directions" in result["text"], "current STRI workspace or historical STOP archive is missing")
+                require("CURRENT SELECTED PAPER" in result["text"] and "Former Regression-Gated Self-Evolution workspace" in result["text"] and "No experiment from this old project is currently allowed to launch" in result["text"], "current STRI workspace or plain-language historical STOP archive is missing")
 
         navigate("/research-directions.html", 7)
         direction_map = execute(
@@ -458,7 +458,7 @@ def main() -> None:
         require("代表论文" in zh_state["text"] and "方向关联" in zh_state["text"], "Chinese direction literature did not switch")
         shell_zh = execute(session_id, """return {brand:[document.querySelector('.brand strong')?.textContent||'',document.querySelector('.brand span')?.textContent||''],nav:[...document.querySelectorAll('.nav-level1 span:first-child,.nav-level2')].map(x=>x.textContent.trim()),placeholder:document.querySelector('#site-search')?.getAttribute('placeholder')||'',status:document.querySelector('.project-status-strip')?.textContent||''};""")
         require(shell_zh["brand"] == ["Agent 自进化","科研观测站"] and "开始阅读" in shell_zh["nav"] and "领域图谱" in shell_zh["nav"] and "研究规划" in shell_zh["nav"] and "文献" in shell_zh["nav"] and "Start Here" not in shell_zh["nav"] and shell_zh["placeholder"] == "搜索研究站内容…", f"shared shell did not fully switch to Chinese: {shell_zh}")
-        require(all(marker in shell_zh["status"] for marker in ("论文就绪","证据欠账","正式活跃方向","新现象暂缓","影子搜索死路")), f"shared current-status strip is not Chinese-first: {shell_zh['status']}")
+        require(all(marker in shell_zh["status"] for marker in ("投稿就绪论文","还缺的论文证据","通过正式问题检查的新研究问题","因缺证据暂缓的新现象","已关闭的暂定候选")), f"shared current-status strip is not plain-language Chinese: {shell_zh['status']}")
 
         navigate("/paper-ideas.html", 7)
         idea_portfolio = execute(
@@ -478,6 +478,7 @@ def main() -> None:
               currentRows: document.querySelectorAll('#current-research-portfolio .current-research-table tbody tr').length,
               leadingPaperTracks: document.querySelectorAll('#current-research-portfolio .current-paper-track-card').length,
               currentStatus: window.CURRENT_RESEARCH_STATUS?.headline || {},
+              striP0E: window.CURRENT_RESEARCH_STATUS?.stri_dynamic_evidence?.skillrl_p0e || {},
               legacyFinalPass: Number(window.RESEARCH_SYSTEM_STATE?.summary?.final_pass || 0),
               experimentStops: Number(window.RESEARCH_SYSTEM_STATE?.p0_decision_ledger?.summary?.experiment_stopped || 0),
               text: document.body.textContent || ''
@@ -491,13 +492,15 @@ def main() -> None:
         require(idea_portfolio["terminalGroups"] >= 3 and idea_portfolio["terminalStats"] == 4, f"terminal routing UI is incomplete: {idea_portfolio['terminalGroups']}/{idea_portfolio['terminalStats']}")
         require(idea_portfolio["legacyPreGpuBoards"] == 0 and idea_portfolio["legacyP0Entry"] == 0, "legacy Pre-GPU/P0-entry boards leaked back into canonical Paper Ideas")
         require(idea_portfolio["currentLedger"] == 1 and idea_portfolio["currentRows"] >= 7 and idea_portfolio["leadingPaperTracks"] == 1, f"unified current idea ledger is incomplete: {idea_portfolio}")
-        require("STRI-P0E" in idea_portfolio["text"] and "STOP_FIXED_POLICY_DYNAMIC_BRIDGE" in idea_portfolio["text"] and "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED" in idea_portfolio["text"], "qualified STRI P0-E boundary is missing from the current ledger")
+        p0e=idea_portfolio["striP0E"]
+        require(p0e.get("status") == "STOP_FIXED_POLICY_DYNAMIC_BRIDGE" and p0e.get("principle_disposition") == "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED" and p0e.get("persistent_principle_dead_end_certified") is False and p0e.get("stage2_locked") is True and p0e.get("new_gpu_authorized") is False, f"qualified STRI P0-E machine boundary is stale: {p0e}")
+        require("STRI-P0E" in idea_portfolio["text"] and "这条额外路线已经停止继续扩实验" in idea_portfolio["text"] and "新 GPU=未授权" in idea_portfolio["text"], "STRI P0-E plain-language boundary is missing from the current ledger")
         cs=idea_portfolio["currentStatus"]
         require((cs.get("paper_ready"),cs.get("paper_quality_hold"),cs.get("paper_quality_evidence_debt"),cs.get("canonical_live_ideas"),cs.get("launchable_formal_experiments"),cs.get("legacy_p0_lifecycle")) == (1,0,0,0,0,27) and cs.get("shadow_qualification_ready") == expected_headline.get("shadow_qualification_ready") and int(cs.get("shadow_dead_ends") or 0) >= 0 and int(cs.get("shadow_holds") or 0) >= 0, f"current status invariants are wrong: rendered={cs} expected={expected_headline}")
         require(idea_portfolio["legacyFinalPass"] == 20 and idea_portfolio["experimentStops"] >= 16, f"historical lineage state is unexpectedly missing: {idea_portfolio}")
         require("Historical ICLR Paper Workspace" not in idea_portfolio["text"] and "Selected ICLR Paper Workspace" not in idea_portfolio["text"], "historical paper workspace content leaked into Paper Ideas")
-        require((("当前科研状态" in idea_portfolio["text"] and "正向残余现象的当前边界" in idea_portfolio["text"]) or ("Current research state" in idea_portfolio["text"] and "Positive-residual boundary" in idea_portfolio["text"])) and "20 个当前 FINAL-PASS" not in idea_portfolio["text"], "Paper Ideas current-state labels are incomplete or stale FINAL-PASS framing leaked into the current view")
-        require(all(marker in idea_portfolio["text"] for marker in ("论文就绪","证据欠账","正式活跃方向","新现象 F0 设计就绪","影子搜索暂缓")), "Paper Ideas Chinese-first status labels are incomplete")
+        require((("当前科研状态" in idea_portfolio["text"] and "以前观察到的记忆效应为什么现在不继续做" in idea_portfolio["text"]) or ("Current research state" in idea_portfolio["text"] and "Why the previously observed memory effect is not being pursued now" in idea_portfolio["text"])) and "20 个当前 FINAL-PASS" not in idea_portfolio["text"], "Paper Ideas current-state explanation is incomplete or stale FINAL-PASS framing leaked into the current view")
+        require(all(marker in idea_portfolio["text"] for marker in ("论文就绪","还缺的论文证据项","通过正式问题检查的新研究问题","已设计最小验证实验的新现象","缺证据、暂不推进的候选")), "Paper Ideas plain-language current-status labels are incomplete")
 
         navigate("/selected-paper.html", 4)
         selected = execute(session_id, """return {
@@ -516,12 +519,12 @@ def main() -> None:
         require(p0e.get("status") == "STOP_FIXED_POLICY_DYNAMIC_BRIDGE" and p0e.get("persistent_principle_dead_end_certified") is False and p0e.get("principle_disposition") == "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED" and p0e.get("stage2_locked") is True and p0e.get("new_gpu_authorized") is False and (p0e.get("calibration") or {}).get("calibration_pristine_success") == 18 and (p0e.get("calibration") or {}).get("paired_units") == 24, f"selected-paper P0-E boundary is stale: {selected}")
         require("Self-Evolution Should Not Depend on How Skills Are Split" in selected["title"] and ("当前选中论文" in selected["text"] or "CURRENT SELECTED PAPER" in selected["text"]) and "2026-09-11" in selected["text"] and "2026-09-16" in selected["text"] and "2026-09-18" in selected["text"] and "2026-09-25" in selected["text"] and ("Official ICLR pages currently conflict" in selected["text"] or "官方页面日期目前冲突" in selected["text"]) and ("Former Regression-Gated Self-Evolution workspace" in selected["text"] or "旧 Regression-Gated Self-Evolution 工作区" in selected["text"]), f"selected-paper current/historical hierarchy or deadline handoff is wrong: {selected}")
         require("only permits a new shadow qualification" not in selected["text"] and "Historical ICLR Paper Workspace" not in selected["title"] and "[object Object]" not in selected["text"], f"selected-paper leaked stale shadow, nested-boundary rendering, or historical-primary framing: {selected}")
-        require(all(marker in selected["text"] for marker in ("科学主张","论文证据质量 v2","ICLR 投稿包","可视化证据","人工提交交接","已发布控制平面上的表示敏感性","求解器新颖性","等待人工签字")), "selected-paper Chinese-first current-paper UI is incomplete")
+        require(all(marker in selected["text"] for marker in ("科学主张","论文证据是否齐全且能追到固定文件","ICLR 投稿包","可视化证据","人工提交交接","已发布控制平面上的表示敏感性","是否声称求解算法本身是新贡献","等待人工签字")), "selected-paper Chinese-first current-paper UI is incomplete")
         require("作者必须在提交前人工核验实时 ICLR/OpenReview 截止日期" in selected["text"] and "Human authors must verify the live ICLR/OpenReview deadline" not in selected["text"], "Selected Paper Chinese deadline handoff leaked the raw English next_action")
 
         navigate("/experiments.html", 4)
         experiments_zh = execute(session_id, "return document.body.textContent || ''")
-        require(all(marker in experiments_zh for marker in ("当前论文 / 残余证据","STRI · P0-A 动态证据","STRI · P0-E 最终策略","记忆 · 已归档正向残余","0 个正式实验可启动")), "Experiments Chinese-first current-evidence UI is incomplete")
+        require(all(marker in experiments_zh for marker in ("先看当前实验结论","额外检查 A：提案器是否具备继续实验的基本能力","额外检查 E：更完整策略是否真的会改变最终结果","以前的记忆效应 · 为什么不继续","0 个正式实验可启动")), "Experiments Chinese-first current-evidence UI is incomplete")
         experiment_disposition_leaks = (
             "Use frozen existing P0 evidence; do not rerun identical compute.",
             "Merge branch soft-audit into research-system scheduling; stop standalone A-1 repair and do not spend GPU unless a materially new observable/substrate is proposed.",

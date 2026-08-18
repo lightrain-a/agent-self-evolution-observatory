@@ -2,8 +2,9 @@ window.PAGE_ARCHITECTURES = {
   home:{
     chapters:[
       {id:"understand-field",title:{en:"Understand the field",zh:"理解领域"},question:{en:"What counts as self-evolution, what can change, and where does the field come from?",zh:"什么算自进化、哪些对象可以变化，以及这个领域从哪里发展而来？"},links:["foundations.html","mechanisms.html","domains.html","evaluation.html"]},
-      {id:"select-research",title:{en:"Choose the next research formulation",zh:"选择下一轮研究 formulation"},question:{en:"How does the research system generate and falsify candidates, and which materially new formulation deserves the next validation cycle?",zh:"科研系统如何生成并证伪候选，哪一个实质性新 formulation 值得进入下一轮验证？"},links:["system-overview.html","research-directions.html","paper-ideas.html"]},
-      {id:"execute-audit",title:{en:"Execute and audit",zh:"执行与审计"},question:{en:"What are the current experiment decisions, what is the selected STRI paper state, and how can historical formulations be audited without confusing them with the current plan?",zh:"当前实验结论是什么、STRI 这篇选中论文现在处于什么状态，以及怎样复盘历史 formulation 而不把它误当成当前计划？"},links:["experiments.html","selected-paper.html","bibliography.html"]}
+      {id:"select-research",title:{en:"Choose the next research problem",zh:"选择下一轮研究问题"},question:{en:"How do we turn new paper evidence into candidate problems, reject ideas already explained by prior work or simpler theory, and decide which surviving problem is worth a small decisive experiment?",zh:"怎样把最新论文证据变成候选问题、淘汰已经被已有工作或更简单理论解释的 Idea，并决定哪个真正剩下的问题值得做一次小规模决定性实验？"},links:["system-overview.html","research-directions.html","paper-ideas.html"]},
+
+      {id:"execute-audit",title:{en:"Run, inspect, and submit",zh:"运行、核查与投稿"},question:{en:"Which experiments are still allowed to run, what exact evidence supports the current STRI submission, and how can old projects be inspected without mistaking their archived plans for today's work?",zh:"哪些实验现在仍允许运行、STRI 当前投稿具体由哪些证据支持，以及怎样查看旧项目而不把它们已经归档的计划误当成今天的待办？"},links:["experiments.html","selected-paper.html","bibliography.html"]}
     ]
   },
   foundations:{
@@ -30,48 +31,62 @@ window.PAGE_ARCHITECTURES = {
     chapters:[
       {id:"validity-safety",title:{en:"I · What counts as improvement?",zh:"第一章 · 什么才算改进？"},question:{en:"How should persistent gain, regression, negative evolution, safety, and rollback be measured?",zh:"如何测量持久收益、回退、负向进化、安全与回滚？"},sourceIds:["evaluation-safety"]},
       {id:"tasks-benchmarks",title:{en:"II · Where should evolution be tested?",zh:"第二章 · 应该在哪里测试进化？"},question:{en:"Which task streams, environments, datasets, and benchmarks expose genuine longitudinal behavior?",zh:"哪些任务流、环境、数据集和基准能够暴露真实纵向行为？"},sourceIds:["datasets-benchmarks"],resourceModes:["benchmarks"]},
-      {id:"reproducibility",title:{en:"III · How can evidence be reproduced?",zh:"第三章 · 证据如何被复现？"},question:{en:"Which repositories, artifacts, version records, and reporting standards make claims auditable?",zh:"哪些代码仓库、研究工件、版本记录和报告标准能让主张可审计？"},sourceIds:["repositories"],resourceModes:["repositories"]}
+      {id:"reproducibility",title:{en:"III · Can another person rerun the result?",zh:"第三章 · 别人能否重新跑出同样结果？"},question:{en:"Which code, data, environment versions, commands, logs, and reporting details must be saved so another researcher can reproduce the key result rather than merely read a summary?",zh:"需要保存哪些代码、数据、环境版本、运行命令、日志和报告细节，才能让另一位研究者真正重新跑出关键结果，而不是只能阅读摘要？"},sourceIds:["repositories"],resourceModes:["repositories"]}
     ]
   },
   "system-overview":{
     chapters:[
-      {id:"overview",title:{en:"I · Start here — one research flow, three system views",zh:"第一章 · 从这里开始——一条科研主流程，三个系统视角"},question:{en:"How should the canonical lifecycle, backend responsibility layers, and authority boundaries be read together without confusing them?",zh:"11 步主流程、六个后端职责层和权限边界应该如何一起理解，而不再混成多套并行流程？"}},
-      {id:"problem-discovery",title:{en:"II · Discover a real scientific problem",zh:"第二章 · 发现真实科学问题"},question:{en:"How does measured primary evidence survive closest-work, mature-theory reduction, and the Problem Gate before any method is proposed?",zh:"第一手实测证据如何经过最近邻工作、成熟理论归约与问题门（Problem Gate），之后才允许进入方法设计？"}},
-      {id:"paper-design",title:{en:"III · Design the paper before implementation",zh:"第三章 · 实现之前先把论文设计完整"},question:{en:"How are novelty, principle, method, baselines, ablations, analyses, and visual evidence frozen before a pilot can influence implementation?",zh:"新颖性（Novelty）、原理、方法、最强 Baseline、消融、分析与主文证据图，如何在局部实验影响实现之前就被冻结？"}},
-      {id:"experiment-compile",title:{en:"IV · Compile the cheapest decisive experiment",zh:"第四章 · 编译最便宜的决定性实验"},question:{en:"How do Economy, Protocol Validity, Updater Competence, REP, and the eight gates decide whether a local run deserves resources?",zh:"资源经济门、协议有效性、更新器能力、科研执行计划（REP）与 8 道实验门，如何共同决定一个局部实验是否值得消耗资源？"}},
-      {id:"validation-scale",title:{en:"V · Execute, diagnose, freeze, then scale",zh:"第五章 · 执行、诊断、冻结，再扩量"},question:{en:"How are local evidence, typed negative-result semantics, method freeze, full experiments, runtime authority, and recovery kept separate?",zh:"局部证据、负结果分层语义、方法冻结、全量实验、运行权限与恢复机制如何保持边界清晰？"}},
-      {id:"paper-evidence",title:{en:"VI · Close paper evidence and release",zh:"第六章 · 论文证据闭环与发布"},question:{en:"How do claim-matched baselines, ablations, analyses, figures, reproducibility, content-addressed receipts, venue QA, and human signoff become one release package?",zh:"与主张匹配的 Baseline、消融、分析、图表、独立复现、内容寻址证据回执（content-addressed receipt）、会议格式 QA 与人工签字，如何合并成一个可投稿发布包？"}},
-      {id:"system-learning",title:{en:"VII · Turn outcomes into system memory",zh:"第七章 · 把科研结果沉淀成系统记忆"},question:{en:"How do decisions become Meta-Trace state, Failure Assets, replay-tested rules, external-system learning, and public snapshots without rewriting history?",zh:"科研决策如何沉淀为科学 Meta-Trace、失败资产（Failure Assets）、回放验证规则、外部系统学习与公开快照，同时又不改写科研历史？"}}
+      {id:"overview",title:{en:"I · Start here — what happens from a paper to a finished experiment",zh:"第一章 · 从这里开始——一篇论文怎样一路变成可执行实验"},question:{en:"What are the actual steps from reading new evidence to choosing a problem, designing a paper, approving an experiment, running it, and recording the result—and who is allowed to make each decision?",zh:"从读到新证据，到选问题、设计论文、批准实验、真正运行、记录结果，实际依次做哪些事？每一步又是谁有权决定？"}},
+
+      {id:"problem-discovery",title:{en:"II · Decide whether there is a new problem at all",zh:"第二章 · 先判断到底有没有新的科学问题"},question:{en:"When a paper or experiment shows an unusual failure, how do we check whether prior work or a known explanation already accounts for it before spending time inventing a method?",zh:"当论文或实验出现一个异常失败时，怎样先检查已有工作或成熟解释是否已经能说明它，而不是马上开始想新方法？"}},
+
+      {id:"paper-design",title:{en:"III · Write down the paper logic before coding the method",zh:"第三章 · 写代码前先把论文逻辑写完整"},question:{en:"Before implementation, can we state the exact new claim, why the mechanism should work, the strongest comparison, the required ablations, and the figure or table that would convince a reviewer?",zh:"实现方法之前，能否先明确写出：新贡献到底是什么、为什么应该有效、最强对照是谁、必须做哪些消融，以及哪张图或表能真正说服审稿人？"}},
+
+      {id:"experiment-compile",title:{en:"IV · Find the cheapest experiment that can change the decision",zh:"第四章 · 找到最便宜、但足以改变结论的实验"},question:{en:"Before using GPU, have we verified that the dataset/environment can realize the effect, the baseline is strong and equally informed, the truth label is independent, the sample size is enough, and a positive or negative result would actually change what we do next?",zh:"用 GPU 前是否已经确认：数据/环境真的能产生目标效应、基线足够强且拿到同样信息、真值独立、样本量够用，而且无论结果正负都能真正改变下一步决策？"}},
+
+      {id:"validation-scale",title:{en:"V · Run small, identify what failed, then decide whether to scale",zh:"第五章 · 先小规模运行，弄清哪里失败，再决定是否扩量"},question:{en:"If a local test fails, how do we tell whether the cause is broken code, a bad experiment design, an incapable update mechanism, insufficient data, or a false scientific idea—and when is the method stable enough for full experiments?",zh:"局部实验没过时，怎样区分是代码坏了、实验设计有问题、更新机制本身做不到、数据不够，还是科学想法真的错了？又要到什么程度才允许冻结方法并做全量实验？"}},
+
+      {id:"paper-evidence",title:{en:"VI · Check that every paper claim has enough evidence",zh:"第六章 · 检查论文每条主张是否都有足够证据"},question:{en:"For each headline claim, do we have the strongest baseline, the ablation that isolates the key component, analysis of why and when it works, failure cases, uncertainty, a reproducible figure/table, and final format checks before submission?",zh:"对每条核心主张，是否都有最强基线、能隔离关键组件的消融、为什么有效和什么时候失效的分析、失败案例、不确定性、可复现的图表，以及投稿前的格式检查？"}},
+
+      {id:"system-learning",title:{en:"VII · Remember why we stopped or continued",zh:"第七章 · 记住为什么继续、为什么停止"},question:{en:"After a PASS, HOLD, or STOP, what exact evidence, failure pattern, reopen condition, and cheap pre-check should be saved so the next agent does not repeat the same mistake or accidentally rewrite the old decision?",zh:"出现 PASS、HOLD 或 STOP 后，应该保存哪些具体证据、失败模式、重开条件和廉价前置检查，才能避免下一轮 Agent 重复同样的错误，也不会把旧结论悄悄改掉？"}}
+
     ]
   },
   "research-directions":{
     chapters:[
       {id:"orientation",title:{en:"I · Orientation: four lifecycle questions",zh:"第一章 · 入门：四个生命周期问题"},question:{en:"How do the ten directions fit into one evolution lifecycle?",zh:"十个方向如何放进同一条自进化生命周期？"}},
-      {id:"landscape",title:{en:"II · Field landscape and direction map",zh:"第二章 · 领域全景与方向地图"},question:{en:"How do stable directions, current paper contracts, and the historical formulation archive relate without becoming the same object?",zh:"稳定研究方向、当前论文研究合同和历史 formulation 档案之间是什么关系，为什么不能混为同一层？"}},
+      {id:"landscape",title:{en:"II · What is a long-term direction versus a paper we can write now?",zh:"第二章 · 长期方向和现在能写的论文有什么区别？"},question:{en:"Which questions are broad long-term research areas, which one is the paper we are currently preparing, and which older ideas are retained only to explain past decisions?",zh:"哪些只是长期研究方向、哪一个是我们现在正在准备的论文、哪些旧 Idea 只为了说明过去为什么做过或停止过？"}},
+
       {id:"direction-clusters",title:{en:"III · Ten directions grouped by four big questions",zh:"第三章 · 按四个大问题组织十个方向"},question:{en:"What does each direction study, and how is it different from its neighbors?",zh:"每个方向研究什么，又与相邻方向有何区别？"}},
       {id:"long-term-agenda",title:{en:"IV · Long-term research agenda",zh:"第四章 · 长期研究议程"},question:{en:"Which dependencies and staged priorities turn the direction map into a research program?",zh:"哪些依赖关系和阶段优先级能把方向地图转化为研究计划？"},sourceIds:["research-agenda"]}
     ]
   },
   "paper-ideas":{
     chapters:[
-      {id:"discussed-ideas",title:{en:"I · Discussed ideas",zh:"第一章 · 已讨论 Idea"},question:{en:"Which reviewed scientific directions have entered P0, and which parents are terminally merged or dropped?",zh:"哪些已审科学方向已经进入 P0，哪些父方向已经终态并入或弃掉？"}},
-      {id:"new-ideas",title:{en:"II · Standalone methods and paper-first new problems",zh:"第二章 · 独立方法与论文优先新问题"},question:{en:"Which methods remain standalone, which paper-first problems advance only to Paper Design versus REVISE/BLOCK, and what external human authority would be required before any P0/local validation transition?",zh:"哪些方法仍保持独立身份，哪些论文优先新问题只推进到论文设计、哪些仍需修改/阻断，以及任何 P0/局部验证转换前需要怎样的外部人工授权？"}}
+      {id:"discussed-ideas",title:{en:"I · Current decisions first",zh:"第一章 · 先看当前结论"},question:{en:"Which idea is an active paper, which ideas can still be investigated, which ones are waiting for one specific missing piece of evidence, and which ones are closed because a simpler explanation or prior work already covers them?",zh:"哪些 Idea 是当前论文、哪些还值得继续查、哪些只差一项明确证据、哪些因为已有工作或更简单解释已经足够而正式关闭？"}},
+
+      {id:"new-ideas",title:{en:"II · Why each newer idea advanced, merged, or stopped",zh:"第二章 · 每个新 Idea 为什么推进、并入或停止"},question:{en:"For each newer proposal, what is the exact problem, what prior work or simple baseline threatens it, what evidence would be needed to keep it alive, and is any experiment actually authorized now?",zh:"对每个较新的提案，具体问题是什么、最接近的已有工作或简单基线是什么、还需要什么证据才能继续，以及现在到底有没有实验获得授权？"}}
+
     ]
   },
   experiments:{
     chapters:[
-      {id:"experiment-queue",title:{en:"I · Current terminal decisions",zh:"第一章 · 当前终态决策"},question:{en:"What is the single current decision for each active P0 direction, and what evidence is decisive for that decision?",zh:"每个活跃 P0 方向现在唯一的终态结论是什么，哪条证据真正决定了这个结论？"}},
-      {id:"experiment-evidence",title:{en:"II · Current evidence audit",zh:"第二章 · 当前证据审计"},question:{en:"When a row needs auditing, which frozen P0 contract and qualification evidence support it without restating the verdict?",zh:"当需要核查某一行时，应查看哪些冻结 P0 合同与资格证据，而不再重复终态结论？"}},
-      {id:"experiment-traceability",title:{en:"III · Historical traceability archive",zh:"第三章 · 历史追溯档案"},question:{en:"Which earlier Pre-GPU, runtime, pilot-registry, resource, and approval artifacts are retained for provenance without competing with the current decision table?",zh:"哪些旧的 GPU 前检查、运行时、Pilot 注册表、资源与审批工件需要保留追溯，但不能再与当前终态总表竞争主叙事？"}}
+      {id:"experiment-queue",title:{en:"I · What can still run, and what has stopped?",zh:"第一章 · 哪些还能跑，哪些已经停止？"},question:{en:"For every experiment direction, what is the current decision, what exact result caused it, and does that result stop only this experiment setup or the scientific idea itself?",zh:"对每个实验方向，现在的结论是什么、是哪条具体结果决定的，以及它只是停止当前实验方案，还是连科学想法本身也已经被否定？"}},
+
+      {id:"experiment-evidence",title:{en:"II · Open the evidence only when you need to verify a decision",zh:"第二章 · 需要核查结论时再展开证据"},question:{en:"Which dataset, model, budget, hidden test, baseline, and pass/stop threshold were fixed before the run, and do the recorded results actually satisfy that rule?",zh:"这次实验在运行前固定了哪些数据、模型、预算、隐藏测试、基线和通过/停止阈值？记录下来的结果是否真的符合当时的规则？"}},
+
+      {id:"experiment-traceability",title:{en:"III · Old logs and approvals",zh:"第三章 · 旧日志、旧审批和旧运行记录"},question:{en:"Which earlier launch checks, runtime logs, pilot records, GPU/resource records, and approvals are kept only so we can reconstruct what happened, while the current decision remains the one shown in Chapter I?",zh:"哪些旧启动检查、运行日志、Pilot 记录、GPU/资源记录和审批只为了以后能复盘当时发生了什么，而不能覆盖第一章给出的当前结论？"}}
+
     ]
   },
   "selected-paper":{
     chapters:[
       {id:"current-stri",title:{en:"I · Current selected paper — STRI",zh:"第一章 · 当前选中论文 — STRI"},question:{en:"What exactly is submission-ready, which claims are supported, what is explicitly excluded, and what human handoff remains?",zh:"STRI 当前究竟哪些内容已经达到投稿就绪、哪些主张得到支持、哪些内容明确不主张，以及还剩什么人工交接？"}},
-      {id:"problem-scope",title:{en:"II · Historical archive — Regression-Gated problem formulation",zh:"第二章 · 历史归档 — Regression-Gated 问题表述"},question:{en:"What scientific problem was the former Regression-Gated Self-Evolution formulation trying to isolate, and which assumptions did it add?",zh:"旧 Regression-Gated Self-Evolution 方案当时试图隔离什么科学问题，又额外加入了哪些后来需要检验的假设？"},sourceIds:["paper-problem"]},
-      {id:"evidence-experiments",title:{en:"III · Historical proposed falsification protocol",zh:"第三章 · 历史拟定的可证伪实验协议"},question:{en:"What matched-budget experiment was proposed, and which parts were never authorized as a current paper experiment?",zh:"当时提出了怎样的等预算实验，哪些部分后来并没有获得当前论文实验授权？"},sourceIds:["paper-experiments"]},
-      {id:"narrative-execution",title:{en:"IV · Historical superseded execution roadmap",zh:"第四章 · 历史归档的已取代执行路线"},question:{en:"What was the intended roadmap, and why is it now provenance rather than an active schedule?",zh:"当时计划怎样推进，为什么现在只能作为溯源档案而不是活跃日程？"},sourceIds:["paper-roadmap"]},
-      {id:"review-gates",title:{en:"V · Historical lessons from later evidence",zh:"第五章 · 历史方案的后续证据教训"},question:{en:"Which later substrate, simplification, and falsification results stopped the former formulation and became system-level rules?",zh:"哪些后续底座、简化基线和证伪实验结果停止了旧方案，并进一步沉淀成系统规则？"},sourceIds:["review-log"]}
+      {id:"problem-scope",title:{en:"II · Historical archive — what the older Regression-Gated project was trying to solve",zh:"第二章 · 历史归档 — 旧 Regression-Gated 项目当时想解决什么"},question:{en:"What failure was the older project trying to prevent, what mechanism did it propose, and which assumptions later turned out to need stronger evidence?",zh:"旧项目当时想防止什么具体失败、提出了什么机制，以及后来哪些假设被证明还需要更强证据？"},sourceIds:["paper-problem"]},
+      {id:"evidence-experiments",title:{en:"III · Historical experiment plan",zh:"第三章 · 历史实验计划"},question:{en:"What exact comparisons, models, tasks, and stop conditions were planned, and which of those runs were never authorized after later evidence changed the project?",zh:"当时计划比较哪些方法、模型和任务，停止条件是什么？后续证据改变项目后，其中哪些实验实际上从未获得运行授权？"},sourceIds:["paper-experiments"]},
+      {id:"narrative-execution",title:{en:"IV · The old plan we no longer execute",zh:"第四章 · 已经不再执行的旧计划"},question:{en:"What did the earlier project plan propose to run, which later evidence made that plan obsolete, and why should none of those old steps be treated as pending work now?",zh:"旧方案当时计划跑什么、后来的哪类证据让这条路线失效，以及为什么这些旧步骤现在都不能再当成待办任务？"},sourceIds:["paper-roadmap"]},
+
+      {id:"review-gates",title:{en:"V · What the failed project taught the research system",zh:"第五章 · 旧项目失败后，系统具体学到了什么"},question:{en:"Which concrete results showed that the data/environment could not support the intended test or that a simpler baseline already matched the method, and what checks were added so future projects catch those problems earlier?",zh:"哪些具体结果说明当时的数据/环境不足以支撑目标实验，或更简单基线已经能做到同样效果？系统后来增加了哪些检查，让后续项目更早发现这些问题？"},sourceIds:["review-log"]}
     ]
   },
   bibliography:{

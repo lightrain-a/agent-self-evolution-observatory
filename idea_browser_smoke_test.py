@@ -134,7 +134,7 @@ def main() -> None:
         require(system["chapters"] == 7 and system["readerChapters"] == 7 and system["readerPhases"] == 6 and system["deepDives"] == 4 and system["authorityCards"] == 3, f"research-system reading framework is incomplete: chapters={system['chapters']} roadmap={system['readerChapters']} phases={system['readerPhases']} deep={system['deepDives']} authority={system['authorityCards']}")
         require(system["responsibilityLayers"] == 6 and system["temporalStages"] == 11 and system["componentLayerHeaders"] == 6 and system["aiCheckpoints"] == 5, f"research-system architecture/AI clinic is incomplete: layers={system['responsibilityLayers']} stages={system['temporalStages']} component-groups={system['componentLayerHeaders']} ai={system['aiCheckpoints']}")
         require((system["architectureSummary"].get("temporal_stages"),system["architectureSummary"].get("reader_chapters"),system["architectureSummary"].get("reader_stage_coverage"),system["architectureSummary"].get("reader_stage_missing"),system["architectureSummary"].get("reader_stage_duplicates"),system["architectureSummary"].get("reader_stage_extra"),system["architectureSummary"].get("functional_layers"),system["architectureSummary"].get("assigned_components"),system["architectureSummary"].get("unassigned_components"),system["architectureSummary"].get("cross_cutting_controls"),system["architectureSummary"].get("orphan_cross_cutting_controls")) == (11,7,11,0,0,0,6,27,0,3,0), f"backend architecture manifest is stale in browser state: {system['architectureSummary']}")
-        require(system["methodologyControls"] == 3 and "Exploration Frontier" in system["text"] and "Reproducibility Readiness" in system["text"], f"cross-cutting methodology controls are missing: {system['methodologyControls']}")
+        require(system["methodologyControls"] == 3 and "Are candidate problems too similar?" in system["text"] and "Can another person rerun the key result from scratch?" in system["text"], f"cross-cutting methodology controls are missing: {system['methodologyControls']}")
         require(system["outerGates"] == 8 and system["preflightGates"] == 10 and system["quantWorksheets"] == 2, f"Pre-Experiment/identifiability compiler is incomplete: {system['outerGates']}/{system['preflightGates']}/{system['quantWorksheets']}")
         require(system["lessons"] == 6 and system["failureLayers"] == 6 and system["repairLoops"] == 1, f"learning/diagnosis visualization is incomplete: {system['lessons']}/{system['failureLayers']}/{system['repairLoops']}")
         require(system["components"] >= 27, f"expected the current backend responsibility set including Paper-first contract, capability registry, literature audit, Principle, Protocol Validity, Meta-Trace, failure memory, scheduler, replay, Economy, and AI consultation, got {system['components']}")
@@ -227,7 +227,7 @@ def main() -> None:
         execute(session_id, "document.querySelector('.language-toggle')?.click();")
         time.sleep(1)
         zh = execute(session_id, "return {text:document.body.textContent||'', outer:document.querySelectorAll('.preflight-outer-gate').length, gates:document.querySelectorAll('.preflight-gate').length, failures:document.querySelectorAll('.system-failure-layer').length};")
-        require(zh["outer"] == 8 and zh["gates"] == 10 and zh["failures"] == 6 and "P0 资源经济" in zh["text"] and "协议有效性" in zh["text"] and "科学元轨迹" in zh["text"] and "原理" in zh["text"], "research-system Economy / Principle / Protocol Validity / learning-loop visualization is incomplete")
+        require(zh["outer"] == 8 and zh["gates"] == 10 and zh["failures"] == 6 and "先用便宜检查决定值不值得上 GPU" in zh["text"] and "先证明评测协议真的在测我们声称的能力" in zh["text"] and "让系统记住为什么成功、为什么失败" in zh["text"] and "先写清为什么应该有效" in zh["text"], "research-system plain-language Economy / Principle / Protocol / learning-loop explanation is incomplete")
         request("POST", f"/session/{session_id}/window/rect", {"width": 390, "height": 844})
         time.sleep(1)
         system_mobile = execute(session_id, """const gate=document.querySelector('.preflight-gate-grid'); const failure=document.querySelector('.system-failure-layers'); return {inner:window.innerWidth,scroll:document.documentElement.scrollWidth,gateCols:gate?getComputedStyle(gate).gridTemplateColumns:'',failureCols:failure?getComputedStyle(failure).gridTemplateColumns:'',maxCard:Math.max(0,...[...document.querySelectorAll('.preflight-gate,.system-failure-layer,.methodology-control-card')].map(x=>x.getBoundingClientRect().width))};""")
@@ -402,8 +402,8 @@ def main() -> None:
             "SP-15 影子修订 · 可辨识性证据库存",
             "仅诊断（DIAGNOSTIC ONLY）",
             "停止 PF-1 独立论文",
-            "正式活跃研究方向仍为 0",
-            "影子搜索层",
+            "通过正式问题检查的新研究问题",
+            "缺证据、暂不推进的候选",
             "局部反例记忆修复",
         )
         require(all(marker in ideas["text"] for marker in chinese_reader_markers), f"paper-ideas Chinese reader layer is incomplete; missing={[m for m in chinese_reader_markers if m not in ideas['text']]}")

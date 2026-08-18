@@ -24,8 +24,8 @@
   pages.foundations = {
     eyebrow:{en:"Foundations",zh:"基础总览"},
     title:{en:"Definitions, history, and taxonomy of agent self-evolution",zh:"Agent 自进化的定义、历史与分类体系"},
-    lead:{en:"One foundation page now combines the field boundary, the published-paper historical overview, and the four-axis taxonomy that structures the rest of the observatory.",zh:"一个基础页面统一解释领域边界、基于已发表论文的历史全景，以及组织全站内容的四轴分类体系。"},
-    callout:{en:"Read this page first: it separates retry and self-correction from persistent evolution, then explains how update surfaces, feedback signals, timescales, and release gates emerged.",zh:"建议从本页开始：先区分重试、自纠错与持久进化，再理解更新对象、反馈信号、时间尺度和发布门控如何形成。"},
+    lead:{en:"Start here if you are new to the topic. The page first defines the minimum condition for agent self-evolution, then shows the main historical milestones, and finally gives four questions you can use to classify any system.",zh:"如果第一次看这个方向，建议从这里开始。本页先说明什么条件下才能称为 Agent 自进化，再按时间梳理主要论文，最后给出四个可以直接用来判断任何系统的分类问题。"},
+    callout:{en:"The key distinction is simple: a better answer after another retry is not enough. A change must persist beyond the current task and still affect later tasks before we call it evolution.",zh:"最重要的区别很简单：多重试一次得到更好答案还不算进化。只有变化在当前任务结束后仍被保存，并继续影响后续任务，才算持久自进化。"},
     overviewFigure:{src:{en:"agent-self-evolution-history-en.svg",zh:"agent-self-evolution-history-zh.svg"},caption:{en:"Standalone vector overview for paper embedding. Milestones are grouped by method family and state the method action, update target, and feedback signal.",zh:"可直接嵌入论文的独立矢量总览图。正式发表里程碑按方法族组织，并标明核心做法、更新对象与反馈来源。"}},
     renderMode:"merged-hub",
     chapters:chaptersFor("foundations")
@@ -34,8 +34,8 @@
   pages.mechanisms = {
     eyebrow:{en:"Mechanisms",zh:"进化机制"},
     title:{en:"How agents evolve: parameters, prompts, memory, skills, and workflows",zh:"Agent 如何进化：参数、提示词、记忆、技能与工作流"},
-    lead:{en:"A unified mechanism atlas organized by the persistent object being changed, the learning signal, the commitment gate, and the dominant failure mode.",zh:"按照被持久修改的对象、学习信号、提交门控和主要失败模式组织的统一机制图谱。"},
-    callout:{en:"The five mechanism families are adjacent, not interchangeable. A good paper must state which surface changes and why a smaller intervention is insufficient.",zh:"五类机制彼此相邻但不可混用。可信论文必须说明究竟更新哪个表面，以及为什么更小的干预不足。"},
+    lead:{en:"This page compares five concrete ways an agent can change itself: update model parameters, rewrite prompts, store or revise memory, create or modify skills/tools, or change the workflow that coordinates them.",zh:"本页比较 Agent 改变自己的五种具体方式：更新模型参数、改写提示词、写入或修订记忆、创建或修改技能/工具，以及改变这些组件如何协作的工作流。"},
+    callout:{en:"For each mechanism, look for three things: what state is actually changed, what evidence justifies keeping the change, and what simpler update would solve the same problem with less cost or risk.",zh:"看每种机制时重点问三件事：到底改了什么状态、凭什么证据保留这次修改、是否存在成本和风险更低但能解决同一问题的更简单更新。"},
     renderMode:"merged-hub",
     chapters:chaptersFor("mechanisms")
   };
@@ -43,8 +43,8 @@
   pages.domains = {
     eyebrow:{en:"Domains",zh:"视觉与交互领域"},
     title:{en:"Visual, GUI/web, and embodied self-evolving agents",zh:"视觉、GUI/Web 与具身自进化 Agent"},
-    lead:{en:"Three application domains share multimodal perception and interaction, but differ in state observability, action cost, embodiment, and the evidence needed for persistent improvement.",zh:"三个应用领域都依赖多模态感知与交互，但在状态可观测性、动作成本、具身约束和持久改进证据上存在关键差异。"},
-    callout:{en:"The page keeps domain-specific benchmarks and failure modes visible while making their shared visual-memory, tool, world-model, and adaptation mechanisms comparable.",zh:"本页保留各领域特有的基准与失败模式，同时对齐视觉记忆、工具、世界模型和适应机制。"},
+    lead:{en:"The same update can behave very differently in images, web interfaces, and robots. This page compares what each agent can observe, what actions it can take, how costly a wrong action is, and whether the environment provides exact state for evaluation.",zh:"同一种更新方法放到图像、网页和机器人上，效果可能完全不同。本页比较三类 Agent 能观察到什么、能执行什么动作、错误动作代价多大，以及评测时能否拿到精确环境状态。"},
+    callout:{en:"Use the comparison to decide whether a result really transfers across domains. A method that works because a GUI can be reset exactly may not transfer unchanged to a physical robot with irreversible actions.",zh:"这张对照表用来判断实验结果能否真的跨领域迁移。例如，依赖 GUI 精确重置的方法，不能默认直接迁移到动作不可逆的实体机器人。"},
     renderMode:"merged-hub",
     chapters:chaptersFor("domains")
   };
@@ -52,8 +52,8 @@
   pages.evaluation = {
     eyebrow:{en:"Evaluation & Infrastructure",zh:"评测与研究基础设施"},
     title:{en:"Evaluation, safety, benchmarks, and reproducible infrastructure",zh:"评测、安全、基准与可复现基础设施"},
-    lead:{en:"A single evidence page connects longitudinal evaluation, negative evolution, governance, benchmark construction, datasets, environments, repositories, and reproduction readiness.",zh:"一个证据页面统一连接纵向评测、负向进化、安全治理、基准构建、数据环境、代码仓库与复现成熟度。"},
-    callout:{en:"Evaluation is not an appendix to self-evolution: the release gate, task stream, statistical unit, and rollback protocol define whether an update counts as genuine improvement.",zh:"评测不是自进化的附录：发布门控、任务流、统计单位和回滚协议共同决定一次更新能否被视为真实改进。"},
+    lead:{en:"This page explains how to prove that an update is genuinely useful: test later tasks, measure damage to earlier tasks, count harmful updates, report recovery after rollback, and keep the data, environments, code, and statistical unit explicit.",zh:"本页说明怎样证明一次更新真的有用：测试后续任务、测量对旧任务的伤害、统计有害更新、报告回滚后的恢复情况，并明确写清数据、环境、代码和统计单位。"},
+    callout:{en:"An update should not be called an improvement just because the current task score rises. The evaluation must also show what happens to future tasks, old capabilities, safety, cost, and recovery.",zh:"不能因为当前任务分数提高就把更新称为改进。至少还要说明它对后续任务、旧能力、安全性、成本和回滚恢复分别产生了什么影响。"},
     renderMode:"merged-hub",
     chapters:chaptersFor("evaluation")
   };
@@ -62,7 +62,7 @@
     pages.bibliography = Object.assign({}, sources.bibliography, {
       eyebrow:{en:"Literature",zh:"文献与覆盖"},
       title:{en:"Coverage protocol and live bibliography",zh:"覆盖协议与动态文献库"},
-      lead:{en:"The search protocol, inclusion boundary, publication-status rules, deduplication audit, interactive maps, and searchable corpus now live on one canonical literature page.",zh:"检索协议、纳入边界、发表状态规则、去重审计、交互地图和可检索语料统一集中在一个文献页面。"},
+      lead:{en:"This page shows exactly how the literature list is built: which queries are used, which papers are included or excluded, how duplicate preprint/published versions are merged, when records were last updated, and where to search or export the resulting corpus.",zh:"本页具体说明文献库怎样产生：用了哪些检索词、哪些论文会纳入或排除、预印本与正式版本怎样去重合并、记录何时更新，以及怎样搜索或导出最终文献表。"},
       groupsBefore:[group("coverage-method")]
     });
   }
@@ -70,7 +70,7 @@
   if (sources["research-directions"]) {
     pages["research-directions"] = Object.assign({}, sources["research-directions"], {
       title:{en:"Research directions and long-term agenda",zh:"研究方向地图与长期议程"},
-      lead:{en:"Ten stable scientific directions organize the field. Historical idea lineages explain how the search evolved; the current STRI paper, zero-authority positive-residual search, canonical/shadow discovery state, and terminal experiment ledger are synchronized on Paper Ideas and Experiments.",zh:"十个稳定科学方向组织领域结构。历史研究方案谱系用于解释搜索如何演化；当前 STRI 论文、零权限正向残余搜索、正式/影子搜索问题发现状态与终态实验账本，统一同步到“论文研究方案”和“实验决策”页面。"},
+      lead:{en:"The page groups the field into ten long-term research questions. For each direction it shows the motivating failure, representative papers, what a new paper would still need to prove, and whether that direction is part of our current research program or only a longer-term option.",zh:"本页把领域整理为十个长期研究问题。每个方向都会写清楚它由什么具体失败推动、有哪些代表论文、新论文还必须证明什么，以及它属于当前研究计划还是仅作为长期备选。"},
       groupsAfter:[group("research-agenda")]
     });
   }
@@ -78,7 +78,7 @@
   if (sources["paper-ideas"]) {
     pages["paper-ideas"] = Object.assign({}, sources["paper-ideas"], {
       title:{en:"ICLR-first current research contracts and terminal decisions",zh:"ICLR 优先：当前研究合同与终态决策"},
-      lead:{en:"The canonical page starts from one current-status ledger: STRI is paper-ready after Paper Quality v2 closes with zero evidence debt; canonical live ideas remain zero; the memory positive residual is shadow-only; shadow holds/dead ends and the 27 legacy P0 lifecycle records are shown as separate authority layers. Older candidate banks remain provenance only.",zh:"本页先看统一的“当前状态账本”：STRI 的论文证据质量 v2 已经闭环、证据欠账清零并达到论文就绪；正式活跃研究方向仍为 0；记忆正向残余只保留在影子搜索层；影子搜索暂缓/死路与 27 个历史 P0 生命周期按权限层分开显示。更早候选池仅作溯源。"},
+      lead:{en:"Read the top table for the current answer. STRI is ready for submission. No new research idea has yet passed the check that asks whether the problem is real, not already solved by prior work, and not already explained by a simpler known mechanism. The earlier memory-effect observation is kept only as history because no independent mechanism survived. Tentative candidates are either waiting for one named piece of evidence or already closed. The 27 old P0 directions are historical decisions, not experiments waiting to run.",zh:"只想知道现在该做什么，先看顶部状态表：STRI 已达到投稿就绪；目前还没有新研究问题同时通过“问题确实存在、已有论文没有解决、简单成熟解释也不足”这三项检查。之前的记忆效应只保留为历史现象，因为没有独立机制继续存活。暂定候选要么明确写着还缺哪一项证据，要么已经关闭；27 个旧 P0 方向只是历史决策，不是等待启动的实验队列。"},
       includeRanking:true
     });
   }
@@ -86,8 +86,8 @@
   pages["selected-paper"] = {
     eyebrow:{en:"Selected ICLR Paper · STRI",zh:"当前选中 ICLR 论文 · STRI"},
     title:{en:"STRI: Self-Evolution Should Not Depend on How Skills Are Split",zh:"STRI：技能如何拆分不应影响自进化（Self-Evolution Should Not Depend on How Skills Are Split）"},
-    lead:{en:"The current selected paper is STRI. This page starts from its exact paper-ready state, claim boundary, evidence completeness, downloads, and human handoff. The former Regression-Gated Self-Evolution workspace is preserved below as a clearly separated historical archive.",zh:"当前选中论文是 STRI。本页首先展示它精确的论文就绪状态、主张边界、证据完整性、下载与人工提交交接；旧 Regression-Gated Self-Evolution 工作区整体下沉为明确分隔的历史归档。"},
-    callout:{en:"Current state: READY_NARROW_ICLR · Paper Quality v2 PASS · N1–N3 3/3 supported · evidence debt 0 · 9/9 main-text pages · anonymous supplement ready. Only human author signoff and OpenReview handoff remain; this asset-first paper-ready state does not create canonical Problem-Gate, Method, P0, or GPU authority.",zh:"当前状态：READY_NARROW_ICLR · 论文证据质量 v2 通过 · N1–N3 3/3 已支持 · 证据欠账 0 · 正文 9/9 页 · 匿名补充材料就绪。当前只剩作者责任确认与 OpenReview 提交交接；该“工件优先（Asset-first）”论文就绪状态不会创建正式问题门、方法、P0 或 GPU 权限。"},
+    lead:{en:"This page answers the submission question directly: what STRI claims, which experiments support each claim, which broader claims are excluded, whether the manuscript and supplement pass checks, which files are ready to download, and what the authors still need to verify before uploading to OpenReview. The older Regression-Gated project is shown only as history below.",zh:"本页直接回答投稿前最需要确认的问题：STRI 到底主张什么、每条主张由哪些实验支持、哪些更宽的结论明确不说、正文和补充材料是否检查通过、哪些文件已经可以下载，以及作者上传 OpenReview 前还要人工确认什么。旧 Regression-Gated 项目只在下方作为历史记录保留。"},
+    callout:{en:"Submission status: all three STRI claims are supported, the evidence checklist has no remaining debt, the main text is within the 9-page limit, and the anonymous supplement is ready. The remaining work is human author/signoff and deadline/account verification before OpenReview submission; no new experiment is required for the current narrow paper.",zh:"投稿状态：STRI 的 3 条主张都有对应证据，证据清单没有未完成项，正文符合 9 页限制，匿名补充材料也已就绪。当前剩余工作是作者责任确认、截止日期和 OpenReview 账号等人工核验；这篇窄范围论文不需要再补新的实验。"},
     renderMode:"selected-paper-current",
     chapters:chaptersFor("selected-paper")
   };
