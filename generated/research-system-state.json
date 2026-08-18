@@ -6215,7 +6215,7 @@
     "paper_first_problem_lane_search_reducible_lanes": 3,
     "paper_first_problem_lane_search_no_pair_lanes": 0,
     "paper_first_problem_last_lane_search_available": true,
-    "paper_first_problem_last_lane_search_run_id": "20260817T180951Z",
+    "paper_first_problem_last_lane_search_run_id": "20260817T203424Z-replay",
     "paper_first_problem_last_lane_search_candidate_lanes": 1,
     "paper_first_problem_last_lane_search_reducible_lanes": 3,
     "paper_first_problem_last_lane_search_no_pair_lanes": 0,
@@ -31453,7 +31453,7 @@
       "source_manifest_changed": false,
       "scientific_authority": false
     },
-    "discovery_transaction_id": "c669b002be54353844b9ee647a7fa1d5dbbcb3bb77e1ac3722ab355a71e887fc",
+    "discovery_transaction_id": "6e8c97ad9b581d1f523d342fde68cb6c265ebb5e6e2056d0e066c584bf5fdfb5",
     "discovery_transaction_role": "primary"
   },
   "paper_first_scientific_object_retrieval_audit": {
@@ -33970,18 +33970,18 @@
       }
     ],
     "status": "GENERATED_AWAIT_PROBLEM_GATE",
-    "discovery_transaction_id": "c669b002be54353844b9ee647a7fa1d5dbbcb3bb77e1ac3722ab355a71e887fc",
+    "discovery_transaction_id": "6e8c97ad9b581d1f523d342fde68cb6c265ebb5e6e2056d0e066c584bf5fdfb5",
     "discovery_transaction_role": "generator"
   },
   "paper_first_problem_gate_queue": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-17T20:34:24+00:00",
+    "generated_at": "2026-08-18T06:01:31+00:00",
     "source_inbox": "private-data://paper-first-problem-discovery/candidate-inbox.json",
     "source_inboxes": [
       "private-data://paper-first-problem-discovery/candidate-inbox.json",
-      "repo://generated/.paper-first-typed-recompile-w0giyvq9/auto-candidate-inbox.json"
+      "private-data://paper-first-problem-discovery/auto-candidate-inbox.json"
     ],
-    "primary_evidence_pool": "repo://generated/.paper-first-typed-recompile-w0giyvq9/primary-private.json",
+    "primary_evidence_pool": "private-data://paper-first-problem-discovery/primary-evidence-pool.json",
     "primary_evidence_records": 32,
     "source_exists": true,
     "policy": {
@@ -34041,7 +34041,7 @@
         "title": "When does adding a relevant procedural memory retract an otherwise correct action under a frozen executor?",
         "discovery_lane": "ASSUMPTION_BREAK",
         "status": "PROBLEM_GATE_BLOCKED",
-        "source_inbox": "repo://generated/.paper-first-typed-recompile-w0giyvq9/auto-candidate-inbox.json",
+        "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
         "blockers": [
           "saturation-proven-hard-reduction:procedural-memory-nonmonotonicity",
           "semantic-reduction-review-missing",
@@ -34054,7 +34054,7 @@
         "candidate_id": "AUTO-1",
         "title": "When does adding a relevant procedural memory retract an otherwise correct action under a frozen executor?",
         "discovery_lane": "ASSUMPTION_BREAK",
-        "source_inbox": "repo://generated/.paper-first-typed-recompile-w0giyvq9/auto-candidate-inbox.json",
+        "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
         "candidate": {
           "candidate_id": "AUTO-1",
           "title": "When does adding a relevant procedural memory retract an otherwise correct action under a frozen executor?",
@@ -34408,7 +34408,7 @@
       }
     ],
     "next_action": "Human Paper Design review may inspect passed candidates. Blocked, stale, malformed, or missing candidates do not create a paper, method, experiment, or P0 lifecycle entry.",
-    "discovery_transaction_id": "c669b002be54353844b9ee647a7fa1d5dbbcb3bb77e1ac3722ab355a71e887fc",
+    "discovery_transaction_id": "6e8c97ad9b581d1f523d342fde68cb6c265ebb5e6e2056d0e066c584bf5fdfb5",
     "discovery_transaction_role": "queue"
   },
   "paper_first_search_portfolio_design_adjudication": {
@@ -77855,7 +77855,7 @@
   },
   "paper_first_fresh_phenomenon_portfolio": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-18T06:06:00+00:00",
+    "generated_at": "2026-08-18T06:14:29+00:00",
     "status": "NO_ACTIVE_F0",
     "policy": {
       "portfolio_is_outside_canonical_problem_queue": true,
@@ -78193,7 +78193,7 @@
       },
       "primary_state": {
         "path": "generated/paper-first-primary-evidence-state.json",
-        "sha256": "896a84b093da99ceaa828e8cb6586b705e898b4c6339381859376abd90bf7aa2"
+        "sha256": "b5a058febb2ad74bc0407858d4062abe804b52fa9ba58521212c704b025db6ea"
       },
       "dead_end_memory": {
         "path": "generated/paper-first-search-portfolio-design-adjudication.json",
