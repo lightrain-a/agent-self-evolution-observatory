@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T06:25:38+00:00",
-  "source_revision": "696246e2fecdf56eddcc0b0b3c1a9cb8ad9f4e94",
+  "generated_at": "2026-08-18T11:42:20+00:00",
+  "source_revision": "2bc81d8a75c32df8d9c624f92a9a357ef666319d",
   "as_of_date": "2026-08-18",
   "headline": {
     "paper_ready": 1,
@@ -17,9 +17,9 @@
     "legacy_p0_method_stop": 1,
     "launchable_formal_experiments": 0,
     "shadow_dead_ends": 39,
-    "shadow_holds": 5,
+    "shadow_holds": 7,
     "shadow_method_ready": 0,
-    "shadow_qualification_ready": 1,
+    "shadow_qualification_ready": 0,
     "fresh_active_f0": 0,
     "fresh_design_ready_f0": 0,
     "fresh_support_holds": 0,
@@ -296,11 +296,11 @@
     "stop_standalone": 1,
     "dead_end_objects": 39,
     "principle_readjudication_dead_ends": 35,
-    "hold_objects": 5,
+    "hold_objects": 7,
     "semantic_holds": 0,
-    "near_miss_holds": 1,
-    "support_release_holds": 4,
-    "explicit_release_targets": 2,
+    "near_miss_holds": 3,
+    "support_release_holds": 5,
+    "explicit_release_targets": 0,
     "scientific_authority": false,
     "rows": [
       {
@@ -330,12 +330,12 @@
       "method_design_authorized": 0
     },
     "qualification": {
-      "status": "READY_FOR_SHADOW_QUALIFICATION",
+      "status": "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL",
       "operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
-      "operator_upgrade_recompile": true,
-      "qualification_allowed": true,
+      "operator_upgrade_recompile": false,
+      "qualification_allowed": false,
       "automatic_provider_calls_authorized": 0,
-      "reason": "Canonical discovery is closed and the discovery operator changed since the latest terminal shadow run, so one new qualified shadow transaction is allowed on the same frozen evidence.",
+      "reason": "The current canonical source transaction already has a terminal shadow search result under the current discovery operator; repeating model calls would be redundant.",
       "scope": "global-v13-shadow-control; does not reactivate archived positive-residual assets"
     }
   },

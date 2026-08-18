@@ -65,10 +65,11 @@ def _current_holds(design_state: dict[str, Any]) -> dict[str, dict[str, Any]]:
         if not isinstance(row, dict):
             continue
         candidate_id = str(row.get("source_candidate_id") or "")
+        basin = str(row.get("basin") or "")
         if (
             candidate_id
             and str(row.get("disposition") or "") == "HOLD_SUPPORT_UNAVAILABLE"
-            and str(row.get("basin") or "").startswith("near-miss-terminal-support-hold-")
+            and basin.startswith(("near-miss-terminal-support-hold-", "fresh-phenomenon-support-hold-"))
             and row.get("dead_end_certified") is not True
         ):
             key = _support_hold_key(row)

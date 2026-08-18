@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T07:50:48+00:00",
+  "generated_at": "2026-08-18T09:15:04+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -129,22 +129,22 @@
     "paper_first_search_portfolio_near_miss_current_primary_stops": 2,
     "paper_first_search_portfolio_near_miss_mature_theory_stops": 1,
     "paper_first_search_portfolio_memory_last_ingested_run_id": "shadow-auto-3eb8aa25b7961110",
-    "paper_first_support_release_watch_status": "NOT_RUN",
-    "paper_first_support_release_holds": 0,
+    "paper_first_support_release_watch_status": "SUPPORT_RELEASE_WATCH_COMPLETE",
+    "paper_first_support_release_holds": 5,
     "paper_first_support_release_targets": 0,
-    "paper_first_support_release_no_endpoint": 0,
+    "paper_first_support_release_no_endpoint": 5,
     "paper_first_support_release_recheck_required": 0,
     "paper_first_support_release_support_qualified": 0,
     "paper_first_support_release_generator_reopen": 0,
     "paper_first_support_release_problem_gate": 0,
-    "paper_first_support_asset_recheck_status": "NOT_RUN",
+    "paper_first_support_asset_recheck_status": "SUPPORT_ASSET_RECHECK_QUEUE_EMPTY",
     "paper_first_support_asset_recheck_queued": 0,
     "paper_first_support_asset_recheck_new_triggers": 0,
     "paper_first_support_asset_recheck_carried_forward": 0,
     "paper_first_support_asset_recheck_resolved": 0,
     "paper_first_support_asset_recheck_resolution_still_unavailable": 0,
     "paper_first_support_asset_recheck_resolution_irrelevant_release": 0,
-    "paper_first_support_asset_handoff_status": "NOT_RUN",
+    "paper_first_support_asset_handoff_status": "SUPPORT_ASSET_RECHECK_HANDOFF_EMPTY",
     "paper_first_support_asset_handoff_ready": 0,
     "paper_first_support_asset_handoff_provenance_incomplete": 0,
     "paper_first_sp15_identifiability_support_status": "INSUFFICIENT_FOR_IDENTIFIABILITY_CLAIM",
@@ -189,7 +189,7 @@
     "paper_first_shadow_search_same_source_transaction": true,
     "paper_first_shadow_search_qualification_allowed": false,
     "paper_first_shadow_search_automatic_provider_calls": 0,
-    "paper_first_shadow_continuation_status": "WAIT_EXTERNAL_PRIMARY_CONTENT_CHANGE",
+    "paper_first_shadow_continuation_status": "WAIT_EXTERNAL_PRIMARY_OR_SUPPORT_RELEASE_CHANGE",
     "paper_first_shadow_continuation_next_action": "wait-external-change",
     "paper_first_shadow_continuation_active_actions": 0,
     "paper_first_shadow_continuation_external_wait": 1,
@@ -28873,7 +28873,7 @@
   },
   "paper_first_support_release_watch": {
     "schema_version": "1.0",
-    "status": "NOT_RUN",
+    "status": "SUPPORT_RELEASE_WATCH_COMPLETE",
     "policy": {
       "scientific_authority": false,
       "primary_declared_release_endpoints_only": true,
@@ -28890,13 +28890,32 @@
       "portable_release_targets_cannot_qualify_support_or_reopen": true,
       "public_summary_excludes_urls_refs_required_units_and_private_paths": true
     },
-    "summary": {},
-    "status_counts": {},
+    "summary": {
+      "support_holds": 5,
+      "explicit_release_targets": 0,
+      "no_explicit_endpoint": 5,
+      "checked": 0,
+      "skipped_cooldown": 0,
+      "provider_errors": 0,
+      "recheck_required": 0,
+      "support_qualified": 0,
+      "generator_reopen_authorized": 0,
+      "problem_gate_authorized": 0,
+      "primary_declaration_refresh_checked": 2,
+      "primary_declaration_refresh_changed": 0,
+      "primary_declaration_refresh_skipped_cooldown": 2,
+      "primary_declaration_refresh_rate_limited": 0,
+      "primary_declaration_refresh_errors": 0,
+      "portable_release_targets_used": 0
+    },
+    "status_counts": {
+      "NO_EXPLICIT_AUTHOR_RELEASE_ENDPOINT": 5
+    },
     "scientific_authority": false
   },
   "paper_first_support_asset_recheck_queue": {
     "schema_version": "1.0",
-    "status": "NOT_RUN",
+    "status": "SUPPORT_ASSET_RECHECK_QUEUE_EMPTY",
     "policy": {
       "scientific_authority": false,
       "release_change_only_creates_asset_recheck_task": true,
@@ -28914,12 +28933,28 @@
       "automatic_provider_calls_authorized": false,
       "public_summary_excludes_entries_refs_urls_required_units_and_private_paths": true
     },
-    "summary": {},
+    "summary": {
+      "support_holds": 5,
+      "release_recheck_signals": 0,
+      "queued": 0,
+      "new_triggers": 0,
+      "carried_forward": 0,
+      "resolved": 0,
+      "resolution_still_unavailable": 0,
+      "resolution_irrelevant_release": 0,
+      "support_qualified": 0,
+      "generator_reopen_authorized": 0,
+      "problem_gate_authorized": 0,
+      "method_authorized": 0,
+      "experiment_authorized": 0,
+      "p0_authorized": 0,
+      "gpu_authorized": 0
+    },
     "scientific_authority": false
   },
   "paper_first_support_asset_recheck_handoff": {
     "schema_version": "1.0",
-    "status": "NOT_RUN",
+    "status": "SUPPORT_ASSET_RECHECK_HANDOFF_EMPTY",
     "policy": {
       "scientific_authority": false,
       "handoff_reuses_existing_problem_falsifier_support_inventory": true,
@@ -30512,7 +30547,7 @@
   },
   "paper_first_shadow_continuation_frontier": {
     "schema_version": "1.0",
-    "status": "WAIT_EXTERNAL_PRIMARY_CONTENT_CHANGE",
+    "status": "WAIT_EXTERNAL_PRIMARY_OR_SUPPORT_RELEASE_CHANGE",
     "next_control_action": "wait-external-change",
     "policy": {
       "scientific_authority": false,
@@ -30530,7 +30565,7 @@
       "asset_recheck_queued": 0,
       "support_inventory_handoff_ready": 0,
       "support_handoff_provenance_hold": 0,
-      "support_holds": 0,
+      "support_holds": 5,
       "active_control_actions": 0,
       "external_wait": 1,
       "automatic_provider_calls_authorized": 0,
@@ -30544,9 +30579,9 @@
     },
     "source_status": {
       "shadow_admission": "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL",
-      "support_release_watch": "NOT_RUN",
-      "support_asset_queue": "NOT_RUN",
-      "support_inventory_handoff": "NOT_RUN"
+      "support_release_watch": "SUPPORT_RELEASE_WATCH_COMPLETE",
+      "support_asset_queue": "SUPPORT_ASSET_RECHECK_QUEUE_EMPTY",
+      "support_inventory_handoff": "SUPPORT_ASSET_RECHECK_HANDOFF_EMPTY"
     },
     "scientific_authority": false
   },

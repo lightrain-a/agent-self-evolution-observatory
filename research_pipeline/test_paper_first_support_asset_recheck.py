@@ -83,6 +83,26 @@ class SupportAssetRecheckQueueTest(unittest.TestCase):
         self.assertEqual(row["required_unit"], "second matched released unit")
         self.assertEqual(len(row["support_hold_key"]), 64)
 
+    def test_fresh_phenomenon_support_hold_routes_release_change_to_recheck(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            storage = self.storage(Path(td))
+            hold = self.design("FRESH-C1")["shadow_dead_end_memory"]["blocked_objects"][0]
+            hold = {
+                **hold,
+                "basin": "fresh-phenomenon-support-hold-deadbeef",
+                "memory_class": "REOPENABLE_HOLD",
+                "dead_end_certified": False,
+                "evidence_basis": ["arXiv:2607.00001"],
+            }
+            design = {"shadow_dead_end_memory": {"scientific_authority": False, "blocked_objects": [], "hold_objects": [hold]}, "scientific_authority": False}
+            watch = self.watch(); watch["rows"][0].update({"candidate_id": "FRESH-C1", "source_ref": "arXiv:2607.00001"})
+            state = build_support_asset_recheck_queue(storage=storage, watch_state=watch, design_state=design, previous_state={}, now=datetime(2026, 8, 14, tzinfo=timezone.utc))
+        self.assertEqual(state["summary"]["support_holds"], 1)
+        self.assertEqual(state["summary"]["queued"], 1)
+        self.assertEqual(state["entries"][0]["candidate_id"], "FRESH-C1")
+        self.assertEqual(state["entries"][0]["source_refs"], ["arXiv:2607.00001"])
+        self.assertFalse(state["entries"][0]["scientific_authority"])
+
     def test_release_change_creates_zero_authority_asset_recheck_task(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             state = build_support_asset_recheck_queue(
