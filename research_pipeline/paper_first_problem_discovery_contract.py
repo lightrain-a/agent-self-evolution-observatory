@@ -211,6 +211,14 @@ POLICY: dict[str, Any] = {
     "single_source_anomaly_first_search_enabled": True,
     "primary_anomaly_can_trigger_controlled_residual_search_without_cross_paper_metric_match": True,
     "support_feasibility_is_search_priority_not_novelty_authority": True,
+    "closed_basin_inversion_search_enabled": True,
+    "search_closure_inversion_requires_certified_counter_explanation": True,
+    "search_closure_inversion_is_search_prior_not_scientific_authority": True,
+    "search_closure_inversion_requires_fresh_primary_grounding": True,
+    "search_closure_inversion_must_satisfy_recorded_reopen_condition": True,
+    # Backward-compatible policy aliases for current research-system consumers.
+    # These names are legacy only: they refer to layer-typed search closures, not
+    # to scientific dead-end certification except for core_principle rows.
     "principle_dead_end_inversion_search_enabled": True,
     "dead_end_inversion_requires_certified_counter_explanation": True,
     "dead_end_inversion_is_search_prior_not_scientific_authority": True,
@@ -256,8 +264,8 @@ POLICY: dict[str, Any] = {
     "generator_pre_review_still_blocks_proven_hard_reduction": True,
     "semantic_reviewer_owns_pending_exact_reduction_adjudication": True,
     "final_problem_gate_still_requires_all_reductions_resolved": True,
-    "principle_dead_end_exact_source_reentry_forbidden": True,
-    "principle_dead_end_reopen_requires_new_evidence": True,
+    "search_closure_exact_source_reentry_forbidden": True,
+    "search_closure_reopen_requires_new_evidence": True,
     "discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
     "shared_limitation_without_empirical_failure_forbidden": True,
     "pure_topic_brainstorm_forbidden": True,
@@ -573,10 +581,10 @@ def audit_problem_candidate(
     if not isinstance(domain, dict) or not all(_nonempty(domain.get(key)) for key in ("mature_source_domain", "mature_object", "why_not_domain_transfer")):
         blockers.append("domain-transfer-audit-incomplete")
 
-    principle_reentry = candidate.get("principle_dead_end_reentry_audit") or {}
-    if isinstance(principle_reentry,dict) and principle_reentry.get("blocked") is True:
-        matches=[str(x) for x in (principle_reentry.get("matched_source_candidate_ids") or []) if str(x)]
-        blockers.append("principle-dead-end-exact-source-reentry:" + ",".join(sorted(matches or ["unknown"])))
+    closure_reentry = candidate.get("search_closure_reentry_audit") or candidate.get("principle_dead_end_reentry_audit") or {}
+    if isinstance(closure_reentry,dict) and closure_reentry.get("blocked") is True:
+        matches=[str(x) for x in (closure_reentry.get("matched_source_candidate_ids") or []) if str(x)]
+        blockers.append("search-closure-exact-source-reentry:" + ",".join(sorted(matches or ["unknown"])))
 
     saturation = candidate.get("saturation_scan") or {}
     matched = list(saturation.get("matched_patterns") or []) if isinstance(saturation, dict) else []
@@ -763,13 +771,13 @@ def build_problem_discovery_contract_state() -> dict[str, Any]:
         },
         "lane_contracts":[{"lane":lane,"source_roles":list(LANE_SOURCE_ROLES[lane]),"minimum_distinct_primary_sources":LANE_DISTINCT_SOURCE_MINIMUM[lane],"required_lane_evidence":list(LANE_EVIDENCE_REQUIRED[lane]),"machine_contract":LANE_MACHINE_CONTRACTS[lane]} for lane in DISCOVERY_LANES],
         "generator_order":[
-            "INVERT principle-certified dead ends only as zero-authority search priors: extract the opposite principle/search seed, then require fresh primary grounding and the recorded reopen condition before retaining a branch",
+            "INVERT certified closed basins only as zero-authority search priors: extract the opposite principle/search seed, then require fresh primary grounding and the recorded reopen condition before retaining a branch",
             "VERIFY any proposed feedback mechanism has a causal write path into selection, gating, rollback, synthesis, memory admission, artifact promotion, or another state transition; report-only measurements cannot justify feedback-effect experiments",
             "DETECT a grounded anomaly, sign reversal, threshold, nonmonotonic regime, or assumption violation; UNEXPLAINED_BOUNDARY may begin from one primary paper when it contains both required evidence items",
             "ALIGN treatment semantics before CONTRADICTION: intervention surface, executor/parameter state, comparator, endpoint, and timing must match; otherwise record REDUCIBLE cross-treatment contrast",
             "OPERATIONALIZE the smallest shared observable and adjacent/control regime without requiring a second paper to have used the same metric",
             "SEPARATE generator from reviewer: pending exact mature reductions may reach independent semantic review, but proven hard reductions never do",
-            "BLOCK exact principle-dead-end re-entry when the same live lane reuses the identical primary source set; reopening requires new evidence that can satisfy the recorded reopen condition",
+            "BLOCK exact search-closure re-entry when the same live lane reuses the identical primary source set; reopening requires new evidence that can satisfy the recorded reopen condition",
             "MATERIALIZE a cheapest independent-truth falsifier from released units, first-party code, or an existing provenance-audited substrate whenever possible",
             "REDUCE using closest work + mature theories under the same-information Reduction Falsifiability Contract",
             "retain only a residual with an ex-ante distinguishing prediction over the strongest reduction",

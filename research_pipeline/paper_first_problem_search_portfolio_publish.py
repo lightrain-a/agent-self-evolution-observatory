@@ -245,7 +245,7 @@ def _latest_shadow_run(root:Path)->dict:
         'expansion_parse_failures':expansion_parse_failures,
         'expansion_provider_failures':expansion_provider_failures,
         'raw_seeds':int(bs.get('raw_seeds') or 0),
-        'semantic_dead_end_blocks':int(bs.get('semantic_dead_end_blocks') or 0),
+        'search_closure_blocks':int(bs.get('search_closure_blocks') if 'search_closure_blocks' in bs else (bs.get('semantic_dead_end_blocks') or 0)),
         'semantic_unique':int(bs.get('semantic_unique') or 0),
         'duplicate_or_near_duplicate':int(bs.get('semantic_duplicates') or 0),
         'unique_problem_families':int(bs.get('structural_clusters') or 0),
@@ -325,7 +325,7 @@ def _latest_shadow_run(root:Path)->dict:
     evidence_unresolved=_evidence_unresolved_count(summary)
     if evidence_present and (evidence_internal_open or evidence_unresolved):terminal_status='SHADOW_EVIDENCE_ACQUISITION_PENDING'
     elif not evidence_present and falsifier_resolved!=falsifier_eligible:terminal_status='SHADOW_TERMINAL_INCOMPLETE_PROBLEM_FALSIFIER_PREFLIGHT'
-    stage_runner_schema=str(qualification.get('stage_runner_required_schema') or '');control_snapshot_sha=str(qualification.get('control_snapshot_sha256') or '');control_bound=stage_runner_schema=='1.4' and bool(re.fullmatch(r'[0-9a-f]{64}',control_snapshot_sha));control_terminal_verified=False
+    stage_runner_schema=str(qualification.get('stage_runner_required_schema') or '');control_snapshot_sha=str(qualification.get('control_snapshot_sha256') or '');control_bound=stage_runner_schema=='1.5' and bool(re.fullmatch(r'[0-9a-f]{64}',control_snapshot_sha));control_terminal_verified=False
     if control_bound:
         for label,payload in (('machine-audit',machine),('shadow-final-audit',final),('shadow-terminal-current-source-gate',terminal)):
             if str(payload.get('control_snapshot_sha256') or '')!=control_snapshot_sha:raise ValueError(f'qualified shadow public projection control mismatch:{label}')

@@ -16,7 +16,7 @@ from .paper_first_problem_discovery_contract import DISCOVERY_OPERATOR_VERSION
 
 QUALIFICATION_FILENAME = "shadow-run-qualification.json"
 QUALIFICATION_SCHEMA_VERSION = "1.1"
-STAGE_RUNNER_ARTIFACT_SCHEMA = "1.4"
+STAGE_RUNNER_ARTIFACT_SCHEMA = "1.5"
 CONTROL_FILES = (
     "research_pipeline/problem_search_control_snapshot.py",
     "research_pipeline/problem_search_shadow_launcher.py",
@@ -48,7 +48,7 @@ POLICY = {
     "shadow_memory_is_frozen_for_run": True,
     "control_snapshot_is_content_addressed": True,
     "control_snapshot_drift_stops_before_provider_call": True,
-    "new_pool_reopens_old_semantic_dead_ends": True,
+    "new_pool_reopens_old_semantic_search_closures": True,
     "canonical_primary_generator_queue_untouched": True,
 }
 
@@ -74,11 +74,21 @@ def _sha_file(path: Path) -> str:
 
 def _memory_payload(path: Path) -> dict[str, Any]:
     payload = _load(path)
+    canonical = isinstance(payload.get("shadow_search_memory"), dict)
     memory = (payload.get("shadow_search_memory") or payload.get("shadow_dead_end_memory")) if isinstance(payload, dict) else None
     if not isinstance(memory, dict):
         memory = payload
+    canonical = canonical or ("closed_objects" in memory and "blocked_objects" not in memory)
     if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True:
         raise ValueError("shadow memory must be zero-authority and unable to mutate canonical discovery")
+    if canonical:
+        rows = memory.get("closed_objects") or []
+        if not isinstance(rows, list) or any(not isinstance(row, dict) for row in rows):
+            raise ValueError("canonical shadow_search_memory.closed_objects must be a list of objects")
+        if any(row.get("search_closure_certified") is not True for row in rows):
+            raise ValueError("canonical closed_objects rows must set search_closure_certified=true")
+        if "blocked_objects" in memory:
+            raise ValueError("canonical shadow_search_memory must not expose legacy blocked_objects")
     return memory
 
 
@@ -160,7 +170,10 @@ def build_shadow_run_qualification(*, run_root: Path, pool_path: Path, memory_pa
     pool = _validate_pool(pool_path)
     memory = _memory_payload(memory_path)
     control = compute_control_snapshot(project_root=project_root, control_files=control_files)
-    semantic_dead_ends = sum(str(row.get("basin") or "").startswith(("semantic-exact-reduction-", "semantic-lane-contract-")) for row in memory.get("blocked_objects") or [] if isinstance(row, dict))
+    closed_rows = [row for row in memory.get("closed_objects") or [] if isinstance(row, dict) and row.get("search_closure_certified") is True]
+    dead_end_rows = [row for row in closed_rows if row.get("dead_end_certified") is True]
+    semantic_search_closures = sum(str(row.get("basin") or "").startswith(("semantic-exact-reduction-", "semantic-lane-contract-")) for row in closed_rows)
+    semantic_dead_ends = sum(str(row.get("basin") or "").startswith(("semantic-exact-reduction-", "semantic-lane-contract-")) for row in dead_end_rows)
     pool_policy = pool.get("policy") or {}
     pool_source_kind = str(pool_policy.get("pool_source_kind") or ("canonical_private_pool" if pool_policy.get("canonical_private_pool_source") is True else ""))
     receipt = {
@@ -178,7 +191,9 @@ def build_shadow_run_qualification(*, run_root: Path, pool_path: Path, memory_pa
         "pool_source_kind": pool_source_kind,
         "records": len(pool.get("records") or []),
         "memory_sha256": memory_sha256(memory_path),
-        "dead_end_objects": len(memory.get("blocked_objects") or []),
+        "search_closure_objects": len(closed_rows),
+        "dead_end_objects": len(dead_end_rows),
+        "semantic_search_closures": semantic_search_closures,
         "semantic_dead_ends": semantic_dead_ends,
         "stage_runner_required_schema": STAGE_RUNNER_ARTIFACT_SCHEMA,
         "control_snapshot_sha256": control["control_snapshot_sha256"],

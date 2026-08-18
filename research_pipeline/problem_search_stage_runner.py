@@ -34,7 +34,8 @@ from .paper_first_problem_search_portfolio import (
 )
 
 
-DEFAULT_SHADOW_DEAD_END_MEMORY_PATH=PROJECT_ROOT/"generated"/"paper-first-search-portfolio-design-adjudication.json"
+DEFAULT_SHADOW_SEARCH_MEMORY_PATH=PROJECT_ROOT/"generated"/"paper-first-search-portfolio-design-adjudication.json"
+DEFAULT_SHADOW_DEAD_END_MEMORY_PATH=DEFAULT_SHADOW_SEARCH_MEMORY_PATH  # legacy import alias
 
 
 def _resolve_run_pool(run_root:Path,pool_path:Path|None=None)->Path|None:
@@ -45,8 +46,10 @@ def _resolve_run_pool(run_root:Path,pool_path:Path|None=None)->Path|None:
 
 def _resolve_run_memory(run_root:Path,memory_path:Path|None=None)->Path|None:
     if memory_path is not None:return memory_path
-    local=run_root/"shadow-dead-end-memory.json"
-    return local if local.exists() else None
+    local=run_root/"shadow-search-memory.json"
+    if local.exists():return local
+    legacy=run_root/"shadow-dead-end-memory.json"
+    return legacy if legacy.exists() else None
 
 
 def _require_resolved_pool(run_root:Path,pool_path:Path|None=None)->Path:
@@ -229,28 +232,56 @@ def _provider_success_metadata(*,run_root:Path,stem:str,response:dict)->dict:
     return {"provider_calls_executed":calls,"transport_fallback_used":response.get("transport_fallback_used") is True,"transport_attempts":attempts,"thinking_compatibility_fallback":compatibility}
 
 
-def _shadow_dead_end_memory(path:Path|None)->dict:
-    resolved=path or DEFAULT_SHADOW_DEAD_END_MEMORY_PATH
+def _shadow_search_memory(path:Path|None)->dict:
+    """Load search-control memory and normalize legacy snapshots at the boundary.
+
+    Canonical search memory is ``shadow_search_memory.closed_objects`` and every
+    deduplication row must carry ``search_closure_certified=true``. Historical
+    ``blocked_objects/dead_end_certified`` snapshots are accepted only here, then
+    translated into the canonical search-closure representation before use.
+    """
+    resolved=path or DEFAULT_SHADOW_SEARCH_MEMORY_PATH
     if not resolved.exists():return {}
     payload=json.loads(resolved.read_text(encoding="utf-8"))
+    canonical_container=bool(isinstance(payload,dict) and isinstance(payload.get("shadow_search_memory"),dict))
     memory=(payload.get("shadow_search_memory") or payload.get("shadow_dead_end_memory")) if isinstance(payload,dict) else None
     if not isinstance(memory,dict):memory=payload if isinstance(payload,dict) else {}
+    canonical_container=canonical_container or ("closed_objects" in memory and "blocked_objects" not in memory)
     if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True:
         raise ValueError("shadow search-control memory must be zero-authority and unable to mutate canonical discovery")
-    # Defensive migration for old snapshots: lane-contract failures, support holds,
-    # and unresolved exact-reduction tests used to live in blocked_objects. Only
-    # an affirmative current/mature reduction certificate may remain blocking.
-    all_rows=[dict(row) for row in list(memory.get("closed_objects") or memory.get("blocked_objects") or [])+list(memory.get("hold_objects") or []) if isinstance(row,dict)]
-    blocked=[];holds=[]
-    for row in all_rows:
-        basin=str(row.get("basin") or "");disposition=str(row.get("disposition") or "")
-        certified=row.get("search_closure_certified") is True or row.get("dead_end_certified") is True or basin.startswith("current-source-hard-veto-") or disposition in {"STOP_CURRENT_PRIMARY_COLLISION","STOP_MATURE_THEORY_REDUCTION"}
-        if certified:
-            row=normalize_closed_row(row);row["search_closure_certified"]=True;row["dead_end_certified"]=bool(row.get("failure_layer")=="core_principle" and row.get("principle_update_allowed") is True);blocked.append(row)
-        else:
-            row["dead_end_certified"]=False;row.setdefault("memory_class","REOPENABLE_HOLD");holds.append(row)
-    memory=dict(memory);memory["blocked_objects"]=blocked;memory["closed_objects"]=blocked;memory["hold_objects"]=holds
+
+    closed=[];holds=[]
+    if canonical_container:
+        raw_closed=memory.get("closed_objects") or []
+        raw_holds=memory.get("hold_objects") or []
+        if not isinstance(raw_closed,list) or any(not isinstance(row,dict) for row in raw_closed):
+            raise ValueError("canonical shadow_search_memory.closed_objects must be a list of objects")
+        if any(row.get("search_closure_certified") is not True for row in raw_closed):
+            raise ValueError("canonical closed_objects rows must set search_closure_certified=true")
+        for source in raw_closed:
+            row=normalize_closed_row(dict(source));row["search_closure_certified"]=True;row["dead_end_certified"]=bool(row.get("failure_layer")=="core_principle" and row.get("principle_update_allowed") is True);closed.append(row)
+        for source in raw_holds:
+            if not isinstance(source,dict):continue
+            row=dict(source);row["dead_end_certified"]=False;row.setdefault("memory_class","REOPENABLE_HOLD");holds.append(row)
+    else:
+        # Explicit legacy migration only: old snapshots used blocked_objects and
+        # overloaded dead_end_certified for both search control and science.
+        all_rows=[dict(row) for row in list(memory.get("closed_objects") or memory.get("blocked_objects") or [])+list(memory.get("hold_objects") or []) if isinstance(row,dict)]
+        for row in all_rows:
+            basin=str(row.get("basin") or "");disposition=str(row.get("disposition") or "")
+            certified=row.get("search_closure_certified") is True or row.get("dead_end_certified") is True or basin.startswith("current-source-hard-veto-") or disposition in {"STOP_CURRENT_PRIMARY_COLLISION","STOP_MATURE_THEORY_REDUCTION"}
+            if certified:
+                row=normalize_closed_row(row);row["search_closure_certified"]=True;row["dead_end_certified"]=bool(row.get("failure_layer")=="core_principle" and row.get("principle_update_allowed") is True);closed.append(row)
+            else:
+                row["dead_end_certified"]=False;row.setdefault("memory_class","REOPENABLE_HOLD");holds.append(row)
+    memory=dict(memory);memory["closed_objects"]=closed;memory["hold_objects"]=holds
+    if canonical_container:memory.pop("blocked_objects",None)
+    else:memory["blocked_objects"]=closed  # legacy compatibility only; never used for canonical deduplication
     return memory
+
+
+# Legacy function alias for archived callers/tests. New code must use search-memory semantics.
+_shadow_dead_end_memory=_shadow_search_memory
 
 
 def _text_tokens(value:str)->set[str]:
@@ -278,14 +309,24 @@ def _fresh_target_seed_match(seed:dict,target:dict)->bool:
     return overlap>=3 and (overlap/max(1,min(len(target_tokens),12))>=0.25 or _text_jaccard(target_text,candidate_text)>=0.10)
 
 
-def _semantic_dead_end_seed_blocker(seed:dict,memory:dict,pool_sha:str,registry:dict|None=None)->dict|None:
+def _iter_search_closures(memory:dict)->list[dict]:
+    """Read canonical search closures with legacy blocked_objects fallback."""
+    canonical=isinstance((memory or {}).get("closed_objects"),list)
+    rows=(memory or {}).get("closed_objects") if canonical else ((memory or {}).get("blocked_objects") or [])
+    return [
+        row for row in (rows or [])
+        if isinstance(row,dict)
+        and (row.get("search_closure_certified") is True or (not canonical and row.get("dead_end_certified") is True))
+    ]
+
+
+def _search_closure_seed_blocker(seed:dict,memory:dict,pool_sha:str,registry:dict|None=None)->dict|None:
     lane=str(seed.get("discovery_lane") or "").strip().upper()
     evidence=seed.get("empirical_evidence") or {}
     refs=sorted({str((evidence.get(key) or {}).get("ref") or "").strip() for key in ("source_a","source_b") if str((evidence.get(key) or {}).get("ref") or "").strip()})
     claims=" ".join(str((evidence.get(key) or {}).get("claim") or "") for key in ("source_a","source_b"))
     problem=" ".join(str(seed.get(key) or "") for key in ("title","problem_seed","scientific_tension","structural_signature","irreducible_object","exact_prediction"))
-    for row in memory.get("blocked_objects") or []:
-        if not isinstance(row,dict) or not (row.get("search_closure_certified") is True or row.get("dead_end_certified") is True):continue
+    for row in _iter_search_closures(memory):
         basin=str(row.get("basin") or "")
         row_lane=str(row.get("search_primitive") or "").strip().upper()
         memory_refs=sorted({str(ref) for ref in row.get("current_source_refs") or [] if str(ref)})
@@ -295,7 +336,7 @@ def _semantic_dead_end_seed_blocker(seed:dict,memory:dict,pool_sha:str,registry:
             claim_sim=_text_jaccard(claims," ".join(str(value) for value in row.get("evidence_claims") or []))
             problem_sim=_text_jaccard(problem,str(row.get("problem_text") or ""))
             if claim_sim<0.55 and problem_sim<0.35:continue
-            return {"basin":basin,"source_candidate_id":str(row.get("source_candidate_id") or ""),"search_primitive":lane,"source_refs":refs,"claim_similarity":round(claim_sim,4),"problem_similarity":round(problem_sim,4),"reason":"same frozen evidence pool re-entered a persisted semantic dead-end without new evidence","scientific_authority":False}
+            return {"basin":basin,"source_candidate_id":str(row.get("source_candidate_id") or ""),"search_primitive":lane,"source_refs":refs,"claim_similarity":round(claim_sim,4),"problem_similarity":round(problem_sim,4),"reason":"same frozen evidence pool re-entered a persisted search closure without new evidence satisfying its reopen boundary","scientific_authority":False}
         if basin.startswith("principle-readjudication-"):
             # Evidence-level fresh-phenomenon closures are stronger than free-text
             # similarity.  If a seed's grounded claim/lane evidence reuses the exact
@@ -324,7 +365,7 @@ def _semantic_dead_end_seed_blocker(seed:dict,memory:dict,pool_sha:str,registry:
                 evidence_sim=max((_text_jaccard(candidate,closed) for candidate in seed_evidence_texts if candidate for closed in closed_texts),default=0.0)
                 if evidence_sim>=0.50:
                     return {"basin":basin,"source_candidate_id":str(row.get("source_candidate_id") or ""),"search_primitive":lane,"source_refs":refs,"claim_similarity":round(evidence_sim,4),"problem_similarity":0.0,"closed_evidence_match":True,"reason":"same content-addressed primary evidence re-entered an exact principle-closed fresh phenomenon without new evidence satisfying its reopen boundary","scientific_authority":False}
-            # Principle-certified dead ends persist across shadow pools.  Keep the
+            # Certified search closures persist across shadow pools. Keep the
             # machine veto deliberately narrow: the typed primitive and exact
             # primary-source set must be unchanged, and the proposed problem must
             # still be semantically close to the certified scope.  Adding new
@@ -334,8 +375,12 @@ def _semantic_dead_end_seed_blocker(seed:dict,memory:dict,pool_sha:str,registry:
             memory_problem=" ".join(str(row.get(key) or "") for key in ("title","problem_text"))
             problem_sim=max(_text_jaccard(problem,str(row.get("problem_text") or "")),_text_jaccard(problem+" "+claims,memory_problem))
             if problem_sim<0.28:continue
-            return {"basin":basin,"source_candidate_id":str(row.get("source_candidate_id") or ""),"search_primitive":lane,"source_refs":refs,"claim_similarity":0.0,"problem_similarity":round(problem_sim,4),"reason":"same typed primary-source problem re-entered a persisted principle dead-end without new evidence satisfying its reopen boundary","scientific_authority":False}
+            return {"basin":basin,"source_candidate_id":str(row.get("source_candidate_id") or ""),"search_primitive":lane,"source_refs":refs,"claim_similarity":0.0,"problem_similarity":round(problem_sim,4),"reason":"same typed primary-source problem re-entered a persisted search closure without new evidence satisfying its reopen boundary","scientific_authority":False}
     return None
+
+
+# Legacy alias for archived callers/tests; canonical semantics are search-closure deduplication.
+_semantic_dead_end_seed_blocker=_search_closure_seed_blocker
 
 
 def _compile_expansion_raw(*,pool:Path|None,run_root:Path,lane:str,count:int,part:int,memory_path:Path|None,requested_model:str,resolved_model:str,raw:str,raw_replayed_without_provider:bool=False,raw_origin_control_snapshot_sha256:str="",control_sha_override:str="",provider_metadata:dict|None=None)->dict:
@@ -343,23 +388,23 @@ def _compile_expansion_raw(*,pool:Path|None,run_root:Path,lane:str,count:int,par
     payload=json.loads(pool.read_text(encoding="utf-8"));records=payload.get("records") or []
     lane=lane.strip().upper()
     if lane not in SEARCH_PORTFOLIO_PRIMITIVES:raise ValueError(f"unknown search primitive {lane}")
-    memory=_shadow_dead_end_memory(memory_path);effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};fresh_target=_fresh_phenomenon_target(records,part,dead_end_memory=memory) if lane=="UNEXPLAINED_BOUNDARY" else {};fresh_target_id=str(fresh_target.get("phenomenon_id") or "")
+    memory=_shadow_search_memory(memory_path);effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};fresh_target=_fresh_phenomenon_target(records,part,dead_end_memory=memory) if lane=="UNEXPLAINED_BOUNDARY" else {};fresh_target_id=str(fresh_target.get("phenomenon_id") or "")
     parsed,raw_sha=_parse_archived_json(run_root,f"expand-{lane}-p{part}",raw,resolved_model)
-    pool_sha=str(payload.get("frozen_pool_sha256") or "").strip();seeds=[];dead_end_blocks=[]
+    pool_sha=str(payload.get("frozen_pool_sha256") or "").strip();seeds=[];search_closure_blocks=[]
     for i,item in enumerate(parsed.get("seeds") or [],1):
         if not isinstance(item,dict):continue
         row=_normalize_seed(item,lane,i);row["seed_id"]=f"{lane}-P{part}-{i:03d}"
         if not _valid_seed(row,registry):continue
-        blocker=_semantic_dead_end_seed_blocker(row,memory,pool_sha,registry)
+        blocker=_search_closure_seed_blocker(row,memory,pool_sha,registry)
         if blocker:
-            dead_end_blocks.append({"seed_id":row["seed_id"],**blocker});continue
+            search_closure_blocks.append({"seed_id":row["seed_id"],**blocker});continue
         seeds.append(row)
     inversion_asset_refs={str(row.get("ref") or "") for row in _inversion_asset_records(memory)};inversion_asset_seed_count=sum(any(ref in inversion_asset_refs for ref in _source_refs(seed)) for seed in seeds)
     positive_asset_refs={str(row.get("ref") or "") for row in _positive_residual_asset_records(memory)};positive_residual_seed_count=sum(any(ref in positive_asset_refs for ref in _source_refs(seed)) for seed in seeds);positive_required=bool(lane=="UNEXPLAINED_BOUNDARY" and positive_asset_refs and count>=(2 if inversion_asset_refs else 1))
     fresh_priors=_fresh_phenomenon_priors(records,dead_end_memory=memory);fresh_refs={str(row.get("ref") or "") for row in fresh_priors};fresh_ids={str(row.get("phenomenon_id") or "") for row in fresh_priors};fresh_target_ref=str(fresh_target.get("ref") or "");fresh_required=bool(lane=="UNEXPLAINED_BOUNDARY" and not inversion_asset_refs and not positive_asset_refs and fresh_target_ref and fresh_target_id and count>0);fresh_seed_count=sum(any(ref in fresh_refs for ref in _source_refs(seed)) for seed in seeds);fresh_target_source_satisfied=bool(seeds and fresh_target_ref in _source_refs(seeds[0]));fresh_target_phenomenon_satisfied=bool(seeds and _fresh_target_seed_match(seeds[0],fresh_target));fresh_target_satisfied=fresh_target_source_satisfied and fresh_target_phenomenon_satisfied
     if fresh_required and not fresh_target_satisfied:seeds=[]
     transport={"provider_calls_executed":0,"transport_fallback_used":False,"transport_attempts":[],"thinking_compatibility_fallback":False} if raw_replayed_without_provider else dict(provider_metadata or {"provider_calls_executed":1,"transport_fallback_used":False,"transport_attempts":[],"thinking_compatibility_fallback":False})
-    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":lane,"part":part,"requested":count,"requested_model":requested_model,"resolved_model":resolved_model,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"raw_replayed_without_provider":bool(raw_replayed_without_provider),"raw_origin_control_snapshot_sha256":str(raw_origin_control_snapshot_sha256 or ""),**transport,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"valid_seeds":len(seeds),"inversion_asset_seed_count":inversion_asset_seed_count,"inversion_asset_requirement_satisfied":(not inversion_asset_refs or inversion_asset_seed_count>0),"positive_residual_seed_count":positive_residual_seed_count,"positive_residual_requirement_satisfied":(not positive_required or positive_residual_seed_count>0),"fresh_phenomenon_seed_count":fresh_seed_count,"fresh_phenomenon_requirement_satisfied":(not fresh_required or fresh_target_satisfied),"fresh_phenomenon_target_ref":fresh_target_ref,"fresh_phenomenon_target_id":fresh_target_id,"fresh_phenomenon_target_kind":str(fresh_target.get("phenomenon_kind") or ""),"fresh_phenomenon_target_text":str(fresh_target.get("phenomenon_text") or ""),"fresh_phenomenon_target_source_satisfied":fresh_target_source_satisfied,"fresh_phenomenon_target_exact_satisfied":fresh_target_phenomenon_satisfied,"fresh_phenomenon_refs":sorted(fresh_refs),"fresh_phenomenon_ids":sorted(fresh_ids),"semantic_dead_end_blocks":dead_end_blocks,"semantic_dead_end_block_count":len(dead_end_blocks),"seeds":seeds,"scientific_authority":False}
+    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":lane,"part":part,"requested":count,"requested_model":requested_model,"resolved_model":resolved_model,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"raw_replayed_without_provider":bool(raw_replayed_without_provider),"raw_origin_control_snapshot_sha256":str(raw_origin_control_snapshot_sha256 or ""),**transport,"shadow_search_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"valid_seeds":len(seeds),"inversion_asset_seed_count":inversion_asset_seed_count,"inversion_asset_requirement_satisfied":(not inversion_asset_refs or inversion_asset_seed_count>0),"positive_residual_seed_count":positive_residual_seed_count,"positive_residual_requirement_satisfied":(not positive_required or positive_residual_seed_count>0),"fresh_phenomenon_seed_count":fresh_seed_count,"fresh_phenomenon_requirement_satisfied":(not fresh_required or fresh_target_satisfied),"fresh_phenomenon_target_ref":fresh_target_ref,"fresh_phenomenon_target_id":fresh_target_id,"fresh_phenomenon_target_kind":str(fresh_target.get("phenomenon_kind") or ""),"fresh_phenomenon_target_text":str(fresh_target.get("phenomenon_text") or ""),"fresh_phenomenon_target_source_satisfied":fresh_target_source_satisfied,"fresh_phenomenon_target_exact_satisfied":fresh_target_phenomenon_satisfied,"fresh_phenomenon_refs":sorted(fresh_refs),"fresh_phenomenon_ids":sorted(fresh_ids),"search_closure_blocks":search_closure_blocks,"search_closure_block_count":len(search_closure_blocks),"seeds":seeds,"scientific_authority":False}
     run_root.mkdir(parents=True,exist_ok=True);(run_root/f"expand-{lane}-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {k:out[k] for k in ("lane","part","requested","resolved_model","raw_sha256","valid_seeds")}
 
@@ -367,7 +412,7 @@ def _compile_expansion_raw(*,pool:Path|None,run_root:Path,lane:str,count:int,par
 def expand(*,pool:Path|None,run_root:Path,lane:str,count:int=6,model:str=PREMIUM_AUTO,part:int=1,memory_path:Path|None=None) -> dict:
     model=preferred_model("portfolio_expand",model)
     pool=_require_resolved_pool(run_root,pool);memory_path=_resolve_run_memory(run_root,memory_path);control_sha=_assert_run_control(run_root,pool,memory_path)
-    payload=json.loads(pool.read_text(encoding="utf-8"));records=payload.get("records") or [];memory=_shadow_dead_end_memory(memory_path);lane=lane.strip().upper();fresh_target=_fresh_phenomenon_target(records,part,dead_end_memory=memory) if lane=="UNEXPLAINED_BOUNDARY" else {};fresh_target_id=str(fresh_target.get("phenomenon_id") or "");prompt=_expansion_prompt(lane,records,count,memory,fresh_target_ref=str(fresh_target.get("ref") or ""),fresh_target_phenomenon_id=fresh_target_id)
+    payload=json.loads(pool.read_text(encoding="utf-8"));records=payload.get("records") or [];memory=_shadow_search_memory(memory_path);lane=lane.strip().upper();fresh_target=_fresh_phenomenon_target(records,part,dead_end_memory=memory) if lane=="UNEXPLAINED_BOUNDARY" else {};fresh_target_id=str(fresh_target.get("phenomenon_id") or "");prompt=_expansion_prompt(lane,records,count,memory,fresh_target_ref=str(fresh_target.get("ref") or ""),fresh_target_phenomenon_id=fresh_target_id)
     res=_ark_with_provider_receipt(run_root=run_root,stem=f"expand-{lane}-p{part}",requested_model=model,context={"lane":lane,"part":part,"requested":count,"fresh_target_ref":str(fresh_target.get("ref") or ""),"fresh_target_phenomenon_id":fresh_target_id,"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=.85);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);provider_metadata=_provider_success_metadata(run_root=run_root,stem=f"expand-{lane}-p{part}",response=res)
     return _compile_expansion_raw(pool=pool,run_root=run_root,lane=lane,count=count,part=part,memory_path=memory_path,requested_model=model,resolved_model=resolved,raw=raw,control_sha_override=control_sha,provider_metadata=provider_metadata)
 
@@ -400,7 +445,8 @@ def assemble(*,run_root:Path,archive_capacity:int=48,evolution_parents:int=24)->
             if not anchor_id:raise ValueError(f"fresh target shard lacks Seed 1 identity: {path.name}")
             anchor["fresh_target_anchor"]=True;anchor["fresh_target_ref"]=str(payload.get("fresh_phenomenon_target_ref") or "");anchor["fresh_target_id"]=str(payload.get("fresh_phenomenon_target_id") or "")
             if anchor_id not in fresh_anchor_seen:fresh_anchor_seen.add(anchor_id);fresh_anchor_ids.append(anchor_id)
-        raw.extend(rows);shards.append({"path":path.name,"lane":payload.get("lane"),"part":payload.get("part","legacy"),"requested":payload.get("requested"),"valid_seeds":len(rows),"semantic_dead_end_blocks":int(payload.get("semantic_dead_end_block_count") or 0),"raw_sha256":payload.get("raw_sha256"),"resolved_model":payload.get("resolved_model"),"fresh_target_anchor_id":str(rows[0].get("seed_id") or "") if target_bound else ""})
+        block_count=int(payload.get("search_closure_block_count") if "search_closure_block_count" in payload else (payload.get("semantic_dead_end_block_count") or 0))
+        raw.extend(rows);shards.append({"path":path.name,"lane":payload.get("lane"),"part":payload.get("part","legacy"),"requested":payload.get("requested"),"valid_seeds":len(rows),"search_closure_blocks":block_count,"raw_sha256":payload.get("raw_sha256"),"resolved_model":payload.get("resolved_model"),"fresh_target_anchor_id":str(rows[0].get("seed_id") or "") if target_bound else ""})
     unique,dups=_semantic_dedup(raw,protected_ids=fresh_anchor_ids);unique_ids={str(row.get("seed_id") or "") for row in unique}
     if not set(fresh_anchor_ids).issubset(unique_ids):raise ValueError("fresh target anchor lost during semantic dedup")
     unique,clusters=_assign_structural_clusters(unique);archives=_archives(unique,archive_capacity,required_ids=fresh_anchor_ids);by_id={row["seed_id"]:row for row in unique};breadth=[by_id[sid] for sid in archives["breadth"] if sid in by_id];breadth_ids={str(row.get("seed_id") or "") for row in breadth}
@@ -412,7 +458,7 @@ def assemble(*,run_root:Path,archive_capacity:int=48,evolution_parents:int=24)->
     if parent_ids[:len(preserved_previous)]!=preserved_previous:raise ValueError("incremental shadow reassembly reordered an existing parent prefix")
     if not set(fresh_anchor_ids).issubset(set(parent_ids)):raise ValueError("fresh target anchor lost from evolution parents")
     lane_counts={lane:sum(row.get("discovery_lane")==lane for row in raw) for lane in SEARCH_PORTFOLIO_PRIMITIVES};archive_lanes={lane:sum(by_id[sid].get("discovery_lane")==lane for sid in archives["breadth"] if sid in by_id) for lane in SEARCH_PORTFOLIO_PRIMITIVES}
-    out={"schema_version":"1.2","control_snapshot_sha256":control_sha,"shards":shards,"summary":{"raw_seeds":len(raw),"semantic_dead_end_blocks":sum(int(shard.get("semantic_dead_end_blocks") or 0) for shard in shards),"semantic_unique":len(unique),"semantic_duplicates":len(dups),"structural_clusters":clusters,"breadth_archive":len(archives["breadth"]),"evolution_parents":len(parents),"fresh_target_anchors":len(fresh_anchor_ids),"fresh_target_anchors_preserved":sum(str(row.get("seed_id") or "") in set(fresh_anchor_ids) for row in parents),"previous_parent_prefix":len(previous_parent_ids),"previous_parent_prefix_preserved":len(preserved_previous),"lane_coverage":sum(value>0 for value in lane_counts.values()),"archive_lane_coverage":sum(value>0 for value in archive_lanes.values())},"policy":{"fresh_target_anchor_survives_semantic_dedup":True,"fresh_target_anchor_survives_breadth_archive":True,"fresh_target_anchor_survives_evolution_parent_selection":True,"fresh_target_anchor_is_prioritized_in_formulation_budget":True,"incremental_reassembly_preserves_existing_parent_prefix":True},"fresh_target_anchor_ids":fresh_anchor_ids,"previous_parent_prefix_ids":preserved_previous,"lane_counts":lane_counts,"archive_lane_counts":archive_lanes,"archives":archives,"duplicates":dups,"unique_seeds":unique,"parents":parents,"scientific_authority":False}
+    out={"schema_version":"1.2","control_snapshot_sha256":control_sha,"shards":shards,"summary":{"raw_seeds":len(raw),"search_closure_blocks":sum(int(shard.get("search_closure_blocks") or 0) for shard in shards),"semantic_unique":len(unique),"semantic_duplicates":len(dups),"structural_clusters":clusters,"breadth_archive":len(archives["breadth"]),"evolution_parents":len(parents),"fresh_target_anchors":len(fresh_anchor_ids),"fresh_target_anchors_preserved":sum(str(row.get("seed_id") or "") in set(fresh_anchor_ids) for row in parents),"previous_parent_prefix":len(previous_parent_ids),"previous_parent_prefix_preserved":len(preserved_previous),"lane_coverage":sum(value>0 for value in lane_counts.values()),"archive_lane_coverage":sum(value>0 for value in archive_lanes.values())},"policy":{"fresh_target_anchor_survives_semantic_dedup":True,"fresh_target_anchor_survives_breadth_archive":True,"fresh_target_anchor_survives_evolution_parent_selection":True,"fresh_target_anchor_is_prioritized_in_formulation_budget":True,"incremental_reassembly_preserves_existing_parent_prefix":True},"fresh_target_anchor_ids":fresh_anchor_ids,"previous_parent_prefix_ids":preserved_previous,"lane_counts":lane_counts,"archive_lane_counts":archive_lanes,"archives":archives,"duplicates":dups,"unique_seeds":unique,"parents":parents,"scientific_authority":False}
     (run_root/"base.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return out["summary"]
 
@@ -420,7 +466,7 @@ def assemble(*,run_root:Path,archive_capacity:int=48,evolution_parents:int=24)->
 def evolve(*,pool:Path|None,run_root:Path,generation:int,part:int,batch_size:int=6,model:str=PREMIUM_AUTO,memory_path:Path|None=None)->dict:
     model=preferred_model("portfolio_evolve",model)
     pool=_require_resolved_pool(run_root,pool);memory_path=_resolve_run_memory(run_root,memory_path);control_sha=_assert_run_control(run_root,pool,memory_path)
-    pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];memory=_shadow_dead_end_memory(memory_path);effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();base_path=run_root/"base.json";base=json.loads(base_path.read_text(encoding="utf-8"));_require_artifact_control(base,control_sha,base_path,"1.2")
+    pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];memory=_shadow_search_memory(memory_path);effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();base_path=run_root/"base.json";base=json.loads(base_path.read_text(encoding="utf-8"));_require_artifact_control(base,control_sha,base_path,"1.2")
     if generation==1:parents=base.get("parents") or []
     elif generation==2:
         g1=[]
@@ -430,18 +476,18 @@ def evolve(*,pool:Path|None,run_root:Path,generation:int,part:int,batch_size:int
     else:raise ValueError("generation must be 1 or 2")
     start=(part-1)*batch_size;batch=parents[start:start+batch_size]
     if not batch:raise ValueError(f"empty evolution batch generation={generation} part={part}")
-    temperature=.60 if generation==1 else .35;prompt=_evolution_prompt(batch,generation)+" SHADOW DEAD-END MEMORY (search control only; never scientific authority)="+json.dumps(memory,ensure_ascii=False,separators=(",",":"));res=_ark_with_provider_receipt(run_root=run_root,stem=f"evolve-g{generation}-p{part}",requested_model=model,context={"generation":generation,"part":part,"requested_children":len(batch),"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=temperature);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"evolve-g{generation}-p{part}",raw,resolved);pmap={p["seed_id"]:p for p in batch};children=[];dead_end_blocks=[]
+    temperature=.60 if generation==1 else .35;prompt=_evolution_prompt(batch,generation)+" SHADOW SEARCH-CLOSURE MEMORY (search control only; never scientific authority)="+json.dumps(memory,ensure_ascii=False,separators=(",",":"));res=_ark_with_provider_receipt(run_root=run_root,stem=f"evolve-g{generation}-p{part}",requested_model=model,context={"generation":generation,"part":part,"requested_children":len(batch),"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=temperature);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"evolve-g{generation}-p{part}",raw,resolved);pmap={p["seed_id"]:p for p in batch};children=[];search_closure_blocks=[]
     for i,item in enumerate(payload.get("children") or [],1):
         if not isinstance(item,dict):continue
         parent=pmap.get(str(item.get("parent_id") or ""))
         if not parent:continue
         merged={**parent,**item,"discovery_lane":parent["discovery_lane"],"empirical_evidence":parent["empirical_evidence"],"lane_evidence":parent["lane_evidence"],"cross_domain_origin":parent.get("cross_domain_origin","")};row=_normalize_seed(merged,parent["discovery_lane"],i);row["seed_id"]=f"{parent['seed_id']}-G{generation}";row["parent_id"]=parent["seed_id"];row["branch_depth"]=generation
         if not _valid_seed(row,registry):continue
-        blocker=_semantic_dead_end_seed_blocker(row,memory,pool_sha,registry)
+        blocker=_search_closure_seed_blocker(row,memory,pool_sha,registry)
         if blocker:
-            dead_end_blocks.append({"seed_id":row["seed_id"],**blocker});continue
+            search_closure_blocks.append({"seed_id":row["seed_id"],**blocker});continue
         children.append(row)
-    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"generation":generation,"part":part,"parent_ids":[p["seed_id"] for p in batch],"requested_children":len(batch),"valid_children":len(children),"requested_model":model,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"semantic_dead_end_blocks":dead_end_blocks,"semantic_dead_end_block_count":len(dead_end_blocks),"temperature":temperature,"children":children,"scientific_authority":False}
+    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"generation":generation,"part":part,"parent_ids":[p["seed_id"] for p in batch],"requested_children":len(batch),"valid_children":len(children),"requested_model":model,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_search_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"search_closure_blocks":search_closure_blocks,"search_closure_block_count":len(search_closure_blocks),"temperature":temperature,"children":children,"scientific_authority":False}
     (run_root/f"evolve-g{generation}-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {k:out[k] for k in ("generation","part","requested_children","valid_children","resolved_model","raw_sha256")}
 
@@ -479,7 +525,7 @@ def _formulation_precheck(candidate:dict,registry:dict)->tuple[str,dict,dict]:
 def formulate(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,budget:int=24,model:str=PREMIUM_AUTO,memory_path:Path|None=None)->dict:
     model=preferred_model("portfolio_formulate",model)
     pool=_require_resolved_pool(run_root,pool);memory_path=_resolve_run_memory(run_root,memory_path);control_sha=_assert_run_control(run_root,pool,memory_path)
-    pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];memory=_shadow_dead_end_memory(memory_path);effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();branches=formulation_pool(run_root,budget,control_sha);start=(part-1)*batch_size;batch=branches[start:start+batch_size]
+    pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];memory=_shadow_search_memory(memory_path);effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();branches=formulation_pool(run_root,budget,control_sha);start=(part-1)*batch_size;batch=branches[start:start+batch_size]
     if not batch:raise ValueError(f"empty formulation batch part={part}")
     prompt=_formulation_prompt(batch,registry,memory);res=_ark_with_provider_receipt(run_root=run_root,stem=f"formulate-p{part}",requested_model=model,context={"part":part,"branch_ids":[b["seed_id"] for b in batch],"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5600,temperature=.15);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);provider_metadata=_provider_success_metadata(run_root=run_root,stem=f"formulate-p{part}",response=res);payload,raw_sha=_parse_archived_json(run_root,f"formulate-p{part}",raw,resolved);live=[x for x in (payload.get("candidates") or []) if isinstance(x,dict)];dead=[x for x in (payload.get("rejected") or []) if isinstance(x,dict)]
     # Preserve branch provenance and typed evidence deterministically. The model
@@ -487,21 +533,21 @@ def formulate(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,budget:in
     # deterministic precheck then separates machine-ready problems from exact-
     # reduction uncertainty and all other formulation failures. Reduction-pending
     # objects remain zero-authority and may only enter the problem-falsifier path.
-    by={b["seed_id"]:b for b in batch};normalized=[];reduction_pending=[];dead_end_blocks=[]
+    by={b["seed_id"]:b for b in batch};normalized=[];reduction_pending=[];search_closure_blocks=[]
     for i,item in enumerate(live,1):
         parent=by.get(str(item.get("source_branch_id") or ""))
         if not parent:continue
         row=dict(item);row["model_candidate_id"]=str(row.get("candidate_id") or "").strip();row["candidate_id"]=f"SHADOW-P{part:02d}-C{i:02d}";row["source_branch_id"]=parent["seed_id"];row["branch_depth"]=parent.get("branch_depth",0);row["discovery_lane"]=parent["discovery_lane"];row["empirical_evidence"]=parent["empirical_evidence"];row["lane_evidence"]=parent["lane_evidence"]
-        blocker=_semantic_dead_end_seed_blocker(row,memory,pool_sha,registry)
+        blocker=_search_closure_seed_blocker(row,memory,pool_sha,registry)
         if blocker:
-            dead_end_blocks.append({"candidate_id":row["candidate_id"],"source_branch_id":parent["seed_id"],**blocker});continue
+            search_closure_blocks.append({"candidate_id":row["candidate_id"],"source_branch_id":parent["seed_id"],**blocker});continue
         route,audited,audit=_formulation_precheck(row,registry)
         if route=="machine-ready":
             normalized.append(row);continue
         if route=="reduction-pending":
             reduction_pending.append({"candidate_id":row["candidate_id"],"model_candidate_id":row["model_candidate_id"],"source_branch_id":row["source_branch_id"],"title":row.get("title"),"discovery_lane":row.get("discovery_lane"),"blockers":list(audit.get("blockers") or []),"exact_prediction":audited.get("exact_prediction"),"strongest_same_information_baseline":audited.get("strongest_same_information_baseline"),"cheapest_problem_falsifier":audited.get("cheapest_problem_falsifier"),"candidate":row,"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}});continue
         dead.append({"source_branch_id":row["source_branch_id"],"candidate_id":row["candidate_id"],"title":row.get("title"),"reason":"deterministic formulation precheck found blockers beyond exact-reduction uncertainty","matched_mature_theory":audited.get("strongest_same_information_baseline"),"reduction_class":"FORMULATION_MACHINE_CONTRACT_INCOMPLETE","exact_reduction_test":audited.get("cheapest_problem_falsifier"),"blockers":list(audit.get("blockers") or []),"rejection_origin":"deterministic-formulation-precheck","candidate":row,"scientific_authority":False})
-    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"branch_ids":[b["seed_id"] for b in batch],"requested_model":model,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"raw_replayed_without_provider":False,"raw_origin_control_snapshot_sha256":"",**provider_metadata,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"semantic_dead_end_blocks":dead_end_blocks,"semantic_dead_end_block_count":len(dead_end_blocks),"candidates":normalized,"reduction_pending":reduction_pending,"reduction_pending_count":len(reduction_pending),"rejected":dead,"scientific_authority":False}
+    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"branch_ids":[b["seed_id"] for b in batch],"requested_model":model,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"raw_replayed_without_provider":False,"raw_origin_control_snapshot_sha256":"",**provider_metadata,"shadow_search_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"search_closure_blocks":search_closure_blocks,"search_closure_block_count":len(search_closure_blocks),"candidates":normalized,"reduction_pending":reduction_pending,"reduction_pending_count":len(reduction_pending),"rejected":dead,"scientific_authority":False}
     (run_root/f"formulate-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {"part":part,"branches":len(batch),"candidates":len(normalized),"reduction_pending":len(reduction_pending),"rejected":len(dead),"resolved_model":out["resolved_model"],"raw_sha256":out["raw_sha256"]}
 
@@ -517,30 +563,30 @@ def replay_formulate(*,pool:Path|None,run_root:Path,part:int,raw_input:Path,expe
     requested=str(requested_model or "").strip();resolved=str(resolved_model or "").strip()
     if not requested or not resolved:raise ValueError("formulation raw replay requires requested and resolved model identities")
     pool=_require_resolved_pool(run_root,pool);memory_path=_resolve_run_memory(run_root,memory_path);control_sha=_assert_run_control(run_root,pool,memory_path)
-    pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];memory=_shadow_dead_end_memory(memory_path);effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();branches=formulation_pool(run_root,budget,control_sha);start=(part-1)*batch_size;batch=branches[start:start+batch_size]
+    pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];memory=_shadow_search_memory(memory_path);effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();branches=formulation_pool(run_root,budget,control_sha);start=(part-1)*batch_size;batch=branches[start:start+batch_size]
     if not batch:raise ValueError(f"empty formulation replay batch part={part}")
     payload,raw_sha=_parse_archived_json(run_root,f"formulate-p{part}",raw,resolved);live=[x for x in (payload.get("candidates") or []) if isinstance(x,dict)];dead=[x for x in (payload.get("rejected") or []) if isinstance(x,dict)]
-    by={b["seed_id"]:b for b in batch};normalized=[];reduction_pending=[];dead_end_blocks=[]
+    by={b["seed_id"]:b for b in batch};normalized=[];reduction_pending=[];search_closure_blocks=[]
     for i,item in enumerate(live,1):
         parent=by.get(str(item.get("source_branch_id") or ""))
         if not parent:continue
         row=dict(item);row["model_candidate_id"]=str(row.get("candidate_id") or "").strip();row["candidate_id"]=f"SHADOW-P{part:02d}-C{i:02d}";row["source_branch_id"]=parent["seed_id"];row["branch_depth"]=parent.get("branch_depth",0);row["discovery_lane"]=parent["discovery_lane"];row["empirical_evidence"]=parent["empirical_evidence"];row["lane_evidence"]=parent["lane_evidence"]
-        blocker=_semantic_dead_end_seed_blocker(row,memory,pool_sha,registry)
+        blocker=_search_closure_seed_blocker(row,memory,pool_sha,registry)
         if blocker:
-            dead_end_blocks.append({"candidate_id":row["candidate_id"],"source_branch_id":parent["seed_id"],**blocker});continue
+            search_closure_blocks.append({"candidate_id":row["candidate_id"],"source_branch_id":parent["seed_id"],**blocker});continue
         route,audited,audit=_formulation_precheck(row,registry)
         if route=="machine-ready":normalized.append(row);continue
         if route=="reduction-pending":
             reduction_pending.append({"candidate_id":row["candidate_id"],"model_candidate_id":row["model_candidate_id"],"source_branch_id":row["source_branch_id"],"title":row.get("title"),"discovery_lane":row.get("discovery_lane"),"blockers":list(audit.get("blockers") or []),"exact_prediction":audited.get("exact_prediction"),"strongest_same_information_baseline":audited.get("strongest_same_information_baseline"),"cheapest_problem_falsifier":audited.get("cheapest_problem_falsifier"),"candidate":row,"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}});continue
         dead.append({"source_branch_id":row["source_branch_id"],"candidate_id":row["candidate_id"],"title":row.get("title"),"reason":"deterministic formulation precheck found blockers beyond exact-reduction uncertainty","matched_mature_theory":audited.get("strongest_same_information_baseline"),"reduction_class":"FORMULATION_MACHINE_CONTRACT_INCOMPLETE","exact_reduction_test":audited.get("cheapest_problem_falsifier"),"blockers":list(audit.get("blockers") or []),"rejection_origin":"deterministic-formulation-precheck","candidate":row,"scientific_authority":False})
-    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"branch_ids":[b["seed_id"] for b in batch],"requested_model":requested,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"raw_replayed_without_provider":True,"raw_origin_control_snapshot_sha256":origin,"provider_calls_executed":0,"transport_fallback_used":False,"transport_attempts":[],"thinking_compatibility_fallback":False,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"semantic_dead_end_blocks":dead_end_blocks,"semantic_dead_end_block_count":len(dead_end_blocks),"candidates":normalized,"reduction_pending":reduction_pending,"reduction_pending_count":len(reduction_pending),"rejected":dead,"scientific_authority":False}
+    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"branch_ids":[b["seed_id"] for b in batch],"requested_model":requested,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"raw_replayed_without_provider":True,"raw_origin_control_snapshot_sha256":origin,"provider_calls_executed":0,"transport_fallback_used":False,"transport_attempts":[],"thinking_compatibility_fallback":False,"shadow_search_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"search_closure_blocks":search_closure_blocks,"search_closure_block_count":len(search_closure_blocks),"candidates":normalized,"reduction_pending":reduction_pending,"reduction_pending_count":len(reduction_pending),"rejected":dead,"scientific_authority":False}
     (run_root/f"formulate-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {"part":part,"branches":len(batch),"candidates":len(normalized),"reduction_pending":len(reduction_pending),"rejected":len(dead),"resolved_model":resolved,"raw_sha256":raw_sha,"provider_calls_executed":0}
 
 
 def machine_audit(*,pool:Path|None,run_root:Path)->dict:
     pool=_require_resolved_pool(run_root,pool);control_sha=_assert_run_control(run_root,pool)
-    records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];memory=_shadow_dead_end_memory(_resolve_run_memory(run_root,None));effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")}
+    records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];memory=_shadow_search_memory(_resolve_run_memory(run_root,None));effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")}
     reviewable=[];reduction_pending=[];blocked=[];problem_falsifier_queue=[];formulated=0;machine_ready_input=0;pending_input=0
     def process(item:dict,path:Path,part:int,idx:int,route_origin:str)->None:
         nonlocal formulated,machine_ready_input,pending_input
@@ -646,7 +692,7 @@ def evidence_adjudicate(*,run_root:Path,receipt_path:Path)->dict:
 def review(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,model:str=PREMIUM_AUTO)->dict:
     model=preferred_model("semantic_review",model)
     pool=_require_resolved_pool(run_root,pool);control_sha=_assert_run_control(run_root,pool)
-    records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];memory=_shadow_dead_end_memory(_resolve_run_memory(run_root,None));effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")}
+    records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];memory=_shadow_search_memory(_resolve_run_memory(run_root,None));effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")}
     audit_path=run_root/"machine-audit.json";audit=json.loads(audit_path.read_text(encoding="utf-8"));_require_artifact_control(audit,control_sha,audit_path,"1.3-shadow");rows=audit.get("reviewable") or [];start=(part-1)*batch_size;selected=rows[start:start+batch_size]
     if not selected:raise ValueError(f"empty review batch part={part}")
     generator_receipts,generator_resolved=_review_generator_receipts(run_root,selected,control_sha)
@@ -659,7 +705,7 @@ def review(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,model:str=PR
 
 def finalize(*,pool:Path|None,run_root:Path)->dict:
     pool=_require_resolved_pool(run_root,pool);control_sha=_assert_run_control(run_root,pool)
-    records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];memory=_shadow_dead_end_memory(_resolve_run_memory(run_root,None));effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")}
+    records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];memory=_shadow_search_memory(_resolve_run_memory(run_root,None));effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")}
     machine_path=run_root/"machine-audit.json";machine=json.loads(machine_path.read_text(encoding="utf-8"));_require_artifact_control(machine,control_sha,machine_path,"1.3-shadow");reviewed=[]
     for path in sorted(run_root.glob("review-p*.json"),key=lambda value:int(value.stem.split("p")[-1])):
         payload=json.loads(path.read_text(encoding="utf-8"));_require_artifact_control(payload,control_sha,path,STAGE_RUNNER_ARTIFACT_SCHEMA);reviewed.extend([row for row in (payload.get("candidates") or []) if isinstance(row,dict)])

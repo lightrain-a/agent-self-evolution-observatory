@@ -33,7 +33,7 @@ class SearchPortfolioTest(unittest.TestCase):
                 repairs.append({"parent_id":p["seed_id"],"attack":"closest-work collision on the original object","attack_class":"CLOSEST_WORK","children":children})
             return {"text":json.dumps({"repairs":repairs}),"resolved_model":"doubao-seed-evolving"}
         if role.startswith("formulate-"):
-            branches=json.loads(prompt.split("BRANCHES=",1)[1].split(". DEAD_END_MEMORY=",1)[0]);rows=[{"candidate_id":f"PORT-{i}","source_branch_id":b["seed_id"],"title":b["title"],"discovery_lane":b["discovery_lane"],"paperability_axes":b.get("paperability_axes") or {"E":{"status":"SUPPORTED","rationale":"grounded phenomenon"}}} for i,b in enumerate(branches)]
+            branches=json.loads(prompt.split("BRANCHES=",1)[1].split(". SEARCH_CLOSURE_MEMORY=",1)[0]);rows=[{"candidate_id":f"PORT-{i}","source_branch_id":b["seed_id"],"title":b["title"],"discovery_lane":b["discovery_lane"],"paperability_axes":b.get("paperability_axes") or {"E":{"status":"SUPPORTED","rationale":"grounded phenomenon"}}} for i,b in enumerate(branches)]
             return {"text":json.dumps({"candidates":rows,"rejected":[]}),"resolved_model":"doubao-seed-evolving"}
         raise AssertionError(role)
 
@@ -67,7 +67,7 @@ class SearchPortfolioTest(unittest.TestCase):
         priors=_fresh_phenomenon_priors(records)
         self.assertEqual([row["phenomenon_id"] for row in priors],[failure_sha,boundary_sha,older_sha])
         self.assertEqual(_fresh_phenomenon_target(records,1)["phenomenon_id"],failure_sha)
-        memory={"blocked_objects":[{"dead_end_certified":True,"fresh_phenomenon_closure":{"source_ref":"arXiv:new-boundary","closed_evidence_sha256":[failure_sha],"scientific_authority":False}}],"inversion_asset_evidence":[],"positive_residual_asset_evidence":[]}
+        memory={"closed_objects":[{"search_closure_certified":True,"dead_end_certified":False,"failure_layer":"method_realization","fresh_phenomenon_closure":{"source_ref":"arXiv:new-boundary","closed_evidence_sha256":[failure_sha],"scientific_authority":False}}],"inversion_asset_evidence":[],"positive_residual_asset_evidence":[]}
         open_priors=_fresh_phenomenon_priors(records,dead_end_memory=memory)
         self.assertEqual([row["phenomenon_id"] for row in open_priors],[boundary_sha,older_sha])
         self.assertEqual(open_priors[0]["ref"],"arXiv:new-boundary")
@@ -172,14 +172,14 @@ class SearchPortfolioTest(unittest.TestCase):
         self.assertNotIn("inactive stale seed",certified_slice)
         self.assertNotIn("Inactive asset stale receipt",prompt)
 
-    def test_certified_dead_end_emits_opposite_search_prior_without_authority(self):
-        memory={"blocked_objects":[{"source_candidate_id":"D1","basin":"principle-dead-end-x","dead_end_certified":True,"counter_explanation":{"type":"IMPOSSIBILITY_OR_INVARIANCE","opposite_principle":"Evidence sufficiency is relevance-conditioned, not coverage-conditioned.","opposite_search_seed":"Search for relevance-conditioned evidence debt.","reopen_condition":"Fresh evidence must expose a same-information residual.","evidence_refs":["artifact:x"]}}],"hold_objects":[{"source_candidate_id":"H1","dead_end_certified":False,"counter_explanation":{"opposite_principle":"must not appear","opposite_search_seed":"must not appear"}}]}
+    def test_certified_search_closure_emits_opposite_search_prior_without_authority(self):
+        memory={"closed_objects":[{"source_candidate_id":"D1","basin":"method-closure-x","search_closure_certified":True,"dead_end_certified":False,"failure_layer":"method_realization","principle_update_allowed":False,"counter_explanation":{"type":"IMPOSSIBILITY_OR_INVARIANCE","opposite_principle":"Evidence sufficiency is relevance-conditioned, not coverage-conditioned.","opposite_search_seed":"Search for relevance-conditioned evidence debt.","reopen_condition":"Fresh evidence must expose a same-information residual.","evidence_refs":["artifact:x"]}}],"hold_objects":[{"source_candidate_id":"H1","dead_end_certified":False,"counter_explanation":{"opposite_principle":"must not appear","opposite_search_seed":"must not appear"}}]}
         priors=_opposite_search_priors(memory)
         self.assertEqual(len(priors),1)
         self.assertEqual(priors[0]["source_candidate_id"],"D1")
         prompt=_expansion_prompt("CONTRADICTION",self.records(),1,memory)
         self.assertIn("CLOSED-BASIN INVERSION is a search prior, never authority",prompt)
-        self.assertIn("core_principle",prompt)
+        self.assertIn("method_realization",prompt)
         self.assertIn("relevance-conditioned evidence debt",prompt)
         self.assertNotIn("must not appear",prompt.split("LAYER-TYPED CLOSED-BASIN INVERSION PRIORS=",1)[1].split(". CLOSED-BASIN SEARCH MEMORY",1)[0])
 

@@ -34,7 +34,7 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             path = Path(td) / "design.json"
             path.write_text(json.dumps(self.memory()), encoding="utf-8")
-            with patch.object(runner, "DEFAULT_SHADOW_DEAD_END_MEMORY_PATH", path):
+            with patch.object(runner, "DEFAULT_SHADOW_SEARCH_MEMORY_PATH", path):
                 memory = runner._shadow_dead_end_memory(None)
         self.assertEqual(memory["blocked_objects"][0]["source_candidate_id"], "SHADOW-P12-C01")
         self.assertFalse(memory["scientific_authority"])
@@ -46,14 +46,14 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
             explicit = root / "explicit.json"
             default.write_text(json.dumps(self.memory("DEFAULT")), encoding="utf-8")
             explicit.write_text(json.dumps(self.memory("EXPLICIT")), encoding="utf-8")
-            with patch.object(runner, "DEFAULT_SHADOW_DEAD_END_MEMORY_PATH", default):
+            with patch.object(runner, "DEFAULT_SHADOW_SEARCH_MEMORY_PATH", default):
                 memory = runner._shadow_dead_end_memory(explicit)
         self.assertEqual(memory["blocked_objects"][0]["source_candidate_id"], "EXPLICIT")
 
     def test_missing_default_memory_is_empty_search_control(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             missing = Path(td) / "missing.json"
-            with patch.object(runner, "DEFAULT_SHADOW_DEAD_END_MEMORY_PATH", missing):
+            with patch.object(runner, "DEFAULT_SHADOW_SEARCH_MEMORY_PATH", missing):
                 self.assertEqual(runner._shadow_dead_end_memory(None), {})
 
     def test_illegal_default_memory_authority_fails_closed(self) -> None:
@@ -62,13 +62,13 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             path = Path(td) / "bad.json"
             path.write_text(json.dumps(payload), encoding="utf-8")
-            with patch.object(runner, "DEFAULT_SHADOW_DEAD_END_MEMORY_PATH", path):
+            with patch.object(runner, "DEFAULT_SHADOW_SEARCH_MEMORY_PATH", path):
                 with self.assertRaisesRegex(ValueError, "zero-authority"):
                     runner._shadow_dead_end_memory(None)
 
     def test_qualified_expand_defaults_to_run_local_pool_and_memory_for_validation_and_prompt(self) -> None:
         with tempfile.TemporaryDirectory() as td:
-            root=Path(td);run=root/"shadow-qualified";run.mkdir();local_pool=run/"frozen-primary-evidence-pool.json";local_memory=run/"shadow-dead-end-memory.json";global_memory=root/"global-memory.json"
+            root=Path(td);run=root/"shadow-qualified";run.mkdir();local_pool=run/"frozen-primary-evidence-pool.json";local_memory=run/"shadow-search-memory.json";global_memory=root/"global-memory.json"
             local_pool.write_text(json.dumps({"frozen_pool_sha256":"a"*64,"records":[]}),encoding="utf-8")
             local_memory.write_text(json.dumps({"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[],"memory_id":"RUN_LOCAL"}),encoding="utf-8")
             global_memory.write_text(json.dumps({"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[],"memory_id":"GLOBAL"}),encoding="utf-8")
@@ -76,7 +76,7 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
             def prompt(lane,records,count,memory,**kwargs):
                 self.assertEqual(memory.get("memory_id"),"RUN_LOCAL")
                 return "prompt"
-            with patch.object(runner,"DEFAULT_SHADOW_DEAD_END_MEMORY_PATH",global_memory),patch("research_pipeline.problem_search_stage_runner.validate_shadow_run_control",return_value={"control_snapshot_sha256":"f"*64}) as validate,patch("research_pipeline.problem_search_stage_runner._expansion_prompt",side_effect=prompt),patch("research_pipeline.problem_search_stage_runner._ark",return_value=response):
+            with patch.object(runner,"DEFAULT_SHADOW_SEARCH_MEMORY_PATH",global_memory),patch("research_pipeline.problem_search_stage_runner.validate_shadow_run_control",return_value={"control_snapshot_sha256":"f"*64}) as validate,patch("research_pipeline.problem_search_stage_runner._expansion_prompt",side_effect=prompt),patch("research_pipeline.problem_search_stage_runner._ark",return_value=response):
                 result=runner.expand(pool=None,run_root=run,lane="CONTRADICTION",count=1,model="test",part=1,memory_path=None)
             validate.assert_called_once_with(run_root=run,pool_path=local_pool,memory_path=local_memory)
             artifact=json.loads((run/"expand-CONTRADICTION-p1.json").read_text(encoding="utf-8"))
@@ -130,42 +130,44 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         self.assertEqual(result["valid_seeds"],0)
         self.assertEqual(artifact["schema_version"],runner.STAGE_RUNNER_ARTIFACT_SCHEMA)
         self.assertEqual(artifact["control_snapshot_sha256"],"f"*64)
-        self.assertEqual(artifact["semantic_dead_end_block_count"],1)
-        self.assertEqual(artifact["semantic_dead_end_blocks"][0]["source_candidate_id"],"R3-REDUCTION")
-        self.assertFalse(artifact["semantic_dead_end_blocks"][0]["scientific_authority"])
+        self.assertEqual(artifact["search_closure_block_count"],1)
+        self.assertEqual(artifact["search_closure_blocks"][0]["source_candidate_id"],"R3-REDUCTION")
+        self.assertFalse(artifact["search_closure_blocks"][0]["scientific_authority"])
 
-    def test_semantic_dead_end_machine_filter_reopens_on_new_frozen_pool(self) -> None:
+    def test_search_closure_machine_filter_reopens_on_new_frozen_pool(self) -> None:
         seed={"discovery_lane":"CONVERGENT_FAILURE","title":"optimizer capability threshold","problem_seed":"same object","scientific_tension":"same tension","structural_signature":"same signature","empirical_evidence":{"source_a":{"ref":"arXiv:1","claim":"weak optimizer cannot operate interface"},"source_b":{"ref":"arXiv:2","claim":"weak agent fails to converge"}}}
         memory={"blocked_objects":[{"source_candidate_id":"OLD","basin":"semantic-exact-reduction-x","search_primitive":"CONVERGENT_FAILURE","current_source_refs":["arXiv:1","arXiv:2"],"evidence_claims":["weak optimizer cannot operate interface","weak agent fails to converge"],"problem_text":"optimizer capability threshold","frozen_pool_sha256":"a"*64,"dead_end_certified":True,"scientific_authority":False}]}
-        self.assertIsNotNone(runner._semantic_dead_end_seed_blocker(seed,memory,"a"*64))
-        self.assertIsNone(runner._semantic_dead_end_seed_blocker(seed,memory,"b"*64))
+        self.assertIsNotNone(runner._search_closure_seed_blocker(seed,memory,"a"*64))
+        self.assertIsNone(runner._search_closure_seed_blocker(seed,memory,"b"*64))
 
     def test_principle_readjudication_machine_filter_persists_but_reopens_on_new_primary_evidence(self) -> None:
         scope="The standalone claim that EvoDRC connectivity gated repair history defines a novel credit semantics for persistent skill evolution because accepted repair records can coexist with locally harmful DRC outcomes."
         seed={"discovery_lane":"UNEXPLAINED_BOUNDARY","title":"Connectivity-admissible repair history as persistent skill credit","problem_seed":scope,"scientific_tension":"accepted connectivity-preserving repairs can still have locally harmful DRC utility","structural_signature":"feasibility|credit|persistent-skill|local-utility","empirical_evidence":{"source_a":{"ref":"arXiv:2607.20019","claim":"connectivity-gated repair records can be locally harmful"},"source_b":{"ref":"arXiv:2607.20019","claim":"accepted repairs are persisted into skill history"}}}
-        memory={"blocked_objects":[{"source_candidate_id":"EVODRC-FEASIBILITY-CREDIT","basin":"principle-readjudication-c644ce58af18f624","search_primitive":"UNEXPLAINED_BOUNDARY","current_source_refs":["arXiv:2607.20019"],"title":"Connectivity-admissible repair history is not a new persistent-credit primitive","problem_text":scope,"dead_end_certified":True,"memory_class":"PRINCIPLE_DEAD_END","scientific_authority":False}]}
-        first=runner._semantic_dead_end_seed_blocker(seed,memory,"a"*64)
-        second=runner._semantic_dead_end_seed_blocker(seed,memory,"b"*64)
+        memory={"closed_objects":[{"source_candidate_id":"EVODRC-FEASIBILITY-CREDIT","basin":"principle-readjudication-c644ce58af18f624","search_primitive":"UNEXPLAINED_BOUNDARY","current_source_refs":["arXiv:2607.20019"],"title":"Connectivity-admissible repair history is not a new persistent-credit primitive","problem_text":scope,"search_closure_certified":True,"dead_end_certified":False,"failure_layer":"method_realization","memory_class":"SEARCH_CLOSURE","scientific_authority":False}]}
+        first=runner._search_closure_seed_blocker(seed,memory,"a"*64)
+        second=runner._search_closure_seed_blocker(seed,memory,"b"*64)
         self.assertIsNotNone(first);self.assertIsNotNone(second)
         self.assertEqual(first["source_candidate_id"],"EVODRC-FEASIBILITY-CREDIT")
-        self.assertIn("persisted principle dead-end",first["reason"])
+        self.assertIn("persisted search closure",first["reason"])
         new_evidence=json.loads(json.dumps(seed));new_evidence["empirical_evidence"]["source_b"]["ref"]="arXiv:2608.99999"
-        self.assertIsNone(runner._semantic_dead_end_seed_blocker(new_evidence,memory,"b"*64))
+        self.assertIsNone(runner._search_closure_seed_blocker(new_evidence,memory,"b"*64))
         different=json.loads(json.dumps(seed));different.update({"title":"Wall-clock scheduling overhead in DRC search","problem_seed":"How does batch size change runtime and memory use?","scientific_tension":"runtime grows with larger search batches","structural_signature":"runtime|batch-size|memory"})
         different["empirical_evidence"]["source_a"]["claim"]="runtime grows with larger batches";different["empirical_evidence"]["source_b"]["claim"]="memory use grows with larger batches"
-        self.assertIsNone(runner._semantic_dead_end_seed_blocker(different,memory,"b"*64))
+        self.assertIsNone(runner._search_closure_seed_blocker(different,memory,"b"*64))
 
     def test_cross_treatment_sign_contradiction_machine_blocks_same_problem_but_reopens_new_evidence(self) -> None:
         scope="Canonical AUTO-1 contradiction claiming a common sign certificate from MetaSkill-Evolve inference-time Static Skill and SkillCoach rubric-filtered SFT despite the interventions acting on different causal surfaces."
-        memory={"blocked_objects":[{
+        memory={"closed_objects":[{
             "source_candidate_id":"AUTO-1-STATIC-PROCEDURAL-PRIOR-CROSS-REGIME",
             "basin":"principle-readjudication-9cf5536340bd08e1",
             "search_primitive":"CONTRADICTION",
             "current_source_refs":["arXiv:2607.01874","arXiv:2607.05297"],
             "title":"Cross-regime static-procedural sign contradiction collapses because the two papers intervene on different causal surfaces",
             "problem_text":scope,
-            "dead_end_certified":True,
-            "memory_class":"PRINCIPLE_DEAD_END",
+            "search_closure_certified":True,
+            "dead_end_certified":False,
+            "failure_layer":"method_realization",
+            "memory_class":"SEARCH_CLOSURE",
             "scientific_authority":False,
         }]}
         seed={
@@ -179,12 +181,12 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
                 "source_b":{"ref":"arXiv:2607.01874","claim":"R0-filtered SFT improves Qwen3.5 held-out performance."},
             },
         }
-        blocked=runner._semantic_dead_end_seed_blocker(seed,memory,"a"*64)
+        blocked=runner._search_closure_seed_blocker(seed,memory,"a"*64)
         self.assertIsNotNone(blocked)
         self.assertEqual(blocked["source_candidate_id"],"AUTO-1-STATIC-PROCEDURAL-PRIOR-CROSS-REGIME")
-        self.assertIn("persisted principle dead-end",blocked["reason"])
+        self.assertIn("persisted search closure",blocked["reason"])
         new_primary=json.loads(json.dumps(seed));new_primary["empirical_evidence"]["source_b"]["ref"]="arXiv:2608.99999"
-        self.assertIsNone(runner._semantic_dead_end_seed_blocker(new_primary,memory,"b"*64))
+        self.assertIsNone(runner._search_closure_seed_blocker(new_primary,memory,"b"*64))
         different=json.loads(json.dumps(seed));different.update({
             "title":"MetaSkill latency overhead under large skill files",
             "problem_seed":"How does static skill file size affect wall-clock latency?",
@@ -193,19 +195,21 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         })
         different["empirical_evidence"]["source_a"]["claim"]="Static skill files increase prompt length."
         different["empirical_evidence"]["source_b"]["claim"]="Rubric files have different token costs."
-        self.assertIsNone(runner._semantic_dead_end_seed_blocker(different,memory,"b"*64))
+        self.assertIsNone(runner._search_closure_seed_blocker(different,memory,"b"*64))
 
     def test_principle_exact_evidence_closure_blocks_rephrased_same_evidence_but_not_adjacent_boundary(self) -> None:
         closed_text="Train selection is a lower bound on what generalizes: on GDPval a variant ranked below the winner on train scored highest on test (+11.5% vs. +9.2%)."
         closed_sha=runner._fresh_evidence_sha({"text":closed_text})
-        memory={"blocked_objects":[{
+        memory={"closed_objects":[{
             "source_candidate_id":"PA-03-HARNESS-SELECTION-INVERSION",
             "basin":"principle-readjudication-pa03",
             "search_primitive":"UNEXPLAINED_BOUNDARY",
             "current_source_refs":["arXiv:2607.13683"],
             "problem_text":"aggregate GDPval train/test ranking reversal and phantom progress",
-            "dead_end_certified":True,
-            "memory_class":"PRINCIPLE_DEAD_END",
+            "search_closure_certified":True,
+            "dead_end_certified":False,
+            "failure_layer":"method_realization",
+            "memory_class":"SEARCH_CLOSURE",
             "fresh_phenomenon_closure":{"source_ref":"arXiv:2607.13683","closed_evidence_sha256":[closed_sha],"closure_scope":"GDPval aggregate ranking inversion only","scientific_authority":False},
             "scientific_authority":False,
         }]}
@@ -219,7 +223,7 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
             "empirical_evidence":{"source_a":{"ref":"arXiv:2607.13683","claim":closed_text},"source_b":{"ref":"arXiv:2607.13683","claim":"The selected harness still improves over vanilla on held-out test."}},
             "lane_evidence":{"boundary_observation":closed_text,"adjacent_regime":"other domains improve","unexplained_transition":"ranking may invert","shared_measurement":"train/test harness score"},
         }
-        blocked=runner._semantic_dead_end_seed_blocker(rephrased,memory,"a"*64,registry)
+        blocked=runner._search_closure_seed_blocker(rephrased,memory,"a"*64,registry)
         self.assertIsNotNone(blocked)
         self.assertTrue(blocked["closed_evidence_match"])
         self.assertEqual("PA-03-HARNESS-SELECTION-INVERSION",blocked["source_candidate_id"])
@@ -229,14 +233,14 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         adjacent["empirical_evidence"]["source_a"]["claim"]="SWE-bench gains +5.1% on test at n=26 but remains below the paired-2sigma bar (z=0.78)."
         adjacent["lane_evidence"]["boundary_observation"]=adjacent["empirical_evidence"]["source_a"]["claim"]
         adjacent["lane_evidence"]["unexplained_transition"]="real positive effect versus statistical detectability at small n"
-        self.assertIsNone(runner._semantic_dead_end_seed_blocker(adjacent,memory,"a"*64,registry))
+        self.assertIsNone(runner._search_closure_seed_blocker(adjacent,memory,"a"*64,registry))
 
     def test_lane_contract_hold_cannot_machine_block_search(self) -> None:
         seed={"discovery_lane":"CONVERGENT_FAILURE","title":"optimizer capability threshold","problem_seed":"same object","scientific_tension":"same tension","structural_signature":"same signature","empirical_evidence":{"source_a":{"ref":"arXiv:1","claim":"weak optimizer cannot operate interface"},"source_b":{"ref":"arXiv:2","claim":"weak agent fails to converge"}}}
         memory={"blocked_objects":[{"source_candidate_id":"OLD-HOLD","basin":"semantic-lane-contract-x","search_primitive":"CONVERGENT_FAILURE","current_source_refs":["arXiv:1","arXiv:2"],"evidence_claims":["weak optimizer cannot operate interface","weak agent fails to converge"],"problem_text":"optimizer capability threshold","frozen_pool_sha256":"a"*64,"dead_end_certified":False,"scientific_authority":False}]}
-        self.assertIsNone(runner._semantic_dead_end_seed_blocker(seed,memory,"a"*64))
+        self.assertIsNone(runner._search_closure_seed_blocker(seed,memory,"a"*64))
 
-    def test_evolution_cannot_reenter_same_pool_certified_semantic_dead_end(self) -> None:
+    def test_evolution_cannot_reenter_same_pool_certified_search_closure(self) -> None:
         pool_sha="a"*64
         claim_a="A weak optimizer cannot operate through the unchanged open-ended optimization interface."
         claim_b="A weak coding agent fails to converge on all three verifier extension tasks."
@@ -252,10 +256,10 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
                 result=runner.evolve(pool=pool,run_root=run,generation=1,part=1,batch_size=1,model="test",memory_path=mem)
             artifact=json.loads((run/"evolve-g1-p1.json").read_text(encoding="utf-8"))
         self.assertEqual(result["valid_children"],0)
-        self.assertEqual(artifact["semantic_dead_end_block_count"],1)
-        self.assertEqual(artifact["semantic_dead_end_blocks"][0]["source_candidate_id"],"R3-LANE")
+        self.assertEqual(artifact["search_closure_block_count"],1)
+        self.assertEqual(artifact["search_closure_blocks"][0]["source_candidate_id"],"R3-LANE")
 
-    def test_formulation_cannot_reenter_same_pool_certified_semantic_dead_end(self) -> None:
+    def test_formulation_cannot_reenter_same_pool_certified_search_closure(self) -> None:
         pool_sha="a"*64
         claim_a="A weak optimizer cannot operate through the unchanged open-ended optimization interface."
         claim_b="A weak coding agent fails to converge on all three verifier extension tasks."
@@ -271,8 +275,8 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
                 result=runner.formulate(pool=pool,run_root=run,part=1,batch_size=1,budget=1,model="test",memory_path=mem)
             artifact=json.loads((run/"formulate-p1.json").read_text(encoding="utf-8"))
         self.assertEqual(result["candidates"],0)
-        self.assertEqual(artifact["semantic_dead_end_block_count"],1)
-        self.assertEqual(artifact["semantic_dead_end_blocks"][0]["source_candidate_id"],"R3-LANE")
+        self.assertEqual(artifact["search_closure_block_count"],1)
+        self.assertEqual(artifact["search_closure_blocks"][0]["source_candidate_id"],"R3-LANE")
 
     def test_formulation_precheck_has_three_fail_closed_routes(self) -> None:
         candidate={"candidate_id":"SHADOW-P01-C01","exact_prediction":"matched prediction","strongest_same_information_baseline":"mature baseline","cheapest_problem_falsifier":"run matched falsifier"}
@@ -457,7 +461,7 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
             run=Path(td)/"run";run.mkdir();control_sha="f"*64
             target={"seed_id":"UNEXPLAINED_BOUNDARY-P1-001","discovery_lane":"UNEXPLAINED_BOUNDARY","title":"Target inversion","problem_seed":"Why does the target model invert?","scientific_tension":"target tension","problem_family":"target","structural_signature":"shared|signature","agent_specific_constraint":"target constraint","empirical_evidence":{},"lane_evidence":{},"scores":{"importance":20,"specificity":20,"seed_distance":20,"evidence_grounding":20},"scientific_authority":False}
             higher=json.loads(json.dumps(target));higher.update({"seed_id":"UNEXPLAINED_BOUNDARY-P1-002","title":"Higher scoring duplicate","scores":{"importance":100,"specificity":100,"seed_distance":100,"evidence_grounding":100}})
-            artifact={"schema_version":runner.STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":"UNEXPLAINED_BOUNDARY","part":1,"requested":2,"valid_seeds":2,"semantic_dead_end_block_count":0,"raw_sha256":"a"*64,"resolved_model":"kimi-k3","fresh_phenomenon_requirement_satisfied":True,"fresh_phenomenon_target_source_satisfied":True,"fresh_phenomenon_target_exact_satisfied":True,"fresh_phenomenon_target_ref":"arXiv:2608.14270","fresh_phenomenon_target_id":"b"*64,"seeds":[target,higher]}
+            artifact={"schema_version":runner.STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":"UNEXPLAINED_BOUNDARY","part":1,"requested":2,"valid_seeds":2,"search_closure_block_count":0,"raw_sha256":"a"*64,"resolved_model":"kimi-k3","fresh_phenomenon_requirement_satisfied":True,"fresh_phenomenon_target_source_satisfied":True,"fresh_phenomenon_target_exact_satisfied":True,"fresh_phenomenon_target_ref":"arXiv:2608.14270","fresh_phenomenon_target_id":"b"*64,"seeds":[target,higher]}
             (run/"expand-UNEXPLAINED_BOUNDARY-p1.json").write_text(json.dumps(artifact),encoding="utf-8")
             with patch("research_pipeline.problem_search_stage_runner._assert_run_control",return_value=control_sha):
                 summary=runner.assemble(run_root=run,archive_capacity=1,evolution_parents=1)
@@ -472,13 +476,13 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
             run=Path(td)/"run";run.mkdir();control_sha="f"*64
             first={"seed_id":"UNEXPLAINED_BOUNDARY-P1-001","discovery_lane":"UNEXPLAINED_BOUNDARY","title":"First target","problem_seed":"first target question","scientific_tension":"first tension","problem_family":"first","structural_signature":"first|target","agent_specific_constraint":"first constraint","empirical_evidence":{},"lane_evidence":{},"scores":{"importance":50,"specificity":50,"seed_distance":50,"evidence_grounding":50},"scientific_authority":False}
             support={**json.loads(json.dumps(first)),"seed_id":"UNEXPLAINED_BOUNDARY-P1-002","title":"First support","problem_seed":"support question","structural_signature":"support|branch","scores":{"importance":90,"specificity":90,"seed_distance":90,"evidence_grounding":90}}
-            p1={"schema_version":runner.STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":"UNEXPLAINED_BOUNDARY","part":1,"requested":2,"valid_seeds":2,"semantic_dead_end_block_count":0,"raw_sha256":"a"*64,"resolved_model":"kimi-k3","fresh_phenomenon_requirement_satisfied":True,"fresh_phenomenon_target_source_satisfied":True,"fresh_phenomenon_target_exact_satisfied":True,"fresh_phenomenon_target_ref":"arXiv:p1","fresh_phenomenon_target_id":"1"*64,"seeds":[first,support]}
+            p1={"schema_version":runner.STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":"UNEXPLAINED_BOUNDARY","part":1,"requested":2,"valid_seeds":2,"search_closure_block_count":0,"raw_sha256":"a"*64,"resolved_model":"kimi-k3","fresh_phenomenon_requirement_satisfied":True,"fresh_phenomenon_target_source_satisfied":True,"fresh_phenomenon_target_exact_satisfied":True,"fresh_phenomenon_target_ref":"arXiv:p1","fresh_phenomenon_target_id":"1"*64,"seeds":[first,support]}
             (run/"expand-UNEXPLAINED_BOUNDARY-p1.json").write_text(json.dumps(p1),encoding="utf-8")
             with patch("research_pipeline.problem_search_stage_runner._assert_run_control",return_value=control_sha):
                 runner.assemble(run_root=run,archive_capacity=8,evolution_parents=8)
             initial=json.loads((run/"base.json").read_text(encoding="utf-8"));initial_ids=[row["seed_id"] for row in initial["parents"]]
             second={**json.loads(json.dumps(first)),"seed_id":"UNEXPLAINED_BOUNDARY-P4-001","title":"Second target","problem_seed":"second target question","structural_signature":"second|target","scores":{"importance":100,"specificity":100,"seed_distance":100,"evidence_grounding":100}}
-            p4={"schema_version":runner.STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":"UNEXPLAINED_BOUNDARY","part":4,"requested":1,"valid_seeds":1,"semantic_dead_end_block_count":0,"raw_sha256":"b"*64,"resolved_model":"deepseek-v4-pro","fresh_phenomenon_requirement_satisfied":True,"fresh_phenomenon_target_source_satisfied":True,"fresh_phenomenon_target_exact_satisfied":True,"fresh_phenomenon_target_ref":"arXiv:p4","fresh_phenomenon_target_id":"4"*64,"seeds":[second]}
+            p4={"schema_version":runner.STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":"UNEXPLAINED_BOUNDARY","part":4,"requested":1,"valid_seeds":1,"search_closure_block_count":0,"raw_sha256":"b"*64,"resolved_model":"deepseek-v4-pro","fresh_phenomenon_requirement_satisfied":True,"fresh_phenomenon_target_source_satisfied":True,"fresh_phenomenon_target_exact_satisfied":True,"fresh_phenomenon_target_ref":"arXiv:p4","fresh_phenomenon_target_id":"4"*64,"seeds":[second]}
             (run/"expand-UNEXPLAINED_BOUNDARY-p4.json").write_text(json.dumps(p4),encoding="utf-8")
             with patch("research_pipeline.problem_search_stage_runner._assert_run_control",return_value=control_sha):
                 summary=runner.assemble(run_root=run,archive_capacity=8,evolution_parents=8);formulation=runner.formulation_pool(run,budget=8,control_sha=control_sha)
@@ -492,7 +496,7 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
     def test_mixed_control_snapshot_artifact_is_rejected_before_downstream_stage(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             run=Path(td)/"run";run.mkdir()
-            (run/"expand-CONTRADICTION-p1.json").write_text(json.dumps({"schema_version":runner.STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":"e"*64,"lane":"CONTRADICTION","part":1,"seeds":[],"semantic_dead_end_block_count":0}),encoding="utf-8")
+            (run/"expand-CONTRADICTION-p1.json").write_text(json.dumps({"schema_version":runner.STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":"e"*64,"lane":"CONTRADICTION","part":1,"seeds":[],"search_closure_block_count":0}),encoding="utf-8")
             with patch("research_pipeline.problem_search_stage_runner._assert_run_control",return_value="f"*64):
                 with self.assertRaisesRegex(ValueError,"mixed shadow control snapshot artifact"):
                     runner.assemble(run_root=run)
@@ -500,7 +504,7 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
     def test_artifact_schema_drift_is_rejected_before_downstream_stage(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             run=Path(td)/"run";run.mkdir()
-            (run/"expand-CONTRADICTION-p1.json").write_text(json.dumps({"schema_version":"1.3","control_snapshot_sha256":"f"*64,"lane":"CONTRADICTION","part":1,"seeds":[],"semantic_dead_end_block_count":0}),encoding="utf-8")
+            (run/"expand-CONTRADICTION-p1.json").write_text(json.dumps({"schema_version":"1.3","control_snapshot_sha256":"f"*64,"lane":"CONTRADICTION","part":1,"seeds":[],"search_closure_block_count":0}),encoding="utf-8")
             with patch("research_pipeline.problem_search_stage_runner._assert_run_control",return_value="f"*64):
                 with self.assertRaisesRegex(ValueError,"artifact schema drift"):
                     runner.assemble(run_root=run)

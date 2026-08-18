@@ -24,8 +24,11 @@ class ProblemSearchControlSnapshotTest(unittest.TestCase):
         pool=run/"frozen-primary-evidence-pool.json"
         set_sha=hashlib.sha256("arXiv:2608.00001".encode()).hexdigest()
         pool.write_text(json.dumps({"generated_at":"2026-08-14T00:00:00+00:00","source_pool_sha256":"1"*64,"source_set_sha256":set_sha,"frozen_pool_sha256":"3"*64,"records":[{"ref":"arXiv:2608.00001","source_sha256":"4"*64,"fulltext_sha256":"5"*64}]}),encoding="utf-8")
-        memory=run/"shadow-dead-end-memory.json"
-        memory.write_text(json.dumps({"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[{"basin":"semantic-lane-contract-x","scientific_authority":False}]}),encoding="utf-8")
+        memory=run/"shadow-search-memory.json"
+        memory.write_text(json.dumps({"shadow_search_memory":{"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"closed_objects":[
+            {"source_candidate_id":"METHOD-CLOSURE","basin":"semantic-exact-reduction-x","search_closure_certified":True,"dead_end_certified":False,"failure_layer":"method_realization","principle_update_allowed":False,"scientific_authority":False},
+            {"source_candidate_id":"PACE-CORE","basin":"principle-readjudication-pace","search_closure_certified":True,"dead_end_certified":True,"failure_layer":"core_principle","principle_update_allowed":True,"scientific_authority":False},
+        ],"hold_objects":[]}}),encoding="utf-8")
         return project,run,pool,memory,("a.py","b.py")
 
     def test_snapshot_digest_changes_when_control_bytes_change(self) -> None:
@@ -47,8 +50,10 @@ class ProblemSearchControlSnapshotTest(unittest.TestCase):
         self.assertEqual(state["frozen_pool_sha256"],"3"*64)
         self.assertRegex(state["source_primary_content_sha256"],r"^[0-9a-f]{64}$")
         self.assertEqual(state["records"],1)
+        self.assertEqual(state["search_closure_objects"],2)
         self.assertEqual(state["dead_end_objects"],1)
-        self.assertEqual(state["semantic_dead_ends"],1)
+        self.assertEqual(state["semantic_search_closures"],1)
+        self.assertEqual(state["semantic_dead_ends"],0)
         self.assertRegex(state["control_snapshot_sha256"],r"^[0-9a-f]{64}$")
         self.assertFalse(state["scientific_authority"])
         self.assertTrue(state["policy"]["control_snapshot_drift_stops_before_provider_call"])
@@ -70,13 +75,20 @@ class ProblemSearchControlSnapshotTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,"source identity drift detected:source_primary_content_sha256"):
                 validate_shadow_run_control(run_root=run,pool_path=pool,memory_path=memory,project_root=project,control_files=files)
             receipt["source_primary_content_sha256"]=original_content;receipt_path.write_text(json.dumps(receipt),encoding="utf-8")
-            m=json.loads(memory.read_text());m["blocked_objects"].append({"basin":"x"});memory.write_text(json.dumps(m),encoding="utf-8")
+            m=json.loads(memory.read_text());m["shadow_search_memory"]["closed_objects"].append({"source_candidate_id":"EXTRA","basin":"x","search_closure_certified":True,"dead_end_certified":False,"failure_layer":"method_realization","scientific_authority":False});memory.write_text(json.dumps(m),encoding="utf-8")
             with self.assertRaisesRegex(ValueError,"memory digest drift"):
                 validate_shadow_run_control(run_root=run,pool_path=pool,memory_path=memory,project_root=project,control_files=files)
-            m["blocked_objects"].pop();memory.write_text(json.dumps(m),encoding="utf-8")
+            m["shadow_search_memory"]["closed_objects"].pop();memory.write_text(json.dumps(m),encoding="utf-8")
             receipt=json.loads((run/"shadow-run-qualification.json").read_text());receipt["stage_runner_required_schema"]="1.3";(run/"shadow-run-qualification.json").write_text(json.dumps(receipt),encoding="utf-8")
             with self.assertRaisesRegex(ValueError,"stage-runner schema drift"):
                 validate_shadow_run_control(run_root=run,pool_path=pool,memory_path=memory,project_root=project,control_files=files)
+
+    def test_qualification_rejects_canonical_closed_row_without_search_certificate(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            project,run,pool,memory,files=self.fixture(Path(td))
+            payload=json.loads(memory.read_text());payload["shadow_search_memory"]["closed_objects"][0]["search_closure_certified"]=False;memory.write_text(json.dumps(payload),encoding="utf-8")
+            with self.assertRaisesRegex(ValueError,"search_closure_certified=true"):
+                build_shadow_run_qualification(run_root=run,pool_path=pool,memory_path=memory,project_root=project,require_clean_control=False,control_files=files)
 
     def test_qualification_rejects_source_set_digest_mismatch(self) -> None:
         with tempfile.TemporaryDirectory() as td:

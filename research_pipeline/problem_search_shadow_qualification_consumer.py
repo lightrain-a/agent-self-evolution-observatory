@@ -166,7 +166,7 @@ def _existing_qualification(run_root: Path, expected_set: str, expected_content:
     }
     if any(str(receipt.get(key) or "") != value for key, value in required.items()):
         return None
-    if str(receipt.get("stage_runner_required_schema") or "") != "1.4":
+    if str(receipt.get("stage_runner_required_schema") or "") != "1.5":
         return None
     return receipt
 
@@ -223,7 +223,7 @@ def _prior_terminal_frozen_pool(admission: dict[str, Any], worktree_parent: Path
         return None
     if receipt.get("status") != "READY_FOR_SHADOW_EXPANSION" or receipt.get("scientific_authority") is not False:
         return None
-    if str(receipt.get("stage_runner_required_schema") or "") != "1.4":
+    if str(receipt.get("stage_runner_required_schema") or "") != "1.5":
         return None
     if any(str(receipt.get(key) or "") != value for key, value in expected.items()):
         return None

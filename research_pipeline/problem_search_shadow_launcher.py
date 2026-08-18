@@ -93,14 +93,22 @@ def _frozen_memory_payload(memory_path: Path) -> dict[str, Any]:
         payload=json.loads(memory_path.read_text(encoding="utf-8"))
     except (OSError,json.JSONDecodeError) as error:
         raise ValueError(f"shadow search-control memory unreadable: {error}") from error
+    if isinstance(payload,dict) and "scientific_authority" in payload and payload.get("scientific_authority") is not False:
+        raise ValueError("shadow search-control memory container must be zero-authority")
+    canonical=isinstance(payload,dict) and isinstance(payload.get("shadow_search_memory"),dict)
     memory=(payload.get("shadow_search_memory") or payload.get("shadow_dead_end_memory")) if isinstance(payload,dict) else None
     if not isinstance(memory,dict):
         memory=payload if isinstance(payload,dict) else {}
+    canonical=canonical or ("closed_objects" in memory and "blocked_objects" not in memory)
     if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True:
         raise ValueError("shadow search-control memory must be zero-authority and unable to mutate canonical discovery")
-    rows=memory.get("closed_objects") or memory.get("blocked_objects") or []
+    rows=memory.get("closed_objects") if canonical else (memory.get("closed_objects") or memory.get("blocked_objects") or [])
     if not isinstance(rows,list) or any(not isinstance(row,dict) for row in rows):
         raise ValueError("shadow search-control memory closed_objects must be a list of objects")
+    if canonical and any(row.get("search_closure_certified") is not True for row in rows):
+        raise ValueError("canonical shadow_search_memory closed_objects must set search_closure_certified=true")
+    if canonical and "blocked_objects" in memory:
+        raise ValueError("canonical shadow_search_memory must not expose legacy blocked_objects")
     return json.loads(json.dumps(memory,ensure_ascii=False))
 
 
@@ -179,10 +187,10 @@ def shadow_search_target_inventory(
     A v13 operator-upgrade receipt may reopen qualification on an unchanged source
     transaction, but it may not silently degrade to open-ended brainstorming. When
     all provenance-bound search assets are inactive, at least one evidence-level
-    fresh phenomenon must remain outside certified dead ends and support holds.
+    fresh phenomenon must remain outside certified search closures and support holds.
     """
     if not memory_path.is_file():
-        raise ValueError(f"shadow dead-end memory unavailable: {memory_path}")
+        raise ValueError(f"shadow search memory unavailable: {memory_path}")
     if not private_pool_path.is_file():
         raise ValueError(f"canonical private primary pool unavailable: {private_pool_path}")
     frozen_memory = _frozen_memory_payload(memory_path)
@@ -231,7 +239,7 @@ def prepare_shadow_run(
     if run_root.exists() and any(run_root.iterdir()):
         raise ValueError("shadow launcher requires an absent or empty run root before freeze")
     if not memory_path.is_file():
-        return _bounded_result("HOLD_SHADOW_MEMORY_UNAVAILABLE", admission=admission, reason=f"Shadow dead-end memory unavailable: {memory_path}", run_root=run_root)
+        return _bounded_result("HOLD_SHADOW_MEMORY_UNAVAILABLE", admission=admission, reason=f"Shadow search memory unavailable: {memory_path}", run_root=run_root)
     try:
         frozen_memory=_frozen_memory_payload(memory_path)
     except ValueError as error:
@@ -257,14 +265,14 @@ def prepare_shadow_run(
         return _bounded_result(
             NO_FRESH_TARGET_STATUS,
             admission=admission,
-            reason="No active first-party inversion or positive-residual search asset remains, and every v13-eligible fresh evidence-level phenomenon is already principle-closed or support-held. Open-ended provider expansion is therefore forbidden until new primary evidence or a recorded reopen condition creates a target.",
+            reason="No active first-party inversion or positive-residual search asset remains, and every v13-eligible fresh evidence-level phenomenon is already search-closed or support-held. Open-ended provider expansion is therefore forbidden until new primary evidence or a recorded reopen condition creates a target.",
             run_root=run_root,
             **inventory,
         )
     if not run_root.exists():
         run_root.mkdir(parents=True, exist_ok=False)
     frozen_path = run_root / "frozen-primary-evidence-pool.json"
-    frozen_memory_path=run_root/"shadow-dead-end-memory.json"
+    frozen_memory_path=run_root/"shadow-search-memory.json"
     frozen_path.write_text(json.dumps(frozen, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     frozen_memory_path.write_text(json.dumps(frozen_memory,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     try:
@@ -287,7 +295,7 @@ def prepare_shadow_run(
     return _bounded_result(
         HANDOFF_STATUS,
         admission=admission,
-        reason=("Canonical private Primary" if pool_source_kind == "canonical_private_pool" else "Prior terminal frozen Primary") + " and shadow dead-end memory were frozen into the run root and a schema-bound zero-authority qualification receipt was created. Provider execution remains unauthorized by this launcher.",
+        reason=("Canonical private Primary" if pool_source_kind == "canonical_private_pool" else "Prior terminal frozen Primary") + " and shadow search memory were frozen into the run root and a schema-bound zero-authority qualification receipt was created. Provider execution remains unauthorized by this launcher.",
         run_root=run_root,
         frozen_pool_created=True,
         frozen_memory_created=True,

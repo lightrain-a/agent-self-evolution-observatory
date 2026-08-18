@@ -224,13 +224,23 @@ def _public_blocked_problem_memory(storage:StorageSettings,previous_public_state
     }
 
 
+def _search_closure_rows(memory:dict[str,Any])->list[dict[str,Any]]:
+    """Canonical closed_objects first; legacy blocked_objects is read-only fallback."""
+    canonical=isinstance((memory or {}).get("closed_objects"),list)
+    rows=(memory or {}).get("closed_objects") if canonical else ((memory or {}).get("blocked_objects") or [])
+    return [
+        row for row in (rows or [])
+        if isinstance(row,dict)
+        and (row.get("search_closure_certified") is True or (not canonical and row.get("dead_end_certified") is True))
+    ]
+
+
 def _durable_principle_dead_end_examples(path:Path=DURABLE_PRINCIPLE_DEAD_END_JSON,limit:int=12,current_refs:set[str]|None=None)->list[dict[str,Any]]:
     try: payload=json.loads(Path(path).read_text(encoding="utf-8"))
     except (OSError,json.JSONDecodeError): return []
-    memory=payload.get("shadow_search_memory") or payload.get("shadow_dead_end_memory") or {};rows=memory.get("closed_objects") or memory.get("blocked_objects") or []
+    memory=payload.get("shadow_search_memory") or payload.get("shadow_dead_end_memory") or {};rows=_search_closure_rows(memory)
     examples=[]
     for order,row in enumerate(rows):
-        if not isinstance(row,dict) or not (row.get("search_closure_certified") is True or row.get("dead_end_certified") is True): continue
         counter=row.get("counter_explanation") or {}
         if not isinstance(counter,dict): counter={}
         refs=[str(ref) for ref in (row.get("current_source_refs") or []) if str(ref)][:4]
@@ -263,7 +273,7 @@ def _durable_principle_dead_end_examples(path:Path=DURABLE_PRINCIPLE_DEAD_END_JS
     return chosen
 
 
-def _principle_dead_end_reentry_audit(candidate:dict[str,Any],path:Path=DURABLE_PRINCIPLE_DEAD_END_JSON,prior_source_grounding:dict[str,Any]|None=None)->dict[str,Any]:
+def _search_closure_reentry_audit(candidate:dict[str,Any],path:Path=DURABLE_PRINCIPLE_DEAD_END_JSON,prior_source_grounding:dict[str,Any]|None=None)->dict[str,Any]:
     lane=str(candidate.get("discovery_lane") or "").strip().upper();evidence=candidate.get("empirical_evidence") or {}
     refs={str((evidence.get(key) or {}).get("ref") or "").strip() for key in ("source_a","source_b") if str((evidence.get(key) or {}).get("ref") or "").strip()}
     grounding=prior_source_grounding if isinstance(prior_source_grounding,dict) else {}
@@ -271,8 +281,7 @@ def _principle_dead_end_reentry_audit(candidate:dict[str,Any],path:Path=DURABLE_
     except (OSError,json.JSONDecodeError): payload={}
     matches=[]
     memory=payload.get("shadow_search_memory") or payload.get("shadow_dead_end_memory") or {}
-    for row in (memory.get("closed_objects") or memory.get("blocked_objects") or []):
-        if not isinstance(row,dict) or not (row.get("search_closure_certified") is True or row.get("dead_end_certified") is True): continue
+    for row in _search_closure_rows(memory):
         primitive=str(row.get("search_primitive") or "").strip().upper();dead_refs={str(ref).strip() for ref in (row.get("current_source_refs") or []) if str(ref).strip()}
         if lane and primitive==lane and refs and dead_refs==refs:
             matches.append({"source_candidate_id":str(row.get("source_candidate_id") or ""),"match_kind":"TYPED_EXACT_SOURCE_SCOPE","reopen_condition":str(((row.get("counter_explanation") or {}).get("reopen_condition")) or row.get("reopen_only_if") or "")[:700],"source_refs":sorted(dead_refs)})
@@ -286,6 +295,9 @@ def _principle_dead_end_reentry_audit(candidate:dict[str,Any],path:Path=DURABLE_
         if closure_ref and closed_hashes and refs==dead_refs==grounded_refs=={closure_ref} and exact_grounding and grounded_hashes and grounded_hashes.issubset(closed_hashes):
             matches.append({"source_candidate_id":str(row.get("source_candidate_id") or ""),"match_kind":"CERTIFIED_EXACT_EVIDENCE_CLOSURE","reopen_condition":str(((row.get("counter_explanation") or {}).get("reopen_condition")) or row.get("reopen_only_if") or "")[:700],"source_refs":sorted(dead_refs),"grounded_evidence_sha256":sorted(grounded_hashes),"closed_evidence_sha256":sorted(closed_hashes)})
     return {"checked":True,"blocked":bool(matches),"matched_source_candidate_ids":[row["source_candidate_id"] for row in matches if row["source_candidate_id"]],"matches":matches,"reopen_requires_new_evidence":True,"scientific_authority":False}
+
+
+_principle_dead_end_reentry_audit=_search_closure_reentry_audit  # legacy helper alias
 
 
 def _private_dead_end_prompt_memory(storage:StorageSettings,public_memory:dict[str,Any],current_refs:set[str]|None=None)->dict[str,Any]:
@@ -302,10 +314,6 @@ def _private_dead_end_prompt_memory(storage:StorageSettings,public_memory:dict[s
         "recent_blocked_examples":examples,
         "typed_closed_basins":principle_examples,
         "typed_closed_basin_count":len(principle_examples),
-        # Legacy aliases retained for prompt/schema compatibility. They mean
-        # scoped basin closure, not broad/core-principle falsification.
-        "principle_certified_dead_ends":principle_examples,
-        "principle_certified_dead_end_count":len(principle_examples),
         "scientific_authority":False,
     }
 
@@ -476,12 +484,15 @@ def _pre_review_blockers(c,reg):
         hard.append(blocker)
     return sorted(set(hard))
 
-def _annotate_principle_dead_end_reentry(cands:list[dict[str,Any]],prior_grounding_by_candidate:dict[str,dict[str,Any]]|None=None)->list[dict[str,Any]]:
+def _annotate_search_closure_reentry(cands:list[dict[str,Any]],prior_grounding_by_candidate:dict[str,dict[str,Any]]|None=None)->list[dict[str,Any]]:
     prior=prior_grounding_by_candidate if isinstance(prior_grounding_by_candidate,dict) else {}
     for candidate in cands:
         candidate_id=str(candidate.get("candidate_id") or "")
-        candidate["principle_dead_end_reentry_audit"]=_principle_dead_end_reentry_audit(candidate,prior_source_grounding=prior.get(candidate_id) or {})
+        candidate["search_closure_reentry_audit"]=_search_closure_reentry_audit(candidate,prior_source_grounding=prior.get(candidate_id) or {})
     return cands
+
+
+_annotate_principle_dead_end_reentry=_annotate_search_closure_reentry  # legacy helper alias
 
 
 def _reviewable(c,reg):
@@ -856,12 +867,12 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
             if receipt_audits:state["provider_receipt_audits"]=receipt_audits
             if orphan_audits:state["provider_orphan_audits"]=orphan_audits
             return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
-        cands=_annotate_principle_dead_end_reentry([_normalize(r,reg) for r in rows])
+        cands=_annotate_search_closure_reentry([_normalize(r,reg) for r in rows])
         try:_validate_lane_search_candidates(lane_search,cands)
         except Exception as e:state["error"]=f"{type(e).__name__}:{str(e)[:300]}";return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
         state["search_diagnostics"].update({"lane_search_complete":True,"lane_search":lane_search});reviewable=[c for c in cands if _reviewable(c,reg)];state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
     if portfolio_mode:
-        cands=_annotate_principle_dead_end_reentry([_normalize(r,reg) for r in rows]);reviewable=[c for c in cands if _reviewable(c,reg)];state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
+        cands=_annotate_search_closure_reentry([_normalize(r,reg) for r in rows]);reviewable=[c for c in cands if _reviewable(c,reg)];state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
     if reviewable and defer_reviewer:
         state["summary"].update({"semantic_clear":0,"semantic_blocked":0,"semantic_review_unavailable":len(reviewable),"written_to_auto_inbox":0,"semantic_clear_by_lane":_count_by_lane([]),"semantic_blocked_by_lane":_count_by_lane([]),"semantic_review_unavailable_by_lane":_count_by_lane(reviewable)})
         state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"source_branch_id":c.get("source_branch_id") or "","source_refs":[c["empirical_evidence"]["source_a"]["ref"],c["empirical_evidence"]["source_b"]["ref"]],"semantic_verdict":"UNREVIEWED","lane_contract_verified":False,"matched_patterns":[]} for c in cands]
@@ -925,12 +936,12 @@ def resume_semantic_reviewer(*,storage=None,primary_pool_path:Path,generator_raw
         if prior_reviewer_raw_path is not None or prior_reviewer_raw_sha256:
             if prior_reviewer_raw_path is None or not prior_reviewer_raw_sha256:raise ValueError("prior-reviewer-grounding-provenance-incomplete")
             prior_grounding,grounding_audit=_load_prior_reviewer_grounding(raw_path=Path(prior_reviewer_raw_path),expected_raw_sha256=prior_reviewer_raw_sha256,candidates=normalized,registry=reg);state["prior_reviewer_grounding_audit"]=grounding_audit
-        cands=_annotate_principle_dead_end_reentry(normalized,prior_grounding);reviewable=[c for c in cands if _reviewable(c,reg)]
+        cands=_annotate_search_closure_reentry(normalized,prior_grounding);reviewable=[c for c in cands if _reviewable(c,reg)]
     except Exception as e:state["error"]=f"generator-raw-parse-error:{type(e).__name__}:{str(e)[:240]}";return finish("REVIEWER_RESUME_INPUT_INVALID")
     state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
     if not reviewable:
         state["summary"].update({"semantic_clear":0,"semantic_blocked":len(cands),"written_to_auto_inbox":0,"semantic_clear_by_lane":_count_by_lane([]),"semantic_blocked_by_lane":_count_by_lane(cands)})
-        state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"semantic_verdict":"BLOCK_PRE_REVIEW","principle_dead_end_reentry_audit":c.get("principle_dead_end_reentry_audit") or {}} for c in cands]
+        state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"semantic_verdict":"BLOCK_PRE_REVIEW","search_closure_reentry_audit":c.get("search_closure_reentry_audit") or {}} for c in cands]
         return finish("SKIPPED_NO_STRUCTURALLY_REVIEWABLE_CANDIDATES")
     call=reviewer_responder or (lambda **kwargs:_ark(stage="semantic_review",allow_transport_fallback=not strict_provider,**kwargs))
     try:
@@ -1120,7 +1131,7 @@ def replay_problem_generator_raw(
         if prior_reviewer_raw_path is not None or prior_reviewer_raw_sha256:
             if prior_reviewer_raw_path is None or not prior_reviewer_raw_sha256:raise ValueError("prior-reviewer-grounding-provenance-incomplete")
             prior_grounding,grounding_audit=_load_prior_reviewer_grounding(raw_path=Path(prior_reviewer_raw_path),expected_raw_sha256=prior_reviewer_raw_sha256,candidates=normalized,registry=reg);state["prior_reviewer_grounding_audit"]=grounding_audit
-        cands=_annotate_principle_dead_end_reentry(normalized,prior_grounding);_validate_lane_search_candidates(lane_search,cands)
+        cands=_annotate_search_closure_reentry(normalized,prior_grounding);_validate_lane_search_candidates(lane_search,cands)
     except Exception as error:
         state["error"]=f"raw-recompile-error:{type(error).__name__}:{str(error)[:300]}";return finish("REPLAY_INPUT_INVALID")
     reviewable=[candidate for candidate in cands if _reviewable(candidate,reg)]
@@ -1131,12 +1142,12 @@ def replay_problem_generator_raw(
     if reviewable:
         blocked_before_review=[candidate for candidate in cands if candidate not in reviewable];reviewable_ids={id(candidate) for candidate in reviewable}
         state["summary"].update({"semantic_clear":0,"semantic_blocked":len(blocked_before_review),"semantic_review_unavailable":len(reviewable),"written_to_auto_inbox":0,"semantic_clear_by_lane":_count_by_lane([]),"semantic_blocked_by_lane":_count_by_lane(blocked_before_review),"semantic_review_unavailable_by_lane":_count_by_lane(reviewable)})
-        state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"semantic_verdict":"UNREVIEWED_REPLAY_REQUIRES_REVIEWER" if id(c) in reviewable_ids else "BLOCK_PRE_REVIEW_REPLAY","lane_contract_verified":False,"matched_patterns":[],"principle_dead_end_reentry_audit":c.get("principle_dead_end_reentry_audit") or {}} for c in cands]
+        state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"semantic_verdict":"UNREVIEWED_REPLAY_REQUIRES_REVIEWER" if id(c) in reviewable_ids else "BLOCK_PRE_REVIEW_REPLAY","lane_contract_verified":False,"matched_patterns":[],"search_closure_reentry_audit":c.get("search_closure_reentry_audit") or {}} for c in cands]
         return finish("REPLAY_REQUIRES_SEMANTIC_REVIEW",[])
     for candidate in cands:
         candidate["semantic_reduction_review"].update({"reviewed":False,"verdict":"BLOCK","lane_contract_verified":False,"lane_contract_reason":"current-machine-contract-blocked-before-review","strongest_reduction":"current-machine-contract-blocked-before-review"})
     state["summary"].update({"semantic_clear":0,"semantic_blocked":len(cands),"written_to_auto_inbox":len(cands),"semantic_clear_by_lane":_count_by_lane([]),"semantic_blocked_by_lane":_count_by_lane(cands)})
-    state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"source_refs":[c["empirical_evidence"]["source_a"]["ref"],c["empirical_evidence"]["source_b"]["ref"]],"semantic_verdict":"BLOCK_PRE_REVIEW_REPLAY","lane_contract_verified":False,"matched_patterns":[],"principle_dead_end_reentry_audit":c.get("principle_dead_end_reentry_audit") or {}} for c in cands]
+    state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"source_refs":[c["empirical_evidence"]["source_a"]["ref"],c["empirical_evidence"]["source_b"]["ref"]],"semantic_verdict":"BLOCK_PRE_REVIEW_REPLAY","lane_contract_verified":False,"matched_patterns":[],"search_closure_reentry_audit":c.get("search_closure_reentry_audit") or {}} for c in cands]
     return finish("GENERATED_ZERO_CANDIDATES" if not cands else "GENERATED_AWAIT_PROBLEM_GATE",cands)
 
 

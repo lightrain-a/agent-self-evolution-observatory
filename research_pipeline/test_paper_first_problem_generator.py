@@ -11,7 +11,7 @@ from pathlib import Path
 from .config import StorageSettings
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES, SEARCH_PORTFOLIO_PRIMITIVES
 from .paper_first_problem_gate_queue import build_problem_gate_queue
-from .paper_first_problem_generator import _archived_replay_metadata, _ark, _durable_principle_dead_end_examples, _evidence_excerpt_matches, _normalize_lane_search, _normalize_last_completed_lane_search_receipt, _pre_f0_route, _principle_dead_end_reentry_audit, _provider_request_audit, _repair_block_only_reviewer_outer_braces, recover_archived_block_only_reviewer_raw, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
+from .paper_first_problem_generator import _archived_replay_metadata, _ark, _durable_principle_dead_end_examples, _evidence_excerpt_matches, _normalize_lane_search, _normalize_last_completed_lane_search_receipt, _pre_f0_route, _provider_request_audit, _repair_block_only_reviewer_outer_braces, _search_closure_reentry_audit, recover_archived_block_only_reviewer_raw, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
 from .paper_first_problem_generator_prompts import generator_prompt, reviewer_prompt
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
@@ -179,31 +179,31 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertEqual(receipt["provider_calls_executed"],0);self.assertFalse(receipt["scientific_authority"])
         self.assertEqual(len(receipts),1)
 
-    def test_durable_principle_dead_end_memory_prioritizes_current_source_overlap(self) -> None:
+    def test_durable_search_closure_memory_prioritizes_current_source_overlap(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             path=Path(td)/"memory.json"
-            rows=[{"source_candidate_id":f"RECENT-{i}","title":f"recent {i}","search_primitive":"CONTRADICTION","current_source_refs":[f"arXiv:other{i}"],"dead_end_certified":True,"counter_explanation":{"reopen_condition":"new evidence"}} for i in range(14)]
-            rows.insert(0,{"source_candidate_id":"OLD-DIRECT-MATCH","title":"direct match","search_primitive":"CONVERGENT_FAILURE","current_source_refs":["arXiv:target-a","arXiv:target-b"],"dead_end_certified":True,"counter_explanation":{"reopen_condition":"new matched evidence"}})
-            path.write_text(json.dumps({"shadow_dead_end_memory":{"blocked_objects":rows}}),encoding="utf-8")
+            rows=[{"source_candidate_id":f"RECENT-{i}","title":f"recent {i}","search_primitive":"CONTRADICTION","current_source_refs":[f"arXiv:other{i}"],"search_closure_certified":True,"dead_end_certified":False,"failure_layer":"method_realization","counter_explanation":{"reopen_condition":"new evidence"}} for i in range(14)]
+            rows.insert(0,{"source_candidate_id":"OLD-DIRECT-MATCH","title":"direct match","search_primitive":"CONVERGENT_FAILURE","current_source_refs":["arXiv:target-a","arXiv:target-b"],"search_closure_certified":True,"dead_end_certified":False,"failure_layer":"method_realization","counter_explanation":{"reopen_condition":"new matched evidence"}})
+            path.write_text(json.dumps({"shadow_search_memory":{"closed_objects":rows}}),encoding="utf-8")
             selected=_durable_principle_dead_end_examples(path,limit=12,current_refs={"arXiv:target-a","arXiv:target-b"})
         self.assertEqual(len(selected),12)
         self.assertEqual(selected[0]["source_candidate_id"],"OLD-DIRECT-MATCH")
         self.assertIn("OLD-DIRECT-MATCH",[row["source_candidate_id"] for row in selected])
 
-    def test_exact_source_lane_principle_dead_end_reentry_is_machine_blocked(self) -> None:
+    def test_exact_source_lane_search_closure_reentry_is_machine_blocked(self) -> None:
         candidate=self.raw_candidate("CONVERGENT_FAILURE")
         with tempfile.TemporaryDirectory() as td:
             path=Path(td)/"memory.json"
             refs=[candidate["empirical_evidence"]["source_a"]["ref"],candidate["empirical_evidence"]["source_b"]["ref"]]
-            path.write_text(json.dumps({"shadow_dead_end_memory":{"blocked_objects":[{"source_candidate_id":"OLD-BASIN","search_primitive":"CONVERGENT_FAILURE","current_source_refs":refs,"dead_end_certified":True,"counter_explanation":{"reopen_condition":"reopen only with new evidence"}}]}}),encoding="utf-8")
-            audit=_principle_dead_end_reentry_audit(candidate,path)
+            path.write_text(json.dumps({"shadow_search_memory":{"closed_objects":[{"source_candidate_id":"OLD-BASIN","search_primitive":"CONVERGENT_FAILURE","current_source_refs":refs,"search_closure_certified":True,"dead_end_certified":False,"failure_layer":"method_realization","counter_explanation":{"reopen_condition":"reopen only with new evidence"}}]}}),encoding="utf-8")
+            audit=_search_closure_reentry_audit(candidate,path)
         self.assertTrue(audit["blocked"])
         self.assertEqual(audit["matched_source_candidate_ids"],["OLD-BASIN"])
-        candidate["principle_dead_end_reentry_audit"]=audit
+        candidate["search_closure_reentry_audit"]=audit
         from .paper_first_problem_discovery_contract import audit_problem_candidate
         result=audit_problem_candidate(candidate,require_semantic_review=False,allow_pending_reduction_for_semantic_review=True)
         self.assertFalse(result["passed"])
-        self.assertIn("principle-dead-end-exact-source-reentry:OLD-BASIN",result["blockers"])
+        self.assertIn("search-closure-exact-source-reentry:OLD-BASIN",result["blockers"])
 
     def test_legacy_principle_closure_blocks_only_exact_reverified_evidence(self) -> None:
         candidate=self.raw_candidate("UNEXPLAINED_BOUNDARY");ref=candidate["empirical_evidence"]["source_a"]["ref"]
@@ -220,26 +220,26 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
                 "fresh_phenomenon_closure":{"source_ref":ref,"closed_evidence_sha256":[closed_a,closed_b]},
                 "counter_explanation":{"reopen_condition":"new exact evidence"},
             }]}}),encoding="utf-8")
-            exact=_principle_dead_end_reentry_audit(candidate,path,grounding)
+            exact=_search_closure_reentry_audit(candidate,path,grounding)
             fresh_grounding=json.loads(json.dumps(grounding));fresh_grounding["source_b"]["evidence_sha256"]="f"*64
-            fresh=_principle_dead_end_reentry_audit(candidate,path,fresh_grounding)
+            fresh=_search_closure_reentry_audit(candidate,path,fresh_grounding)
         self.assertTrue(exact["blocked"])
         self.assertEqual(exact["matches"][0]["match_kind"],"CERTIFIED_EXACT_EVIDENCE_CLOSURE")
         self.assertEqual(set(exact["matches"][0]["grounded_evidence_sha256"]),{closed_a,closed_b})
         self.assertFalse(fresh["blocked"])
 
-    def test_durable_principle_dead_end_memory_preserves_reopen_contract(self) -> None:
+    def test_durable_search_closure_memory_preserves_reopen_contract(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             path=Path(td)/"memory.json"
-            path.write_text(json.dumps({"shadow_dead_end_memory":{"blocked_objects":[{
-                "source_candidate_id":"AUTO-X","title":"cross-treatment false contradiction","search_primitive":"CONTRADICTION","current_source_refs":["arXiv:1","arXiv:2"],"dead_end_certified":True,
+            path.write_text(json.dumps({"shadow_search_memory":{"closed_objects":[{
+                "source_candidate_id":"AUTO-X","title":"cross-treatment false contradiction","search_primitive":"CONTRADICTION","current_source_refs":["arXiv:1","arXiv:2"],"search_closure_certified":True,"dead_end_certified":False,"failure_layer":"method_realization",
                 "strongest_reduction":"the interventions use different causal surfaces",
                 "counter_explanation":{"opposite_principle":"align treatment semantics before comparing effects","opposite_search_seed":"search same frozen executor treatment","reopen_condition":"reopen only with identical intervention surface"}
             }]}}),encoding="utf-8")
             rows=_durable_principle_dead_end_examples(path)
         self.assertEqual(len(rows),1)
         self.assertEqual(rows[0]["source_candidate_id"],"AUTO-X")
-        self.assertTrue(rows[0]["dead_end_certified"])
+        self.assertFalse(rows[0]["dead_end_certified"])
         self.assertIn("identical intervention surface",rows[0]["reopen_condition"])
         self.assertFalse(rows[0]["scientific_authority"])
 

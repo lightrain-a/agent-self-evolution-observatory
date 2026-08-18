@@ -38,7 +38,7 @@ class ProblemSearchShadowLauncherTest(unittest.TestCase):
         private_pool=root/"primary-evidence-pool.json"
         private_pool.write_text(json.dumps({"schema_version":"1.0","generated_at":generated_at,"records":records,"scientific_authority":False}),encoding="utf-8")
         memory=root/"memory.json"
-        memory.write_text(json.dumps({"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[]}),encoding="utf-8")
+        memory.write_text(json.dumps({"shadow_search_memory":{"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"closed_objects":[],"hold_objects":[]}}),encoding="utf-8")
         project=root/"project";project.mkdir();(project/"a.py").write_text("A=1\n",encoding="utf-8");(project/"b.py").write_text("B=2\n",encoding="utf-8")
         return admission,private_pool,memory,project,("a.py","b.py")
 
@@ -47,7 +47,7 @@ class ProblemSearchShadowLauncherTest(unittest.TestCase):
             root=Path(td);admission,private_pool,memory,project,files=self.fixture(root);run=root/"shadow-new"
             self.assertEqual(admission["status"],"READY_FOR_SHADOW_QUALIFICATION")
             state=prepare_shadow_run(run_root=run,private_pool_path=private_pool,memory_path=memory,project_root=project,admission_state=admission,require_clean_control=False,control_files=files)
-            frozen=json.loads((run/"frozen-primary-evidence-pool.json").read_text());frozen_memory=json.loads((run/"shadow-dead-end-memory.json").read_text());receipt=json.loads((run/"shadow-run-qualification.json").read_text())
+            frozen=json.loads((run/"frozen-primary-evidence-pool.json").read_text());frozen_memory=json.loads((run/"shadow-search-memory.json").read_text());receipt=json.loads((run/"shadow-run-qualification.json").read_text())
             self.assertEqual(state["status"],HANDOFF_STATUS)
             self.assertTrue(state["summary"]["frozen_pool_created"]);self.assertTrue(state["summary"]["frozen_memory_created"]);self.assertTrue(state["summary"]["qualification_created"])
             self.assertEqual(state["summary"]["automatic_provider_calls_authorized"],0);self.assertEqual(state["summary"]["model_calls_executed"],0)
@@ -55,10 +55,10 @@ class ProblemSearchShadowLauncherTest(unittest.TestCase):
             self.assertEqual(frozen["source_primary_content_sha256"],admission["source_identity"]["current_primary_content_sha256"])
             self.assertEqual(frozen["policy"]["pool_source_kind"],"canonical_private_pool");self.assertTrue(frozen["policy"]["canonical_private_pool_source"]);self.assertFalse(frozen["policy"]["prior_terminal_frozen_pool_source"])
             self.assertEqual(receipt["source_primary_content_sha256"],frozen["source_primary_content_sha256"]);self.assertEqual(receipt["pool_source_kind"],"canonical_private_pool")
-            self.assertEqual(receipt["stage_runner_required_schema"],"1.4")
+            self.assertEqual(receipt["stage_runner_required_schema"],"1.5")
             self.assertFalse(frozen_memory["scientific_authority"]);self.assertFalse(frozen_memory["live_source_coverage_effect"]);self.assertTrue(frozen_memory["cannot_mutate_canonical_generator_or_queue"])
-            source_memory=json.loads(memory.read_text());source_memory["blocked_objects"].append({"basin":"later-update","scientific_authority":False});memory.write_text(json.dumps(source_memory),encoding="utf-8")
-            validated=validate_shadow_run_control(run_root=run,pool_path=run/"frozen-primary-evidence-pool.json",memory_path=run/"shadow-dead-end-memory.json",project_root=project,control_files=files)
+            source_memory=json.loads(memory.read_text());source_memory["shadow_search_memory"]["closed_objects"].append({"basin":"later-update","search_closure_certified":True,"dead_end_certified":False,"failure_layer":"method_realization","scientific_authority":False});memory.write_text(json.dumps(source_memory),encoding="utf-8")
+            validated=validate_shadow_run_control(run_root=run,pool_path=run/"frozen-primary-evidence-pool.json",memory_path=run/"shadow-search-memory.json",project_root=project,control_files=files)
             self.assertEqual(validated["memory_sha256"],receipt["memory_sha256"])
             with self.assertRaisesRegex(ValueError,"memory digest drift"):
                 validate_shadow_run_control(run_root=run,pool_path=run/"frozen-primary-evidence-pool.json",memory_path=memory,project_root=project,control_files=files)
@@ -77,9 +77,11 @@ class ProblemSearchShadowLauncherTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);admission,private_pool,memory,project,files=self.fixture(root);run=root/"shadow-no-target"
             pool=json.loads(private_pool.read_text());text=pool["records"][0]["empirical_facts"][0]["text"];sha=hashlib.sha256(" ".join(text.split()).encode()).hexdigest()
-            memory_payload=json.loads(memory.read_text());memory_payload["blocked_objects"]=[{
+            memory_payload=json.loads(memory.read_text());memory_payload["shadow_search_memory"]["closed_objects"]=[{
                 "source_candidate_id":"CLOSED-ANOMALY",
-                "dead_end_certified":True,
+                "search_closure_certified":True,
+                "dead_end_certified":False,
+                "failure_layer":"method_realization",
                 "scientific_authority":False,
                 "fresh_phenomenon_closure":{"source_ref":"arXiv:2608.00001","closed_evidence_sha256":[sha],"scientific_authority":False},
             }];memory.write_text(json.dumps(memory_payload),encoding="utf-8")
@@ -124,7 +126,7 @@ class ProblemSearchShadowLauncherTest(unittest.TestCase):
     def test_invalid_memory_holds_without_creating_run(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);admission,private_pool,memory,project,files=self.fixture(root);run=root/"shadow-invalid-memory"
-            payload=json.loads(memory.read_text());payload["scientific_authority"]=True;memory.write_text(json.dumps(payload),encoding="utf-8")
+            payload=json.loads(memory.read_text());payload["shadow_search_memory"]["scientific_authority"]=True;memory.write_text(json.dumps(payload),encoding="utf-8")
             state=prepare_shadow_run(run_root=run,private_pool_path=private_pool,memory_path=memory,project_root=project,admission_state=admission,require_clean_control=False,control_files=files)
             self.assertFalse(run.exists())
         self.assertEqual(state["status"],"HOLD_SHADOW_MEMORY_INVALID")

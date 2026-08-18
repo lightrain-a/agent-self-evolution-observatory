@@ -150,17 +150,34 @@ def _evidence_payload(records):
         "typed_evidence":{k:[str(f.get("text") or "")[:340] for f in ((r.get("typed_evidence") or {}).get(k) or [])[:2] if isinstance(f,dict)] for k in ("operational_assumptions","measured_failures","boundary_observations")},
     } for r in records[:32]]
 
+def _closed_search_rows(search_memory):
+    """Return search closures with explicit legacy blocked_objects compatibility.
+
+    Canonical persistence uses ``closed_objects`` + ``search_closure_certified``.
+    Historical snapshots/tests may still supply only ``blocked_objects`` where
+    ``dead_end_certified`` carried the old overloaded search-closure meaning. That
+    legacy fallback is read-only compatibility and is never written back canonically.
+    """
+    memory=search_memory or {}
+    canonical=isinstance(memory.get("closed_objects"),list)
+    rows=memory.get("closed_objects") if canonical else (memory.get("blocked_objects") or [])
+    return [
+        row for row in (rows or [])
+        if isinstance(row,dict)
+        and (row.get("search_closure_certified") is True or (not canonical and row.get("dead_end_certified") is True))
+    ]
+
+
 def _fresh_phenomenon_closed_keys(dead_end_memory):
-    """Return exact (primary ref, evidence-text SHA) pairs already principle-closed.
+    """Return exact (primary ref, evidence-text SHA) pairs already search-closed.
 
     Closure is intentionally boundary-level rather than source-level: a paper can
-    carry several independent anomalies, and explaining one must not blacklist the
-    rest of the paper. Only provenance-bound principle certificates may close a
-    fresh target; ordinary negative experiments and reopenable holds cannot.
+    carry several independent anomalies, and closing one exact search object must
+    not blacklist the rest of the paper. Scientific dead-end status is irrelevant
+    to this deduplication decision.
     """
     closed=set()
-    for row in (dead_end_memory or {}).get("blocked_objects") or []:
-        if not isinstance(row,dict) or row.get("dead_end_certified") is not True:continue
+    for row in _closed_search_rows(dead_end_memory):
         closure=row.get("fresh_phenomenon_closure") or {}
         if not isinstance(closure,dict) or closure.get("scientific_authority") is not False:continue
         ref=str(closure.get("source_ref") or "").strip()
@@ -333,15 +350,14 @@ def _prompt_dead_end_memory(dead_end_memory):
 
     Archived search assets remain in the canonical memory for provenance, but their
     direct inversion seeds and asset payloads must not be visible to generators.
-    Keep the dead-end statement/reopen boundary so the model still avoids re-entry.
+    Keep each closed-basin statement/reopen boundary so the model still avoids re-entry.
     Global closure wins over stale per-certificate asset flags.
     """
     memory=json.loads(json.dumps(dead_end_memory or {},ensure_ascii=False))
     globally_inactive={str(row.get("asset_ref") or "") for row in memory.get("inversion_asset_evidence") or [] if isinstance(row,dict) and row.get("search_active") is False}
     memory["inversion_asset_evidence"]=[row for row in memory.get("inversion_asset_evidence") or [] if not isinstance(row,dict) or row.get("search_active") is not False]
     memory["positive_residual_asset_evidence"]=[row for row in memory.get("positive_residual_asset_evidence") or [] if not isinstance(row,dict) or row.get("search_active") is True]
-    for row in memory.get("blocked_objects") or []:
-        if not isinstance(row,dict):continue
+    for row in _closed_search_rows(memory):
         asset=row.get("opposite_search_asset_evidence") or {}
         ref=str(asset.get("asset_ref") or "") if isinstance(asset,dict) else ""
         if not ref or (ref not in globally_inactive and asset.get("search_active") is not False):continue
@@ -371,8 +387,7 @@ def _positive_residual_priors(dead_end_memory,limit=6):
 def _opposite_search_priors(dead_end_memory,limit=8):
     priors=[]
     globally_inactive={str(row.get("asset_ref") or "") for row in (dead_end_memory or {}).get("inversion_asset_evidence") or [] if isinstance(row,dict) and row.get("search_active") is False}
-    for row in (dead_end_memory or {}).get("blocked_objects") or []:
-        if not isinstance(row,dict) or row.get("dead_end_certified") is not True:continue
+    for row in _closed_search_rows(dead_end_memory):
         asset=row.get("opposite_search_asset_evidence") or {}
         ref=str(asset.get("asset_ref") or "") if isinstance(asset,dict) else ""
         if ref in globally_inactive or (isinstance(asset,dict) and asset and asset.get("search_active") is False):continue
@@ -404,7 +419,7 @@ def _expansion_prompt(lane,records,count,dead_end_memory=None,fresh_target_ref="
     target_id=str(fresh_target_phenomenon_id or "").strip().lower()
     fresh_target=next((row for row in fresh_priors if (target_id and str(row.get("phenomenon_id") or "").lower()==target_id) or (not target_id and str(row.get("ref") or "")==str(fresh_target_ref or ""))),{})
     records=(assets+positive_assets+_lane_records(lane,paper_records,max_records=max(1,20-len(assets)-len(positive_assets))))[:20]
-    asset_requirement=("ASSET-INVERSION EXECUTION REQUIREMENT: provenance-bound first-party inversion assets are available. Seed 1 MUST directly execute one certified opposite-search prior by citing a FIRST_PARTY_INVERSION_ASSET ref in source_a; because this lane permits a single distinct source, source_b MAY cite the same asset ref for a second independently stated grounded fact. The seed must test the opposite principle/reopen boundary rather than restate the certified dead end. STRUCTURAL-GRAPH RULE: if the first-party implementation directly exposes whether a causal/update edge exists, do NOT formulate identifiability of that edge. Instead target a downstream consequence of that structure and state what ordinary distribution-shift, stale-supervisor, online-adaptation, or alternating-optimization explanation must be beaten. Remaining seeds may explore any grounded anomaly. " if assets and count>0 else "")
+    asset_requirement=("ASSET-INVERSION EXECUTION REQUIREMENT: provenance-bound first-party inversion assets are available. Seed 1 MUST directly execute one certified opposite-search prior by citing a FIRST_PARTY_INVERSION_ASSET ref in source_a; because this lane permits a single distinct source, source_b MAY cite the same asset ref for a second independently stated grounded fact. The seed must test the opposite principle/reopen boundary rather than restate the certified search closure. STRUCTURAL-GRAPH RULE: if the first-party implementation directly exposes whether a causal/update edge exists, do NOT formulate identifiability of that edge. Instead target a downstream consequence of that structure and state what ordinary distribution-shift, stale-supervisor, online-adaptation, or alternating-optimization explanation must be beaten. Remaining seeds may explore any grounded anomaly. " if assets and count>0 else "")
     positive_slot=2 if assets else 1
     positive_requirement=(f"POSITIVE-RESIDUAL EXECUTION REQUIREMENT: Seed {positive_slot} MUST cite a POSITIVE_RESIDUAL_ASSET ref in source_a (source_b MAY reuse the same ref because this lane permits one distinct source). It must propose a NEW scientific mechanism/problem that simultaneously explains the surviving phenomenon and the recorded failed/reduced mechanisms. It MUST make a prospective prediction from pre-outcome information, explicitly condition on or beat the recorded same-information baselines, and obey every prohibited_rescue in the asset. If the asset marks temporal_exposure_standalone_branch_closed, DO NOT propose K-step mediation, ON/OFF exposure windows, duration, cumulative dose, or repeated conditioning as the new mechanism. The only permitted next memory seed must change executable treatment semantics/version identity and must name the mandatory nonstationary/versioned-treatment reductions it must beat before any experiment. Do not use full-trajectory distance or endpoint length/success. This asset is search evidence only, never novelty or experiment authority. " if lane=="UNEXPLAINED_BOUNDARY" and positive_assets and count>=positive_slot else "")
     fresh_requirement=(f"FRESH-PHENOMENON BOUNDARY-COVERAGE REQUIREMENT: no active inversion or positive-residual asset exists. For UNEXPLAINED_BOUNDARY, Seed 1 MUST cite the specifically assigned FRESH_PHENOMENON_TARGET ref={fresh_target.get('ref')} AND directly target phenomenon_id={fresh_target.get('phenomenon_id')} with phenomenon_text={json.dumps(fresh_target.get('phenomenon_text'),ensure_ascii=False)}. Do not substitute another anomaly from the same paper or a more salient fresh source. The seed must name in scientific_tension the strongest mature reduction class it expects to face (for example information redundancy, rate-distortion, adaptive validation, distribution shift, or ceiling effects) and in agent_specific_constraint state what released/independent truth could falsify the residual. Missing released substrate is a HOLD, never evidence of novelty or scientific failure. Remaining seeds may explore other grounded phenomena. " if lane=="UNEXPLAINED_BOUNDARY" and not assets and not positive_assets and fresh_target and count>0 else "")
@@ -425,7 +440,7 @@ def _expansion_prompt(lane,records,count,dead_end_memory=None,fresh_target_ref="
         f"Use two grounded evidence items and at least {LANE_DISTINCT_SOURCE_MINIMUM[lane]} distinct primary source ref(s), following the lane contract; obey evidence roles. Claims must be supported by supplied primary text. "
         "Vary problem families and structural signatures; avoid paraphrase-only variants. "
         "For CROSS_DOMAIN_STRUCTURAL_ANALOGY, the external domain is only an analogy prior and never novelty by itself; state the Agent-specific structural constraint. "
-        f"Analogy priors={json.dumps(analogy,ensure_ascii=False)}. FIRST_PARTY_INVERSION_ASSETS={json.dumps(_evidence_payload(assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_ASSETS={json.dumps(_evidence_payload(positive_assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_PRIORS={json.dumps(_positive_residual_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. FRESH_PHENOMENON_TARGET={json.dumps(fresh_target,ensure_ascii=False,separators=(',',':'))}. FRESH_PHENOMENON_PRIORS={json.dumps(fresh_priors,ensure_ascii=False,separators=(',',':'))}. CERTIFIED DEAD-END INVERSION PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. DEAD-END SEARCH MEMORY (search-control only, never scientific authority)={json.dumps(_prompt_dead_end_memory(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. VERIFIED PRIMARY EVIDENCE={json.dumps(_evidence_payload(records),ensure_ascii=False,separators=(',',':'))}. "
+        f"Analogy priors={json.dumps(analogy,ensure_ascii=False)}. FIRST_PARTY_INVERSION_ASSETS={json.dumps(_evidence_payload(assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_ASSETS={json.dumps(_evidence_payload(positive_assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_PRIORS={json.dumps(_positive_residual_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. FRESH_PHENOMENON_TARGET={json.dumps(fresh_target,ensure_ascii=False,separators=(',',':'))}. FRESH_PHENOMENON_PRIORS={json.dumps(fresh_priors,ensure_ascii=False,separators=(',',':'))}. LAYER-TYPED CLOSED-BASIN INVERSION PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. CLOSED-BASIN SEARCH MEMORY (search-control only, never scientific authority)={json.dumps(_prompt_dead_end_memory(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. VERIFIED PRIMARY EVIDENCE={json.dumps(_evidence_payload(records),ensure_ascii=False,separators=(',',':'))}. "
         f"Return JSON only: {json.dumps(shape,ensure_ascii=False,separators=(',',':'))}"
     )
 
@@ -522,7 +537,7 @@ def _formulation_prompt(branches,registry,dead_end_memory=None):
         "Inspect branch-local closest_work_candidates. A duplicate/collision or VALID_HARD_VETO branch must be returned in rejected rather than silently omitted. If a branch follows a certified scoped closed-basin inversion prior, explicitly verify that fresh primary evidence grounds the opposite principle and that the formulation satisfies the recorded reopen condition; otherwise reject or hold it rather than rewarding inversion wording. Preserve closure_layer/failure_layer exactly: problem_novelty is an upstream literature/theory stop, scientific closures use only execution, experiment_identifiability, optimization, operationalization, method_realization, assumption_scope, or core_principle, and only core_principle may enter persistent scientific dead-end memory or update the scoped principle. Broader benchmark/phenomenon falsification remains a separate field. When first-party code directly determines the dependency graph, the graph fact itself is not an identifiability contribution: require a downstream decision/utility/regret consequence and explicitly test generic distribution-shift, stale-supervisor, online-adaptation, or alternating-optimization reductions before keeping the branch. If a branch follows a POSITIVE_RESIDUAL_ASSET, require one prospective pre-outcome prediction that jointly explains the surviving phenomenon and every named failed mechanism; reject endpoint-leaking features, post-hoc full-trajectory geometry, or a renamed K-step mediator unless independent pre-outcome evidence distinguishes it from the failed first-action mechanism. "
         "Prefer a residual whose cheapest falsifier is an actual controlled comparison we can materialize quickly from released units, first-party code, or an existing provenance-audited substrate. Cheap falsification may precede final exact reduction only as zero-authority evidence acquisition; after a positive residual, the exact same-information reduction must be rerun before live Problem Gate/Paper Design eligibility. Do not claim support exists unless the supplied evidence establishes it; missing support is SUPPORT_STOP/HOLD, never a scientific negative. "
         "Preserve the inherited typed evidence/lane contract and source refs. "
-        f"BRANCHES={json.dumps(compact,ensure_ascii=False,separators=(',',':'))}. DEAD_END_MEMORY={json.dumps(_prompt_dead_end_memory(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. CERTIFIED_DEAD_END_INVERSION_PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_PRIORS={json.dumps(_positive_residual_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. PRIMARY_EVIDENCE={json.dumps(evidence,ensure_ascii=False,separators=(',',':'))}. REDUCTION_LEDGER={json.dumps(reduction_pattern_audit(),ensure_ascii=False,separators=(',',':'))}. "
+        f"BRANCHES={json.dumps(compact,ensure_ascii=False,separators=(',',':'))}. SEARCH_CLOSURE_MEMORY={json.dumps(_prompt_dead_end_memory(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. CLOSED_BASIN_INVERSION_PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_PRIORS={json.dumps(_positive_residual_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. PRIMARY_EVIDENCE={json.dumps(evidence,ensure_ascii=False,separators=(',',':'))}. REDUCTION_LEDGER={json.dumps(reduction_pattern_audit(),ensure_ascii=False,separators=(',',':'))}. "
         f"Return JSON only: {json.dumps(shape,ensure_ascii=False,separators=(',',':'))}"
     )
 

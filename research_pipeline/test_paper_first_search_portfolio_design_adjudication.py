@@ -40,11 +40,15 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertFalse(lopd["dead_end_certified"]);self.assertFalse(lopd["scientific_authority"])
 
     def test_continuation_holds_enter_hold_memory_and_never_blocked_memory(self) -> None:
-        memory=self.state["shadow_dead_end_memory"]
-        blocked={row.get("source_candidate_id") for row in memory.get("blocked_objects") or []}
+        memory=self.state["shadow_search_memory"]
+        dead=self.state["shadow_dead_end_memory"]
+        blocked={row.get("source_candidate_id") for row in memory.get("closed_objects") or []}
         held={row.get("source_candidate_id"):row for row in memory.get("hold_objects") or []}
         auto_id="AUTO-1-AGENT-SAFETY-20260818T060955Z";lopd_id="LOPD-FIXED-BUDGET-LATENT-EXPERIENCE-DECOMPOSITION"
         self.assertNotIn(auto_id,blocked);self.assertNotIn(lopd_id,blocked)
+        self.assertEqual(dead.get("hold_objects"),[])
+        self.assertNotIn(auto_id,{row.get("source_candidate_id") for row in dead.get("blocked_objects") or []})
+        self.assertNotIn(lopd_id,{row.get("source_candidate_id") for row in dead.get("blocked_objects") or []})
         self.assertEqual(held[auto_id]["memory_class"],"FORMULATION_HOLD")
         self.assertEqual(held[lopd_id]["memory_class"],"REOPENABLE_HOLD")
         self.assertFalse(held[auto_id]["dead_end_certified"]);self.assertFalse(held[lopd_id]["dead_end_certified"])
@@ -175,7 +179,7 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertEqual(memory["core_principle_stop_count"], 1)
         self.assertEqual(memory["broader_core_principle_falsification_count"], 0)
         self.assertEqual(memory["core_principle_dead_end_count"], 1)
-        self.assertEqual(len(memory["hold_objects"]), 7)
+        self.assertEqual(len(memory["hold_objects"]), 9)
         self.assertTrue(all(row.get("dead_end_certified") is False for row in memory["hold_objects"]))
         pace = next(row for row in memory["closed_objects"] if row.get("source_candidate_id") == "PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY")
         self.assertEqual(pace["failure_layer"], "core_principle")
