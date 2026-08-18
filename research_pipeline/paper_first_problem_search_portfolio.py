@@ -193,7 +193,12 @@ def _fresh_evidence_sha(item):
 
 
 def _fresh_phenomenon_priors(records,limit=32,recent_days=45,dead_end_memory=None):
-    """Return recent *evidence-level* quantitative/failure boundaries for search.
+    """Return recent or explicitly age-exempt exact-seed evidence boundaries.
+
+    Exact seed papers are deliberate recall targets supplied by research scope. If
+    Primary verified one with both exact_seed and exact_seed_age_exemption, the
+    downstream search operator must not silently discard it only because its
+    publication date falls outside the ordinary rolling freshness window.
 
     v11 rotated at source granularity, so one already-explained anomaly could keep
     consuming a paper's fresh slot or force us to suppress the whole paper. v12
@@ -225,7 +230,9 @@ def _fresh_phenomenon_priors(records,limit=32,recent_days=45,dead_end_memory=Non
         r"\bcollapse\w*\b|\boverly\s+restrict\w*\b|\bnegative\s+transfer\b|\bmislead\w*\b|"
         r"\bcannot\b|\bunable\b|\binstab\w*\b|\bregress\w*\b|\bdrop\w*\b|\bworse\b|"
         r"\blower\s+utility\b|\boverfit\w*\b|\bredundan\w*\b|\bconflict\w*\b|\bpoison\w*\b|"
-        r"\battack\s+success(?:\s+rate)?\b.{0,32}\b(?:increas\w*|ris\w*|remain\w*\s+high|worsen\w*)\b)",
+        r"\battack\s+success(?:\s+rate)?\b.{0,32}\b(?:increas\w*|ris\w*|remain\w*\s+high|worsen\w*)\b|"
+        r"\bsafety\s+(?:degrad\w*|declin\w*|erosion\b)|"
+        r"\bASR\b.{0,64}\b(?:increas\w*|ris\w*|elevat\w*|worsen\w*|plateau\w*)\b)",
         re.I,
     )
     closed=_fresh_phenomenon_closed_keys(dead_end_memory)
@@ -233,7 +240,8 @@ def _fresh_phenomenon_priors(records,limit=32,recent_days=45,dead_end_memory=Non
     priors=[]
     kind_priority={"measured_failure":3,"boundary_observation":2,"quantitative_anomaly":1}
     for published,r in parsed:
-        if published<cutoff:continue
+        exact_seed_age_exempt = r.get("exact_seed") is True and r.get("exact_seed_age_exemption") is True
+        if published<cutoff and not exact_seed_age_exempt:continue
         ref=str(r.get("ref") or "");typed=r.get("typed_evidence") or {};facts=[x for x in r.get("empirical_facts") or [] if isinstance(x,dict) and str(x.get("text") or "").strip()]
         items=[]
         items.extend(("measured_failure",x) for x in typed.get("measured_failures") or [] if isinstance(x,dict) and str(x.get("text") or "").strip() and failure_cue.search(str(x.get("text") or "")))
@@ -279,7 +287,7 @@ def _fresh_phenomenon_priors(records,limit=32,recent_days=45,dead_end_memory=Non
                 "quantitative_anomalies":[text] if kind=="quantitative_anomaly" else [],
                 "empirical_facts":[" ".join(str(x.get("text") or "").split()) for x in facts[:2]],
                 "search_instruction":"target this exact measured/quantitative phenomenon; name the strongest mature reduction and cheapest independent-truth substrate before proposing a method",
-                "priority":kind_priority[kind],"scientific_authority":False,
+                "priority":kind_priority[kind],"exact_seed_age_exemption":exact_seed_age_exempt,"scientific_authority":False,
             })
     priors.sort(key=lambda row:(row["publication_date"],row["priority"],row["ref"],row["phenomenon_id"]),reverse=True)
     return priors[:limit]

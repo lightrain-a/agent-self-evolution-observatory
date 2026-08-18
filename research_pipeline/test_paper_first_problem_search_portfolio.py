@@ -70,6 +70,19 @@ class SearchPortfolioTest(unittest.TestCase):
         self.assertIn("strongest mature reduction",prompt)
         self.assertIn("independent truth",prompt)
 
+    def test_exact_seed_age_exemption_survives_fresh_phenomenon_window(self):
+        recent_sha="a"*64; exact_sha="b"*64; stale_sha="c"*64
+        records=[
+            {"ref":"arXiv:recent","publication_date":"2026-08-13","title":"Recent","typed_evidence":{"measured_failures":[{"text":"Held-out accuracy degrades from 0.82 to 0.74 after the update.","text_sha256":recent_sha}],"boundary_observations":[]},"empirical_facts":[]},
+            {"ref":"arXiv:exact-old","publication_date":"2026-04-18","title":"Exact old","exact_seed":True,"exact_seed_age_exemption":True,"typed_evidence":{"measured_failures":[{"text":"Attack success increases by 12 points after benign self-evolution.","text_sha256":exact_sha}],"boundary_observations":[]},"empirical_facts":[]},
+            {"ref":"arXiv:ordinary-old","publication_date":"2026-04-18","title":"Ordinary old","typed_evidence":{"measured_failures":[{"text":"Held-out accuracy drops by 9 points after the persistent update.","text_sha256":stale_sha}],"boundary_observations":[]},"empirical_facts":[]},
+        ]
+        priors=_fresh_phenomenon_priors(records,recent_days=45)
+        self.assertEqual({row["phenomenon_id"] for row in priors},{recent_sha,exact_sha})
+        exact=next(row for row in priors if row["phenomenon_id"]==exact_sha)
+        self.assertTrue(exact["exact_seed_age_exemption"])
+        self.assertFalse(next(row for row in priors if row["phenomenon_id"]==recent_sha)["exact_seed_age_exemption"])
+
     def test_fresh_boundary_precision_excludes_protocol_rules_and_example_intros(self):
         records=[
             {"ref":"arXiv:protocol","publication_date":"2026-08-13","title":"Protocol","typed_evidence":{"measured_failures":[],"boundary_observations":[
@@ -96,10 +109,11 @@ class SearchPortfolioTest(unittest.TestCase):
             {"ref":"arXiv:negative","publication_date":"2026-08-13","title":"Negative boundary","typed_evidence":{"measured_failures":[
                 {"text":"Held-out accuracy degrades from 0.82 to 0.61 after the persistent update.","text_sha256":"c"*64},
                 {"text":"The update degrades task success by 12 points under context shift.","text_sha256":"d"*64},
+                {"text":"Offline self-evolution leads to clear safety degradation across high-risk categories.","text_sha256":"f"*64},
             ],"boundary_observations":[]},"empirical_facts":[]},
         ]
         priors=_fresh_phenomenon_priors(records)
-        self.assertEqual({row["phenomenon_id"] for row in priors},{"c"*64,"d"*64})
+        self.assertEqual({row["phenomenon_id"] for row in priors},{"c"*64,"d"*64,"f"*64})
         self.assertTrue(all(row["ref"]=="arXiv:negative" for row in priors))
 
     def test_quantitative_anomaly_requires_actual_boundary_not_ordinary_positive_gain(self):
