@@ -11,7 +11,7 @@ from pathlib import Path
 from .config import StorageSettings
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES
 from .paper_first_problem_gate_queue import build_problem_gate_queue
-from .paper_first_problem_generator import _ark, _durable_principle_dead_end_examples, _evidence_excerpt_matches, _extract_generator_payload, _normalize_lane_search, _principle_dead_end_reentry_audit, _provider_request_audit, _repair_block_only_reviewer_outer_braces, recover_archived_block_only_reviewer_raw, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
+from .paper_first_problem_generator import _ark, _durable_principle_dead_end_examples, _evidence_excerpt_matches, _extract_generator_payload, _normalize_lane_search, _normalize_saturation_scan, _principle_dead_end_reentry_audit, _provider_request_audit, _repair_block_only_reviewer_outer_braces, recover_archived_block_only_reviewer_raw, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
 from .paper_first_problem_generator_prompts import generator_prompt, reviewer_prompt
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
@@ -1017,6 +1017,17 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertEqual(scan["invalid_entries"],[])
         self.assertEqual(state["summary"]["structurally_reviewable"],1)
         self.assertEqual(state["summary"]["semantic_clear"],1)
+
+    def test_pending_saturation_string_is_repaired_only_when_bound_to_existing_baseline(self) -> None:
+        baselines=[
+            {"name":"snapshot-validity-horizon","exact_reduction_test":"Match update count and compare future first-violation hazard.","cannot_express":"state-content-dependent hazard"},
+            {"name":"current-safety-score-only","exact_reduction_test":"Match current safety score and compare future hazard.","cannot_express":"latent fragility"},
+        ]
+        scan=_normalize_saturation_scan({"checked":True,"matched_patterns":[],"pending_patterns":["snapshot-validity-horizon","current-safety-score-only","unknown-freeform"],"rejected_patterns":[]},baselines)
+        self.assertEqual(scan["pending_patterns"],[{"key":"snapshot-validity-horizon","exact_reduction_test":"Match update count and compare future first-violation hazard.","reason":"state-content-dependent hazard"}])
+        self.assertEqual(scan["nonledger_pending_baselines"],["current-safety-score-only"])
+        self.assertEqual(scan["invalid_entries"],["unknown-freeform"])
+        self.assertEqual(scan["normalization_repair_count"],2)
 
     def test_freeform_unknown_saturation_entry_blocks_before_reviewer(self) -> None:
         candidate=self.raw_candidate("CONTRADICTION")

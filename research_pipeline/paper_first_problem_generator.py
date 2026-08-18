@@ -382,10 +382,15 @@ def _ark(*,prompt,model,max_output_tokens,temperature=0.0,stage="problem_generat
 def _source(raw,key,reg):
     src=(raw.get("empirical_evidence") or {}).get(key) or {};ref=str(src.get("ref") or "").strip();r=reg.get(ref) or {}
     return {"ref":ref,"title":str(r.get("title") or ""),"claim":str(src.get("claim") or "").strip(),"evidence_role":str(src.get("evidence_role") or "").strip().upper(),"primary_source":bool(r),"primary_url":str(r.get("primary_url") or ""),"source_sha256":str(r.get("source_sha256") or "")}
-def _normalize_saturation_scan(raw_scan):
+def _normalize_saturation_scan(raw_scan,mature_theory_baselines=None):
     scan=raw_scan if isinstance(raw_scan,dict) else {}
     known={str(row.get("key") or "") for row in REDUCTION_PATTERNS}
-    matched=[];pending=[];rejected=[];invalid=[]
+    baseline_by_name={}
+    for row in mature_theory_baselines or []:
+        if not isinstance(row,dict):continue
+        name=str(row.get("name") or "").strip();test=str(row.get("exact_reduction_test") or "").strip();reason=str(row.get("cannot_express") or "").strip()
+        if name:baseline_by_name[name]={"exact_reduction_test":test,"reason":reason}
+    matched=[];pending=[];rejected=[];invalid=[];nonledger_pending=[];repair_count=0
     for value in scan.get("matched_patterns") or []:
         text=str(value or "").strip()
         if not text: continue
@@ -396,6 +401,13 @@ def _normalize_saturation_scan(raw_scan):
             rejected.append({"key":key,"reason":text[len(key):].strip(" :-—")});continue
         invalid.append(text)
     for row in scan.get("pending_patterns") or []:
+        if isinstance(row,str):
+            key=row.strip()
+            if key in known and key in baseline_by_name and (baseline_by_name[key]["exact_reduction_test"] or baseline_by_name[key]["reason"]):
+                pending.append({"key":key,"exact_reduction_test":baseline_by_name[key]["exact_reduction_test"],"reason":baseline_by_name[key]["reason"]});repair_count+=1;continue
+            if key and key in baseline_by_name and key not in known:
+                nonledger_pending.append(key);repair_count+=1;continue
+            invalid.append(key);continue
         if not isinstance(row,dict): invalid.append(str(row));continue
         key=str(row.get("key") or "").strip();test=str(row.get("exact_reduction_test") or "").strip();reason=str(row.get("reason") or "").strip()
         if key in known and (test or reason): pending.append({"key":key,"exact_reduction_test":test,"reason":reason})
@@ -409,11 +421,11 @@ def _normalize_saturation_scan(raw_scan):
     for row in rejected:
         signature=(row["key"],row["reason"])
         if signature not in seen: seen.add(signature);dedup_rejected.append(row)
-    return {"checked":scan.get("checked") is True,"matched_patterns":sorted(set(matched)),"pending_patterns":pending,"rejected_patterns":dedup_rejected,"invalid_entries":invalid}
+    return {"checked":scan.get("checked") is True,"matched_patterns":sorted(set(matched)),"pending_patterns":pending,"rejected_patterns":dedup_rejected,"invalid_entries":invalid,"nonledger_pending_baselines":sorted(set(nonledger_pending)),"normalization_repair_count":repair_count}
 
 
 def _normalize(raw,reg):
-    evidence=raw.get("empirical_evidence") or {};lane=str(raw.get("discovery_lane") or "").strip().upper();lane_evidence=raw.get("lane_evidence") or {}
+    evidence=raw.get("empirical_evidence") or {};lane=str(raw.get("discovery_lane") or "").strip().upper();lane_evidence=raw.get("lane_evidence") or {};baselines=raw.get("mature_theory_baselines") or []
     return {
         "candidate_id":str(raw.get("candidate_id") or "").strip(),"title":str(raw.get("title") or "").strip(),"discovery_lane":lane,
         "empirical_evidence":{"source_a":_source(raw,"source_a",reg),"source_b":_source(raw,"source_b",reg),"relation":str(evidence.get("relation") or "").strip()},
@@ -421,10 +433,10 @@ def _normalize(raw,reg):
         "source_branch_id":str(raw.get("source_branch_id") or "").strip(),"branch_depth":int(raw.get("branch_depth") or 0),
         "irreducible_object":str(raw.get("irreducible_object") or "").strip(),"novelty_category":str(raw.get("novelty_category") or "").strip(),
         "closest_work":dict(raw.get("closest_work") or {}) if isinstance(raw.get("closest_work"),dict) else {},"closest_work_distance":raw.get("closest_work_distance"),
-        "mature_theory_baselines":raw.get("mature_theory_baselines") or [],"reduction_falsifiability_contract":raw.get("reduction_falsifiability_contract") or {},
+        "mature_theory_baselines":baselines,"reduction_falsifiability_contract":raw.get("reduction_falsifiability_contract") or {},
         "same_information_nonreducibility":raw.get("same_information_nonreducibility") or {},"exact_prediction":str(raw.get("exact_prediction") or "").strip(),
         "strongest_same_information_baseline":str(raw.get("strongest_same_information_baseline") or "").strip(),"domain_transfer_audit":raw.get("domain_transfer_audit") or {},
-        "saturation_scan":_normalize_saturation_scan(raw.get("saturation_scan")),"cheapest_problem_falsifier":str(raw.get("cheapest_problem_falsifier") or "").strip(),
+        "saturation_scan":_normalize_saturation_scan(raw.get("saturation_scan"),baselines),"cheapest_problem_falsifier":str(raw.get("cheapest_problem_falsifier") or "").strip(),
         "endpoint_headroom_requirement":str(raw.get("endpoint_headroom_requirement") or "").strip(),"importance":str(raw.get("importance") or "").strip(),"likely_iclr_story":str(raw.get("likely_iclr_story") or "").strip(),
         "semantic_reduction_review":{"reviewed":False,"block_only":True,"verdict":"BLOCK","reviewer_model":"","raw_sha256":"","source_claims_grounded":False,"source_claim_grounding":{},"lane_contract_verified":False,"lane_contract_reason":"unreviewed","matched_patterns":[],"strongest_reduction":"unreviewed"},
         "authority":{k:False for k in ("method_design","experiment_blueprint","local_validation","p0","gpu","full_experiment")}}
