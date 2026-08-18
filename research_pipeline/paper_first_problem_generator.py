@@ -243,6 +243,10 @@ def _durable_principle_dead_end_examples(path:Path=DURABLE_PRINCIPLE_DEAD_END_JS
             "opposite_principle":str(counter.get("opposite_principle") or "")[:500],
             "opposite_search_seed":str(counter.get("opposite_search_seed") or "")[:700],
             "reopen_condition":str(counter.get("reopen_condition") or row.get("reopen_only_if") or "")[:700],
+            "failure_layer":str(row.get("failure_layer") or ""),
+            "memory_class":str(row.get("memory_class") or ""),
+            "principle_layer_closed":row.get("principle_layer_closed") is True,
+            "broader_core_principle_falsified":row.get("broader_core_principle_falsified") is True,
             "dead_end_certified":True,
             "scientific_authority":False,
             "_order":order,
@@ -293,6 +297,10 @@ def _private_dead_end_prompt_memory(storage:StorageSettings,public_memory:dict[s
         "summary":{key:public_memory.get(key) for key in ("blocked_candidate_attempts","blocked_by_lane","reduction_pattern_counts","top_reduction_basin","repeated_reduction_basin")},
         "lane_search_priority":lane_search_priority,
         "recent_blocked_examples":examples,
+        "typed_closed_basins":principle_examples,
+        "typed_closed_basin_count":len(principle_examples),
+        # Legacy aliases retained for prompt/schema compatibility. They mean
+        # scoped basin closure, not broad/core-principle falsification.
         "principle_certified_dead_ends":principle_examples,
         "principle_certified_dead_end_count":len(principle_examples),
         "scientific_authority":False,

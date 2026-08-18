@@ -8,6 +8,14 @@ from pathlib import Path
 from typing import Any
 
 from .config import PROJECT_ROOT
+from .dead_end_failure_layers import (
+    FAILURE_LAYERS,
+    MEMORY_CLASS_BY_LAYER,
+    classify_readjudication,
+    normalize_closed_row,
+    problem_novelty_classification,
+    summarize_failure_layers,
+)
 from .paper_first_shadow_near_miss_preflight import build_shadow_near_miss_preflight, compile_shadow_dead_end_rows
 from .principle_adjudication import audit_dead_end_counter_explanation
 from .positive_residual_assets import build_positive_residual_asset_registry
@@ -119,6 +127,10 @@ SHADOW_MEMORY_MAINTENANCE_POLICY = {
     "lane_contract_failure_is_a_reopenable_hold_not_dead_end": True,
     "unresolved_exact_reduction_test_is_a_hold_not_dead_end": True,
     "persistent_dead_end_requires_positive_counter_explanation": True,
+    "closed_basin_must_name_failure_layer": True,
+    "scoped_closed_basin_is_not_automatically_principle_stop": True,
+    "principle_stop_does_not_imply_benchmark_level_dead_end": True,
+    "principle_stop_requires_explicit_stop_class_or_broader_falsification": True,
     "canonical_generator_and_queue_untouched": True,
 }
 
@@ -142,7 +154,7 @@ BASE_SHADOW_DEAD_END_MEMORY = {
             "strongest_reduction": "generic contextual constrained governance using the same model, trigger, workflow, security, and utility information",
             "current_source_refs": ["arXiv:2602.12430", "arXiv:2607.01136", "arXiv:2608.09732", "arXiv:2605.30723"],
             "dead_end_certified": True,
-            "memory_class": "PRINCIPLE_DEAD_END",
+            **problem_novelty_classification(basis="historical-paper-design-collision-re-review-2026-08-18"),
             "counter_explanation": {
                 "type": "SAME_INFORMATION_REDUCTION",
                 "statement": "The proposed acceptance object is expressible as contextual constrained governance when the same model/trigger/workflow/security/utility observations are available.",
@@ -152,6 +164,7 @@ BASE_SHADOW_DEAD_END_MEMORY = {
                 "scope": "SP-09 paper-problem formulation under the reviewed primary-source evidence",
                 "same_information_or_scope_matched": True,
                 "evidence_refs": ["arXiv:2602.12430", "arXiv:2607.01136", "arXiv:2608.09732", "arXiv:2605.30723"],
+                "alternative_explanations_ruled_out": ["the proposal is not merely waiting for executable support", "the collision is not a provider/runtime failure", "the same-information governance baseline already receives the candidate's stated context variables"],
                 "positive_support": True,
                 "same_information_reduction_verified": True,
                 "reopen_condition": "Current primary evidence supports an ex-ante non-separability or impossibility prediction for the same skill under identical model/trigger/workflow/security/utility information that generic contextual governance cannot express."
@@ -459,6 +472,7 @@ def _principle_readjudication_rows(paths: list[Path] | None = None) -> list[dict
                     "search_closed_reason": str(asset.get("search_closed_reason") or "").strip(),
                     "scientific_authority": False,
                 }
+        failure_layer = classify_readjudication(payload, artifact_ref)
         rows.append({
             "source_candidate_id": candidate_id,
             "basin": f"principle-readjudication-{signature}",
@@ -476,7 +490,7 @@ def _principle_readjudication_rows(paths: list[Path] | None = None) -> list[dict
             "reason": str((payload.get("scientific_interpretation") or {}).get("safe_claim") or counter.get("statement") or ""),
             "reopen_only_if": reopen,
             "dead_end_certified": True,
-            "memory_class": "PRINCIPLE_DEAD_END",
+            **failure_layer,
             "counter_explanation": dict(counter),
             "source_readjudication_artifact": artifact_ref,
             "opposite_search_asset_evidence": asset_row,
@@ -584,7 +598,7 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
             "reason": reason,
             "reopen_only_if": "New primary evidence supplies an ex-ante same-information prediction that the recorded current-source reduction cannot express under matched information, budget, and operational scope; renaming components, changing application domain, or proposing an unexecuted ablation does not reopen the basin.",
             "dead_end_certified": True,
-            "memory_class": "PRINCIPLE_DEAD_END",
+            **problem_novelty_classification(basis="current-primary-collision-re-review-2026-08-18"),
             "counter_explanation": {
                 "type": "SAME_INFORMATION_REDUCTION",
                 "statement": strongest,
@@ -594,6 +608,7 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
                 "scope": "the bounded candidate problem formulation and current-source collision review",
                 "same_information_or_scope_matched": True,
                 "evidence_refs": refs,
+                "alternative_explanations_ruled_out": ["missing execution support", "provider/runtime failure", "mere terminology or application-domain change"],
                 "positive_support": True,
                 "same_information_reduction_verified": True,
                 "reopen_condition": "New primary evidence supplies an ex-ante same-information prediction that the recorded current-source reduction cannot express under matched information, budget, and operational scope."
@@ -698,10 +713,10 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
     readjudication_rows = [dict(row) for row in (principle_readjudication_rows or []) if isinstance(row, dict) and row.get("dead_end_certified") is True]
     readjudication_by_basin = {str(row.get("basin") or ""): row for row in readjudication_rows if str(row.get("basin") or "")}
     memory["blocked_objects"].extend(readjudication_by_basin[key] for key in sorted(readjudication_by_basin))
-    # A certified principle closure supersedes an older support-unavailable hold for
-    # the exact same fresh candidate.  Keep the release audit as provenance/reopen
-    # evidence, but do not expose contradictory live memory saying the same object is
-    # simultaneously a PRINCIPLE_DEAD_END and a REOPENABLE_HOLD.
+    # A certified scoped closure supersedes an older support-unavailable hold for
+    # the exact same fresh candidate. Keep the release audit as provenance/reopen
+    # evidence, but do not expose contradictory live memory saying the same exact
+    # formulation is simultaneously closed and a REOPENABLE_HOLD.
     principle_closed_candidate_ids = {
         str(row.get("source_candidate_id") or "")
         for row in readjudication_rows
@@ -722,9 +737,10 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
     memory["hold_objects"].extend(hold_by_basin[key] for key in sorted(hold_by_basin))
 
     # Migrate legacy memory into the stricter epistemic split. Only rows with an
-    # affirmative reduction/collision explanation become persistent dead ends.
-    # Missing support, lane-contract failures, and unresolved reduction tests are
-    # retained as holds and must never machine-veto future scientific search.
+    # affirmative reduction/collision explanation remain persistent closed basins.
+    # Their memory_class is then typed by the scientific layer that actually failed;
+    # a scoped closure is not automatically a core-principle falsification. Missing
+    # support, lane-contract failures, and unresolved reduction tests remain holds.
     all_rows = [dict(row) for row in list(memory.get("blocked_objects") or []) + list(memory.get("hold_objects") or []) if isinstance(row, dict)]
     certified_rows: list[dict[str, Any]] = []
     hold_rows: list[dict[str, Any]] = []
@@ -735,7 +751,7 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
         certified = item.get("dead_end_certified") is True or legacy_reduction_dead_end
         if certified:
             item["dead_end_certified"] = True
-            item["memory_class"] = "PRINCIPLE_DEAD_END"
+            item = normalize_closed_row(item)
             strongest = str(item.get("strongest_reduction") or "").strip()
             refs = list(item.get("current_source_refs") or item.get("evidence_basis") or [])
             reopen = str(item.get("reopen_only_if") or "").strip()
@@ -768,9 +784,22 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
 
     memory["blocked_objects"] = certified_rows
     memory["hold_objects"] = hold_rows
-    memory["memory_id"] = "shadow-paper-design-principle-dead-ends-and-holds-v2"
-    memory["principle_dead_end_count"] = len(certified_rows)
-    memory["principle_readjudication_dead_end_count"] = sum(str(row.get("basin") or "").startswith("principle-readjudication-") for row in certified_rows)
+    memory["memory_id"] = "shadow-paper-design-layer-typed-closed-basins-and-holds-v3"
+    layer_counts = summarize_failure_layers(certified_rows)
+    memory["closed_basin_count"] = len(certified_rows)
+    memory["failure_layer_counts"] = layer_counts
+    memory["problem_novelty_stop_count"] = layer_counts["PROBLEM_NOVELTY"]
+    memory["operationalization_identifiability_stop_count"] = layer_counts["OPERATIONALIZATION_IDENTIFIABILITY"]
+    memory["method_formulation_stop_count"] = layer_counts["METHOD_FORMULATION"]
+    memory["assumption_scope_stop_count"] = layer_counts["ASSUMPTION_SCOPE"]
+    memory["principle_stop_count"] = layer_counts["PRINCIPLE"]
+    memory["broader_core_principle_falsification_count"] = sum(row.get("broader_core_principle_falsified") is True for row in certified_rows)
+    # Compatibility fields: principle_dead_end_count means scoped PRINCIPLE_STOP;
+    # core_principle_dead_end_count is kept only for explicit broader/core falsification.
+    memory["principle_dead_end_count"] = layer_counts["PRINCIPLE"]
+    memory["core_principle_dead_end_count"] = memory["broader_core_principle_falsification_count"]
+    memory["principle_readjudication_closed_basin_count"] = sum(str(row.get("basin") or "").startswith("principle-readjudication-") for row in certified_rows)
+    memory["principle_readjudication_dead_end_count"] = sum(str(row.get("basin") or "").startswith("principle-readjudication-") and row.get("failure_layer") == "PRINCIPLE" for row in certified_rows)
     closure_rows=[row.get("fresh_phenomenon_closure") or {} for row in certified_rows if isinstance(row.get("fresh_phenomenon_closure"),dict) and row.get("fresh_phenomenon_closure")]
     memory["fresh_phenomenon_closure_count"] = len(closure_rows)
     memory["fresh_phenomenon_closed_evidence_count"] = sum(len(row.get("closed_evidence_sha256") or []) for row in closure_rows)
@@ -856,7 +885,16 @@ def merge_shadow_terminal_run_memory(state: dict[str, Any], terminal_run: dict[s
     summary = merged.setdefault("summary", {})
     summary.update({
         "shadow_dead_end_objects": len(memory.get("blocked_objects") or []),
+        "shadow_closed_basins": int(memory.get("closed_basin_count") or 0),
         "principle_readjudication_dead_ends": int(memory.get("principle_readjudication_dead_end_count") or 0),
+        "principle_readjudication_closed_basins": int(memory.get("principle_readjudication_closed_basin_count") or 0),
+        "problem_novelty_stops": int(memory.get("problem_novelty_stop_count") or 0),
+        "operationalization_identifiability_stops": int(memory.get("operationalization_identifiability_stop_count") or 0),
+        "method_formulation_stops": int(memory.get("method_formulation_stop_count") or 0),
+        "assumption_scope_stops": int(memory.get("assumption_scope_stop_count") or 0),
+        "principle_stops": int(memory.get("principle_stop_count") or 0),
+        "broader_core_principle_falsifications": int(memory.get("broader_core_principle_falsification_count") or 0),
+        "core_principle_dead_ends": int(memory.get("core_principle_dead_end_count") or 0),
         "shadow_hold_objects": len(memory.get("hold_objects") or []),
         "current_source_hard_veto_dead_ends": int(memory.get("current_source_hard_veto_count") or 0),
         "current_source_hard_veto_added_from_latest_run": 0,
@@ -1092,6 +1130,10 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "semantic_lane_or_pending_reduction_is_not_a_dead_end": True,
             "semantic_soft_collision_alone_is_not_a_dead_end": True,
             "persistent_dead_end_requires_positive_counter_explanation": True,
+            "closed_basin_must_name_failure_layer": True,
+            "scoped_closed_basin_is_not_automatically_principle_stop": True,
+            "principle_stop_does_not_imply_benchmark_level_dead_end": True,
+            "principle_stop_requires_explicit_stop_class_or_broader_falsification": True,
             "principle_readjudications_feed_opposite_search_control_only": True,
             "current_primary_source_collision_review_required": True,
             "same_information_reduction_required_before_method_design": True,
@@ -1123,7 +1165,16 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "stop_standalone": counts.get("STOP_STANDALONE_COLLISION_KEEP_CONTEXT_RISK_AXIS", 0),
             "support_inventory_required": counts.get("REVISE_PAPER_PROBLEM_SUPPORT_INVENTORY_REQUIRED", 0),
             "shadow_dead_end_objects": len(dead_end_memory.get("blocked_objects") or []),
+            "shadow_closed_basins": int(dead_end_memory.get("closed_basin_count") or 0),
             "principle_readjudication_dead_ends": int(dead_end_memory.get("principle_readjudication_dead_end_count") or 0),
+            "principle_readjudication_closed_basins": int(dead_end_memory.get("principle_readjudication_closed_basin_count") or 0),
+            "problem_novelty_stops": int(dead_end_memory.get("problem_novelty_stop_count") or 0),
+            "operationalization_identifiability_stops": int(dead_end_memory.get("operationalization_identifiability_stop_count") or 0),
+            "method_formulation_stops": int(dead_end_memory.get("method_formulation_stop_count") or 0),
+            "assumption_scope_stops": int(dead_end_memory.get("assumption_scope_stop_count") or 0),
+            "principle_stops": int(dead_end_memory.get("principle_stop_count") or 0),
+            "broader_core_principle_falsifications": int(dead_end_memory.get("broader_core_principle_falsification_count") or 0),
+            "core_principle_dead_ends": int(dead_end_memory.get("core_principle_dead_end_count") or 0),
             "shadow_hold_objects": len(dead_end_memory.get("hold_objects") or []),
             "current_source_hard_veto_dead_ends": int(dead_end_memory.get("current_source_hard_veto_count") or 0),
             "current_source_hard_veto_added_from_latest_run": int(dead_end_memory.get("current_source_hard_veto_added_from_latest_run") or 0),
@@ -1166,18 +1217,23 @@ def validate_search_portfolio_design_adjudication(state: dict[str, Any]) -> list
         errors.append("SP design adjudication cannot authorize downstream work")
     if policy.get("this_is_a_substate_not_a_new_backend_component") is not True or policy.get("paper_problem_support_inventory_precedes_method_design_when_identifiability_is_claimed") is not True:
         errors.append("SP design must remain a Paper Design substate and gate identifiability on support inventory")
-    if policy.get("source_is_shadow_search_portfolio") is not True or policy.get("shadow_queue_has_zero_paper_design_authority") is not True or policy.get("cannot_grant_or_revoke_live_paper_design_authority") is not True or policy.get("current_source_hard_veto_memory_persists_across_shadow_runs") is not True or policy.get("semantic_hold_memory_persists_across_shadow_runs") is not True or policy.get("semantic_lane_or_pending_reduction_is_not_a_dead_end") is not True or policy.get("persistent_dead_end_requires_positive_counter_explanation") is not True or policy.get("principle_readjudications_feed_opposite_search_control_only") is not True or policy.get("semantic_soft_collision_alone_is_not_a_dead_end") is not True:
-        errors.append("SP design audit must remain retrospective shadow feedback with zero live Paper Design authority and principle-certified dead-end semantics")
+    if policy.get("source_is_shadow_search_portfolio") is not True or policy.get("shadow_queue_has_zero_paper_design_authority") is not True or policy.get("cannot_grant_or_revoke_live_paper_design_authority") is not True or policy.get("current_source_hard_veto_memory_persists_across_shadow_runs") is not True or policy.get("semantic_hold_memory_persists_across_shadow_runs") is not True or policy.get("semantic_lane_or_pending_reduction_is_not_a_dead_end") is not True or policy.get("persistent_dead_end_requires_positive_counter_explanation") is not True or policy.get("closed_basin_must_name_failure_layer") is not True or policy.get("scoped_closed_basin_is_not_automatically_principle_stop") is not True or policy.get("principle_stop_does_not_imply_benchmark_level_dead_end") is not True or policy.get("principle_stop_requires_explicit_stop_class_or_broader_falsification") is not True or policy.get("principle_readjudications_feed_opposite_search_control_only") is not True or policy.get("semantic_soft_collision_alone_is_not_a_dead_end") is not True:
+        errors.append("SP design audit must remain retrospective zero-authority search control and every closed basin must be typed by its actual scientific failure layer")
     if (state.get("advisory_consultation") or {}).get("scientific_authority") is not False or (state.get("advisory_consultation") or {}).get("failed_or_missing_review_is_not_pass") is not True:
         errors.append("unavailable AI premortem reviewers must remain zero-authority and cannot count as PASS")
     memory = state.get("shadow_dead_end_memory") or {}; blocked_objects=[row for row in memory.get("blocked_objects") or [] if isinstance(row,dict)]; hold_objects=[row for row in memory.get("hold_objects") or [] if isinstance(row,dict)]; blocked_ids={str(row.get("source_candidate_id") or "") for row in blocked_objects}; hold_ids={str(row.get("source_candidate_id") or "") for row in hold_objects}
     if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True or "SP-09" not in blocked_ids or "SP-15" not in hold_ids or "SP-15" in blocked_ids:
-        errors.append("Paper Design memory must retain SP-09 as a principle-certified dead end and SP-15 only as a reopenable hold")
-    if any(row.get("dead_end_certified") is not True or row.get("memory_class") != "PRINCIPLE_DEAD_END" or not isinstance(row.get("counter_explanation"),dict) or not str((row.get("counter_explanation") or {}).get("statement") or "").strip() or not str((row.get("counter_explanation") or {}).get("opposite_principle") or "").strip() or not str((row.get("counter_explanation") or {}).get("opposite_search_seed") or "").strip() or not (row.get("counter_explanation") or {}).get("evidence_refs") or not str(row.get("reopen_only_if") or "").strip() for row in blocked_objects):
-        errors.append("every persistent blocked object must carry an affirmative counter-explanation, opposite-principle search seed, and reopen condition")
+        errors.append("Paper Design memory must retain SP-09 as a problem/novelty stop and SP-15 only as a reopenable hold")
+    if any(row.get("dead_end_certified") is not True or str(row.get("failure_layer") or "") not in FAILURE_LAYERS or row.get("memory_class") != MEMORY_CLASS_BY_LAYER.get(str(row.get("failure_layer") or "")) or row.get("principle_layer_closed") is not (str(row.get("failure_layer") or "") == "PRINCIPLE") or row.get("broader_core_principle_falsified") not in {True,False} or not isinstance(row.get("counter_explanation"),dict) or not str((row.get("counter_explanation") or {}).get("statement") or "").strip() or not str((row.get("counter_explanation") or {}).get("opposite_principle") or "").strip() or not str((row.get("counter_explanation") or {}).get("opposite_search_seed") or "").strip() or not (row.get("counter_explanation") or {}).get("evidence_refs") or not str(row.get("reopen_only_if") or "").strip() for row in blocked_objects):
+        errors.append("every persistent blocked object must carry a valid failure layer/memory class plus an affirmative counter-explanation and reopen condition")
+    layer_counts = summarize_failure_layers(blocked_objects)
+    broader_count=sum(row.get("broader_core_principle_falsified") is True for row in blocked_objects)
+    if int(memory.get("closed_basin_count") or 0) != len(blocked_objects) or dict(memory.get("failure_layer_counts") or {}) != layer_counts or int(memory.get("problem_novelty_stop_count") or 0) != layer_counts["PROBLEM_NOVELTY"] or int(memory.get("operationalization_identifiability_stop_count") or 0) != layer_counts["OPERATIONALIZATION_IDENTIFIABILITY"] or int(memory.get("method_formulation_stop_count") or 0) != layer_counts["METHOD_FORMULATION"] or int(memory.get("assumption_scope_stop_count") or 0) != layer_counts["ASSUMPTION_SCOPE"] or int(memory.get("principle_stop_count") or 0) != layer_counts["PRINCIPLE"] or int(memory.get("principle_dead_end_count") or 0) != layer_counts["PRINCIPLE"] or int(memory.get("broader_core_principle_falsification_count") or 0) != broader_count or int(memory.get("core_principle_dead_end_count") or 0) != broader_count:
+        errors.append("closed-basin failure-layer accounting must match typed blocked objects; PRINCIPLE_STOP and broader benchmark/core falsification are tracked separately")
     readjudicated=[row for row in blocked_objects if str(row.get("basin") or "").startswith("principle-readjudication-")]
-    if int(memory.get("principle_readjudication_dead_end_count") or 0)!=len(readjudicated) or any(not str(row.get("source_readjudication_artifact") or "").strip() or row.get("scientific_authority") is not False for row in readjudicated):
-        errors.append("principle readjudications must enter persistent memory only as provenance-bound zero-authority opposite-search control")
+    readjudicated_principle=[row for row in readjudicated if row.get("failure_layer")=="PRINCIPLE"]
+    if int(memory.get("principle_readjudication_closed_basin_count") or 0)!=len(readjudicated) or int(memory.get("principle_readjudication_dead_end_count") or 0)!=len(readjudicated_principle) or any(not str(row.get("source_readjudication_artifact") or "").strip() or row.get("scientific_authority") is not False for row in readjudicated):
+        errors.append("principle readjudications must enter persistent memory as provenance-bound layer-typed zero-authority closed-basin control; only explicit PRINCIPLE_STOP rows count as readjudication principle dead ends")
     closures=[row.get("fresh_phenomenon_closure") or {} for row in blocked_objects if isinstance(row.get("fresh_phenomenon_closure"),dict) and row.get("fresh_phenomenon_closure")]
     if int(memory.get("fresh_phenomenon_closure_count") or 0)!=len(closures) or int(memory.get("fresh_phenomenon_closed_evidence_count") or 0)!=sum(len(row.get("closed_evidence_sha256") or []) for row in closures) or any(not str(row.get("source_ref") or "").startswith("arXiv:") or not row.get("closed_evidence_sha256") or row.get("scientific_authority") is not False or any(not re.fullmatch(r"[0-9a-f]{64}",str(value or "")) for value in row.get("closed_evidence_sha256") or []) for row in closures):
         errors.append("fresh phenomenon closures must be exact evidence-SHA, source-bounded, provenance-preserving zero-authority search control")

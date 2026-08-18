@@ -78,7 +78,7 @@ class SearchPortfolioTest(unittest.TestCase):
         self.assertIn("FRESH_PHENOMENON_TARGET",prompt)
         self.assertIn(boundary_sha,prompt)
         self.assertIn("Reward rises from 0.56",prompt)
-        self.assertNotIn(failure_sha,prompt.split("FRESH_PHENOMENON_PRIORS=",1)[1].split(". CERTIFIED",1)[0])
+        self.assertNotIn(failure_sha,prompt.split("FRESH_PHENOMENON_PRIORS=",1)[1].split(". LAYER-TYPED CLOSED-BASIN INVERSION PRIORS=",1)[0])
         self.assertIn("strongest mature reduction",prompt)
         self.assertIn("independent truth",prompt)
 
@@ -167,7 +167,7 @@ class SearchPortfolioTest(unittest.TestCase):
         prompt=_expansion_prompt("UNEXPLAINED_BOUNDARY",self.records(),2,memory)
         self.assertIn("Active asset",prompt)
         self.assertNotIn("Inactive asset",prompt)
-        certified_slice=prompt.split("CERTIFIED DEAD-END INVERSION PRIORS=",1)[1].split(". DEAD-END SEARCH MEMORY",1)[0]
+        certified_slice=prompt.split("LAYER-TYPED CLOSED-BASIN INVERSION PRIORS=",1)[1].split(". CLOSED-BASIN SEARCH MEMORY",1)[0]
         self.assertNotIn("inactive seed",certified_slice)
         self.assertNotIn("inactive stale seed",certified_slice)
         self.assertNotIn("Inactive asset stale receipt",prompt)
@@ -178,9 +178,10 @@ class SearchPortfolioTest(unittest.TestCase):
         self.assertEqual(len(priors),1)
         self.assertEqual(priors[0]["source_candidate_id"],"D1")
         prompt=_expansion_prompt("CONTRADICTION",self.records(),1,memory)
-        self.assertIn("DEAD-END INVERSION is a search prior, never authority",prompt)
+        self.assertIn("CLOSED-BASIN INVERSION is a search prior, never authority",prompt)
+        self.assertIn("PRINCIPLE_STOP",prompt)
         self.assertIn("relevance-conditioned evidence debt",prompt)
-        self.assertNotIn("must not appear",prompt.split("CERTIFIED DEAD-END INVERSION PRIORS=",1)[1].split(". DEAD-END SEARCH MEMORY",1)[0])
+        self.assertNotIn("must not appear",prompt.split("LAYER-TYPED CLOSED-BASIN INVERSION PRIORS=",1)[1].split(". CLOSED-BASIN SEARCH MEMORY",1)[0])
 
     def test_formulation_prompt_never_turns_unresolved_reduction_into_a_fake_clear(self):
         records=self.records();registry={row["ref"]:row for row in records};branch={"seed_id":"B1","parent_id":"","branch_depth":0,"discovery_lane":"UNEXPLAINED_BOUNDARY","title":"Boundary","problem_seed":"Question","scientific_tension":"Tension","problem_family":"boundary","structural_signature":"boundary|signal","agent_specific_constraint":"agent-specific","empirical_evidence":{"source_a":{"ref":records[0]["ref"],"claim":"A","evidence_role":"EMPIRICAL_FACT"},"source_b":{"ref":records[0]["ref"],"claim":"B","evidence_role":"EMPIRICAL_FACT"}},"lane_evidence":{},"cross_domain_origin":""}

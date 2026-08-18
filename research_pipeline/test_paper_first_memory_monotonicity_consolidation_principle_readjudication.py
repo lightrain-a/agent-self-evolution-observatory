@@ -50,7 +50,9 @@ class MemoryMonotonicityConsolidationPrincipleReadjudicationTest(unittest.TestCa
         self.assertEqual(row["search_primitive"], SEARCH_PRIMITIVE)
         self.assertEqual(row["current_source_refs"], sorted([SOURCE_A, SOURCE_B]))
         self.assertTrue(row["dead_end_certified"])
-        self.assertEqual(row["memory_class"], "PRINCIPLE_DEAD_END")
+        self.assertEqual(row["memory_class"], "METHOD_FORMULATION_STOP")
+        self.assertEqual(row["failure_layer"], "METHOD_FORMULATION")
+        self.assertFalse(row["broader_core_principle_falsified"])
         self.assertFalse(row["scientific_authority"])
         self.assertIn("retention/compression quantity", row["reopen_only_if"])
 

@@ -6,6 +6,7 @@ from pathlib import Path
 
 from .ark_provider import extract_json_object
 from .config import PROJECT_ROOT
+from .dead_end_failure_layers import normalize_closed_row
 from .paper_first_problem_discovery_contract import SEARCH_PORTFOLIO_PRIMITIVES, audit_problem_candidate, audit_shadow_problem_candidate
 from .paper_first_problem_generator import _ark,_apply_reviews,_normalize
 from .paper_first_problem_generator_prompts import reviewer_prompt
@@ -245,7 +246,7 @@ def _shadow_dead_end_memory(path:Path|None)->dict:
         basin=str(row.get("basin") or "");disposition=str(row.get("disposition") or "")
         certified=row.get("dead_end_certified") is True or basin.startswith("current-source-hard-veto-") or disposition in {"STOP_CURRENT_PRIMARY_COLLISION","STOP_MATURE_THEORY_REDUCTION"}
         if certified:
-            row["dead_end_certified"]=True;row["memory_class"]="PRINCIPLE_DEAD_END";blocked.append(row)
+            row["dead_end_certified"]=True;blocked.append(normalize_closed_row(row))
         else:
             row["dead_end_certified"]=False;row.setdefault("memory_class","REOPENABLE_HOLD");holds.append(row)
     memory=dict(memory);memory["blocked_objects"]=blocked;memory["hold_objects"]=holds

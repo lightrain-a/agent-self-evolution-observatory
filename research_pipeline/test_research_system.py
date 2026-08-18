@@ -78,10 +78,14 @@ class ResearchSystemTest(unittest.TestCase):
             row for row in memory["blocked_objects"]
             if row.get("source_candidate_id")!="AUTO-1-RELEVANT-SKILL-MISEXECUTION"
         ]
-        memory["principle_dead_end_count"]-=1
-        memory["principle_readjudication_dead_end_count"]-=1
+        memory["closed_basin_count"]-=1
+        memory["failure_layer_counts"]["METHOD_FORMULATION"]-=1
+        memory["method_formulation_stop_count"]-=1
+        memory["principle_readjudication_closed_basin_count"]-=1
         sp["summary"]["shadow_dead_end_objects"]-=1
-        sp["summary"]["principle_readjudication_dead_ends"]-=1
+        sp["summary"]["shadow_closed_basins"]-=1
+        sp["summary"]["method_formulation_stops"]-=1
+        sp["summary"]["principle_readjudication_closed_basins"]-=1
         errors=validate_state(stale)
         self.assertIn(
             "research-system embedded Search Portfolio state is stale versus current durable artifact",

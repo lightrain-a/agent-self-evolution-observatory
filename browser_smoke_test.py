@@ -458,7 +458,7 @@ def main() -> None:
         require("代表论文" in zh_state["text"] and "方向关联" in zh_state["text"], "Chinese direction literature did not switch")
         shell_zh = execute(session_id, """return {brand:[document.querySelector('.brand strong')?.textContent||'',document.querySelector('.brand span')?.textContent||''],nav:[...document.querySelectorAll('.nav-level1 span:first-child,.nav-level2')].map(x=>x.textContent.trim()),placeholder:document.querySelector('#site-search')?.getAttribute('placeholder')||'',status:document.querySelector('.project-status-strip')?.textContent||''};""")
         require(shell_zh["brand"] == ["Agent 自进化","科研观测站"] and "开始阅读" in shell_zh["nav"] and "领域图谱" in shell_zh["nav"] and "研究规划" in shell_zh["nav"] and "文献" in shell_zh["nav"] and "Start Here" not in shell_zh["nav"] and shell_zh["placeholder"] == "搜索研究站内容…", f"shared shell did not fully switch to Chinese: {shell_zh}")
-        require(all(marker in shell_zh["status"] for marker in ("投稿就绪论文","还缺的论文证据","通过正式问题检查的新研究问题","因缺证据暂缓的新现象","已关闭的暂定候选")), f"shared current-status strip is not plain-language Chinese: {shell_zh['status']}")
+        require(all(marker in shell_zh["status"] for marker in ("投稿就绪论文","还缺的论文证据","通过正式问题检查的新研究问题","因缺证据暂缓的新现象","已关闭的精确候选表述","核心原理级关闭")), f"shared current-status strip is not plain-language Chinese: {shell_zh['status']}")
 
         navigate("/paper-ideas.html", 7)
         idea_portfolio = execute(

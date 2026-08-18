@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import PROJECT_ROOT
+from .dead_end_failure_layers import problem_novelty_classification
 
 SPEC_PATH = PROJECT_ROOT / "research_pipeline" / "paper_first_shadow_near_miss_preflight.json"
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-shadow-near-miss-preflight.json"
@@ -124,7 +125,7 @@ def compile_shadow_dead_end_rows(state: dict[str, Any]) -> list[dict[str, Any]]:
             "reason": str(receipt.get("reason") or ""),
             "reopen_only_if": reopen,
             "dead_end_certified": certified,
-            "memory_class": "PRINCIPLE_DEAD_END" if certified else "REOPENABLE_HOLD",
+            **(problem_novelty_classification(basis="near-miss-primary-or-mature-reduction-re-review-2026-08-18") if certified else {"memory_class": "REOPENABLE_HOLD"}),
             "scientific_authority": False,
         }
         if certified:
@@ -137,6 +138,7 @@ def compile_shadow_dead_end_rows(state: dict[str, Any]) -> list[dict[str, Any]]:
                 "scope": "the bounded near-miss paper-problem formulation and its cited primary evidence",
                 "same_information_or_scope_matched": True,
                 "evidence_refs": refs,
+                "alternative_explanations_ruled_out": ["missing support is handled separately as HOLD", "provider/runtime failure", "unresolved exact-reduction uncertainty"],
                 "positive_support": True,
                 "same_information_reduction_verified": True,
                 "reopen_condition": reopen,

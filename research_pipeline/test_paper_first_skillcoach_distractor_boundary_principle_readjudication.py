@@ -40,7 +40,9 @@ class SkillCoachDistractorBoundaryPrincipleReadjudicationTest(unittest.TestCase)
         self.assertEqual(len(rows), 1)
         row = rows[0]
         self.assertTrue(row["dead_end_certified"])
-        self.assertEqual(row["memory_class"], "PRINCIPLE_DEAD_END")
+        self.assertEqual(row["memory_class"], "METHOD_FORMULATION_STOP")
+        self.assertEqual(row["failure_layer"], "METHOD_FORMULATION")
+        self.assertFalse(row["broader_core_principle_falsified"])
         closed = _fresh_phenomenon_closed_keys({"blocked_objects": rows})
         self.assertEqual(
             {sha for ref, sha in closed if ref == SOURCE_REF},
