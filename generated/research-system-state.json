@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T17:53:21+00:00",
+  "generated_at": "2026-08-18T18:00:49+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -26663,11 +26663,11 @@
   },
   "paper_first_pre_f0_problem_falsifier_preflight": {
     "schema_version": "1.0-shadow",
-    "generated_at": "2026-08-18T17:53:21+00:00",
+    "generated_at": "2026-08-18T18:00:49+00:00",
     "run_id": "20260818T164230Z-ingestion-replay",
     "status": "PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE",
     "support_inventory_origin": "first-party-release-and-code-audit-20260819",
-    "support_inventory_sha256": "6635d03e2eaa107f8e69cfbcae45fe04b013fc278c882739bcdc349c9b38ce12",
+    "support_inventory_sha256": "531d3cd44d34cc7a0ca20d007fc6d4509ebbc356407f70af0e51c5576f63afba",
     "policy": {
       "problem_falsifier_queue_is_zero_authority": true,
       "support_inventory_precedes_falsifier_execution": true,
@@ -26714,13 +26714,13 @@
         "title": "Rank-inverted skill harm across harnesses as a non-composability witness",
         "disposition": "HOLD_SUPPORT_UNAVAILABLE",
         "required_unit": "One frozen TBA-poisoned SKILL.md artifact executed under both Codex and Gemini CLI on matched task instances, with logged skill availability/retrieval/invocation and outcome fields sufficient to compare harm ranking under the exact same artifact.",
-        "asset_audit": "TBA first-party repository commit 0d0f58e50bfeace9c13b73afbd7f8290d7d53a47 provides eval-only frozen-skill replay and a Codex executor that installs the supplied skill as .agents/skills/skillopt-target/SKILL.md, but the release does not contain the paper-run poisoned TBA skill artifact or a Gemini CLI executor. arXiv:2608.14036 reports fixed SKILL.md transfer from Codex to Gemini CLI, but its current primary release surface does not expose an author executable Gemini runner that can be bound to the exact TBA artifact with matched invocation instrumentation. Writing a new wrapper would alter the realization surface rather than audit released harness parity.",
+        "asset_audit": "Trajectory-Backdoor-Attack first-party origin HEAD/master is exactly 0d0f58e50bfeace9c13b73afbd7f8290d7d53a47. After unshallowing, the complete public history contains only two commits (b76b0f44c725b4a49250c6215be8c6c7c0df8cc6 and 0d0f58e...), with the second changing only one README line. Across both commits there is no Gemini implementation. scripts/eval_only.py (sha256=615212ed8a50f1fba66e32e218fc5d834a1682c4719fb3420fa18948f39eedeb) exposes Codex/Claude/OpenAI/Bedrock choices but no Gemini backend; skillopt/model/codex_harness.py (sha256=ed0e1e05cdd911206395135ec7704bb5aa099d709feb15935b8abebda1988d48) installs the supplied artifact at .agents/skills/skillopt-target/SKILL.md and records Codex use. The public tree/history contains oracle/initial skill markdown but not the paper-run poisoned TBA SKILL.md. arXiv:2608.14036 explicitly evaluates fixed Codex-derived skills in Gemini CLI, yet its author-submitted source archive (sha256=49c4b7c4472196f0254e574f1e5e7c5eaac2e9f099de6ebbb0fb4b77dfd88006) contains only manuscript/style/bibliography/figures, with no runner, result bundle, or author code/project URL; its arXiv abstract metadata likewise exposes no author release endpoint. Thus no released first-party joint unit binds the exact poisoned artifact to both Codex and Gemini with matched invocation observables. Synthesizing the poison or writing a Gemini wrapper would change the realization substrate.",
         "primary_refs": [
           "arXiv:2608.08303",
           "arXiv:2608.14036"
         ],
         "scientific_authority": false,
-        "reopen_only_if": "Reopen when a first-party/release-provenance Gemini CLI runner (or an equivalent existing provenance-audited substrate) can execute the exact frozen TBA poisoned SKILL.md on matched tasks and expose matched skill availability/retrieval/invocation/outcome fields without re-evolving the artifact or injecting a new mechanism.",
+        "reopen_only_if": "Reopen only when first-party provenance exposes both missing halves of the joint unit: the exact frozen paper-run TBA poisoned SKILL.md (or a content-addressed equivalent) and an author-released Gemini CLI execution path that can consume that same artifact on matched tasks while exposing matched availability/retrieval/invocation/outcome fields. An equivalent existing provenance-audited substrate is admissible only if it requires no poison synthesis, skill re-evolution, custom Gemini wrapper, candidate-mechanism injection, hidden-outcome tuning, or change to the Codex/Gemini task interface.",
         "bounded_first_party_evidence_design_allowed": true,
         "next_route": "BOUNDED_EVIDENCE_DESIGN_OR_WAIT_PRIMARY_ASSET"
       },
