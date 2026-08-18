@@ -15,7 +15,6 @@ from .config import PROJECT_ROOT, SemanticScholarSettings, StorageSettings
 from .ai_consultation_automation import run_ai_consultation_automation
 from .cvpr_idea_factory import write_cvpr_idea_bank
 from .discussion_portfolio import write_discussion_portfolio
-from .emerging_niche import write_emerging_niche_policy
 from .human_terminal_state import write_human_terminal_state
 from .p0_admission import write_p0_admission_state
 from .p0_b10_cpu import write_b10_cpu_p0
@@ -320,7 +319,6 @@ def run_cycle(
             report["steps"].append(_step("iclr-audit", write_iclr_audit))
             report["steps"].append(_step("cvpr-followup-bank", write_cvpr_idea_bank))
             report["steps"].append(_step("published-visual-audit", write_published_audit))
-        report["steps"].append(_step("emerging-niche-policy", write_emerging_niche_policy))
         if mode not in {"weekly", "manual"}:
             report["steps"].append(_step("paper-first-fresh-saturation", write_fresh_saturation_state))
             # Daily maintenance may refill verified public primary abstracts, but it never runs Global Relation Recall.
@@ -380,7 +378,6 @@ def run_cycle(
     if publish:
         # Rebuild once so the public state can include the latest cycle report, then publish
         # only if normalized content has changed.
-        write_emerging_niche_policy()
         write_human_terminal_state()
         write_p0_realizability_suite()
         write_revived_batch_f0()

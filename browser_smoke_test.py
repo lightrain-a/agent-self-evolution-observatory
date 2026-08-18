@@ -497,7 +497,7 @@ def main() -> None:
         require(idea_portfolio["legacyFinalPass"] == 20 and idea_portfolio["experimentStops"] >= 16, f"historical lineage state is unexpectedly missing: {idea_portfolio}")
         require("Historical ICLR Paper Workspace" not in idea_portfolio["text"] and "Selected ICLR Paper Workspace" not in idea_portfolio["text"], "historical paper workspace content leaked into Paper Ideas")
         require((("当前科研状态" in idea_portfolio["text"] and "正向残余现象的当前边界" in idea_portfolio["text"]) or ("Current research state" in idea_portfolio["text"] and "Positive-residual boundary" in idea_portfolio["text"])) and "20 个当前 FINAL-PASS" not in idea_portfolio["text"], "Paper Ideas current-state labels are incomplete or stale FINAL-PASS framing leaked into the current view")
-        require(all(marker in idea_portfolio["text"] for marker in ("论文就绪","证据欠账","正式活跃方向","新现象 F0 设计就绪","影子搜索暂缓","问题稀疏度","新兴信号","碰撞余量")), "Paper Ideas Chinese-first status/ENS labels are incomplete")
+        require(all(marker in idea_portfolio["text"] for marker in ("论文就绪","证据欠账","正式活跃方向","新现象 F0 设计就绪","影子搜索暂缓")), "Paper Ideas Chinese-first status labels are incomplete")
 
         navigate("/selected-paper.html", 4)
         selected = execute(session_id, """return {

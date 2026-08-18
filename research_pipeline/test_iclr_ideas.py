@@ -187,9 +187,7 @@ class IclrIdeaBankTest(unittest.TestCase):
         for verdict in verdict_order:
             rows = [idea for idea in self.ideas if idea["external_verdict"] == verdict]
             def order_key(idea):
-                niche = idea.get("emerging_niche") or {}; score = niche.get("score")
-                niche_key = (0, -float(score)) if niche.get("priority_eligible") and isinstance(score, (int, float)) else (1, 0.0)
-                return (*niche_key, -idea["priority"], idea["budget"]["gpu_hours"], idea["id"])
+                return (-idea["priority"], idea["budget"]["gpu_hours"], idea["id"])
             self.assertEqual([order_key(idea) for idea in rows], sorted(order_key(idea) for idea in rows))
         reviewed = [idea for idea in self.ideas if idea["external_reviews"]]
         self.assertTrue(any(idea["id"] == "regression-gated-self-evolution" for idea in reviewed))

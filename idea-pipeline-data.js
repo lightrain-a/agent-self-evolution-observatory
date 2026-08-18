@@ -1,5 +1,5 @@
 window.IDEA_PIPELINE_META = {
-  architectureVersion:"2.1-evidence-gated+ENS",
+  architectureVersion:"2.1-evidence-gated",
   generatedFrom:"69-formulation audit + structured direction literature",
   selectedIdea:"GroundEvo-Admission",
   advisorShortlist:[
@@ -40,7 +40,6 @@ window.IDEA_PIPELINE_META = {
   ],
   reviewers:[
     {key:"novelty",name:{en:"Novelty / collision",zh:"新颖性／碰撞"},question:{en:"Is the same problem–mechanism combination already published?",zh:"相同问题—机制组合是否已经发表？"}},
-    {key:"emerging-niche",name:{en:"Emerging niche",zh:"新兴小众性"},question:{en:"Is the neighborhood forming while the exact problem–mechanism cell remains sparse and cheaply falsifiable?",zh:"邻域是否正在形成，同时精确问题—机制单元仍稀疏且可低成本证伪？"}},
     {key:"scientific",name:{en:"Scientific validity",zh:"科学成立性"},question:{en:"Is the observation–failure–mechanism chain identifiable?",zh:"观察—失败—机制链是否可识别？"}},
     {key:"experiment",name:{en:"Main-table evidence",zh:"主表证据"},question:{en:"Can one normal-setting experiment prove the core claim?",zh:"一项正常设置实验能否证明核心主张？"}},
     {key:"feasibility",name:{en:"Pilot feasibility",zh:"Pilot 可行性"},question:{en:"Can the phenomenon be tested before building the full method?",zh:"能否在开发完整方法前先验证现象？"}},
@@ -48,7 +47,6 @@ window.IDEA_PIPELINE_META = {
   ],
   warnings:[
     {en:"Decimal legacy scores are shown only in the archive. The advisor board uses evidence gates and decision stages.",zh:"旧小数分数仅在归档中保留；导师决策板采用证据门槛与阶段。"},
-    {en:"Direction-level neighboring papers do not establish idea-level novelty. Exact collision checks remain mandatory.",zh:"方向级近邻论文不能证明 Idea 级新颖性；仍必须做精确碰撞检索。"},
-    {en:"ENS prioritizes exploration only. Direct collisions, matched simplifications, real experiment STOPs, and human MERGE/DROP decisions always take precedence.",zh:"ENS 只用于探索优先级；直接碰撞、等信息简化、真实实验 STOP 与人工 MERGE/DROP 永远优先。"}
+    {en:"Direction-level neighboring papers do not establish idea-level novelty. Exact collision checks remain mandatory.",zh:"方向级近邻论文不能证明 Idea 级新颖性；仍必须做精确碰撞检索。"}
   ]
 };

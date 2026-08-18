@@ -46,7 +46,7 @@ class IclrExternalReviewTest(unittest.TestCase):
         prompt = build_prompt([sample_idea(1)], batch_index=1, batch_count=1)
         self.assertIn("strict ICLR area chair", prompt)
         self.assertIn("idea-1", prompt)
-        self.assertIn("emerging_niche", prompt)
+        self.assertNotIn("emerging_niche", prompt)
         response = {
             "reviewer": "agent-project-web-gpt-iclr-area-chair",
             "review_date": "2026-08-01",
@@ -57,7 +57,6 @@ class IclrExternalReviewTest(unittest.TestCase):
                 "finding": "The mechanism is promising but the collision boundary is not frozen.",
                 "required_action": "Compare against the nearest direct mechanism under matched cost.",
                 "direct_collision": {"status": "partial", "closest_work": [], "surviving_difference": "Persistent update admission."},
-                "emerging_niche": {"evidence_fresh": True, "exact_problem_sparsity": 5, "emerging_signal": 4, "collision_margin": 4, "decisive_p0": 5, "importance_floor": 4, "evidence_note": "Fresh primary-source audit.", "neighbors": []},
                 "iclr_fit": "conditional",
                 "strongest_baseline": "Equal-budget baseline",
                 "decisive_pilot": "Matched-cost future-task utility.",
@@ -68,9 +67,8 @@ class IclrExternalReviewTest(unittest.TestCase):
         parsed = extract_json("```json\n" + json.dumps(response) + "\n```")
         normalized = normalize_response(parsed, ["idea-1"], source_artifact="response.md")
         self.assertEqual(normalized["idea-1"]["verdict"], "revise")
-        self.assertEqual(normalized["idea-1"]["emerging_niche"]["score"], 90.0)
-        self.assertTrue(normalized["idea-1"]["emerging_niche"]["priority_eligible"])
         self.assertEqual(normalized["idea-1"]["source_artifact"], "response.md")
+        self.assertNotIn("emerging_niche", normalized["idea-1"])
 
     def test_update_store_counts_all_ideas(self) -> None:
         store = {"reviews": {"idea-1": [{"reviewer": "old", "verdict": "pass"}]}, "status": {}}

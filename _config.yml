@@ -16,7 +16,6 @@ exclude:
   - research_pipeline
   - scripts
   - browser_smoke_test.py
-  - emerging_niche_browser_smoke_test.py
   - build_citation_cache.py
   - catalog_audit.py
   - hierarchy_smoke_test.py
