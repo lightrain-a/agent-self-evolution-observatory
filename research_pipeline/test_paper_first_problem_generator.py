@@ -558,6 +558,18 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertEqual(result["transport_attempts"][0]["provider_receipt"]["status"],"incomplete")
         self.assertEqual(result["resolved_model"],"kimi-k3")
 
+    def test_long_generation_uses_180_second_timeout_without_enabling_retries(self) -> None:
+        from .ark_provider import ArkSettings
+        base=ArkSettings(api_key="test-key",base_url="https://example.invalid",default_model="glm-5.3",timeout_seconds=120,max_retries=9)
+        seen={}
+        class FakeClient:
+            def __init__(self,settings):seen["timeout"]=settings.timeout_seconds;seen["retries"]=settings.max_retries
+            def respond(self,*args,**kwargs):return {"text":"OK","resolved_model":"glm-5.3"}
+        with patch("research_pipeline.paper_first_problem_generator.ArkSettings.from_env",return_value=base), patch("research_pipeline.paper_first_problem_generator.ArkResponsesClient",FakeClient):
+            result=_ark(prompt="test",model="glm-5.3",max_output_tokens=5200,temperature=0.0,stage="problem_generation",allow_transport_fallback=False)
+        self.assertEqual(seen,{"timeout":180.0,"retries":0})
+        self.assertEqual(result["resolved_model"],"glm-5.3")
+
     def test_strict_provider_disables_transport_fallback_after_incomplete(self) -> None:
         from .ark_provider import ArkResponseStateError,ArkSettings
         settings=ArkSettings(api_key="test-key",base_url="https://example.invalid",default_model="glm-5.3",timeout_seconds=120,max_retries=0)

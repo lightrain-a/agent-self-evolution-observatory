@@ -353,7 +353,8 @@ def _transport_no_output_error(error: Exception) -> str:
 def _ark(*,prompt,model,max_output_tokens,temperature=0.0,stage="problem_generation",allow_transport_fallback=True):
     base=ArkSettings.from_env(required=False)
     if not base.api_key: raise RuntimeError("ARK_API_KEY_NOT_CONFIGURED")
-    settings=ArkSettings(api_key=base.api_key,base_url=base.base_url,default_model=base.default_model,timeout_seconds=min(max(base.timeout_seconds,90.0),180.0),max_retries=0)
+    timeout_floor=180.0 if int(max_output_tokens)>=5000 else 90.0
+    settings=ArkSettings(api_key=base.api_key,base_url=base.base_url,default_model=base.default_model,timeout_seconds=min(max(base.timeout_seconds,timeout_floor),180.0),max_retries=0)
     priorities=list(stage_model_priority(stage))
     candidates=[model] if not allow_transport_fallback else [model]+[candidate for candidate in priorities if candidate!=model][:1]
     attempts=[]
