@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 from datetime import datetime, timezone
@@ -311,6 +312,65 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
     }
 
 
+def effective_execution_gate(
+    *, evidence_plan: dict[str, Any], agent_model_dir: Path, evaluator_model_dir: Path
+) -> dict[str, Any]:
+    """Combine generic evidence readiness with R9's exact runtime-asset gate.
+
+    The generic evidence compiler intentionally knows nothing about candidate-specific
+    model provenance.  For R9, structural harness readiness is therefore necessary
+    but not sufficient: outcome-bearing execution is allowed only when the frozen
+    candidate contract is execution-ready *and* both exact model revisions have
+    passed the fail-closed runtime asset gate.  This function never loads a model or
+    performs provider/GPU work.
+    """
+    entries = [row for row in evidence_plan.get("entries") or [] if isinstance(row, dict)]
+    matches = [row for row in entries if str(row.get("candidate_id") or "") == CANDIDATE_ID]
+    blockers: list[str] = []
+    if len(matches) != 1:
+        blockers.append("candidate-entry-missing-or-ambiguous")
+        entry: dict[str, Any] = {}
+    else:
+        entry = matches[0]
+        if str(entry.get("contract_sha256") or "") != CONTRACT_SHA256:
+            blockers.append("candidate-contract-mismatch")
+        if str(entry.get("status") or "") != "READY_FOR_BOUNDED_EVIDENCE_ACQUISITION":
+            blockers.append("generic-evidence-plan-not-ready")
+        if entry.get("execution_authorized") is not True:
+            blockers.append("generic-evidence-execution-not-authorized")
+        harness = entry.get("harness_implementation") or {}
+        if not re.fullmatch(r"[0-9a-f]{64}", str(harness.get("harness_manifest_sha256") or "")):
+            blockers.append("harness-implementation-manifest-missing")
+        if harness.get("probe_passed") is not True or harness.get("budget_feasible") is not True:
+            blockers.append("harness-implementation-not-qualified")
+
+    runtime = runtime_model_asset_gate(
+        agent_model_dir=Path(agent_model_dir), evaluator_model_dir=Path(evaluator_model_dir)
+    )
+    if runtime.get("execution_authorized") is not True:
+        blockers.extend(f"runtime:{value}" for value in runtime.get("blockers") or ["asset-gate-not-ready"])
+    if runtime.get("fallback_allowed") is not False:
+        blockers.append("runtime-fallback-policy-invalid")
+
+    ready = not blockers
+    return {
+        "schema_version": "1.0",
+        "candidate_id": CANDIDATE_ID,
+        "contract_sha256": CONTRACT_SHA256,
+        "status": "READY_R9_BOUNDED_EVIDENCE_EXECUTION" if ready else "HOLD_R9_EFFECTIVE_EXECUTION_GATE",
+        "generic_plan_status": str(evidence_plan.get("status") or ""),
+        "generic_candidate_status": str(entry.get("status") or ""),
+        "generic_execution_authorized": entry.get("execution_authorized") is True,
+        "runtime_asset_gate": runtime,
+        "effective_execution_authorized": ready,
+        "fallback_allowed": False,
+        "blockers": blockers,
+        "provider_calls_executed": 0,
+        "gpu_calls_executed": 0,
+        "scientific_authority": False,
+    }
+
+
 def first_violation_outcome(verdicts: list[bool]) -> dict[str, Any]:
     for index, violated in enumerate(verdicts, start=1):
         if violated:
@@ -517,14 +577,37 @@ def run_zero_provider_smoke(
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--awm-root", type=Path, required=True)
-    parser.add_argument("--browserart-root", type=Path, required=True)
-    parser.add_argument("--scratch-root", type=Path, required=True)
+    parser.add_argument("--awm-root", type=Path)
+    parser.add_argument("--browserart-root", type=Path)
+    parser.add_argument("--scratch-root", type=Path)
+    parser.add_argument("--execution-preflight", action="store_true")
+    parser.add_argument("--evidence-plan", type=Path)
+    parser.add_argument("--agent-model-dir", type=Path)
+    parser.add_argument("--evaluator-model-dir", type=Path)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-    result = run_zero_provider_smoke(
-        awm_root=args.awm_root, browserart_root=args.browserart_root, scratch_root=args.scratch_root
-    )
+    if args.execution_preflight:
+        required = {
+            "--evidence-plan": args.evidence_plan,
+            "--agent-model-dir": args.agent_model_dir,
+            "--evaluator-model-dir": args.evaluator_model_dir,
+        }
+        missing = [name for name, value in required.items() if value is None]
+        if missing:
+            parser.error("execution preflight requires " + ", ".join(missing))
+        result = effective_execution_gate(
+            evidence_plan=json.loads(args.evidence_plan.read_text(encoding="utf-8")),
+            agent_model_dir=args.agent_model_dir,
+            evaluator_model_dir=args.evaluator_model_dir,
+        )
+    else:
+        required = {"--awm-root": args.awm_root, "--browserart-root": args.browserart_root, "--scratch-root": args.scratch_root}
+        missing = [name for name, value in required.items() if value is None]
+        if missing:
+            parser.error("zero-provider smoke requires " + ", ".join(missing))
+        result = run_zero_provider_smoke(
+            awm_root=args.awm_root, browserart_root=args.browserart_root, scratch_root=args.scratch_root
+        )
     rendered = json.dumps(result, ensure_ascii=False, indent=2) + "\n"
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)

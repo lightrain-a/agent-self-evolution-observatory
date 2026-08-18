@@ -12,6 +12,7 @@ from .paper_first_agent_safety_r9_harness import (
     CONTRACT_SHA256,
     clone_future_branch,
     build_r9_model_call_budget,
+    effective_execution_gate,
     first_violation_outcome,
     freeze_state_bundle,
     frozen_r9_execution_invariants,
@@ -226,6 +227,60 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
             gate = runtime_model_asset_gate(agent_model_dir=agent, evaluator_model_dir=evaluator)
             self.assertTrue(gate["execution_authorized"])
             self.assertEqual(gate["status"], "READY_RUNTIME_MODEL_ASSETS_PINNED")
+
+    def test_effective_execution_gate_requires_runtime_assets_even_when_generic_plan_is_ready(self) -> None:
+        plan = {
+            "status": "EVIDENCE_EXECUTION_READY",
+            "entries": [{
+                "candidate_id": CANDIDATE_ID,
+                "contract_sha256": CONTRACT_SHA256,
+                "status": "READY_FOR_BOUNDED_EVIDENCE_ACQUISITION",
+                "execution_authorized": True,
+                "harness_implementation": {
+                    "harness_manifest_sha256": "a" * 64,
+                    "probe_passed": True,
+                    "budget_feasible": True,
+                },
+            }],
+        }
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            gate = effective_execution_gate(
+                evidence_plan=plan, agent_model_dir=root / "agent", evaluator_model_dir=root / "evaluator"
+            )
+        self.assertFalse(gate["effective_execution_authorized"])
+        self.assertEqual(gate["status"], "HOLD_R9_EFFECTIVE_EXECUTION_GATE")
+        self.assertIn("runtime:agent-model-directory-missing", gate["blockers"])
+        self.assertFalse(gate["fallback_allowed"])
+
+    def test_effective_execution_gate_requires_both_generic_and_exact_runtime_readiness(self) -> None:
+        plan = {
+            "status": "EVIDENCE_EXECUTION_READY",
+            "entries": [{
+                "candidate_id": CANDIDATE_ID,
+                "contract_sha256": CONTRACT_SHA256,
+                "status": "READY_FOR_BOUNDED_EVIDENCE_ACQUISITION",
+                "execution_authorized": True,
+                "harness_implementation": {
+                    "harness_manifest_sha256": "b" * 64,
+                    "probe_passed": True,
+                    "budget_feasible": True,
+                },
+            }],
+        }
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); agent = root / "agent"; evaluator = root / "evaluator"
+            agent.mkdir(); evaluator.mkdir()
+            (agent / ".r9-model-revision.json").write_text(json.dumps({"model_id":"Qwen/Qwen3-8B","revision":"b968826d9c46dd6066d109eabc6255188de91218"}),encoding="utf-8")
+            (evaluator / ".r9-model-revision.json").write_text(json.dumps({"model_id":"cais/HarmBench-Llama-2-13b-cls","revision":"0cd31cdc8b53209dd5b153b20026ff085901bb14"}),encoding="utf-8")
+            gate = effective_execution_gate(evidence_plan=plan, agent_model_dir=agent, evaluator_model_dir=evaluator)
+            self.assertTrue(gate["effective_execution_authorized"])
+            self.assertEqual(gate["status"], "READY_R9_BOUNDED_EVIDENCE_EXECUTION")
+            blocked_plan = json.loads(json.dumps(plan))
+            blocked_plan["entries"][0]["execution_authorized"] = False
+            blocked = effective_execution_gate(evidence_plan=blocked_plan, agent_model_dir=agent, evaluator_model_dir=evaluator)
+            self.assertFalse(blocked["effective_execution_authorized"])
+            self.assertIn("generic-evidence-execution-not-authorized", blocked["blockers"])
 
 
 
