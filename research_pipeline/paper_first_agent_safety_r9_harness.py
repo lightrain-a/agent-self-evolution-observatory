@@ -6,9 +6,11 @@ import json
 import re
 import shutil
 import subprocess
+import urllib.parse
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 CANDIDATE_ID = "SHADOW-P01-C01"
 CONTRACT_SHA256 = "c6be022619e4b742e4737bc7fc7b50e938e25cf6d132a88ffb6db4f567e5dd63"
@@ -372,6 +374,156 @@ def _hf_metadata_identity(payload: dict[str, Any]) -> tuple[str, str, set[str]]:
     return model_id, revision, siblings
 
 
+def _hf_revision_api_url(model_id: str, revision: str) -> str:
+    return f"https://huggingface.co/api/models/{model_id}/revision/{revision}?blobs=true"
+
+
+def _source_identity_matches_file(path: Path, source_item: dict[str, Any]) -> tuple[bool, str, str]:
+    if not path.is_file():
+        return False, "missing", ""
+    expected_size = source_item.get("size")
+    if not isinstance(expected_size, int) or path.stat().st_size != expected_size:
+        return False, "size", ""
+    source_kind = str(source_item.get("source_kind") or "")
+    source_digest = str(source_item.get("source_digest") or "")
+    if source_kind == "lfs-sha256":
+        actual = _sha_file(path)
+        return actual == source_digest, "lfs-sha256", actual
+    if source_kind == "git-blob-sha1":
+        actual = _git_blob_sha1(path.read_bytes())
+        return actual == source_digest, "git-blob-sha1", actual
+    return False, "source-kind", ""
+
+
+def acquire_and_prepare_hf_model_provenance(
+    *,
+    role: str,
+    model_dir: Path,
+    ancillary_cache_dir: Path | None = None,
+    requester: Callable[[str], dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Acquire official HF exact-revision metadata and prepare an R9 model receipt.
+
+    The default requester always targets the literal ``huggingface.co`` API URL and
+    rejects redirects to any other hostname.  ``HF_ENDPOINT`` is deliberately not
+    consulted.  Missing non-weight runtime files may be copied from a pre-existing
+    transport cache only after their bytes match the content identity carried by the
+    official HF metadata.  No marker is written unless every required local byte is
+    source-verified.
+    """
+    if role == "agent":
+        model_id, revision = R9_AGENT_MODEL_ID, R9_AGENT_MODEL_REVISION
+    elif role == "evaluator":
+        model_id, revision = R9_EVALUATOR_MODEL_ID, R9_EVALUATOR_MODEL_REVISION
+    else:
+        raise ValueError("R9 model provenance role must be agent or evaluator")
+    model_dir = Path(model_dir)
+    ancillary_cache_dir = Path(ancillary_cache_dir) if ancillary_cache_dir is not None else None
+    model_dir.mkdir(parents=True, exist_ok=True)
+    url = _hf_revision_api_url(model_id, revision)
+
+    if requester is None:
+        request = urllib.request.Request(url, headers={"User-Agent": "Agent-Self-Evolution-Observatory/R9-HF-Provenance"})
+        with urllib.request.urlopen(request, timeout=20) as response:
+            status = int(getattr(response, "status", 0) or response.getcode() or 0)
+            final_url = str(response.geturl() or "")
+            raw = response.read()
+        response_payload = {"status": status, "final_url": final_url, "content": raw}
+    else:
+        response_payload = dict(requester(url) or {})
+    status = int(response_payload.get("status") or 0)
+    final_url = str(response_payload.get("final_url") or "")
+    raw = response_payload.get("content")
+    if isinstance(raw, str):
+        raw = raw.encode("utf-8")
+    if not isinstance(raw, (bytes, bytearray)) or not raw or status != 200:
+        raise RuntimeError("official HF exact-revision metadata request did not return HTTP 200 bytes")
+    parsed_final = urllib.parse.urlparse(final_url)
+    if parsed_final.scheme != "https" or (parsed_final.hostname or "").lower() != "huggingface.co":
+        raise RuntimeError("official HF provenance request redirected away from huggingface.co")
+    if final_url.split("#", 1)[0] != url:
+        raise RuntimeError("official HF provenance request final URL does not match the frozen exact-revision API URL")
+    try:
+        metadata = json.loads(bytes(raw).decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise RuntimeError("official HF exact-revision metadata is not valid JSON") from error
+    source_id, source_revision, _ = _hf_metadata_identity(metadata)
+    if source_id != model_id or source_revision != revision:
+        raise RuntimeError("official HF exact-revision metadata identity mismatch")
+    required_files = set(R9_REQUIRED_MODEL_FILES[role])
+    source_manifest, source_manifest_sha = _hf_source_manifest(metadata, required_files)
+    source_by_path = {item["path"]: item for item in source_manifest}
+
+    staged_from_cache = []
+    verified_files = []
+    for filename in sorted(required_files):
+        local = model_dir / filename
+        source_item = source_by_path[filename]
+        if not local.is_file():
+            cached = ancillary_cache_dir / filename if ancillary_cache_dir is not None else None
+            if cached is None or not cached.is_file():
+                raise RuntimeError(f"required R9 runtime file missing and no verified ancillary cache candidate exists:{filename}")
+            matches, _, _ = _source_identity_matches_file(cached, source_item)
+            if not matches:
+                raise RuntimeError(f"ancillary cache content does not match official HF exact revision:{filename}")
+            shutil.copy2(cached, local)
+            staged_from_cache.append(filename)
+        matches, reason, _ = _source_identity_matches_file(local, source_item)
+        if not matches:
+            raise RuntimeError(f"local R9 runtime file does not match official HF exact revision:{filename}:{reason}")
+        verified_files.append({"path": filename, "size": local.stat().st_size, "sha256": _sha_file(local)})
+    verified_files, files_manifest_sha = _verification_files_manifest(verified_files)
+
+    source_metadata_path = model_dir / R9_MODEL_SOURCE_METADATA
+    source_metadata_path.write_bytes(bytes(raw))
+    receipt = {
+        "schema_version": "2.0",
+        "model_id": model_id,
+        "revision": revision,
+        "source_domain": "huggingface.co",
+        "source_url": url,
+        "source_http_status": status,
+        "source_final_url": final_url,
+        "exact_revision_verified": True,
+        "source_metadata": R9_MODEL_SOURCE_METADATA,
+        "source_metadata_sha256": _sha_file(source_metadata_path),
+        "source_manifest_sha256": source_manifest_sha,
+        "files": verified_files,
+        "files_manifest_sha256": files_manifest_sha,
+        "staged_from_ancillary_cache": staged_from_cache,
+        "scientific_authority": False,
+    }
+    receipt_path = model_dir / R9_MODEL_VERIFICATION_RECEIPT
+    receipt_path.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    marker = {
+        "schema_version": "2.0",
+        "model_id": model_id,
+        "revision": revision,
+        "verification_receipt": R9_MODEL_VERIFICATION_RECEIPT,
+        "verification_receipt_sha256": _sha_file(receipt_path),
+        "files_manifest_sha256": files_manifest_sha,
+        "source_manifest_sha256": source_manifest_sha,
+        "scientific_authority": False,
+    }
+    marker_path = model_dir / R9_MODEL_REVISION_MARKER
+    marker_path.write_text(json.dumps(marker, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return {
+        "status": "R9_HF_MODEL_PROVENANCE_PREPARED",
+        "role": role,
+        "model_id": model_id,
+        "revision": revision,
+        "source_url": url,
+        "source_metadata_sha256": receipt["source_metadata_sha256"],
+        "source_manifest_sha256": source_manifest_sha,
+        "files_manifest_sha256": files_manifest_sha,
+        "verification_receipt_sha256": marker["verification_receipt_sha256"],
+        "staged_from_ancillary_cache": staged_from_cache,
+        "provider_calls_executed": 0,
+        "gpu_calls_executed": 0,
+        "scientific_authority": False,
+    }
+
+
 def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path) -> dict[str, Any]:
     """Require content-addressed Hugging Face exact-revision evidence for both R9 models.
 
@@ -461,6 +613,10 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
                 receipt_id = str(receipt.get("model_id") or "")
                 receipt_revision = str(receipt.get("revision") or "")
                 source_domain = str(receipt.get("source_domain") or "").strip().lower()
+                source_url = str(receipt.get("source_url") or "").strip()
+                source_final_url = str(receipt.get("source_final_url") or "").strip()
+                source_http_status = receipt.get("source_http_status")
+                expected_source_url = _hf_revision_api_url(model_id, revision)
                 exact_verified = receipt.get("exact_revision_verified") is True
                 source_metadata_name = str(receipt.get("source_metadata") or "").strip()
                 source_metadata_sha = str(receipt.get("source_metadata_sha256") or "").strip().lower()
@@ -468,12 +624,17 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
                     "receipt_model_id": receipt_id,
                     "receipt_revision": receipt_revision,
                     "source_domain": source_domain,
+                    "source_url": source_url,
+                    "source_final_url": source_final_url,
+                    "source_http_status": source_http_status,
                     "exact_revision_claim": exact_verified,
                 })
                 if receipt_id != model_id or receipt_revision != revision:
                     role_failures.append("verification-receipt-identity-mismatch")
                 if source_domain != "huggingface.co":
                     role_failures.append("verification-source-not-huggingface")
+                if source_url != expected_source_url or source_final_url != expected_source_url or source_http_status != 200:
+                    role_failures.append("verification-source-acquisition-invalid")
                 if not exact_verified:
                     role_failures.append("exact-revision-not-verified")
                 if receipt.get("scientific_authority") is not False:
@@ -586,6 +747,9 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
                     and row["local_file_hashes_match"]
                     and row["source_content_matches_local"]
                     and source_domain == "huggingface.co"
+                    and source_url == _hf_revision_api_url(model_id, revision)
+                    and source_final_url == _hf_revision_api_url(model_id, revision)
+                    and source_http_status == 200
                     and exact_verified
                     and source_metadata
                     and _hf_metadata_identity(source_metadata)[:2] == (model_id, revision)
@@ -886,12 +1050,26 @@ def main() -> None:
     parser.add_argument("--browserart-root", type=Path)
     parser.add_argument("--scratch-root", type=Path)
     parser.add_argument("--execution-preflight", action="store_true")
+    parser.add_argument("--prepare-model-provenance", action="store_true")
+    parser.add_argument("--role", choices=("agent", "evaluator"))
+    parser.add_argument("--model-dir", type=Path)
+    parser.add_argument("--ancillary-cache", type=Path)
     parser.add_argument("--evidence-plan", type=Path)
     parser.add_argument("--agent-model-dir", type=Path)
     parser.add_argument("--evaluator-model-dir", type=Path)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-    if args.execution_preflight:
+    if args.prepare_model_provenance:
+        required = {"--role": args.role, "--model-dir": args.model_dir}
+        missing = [name for name, value in required.items() if value is None]
+        if missing:
+            parser.error("model provenance preparation requires " + ", ".join(missing))
+        result = acquire_and_prepare_hf_model_provenance(
+            role=args.role,
+            model_dir=args.model_dir,
+            ancillary_cache_dir=args.ancillary_cache,
+        )
+    elif args.execution_preflight:
         required = {
             "--evidence-plan": args.evidence_plan,
             "--agent-model-dir": args.agent_model_dir,
