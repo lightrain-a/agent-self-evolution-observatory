@@ -318,6 +318,7 @@ def main() -> None:
           shadowAdmission: window.RESEARCH_SYSTEM_STATE?.paper_first_shadow_search_admission || {},
           shadowAdmissionPanels: document.querySelectorAll('.paper-first-shadow-admission').length,
           sp15SupportSummary: window.PAPER_FIRST_SP15_IDENTIFIABILITY_SUPPORT?.summary || {},
+          sp15SupportDiagnosis: window.PAPER_FIRST_SP15_IDENTIFIABILITY_SUPPORT?.support_diagnosis || {},
           prematureMethodSummary: window.PAPER_FIRST_PREMATURE_METHOD_DIAGNOSTICS?.summary || window.RESEARCH_SYSTEM_STATE?.paper_first_premature_method_diagnostics?.summary || {},
           prematureMethodPanels: document.querySelectorAll('.premature-method-diagnostic').length,
           designCards: document.querySelectorAll('.paper-incubation-card small').length,
@@ -389,6 +390,7 @@ def main() -> None:
         if shadow_admission.get("status") == "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL":
             require(shadow_admission_summary.get("same_source_transaction") is True and shadow_admission_summary.get("same_discovery_operator_version") is True and shadow_admission_summary.get("qualification_allowed") is False, f"same-source current-operator terminal shadow must skip: {shadow_admission}")
         require((ideas["sp15SupportSummary"].get("primary_or_author_releases_audited"),ideas["sp15SupportSummary"].get("query_level_identifiability_units"),ideas["sp15SupportSummary"].get("method_design_authorized")) == (5,0,0), f"SP-15 shadow identifiability support must remain 5 sources / 0 units / 0 method authority: {ideas['sp15SupportSummary']}")
+        require((ideas["sp15SupportDiagnosis"].get("stop_class"),ideas["sp15SupportDiagnosis"].get("failure_layer"),ideas["sp15SupportDiagnosis"].get("failure_subtype")) == ("SUPPORT_STOP","experiment_identifiability","NO_MATCHED_QUERY_IDENTIFIABILITY_UNIT") and ideas["sp15SupportDiagnosis"].get("principle_dead_end_certified") is False and ideas["sp15SupportDiagnosis"].get("principle_update_allowed") is False, f"SP-15 missing matched support must stay a reopenable experiment-identifiability SUPPORT_STOP, not a principle dead-end: {ideas['sp15SupportDiagnosis']}")
         shadow_render_markers=(
             "影子搜索组合 · 回溯式论文设计审查",
             "影子搜索组合 · 最新当前来源终态",

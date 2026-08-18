@@ -369,6 +369,11 @@ state = {
         "sp15_support": {
             "decision": sp15.get("decision"),
             "support_status": sp15_summary.get("support_status"),
+            "stop_class": (sp15.get("support_diagnosis") or {}).get("stop_class"),
+            "failure_layer": (sp15.get("support_diagnosis") or {}).get("failure_layer"),
+            "failure_subtype": (sp15.get("support_diagnosis") or {}).get("failure_subtype"),
+            "principle_dead_end_certified": bool((sp15.get("support_diagnosis") or {}).get("principle_dead_end_certified", False)),
+            "principle_update_allowed": bool((sp15.get("support_diagnosis") or {}).get("principle_update_allowed", False)),
             "audited_sources": int(sp15_summary.get("primary_or_author_releases_audited", 0)),
             "query_level_identifiability_units": int(sp15_summary.get("query_level_identifiability_units", 0)),
             "method_design_authorized": int(sp15_summary.get("method_design_authorized", 0)),

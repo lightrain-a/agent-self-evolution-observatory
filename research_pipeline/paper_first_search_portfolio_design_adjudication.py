@@ -199,6 +199,11 @@ BASE_SHADOW_DEAD_END_MEMORY = {
             ],
             "dead_end_certified": False,
             "memory_class": "REOPENABLE_HOLD",
+            "stop_class": "SUPPORT_STOP",
+            "failure_layer": "experiment_identifiability",
+            "failure_subtype": "NO_MATCHED_QUERY_IDENTIFIABILITY_UNIT",
+            "principle_dead_end_certified": False,
+            "principle_update_allowed": False,
             "hold_reason": "The revised sufficient-skill-set identifiability problem still requires provenance-audited query-level support and therefore has not earned a principle dead-end or principle pass.",
             "reopen_only_if": "A new provenance-audited query-level unit shows that the same observable or information-equivalent query is compatible with multiple task semantics requiring incompatible sufficient skill sets, and a generic partial-identification/clarification baseline using the same information cannot absorb the claim.",
             "scientific_authority": False
@@ -1326,6 +1331,9 @@ def validate_search_portfolio_design_adjudication(state: dict[str, Any]) -> list
     dead_memory = state.get("shadow_dead_end_memory") or {}; dead_objects=[row for row in dead_memory.get("blocked_objects") or [] if isinstance(row,dict)]
     if search_memory.get("scientific_authority") is not False or search_memory.get("live_source_coverage_effect") is not False or search_memory.get("cannot_mutate_canonical_generator_or_queue") is not True or search_memory.get("search_control_only") is not True or "blocked_objects" in search_memory or "SP-09" not in closed_ids or "SP-15" not in hold_ids or "SP-15" in closed_ids:
         errors.append("canonical shadow_search_memory must hold SP-09 as an upstream problem/novelty closure and SP-15 only as a reopenable HOLD, without using scientific dead-end container semantics")
+    sp15_holds=[row for row in hold_objects if str(row.get("source_candidate_id") or "")=="SP-15"]
+    if len(sp15_holds)!=1 or (sp15_holds[0].get("stop_class"),sp15_holds[0].get("failure_layer"),sp15_holds[0].get("failure_subtype")) != ("SUPPORT_STOP","experiment_identifiability","NO_MATCHED_QUERY_IDENTIFIABILITY_UNIT") or sp15_holds[0].get("principle_dead_end_certified") is not False or sp15_holds[0].get("principle_update_allowed") is not False or sp15_holds[0].get("dead_end_certified") is not False:
+        errors.append("SP-15 search hold must be typed as a reopenable experiment-identifiability SUPPORT_STOP with zero principle-dead-end authority")
     if any(row.get("search_closure_certified") is not True or audit_closed_row_layer(row).get("passed") is not True or row.get("dead_end_certified") is not (row.get("failure_layer") == "core_principle") or not isinstance(row.get("counter_explanation"),dict) or not str((row.get("counter_explanation") or {}).get("statement") or "").strip() or not str((row.get("counter_explanation") or {}).get("opposite_principle") or "").strip() or not str((row.get("counter_explanation") or {}).get("opposite_search_seed") or "").strip() or not (row.get("counter_explanation") or {}).get("evidence_refs") or not str(row.get("reopen_only_if") or "").strip() for row in closed_objects):
         errors.append("every search closure must carry a valid closure/failure layer and reopen contract; only core_principle closures may retain dead_end_certified=true")
     closure_counts = summarize_closure_layers(closed_objects)

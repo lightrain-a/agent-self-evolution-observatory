@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T18:32:46+00:00",
+  "generated_at": "2026-08-18T15:17:30+00:00",
   "support_id": "sp15-query-only-identifiability-support-20260814",
   "paper_problem_id": "SP-15",
   "revised_claim": "Under fixed query-only inference and a fixed skill library, a minimally sufficient skill set may be observationally non-identifiable when multiple task semantics compatible with the same available query require incompatible sufficient sets.",
@@ -104,6 +104,18 @@
     "qualifying_identifiability_units": 0,
     "reason": "High text overlap mainly reflected shared domain or template language while the requested tasks differed. Text overlap was never treated as proof of information equivalence.",
     "scientific_authority": false
+  },
+  "support_diagnosis": {
+    "status": "INSUFFICIENT_FOR_IDENTIFIABILITY_CLAIM",
+    "stop_class": "SUPPORT_STOP",
+    "failure_layer": "experiment_identifiability",
+    "failure_subtype": "NO_MATCHED_QUERY_IDENTIFIABILITY_UNIT",
+    "principle_dead_end_certified": false,
+    "principle_update_allowed": false,
+    "core_principle_rejected": false,
+    "benchmark_level_dead_end_certified": false,
+    "reason": "Five audited first-party or author-released sources support the retrieval/decomposition/coverage phenomenon, but expose zero provenance-audited matched query-level units in which the same observable or information-equivalent query remains compatible with multiple task semantics that require incompatible sufficient skill sets.",
+    "reopen_only_if": "A new provenance-audited query-level unit shows that the same observable or information-equivalent query is compatible with multiple task semantics requiring incompatible sufficient skill sets, and a generic partial-identification/clarification baseline using the same information cannot absorb the claim."
   },
   "decision": "HOLD_SP15_REVISED_PROBLEM_NO_IDENTIFIABILITY_UNIT",
   "interpretation": "Current evidence strongly supports a real retrieval/decomposition/coverage phenomenon, but the revised thesis needs a stronger unit than current audited benchmarks expose. Zero directly supported query-level identifiability units were found. This is a support failure for the revised formulation, not evidence that such ambiguity never exists.",

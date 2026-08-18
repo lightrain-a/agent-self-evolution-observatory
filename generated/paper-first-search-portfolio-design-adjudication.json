@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T14:23:09+00:00",
+  "generated_at": "2026-08-18T15:17:30+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -56,7 +56,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-18T14:23:09+00:00",
+    "generated_at": "2026-08-18T15:17:30+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -382,6 +382,11 @@
         ],
         "dead_end_certified": false,
         "memory_class": "REOPENABLE_HOLD",
+        "stop_class": "SUPPORT_STOP",
+        "failure_layer": "experiment_identifiability",
+        "failure_subtype": "NO_MATCHED_QUERY_IDENTIFIABILITY_UNIT",
+        "principle_dead_end_certified": false,
+        "principle_update_allowed": false,
         "hold_reason": "The revised sufficient-skill-set identifiability problem still requires provenance-audited query-level support and therefore has not earned a principle dead-end or principle pass.",
         "reopen_only_if": "A new provenance-audited query-level unit shows that the same observable or information-equivalent query is compatible with multiple task semantics requiring incompatible sufficient skill sets, and a generic partial-identification/clarification baseline using the same information cannot absorb the claim.",
         "scientific_authority": false

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T15:02:50+00:00",
-  "source_revision": "fc09af15d18aac4878788f8231625b88f1d7e447",
+  "generated_at": "2026-08-18T15:19:37+00:00",
+  "source_revision": "c5f184991e6a34df2d6cffe6e3a3843052a0605d",
   "as_of_date": "2026-08-18",
   "headline": {
     "paper_ready": 1,
@@ -1087,6 +1087,11 @@
     "sp15_support": {
       "decision": "HOLD_SP15_REVISED_PROBLEM_NO_IDENTIFIABILITY_UNIT",
       "support_status": "INSUFFICIENT_FOR_IDENTIFIABILITY_CLAIM",
+      "stop_class": "SUPPORT_STOP",
+      "failure_layer": "experiment_identifiability",
+      "failure_subtype": "NO_MATCHED_QUERY_IDENTIFIABILITY_UNIT",
+      "principle_dead_end_certified": false,
+      "principle_update_allowed": false,
       "audited_sources": 5,
       "query_level_identifiability_units": 0,
       "method_design_authorized": 0

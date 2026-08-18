@@ -124,6 +124,18 @@ def build_sp15_identifiability_support() -> dict[str, Any]:
         },
         "audited_sources": [dict(row) for row in AUDITED_SOURCES],
         "near_equivalent_scan": dict(NEAR_EQUIVALENT_SCAN),
+        "support_diagnosis": {
+            "status": "INSUFFICIENT_FOR_IDENTIFIABILITY_CLAIM",
+            "stop_class": "SUPPORT_STOP",
+            "failure_layer": "experiment_identifiability",
+            "failure_subtype": "NO_MATCHED_QUERY_IDENTIFIABILITY_UNIT",
+            "principle_dead_end_certified": False,
+            "principle_update_allowed": False,
+            "core_principle_rejected": False,
+            "benchmark_level_dead_end_certified": False,
+            "reason": "Five audited first-party or author-released sources support the retrieval/decomposition/coverage phenomenon, but expose zero provenance-audited matched query-level units in which the same observable or information-equivalent query remains compatible with multiple task semantics that require incompatible sufficient skill sets.",
+            "reopen_only_if": "A new provenance-audited query-level unit shows that the same observable or information-equivalent query is compatible with multiple task semantics requiring incompatible sufficient skill sets, and a generic partial-identification/clarification baseline using the same information cannot absorb the claim.",
+        },
         "decision": "HOLD_SP15_REVISED_PROBLEM_NO_IDENTIFIABILITY_UNIT",
         "interpretation": "Current evidence strongly supports a real retrieval/decomposition/coverage phenomenon, but the revised thesis needs a stronger unit than current audited benchmarks expose. Zero directly supported query-level identifiability units were found. This is a support failure for the revised formulation, not evidence that such ambiguity never exists.",
         "next_action": "Do not design a method. Obtain or construct a provenance-audited matched ambiguity resource with nonzero query-level identifiability units, or return SP-15 to problem search/revision. A future revival must beat generic partial-identification, selective-prediction, and clarification baselines under the same information.",
@@ -134,6 +146,7 @@ def validate_sp15_identifiability_support(state: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     policy = state.get("policy") or {}
     summary = state.get("summary") or {}
+    diagnosis = state.get("support_diagnosis") or {}
     if summary.get("query_level_identifiability_units") != 0 or summary.get("support_status") != "INSUFFICIENT_FOR_IDENTIFIABILITY_CLAIM":
         errors.append("current SP-15 support inventory must not fabricate identifiability units")
     if summary.get("released_r3_test_queries") != 5696 or summary.get("released_r3_exact_duplicate_queries") != 0:
@@ -142,6 +155,10 @@ def validate_sp15_identifiability_support(state: dict[str, Any]) -> list[str]:
         errors.append("near-equivalent query scan cannot become scientific evidence")
     if policy.get("phenomenon_support_is_not_identifiability_support") is not True or policy.get("query_level_matched_unit_required_before_method_design") is not True:
         errors.append("SP-15 support gate must separate phenomenon from matched identifiability units")
+    if (diagnosis.get("status"), diagnosis.get("stop_class"), diagnosis.get("failure_layer"), diagnosis.get("failure_subtype")) != ("INSUFFICIENT_FOR_IDENTIFIABILITY_CLAIM", "SUPPORT_STOP", "experiment_identifiability", "NO_MATCHED_QUERY_IDENTIFIABILITY_UNIT"):
+        errors.append("SP-15 missing matched identifiability support must be typed as experiment-identifiability SUPPORT_STOP")
+    if diagnosis.get("principle_dead_end_certified") is not False or diagnosis.get("principle_update_allowed") is not False or diagnosis.get("core_principle_rejected") is not False or diagnosis.get("benchmark_level_dead_end_certified") is not False:
+        errors.append("SP-15 support insufficiency cannot certify or update the scientific principle")
     for key in ("method_design_authorized", "experiment_blueprint_authorized", "local_validation_authorized", "p0_authorized", "gpu_authorized"):
         if int(summary.get(key) or 0) != 0:
             errors.append(f"SP-15 support inventory cannot authorize:{key}")
