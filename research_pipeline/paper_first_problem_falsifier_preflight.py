@@ -8,9 +8,14 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .config import PROJECT_ROOT
+from .paper_first_pre_f0_queue import load_pre_f0_queue
+
 
 REQUEST_FILENAME = "problem-falsifier-support-inventory-request.json"
 PREFLIGHT_FILENAME = "problem-falsifier-preflight.json"
+PRE_F0_REQUEST_JSON=PROJECT_ROOT/"generated"/"paper-first-pre-f0-support-inventory-request.json"
+PRE_F0_PREFLIGHT_JSON=PROJECT_ROOT/"generated"/"paper-first-pre-f0-problem-falsifier-preflight.json"
 ALLOWED_DISPOSITIONS = {"SUPPORT_QUALIFIED", "HOLD_SUPPORT_UNAVAILABLE"}
 SUPPORT_MODES = {"RELEASED_UNITS", "FIRST_PARTY_CODE_RECONSTRUCTION", "EXISTING_PROVENANCE_SUBSTRATE"}
 RECONSTRUCTED_SUPPORT_MODES = {"FIRST_PARTY_CODE_RECONSTRUCTION", "EXISTING_PROVENANCE_SUBSTRATE"}
@@ -300,6 +305,21 @@ def compile_problem_falsifier_preflight(machine_audit: dict[str, Any], support_i
 
 def compile_pre_f0_problem_falsifier_preflight(pre_f0_queue:dict[str,Any],support_inventory:dict[str,Any],*,run_id:str="",inventory_sha256:str="")->dict[str,Any]:
     return _compile_support_inventory_request(build_support_inventory_request_from_pre_f0_queue(pre_f0_queue,run_id=run_id),support_inventory,run_id=run_id,inventory_sha256=inventory_sha256)
+
+
+def write_pre_f0_support_inventory_request(*,pre_f0_queue:dict[str,Any]|None=None,output_path:Path=PRE_F0_REQUEST_JSON)->dict[str,Any]:
+    queue=pre_f0_queue if pre_f0_queue is not None else load_pre_f0_queue();state=build_support_inventory_request_from_pre_f0_queue(queue,run_id=str(queue.get("source_generator_run_id") or ""));output_path.parent.mkdir(parents=True,exist_ok=True);output_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return state
+
+
+def write_pre_f0_problem_falsifier_preflight(*,support_inventory_path:Path,pre_f0_queue:dict[str,Any]|None=None,output_path:Path=PRE_F0_PREFLIGHT_JSON)->dict[str,Any]:
+    queue=pre_f0_queue if pre_f0_queue is not None else load_pre_f0_queue();inventory=_load(Path(support_inventory_path));state=compile_pre_f0_problem_falsifier_preflight(queue,inventory,run_id=str(queue.get("source_generator_run_id") or ""),inventory_sha256=_sha(Path(support_inventory_path)));output_path.parent.mkdir(parents=True,exist_ok=True);output_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return state
+
+
+def load_pre_f0_problem_falsifier_preflight(path:Path=PRE_F0_PREFLIGHT_JSON)->dict[str,Any]:
+    if not path.exists():return {"schema_version":"1.0-pre-f0","status":"NOT_RUN","summary":{"queued":0,"support_qualified":0,"hold_support_unavailable":0,"falsifier_executed":0},"authority":dict(AUTHORITY),"scientific_authority":False}
+    try:payload=_load(path)
+    except (OSError,json.JSONDecodeError,ValueError):return {"schema_version":"1.0-pre-f0","status":"STATE_UNREADABLE","summary":{"queued":0,"support_qualified":0,"hold_support_unavailable":0,"falsifier_executed":0},"authority":dict(AUTHORITY),"scientific_authority":False}
+    return payload
 
 
 def write_problem_falsifier_preflight(*, run_root: Path, support_inventory_path: Path, output_path: Path | None = None) -> dict[str, Any]:

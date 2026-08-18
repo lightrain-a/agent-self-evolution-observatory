@@ -11,6 +11,9 @@ from .paper_first_problem_falsifier_preflight import (
     build_support_inventory_request_from_pre_f0_queue,
     compile_pre_f0_problem_falsifier_preflight,
     compile_problem_falsifier_preflight,
+    load_pre_f0_problem_falsifier_preflight,
+    write_pre_f0_problem_falsifier_preflight,
+    write_pre_f0_support_inventory_request,
     write_problem_falsifier_preflight,
     write_support_inventory_request,
 )
@@ -98,6 +101,13 @@ class ProblemFalsifierPreflightTest(unittest.TestCase):
         inv={"inventory_origin":"pre-f0-asset-audit","rows":[{"candidate_id":"PORT-001","disposition":"HOLD_SUPPORT_UNAVAILABLE","required_unit":"Executable matched unit.","asset_audit":"The required harness parity is not released.","primary_refs":["arXiv:2608.00001"],"reopen_only_if":"The missing first-party harness is released."}],"scientific_authority":False}
         state=compile_pre_f0_problem_falsifier_preflight(self.pre_f0(),inv,run_id="pre-f0-r1",inventory_sha256="d"*64)
         self.assertEqual(state["summary"]["hold_support_unavailable"],1);self.assertEqual(state["summary"]["support_qualified"],0);self.assertFalse(state["authority"]["experiment"])
+
+    def test_pre_f0_file_helpers_write_request_and_compiled_hold(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);request_path=root/"request.json";inventory_path=root/"inventory.json";preflight_path=root/"preflight.json"
+            inv={"inventory_origin":"pre-f0-asset-audit","rows":[{"candidate_id":"PORT-001","disposition":"HOLD_SUPPORT_UNAVAILABLE","required_unit":"Executable matched unit.","asset_audit":"The required harness parity is not released.","primary_refs":["arXiv:2608.00001"],"reopen_only_if":"The missing first-party harness is released."}],"scientific_authority":False};inventory_path.write_text(json.dumps(inv),encoding="utf-8");expected_sha=hashlib.sha256(inventory_path.read_bytes()).hexdigest()
+            request=write_pre_f0_support_inventory_request(pre_f0_queue=self.pre_f0(),output_path=request_path);state=write_pre_f0_problem_falsifier_preflight(pre_f0_queue=self.pre_f0(),support_inventory_path=inventory_path,output_path=preflight_path);loaded=load_pre_f0_problem_falsifier_preflight(preflight_path)
+        self.assertEqual(request["summary"]["inventory_requests"],1);self.assertEqual(state["summary"]["hold_support_unavailable"],1);self.assertEqual(loaded["support_inventory_sha256"],expected_sha)
 
     def test_hold_compiles_without_scientific_falsification_or_execution_authority(self) -> None:
         state=compile_problem_falsifier_preflight(self.machine(),self.hold_inventory(),run_id="shadow-rx",inventory_sha256="a"*64)
