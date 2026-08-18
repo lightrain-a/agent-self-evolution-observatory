@@ -385,6 +385,36 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertTrue(state["policy"]["exact_reduction_required_before_final_problem_gate"])
         self.assertFalse(state["scientific_authority"] if "scientific_authority" in state else False)
 
+    def test_portfolio_ambiguous_transport_orphan_fails_fast_before_queued_subcalls(self) -> None:
+        calls=[]
+        def orphaning_responder(**kwargs):
+            calls.append(str(kwargs.get("prompt") or "")[:24])
+            error=RuntimeError("simulated transport timeout")
+            error.transport_attempts=[{"error_kind":"transport-timeout-or-connection","request_fingerprint":"f"*64,"requested_model":kwargs.get("model"),"provider_receipt":False}]
+            raise error
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc)
+            state=run_problem_generator(storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=orphaning_responder,reviewer_responder=orphaning_responder,portfolio_mode=True,strict_provider=True,now=now)
+        self.assertEqual(state["status"],"GENERATOR_ERROR_ZERO_AUTHORITY")
+        self.assertGreaterEqual(len(calls),1);self.assertLessEqual(len(calls),2)
+        self.assertIn("canonical-double-funnel-ambiguous-provider-orphan-fail-fast",state.get("error") or "")
+        self.assertTrue(state.get("provider_orphan_audits"))
+        self.assertEqual(state.get("portfolio_provenance"),[])
+
+    def test_existing_portfolio_orphan_blocks_rerun_before_any_provider_call(self) -> None:
+        calls=[]
+        def forbidden_ark(**kwargs):
+            calls.append(1);raise AssertionError("existing orphan must block before provider")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc)
+            with patch("research_pipeline.paper_first_problem_generator._provider_orphan_exists",return_value=True), patch("research_pipeline.paper_first_problem_generator._ark",side_effect=forbidden_ark):
+                state=run_problem_generator(storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",portfolio_mode=True,strict_provider=True,now=now)
+        self.assertEqual(calls,[])
+        self.assertEqual(state["status"],"GENERATOR_ERROR_ZERO_AUTHORITY")
+        self.assertIn("canonical-double-funnel-ambiguous-provider-orphan-fail-fast",state.get("error") or "")
+        self.assertTrue(state.get("provider_orphan_audits"))
+        self.assertTrue(all(row.get("replay_blocked_before_provider") is True for row in state["provider_orphan_audits"]))
+
     def test_unexplained_boundary_lane_search_accepts_one_primary_ref_but_other_lanes_do_not(self) -> None:
         registry={f"arXiv:2608.0000{i}":{} for i in range(1,5)}
         rows=[]

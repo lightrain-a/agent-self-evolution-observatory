@@ -4,6 +4,7 @@ import hashlib,json,os,re
 from collections import Counter
 from datetime import datetime,timezone
 from pathlib import Path
+from threading import Event
 from typing import Any,Callable
 
 from .ark_provider import ArkResponsesClient,ArkSettings,extract_json_object
@@ -780,16 +781,21 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
             return finish("SKIPPED_ORPHANED_PROVIDER_REQUEST")
     call=generator_responder or (lambda **kwargs:_ark(stage="problem_generation",allow_transport_fallback=not strict_provider,**kwargs));rows=[];generator_resolved_models=[]
     if portfolio_mode:
-        provenance=[];generator_subcall_budget=int(policy["portfolio_generator_subcall_budget"])
+        provenance=[];generator_subcall_budget=int(policy["portfolio_generator_subcall_budget"]);portfolio_transport_abort=Event();portfolio_orphan_audits=[]
         def portfolio_call(*,role,prompt,model,max_output_tokens):
+            if portfolio_transport_abort.is_set():raise RuntimeError("canonical-double-funnel-transport-fail-fast")
             if len(provenance)>=generator_subcall_budget:raise RuntimeError("canonical-double-funnel-generator-subcall-budget-exhausted")
             temperature=0.85 if role.startswith("expand-") else (0.60 if role.startswith("evolve-g1") else (0.35 if role.startswith("evolve-g2") else (0.45 if role.startswith("repair-") else 0.15)))
             request_audit=_provider_request_audit(stage=f"portfolio:{role}",prompt=prompt,model=model,max_output_tokens=max_output_tokens,temperature=temperature)
             if generator_responder is None and not allow_orphan_replay and _provider_orphan_exists(storage,request_audit["request_fingerprint"]):
+                portfolio_orphan_audits.append({"request_fingerprint":request_audit["request_fingerprint"],"status":"ORPHANED_POST_NO_RECEIPT","requested_model":model,"stage":f"portfolio:{role}","replay_blocked_before_provider":True,"scientific_authority":False});portfolio_transport_abort.set()
                 raise RuntimeError(f"portfolio-provider-orphan-replay-blocked:{role}:{request_audit['request_fingerprint']}")
             try:res=call(prompt=prompt,model=model,max_output_tokens=max_output_tokens,temperature=temperature)
             except Exception as error:
-                attempts=list(getattr(error,"transport_attempts",[]) or []);_archive_provider_orphans(storage,run_id,f"portfolio:{role}",attempts);raise
+                attempts=list(getattr(error,"transport_attempts",[]) or []);orphan_audits=_archive_provider_orphans(storage,run_id,f"portfolio:{role}",attempts)
+                if orphan_audits:
+                    portfolio_orphan_audits.extend(orphan_audits);portfolio_transport_abort.set()
+                raise
             raw=str(res.get("text") or "");path,sha=_write_raw(storage,run_id,role,model,raw);resolved=str(res.get("resolved_model") or model);generator_resolved_models.append(resolved);attempts=list(res.get("transport_attempts") or []);safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,role,attempts);orphan_audits=_archive_provider_orphans(storage,run_id,f"portfolio:{role}",attempts)
             replay_meta=_archived_replay_metadata(res,sha,f"portfolio:{role}",expected_request_fingerprint=request_audit["request_fingerprint"])
             entry={"role":role,"sha256":sha,"requested_model":model,"resolved_model":resolved,"temperature":temperature,"request_fingerprint":request_audit["request_fingerprint"],"transport_attempts":safe_attempts,"provider_calls_executed":0 if replay_meta else 1,"scientific_authority":False,**replay_meta}
@@ -798,6 +804,10 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
             provenance.append(entry);return res
         try:
             portfolio=run_search_portfolio(records=list(reg.values()),call=portfolio_call,model=generator_model,target_raw_seeds=target_raw_seeds,dead_end_memory=dead_end_prompt_memory)
+            if portfolio_transport_abort.is_set():
+                state["provider_orphan_audits"]=portfolio_orphan_audits[-8:]
+                fingerprints=sorted({str(row.get("request_fingerprint") or "") for row in portfolio_orphan_audits if row.get("request_fingerprint")})
+                raise RuntimeError("canonical-double-funnel-ambiguous-provider-orphan-fail-fast:"+",".join(fingerprints[:4]))
             formulated=portfolio.get("formulated_candidates") or [];machine_reviewable=[];pre_f0_eligible=[];machine_blocked=[]
             for raw_candidate in formulated:
                 normalized=_normalize(raw_candidate,reg);audit=audit_problem_candidate(normalized,primary_evidence_by_ref=reg,require_primary_registry=True,require_semantic_review=False)
