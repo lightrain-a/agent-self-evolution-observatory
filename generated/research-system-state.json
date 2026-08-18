@@ -405,7 +405,15 @@
     "mem_xfer_second_model_status": "second_model_hold",
     "architecture_temporal_stages": 11,
     "architecture_reader_chapters": 7,
-    "architecture_functional_layers": 6
+    "architecture_functional_layers": 6,
+    "p0_failure_diagnosis_required": 27,
+    "p0_failure_diagnosis_complete": 27,
+    "p0_failure_diagnosis_incomplete": 0,
+    "p0_failure_layer_counts": {
+      "operationalization": 2,
+      "experiment_identifiability": 6,
+      "method_realization": 19
+    }
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -36343,6 +36351,17 @@
       "principle_certificate_is_not_a_formal_experiment_gate": true,
       "experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea": true,
       "negative_result_requires_layer_adjudication": true,
+      "negative_adjudication_must_emit_failure_layer": true,
+      "failure_layer_schema": [
+        "execution",
+        "experiment_identifiability",
+        "optimization",
+        "operationalization",
+        "method_realization",
+        "assumption_scope",
+        "core_principle"
+      ],
+      "core_principle_update_requires_dead_end_counter_explanation": true,
       "design_failure_cannot_falsify_principle": true,
       "operationalization_failure_cannot_falsify_principle": true,
       "substrate_failure_cannot_falsify_broader_problem": true,
@@ -36426,6 +36445,8 @@
         "dead_end_certified": false,
         "scientific_belief_target": "measurement-bridge",
         "requires_human_review": false,
+        "failure_layer": "operationalization",
+        "principle_update_allowed": false,
         "verdict": "OPERATIONALIZATION_REPAIR",
         "repair_layer": "operationalization",
         "reason": "The current measurement/representation bridge is weakened; the underlying principle is not rejected by itself."
@@ -36439,6 +36460,8 @@
         "dead_end_certified": false,
         "scientific_belief_target": "none",
         "requires_human_review": false,
+        "failure_layer": "experiment_identifiability",
+        "principle_update_allowed": false,
         "verdict": "EXPERIMENT_DESIGN_REPAIR",
         "repair_layer": "experiment",
         "reason": "The design failed to instantiate an identifiable test of the principle."
@@ -39228,16 +39251,40 @@
       "compile_blocked": 0,
       "method_admission_blocked": 0,
       "launchable": 0,
-      "execution_authorized": 0
+      "execution_authorized": 0,
+      "failure_diagnosis_required": 27,
+      "failure_diagnosis_complete": 27,
+      "failure_diagnosis_incomplete": 0,
+      "failure_layer_counts": {
+        "operationalization": 2,
+        "experiment_identifiability": 6,
+        "method_realization": 19
+      },
+      "principle_updates_allowed": 0
     },
     "policy": {
-      "schema_version": "1.1",
+      "schema_version": "1.2",
       "one_current_row_per_active_p0": true,
       "lifecycle_and_execution_decision_are_separate": true,
       "economy_stop_overrides_planned_registry_display": true,
       "execution_artifact_overrides_plan": true,
       "human_terminal_state_remains_lifecycle_authority": true,
-      "scientific_stop_does_not_rewrite_p0_lifecycle": true
+      "scientific_stop_does_not_rewrite_p0_lifecycle": true,
+      "failed_or_held_experiment_requires_failure_layer": true,
+      "failure_layer_schema": [
+        "execution",
+        "experiment_identifiability",
+        "optimization",
+        "operationalization",
+        "method_realization",
+        "assumption_scope",
+        "core_principle"
+      ],
+      "failure_layer_requires_evidence_next_action_and_principle_authority": true,
+      "unknown_failure_layer_blocks_ledger_build_and_publication": true,
+      "historical_rows_are_migrated_from_existing_typed_artifacts_not_reinterpreted_as_new_evidence": true,
+      "only_core_principle_layer_may_allow_principle_update": true,
+      "principle_update_requires_explicit_dead_end_certificate": true
     }
   },
   "p0_four_direction_iteration": {
@@ -71182,7 +71229,16 @@
           "compile_blocked": 0,
           "method_admission_blocked": 0,
           "launchable": 0,
-          "execution_authorized": 0
+          "execution_authorized": 0,
+          "failure_diagnosis_required": 27,
+          "failure_diagnosis_complete": 27,
+          "failure_diagnosis_incomplete": 0,
+          "failure_layer_counts": {
+            "operationalization": 2,
+            "experiment_identifiability": 6,
+            "method_realization": 19
+          },
+          "principle_updates_allowed": 0
         }
       },
       {

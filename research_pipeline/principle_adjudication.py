@@ -32,12 +32,46 @@ DEAD_END_COUNTER_EXPLANATION_TYPES = {
     "IMPOSSIBILITY_OR_INVARIANCE",
 }
 
+FAILURE_LAYER_SPECS: dict[str, dict[str, Any]] = {
+    "execution": {
+        "core_principle_update_allowed": False,
+        "default_next_action": "repair runtime, infrastructure, provenance, or budget execution only",
+    },
+    "experiment_identifiability": {
+        "core_principle_update_allowed": False,
+        "default_next_action": "repair substrate, task variation, truth, comparison unit, or experiment design",
+    },
+    "optimization": {
+        "core_principle_update_allowed": False,
+        "default_next_action": "repair implementation, optimization, or capacity before scientific interpretation",
+    },
+    "operationalization": {
+        "core_principle_update_allowed": False,
+        "default_next_action": "repair the principle-to-measurement/representation/objective bridge and retest",
+    },
+    "method_realization": {
+        "core_principle_update_allowed": False,
+        "default_next_action": "merge, simplify, or redesign the current method realization without rejecting the broader principle",
+    },
+    "assumption_scope": {
+        "core_principle_update_allowed": False,
+        "default_next_action": "refine the omitted assumption or scope condition and derive a new registered prediction",
+    },
+    "core_principle": {
+        "core_principle_update_allowed": True,
+        "default_next_action": "reject only the scope-matched principle justified by a valid falsifier and positive counter-explanation",
+    },
+}
+
 POLICY: dict[str, Any] = {
     "schema_version": "1.0",
     "principle_certificate_required_before_experiment_compile": True,
     "principle_certificate_is_not_a_formal_experiment_gate": True,
     "experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea": True,
     "negative_result_requires_layer_adjudication": True,
+    "negative_adjudication_must_emit_failure_layer": True,
+    "failure_layer_schema": tuple(FAILURE_LAYER_SPECS),
+    "core_principle_update_requires_dead_end_counter_explanation": True,
     "design_failure_cannot_falsify_principle": True,
     "operationalization_failure_cannot_falsify_principle": True,
     "substrate_failure_cannot_falsify_broader_problem": True,
@@ -286,20 +320,23 @@ def adjudicate_experiment_evidence(
         "dead_end_certified": False,
         "scientific_belief_target": "none",
         "requires_human_review": False,
+        "failure_layer": None,
+        "principle_update_allowed": False,
     }
     if cert.get("passed") is not True:
-        return {**base, "verdict": "PRINCIPLE_CONTRACT_REPAIR", "reason": "The principle certificate is incomplete, so evidence cannot be interpreted at principle level."}
+        return {**base, "verdict": "PRINCIPLE_CONTRACT_REPAIR", "failure_layer": "experiment_identifiability", "reason": "The principle certificate is incomplete, so evidence cannot be interpreted at principle level."}
     if diagnosis in {"infrastructure-error", "budget-plan-mismatch"}:
-        return {**base, "verdict": "NO_PRINCIPLE_UPDATE", "repair_layer": "execution", "reason": "The run did not validly test the mechanism."}
+        return {**base, "verdict": "NO_PRINCIPLE_UPDATE", "repair_layer": "execution", "failure_layer": "execution", "reason": "The run did not validly test the mechanism."}
     if diagnosis in {"substrate-degenerate", "no-label-variation"}:
-        return {**base, "verdict": "EXPERIMENT_DESIGN_REPAIR", "repair_layer": "experiment", "reason": "The design failed to instantiate an identifiable test of the principle."}
+        return {**base, "verdict": "EXPERIMENT_DESIGN_REPAIR", "repair_layer": "experiment", "failure_layer": "experiment_identifiability", "reason": "The design failed to instantiate an identifiable test of the principle."}
     if diagnosis == "underfit":
-        return {**base, "verdict": "OPTIMIZATION_REPAIR", "repair_layer": "optimization", "reason": "Optimization was insufficient to interpret the scientific prediction."}
+        return {**base, "verdict": "OPTIMIZATION_REPAIR", "repair_layer": "optimization", "failure_layer": "optimization", "reason": "Optimization was insufficient to interpret the scientific prediction."}
     if diagnosis in {"representation-signal-mismatch", "objective-claim-mismatch"}:
         return {
             **base,
             "verdict": "OPERATIONALIZATION_REPAIR",
             "repair_layer": "operationalization",
+            "failure_layer": "operationalization",
             "scientific_belief_target": "measurement-bridge",
             "reason": "The current measurement/representation bridge is weakened; the underlying principle is not rejected by itself.",
         }
@@ -307,6 +344,7 @@ def adjudicate_experiment_evidence(
         return {
             **base,
             "verdict": "METHOD_OR_NOVELTY_WEAKENED",
+            "failure_layer": "method_realization",
             "scientific_belief_target": "method-realization",
             "requires_human_review": True,
             "reason": "The realization adds no identifiable value over the strongest matched simplification; the broader mechanism may still hold.",
@@ -320,12 +358,13 @@ def adjudicate_experiment_evidence(
             "reason": "Observed evidence is compatible with the preregistered mechanism prediction but does not prove the principle.",
         }
     if diagnosis != "true-negative":
-        return {**base, "verdict": "INCONCLUSIVE_PRINCIPLE_STATUS", "reason": "No principle-level mapping is registered for this diagnosis."}
+        return {**base, "verdict": "INCONCLUSIVE_PRINCIPLE_STATUS", "failure_layer": "experiment_identifiability", "reason": "No principle-level mapping is registered for this diagnosis."}
 
     if evidence.get("omitted_condition_discovered") is True or evidence.get("assumption_violation_discovered") is True:
         return {
             **base,
             "verdict": "ASSUMPTION_OR_SCOPE_REFINEMENT",
+            "failure_layer": "assumption_scope",
             "scientific_belief_target": "assumption-or-scope",
             "requires_human_review": True,
             "reason": "The negative result exposed an omitted condition; refine scope/assumptions and derive a new prediction before rejecting the core mechanism.",
@@ -348,6 +387,7 @@ def adjudicate_experiment_evidence(
         return {
             **base,
             "verdict": "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED",
+            "failure_layer": "experiment_identifiability" if missing else "method_realization",
             "scientific_belief_target": "method-realization",
             "requires_human_review": True,
             "preconditions": checks,
@@ -360,6 +400,7 @@ def adjudicate_experiment_evidence(
         return {
             **base,
             "verdict": "REGISTERED_PREDICTION_REJECTED_COUNTEREXPLANATION_REQUIRED",
+            "failure_layer": "core_principle",
             "registered_prediction_rejected": True,
             "scientific_belief_target": "registered-prediction",
             "requires_human_review": True,
@@ -376,6 +417,8 @@ def adjudicate_experiment_evidence(
         "principle_falsified": True,
         "core_mechanism_rejected": True,
         "dead_end_certified": True,
+        "failure_layer": "core_principle",
+        "principle_update_allowed": True,
         "scientific_belief_target": "core-principle",
         "requires_human_review": True,
         "preconditions": checks,

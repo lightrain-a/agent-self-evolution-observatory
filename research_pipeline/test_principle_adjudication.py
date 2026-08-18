@@ -27,11 +27,15 @@ class PrincipleAdjudicationTest(unittest.TestCase):
     def test_experiment_design_failure_cannot_falsify_principle(self) -> None:
         verdict = adjudicate_experiment_evidence("no-label-variation", self.certificate())
         self.assertEqual(verdict["verdict"], "EXPERIMENT_DESIGN_REPAIR")
+        self.assertEqual(verdict["failure_layer"], "experiment_identifiability")
+        self.assertFalse(verdict["principle_update_allowed"])
         self.assertFalse(verdict["principle_falsified"])
 
     def test_representation_failure_updates_operationalization_not_principle(self) -> None:
         verdict = adjudicate_experiment_evidence("representation-signal-mismatch", self.certificate())
         self.assertEqual(verdict["verdict"], "OPERATIONALIZATION_REPAIR")
+        self.assertEqual(verdict["failure_layer"], "operationalization")
+        self.assertFalse(verdict["principle_update_allowed"])
         self.assertEqual(verdict["scientific_belief_target"], "measurement-bridge")
         self.assertFalse(verdict["principle_falsified"])
 
@@ -40,6 +44,8 @@ class PrincipleAdjudicationTest(unittest.TestCase):
             "true-negative", self.certificate(), {"omitted_condition_discovered": True}
         )
         self.assertEqual(verdict["verdict"], "ASSUMPTION_OR_SCOPE_REFINEMENT")
+        self.assertEqual(verdict["failure_layer"], "assumption_scope")
+        self.assertFalse(verdict["principle_update_allowed"])
         self.assertFalse(verdict["core_mechanism_rejected"])
 
     def test_true_negative_without_registered_falsifier_does_not_kill_principle(self) -> None:
@@ -48,6 +54,8 @@ class PrincipleAdjudicationTest(unittest.TestCase):
             {"experiment_identifiable": True, "optimization_adequate": True},
         )
         self.assertEqual(verdict["verdict"], "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED")
+        self.assertEqual(verdict["failure_layer"], "experiment_identifiability")
+        self.assertFalse(verdict["principle_update_allowed"])
         self.assertFalse(verdict["principle_falsified"])
 
     def test_registered_prediction_rejection_is_not_dead_end_without_counter_explanation(self) -> None:
@@ -67,6 +75,8 @@ class PrincipleAdjudicationTest(unittest.TestCase):
         )
         self.assertEqual(verdict["verdict"], "REGISTERED_PREDICTION_REJECTED_COUNTEREXPLANATION_REQUIRED")
         self.assertTrue(verdict["registered_prediction_rejected"])
+        self.assertEqual(verdict["failure_layer"], "core_principle")
+        self.assertFalse(verdict["principle_update_allowed"])
         self.assertFalse(verdict["principle_falsified"])
         self.assertFalse(verdict["core_mechanism_rejected"])
         self.assertFalse(verdict["dead_end_certified"])
@@ -105,7 +115,20 @@ class PrincipleAdjudicationTest(unittest.TestCase):
         self.assertTrue(verdict["principle_falsified"])
         self.assertTrue(verdict["core_mechanism_rejected"])
         self.assertTrue(verdict["dead_end_certified"])
+        self.assertEqual(verdict["failure_layer"], "core_principle")
+        self.assertTrue(verdict["principle_update_allowed"])
         self.assertEqual(verdict["counter_explanation"]["type"], "SAME_INFORMATION_REDUCTION")
+
+    def test_execution_optimization_and_method_failures_are_separate_layers(self) -> None:
+        execution = adjudicate_experiment_evidence("infrastructure-error", self.certificate())
+        underfit = adjudicate_experiment_evidence("underfit", self.certificate())
+        method = adjudicate_experiment_evidence("matched-simplification-tie", self.certificate())
+        self.assertEqual(execution["failure_layer"], "execution")
+        self.assertEqual(underfit["failure_layer"], "optimization")
+        self.assertEqual(method["failure_layer"], "method_realization")
+        self.assertFalse(execution["principle_update_allowed"])
+        self.assertFalse(underfit["principle_update_allowed"])
+        self.assertFalse(method["principle_update_allowed"])
 
     def test_missing_failure_update_rule_invalidates_certificate(self) -> None:
         config = load_json(Path(__file__).with_name("p0_a1_confirm_config.json"))
