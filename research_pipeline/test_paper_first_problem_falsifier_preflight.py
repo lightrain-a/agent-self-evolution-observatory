@@ -8,6 +8,8 @@ from pathlib import Path
 
 from .paper_first_problem_falsifier_preflight import (
     build_support_inventory_request,
+    build_support_inventory_request_from_pre_f0_queue,
+    compile_pre_f0_problem_falsifier_preflight,
     compile_problem_falsifier_preflight,
     write_problem_falsifier_preflight,
     write_support_inventory_request,
@@ -43,6 +45,22 @@ class ProblemFalsifierPreflightTest(unittest.TestCase):
             }],
         }
 
+    def pre_f0(self) -> dict:
+        return {
+            "schema_version":"1.0","status":"PRE_F0_QUEUE_READY","scientific_authority":False,
+            "policy":{"cheap_falsifier_is_evidence_acquisition_not_problem_gate":True,"exact_reduction_required_before_problem_gate":True},
+            "authority":{"problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+            "rows":[{
+                "candidate_id":"PORT-001","title":"Pre-F0 residual","discovery_lane":"ASSUMPTION_BREAK","source_branch_id":"B-R1",
+                "primary_refs":["arXiv:2608.00001","arXiv:2608.00002"],
+                "exact_prediction":"The frozen residual reverses under the matched intervention.",
+                "strongest_same_information_baseline":"Matched same-information baseline.",
+                "cheapest_problem_falsifier":"Run the frozen matched falsifier on the released unit pair.",
+                "next_if_positive":"RERUN_EXACT_SAME_INFORMATION_REDUCTION","scientific_authority":False,
+                "authority":{"problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+            }],
+        }
+
     def hold_inventory(self) -> dict:
         return {
             "inventory_origin":"unit-test-primary-asset-audit",
@@ -70,6 +88,16 @@ class ProblemFalsifierPreflightTest(unittest.TestCase):
         self.assertFalse(request["scientific_authority"])
         self.assertFalse(request["authority"]["paper_design"])
         self.assertTrue(request["policy"]["support_inventory_request_cannot_claim_asset_availability"])
+
+    def test_pre_f0_support_request_preserves_primary_refs_and_zero_authority(self) -> None:
+        request=build_support_inventory_request_from_pre_f0_queue(self.pre_f0(),run_id="pre-f0-r1")
+        self.assertEqual(request["source"],"CANONICAL_PRE_F0_QUEUE")
+        self.assertEqual(request["summary"]["queued"],1)
+        self.assertEqual(request["rows"][0]["primary_refs"],["arXiv:2608.00001","arXiv:2608.00002"])
+        self.assertFalse(request["scientific_authority"]);self.assertFalse(request["authority"]["experiment"])
+        inv={"inventory_origin":"pre-f0-asset-audit","rows":[{"candidate_id":"PORT-001","disposition":"HOLD_SUPPORT_UNAVAILABLE","required_unit":"Executable matched unit.","asset_audit":"The required harness parity is not released.","primary_refs":["arXiv:2608.00001"],"reopen_only_if":"The missing first-party harness is released."}],"scientific_authority":False}
+        state=compile_pre_f0_problem_falsifier_preflight(self.pre_f0(),inv,run_id="pre-f0-r1",inventory_sha256="d"*64)
+        self.assertEqual(state["summary"]["hold_support_unavailable"],1);self.assertEqual(state["summary"]["support_qualified"],0);self.assertFalse(state["authority"]["experiment"])
 
     def test_hold_compiles_without_scientific_falsification_or_execution_authority(self) -> None:
         state=compile_problem_falsifier_preflight(self.machine(),self.hold_inventory(),run_id="shadow-rx",inventory_sha256="a"*64)

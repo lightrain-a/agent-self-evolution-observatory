@@ -63,7 +63,8 @@ def build_pre_f0_queue(generator: dict[str, Any]) -> dict[str, Any]:
         prediction = " ".join(str(source.get("exact_prediction") or "").split())
         surviving = [str(axis) for axis in source.get("surviving_paperability_axes") or [] if str(axis) in {"P", "M", "E", "B", "T", "S"}]
         blockers = [str(value) for value in source.get("reduction_blockers") or [] if str(value)]
-        if not falsifier or not strongest or not prediction or not surviving or not blockers:
+        primary_refs=sorted({str(ref).strip() for ref in source.get("primary_refs") or [] if str(ref).strip().startswith("arXiv:")})
+        if not falsifier or not strongest or not prediction or not surviving or not blockers or not primary_refs:
             raise ValueError(f"pre-F0 source candidate is incomplete: {candidate_id}")
         if str(source.get("post_f0_requirement") or "") != "RERUN_EXACT_SAME_INFORMATION_REDUCTION_BEFORE_PROBLEM_GATE":
             raise ValueError(f"pre-F0 candidate misses post-F0 exact-reduction obligation: {candidate_id}")
@@ -72,6 +73,7 @@ def build_pre_f0_queue(generator: dict[str, Any]) -> dict[str, Any]:
             "title": str(source.get("title") or "").strip(),
             "discovery_lane": str(source.get("discovery_lane") or "").strip(),
             "source_branch_id": str(source.get("source_branch_id") or "").strip(),
+            "primary_refs": primary_refs,
             "paperability_axes": dict(source.get("paperability_axes") or {}),
             "surviving_paperability_axes": surviving,
             "non_principle_surviving_axes": [str(axis) for axis in source.get("non_principle_surviving_axes") or [] if str(axis) in {"M", "E", "B", "T", "S"}],

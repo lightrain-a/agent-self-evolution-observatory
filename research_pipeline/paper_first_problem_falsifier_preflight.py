@@ -153,6 +153,28 @@ def build_support_inventory_request(machine_audit: dict[str, Any], *, run_id: st
     }
 
 
+def build_support_inventory_request_from_pre_f0_queue(pre_f0_queue:dict[str,Any],*,run_id:str="")->dict[str,Any]:
+    """Compile the same support-inventory contract directly from canonical Pre-F0 rows."""
+    if pre_f0_queue.get("scientific_authority") is not False:
+        raise ValueError("pre-F0 queue must be zero-authority")
+    authority=pre_f0_queue.get("authority") or {}
+    if any(authority.get(key) is not False for key in ("problem_gate","paper_design","method","experiment","p0","gpu")):
+        raise ValueError("pre-F0 queue cannot authorize downstream execution")
+    policy=pre_f0_queue.get("policy") or {}
+    if policy.get("cheap_falsifier_is_evidence_acquisition_not_problem_gate") is not True or policy.get("exact_reduction_required_before_problem_gate") is not True:
+        raise ValueError("pre-F0 queue does not preserve support/final-reduction authority boundary")
+    rows=[];seen=set()
+    for row in pre_f0_queue.get("rows") or []:
+        if not isinstance(row,dict):continue
+        candidate_id=str(row.get("candidate_id") or "").strip()
+        if not candidate_id or candidate_id in seen:raise ValueError("pre-F0 support request candidate ids must be nonempty and unique")
+        seen.add(candidate_id);refs=sorted({str(ref).strip() for ref in row.get("primary_refs") or [] if str(ref).strip().startswith("arXiv:")});prediction=_bounded(row.get("exact_prediction"),2000);strongest=_bounded(row.get("strongest_same_information_baseline"),1200);falsifier=_bounded(row.get("cheapest_problem_falsifier"),2200)
+        if not refs or not prediction or not strongest or not falsifier:raise ValueError(f"pre-F0 support request missing frozen provenance/decision fields: {candidate_id}")
+        if str(row.get("next_if_positive") or "")!="RERUN_EXACT_SAME_INFORMATION_REDUCTION":raise ValueError(f"pre-F0 support request misses exact-reduction recheck: {candidate_id}")
+        rows.append({"candidate_id":candidate_id,"title":_bounded(row.get("title"),500),"discovery_lane":str(row.get("discovery_lane") or "").strip(),"source_branch_id":str(row.get("source_branch_id") or "").strip(),"primary_refs":refs,"exact_prediction":prediction,"strongest_same_information_baseline":strongest,"falsifier_expression":falsifier,"support_inventory_question":"Determine whether primary/author-released artifacts directly expose the observational/interventional units and fields needed for this frozen Pre-F0 falsifier, or whether author-released first-party code / an existing provenance-audited substrate can materialize those units as independent truth under the frozen operationalization. Reconstructed support is admissible only after materialization and provenance hashing, without synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.","required_receipt_dispositions":sorted(ALLOWED_DISPOSITIONS),"scientific_authority":False})
+    return {"schema_version":"1.0-pre-f0","generated_at":_now(),"run_id":run_id,"status":"PROBLEM_FALSIFIER_SUPPORT_INVENTORY_REQUEST_READY" if rows else "NO_PROBLEM_FALSIFIER_QUEUE","source":"CANONICAL_PRE_F0_QUEUE","policy":dict(REQUEST_POLICY),"summary":{"queued":len(rows),"inventory_requests":len(rows),"problem_gate_authorized":0,"paper_design_authorized":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0,"gpu_authorized":0},"rows":rows,"authority":dict(AUTHORITY),"scientific_authority":False}
+
+
 def write_support_inventory_request(*, run_root: Path, output_path: Path | None = None) -> dict[str, Any]:
     machine_path = run_root / "machine-audit.json"
     request = build_support_inventory_request(_load(machine_path), run_id=run_root.name)
@@ -241,8 +263,7 @@ def _validate_receipt_row(request: dict[str, Any], receipt: dict[str, Any]) -> d
     return out
 
 
-def compile_problem_falsifier_preflight(machine_audit: dict[str, Any], support_inventory: dict[str, Any], *, run_id: str = "", inventory_sha256: str = "") -> dict[str, Any]:
-    request = build_support_inventory_request(machine_audit, run_id=run_id)
+def _compile_support_inventory_request(request:dict[str,Any],support_inventory:dict[str,Any],*,run_id:str="",inventory_sha256:str="")->dict[str,Any]:
     requested = {str(row.get("candidate_id") or ""): row for row in request.get("rows") or [] if isinstance(row, dict)}
     receipt_rows = [row for row in support_inventory.get("rows") or [] if isinstance(row, dict)]
     receipts: dict[str, dict[str, Any]] = {}
@@ -271,6 +292,14 @@ def compile_problem_falsifier_preflight(machine_audit: dict[str, Any], support_i
         "authority": dict(AUTHORITY),
         "scientific_authority": False,
     }
+
+
+def compile_problem_falsifier_preflight(machine_audit: dict[str, Any], support_inventory: dict[str, Any], *, run_id: str = "", inventory_sha256: str = "") -> dict[str, Any]:
+    return _compile_support_inventory_request(build_support_inventory_request(machine_audit,run_id=run_id),support_inventory,run_id=run_id,inventory_sha256=inventory_sha256)
+
+
+def compile_pre_f0_problem_falsifier_preflight(pre_f0_queue:dict[str,Any],support_inventory:dict[str,Any],*,run_id:str="",inventory_sha256:str="")->dict[str,Any]:
+    return _compile_support_inventory_request(build_support_inventory_request_from_pre_f0_queue(pre_f0_queue,run_id=run_id),support_inventory,run_id=run_id,inventory_sha256=inventory_sha256)
 
 
 def write_problem_falsifier_preflight(*, run_root: Path, support_inventory_path: Path, output_path: Path | None = None) -> dict[str, Any]:

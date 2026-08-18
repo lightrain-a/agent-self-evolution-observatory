@@ -12,6 +12,7 @@ class PaperFirstPreF0QueueTest(unittest.TestCase):
             "title": "A surviving empirical boundary",
             "discovery_lane": "UNEXPLAINED_BOUNDARY",
             "source_branch_id": "B-R1",
+            "primary_refs": ["arXiv:2608.00001", "arXiv:2608.00002"],
             "paperability_axes": {"P": {"status": "REDUCED"}, "E": {"status": "SUPPORTED"}},
             "surviving_paperability_axes": ["E"],
             "non_principle_surviving_axes": ["E"],
@@ -34,12 +35,19 @@ class PaperFirstPreF0QueueTest(unittest.TestCase):
         self.assertFalse(state["scientific_authority"])
         self.assertTrue(state["policy"]["positive_f0_requires_exact_same_information_reduction_recheck"])
         self.assertEqual(state["rows"][0]["next_if_positive"],"RERUN_EXACT_SAME_INFORMATION_REDUCTION")
+        self.assertEqual(state["rows"][0]["primary_refs"],["arXiv:2608.00001","arXiv:2608.00002"])
         self.assertTrue(all(value is False for value in state["rows"][0]["authority"].values()))
 
     def test_queue_rejects_authority_leak(self) -> None:
         row=self.candidate();row["authority"]["method"]=True
         generator={"policy":{"search_portfolio_enabled":True,"exact_reduction_required_before_final_problem_gate":True},"pre_f0_candidates":[row]}
         with self.assertRaisesRegex(ValueError,"authority"):
+            build_pre_f0_queue(generator)
+
+    def test_queue_rejects_missing_primary_provenance(self) -> None:
+        row=self.candidate();row["primary_refs"]=[]
+        generator={"policy":{"search_portfolio_enabled":True,"exact_reduction_required_before_final_problem_gate":True},"pre_f0_candidates":[row]}
+        with self.assertRaisesRegex(ValueError,"incomplete"):
             build_pre_f0_queue(generator)
 
     def test_queue_rejects_missing_post_f0_reduction_obligation(self) -> None:
