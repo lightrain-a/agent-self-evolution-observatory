@@ -23,6 +23,7 @@ from .public_state_redaction import redact_private_paths
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.js"
 DEFAULT_PORTABLE_REVIEW_STATE = PROJECT_ROOT / "generated" / "paper-first-problem-generator-state.json"
+DEFAULT_PORTABLE_SOURCE_REVIEW_STATE = PROJECT_ROOT / "generated" / "paper-first-source-review-receipts.json"
 DEFAULT_MAX_PAPERS = 32
 DEFAULT_LANE_FLOOR = 1
 DEFAULT_SOURCE_COVERAGE_ANCHOR_COUNT = 16
@@ -57,7 +58,8 @@ DEFAULT_ARXIV_MAX_PAGES = 4
 DEFAULT_ARXIV_RATE_LIMIT_COOLDOWN_SECONDS = 1800
 DEFAULT_ARXIV_RATE_LIMIT_MAX_COOLDOWN_SECONDS = 21600
 EMPIRICAL_FACT_EXTRACTION_VERSION = "precision-v2"
-TYPED_EVIDENCE_EXTRACTION_VERSION = "typed-v2"
+TYPED_EVIDENCE_EXTRACTION_VERSION = "typed-v3"
+SUPPORTED_TYPED_EVIDENCE_SNAPSHOT_VERSIONS = ("typed-v2", TYPED_EVIDENCE_EXTRACTION_VERSION)
 DEFAULT_ARXIV_QUERIES = (
     'all:"self-evolving" AND all:agent',
     'all:"self-improving" AND all:agent',
@@ -283,6 +285,7 @@ def extract_empirical_fact_candidates(page: str, *, max_facts: int = 4) -> list[
 
 _ASSUMPTION_SECTION_TERMS = ("assumption", "method", "setup", "system", "problem", "formulation", "framework", "approach", "algorithm", "protocol")
 _MEASURED_SECTION_TERMS = ("result", "experiment", "evaluation", "analysis", "ablation", "discussion", "finding", "failure", "safety", "robust")
+_FIRST_PARTY_RESULT_SECTION_TERMS = ("result", "experiment", "evaluation", "analysis", "ablation")
 _ASSUMPTION_CUE_RE = re.compile(r"\b(we assume|assume that|assumes that|under the assumption|we require|requires that|we fix|is fixed|we restrict|we consider only|for simplicity,? we (?:assume|consider|restrict)|we hold .{0,40} constant|given a fixed)\b", flags=re.I)
 _FAILURE_CUE_RE = re.compile(r"\b(fail(?:s|ed|ure|ures)?|degrad(?:e|es|ed|ation)|drop(?:s|ped)?|harm(?:s|ed|ful)?|worse than|underperform(?:s|ed)?|error rate|attack success rate|cannot|unable to)\b", flags=re.I)
 _BOUNDARY_CUE_RE = re.compile(r"\b(only when|only if|threshold|regime|above|below|with increasing|with decreasing|gap between|saturat(?:e|es|ed|ion)|plateau|cross-over|crossover)\b", flags=re.I)
@@ -301,6 +304,10 @@ _LITERATURE_ATTRIBUTION_RE = re.compile(
     r"\b(?:benchmarks?|systems?|methods?)\b[^.!?]{0,180}\b(?:reveal(?:s|ed|ing)?|show(?:s|ed|ing)?|"
     r"demonstrat(?:e|es|ed|ing)|report(?:s|ed|ing)|find(?:s|ings)?|emphasiz(?:e|es|ed|ing)|"
     r"highlight(?:s|ed|ing)|study(?:ies|ied|ing))\b",
+    flags=re.I,
+)
+_CITATION_LED_ATTRIBUTION_RE = re.compile(
+    r"^\s*(?:\(\s*\d+(?:\s*[,;]\s*\d+)*\s*\)|\[\s*\d+(?:\s*[,;]\s*\d+)*\s*\])\s*[,;:]?",
     flags=re.I,
 )
 
@@ -329,8 +336,17 @@ def extract_typed_evidence_candidates(page: str, *, max_per_type: int = 2) -> di
                 continue
             item = {"section": section or "unnamed", "text": sentence, "text_sha256": hashlib.sha256(sentence.encode("utf-8")).hexdigest(), "extraction_version": TYPED_EVIDENCE_EXTRACTION_VERSION}
             first_party_typed = bool(_FIRST_PARTY_TYPED_EVIDENCE_RE.search(sentence))
-            literature_attributed = bool(_LITERATURE_ATTRIBUTION_RE.search(sentence))
-            typed_empirical_eligible = not literature_attributed or first_party_typed
+            literature_attributed = bool(_LITERATURE_ATTRIBUTION_RE.search(sentence) or _CITATION_LED_ATTRIBUTION_RE.search(sentence))
+            first_party_result_section = any(term in section_low for term in _FIRST_PARTY_RESULT_SECTION_TERMS)
+            quantitative_typed = bool(_TYPED_NUMERIC_CUE_RE.search(sentence))
+            typed_empirical_eligible = (
+                first_party_typed
+                or (
+                    first_party_result_section
+                    and not literature_attributed
+                    and quantitative_typed
+                )
+            )
             if any(term in section_low for term in _ASSUMPTION_SECTION_TERMS) and _ASSUMPTION_CUE_RE.search(sentence) and normalized not in seen["operational_assumptions"]:
                 seen["operational_assumptions"].add(normalized)
                 score = 3 + (2 if "assumption" in section_low else 0) + (1 if re.search(r"\bwe assume\b|\bunder the assumption\b", sentence, flags=re.I) else 0)
@@ -461,11 +477,18 @@ def _portable_review_receipts(generator_state_path: Path | None, primary_state_p
     return receipts[-64:]
 
 
+def _portable_source_review_receipts(path: Path | None) -> list[dict[str, Any]]:
+    """Read explicit zero-authority review receipts outside generator transactions."""
+    payload=_load_json_object(path)
+    return [dict(row) for row in payload.get("receipts") or [] if isinstance(row,dict)][-64:]
+
+
 def _source_exposure_state(
     storage: StorageSettings,
     *,
     portable_generator_state_path: Path | None = None,
     portable_primary_state_path: Path | None = None,
+    portable_source_review_state_path: Path | None = None,
 ) -> tuple[dict[str, int], int, int, list[dict[str, Any]]]:
     """Return deterministic review exposure from private + portable receipts.
 
@@ -510,11 +533,15 @@ def _source_exposure_state(
                 "from_private_saturation_ledger":True,
             })
     portable_added=0
-    for row in _portable_review_receipts(portable_generator_state_path,portable_primary_state_path):
+    portable_rows=[
+        *_portable_review_receipts(portable_generator_state_path,portable_primary_state_path),
+        *_portable_source_review_receipts(portable_source_review_state_path),
+    ]
+    for row in portable_rows:
         run_id=str(row.get("run_id") or "").strip()
         if not run_id or row.get("scientific_authority") is not False:
             continue
-        if str(row.get("status") or "") not in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}:
+        if str(row.get("status") or "") not in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE","EXTERNAL_FRESH_INTAKE_REVIEWED"}:
             continue
         refs=sorted({str(ref).strip() for ref in row.get("source_refs") or [] if str(ref).strip().startswith("arXiv:")})
         if len(refs)<4:
@@ -1365,6 +1392,7 @@ def build_primary_evidence_pool(
     recent_fulltext_failure_cooldown_hours: float = DEFAULT_RECENT_FULLTEXT_FAILURE_COOLDOWN_HOURS,
     portable_generator_state_path: Path | None = None,
     portable_primary_state_path: Path | None = None,
+    portable_source_review_state_path: Path | None = None,
     cache_dir: Path | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     storage = storage or StorageSettings.from_env()
@@ -1583,6 +1611,7 @@ def build_primary_evidence_pool(
         storage,
         portable_generator_state_path=portable_generator_state_path,
         portable_primary_state_path=portable_primary_state_path,
+        portable_source_review_state_path=portable_source_review_state_path,
     )
     source_scheduler_active = bool(source_exposure_counts) and int(max_papers) > max(0, int(coverage_anchor_count))
     eligible_candidates = select_primary_candidates(
@@ -1995,6 +2024,7 @@ def write_primary_evidence_pool(
     recent_fulltext_failure_cooldown_hours: float = DEFAULT_RECENT_FULLTEXT_FAILURE_COOLDOWN_HOURS,
     portable_generator_state_path: Path | None = DEFAULT_PORTABLE_REVIEW_STATE,
     portable_primary_state_path: Path | None = None,
+    portable_source_review_state_path: Path | None = DEFAULT_PORTABLE_SOURCE_REVIEW_STATE,
     private_pool_output_path: Path | None = None,
 ) -> dict[str, Any]:
     storage = storage or StorageSettings.from_env()
@@ -2020,6 +2050,7 @@ def write_primary_evidence_pool(
         recent_fulltext_failure_cooldown_hours=recent_fulltext_failure_cooldown_hours,
         portable_generator_state_path=portable_generator_state_path,
         portable_primary_state_path=portable_primary_state_path if portable_primary_state_path is not None else json_path,
+        portable_source_review_state_path=portable_source_review_state_path,
     )
     private_pool_path = Path(private_pool_output_path) if private_pool_output_path is not None else private_primary_pool_path(storage)
     private_pool_path.parent.mkdir(parents=True, exist_ok=True)

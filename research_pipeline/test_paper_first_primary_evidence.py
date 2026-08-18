@@ -142,7 +142,25 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         typed=extract_typed_evidence_candidates(page,max_per_type=8)
         self.assertTrue(any("12.0%" in row["text"] and "3.0%" in row["text"] for row in typed["measured_failures"]))
         self.assertTrue(any("threshold regime" in row["text"] for row in typed["boundary_observations"]))
-        self.assertTrue(all(row["extraction_version"]=="typed-v2" for rows in typed.values() for row in rows))
+        self.assertTrue(all(row["extraction_version"]==TYPED_EVIDENCE_EXTRACTION_VERSION for rows in typed.values() for row in rows))
+
+    def test_typed_evidence_rejects_survey_failure_diagnosis_and_citation_led_numbers(self) -> None:
+        page='''<html><body><section><h2>4.2. Failure diagnosis</h2><p>Failure analysis asks: given a trajectory, did the agent fail, why did it fail, and at what point did the failure become inevitable?</p><p>(5), identifies recurring behavioral anti-patterns across 120 trajectories, including incoherent reasoning chains and failure to integrate tool feedback.</p><p>(20) isolate plan deviation as a distinct failure class across 10K trajectories, finding that a poorly specified plan inflicts more damage than no plan at all.</p><p>Unlike a traditional program, an LLM-based agent can fail silently and finally lead to wrong or unsafe output.</p></section></body></html>'''
+        typed=extract_typed_evidence_candidates(page,max_per_type=8)
+        self.assertEqual(typed["measured_failures"],[])
+        self.assertEqual(typed["boundary_observations"],[])
+
+    def test_typed_evidence_keeps_quantitative_owned_results_without_we_find_prefix(self) -> None:
+        page='''<html><body><section><h2>Experimental Results</h2><p>Our agent fails on 4/10 held-out tasks when the verifier is removed, compared with 1/10 under the full protocol.</p></section></body></html>'''
+        typed=extract_typed_evidence_candidates(page,max_per_type=8)
+        self.assertEqual(len(typed["measured_failures"]),1)
+        self.assertIn("4/10",typed["measured_failures"][0]["text"])
+
+    def test_typed_evidence_result_section_fallback_requires_quantitative_evidence(self) -> None:
+        page='''<html><body><section><h2>Experimental Results</h2><p>HYPERSKILL improves overall behavior but fails under retrieval noise and performs worse than the baseline in difficult cases.</p></section></body></html>'''
+        typed=extract_typed_evidence_candidates(page,max_per_type=8)
+        self.assertEqual(typed["measured_failures"],[])
+        self.assertEqual(typed["boundary_observations"],[])
 
     def test_frozen_typed_evidence_recompile_uses_exact_fulltext_bytes_without_changing_source_manifest(self) -> None:
         import hashlib
@@ -281,6 +299,34 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
             counts,runs,portable,receipts=_source_exposure_state(storage,portable_generator_state_path=generator,portable_primary_state_path=root/"unused.json")
         self.assertEqual((runs,portable),(2,1));self.assertEqual({row["run_id"] for row in receipts},{"private-run","remote-run"})
         self.assertEqual({k:counts[k] for k in sorted(counts)},{"arXiv:A":1,"arXiv:B":1,"arXiv:C":2,"arXiv:D":2,"arXiv:E":1,"arXiv:F":1})
+
+    def test_external_source_review_receipt_merges_as_zero_authority_exposure_only(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);review=root/"source-review.json"
+            review.write_text(json.dumps({"schema_version":"1.0","receipts":[{
+                "run_id":"external-fresh-r1","status":"EXTERNAL_FRESH_INTAKE_REVIEWED",
+                "source_refs":["arXiv:10","arXiv:11","arXiv:12","arXiv:13"],"scientific_authority":False,
+            }]}),encoding="utf-8")
+            counts,runs,portable,receipts=_source_exposure_state(
+                storage,
+                portable_generator_state_path=root/"missing-generator.json",
+                portable_primary_state_path=root/"missing-primary.json",
+                portable_source_review_state_path=review,
+            )
+        self.assertEqual((runs,portable),(1,1));self.assertEqual(len(counts),4)
+        self.assertTrue(all(value==1 for value in counts.values()))
+        self.assertEqual(receipts[0]["status"],"EXTERNAL_FRESH_INTAKE_REVIEWED")
+        self.assertFalse(receipts[0]["scientific_authority"])
+
+    def test_external_source_review_receipt_cannot_gain_exposure_with_scientific_authority(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);review=root/"source-review.json"
+            review.write_text(json.dumps({"schema_version":"1.0","receipts":[{
+                "run_id":"bad-external","status":"EXTERNAL_FRESH_INTAKE_REVIEWED",
+                "source_refs":["arXiv:20","arXiv:21","arXiv:22","arXiv:23"],"scientific_authority":True,
+            }]}),encoding="utf-8")
+            counts,runs,portable,receipts=_source_exposure_state(storage,portable_source_review_state_path=review)
+        self.assertEqual((counts,runs,portable,receipts),({},0,0,[]))
 
     def test_private_saturation_runs_are_exported_as_zero_authority_portable_receipts(self) -> None:
         with tempfile.TemporaryDirectory() as td:

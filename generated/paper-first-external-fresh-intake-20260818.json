@@ -1,0 +1,223 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-18T13:06:01Z",
+  "run_id": "external-fresh-intake-20260818-r1",
+  "status": "EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+  "source_window": {
+    "latest_prior_primary_publication_date": "2026-08-14",
+    "fresh_publication_dates": [
+      "2026-08-15",
+      "2026-08-16",
+      "2026-08-17"
+    ]
+  },
+  "summary": {
+    "sources_discovered": 10,
+    "exact_prior_exposure_zero": 10,
+    "identity_verified": 10,
+    "formal_generator_run": false,
+    "provider_model_calls": 0,
+    "paper_problem_emissions": 0,
+    "old_primary_tranche_mutated": false
+  },
+  "policy": {
+    "identity_before_asset": true,
+    "first_party_asset_ownership_required": true,
+    "secondary_literature_is_not_primary_anomaly_evidence": true,
+    "typed_evidence_extraction_version": "typed-v3",
+    "review_exposure_is_retrieval_metadata_only": true,
+    "review_exposure_cannot_authorize_or_skip_scientific_gates": true,
+    "no_emit_is_not_automatically_a_scientific_dead_end": true
+  },
+  "sources": [
+    {
+      "ref": "arXiv:2608.16721",
+      "title": "GenRouter: Unified Workflow Routing for Agentic Image Generation",
+      "published": "2026-08-17",
+      "assets": [
+        "github:EnVision-Research/GenRouter"
+      ],
+      "disposition": "NO_EMIT_THIS_PASS",
+      "reduction": [],
+      "note": "Capability/routing evidence; no hard residual beyond mature routing, specialization, or experience-selection explanations.",
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 2,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "ref": "arXiv:2608.16590",
+      "title": "Zetta ζ: An Efficient Closed-Loop Embodied Harness for Self-Evolving Physical Intelligence",
+      "published": "2026-08-17",
+      "assets": [
+        "project:air-embodied-brain.github.io/zetta",
+        "github:air-embodied-brain/Zetta-Embodiment"
+      ],
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "horizon-censored-attribution",
+        "serial-or-conjunctive-bottleneck"
+      ],
+      "note": "Later failures becoming visible after earliest-failure repair are reachability/right-censoring unless a same-later-state residual survives; large endpoint jumps after bottleneck repair are not a new mechanism. Similar-task transfer is capability evidence without a matched applicability boundary.",
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 2,
+        "boundary_observations": 1
+      }
+    },
+    {
+      "ref": "arXiv:2608.16411",
+      "title": "Towards Risk-free AI Agent Deployment",
+      "published": "2026-08-17",
+      "assets": [],
+      "disposition": "NO_EMIT_THIS_PASS",
+      "reduction": [],
+      "note": "Survey/deployment perspective, not a first-party experiment. Citation-led numeric failure-diagnosis examples are secondary literature. This source exposed the typed-v2 ownership bug fixed by typed-v3.",
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "ref": "arXiv:2608.16211",
+      "title": "BaT: Towards Self-Evolving Medical Research Agent with Stage Rubrics",
+      "published": "2026-08-17",
+      "assets": [
+        "github:AutoMedBench/Benchmark-as-Teacher"
+      ],
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "adaptive-validation-or-reusable-holdout",
+        "capacity-conditioned-negative-transfer"
+      ],
+      "note": "Repeated fixed diagnostic evaluation is used to select curriculum/checkpoints, so it is not untouched final evidence. Model-size-dependent transfer sign alone does not establish an agent-specific mechanism.",
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 1,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "ref": "arXiv:2608.16114",
+      "title": "HyperSkill: Self-Evolving LLM Agents via Hypergraph-Structured Skill Memory",
+      "published": "2026-08-17",
+      "assets": [
+        "github:rux001/HyperSkill"
+      ],
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "memory-capacity-retrieval-quality-revalidation-tradeoff",
+        "negative-transfer-or-applicability"
+      ],
+      "note": "Too little pruning accumulates low-utility entries; aggressive pruning removes useful skills. Memory below No Memory is covered by compatibility/revalidation unless a residual survives.",
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 4,
+        "boundary_observations": 2
+      }
+    },
+    {
+      "ref": "arXiv:2608.15763",
+      "title": "TaoLive Digital Avatar Agent Technical Report: Training Agents to Evolve with Their Harness",
+      "published": "2026-08-16",
+      "assets": [],
+      "disposition": "CAPABILITY_EVIDENCE_ONLY",
+      "reduction": [],
+      "note": "No first-party irreducible failure or boundary with enough released evidence was identified in this pass.",
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "ref": "arXiv:2608.15591",
+      "title": "Agent Gym: A Framework for Continuous Evaluation and Evolution of LLM Agents Through Human-in-the-Loop Feedback",
+      "published": "2026-08-16",
+      "assets": [],
+      "disposition": "CAPABILITY_EVIDENCE_ONLY",
+      "reduction": [],
+      "note": "Related-work links are not treated as an author release; no hard first-party residual was identified.",
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "ref": "arXiv:2608.15165",
+      "title": "SkillCommit: Evolving Agent Skills through Behaviorally Validated Scope Expansion",
+      "published": "2026-08-15",
+      "assets": [],
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "task-skill-compatibility-negative-transfer-applicability-revalidation"
+      ],
+      "note": "Fixing historical failures can introduce new errors; this is the mature overgeneralization/negative-transfer mode absent a residual after applicability conditioning.",
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 1,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "ref": "arXiv:2608.15089",
+      "title": "StateM: Reaching 95.3% Raw Accuracy, or a $15 Frontier Run, on Terminal-Bench 2.1 via Harness Scaling",
+      "published": "2026-08-15",
+      "assets": [
+        "github:henryqin1997/statem"
+      ],
+      "disposition": "CAPABILITY_EVIDENCE_ONLY",
+      "reduction": [],
+      "note": "Strong harness-scaling capability evidence; no hard irreducible anomaly was isolated.",
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "ref": "arXiv:2608.15071",
+      "title": "Evo-Harness: Context-to-Harness Skill Compilation for Self-Evolving Agents",
+      "published": "2026-08-15",
+      "typed_v3": null,
+      "assets": [
+        "github:A-EVO-Lab/a-evolve@release/evo-harness"
+      ],
+      "disposition": "CAPABILITY_EVIDENCE_ONLY",
+      "reduction": [],
+      "note": "One arXiv HTML-v1 typed-extraction fetch returned 404; identity and author-declared code provenance were independently verified. Fetch failure is not a scientific negative.",
+      "identity_verified": true,
+      "prior_exact_exposure": 0
+    }
+  ],
+  "authority": {
+    "scientific_authority": false,
+    "candidate_generation": false,
+    "problem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

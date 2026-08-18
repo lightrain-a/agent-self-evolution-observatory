@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-18T13:06:01Z",
+  "receipts": [
+    {
+      "run_id": "external-fresh-intake-20260818-r1",
+      "status": "EXTERNAL_FRESH_INTAKE_REVIEWED",
+      "source_refs": [
+        "arXiv:2608.16721",
+        "arXiv:2608.16590",
+        "arXiv:2608.16411",
+        "arXiv:2608.16211",
+        "arXiv:2608.16114",
+        "arXiv:2608.15763",
+        "arXiv:2608.15591",
+        "arXiv:2608.15165",
+        "arXiv:2608.15089",
+        "arXiv:2608.15071"
+      ],
+      "review_artifact": "generated/paper-first-external-fresh-intake-20260818.json",
+      "review_complete": true,
+      "identity_verified_count": 10,
+      "provider_model_calls": 0,
+      "scientific_authority": false,
+      "authority": {
+        "candidate_generation": false,
+        "problem": false,
+        "method": false,
+        "experiment": false,
+        "p0": false,
+        "gpu": false
+      }
+    }
+  ]
+}

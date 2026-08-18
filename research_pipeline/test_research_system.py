@@ -4,7 +4,7 @@ import copy
 import json
 import unittest
 
-from .paper_first_primary_evidence import TYPED_EVIDENCE_EXTRACTION_VERSION
+from .paper_first_primary_evidence import SUPPORTED_TYPED_EVIDENCE_SNAPSHOT_VERSIONS, TYPED_EVIDENCE_EXTRACTION_VERSION
 from .paper_first_relation_coverage import relation_recall_freshness
 from .paper_first_discovery_frontier import build_paper_first_discovery_frontier
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier
@@ -353,7 +353,7 @@ class ResearchSystemTest(unittest.TestCase):
             self.assertTrue(primary["policy"]["empirical_fact_candidates_are_not_ground_truth"])
             self.assertTrue(primary["policy"]["typed_evidence_candidates_are_not_ground_truth"])
             self.assertTrue(primary["policy"]["typed_evidence_is_deterministic_and_bounded"])
-            self.assertEqual(primary["policy"]["typed_evidence_extraction_version"],TYPED_EVIDENCE_EXTRACTION_VERSION)
+            self.assertIn(primary["policy"]["typed_evidence_extraction_version"],SUPPORTED_TYPED_EVIDENCE_SNAPSHOT_VERSIONS)
             self.assertTrue(primary["policy"]["derived_typed_evidence_reused_only_when_extractor_version_matches"])
             self.assertTrue(primary["policy"]["typed_evidence_requires_first_party_ownership_or_nonliterature_attribution"])
             self.assertEqual(set((primary["summary"].get("typed_evidence_candidates") or {}).keys()),{"operational_assumptions","measured_failures","boundary_observations"})
@@ -940,6 +940,14 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(any("manual relation-scan admission" in error for error in validate_state(auto)))
         flag=copy.deepcopy(state);flag["paper_first_global_relation_scan_admission"]["policy"]["manual_execution_requires_explicit_operator_flag"]=False
         self.assertTrue(any("manual relation-scan admission" in error for error in validate_state(flag)))
+
+    def test_legacy_typed_v2_primary_snapshot_is_supported_but_unknown_version_is_rejected(self) -> None:
+        state=copy.deepcopy(self.state)
+        state["paper_first_primary_evidence"]["policy"]["typed_evidence_extraction_version"]="typed-v2"
+        self.assertEqual(validate_state(state),[])
+        broken=copy.deepcopy(state)
+        broken["paper_first_primary_evidence"]["policy"]["typed_evidence_extraction_version"]="typed-v1"
+        self.assertTrue(any("supported first-party-owned typed-evidence snapshot" in error for error in validate_state(broken)))
 
     def test_v23_problem_deadend_memory_is_zero_authority_and_requires_basin_escape(self) -> None:
         state=copy.deepcopy(self.state); generator=state["paper_first_problem_generator"]
