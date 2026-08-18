@@ -5,14 +5,14 @@
   "status": "PASS",
   "package": {
     "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-    "sha256": "ab38373f19c38a09de528ec2daac21c359cc819d970edb7594379e4913edfb5f",
-    "manifest_sha256": "f81fb7e911049a141bc067db5e6176caa458bfcf768cd700e449aa8b33770f96",
-    "package_metadata_sha256": "cba083006a2d122bdc8f003e8a43f09ed1b5e67a91526bcd78f4824f6a3b062c"
+    "sha256": "ead253c9049958d44690fe63607610bfefac3dc6983c4b70de14c011e6891f35",
+    "manifest_sha256": "a9133b2b66bc1d3ccf04157f0e985271ffe4abf8055b47508fb687b47859a47e",
+    "package_metadata_sha256": "a73d146b6abde6d6fac300c0460e36efab3d5ab0752ed232c1c2f8b07ed935c1"
   },
   "isolated_verification": {
     "fresh_extract_manifest": "PASS",
     "reproduce_py": "PASS",
-    "unit_tests": "13/13 PASS",
+    "unit_tests": "19/19 PASS",
     "binary_identity_path_scan": "PASS",
     "text_identity_path_scan": "PASS",
     "figure_regeneration": "PASS_4_OF_4_FIGURES",
