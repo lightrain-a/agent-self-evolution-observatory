@@ -312,7 +312,7 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         self.assertFalse(artifact["reduction_pending"][0]["scientific_authority"])
 
     def test_machine_audit_keeps_exact_reduction_uncertainty_out_of_blocked_count(self) -> None:
-        candidate={"candidate_id":"SHADOW-P01-C01","model_candidate_id":"MODEL-1","title":"pending","discovery_lane":"UNEXPLAINED_BOUNDARY","source_branch_id":"B1","exact_prediction":"p","strongest_same_information_baseline":"b","cheapest_problem_falsifier":"f"}
+        candidate={"candidate_id":"SHADOW-P01-C01","model_candidate_id":"MODEL-1","title":"pending","discovery_lane":"UNEXPLAINED_BOUNDARY","source_branch_id":"B1","exact_prediction":"p","strongest_same_information_baseline":"b","cheapest_problem_falsifier":"f","empirical_evidence":{"source_a":{"ref":"arXiv:2608.13040"},"source_b":{"ref":"arXiv:2608.13040"}}}
         audit={"passed":False,"blockers":["reduction-falsifiability-contract-incomplete","saturation-exact-reduction-pending:procedural-memory-nonmonotonicity","unresolved-exact-reduction-test:1"]}
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);pool=root/"pool.json";run=root/"run";run.mkdir();pool.write_text(json.dumps({"records":[]}),encoding="utf-8")
@@ -327,6 +327,8 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         self.assertFalse(evidence["scientific_authority"])
         self.assertFalse(evidence["authority"]["paper_design"])
         self.assertEqual(artifact["problem_falsifier_queue"][0]["candidate_id"],"SHADOW-P01-C01")
+        self.assertEqual((artifact["problem_falsifier_queue"][0].get("candidate") or {}).get("empirical_evidence",{}).get("source_a",{}).get("ref"),"arXiv:2608.13040")
+        self.assertEqual(evidence["entries"][0]["source_refs"],["arXiv:2608.13040"])
         self.assertEqual(artifact["reduction_pending"][0]["route_origin"],"formulation-reduction-pending")
         self.assertTrue(artifact["policy"]["reduction_pending_is_not_scientific_block_or_pass"])
 
