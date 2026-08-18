@@ -52,6 +52,36 @@ R9_AGENT_MODEL_REVISION = "b968826d9c46dd6066d109eabc6255188de91218"
 R9_EVALUATOR_MODEL_ID = "cais/HarmBench-Llama-2-13b-cls"
 R9_EVALUATOR_MODEL_REVISION = "0cd31cdc8b53209dd5b153b20026ff085901bb14"
 R9_MODEL_REVISION_MARKER = ".r9-model-revision.json"
+R9_MODEL_VERIFICATION_RECEIPT = ".r9-hf-verification.json"
+R9_MODEL_SOURCE_METADATA = ".r9-hf-source-metadata.json"
+R9_REQUIRED_MODEL_FILES = {
+    "agent": (
+        "config.json",
+        "generation_config.json",
+        "model.safetensors.index.json",
+        "tokenizer.json",
+        "tokenizer_config.json",
+        "model-00001-of-00005.safetensors",
+        "model-00002-of-00005.safetensors",
+        "model-00003-of-00005.safetensors",
+        "model-00004-of-00005.safetensors",
+        "model-00005-of-00005.safetensors",
+    ),
+    "evaluator": (
+        "config.json",
+        "generation_config.json",
+        "model.safetensors.index.json",
+        "special_tokens_map.json",
+        "tokenizer.model",
+        "tokenizer_config.json",
+        "model-00001-of-00006.safetensors",
+        "model-00002-of-00006.safetensors",
+        "model-00003-of-00006.safetensors",
+        "model-00004-of-00006.safetensors",
+        "model-00005-of-00006.safetensors",
+        "model-00006-of-00006.safetensors",
+    ),
+}
 R9_FROZEN_BUDGET_SHAPE = {
     "states": 4,
     "qualification_probes_per_state": 3,
@@ -266,7 +296,50 @@ def frozen_r9_execution_invariants() -> dict[str, Any]:
     }
 
 
+def _verification_files_manifest(files: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], str]:
+    normalized = []
+    seen = set()
+    for item in files:
+        if not isinstance(item, dict):
+            raise ValueError("verification file entries must be objects")
+        path = str(item.get("path") or "").strip()
+        if not path or Path(path).name != path or path in seen:
+            raise ValueError("verification file paths must be unique top-level filenames")
+        seen.add(path)
+        size = item.get("size")
+        sha = str(item.get("sha256") or "").strip().lower()
+        source_sha = str(item.get("source_sha256") or "").strip().lower()
+        if not isinstance(size, int) or size <= 0:
+            raise ValueError("verification file sizes must be positive integers")
+        if not re.fullmatch(r"[0-9a-f]{64}", sha) or not re.fullmatch(r"[0-9a-f]{64}", source_sha):
+            raise ValueError("verification file digests must be 64-hex sha256")
+        normalized.append({"path": path, "size": size, "sha256": sha, "source_sha256": source_sha})
+    normalized.sort(key=lambda row: row["path"])
+    return normalized, _canonical_sha(normalized)
+
+
+def _hf_metadata_identity(payload: dict[str, Any]) -> tuple[str, str, set[str]]:
+    model_id = str(payload.get("id") or payload.get("modelId") or payload.get("model_id") or "").strip()
+    revision = str(payload.get("sha") or payload.get("revision") or "").strip()
+    siblings = set()
+    for item in payload.get("siblings") or payload.get("files") or []:
+        if not isinstance(item, dict):
+            continue
+        name = str(item.get("rfilename") or item.get("path") or item.get("filename") or item.get("name") or "").strip()
+        if name:
+            siblings.add(name)
+    return model_id, revision, siblings
+
+
 def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path) -> dict[str, Any]:
+    """Require content-addressed Hugging Face exact-revision evidence for both R9 models.
+
+    A directory name or hand-written model/revision marker is intentionally
+    insufficient.  Each model directory must contain a marker that binds a hashed
+    verification receipt.  The receipt in turn binds the exact HF revision metadata,
+    the complete role-specific runtime file set, source-content SHA-256 values, and
+    the bytes currently present on disk.  The gate is read-only and fail-closed.
+    """
     expected = (
         ("agent", Path(agent_model_dir), R9_AGENT_MODEL_ID, R9_AGENT_MODEL_REVISION),
         ("evaluator", Path(evaluator_model_dir), R9_EVALUATOR_MODEL_ID, R9_EVALUATOR_MODEL_REVISION),
@@ -275,37 +348,192 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
     failures = []
     for role, root, model_id, revision in expected:
         marker = root / R9_MODEL_REVISION_MARKER
-        row = {
+        receipt_path = root / R9_MODEL_VERIFICATION_RECEIPT
+        source_metadata_path = root / R9_MODEL_SOURCE_METADATA
+        required_files = set(R9_REQUIRED_MODEL_FILES[role])
+        row: dict[str, Any] = {
             "role": role,
             "model_id": model_id,
             "expected_revision": revision,
             "path": str(root),
             "directory_present": root.is_dir(),
             "revision_marker_present": marker.is_file(),
+            "verification_receipt_present": receipt_path.is_file(),
+            "source_metadata_present": source_metadata_path.is_file(),
             "revision_match": False,
+            "verification_receipt_digest_match": False,
+            "source_metadata_digest_match": False,
+            "required_file_set_complete": False,
+            "local_file_hashes_match": False,
+            "hf_exact_revision_verified": False,
         }
+        role_failures: list[str] = []
         if not root.is_dir():
-            failures.append(f"{role}-model-directory-missing")
+            role_failures.append("model-directory-missing")
         elif not marker.is_file():
-            failures.append(f"{role}-revision-marker-missing")
+            role_failures.append("revision-marker-missing")
         else:
             try:
-                payload = json.loads(marker.read_text(encoding="utf-8"))
+                marker_payload = json.loads(marker.read_text(encoding="utf-8"))
             except (OSError, json.JSONDecodeError):
-                payload = {}
-            observed_id = str(payload.get("model_id") or "")
-            observed_revision = str(payload.get("revision") or "")
+                marker_payload = {}
+                role_failures.append("revision-marker-invalid")
+            observed_id = str(marker_payload.get("model_id") or "")
+            observed_revision = str(marker_payload.get("revision") or "")
             row["observed_model_id"] = observed_id
             row["observed_revision"] = observed_revision
             row["revision_match"] = observed_id == model_id and observed_revision == revision
             if not row["revision_match"]:
-                failures.append(f"{role}-revision-mismatch")
+                role_failures.append("revision-mismatch")
+
+            receipt_name = str(marker_payload.get("verification_receipt") or "").strip()
+            marker_receipt_sha = str(marker_payload.get("verification_receipt_sha256") or "").strip().lower()
+            marker_manifest_sha = str(marker_payload.get("files_manifest_sha256") or "").strip().lower()
+            if receipt_name != R9_MODEL_VERIFICATION_RECEIPT:
+                role_failures.append("verification-receipt-reference-invalid")
+            if not re.fullmatch(r"[0-9a-f]{64}", marker_receipt_sha):
+                role_failures.append("verification-receipt-digest-invalid")
+            if not re.fullmatch(r"[0-9a-f]{64}", marker_manifest_sha):
+                role_failures.append("files-manifest-digest-invalid")
+
+            receipt: dict[str, Any] = {}
+            if not receipt_path.is_file():
+                role_failures.append("verification-receipt-missing")
+            else:
+                actual_receipt_sha = _sha_file(receipt_path)
+                row["verification_receipt_sha256"] = actual_receipt_sha
+                row["verification_receipt_digest_match"] = actual_receipt_sha == marker_receipt_sha
+                if not row["verification_receipt_digest_match"]:
+                    role_failures.append("verification-receipt-digest-mismatch")
+                try:
+                    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+                except (OSError, json.JSONDecodeError):
+                    role_failures.append("verification-receipt-invalid")
+                    receipt = {}
+
+            if receipt:
+                receipt_id = str(receipt.get("model_id") or "")
+                receipt_revision = str(receipt.get("revision") or "")
+                source_domain = str(receipt.get("source_domain") or "").strip().lower()
+                exact_verified = receipt.get("exact_revision_verified") is True
+                source_metadata_name = str(receipt.get("source_metadata") or "").strip()
+                source_metadata_sha = str(receipt.get("source_metadata_sha256") or "").strip().lower()
+                row.update({
+                    "receipt_model_id": receipt_id,
+                    "receipt_revision": receipt_revision,
+                    "source_domain": source_domain,
+                    "exact_revision_claim": exact_verified,
+                })
+                if receipt_id != model_id or receipt_revision != revision:
+                    role_failures.append("verification-receipt-identity-mismatch")
+                if source_domain != "huggingface.co":
+                    role_failures.append("verification-source-not-huggingface")
+                if not exact_verified:
+                    role_failures.append("exact-revision-not-verified")
+                if receipt.get("scientific_authority") is not False:
+                    role_failures.append("verification-receipt-authority-invalid")
+                if source_metadata_name != R9_MODEL_SOURCE_METADATA:
+                    role_failures.append("source-metadata-reference-invalid")
+                if not re.fullmatch(r"[0-9a-f]{64}", source_metadata_sha):
+                    role_failures.append("source-metadata-digest-invalid")
+
+                source_metadata: dict[str, Any] = {}
+                if not source_metadata_path.is_file():
+                    role_failures.append("source-metadata-missing")
+                else:
+                    actual_source_sha = _sha_file(source_metadata_path)
+                    row["source_metadata_sha256"] = actual_source_sha
+                    row["source_metadata_digest_match"] = actual_source_sha == source_metadata_sha
+                    if not row["source_metadata_digest_match"]:
+                        role_failures.append("source-metadata-digest-mismatch")
+                    try:
+                        source_metadata = json.loads(source_metadata_path.read_text(encoding="utf-8"))
+                    except (OSError, json.JSONDecodeError):
+                        role_failures.append("source-metadata-invalid")
+                        source_metadata = {}
+                if source_metadata:
+                    source_id, source_revision, source_files = _hf_metadata_identity(source_metadata)
+                    row["source_metadata_model_id"] = source_id
+                    row["source_metadata_revision"] = source_revision
+                    if source_id != model_id or source_revision != revision:
+                        role_failures.append("source-metadata-identity-mismatch")
+                    missing_from_hf_metadata = sorted(required_files - source_files)
+                    row["required_files_missing_from_source_metadata"] = missing_from_hf_metadata
+                    if missing_from_hf_metadata:
+                        role_failures.append("required-files-missing-from-source-metadata")
+
+                try:
+                    verification_files, manifest_sha = _verification_files_manifest(list(receipt.get("files") or []))
+                except ValueError:
+                    verification_files, manifest_sha = [], ""
+                    role_failures.append("verification-file-manifest-invalid")
+                row["files_manifest_sha256"] = manifest_sha
+                if manifest_sha != marker_manifest_sha or manifest_sha != str(receipt.get("files_manifest_sha256") or ""):
+                    role_failures.append("files-manifest-digest-mismatch")
+                by_path = {item["path"]: item for item in verification_files}
+                missing_required = sorted(required_files - set(by_path))
+                row["required_files_missing_from_receipt"] = missing_required
+                row["required_file_set_complete"] = not missing_required
+                if missing_required:
+                    role_failures.append("required-runtime-files-missing-from-receipt")
+
+                local_mismatch = []
+                source_mismatch = []
+                if not missing_required:
+                    for filename in sorted(required_files):
+                        item = by_path[filename]
+                        local = root / filename
+                        if not local.is_file():
+                            local_mismatch.append(filename + ":missing")
+                            continue
+                        if local.stat().st_size != item["size"]:
+                            local_mismatch.append(filename + ":size")
+                            continue
+                        actual_sha = _sha_file(local)
+                        if actual_sha != item["sha256"]:
+                            local_mismatch.append(filename + ":sha256")
+                        if item["source_sha256"] != item["sha256"]:
+                            source_mismatch.append(filename)
+                row["local_file_mismatches"] = local_mismatch
+                row["source_vs_local_sha_mismatches"] = source_mismatch
+                row["local_file_hashes_match"] = not missing_required and not local_mismatch
+                if local_mismatch:
+                    role_failures.append("local-runtime-file-content-mismatch")
+                if source_mismatch:
+                    role_failures.append("source-vs-local-content-mismatch")
+
+                row["hf_exact_revision_verified"] = bool(
+                    row["revision_match"]
+                    and row["verification_receipt_digest_match"]
+                    and row["source_metadata_digest_match"]
+                    and row["required_file_set_complete"]
+                    and row["local_file_hashes_match"]
+                    and not source_mismatch
+                    and source_domain == "huggingface.co"
+                    and exact_verified
+                    and source_metadata
+                    and _hf_metadata_identity(source_metadata)[:2] == (model_id, revision)
+                    and receipt.get("scientific_authority") is False
+                    and not role_failures
+                )
+                if not row["hf_exact_revision_verified"] and not role_failures:
+                    role_failures.append("hf-exact-revision-verification-incomplete")
+
+        failures.extend(f"{role}-{failure}" for failure in role_failures)
+        row["blockers"] = role_failures
         rows.append(row)
-    ready = not failures
+    ready = not failures and all(row.get("hf_exact_revision_verified") is True for row in rows)
     return {
         "status": "READY_RUNTIME_MODEL_ASSETS_PINNED" if ready else "HOLD_RUNTIME_MODEL_ASSETS_UNAVAILABLE_OR_UNPINNED",
         "execution_authorized": ready,
         "fallback_allowed": False,
+        "verification_contract": {
+            "marker_only_is_insufficient": True,
+            "content_addressed_hf_receipt_required": True,
+            "exact_hf_revision_metadata_required": True,
+            "complete_role_runtime_file_set_required": True,
+            "source_and_local_sha256_must_match": True,
+        },
         "model_assets": rows,
         "blockers": failures,
         "scientific_authority": False,
