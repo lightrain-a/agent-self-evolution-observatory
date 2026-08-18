@@ -2503,7 +2503,8 @@ function renderIdeaPortfolio(config) {
   const newIdeas = renderNewIdeaCandidates();
   const incubation = window.renderPaperFirstIdeaIncubation ? window.renderPaperFirstIdeaIncubation() : "";
   const current=window.renderCurrentResearchPortfolio?window.renderCurrentResearchPortfolio():"";
-  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${current}${renderCustomChapter(chapters[0],0,discussed)}${renderCustomChapter(chapters[1],1,`${newIdeas}${incubation}`)}`;
+  const agentSafety=window.renderAgentSafetyProgram?window.renderAgentSafetyProgram():"";
+  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${current}${agentSafety}${renderCustomChapter(chapters[0],0,discussed)}${renderCustomChapter(chapters[1],1,`${newIdeas}${incubation}`)}`;
 }
 function renderIdeaRanking(config) {
   return `${pageHeader(config)}${(config.sections || []).map(renderSection).join("")}${renderIdeaRankingPanels()}`;
