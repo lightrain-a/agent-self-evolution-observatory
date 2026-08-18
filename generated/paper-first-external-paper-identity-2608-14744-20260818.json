@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-18T11:50:11+00:00",
+  "status": "VERIFIED_BIBLIOGRAPHIC_IDENTITY",
+  "claimed_identity": {
+    "title": "Iterative Refinement Diffusion for Super-Resolved Data Assimilation of Multiscale Physical Systems",
+    "ref": "arXiv:2608.14744",
+    "normalized_ref": "arXiv:2608.14744",
+    "arxiv_id": "2608.14744"
+  },
+  "official_identity": {
+    "ref": "arXiv:2608.14744",
+    "arxiv_id": "2608.14744",
+    "title": "Iterative Refinement Diffusion for Super-Resolved Data Assimilation of Multiscale Physical Systems",
+    "publication_date": "2026-08-13",
+    "primary_url": "https://arxiv.org/abs/2608.14744"
+  },
+  "identity_check": {
+    "primary_metadata_source": "https://export.arxiv.org/api/query",
+    "title_match_threshold": 0.72,
+    "title_similarity": 1.0,
+    "ref_resolves": true,
+    "claimed_title_matches_resolved_ref": true,
+    "primary_metadata_sha256": "ab96ebb811107143af409e27561c09a30080b9721c22920bf0a0dc7380f40e0f",
+    "identity_binding_sha256": "98e8b64c491d38bfbed15c369c17d61dccfb87003a07bf0d06b68d774016f8bc",
+    "http_status": 200,
+    "resolved_records": 1
+  },
+  "identity_recovery": {
+    "title_search_attempted": false,
+    "matching_candidates": [],
+    "matching_candidate_count": 0,
+    "claimed_title_primary_identity_status": "NOT_SEARCHED"
+  },
+  "next_action": "official-first-party-asset-audit",
+  "asset_audit_authorized": true,
+  "provider_calls_authorized": false,
+  "method_authorized": false,
+  "experiment_authorized": false,
+  "p0_authorized": false,
+  "gpu_authorized": false,
+  "scientific_authority": false,
+  "policy": {
+    "asset_audit_requires_verified_bibliographic_identity_receipt": true,
+    "title_and_ref_must_resolve_to_the_same_primary_record": true,
+    "title_ref_mismatch_is_quarantine_not_scientific_negative": true,
+    "unverified_identity_cannot_start_asset_or_experiment_execution": true,
+    "bibliographic_verification_grants_read_only_asset_audit_only": true,
+    "bibliographic_verification_never_grants_scientific_or_experiment_authority": true
+  }
+}

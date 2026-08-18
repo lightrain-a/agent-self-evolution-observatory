@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0",
-  "generated_at": "2026-08-18T10:17:59+00:00",
-  "status": "ROOT_CAUSE_TRACED_AND_BAD_IDENTITY_QUARANTINED",
+  "schema_version": "1.1",
+  "generated_at": "2026-08-18T11:58:13+00:00",
+  "status": "ROOT_CAUSE_TRACED_CORRECT_IDENTITY_RESTORED_ASSET_AUDITED",
   "incident": {
     "claimed_title": "Great Theorem Prover",
     "claimed_ref": "arXiv:2608.14744",
@@ -22,7 +22,12 @@
     "claimed_title_exact_primary_search_attempted": true,
     "claimed_title_matching_primary_candidates": 0,
     "claimed_title_primary_identity_status": "UNRESOLVED_NO_PRIMARY_TITLE_MATCH",
-    "identity_receipt": "generated/paper-first-external-paper-identity-gtp-2608-14744-20260818.json"
+    "identity_receipt": "generated/paper-first-external-paper-identity-gtp-2608-14744-20260818.json",
+    "restored_identity_receipt": "generated/paper-first-external-paper-identity-2608-14744-20260818.json",
+    "restored_asset_audit": "generated/paper-first-external-asset-content-audit-2608-14744-20260818.json",
+    "restored_title": "Iterative Refinement Diffusion for Super-Resolved Data Assimilation of Multiscale Physical Systems",
+    "restored_ref": "arXiv:2608.14744",
+    "restored_title_similarity": 1.0
   },
   "root_cause": {
     "classification": "UNVERIFIED_EXTERNAL_PAPER_HANDOFF_BYPASSED_BIBLIOGRAPHIC_IDENTITY_RECEIPT",
@@ -30,7 +35,8 @@
     "canonical_primary_gate_itself_accepts_this_mismatch": false,
     "why": "The canonical Primary intake already verifies the candidate title against the official arXiv page and rejects title similarity below 0.72. The bad title-ref pair was not present in Git history or the public authoritative Primary/Fresh/System states, so the incorrect association occurred before canonical intake, during an external paper-to-asset-triage handoff that had no standalone bibliographic identity receipt.",
     "not_a_dedup_failure": true,
-    "prior_dedup_should_be_reused": true
+    "prior_dedup_should_be_reused": true,
+    "source_of_truth_rule": "When an external handoff contains a primary identifier/URL but a later unverified title conflicts, preserve the primary identifier, resolve its official title, and retire the unbound title rather than guessing a new identifier."
   },
   "remediation": {
     "identity_module": "research_pipeline.paper_first_external_paper_identity",
@@ -46,11 +52,17 @@
     "experiment_behavior": "Bibliographic verification never grants Method, Experiment, P0, GPU, or scientific authority."
   },
   "current_disposition": {
-    "gtp_identity": "UNRESOLVED_QUARANTINED",
-    "arxiv_2608_14744_identity": "RESOLVED_TO_DIFFUSION_DATA_ASSIMILATION_PAPER",
-    "gtp_official_asset_audit_authorized": false,
+    "gtp_identity": "RETIRED_AS_UNBOUND_TITLE_DRIFT",
+    "arxiv_2608_14744_identity": "VERIFIED_BIBLIOGRAPHIC_IDENTITY",
+    "arxiv_2608_14744_title": "Iterative Refinement Diffusion for Super-Resolved Data Assimilation of Multiscale Physical Systems",
+    "official_asset_audit": "COMPLETE",
+    "official_code_repository": "https://github.com/dmrigank/Iterative_refinement_DA",
+    "official_archive": "https://doi.org/10.5281/zenodo.21494987",
+    "lean_or_gtp_asset_present": false,
     "gtp_experiment_authorized": false,
-    "next_action": "Obtain a primary identifier for the intended GTP paper. Re-run the bibliographic identity gate; only a VERIFIED_BIBLIOGRAPHIC_IDENTITY receipt may hand off directly to official GitHub/Hugging Face/project/Lean-verifier asset audit. Do not redo prior deduplication."
+    "correct_paper_experiment_authorized": false,
+    "prior_dedup_reused": true,
+    "next_action": "Return to the already-deduplicated fresh-paper queue; do not create a GTP experiment from this incident."
   },
   "scientific_authority": false
 }

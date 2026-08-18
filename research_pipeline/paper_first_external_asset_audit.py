@@ -14,7 +14,7 @@ import requests
 
 from .paper_first_external_paper_identity import validate_external_paper_identity_receipt
 
-SCHEMA_VERSION = "1.0"
+SCHEMA_VERSION = "1.1"
 _ASSET_HOSTS = {"github.com", "huggingface.co"}
 
 
@@ -38,6 +38,27 @@ def _hrefs(page: str) -> list[str]:
         if url.startswith("https://") or url.startswith("http://"):
             values.append(url)
     return values
+
+
+def _paper_declaration_surface(page: str) -> str:
+    """Return only the paper-authored arXiv metadata/abstract surface.
+
+    arXiv appends Labs and "Code, Data, Media" UI after the paper metadata. Those
+    controls contain generic GitHub/Hugging Face links that are platform chrome,
+    not declarations by the paper authors.  Missing/changed arXiv markup therefore
+    fails closed to an empty declaration surface rather than forwarding UI links.
+    """
+    text = str(page or "")
+    start = re.search(r'<div\b[^>]*\bid=["\']abs["\'][^>]*>', text, flags=re.I)
+    if start is None:
+        return ""
+    end_positions = []
+    for marker in ("<!--end leftcolumn-->", '<div class="extra-services"', "<div class='extra-services'"):
+        pos = text.find(marker, start.end())
+        if pos >= 0:
+            end_positions.append(pos)
+    end = min(end_positions) if end_positions else len(text)
+    return text[start.start():end]
 
 
 def _asset_kind(url: str) -> str:
@@ -126,6 +147,8 @@ def build_external_asset_audit(
         "policy": {
             "verified_bibliographic_identity_required_before_network_asset_probe": True,
             "official_primary_page_is_asset_declaration_carrier": True,
+            "only_paper_metadata_surface_is_declaration_carrier": True,
+            "arxiv_labs_and_platform_chrome_are_not_paper_asset_declarations": True,
             "repository_or_model_url_guess_is_not_first_party_provenance": True,
             "only_primary_declared_asset_endpoints_are_forwarded": True,
             "no_declared_endpoint_is_evidence_absence_not_scientific_negative": True,
@@ -168,8 +191,9 @@ def build_external_asset_audit(
         return state
 
     state["summary"]["primary_page_verified"] = 1
+    declaration_surface = _paper_declaration_surface(page)
     endpoints: dict[str, dict[str, Any]] = {}
-    for raw_url in _hrefs(page):
+    for raw_url in _hrefs(declaration_surface):
         kind = _asset_kind(raw_url)
         if not kind:
             continue

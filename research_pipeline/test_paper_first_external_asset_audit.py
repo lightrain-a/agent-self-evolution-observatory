@@ -55,12 +55,14 @@ class ExternalAssetAuditTest(unittest.TestCase):
     def test_verified_identity_forwards_only_primary_declared_asset_hosts(self) -> None:
         title = "A Verified Lean Prover"
         receipt = self.identity(claimed_title=title, official_title=title, arxiv_id="2608.19999")
-        page = '''<html><body>
+        page = '''<html><body><div id="abs">
           <a href="https://github.com/example/lean-prover/tree/main">Code</a>
           <a href="https://huggingface.co/example/lean-prover">Model</a>
           <a href="https://example.github.io/lean-prover/">Project</a>
           <a href="https://unrelated.example.org/tool">Other</a>
           <a href="https://arxiv.org/pdf/2608.19999">PDF</a>
+        </div><!--end leftcolumn-->
+        <div class="extra-services"><a href="https://huggingface.co/docs/hub">arXiv Labs help</a></div>
         </body></html>'''
 
         def fetcher(**kwargs):
@@ -79,6 +81,7 @@ class ExternalAssetAuditTest(unittest.TestCase):
         self.assertIn("https://huggingface.co/example/lean-prover", urls)
         self.assertIn("https://example.github.io/lean-prover", urls)
         self.assertNotIn("https://unrelated.example.org/tool", urls)
+        self.assertNotIn("https://huggingface.co/docs/hub", urls)
         self.assertEqual(validate_external_asset_audit(state), [])
         for key in ("provider_calls_authorized", "method_authorized", "experiment_authorized", "p0_authorized", "gpu_authorized", "scientific_authority"):
             self.assertFalse(state[key])
@@ -88,7 +91,7 @@ class ExternalAssetAuditTest(unittest.TestCase):
         receipt = self.identity(claimed_title=title, official_title=title, arxiv_id="2608.19999")
 
         def fetcher(**kwargs):
-            return SimpleNamespace(status_code=200, text='<html><a href="https://arxiv.org/pdf/2608.19999">PDF</a></html>', url=kwargs["url"])
+            return SimpleNamespace(status_code=200, text='<html><div id="abs"><a href="https://arxiv.org/pdf/2608.19999">PDF</a></div><!--end leftcolumn--><div class="extra-services"><a href="https://huggingface.co/huggingface">What is Hugging Face?</a></div></html>', url=kwargs["url"])
 
         state = build_external_asset_audit(identity_receipt=receipt, fetcher=fetcher, now=self.now())
         self.assertEqual(state["status"], "VERIFIED_IDENTITY_NO_DECLARED_ASSET_ENDPOINTS")
@@ -96,6 +99,22 @@ class ExternalAssetAuditTest(unittest.TestCase):
         self.assertFalse(state["asset_content_review_authorized"])
         self.assertTrue(state["policy"]["no_declared_endpoint_is_evidence_absence_not_scientific_negative"])
         self.assertFalse(state["scientific_authority"])
+        self.assertEqual(validate_external_asset_audit(state), [])
+
+    def test_missing_paper_surface_fails_closed_instead_of_forwarding_platform_links(self) -> None:
+        title = "A Verified Lean Prover"
+        receipt = self.identity(claimed_title=title, official_title=title, arxiv_id="2608.19999")
+
+        def fetcher(**kwargs):
+            return SimpleNamespace(
+                status_code=200,
+                text='<html><div class="extra-services"><a href="https://github.com/arxiv/platform">UI</a><a href="https://huggingface.co/docs/hub">HF help</a></div></html>',
+                url=kwargs["url"],
+            )
+
+        state = build_external_asset_audit(identity_receipt=receipt, fetcher=fetcher, now=self.now())
+        self.assertEqual(state["status"], "VERIFIED_IDENTITY_NO_DECLARED_ASSET_ENDPOINTS")
+        self.assertEqual(state["declared_asset_endpoints"], [])
         self.assertEqual(validate_external_asset_audit(state), [])
 
 

@@ -1,0 +1,108 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-18T11:58:13+00:00",
+  "status": "OFFICIAL_ASSET_AUDIT_COMPLETE_CORRECT_PAPER",
+  "source_identity": {
+    "ref": "arXiv:2608.14744",
+    "title": "Iterative Refinement Diffusion for Super-Resolved Data Assimilation of Multiscale Physical Systems",
+    "publication_date": "2026-08-13",
+    "identity_receipt": "generated/paper-first-external-paper-identity-2608-14744-20260818.json",
+    "identity_binding_sha256": "98e8b64c491d38bfbed15c369c17d61dccfb87003a07bf0d06b68d774016f8bc",
+    "bibliographic_identity_verified": true
+  },
+  "official_fulltext": {
+    "url": "https://arxiv.org/html/2608.14744v1",
+    "http_status": 200,
+    "content_sha256": "402c58f45b2ecc6efc6b308d4cf1123d0da8ec449716132019cc6790ada114f5",
+    "paper_declares_public_code": true,
+    "paper_declares_data_available_by_request": true,
+    "declared_release_endpoints": [
+      "https://github.com/dmrigank/Iterative_refinement_DA",
+      "https://doi.org/10.5281/zenodo.21494987"
+    ]
+  },
+  "github": {
+    "url": "https://github.com/dmrigank/Iterative_refinement_DA",
+    "default_branch": "main",
+    "license": "MIT",
+    "main_tree_sha": "b3b603d2eba8c451e075f702c25b7390a8ab965c",
+    "release_tag": "v1.0.0",
+    "release_tree_sha": "8b15ece0bb2c1864e9c3cbc7b9aaa98ea4f4e59b",
+    "main_tree_items": 100,
+    "main_blob_count": 93,
+    "lean_or_theorem_assets": [],
+    "attempt_or_trace_assets": [],
+    "src_data_modules_main": [],
+    "src_data_modules_v1_0_0": [],
+    "generator_imports": {
+      "scripts/generate_data.py": [
+        "from src.data.generate_dataset import generate_and_save"
+      ],
+      "scripts/generate_kraichnan_data.py": [
+        "from src.data.generate_kraichnan import generate_and_save_kraichnan"
+      ]
+    }
+  },
+  "zenodo": {
+    "doi": "10.5281/zenodo.21494987",
+    "concept_doi": "10.5281/zenodo.21494986",
+    "title": "Resolution-Agnostic Iterative Generative Data Assimilation",
+    "version": "v1.0.0",
+    "resource_type": {
+      "title": "Software",
+      "type": "software"
+    },
+    "creators": [
+      "Dhingra, Mrigank",
+      "Muthukumar, Ramchandran",
+      "Willett, Rebecca",
+      "San, Omer"
+    ],
+    "related_identifiers": [
+      {
+        "identifier": "https://github.com/dmrigank/Iterative_refinement_DA/tree/v1.0.0",
+        "relation": "isSupplementTo",
+        "resource_type": "software",
+        "scheme": "url"
+      }
+    ],
+    "files": [
+      {
+        "key": "dmrigank/Iterative_refinement_DA-v1.0.0.zip",
+        "size": 300246,
+        "checksum": "md5:1718f8813e96503e6755712ebc82ce54"
+      }
+    ]
+  },
+  "audit_findings": {
+    "is_great_theorem_prover": false,
+    "is_lean_theorem_proving_asset": false,
+    "is_agent_self_evolution_asset": false,
+    "released_lean_verifier_present": false,
+    "released_per_instance_or_per_attempt_traces_present": false,
+    "release_is_self_contained_for_documented_data_generation": false,
+    "release_completeness_caveat": "The documented data-generation entry points import src.data modules, but src/data is absent from both current main and the archived v1.0.0 tree. Treat this as an asset-completeness caveat only, not a scientific negative result."
+  },
+  "routing_disposition": {
+    "gtp_handoff": "RETIRE_IDENTITY_DRIFT",
+    "correct_paper": "OUT_OF_SCOPE_FOR_CURRENT_AGENT_SELF_EVOLUTION_GTP_LANE",
+    "redo_prior_deduplication": false,
+    "start_gtp_experiment": false,
+    "start_correct_paper_experiment": false,
+    "next_action": "Return to the already-deduplicated fresh-paper queue; require a verified bibliographic identity receipt before any future external-paper asset handoff."
+  },
+  "authority": {
+    "provider_calls_authorized": false,
+    "method_authorized": false,
+    "experiment_authorized": false,
+    "p0_authorized": false,
+    "gpu_authorized": false,
+    "scientific_authority": false
+  },
+  "provenance": {
+    "abs_asset_audit": "generated/paper-first-external-asset-audit-2608-14744-20260818.json",
+    "abs_page_platform_chrome_excluded": true,
+    "official_fulltext_used_only_for_explicit_code_data_declarations": true,
+    "repository_url_guessing_used": false
+  }
+}
