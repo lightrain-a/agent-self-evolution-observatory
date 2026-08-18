@@ -36,7 +36,7 @@
     ],
     "typed_evidence_candidates_are_not_ground_truth": true,
     "typed_evidence_is_deterministic_and_bounded": true,
-    "typed_evidence_extraction_version": "typed-v1",
+    "typed_evidence_extraction_version": "typed-v2",
     "pre_registered_lane_coverage_floor": true,
     "lane_coverage_is_discovery_breadth_not_scientific_authority": true,
     "scientific_object_lanes": [
@@ -80,7 +80,8 @@
     "candidate_generation_authority": false,
     "method_authority": false,
     "experiment_authority": false,
-    "p0_authority": false
+    "p0_authority": false,
+    "typed_evidence_requires_first_party_ownership_or_nonliterature_attribution": true
   },
   "summary": {
     "corpus_available": true,
@@ -103,7 +104,7 @@
     },
     "typed_evidence_candidates": {
       "operational_assumptions": 6,
-      "measured_failures": 45,
+      "measured_failures": 43,
       "boundary_observations": 20
     },
     "recent_verified_cache_reused": 0,
@@ -672,7 +673,7 @@
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
         "operational_assumptions": 0,
-        "measured_failures": 2,
+        "measured_failures": 0,
         "boundary_observations": 0
       }
     },
@@ -910,6 +911,17 @@
   },
   "fulltext_errors": [],
   "status": "READY",
-  "discovery_transaction_id": "1e841d1f5c312812ab40d779251786192c8016edcf9a193a15e1be6aa37daaa9",
+  "derived_evidence_recompile": {
+    "kind": "typed-evidence-first-party-ownership-recompile",
+    "prior_typed_evidence_extraction_version": "typed-v1",
+    "typed_evidence_extraction_version": "typed-v2",
+    "records_recompiled": 32,
+    "records_changed": 32,
+    "source_scheduler_runs_executed": 0,
+    "network_fetches_executed": 0,
+    "source_manifest_changed": false,
+    "scientific_authority": false
+  },
+  "discovery_transaction_id": "c669b002be54353844b9ee647a7fa1d5dbbcb3bb77e1ac3722ab355a71e887fc",
   "discovery_transaction_role": "primary"
 }

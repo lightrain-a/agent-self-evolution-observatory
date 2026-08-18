@@ -1,12 +1,12 @@
 {
   "schema_version": "2.5",
-  "generated_at": "2026-08-17T18:09:51+00:00",
-  "run_id": "20260817T180951Z",
+  "generated_at": "2026-08-17T20:34:24+00:00",
+  "run_id": "20260817T203424Z-replay",
   "generator_model": "kimi-k3",
-  "reviewer_model": "deepseek-v4-pro",
+  "reviewer_model": "",
   "policy": {
     "zero_candidates_is_valid": true,
-    "discovery_operator_version": "fresh-phenomenon-treatment-aligned-v14",
+    "discovery_operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
     "single_source_anomaly_first_enabled": true,
     "source_coverage_saturation_reopens_once_on_operator_change": true,
     "search_portfolio_enabled": false,
@@ -35,8 +35,8 @@
     "reduction_falsifiability_contract_required": false,
     "generic_theory_label_cannot_veto": false,
     "format_retry_forbidden": true,
-    "transport_only_no_output_fallback_allowed": false,
-    "transport_fallback_max_additional_provider_attempts": 0,
+    "transport_only_no_output_fallback_allowed": true,
+    "transport_fallback_max_additional_provider_attempts": 1,
     "transport_fallback_requires_zero_auditable_assistant_output": true,
     "transport_fallback_is_single_logical_generator_call": true,
     "thinking_disabled": true,
@@ -58,6 +58,10 @@
     "reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority": true,
     "exact_excerpt_location_is_machine_inferred": true,
     "independent_reviewer_must_verify_lane_contract": true,
+    "reduction_pending_may_reach_block_only_semantic_review": true,
+    "reduction_pending_cannot_pass_problem_gate": true,
+    "contradiction_requires_matched_intervention_semantics": true,
+    "contradiction_requires_matched_adaptation_stage": true,
     "same_resolved_model_cannot_count_as_independent_review": true,
     "raw_model_output_archived_before_parsing": true,
     "generation_notes_are_advisory_not_scientific_authority": true,
@@ -90,13 +94,11 @@
     "automatic_method_authority": false,
     "automatic_experiment_authority": false,
     "automatic_p0_authority": false,
-    "strict_provider_transport": true,
-    "semantic_reviewer_deferred": true,
-    "thinking_compatibility_repost_allowed": false,
-    "generator_thinking_profile": "disabled",
-    "generator_max_output_tokens": 6500,
-    "provider_orphan_replay_forbidden": true,
-    "provider_orphan_override_requires_explicit_operator_action": true
+    "generator_replayed_without_provider": true,
+    "generator_replay_requires_exact_raw_sha256": true,
+    "generator_replay_rechecks_current_machine_contract": true,
+    "generator_replay_cannot_invoke_semantic_reviewer": true,
+    "automatic_provider_calls_authorized": 0
   },
   "summary": {
     "primary_evidence_records": 32,
@@ -147,22 +149,11 @@
       "sha256": "bf977f12f856e3c035ff48c7ef56cb2c43510d0a6380ed9e1d4a631034bbb8df",
       "requested_model": "kimi-k3",
       "resolved_model": "kimi-k3",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "1a68d19fa47bf35ae0f8cf81ff1c3862c6cc99bda4e18cf82bd0e1291f10e9c0",
-          "requested_model": "kimi-k3",
-          "max_output_tokens": 6500,
-          "temperature": 0.0,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "603af9827d9abfb03b4f94bc04bd206735018ebc46f3658f15da33e342d6f12e",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "kimi-k3",
-          "assistant_output_present": true
-        }
-      ],
-      "transport_fallback_used": false
+      "raw_replayed_without_provider": true,
+      "raw_origin_path": "private-data://external/20260817T180951Z-generator-kimi-k3-bf977f12f856.txt",
+      "raw_origin_run_id": "20260817T180951Z",
+      "raw_origin_discovery_operator_version": "fresh-phenomenon-treatment-aligned-v14",
+      "provider_calls_executed": 0
     }
   },
   "generation_notes": "One candidate survives. The search deliberately avoids the repeatedly blocked basin of merely renaming procedural-memory nonmonotonicity: the emitted object is narrower and requires a paired frozen-executor applicability-boundary falsifier. CONTRADICTION, CONVERGENT_FAILURE, and UNEXPLAINED_BOUNDARY did not yield emit-eligible evidence tuples under the supplied registry.",
@@ -212,11 +203,11 @@
       }
     ],
     "last_completed_lane_search": {
-      "run_id": "20260817T180951Z",
+      "run_id": "20260817T203424Z-replay",
       "generator_status": "GENERATED_AWAIT_PROBLEM_GATE",
-      "generated_at": "2026-08-17T18:09:51+00:00",
+      "generated_at": "2026-08-17T20:34:24+00:00",
       "mode": "anomaly_first_evidence_tuple_audit",
-      "discovery_operator_version": "fresh-phenomenon-treatment-aligned-v14",
+      "discovery_operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
       "lane_search_priority": [
         "CONTRADICTION",
         "CONVERGENT_FAILURE",
@@ -266,14 +257,14 @@
     "scientific_authority": false
   },
   "saturation_memory": {
-    "ledger_entries": 1,
+    "ledger_entries": 21,
     "prior_identical_zero_runs": 0,
     "current_run_recorded": true,
     "current_review_receipt": {
-      "run_id": "20260817T180951Z",
-      "pool_sha256": "c4a42abe9f66a2ceafdb673f4e7778632406aaa65c9ca21c081221b22d36c2f6",
+      "run_id": "20260817T203424Z-replay",
+      "pool_sha256": "9e0709de686961619df7c0d478b20a6562e83a6a656a76578e67d4f1f3b68678",
       "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
-      "discovery_operator_version": "fresh-phenomenon-treatment-aligned-v14",
+      "discovery_operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
       "source_refs": [
         "arXiv:2607.00457",
         "arXiv:2607.00871",
@@ -1331,6 +1322,51 @@
         "resolved_model": "kimi-k3",
         "raw_sha256": "e02bd64e1265704b00bb73522f0522edb9634b6cfdbd111bb7b36618e3870d74",
         "scientific_authority": false
+      },
+      {
+        "run_id": "20260817T203424Z-replay",
+        "pool_sha256": "9e0709de686961619df7c0d478b20a6562e83a6a656a76578e67d4f1f3b68678",
+        "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
+        "discovery_operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
+        "source_refs": [
+          "arXiv:2607.00457",
+          "arXiv:2607.00871",
+          "arXiv:2607.00911",
+          "arXiv:2607.01071",
+          "arXiv:2607.01120",
+          "arXiv:2607.01709",
+          "arXiv:2607.01874",
+          "arXiv:2607.02440",
+          "arXiv:2607.03238",
+          "arXiv:2607.03451",
+          "arXiv:2607.03691",
+          "arXiv:2607.03935",
+          "arXiv:2607.05202",
+          "arXiv:2607.05297",
+          "arXiv:2607.05382",
+          "arXiv:2607.07820",
+          "arXiv:2608.11596",
+          "arXiv:2608.11654",
+          "arXiv:2608.11888",
+          "arXiv:2608.12428",
+          "arXiv:2608.12720",
+          "arXiv:2608.12743",
+          "arXiv:2608.12841",
+          "arXiv:2608.12851",
+          "arXiv:2608.12977",
+          "arXiv:2608.13040",
+          "arXiv:2608.13560",
+          "arXiv:2608.13833",
+          "arXiv:2608.13951",
+          "arXiv:2608.14036",
+          "arXiv:2608.14270",
+          "arXiv:2608.14441"
+        ],
+        "status": "GENERATED_AWAIT_PROBLEM_GATE",
+        "requested_model": "kimi-k3",
+        "resolved_model": "kimi-k3",
+        "raw_sha256": "bf977f12f856e3c035ff48c7ef56cb2c43510d0a6380ed9e1d4a631034bbb8df",
+        "scientific_authority": false
       }
     ],
     "blocked_problem_memory": {
@@ -1514,48 +1550,36 @@
       ],
       "scientific_authority": false
     },
-    "scientific_authority": false
+    "scientific_authority": false,
+    "portable_review_receipt_count": 24
   },
+  "source_generator_run_id": "20260817T180951Z",
+  "source_discovery_operator_version": "fresh-phenomenon-treatment-aligned-v14",
+  "provider_calls_executed": 0,
+  "semantic_reviewer_calls_executed": 0,
   "candidates": [
     {
       "candidate_id": "AUTO-1",
       "title": "When does adding a relevant procedural memory retract an otherwise correct action under a frozen executor?",
       "discovery_lane": "ASSUMPTION_BREAK",
-      "source_branch_id": "",
       "source_refs": [
         "arXiv:2608.11654",
         "arXiv:2608.11888"
       ],
-      "semantic_verdict": "BLOCK",
+      "semantic_verdict": "BLOCK_PRE_REVIEW_REPLAY",
       "lane_contract_verified": false,
-      "matched_patterns": []
+      "matched_patterns": [],
+      "principle_dead_end_reentry_audit": {
+        "checked": true,
+        "blocked": false,
+        "matched_source_candidate_ids": [],
+        "matches": [],
+        "reopen_requires_new_evidence": true,
+        "scientific_authority": false
+      }
     }
   ],
-  "primary_pool_age_hours": 1.877,
-  "source_coverage": {
-    "coverage_exhausted": true,
-    "source_retrieval_complete": true,
-    "eligible_lane_linked_sources": 215,
-    "reviewed_lane_linked_sources": 215,
-    "unreviewed_lane_linked_sources": 0,
-    "unreviewed_no_lane_sources": 4,
-    "carrier_probe_required": true,
-    "carrier_probe_pending": 0,
-    "carrier_probe_complete": true,
-    "scientific_authority": false
-  },
-  "operator_recompile_reason": "Source coverage is saturated, but this evidence pool has no completed receipt for the current anomaly-first discovery operator. One bounded recompilation is allowed; scientific gates are unchanged.",
-  "generator_request_audit": {
-    "stage": "problem_generation",
-    "prompt_sha256": "1a68d19fa47bf35ae0f8cf81ff1c3862c6cc99bda4e18cf82bd0e1291f10e9c0",
-    "requested_model": "kimi-k3",
-    "max_output_tokens": 6500,
-    "temperature": 0.0,
-    "thinking_profile": "disabled",
-    "request_fingerprint": "603af9827d9abfb03b4f94bc04bd206735018ebc46f3658f15da33e342d6f12e",
-    "scientific_authority": false
-  },
   "status": "GENERATED_AWAIT_PROBLEM_GATE",
-  "discovery_transaction_id": "1e841d1f5c312812ab40d779251786192c8016edcf9a193a15e1be6aa37daaa9",
+  "discovery_transaction_id": "c669b002be54353844b9ee647a7fa1d5dbbcb3bb77e1ac3722ab355a71e887fc",
   "discovery_transaction_role": "generator"
 }

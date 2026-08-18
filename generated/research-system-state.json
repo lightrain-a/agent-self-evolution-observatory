@@ -6173,7 +6173,7 @@
     "paper_first_primary_evidence_status": "READY",
     "paper_first_primary_evidence_verified": 32,
     "paper_first_primary_fact_extraction_version": "precision-v2",
-    "paper_first_primary_typed_extraction_version": "typed-v1",
+    "paper_first_primary_typed_extraction_version": "typed-v2",
     "paper_first_primary_source_scheduler_active": true,
     "paper_first_primary_source_scheduler_prior_runs": 23,
     "paper_first_primary_selected_reviewed": 32,
@@ -6203,7 +6203,7 @@
     "paper_first_problem_generator_generated": 1,
     "paper_first_problem_generator_semantic_clear": 0,
     "paper_first_problem_generator_semantic_blocked": 1,
-    "paper_first_problem_generator_saturation_entries": 1,
+    "paper_first_problem_generator_saturation_entries": 21,
     "paper_first_problem_generator_prior_identical_zero": 0,
     "paper_first_problem_blocked_attempts": 12,
     "paper_first_problem_top_reduction_basin": "procedural-memory-nonmonotonicity",
@@ -6273,13 +6273,13 @@
     "paper_first_global_relation_reducible": 3,
     "paper_first_global_relation_not_reduced": 0,
     "paper_first_global_relation_focused_reopen": false,
-    "paper_first_global_relation_freshness_status": "STALE_RELATION_UNIVERSE",
+    "paper_first_global_relation_freshness_status": "CURRENT_RELATION_UNIVERSE",
     "paper_first_global_relation_current_sources": 233,
     "paper_first_global_relation_last_scanned_sources": 233,
-    "paper_first_global_relation_current_pair_coverage": 0.241,
-    "paper_first_global_relation_universe_stale": true,
-    "paper_first_global_relation_current_not_reduced_unknown": true,
-    "paper_first_global_relation_model_scan_deferred": true,
+    "paper_first_global_relation_current_pair_coverage": 0.2505,
+    "paper_first_global_relation_universe_stale": false,
+    "paper_first_global_relation_current_not_reduced_unknown": false,
+    "paper_first_global_relation_model_scan_deferred": false,
     "paper_first_global_relation_focused_reopen_allowed": false,
     "paper_first_relation_delta_status": "RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE",
     "paper_first_relation_delta_new_sources": 5,
@@ -6304,7 +6304,7 @@
     "paper_first_shadow_continuation_active_actions": 1,
     "paper_first_shadow_continuation_external_wait": 0,
     "paper_first_discovery_frontier_status": "SHADOW_QUALIFICATION_PENDING",
-    "paper_first_discovery_frontier_open_internal": 2,
+    "paper_first_discovery_frontier_open_internal": 1,
     "paper_first_discovery_frontier_external_triggers": 5,
     "paper_first_discovery_frontier_model_calls": 0,
     "paper_first_discovery_frontier_evidence_open": 0,
@@ -30567,7 +30567,7 @@
       ],
       "typed_evidence_candidates_are_not_ground_truth": true,
       "typed_evidence_is_deterministic_and_bounded": true,
-      "typed_evidence_extraction_version": "typed-v1",
+      "typed_evidence_extraction_version": "typed-v2",
       "pre_registered_lane_coverage_floor": true,
       "lane_coverage_is_discovery_breadth_not_scientific_authority": true,
       "scientific_object_lanes": [
@@ -30611,7 +30611,8 @@
       "candidate_generation_authority": false,
       "method_authority": false,
       "experiment_authority": false,
-      "p0_authority": false
+      "p0_authority": false,
+      "typed_evidence_requires_first_party_ownership_or_nonliterature_attribution": true
     },
     "summary": {
       "corpus_available": true,
@@ -30634,7 +30635,7 @@
       },
       "typed_evidence_candidates": {
         "operational_assumptions": 6,
-        "measured_failures": 45,
+        "measured_failures": 43,
         "boundary_observations": 20
       },
       "recent_verified_cache_reused": 0,
@@ -31203,7 +31204,7 @@
         "empirical_fact_count": 4,
         "typed_evidence_counts": {
           "operational_assumptions": 0,
-          "measured_failures": 2,
+          "measured_failures": 0,
           "boundary_observations": 0
         }
       },
@@ -31441,7 +31442,18 @@
     },
     "fulltext_errors": [],
     "status": "READY",
-    "discovery_transaction_id": "1e841d1f5c312812ab40d779251786192c8016edcf9a193a15e1be6aa37daaa9",
+    "derived_evidence_recompile": {
+      "kind": "typed-evidence-first-party-ownership-recompile",
+      "prior_typed_evidence_extraction_version": "typed-v1",
+      "typed_evidence_extraction_version": "typed-v2",
+      "records_recompiled": 32,
+      "records_changed": 32,
+      "source_scheduler_runs_executed": 0,
+      "network_fetches_executed": 0,
+      "source_manifest_changed": false,
+      "scientific_authority": false
+    },
+    "discovery_transaction_id": "c669b002be54353844b9ee647a7fa1d5dbbcb3bb77e1ac3722ab355a71e887fc",
     "discovery_transaction_role": "primary"
   },
   "paper_first_scientific_object_retrieval_audit": {
@@ -32378,13 +32390,13 @@
   },
   "paper_first_problem_generator": {
     "schema_version": "2.5",
-    "generated_at": "2026-08-17T18:09:51+00:00",
-    "run_id": "20260817T180951Z",
+    "generated_at": "2026-08-17T20:34:24+00:00",
+    "run_id": "20260817T203424Z-replay",
     "generator_model": "kimi-k3",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "",
     "policy": {
       "zero_candidates_is_valid": true,
-      "discovery_operator_version": "fresh-phenomenon-treatment-aligned-v14",
+      "discovery_operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
       "single_source_anomaly_first_enabled": true,
       "source_coverage_saturation_reopens_once_on_operator_change": true,
       "search_portfolio_enabled": false,
@@ -32413,8 +32425,8 @@
       "reduction_falsifiability_contract_required": false,
       "generic_theory_label_cannot_veto": false,
       "format_retry_forbidden": true,
-      "transport_only_no_output_fallback_allowed": false,
-      "transport_fallback_max_additional_provider_attempts": 0,
+      "transport_only_no_output_fallback_allowed": true,
+      "transport_fallback_max_additional_provider_attempts": 1,
       "transport_fallback_requires_zero_auditable_assistant_output": true,
       "transport_fallback_is_single_logical_generator_call": true,
       "thinking_disabled": true,
@@ -32436,6 +32448,10 @@
       "reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority": true,
       "exact_excerpt_location_is_machine_inferred": true,
       "independent_reviewer_must_verify_lane_contract": true,
+      "reduction_pending_may_reach_block_only_semantic_review": true,
+      "reduction_pending_cannot_pass_problem_gate": true,
+      "contradiction_requires_matched_intervention_semantics": true,
+      "contradiction_requires_matched_adaptation_stage": true,
       "same_resolved_model_cannot_count_as_independent_review": true,
       "raw_model_output_archived_before_parsing": true,
       "generation_notes_are_advisory_not_scientific_authority": true,
@@ -32468,13 +32484,11 @@
       "automatic_method_authority": false,
       "automatic_experiment_authority": false,
       "automatic_p0_authority": false,
-      "strict_provider_transport": true,
-      "semantic_reviewer_deferred": true,
-      "thinking_compatibility_repost_allowed": false,
-      "generator_thinking_profile": "disabled",
-      "generator_max_output_tokens": 6500,
-      "provider_orphan_replay_forbidden": true,
-      "provider_orphan_override_requires_explicit_operator_action": true
+      "generator_replayed_without_provider": true,
+      "generator_replay_requires_exact_raw_sha256": true,
+      "generator_replay_rechecks_current_machine_contract": true,
+      "generator_replay_cannot_invoke_semantic_reviewer": true,
+      "automatic_provider_calls_authorized": 0
     },
     "summary": {
       "primary_evidence_records": 32,
@@ -32525,22 +32539,11 @@
         "sha256": "bf977f12f856e3c035ff48c7ef56cb2c43510d0a6380ed9e1d4a631034bbb8df",
         "requested_model": "kimi-k3",
         "resolved_model": "kimi-k3",
-        "transport_attempts": [
-          {
-            "stage": "problem_generation",
-            "prompt_sha256": "1a68d19fa47bf35ae0f8cf81ff1c3862c6cc99bda4e18cf82bd0e1291f10e9c0",
-            "requested_model": "kimi-k3",
-            "max_output_tokens": 6500,
-            "temperature": 0.0,
-            "thinking_profile": "disabled",
-            "request_fingerprint": "603af9827d9abfb03b4f94bc04bd206735018ebc46f3658f15da33e342d6f12e",
-            "scientific_authority": false,
-            "status": "success",
-            "resolved_model": "kimi-k3",
-            "assistant_output_present": true
-          }
-        ],
-        "transport_fallback_used": false
+        "raw_replayed_without_provider": true,
+        "raw_origin_path": "private-data://external/20260817T180951Z-generator-kimi-k3-bf977f12f856.txt",
+        "raw_origin_run_id": "20260817T180951Z",
+        "raw_origin_discovery_operator_version": "fresh-phenomenon-treatment-aligned-v14",
+        "provider_calls_executed": 0
       }
     },
     "generation_notes": "One candidate survives. The search deliberately avoids the repeatedly blocked basin of merely renaming procedural-memory nonmonotonicity: the emitted object is narrower and requires a paired frozen-executor applicability-boundary falsifier. CONTRADICTION, CONVERGENT_FAILURE, and UNEXPLAINED_BOUNDARY did not yield emit-eligible evidence tuples under the supplied registry.",
@@ -32590,11 +32593,11 @@
         }
       ],
       "last_completed_lane_search": {
-        "run_id": "20260817T180951Z",
+        "run_id": "20260817T203424Z-replay",
         "generator_status": "GENERATED_AWAIT_PROBLEM_GATE",
-        "generated_at": "2026-08-17T18:09:51+00:00",
+        "generated_at": "2026-08-17T20:34:24+00:00",
         "mode": "anomaly_first_evidence_tuple_audit",
-        "discovery_operator_version": "fresh-phenomenon-treatment-aligned-v14",
+        "discovery_operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
         "lane_search_priority": [
           "CONTRADICTION",
           "CONVERGENT_FAILURE",
@@ -32644,14 +32647,14 @@
       "scientific_authority": false
     },
     "saturation_memory": {
-      "ledger_entries": 1,
+      "ledger_entries": 21,
       "prior_identical_zero_runs": 0,
       "current_run_recorded": true,
       "current_review_receipt": {
-        "run_id": "20260817T180951Z",
-        "pool_sha256": "c4a42abe9f66a2ceafdb673f4e7778632406aaa65c9ca21c081221b22d36c2f6",
+        "run_id": "20260817T203424Z-replay",
+        "pool_sha256": "9e0709de686961619df7c0d478b20a6562e83a6a656a76578e67d4f1f3b68678",
         "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
-        "discovery_operator_version": "fresh-phenomenon-treatment-aligned-v14",
+        "discovery_operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
         "source_refs": [
           "arXiv:2607.00457",
           "arXiv:2607.00871",
@@ -33709,6 +33712,51 @@
           "resolved_model": "kimi-k3",
           "raw_sha256": "e02bd64e1265704b00bb73522f0522edb9634b6cfdbd111bb7b36618e3870d74",
           "scientific_authority": false
+        },
+        {
+          "run_id": "20260817T203424Z-replay",
+          "pool_sha256": "9e0709de686961619df7c0d478b20a6562e83a6a656a76578e67d4f1f3b68678",
+          "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
+          "discovery_operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
+          "source_refs": [
+            "arXiv:2607.00457",
+            "arXiv:2607.00871",
+            "arXiv:2607.00911",
+            "arXiv:2607.01071",
+            "arXiv:2607.01120",
+            "arXiv:2607.01709",
+            "arXiv:2607.01874",
+            "arXiv:2607.02440",
+            "arXiv:2607.03238",
+            "arXiv:2607.03451",
+            "arXiv:2607.03691",
+            "arXiv:2607.03935",
+            "arXiv:2607.05202",
+            "arXiv:2607.05297",
+            "arXiv:2607.05382",
+            "arXiv:2607.07820",
+            "arXiv:2608.11596",
+            "arXiv:2608.11654",
+            "arXiv:2608.11888",
+            "arXiv:2608.12428",
+            "arXiv:2608.12720",
+            "arXiv:2608.12743",
+            "arXiv:2608.12841",
+            "arXiv:2608.12851",
+            "arXiv:2608.12977",
+            "arXiv:2608.13040",
+            "arXiv:2608.13560",
+            "arXiv:2608.13833",
+            "arXiv:2608.13951",
+            "arXiv:2608.14036",
+            "arXiv:2608.14270",
+            "arXiv:2608.14441"
+          ],
+          "status": "GENERATED_AWAIT_PROBLEM_GATE",
+          "requested_model": "kimi-k3",
+          "resolved_model": "kimi-k3",
+          "raw_sha256": "bf977f12f856e3c035ff48c7ef56cb2c43510d0a6380ed9e1d4a631034bbb8df",
+          "scientific_authority": false
         }
       ],
       "blocked_problem_memory": {
@@ -33892,60 +33940,48 @@
         ],
         "scientific_authority": false
       },
-      "scientific_authority": false
+      "scientific_authority": false,
+      "portable_review_receipt_count": 24
     },
+    "source_generator_run_id": "20260817T180951Z",
+    "source_discovery_operator_version": "fresh-phenomenon-treatment-aligned-v14",
+    "provider_calls_executed": 0,
+    "semantic_reviewer_calls_executed": 0,
     "candidates": [
       {
         "candidate_id": "AUTO-1",
         "title": "When does adding a relevant procedural memory retract an otherwise correct action under a frozen executor?",
         "discovery_lane": "ASSUMPTION_BREAK",
-        "source_branch_id": "",
         "source_refs": [
           "arXiv:2608.11654",
           "arXiv:2608.11888"
         ],
-        "semantic_verdict": "BLOCK",
+        "semantic_verdict": "BLOCK_PRE_REVIEW_REPLAY",
         "lane_contract_verified": false,
-        "matched_patterns": []
+        "matched_patterns": [],
+        "principle_dead_end_reentry_audit": {
+          "checked": true,
+          "blocked": false,
+          "matched_source_candidate_ids": [],
+          "matches": [],
+          "reopen_requires_new_evidence": true,
+          "scientific_authority": false
+        }
       }
     ],
-    "primary_pool_age_hours": 1.877,
-    "source_coverage": {
-      "coverage_exhausted": true,
-      "source_retrieval_complete": true,
-      "eligible_lane_linked_sources": 215,
-      "reviewed_lane_linked_sources": 215,
-      "unreviewed_lane_linked_sources": 0,
-      "unreviewed_no_lane_sources": 4,
-      "carrier_probe_required": true,
-      "carrier_probe_pending": 0,
-      "carrier_probe_complete": true,
-      "scientific_authority": false
-    },
-    "operator_recompile_reason": "Source coverage is saturated, but this evidence pool has no completed receipt for the current anomaly-first discovery operator. One bounded recompilation is allowed; scientific gates are unchanged.",
-    "generator_request_audit": {
-      "stage": "problem_generation",
-      "prompt_sha256": "1a68d19fa47bf35ae0f8cf81ff1c3862c6cc99bda4e18cf82bd0e1291f10e9c0",
-      "requested_model": "kimi-k3",
-      "max_output_tokens": 6500,
-      "temperature": 0.0,
-      "thinking_profile": "disabled",
-      "request_fingerprint": "603af9827d9abfb03b4f94bc04bd206735018ebc46f3658f15da33e342d6f12e",
-      "scientific_authority": false
-    },
     "status": "GENERATED_AWAIT_PROBLEM_GATE",
-    "discovery_transaction_id": "1e841d1f5c312812ab40d779251786192c8016edcf9a193a15e1be6aa37daaa9",
+    "discovery_transaction_id": "c669b002be54353844b9ee647a7fa1d5dbbcb3bb77e1ac3722ab355a71e887fc",
     "discovery_transaction_role": "generator"
   },
   "paper_first_problem_gate_queue": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-17T19:31:51+00:00",
+    "generated_at": "2026-08-17T20:34:24+00:00",
     "source_inbox": "private-data://paper-first-problem-discovery/candidate-inbox.json",
     "source_inboxes": [
       "private-data://paper-first-problem-discovery/candidate-inbox.json",
-      "private-data://paper-first-problem-discovery/auto-candidate-inbox.json"
+      "repo://generated/.paper-first-typed-recompile-w0giyvq9/auto-candidate-inbox.json"
     ],
-    "primary_evidence_pool": "private-data://paper-first-problem-discovery/primary-evidence-pool.json",
+    "primary_evidence_pool": "repo://generated/.paper-first-typed-recompile-w0giyvq9/primary-private.json",
     "primary_evidence_records": 32,
     "source_exists": true,
     "policy": {
@@ -34005,7 +34041,7 @@
         "title": "When does adding a relevant procedural memory retract an otherwise correct action under a frozen executor?",
         "discovery_lane": "ASSUMPTION_BREAK",
         "status": "PROBLEM_GATE_BLOCKED",
-        "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
+        "source_inbox": "repo://generated/.paper-first-typed-recompile-w0giyvq9/auto-candidate-inbox.json",
         "blockers": [
           "saturation-proven-hard-reduction:procedural-memory-nonmonotonicity",
           "semantic-reduction-review-missing",
@@ -34018,7 +34054,7 @@
         "candidate_id": "AUTO-1",
         "title": "When does adding a relevant procedural memory retract an otherwise correct action under a frozen executor?",
         "discovery_lane": "ASSUMPTION_BREAK",
-        "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
+        "source_inbox": "repo://generated/.paper-first-typed-recompile-w0giyvq9/auto-candidate-inbox.json",
         "candidate": {
           "candidate_id": "AUTO-1",
           "title": "When does adding a relevant procedural memory retract an otherwise correct action under a frozen executor?",
@@ -34124,9 +34160,9 @@
             "source_claims_grounded": false,
             "source_claim_grounding": {},
             "lane_contract_verified": false,
-            "lane_contract_reason": "structural-or-provenance-gate-failed",
+            "lane_contract_reason": "current-machine-contract-blocked-before-review",
             "matched_patterns": [],
-            "strongest_reduction": "structural-or-provenance-gate-failed"
+            "strongest_reduction": "current-machine-contract-blocked-before-review"
           },
           "cheapest_problem_falsifier": "Materialize paired frozen-executor cells from the released skill-failure attribution setting: same task, tools, budget, scorer, and base model, with only skill presence varied. If all harmful cases are explained by obvious irrelevance, prompt length, task difficulty, or an explicit default-rule trigger/priority encoding with no residual applicability-boundary variable, the proposed problem is falsified.",
           "endpoint_headroom_requirement": "The no-skill or matched-skill reference must solve the task or solve it more cheaply, and the skill-guided run must have enough headroom to fail or regress on the same endpoint; aggregate-only improvements without paired harmful cells do not qualify.",
@@ -34372,7 +34408,7 @@
       }
     ],
     "next_action": "Human Paper Design review may inspect passed candidates. Blocked, stale, malformed, or missing candidates do not create a paper, method, experiment, or P0 lifecycle entry.",
-    "discovery_transaction_id": "1e841d1f5c312812ab40d779251786192c8016edcf9a193a15e1be6aa37daaa9",
+    "discovery_transaction_id": "c669b002be54353844b9ee647a7fa1d5dbbcb3bb77e1ac3722ab355a71e887fc",
     "discovery_transaction_role": "queue"
   },
   "paper_first_search_portfolio_design_adjudication": {
@@ -37539,7 +37575,7 @@
   },
   "paper_first_discovery_frontier": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T19:37:51+00:00",
+    "generated_at": "2026-08-17T20:38:46+00:00",
     "status": "SHADOW_QUALIFICATION_PENDING",
     "policy": {
       "scientific_authority": false,
@@ -37557,9 +37593,9 @@
       "live_source_closed": true,
       "live_generator_closed": true,
       "live_queue_closed": true,
-      "relation_current_closed": false,
+      "relation_current_closed": true,
       "relation_execution_censored": false,
-      "relation_control_closed_for_now": false,
+      "relation_control_closed_for_now": true,
       "shadow_closed": false,
       "scientific_object_closed": true,
       "support_release_closed": true,
@@ -37575,7 +37611,7 @@
       "evidence_execution_ready": 0,
       "evidence_residual_survives": 0,
       "evidence_branch_repair_ready": 0,
-      "open_internal_frontiers": 2,
+      "open_internal_frontiers": 1,
       "external_triggers": 5,
       "automatic_model_calls_authorized": 0,
       "automatic_problem_gate_authorized": 0,
@@ -37585,7 +37621,6 @@
       "automatic_gpu_authorized": 0
     },
     "blockers": [
-      "relation-frontier-open-or-stale",
       "shadow-qualification-or-search-open"
     ],
     "triggers": [
@@ -38541,7 +38576,7 @@
   },
   "paper_first_global_relation_freshness": {
     "schema_version": "1.1",
-    "status": "STALE_RELATION_UNIVERSE",
+    "status": "CURRENT_RELATION_UNIVERSE",
     "policy": {
       "scientific_authority": false,
       "deterministic_digest_comparison_only": true,
@@ -38556,19 +38591,19 @@
       "current_reviewed_sources": 233,
       "last_scanned_sources": 233,
       "current_possible_pairs": 27028,
-      "current_coobserved_pairs": 6514,
-      "current_pair_coverage_fraction": 0.241,
+      "current_coobserved_pairs": 6770,
+      "current_pair_coverage_fraction": 0.2505,
       "last_pair_coverage_fraction": 0.2505,
       "current_relation_blind_spot": true,
-      "raw_topology_digest_changed": true,
+      "raw_topology_digest_changed": false,
       "source_boundary_reconstructable": false,
       "scheduler_topology_only_drift": false,
-      "universe_stale": true,
-      "current_not_reduced_unknown": true,
-      "model_scan_deferred": true,
+      "universe_stale": false,
+      "current_not_reduced_unknown": false,
+      "model_scan_deferred": false,
       "focused_problem_generator_reopen_allowed": false
     },
-    "current_relation_universe_digest": "7b97dec9f375cbab44cb1aa82c0c524085a6b22ecb3cac6807f8f12edda0d7d2",
+    "current_relation_universe_digest": "c0b3fa88249144def5de80657f5ea7ca07b3414f00a7a8ea24b0a7160e25a23e",
     "last_scanned_relation_universe_digest": "c0b3fa88249144def5de80657f5ea7ca07b3414f00a7a8ea24b0a7160e25a23e",
     "current_source_universe_digest": "bba92c46a2ee0e75333cb8d29f9eb5f271374f4867698c76cbb5cb629771ce1a",
     "last_scanned_source_universe_digest": "",
@@ -38631,19 +38666,19 @@
       "same_relation_universe_lane_review_retry_exhaustion_blocks_repeat_scan": true
     },
     "summary": {
-      "automatic_model_scan_authorized": false,
-      "relation_lane_review_retry_exhausted": false,
-      "new_empirical_sources": 5,
-      "new_boundary_sources": 2,
-      "current_reviewed_sources": 233,
-      "new_failure_sources": 5,
-      "passed": 14,
-      "last_scanned_sources": 233,
       "manual_scan_eligible": false,
-      "checks": 16,
-      "failed": 2,
+      "new_reviewed_sources": 5,
+      "new_empirical_sources": 5,
+      "new_failure_sources": 5,
+      "relation_lane_review_retry_exhausted": false,
       "new_assumption_sources": 1,
-      "new_reviewed_sources": 5
+      "checks": 16,
+      "automatic_model_scan_authorized": false,
+      "failed": 2,
+      "current_reviewed_sources": 233,
+      "new_boundary_sources": 2,
+      "last_scanned_sources": 233,
+      "passed": 14
     },
     "failed_check_count": 2,
     "freshness_status": "CURRENT_RELATION_UNIVERSE",
@@ -77753,7 +77788,7 @@
   },
   "paper_first_fresh_phenomenon_portfolio": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T20:13:49+00:00",
+    "generated_at": "2026-08-17T20:39:55+00:00",
     "status": "NO_ACTIVE_F0",
     "policy": {
       "portfolio_is_outside_canonical_problem_queue": true,
@@ -78091,7 +78126,7 @@
       },
       "primary_state": {
         "path": "generated/paper-first-primary-evidence-state.json",
-        "sha256": "bbd9d224f8305b90405ab1228f7f08e58002b10477296b9ffdc2c40b3ecb2646"
+        "sha256": "896a84b093da99ceaa828e8cb6586b705e898b4c6339381859376abd90bf7aa2"
       },
       "dead_end_memory": {
         "path": "generated/paper-first-search-portfolio-design-adjudication.json",
