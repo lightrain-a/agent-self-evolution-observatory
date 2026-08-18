@@ -40,6 +40,7 @@ from .paper_first_problem_gate_queue import (
     default_auto_inbox_path,
     write_problem_gate_queue,
 )
+from .public_state_redaction import redact_private_paths
 
 
 PUBLIC_TARGETS = (
@@ -390,6 +391,43 @@ def _stamp(path: Path, js_path: Path, global_name: str, transaction_id: str, rol
     return payload
 
 
+def _rebind_transaction_private_paths(value: Any, bindings: list[tuple[Path, Path]]) -> Any:
+    """Replace staged private paths with their final canonical targets before public redaction."""
+    if isinstance(value, dict):
+        return {str(key): _rebind_transaction_private_paths(item, bindings) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_rebind_transaction_private_paths(item, bindings) for item in value]
+    if isinstance(value, tuple):
+        return [_rebind_transaction_private_paths(item, bindings) for item in value]
+    if not isinstance(value, str):
+        return value
+    text=value
+    for staged,target in bindings:
+        staged_text=str(Path(staged))
+        target_text=str(Path(target))
+        if staged_text and staged_text in text:
+            text=text.replace(staged_text,target_text)
+    return text
+
+
+def _rewrite_staged_queue_public_projection(
+    *,
+    queue_internal: dict[str, Any],
+    q_json: Path,
+    q_js: Path,
+    storage: StorageSettings,
+    staged_private: Path,
+    target_private: Path,
+    staged_auto: Path,
+    target_auto: Path,
+) -> dict[str, Any]:
+    rebound=_rebind_transaction_private_paths(queue_internal,[(staged_private,target_private),(staged_auto,target_auto)])
+    public=redact_private_paths(rebound,storage=storage)
+    q_json.write_text(json.dumps(public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    q_js.write_text("window.PAPER_FIRST_PROBLEM_GATE_QUEUE = "+json.dumps(public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
+    return public
+
+
 def _commit_files(temp_targets: list[tuple[Path, Path]]) -> None:
     backups: dict[Path, bytes | None] = {target: (target.read_bytes() if target.exists() else None) for _, target in temp_targets}
     replaced: list[Path] = []
@@ -657,6 +695,7 @@ def recompile_existing_problem_discovery_transaction(
             generator_internal=write_problem_generator_state(**gkw)
             qkw=dict(queue_kwargs or {});qkw.update({"storage":storage,"json_path":q_json,"js_path":q_js,"primary_pool_path":staged_private,"auto_inbox_path":staged_auto})
             queue_internal=write_problem_gate_queue(**qkw)
+            _rewrite_staged_queue_public_projection(queue_internal=queue_internal,q_json=q_json,q_js=q_js,storage=storage,staged_private=staged_private,target_private=target_private,staged_auto=staged_auto,target_auto=target_auto)
             primary_public=_load(p_json);generator_public=_load(g_json);queue_public=_load(q_json)
             validation=_validate(primary_public,generator_public,queue_public)
             if validation:raise RuntimeError("paper-first operator recompile transaction invalid: "+",".join(validation))
@@ -776,6 +815,7 @@ def recompile_primary_typed_evidence_with_generator_replay_transaction(
             if generator_calls or semantic_calls or int((generator_internal or {}).get("provider_calls_executed") or 0)!=0 or int((generator_internal or {}).get("semantic_reviewer_calls_executed") or 0)!=0:raise RuntimeError("derived-evidence Generator replay attempted provider execution")
             if generator_internal.get("status") in {"REPLAY_REQUIRES_SEMANTIC_REVIEW","REPLAY_INPUT_INVALID","REPLAY_INSUFFICIENT_PRIMARY_EVIDENCE"}:raise RuntimeError(f"derived-evidence Generator replay did not close deterministically: {generator_internal.get('status')}")
             qkw=dict(queue_kwargs or {});qkw.update({"storage":storage,"json_path":q_json,"js_path":q_js,"primary_pool_path":staged_private,"auto_inbox_path":staged_auto});queue_internal=write_problem_gate_queue(**qkw)
+            _rewrite_staged_queue_public_projection(queue_internal=queue_internal,q_json=q_json,q_js=q_js,storage=storage,staged_private=staged_private,target_private=target_private,staged_auto=staged_auto,target_auto=target_auto)
             primary_public=_load(p_json);generator_public=_load(g_json);queue_public=_load(q_json);validation=_validate(primary_public,generator_public,queue_public)
             if validation:raise RuntimeError("paper-first derived-evidence replay transaction invalid: "+",".join(validation))
             if _generator_operator_version(generator_public)!=DISCOVERY_OPERATOR_VERSION:raise RuntimeError("derived-evidence replay did not bind current discovery operator")
@@ -829,6 +869,7 @@ def write_problem_discovery_transaction(
             generator_internal=write_problem_generator_state(**gkw)
             qkw=dict(queue_kwargs or {});qkw.update({"storage":storage,"json_path":q_json,"js_path":q_js,"primary_pool_path":staged_private,"auto_inbox_path":staged_auto})
             queue_internal=write_problem_gate_queue(**qkw)
+            _rewrite_staged_queue_public_projection(queue_internal=queue_internal,q_json=q_json,q_js=q_js,storage=storage,staged_private=staged_private,target_private=target_private,staged_auto=staged_auto,target_auto=target_auto)
             primary_public=_load(p_json);generator_public=_load(g_json);queue_public=_load(q_json)
             errors=_validate(primary_public,generator_public,queue_public)
             if errors:
