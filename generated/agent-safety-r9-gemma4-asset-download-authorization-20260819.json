@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-19T13:57:34+00:00",
+  "status": "AUTHORIZED_CONTENT_ADDRESSED_ASSET_DOWNLOAD_ONLY",
+  "realization_id": "R9-FRESH-BACKBONE-GEMMA4-26B-A4B-IT-V1",
+  "contract_sha256": "89cedfbf4c63ec54099d389866f01fd95c65c73519de7af04317214d2430486f",
+  "model_id": "google/gemma-4-26B-A4B-it",
+  "exact_revision": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+  "destination": "/data/wyt/agent-safety-discovery-20260818/model-assets/gemma4-26B-A4B-it-4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+  "official_capture": {
+    "repo_path": "generated/agent-safety-r9-gemma4-official-hf-metadata-capture.json",
+    "sha256": "26750adab2d7aaca1b478b4bce7b9769c6816b2e5bf2dfe93a154fc954287c4a",
+    "source_manifest_sha256": "039ea1e26e19a5d6095f61a301e655bd55b6c03338a8a9110dc2338b06868cd3",
+    "manifest_file_count": 12,
+    "manifest_total_bytes": 51644340088,
+    "lfs_total_bytes": 51644179542
+  },
+  "transport_policy": {
+    "authoritative_source": "literal huggingface.co exact-revision metadata capture only",
+    "preferred_endpoint": "https://huggingface.co",
+    "non_authoritative_transport_fallback": "https://hf-mirror.com",
+    "mirror_may_transport_bytes_but_never_establish_provenance": true,
+    "exact_revision_required": true,
+    "partial_resume_allowed": true,
+    "concurrent_duplicate_download_forbidden": true
+  },
+  "verification_contract": {
+    "verify_every_manifest_file": true,
+    "lfs_files": "sha256 must equal official HF lfs.sha256",
+    "git_blob_files": "git blob sha1 must equal official HF blobId",
+    "missing_extra_or_digest_mismatch": "PROTOCOL_STOP_ASSET_INTEGRITY",
+    "formal_asset_verified_only_after_all_files_pass": true
+  },
+  "disk_preflight": {
+    "free_bytes": 9824297017344,
+    "required_free_bytes": 62381758328,
+    "headroom_bytes": 10737418240,
+    "passed": true
+  },
+  "authority": {
+    "model_weight_download": true,
+    "model_loading": false,
+    "model_inference": false,
+    "benign_capability_execution": false,
+    "development_safety_execution": false,
+    "persistent_state_construction": false,
+    "fresh_qualification_execution": false,
+    "heldout_future": false,
+    "scientific_claim": false,
+    "gpu_scientific": false
+  },
+  "next_gate": "LOCAL_GEMMA4_FULL_MANIFEST_CONTENT_VERIFICATION",
+  "scientific_authority": false,
+  "provenance": {
+    "preregistration_repo_path": "generated/agent-safety-r9-gemma4-backbone-preflight-preregistration-20260819.json",
+    "preregistration_sha256": "3d20af25518b688a392126daafb86fb5d09a2e9bee680f5dcf73b9a13b4bbb29",
+    "official_capture_sha256": "26750adab2d7aaca1b478b4bce7b9769c6816b2e5bf2dfe93a154fc954287c4a"
+  },
+  "authorization_sha256": "c48cf327c783bcc63d022cd7e85f5ab297dabcf4658dfe693b783728a4ea02ca"
+}
