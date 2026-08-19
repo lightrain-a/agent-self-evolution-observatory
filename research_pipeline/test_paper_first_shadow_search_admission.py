@@ -54,6 +54,14 @@ class ShadowSearchAdmissionTest(unittest.TestCase):
         self.assertTrue(state["summary"]["qualification_allowed"])
         self.assertEqual(state["summary"]["automatic_provider_calls_authorized"],0)
 
+    def test_pre_f0_evidence_acquisition_is_a_closed_canonical_transaction(self):
+        primary,generator,queue,shadow=self.states();generator=copy.deepcopy(generator)
+        generator["status"]="GENERATED_PRE_F0_EVIDENCE_ACQUISITION"
+        state=build_shadow_search_admission(primary_state=primary,generator_state=generator,queue_state=queue,shadow_state=shadow)
+        self.assertEqual(validate_shadow_search_admission(state),[])
+        self.assertTrue(state["summary"]["canonical_transaction_closed"])
+        self.assertEqual(state["status"],"SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL")
+
     def test_new_closed_source_transaction_opens_qualification_only(self):
         primary,generator,queue,shadow=self.states()
         primary=copy.deepcopy(primary);generator=copy.deepcopy(generator);queue=copy.deepcopy(queue)
