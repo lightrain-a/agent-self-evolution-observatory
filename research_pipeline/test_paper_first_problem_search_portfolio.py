@@ -3,7 +3,7 @@ from __future__ import annotations
 import json,re,unittest
 
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES,SEARCH_PORTFOLIO_PRIMITIVES,LANE_EVIDENCE_REQUIRED,LANE_SOURCE_ROLES
-from .paper_first_problem_search_portfolio import DEFAULT_MAX_PARALLEL_CALLS,_expansion_prompt,_formulation_prompt,_fresh_phenomenon_priors,_fresh_phenomenon_target,_inversion_asset_records,_opposite_search_priors,_valid_seed,recover_archived_formulation_payload,run_search_portfolio
+from .paper_first_problem_search_portfolio import DEFAULT_MAX_PARALLEL_CALLS,_expansion_prompt,_formulation_prompt,_fresh_phenomenon_priors,_fresh_phenomenon_target,_inversion_asset_records,_opposite_search_priors,_reopenable_support_hold_priors,_valid_seed,recover_archived_formulation_payload,run_search_portfolio
 from .paper_first_fresh_saturation import reduction_pattern_audit
 
 
@@ -192,6 +192,34 @@ class SearchPortfolioTest(unittest.TestCase):
         self.assertIn("method_realization",prompt)
         self.assertIn("relevance-conditioned evidence debt",prompt)
         self.assertNotIn("must not appear",prompt.split("LAYER-TYPED CLOSED-BASIN INVERSION PRIORS=",1)[1].split(". CLOSED-BASIN SEARCH MEMORY",1)[0])
+
+    def test_support_stop_is_explicit_reopen_search_prior_not_closure(self):
+        memory={"closed_objects":[],"hold_objects":[{
+            "source_candidate_id":"SP-15",
+            "memory_class":"REOPENABLE_HOLD",
+            "stop_class":"SUPPORT_STOP",
+            "failure_layer":"experiment_identifiability",
+            "failure_subtype":"NO_MATCHED_QUERY_IDENTIFIABILITY_UNIT",
+            "hold_reason":"No provenance-audited matched query-level unit exists.",
+            "reopen_only_if":"A new matched query-level unit establishes incompatible sufficient sets under the same observable query.",
+            "avoid":["implicit queries are harder"],
+            "dead_end_certified":False,
+            "scientific_authority":False,
+        }]}
+        priors=_reopenable_support_hold_priors(memory)
+        self.assertEqual(len(priors),1)
+        self.assertEqual(priors[0]["source_candidate_id"],"SP-15")
+        self.assertEqual(priors[0]["failure_layer"],"experiment_identifiability")
+        self.assertFalse(priors[0]["search_closure"])
+        self.assertFalse(priors[0]["automatic_reopen_authority"])
+        prompt=_expansion_prompt("CONTRADICTION",self.records(),1,memory)
+        self.assertIn("REOPENABLE SUPPORT-HOLD SEARCH is a zero-authority search priority, never a blocker or scientific negative",prompt)
+        support_slice=prompt.split("REOPENABLE_SUPPORT_HOLD_PRIORS=",1)[1].split(". CLOSED-BASIN SEARCH MEMORY",1)[0]
+        self.assertIn("SP-15",support_slice)
+        self.assertIn("NO_MATCHED_QUERY_IDENTIFIABILITY_UNIT",support_slice)
+        self.assertIn("new matched query-level unit",support_slice)
+        closed_slice=prompt.split("LAYER-TYPED CLOSED-BASIN INVERSION PRIORS=",1)[1].split(". REOPENABLE_SUPPORT_HOLD_PRIORS=",1)[0]
+        self.assertNotIn("SP-15",closed_slice)
 
     def test_formulation_prompt_never_turns_unresolved_reduction_into_a_fake_clear(self):
         records=self.records();registry={row["ref"]:row for row in records};branch={"seed_id":"B1","parent_id":"","branch_depth":0,"discovery_lane":"UNEXPLAINED_BOUNDARY","title":"Boundary","problem_seed":"Question","scientific_tension":"Tension","problem_family":"boundary","structural_signature":"boundary|signal","agent_specific_constraint":"agent-specific","empirical_evidence":{"source_a":{"ref":records[0]["ref"],"claim":"A","evidence_role":"EMPIRICAL_FACT"},"source_b":{"ref":records[0]["ref"],"claim":"B","evidence_role":"EMPIRICAL_FACT"}},"lane_evidence":{},"cross_domain_origin":""}

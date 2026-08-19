@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from .paper_first_primary_evidence import SUPPORTED_TYPED_EVIDENCE_SNAPSHOT_VERSIONS, TYPED_EVIDENCE_EXTRACTION_VERSION
-from .paper_first_problem_discovery_contract import SEARCH_PORTFOLIO_PRIMITIVES
+from .paper_first_problem_discovery_contract import DISCOVERY_OPERATOR_VERSION, SEARCH_PORTFOLIO_PRIMITIVES
 from .paper_first_relation_coverage import relation_recall_freshness
 from .paper_first_discovery_frontier import build_paper_first_discovery_frontier
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier
@@ -476,7 +476,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(discovery["policy"]["observed_dependency_graph_is_not_an_identifiability_gap"])
         self.assertTrue(discovery["policy"]["reciprocal_coupling_claim_requires_downstream_residual_beyond_distribution_shift"])
         self.assertTrue(discovery["policy"]["feedback_mechanism_requires_causal_write_path_before_experiment"])
-        self.assertEqual(discovery["policy"]["discovery_operator_version"],"double-funnel-paperability-evolution-v18-memory-wiki")
+        self.assertEqual(discovery["policy"]["discovery_operator_version"],DISCOVERY_OPERATOR_VERSION)
         self.assertTrue(discovery["policy"]["inactive_search_assets_hidden_from_generator"])
         self.assertTrue(discovery["policy"]["no_active_asset_fallback_requires_latest_primary_quantitative_anomaly"])
         self.assertTrue(discovery["policy"]["fresh_phenomenon_seed_must_name_measured_boundary_or_failure"])

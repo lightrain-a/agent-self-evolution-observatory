@@ -444,6 +444,43 @@ def _prompt_dead_end_memory(dead_end_memory):
     memory["positive_residual_asset_evidence_count"]=len(memory["positive_residual_asset_evidence"])
     return memory
 
+def _reopenable_support_hold_priors(search_memory,limit=8):
+    """Project support/identifiability HOLDs into explicit search priorities.
+
+    HOLDs are not search closures and never block a new problem.  This projection
+    only tells Expansion what concrete evidence would be needed to revisit a held
+    formulation, so a later search can either find that unit or move to a
+    materially different problem instead of paraphrasing the unsupported claim.
+    """
+    priors=[]
+    for row in (search_memory or {}).get("hold_objects") or []:
+        if not isinstance(row,dict) or row.get("scientific_authority") is not False or row.get("dead_end_certified") is True:
+            continue
+        stop_class=str(row.get("stop_class") or "").strip().upper()
+        support_status=str(row.get("support_status") or "").strip().upper()
+        if stop_class!="SUPPORT_STOP" and "SUPPORT" not in support_status:
+            continue
+        reopen=" ".join(str(row.get("reopen_only_if") or "").split())
+        required=" ".join(str(row.get("required_unit") or row.get("hold_reason") or row.get("reason") or "").split())
+        if not reopen or not required:
+            continue
+        priors.append({
+            "source_candidate_id":str(row.get("source_candidate_id") or ""),
+            "memory_class":str(row.get("memory_class") or "REOPENABLE_HOLD"),
+            "stop_class":stop_class or "SUPPORT_STOP",
+            "failure_layer":str(row.get("failure_layer") or ""),
+            "failure_subtype":str(row.get("failure_subtype") or ""),
+            "missing_support_or_required_unit":required[:1600],
+            "reopen_only_if":reopen[:1600],
+            "avoid":list(row.get("avoid") or [])[:8],
+            "scientific_authority":False,
+            "search_closure":False,
+            "automatic_reopen_authority":False,
+        })
+        if len(priors)>=limit:break
+    return priors
+
+
 def _positive_residual_priors(dead_end_memory,limit=6):
     priors=[]
     for row in (dead_end_memory or {}).get("positive_residual_asset_evidence") or []:
@@ -504,12 +541,13 @@ def _expansion_prompt(lane,records,count,dead_end_memory=None,fresh_target_ref="
         "This is exploration, not adjudication: DO NOT apply mature-theory, closest-work, domain-transfer, or Negative-Space novelty vetoes here. "
         "Do not invent open-world missing-cell claims. Preserve structurally unusual seeds even if their final novelty is uncertain. "
         "ANOMALY-FIRST SEARCH: actively inspect source-local sign reversals, nonmonotonicity, thresholds, plateaus, history dependence, composition effects, and bounded failure transitions; do not wait for a second paper to have used the same metric when this lane permits one source. When equally grounded seeds compete, prefer an operational core whose decisive comparison could plausibly be materialized on released units, first-party code, or an existing provenance-audited agent substrate. Support feasibility is a search priority only and never novelty evidence. "
-        "CLOSED-BASIN INVERSION is a search prior, never authority: a layer-typed scoped closure may contribute its opposite principle/search seed, but only generate an inversion seed when the supplied fresh primary evidence independently grounds it and the seed escapes the recorded basin/reopen condition. Preserve closure_layer/failure_layer exactly. problem_novelty is an upstream literature/theory stop, not an experimental failure layer. Scientific closures use only execution, experiment_identifiability, optimization, operationalization, method_realization, assumption_scope, or core_principle; only core_principle may enter persistent scientific dead-end memory or update the scoped principle, and broader benchmark/phenomenon falsification remains a separate flag. Never turn a closed-basin inversion into an automatic survivor or fabricate support merely to reuse it. "+asset_requirement+positive_requirement+fresh_requirement+
+        "CLOSED-BASIN INVERSION is a search prior, never authority: a layer-typed scoped closure may contribute its opposite principle/search seed, but only generate an inversion seed when the supplied fresh primary evidence independently grounds it and the seed escapes the recorded basin/reopen condition. Preserve closure_layer/failure_layer exactly. problem_novelty is an upstream literature/theory stop, not an experimental failure layer. Scientific closures use only execution, experiment_identifiability, optimization, operationalization, method_realization, assumption_scope, or core_principle; only core_principle may enter persistent scientific dead-end memory or update the scoped principle, and broader benchmark/phenomenon falsification remains a separate flag. Never turn a closed-basin inversion into an automatic survivor or fabricate support merely to reuse it. "
+        "REOPENABLE SUPPORT-HOLD SEARCH is a zero-authority search priority, never a blocker or scientific negative. A SUPPORT_STOP means the held formulation lacks a required observable/unit; do not paraphrase that formulation, infer novelty from the missing support, or manufacture synthetic support. Revisit it only when VERIFIED PRIMARY EVIDENCE contains a concrete unit that plausibly satisfies its reopen_only_if contract and still leaves a same-information residual beyond the named generic baseline. Otherwise search a materially different problem object. "+asset_requirement+positive_requirement+fresh_requirement+
         f"Generate exactly {count} materially distinct grounded seeds for lane {lane}. The lane machine contract is {json.dumps(contract,ensure_ascii=False)}. "
         f"Use two grounded evidence items and at least {LANE_DISTINCT_SOURCE_MINIMUM[lane]} distinct primary source ref(s), following the lane contract; obey evidence roles. Claims must be supported by supplied primary text. "
         "Vary problem families and structural signatures; avoid paraphrase-only variants. "
         "For CROSS_DOMAIN_STRUCTURAL_ANALOGY, the external domain is only an analogy prior and never novelty by itself; state the Agent-specific structural constraint. "
-        f"Analogy priors={json.dumps(analogy,ensure_ascii=False)}. FIRST_PARTY_INVERSION_ASSETS={json.dumps(_evidence_payload(assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_ASSETS={json.dumps(_evidence_payload(positive_assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_PRIORS={json.dumps(_positive_residual_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. FRESH_PHENOMENON_TARGET={json.dumps(fresh_target,ensure_ascii=False,separators=(',',':'))}. FRESH_PHENOMENON_PRIORS={json.dumps(fresh_priors,ensure_ascii=False,separators=(',',':'))}. LAYER-TYPED CLOSED-BASIN INVERSION PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. CLOSED-BASIN SEARCH MEMORY (search-control only, never scientific authority)={json.dumps(_prompt_dead_end_memory(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. VERIFIED PRIMARY EVIDENCE={json.dumps(_evidence_payload(records),ensure_ascii=False,separators=(',',':'))}. "
+        f"Analogy priors={json.dumps(analogy,ensure_ascii=False)}. FIRST_PARTY_INVERSION_ASSETS={json.dumps(_evidence_payload(assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_ASSETS={json.dumps(_evidence_payload(positive_assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_PRIORS={json.dumps(_positive_residual_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. FRESH_PHENOMENON_TARGET={json.dumps(fresh_target,ensure_ascii=False,separators=(',',':'))}. FRESH_PHENOMENON_PRIORS={json.dumps(fresh_priors,ensure_ascii=False,separators=(',',':'))}. LAYER-TYPED CLOSED-BASIN INVERSION PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. REOPENABLE_SUPPORT_HOLD_PRIORS={json.dumps(_reopenable_support_hold_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. CLOSED-BASIN SEARCH MEMORY (search-control only, never scientific authority)={json.dumps(_prompt_dead_end_memory(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. VERIFIED PRIMARY EVIDENCE={json.dumps(_evidence_payload(records),ensure_ascii=False,separators=(',',':'))}. "
         f"Return JSON only: {json.dumps(shape,ensure_ascii=False,separators=(',',':'))}"
     )
 
