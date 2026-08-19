@@ -3,13 +3,14 @@ from __future__ import annotations
 import copy
 import json
 import unittest
+from pathlib import Path
 
 from .paper_first_primary_evidence import SUPPORTED_TYPED_EVIDENCE_SNAPSHOT_VERSIONS, TYPED_EVIDENCE_EXTRACTION_VERSION
 from .paper_first_problem_discovery_contract import SEARCH_PORTFOLIO_PRIMITIVES
 from .paper_first_relation_coverage import relation_recall_freshness
 from .paper_first_discovery_frontier import build_paper_first_discovery_frontier
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier
-from .research_system import build_research_system_state, validate_state
+from .research_system import _canonicalize_public_state_locations, build_research_system_state, validate_state
 
 
 class ResearchSystemTest(unittest.TestCase):
@@ -43,6 +44,21 @@ class ResearchSystemTest(unittest.TestCase):
     def test_state_is_valid_and_iclr_first(self) -> None:
         self.assertEqual(self.state["target_venue"], "ICLR")
         self.assertEqual(validate_state(self.state), [])
+
+    def test_public_state_location_canonicalization_matches_private_durable_paths(self) -> None:
+        public=[
+            "run:private-data://runs/example.json#sha256=abc",
+            "host52:repo://generated/example.json#ROW",
+        ]
+        private=[
+            "run:/data/wyt/agent-self-evolution-observatory/runs/example.json#sha256=abc",
+            "host52:/home/wyt/code/agent-self-evolution-observatory-automation/generated/example.json#ROW",
+        ]
+        self.assertEqual(_canonicalize_public_state_locations(public),_canonicalize_public_state_locations(private))
+
+    def test_persisted_public_state_validates_against_private_durable_search_receipt(self) -> None:
+        persisted=json.loads((Path(__file__).parents[1]/"generated"/"research-system-state.json").read_text(encoding="utf-8"))
+        self.assertEqual(validate_state(persisted),[])
         self.assertEqual(self.state["summary"]["passed_ideas"], 26)
         self.assertGreaterEqual(self.state["summary"]["papers"], 200)
         self.assertEqual(self.state["summary"]["v4_candidates"], 28)
@@ -574,7 +590,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual((stri.get("summary") or {}).get("paper_quality_v2_passed"),1)
         self.assertEqual((stri.get("summary") or {}).get("paper_quality_source_binding"),1)
         self.assertEqual((stri.get("summary") or {}).get("paper_quality_content_addressed_completion"),1)
-        self.assertEqual((stri.get("summary") or {}).get("paper_quality_content_addressed_files"),15)
+        self.assertEqual((stri.get("summary") or {}).get("paper_quality_content_addressed_files"),20)
         self.assertEqual((stri.get("summary") or {}).get("paper_quality_evidence_debt"),0)
         self.assertEqual((stri.get("summary") or {}).get("paper_quality_main_visualizations"),4)
         self.assertIn("failure", (stri.get("summary") or {}).get("paper_quality_main_visual_roles") or [])
@@ -586,7 +602,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_v2_passed"],1)
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_source_binding"],1)
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_content_addressed_completion"],1)
-        self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_content_addressed_files"],15)
+        self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_content_addressed_files"],20)
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_evidence_debt"],0)
         self.assertEqual(self.state["summary"]["asset_first_stri_official_qa_checks_passed"],self.state["summary"]["asset_first_stri_official_qa_checks_total"])
         self.assertEqual((self.state["summary"]["asset_first_stri_main_text_pages"],self.state["summary"]["asset_first_stri_main_text_page_limit"]),(9,9))

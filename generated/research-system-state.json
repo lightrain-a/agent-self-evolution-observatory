@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-19T06:10:10+00:00",
+  "generated_at": "2026-08-19T06:22:44+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -6354,8 +6354,8 @@
     "asset_first_stri_qa_checks_passed": 60,
     "asset_first_stri_qa_checks_total": 60,
     "asset_first_stri_submission_status": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
-    "asset_first_stri_official_qa_checks_passed": 51,
-    "asset_first_stri_official_qa_checks_total": 51,
+    "asset_first_stri_official_qa_checks_passed": 60,
+    "asset_first_stri_official_qa_checks_total": 60,
     "asset_first_stri_main_text_pages": 9,
     "asset_first_stri_main_text_page_limit": 9,
     "asset_first_stri_supplement_ready": 1,
@@ -6363,7 +6363,7 @@
     "asset_first_stri_paper_quality_v2_passed": 1,
     "asset_first_stri_paper_quality_source_binding": 1,
     "asset_first_stri_paper_quality_content_addressed_completion": 1,
-    "asset_first_stri_paper_quality_content_addressed_files": 15,
+    "asset_first_stri_paper_quality_content_addressed_files": 20,
     "asset_first_stri_paper_quality_evidence_debt": 0,
     "asset_first_stri_main_visualizations": 4,
     "asset_first_stri_canonical_problem_gate_added": 0,
@@ -40454,19 +40454,19 @@
       "claims_total": 3,
       "qa_checks_passed": 60,
       "qa_checks_total": 60,
-      "official_qa_checks_passed": 51,
-      "official_qa_checks_total": 51,
+      "official_qa_checks_passed": 60,
+      "official_qa_checks_total": 60,
       "main_text_pages": 9,
       "main_text_page_limit": 9,
       "supplement_ready": 1,
-      "supplement_unit_tests": "19/19 PASS",
+      "supplement_unit_tests": "29/29 PASS",
       "human_signoff_pending": 1,
       "new_gpu_evidence_required": 0,
       "final_review_confidence": 0.92,
       "paper_quality_v2_passed": 1,
       "paper_quality_source_binding": 1,
       "paper_quality_content_addressed_completion": 1,
-      "paper_quality_content_addressed_files": 15,
+      "paper_quality_content_addressed_files": 20,
       "paper_quality_evidence_debt": 0,
       "paper_quality_missing_ids": [],
       "paper_quality_visualizations": 4,
@@ -40517,18 +40517,18 @@
       "title_freezes_at_full_paper_deadline": true,
       "deadline_source_verified_on": "2026-08-17",
       "deadline_human_action": "Confirm the live OpenReview/ICLR deadline before submission; until resolved, plan against the earlier published official dates.",
-      "pdf_sha256": "f2100998f3967faf29ce7aa00e4b1006f8b93fbb7a28087c325e75a438cf0291",
-      "source_zip_sha256": "851198e0e4202c4a15844265c6a48a7af39446c49db7680c237f5abdef7fc8ec",
-      "supplement_zip_sha256": "ead253c9049958d44690fe63607610bfefac3dc6983c4b70de14c011e6891f35",
+      "pdf_sha256": "b6a30dbca94539a85cafdc1b867883ba42017ce01fba5b30fe152cd8b43bfaf4",
+      "source_zip_sha256": "476af7f9808ec475e93ce2e2828071ad9de9f674e6e1709c2dd73b67c4bb1c14",
+      "supplement_zip_sha256": "8b14c78e4dbd53afe458edeea9c0ccdebacbccef3e4b510e85987c093e29d930",
       "downloads": {
         "tex": "downloads/STRI-ICLR2027.tex",
         "pdf": "downloads/STRI-ICLR2027.pdf",
         "source_zip": "downloads/STRI-ICLR2027-source.zip"
       },
       "download_sha256": {
-        "tex": "92edcc62b0c3e8db0cc6fdc49e0bd0852e5e9c096baf2c7307ced18fbeb37bcd",
-        "pdf": "f2100998f3967faf29ce7aa00e4b1006f8b93fbb7a28087c325e75a438cf0291",
-        "source_zip": "851198e0e4202c4a15844265c6a48a7af39446c49db7680c237f5abdef7fc8ec"
+        "tex": "3ecb724621e9eb4b1db70bcd009bd73f1b0fedaac8442227675a2f9f3a63be12",
+        "pdf": "b6a30dbca94539a85cafdc1b867883ba42017ce01fba5b30fe152cd8b43bfaf4",
+        "source_zip": "476af7f9808ec475e93ce2e2828071ad9de9f674e6e1709c2dd73b67c4bb1c14"
       },
       "human_action": "author-list/profile/quota/dual-submission/ethics/AI-use signoff and OpenReview upload only"
     },
@@ -40574,7 +40574,7 @@
       },
       "paper_quality_v2": {
         "path": "generated/asset-first-stri-paper-quality-v2-20260816.json",
-        "sha256": "3c222477d915f04312be1a56b8080e06871fad7fcea7c53db881464391e43730",
+        "sha256": "2760abb55ec21098b26e402224d14428a48ff668dea6cce0ae10d0364887e5b7",
         "present": true
       },
       "current_source_review": {
@@ -40584,22 +40584,22 @@
       },
       "official_final_state": {
         "path": "generated/asset-first-stri-iclr2027-final-state-20260816.json",
-        "sha256": "8bd62364e9b69ac09857b41e7378ed9545530b8897b0e96c0854235d3a2d4052",
+        "sha256": "1113ad3850750915b27510a6ce901ef16731f93b3f0408f087f3416d62616d6f",
         "present": true
       },
       "official_submission_qa": {
         "path": "generated/asset-first-stri-iclr2027-submission-qa-20260816.json",
-        "sha256": "3599b5849eb675f3c7966514864dfda726839e39e047f04560c521029fd9afff",
+        "sha256": "9261d2291a19f805f71a8c098d53fd338e957f72d6617afc101bedaca00e9580",
         "present": true
       },
       "supplement_state": {
         "path": "generated/asset-first-stri-iclr2027-supplement-state-20260816.json",
-        "sha256": "cce885b31b8dec5c23f8d52f119b2adadac86ca086759d6322a6eb80cbacd96d",
+        "sha256": "2d00b9862df0d16b0c50bedc38cd55441afa77ce176e0a113f1a3505d293e3dd",
         "present": true
       },
       "openreview_readiness": {
         "path": "generated/asset-first-stri-iclr2027-openreview-readiness-20260816.json",
-        "sha256": "8aca17d168e9216dab74077c23827f9d1696ca10f6bb976e137b4082808e3649",
+        "sha256": "c799afca74fde6a7357c1eb375a9405a562d3768de7fd44abaa5b84e7cc94243",
         "present": true
       },
       "skillrl_p0e_principle_disposition": {

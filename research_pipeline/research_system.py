@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -99,6 +100,51 @@ from .system_architecture import annotate_components, build_system_architecture
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "research-system-state.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "research-system-state.js"
+
+_HOST_OR_LOCAL_REPO_PATH = re.compile(
+    r"(?P<prefix>(?:host[^:]+:)?)?/(?:[^/\"#\s]+/)*agent-self-evolution-observatory(?:-[^/\"#\s]+)?/"
+)
+
+
+def _registered_private_data_roots() -> tuple[str, ...]:
+    roots = {str(resolve_experiment_data_root(StorageSettings.from_env()).resolve()).rstrip("/")}
+    profile_path = PROJECT_ROOT / "research_pipeline" / "experiment_orchestrator_profiles.json"
+    try:
+        payload = json.loads(profile_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError, json.JSONDecodeError):
+        payload = {}
+    for row in payload.get("servers") or []:
+        if isinstance(row, dict) and str(row.get("data_root") or "").strip():
+            roots.add(str(Path(str(row["data_root"])).expanduser().resolve()).rstrip("/"))
+    return tuple(sorted((root for root in roots if root), key=len, reverse=True))
+
+
+def _canonicalize_public_state_locations(value: Any, *, _private_roots: tuple[str, ...] | None = None) -> Any:
+    """Normalize private/public path spellings before durable-state comparison.
+
+    Public state intentionally redacts machine-local data/repository roots, while
+    durable research receipts may retain their original absolute provenance. The
+    validator must compare the same scientific object without requiring public
+    artifacts to re-expose those private paths. Registered server roots make this
+    comparison independent of which checkout or CI host performs validation.
+    """
+    private_roots = _private_roots or _registered_private_data_roots()
+    if isinstance(value, dict):
+        return {str(key): _canonicalize_public_state_locations(item, _private_roots=private_roots) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_canonicalize_public_state_locations(item, _private_roots=private_roots) for item in value]
+    if isinstance(value, tuple):
+        return [_canonicalize_public_state_locations(item, _private_roots=private_roots) for item in value]
+    if not isinstance(value, str):
+        return value
+    text = value.replace("private-data://", "<PRIVATE_DATA>/")
+    for private_root in private_roots:
+        text = text.replace(private_root + "/", "<PRIVATE_DATA>/")
+    text = text.replace("repo://", "<REPO>/")
+    return _HOST_OR_LOCAL_REPO_PATH.sub(
+        lambda match: f"{match.group('prefix') or ''}<REPO>/",
+        text,
+    )
 
 
 def _now() -> str:
@@ -1595,11 +1641,13 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     except Exception:
         errors.append("research-system embedded Search Portfolio state cannot verify current durable artifact")
     else:
+        sp_compare = _canonicalize_public_state_locations(sp_design)
+        persisted_sp_compare = _canonicalize_public_state_locations(persisted_sp_design)
         if (
-            sp_design.get("shadow_search_memory") != persisted_sp_design.get("shadow_search_memory")
-            or sp_design.get("shadow_dead_end_memory") != persisted_sp_design.get("shadow_dead_end_memory")
-            or sp_design_summary != (persisted_sp_design.get("summary") or {})
-            or sp_design.get("rows") != persisted_sp_design.get("rows")
+            sp_compare.get("shadow_search_memory") != persisted_sp_compare.get("shadow_search_memory")
+            or sp_compare.get("shadow_dead_end_memory") != persisted_sp_compare.get("shadow_dead_end_memory")
+            or (sp_compare.get("summary") or {}) != (persisted_sp_compare.get("summary") or {})
+            or sp_compare.get("rows") != persisted_sp_compare.get("rows")
         ):
             errors.append("research-system embedded Search Portfolio state is stale versus current durable artifact")
     sp15_support = state.get("paper_first_sp15_identifiability_support") or {}; sp15_summary = sp15_support.get("summary") or {}; sp15_policy = sp15_support.get("policy") or {}; sp15_diagnosis=sp15_support.get("support_diagnosis") or {}
