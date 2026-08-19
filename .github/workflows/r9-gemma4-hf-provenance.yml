@@ -1,0 +1,44 @@
+name: Capture R9 Gemma4 official HF provenance
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/r9-gemma4-hf-provenance.yml
+      - scripts/capture_r9_gemma4_hf_official_metadata.py
+      - research_pipeline/paper_first_agent_safety_r9_backbone_preflight.py
+      - generated/agent-safety-r9-gemma4-backbone-preflight-preregistration-20260819.json
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: r9-gemma4-hf-provenance-capture
+  cancel-in-progress: true
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact main revision
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Capture literal huggingface.co exact-revision metadata
+        run: python3 scripts/capture_r9_gemma4_hf_official_metadata.py
+
+      - name: Validate zero-authority capture
+        run: python3 scripts/capture_r9_gemma4_hf_official_metadata.py --validate generated/agent-safety-r9-gemma4-official-hf-metadata-capture.json
+
+      - name: Publish content-addressed capture branch
+        run: |
+          set -euo pipefail
+          git config user.name "Agent Evolution Automation"
+          git config user.email "agent-evolution-bot@users.noreply.github.com"
+          git add -f generated/agent-safety-r9-gemma4-official-hf-metadata-capture.json
+          git commit -m "chore(agent-safety): capture official Gemma4 HF metadata"
+          git push --force origin HEAD:refs/heads/r9-gemma4-hf-provenance-capture
