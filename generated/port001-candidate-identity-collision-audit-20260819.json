@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-19T13:16:28Z",
+  "status": "CANDIDATE_ID_COLLISION_CONFIRMED_LEGACY_RECEIPT_UNBOUND",
+  "policy": {
+    "candidate_id_scope": "RUN_LOCAL_DISPLAY_ORDINAL",
+    "canonical_cross_component_identity": "candidate_snapshot_sha256",
+    "candidate_identity_version": "candidate-content-v1",
+    "legacy_receipt_without_candidate_snapshot_cannot_authorize_or_close": true,
+    "candidate_id_only_join_for_cross_run_receipts_forbidden": true,
+    "collision_audit_has_zero_scientific_authority": true
+  },
+  "current_canonical_candidate": {
+    "candidate_id": "PORT-001",
+    "source_generator_run_id": "20260818T164230Z-ingestion-replay",
+    "title": "Rank-inverted skill harm across harnesses as a non-composability witness",
+    "source_branch_id": "ASSUMPTION_BREAK-P2-001-R1",
+    "primary_refs": [
+      "arXiv:2608.08303",
+      "arXiv:2608.14036"
+    ],
+    "candidate_identity_version": "candidate-content-v1",
+    "candidate_snapshot_sha256": "9b255e3ac6e3896a155b185b507073e6e36c65761f9e99d4e9bb5a0b7004bdd4",
+    "queue_artifact": "generated/paper-first-pre-f0-queue.json",
+    "queue_artifact_sha256": "6a75c36bdd08e3b6a03136461b6ccc70c7b7fbbb2fdf3a3b45f92fb973e57795",
+    "canonical_disposition": "HOLD_SUPPORT_UNAVAILABLE",
+    "scientific_authority": false
+  },
+  "conflicting_legacy_candidate": {
+    "candidate_id": "PORT-001",
+    "source_generator_run_id": "20260818T170139Z",
+    "title": "The Pre-Commitment Validity Object: Decision at Write-Time for Future Action Authorization",
+    "source_branch_id": "MISSING_DECISION_OBJECT-P2-003-R1",
+    "legacy_queue_artifact": "agent-safety-v17-pre-f0-queue-20260818.json",
+    "legacy_queue_artifact_sha256": "43074935957b6ff10809be62b81580bc6a26255206e6a04d8c3013c7a285ded3",
+    "candidate_snapshot_sha256": "",
+    "identity_status": "LEGACY_IDENTITY_INCOMPLETE",
+    "scientific_authority": false
+  },
+  "legacy_exact_reduction_receipt": {
+    "artifact": "agent-safety-port001-exact-reduction-20260819.json",
+    "artifact_sha256": "fed6b7e36c09bf275bea6dc14c430f8ce6cd74c45e3e815e4b05f02c2c8fbdd5",
+    "generated_at": "2026-08-19T06:41:44+00:00",
+    "candidate_id": "PORT-001",
+    "role": "EXACT_SAME_INFORMATION_WRITE_TIME_PRECOMMIT_REDUCTION",
+    "context_sha256": "c271ba4f59bc9664f2c9ca89da0c5d81412b4aed255a245cf7cdd21f5f94ec18",
+    "candidate_snapshot_sha256": "",
+    "binding_status": "UNBOUND_LEGACY_RECEIPT",
+    "may_materialize_to_current_canonical_candidate": false,
+    "scientific_authority": false
+  },
+  "adjudication": {
+    "collision_confirmed": true,
+    "same_candidate_id_does_not_imply_same_scientific_object": true,
+    "legacy_reduction_belongs_to_current_canonical_port001": false,
+    "current_canonical_port001_should_remain_support_hold": true,
+    "search_closure_materialization_from_legacy_receipt_forbidden": true,
+    "persistent_dead_end_materialization_from_legacy_receipt_forbidden": true,
+    "next": "USE_CONTENT_ADDRESSED_CANDIDATE_IDENTITY_FOR_ALL_CROSS_COMPONENT_RECEIPTS"
+  },
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

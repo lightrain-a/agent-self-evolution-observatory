@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T16:43:15+00:00",
+  "generated_at": "2026-08-19T13:09:28+00:00",
   "source_generator_run_id": "20260818T164230Z-ingestion-replay",
   "source_generator_status": "GENERATED_PRE_F0_EVIDENCE_ACQUISITION",
   "status": "PRE_F0_QUEUE_READY",
@@ -17,6 +17,8 @@
     "positive_f0_requires_exact_same_information_reduction_recheck": true,
     "exact_reduction_required_before_problem_gate": true,
     "pre_f0_cannot_enter_persistent_dead_end_memory": true,
+    "candidate_id_is_run_local_ordinal": true,
+    "candidate_snapshot_sha256_required": true,
     "automatic_provider_calls_authorized": false,
     "automatic_method_authority": false,
     "automatic_experiment_authority": false,
@@ -35,6 +37,8 @@
   "rows": [
     {
       "candidate_id": "PORT-001",
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "9b255e3ac6e3896a155b185b507073e6e36c65761f9e99d4e9bb5a0b7004bdd4",
       "title": "Rank-inverted skill harm across harnesses as a non-composability witness",
       "discovery_lane": "ASSUMPTION_BREAK",
       "source_branch_id": "ASSUMPTION_BREAK-P2-001-R1",
@@ -107,6 +111,8 @@
     },
     {
       "candidate_id": "PORT-003",
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "d15348638054d336246774f5f9410dcc33faccb4942b02ec842eb8c831fbf366",
       "title": "Timescale-isolated ablation of action-frequency governance on a frozen skill set",
       "discovery_lane": "ASSUMPTION_BREAK",
       "source_branch_id": "ASSUMPTION_BREAK-P2-004-R1",

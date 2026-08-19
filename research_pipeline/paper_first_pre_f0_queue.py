@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .candidate_identity import attach_candidate_identity, validate_candidate_identity
 from .config import PROJECT_ROOT
 from .paper_first_problem_generator import DEFAULT_JSON as GENERATOR_JSON, load_problem_generator_state
 
@@ -33,6 +34,8 @@ POLICY = {
     "positive_f0_requires_exact_same_information_reduction_recheck": True,
     "exact_reduction_required_before_problem_gate": True,
     "pre_f0_cannot_enter_persistent_dead_end_memory": True,
+    "candidate_id_is_run_local_ordinal": True,
+    "candidate_snapshot_sha256_required": True,
     "automatic_provider_calls_authorized": False,
     "automatic_method_authority": False,
     "automatic_experiment_authority": False,
@@ -50,11 +53,19 @@ def build_pre_f0_queue(generator: dict[str, Any]) -> dict[str, Any]:
     source_rows = [row for row in generator.get("pre_f0_candidates") or [] if isinstance(row, dict)]
     rows: list[dict[str, Any]] = []
     seen: set[str] = set()
+    seen_snapshots: set[str] = set()
     for source in source_rows:
         candidate_id = str(source.get("candidate_id") or "").strip()
         if not candidate_id or candidate_id in seen:
-            raise ValueError("pre-F0 candidate ids must be nonempty and unique")
+            raise ValueError("pre-F0 candidate ids must be nonempty and unique within one generator run")
         seen.add(candidate_id)
+        if source.get("candidate_identity_version") or source.get("candidate_snapshot_sha256"):
+            validate_candidate_identity(source)
+        identified = attach_candidate_identity(source)
+        candidate_snapshot = str(identified["candidate_snapshot_sha256"])
+        if candidate_snapshot in seen_snapshots:
+            raise ValueError("pre-F0 exact candidate snapshots must be unique")
+        seen_snapshots.add(candidate_snapshot)
         authority = source.get("authority") or {}
         if source.get("scientific_authority") is not False or any(authority.get(key) is not False for key in ("paper_design", "method", "experiment", "p0", "gpu")):
             raise ValueError(f"pre-F0 source candidate leaks downstream authority: {candidate_id}")
@@ -68,8 +79,10 @@ def build_pre_f0_queue(generator: dict[str, Any]) -> dict[str, Any]:
             raise ValueError(f"pre-F0 source candidate is incomplete: {candidate_id}")
         if str(source.get("post_f0_requirement") or "") != "RERUN_EXACT_SAME_INFORMATION_REDUCTION_BEFORE_PROBLEM_GATE":
             raise ValueError(f"pre-F0 candidate misses post-F0 exact-reduction obligation: {candidate_id}")
-        rows.append({
+        row = {
             "candidate_id": candidate_id,
+            "candidate_identity_version": identified["candidate_identity_version"],
+            "candidate_snapshot_sha256": candidate_snapshot,
             "title": str(source.get("title") or "").strip(),
             "discovery_lane": str(source.get("discovery_lane") or "").strip(),
             "source_branch_id": str(source.get("source_branch_id") or "").strip(),
@@ -89,7 +102,9 @@ def build_pre_f0_queue(generator: dict[str, Any]) -> dict[str, Any]:
             "next_if_realization_fails": "REALIZATION_STOP_AND_REPAIR",
             "scientific_authority": False,
             "authority": dict(AUTHORITY),
-        })
+        }
+        validate_candidate_identity(row)
+        rows.append(row)
     if rows and policy.get("search_portfolio_enabled") is not True:
         raise ValueError("pre-F0 queue cannot be sourced from a non-double-funnel generator")
     if rows and policy.get("exact_reduction_required_before_final_problem_gate") is not True:

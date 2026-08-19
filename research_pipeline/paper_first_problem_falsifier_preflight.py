@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
+from .candidate_identity import attach_candidate_identity, validate_candidate_identity
 from .config import PROJECT_ROOT
 from .paper_first_pre_f0_queue import load_pre_f0_queue
 
@@ -46,6 +47,8 @@ REQUEST_POLICY = {
     "support_unavailable_may_route_to_bounded_first_party_evidence_design": True,
     "first_party_evidence_requires_independent_truth_and_same_information_baseline": True,
     "canonical_generator_and_queue_untouched": True,
+    "candidate_id_is_run_local_ordinal": True,
+    "canonical_pre_f0_candidate_snapshot_binding_required": True,
     "automatic_problem_gate_authority": False,
     "automatic_paper_design_authority": False,
     "automatic_method_authority": False,
@@ -229,15 +232,20 @@ def build_support_inventory_request_from_pre_f0_queue(pre_f0_queue:dict[str,Any]
     policy=pre_f0_queue.get("policy") or {}
     if policy.get("cheap_falsifier_is_evidence_acquisition_not_problem_gate") is not True or policy.get("exact_reduction_required_before_problem_gate") is not True:
         raise ValueError("pre-F0 queue does not preserve support/final-reduction authority boundary")
-    rows=[];seen=set()
+    rows=[];seen=set();seen_snapshots=set()
     for row in pre_f0_queue.get("rows") or []:
         if not isinstance(row,dict):continue
         candidate_id=str(row.get("candidate_id") or "").strip()
-        if not candidate_id or candidate_id in seen:raise ValueError("pre-F0 support request candidate ids must be nonempty and unique")
-        seen.add(candidate_id);refs=sorted({str(ref).strip() for ref in row.get("primary_refs") or [] if str(ref).strip().startswith("arXiv:")});prediction=_bounded(row.get("exact_prediction"),2000);strongest=_bounded(row.get("strongest_same_information_baseline"),1200);falsifier=_bounded(row.get("cheapest_problem_falsifier"),2200)
+        if not candidate_id or candidate_id in seen:raise ValueError("pre-F0 support request candidate ids must be nonempty and unique within one generator run")
+        seen.add(candidate_id)
+        if row.get("candidate_identity_version") or row.get("candidate_snapshot_sha256"):validate_candidate_identity(row)
+        identified=attach_candidate_identity(row);snapshot=str(identified["candidate_snapshot_sha256"])
+        if snapshot in seen_snapshots:raise ValueError("pre-F0 support request exact candidate snapshots must be unique")
+        seen_snapshots.add(snapshot);refs=sorted({str(ref).strip() for ref in row.get("primary_refs") or [] if str(ref).strip().startswith("arXiv:")});prediction=_bounded(row.get("exact_prediction"),2000);strongest=_bounded(row.get("strongest_same_information_baseline"),1200);falsifier=_bounded(row.get("cheapest_problem_falsifier"),2200)
         if not refs or not prediction or not strongest or not falsifier:raise ValueError(f"pre-F0 support request missing frozen provenance/decision fields: {candidate_id}")
         if str(row.get("next_if_positive") or "")!="RERUN_EXACT_SAME_INFORMATION_REDUCTION":raise ValueError(f"pre-F0 support request misses exact-reduction recheck: {candidate_id}")
-        rows.append({"candidate_id":candidate_id,"title":_bounded(row.get("title"),500),"discovery_lane":str(row.get("discovery_lane") or "").strip(),"source_branch_id":str(row.get("source_branch_id") or "").strip(),"primary_refs":refs,"exact_prediction":prediction,"strongest_same_information_baseline":strongest,"falsifier_expression":falsifier,"support_inventory_question":"Determine whether primary/author-released artifacts directly expose the observational/interventional units and fields needed for this frozen Pre-F0 falsifier, or whether author-released first-party code / an existing provenance-audited substrate can materialize those units as independent truth under the frozen operationalization. Reconstructed support is admissible only after materialization and provenance hashing, without synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.","required_receipt_dispositions":sorted(ALLOWED_DISPOSITIONS),"scientific_authority":False})
+        request_row={"candidate_id":candidate_id,"candidate_identity_version":identified["candidate_identity_version"],"candidate_snapshot_sha256":snapshot,"title":_bounded(row.get("title"),500),"discovery_lane":str(row.get("discovery_lane") or "").strip(),"source_branch_id":str(row.get("source_branch_id") or "").strip(),"primary_refs":refs,"exact_prediction":prediction,"strongest_same_information_baseline":strongest,"falsifier_expression":falsifier,"endpoint_headroom_requirement":_bounded(row.get("endpoint_headroom_requirement"),1200),"support_inventory_question":"Determine whether primary/author-released artifacts directly expose the observational/interventional units and fields needed for this frozen Pre-F0 falsifier, or whether author-released first-party code / an existing provenance-audited substrate can materialize those units as independent truth under the frozen operationalization. Reconstructed support is admissible only after materialization and provenance hashing, without synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.","required_receipt_dispositions":sorted(ALLOWED_DISPOSITIONS),"scientific_authority":False}
+        validate_candidate_identity(request_row);rows.append(request_row)
     return {"schema_version":"1.0-pre-f0","generated_at":_now(),"run_id":run_id,"status":"PROBLEM_FALSIFIER_SUPPORT_INVENTORY_REQUEST_READY" if rows else "NO_PROBLEM_FALSIFIER_QUEUE","source":"CANONICAL_PRE_F0_QUEUE","policy":dict(REQUEST_POLICY),"summary":{"queued":len(rows),"inventory_requests":len(rows),"problem_gate_authorized":0,"paper_design_authorized":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0,"gpu_authorized":0},"rows":rows,"authority":dict(AUTHORITY),"scientific_authority":False}
 
 
@@ -251,6 +259,14 @@ def write_support_inventory_request(*, run_root: Path, output_path: Path | None 
 
 def _validate_receipt_row(request: dict[str, Any], receipt: dict[str, Any]) -> dict[str, Any]:
     candidate_id = str(request.get("candidate_id") or "")
+    request_snapshot = str(request.get("candidate_snapshot_sha256") or "").strip().lower()
+    request_identity_version = str(request.get("candidate_identity_version") or "").strip()
+    if request_snapshot:
+        validate_candidate_identity(request)
+        receipt_snapshot = str(receipt.get("candidate_snapshot_sha256") or "").strip().lower()
+        receipt_identity_version = str(receipt.get("candidate_identity_version") or "").strip()
+        if receipt_snapshot != request_snapshot or receipt_identity_version != request_identity_version:
+            raise ValueError(f"support receipt candidate snapshot identity mismatch: {candidate_id}")
     disposition = str(receipt.get("disposition") or "").strip().upper()
     if disposition not in ALLOWED_DISPOSITIONS:
         raise ValueError(f"invalid support disposition for {candidate_id}: {disposition or 'EMPTY'}")
@@ -271,6 +287,9 @@ def _validate_receipt_row(request: dict[str, Any], receipt: dict[str, Any]) -> d
         "primary_refs": refs,
         "scientific_authority": False,
     }
+    if request_snapshot:
+        out["candidate_identity_version"] = request_identity_version
+        out["candidate_snapshot_sha256"] = request_snapshot
     support_audit_artifact = _bounded(receipt.get("support_audit_artifact"), 500)
     support_audit_sha256 = str(receipt.get("support_audit_sha256") or "").strip().lower()
     support_audit_payload: dict[str, Any] | None = None

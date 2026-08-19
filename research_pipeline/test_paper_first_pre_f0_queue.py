@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import unittest
 
 from .paper_first_pre_f0_queue import build_pre_f0_queue
@@ -36,7 +37,20 @@ class PaperFirstPreF0QueueTest(unittest.TestCase):
         self.assertTrue(state["policy"]["positive_f0_requires_exact_same_information_reduction_recheck"])
         self.assertEqual(state["rows"][0]["next_if_positive"],"RERUN_EXACT_SAME_INFORMATION_REDUCTION")
         self.assertEqual(state["rows"][0]["primary_refs"],["arXiv:2608.00001","arXiv:2608.00002"])
+        self.assertEqual(state["rows"][0]["candidate_identity_version"],"candidate-content-v1")
+        self.assertEqual(len(state["rows"][0]["candidate_snapshot_sha256"]),64)
+        self.assertTrue(state["policy"]["candidate_id_is_run_local_ordinal"])
+        self.assertTrue(state["policy"]["candidate_snapshot_sha256_required"])
         self.assertTrue(all(value is False for value in state["rows"][0]["authority"].values()))
+
+    def test_candidate_snapshot_is_independent_of_run_local_port_ordinal_but_changes_with_scientific_object(self) -> None:
+        first=self.candidate();second=copy.deepcopy(first);second["candidate_id"]="PORT-099"
+        first_state=build_pre_f0_queue({"run_id":"r1","policy":{"search_portfolio_enabled":True,"exact_reduction_required_before_final_problem_gate":True},"pre_f0_candidates":[first]})
+        second_state=build_pre_f0_queue({"run_id":"r2","policy":{"search_portfolio_enabled":True,"exact_reduction_required_before_final_problem_gate":True},"pre_f0_candidates":[second]})
+        self.assertEqual(first_state["rows"][0]["candidate_snapshot_sha256"],second_state["rows"][0]["candidate_snapshot_sha256"])
+        changed=copy.deepcopy(second);changed["title"]="A different scientific candidate reusing the same local ordinal"
+        changed_state=build_pre_f0_queue({"run_id":"r3","policy":{"search_portfolio_enabled":True,"exact_reduction_required_before_final_problem_gate":True},"pre_f0_candidates":[changed]})
+        self.assertNotEqual(first_state["rows"][0]["candidate_snapshot_sha256"],changed_state["rows"][0]["candidate_snapshot_sha256"])
 
     def test_queue_rejects_authority_leak(self) -> None:
         row=self.candidate();row["authority"]["method"]=True

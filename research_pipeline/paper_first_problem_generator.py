@@ -9,6 +9,7 @@ from threading import Event,Thread
 from typing import Any,Callable
 
 from .ark_provider import ArkResponsesClient,ArkSettings,extract_json_object
+from .candidate_identity import attach_candidate_identity
 from .config import PROJECT_ROOT,StorageSettings
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS, reduction_pattern_audit
 from .paper_first_primary_evidence import load_private_primary_pool,private_primary_pool_path
@@ -575,12 +576,13 @@ def _pre_f0_route(candidate:dict[str,Any],registry:dict[str,dict[str,Any]])->dic
 
 def _pre_f0_candidate_row(normalized:dict[str,Any],route:dict[str,Any])->dict[str,Any]:
     evidence=normalized.get("empirical_evidence") or {};primary_refs=sorted({str((evidence.get(key) or {}).get("ref") or "").strip() for key in ("source_a","source_b") if str((evidence.get(key) or {}).get("ref") or "").strip().startswith("arXiv:")})
-    return {
+    row={
         "candidate_id":normalized.get("candidate_id"),"title":normalized.get("title"),"discovery_lane":normalized.get("discovery_lane"),"source_branch_id":normalized.get("source_branch_id"),"primary_refs":primary_refs,
         "paperability_axes":normalized.get("paperability_axes") or {},"surviving_paperability_axes":route.get("surviving_axes") or [],"non_principle_surviving_axes":route.get("non_principle_surviving_axes") or [],"route_reason":route.get("route_reason"),"reduction_blockers":route.get("reduction_blockers") or [],
         "exact_prediction":normalized.get("exact_prediction"),"strongest_same_information_baseline":normalized.get("strongest_same_information_baseline"),"cheapest_problem_falsifier":normalized.get("cheapest_problem_falsifier"),"endpoint_headroom_requirement":normalized.get("endpoint_headroom_requirement"),
         "post_f0_requirement":"RERUN_EXACT_SAME_INFORMATION_REDUCTION_BEFORE_PROBLEM_GATE","scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False},
     }
+    return attach_candidate_identity(row)
 
 def _norm_text(value:str)->str:
     return " ".join(str(value or "").lower().split())

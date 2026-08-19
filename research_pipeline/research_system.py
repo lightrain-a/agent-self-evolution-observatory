@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .candidate_identity import validate_candidate_identity
 from .config import PROJECT_ROOT, StorageSettings, resolve_experiment_data_root
 from .asset_first_stri_public_status import build_asset_first_stri_public_status, validate_asset_first_stri_public_status
 from .asset_first_stri_paper_quality import write_asset_first_stri_paper_quality
@@ -1614,14 +1615,27 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if pre_f0:
         if pre_f0.get("scientific_authority") is not False or int(pre_f0_summary.get("queued") or 0)!=len(pre_f0_rows) or any(pre_f0_authority.get(key) is not False for key in ("problem_gate","paper_design","method","experiment","p0","gpu")): errors.append("canonical pre-F0 queue must remain zero-authority with exact row accounting")
         if pre_f0_policy.get("cheap_falsifier_is_evidence_acquisition_not_problem_gate") is not True or pre_f0_policy.get("positive_f0_requires_exact_same_information_reduction_recheck") is not True or pre_f0_policy.get("exact_reduction_required_before_problem_gate") is not True or pre_f0_policy.get("pre_f0_cannot_enter_persistent_dead_end_memory") is not True: errors.append("canonical pre-F0 queue must preserve evidence-acquisition and post-F0 exact-reduction boundaries")
+        if pre_f0_policy.get("candidate_id_is_run_local_ordinal") is not True or pre_f0_policy.get("candidate_snapshot_sha256_required") is not True: errors.append("canonical pre-F0 queue must bind run-local candidate ordinals to immutable candidate snapshots")
+        pre_f0_snapshots=[]
+        for row in pre_f0_rows:
+            try: validate_candidate_identity(row)
+            except ValueError: errors.append(f"canonical pre-F0 candidate identity is invalid: {row.get('candidate_id')}")
+            snapshot=str(row.get("candidate_snapshot_sha256") or "").strip().lower()
+            if snapshot: pre_f0_snapshots.append(snapshot)
+        if len(pre_f0_snapshots)!=len(pre_f0_rows) or len(set(pre_f0_snapshots))!=len(pre_f0_snapshots): errors.append("canonical pre-F0 candidate snapshots must be present and unique")
         if any(row.get("scientific_authority") is not False or any((row.get("authority") or {}).get(key) is not False for key in ("problem_gate","paper_design","method","experiment","p0","gpu")) or str(row.get("next_if_positive") or "")!="RERUN_EXACT_SAME_INFORMATION_REDUCTION" for row in pre_f0_rows): errors.append("canonical pre-F0 row leaks authority or bypasses exact-reduction recheck")
         if generator_double_funnel and int(generator_summary.get("pre_f0_eligible") or 0)!=int(pre_f0_summary.get("queued") or 0): errors.append("canonical generator and pre-F0 queue accounting must match")
     pre_f0_support=state.get("paper_first_pre_f0_problem_falsifier_preflight") or {};pre_f0_support_summary=pre_f0_support.get("summary") or {};pre_f0_support_authority=pre_f0_support.get("authority") or {}
     if pre_f0_support:
         if pre_f0_support.get("scientific_authority") is not False or any(pre_f0_support_authority.get(key) is not False for key in ("canonical_generator","canonical_problem_gate","paper_design","method","experiment","p0","gpu")): errors.append("canonical Pre-F0 support preflight must remain zero-authority")
+        if (pre_f0_support.get("policy") or {}).get("canonical_pre_f0_candidate_snapshot_binding_required") is not True: errors.append("canonical Pre-F0 support preflight must require candidate snapshot binding")
         if pre_f0_support.get("status") == "PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE":
             support_queued=int(pre_f0_support_summary.get("queued") or 0);support_ready=int(pre_f0_support_summary.get("support_qualified") or 0);support_hold=int(pre_f0_support_summary.get("hold_support_unavailable") or 0);executed=int(pre_f0_support_summary.get("falsifier_executed") or 0)
             if support_queued!=int(pre_f0_summary.get("queued") or 0) or support_ready+support_hold!=support_queued or executed!=0: errors.append("canonical Pre-F0 support preflight must cover the queue exactly without executing a falsifier")
+            queue_identity={(str(row.get("candidate_id") or ""),str(row.get("candidate_identity_version") or ""),str(row.get("candidate_snapshot_sha256") or "").strip().lower()) for row in pre_f0_rows}
+            support_rows=[row for row in pre_f0_support.get("rows") or [] if isinstance(row,dict)]
+            support_identity={(str(row.get("candidate_id") or ""),str(row.get("candidate_identity_version") or ""),str(row.get("candidate_snapshot_sha256") or "").strip().lower()) for row in support_rows}
+            if len(support_identity)!=len(support_rows) or support_identity!=queue_identity: errors.append("canonical Pre-F0 support preflight candidate snapshots do not exactly match the queue")
     generated_discovery_statuses={"GENERATED_ZERO_CANDIDATES","GENERATED_PRE_F0_EVIDENCE_ACQUISITION","GENERATED_AWAIT_PROBLEM_GATE"}
     expected_lane_statuses={"EXPANDED","EMPTY"} if generator_double_funnel else {"NO_PAIR","REDUCIBLE","CANDIDATE"}
     if generator_schema >= "2.4" and generator.get("status") in generated_discovery_statuses:

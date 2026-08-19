@@ -6,6 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from .candidate_identity import attach_candidate_identity
 from .paper_first_problem_falsifier_preflight import (
     build_support_inventory_request,
     build_support_inventory_request_from_pre_f0_queue,
@@ -64,6 +65,13 @@ class ProblemFalsifierPreflightTest(unittest.TestCase):
             }],
         }
 
+    def identity_fields(self, row: dict) -> dict:
+        identified=attach_candidate_identity(row)
+        return {
+            "candidate_identity_version": identified["candidate_identity_version"],
+            "candidate_snapshot_sha256": identified["candidate_snapshot_sha256"],
+        }
+
     def hold_inventory(self) -> dict:
         return {
             "inventory_origin":"unit-test-primary-asset-audit",
@@ -93,20 +101,32 @@ class ProblemFalsifierPreflightTest(unittest.TestCase):
         self.assertTrue(request["policy"]["support_inventory_request_cannot_claim_asset_availability"])
 
     def test_pre_f0_support_request_preserves_primary_refs_and_zero_authority(self) -> None:
-        request=build_support_inventory_request_from_pre_f0_queue(self.pre_f0(),run_id="pre-f0-r1")
+        pre=self.pre_f0();request=build_support_inventory_request_from_pre_f0_queue(pre,run_id="pre-f0-r1")
         self.assertEqual(request["source"],"CANONICAL_PRE_F0_QUEUE")
         self.assertEqual(request["summary"]["queued"],1)
         self.assertEqual(request["rows"][0]["primary_refs"],["arXiv:2608.00001","arXiv:2608.00002"])
+        self.assertEqual(request["rows"][0]["candidate_identity_version"],"candidate-content-v1")
         self.assertFalse(request["scientific_authority"]);self.assertFalse(request["authority"]["experiment"])
-        inv={"inventory_origin":"pre-f0-asset-audit","rows":[{"candidate_id":"PORT-001","disposition":"HOLD_SUPPORT_UNAVAILABLE","required_unit":"Executable matched unit.","asset_audit":"The required harness parity is not released.","primary_refs":["arXiv:2608.00001"],"reopen_only_if":"The missing first-party harness is released."}],"scientific_authority":False}
-        state=compile_pre_f0_problem_falsifier_preflight(self.pre_f0(),inv,run_id="pre-f0-r1",inventory_sha256="d"*64)
+        inv={"inventory_origin":"pre-f0-asset-audit","rows":[{"candidate_id":"PORT-001",**self.identity_fields(pre["rows"][0]),"disposition":"HOLD_SUPPORT_UNAVAILABLE","required_unit":"Executable matched unit.","asset_audit":"The required harness parity is not released.","primary_refs":["arXiv:2608.00001"],"reopen_only_if":"The missing first-party harness is released."}],"scientific_authority":False}
+        state=compile_pre_f0_problem_falsifier_preflight(pre,inv,run_id="pre-f0-r1",inventory_sha256="d"*64)
         self.assertEqual(state["summary"]["hold_support_unavailable"],1);self.assertEqual(state["summary"]["support_qualified"],0);self.assertFalse(state["authority"]["experiment"])
+
+    def test_pre_f0_receipt_rejects_reused_port_ordinal_from_different_candidate_snapshot(self) -> None:
+        pre=self.pre_f0();other=json.loads(json.dumps(pre["rows"][0]));other["title"]="A different candidate from a later search generation";other["source_branch_id"]="OTHER-BRANCH"
+        wrong_identity=self.identity_fields(other)
+        inventory={"inventory_origin":"cross-run-id-collision-test","rows":[{
+            "candidate_id":"PORT-001",**wrong_identity,"disposition":"HOLD_SUPPORT_UNAVAILABLE",
+            "required_unit":"Executable matched unit.","asset_audit":"A valid-looking receipt from a different PORT-001 generation.",
+            "primary_refs":["arXiv:2608.00001"],"reopen_only_if":"The missing first-party harness is released.",
+        }],"scientific_authority":False}
+        with self.assertRaisesRegex(ValueError,"candidate snapshot identity mismatch"):
+            compile_pre_f0_problem_falsifier_preflight(pre,inventory,run_id="pre-f0-r1")
 
     def test_pre_f0_file_helpers_write_request_and_compiled_hold(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);request_path=root/"request.json";inventory_path=root/"inventory.json";preflight_path=root/"preflight.json"
-            inv={"inventory_origin":"pre-f0-asset-audit","rows":[{"candidate_id":"PORT-001","disposition":"HOLD_SUPPORT_UNAVAILABLE","required_unit":"Executable matched unit.","asset_audit":"The required harness parity is not released.","primary_refs":["arXiv:2608.00001"],"reopen_only_if":"The missing first-party harness is released."}],"scientific_authority":False};inventory_path.write_text(json.dumps(inv),encoding="utf-8");expected_sha=hashlib.sha256(inventory_path.read_bytes()).hexdigest()
-            request=write_pre_f0_support_inventory_request(pre_f0_queue=self.pre_f0(),output_path=request_path);state=write_pre_f0_problem_falsifier_preflight(pre_f0_queue=self.pre_f0(),support_inventory_path=inventory_path,output_path=preflight_path);loaded=load_pre_f0_problem_falsifier_preflight(preflight_path)
+            pre=self.pre_f0();inv={"inventory_origin":"pre-f0-asset-audit","rows":[{"candidate_id":"PORT-001",**self.identity_fields(pre["rows"][0]),"disposition":"HOLD_SUPPORT_UNAVAILABLE","required_unit":"Executable matched unit.","asset_audit":"The required harness parity is not released.","primary_refs":["arXiv:2608.00001"],"reopen_only_if":"The missing first-party harness is released."}],"scientific_authority":False};inventory_path.write_text(json.dumps(inv),encoding="utf-8");expected_sha=hashlib.sha256(inventory_path.read_bytes()).hexdigest()
+            request=write_pre_f0_support_inventory_request(pre_f0_queue=pre,output_path=request_path);state=write_pre_f0_problem_falsifier_preflight(pre_f0_queue=pre,support_inventory_path=inventory_path,output_path=preflight_path);loaded=load_pre_f0_problem_falsifier_preflight(preflight_path)
         self.assertEqual(request["summary"]["inventory_requests"],1);self.assertEqual(state["summary"]["hold_support_unavailable"],1);self.assertEqual(loaded["support_inventory_sha256"],expected_sha)
 
     def test_hold_compiles_without_scientific_falsification_or_execution_authority(self) -> None:
@@ -123,7 +143,7 @@ class ProblemFalsifierPreflightTest(unittest.TestCase):
         audit=json.loads(audit_path.read_text(encoding="utf-8"));digest=hashlib.sha256(audit_path.read_bytes()).hexdigest()
         pre=json.loads(json.dumps(self.pre_f0()));pre["rows"][0]["candidate_id"]="PORT-003";pre["rows"][0]["primary_refs"]=audit["source_refs"]
         inventory={"inventory_origin":"zetta-schema-audit-test","rows":[{
-            "candidate_id":"PORT-003","disposition":"HOLD_SUPPORT_UNAVAILABLE","required_unit":audit["required_unit"],
+            "candidate_id":"PORT-003",**self.identity_fields(pre["rows"][0]),"disposition":"HOLD_SUPPORT_UNAVAILABLE","required_unit":audit["required_unit"],
             "asset_audit":"The released schema blocks the frozen intermediate intervention arms.","primary_refs":audit["source_refs"],
             "support_audit_artifact":"generated/zetta-timescale-support-audit-20260819.json","support_audit_sha256":digest,
             "reopen_only_if":audit["reopen_only_if"],
@@ -257,6 +277,7 @@ class ProblemFalsifierPreflightTest(unittest.TestCase):
         })
         inventory={"inventory_origin":"unit-test-zetta-schema-audit","rows":[{
             "candidate_id":"PORT-003",
+            **self.identity_fields(row),
             "disposition":"HOLD_SUPPORT_UNAVAILABLE",
             "required_unit":audit["required_unit"],
             "asset_audit":"The released Zetta schema couples Critic and Recovery and blocks the required intermediate arms.",

@@ -1008,6 +1008,16 @@ class ResearchSystemTest(unittest.TestCase):
         broken=copy.deepcopy(state); broken["paper_first_problem_generator"]["search_diagnostics"]["lane_search"].pop()
         self.assertTrue(any("complete machine-audited status" in error for error in validate_state(broken)))
 
+    def test_pre_f0_support_snapshot_binding_rejects_run_local_candidate_id_collision(self) -> None:
+        state=copy.deepcopy(self.state)
+        queue=state.get("paper_first_pre_f0_queue") or {};preflight=state.get("paper_first_pre_f0_problem_falsifier_preflight") or {}
+        if not (queue.get("rows") and preflight.get("rows")):
+            self.skipTest("current durable state has no compiled Pre-F0 support rows")
+        self.assertEqual(validate_state(state),[])
+        broken=copy.deepcopy(state);broken_row=broken["paper_first_pre_f0_problem_falsifier_preflight"]["rows"][0]
+        broken_row["candidate_snapshot_sha256"]="0"*64
+        self.assertTrue(any("candidate snapshots do not exactly match" in error for error in validate_state(broken)))
+
     def test_v17_double_funnel_pre_f0_receipt_uses_full_search_vocabulary(self) -> None:
         state=copy.deepcopy(self.state);generator=state["paper_first_problem_generator"]
         if (generator.get("policy") or {}).get("search_portfolio_enabled") is not True:
