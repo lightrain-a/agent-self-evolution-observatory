@@ -13,6 +13,7 @@ from .asset_first_stri_certificate import (
     certify,
     dual_global_package_ratio,
     optimal_global_package_ratio,
+    semantic_first_construction,
     support_matrix,
 )
 
@@ -128,6 +129,10 @@ def analyze_context(rows: list[dict[str, Any]], *, context_id: str) -> dict[str,
             "reason": result.get("reason") if not result.get("pass") else None,
         }
 
+    semantic_first = semantic_first_construction(rows)
+    if not semantic_first.get("pass"):
+        raise RuntimeError(f"semantic-first construction failed for {context_id}: {semantic_first}")
+
     return {
         "context_id": context_id,
         "covered_rows": len(covered),
@@ -143,6 +148,12 @@ def analyze_context(rows: list[dict[str, Any]], *, context_id: str) -> dict[str,
             "beta_rows": dual["beta_rows"],
         },
         "max_share_scan": max_share_scan,
+        "semantic_first_neutral_construction": {
+            "maximum_semantic_marginal_error": semantic_first["maximum_semantic_marginal_error"],
+            "support_violation_mass": semantic_first["support_violation_mass"],
+            "kernel_row_sum_min": semantic_first["kernel_row_sum_min"],
+            "kernel_row_sum_max": semantic_first["kernel_row_sum_max"],
+        },
         "single_edge_support_stability": single_edge_support_stability(rows),
     }
 
@@ -189,7 +200,6 @@ def evaluate(membership_rows: list[dict[str, Any]], logical_rows: list[dict[str,
     level1_rows = [r for r in membership_rows if int(r.get("level") or -1) == 1]
     contexts = {
         "api_bank_level1_all": level1_rows,
-        "api_bank_level1_all": [r for r in membership_rows if int(r.get("level") or -1) == 1],
         "api_bank_level1_calibration_tools": [
             r for r in membership_rows if int(r.get("level") or -1) == 1 and str(r.get("tool") or "") in CALIBRATION_TOOLS
         ],
@@ -213,6 +223,13 @@ def evaluate(membership_rows: list[dict[str, Any]], logical_rows: list[dict[str,
         "per_tool_exact_lp": per_tool,
         "headline_checks": {
             "all_primal_dual_gaps_le_1e_8": all(ctx["dual"]["primal_dual_gap"] <= 1e-8 for ctx in analyses.values()),
+            "semantic_first_neutral_target_exact_on_all_five_regimes": all(
+                ctx["semantic_first_neutral_construction"]["maximum_semantic_marginal_error"] <= 1e-12
+                and ctx["semantic_first_neutral_construction"]["support_violation_mass"] <= 1e-12
+                and abs(ctx["semantic_first_neutral_construction"]["kernel_row_sum_min"] - 1.0) <= 1e-12
+                and abs(ctx["semantic_first_neutral_construction"]["kernel_row_sum_max"] - 1.0) <= 1e-12
+                for ctx in analyses.values()
+            ),
             "level1_residual_survives_all_single_support_additions": (
                 l1["support_additions"]["same_original_class_fraction"] == 1.0
             ),
@@ -233,12 +250,13 @@ def evaluate(membership_rows: list[dict[str, Any]], logical_rows: list[dict[str,
                 "the Level-1 positive residual is stable to every exhaustive one-cell support addition and every one-cell deletion that keeps the affected row covered",
                 "the logical-compiler R*=1 solution is operationally concentrated: imposing a 75% package-mass cap makes the constrained optimum exceed one",
                 "the logical-compiler negative boundary is asymmetric under support error: some single support deletions break equalizability",
+                "a semantic-first row-stochastic implementation factorization realizes the neutral semantic target exactly on all five covered frozen support regimes despite arbitrary overlap",
             ],
             "not_supported": [
                 "learned support estimators are calibrated",
                 "arbitrary multi-cell support noise preserves the certificate",
                 "static exposure distortion causes downstream utility harm",
-                "constrained equalization is a new optimization algorithm",
+                "constrained equalization or semantic-first factorization is a downstream-validated new optimization algorithm",
             ],
         },
         "scientific_authority": False,

@@ -28,6 +28,7 @@
           {
             "matrix_row": 10,
             "value": 1.0,
+            "target": 1.0,
             "level": 1,
             "index": 12,
             "tool": "EmergencyKnowledge",
@@ -39,6 +40,7 @@
           {
             "matrix_row": 41,
             "value": 1.0,
+            "target": 1.0,
             "level": 1,
             "index": 44,
             "tool": "ModifyRegistration",
@@ -52,6 +54,7 @@
           {
             "matrix_row": 0,
             "value": 1.0,
+            "target": 1.0,
             "level": 1,
             "index": 0,
             "tool": "ModifyRegistration",
@@ -128,6 +131,12 @@
           "reason": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)"
         }
       },
+      "semantic_first_neutral_construction": {
+        "maximum_semantic_marginal_error": 0.0,
+        "support_violation_mass": 0.0,
+        "kernel_row_sum_min": 1.0,
+        "kernel_row_sum_max": 1.0
+      },
       "single_edge_support_stability": {
         "pass": true,
         "base_R_star": 2.0,
@@ -184,6 +193,7 @@
           {
             "matrix_row": 15,
             "value": 1.0,
+            "target": 1.0,
             "level": 1,
             "index": 98,
             "tool": "RecordHealthData",
@@ -195,6 +205,7 @@
           {
             "matrix_row": 16,
             "value": 1.0,
+            "target": 1.0,
             "level": 1,
             "index": 109,
             "tool": "RecordHealthData",
@@ -208,6 +219,7 @@
           {
             "matrix_row": 1,
             "value": 1.0,
+            "target": 1.0,
             "level": 1,
             "index": 1,
             "tool": "QueryHealthData",
@@ -268,6 +280,12 @@
           "reason": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)"
         }
       },
+      "semantic_first_neutral_construction": {
+        "maximum_semantic_marginal_error": 0.0,
+        "support_violation_mass": 0.0,
+        "kernel_row_sum_min": 1.0,
+        "kernel_row_sum_max": 1.0
+      },
       "single_edge_support_stability": {
         "pass": true,
         "base_R_star": 2.0,
@@ -321,6 +339,7 @@
           {
             "matrix_row": 4,
             "value": 1.0,
+            "target": 1.0,
             "level": 1,
             "index": 12,
             "tool": "EmergencyKnowledge",
@@ -332,6 +351,7 @@
           {
             "matrix_row": 28,
             "value": 1.0,
+            "target": 1.0,
             "level": 1,
             "index": 276,
             "tool": "QueryRegistration",
@@ -345,6 +365,7 @@
           {
             "matrix_row": 0,
             "value": 1.0,
+            "target": 1.0,
             "level": 1,
             "index": 2,
             "tool": "CancelRegistration",
@@ -405,6 +426,12 @@
           "reason": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)"
         }
       },
+      "semantic_first_neutral_construction": {
+        "maximum_semantic_marginal_error": 0.0,
+        "support_violation_mass": 0.0,
+        "kernel_row_sum_min": 1.0,
+        "kernel_row_sum_max": 1.0
+      },
       "single_edge_support_stability": {
         "pass": true,
         "base_R_star": 2.0,
@@ -459,6 +486,7 @@
           {
             "matrix_row": 29,
             "value": 1.0,
+            "target": 1.0,
             "level": 3,
             "index": 112,
             "tool": "TaxCalculator",
@@ -472,6 +500,7 @@
           {
             "matrix_row": 30,
             "value": 1.0,
+            "target": 1.0,
             "level": 3,
             "index": 114,
             "tool": "TaxCalculator",
@@ -539,6 +568,12 @@
           "reason": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)"
         }
       },
+      "semantic_first_neutral_construction": {
+        "maximum_semantic_marginal_error": 0.0,
+        "support_violation_mass": 0.0,
+        "kernel_row_sum_min": 1.0,
+        "kernel_row_sum_max": 1.0
+      },
       "single_edge_support_stability": {
         "pass": true,
         "base_R_star": 1.0,
@@ -598,6 +633,7 @@
           {
             "matrix_row": 113,
             "value": 1.0,
+            "target": 1.0,
             "level": 0,
             "index": 113,
             "tool": "zebra_3x3",
@@ -611,6 +647,7 @@
           {
             "matrix_row": 0,
             "value": 1.0,
+            "target": 1.0,
             "level": 0,
             "index": 0,
             "tool": "zebra_3x3",
@@ -704,6 +741,12 @@
           },
           "reason": null
         }
+      },
+      "semantic_first_neutral_construction": {
+        "maximum_semantic_marginal_error": 0.0,
+        "support_violation_mass": 0.0,
+        "kernel_row_sum_min": 1.0,
+        "kernel_row_sum_max": 1.0
       },
       "single_edge_support_stability": {
         "pass": true,
@@ -1149,6 +1192,7 @@
   },
   "headline_checks": {
     "all_primal_dual_gaps_le_1e_8": true,
+    "semantic_first_neutral_target_exact_on_all_five_regimes": true,
     "level1_residual_survives_all_single_support_additions": true,
     "level1_residual_survives_all_nonuncovering_single_support_deletions": true,
     "logical_unrestricted_equalizable": true,
@@ -1161,13 +1205,14 @@
       "the LP dual gives a complete lower-bound certificate and has zero numerical duality gap on all five audited regimes",
       "the Level-1 positive residual is stable to every exhaustive one-cell support addition and every one-cell deletion that keeps the affected row covered",
       "the logical-compiler R*=1 solution is operationally concentrated: imposing a 75% package-mass cap makes the constrained optimum exceed one",
-      "the logical-compiler negative boundary is asymmetric under support error: some single support deletions break equalizability"
+      "the logical-compiler negative boundary is asymmetric under support error: some single support deletions break equalizability",
+      "a semantic-first row-stochastic implementation factorization realizes the neutral semantic target exactly on all five covered frozen support regimes despite arbitrary overlap"
     ],
     "not_supported": [
       "learned support estimators are calibrated",
       "arbitrary multi-cell support noise preserves the certificate",
       "static exposure distortion causes downstream utility harm",
-      "constrained equalization is a new optimization algorithm"
+      "constrained equalization or semantic-first factorization is a downstream-validated new optimization algorithm"
     ]
   },
   "scientific_authority": false,

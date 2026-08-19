@@ -45,8 +45,10 @@ for regime, (covered, multi, rstar) in expected.items():
 # Required paper literals are intentionally exact for high-load-bearing results.
 for literal in [
     "314", "183", "47", "33", "52", "38", "34", "127/128", "R^*=2", "R^*=1",
-    "14/24", "5/24", "8/24", "1,387", "366", "127/595", "R^*_{0.75}=4/3",
-    "D^*(A)", "R^*_{[L,U]}",
+    "1,387", "366", "127/595", "R^*_{0.75}=4/3",
+    "Proposition 1 (quotient-factorization characterization)", "Corollary 1 (identity-local normalization is clone-sensitive)",
+    "Proposition 2 (semantic-first construction handles arbitrary overlap)",
+    "R^*(A;q)", "D^*(A;q)", "\\operatorname{cone}(A)", "2/15", "2/16=1/8", "1/30+1/30", "$7/120=0.0583$",  "TV $=0$", "similarity 1.0", "0.33 rejection threshold",
 ]:
     check(f"paper_literal_{literal}", literal in body or literal in tables, literal)
 
@@ -61,10 +63,12 @@ check("p0a_skill015_8", counts.get("skill_015", {}).get("contract_valid") == 8)
 
 # Claim-boundary language must be present; common accidental overclaims must be absent.
 required_boundaries = [
-    "We \\textbf{do not} claim that a positive certificate causes task failure",
-    "STRI-Cert is computationally novel relative to linear programming",
-    "Support-Quotient Control has been empirically validated",
-    "make no dynamic claim from this bank",
+    "representation-independent semantic target",
+    "induction-time admission path would store a literal exact text duplicate",
+    "questioner message builder does not expose package ID",
+    "We \\textbf{do not} infer task failure or longitudinal utility",
+    "claim a new LP algorithm",
+    "present a validated dynamic repair",
     "not a population-level no-effect theorem",
 ]
 for text in required_boundaries:

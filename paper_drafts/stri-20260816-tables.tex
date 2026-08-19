@@ -11,7 +11,7 @@
 \toprule
 System & Identity perturbation & Independent $A$? & Audit role \\
 \midrule
-Skill-SP & Package sampling; partial overlap survives exact-cover pruning (183$\to$71 multi rows) & Yes: released validators & Phenotype + exact/dual STRI-Cert + robustness \\
+Skill-SP & Pristine sampler gives 2$\times$ eligibility; sampler-input clone changes class mass $1/15\to1/8$, while quotient conservation restores it exactly & Yes: released validators & Controller violation + exact clone repair + geometry certificate \\
 SkillRL & Fresh-ID exact clones: 11/12 change semantic retrieval over 223 tasks & No explicit support contract & Phenotype + qualified downstream bridge; no $R^*$ \\
 \bottomrule
 \end{tabular}
@@ -30,15 +30,15 @@ Baseline / reduction & Outcome & Evidence \\
 Released name+description Jaccard duplicate filter & Does not absorb & Misses all 5/5 observed specific--generic support-overlap pairs; similarity 0.1429--0.20 is below the released 0.33 threshold. \\
 Exact semantic-clone deduplication & Does not absorb partial overlap & The positive regime uses distinct specific/generic packages with different unique support regions. \\
 Minimum-cardinality whole-package pruning preserving exact support & Partial reduction only & Active packages drop from 10 to 7, but 71 overlap rows remain while exact support is preserved. \\
-Arbitrary nonnegative global package weights & Exact residual & The exact optimum is $R^*(A)=2$. \\
-Global-singleton overlap witness & Closed-form lower bound & Two independent released witnesses imply $R^*(A)\ge 2$, and the exact LP attains 2. \\
+Arbitrary nonnegative global package weights & Exact neutral-target residual & The exact optimum is $R^*(A;\mathbf1)=2$. \\
+Global-singleton overlap witness & Sparse dual lower bound & Two independent released witnesses imply $R^*(A;\mathbf1)\ge 2$, and the exact LP attains 2. \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[t]
 \centering
-\caption{Mechanism boundary across real first-party support regimes. High overlap is neither necessary nor sufficient for an irreducible package-only residual; the exact discriminator is $R^*(A)$.}
+\caption{Neutral-target ($q=\mathbf1$) mechanism boundary across real first-party support regimes. High overlap is neither necessary nor sufficient; the discriminator is target realizability in the support cone.}
 \label{tab:support-boundary}
 \small
 \setlength{\tabcolsep}{3.2pt}

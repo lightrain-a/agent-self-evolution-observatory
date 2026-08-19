@@ -7,8 +7,11 @@ import numpy as np
 from .asset_first_stri_certificate import (
     certify,
     dual_global_package_ratio,
+    dual_target_package_ratio,
     optimal_global_package_ratio,
+    optimal_target_package_ratio,
     robust_interval_package_ratio,
+    semantic_first_construction,
 )
 
 
@@ -97,6 +100,89 @@ class STRICertificateTest(unittest.TestCase):
         robust = robust_interval_package_ratio(support, support, skills=["s1", "s2"])
         self.assertTrue(robust["pass"])
         self.assertAlmostEqual(robust["ratio"], 2.0)
+
+    def test_nonuniform_target_is_exact_when_target_lies_in_support_cone(self) -> None:
+        rows = [
+            {"level": 1, "index": 0, "tool": "a", "accepted_skill_ids": ["s1"]},
+            {"level": 1, "index": 1, "tool": "b", "accepted_skill_ids": ["s2"]},
+            {"level": 1, "index": 2, "tool": "ab", "accepted_skill_ids": ["s1", "s2"]},
+        ]
+        target = [1.0, 2.0, 3.0]
+        primal = optimal_target_package_ratio(rows, target_exposure=target)
+        dual = dual_target_package_ratio(rows, target_exposure=target)
+        self.assertAlmostEqual(primal["ratio"], 1.0)
+        self.assertAlmostEqual(dual["lower_bound"], 1.0)
+        self.assertAlmostEqual(primal["weights"]["s1"], 1.0)
+        self.assertAlmostEqual(primal["weights"]["s2"], 2.0)
+        self.assertFalse(primal["neutral_target"])
+
+    def test_nonuniform_target_outside_support_cone_has_irreducible_distortion(self) -> None:
+        rows = [
+            {"level": 1, "index": 0, "tool": "a", "accepted_skill_ids": ["s1"]},
+            {"level": 1, "index": 1, "tool": "b", "accepted_skill_ids": ["s2"]},
+            {"level": 1, "index": 2, "tool": "ab", "accepted_skill_ids": ["s1", "s2"]},
+        ]
+        target = [1.0, 1.0, 1.5]
+        primal = optimal_target_package_ratio(rows, target_exposure=target)
+        dual = dual_target_package_ratio(rows, target_exposure=target)
+        self.assertGreater(primal["ratio"], 1.0)
+        self.assertAlmostEqual(primal["ratio"], dual["lower_bound"])
+
+    def test_duplicate_support_column_preserves_nonuniform_target_certificate(self) -> None:
+        base = [
+            {"level": 1, "index": 0, "tool": "a", "accepted_skill_ids": ["s1"]},
+            {"level": 1, "index": 1, "tool": "b", "accepted_skill_ids": ["s2"]},
+            {"level": 1, "index": 2, "tool": "ab", "accepted_skill_ids": ["s1", "s2"]},
+        ]
+        cloned = [
+            {**row, "accepted_skill_ids": list(row["accepted_skill_ids"]) + (["s1_clone"] if "s1" in row["accepted_skill_ids"] else [])}
+            for row in base
+        ]
+        target = [1.0, 1.0, 1.5]
+        original = optimal_target_package_ratio(base, target_exposure=target)
+        duplicate = optimal_target_package_ratio(cloned, target_exposure=target)
+        self.assertAlmostEqual(original["ratio"], duplicate["ratio"])
+
+    def test_box_robust_target_conditioning_reduces_to_nonuniform_point_certificate(self) -> None:
+        support = np.asarray([[1.0, 0.0], [0.0, 1.0], [1.0, 1.0]])
+        target = [1.0, 2.0, 3.0]
+        robust = robust_interval_package_ratio(support, support, skills=["s1", "s2"], target_exposure=target)
+        self.assertTrue(robust["pass"])
+        self.assertAlmostEqual(robust["ratio"], 1.0)
+        self.assertFalse(robust["neutral_target"])
+
+    def test_semantic_first_construction_realizes_arbitrary_target_under_overlap(self) -> None:
+        rows = [
+            {"level": 1, "index": 0, "tool": "a", "accepted_skill_ids": ["s1"]},
+            {"level": 1, "index": 1, "tool": "b", "accepted_skill_ids": ["s2"]},
+            {"level": 1, "index": 2, "tool": "ab", "accepted_skill_ids": ["s1", "s2"]},
+        ]
+        target = [1.0, 2.0, 7.0]
+        out = semantic_first_construction(rows, target_exposure=target)
+        self.assertTrue(out["pass"])
+        self.assertAlmostEqual(out["maximum_semantic_marginal_error"], 0.0)
+        self.assertAlmostEqual(out["support_violation_mass"], 0.0)
+        self.assertAlmostEqual(out["kernel_row_sum_min"], 1.0)
+        self.assertAlmostEqual(out["kernel_row_sum_max"], 1.0)
+        self.assertEqual(out["target_distribution"], [0.1, 0.2, 0.7])
+        self.assertEqual(out["semantic_marginal"], [0.1, 0.2, 0.7])
+
+    def test_semantic_first_target_survives_exact_support_clone(self) -> None:
+        base = [
+            {"level": 1, "index": 0, "tool": "a", "accepted_skill_ids": ["s1"]},
+            {"level": 1, "index": 1, "tool": "b", "accepted_skill_ids": ["s2"]},
+            {"level": 1, "index": 2, "tool": "ab", "accepted_skill_ids": ["s1", "s2"]},
+        ]
+        cloned = [
+            {**row, "accepted_skill_ids": list(row["accepted_skill_ids"]) + (["s1_clone"] if "s1" in row["accepted_skill_ids"] else [])}
+            for row in base
+        ]
+        target = [1.0, 1.0, 1.0]
+        before = semantic_first_construction(base, target_exposure=target)
+        after = semantic_first_construction(cloned, target_exposure=target)
+        self.assertEqual(before["semantic_marginal"], after["semantic_marginal"])
+        self.assertAlmostEqual(after["maximum_semantic_marginal_error"], 0.0)
+        self.assertIn("s1_clone", after["package_marginal"])
 
 
 if __name__ == "__main__":

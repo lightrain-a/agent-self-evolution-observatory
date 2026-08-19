@@ -15,6 +15,11 @@ COHERENCE = "generated/asset-first-stri-narrow-paper-coherence-20260816.json"
 FINAL_REVIEW = "generated/asset-first-stri-narrow-final-review-20260816.json"
 PAPER_ANALYSIS = "generated/asset-first-stri-paper-analysis-suite-20260816.json"
 REVIEWER_EXTENSIONS = "generated/asset-first-stri-reviewer-extensions-20260819.json"
+CONTROLLER_AUDIT = "generated/asset-first-stri-released-controller-clone-audit-20260819.json"
+CONTROLLER_AUDIT_CODE = "research_pipeline/asset_first_stri_released_controller_clone_audit.py"
+CONTROLLER_AUDIT_TEST = "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py"
+CERTIFICATE_CODE = "research_pipeline/asset_first_stri_certificate.py"
+CERTIFICATE_TEST = "research_pipeline/test_asset_first_stri_certificate.py"
 PRUNING_BASELINE = "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json"
 P0E_DIAGNOSIS = "generated/asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json"
 P0E_PRINCIPLE = "generated/asset-first-stri-skillrl-final-policy-p0e-principle-disposition-20260817.json"
@@ -45,10 +50,10 @@ def build_stri_quality_contract() -> dict[str, Any]:
             {
                 "id": "N1",
                 "claim_type": "empirical_analysis",
-                "statement": "Released skill inventories exhibit high raw overlap while alternative support reductions can change the apparent redundancy structure.",
-                "why_better_or_why_matters": "A support-aware comparison should distinguish representational redundancy from genuinely different operational support rather than treating raw skill names as independent evidence.",
-                "alternative_explanations": ["the pattern is an artifact of duplicate or umbrella skill names", "the pattern is driven by one released system or one support threshold"],
-                "ruling_out_experiments": ["compare raw overlap, deduplicated overlap, minimum-package pruning, and reweighted package mass on the same released inventories", "stress split/merge/clone perturbations while preserving operational support"],
+                "statement": "Released skill controllers can assign different semantic control solely because equivalent implementation content is represented by different package identities.",
+                "why_better_or_why_matters": "The released Skill-SP sampler changes the distribution over actual questioner message classes under a same-content representation refinement, while quotient-conserved class mass restores that distribution exactly.",
+                "alternative_explanations": ["the apparent change is only a name-level statistic and does not reach the released controller input distribution", "literal exact clones are accepted by the author induction path", "the pattern is driven by one support threshold"],
+                "ruling_out_experiments": ["rerun the author's released sampling-weight function on a same-state sampler-input clone and compare actual questioner prompt-mixture mass", "verify the author induction duplicate filter rejects the literal exact text clone", "compare released identity normalization against quotient-conserved class mass on the same frozen support and prompt strings"],
                 "baseline_ids": ["B-RAW-OVERLAP", "B-DEDUP", "B-ANALYTICAL"],
                 "ablation_ids": ["A-REDUCTION-TOURNAMENT", "A-TAXONOMY-PERTURB"],
                 "analysis_ids": ["AN-RULEOUT", "AN-FAILURE", "AN-SENSITIVITY", "AN-UNCERTAINTY"],
@@ -58,8 +63,8 @@ def build_stri_quality_contract() -> dict[str, Any]:
             {
                 "id": "N2",
                 "claim_type": "theory",
-                "statement": "STRI-Cert exactly decides package-only exposure equalizability; its LP dual gives general lower-bound witnesses and linear extensions expose support uncertainty and controller-feasible-set assumptions.",
-                "why_better_or_why_matters": "The primal/dual certificate makes representation assumptions explicit, while box-robust and max-share variants separate support uncertainty from controller constraints without changing the claim into a new optimization algorithm.",
+                "statement": "Exact-refinement STRI is equivalent to quotient factorization of semantic-class mass; R*(A;q) exactly decides target realizability by package-first mass, while a semantic-first row-stochastic implementation factorization realizes any covered target after changing the action basis.",
+                "why_better_or_why_matters": "The quotient characterization exposes a general failure class for positive identity-local normalization, the primal/dual certificate identifies when package-first retuning is insufficient, and the semantic-first construction supplies the corresponding design boundary without claiming downstream validation or a new optimization algorithm.",
                 "alternative_explanations": ["the certificate is merely a restatement of raw overlap under another weighting"],
                 "ruling_out_experiments": ["show counterexamples where raw overlap changes under representation edits while the support-equivalent operational object is preserved"],
                 "baseline_ids": ["B-ANALYTICAL"],
@@ -71,8 +76,8 @@ def build_stri_quality_contract() -> dict[str, Any]:
             {
                 "id": "N3",
                 "claim_type": "mechanism",
-                "statement": "Raw overlap is insufficient to explain when released skill taxonomies are clone-sensitive versus support-invariant.",
-                "why_better_or_why_matters": "The support-equivalence view predicts a specific failure mode of name-level overlap: clone/split/merge edits may change the apparent overlap without changing operational support.",
+                "statement": "STRI has two separable boundaries: identity-local normalization violates exact-refinement invariance, while after quotienting the neutral residual is not determined by overlap count alone and is exactly characterized by target realizability in the package support cone.",
+                "why_better_or_why_matters": "This separation yields an exact allocation-level repair for known pure multiplicity nuisance, a fail-closed impossibility certificate for package-first retuning, and a semantic-first constructive escape when the action interface can select semantic intent before implementation.",
                 "alternative_explanations": ["the observed separation is only a consequence of arbitrary weighting", "a simpler deduplication rule explains the same cases", "the effect disappears under benign taxonomy perturbations"],
                 "ruling_out_experiments": ["matched taxonomy perturbation test with split/merge/clone edits", "compare STRI-Cert against raw overlap, deduplication, and package-pruning reductions on identical support information"],
                 "baseline_ids": ["B-RAW-OVERLAP", "B-DEDUP", "B-ANALYTICAL"],
@@ -92,7 +97,7 @@ def build_stri_quality_contract() -> dict[str, Any]:
             {"id": "A-TAXONOMY-PERTURB", "ablation_type": "assumption_boundary", "target_claim_ids": ["N1", "N2", "N3"], "purpose": "Apply exact-support clone/split and identity-renaming controls, while treating macro merges that discard primitive fingerprints as an explicit assumption-boundary negative implementation control.", "decision_rule": "Clone/split quotienting must exactly recover the original row support and certificate inputs; identity renaming must be invariant. A macro-ID-only merge is not counted as a valid invariance test unless primitive fingerprints/responsibility metadata are retained."},
         ],
         "analyses": [
-            {"id": "AN-MECHANISM", "analysis_type": "mechanism", "target_claim_ids": ["N3"], "purpose": "Show exactly when name-level overlap and support-equivalence disagree and connect each disagreement to clone/split/merge structure.", "decision_rule": "No mechanism claim from aggregate overlap trends; disagreement cases must be enumerated and explained."},
+            {"id": "AN-MECHANISM", "analysis_type": "mechanism", "target_claim_ids": ["N3"], "purpose": "Separate clone-multiplicity nuisance from support-cone target-realizability boundaries and enumerate where overlap count gives the wrong qualitative conclusion.", "decision_rule": "No causal claim from aggregate overlap trends; positive and negative boundary cases must be explicitly enumerated."},
             {"id": "AN-RULEOUT", "analysis_type": "alternative_explanation", "target_claim_ids": ["N1", "N2", "N3"], "purpose": "Rule out simple deduplication, arbitrary weighting, and one-system idiosyncrasy as sufficient explanations.", "decision_rule": "If a simpler matched-information reduction reproduces all certified conclusions, STRI must merge into that baseline."},
             {"id": "AN-FAILURE", "analysis_type": "failure", "target_claim_ids": ["N1", "N3"], "purpose": "Catalogue invariant, clone-sensitive, underidentified, and unsupported regimes instead of presenting only positive examples.", "decision_rule": "Every released-system case is assigned a preregistered regime; inconclusive cells remain visible."},
             {"id": "AN-SENSITIVITY", "analysis_type": "sensitivity", "target_claim_ids": ["N1", "N2", "N3"], "purpose": "Stress support thresholds, package constraints, singleton witnesses, and taxonomy edits.", "decision_rule": "Report the region over which each conclusion is stable; narrow any claim that depends on one arbitrary setting."},
@@ -108,7 +113,7 @@ def build_stri_quality_contract() -> dict[str, Any]:
         "visualizations": [
             {"id": "V-OVERVIEW", "placement": "main", "visual_type": "flow", "panel_roles": ["overview", "traceability"], "target_claim_ids": ["N1", "N3"], "source_evidence_ids": ["B-RAW-OVERLAP", "B-DEDUP", "O-MAIN"], "reviewer_question": "What representation nuisance is STRI auditing, and how does package identity alter a semantic control surface?", "takeaway": "Separate semantic capability/support from package identity before interpreting self-evolution control changes.", "quantitative": False, "negative_or_failure_visible": False},
             {"id": "V-WITNESS", "placement": "main", "visual_type": "case_panel", "panel_roles": ["mechanism"], "target_claim_ids": ["N2", "N3"], "source_evidence_ids": ["B-ANALYTICAL", "AN-MECHANISM", "O-MECHANISM"], "reviewer_question": "Why does irreducible partial overlap force a factor-2 exposure distortion?", "takeaway": "Two inspectable singleton-plus-overlap structures explain the tight lower bound rather than relying on the LP as a black box.", "quantitative": True, "uncertainty_required": False, "negative_or_failure_visible": False},
-            {"id": "V-BOUNDARY", "placement": "main", "visual_type": "scatter", "panel_roles": ["boundary", "main_comparison"], "target_claim_ids": ["N1", "N2", "N3"], "source_evidence_ids": ["B-RAW-OVERLAP", "B-ANALYTICAL", "AN-MECHANISM", "O-MAIN", "O-MECHANISM"], "reviewer_question": "Is overlap prevalence itself the mechanism, or does exact support geometry separate positive and negative regimes?", "takeaway": "High overlap can still be exactly equalizable; R*(A), not overlap prevalence, separates the audited regimes.", "quantitative": True, "uncertainty_required": False, "negative_or_failure_visible": True},
+            {"id": "V-BOUNDARY", "placement": "main", "visual_type": "scatter", "panel_roles": ["boundary", "main_comparison"], "target_claim_ids": ["N1", "N2", "N3"], "source_evidence_ids": ["B-RAW-OVERLAP", "B-ANALYTICAL", "AN-MECHANISM", "O-MAIN", "O-MECHANISM"], "reviewer_question": "Can overlap prevalence alone determine whether the neutral target is package-first realizable?", "takeaway": "No: a 99.2% overlap regime is exactly realizable, while lower-overlap Level-1 regimes have R*(A)=2; support geometry is needed to decide the audited cases.", "quantitative": True, "uncertainty_required": False, "negative_or_failure_visible": True},
             {"id": "V-ABLATION-ROBUSTNESS", "placement": "main", "visual_type": "multi_panel", "panel_roles": ["ablation", "failure", "sensitivity", "uncertainty"], "target_claim_ids": ["N1", "N2", "N3"], "source_evidence_ids": ["A-TAXONOMY-PERTURB", "AN-FAILURE", "AN-SENSITIVITY", "AN-UNCERTAINTY", "O-ABLATION", "O-FAILURE", "O-SENSITIVITY"], "reviewer_question": "Does the diagnosis survive representation edits and subset perturbations, and where is the closed-form witness not applicable?", "takeaway": "Exact-support quotienting removes clone/split nuisance, both witnesses are deletion-robust, and witness absence is visibly typed as inconclusive rather than a negative result.", "quantitative": True, "uncertainty_required": True, "negative_or_failure_visible": True},
         ],
     }
@@ -120,14 +125,16 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     analysis_path = project_root / PAPER_ANALYSIS
     analysis = json.loads(analysis_path.read_text(encoding="utf-8")) if analysis_path.exists() else {}
     q = analysis.get("quality_v2_evidence") if isinstance(analysis.get("quality_v2_evidence"), dict) else {}
-    analysis_refs = [PAPER_ANALYSIS, REVIEWER_EXTENSIONS, PRUNING_BASELINE]
+    controller_refs = [CONTROLLER_AUDIT, CONTROLLER_AUDIT_CODE, CONTROLLER_AUDIT_TEST]
+    certificate_refs = [CERTIFICATE_CODE, CERTIFICATE_TEST]
+    analysis_refs = [PAPER_ANALYSIS, REVIEWER_EXTENSIONS, PRUNING_BASELINE, *controller_refs, *certificate_refs]
     body_path = project_root / PAPER_BODY
     tables_path = project_root / PAPER_TABLES
     body = body_path.read_text(encoding="utf-8") if body_path.exists() else ""
     tables = tables_path.read_text(encoding="utf-8") if tables_path.exists() else ""
     manuscript_ablation = "\\label{fig:ablation-robustness}" in body and "representation ablations" in body.lower()
     manuscript_failure = "Across 49 Level-1 tools" in body and "overlap-without-witness" in body and "exact per-tool LP" in body
-    manuscript_sensitivity = "1,387 perturbed Level-1 matrices" in body and "127 break equalizability" in body and "500 fixed-seed tool-bootstrap" in body
+    manuscript_sensitivity = "1,387 perturbed Level-1 matrices" in body and "127/595 break equalizability" in body and "500 fixed-seed tool-bootstrap" in body
     manuscript_refs = [PAPER_BODY, PAPER_TABLES, PAPER_ANALYSIS, REVIEWER_EXTENSIONS]
     visual_review = {"caption_claim_aligned": True, "legible_labels": True, "legend_or_direct_labels": True, "non_deceptive_scale": True, "source_data_versioned": True}
     visualizations = [
@@ -147,14 +154,14 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
             {"id": "B-ANALYTICAL", "status": "PASS", "artifact_refs": existing_reduction},
             {"id": "A-REDUCTION-TOURNAMENT", "status": "PASS", "artifact_refs": existing_reduction},
             completed("A-TAXONOMY-PERTURB"),
-            {"id": "AN-MECHANISM", "status": "PASS", "artifact_refs": existing_coherence + existing_reduction},
+            {"id": "AN-MECHANISM", "status": "PASS", "artifact_refs": existing_coherence + existing_reduction + controller_refs},
             completed("AN-RULEOUT"),
             completed("AN-FAILURE"),
             completed("AN-SENSITIVITY"),
             completed("AN-UNCERTAINTY", allow_scoped=True),
-            {"id": "O-MAIN", "status": "PASS", "artifact_refs": existing_reduction},
+            {"id": "O-MAIN", "status": "PASS", "artifact_refs": existing_reduction + controller_refs},
             {"id": "O-ABLATION", "status": "PASS" if manuscript_ablation else "PLANNED", "artifact_refs": manuscript_refs if manuscript_ablation else []},
-            {"id": "O-MECHANISM", "status": "PASS", "artifact_refs": existing_coherence + existing_reduction},
+            {"id": "O-MECHANISM", "status": "PASS", "artifact_refs": existing_coherence + existing_reduction + controller_refs},
             {"id": "O-FAILURE", "status": "PASS" if manuscript_failure else "PLANNED", "artifact_refs": manuscript_refs if manuscript_failure else []},
             {"id": "O-SENSITIVITY", "status": "PASS" if manuscript_sensitivity else "PLANNED", "artifact_refs": manuscript_refs if manuscript_sensitivity else []},
         ],
@@ -170,7 +177,7 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
 def build_asset_first_stri_paper_quality(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     quality = build_stri_quality_contract()
     completion = build_stri_completion(project_root)
-    source_artifacts = [REDUCTION, COHERENCE, FINAL_REVIEW, PAPER_ANALYSIS, REVIEWER_EXTENSIONS, PRUNING_BASELINE, P0E_DIAGNOSIS, P0E_PRINCIPLE, PAPER_BODY, PAPER_TABLES, FIG_OVERVIEW, FIG_WITNESS, FIG_BOUNDARY, FIG_ABLATION, PLOT_OVERVIEW, PLOT_WITNESS, PLOT_BOUNDARY, PLOT_ABLATION]
+    source_artifacts = [REDUCTION, COHERENCE, FINAL_REVIEW, PAPER_ANALYSIS, REVIEWER_EXTENSIONS, CONTROLLER_AUDIT, CONTROLLER_AUDIT_CODE, CONTROLLER_AUDIT_TEST, CERTIFICATE_CODE, CERTIFICATE_TEST, PRUNING_BASELINE, P0E_DIAGNOSIS, P0E_PRINCIPLE, PAPER_BODY, PAPER_TABLES, FIG_OVERVIEW, FIG_WITNESS, FIG_BOUNDARY, FIG_ABLATION, PLOT_OVERVIEW, PLOT_WITNESS, PLOT_BOUNDARY, PLOT_ABLATION]
     source_sha256 = {rel: _sha256(project_root / rel) for rel in source_artifacts}
     audit = audit_manuscript_evidence_completion(
         quality,

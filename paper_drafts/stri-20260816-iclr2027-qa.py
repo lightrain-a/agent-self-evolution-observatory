@@ -91,13 +91,22 @@ check("no_plain_cite_remaining", "\\cite{" not in body)
 check("all_citations_in_bib", cite_keys <= bib_keys, str(sorted(cite_keys - bib_keys)))
 check("all_bib_entries_cited", cite_keys == bib_keys, f"cites={len(cite_keys)} bib={len(bib_keys)}")
 
-# Claim boundaries remain locked while formatting changes.
+# Claim boundaries and the generalized target-conditioned audit remain locked while formatting changes.
 for phrase in [
-    "We \\textbf{do not} claim that a positive certificate causes task failure",
-    "make no dynamic claim from this bank",
+    "Proposition 1 (quotient-factorization characterization)",
+    "Corollary 1 (identity-local normalization is clone-sensitive)",
+    "Proposition 2 (semantic-first construction handles arbitrary overlap)",
+    "R^*(A;q)",
+    "D^*(A;q)",
+    "representation-independent semantic target",
+    "induction-time admission path would store a literal exact text duplicate",
+    "$1/30+1/30$",
+    "questioner message builder does not expose package ID",
+    "$7/120=0.0583$",
+    "We \\textbf{do not} infer task failure or longitudinal utility",
+    "claim a new LP algorithm",
+    "present a validated dynamic repair",
     "not a population-level no-effect theorem",
-    "Support-Quotient Control has been empirically validated",
-    "STRI-Cert is computationally novel relative to linear programming",
 ]:
     check(f"claim_boundary_{phrase[:24]}", phrase in body)
 

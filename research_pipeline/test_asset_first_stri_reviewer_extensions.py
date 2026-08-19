@@ -18,6 +18,11 @@ class STRIReviewerExtensionsTest(unittest.TestCase):
         self.assertLessEqual(out["dual"]["primal_dual_gap"], 1e-8)
         self.assertEqual({row["index"] for row in out["dual"]["alpha_rows"]}, {0, 1})
         self.assertEqual({row["index"] for row in out["dual"]["beta_rows"]}, {2})
+        semantic = out["semantic_first_neutral_construction"]
+        self.assertAlmostEqual(semantic["maximum_semantic_marginal_error"], 0.0)
+        self.assertAlmostEqual(semantic["support_violation_mass"], 0.0)
+        self.assertAlmostEqual(semantic["kernel_row_sum_min"], 1.0)
+        self.assertAlmostEqual(semantic["kernel_row_sum_max"], 1.0)
 
         stability = out["single_edge_support_stability"]
         self.assertEqual(stability["support_additions"]["perturbations"], 2)

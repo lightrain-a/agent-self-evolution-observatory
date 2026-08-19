@@ -1,0 +1,512 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "analysis_type": "released-controller exact-clone allocation audit",
+  "author_release": {
+    "commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "library_py_sha256": "8441de35078fc4c70880204c46a06856e99cdde7700ff859097032065e2756e0",
+    "question_generate_py_sha256": "1b4cb67f36d20d9768e47674dce3b4cc0c74daf27ae476f45c479cef782d739b",
+    "initial_tool_call_package_bundle_sha256": "d4c4350a83ee6bc3aacbde224c2e654e1ab25bfe7dd85072f66a90060968b6e7",
+    "initial_tool_call_package_file_count": 136,
+    "sampling_function": "skill_library.library.sample_skill -> sampling_weights -> random.choices",
+    "question_generation_callsite": "question_generate.question_generate._build_prompts",
+    "default_sampler_flags": {
+      "use_quality": true,
+      "use_exploration": true,
+      "use_decay": false
+    }
+  },
+  "frozen_initial_controller": {
+    "package_count": 15,
+    "package_ids": [
+      "skill_001",
+      "skill_002",
+      "skill_003",
+      "skill_004",
+      "skill_005",
+      "skill_006",
+      "skill_007",
+      "skill_008",
+      "skill_009",
+      "skill_010",
+      "skill_011",
+      "skill_012",
+      "skill_013",
+      "skill_014",
+      "skill_015"
+    ],
+    "raw_sampling_weights": {
+      "skill_001": 2.0,
+      "skill_002": 2.0,
+      "skill_003": 2.0,
+      "skill_004": 2.0,
+      "skill_005": 2.0,
+      "skill_006": 2.0,
+      "skill_007": 2.0,
+      "skill_008": 2.0,
+      "skill_009": 2.0,
+      "skill_010": 2.0,
+      "skill_011": 2.0,
+      "skill_012": 2.0,
+      "skill_013": 2.0,
+      "skill_014": 2.0,
+      "skill_015": 2.0
+    },
+    "normalized_sampling_probabilities": {
+      "skill_001": 0.06666666666666667,
+      "skill_002": 0.06666666666666667,
+      "skill_003": 0.06666666666666667,
+      "skill_004": 0.06666666666666667,
+      "skill_005": 0.06666666666666667,
+      "skill_006": 0.06666666666666667,
+      "skill_007": 0.06666666666666667,
+      "skill_008": 0.06666666666666667,
+      "skill_009": 0.06666666666666667,
+      "skill_010": 0.06666666666666667,
+      "skill_011": 0.06666666666666667,
+      "skill_012": 0.06666666666666667,
+      "skill_013": 0.06666666666666667,
+      "skill_014": 0.06666666666666667,
+      "skill_015": 0.06666666666666667
+    },
+    "all_initial_stats_pristine": true,
+    "interpretation": "At the released initial state, identical package-local statistics make the default quality-plus-exploration sampler uniform over the 15 package identities."
+  },
+  "level1_support": {
+    "covered_rows": 314,
+    "active_package_ids": [
+      "skill_001",
+      "skill_002",
+      "skill_003",
+      "skill_004",
+      "skill_005",
+      "skill_015"
+    ],
+    "membership_sha256": "b73d86370e06e83179a1ce4c7f26431c58b27f7958722974e96a4c316f2e17d4"
+  },
+  "audit_intervention": {
+    "kind": "counterfactual same-state exact-clone reparameterization applied directly to the released sampler input",
+    "is_author_admission_path_claim": false,
+    "author_induction_duplicate_threshold": 0.33,
+    "literal_exact_clone_duplicate_filter_checks": [
+      {
+        "target_skill_id": "skill_001",
+        "literal_exact_clone_detected_as_duplicate": true,
+        "duplicate_score": 1.0,
+        "threshold": 0.33
+      },
+      {
+        "target_skill_id": "skill_002",
+        "literal_exact_clone_detected_as_duplicate": true,
+        "duplicate_score": 1.0,
+        "threshold": 0.33
+      },
+      {
+        "target_skill_id": "skill_003",
+        "literal_exact_clone_detected_as_duplicate": true,
+        "duplicate_score": 1.0,
+        "threshold": 0.33
+      },
+      {
+        "target_skill_id": "skill_004",
+        "literal_exact_clone_detected_as_duplicate": true,
+        "duplicate_score": 1.0,
+        "threshold": 0.33
+      },
+      {
+        "target_skill_id": "skill_005",
+        "literal_exact_clone_detected_as_duplicate": true,
+        "duplicate_score": 1.0,
+        "threshold": 0.33
+      },
+      {
+        "target_skill_id": "skill_015",
+        "literal_exact_clone_detected_as_duplicate": true,
+        "duplicate_score": 1.0,
+        "threshold": 0.33
+      }
+    ],
+    "interpretation": "The intervention audits whether the released identity-indexed sampler mapping is invariant to an exact representation refinement. It does not claim that the author's induction-time admission path would store a literal exact text clone; the released Jaccard duplicate filter detects such a literal duplicate."
+  },
+  "exact_clone_audits": [
+    {
+      "target_skill_id": "skill_001",
+      "base_target_package_probability": 0.06666666666666667,
+      "cloned_target_package_probability_each": 0.0625,
+      "cloned_semantic_family_probability": 0.125,
+      "semantic_family_relative_change": 0.875,
+      "target_support_rows": 76,
+      "covered_rows": 314,
+      "rows_with_positive_exposure_change": 76,
+      "rows_with_negative_exposure_change": 238,
+      "rows_with_zero_exposure_change": 0,
+      "target_support_relative_exposure_change_min": 0.40625,
+      "target_support_relative_exposure_change_max": 0.40625,
+      "all_rows_relative_exposure_change_min": -0.0625,
+      "all_rows_relative_exposure_change_max": 0.40625,
+      "base_exposure_ratio": 2.0,
+      "cloned_exposure_ratio": 3.0,
+      "normalized_exposure_profile_tv": 0.09207074910194182,
+      "maximum_absolute_exposure_change": 0.05416666666666667,
+      "target_raw_sampling_weight": 2.0,
+      "clone_raw_sampling_weight_recomputed_by_author": 2.0,
+      "clone_raw_weight_equals_target_raw_weight": true,
+      "questioner_prompt_control": {
+        "target_and_clone_messages_exactly_equal": true,
+        "target_message_sha256": "d20c4e9ec02dbe638ac260ae36de72dd5efdefc68848b3adb471c77abe9a420b",
+        "clone_message_sha256": "d20c4e9ec02dbe638ac260ae36de72dd5efdefc68848b3adb471c77abe9a420b",
+        "released_sampler_prompt_mixture_tv_after_clone": 0.05833333333333333,
+        "base_distinct_prompt_classes": 15,
+        "augmented_distinct_prompt_classes": 15,
+        "target_prompt_class_probability_before": 0.06666666666666667,
+        "target_prompt_class_probability_after_released_clone": 0.125,
+        "other_prompt_class_count": 14,
+        "other_prompt_class_probability_before_values": [
+          0.06666666666666667
+        ],
+        "other_prompt_class_probability_after_values": [
+          0.0625
+        ],
+        "exact_tv_decomposition": "0.5*(abs(2/16-1/15)+14*abs(1/16-1/15))=7/120",
+        "quotient_conserved_prompt_mixture_tv_after_clone": 0.0
+      },
+      "quotient_conserved_control": {
+        "target_probability": 0.03333333333333333,
+        "clone_probability": 0.03333333333333333,
+        "semantic_family_probability": 0.06666666666666667,
+        "semantic_family_relative_change": 0.0,
+        "rows_with_nonzero_exposure_change": 0,
+        "exposure_ratio": 2.0,
+        "normalized_exposure_profile_tv": 0.0
+      }
+    },
+    {
+      "target_skill_id": "skill_002",
+      "base_target_package_probability": 0.06666666666666667,
+      "cloned_target_package_probability_each": 0.0625,
+      "cloned_semantic_family_probability": 0.125,
+      "semantic_family_relative_change": 0.875,
+      "target_support_rows": 33,
+      "covered_rows": 314,
+      "rows_with_positive_exposure_change": 33,
+      "rows_with_negative_exposure_change": 281,
+      "rows_with_zero_exposure_change": 0,
+      "target_support_relative_exposure_change_min": 0.40625,
+      "target_support_relative_exposure_change_max": 0.40625,
+      "all_rows_relative_exposure_change_min": -0.0625,
+      "all_rows_relative_exposure_change_max": 0.40625,
+      "base_exposure_ratio": 2.0,
+      "cloned_exposure_ratio": 3.0,
+      "normalized_exposure_profile_tv": 0.053995672146084445,
+      "maximum_absolute_exposure_change": 0.05416666666666667,
+      "target_raw_sampling_weight": 2.0,
+      "clone_raw_sampling_weight_recomputed_by_author": 2.0,
+      "clone_raw_weight_equals_target_raw_weight": true,
+      "questioner_prompt_control": {
+        "target_and_clone_messages_exactly_equal": true,
+        "target_message_sha256": "ed00046d60be25d22af4befb6212a5312de68fb7fa4b0ec8ac4149e3647872d6",
+        "clone_message_sha256": "ed00046d60be25d22af4befb6212a5312de68fb7fa4b0ec8ac4149e3647872d6",
+        "released_sampler_prompt_mixture_tv_after_clone": 0.05833333333333333,
+        "base_distinct_prompt_classes": 15,
+        "augmented_distinct_prompt_classes": 15,
+        "target_prompt_class_probability_before": 0.06666666666666667,
+        "target_prompt_class_probability_after_released_clone": 0.125,
+        "other_prompt_class_count": 14,
+        "other_prompt_class_probability_before_values": [
+          0.06666666666666667
+        ],
+        "other_prompt_class_probability_after_values": [
+          0.0625
+        ],
+        "exact_tv_decomposition": "0.5*(abs(2/16-1/15)+14*abs(1/16-1/15))=7/120",
+        "quotient_conserved_prompt_mixture_tv_after_clone": 0.0
+      },
+      "quotient_conserved_control": {
+        "target_probability": 0.03333333333333333,
+        "clone_probability": 0.03333333333333333,
+        "semantic_family_probability": 0.06666666666666667,
+        "semantic_family_relative_change": 0.0,
+        "rows_with_nonzero_exposure_change": 0,
+        "exposure_ratio": 2.0,
+        "normalized_exposure_profile_tv": 0.0
+      }
+    },
+    {
+      "target_skill_id": "skill_003",
+      "base_target_package_probability": 0.06666666666666667,
+      "cloned_target_package_probability_each": 0.0625,
+      "cloned_semantic_family_probability": 0.125,
+      "semantic_family_relative_change": 0.875,
+      "target_support_rows": 52,
+      "covered_rows": 314,
+      "rows_with_positive_exposure_change": 52,
+      "rows_with_negative_exposure_change": 262,
+      "rows_with_zero_exposure_change": 0,
+      "target_support_relative_exposure_change_min": 0.40625,
+      "target_support_relative_exposure_change_max": 0.875,
+      "all_rows_relative_exposure_change_min": -0.0625,
+      "all_rows_relative_exposure_change_max": 0.875,
+      "base_exposure_ratio": 2.0,
+      "cloned_exposure_ratio": 3.0,
+      "normalized_exposure_profile_tv": 0.0781373120324867,
+      "maximum_absolute_exposure_change": 0.058333333333333334,
+      "target_raw_sampling_weight": 2.0,
+      "clone_raw_sampling_weight_recomputed_by_author": 2.0,
+      "clone_raw_weight_equals_target_raw_weight": true,
+      "questioner_prompt_control": {
+        "target_and_clone_messages_exactly_equal": true,
+        "target_message_sha256": "aaa8e60fc8e66a1b53627830b84a45bb19784f48e3e76522b2343841b67feb36",
+        "clone_message_sha256": "aaa8e60fc8e66a1b53627830b84a45bb19784f48e3e76522b2343841b67feb36",
+        "released_sampler_prompt_mixture_tv_after_clone": 0.05833333333333333,
+        "base_distinct_prompt_classes": 15,
+        "augmented_distinct_prompt_classes": 15,
+        "target_prompt_class_probability_before": 0.06666666666666667,
+        "target_prompt_class_probability_after_released_clone": 0.125,
+        "other_prompt_class_count": 14,
+        "other_prompt_class_probability_before_values": [
+          0.06666666666666667
+        ],
+        "other_prompt_class_probability_after_values": [
+          0.0625
+        ],
+        "exact_tv_decomposition": "0.5*(abs(2/16-1/15)+14*abs(1/16-1/15))=7/120",
+        "quotient_conserved_prompt_mixture_tv_after_clone": 0.0
+      },
+      "quotient_conserved_control": {
+        "target_probability": 0.03333333333333333,
+        "clone_probability": 0.03333333333333333,
+        "semantic_family_probability": 0.06666666666666667,
+        "semantic_family_relative_change": 0.0,
+        "rows_with_nonzero_exposure_change": 0,
+        "exposure_ratio": 2.0,
+        "normalized_exposure_profile_tv": 0.0
+      }
+    },
+    {
+      "target_skill_id": "skill_004",
+      "base_target_package_probability": 0.06666666666666667,
+      "cloned_target_package_probability_each": 0.0625,
+      "cloned_semantic_family_probability": 0.125,
+      "semantic_family_relative_change": 0.875,
+      "target_support_rows": 41,
+      "covered_rows": 314,
+      "rows_with_positive_exposure_change": 41,
+      "rows_with_negative_exposure_change": 273,
+      "rows_with_zero_exposure_change": 0,
+      "target_support_relative_exposure_change_min": 0.40625,
+      "target_support_relative_exposure_change_max": 0.875,
+      "all_rows_relative_exposure_change_min": -0.0625,
+      "all_rows_relative_exposure_change_max": 0.875,
+      "base_exposure_ratio": 2.0,
+      "cloned_exposure_ratio": 3.0,
+      "normalized_exposure_profile_tv": 0.0644012775537991,
+      "maximum_absolute_exposure_change": 0.058333333333333334,
+      "target_raw_sampling_weight": 2.0,
+      "clone_raw_sampling_weight_recomputed_by_author": 2.0,
+      "clone_raw_weight_equals_target_raw_weight": true,
+      "questioner_prompt_control": {
+        "target_and_clone_messages_exactly_equal": true,
+        "target_message_sha256": "3d377fc70446d01e7c1f97cd9c9ca32a9f410199fe0f9632f672a2e4edc7a03a",
+        "clone_message_sha256": "3d377fc70446d01e7c1f97cd9c9ca32a9f410199fe0f9632f672a2e4edc7a03a",
+        "released_sampler_prompt_mixture_tv_after_clone": 0.05833333333333333,
+        "base_distinct_prompt_classes": 15,
+        "augmented_distinct_prompt_classes": 15,
+        "target_prompt_class_probability_before": 0.06666666666666667,
+        "target_prompt_class_probability_after_released_clone": 0.125,
+        "other_prompt_class_count": 14,
+        "other_prompt_class_probability_before_values": [
+          0.06666666666666667
+        ],
+        "other_prompt_class_probability_after_values": [
+          0.0625
+        ],
+        "exact_tv_decomposition": "0.5*(abs(2/16-1/15)+14*abs(1/16-1/15))=7/120",
+        "quotient_conserved_prompt_mixture_tv_after_clone": 0.0
+      },
+      "quotient_conserved_control": {
+        "target_probability": 0.03333333333333333,
+        "clone_probability": 0.03333333333333333,
+        "semantic_family_probability": 0.06666666666666667,
+        "semantic_family_relative_change": 0.0,
+        "rows_with_nonzero_exposure_change": 0,
+        "exposure_ratio": 2.0,
+        "normalized_exposure_profile_tv": 0.0
+      }
+    },
+    {
+      "target_skill_id": "skill_005",
+      "base_target_package_probability": 0.06666666666666667,
+      "cloned_target_package_probability_each": 0.0625,
+      "cloned_semantic_family_probability": 0.125,
+      "semantic_family_relative_change": 0.875,
+      "target_support_rows": 3,
+      "covered_rows": 314,
+      "rows_with_positive_exposure_change": 3,
+      "rows_with_negative_exposure_change": 311,
+      "rows_with_zero_exposure_change": 0,
+      "target_support_relative_exposure_change_min": 0.40625,
+      "target_support_relative_exposure_change_max": 0.40625,
+      "all_rows_relative_exposure_change_min": -0.0625,
+      "all_rows_relative_exposure_change_max": 0.40625,
+      "base_exposure_ratio": 2.0,
+      "cloned_exposure_ratio": 3.0,
+      "normalized_exposure_profile_tv": 0.005927565392354868,
+      "maximum_absolute_exposure_change": 0.05416666666666667,
+      "target_raw_sampling_weight": 2.0,
+      "clone_raw_sampling_weight_recomputed_by_author": 2.0,
+      "clone_raw_weight_equals_target_raw_weight": true,
+      "questioner_prompt_control": {
+        "target_and_clone_messages_exactly_equal": true,
+        "target_message_sha256": "4319f243726bb18b19fd919518ec544e641774365f277c643a0c7edacf88a7bb",
+        "clone_message_sha256": "4319f243726bb18b19fd919518ec544e641774365f277c643a0c7edacf88a7bb",
+        "released_sampler_prompt_mixture_tv_after_clone": 0.05833333333333333,
+        "base_distinct_prompt_classes": 15,
+        "augmented_distinct_prompt_classes": 15,
+        "target_prompt_class_probability_before": 0.06666666666666667,
+        "target_prompt_class_probability_after_released_clone": 0.125,
+        "other_prompt_class_count": 14,
+        "other_prompt_class_probability_before_values": [
+          0.06666666666666667
+        ],
+        "other_prompt_class_probability_after_values": [
+          0.0625
+        ],
+        "exact_tv_decomposition": "0.5*(abs(2/16-1/15)+14*abs(1/16-1/15))=7/120",
+        "quotient_conserved_prompt_mixture_tv_after_clone": 0.0
+      },
+      "quotient_conserved_control": {
+        "target_probability": 0.03333333333333333,
+        "clone_probability": 0.03333333333333333,
+        "semantic_family_probability": 0.06666666666666667,
+        "semantic_family_relative_change": 0.0,
+        "rows_with_nonzero_exposure_change": 0,
+        "exposure_ratio": 2.0,
+        "normalized_exposure_profile_tv": 0.0
+      }
+    },
+    {
+      "target_skill_id": "skill_015",
+      "base_target_package_probability": 0.06666666666666667,
+      "cloned_target_package_probability_each": 0.0625,
+      "cloned_semantic_family_probability": 0.125,
+      "semantic_family_relative_change": 0.875,
+      "target_support_rows": 292,
+      "covered_rows": 314,
+      "rows_with_positive_exposure_change": 292,
+      "rows_with_negative_exposure_change": 22,
+      "rows_with_zero_exposure_change": 0,
+      "target_support_relative_exposure_change_min": 0.40625,
+      "target_support_relative_exposure_change_max": 0.875,
+      "all_rows_relative_exposure_change_min": -0.0625,
+      "all_rows_relative_exposure_change_max": 0.875,
+      "base_exposure_ratio": 2.0,
+      "cloned_exposure_ratio": 3.0,
+      "normalized_exposure_profile_tv": 0.05698321742878119,
+      "maximum_absolute_exposure_change": 0.058333333333333334,
+      "target_raw_sampling_weight": 2.0,
+      "clone_raw_sampling_weight_recomputed_by_author": 2.0,
+      "clone_raw_weight_equals_target_raw_weight": true,
+      "questioner_prompt_control": {
+        "target_and_clone_messages_exactly_equal": true,
+        "target_message_sha256": "95135924e4259d3a93533beb88fa1e626606b57c2f8b66c0df55d461051170c8",
+        "clone_message_sha256": "95135924e4259d3a93533beb88fa1e626606b57c2f8b66c0df55d461051170c8",
+        "released_sampler_prompt_mixture_tv_after_clone": 0.05833333333333333,
+        "base_distinct_prompt_classes": 15,
+        "augmented_distinct_prompt_classes": 15,
+        "target_prompt_class_probability_before": 0.06666666666666667,
+        "target_prompt_class_probability_after_released_clone": 0.125,
+        "other_prompt_class_count": 14,
+        "other_prompt_class_probability_before_values": [
+          0.06666666666666667
+        ],
+        "other_prompt_class_probability_after_values": [
+          0.0625
+        ],
+        "exact_tv_decomposition": "0.5*(abs(2/16-1/15)+14*abs(1/16-1/15))=7/120",
+        "quotient_conserved_prompt_mixture_tv_after_clone": 0.0
+      },
+      "quotient_conserved_control": {
+        "target_probability": 0.03333333333333333,
+        "clone_probability": 0.03333333333333333,
+        "semantic_family_probability": 0.06666666666666667,
+        "semantic_family_relative_change": 0.0,
+        "rows_with_nonzero_exposure_change": 0,
+        "exposure_ratio": 2.0,
+        "normalized_exposure_profile_tv": 0.0
+      }
+    }
+  ],
+  "headline": {
+    "base_package_probability": 0.06666666666666667,
+    "released_pristine_singleton_eligibility_exposure": 0.06666666666666667,
+    "released_pristine_double_support_eligibility_exposure": 0.13333333333333333,
+    "released_pristine_double_to_singleton_exposure_ratio": 2.0,
+    "exact_clone_family_probability": 0.125,
+    "exact_clone_family_relative_change": 0.875,
+    "untouched_package_probability_after_clone": 0.0625,
+    "untouched_package_relative_change": -0.0625,
+    "base_level1_exposure_ratio": 2.0,
+    "clone_level1_exposure_ratio_all_targets": [
+      3.0
+    ],
+    "normalized_exposure_profile_tv_range": [
+      0.005927565392354868,
+      0.09207074910194182
+    ],
+    "quotient_conserved_clone_family_probability": 0.06666666666666667,
+    "quotient_conserved_clone_probability_each": 0.03333333333333333,
+    "quotient_conserved_exposure_profile_tv_all_targets": [
+      0.0
+    ],
+    "released_initialization_distinct_questioner_prompt_classes": 15,
+    "released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets": [
+      0.05833333333333333
+    ],
+    "released_sampler_questioner_prompt_mixture_tv_exact_decomposition": "0.5*(abs(2/16-1/15)+14*abs(1/16-1/15))=7/120",
+    "quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets": [
+      0.0
+    ]
+  },
+  "checks": {
+    "author_commit_matches_frozen_release": true,
+    "fifteen_initial_packages": true,
+    "all_initial_package_sampling_weights_equal": true,
+    "all_initial_package_stats_pristine": true,
+    "base_probabilities_uniform": true,
+    "all_level1_active_packages_audited": true,
+    "every_exact_clone_changes_released_controller_exposure": true,
+    "every_exact_clone_raises_semantic_family_probability": true,
+    "every_exact_clone_changes_normalized_exposure_profile": true,
+    "clone_weights_recomputed_by_author_sampling_function": true,
+    "author_duplicate_filter_would_reject_literal_exact_text_clone": true,
+    "quotient_conserved_allocation_exactly_restores_base_exposure": true,
+    "same_content_clone_has_identical_author_questioner_messages": true,
+    "released_initialization_has_fifteen_distinct_questioner_prompt_classes": true,
+    "released_sampler_clone_changes_author_questioner_prompt_mixture": true,
+    "quotient_conservation_exactly_restores_author_questioner_prompt_mixture": true
+  },
+  "all_checks_pass": true,
+  "claim_boundary": {
+    "supported": [
+      "the released Skill-SP pre-task sampler assigns probability to package identities using package-local quality/exploration weights",
+      "at the released pristine initial state the 15 package weights are equal, so the controller is uniform over identities and double-supported Level-1 rows receive twice the additive eligibility opportunity of singleton rows",
+      "under a counterfactual same-state exact-clone reparameterization applied directly to the released sampler input, the author's own sampling_weights function changes controller allocation and the induced Level-1 additive eligibility-exposure profile without changing support semantics",
+      "a same-content clone produces exactly the same released questioner message string as its source package, yet identity-normalized sampling changes the distribution over those actual questioner message classes",
+      "a quotient-conserved allocation that splits the original semantic-family mass across the exact clone pair restores both the base Level-1 exposure profile and the released questioner prompt-mixture distribution exactly for all six audited clone targets"
+    ],
+    "not_supported": [
+      "the author's induction-time admission path would accept a literal exact text clone; its released Jaccard duplicate filter detects the literal duplicate",
+      "the controller-level exposure change necessarily changes generated task probabilities by the same amount",
+      "the exposure change causes downstream utility degradation",
+      "all later Skill-SP iterations remain uniform after package statistics diverge"
+    ]
+  },
+  "model_calls": 0,
+  "gpu_hours": 0.0,
+  "scientific_authority": false,
+  "authority": {
+    "dynamic_claim": false,
+    "downstream_utility_claim": false,
+    "gpu": false
+  }
+}

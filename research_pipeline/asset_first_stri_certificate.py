@@ -29,23 +29,90 @@ def support_matrix(rows: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], li
     return covered, skills, A
 
 
-def optimal_global_package_ratio(rows: list[dict[str, Any]], *, max_share: float | None = None) -> dict[str, Any]:
-    """Solve R*(A), optionally with the homogeneous cap w_j <= rho * sum_k w_k."""
+def _target_vector(row_count: int, target_exposure: np.ndarray | list[float] | tuple[float, ...] | None) -> np.ndarray:
+    """Normalize a strictly positive representation-independent semantic target."""
+    if target_exposure is None:
+        return np.ones(row_count, dtype=float)
+    target = np.asarray(target_exposure, dtype=float)
+    if target.ndim != 1 or len(target) != row_count:
+        raise ValueError("target_exposure must have one positive value per covered support row")
+    if np.any(~np.isfinite(target)) or np.any(target <= 0):
+        raise ValueError("target_exposure must be finite and strictly positive")
+    return target
+
+
+def semantic_first_construction(
+    rows: list[dict[str, Any]],
+    *,
+    target_exposure: np.ndarray | list[float] | tuple[float, ...] | None = None,
+) -> dict[str, Any]:
+    """Construct a semantic-first joint controller on the frozen support relation.
+
+    The target ray q is normalized to a semantic-unit distribution pi. The
+    controller first selects semantic unit i ~ pi, then selects an implementation
+    package j from any row-stochastic kernel K supported by A. We use the
+    deterministic uniform-within-row kernel as one witness. By construction the
+    semantic marginal is exactly pi for arbitrary overlap. This changes the
+    action basis relative to package-first control and is therefore a design
+    construction, not a package-only baseline.
+    """
+    covered, skills, A = support_matrix(rows)
+    if not covered:
+        return {"pass": False, "reason": "no-covered-rows", "skills": []}
+    target = _target_vector(len(covered), target_exposure)
+    pi = target / float(target.sum())
+    degree = A.sum(axis=1)
+    if np.any(degree <= 0):
+        return {"pass": False, "reason": "positive-target-row-without-support", "skills": skills}
+    kernel = A / degree[:, None]
+    joint = pi[:, None] * kernel
+    semantic_marginal = joint.sum(axis=1)
+    package_marginal = joint.sum(axis=0)
+    support_violation_mass = float(np.sum(joint[A <= 0]))
+    return {
+        "pass": True,
+        "skills": skills,
+        "semantic_units": len(covered),
+        "target_distribution": [float(value) for value in pi],
+        "semantic_marginal": [float(value) for value in semantic_marginal],
+        "package_marginal": {skill: float(package_marginal[j]) for j, skill in enumerate(skills)},
+        "maximum_semantic_marginal_error": float(np.max(np.abs(semantic_marginal - pi))),
+        "support_violation_mass": support_violation_mass,
+        "kernel_row_sum_min": float(kernel.sum(axis=1).min()),
+        "kernel_row_sum_max": float(kernel.sum(axis=1).max()),
+        "interpretation": "Semantic-first selection realizes the target marginal exactly; package overlap only changes implementation responsibility inside each selected semantic unit.",
+    }
+
+
+def optimal_target_package_ratio(
+    rows: list[dict[str, Any]],
+    *,
+    target_exposure: np.ndarray | list[float] | tuple[float, ...] | None = None,
+    max_share: float | None = None,
+) -> dict[str, Any]:
+    """Solve target-conditioned R*(A;q), optionally with w_j <= rho * sum_k w_k.
+
+    The default q=1 is the neutral audit used by the paper when no external
+    pre-context semantic priority is specified. A nonuniform q lets a caller
+    audit whether a representation-independent target ray is realizable by the
+    package action cone without redefining STRI as uniformity itself.
+    """
     covered, skills, A = support_matrix(rows)
     if not covered:
         return {"pass": False, "reason": "no-covered-rows", "ratio": None, "skills": []}
     if max_share is not None and not (0.0 < float(max_share) <= 1.0):
         raise ValueError("max_share must lie in (0, 1]")
 
+    target = _target_vector(len(covered), target_exposure)
     n = len(skills)
     c = np.zeros(n + 1)
     c[-1] = 1.0
     A_ub: list[np.ndarray] = []
     b_ub: list[float] = []
-    for incidence in A:
+    for incidence, desired in zip(A, target, strict=True):
         A_ub.append(np.r_[-incidence, 0.0])
-        b_ub.append(-1.0)
-        A_ub.append(np.r_[incidence, -1.0])
+        b_ub.append(-float(desired))
+        A_ub.append(np.r_[incidence, -float(desired)])
         b_ub.append(0.0)
     if max_share is not None:
         rho = float(max_share)
@@ -73,38 +140,53 @@ def optimal_global_package_ratio(rows: list[dict[str, Any]], *, max_share: float
         }
     weights = result.x[:n]
     exposures = A @ weights
+    relative_exposure = exposures / target
     total_mass = float(weights.sum())
     return {
         "pass": True,
         "ratio": float(result.x[-1]),
+        "minimum_relative_exposure": float(relative_exposure.min()),
+        "maximum_relative_exposure": float(relative_exposure.max()),
         "minimum_exposure": float(exposures.min()),
         "maximum_exposure": float(exposures.max()),
         "weights": {skill: float(weights[i]) for i, skill in enumerate(skills)},
         "skills": skills,
+        "target_exposure": [float(value) for value in target],
+        "neutral_target": bool(np.allclose(target, 1.0)),
         "max_share": max_share,
         "attained_max_share": float(weights.max() / total_mass) if total_mass > 0 else None,
     }
 
 
-def dual_global_package_ratio(rows: list[dict[str, Any]], *, tolerance: float = 1e-9) -> dict[str, Any]:
-    """Solve the LP dual of R*(A) and return a general lower-bound certificate.
+def optimal_global_package_ratio(rows: list[dict[str, Any]], *, max_share: float | None = None) -> dict[str, Any]:
+    """Backward-compatible neutral-target wrapper for R*(A;1)."""
+    return optimal_target_package_ratio(rows, target_exposure=None, max_share=max_share)
 
-    For primal min t s.t. 1 <= Aw <= t1, w,t >= 0, the dual is
-    max 1^T alpha s.t. A^T(beta-alpha) >= 0, 1^T beta <= 1,
-    alpha,beta >= 0.  Any feasible dual pair is therefore a certified lower
-    bound; strong LP duality makes the optimum equal R*(A).
+
+def dual_target_package_ratio(
+    rows: list[dict[str, Any]],
+    *,
+    target_exposure: np.ndarray | list[float] | tuple[float, ...] | None = None,
+    tolerance: float = 1e-9,
+) -> dict[str, Any]:
+    """Solve the dual of target-conditioned R*(A;q).
+
+    The dual is max q^T alpha subject to A^T(beta-alpha)>=0,
+    q^T beta<=1, alpha,beta>=0. Any feasible pair is a lower-bound
+    certificate; strong duality makes the optimum equal R*(A;q).
     """
     covered, skills, A = support_matrix(rows)
     if not covered:
         return {"pass": False, "reason": "no-covered-rows", "lower_bound": None, "skills": []}
+    target = _target_vector(len(covered), target_exposure)
     nr, nc = A.shape
-    objective = np.r_[-np.ones(nr), np.zeros(nr)]
+    objective = np.r_[-target, np.zeros(nr)]
     A_ub: list[np.ndarray] = []
     b_ub: list[float] = []
     for j in range(nc):
         A_ub.append(np.r_[A[:, j], -A[:, j]])
         b_ub.append(0.0)
-    A_ub.append(np.r_[np.zeros(nr), np.ones(nr)])
+    A_ub.append(np.r_[np.zeros(nr), target])
     b_ub.append(1.0)
     result = linprog(
         objective,
@@ -128,6 +210,7 @@ def dual_global_package_ratio(rows: list[dict[str, Any]], *, tolerance: float = 
                 {
                     "matrix_row": int(i),
                     "value": float(values[i]),
+                    "target": float(target[i]),
                     "level": row.get("level"),
                     "index": row.get("index"),
                     "tool": row.get("tool"),
@@ -140,12 +223,20 @@ def dual_global_package_ratio(rows: list[dict[str, Any]], *, tolerance: float = 
     return {
         "pass": True,
         "lower_bound": float(-result.fun),
+        "target_weighted_beta": float(target @ beta),
         "sum_beta": float(beta.sum()),
         "minimum_package_slack": float(package_slack.min()) if len(package_slack) else None,
         "alpha_rows": nonzero_rows(alpha),
         "beta_rows": nonzero_rows(beta),
         "skills": skills,
+        "target_exposure": [float(value) for value in target],
+        "neutral_target": bool(np.allclose(target, 1.0)),
     }
+
+
+def dual_global_package_ratio(rows: list[dict[str, Any]], *, tolerance: float = 1e-9) -> dict[str, Any]:
+    """Backward-compatible neutral-target wrapper for the dual of R*(A;1)."""
+    return dual_target_package_ratio(rows, target_exposure=None, tolerance=tolerance)
 
 
 def robust_interval_package_ratio(
@@ -153,12 +244,13 @@ def robust_interval_package_ratio(
     upper_support: np.ndarray,
     *,
     skills: list[str] | None = None,
+    target_exposure: np.ndarray | list[float] | tuple[float, ...] | None = None,
 ) -> dict[str, Any]:
-    """Exact box-robust extension for independently bounded additive support.
+    """Exact box-robust extension for target-conditioned additive support.
 
     With nonnegative w and elementwise L <= A <= U, the worst lower exposure is
     Lw and the worst upper exposure is Uw, so robust STRI is the LP
-    min t s.t. Lw >= 1 and Uw <= t1.
+    min t s.t. Lw >= q and Uw <= tq. The default q=1 recovers the neutral audit.
     """
     lower = np.asarray(lower_support, dtype=float)
     upper = np.asarray(upper_support, dtype=float)
@@ -172,15 +264,16 @@ def robust_interval_package_ratio(
         raise ValueError("skills length must match support columns")
     if nr == 0 or nc == 0:
         return {"pass": False, "reason": "empty-support-interval", "ratio": None, "skills": names}
+    target = _target_vector(nr, target_exposure)
 
     c = np.zeros(nc + 1)
     c[-1] = 1.0
     A_ub: list[np.ndarray] = []
     b_ub: list[float] = []
-    for lo, hi in zip(lower, upper):
+    for lo, hi, desired in zip(lower, upper, target, strict=True):
         A_ub.append(np.r_[-lo, 0.0])
-        b_ub.append(-1.0)
-        A_ub.append(np.r_[hi, -1.0])
+        b_ub.append(-float(desired))
+        A_ub.append(np.r_[hi, -float(desired)])
         b_ub.append(0.0)
     result = linprog(
         c,
@@ -197,6 +290,8 @@ def robust_interval_package_ratio(
         "ratio": float(result.x[-1]),
         "weights": {name: float(weights[i]) for i, name in enumerate(names)},
         "skills": names,
+        "target_exposure": [float(value) for value in target],
+        "neutral_target": bool(np.allclose(target, 1.0)),
     }
 
 

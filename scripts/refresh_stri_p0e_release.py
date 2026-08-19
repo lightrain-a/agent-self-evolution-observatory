@@ -220,6 +220,7 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         (GEN / "asset-first-stri-skillrl-final-policy-p0e-contract-20260816.json", "asset-first-stri-skillrl-final-policy-p0e-contract-20260816.json"),
         (GEN / "asset-first-stri-skillrl-final-policy-p0e-panel-20260816.json", "asset-first-stri-skillrl-final-policy-p0e-panel-20260816.json"),
         (GEN / "asset-first-stri-reviewer-extensions-20260819.json", "asset-first-stri-reviewer-extensions-20260819.json"),
+        (GEN / "asset-first-stri-released-controller-clone-audit-20260819.json", "asset-first-stri-released-controller-clone-audit-20260819.json"),
     ]:
         shutil.copy2(source, tree / "artifacts" / name)
     for source, name in [
@@ -227,6 +228,8 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         (ROOT / "research_pipeline" / "test_asset_first_stri_certificate.py", "test_asset_first_stri_certificate.py"),
         (ROOT / "research_pipeline" / "asset_first_stri_reviewer_extensions.py", "asset_first_stri_reviewer_extensions.py"),
         (ROOT / "research_pipeline" / "test_asset_first_stri_reviewer_extensions.py", "test_asset_first_stri_reviewer_extensions.py"),
+        (ROOT / "research_pipeline" / "asset_first_stri_released_controller_clone_audit.py", "asset_first_stri_released_controller_clone_audit.py"),
+        (ROOT / "research_pipeline" / "test_asset_first_stri_released_controller_clone_audit.py", "test_asset_first_stri_released_controller_clone_audit.py"),
     ]:
         shutil.copy2(source, tree / "research_pipeline" / name)
 
@@ -249,8 +252,19 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
     meta["reviewer_extensions"] = {
         "artifact": "artifacts/asset-first-stri-reviewer-extensions-20260819.json",
         "artifact_sha256": sha(reviewer_artifact),
-        "contents": ["exact LP dual", "max-share constrained audit", "exhaustive one-cell support perturbations", "per-tool exact LP"],
+        "contents": ["exact LP dual", "semantic-first target construction", "max-share constrained audit", "exhaustive one-cell support perturbations", "per-tool exact LP"],
         "learned_support_calibration_claim": False,
+    }
+    controller_artifact = GEN / "asset-first-stri-released-controller-clone-audit-20260819.json"
+    controller = load(controller_artifact)
+    meta["released_controller_audit"] = {
+        "artifact": "artifacts/asset-first-stri-released-controller-clone-audit-20260819.json",
+        "artifact_sha256": sha(controller_artifact),
+        "author_repo_commit": (controller.get("author_release") or {}).get("commit"),
+        "third_party_author_repo_packaged": False,
+        "rerun_requires_author_release_at_recorded_commit": True,
+        "headline": controller.get("headline"),
+        "claim_boundary": controller.get("claim_boundary"),
     }
     dump(meta_path, meta)
 
@@ -266,7 +280,10 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         readme += f"""\n\n{marker}\n\nThe paper's optional C4 boundary result is included as `artifacts/{artifact_name}` together with its frozen anonymous contract and panel; the receipt content-addresses the internal model manifest without packaging author-local paths. The sanitized receipt records 18/24 competence calibration success, 24 paired A/B/C/D units with 18/24 terminal success in every arm and zero endpoint disagreements, B/C action-trajectory disagreement of 11/24 versus 15/24, exact D-to-A restoration, and the post-negative statistical-resolution audit. It supports only a qualified realization STOP. It does not establish population-level absence of a downstream effect, a persistent principle dead end, or an active recovery mechanism, and it does not alter N1--N3.\n"""
     reviewer_marker = "## Reviewer-requested certificate extensions"
     if reviewer_marker not in readme:
-        readme += """\n\n## Reviewer-requested certificate extensions\n\n`artifacts/asset-first-stri-reviewer-extensions-20260819.json` records the exact LP dual, max-share-constrained certificate, exhaustive single-support-edge perturbation audit, and per-tool exact LP analysis used in the revised manuscript. These analyses are deterministic over the packaged frozen support matrices. The one-cell perturbation audit is a finite local sensitivity analysis, not a claim that learned support labels are calibrated or that arbitrary multi-cell support error is harmless.\n"""
+        readme += """\n\n## Reviewer-requested certificate extensions\n\n`artifacts/asset-first-stri-reviewer-extensions-20260819.json` records the exact LP dual, semantic-first target construction, max-share-constrained certificate, exhaustive single-support-edge perturbation audit, and per-tool exact LP analysis used in the revised manuscript. These analyses are deterministic over the packaged frozen support matrices. The one-cell perturbation audit is a finite local sensitivity analysis, not a claim that learned support labels are calibrated or that arbitrary multi-cell support error is harmless.\n"""
+    controller_marker = "## Released Skill-SP controller audit"
+    if controller_marker not in readme:
+        readme += """\n\n## Released Skill-SP controller audit\n\n`artifacts/asset-first-stri-released-controller-clone-audit-20260819.json` is the content-addressed receipt for the sampler/prompt-mixture audit. The audit code and unit tests are packaged under `research_pipeline/`. The third-party Skill-SP repository is intentionally not copied into this supplement. To rerun the first-party audit end-to-end, obtain the author release at the exact commit recorded in the receipt and run the packaged audit against the packaged `data/skillsp-toolcall-membership.jsonl`. The receipt records that a same-content clone yields the identical author questioner message string while the released ID-normalized sampler changes message-class mixture TV to 7/120; quotient-conserved class mass restores prompt-mixture and exposure TV to zero. This is a controller-input-distribution result, not downstream utility evidence.\n"""
     (tree / "README.md").write_text(readme, encoding="utf-8")
 
     reproduce_path = tree / "reproduce.py"
@@ -284,9 +301,14 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         reproduce = reproduce.replace('        "dynamic_p0a": {"decision": p0a["decision"], "contract_valid_by_source": counts, "required_per_source": 16, "scientific_belief_update": False},', '        "dynamic_p0a": {"decision": p0a["decision"], "contract_valid_by_source": counts, "required_per_source": 16, "scientific_belief_update": False},\n        "skillrl_p0e": p0e_summary,', 1)
     reviewer_code_marker = "# REVIEWER EXTENSIONS CHECK"
     if reviewer_code_marker not in reproduce:
-        reviewer_code = '''\n    # REVIEWER EXTENSIONS CHECK\n    reviewer = evaluate_reviewer_extensions(tool_rows, logical_rows)\n    checks = reviewer["headline_checks"]\n    assert checks["all_primal_dual_gaps_le_1e_8"] is True\n    assert checks["level1_residual_survives_all_single_support_additions"] is True\n    assert checks["level1_residual_survives_all_nonuncovering_single_support_deletions"] is True\n    assert checks["logical_rho_075_not_equalizable"] is True\n    assert checks["logical_single_deletions_can_break_equalizability"] is True\n    assert checks["all_overlap_without_simple_witness_tools_resolve_equalizable"] is True\n    reviewer_summary = {\n        "headline_checks": checks,\n        "level1": reviewer["contexts"]["api_bank_level1_all"],\n        "logical": reviewer["contexts"]["logical_compiler_validation"],\n        "per_tool": reviewer["per_tool_exact_lp"],\n    }\n'''
+        reviewer_code = '''\n    # REVIEWER EXTENSIONS CHECK\n    reviewer = evaluate_reviewer_extensions(tool_rows, logical_rows)\n    checks = reviewer["headline_checks"]\n    assert checks["all_primal_dual_gaps_le_1e_8"] is True\n    assert checks["semantic_first_neutral_target_exact_on_all_five_regimes"] is True\n    assert checks["level1_residual_survives_all_single_support_additions"] is True\n    assert checks["level1_residual_survives_all_nonuncovering_single_support_deletions"] is True\n    assert checks["logical_rho_075_not_equalizable"] is True\n    assert checks["logical_single_deletions_can_break_equalizability"] is True\n    assert checks["all_overlap_without_simple_witness_tools_resolve_equalizable"] is True\n    reviewer_summary = {\n        "headline_checks": checks,\n        "level1": reviewer["contexts"]["api_bank_level1_all"],\n        "logical": reviewer["contexts"]["logical_compiler_validation"],\n        "per_tool": reviewer["per_tool_exact_lp"],\n    }\n'''
         reproduce = reproduce.replace("\n    out = {", reviewer_code + "\n    out = {", 1)
         reproduce = reproduce.replace('        "skillrl_p0e": p0e_summary,', '        "skillrl_p0e": p0e_summary,\n        "reviewer_extensions": reviewer_summary,', 1)
+    controller_code_marker = "# RELEASED CONTROLLER AUDIT RECEIPT CHECK"
+    if controller_code_marker not in reproduce:
+        controller_code = '''\n    # RELEASED CONTROLLER AUDIT RECEIPT CHECK\n    controller = json.loads((ROOT / "artifacts/asset-first-stri-released-controller-clone-audit-20260819.json").read_text())\n    assert controller["all_checks_pass"] is True\n    cc = controller["checks"]\n    assert cc["clone_weights_recomputed_by_author_sampling_function"] is True\n    assert cc["author_duplicate_filter_would_reject_literal_exact_text_clone"] is True\n    assert cc["same_content_clone_has_identical_author_questioner_messages"] is True\n    assert cc["released_sampler_clone_changes_author_questioner_prompt_mixture"] is True\n    assert cc["quotient_conservation_exactly_restores_author_questioner_prompt_mixture"] is True\n    assert cc["quotient_conserved_allocation_exactly_restores_base_exposure"] is True\n    ch = controller["headline"]\n    assert abs(ch["base_package_probability"] - (1.0 / 15.0)) < 1e-12\n    assert abs(ch["exact_clone_family_probability"] - (1.0 / 8.0)) < 1e-12\n    assert len(ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"]) == 1\n    assert abs(ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"][0] - (7.0 / 120.0)) < 1e-12\n    assert len(ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"]) == 1\n    assert abs(ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"][0]) < 1e-12\n    assert len(ch["quotient_conserved_exposure_profile_tv_all_targets"]) == 1\n    assert abs(ch["quotient_conserved_exposure_profile_tv_all_targets"][0]) < 1e-12\n    controller_summary = {\n        "author_repo_commit": controller["author_release"]["commit"],\n        "all_checks_pass": True,\n        "base_package_probability": ch["base_package_probability"],\n        "clone_family_probability": ch["exact_clone_family_probability"],\n        "released_prompt_mixture_tv": ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"],\n        "quotient_prompt_mixture_tv": ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"],\n        "quotient_exposure_profile_tv": ch["quotient_conserved_exposure_profile_tv_all_targets"],\n        "third_party_author_repo_packaged": False,\n    }\n'''
+        reproduce = reproduce.replace("\n    out = {", controller_code + "\n    out = {", 1)
+        reproduce = reproduce.replace('        "reviewer_extensions": reviewer_summary,', '        "reviewer_extensions": reviewer_summary,\n        "released_controller_audit": controller_summary,', 1)
     reproduce_path.write_text(reproduce, encoding="utf-8")
 
     manifest_path = tree / "MANIFEST.sha256"
@@ -362,7 +384,11 @@ def build_and_verify_supplement() -> dict:
         state["isolated_verification"]["text_identity_path_scan"] = "PASS"
         state["isolated_verification"]["unit_tests"] = f"{unit_test_count}/{unit_test_count} PASS"
         state["reproduced_results"]["skillrl_p0e"] = p0e_summary(receipt)
-        state["claim_boundary"]["forbidden"] = list(dict.fromkeys(list(state["claim_boundary"].get("forbidden") or []) + ["treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end"]))
+        state["reproduced_results"]["released_controller_audit"] = reproduced.get("released_controller_audit") or {}
+        state["claim_boundary"]["forbidden"] = list(dict.fromkeys(list(state["claim_boundary"].get("forbidden") or []) + [
+            "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end",
+            "treating quotient-conserved clone allocation as downstream utility validation or as a repair for non-realizable partial-overlap support geometry",
+        ]))
         state["new_gpu_evidence_required_for_current_claim_scope"] = False
         dump(SUPPLEMENT_STATE_PATH, state)
         return {"files": file_count, "manifest_entries": manifest_entries, "sha256": sha(REMOTE_SUPPLEMENT), "manifest_sha256": state["package"]["manifest_sha256"], "unit_tests": state["isolated_verification"].get("unit_tests"), "reproduce_stdout_tail": repro.stdout[-800:]}

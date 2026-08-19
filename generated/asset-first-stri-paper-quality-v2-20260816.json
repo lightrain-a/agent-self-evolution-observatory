@@ -10,15 +10,17 @@
       {
         "id": "N1",
         "claim_type": "empirical_analysis",
-        "statement": "Released skill inventories exhibit high raw overlap while alternative support reductions can change the apparent redundancy structure.",
-        "why_better_or_why_matters": "A support-aware comparison should distinguish representational redundancy from genuinely different operational support rather than treating raw skill names as independent evidence.",
+        "statement": "Released skill controllers can assign different semantic control solely because equivalent implementation content is represented by different package identities.",
+        "why_better_or_why_matters": "The released Skill-SP sampler changes the distribution over actual questioner message classes under a same-content representation refinement, while quotient-conserved class mass restores that distribution exactly.",
         "alternative_explanations": [
-          "the pattern is an artifact of duplicate or umbrella skill names",
-          "the pattern is driven by one released system or one support threshold"
+          "the apparent change is only a name-level statistic and does not reach the released controller input distribution",
+          "literal exact clones are accepted by the author induction path",
+          "the pattern is driven by one support threshold"
         ],
         "ruling_out_experiments": [
-          "compare raw overlap, deduplicated overlap, minimum-package pruning, and reweighted package mass on the same released inventories",
-          "stress split/merge/clone perturbations while preserving operational support"
+          "rerun the author's released sampling-weight function on a same-state sampler-input clone and compare actual questioner prompt-mixture mass",
+          "verify the author induction duplicate filter rejects the literal exact text clone",
+          "compare released identity normalization against quotient-conserved class mass on the same frozen support and prompt strings"
         ],
         "baseline_ids": [
           "B-RAW-OVERLAP",
@@ -50,8 +52,8 @@
       {
         "id": "N2",
         "claim_type": "theory",
-        "statement": "STRI-Cert exactly decides package-only exposure equalizability; its LP dual gives general lower-bound witnesses and linear extensions expose support uncertainty and controller-feasible-set assumptions.",
-        "why_better_or_why_matters": "The primal/dual certificate makes representation assumptions explicit, while box-robust and max-share variants separate support uncertainty from controller constraints without changing the claim into a new optimization algorithm.",
+        "statement": "Exact-refinement STRI is equivalent to quotient factorization of semantic-class mass; R*(A;q) exactly decides target realizability by package-first mass, while a semantic-first row-stochastic implementation factorization realizes any covered target after changing the action basis.",
+        "why_better_or_why_matters": "The quotient characterization exposes a general failure class for positive identity-local normalization, the primal/dual certificate identifies when package-first retuning is insufficient, and the semantic-first construction supplies the corresponding design boundary without claiming downstream validation or a new optimization algorithm.",
         "alternative_explanations": [
           "the certificate is merely a restatement of raw overlap under another weighting"
         ],
@@ -82,8 +84,8 @@
       {
         "id": "N3",
         "claim_type": "mechanism",
-        "statement": "Raw overlap is insufficient to explain when released skill taxonomies are clone-sensitive versus support-invariant.",
-        "why_better_or_why_matters": "The support-equivalence view predicts a specific failure mode of name-level overlap: clone/split/merge edits may change the apparent overlap without changing operational support.",
+        "statement": "STRI has two separable boundaries: identity-local normalization violates exact-refinement invariance, while after quotienting the neutral residual is not determined by overlap count alone and is exactly characterized by target realizability in the package support cone.",
+        "why_better_or_why_matters": "This separation yields an exact allocation-level repair for known pure multiplicity nuisance, a fail-closed impossibility certificate for package-first retuning, and a semantic-first constructive escape when the action interface can select semantic intent before implementation.",
         "alternative_explanations": [
           "the observed separation is only a consequence of arbitrary weighting",
           "a simpler deduplication rule explains the same cases",
@@ -199,8 +201,8 @@
         "target_claim_ids": [
           "N3"
         ],
-        "purpose": "Show exactly when name-level overlap and support-equivalence disagree and connect each disagreement to clone/split/merge structure.",
-        "decision_rule": "No mechanism claim from aggregate overlap trends; disagreement cases must be enumerated and explained."
+        "purpose": "Separate clone-multiplicity nuisance from support-cone target-realizability boundaries and enumerate where overlap count gives the wrong qualitative conclusion.",
+        "decision_rule": "No causal claim from aggregate overlap trends; positive and negative boundary cases must be explicitly enumerated."
       },
       {
         "id": "AN-RULEOUT",
@@ -337,8 +339,8 @@
           "O-MAIN",
           "O-MECHANISM"
         ],
-        "reviewer_question": "Is overlap prevalence itself the mechanism, or does exact support geometry separate positive and negative regimes?",
-        "takeaway": "High overlap can still be exactly equalizable; R*(A), not overlap prevalence, separates the audited regimes.",
+        "reviewer_question": "Can overlap prevalence alone determine whether the neutral target is package-first realizable?",
+        "takeaway": "No: a 99.2% overlap regime is exactly realizable, while lower-overlap Level-1 regimes have R*(A)=2; support geometry is needed to decide the audited cases.",
         "quantitative": true,
         "uncertainty_required": false,
         "negative_or_failure_visible": true
@@ -411,7 +413,12 @@
         "artifact_refs": [
           "generated/asset-first-stri-paper-analysis-suite-20260816.json",
           "generated/asset-first-stri-reviewer-extensions-20260819.json",
-          "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json"
+          "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json",
+          "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
+          "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
+          "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
+          "research_pipeline/asset_first_stri_certificate.py",
+          "research_pipeline/test_asset_first_stri_certificate.py"
         ]
       },
       {
@@ -419,7 +426,10 @@
         "status": "PASS",
         "artifact_refs": [
           "generated/asset-first-stri-narrow-paper-coherence-20260816.json",
-          "generated/asset-first-skill-taxonomy-representation-invariance-reduction-20260816.json"
+          "generated/asset-first-skill-taxonomy-representation-invariance-reduction-20260816.json",
+          "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
+          "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
+          "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py"
         ]
       },
       {
@@ -428,7 +438,12 @@
         "artifact_refs": [
           "generated/asset-first-stri-paper-analysis-suite-20260816.json",
           "generated/asset-first-stri-reviewer-extensions-20260819.json",
-          "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json"
+          "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json",
+          "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
+          "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
+          "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
+          "research_pipeline/asset_first_stri_certificate.py",
+          "research_pipeline/test_asset_first_stri_certificate.py"
         ]
       },
       {
@@ -437,7 +452,12 @@
         "artifact_refs": [
           "generated/asset-first-stri-paper-analysis-suite-20260816.json",
           "generated/asset-first-stri-reviewer-extensions-20260819.json",
-          "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json"
+          "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json",
+          "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
+          "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
+          "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
+          "research_pipeline/asset_first_stri_certificate.py",
+          "research_pipeline/test_asset_first_stri_certificate.py"
         ]
       },
       {
@@ -446,7 +466,12 @@
         "artifact_refs": [
           "generated/asset-first-stri-paper-analysis-suite-20260816.json",
           "generated/asset-first-stri-reviewer-extensions-20260819.json",
-          "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json"
+          "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json",
+          "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
+          "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
+          "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
+          "research_pipeline/asset_first_stri_certificate.py",
+          "research_pipeline/test_asset_first_stri_certificate.py"
         ]
       },
       {
@@ -455,14 +480,22 @@
         "artifact_refs": [
           "generated/asset-first-stri-paper-analysis-suite-20260816.json",
           "generated/asset-first-stri-reviewer-extensions-20260819.json",
-          "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json"
+          "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json",
+          "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
+          "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
+          "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
+          "research_pipeline/asset_first_stri_certificate.py",
+          "research_pipeline/test_asset_first_stri_certificate.py"
         ]
       },
       {
         "id": "O-MAIN",
         "status": "PASS",
         "artifact_refs": [
-          "generated/asset-first-skill-taxonomy-representation-invariance-reduction-20260816.json"
+          "generated/asset-first-skill-taxonomy-representation-invariance-reduction-20260816.json",
+          "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
+          "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
+          "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py"
         ]
       },
       {
@@ -480,7 +513,10 @@
         "status": "PASS",
         "artifact_refs": [
           "generated/asset-first-stri-narrow-paper-coherence-20260816.json",
-          "generated/asset-first-skill-taxonomy-representation-invariance-reduction-20260816.json"
+          "generated/asset-first-skill-taxonomy-representation-invariance-reduction-20260816.json",
+          "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
+          "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
+          "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py"
         ]
       },
       {
@@ -713,13 +749,13 @@
       "claim_adjudications": 3,
       "completed_visualizations": 4,
       "content_addressed_required": true,
-      "content_addressed_referenced_files": 15
+      "content_addressed_referenced_files": 20
     },
     "claim_ledger": [
       {
         "claim_id": "N1",
         "claim_type": "empirical_analysis",
-        "claim_text": "Released skill inventories exhibit high raw overlap while alternative support reductions can change the apparent redundancy structure.",
+        "claim_text": "Released skill controllers can assign different semantic control solely because equivalent implementation content is represented by different package identities.",
         "adjudication_status": "SUPPORTED_NARROWLY",
         "manuscript_surface": "AFFIRMATIVE_NARROW_ONLY",
         "affirmative_claim_allowed": true,
@@ -774,7 +810,7 @@
       {
         "claim_id": "N2",
         "claim_type": "theory",
-        "claim_text": "STRI-Cert exactly decides package-only exposure equalizability; its LP dual gives general lower-bound witnesses and linear extensions expose support uncertainty and controller-feasible-set assumptions.",
+        "claim_text": "Exact-refinement STRI is equivalent to quotient factorization of semantic-class mass; R*(A;q) exactly decides target realizability by package-first mass, while a semantic-first row-stochastic implementation factorization realizes any covered target after changing the action basis.",
         "adjudication_status": "SUPPORTED_NARROWLY",
         "manuscript_surface": "AFFIRMATIVE_NARROW_ONLY",
         "affirmative_claim_allowed": true,
@@ -805,7 +841,7 @@
       {
         "claim_id": "N3",
         "claim_type": "mechanism",
-        "claim_text": "Raw overlap is insufficient to explain when released skill taxonomies are clone-sensitive versus support-invariant.",
+        "claim_text": "STRI has two separable boundaries: identity-local normalization violates exact-refinement invariance, while after quotienting the neutral residual is not determined by overlap count alone and is exactly characterized by target realizability in the package support cone.",
         "adjudication_status": "SUPPORTED_NARROWLY",
         "manuscript_surface": "AFFIRMATIVE_NARROW_ONLY",
         "affirmative_claim_allowed": true,
@@ -864,8 +900,8 @@
       "status": "PASS_CONTENT_ADDRESSED_COMPLETION",
       "blockers": [],
       "summary": {
-        "referenced_files": 15,
-        "registered_digests": 18
+        "referenced_files": 20,
+        "registered_digests": 23
       }
     },
     "policy": {
@@ -912,6 +948,11 @@
     "generated/asset-first-stri-narrow-final-review-20260816.json",
     "generated/asset-first-stri-paper-analysis-suite-20260816.json",
     "generated/asset-first-stri-reviewer-extensions-20260819.json",
+    "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
+    "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
+    "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
+    "research_pipeline/asset_first_stri_certificate.py",
+    "research_pipeline/test_asset_first_stri_certificate.py",
     "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json",
     "generated/asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json",
     "generated/asset-first-stri-skillrl-final-policy-p0e-principle-disposition-20260817.json",
@@ -931,12 +972,17 @@
     "generated/asset-first-stri-narrow-paper-coherence-20260816.json": "676930281c919bcf937cdfca375a90f053c6216b474770e153ddc2a349b8cdef",
     "generated/asset-first-stri-narrow-final-review-20260816.json": "9af211d9482130f74c9bacf067b5bcf0d1fc3442e36d6488c31ccd3a5e1aa66d",
     "generated/asset-first-stri-paper-analysis-suite-20260816.json": "ff9477c181f01896063019d969265fa65660ea238f0966da7e221825c02d3fba",
-    "generated/asset-first-stri-reviewer-extensions-20260819.json": "5aa737f9490531be8c10888c5847bb8e1b9d3eb96ba51116581af2974ef76952",
+    "generated/asset-first-stri-reviewer-extensions-20260819.json": "81072d62587790463dce69b5b54637ddb908e6fdda4cc57c84e8a89169bc76ce",
+    "generated/asset-first-stri-released-controller-clone-audit-20260819.json": "fd837d785e66540ec85f14b9d0e8b21d5f00f0292fc6b55c98f90483bcdb58bf",
+    "research_pipeline/asset_first_stri_released_controller_clone_audit.py": "516b3dccb75c99ad50095c9a1ca6359636cada02ee8cfb55dec4333c4a00aa6f",
+    "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py": "c2d354a584a1845daf323855ac9e2401e5a0938716950250e8b8e3bc2c68f0ac",
+    "research_pipeline/asset_first_stri_certificate.py": "1736ee319d55bcfe060f5a6f32bfb2a482b754e9adad05c38ffa36418c9d6026",
+    "research_pipeline/test_asset_first_stri_certificate.py": "3f6296624acc8fc7dfefd1dabd97add147f7a7fa83bebbf3a6796492af40d6f2",
     "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json": "c0a7761fde29b4d3e5f2c5dde752cfed2b5fe8693d1c229bb6e01a0971c86df2",
     "generated/asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json": "5b5827579df4824dea0be8f62ff7c0e2a1757e1cb81c071006e127ef3ba8437a",
     "generated/asset-first-stri-skillrl-final-policy-p0e-principle-disposition-20260817.json": "e4ab9861c8705be4f27abe589d8348c983f4ac2a53d1f17cbd0bd096d7c625d7",
-    "paper_drafts/stri-20260816-narrow-body.tex": "45ff560833502ecdc3bfb21611bcdca04b10387e586b3c265de52e3a726f5a92",
-    "paper_drafts/stri-20260816-tables.tex": "c73c2d6c0c294ed359a7b1d16d4b6405d3538c4dfc8755cc4bb3ef2e6048603e",
+    "paper_drafts/stri-20260816-narrow-body.tex": "854ae2ab53b4c94471aa22ea6db5bfda23d5fe08e4c8e9e32854f0735aa44b54",
+    "paper_drafts/stri-20260816-tables.tex": "57c8967bb68e721317135c96f33c9196d8fed726529fbfbfb9c4b3a2e47df7f7",
     "paper_drafts/figures/stri-overview.pdf": "dcb62917f4394ecc5e486220d9d411d0afc9028f8f11525831efb4c3b41aebf9",
     "paper_drafts/figures/stri-factor2-witnesses.pdf": "ed10fb150579d42027e6bb24a773d3a17bd6fa2cadc845099f54d7772bb1506d",
     "paper_drafts/figures/stri-rstar-boundary.pdf": "70225e96d5c2c2a56fafbcf4d713415537e9ee8b93987cabfa4cb8812fa9ac02",
