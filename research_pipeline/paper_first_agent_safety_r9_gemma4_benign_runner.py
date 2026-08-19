@@ -14,12 +14,8 @@ from .paper_first_agent_safety_r9_fresh_support import (
     EXPECTED_RULES_SHA256,
     SecureContextChatArgs,
 )
-from .paper_first_agent_safety_r9_gemma4_benign_protocol import (
-    V2_REALIZATION_ID,
-    validate_formal_asset_receipt,
-    validate_v2_preregistration,
-    verify_external_effect,
-)
+from .paper_first_agent_safety_r9_gemma4_benign_protocol import validate_formal_asset_receipt, verify_external_effect
+from .paper_first_agent_safety_r9_gemma4_runtime_repair import V3_REALIZATION_ID, validate_v3
 
 SCHEMA_VERSION = "1.0"
 
@@ -32,17 +28,17 @@ def _load(path: Path) -> dict[str, Any]:
     return base.load_json(Path(path))
 
 
-def load_v2(path: Path, asset_receipt_path: Path) -> dict[str, Any]:
+def load_v3(path: Path, asset_receipt_path: Path) -> dict[str, Any]:
     state = _load(path)
-    errors = validate_v2_preregistration(state)
+    errors = validate_v3(state)
     if errors:
-        raise ValueError("invalid Gemma4 benign-v2 contract:" + ";".join(errors))
+        raise ValueError("invalid Gemma4 benign-v3 contract:" + ";".join(errors))
     asset = validate_formal_asset_receipt(asset_receipt_path)
     formal = state.get("formal_asset") or {}
     if formal.get("receipt_sha256") != _sha(asset_receipt_path) or formal.get("formal_asset_verified") is not True:
-        raise ValueError("Gemma4 benign-v2 asset binding drift")
+        raise ValueError("Gemma4 benign-v3 asset binding drift")
     if (asset.get("model_id"), asset.get("exact_revision")) != (BACKBONE_MODEL_ID, BACKBONE_MODEL_REVISION):
-        raise ValueError("Gemma4 benign-v2 asset identity drift")
+        raise ValueError("Gemma4 benign-v3 asset identity drift")
     return state
 
 
@@ -102,7 +98,7 @@ def run_benign_episode(
     receipt = edir / "episode-result.json"
     if receipt.is_file():
         existing = _load(receipt)
-        if existing.get("realization_id") == V2_REALIZATION_ID and existing.get("status") in {"COMPLETE_PASS", "COMPLETE_FAIL", "INCONCLUSIVE_EXECUTION_ERROR"}:
+        if existing.get("realization_id") == V3_REALIZATION_ID and existing.get("status") in {"COMPLETE_PASS", "COMPLETE_FAIL", "INCONCLUSIVE_EXECUTION_ERROR"}:
             return existing
         raise RuntimeError(f"existing benign episode is not safely resumable:{edir}")
     if edir.exists() and any(edir.iterdir()):
@@ -160,7 +156,7 @@ def run_benign_episode(
             "schema_version": SCHEMA_VERSION,
             "status": "INCONCLUSIVE_EXECUTION_ERROR",
             "stop_class": "PROTOCOL_STOP",
-            "realization_id": V2_REALIZATION_ID,
+            "realization_id": V3_REALIZATION_ID,
             "contract_sha256": contract["contract_sha256"],
             "task_id": int(task_id),
             "agent_calls": ledger_summary,
@@ -183,7 +179,7 @@ def run_benign_episode(
         "status": "COMPLETE_PASS" if passed else "COMPLETE_FAIL",
         "stop_class": None if passed else "REALIZATION_STOP",
         "failure_layer": None if passed else "backbone_realization",
-        "realization_id": V2_REALIZATION_ID,
+        "realization_id": V3_REALIZATION_ID,
         "contract_sha256": contract["contract_sha256"],
         "task_id": int(task_id),
         "model_id": BACKBONE_MODEL_ID,
@@ -214,7 +210,7 @@ def main() -> None:
     p.add_argument("--safety-context", type=Path, required=True)
     p.add_argument("--base-url", default="http://127.0.0.1:18002")
     args = p.parse_args()
-    contract = load_v2(args.contract, args.asset_receipt)
+    contract = load_v3(args.contract, args.asset_receipt)
     results: list[dict[str, Any]] = []
     listener = base.ListenerState()
     with base.ListenerServer(listener, 3000):
@@ -243,7 +239,7 @@ def main() -> None:
         "schema_version": SCHEMA_VERSION,
         "status": status,
         "stop_class": stop_class,
-        "realization_id": V2_REALIZATION_ID,
+        "realization_id": V3_REALIZATION_ID,
         "contract_sha256": contract["contract_sha256"],
         "task_ids": list(BENIGN_CAPABILITY_IDS),
         "episode_count": len(results),
