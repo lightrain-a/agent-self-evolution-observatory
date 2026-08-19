@@ -84,7 +84,7 @@ def build_agent_safety_program_state(
     *,
     r9_root: Path,
     canonical_primary_state_path: Path | None = None,
-    survey_supplement_path: Path | None = DEFAULT_SURVEY_SUPPLEMENT,
+    survey_supplement_path: Path | None = None,
     harness_smoke_path: Path | None = None,
     harness_manifest_path: Path | None = None,
     runtime_asset_gate_path: Path | None = None,
@@ -137,7 +137,8 @@ def build_agent_safety_program_state(
     preflight_row = next((row for row in preflight_rows if row.get("candidate_id") == CANDIDATE_ID), {})
 
     candidate_body = candidate.get("candidate") or {}
-    records = _records_by_ref(frozen_primary, canonical_primary)
+    current_records = _records_by_ref(frozen_primary, canonical_primary)
+    records = _records_by_ref(frozen_primary, canonical_primary, survey_supplement)
     survey = []
     for ref in SURVEY_REFS:
         row = records.get(ref)
@@ -151,6 +152,7 @@ def build_agent_safety_program_state(
                 "role": _survey_role(ref),
                 "primary_url": _bounded(row.get("primary_url"), 500),
                 "fact": _bounded((facts[0] if facts else {}).get("text"), 900),
+                "source_scope": _bounded(row.get("source_scope") or ("CURRENT_PRIMARY_OR_FROZEN" if ref in current_records else "SURVEY_SUPPLEMENT"), 120),
             }
         )
 
@@ -367,6 +369,7 @@ def build_agent_safety_program_state(
             **({"formal_harness_manifest": _sha(Path(harness_manifest_path))} if harness_manifest_path and Path(harness_manifest_path).is_file() else {}),
             **({"runtime_asset_gate": _sha(Path(runtime_asset_gate_path))} if runtime_asset_gate_path and Path(runtime_asset_gate_path).is_file() else {}),
             **({"provenance_readjudication": _sha(Path(provenance_readjudication_path))} if provenance_readjudication_path and Path(provenance_readjudication_path).is_file() else {}),
+            **({"literature_survey_supplement": _sha(Path(survey_supplement_path))} if survey_supplement_path and Path(survey_supplement_path).is_file() else {}),
         },
     }
     return state
@@ -416,8 +419,8 @@ def validate_agent_safety_program_state(state: dict[str, Any]) -> list[str]:
     if (state.get("substrate") or {}).get("disposition") != "MINIMAL_HARNESS_IMPLEMENTATION_READY":
         errors.append("agent-safety public substrate disposition drift")
     refs = {row.get("ref") for row in state.get("survey") or [] if isinstance(row, dict)}
-    if "arXiv:2604.16968" not in refs or "arXiv:2608.12851" not in refs:
-        errors.append("agent-safety public survey lost primary anchor/closest-work coverage")
+    if not set(SURVEY_REFS).issubset(refs):
+        errors.append("agent-safety public survey lost audited primary-literature coverage")
     closed = {row.get("candidate_id") for row in state.get("closed_basins") or [] if isinstance(row, dict)}
     if closed != set(CLOSED_CANDIDATES):
         errors.append("agent-safety public closed-basin projection drift")
@@ -430,6 +433,7 @@ def write_agent_safety_program_state(
     *,
     r9_root: Path,
     canonical_primary_state_path: Path | None = None,
+    survey_supplement_path: Path | None = None,
     harness_smoke_path: Path | None = None,
     harness_manifest_path: Path | None = None,
     runtime_asset_gate_path: Path | None = None,
@@ -440,6 +444,7 @@ def write_agent_safety_program_state(
     state = build_agent_safety_program_state(
         r9_root=r9_root,
         canonical_primary_state_path=canonical_primary_state_path,
+        survey_supplement_path=survey_supplement_path,
         harness_smoke_path=harness_smoke_path,
         harness_manifest_path=harness_manifest_path,
         runtime_asset_gate_path=runtime_asset_gate_path,
@@ -461,6 +466,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--r9-root", type=Path, required=True)
     parser.add_argument("--canonical-primary", type=Path, default=PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.json")
+    parser.add_argument("--survey-supplement", type=Path, default=DEFAULT_SURVEY_SUPPLEMENT)
     parser.add_argument("--harness-smoke", type=Path)
     parser.add_argument("--harness-manifest", type=Path)
     parser.add_argument("--runtime-asset-gate", type=Path)
@@ -471,6 +477,7 @@ def main() -> None:
     state = write_agent_safety_program_state(
         r9_root=args.r9_root,
         canonical_primary_state_path=args.canonical_primary,
+        survey_supplement_path=args.survey_supplement,
         harness_smoke_path=args.harness_smoke,
         harness_manifest_path=args.harness_manifest,
         runtime_asset_gate_path=args.runtime_asset_gate,

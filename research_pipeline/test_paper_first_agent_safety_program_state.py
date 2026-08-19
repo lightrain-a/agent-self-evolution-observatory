@@ -166,6 +166,59 @@ class AgentSafetyProgramStateTest(unittest.TestCase):
             self.assertFalse(state["authority"]["bounded_evidence_acquisition"])
             self.assertTrue(state["next_gate"]["required"])
 
+    def test_survey_supplement_restores_related_work_without_primary_authority(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            r9, canonical, smoke = self.fixture_r9(root)
+            canonical_payload = json.loads(canonical.read_text(encoding="utf-8"))
+            canonical_payload["records"] = [row for row in canonical_payload.get("records", []) if row.get("ref") != "arXiv:2608.11888"]
+            canonical.write_text(json.dumps(canonical_payload), encoding="utf-8")
+            supplement = root / "survey-supplement.json"
+            supplement.write_text(json.dumps({
+                "scope": "RELATED_PRIMARY_LITERATURE_SURVEY_ONLY",
+                "scientific_authority": False,
+                "primary_transaction_authority": False,
+                "records": [{
+                    "ref": "arXiv:2608.11888",
+                    "title": "Agent Skills Can Be Harmful",
+                    "primary_url": "https://arxiv.org/abs/2608.11888",
+                    "source_scope": "OFFICIAL_ARXIV_RELATED_WORK",
+                    "empirical_facts": [{"text": "307 skill-induced failures"}],
+                    "scientific_authority": False,
+                    "primary_transaction_authority": False,
+                }],
+            }), encoding="utf-8")
+            state = build_agent_safety_program_state(
+                r9_root=r9,
+                canonical_primary_state_path=canonical,
+                survey_supplement_path=supplement,
+                harness_smoke_path=smoke,
+            )
+            self.assertEqual(validate_agent_safety_program_state(state), [])
+            row = next(item for item in state["survey"] if item["ref"] == "arXiv:2608.11888")
+            self.assertEqual(row["source_scope"], "OFFICIAL_ARXIV_RELATED_WORK")
+            self.assertFalse(state["execution_authorized"])
+            self.assertFalse(state["scientific_authority"])
+
+    def test_survey_supplement_cannot_carry_primary_or_scientific_authority(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            r9, canonical, smoke = self.fixture_r9(root)
+            supplement = root / "bad-survey-supplement.json"
+            supplement.write_text(json.dumps({
+                "scope": "RELATED_PRIMARY_LITERATURE_SURVEY_ONLY",
+                "scientific_authority": False,
+                "primary_transaction_authority": True,
+                "records": [],
+            }), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "survey-only and zero-authority"):
+                build_agent_safety_program_state(
+                    r9_root=r9,
+                    canonical_primary_state_path=canonical,
+                    survey_supplement_path=supplement,
+                    harness_smoke_path=smoke,
+                )
+
     def test_writer_emits_json_and_js_from_same_state(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)

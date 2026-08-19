@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-19T05:20:25+00:00",
+  "generated_at": "2026-08-19T05:25:34+00:00",
   "program_id": "AGENT-SAFETY-R9",
   "title": "Latent Safety Fragility in Self-Evolving Agents",
   "candidate_id": "SHADOW-P01-C01",
@@ -160,9 +160,9 @@
         ]
       }
     ],
-    "provenance_readjudication_status": "NON_AUTHORITATIVE_CACHE_CONTENT_CHECK_SUPERSEDED_FOR_FORMAL_GATE",
+    "provenance_readjudication_status": "NON_AUTHORITATIVE_CACHE_CONTENT_CHECK",
     "provenance_receipt_class": "NON_AUTHORITATIVE_CACHE_CONTENT_CHECK",
-    "provenance_readjudication_artifact": "r9-runtime-model-content-verification-readjudication-v2-20260819.json",
+    "provenance_readjudication_artifact": "agent-safety-r9-non-authoritative-cache-content-check.json",
     "official_metadata_connectivity": "HOLD",
     "outcome_bearing_science_started": false
   },
@@ -172,28 +172,40 @@
       "title": "On Safety Risks in Experience-Driven Self-Evolving Agents",
       "role": "ANCHOR_PHENOMENON",
       "primary_url": "https://arxiv.org/abs/2604.16968",
-      "fact": "Table 1 summarizes the outcomes of offline self-evolution with AWM across both web-based and household embodied settings."
+      "fact": "Table 1 summarizes the outcomes of offline self-evolution with AWM across both web-based and household embodied settings.",
+      "source_scope": "CURRENT_PRIMARY_OR_FROZEN"
     },
     {
       "ref": "arXiv:2608.12851",
       "title": "Practice Makes Unsafe: Skill Misevolution in Self-Improving LLM Agents",
       "role": "CLOSEST_LIFECYCLE_WORK",
       "primary_url": "https://arxiv.org/abs/2608.12851",
-      "fact": "RQ3 compares raw evolution, Utility-only, SafeEvolve, SecureClaw, and ClawKeeper on OpenClaw to test whether governance reduces unsafe artifacts, retrieval, and carryover harm while preserving utility; prompts and thresholds are selected before evaluation."
+      "fact": "RQ3 compares raw evolution, Utility-only, SafeEvolve, SecureClaw, and ClawKeeper on OpenClaw to test whether governance reduces unsafe artifacts, retrieval, and carryover harm while preserving utility; prompts and thresholds are selected before evaluation.",
+      "source_scope": "CURRENT_PRIMARY_OR_FROZEN"
     },
     {
       "ref": "arXiv:2608.01759",
       "title": "Benign Alone, Harmful Together: Exploiting Experience Composition in Self-Evolving LLM Agents",
       "role": "COMPOSITIONAL_HARM_COLLISION",
       "primary_url": "https://arxiv.org/abs/2608.01759",
-      "fact": "Its overall average ASR reaches 86.12%, outperforming the strongest baseline, ReNeLLM, by 24.19 percentage points."
+      "fact": "Its overall average ASR reaches 86.12%, outperforming the strongest baseline, ReNeLLM, by 24.19 percentage points.",
+      "source_scope": "CURRENT_PRIMARY_OR_FROZEN"
     },
     {
       "ref": "arXiv:2608.05563",
       "title": "When Experience Becomes Instruction: Trajectory Poisoning in Self-Evolving Agent Skill Systems",
       "role": "TRAJECTORY_POISONING_COLLISION",
       "primary_url": "https://arxiv.org/abs/2608.05563",
-      "fact": "At fixed n=30n=30, increasing attacker support from k=1k=1 (3.3%) to k=2k=2 (6.7%) raises SER from 5/25 to 21/25, and k=3k=3 (10%) reaches 25/25."
+      "fact": "At fixed n=30n=30, increasing attacker support from k=1k=1 (3.3%) to k=2k=2 (6.7%) raises SER from 5/25 to 21/25, and k=3k=3 (10%) reaches 25/25.",
+      "source_scope": "CURRENT_PRIMARY_OR_FROZEN"
+    },
+    {
+      "ref": "arXiv:2608.11888",
+      "title": "Agent Skills Can Be Harmful: An Empirical Study of Skill-Induced Failures in LLM Agents",
+      "role": "SKILL_HARM_COLLISION",
+      "primary_url": "https://arxiv.org/abs/2608.11888",
+      "fact": "The paper reports 307 skill-induced failures across SkillsBench and SWE-Skills-Bench, including 125 functional failures and 182 efficiency regressions.",
+      "source_scope": "OFFICIAL_ARXIV_RELATED_WORK"
     }
   ],
   "closed_basins": [
@@ -249,6 +261,7 @@
     "harness_smoke": "2cc1dc90b3cd0b748252b8ad02a4c97eb773edd368b31b1d2e67ba79919bad75",
     "formal_harness_manifest": "c63421780460562e4ed0cb2174d1af1ce6d24b883450969c456141e8521493b2",
     "runtime_asset_gate": "852ad8ad804ee67e5bbcf3cb9f6f332b1f1161c8fc9b44c83b63276c124e2de5",
-    "provenance_readjudication": "b7daa7ae66b673e07eef06e478f4e754fb326d7aa05b7aeaf5ab3e1a97c4ef0e"
+    "provenance_readjudication": "7730aa5bedc96c358c3563e4e6ca3bd9bbe8c31a6bc02c765d64bc7f11ebde62",
+    "literature_survey_supplement": "bb572fe63b188f9fb7cc1a1a17c38b76e5473e70da765b15bf120bead2c91ca2"
   }
 }

@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "AGENT_SAFETY_LITERATURE_SURVEY_SUPPLEMENT",
+  "generated_at": "2026-08-19T05:00:00+00:00",
+  "scope": "RELATED_PRIMARY_LITERATURE_SURVEY_ONLY",
+  "scientific_authority": false,
+  "primary_transaction_authority": false,
+  "records": [
+    {
+      "ref": "arXiv:2608.11888",
+      "title": "Agent Skills Can Be Harmful: An Empirical Study of Skill-Induced Failures in LLM Agents",
+      "primary_url": "https://arxiv.org/abs/2608.11888",
+      "source_scope": "OFFICIAL_ARXIV_RELATED_WORK",
+      "publication_date": "2026-08-12",
+      "empirical_facts": [
+        {
+          "text": "The paper reports 307 skill-induced failures across SkillsBench and SWE-Skills-Bench, including 125 functional failures and 182 efficiency regressions.",
+          "evidence_tier": "official-abstract-quantitative"
+        }
+      ],
+      "scientific_authority": false,
+      "primary_transaction_authority": false
+    }
+  ]
+}
