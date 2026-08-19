@@ -150,6 +150,8 @@ def run_support(args: argparse.Namespace) -> dict[str, Any]:
                 if args.max_new_episodes and new >= args.max_new_episodes:
                     progress = candidate_progress(state_id, plan, journal)
                     _write_adjudication(out, progress, contract)
+                    if progress["status"] == "selected":
+                        return _selection(out, contract, plan, journal, state_id)
                     return _partial(new, progress, journal)
             progress = candidate_progress(state_id, plan, journal)
             _write_adjudication(out, progress, contract)
