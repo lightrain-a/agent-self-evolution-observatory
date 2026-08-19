@@ -5,9 +5,9 @@
   "status": "PASS",
   "package": {
     "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-    "sha256": "8b14c78e4dbd53afe458edeea9c0ccdebacbccef3e4b510e85987c093e29d930",
-    "manifest_sha256": "5c941fa85e276f25fbaf50d3bd23e2060b206769339688c93bacf62f9503c4fb",
-    "package_metadata_sha256": "8c535d613ad23d226f600f9ee64ce7ec3333835a73d4ed3570f09a35a33aa77c"
+    "sha256": "f99a01a92c3db432417baee440ddb7b9cae1fc98f22d56da053d41693cad576b",
+    "manifest_sha256": "971859539b2722aea2d306d5e7a3330f3aef1bb87931ed6754aeb02bdf98cc6e",
+    "package_metadata_sha256": "6f952a8949190f2b4b98b4186f5dee662d088bc67b72da1b0ea99d801636bbc4"
   },
   "isolated_verification": {
     "fresh_extract_manifest": "PASS",
@@ -161,6 +161,35 @@
         0.0
       ],
       "third_party_author_repo_packaged": false
+    },
+    "autoskill_p19_dynamic": {
+      "decision": "GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION",
+      "groups": {
+        "A_original": {
+          "valid_runs": 6,
+          "total_runs": 6,
+          "destructive_signature_positive": 6
+        },
+        "B_split4": {
+          "valid_runs": 6,
+          "total_runs": 6,
+          "destructive_signature_positive": 0
+        },
+        "C_id_placebo": {
+          "valid_runs": 3,
+          "total_runs": 3,
+          "destructive_signature_positive": 3
+        },
+        "D_quotient_control": {
+          "valid_runs": 3,
+          "total_runs": 3,
+          "destructive_signature_positive": 3
+        }
+      },
+      "fisher_exact_p": 0.0010822510822510823,
+      "run_count": 18,
+      "all_valid": true,
+      "claim_boundary": "Single archived P19 behavioral-harm substrate. Supports a representation-to-retrieval-to-executed-behavior consequence under the frozen AutoSkill top-k operationalization; does not establish task-utility effects, general AutoSkill safety, or automatic full-paper authority."
     }
   },
   "frozen_external_repositories": {
@@ -181,12 +210,13 @@
     ],
     "forbidden": [
       "downstream utility harm",
-      "dynamic STRI success",
       "empirical SQC success",
       "LP algorithm novelty",
       "using the qualification-failed Qwen3 pilot as scientific evidence for or against dynamic STRI",
       "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end",
-      "treating quotient-conserved clone allocation as downstream utility validation or as a repair for non-realizable partial-overlap support geometry"
+      "treating quotient-conserved clone allocation as downstream utility validation or as a repair for non-realizable partial-overlap support geometry",
+      "generalized dynamic STRI success beyond the frozen AutoSkill/P19 behavior-level result",
+      "treating the AutoSkill P19 behavior-level result as task utility, longitudinal regret, end-to-end AutoSkill runtime validation, or general AutoSkill safety"
     ]
   },
   "new_gpu_evidence_required_for_current_claim_scope": false,

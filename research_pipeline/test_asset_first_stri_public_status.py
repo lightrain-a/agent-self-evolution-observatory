@@ -30,7 +30,7 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         self.assertEqual(state["summary"]["paper_quality_source_binding"], 1)
         self.assertTrue(state["gates"]["paper_quality_source_binding"])
         self.assertEqual(state["summary"]["paper_quality_content_addressed_completion"], 1)
-        self.assertEqual(state["summary"]["paper_quality_content_addressed_files"], 20)
+        self.assertEqual(state["summary"]["paper_quality_content_addressed_files"], 25)
         self.assertTrue(state["gates"]["paper_quality_content_addressed_completion"])
         self.assertEqual(state["summary"]["paper_quality_evidence_debt"], 0)
         self.assertEqual(state["summary"]["paper_quality_main_visualizations"], 4)

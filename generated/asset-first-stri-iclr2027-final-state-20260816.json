@@ -11,11 +11,12 @@
   ],
   "claims_forbidden": [
     "downstream utility harm",
-    "dynamic STRI success",
     "empirical SQC success",
     "LP algorithm novelty",
     "using the Qwen3-8B proposer-qualification-failed bank as scientific evidence for or against dynamic STRI",
-    "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end"
+    "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end",
+    "generalized dynamic STRI success beyond the frozen AutoSkill/P19 behavior-level result",
+    "treating the AutoSkill P19 behavior-level result as task utility, longitudinal regret, end-to-end AutoSkill runtime validation, or general AutoSkill safety"
   ],
   "official_format": {
     "venue": "ICLR 2027",
@@ -26,7 +27,7 @@
     "abstract_single_paragraph": true,
     "ai_use_statement_present": true,
     "reproducibility_statement_present": true,
-    "resolved_citations": 15,
+    "resolved_citations": 16,
     "overfull_boxes": 0,
     "undefined_citations": 0,
     "undefined_references": 0,
@@ -53,18 +54,18 @@
     "remote_directory": "/data/wyt/agent-self-evolution-observatory/submission-packages",
     "pdf": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816.pdf",
-      "sha256": "b6a30dbca94539a85cafdc1b867883ba42017ce01fba5b30fe152cd8b43bfaf4"
+      "sha256": "50a2770ffa5989a5a3994d738729c064ca1c4a485a5666fb577ca24a5fc8ccda"
     },
     "source_zip": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-source.zip",
-      "sha256": "476af7f9808ec475e93ce2e2828071ad9de9f674e6e1709c2dd73b67c4bb1c14",
+      "sha256": "3c3a0a892398c5539456226475c281a008d34f7c983d578c15b823703c7ed2e7",
       "files": 12,
       "isolated_compile_verified": true
     },
     "supplement_zip": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-      "sha256": "8b14c78e4dbd53afe458edeea9c0ccdebacbccef3e4b510e85987c093e29d930",
-      "manifest_sha256": "5c941fa85e276f25fbaf50d3bd23e2060b206769339688c93bacf62f9503c4fb",
+      "sha256": "f99a01a92c3db432417baee440ddb7b9cae1fc98f22d56da053d41693cad576b",
+      "manifest_sha256": "971859539b2722aea2d306d5e7a3330f3aef1bb87931ed6754aeb02bdf98cc6e",
       "isolated_reproduction_verified": true,
       "unit_tests": "13/13 PASS",
       "identity_path_scan": "PASS",
@@ -114,6 +115,50 @@
     "persistent_principle_dead_end_certified": false,
     "stage2_locked": true,
     "new_gpu_authorized": false,
-    "broader_STRI_N1_N2_N3_unchanged": true
+    "broader_STRI_N1_N2_N3_unchanged": true,
+    "autoskill_p19": {
+      "decision": "GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION",
+      "claim_boundary": "Single archived P19 behavioral-harm substrate. Supports a representation-to-retrieval-to-executed-behavior consequence under the frozen AutoSkill top-k operationalization; does not establish task-utility effects, general AutoSkill safety, or automatic full-paper authority.",
+      "groups": {
+        "A_original": {
+          "valid_runs": 6,
+          "total_runs": 6,
+          "destructive_signature_positive": 6
+        },
+        "B_split4": {
+          "valid_runs": 6,
+          "total_runs": 6,
+          "destructive_signature_positive": 0
+        },
+        "C_id_placebo": {
+          "valid_runs": 3,
+          "total_runs": 3,
+          "destructive_signature_positive": 3
+        },
+        "D_quotient_control": {
+          "valid_runs": 3,
+          "total_runs": 3,
+          "destructive_signature_positive": 3
+        }
+      },
+      "fisher_exact_p": 0.0010822510822510823,
+      "frozen_gates": {
+        "A_ge_5_of_6": true,
+        "B_le_1_of_6": true,
+        "C_eq_3_of_3": true,
+        "D_eq_3_of_3": true,
+        "zero_invalid_runs": true,
+        "fisher_p_le_0_05": true
+      },
+      "judge_calls": 0,
+      "training_steps": 0,
+      "fresh_container_per_run": true,
+      "source_run_manifest_sha256": "043e2cefc82b2a97c8834dc231b33d4dc37551dd0e2b0be39ed5a03f97fc6564",
+      "packaged_run_manifest_sha256": "dbd6244430677b65bc7a1202ea1b4d2eae64dd06cd74b204eb673d511639360b",
+      "run_manifest_canonical_sha256": "f7eaed62b6b2f72f609bdcad7895175b1e2649a4758895e9c7b67483a4e9971a"
+    },
+    "autoskill_p19_behavioral_claim_supported": true,
+    "autoskill_p19_task_utility_claim_authorized": false,
+    "autoskill_p19_generalization_claim_authorized": false
   }
 }

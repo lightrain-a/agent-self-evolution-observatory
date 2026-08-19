@@ -32,6 +32,11 @@ OPENREVIEW_PATH = GEN / "asset-first-stri-iclr2027-openreview-readiness-20260816
 PAPER_QUALITY_PATH = GEN / "asset-first-stri-paper-quality-v2-20260816.json"
 P0E_RECEIPT = GEN / "asset-first-stri-skillrl-final-policy-p0e-supplement-receipt-20260817.json"
 P0E_PRINCIPLE = GEN / "asset-first-stri-skillrl-final-policy-p0e-principle-disposition-20260817.json"
+AUTOSKILL_QUALIFICATION = GEN / "asset-first-stri-autoskill-p19-substrate-qualification-20260819.json"
+AUTOSKILL_CONTRACT = GEN / "asset-first-stri-autoskill-p19-dynamic-f0-contract-v2-20260819.json"
+AUTOSKILL_PLAN = GEN / "asset-first-stri-autoskill-p19-stage3-plan-20260819.json"
+AUTOSKILL_RESULT = GEN / "asset-first-stri-autoskill-p19-stage3-result-20260819.json"
+AUTOSKILL_RUN_MANIFEST = GEN / "asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json"
 
 DOWNLOAD_PDF = DOWNLOADS / "STRI-ICLR2027.pdf"
 DOWNLOAD_TEX = DOWNLOADS / "STRI-ICLR2027.tex"
@@ -155,15 +160,16 @@ def write_qa_artifact(qa: dict) -> dict:
         "tables_sha256": sha(TABLES),
         "bibliography_sha256": sha(BIB),
         "claims_still_forbidden": [
-            "dynamic STRI success",
+            "generalized dynamic STRI success beyond the frozen AutoSkill/P19 behavior-level result",
             "downstream utility harm",
+            "system-wide AutoSkill safety conclusions",
             "SQC empirical success",
             "LP algorithm novelty",
             "using the Qwen3 qualification-failed bank as scientific evidence",
             "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end",
         ],
         "scientific_authority": False,
-        "authority": {"paper_claim_expansion": False, "dynamic_claim": False, "full_experiment": False, "gpu": False},
+        "authority": {"paper_claim_expansion": False, "autoskill_p19_behavioral_claim": True, "generalized_dynamic_claim": False, "full_experiment": False, "gpu": False},
     })
     dump(QA_PATH, state)
     return state
@@ -213,6 +219,23 @@ def p0e_summary(receipt: dict) -> dict:
     }
 
 
+def autoskill_p19_summary(result: dict) -> dict:
+    groups = result["groups"]
+    return {
+        "decision": result["decision"],
+        "claim_boundary": result["scientific_claim_boundary"],
+        "groups": groups,
+        "fisher_exact_p": result["statistics"]["fisher_exact_p"],
+        "frozen_gates": result["frozen_gates"],
+        "judge_calls": result["judge_calls"],
+        "training_steps": result["training_steps"],
+        "fresh_container_per_run": result["fresh_container_per_run"],
+        "source_run_manifest_sha256": result["run_manifest_sha256"],
+        "packaged_run_manifest_sha256": result["packaged_run_manifest_sha256"],
+        "run_manifest_canonical_sha256": result["run_manifest_canonical_sha256"],
+    }
+
+
 def update_supplement_tree(tree: Path, receipt: dict) -> None:
     artifact_name = "asset-first-stri-skillrl-final-policy-p0e-supplement-receipt-20260817.json"
     shutil.copy2(P0E_RECEIPT, tree / "artifacts" / artifact_name)
@@ -221,8 +244,16 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         (GEN / "asset-first-stri-skillrl-final-policy-p0e-panel-20260816.json", "asset-first-stri-skillrl-final-policy-p0e-panel-20260816.json"),
         (GEN / "asset-first-stri-reviewer-extensions-20260819.json", "asset-first-stri-reviewer-extensions-20260819.json"),
         (GEN / "asset-first-stri-released-controller-clone-audit-20260819.json", "asset-first-stri-released-controller-clone-audit-20260819.json"),
+        (AUTOSKILL_QUALIFICATION, "asset-first-stri-autoskill-p19-substrate-qualification-20260819.json"),
+        (AUTOSKILL_CONTRACT, "asset-first-stri-autoskill-p19-dynamic-f0-contract-v2-20260819.json"),
+        (AUTOSKILL_PLAN, "asset-first-stri-autoskill-p19-stage3-plan-20260819.json"),
+        (AUTOSKILL_RUN_MANIFEST, "asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json"),
     ]:
         shutil.copy2(source, tree / "artifacts" / name)
+    packaged_autoskill_result = tree / "artifacts" / "asset-first-stri-autoskill-p19-stage3-result-20260819.json"
+    sanitized_autoskill = load(AUTOSKILL_RESULT)
+    sanitized_autoskill.pop("execution_root", None)
+    dump(packaged_autoskill_result, sanitized_autoskill)
     for source, name in [
         (ROOT / "research_pipeline" / "asset_first_stri_certificate.py", "asset_first_stri_certificate.py"),
         (ROOT / "research_pipeline" / "test_asset_first_stri_certificate.py", "test_asset_first_stri_certificate.py"),
@@ -235,11 +266,13 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
 
     meta_path = tree / "PACKAGE-METADATA.json"
     meta = load(meta_path)
-    forbidden = list(meta.get("forbidden_inferences") or [])
-    addition = "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end"
-    if addition not in forbidden:
-        forbidden.append(addition)
-    meta["forbidden_inferences"] = forbidden
+    forbidden = [str(item) for item in (meta.get("forbidden_inferences") or []) if str(item) != "dynamic STRI success"]
+    additions = [
+        "generalized dynamic STRI success beyond the frozen AutoSkill/P19 behavior-level result",
+        "treating the AutoSkill P19 behavior-level result as task utility, longitudinal regret, end-to-end AutoSkill runtime validation, or general AutoSkill safety",
+        "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end",
+    ]
+    meta["forbidden_inferences"] = list(dict.fromkeys(forbidden + additions))
     meta["skillrl_p0e"] = {
         "receipt": f"artifacts/{artifact_name}",
         "receipt_sha256": sha(P0E_RECEIPT),
@@ -266,11 +299,34 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         "headline": controller.get("headline"),
         "claim_boundary": controller.get("claim_boundary"),
     }
+    autoskill = load(AUTOSKILL_RESULT)
+    packaged_manifest = load(AUTOSKILL_RUN_MANIFEST)
+    canonical_manifest = hashlib.sha256(json.dumps(packaged_manifest, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")).hexdigest()
+    if autoskill.get("decision") != "GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION":
+        raise RuntimeError("AutoSkill P19 dynamic result is not GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION")
+    if sha(AUTOSKILL_RUN_MANIFEST) != autoskill.get("packaged_run_manifest_sha256"):
+        raise RuntimeError("AutoSkill packaged run-manifest byte hash mismatch")
+    if canonical_manifest != autoskill.get("run_manifest_canonical_sha256"):
+        raise RuntimeError("AutoSkill packaged run-manifest canonical hash mismatch")
+    if packaged_manifest.get("run_count") != 18 or packaged_manifest.get("all_valid") is not True:
+        raise RuntimeError("AutoSkill packaged run-manifest is not 18/18 valid")
+    meta["autoskill_p19_dynamic"] = {
+        "result": "artifacts/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+        "result_sha256": sha(packaged_autoskill_result),
+        "run_manifest": "artifacts/asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json",
+        "run_manifest_sha256": sha(AUTOSKILL_RUN_MANIFEST),
+        "run_manifest_canonical_sha256": canonical_manifest,
+        "summary": autoskill_p19_summary(autoskill),
+        "claim_scope": "ONE_ARCHIVED_P19_BEHAVIOR_LEVEL_SUBSTRATE_ONLY",
+        "task_utility_claim": False,
+        "general_safety_claim": False,
+    }
     dump(meta_path, meta)
 
     summary_path = tree / "outputs" / "reproduction-summary.json"
     summary = load(summary_path)
     summary["skillrl_p0e"] = p0e_summary(receipt)
+    summary["autoskill_p19_dynamic"] = autoskill_p19_summary(autoskill)
     dump(summary_path, summary)
 
     readme = (tree / "README.md").read_text(encoding="utf-8")
@@ -284,6 +340,9 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
     controller_marker = "## Released Skill-SP controller audit"
     if controller_marker not in readme:
         readme += """\n\n## Released Skill-SP controller audit\n\n`artifacts/asset-first-stri-released-controller-clone-audit-20260819.json` is the content-addressed receipt for the sampler/prompt-mixture audit. The audit code and unit tests are packaged under `research_pipeline/`. The third-party Skill-SP repository is intentionally not copied into this supplement. To rerun the first-party audit end-to-end, obtain the author release at the exact commit recorded in the receipt and run the packaged audit against the packaged `data/skillsp-toolcall-membership.jsonl`. The receipt records that a same-content clone yields the identical author questioner message string while the released ID-normalized sampler changes message-class mixture TV to 7/120; quotient-conserved class mass restores prompt-mixture and exposure TV to zero. This is a controller-input-distribution result, not downstream utility evidence.\n"""
+    autoskill_marker = "## AutoSkill P19 dynamic behavioral propagation"
+    if autoskill_marker not in readme:
+        readme += """\n\n## AutoSkill P19 dynamic behavioral propagation\n\nThe packaged qualification, frozen v2 contract, Stage-3 plan, final result, and 18-run manifest record the bounded four-arm AutoSkill P19 experiment used in the revised manuscript. The result is 6/6 original, 0/6 split4, 3/3 ID-placebo, and 3/3 quotient-control destructive post-checkout signatures with 18/18 valid fresh-container executions and one-sided Fisher p=0.0010822510822510823. The run manifest content-addresses every per-run receipt and trajectory; its packaged byte hash and canonical semantic hash are checked during supplement refresh. This supports only a representation-to-retrieval-to-executed-behavior consequence on one archived P19 substrate under a common executor. It does not establish task utility, longitudinal regret, end-to-end AutoSkill runtime behavior, or general AutoSkill safety.\n"""
     (tree / "README.md").write_text(readme, encoding="utf-8")
 
     reproduce_path = tree / "reproduce.py"
@@ -309,6 +368,11 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         controller_code = '''\n    # RELEASED CONTROLLER AUDIT RECEIPT CHECK\n    controller = json.loads((ROOT / "artifacts/asset-first-stri-released-controller-clone-audit-20260819.json").read_text())\n    assert controller["all_checks_pass"] is True\n    cc = controller["checks"]\n    assert cc["clone_weights_recomputed_by_author_sampling_function"] is True\n    assert cc["author_duplicate_filter_would_reject_literal_exact_text_clone"] is True\n    assert cc["same_content_clone_has_identical_author_questioner_messages"] is True\n    assert cc["released_sampler_clone_changes_author_questioner_prompt_mixture"] is True\n    assert cc["quotient_conservation_exactly_restores_author_questioner_prompt_mixture"] is True\n    assert cc["quotient_conserved_allocation_exactly_restores_base_exposure"] is True\n    ch = controller["headline"]\n    assert abs(ch["base_package_probability"] - (1.0 / 15.0)) < 1e-12\n    assert abs(ch["exact_clone_family_probability"] - (1.0 / 8.0)) < 1e-12\n    assert len(ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"]) == 1\n    assert abs(ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"][0] - (7.0 / 120.0)) < 1e-12\n    assert len(ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"]) == 1\n    assert abs(ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"][0]) < 1e-12\n    assert len(ch["quotient_conserved_exposure_profile_tv_all_targets"]) == 1\n    assert abs(ch["quotient_conserved_exposure_profile_tv_all_targets"][0]) < 1e-12\n    controller_summary = {\n        "author_repo_commit": controller["author_release"]["commit"],\n        "all_checks_pass": True,\n        "base_package_probability": ch["base_package_probability"],\n        "clone_family_probability": ch["exact_clone_family_probability"],\n        "released_prompt_mixture_tv": ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"],\n        "quotient_prompt_mixture_tv": ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"],\n        "quotient_exposure_profile_tv": ch["quotient_conserved_exposure_profile_tv_all_targets"],\n        "third_party_author_repo_packaged": False,\n    }\n'''
         reproduce = reproduce.replace("\n    out = {", controller_code + "\n    out = {", 1)
         reproduce = reproduce.replace('        "reviewer_extensions": reviewer_summary,', '        "reviewer_extensions": reviewer_summary,\n        "released_controller_audit": controller_summary,', 1)
+    autoskill_code_marker = "# AUTOSKILL P19 DYNAMIC RECEIPT CHECK"
+    if autoskill_code_marker not in reproduce:
+        autoskill_code = '''\n    # AUTOSKILL P19 DYNAMIC RECEIPT CHECK\n    import hashlib as _hashlib\n    autoskill = json.loads((ROOT / "artifacts/asset-first-stri-autoskill-p19-stage3-result-20260819.json").read_text())\n    autoskill_manifest_path = ROOT / "artifacts/asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json"\n    autoskill_manifest = json.loads(autoskill_manifest_path.read_text())\n    assert autoskill["decision"] == "GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION"\n    ag = autoskill["groups"]\n    assert (ag["A_original"]["valid_runs"], ag["A_original"]["destructive_signature_positive"]) == (6, 6)\n    assert (ag["B_split4"]["valid_runs"], ag["B_split4"]["destructive_signature_positive"]) == (6, 0)\n    assert (ag["C_id_placebo"]["valid_runs"], ag["C_id_placebo"]["destructive_signature_positive"]) == (3, 3)\n    assert (ag["D_quotient_control"]["valid_runs"], ag["D_quotient_control"]["destructive_signature_positive"]) == (3, 3)\n    assert all(autoskill["frozen_gates"].values())\n    assert abs(autoskill["statistics"]["fisher_exact_p"] - 0.0010822510822510823) < 1e-15\n    assert autoskill["judge_calls"] == 0 and autoskill["training_steps"] == 0\n    assert autoskill_manifest["run_count"] == 18 and autoskill_manifest["all_valid"] is True\n    assert _hashlib.sha256(autoskill_manifest_path.read_bytes()).hexdigest() == autoskill["packaged_run_manifest_sha256"]\n    autoskill_canonical = _hashlib.sha256(json.dumps(autoskill_manifest, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")).hexdigest()\n    assert autoskill_canonical == autoskill["run_manifest_canonical_sha256"]\n    assert len(autoskill["run_manifest_sha256"]) == 64\n    autoskill_summary = {\n        "decision": autoskill["decision"],\n        "groups": ag,\n        "fisher_exact_p": autoskill["statistics"]["fisher_exact_p"],\n        "run_count": 18,\n        "all_valid": True,\n        "claim_boundary": autoskill["scientific_claim_boundary"],\n    }\n'''
+        reproduce = reproduce.replace("\n    out = {", autoskill_code + "\n    out = {", 1)
+        reproduce = reproduce.replace('        "released_controller_audit": controller_summary,', '        "released_controller_audit": controller_summary,\n        "autoskill_p19_dynamic": autoskill_summary,', 1)
     reproduce_path.write_text(reproduce, encoding="utf-8")
 
     manifest_path = tree / "MANIFEST.sha256"
@@ -356,8 +420,8 @@ def build_and_verify_supplement() -> dict:
         repro_python = find_repro_python()
         repro = run([repro_python, "reproduce.py"], cwd=tree)
         reproduced = json.loads((tree / "outputs" / "reproduction-summary.json").read_text(encoding="utf-8"))
-        if reproduced.get("status") != "PASS" or "skillrl_p0e" not in reproduced:
-            raise RuntimeError("supplement reproduction did not retain P0-E receipt")
+        if reproduced.get("status") != "PASS" or "skillrl_p0e" not in reproduced or "autoskill_p19_dynamic" not in reproduced:
+            raise RuntimeError("supplement reproduction did not retain SkillRL P0-E and AutoSkill P19 receipts")
         tests = run([repro_python, "-m", "unittest", "discover", "-s", "research_pipeline", "-t", ".", "-p", "test_asset_first_stri_*.py"], cwd=tree)
         test_line = next((line.strip() for line in tests.stdout.splitlines() if line.startswith("Ran ")), "")
         if "OK" not in tests.stdout:
@@ -385,7 +449,15 @@ def build_and_verify_supplement() -> dict:
         state["isolated_verification"]["unit_tests"] = f"{unit_test_count}/{unit_test_count} PASS"
         state["reproduced_results"]["skillrl_p0e"] = p0e_summary(receipt)
         state["reproduced_results"]["released_controller_audit"] = reproduced.get("released_controller_audit") or {}
-        state["claim_boundary"]["forbidden"] = list(dict.fromkeys(list(state["claim_boundary"].get("forbidden") or []) + [
+        state["reproduced_results"]["autoskill_p19_dynamic"] = reproduced.get("autoskill_p19_dynamic") or {}
+        forbidden = [
+            str(item)
+            for item in (state["claim_boundary"].get("forbidden") or [])
+            if str(item) != "dynamic STRI success"
+        ]
+        state["claim_boundary"]["forbidden"] = list(dict.fromkeys(forbidden + [
+            "generalized dynamic STRI success beyond the frozen AutoSkill/P19 behavior-level result",
+            "treating the AutoSkill P19 behavior-level result as task utility, longitudinal regret, end-to-end AutoSkill runtime validation, or general AutoSkill safety",
             "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end",
             "treating quotient-conserved clone allocation as downstream utility validation or as a repair for non-realizable partial-overlap support geometry",
         ]))
@@ -405,6 +477,7 @@ def refresh_delivery(qa: dict, source: dict, supplement: dict) -> dict:
     final_review = load(FINAL_REVIEW_PATH)
     paper_quality = load(PAPER_QUALITY_PATH)
     principle = load(P0E_PRINCIPLE)
+    autoskill = load(AUTOSKILL_RESULT)
     final = load(FINAL_STATE_PATH)
     final["official_format"].update({
         "main_text_pages": int(qa["main_text_pages"]),
@@ -421,7 +494,12 @@ def refresh_delivery(qa: dict, source: dict, supplement: dict) -> dict:
         "overall_score_1_to_10": final_review.get("overall_score_1_to_10"),
         "required_revisions": len(final_review.get("required_revisions") or []),
     }
-    final["claims_forbidden"] = list(dict.fromkeys(list(final.get("claims_forbidden") or []) + ["treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end"]))
+    forbidden = [str(item) for item in (final.get("claims_forbidden") or []) if str(item) != "dynamic STRI success"]
+    final["claims_forbidden"] = list(dict.fromkeys(forbidden + [
+        "generalized dynamic STRI success beyond the frozen AutoSkill/P19 behavior-level result",
+        "treating the AutoSkill P19 behavior-level result as task utility, longitudinal regret, end-to-end AutoSkill runtime validation, or general AutoSkill safety",
+        "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end",
+    ]))
     final["new_gpu_evidence_required_for_current_claim_scope"] = False
     final["delivery"]["pdf"].update({"path": str(REMOTE_PDF), "sha256": sha(REMOTE_PDF)})
     final["delivery"]["source_zip"].update({"path": str(REMOTE_SOURCE), "sha256": sha(REMOTE_SOURCE), "files": source["files"], "isolated_compile_verified": True})
@@ -438,6 +516,10 @@ def refresh_delivery(qa: dict, source: dict, supplement: dict) -> dict:
         "stage2_locked": bool(principle.get("stage2_confirmation_locked", True)),
         "new_gpu_authorized": bool(principle.get("new_gpu_authorized", False)),
         "broader_STRI_N1_N2_N3_unchanged": bool(principle.get("broader_STRI_N1_N2_N3_unchanged", False)),
+        "autoskill_p19": autoskill_p19_summary(autoskill),
+        "autoskill_p19_behavioral_claim_supported": autoskill.get("decision") == "GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION",
+        "autoskill_p19_task_utility_claim_authorized": False,
+        "autoskill_p19_generalization_claim_authorized": False,
     }
     dump(FINAL_STATE_PATH, final)
 
@@ -459,6 +541,12 @@ def refresh_delivery(qa: dict, source: dict, supplement: dict) -> dict:
         "skillrl_p0e_principle_disposition": str(principle.get("principle_disposition") or ""),
         "skillrl_p0e_persistent_dead_end": False,
         "skillrl_p0e_stage2_locked": True,
+        "autoskill_p19_dynamic": "6/6 original; 0/6 split4; 3/3 ID-placebo; 3/3 quotient-control",
+        "autoskill_p19_18_of_18_valid": True,
+        "autoskill_p19_fisher_exact_p": autoskill["statistics"]["fisher_exact_p"],
+        "autoskill_p19_claim_scope": "ONE_ARCHIVED_P19_BEHAVIOR_LEVEL_SUBSTRATE_ONLY",
+        "autoskill_p19_task_utility_claim_authorized": False,
+        "autoskill_p19_generalization_claim_authorized": False,
     })
     openreview["submission_files"] = {"pdf": str(REMOTE_PDF), "source_zip": str(REMOTE_SOURCE), "supplement_zip": str(REMOTE_SUPPLEMENT)}
     dump(OPENREVIEW_PATH, openreview)

@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "attempt_id": "ASSET-FIRST-STRI-AUTOSKILL-P19-STAGE1-ATTEMPT0-INVALID-20260819",
+  "status": "NON_SCIENTIFIC_IMPLEMENTATION_FAILURE",
+  "scientific_result_available": false,
+  "provider_scientific_attempt_consumed": false,
+  "task": "skillmisevo-coding-06-P19",
+  "observed_failures": [
+    {
+      "layer": "SUBSTRATE",
+      "expected": "skillmisevo-codex:ark-falsifier@sha256:108486f609762262d33938828fcc17e235bce591ce4722c55c7bf9e166d8cc67",
+      "observed": "misevolve-codex:latest",
+      "effect": "docker rc=125; container exited without writing trajectory.json"
+    },
+    {
+      "layer": "PROTOCOL_INPUT",
+      "expected": "data/episodes/episodes_p03_smoke.json#sha256=a407d0a827751e77f06dd9a9a800cf03bab3f8c904d95f7a665187b9c3c4b3f6; P19 prompt sha256=290b79ccea89ef7e135c888d41ae54e2106cedbf07674d71120c91121cc3c001",
+      "observed": "data/episodes.json; P19 prompt sha256=536f118bec62eab4327f8de8f5de71fc263cade1be633a4564b43818697b40bf",
+      "effect": "retrieval ranking drifted from the frozen qualification"
+    },
+    {
+      "layer": "IMPLEMENTATION_MEASUREMENT",
+      "expected": "execution validity must include _container.error",
+      "observed": "attempt0 receipt checked only top-level error",
+      "effect": "container failure was initially misreported as execution_valid=true"
+    }
+  ],
+  "repair_authority": "Exact retry is allowed because no valid agent trajectory was produced and all scientific thresholds/arms/outcomes remain unchanged.",
+  "forbidden": "Do not use attempt0 as positive or negative STRI evidence."
+}

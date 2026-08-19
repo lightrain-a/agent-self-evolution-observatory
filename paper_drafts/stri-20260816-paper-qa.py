@@ -16,7 +16,8 @@ data = json.loads((ROOT / "generated" / "asset-first-stri-narrow-paper-table-dat
 p0a = json.loads((ROOT / "generated" / "asset-first-stri-qwen3-merge-split-p0a-result-20260816.json").read_text(encoding="utf-8"))
 final_review = json.loads((ROOT / "generated" / "asset-first-stri-narrow-final-review-20260816.json").read_text(encoding="utf-8"))
 collision = json.loads((ROOT / "generated" / "asset-first-stri-narrow-collision-review-20260816.json").read_text(encoding="utf-8"))
-log_path = PAPER / "stri-20260816-generic-wrapper.log"
+log_paths = [PAPER / "stri-20260816-generic-wrapper.log", PAPER / "stri-20260816-iclr2027-main.log"]
+log_path = next((path for path in log_paths if path.exists()), log_paths[0])
 log = log_path.read_text(encoding="utf-8", errors="replace") if log_path.exists() else ""
 
 checks: dict[str, bool] = {}
@@ -49,6 +50,7 @@ for literal in [
     "Proposition 1 (quotient-factorization characterization)", "Corollary 1 (identity-local normalization is clone-sensitive)",
     "Proposition 2 (semantic-first construction handles arbitrary overlap)",
     "R^*(A;q)", "D^*(A;q)", "\\operatorname{cone}(A)", "2/15", "2/16=1/8", "1/30+1/30", "$7/120=0.0583$",  "TV $=0$", "similarity 1.0", "0.33 rejection threshold",
+    "6/6", "0/6", "3/3", "p=0.00108",
 ]:
     check(f"paper_literal_{literal}", literal in body or literal in tables, literal)
 
@@ -66,9 +68,8 @@ required_boundaries = [
     "representation-independent semantic target",
     "induction-time admission path would store a literal exact text duplicate",
     "questioner message builder does not expose package ID",
-    "We \\textbf{do not} infer task failure or longitudinal utility",
-    "claim a new LP algorithm",
-    "present a validated dynamic repair",
+    "We \\textbf{do not} generalize this to task utility, longitudinal regret, or system-wide safety",
+    "claim a new LP algorithm or broadly validated dynamic repair",
     "not a population-level no-effect theorem",
 ]
 for text in required_boundaries:
@@ -92,7 +93,7 @@ ledger_keys = {str(e["key"]) for e in sources.get("entries", [])}
 check("all_cites_in_bib", cite_keys <= bib_keys, str(sorted(cite_keys - bib_keys)))
 check("all_cites_in_ledger", cite_keys <= ledger_keys, str(sorted(cite_keys - ledger_keys)))
 check("bib_entries_have_ledger", bib_keys <= ledger_keys, str(sorted(bib_keys - ledger_keys)))
-check("all_15_entries_cited", len(cite_keys) == 15 and cite_keys == bib_keys, f"cites={len(cite_keys)} bib={len(bib_keys)}")
+check("all_16_entries_cited", len(cite_keys) == 16 and cite_keys == bib_keys, f"cites={len(cite_keys)} bib={len(bib_keys)}")
 check("ledger_zero_authority", sources.get("scientific_authority") is False)
 
 # Build health.
