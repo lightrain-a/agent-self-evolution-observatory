@@ -210,10 +210,39 @@ def _validate_receipt_row(request: dict[str, Any], receipt: dict[str, Any]) -> d
         "primary_refs": refs,
         "scientific_authority": False,
     }
+    support_audit_artifact = _bounded(receipt.get("support_audit_artifact"), 500)
+    support_audit_sha256 = str(receipt.get("support_audit_sha256") or "").strip().lower()
+    support_audit_payload: dict[str, Any] | None = None
+    if bool(support_audit_artifact) != bool(support_audit_sha256):
+        raise ValueError(f"support audit artifact/digest must be supplied together: {candidate_id}")
+    if support_audit_artifact:
+        relative = Path(support_audit_artifact)
+        if relative.is_absolute() or ".." in relative.parts or not relative.parts or relative.parts[0] != "generated":
+            raise ValueError(f"support audit artifact must be a generated-relative path: {candidate_id}")
+        if not re.fullmatch(r"[0-9a-f]{64}", support_audit_sha256):
+            raise ValueError(f"support audit digest must be sha256: {candidate_id}")
+        support_audit_path = PROJECT_ROOT / relative
+        if not support_audit_path.is_file() or _sha(support_audit_path) != support_audit_sha256:
+            raise ValueError(f"support audit artifact digest mismatch: {candidate_id}")
+        support_audit_payload = _load(support_audit_path)
+        if str(support_audit_payload.get("candidate_id") or "").strip() != candidate_id:
+            raise ValueError(f"support audit candidate identity mismatch: {candidate_id}")
+        if support_audit_payload.get("scientific_authority") is not False:
+            raise ValueError(f"support audit must remain zero scientific authority: {candidate_id}")
+        audit_authority = support_audit_payload.get("authority") or {}
+        if isinstance(audit_authority, dict) and any(value is not False for value in audit_authority.values()):
+            raise ValueError(f"support audit downstream authority must remain false: {candidate_id}")
+        audit_required_unit = _bounded(support_audit_payload.get("required_unit"), 1800)
+        if audit_required_unit != required_unit:
+            raise ValueError(f"support audit required-unit contract mismatch: {candidate_id}")
+        out["support_audit_artifact"] = support_audit_artifact
+        out["support_audit_sha256"] = support_audit_sha256
     if disposition == "HOLD_SUPPORT_UNAVAILABLE":
         reopen = _bounded(receipt.get("reopen_only_if"), 1800)
         if not reopen:
             raise ValueError(f"support HOLD requires reopen condition: {candidate_id}")
+        if support_audit_payload is not None and _bounded(support_audit_payload.get("reopen_only_if"), 1800) != reopen:
+            raise ValueError(f"support audit reopen contract mismatch: {candidate_id}")
         out["reopen_only_if"] = reopen
         out["bounded_first_party_evidence_design_allowed"] = True
         out["next_route"] = "BOUNDED_EVIDENCE_DESIGN_OR_WAIT_PRIMARY_ASSET"

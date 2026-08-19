@@ -118,6 +118,37 @@ class ProblemFalsifierPreflightTest(unittest.TestCase):
         self.assertFalse(state["authority"]["experiment"])
         self.assertFalse(state["authority"]["gpu"])
 
+    def test_support_audit_binding_requires_exact_digest_identity_and_contract(self) -> None:
+        audit_path=Path(__file__).parents[1]/"generated"/"zetta-timescale-support-audit-20260819.json"
+        audit=json.loads(audit_path.read_text(encoding="utf-8"));digest=hashlib.sha256(audit_path.read_bytes()).hexdigest()
+        pre=json.loads(json.dumps(self.pre_f0()));pre["rows"][0]["candidate_id"]="PORT-003";pre["rows"][0]["primary_refs"]=audit["source_refs"]
+        inventory={"inventory_origin":"zetta-schema-audit-test","rows":[{
+            "candidate_id":"PORT-003","disposition":"HOLD_SUPPORT_UNAVAILABLE","required_unit":audit["required_unit"],
+            "asset_audit":"The released schema blocks the frozen intermediate intervention arms.","primary_refs":audit["source_refs"],
+            "support_audit_artifact":"generated/zetta-timescale-support-audit-20260819.json","support_audit_sha256":digest,
+            "reopen_only_if":audit["reopen_only_if"],
+        }],"scientific_authority":False}
+        row=compile_pre_f0_problem_falsifier_preflight(pre,inventory,run_id="pre-f0-r1")["rows"][0]
+        self.assertEqual(row["support_audit_sha256"],digest);self.assertFalse(row["scientific_authority"])
+        bad=json.loads(json.dumps(inventory));bad["rows"][0]["support_audit_sha256"]="0"*64
+        with self.assertRaisesRegex(ValueError,"artifact digest mismatch"):
+            compile_pre_f0_problem_falsifier_preflight(pre,bad,run_id="pre-f0-r1")
+        bad=json.loads(json.dumps(inventory));bad["rows"][0]["reopen_only_if"]="A different reopen contract."
+        with self.assertRaisesRegex(ValueError,"reopen contract mismatch"):
+            compile_pre_f0_problem_falsifier_preflight(pre,bad,run_id="pre-f0-r1")
+
+    def test_support_audit_binding_rejects_wrong_candidate_identity(self) -> None:
+        audit_path=Path(__file__).parents[1]/"generated"/"zetta-timescale-support-audit-20260819.json"
+        audit=json.loads(audit_path.read_text(encoding="utf-8"));digest=hashlib.sha256(audit_path.read_bytes()).hexdigest()
+        inventory={"inventory_origin":"wrong-audit-binding-test","rows":[{
+            "candidate_id":"SHADOW-P01-C01","disposition":"HOLD_SUPPORT_UNAVAILABLE","required_unit":audit["required_unit"],
+            "asset_audit":"A deliberately wrong receipt binding for the unit test.","primary_refs":["arXiv:2608.00001"],
+            "support_audit_artifact":"generated/zetta-timescale-support-audit-20260819.json","support_audit_sha256":digest,
+            "reopen_only_if":audit["reopen_only_if"],
+        }],"scientific_authority":False}
+        with self.assertRaisesRegex(ValueError,"candidate identity mismatch"):
+            compile_problem_falsifier_preflight(self.machine(),inventory,run_id="shadow-rx")
+
     def test_support_qualified_requires_positive_units_and_content_manifest_but_still_no_execution_authority(self) -> None:
         inventory={"inventory_origin":"verified-private-support-inventory","rows":[{
             "candidate_id":"SHADOW-P01-C01","disposition":"SUPPORT_QUALIFIED",
