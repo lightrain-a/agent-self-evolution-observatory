@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-19T12:15:00Z",
+  "status": "MANUAL_ROOT_CAUSE_TRUTH_CONFIRMED_PUBLIC_CASE_LEVEL_JOIN_NOT_LOCATED",
+  "candidate_id": "SHADOW-P01-C02",
+  "source_ref": "arXiv:2608.11888",
+  "source_title": "Agent Skills Can Be Harmful: An Empirical Study of Skill-Induced Failures in LLM Agents",
+  "audit_scope": "Determine whether the frozen C02 falsifier can obtain author/manual IRF-versus-RRO truth joined to the paper-run task and loaded-skill identities without inferring labels locally.",
+  "first_party_arxiv_source": {
+    "url": "https://arxiv.org/e-print/2608.11888",
+    "archive_sha256": "122166b5601f05972f4bad8a700087466198ff9e1f7d1f87f81366395ea55486",
+    "source_files": {
+      "sections/03_methodology.tex": "e48c68e732843b73f46c77dd6d7ade1a6b3940e4c75de9f3f36dcbeb46024288",
+      "sections/05_rq2.tex": "3609ab90e8c869a19fa0d948270566f6570a1e343c51a1e001b15904c0160582",
+      "sections/07_rq4_attribution.tex": "fc073e2bb095bdf2257a54ea3c3ebb91420c91cc4c06f270f33ad0f4ab38e31e",
+      "related_work.bib": "1bfdaef8b4f2673d50d2f4b628bc75b5e8e997bcab179851a31e885c5c0cfe26"
+    }
+  },
+  "manual_truth_confirmation": {
+    "manual_case_level_root_cause_labels_exist_in_study": true,
+    "assignment_process": "After refinement, the authors manually inspect each remaining case, assign one root-cause label, and finalize labels through group consensus.",
+    "source_location": "sections/03_methodology.tex:117-124",
+    "functional_failure_case_count": 125,
+    "task_implementation_fault_case_count": 86,
+    "irf_label": "Incorrect Required-Element Fill",
+    "irf_case_count": 46,
+    "rro_label": "Required-Element Omission",
+    "rro_case_count": 36,
+    "irf_rro_case_count": 82,
+    "count_basis": "macro.tex plus sections/05_rq2.tex:85-97",
+    "skilltriage_truth_role": "SkillTriage is evaluated against manually assigned labels; it is not used to create the taxonomy or replace manual validation.",
+    "skilltriage_source_location": "sections/07_rq4_attribution.tex:4-19"
+  },
+  "paper_run_identity": {
+    "agent_runtime": "OpenCode 1.15.1",
+    "model": "Claude Opus 4.6",
+    "paired_design": "The task instruction, repository/container state, data files, verifier, agent framework, and model are fixed while skill setup changes.",
+    "per_run_fields_recorded_by_authors": [
+      "loaded skill",
+      "trajectory",
+      "verifier outcome",
+      "token use",
+      "execution time"
+    ],
+    "source_location": "sections/03_methodology.tex:94-96",
+    "implication": "The study internally had the identities needed for a task-skill-root-cause join, but internal existence is not equivalent to a released case-level truth table."
+  },
+  "arxiv_source_release_url_audit": {
+    "project_or_dataset_release_url_declared": false,
+    "skilltriage_code_release_url_declared": false,
+    "case_level_annotation_release_url_declared": false,
+    "explicit_urls_found_in_tex_bib": [
+      "https://github.com/anomalyco/opencode",
+      "https://www.anthropic.com/news/claude-opus-4-6",
+      "https://openai.com/index/introducing-gpt-5-5/"
+    ],
+    "interpretation": "The submitted arXiv source contains dependency/reference URLs but no author-declared project, code, dataset, SkillTriage, or case-level annotation release URL. This is evidence about the submitted source only, not proof that no external release can ever exist."
+  },
+  "public_repository_search": {
+    "audited_at": "2026-08-19",
+    "github_repository_api": {
+      "queries": {
+        "\"Agent Skills Can Be Harmful\"": 0,
+        "SkillTriage": 0,
+        "\"2608.11888\"": 0,
+        "\"Incorrect Required-Element Fill\"": 0
+      },
+      "result_semantics": "Exact repository-search queries returned zero repositories at audit time. Repository search does not prove absence of matching strings inside unrelated repositories."
+    },
+    "github_code_api": {
+      "status": "NOT_EXECUTABLE_UNAUTHENTICATED",
+      "http_status": 401,
+      "interpretation": "No zero-result claim is made for GitHub code search."
+    }
+  },
+  "skillsbench_trajectory_non_substitution": {
+    "allowed_use": "Original SkillsBench trajectory assets may help recover original benchmark runs only when their exact run identity is proven.",
+    "forbidden_substitution": "Do not treat the original SkillsBench trajectory repository as the harmful-paper target/reference dataset merely because both use SkillsBench tasks.",
+    "reason": "The harmful-paper study executes a new controlled OpenCode 1.15.1 plus Claude Opus 4.6 comparison space and records loaded skills per run; its paper-time task/skill/run identities must be recovered from that study or an independently equivalent truth source."
+  },
+  "remaining_missing_public_truth": [
+    "A released row-level mapping from each manually adjudicated IRF/RRO case to a stable paper-run case identity",
+    "The host-task identity for each released manually adjudicated IRF/RRO case",
+    "The loaded-skill identity for each released manually adjudicated IRF/RRO case"
+  ],
+  "disposition": "HOLD_SUPPORT_PUBLIC_CASE_LEVEL_LABEL_JOIN_UNAVAILABLE",
+  "why_hold": "The root-cause truth itself is no longer uncertain: the first-party arXiv source explicitly states that each retained case was manually inspected, assigned one root-cause label, and finalized through group consensus, and the paper fixes IRF=46 and RRO=36. The same source also states that each executed run recorded its loaded skill and trajectory. However, the submitted source does not expose a project/code/data release URL or a row-level annotation table joining those manual labels to stable paper-run task and loaded-skill identities, and exact GitHub repository searches did not locate a matching release as of 2026-08-19. The frozen C02 falsifier therefore remains blocked on public/reviewable case-level truth, not on benchmark provenance and not on whether manual labels existed internally.",
+  "reopen_only_if": "Reopen when a first-party case-level release, or an independently reviewed equivalent truth source, exposes the manually adjudicated IRF/RRO labels together with stable paper-run host-task and loaded-skill identities. A future public release should trigger re-audit rather than being assumed absent permanently.",
+  "policy": {
+    "manual_root_cause_truth_confirmed": true,
+    "manual_irf_rro_counts_confirmed": true,
+    "paper_run_loaded_skill_recording_confirmed": true,
+    "public_case_level_join_located": false,
+    "absence_claim_is_time_bounded": true,
+    "llm_or_heuristic_relabeling_forbidden": true,
+    "original_skillsbench_trajectory_substitution_forbidden_without_identity_proof": true,
+    "support_availability_is_not_scientific_failure": true,
+    "dead_end_certified": false,
+    "scientific_authority": false
+  }
+}

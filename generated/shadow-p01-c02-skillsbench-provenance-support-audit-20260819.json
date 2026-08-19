@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-19T06:13:08Z",
-  "status": "HOLD_SUPPORT_FAILURE_LABEL_JOIN_UNAVAILABLE",
+  "generated_at": "2026-08-19T12:18:00Z",
+  "status": "HOLD_SUPPORT_PUBLIC_CASE_LEVEL_LABEL_JOIN_UNAVAILABLE",
   "candidate_id": "SHADOW-P01-C02",
   "title": "History-Dependent Skill-Induced Failure: Why the Same Skill Causes Different Failure Modes Across Tasks",
   "source_ref": "arXiv:2608.11888",
@@ -96,13 +96,26 @@
     },
     "conclusion": "The receipts call these bundled curated skill IDs, not author-provided gold labels."
   },
+  "manual_root_cause_truth": {
+    "confirmed": true,
+    "functional_failure_case_count": 125,
+    "task_implementation_fault_case_count": 86,
+    "irf_case_count": 46,
+    "rro_case_count": 36,
+    "irf_rro_case_count": 82,
+    "assignment_process": "The authors manually inspect each retained case, assign one root-cause label, and finalize labels through group consensus.",
+    "paper_run_loaded_skill_recording_confirmed": true,
+    "public_case_level_join_located_as_of_2026_08_19": false,
+    "label_release_audit_artifact": "generated/shadow-p01-c02-harmful-skills-label-release-audit-20260819.json",
+    "label_release_audit_sha256": "ab4d38a839e24b2e757db6c29bf8dc9ca051b05092e99ad313ae1d263c74c547"
+  },
   "missing_independent_truth": [
-    "author/independent-truth per-case IRF versus RRO root-cause label",
-    "paper-run host-task identity joined to each manually adjudicated failure case",
-    "paper-run loaded-skill identity joined to each manually adjudicated failure case"
+    "public/reviewable row-level mapping from each manually adjudicated IRF/RRO label to a stable paper-run case identity",
+    "paper-run host-task identity joined to each released manually adjudicated IRF/RRO case",
+    "paper-run loaded-skill identity joined to each released manually adjudicated IRF/RRO case"
   ],
-  "why_hold": "Benchmark identity/provenance is no longer the blocker. The first-party SkillsBench repository fixes current upstream at commit 9a1f4dd5f7659f75707435da3ce854b6e48321d1 and its dataset-versioning documentation identifies the original arXiv-v1 86-task paper snapshot as reproducible at commit adbaf4d7b5a9f1243c6e592e461da4414fffc997. Author task/skill code is sufficient to reconstruct agent-visible task text and the bundled curated skill-directory binding for both snapshots. However, the frozen C02 falsifier still requires independently adjudicated per-case IRF/RRO root-cause labels joined to the corresponding paper-run host-task identity and loaded-skill identity. Those manual per-case joins are not encoded in the audited SkillsBench task packages, and the audited source arXiv:2608.11888 provides aggregate/manual-consensus failure information rather than a released per-case annotation table usable as independent truth. Inferring IRF/RRO from task text, outcomes, heuristics, or an LLM would replace the frozen truth source. Support therefore remains HOLD, narrowed specifically to the failure-label join rather than benchmark provenance.",
-  "reopen_only_if": "Reopen only when a first-party per-case annotation/release, or an independently reviewed equivalent truth source, joins each manually adjudicated IRF/RRO case to stable paper-time host-task identity and loaded-skill identity without inferring labels from task text/outcomes and without substituting current-upstream task identities for the paper-time experiment.",
+  "why_hold": "Benchmark identity/provenance is no longer the blocker, and the existence of manual IRF/RRO truth is no longer uncertain. The first-party arXiv source for arXiv:2608.11888 states that each retained case was manually inspected, assigned one root-cause label, and finalized through group consensus; it fixes IRF=46 and RRO=36, and states that each paper run recorded the loaded skill and trajectory. However, the submitted arXiv source does not declare a project/code/data release URL or expose a row-level annotation table joining those manual labels to stable paper-run host-task and loaded-skill identities. Exact GitHub repository searches also did not locate such a release as of 2026-08-19, while unauthenticated GitHub code search was not executable and is not counted as a zero-result check. The frozen C02 falsifier therefore remains HOLD on public/reviewable case-level truth. Inferring IRF/RRO from task text, outcomes, heuristics, or an LLM would still replace the frozen truth source, and original SkillsBench trajectories must not be substituted for the harmful-paper runs without exact identity proof.",
+  "reopen_only_if": "Reopen when a first-party case-level release, or an independently reviewed equivalent truth source, exposes the manually adjudicated IRF/RRO labels together with stable paper-run host-task and loaded-skill identities. A future public release should trigger re-audit; absence is asserted only as of the 2026-08-19 audit, not permanently.",
   "evidence_basis": [
     "arXiv:2608.11888",
     "SkillsBench current upstream commit 9a1f4dd5f7659f75707435da3ce854b6e48321d1",
@@ -110,15 +123,19 @@
     "SkillsBench paper-v1 reproducibility commit adbaf4d7b5a9f1243c6e592e461da4414fffc997",
     "SkillsBench paper-era website/src/content/news/introducing-skillsbench.mdx at blob 0fbce32b7c7db2d6cbec03c38d6d4d50c2ac8e1e",
     "generated/skillsbench-current-upstream-task-skill-map-20260819.json#sha256:0fef47076efb361ecad93f29a6dcf0c7f5aa6911b954d0d0b45aaf7670a0132a",
-    "generated/skillsbench-paper-v1-task-skill-map-20260819.json#sha256:d2552bbc7ba559564d74644bfd2649f1af9ee8752a52908747f803c8c36374a8"
+    "generated/skillsbench-paper-v1-task-skill-map-20260819.json#sha256:d2552bbc7ba559564d74644bfd2649f1af9ee8752a52908747f803c8c36374a8",
+    "generated/shadow-p01-c02-harmful-skills-label-release-audit-20260819.json#sha256:ab4d38a839e24b2e757db6c29bf8dc9ca051b05092e99ad313ae1d263c74c547"
   ],
   "policy": {
     "benchmark_provenance_resolved": true,
     "paper_snapshot_commit_recovered": true,
     "current_upstream_snapshot_is_not_paper_experiment_identity": true,
     "bundled_curated_skill_ids_are_not_author_explicit_gold_labels": true,
+    "manual_root_cause_truth_confirmed": true,
+    "public_case_level_label_join_missing_as_of_2026_08_19": true,
     "failure_label_join_missing": true,
     "inferred_irf_rro_labels_forbidden": true,
+    "original_skillsbench_trajectory_substitution_forbidden_without_identity_proof": true,
     "support_availability_is_not_scientific_failure": true,
     "dead_end_certified": false,
     "automatic_problem_gate_authority": false,
