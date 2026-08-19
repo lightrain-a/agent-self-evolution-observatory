@@ -37,6 +37,9 @@ POLICY={
  "only_principle_stop_may_enter_persistent_dead_end_memory":True,
  "realization_support_protocol_stop_are_repairable_not_dead_end":True,
  "principle_stop_requires_same_information_or_scope_matched_counter_explanation":True,
+ "execution_completeness_cannot_set_scientific_pass":True,
+ "scientific_status_requires_independent_stage_authority":True,
+ "executor_may_report_artifact_completion_but_cannot_acquit_quality":True,
 }
 PASS_TOKENS={"pass","support-pass","support_qualification_pass","consensus_support_pass","consensus_full_pass","method-pass","qualified"}
 PREDECESSOR_EVIDENCE={"substrate":"problem_evidence","f0-identifiability":"substrate_evidence","p0-support":"f0_evidence","p0-method":"support_evidence","p1-replication":"method_evidence","paper-experiment":"p1_evidence"}

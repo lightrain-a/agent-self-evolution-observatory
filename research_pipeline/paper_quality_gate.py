@@ -86,6 +86,9 @@ POLICY: dict[str, Any] = {
     "manuscript_ready_requires_visual_artifact_data_script_caption_binding": True,
     "paper_ready_content_addressed_mode_rejects_missing_stale_or_path_traversal_artifacts": True,
     "claim_adjudication_may_reference_only_registered_completed_evidence_ids": True,
+    "manuscript_claims_must_read_from_claim_ledger": True,
+    "claim_ledger_preserves_refuted_and_inconclusive_rows": True,
+    "claim_ledger_has_zero_scientific_authority": True,
     "quality_gate_cannot_authorize_method_experiment_p0_or_gpu": True,
 }
 
@@ -511,30 +514,66 @@ def audit_manuscript_evidence_completion(
     claim_rows = _rows((quality or {}).get("claims"))
     claim_completion = completion.get("claims") if isinstance(completion.get("claims"), dict) else {}
     registered_evidence_ids = set().union(*required_ids.values())
+    claim_ledger: list[dict[str, Any]] = []
     for row in claim_rows:
         cid = _text(row.get("id"))
         if not cid:
             continue
         state = claim_completion.get(cid) if isinstance(claim_completion.get(cid), dict) else {}
-        if _text(state.get("status")) not in {"SUPPORTED", "SUPPORTED_NARROWLY", "REFUTED", "INCONCLUSIVE"}:
+        adjudication_status = _text(state.get("status"))
+        if adjudication_status not in {"SUPPORTED", "SUPPORTED_NARROWLY", "REFUTED", "INCONCLUSIVE"}:
             blockers.append(f"paper-quality-claim-adjudication-missing:{cid}")
         claim_evidence_ids = _list_text(state.get("evidence_ids"))
+        linked_evidence_ids = set(
+            _list_text(row.get("baseline_ids"))
+            + _list_text(row.get("ablation_ids"))
+            + _list_text(row.get("analysis_ids"))
+            + _list_text(row.get("output_ids"))
+        )
+        trace_rows: list[dict[str, Any]] = []
+        trace_complete = bool(claim_evidence_ids)
         if not claim_evidence_ids:
             blockers.append(f"paper-quality-claim-evidence-trace-missing:{cid}")
         else:
-            linked_evidence_ids = set(
-                _list_text(row.get("baseline_ids"))
-                + _list_text(row.get("ablation_ids"))
-                + _list_text(row.get("analysis_ids"))
-                + _list_text(row.get("output_ids"))
-            )
             for evidence_id in claim_evidence_ids:
-                if evidence_id not in registered_evidence_ids:
+                registered = evidence_id in registered_evidence_ids
+                linked = evidence_id in linked_evidence_ids
+                completed_row = completed_by_id.get(evidence_id) or {}
+                completion_status = _text(completed_row.get("status"))
+                completed_ok = completion_status in {"PASS", "FAIL", "INCONCLUSIVE", "NOT_APPLICABLE"}
+                trace_rows.append({
+                    "evidence_id": evidence_id,
+                    "registered": registered,
+                    "linked_to_claim": linked,
+                    "completion_status": completion_status,
+                    "completed": completed_ok,
+                })
+                if not registered:
                     blockers.append(f"paper-quality-claim-evidence-id-unregistered:{cid}:{evidence_id}")
-                elif evidence_id not in linked_evidence_ids:
+                elif not linked:
                     blockers.append(f"paper-quality-claim-evidence-id-not-linked:{cid}:{evidence_id}")
                 elif evidence_id not in completed_by_id:
                     blockers.append(f"paper-quality-claim-evidence-id-not-completed:{cid}:{evidence_id}")
+                trace_complete = trace_complete and registered and linked and completed_ok
+        manuscript_surface = {
+            "SUPPORTED": "AFFIRMATIVE_SUPPORTED",
+            "SUPPORTED_NARROWLY": "AFFIRMATIVE_NARROW_ONLY",
+            "REFUTED": "NEGATIVE_OR_REFUTED_ONLY",
+            "INCONCLUSIVE": "INCONCLUSIVE_ONLY",
+        }.get(adjudication_status, "UNADJUDICATED")
+        claim_ledger.append({
+            "claim_id": cid,
+            "claim_type": _text(row.get("claim_type")),
+            "claim_text": _text(row.get("statement") or row.get("claim") or row.get("claim_text") or row.get("text")),
+            "adjudication_status": adjudication_status,
+            "manuscript_surface": manuscript_surface,
+            "affirmative_claim_allowed": adjudication_status in {"SUPPORTED", "SUPPORTED_NARROWLY"} and trace_complete,
+            "must_preserve_negative_or_inconclusive": adjudication_status in {"REFUTED", "INCONCLUSIVE"},
+            "evidence_ids": claim_evidence_ids,
+            "evidence_trace": trace_rows,
+            "trace_complete": trace_complete,
+            "scientific_authority": False,
+        })
 
     content_addressed = {"required": False, "passed": True, "status": "NOT_REQUIRED", "blockers": [], "summary": {"referenced_files": 0, "registered_digests": 0}}
     if require_content_addressed:
@@ -558,6 +597,7 @@ def audit_manuscript_evidence_completion(
             "content_addressed_required": bool(require_content_addressed),
             "content_addressed_referenced_files": int((content_addressed.get("summary") or {}).get("referenced_files") or 0),
         },
+        "claim_ledger": claim_ledger,
         "content_addressed_completion": content_addressed,
         "policy": dict(POLICY),
         "scientific_authority": False,

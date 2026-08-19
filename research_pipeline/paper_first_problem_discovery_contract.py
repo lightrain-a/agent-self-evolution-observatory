@@ -193,6 +193,17 @@ POLICY: dict[str, Any] = {
     "one_content_addressed_pool_allows_at_most_one_discovery_transaction": True,
     "bounded_provider_subcalls_inside_discovery_transaction": True,
     "attack_repair_split_before_terminal_review": True,
+    # Harness invariants: breadth agents generate search material but cannot acquit
+    # themselves scientifically. Deterministic merge/dedup is mechanical only; the
+    # independent semantic jury stays BLOCK-only and exact scientific gates remain
+    # downstream. These controls do not change the v17 scientific search operator.
+    "fanout_is_generation_only": True,
+    "pre_jury_dedup_is_deterministic_mechanical_only": True,
+    "fanout_role_cannot_authorize_terminal_scientific_verdict": True,
+    "terminal_semantic_jury_requires_resolved_model_independence": True,
+    "jury_clear_is_not_scientific_pass": True,
+    "portfolio_retains_multiple_survivors_before_scientific_gate": True,
+    "effort_profile_cannot_change_assurance_thresholds": True,
     "paperability_axes": dict(PAPERABILITY_AXES),
     "principle_reduction_does_not_auto_close_other_paperability_axes": True,
     "cheap_problem_falsifier_may_precede_exact_reduction": True,

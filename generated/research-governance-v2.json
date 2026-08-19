@@ -1,6 +1,6 @@
 {
   "schema_version": "2.4",
-  "generated_at": "2026-08-18T18:31:43+00:00",
+  "generated_at": "2026-08-19T05:24:07+00:00",
   "policy": {
     "schema_version": "2.3",
     "paper_novelty_precedes_method_design": true,
@@ -22,7 +22,10 @@
     "stop_class_required_for_any_stop": true,
     "only_principle_stop_may_enter_persistent_dead_end_memory": true,
     "realization_support_protocol_stop_are_repairable_not_dead_end": true,
-    "principle_stop_requires_same_information_or_scope_matched_counter_explanation": true
+    "principle_stop_requires_same_information_or_scope_matched_counter_explanation": true,
+    "execution_completeness_cannot_set_scientific_pass": true,
+    "scientific_status_requires_independent_stage_authority": true,
+    "executor_may_report_artifact_completion_but_cannot_acquit_quality": true
   },
   "stop_classes": {
     "REALIZATION_STOP": {

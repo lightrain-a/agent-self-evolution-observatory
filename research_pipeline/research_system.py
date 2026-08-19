@@ -13,6 +13,7 @@ from .ai_consultation_automation import DEFAULT_JSON as AI_CONSULTATION_AUTOMATI
 from .discussion_portfolio import build_discussion_portfolio
 from .evidence_graph import build_evidence_graph
 from .evidence_integrity import build_evidence_integrity_state
+from .paper_quality_gate import POLICY as PAPER_QUALITY_POLICY
 from .experiment_iteration import build_experiment_iteration_state
 from .experiment_value_scheduler import build_experiment_value_scheduler
 from .external_system_learning import build_external_system_learning_state
@@ -53,7 +54,7 @@ from .paper_first_fresh_phenomenon_portfolio import DEFAULT_JSON as FRESH_PHENOM
 from .paper_first_skill_validation_transfer_scout import write_skill_validation_transfer_scout
 from .paper_first_legacy_reduction_migration import load_public_migration, validate_public_migration
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
-from .paper_first_problem_generator import load_problem_generator_state
+from .paper_first_problem_generator import installed_problem_generator_policy, load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
 from .paper_first_pre_f0_queue import load_pre_f0_queue
 from .paper_first_problem_falsifier_preflight import load_pre_f0_problem_falsifier_preflight
@@ -85,10 +86,15 @@ from .pre_p0_identifiability import build_pre_p0_identifiability_audit
 from .pre_gpu_candidate_gates import build_pre_gpu_candidate_gate_state
 from .principle_adjudication import build_principle_layer_state
 from .research_capability_registry import build_research_capability_registry
+from .research_candidate_portfolio import build_research_candidate_portfolio
+from .research_harness_assurance import build_research_harness_assurance
+from .search_funnel_telemetry import build_search_funnel_telemetry
+from .premium_model_policy import policy_summary as premium_model_policy_summary
 from .public_state_redaction import redact_private_paths
 from .research_system_replay import build_research_system_replay
 from .review_repair import build_repair_queue
 from .scientific_meta_trace import build_scientific_meta_trace
+from .scientific_research_graph import build_scientific_research_graph
 from .system_architecture import annotate_components, build_system_architecture
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "research-system-state.json"
@@ -176,10 +182,14 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     paper_post_c2 = state["paper_first_post_c2"]
     principle = state["principle_layer"]["summary"]
     meta_trace = state["scientific_meta_trace"]["summary"]
+    research_graph = state["scientific_research_graph"]["summary"]
     failure_assets = state["failure_asset_library"]["summary"]
     value_scheduler = state["experiment_value_scheduler"]["summary"]
     replay = state["research_system_replay"]["summary"]
     external_learning = state["external_system_learning"]["summary"]
+    candidate_portfolio = state["research_candidate_portfolio"]["summary"]
+    search_funnel = state["search_funnel_telemetry"]
+    harness_assurance = state["research_harness_assurance"]["summary"]
     economy = state["p0_economy_gate"]["summary"]
     p0_ledger = state["p0_decision_ledger"]["summary"]
     ai_clinic = state["ai_consultation_clinic"]["summary"]
@@ -203,10 +213,14 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"ResearchAgent / MOOSE-Chem / SciAgents / AI-Scientist-v2 / RD-Agent", "component":{"en":"Solution-first branch search","zh":"解决方案优先的分支搜索"}, "status":"running", "evidence":{"en":f"{discovery['raw_children']} v3 children / {discovery['external_revise']} R2 revise / {repaired['children']} v3.1 repairs","zh":f"{discovery['raw_children']} 个 v3 子节点 / {discovery['external_revise']} 个 R2 REVISE / {repaired['children']} 个 v3.1 修订"}},
         {"source":"ResearchAgent / MOOSE-Chem / Co-Scientist / HypoRefine / Virtual Scientists / autoresearch", "component":{"en":"Constrained composition and conditional revival","zh":"受约束组合与条件复活"}, "status":"running", "evidence":{"en":f"{v4['raw_candidates']} v4 candidates / {v4['tournament_finalists']} finalists / {v4['external_reviewed']} reviewed","zh":f"{v4['raw_candidates']} 个 v4 候选 / {v4['tournament_finalists']} 个 finalists / {v4['external_reviewed']} 个已复核"}},
         {"source":"HypoRefine / IdeaForge / ScholarEval / InnoEval / SciAtlas / InternAgent / AutoScientists", "component":{"en":"Wide-search simplification-challenge ideation","zh":"宽搜索与简化挑战式 Idea 发现"}, "status":"running", "evidence":{"en":f"{v5['raw_candidates']} v5 candidates / {v5['external_reviewed']} R2 reviewed / {v5['external_pass']} PASS","zh":f"{v5['raw_candidates']} 个 v5 候选 / {v5['external_reviewed']} 个 R2 已审 / {v5['external_pass']} 个 PASS"}},
+        {"source":"ARIS + local double-funnel", "component":{"en":"Adversarial fan-out + independent jury harness","zh":"对抗式 Fan-out + 独立 Jury Harness"}, "status":"running", "evidence":{"en":f"{harness_assurance['passed']}/{harness_assurance['checks']} harness invariants pass; resolved-model violations={harness_assurance['resolved_model_independence_violations']}","zh":f"Harness 不变量 {harness_assurance['passed']}/{harness_assurance['checks']} 通过；resolved-model 独立性违规={harness_assurance['resolved_model_independence_violations']}"}},
+        {"source":"ARIS portfolio persistence + local scientific gates", "component":{"en":"Persistent multi-candidate research portfolio","zh":"持久化多候选科研组合"}, "status":"running", "evidence":{"en":f"{candidate_portfolio['visible_candidates']} visible / {candidate_portfolio['active_problem_lines']} active / {candidate_portfolio['search_holds']} search holds; capacity targets are advisory only","zh":f"{candidate_portfolio['visible_candidates']} 条可见 / {candidate_portfolio['active_problem_lines']} 条 active / {candidate_portfolio['search_holds']} 条 search hold；容量目标仅用于调度"}},
+        {"source":"ARIS meta-optimization pattern + local typed failure semantics", "component":{"en":"Search funnel + bottleneck telemetry","zh":"搜索漏斗 + 瓶颈遥测"}, "status":"running", "evidence":{"en":f"current bottleneck={search_funnel['bottleneck']['key']}; telemetry has zero scientific authority","zh":f"当前瓶颈={search_funnel['bottleneck']['key']}；遥测不拥有科学权限"}},
         {"source":"AIDE / AI-Scientist-v2 / R&D-Agent", "component":{"en":"Pre-P0 identifiability auditor","zh":"Pre-P0 实验可识别性审计"}, "status":"running", "evidence":{"en":f"{pre_p0['execution_ready']}/{pre_p0['audited']} retrospective contracts execution-ready","zh":f"当前 {pre_p0['execution_ready']}/{pre_p0['audited']} 份 retrospective 合同允许启动"}},
         {"source":"Advisor paper-first research contract", "component":{"en":"Paper novelty → method → experiment blueprint contract","zh":"论文 Novelty → 方法 → 实验蓝图合同"}, "status":"running", "evidence":{"en":f"{paper_first['paper_design_passed']}/{paper_first['cards']} live cards satisfy paper-first / visual portfolio {visual_evidence['planned_main_visualizations']} planned across {visual_evidence['paper_first_designs']} paper-first designs + {visual_evidence['stri_completed_main_visualizations']} STRI completed / post-C2: {paper_post_c2['decision']}","zh":f"当前 {paper_first['paper_design_passed']}/{paper_first['cards']} 份 live 卡满足 paper-first / 可视化组合：{visual_evidence['paper_first_designs']} 个 paper-first 设计共规划 {visual_evidence['planned_main_visualizations']} 张主图 + STRI 已完成 {visual_evidence['stri_completed_main_visualizations']} 张 / post-C2：{paper_post_c2['decision']}"}},
         {"source":"FirstResearch / Popper / Co-Scientist / RD-Agent", "component":{"en":"Principle Certificate + epistemic adjudicator","zh":"原理证书 + 认识论裁决器"}, "status":"running", "evidence":{"en":f"{principle['certificates_passed']}/{principle['cards']} principle certificates valid / {principle.get('registered_prediction_rejections_pending_counterexplanation',0)} prediction rejections awaiting counter-explanation / {principle.get('principle_dead_end_certifications',0)} certified principle dead ends","zh":f"{principle['certificates_passed']}/{principle['cards']} 份原理证书有效 / {principle.get('registered_prediction_rejections_pending_counterexplanation',0)} 个预测反证待反机制解释 / {principle.get('principle_dead_end_certifications',0)} 个原理级 Dead-End 已认证"}},
         {"source":"Qiushi / Kosmos / MLEvolve", "component":{"en":"Scientific Meta-Trace + cross-branch world state","zh":"Scientific Meta-Trace + 跨分支科研状态"}, "status":"running", "evidence":{"en":f"{meta_trace['principles']} principles / {meta_trace['unresolved_principles']} unresolved / {meta_trace['cross_branch_reference_edges']} cross-branch links","zh":f"{meta_trace['principles']} 个原理 / {meta_trace['unresolved_principles']} 个未决 / {meta_trace['cross_branch_reference_edges']} 条跨分支引用"}},
+        {"source":"ARIS research wiki pattern + local typed closure", "component":{"en":"Typed Scientific Research Graph","zh":"类型化科学研究图谱"}, "status":"running", "evidence":{"en":f"{research_graph['nodes']} nodes / {research_graph['edges']} edges / {research_graph['experiment_nodes']} experiment nodes / {research_graph['failure_asset_nodes']} typed failures / {research_graph['principle_closure_edges']} certified principle-closure edges","zh":f"{research_graph['nodes']} 个节点 / {research_graph['edges']} 条边 / {research_graph['experiment_nodes']} 个实验节点 / {research_graph['failure_asset_nodes']} 个类型化失败 / {research_graph['principle_closure_edges']} 条原理认证 closure 边"}},
         {"source":"MLEvolve / InternAgent / AutoResearchClaw", "component":{"en":"Failure Asset + dead-end memory","zh":"失败资产 + Dead-End 记忆库"}, "status":"running", "evidence":{"en":f"{failure_assets['assets']} failure assets / {failure_assets['unique_signatures']} reusable signatures / {failure_assets.get('experimental_stops_not_dead_ends',0)} experimental stops retained as diagnostics / {failure_assets.get('principle_dead_ends',0)} principle-certified dead ends","zh":f"{failure_assets['assets']} 条失败资产 / {failure_assets['unique_signatures']} 类可复用签名 / {failure_assets.get('experimental_stops_not_dead_ends',0)} 个实验 STOP 仅作诊断 / {failure_assets.get('principle_dead_ends',0)} 个原理认证 Dead-End"}},
         {"source":"Ai2 AutoDiscovery / MLEvolve / AI-Scientist-v2", "component":{"en":"Information-gain experiment portfolio scheduler","zh":"信息增益实验组合调度器"}, "status":"running", "evidence":{"en":f"{value_scheduler['candidates']} candidate tests / {value_scheduler['cross_branch_reference_edges']} cross-branch references / advisory only","zh":f"{value_scheduler['candidates']} 个候选实验 / {value_scheduler['cross_branch_reference_edges']} 条跨分支引用 / 仅建议不授权"}},
         {"source":"ResearchClawBench / HackDetect / ScienceAgentBench / AutoLabs", "component":{"en":"Protocol-validity auditor + research-system replay benchmark","zh":"协议有效性审计 + 科研系统回放基准"}, "status":"running", "evidence":{"en":f"protocol {pre_experiment['protocol_validity_pass']}/{pre_experiment['compiled_cards']} / replay {replay['passed']}/{replay['cases']}","zh":f"Protocol {pre_experiment['protocol_validity_pass']}/{pre_experiment['compiled_cards']} / 回放 {replay['passed']}/{replay['cases']}"}},
@@ -369,6 +383,21 @@ def build_research_system_state() -> dict[str, Any]:
         shadow_portfolio_state=paper_first_problem_search_portfolio,
         evidence_migration_state=paper_first_evidence_migration,
     )
+    research_candidate_portfolio = build_research_candidate_portfolio(
+        generator_state=paper_first_problem_generator,
+        pre_f0_state=paper_first_pre_f0_queue,
+        problem_gate_state=paper_first_problem_gate_queue,
+        paper_design_backlog_state=paper_first_paper_design_backlog,
+    )
+    search_funnel_telemetry = build_search_funnel_telemetry(
+        primary_state=paper_first_primary_evidence,
+        generator_state=paper_first_problem_generator,
+        pre_f0_state=paper_first_pre_f0_queue,
+        pre_f0_support_state=paper_first_pre_f0_problem_falsifier_preflight,
+        problem_gate_state=paper_first_problem_gate_queue,
+        discovery_frontier_state=paper_first_discovery_frontier,
+        candidate_portfolio_state=research_candidate_portfolio,
+    )
     paper_first_fresh_phenomenon_portfolio = build_fresh_phenomenon_portfolio()
     paper_first_shadow_latest = paper_first_problem_search_portfolio.get("latest_run") or {}
     paper_first_shadow_latest_summary = paper_first_shadow_latest.get("summary") or {}
@@ -386,6 +415,16 @@ def build_research_system_state() -> dict[str, Any]:
         "lease_root": str(experiment_data_root / "resource-leases"),
         "repair_budget_root": str(experiment_data_root / "governance" / "repair-budget"),
     }
+    research_harness_assurance = build_research_harness_assurance(
+        discovery_contract_state=paper_first_problem_discovery_contract,
+        generator_state=paper_first_problem_generator,
+        installed_generator_policy=installed_problem_generator_policy(portfolio=True),
+        premium_model_policy=premium_model_policy_summary(),
+        governance_state=research_governance_v2,
+        paper_quality_policy=PAPER_QUALITY_POLICY,
+        candidate_portfolio_state=research_candidate_portfolio,
+        search_telemetry_state=search_funnel_telemetry,
+    )
     mem_xfer_workflow = build_mem_xfer_workflow_state(experiment_data_root)
     pilot_registry = build_pilot_registry(
         idea_bank,
@@ -423,6 +462,13 @@ def build_research_system_state() -> dict[str, Any]:
     p0_decision_ledger_public = {"summary": p0_decision_ledger["summary"], "policy": p0_decision_ledger["policy"]}
     scientific_meta_trace = build_scientific_meta_trace(pre_experiment_compiler, principle_layer, experiment_iteration, p0_decision_ledger_public)
     failure_asset_library = build_failure_asset_library(experiment_iteration, p0_economy_public, paper_first_post_c2, paper_first_p0_f0, principle_layer)
+    scientific_research_graph = build_scientific_research_graph(
+        evidence_graph=evidence_graph,
+        candidate_portfolio=research_candidate_portfolio,
+        scientific_meta_trace=scientific_meta_trace,
+        failure_asset_library=failure_asset_library,
+        pilot_registry=pilot_registry,
+    )
     experiment_value_scheduler = build_experiment_value_scheduler(experiment_iteration, scientific_meta_trace)
     research_system_replay = build_research_system_replay(pre_experiment_compiler)
     external_system_learning = build_external_system_learning_state()
@@ -754,10 +800,18 @@ def build_research_system_state() -> dict[str, Any]:
             "principle_falsifications":principle_layer["summary"]["principle_falsifications"],
             "protocol_validity_pass":pre_experiment_compiler["summary"]["protocol_validity_pass"],
             "meta_trace_unresolved":scientific_meta_trace["summary"]["unresolved_principles"],
+            "scientific_research_graph_nodes":scientific_research_graph["summary"]["nodes"],
+            "scientific_research_graph_edges":scientific_research_graph["summary"]["edges"],
             "failure_assets":failure_asset_library["summary"]["assets"],
             "value_scheduler_candidates":experiment_value_scheduler["summary"]["candidates"],
             "research_replay_passed":research_system_replay["summary"]["passed"],
             "external_systems_reviewed":external_system_learning["summary"]["systems_reviewed"],
+            "candidate_portfolio_visible":research_candidate_portfolio["summary"]["visible_candidates"],
+            "candidate_portfolio_active":research_candidate_portfolio["summary"]["active_problem_lines"],
+            "candidate_portfolio_search_holds":research_candidate_portfolio["summary"]["search_holds"],
+            "search_funnel_bottleneck":search_funnel_telemetry["bottleneck"]["key"],
+            "research_harness_assurance_passed":research_harness_assurance["summary"]["passed"],
+            "research_harness_assurance_checks":research_harness_assurance["summary"]["checks"],
             "repair_queue":repair_queue["summary"]["queued_ideas"],
             "human_terminal_parents":human_terminal_ideas["summary"]["human_parents"],
             "human_terminal_p0":human_terminal_ideas["summary"]["p0"],
@@ -905,10 +959,14 @@ def build_research_system_state() -> dict[str, Any]:
         "experiment_iteration":experiment_iteration,
         "principle_layer":principle_layer,
         "scientific_meta_trace":scientific_meta_trace,
+        "scientific_research_graph":scientific_research_graph,
         "failure_asset_library":failure_asset_library,
         "experiment_value_scheduler":experiment_value_scheduler,
         "research_system_replay":research_system_replay,
         "external_system_learning":external_system_learning,
+        "research_candidate_portfolio":research_candidate_portfolio,
+        "search_funnel_telemetry":search_funnel_telemetry,
+        "research_harness_assurance":research_harness_assurance,
         "human_terminal_ideas":human_terminal_ideas,
         "p0_admission":p0_admission_public,
         "ai_consultation_clinic":ai_consultation_public,
@@ -1280,6 +1338,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"paper-first-p0-f0", "pass":state["paper_first_p0_f0"]["summary"].get("ideas") == 4 and state["paper_first_p0_f0"]["summary"].get("quarantined") == 4 and state["paper_first_p0_f0"]["summary"].get("scientifically_authorized") == 0 and state["paper_first_p0_f0"]["summary"].get("method_fail_authorized") == 0 and state["paper_first_p0_f0"]["policy"].get("unauthorized_execution_is_preserved_as_diagnostic_not_scientific_authority") is True, "detail":state["paper_first_p0_f0"]["summary"]},
         {"key":"paper-first-premature-method-diagnostics", "pass":state["paper_first_premature_method_diagnostics"]["summary"].get("directions") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("completed_diagnostics") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("same_information_reducibility_findings") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("scientifically_authorized") == 0 and state["paper_first_premature_method_diagnostics"]["summary"].get("p0_lifecycle_mutations") == 0 and state["paper_first_premature_method_diagnostics"]["authority"].get("cannot_retroactively_authorize") is True, "detail":state["paper_first_premature_method_diagnostics"]["summary"]},
         {"key":"research-learning-loop", "pass":state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"] and state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"] and state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"] and state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"] and state["research_system_replay"]["summary"]["failed"] == 0 and state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"], "detail":{"meta":state["scientific_meta_trace"]["summary"],"failure_assets":state["failure_asset_library"]["summary"],"scheduler":state["experiment_value_scheduler"]["summary"],"replay":state["research_system_replay"]["summary"],"external":state["external_system_learning"]["summary"]}},
+        {"key":"aris-harness-alignment", "pass":state["research_harness_assurance"].get("status")=="PASS_HARNESS_ASSURANCE" and int((state["research_harness_assurance"].get("summary") or {}).get("failed") or 0)==0 and state["research_candidate_portfolio"].get("scientific_authority") is False and int((state["research_candidate_portfolio"].get("summary") or {}).get("automatic_promotions") or 0)==0 and state["search_funnel_telemetry"].get("scientific_authority") is False and state["scientific_research_graph"].get("scientific_authority") is False and (state["scientific_research_graph"].get("policy") or {}).get("experiment_failure_edge_cannot_close_core_principle") is True, "detail":{"assurance":state["research_harness_assurance"].get("summary"),"portfolio":state["research_candidate_portfolio"].get("summary"),"funnel":state["search_funnel_telemetry"].get("summary"),"graph":state["scientific_research_graph"].get("summary")}},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
         {"key":"mem-xfer-workflow", "pass":not _mem_xfer_semantic_errors(state["mem_xfer_workflow"]), "detail":{"semantic_errors":_mem_xfer_semantic_errors(state["mem_xfer_workflow"]),"support_qualification":state["mem_xfer_workflow"]["support_qualification"]["status"],"full_support":state["mem_xfer_workflow"]["full_support"]["status"],"cpu_gate":state["mem_xfer_workflow"]["support_enriched_analysis"]["status"],"second_model":state["mem_xfer_workflow"]["second_model"]["status"]}},
@@ -1827,6 +1886,14 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if not state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"]: errors.append("experiment value scheduler must remain advisory")
     if state["research_system_replay"]["summary"].get("failed") != 0: errors.append("research-system replay benchmark has failing epistemic cases")
     if not state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"]: errors.append("external system designs require a local gap test before adoption")
+    harness = state.get("research_harness_assurance") or {}; harness_summary = harness.get("summary") or {}
+    portfolio = state.get("research_candidate_portfolio") or {}; portfolio_summary = portfolio.get("summary") or {}; portfolio_policy = portfolio.get("policy") or {}
+    funnel = state.get("search_funnel_telemetry") or {}; funnel_policy = funnel.get("policy") or {}
+    research_graph = state.get("scientific_research_graph") or {}; research_graph_policy = research_graph.get("policy") or {}; research_graph_summary = research_graph.get("summary") or {}
+    if harness.get("status") != "PASS_HARNESS_ASSURANCE" or int(harness_summary.get("failed") or 0) != 0 or int(harness_summary.get("passed") or 0) != int(harness_summary.get("checks") or 0): errors.append("research harness assurance must pass every fan-out/jury/executor/claim/telemetry invariant")
+    if portfolio.get("scientific_authority") is not False or portfolio_policy.get("portfolio_cannot_promote_candidate_stage") is not True or portfolio_policy.get("soft_capacity_targets_do_not_relax_scientific_thresholds") is not True or int(portfolio_summary.get("visible_candidates") or 0) != len(portfolio.get("rows") or []) or int(portfolio_summary.get("automatic_promotions") or 0) != 0: errors.append("persistent candidate portfolio must remain zero-authority capacity/persistence control")
+    if funnel.get("scientific_authority") is not False or funnel_policy.get("typed_reduction_or_support_holds_must_not_be_reported_as_idea_generation_failure") is not True or funnel_policy.get("telemetry_cannot_authorize_provider_calls_problem_gate_method_experiment_p0_or_gpu") is not True: errors.append("search-funnel telemetry must remain zero-authority and preserve typed bottleneck semantics")
+    if research_graph.get("scientific_authority") is not False or research_graph_policy.get("experiment_failure_edge_cannot_close_core_principle") is not True or research_graph_policy.get("only_certified_principle_dead_end_may_emit_principle_closure_edge") is not True or int(research_graph_summary.get("principle_closure_edges") or 0) != int(research_graph_summary.get("scientific_closure_nodes") or 0): errors.append("scientific research graph must preserve typed failure/closure authority boundaries")
     errors.extend(_mem_xfer_semantic_errors(state["mem_xfer_workflow"]))
     if not state["mem_xfer_workflow"].get("allowed_statuses"): errors.append("mem-xfer workflow must publish typed allowed statuses")
     if not state["mem_xfer_workflow"].get("dependencies"): errors.append("mem-xfer workflow must publish stage dependencies")

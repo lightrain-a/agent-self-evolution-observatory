@@ -192,6 +192,24 @@ class PaperQualityGateTest(unittest.TestCase):
         completion = {"evidence": evidence, "visualizations": visualizations, "claims": {"C1": {"status": "SUPPORTED", "evidence_ids": [row["id"] for row in evidence]}}}
         passed = audit_manuscript_evidence_completion(quality, completion, method_components=2)
         self.assertTrue(passed["passed"], passed["blockers"])
+        self.assertEqual(len(passed["claim_ledger"]), 1)
+        ledger = passed["claim_ledger"][0]
+        self.assertEqual(ledger["claim_id"], "C1")
+        self.assertEqual(ledger["manuscript_surface"], "AFFIRMATIVE_SUPPORTED")
+        self.assertTrue(ledger["affirmative_claim_allowed"])
+        self.assertTrue(ledger["trace_complete"])
+        self.assertFalse(ledger["scientific_authority"])
+
+    def test_claim_ledger_preserves_refuted_and_inconclusive_surface(self) -> None:
+        quality = method_quality()
+        completion = completed_quality(quality)
+        completion["claims"]["C1"]["status"] = "REFUTED"
+        audit = audit_manuscript_evidence_completion(quality, completion, method_components=2)
+        self.assertTrue(audit["passed"], audit["blockers"])
+        ledger = audit["claim_ledger"][0]
+        self.assertEqual(ledger["manuscript_surface"], "NEGATIVE_OR_REFUTED_ONLY")
+        self.assertFalse(ledger["affirmative_claim_allowed"])
+        self.assertTrue(ledger["must_preserve_negative_or_inconclusive"])
 
     def test_claim_adjudication_rejects_unregistered_evidence_id(self) -> None:
         quality = method_quality()

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T18:31:43+00:00",
+  "generated_at": "2026-08-19T05:30:24+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -6448,7 +6448,7 @@
     "failure_assets": 6,
     "value_scheduler_candidates": 0,
     "research_replay_passed": 8,
-    "external_systems_reviewed": 31,
+    "external_systems_reviewed": 32,
     "repair_queue": 1,
     "human_terminal_parents": 26,
     "human_terminal_p0": 20,
@@ -6553,7 +6553,15 @@
     "mem_xfer_second_model_status": "second_model_hold",
     "architecture_temporal_stages": 11,
     "architecture_reader_chapters": 7,
-    "architecture_functional_layers": 6
+    "architecture_functional_layers": 6,
+    "scientific_research_graph_nodes": 698,
+    "scientific_research_graph_edges": 1044,
+    "candidate_portfolio_visible": 2,
+    "candidate_portfolio_active": 0,
+    "candidate_portfolio_search_holds": 2,
+    "search_funnel_bottleneck": "PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE",
+    "research_harness_assurance_passed": 9,
+    "research_harness_assurance_checks": 9
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -31692,6 +31700,13 @@
       "one_content_addressed_pool_allows_at_most_one_discovery_transaction": true,
       "bounded_provider_subcalls_inside_discovery_transaction": true,
       "attack_repair_split_before_terminal_review": true,
+      "fanout_is_generation_only": true,
+      "pre_jury_dedup_is_deterministic_mechanical_only": true,
+      "fanout_role_cannot_authorize_terminal_scientific_verdict": true,
+      "terminal_semantic_jury_requires_resolved_model_independence": true,
+      "jury_clear_is_not_scientific_pass": true,
+      "portfolio_retains_multiple_survivors_before_scientific_gate": true,
+      "effort_profile_cannot_change_assurance_thresholds": true,
       "paperability_axes": {
         "P": "principle_or_problem_formulation",
         "M": "method_or_method_boundary",
@@ -47598,8 +47613,8 @@
       "external_system_never_overrides_local_scientific_authority": true
     },
     "summary": {
-      "systems_reviewed": 31,
-      "adopted": 26,
+      "systems_reviewed": 32,
+      "adopted": 27,
       "merged_existing": 4,
       "next_backlog": 1
     },
@@ -47827,6 +47842,20 @@
         "local_gap_test": {
           "before": "synthetic completion passed with nonexistent generated/*.json and paper/*.pdf path strings",
           "after": "the same completion fails unless every referenced artifact/data/script exists under the project root and matches its frozen SHA256; fake claim evidence IDs are rejected",
+          "verdict": "gap-confirmed-and-closed"
+        }
+      },
+      {
+        "system": "ARIS / Auto-Research-In-Sleep",
+        "design": "separate breadth fan-out from cross-model adjudication, persist research artifacts across stages, prevent executor self-acquittal, and separate search effort from assurance",
+        "gap": "the local double-funnel already had breadth, attack/repair, resolved-model independence, typed closure, and strict scientific gates, but these existed as distributed behavior rather than one machine-audited harness invariant; late-stage candidate capacity and funnel bottlenecks were also not compiled into one persistent operator view",
+        "local_mapping": "explicit fan-out->jury invariants + zero-authority persistent candidate portfolio + search-funnel bottleneck telemetry + manuscript claim ledger; local typed closure, provenance, Problem Gate, Pre-F0 exact reduction, and P0 authority remain unchanged",
+        "status": "adopted",
+        "source": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep",
+        "paper": "arXiv:2605.03042",
+        "local_gap_test": {
+          "before": "ARIS-like controls were spread across generator/reviewer/governance/paper-quality modules and current 2-candidate Pre-F0 holds could be mistaken for generic idea-search failure",
+          "after": "research_harness_assurance machine-checks nine cross-layer invariants; research_candidate_portfolio preserves simultaneous lines; search_funnel_telemetry distinguishes breadth failure from reduction/support holds; paper_quality_gate emits a claim ledger",
           "verdict": "gap-confirmed-and-closed"
         }
       },
@@ -49835,7 +49864,7 @@
   },
   "research_governance_v2": {
     "schema_version": "2.4",
-    "generated_at": "2026-08-18T18:31:26+00:00",
+    "generated_at": "2026-08-19T05:30:24+00:00",
     "policy": {
       "schema_version": "2.3",
       "paper_novelty_precedes_method_design": true,
@@ -49857,7 +49886,10 @@
       "stop_class_required_for_any_stop": true,
       "only_principle_stop_may_enter_persistent_dead_end_memory": true,
       "realization_support_protocol_stop_are_repairable_not_dead_end": true,
-      "principle_stop_requires_same_information_or_scope_matched_counter_explanation": true
+      "principle_stop_requires_same_information_or_scope_matched_counter_explanation": true,
+      "execution_completeness_cannot_set_scientific_pass": true,
+      "scientific_status_requires_independent_stage_authority": true,
+      "executor_may_report_artifact_completion_but_cannot_acquit_quality": true
     },
     "stop_classes": {
       "REALIZATION_STOP": {
@@ -78368,6 +78400,48 @@
       "primary_layer": "paper-design"
     },
     {
+      "source": "ARIS + local double-funnel",
+      "component": {
+        "en": "Adversarial fan-out + independent jury harness",
+        "zh": "对抗式 Fan-out + 独立 Jury Harness"
+      },
+      "status": "running",
+      "evidence": {
+        "en": "9/9 harness invariants pass; resolved-model violations=0",
+        "zh": "Harness 不变量 9/9 通过；resolved-model 独立性违规=0"
+      },
+      "key": "research-harness-assurance",
+      "primary_layer": "paper-design"
+    },
+    {
+      "source": "ARIS portfolio persistence + local scientific gates",
+      "component": {
+        "en": "Persistent multi-candidate research portfolio",
+        "zh": "持久化多候选科研组合"
+      },
+      "status": "running",
+      "evidence": {
+        "en": "2 visible / 0 active / 2 search holds; capacity targets are advisory only",
+        "zh": "2 条可见 / 0 条 active / 2 条 search hold；容量目标仅用于调度"
+      },
+      "key": "research-candidate-portfolio",
+      "primary_layer": "paper-design"
+    },
+    {
+      "source": "ARIS meta-optimization pattern + local typed failure semantics",
+      "component": {
+        "en": "Search funnel + bottleneck telemetry",
+        "zh": "搜索漏斗 + 瓶颈遥测"
+      },
+      "status": "running",
+      "evidence": {
+        "en": "current bottleneck=PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE; telemetry has zero scientific authority",
+        "zh": "当前瓶颈=PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE；遥测不拥有科学权限"
+      },
+      "key": "search-funnel-telemetry",
+      "primary_layer": "memory-publication"
+    },
+    {
       "source": "AIDE / AI-Scientist-v2 / R&D-Agent",
       "component": {
         "en": "Pre-P0 identifiability auditor",
@@ -78424,6 +78498,20 @@
       "primary_layer": "memory-publication"
     },
     {
+      "source": "ARIS research wiki pattern + local typed closure",
+      "component": {
+        "en": "Typed Scientific Research Graph",
+        "zh": "类型化科学研究图谱"
+      },
+      "status": "running",
+      "evidence": {
+        "en": "698 nodes / 1044 edges / 78 experiment nodes / 6 typed failures / 0 certified principle-closure edges",
+        "zh": "698 个节点 / 1044 条边 / 78 个实验节点 / 6 个类型化失败 / 0 条原理认证 closure 边"
+      },
+      "key": "scientific-research-graph",
+      "primary_layer": "memory-publication"
+    },
+    {
       "source": "MLEvolve / InternAgent / AutoResearchClaw",
       "component": {
         "en": "Failure Asset + dead-end memory",
@@ -78473,8 +78561,8 @@
       },
       "status": "running",
       "evidence": {
-        "en": "31 systems / 26 adopted / 1 next backlog",
-        "zh": "已审 31 个系统 / 26 个已吸收 / 1 个下一批"
+        "en": "32 systems / 27 adopted / 1 next backlog",
+        "zh": "已审 32 个系统 / 27 个已吸收 / 1 个下一批"
       },
       "key": "external-system-learning",
       "primary_layer": "memory-publication"
@@ -78892,12 +78980,14 @@
           "solution-branch-search",
           "composition-revival",
           "wide-search-ideation",
+          "research-harness-assurance",
+          "research-candidate-portfolio",
           "paper-design-contract",
           "principle-adjudicator",
           "ai-consultation-clinic"
         ],
-        "component_count": 9,
-        "running": 9,
+        "component_count": 11,
+        "running": 11,
         "intentionally_disabled": 0
       },
       {
@@ -79004,13 +79094,15 @@
           "Chain-of-Evidence"
         ],
         "component_keys": [
+          "search-funnel-telemetry",
           "scientific-meta-trace",
+          "scientific-research-graph",
           "failure-assets",
           "external-system-learning",
           "p0-decision-ledger"
         ],
-        "component_count": 4,
-        "running": 4,
+        "component_count": 6,
+        "running": 6,
         "intentionally_disabled": 0
       }
     ],
@@ -79063,8 +79155,8 @@
       "reader_stage_duplicates": 0,
       "reader_stage_extra": 0,
       "functional_layers": 6,
-      "components": 27,
-      "assigned_components": 27,
+      "components": 31,
+      "assigned_components": 31,
       "unassigned_components": 0,
       "duplicate_component_keys": 0,
       "cross_cutting_controls": 3,
@@ -79197,6 +79289,9 @@
       "Functional layers answer WHO owns each responsibility.",
       "A component has one primary responsibility layer even when its evidence is consumed elsewhere.",
       "No advisory component can grant scientific or GPU authority.",
+      "Fan-out may increase search breadth, but only an independent jury may adjudicate its outputs and jury CLEAR is still not scientific PASS.",
+      "Execution loops may establish artifact completeness but cannot self-acquit scientific quality or status.",
+      "Search effort and scientific assurance are orthogonal: more firepower never relaxes evidence or authority gates.",
       "The P0 seven-stage state machine is nested inside scientific validation; it is not a second paper lifecycle.",
       "Cross-cutting methodology controls attach to an existing owner component and never create an implicit seventh functional layer."
     ]
@@ -79207,7 +79302,7 @@
       {
         "key": "corpus",
         "pass": true,
-        "detail": "334 papers"
+        "detail": "281 papers"
       },
       {
         "key": "evidence-coverage",
@@ -80119,8 +80214,8 @@
           "reader_stage_duplicates": 0,
           "reader_stage_extra": 0,
           "functional_layers": 6,
-          "components": 27,
-          "assigned_components": 27,
+          "components": 31,
+          "assigned_components": 31,
           "unassigned_components": 0,
           "duplicate_component_keys": 0,
           "cross_cutting_controls": 3,
@@ -80266,10 +80361,90 @@
             "true_falsification_cases": 1
           },
           "external": {
-            "systems_reviewed": 31,
-            "adopted": 26,
+            "systems_reviewed": 32,
+            "adopted": 27,
             "merged_existing": 4,
             "next_backlog": 1
+          }
+        }
+      },
+      {
+        "key": "aris-harness-alignment",
+        "pass": true,
+        "detail": {
+          "assurance": {
+            "checks": 9,
+            "passed": 9,
+            "failed": 0,
+            "reviewed_candidate_receipts": 0,
+            "resolved_model_independence_violations": 0
+          },
+          "portfolio": {
+            "visible_candidates": 2,
+            "active_problem_lines": 0,
+            "search_holds": 2,
+            "problem_gate_blocked": 0,
+            "active_target": 3,
+            "active_shortfall": 3,
+            "search_hold_min_target": 5,
+            "search_hold_shortfall": 3,
+            "automatic_promotions": 0
+          },
+          "funnel": {
+            "bottleneck": "PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE",
+            "primary_verified": 32,
+            "raw_seeds": 2,
+            "pre_f0_queued": 2,
+            "pre_f0_support_qualified": 0,
+            "problem_gate_passed": 0,
+            "visible_candidates": 2
+          },
+          "graph": {
+            "nodes": 698,
+            "edges": 1044,
+            "node_kinds": {
+              "candidate_problem": 2,
+              "claim": 87,
+              "core_principle": 2,
+              "dataset": 15,
+              "domain": 13,
+              "experiment": 78,
+              "failure_asset": 6,
+              "idea": 57,
+              "model": 6,
+              "paper": 334,
+              "paper-alias": 64,
+              "query": 26,
+              "track": 8
+            },
+            "relations": {
+              "belongs-to": 29,
+              "citation": 44,
+              "covers-domain": 72,
+              "diagnoses": 6,
+              "evaluates-on": 77,
+              "nearest-work": 88,
+              "principle_for": 2,
+              "reference": 36,
+              "retrieved": 264,
+              "semantic-evidence": 174,
+              "states-problem": 29,
+              "tested_by": 78,
+              "tests-hypothesis": 29,
+              "uses-mechanism": 29,
+              "uses-model": 87
+            },
+            "base_nodes": 582,
+            "base_edges": 958,
+            "overlay_nodes": 116,
+            "new_overlay_nodes": 116,
+            "overlay_edges": 86,
+            "candidate_nodes": 2,
+            "experiment_nodes": 78,
+            "principle_nodes": 2,
+            "failure_asset_nodes": 6,
+            "scientific_closure_nodes": 0,
+            "principle_closure_edges": 0
           }
         }
       },
@@ -80443,7 +80618,7 @@
         "pass": true,
         "detail": {
           "schema_version": "2.4",
-          "generated_at": "2026-08-18T18:31:26+00:00",
+          "generated_at": "2026-08-19T05:30:24+00:00",
           "policy": {
             "schema_version": "2.3",
             "paper_novelty_precedes_method_design": true,
@@ -80465,7 +80640,10 @@
             "stop_class_required_for_any_stop": true,
             "only_principle_stop_may_enter_persistent_dead_end_memory": true,
             "realization_support_protocol_stop_are_repairable_not_dead_end": true,
-            "principle_stop_requires_same_information_or_scope_matched_counter_explanation": true
+            "principle_stop_requires_same_information_or_scope_matched_counter_explanation": true,
+            "execution_completeness_cannot_set_scientific_pass": true,
+            "scientific_status_requires_independent_stage_authority": true,
+            "executor_may_report_artifact_completion_but_cannot_acquit_quality": true
           },
           "stop_classes": {
             "REALIZATION_STOP": {
@@ -80656,5 +80834,1702 @@
         }
       }
     ]
+  },
+  "research_candidate_portfolio": {
+    "schema_version": "1.0",
+    "status": "PORTFOLIO_ACTIVE",
+    "policy": {
+      "schema_version": "1.0",
+      "portfolio_is_a_persistence_and_capacity_view_not_a_scientific_gate": true,
+      "portfolio_cannot_promote_candidate_stage": true,
+      "portfolio_cannot_authorize_problem_method_experiment_p0_or_gpu": true,
+      "pre_f0_hold_is_not_problem_gate_pass": true,
+      "problem_gate_pass_is_only_paper_design_eligibility": true,
+      "soft_capacity_targets_do_not_relax_scientific_thresholds": true,
+      "multiple_candidates_may_remain_visible_while_one_line_is_blocked": true
+    },
+    "soft_capacity_targets": {
+      "active_problem_lines": 3,
+      "search_hold_min": 5,
+      "search_hold_max": 10
+    },
+    "summary": {
+      "visible_candidates": 2,
+      "active_problem_lines": 0,
+      "search_holds": 2,
+      "problem_gate_blocked": 0,
+      "active_target": 3,
+      "active_shortfall": 3,
+      "search_hold_min_target": 5,
+      "search_hold_shortfall": 3,
+      "automatic_promotions": 0
+    },
+    "rows": [
+      {
+        "candidate_id": "PORT-001",
+        "title": "Rank-inverted skill harm across harnesses as a non-composability witness",
+        "stage": "PRE_F0_EVIDENCE_ACQUISITION",
+        "portfolio_state": "SEARCH_HOLD",
+        "source_status": "PRE_F0_QUEUE_READY",
+        "discovery_lane": "ASSUMPTION_BREAK",
+        "reduction_blockers": [
+          "saturation-exact-reduction-pending:harness-update-scope-heterogeneity",
+          "unresolved-exact-reduction-test:1"
+        ],
+        "route_reason": "EXACT_REDUCTION_PENDING",
+        "scientific_authority": false
+      },
+      {
+        "candidate_id": "PORT-003",
+        "title": "Timescale-isolated ablation of action-frequency governance on a frozen skill set",
+        "stage": "PRE_F0_EVIDENCE_ACQUISITION",
+        "portfolio_state": "SEARCH_HOLD",
+        "source_status": "PRE_F0_QUEUE_READY",
+        "discovery_lane": "ASSUMPTION_BREAK",
+        "reduction_blockers": [
+          "saturation-exact-reduction-pending:harness-update-scope-heterogeneity",
+          "saturation-exact-reduction-pending:persistent-update-vs-test-time-compute",
+          "unresolved-exact-reduction-test:1",
+          "unresolved-exact-reduction-test:2"
+        ],
+        "route_reason": "EXACT_REDUCTION_PENDING",
+        "scientific_authority": false
+      }
+    ],
+    "scientific_authority": false,
+    "authority": {
+      "problem_gate": false,
+      "paper_design": false,
+      "method": false,
+      "experiment": false,
+      "p0": false,
+      "gpu": false
+    }
+  },
+  "search_funnel_telemetry": {
+    "schema_version": "1.0",
+    "status": "SEARCH_FUNNEL_OBSERVED",
+    "policy": {
+      "schema_version": "1.0",
+      "telemetry_is_observability_not_scientific_authority": true,
+      "bottleneck_labels_describe_pipeline_state_not_scientific_truth": true,
+      "portfolio_capacity_pressure_cannot_relax_gates": true,
+      "zero_candidates_and_support_holds_are_distinct_bottlenecks": true,
+      "typed_reduction_or_support_holds_must_not_be_reported_as_idea_generation_failure": true,
+      "telemetry_cannot_authorize_provider_calls_problem_gate_method_experiment_p0_or_gpu": true
+    },
+    "summary": {
+      "bottleneck": "PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE",
+      "primary_verified": 32,
+      "raw_seeds": 2,
+      "pre_f0_queued": 2,
+      "pre_f0_support_qualified": 0,
+      "problem_gate_passed": 0,
+      "visible_candidates": 2
+    },
+    "stage_counts": {
+      "primary_verified": 32,
+      "primary_selected": 32,
+      "raw_seeds": 2,
+      "semantic_unique_seeds": 2,
+      "breadth_archive": 2,
+      "reviewer_attacks": 2,
+      "repair_children": 4,
+      "pre_f0_eligible": 2,
+      "pre_f0_queued": 2,
+      "pre_f0_support_qualified": 0,
+      "pre_f0_support_hold": 2,
+      "semantic_clear": 0,
+      "problem_gate_submitted": 0,
+      "problem_gate_passed": 0,
+      "paper_design_eligible": 0
+    },
+    "loss_reason_counts": {
+      "saturation-exact-reduction-pending": 3,
+      "unresolved-exact-reduction-test": 3
+    },
+    "bottleneck": {
+      "key": "PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE",
+      "explanation": "Candidate problems exist, but exact-reduction/support evidence is not yet qualified; this is not an idea-generation failure.",
+      "next_action": "Resolve the cheapest discriminating reduction/support contracts for the retained Pre-F0 candidates, then rerun exact same-information reduction before Problem Gate.",
+      "scientific_authority": false
+    },
+    "portfolio": {
+      "visible_candidates": 2,
+      "active_problem_lines": 0,
+      "search_holds": 2,
+      "active_shortfall": 3,
+      "search_hold_shortfall": 3,
+      "capacity_targets_are_advisory": true
+    },
+    "frontier_status": "LIVE_SOURCE_DISCOVERY_PENDING",
+    "scientific_authority": false,
+    "authority": {
+      "provider_calls": false,
+      "problem_gate": false,
+      "paper_design": false,
+      "method": false,
+      "experiment": false,
+      "p0": false,
+      "gpu": false
+    }
+  },
+  "research_harness_assurance": {
+    "schema_version": "1.0",
+    "status": "PASS_HARNESS_ASSURANCE",
+    "policy": {
+      "schema_version": "1.0",
+      "fanout_and_jury_are_distinct_roles": true,
+      "executor_can_establish_execution_facts_but_cannot_self_acquit_scientific_status": true,
+      "jury_clear_is_not_scientific_pass": true,
+      "resolved_model_identity_not_requested_alias_controls_independence": true,
+      "mechanical_merge_before_jury_has_zero_scientific_authority": true,
+      "effort_and_assurance_are_orthogonal": true,
+      "increasing_firepower_cannot_relax_assurance": true,
+      "harness_assurance_cannot_override_local_scientific_gates": true
+    },
+    "reference": {
+      "name": "ARIS / Auto-Research-In-Sleep",
+      "paper": "arXiv:2605.03042",
+      "repository": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep",
+      "adopted_boundary": "Harness invariants only: breadth generation is separated from adjudication, execution completeness cannot self-acquit scientific quality, artifacts persist across stages, and effort is orthogonal to assurance. Local scientific gates remain authoritative."
+    },
+    "effort_profiles": {
+      "lite": {
+        "purpose": "cheap exploratory breadth",
+        "relative_fanout": 1
+      },
+      "standard": {
+        "purpose": "default bounded multi-lane breadth",
+        "relative_fanout": 2
+      },
+      "max": {
+        "purpose": "high-recall candidate expansion",
+        "relative_fanout": 4
+      },
+      "swarm": {
+        "purpose": "maximum bounded breadth when search, not review, is the bottleneck",
+        "relative_fanout": 8
+      }
+    },
+    "assurance_profiles": {
+      "exploratory": {
+        "requires": [
+          "machine schema/provenance",
+          "zero-authority labeling"
+        ]
+      },
+      "qualified": {
+        "requires": [
+          "independent resolved-model review",
+          "exact primary grounding",
+          "typed reduction status"
+        ]
+      },
+      "experiment-ready": {
+        "requires": [
+          "problem/paper design authority",
+          "frozen protocol",
+          "Pre-Experiment gates"
+        ]
+      },
+      "paper-ready": {
+        "requires": [
+          "completed claim ledger",
+          "content-addressed evidence",
+          "independent final review"
+        ]
+      }
+    },
+    "checks": [
+      {
+        "key": "fanout-generation-only",
+        "pass": true,
+        "evidence": {
+          "discovery_contract": true,
+          "generator": true
+        }
+      },
+      {
+        "key": "mechanical-pre-jury-merge-zero-authority",
+        "pass": true,
+        "evidence": {
+          "discovery_contract": true,
+          "generator": true
+        }
+      },
+      {
+        "key": "resolved-model-independent-jury",
+        "pass": true,
+        "evidence": {
+          "generation_default": "kimi-k3",
+          "review_default": "deepseek-v4-pro",
+          "reviewed_candidates": [],
+          "violations": []
+        }
+      },
+      {
+        "key": "jury-cannot-acquit",
+        "pass": true,
+        "evidence": {
+          "semantic_reviewer_is_block_only": true,
+          "jury_clear_is_not_scientific_pass": true
+        }
+      },
+      {
+        "key": "execution-completeness-cannot-self-acquit",
+        "pass": true,
+        "evidence": {
+          "execution_completeness_cannot_set_scientific_pass": true,
+          "scientific_status_requires_independent_stage_authority": true
+        }
+      },
+      {
+        "key": "persistent-multi-candidate-portfolio",
+        "pass": true,
+        "evidence": {
+          "visible_candidates": 2,
+          "active_problem_lines": 0,
+          "search_holds": 2,
+          "problem_gate_blocked": 0,
+          "active_target": 3,
+          "active_shortfall": 3,
+          "search_hold_min_target": 5,
+          "search_hold_shortfall": 3,
+          "automatic_promotions": 0
+        }
+      },
+      {
+        "key": "claim-ledger-before-paper-ready",
+        "pass": true,
+        "evidence": {
+          "paper_quality_schema": "2.1"
+        }
+      },
+      {
+        "key": "effort-assurance-orthogonal",
+        "pass": true,
+        "evidence": {
+          "effort_profiles": [
+            "lite",
+            "max",
+            "standard",
+            "swarm"
+          ],
+          "assurance_profiles": [
+            "experiment-ready",
+            "exploratory",
+            "paper-ready",
+            "qualified"
+          ]
+        }
+      },
+      {
+        "key": "meta-telemetry-zero-authority",
+        "pass": true,
+        "evidence": {
+          "bottleneck": "PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE"
+        }
+      }
+    ],
+    "summary": {
+      "checks": 9,
+      "passed": 9,
+      "failed": 0,
+      "reviewed_candidate_receipts": 0,
+      "resolved_model_independence_violations": 0
+    },
+    "scientific_authority": false,
+    "authority": {
+      "problem_gate": false,
+      "paper_design": false,
+      "method": false,
+      "experiment": false,
+      "p0": false,
+      "gpu": false
+    }
+  },
+  "scientific_research_graph": {
+    "schema_version": "1.1",
+    "status": "RESEARCH_GRAPH_COMPILED",
+    "policy": {
+      "schema_version": "1.1",
+      "graph_is_a_derived_traceability_view_not_scientific_authority": true,
+      "existing_evidence_graph_is_referenced_not_duplicated": true,
+      "paper_idea_claim_experiment_principle_failure_and_closure_are_distinct_node_kinds": true,
+      "experiment_failure_edge_cannot_close_core_principle": true,
+      "only_certified_principle_dead_end_may_emit_principle_closure_edge": true,
+      "search_closure_and_scientific_dead_end_are_distinct": true,
+      "failure_assets_preserve_affected_layer_and_does_not_imply_scope": true,
+      "candidate_portfolio_stage_does_not_promote_scientific_status": true
+    },
+    "base_graph": {
+      "state_key": "evidence_graph",
+      "nodes": 582,
+      "edges": 958,
+      "referenced_not_duplicated": true
+    },
+    "summary": {
+      "nodes": 698,
+      "edges": 1044,
+      "node_kinds": {
+        "candidate_problem": 2,
+        "claim": 87,
+        "core_principle": 2,
+        "dataset": 15,
+        "domain": 13,
+        "experiment": 78,
+        "failure_asset": 6,
+        "idea": 57,
+        "model": 6,
+        "paper": 334,
+        "paper-alias": 64,
+        "query": 26,
+        "track": 8
+      },
+      "relations": {
+        "belongs-to": 29,
+        "citation": 44,
+        "covers-domain": 72,
+        "diagnoses": 6,
+        "evaluates-on": 77,
+        "nearest-work": 88,
+        "principle_for": 2,
+        "reference": 36,
+        "retrieved": 264,
+        "semantic-evidence": 174,
+        "states-problem": 29,
+        "tested_by": 78,
+        "tests-hypothesis": 29,
+        "uses-mechanism": 29,
+        "uses-model": 87
+      },
+      "base_nodes": 582,
+      "base_edges": 958,
+      "overlay_nodes": 116,
+      "new_overlay_nodes": 116,
+      "overlay_edges": 86,
+      "candidate_nodes": 2,
+      "experiment_nodes": 78,
+      "principle_nodes": 2,
+      "failure_asset_nodes": 6,
+      "scientific_closure_nodes": 0,
+      "principle_closure_edges": 0
+    },
+    "overlay_nodes": [
+      {
+        "id": "candidate:PORT-001",
+        "kind": "candidate_problem",
+        "label": "Rank-inverted skill harm across harnesses as a non-composability witness",
+        "candidate_id": "PORT-001",
+        "stage": "PRE_F0_EVIDENCE_ACQUISITION",
+        "portfolio_state": "SEARCH_HOLD",
+        "source": "research_candidate_portfolio",
+        "scientific_authority": false
+      },
+      {
+        "id": "candidate:PORT-003",
+        "kind": "candidate_problem",
+        "label": "Timescale-isolated ablation of action-frequency governance on a frozen skill set",
+        "candidate_id": "PORT-003",
+        "stage": "PRE_F0_EVIDENCE_ACQUISITION",
+        "portfolio_state": "SEARCH_HOLD",
+        "source": "research_candidate_portfolio",
+        "scientific_authority": false
+      },
+      {
+        "id": "experiment:applicability-bounded-lessons:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:applicability-bounded-lessons:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:applicability-bounded-lessons:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:budgeted-evolution-controller:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:budgeted-evolution-controller:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:budgeted-evolution-controller:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:causally-verified-experience-admission:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:causally-verified-experience-admission:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:causally-verified-experience-admission:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:compositional-update-compatibility:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:compositional-update-compatibility:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:compositional-update-compatibility:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:contradiction-preserving-consolidation:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:contradiction-preserving-consolidation:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:contradiction-preserving-consolidation:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:correction-policy-credit:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:correction-policy-credit:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:correction-policy-credit:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:counterexample-generating-curriculum:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:counterexample-generating-curriculum:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:counterexample-generating-curriculum:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:curriculum-drift-controller:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:curriculum-drift-controller:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:curriculum-drift-controller:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:evaluator-coadaptation-guard:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:evaluator-coadaptation-guard:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:evaluator-coadaptation-guard:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:failure-frontier-curriculum:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:failure-frontier-curriculum:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:failure-frontier-curriculum:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:intervention-validated-self-correction:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:intervention-validated-self-correction:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:intervention-validated-self-correction:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:irreversible-action-counterfactuals:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:irreversible-action-counterfactuals:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:irreversible-action-counterfactuals:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:lineage-aware-rollback:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:lineage-aware-rollback:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:lineage-aware-rollback:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:local-counterexample-memory-repair:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:local-counterexample-memory-repair:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:local-counterexample-memory-repair:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:memory-half-life:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:memory-half-life:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:memory-half-life:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:outcome-equivalent-trajectory-contrast:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:outcome-equivalent-trajectory-contrast:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:outcome-equivalent-trajectory-contrast:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:recovery-conditioned-experience:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:recovery-conditioned-experience:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:recovery-conditioned-experience:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:regression-gated-self-evolution:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:regression-gated-self-evolution:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:regression-gated-self-evolution:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:retrieval-interference-auditor:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:retrieval-interference-auditor:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:retrieval-interference-auditor:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:reward-invariance-audit:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:reward-invariance-audit:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:reward-invariance-audit:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:self-correction-collapse-detector:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:self-correction-collapse-detector:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:self-correction-collapse-detector:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:self-label-confidence-flow:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:self-label-confidence-flow:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:self-label-confidence-flow:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:update-trust-region:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:update-trust-region:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:update-trust-region:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:workflow-branch-credit:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:workflow-branch-credit:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:workflow-branch-credit:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:workflow-generalization-certificate:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:workflow-generalization-certificate:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:workflow-generalization-certificate:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:world-model-error-gated-learning:P0",
+        "kind": "experiment",
+        "label": "{'zh': '真实进化检查', 'en': 'Reality-of-evolution check'}",
+        "phase": "P0",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:world-model-error-gated-learning:P1",
+        "kind": "experiment",
+        "label": "{'zh': '机制 Pilot', 'en': 'Mechanism pilot'}",
+        "phase": "P1",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "experiment:world-model-error-gated-learning:P2",
+        "kind": "experiment",
+        "label": "{'zh': '圈外泛化与稳定性', 'en': 'Out-of-loop generalization and stability'}",
+        "phase": "P2",
+        "status": "planned",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "failure:29a8645f1dc119a4",
+        "kind": "failure_asset",
+        "label": "execution:infrastructure-error",
+        "affected_layer": "execution",
+        "does_not_imply": "core-principle failure",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "failure:34d2176b897f5cfd",
+        "kind": "failure_asset",
+        "label": "execution:infrastructure-error",
+        "affected_layer": "execution",
+        "does_not_imply": "core-principle failure",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "failure:39775e5c64ddce05",
+        "kind": "failure_asset",
+        "label": "execution:infrastructure-error",
+        "affected_layer": "execution",
+        "does_not_imply": "core-principle failure",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "failure:475ab7f33b9304e7",
+        "kind": "failure_asset",
+        "label": "execution:infrastructure-error",
+        "affected_layer": "execution",
+        "does_not_imply": "core-principle failure",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "failure:6f0ef0212a9e976a",
+        "kind": "failure_asset",
+        "label": "operationalization:decision-context-support-mismatch",
+        "affected_layer": "operationalization",
+        "does_not_imply": "method failure, core-principle failure, or rescue of the current ALFWorld memory paper",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "failure:f18861b827d51b20",
+        "kind": "failure_asset",
+        "label": "authority-protocol:authority-provenance-mismatch",
+        "affected_layer": "authority-protocol",
+        "does_not_imply": "P0 support PASS/HOLD, method failure, principle failure, or any retrospective scientific authority from the executed rows",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "idea:applicability-bounded-lessons",
+        "kind": "idea",
+        "label": "applicability-bounded-lessons",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:budgeted-evolution-controller",
+        "kind": "idea",
+        "label": "budgeted-evolution-controller",
+        "source": "scientific_meta_trace"
+      },
+      {
+        "id": "idea:causally-verified-experience-admission",
+        "kind": "idea",
+        "label": "causally-verified-experience-admission",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:compositional-update-compatibility",
+        "kind": "idea",
+        "label": "compositional-update-compatibility",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:contradiction-preserving-consolidation",
+        "kind": "idea",
+        "label": "contradiction-preserving-consolidation",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:correction-policy-credit",
+        "kind": "idea",
+        "label": "correction-policy-credit",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:counterexample-generating-curriculum",
+        "kind": "idea",
+        "label": "counterexample-generating-curriculum",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:curriculum-drift-controller",
+        "kind": "idea",
+        "label": "curriculum-drift-controller",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:evaluator-coadaptation-guard",
+        "kind": "idea",
+        "label": "evaluator-coadaptation-guard",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:failure-frontier-curriculum",
+        "kind": "idea",
+        "label": "failure-frontier-curriculum",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:intervention-validated-self-correction",
+        "kind": "idea",
+        "label": "intervention-validated-self-correction",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:irreversible-action-counterfactuals",
+        "kind": "idea",
+        "label": "irreversible-action-counterfactuals",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:lineage-aware-rollback",
+        "kind": "idea",
+        "label": "lineage-aware-rollback",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:local-counterexample-memory-repair",
+        "kind": "idea",
+        "label": "local-counterexample-memory-repair",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:memory-half-life",
+        "kind": "idea",
+        "label": "memory-half-life",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:outcome-equivalent-trajectory-contrast",
+        "kind": "idea",
+        "label": "outcome-equivalent-trajectory-contrast",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:paper-first-p0-20260812-premature-local-validation",
+        "kind": "idea",
+        "label": "paper-first-p0-20260812-premature-local-validation",
+        "source": "failure_asset_library"
+      },
+      {
+        "id": "idea:recovery-conditioned-experience",
+        "kind": "idea",
+        "label": "recovery-conditioned-experience",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:regression-gated-self-evolution",
+        "kind": "idea",
+        "label": "regression-gated-self-evolution",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:retrieval-interference-auditor",
+        "kind": "idea",
+        "label": "retrieval-interference-auditor",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:reward-invariance-audit",
+        "kind": "idea",
+        "label": "reward-invariance-audit",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:scienceworld-persistent-correction-closure",
+        "kind": "idea",
+        "label": "scienceworld-persistent-correction-closure",
+        "source": "failure_asset_library"
+      },
+      {
+        "id": "idea:self-correction-collapse-detector",
+        "kind": "idea",
+        "label": "self-correction-collapse-detector",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:self-label-confidence-flow",
+        "kind": "idea",
+        "label": "self-label-confidence-flow",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:update-trust-region",
+        "kind": "idea",
+        "label": "update-trust-region",
+        "source": "scientific_meta_trace"
+      },
+      {
+        "id": "idea:workflow-branch-credit",
+        "kind": "idea",
+        "label": "workflow-branch-credit",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:workflow-generalization-certificate",
+        "kind": "idea",
+        "label": "workflow-generalization-certificate",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "idea:world-model-error-gated-learning",
+        "kind": "idea",
+        "label": "world-model-error-gated-learning",
+        "source": "pilot_registry"
+      },
+      {
+        "id": "principle:adaptive-update-stopping-v1",
+        "kind": "core_principle",
+        "label": "When update value diminishes or regression risk rises, an adaptive controller can stop before unnecessary or harmful updates and preserve useful earlier changes.",
+        "belief_state": "unresolved",
+        "source": "scientific_meta_trace"
+      },
+      {
+        "id": "principle:persistent-update-drift-governance-v1",
+        "kind": "core_principle",
+        "label": "Harmful persistent updates should induce measurable pre-commit behavioral divergence; a gate can use this signal to avoid harmful commits while retaining useful updates.",
+        "belief_state": "unresolved",
+        "source": "scientific_meta_trace"
+      }
+    ],
+    "overlay_edges": [
+      {
+        "source": "principle:persistent-update-drift-governance-v1",
+        "target": "idea:update-trust-region",
+        "relation": "principle_for"
+      },
+      {
+        "source": "principle:adaptive-update-stopping-v1",
+        "target": "idea:budgeted-evolution-controller",
+        "relation": "principle_for"
+      },
+      {
+        "source": "idea:regression-gated-self-evolution",
+        "target": "experiment:regression-gated-self-evolution:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:regression-gated-self-evolution",
+        "target": "experiment:regression-gated-self-evolution:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:regression-gated-self-evolution",
+        "target": "experiment:regression-gated-self-evolution:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:contradiction-preserving-consolidation",
+        "target": "experiment:contradiction-preserving-consolidation:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:contradiction-preserving-consolidation",
+        "target": "experiment:contradiction-preserving-consolidation:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:contradiction-preserving-consolidation",
+        "target": "experiment:contradiction-preserving-consolidation:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:compositional-update-compatibility",
+        "target": "experiment:compositional-update-compatibility:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:compositional-update-compatibility",
+        "target": "experiment:compositional-update-compatibility:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:compositional-update-compatibility",
+        "target": "experiment:compositional-update-compatibility:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:update-trust-region",
+        "target": "experiment:update-trust-region:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:update-trust-region",
+        "target": "experiment:update-trust-region:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:update-trust-region",
+        "target": "experiment:update-trust-region:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:retrieval-interference-auditor",
+        "target": "experiment:retrieval-interference-auditor:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:retrieval-interference-auditor",
+        "target": "experiment:retrieval-interference-auditor:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:retrieval-interference-auditor",
+        "target": "experiment:retrieval-interference-auditor:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:irreversible-action-counterfactuals",
+        "target": "experiment:irreversible-action-counterfactuals:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:irreversible-action-counterfactuals",
+        "target": "experiment:irreversible-action-counterfactuals:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:irreversible-action-counterfactuals",
+        "target": "experiment:irreversible-action-counterfactuals:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:self-label-confidence-flow",
+        "target": "experiment:self-label-confidence-flow:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:self-label-confidence-flow",
+        "target": "experiment:self-label-confidence-flow:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:self-label-confidence-flow",
+        "target": "experiment:self-label-confidence-flow:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:evaluator-coadaptation-guard",
+        "target": "experiment:evaluator-coadaptation-guard:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:evaluator-coadaptation-guard",
+        "target": "experiment:evaluator-coadaptation-guard:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:evaluator-coadaptation-guard",
+        "target": "experiment:evaluator-coadaptation-guard:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:recovery-conditioned-experience",
+        "target": "experiment:recovery-conditioned-experience:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:recovery-conditioned-experience",
+        "target": "experiment:recovery-conditioned-experience:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:recovery-conditioned-experience",
+        "target": "experiment:recovery-conditioned-experience:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:counterexample-generating-curriculum",
+        "target": "experiment:counterexample-generating-curriculum:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:counterexample-generating-curriculum",
+        "target": "experiment:counterexample-generating-curriculum:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:counterexample-generating-curriculum",
+        "target": "experiment:counterexample-generating-curriculum:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:workflow-generalization-certificate",
+        "target": "experiment:workflow-generalization-certificate:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:workflow-generalization-certificate",
+        "target": "experiment:workflow-generalization-certificate:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:workflow-generalization-certificate",
+        "target": "experiment:workflow-generalization-certificate:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:budgeted-evolution-controller",
+        "target": "experiment:budgeted-evolution-controller:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:budgeted-evolution-controller",
+        "target": "experiment:budgeted-evolution-controller:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:budgeted-evolution-controller",
+        "target": "experiment:budgeted-evolution-controller:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:lineage-aware-rollback",
+        "target": "experiment:lineage-aware-rollback:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:lineage-aware-rollback",
+        "target": "experiment:lineage-aware-rollback:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:lineage-aware-rollback",
+        "target": "experiment:lineage-aware-rollback:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:failure-frontier-curriculum",
+        "target": "experiment:failure-frontier-curriculum:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:failure-frontier-curriculum",
+        "target": "experiment:failure-frontier-curriculum:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:failure-frontier-curriculum",
+        "target": "experiment:failure-frontier-curriculum:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:causally-verified-experience-admission",
+        "target": "experiment:causally-verified-experience-admission:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:causally-verified-experience-admission",
+        "target": "experiment:causally-verified-experience-admission:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:causally-verified-experience-admission",
+        "target": "experiment:causally-verified-experience-admission:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:reward-invariance-audit",
+        "target": "experiment:reward-invariance-audit:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:reward-invariance-audit",
+        "target": "experiment:reward-invariance-audit:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:reward-invariance-audit",
+        "target": "experiment:reward-invariance-audit:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:local-counterexample-memory-repair",
+        "target": "experiment:local-counterexample-memory-repair:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:local-counterexample-memory-repair",
+        "target": "experiment:local-counterexample-memory-repair:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:local-counterexample-memory-repair",
+        "target": "experiment:local-counterexample-memory-repair:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:self-correction-collapse-detector",
+        "target": "experiment:self-correction-collapse-detector:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:self-correction-collapse-detector",
+        "target": "experiment:self-correction-collapse-detector:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:self-correction-collapse-detector",
+        "target": "experiment:self-correction-collapse-detector:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:intervention-validated-self-correction",
+        "target": "experiment:intervention-validated-self-correction:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:intervention-validated-self-correction",
+        "target": "experiment:intervention-validated-self-correction:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:intervention-validated-self-correction",
+        "target": "experiment:intervention-validated-self-correction:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:workflow-branch-credit",
+        "target": "experiment:workflow-branch-credit:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:workflow-branch-credit",
+        "target": "experiment:workflow-branch-credit:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:workflow-branch-credit",
+        "target": "experiment:workflow-branch-credit:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:world-model-error-gated-learning",
+        "target": "experiment:world-model-error-gated-learning:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:world-model-error-gated-learning",
+        "target": "experiment:world-model-error-gated-learning:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:world-model-error-gated-learning",
+        "target": "experiment:world-model-error-gated-learning:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:memory-half-life",
+        "target": "experiment:memory-half-life:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:memory-half-life",
+        "target": "experiment:memory-half-life:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:memory-half-life",
+        "target": "experiment:memory-half-life:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:correction-policy-credit",
+        "target": "experiment:correction-policy-credit:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:correction-policy-credit",
+        "target": "experiment:correction-policy-credit:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:correction-policy-credit",
+        "target": "experiment:correction-policy-credit:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:curriculum-drift-controller",
+        "target": "experiment:curriculum-drift-controller:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:curriculum-drift-controller",
+        "target": "experiment:curriculum-drift-controller:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:curriculum-drift-controller",
+        "target": "experiment:curriculum-drift-controller:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:outcome-equivalent-trajectory-contrast",
+        "target": "experiment:outcome-equivalent-trajectory-contrast:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:outcome-equivalent-trajectory-contrast",
+        "target": "experiment:outcome-equivalent-trajectory-contrast:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:outcome-equivalent-trajectory-contrast",
+        "target": "experiment:outcome-equivalent-trajectory-contrast:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:applicability-bounded-lessons",
+        "target": "experiment:applicability-bounded-lessons:P0",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:applicability-bounded-lessons",
+        "target": "experiment:applicability-bounded-lessons:P1",
+        "relation": "tested_by"
+      },
+      {
+        "source": "idea:applicability-bounded-lessons",
+        "target": "experiment:applicability-bounded-lessons:P2",
+        "relation": "tested_by"
+      },
+      {
+        "source": "failure:29a8645f1dc119a4",
+        "target": "idea:update-trust-region",
+        "relation": "diagnoses"
+      },
+      {
+        "source": "failure:39775e5c64ddce05",
+        "target": "idea:budgeted-evolution-controller",
+        "relation": "diagnoses"
+      },
+      {
+        "source": "failure:475ab7f33b9304e7",
+        "target": "idea:outcome-equivalent-trajectory-contrast",
+        "relation": "diagnoses"
+      },
+      {
+        "source": "failure:34d2176b897f5cfd",
+        "target": "idea:workflow-generalization-certificate",
+        "relation": "diagnoses"
+      },
+      {
+        "source": "failure:6f0ef0212a9e976a",
+        "target": "idea:scienceworld-persistent-correction-closure",
+        "relation": "diagnoses"
+      },
+      {
+        "source": "failure:f18861b827d51b20",
+        "target": "idea:paper-first-p0-20260812-premature-local-validation",
+        "relation": "diagnoses"
+      }
+    ],
+    "scientific_authority": false
   }
 }

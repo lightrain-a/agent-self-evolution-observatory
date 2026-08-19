@@ -676,6 +676,9 @@
         "manuscript_ready_requires_visual_artifact_data_script_caption_binding": true,
         "paper_ready_content_addressed_mode_rejects_missing_stale_or_path_traversal_artifacts": true,
         "claim_adjudication_may_reference_only_registered_completed_evidence_ids": true,
+        "manuscript_claims_must_read_from_claim_ledger": true,
+        "claim_ledger_preserves_refuted_and_inconclusive_rows": true,
+        "claim_ledger_has_zero_scientific_authority": true,
         "quality_gate_cannot_authorize_method_experiment_p0_or_gpu": true
       },
       "scientific_authority": false,
@@ -712,6 +715,149 @@
       "content_addressed_required": true,
       "content_addressed_referenced_files": 15
     },
+    "claim_ledger": [
+      {
+        "claim_id": "N1",
+        "claim_type": "empirical_analysis",
+        "claim_text": "Released skill inventories exhibit high raw overlap while alternative support reductions can change the apparent redundancy structure.",
+        "adjudication_status": "SUPPORTED_NARROWLY",
+        "manuscript_surface": "AFFIRMATIVE_NARROW_ONLY",
+        "affirmative_claim_allowed": true,
+        "must_preserve_negative_or_inconclusive": false,
+        "evidence_ids": [
+          "B-RAW-OVERLAP",
+          "B-DEDUP",
+          "B-ANALYTICAL",
+          "A-REDUCTION-TOURNAMENT",
+          "O-MAIN"
+        ],
+        "evidence_trace": [
+          {
+            "evidence_id": "B-RAW-OVERLAP",
+            "registered": true,
+            "linked_to_claim": true,
+            "completion_status": "PASS",
+            "completed": true
+          },
+          {
+            "evidence_id": "B-DEDUP",
+            "registered": true,
+            "linked_to_claim": true,
+            "completion_status": "PASS",
+            "completed": true
+          },
+          {
+            "evidence_id": "B-ANALYTICAL",
+            "registered": true,
+            "linked_to_claim": true,
+            "completion_status": "PASS",
+            "completed": true
+          },
+          {
+            "evidence_id": "A-REDUCTION-TOURNAMENT",
+            "registered": true,
+            "linked_to_claim": true,
+            "completion_status": "PASS",
+            "completed": true
+          },
+          {
+            "evidence_id": "O-MAIN",
+            "registered": true,
+            "linked_to_claim": true,
+            "completion_status": "PASS",
+            "completed": true
+          }
+        ],
+        "trace_complete": true,
+        "scientific_authority": false
+      },
+      {
+        "claim_id": "N2",
+        "claim_type": "theory",
+        "claim_text": "STRI-Cert exactly decides package-only exposure equalizability; its LP dual gives general lower-bound witnesses and linear extensions expose support uncertainty and controller-feasible-set assumptions.",
+        "adjudication_status": "SUPPORTED_NARROWLY",
+        "manuscript_surface": "AFFIRMATIVE_NARROW_ONLY",
+        "affirmative_claim_allowed": true,
+        "must_preserve_negative_or_inconclusive": false,
+        "evidence_ids": [
+          "B-ANALYTICAL",
+          "O-MAIN"
+        ],
+        "evidence_trace": [
+          {
+            "evidence_id": "B-ANALYTICAL",
+            "registered": true,
+            "linked_to_claim": true,
+            "completion_status": "PASS",
+            "completed": true
+          },
+          {
+            "evidence_id": "O-MAIN",
+            "registered": true,
+            "linked_to_claim": true,
+            "completion_status": "PASS",
+            "completed": true
+          }
+        ],
+        "trace_complete": true,
+        "scientific_authority": false
+      },
+      {
+        "claim_id": "N3",
+        "claim_type": "mechanism",
+        "claim_text": "Raw overlap is insufficient to explain when released skill taxonomies are clone-sensitive versus support-invariant.",
+        "adjudication_status": "SUPPORTED_NARROWLY",
+        "manuscript_surface": "AFFIRMATIVE_NARROW_ONLY",
+        "affirmative_claim_allowed": true,
+        "must_preserve_negative_or_inconclusive": false,
+        "evidence_ids": [
+          "B-RAW-OVERLAP",
+          "B-DEDUP",
+          "B-ANALYTICAL",
+          "AN-MECHANISM",
+          "O-MECHANISM"
+        ],
+        "evidence_trace": [
+          {
+            "evidence_id": "B-RAW-OVERLAP",
+            "registered": true,
+            "linked_to_claim": true,
+            "completion_status": "PASS",
+            "completed": true
+          },
+          {
+            "evidence_id": "B-DEDUP",
+            "registered": true,
+            "linked_to_claim": true,
+            "completion_status": "PASS",
+            "completed": true
+          },
+          {
+            "evidence_id": "B-ANALYTICAL",
+            "registered": true,
+            "linked_to_claim": true,
+            "completion_status": "PASS",
+            "completed": true
+          },
+          {
+            "evidence_id": "AN-MECHANISM",
+            "registered": true,
+            "linked_to_claim": true,
+            "completion_status": "PASS",
+            "completed": true
+          },
+          {
+            "evidence_id": "O-MECHANISM",
+            "registered": true,
+            "linked_to_claim": true,
+            "completion_status": "PASS",
+            "completed": true
+          }
+        ],
+        "trace_complete": true,
+        "scientific_authority": false
+      }
+    ],
     "content_addressed_completion": {
       "required": true,
       "passed": true,
@@ -740,6 +886,9 @@
       "manuscript_ready_requires_visual_artifact_data_script_caption_binding": true,
       "paper_ready_content_addressed_mode_rejects_missing_stale_or_path_traversal_artifacts": true,
       "claim_adjudication_may_reference_only_registered_completed_evidence_ids": true,
+      "manuscript_claims_must_read_from_claim_ledger": true,
+      "claim_ledger_preserves_refuted_and_inconclusive_rows": true,
+      "claim_ledger_has_zero_scientific_authority": true,
       "quality_gate_cannot_authorize_method_experiment_p0_or_gpu": true
     },
     "scientific_authority": false,
