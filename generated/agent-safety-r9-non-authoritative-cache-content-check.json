@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "R9_RUNTIME_PROVENANCE_READJUDICATION",
+  "candidate_id": "SHADOW-P01-C01",
+  "contract_sha256": "c6be022619e4b742e4737bc7fc7b50e938e25cf6d132a88ffb6db4f567e5dd63",
+  "status": "NON_AUTHORITATIVE_CACHE_CONTENT_CHECK",
+  "receipt_class": "NON_AUTHORITATIVE_CACHE_CONTENT_CHECK",
+  "scope": "LOCAL_CACHE_RUNTIME_CONTENT_ONLY",
+  "legacy_runtime_check": {
+    "pair_count": 6,
+    "canonical_protocol": false,
+    "can_substitute_for_formal_hf_metadata": false
+  },
+  "source_receipt_locator_status": "RAW_NONFORMAL_RECEIPT_NOT_PRESENT_IN_TRACKED_WORKTREE",
+  "formal_gate_eligible": false,
+  "execution_authorized": false,
+  "scientific_authority": false,
+  "official_metadata_gate": "HOLD",
+  "canonical_harness_v2": {
+    "states": 4,
+    "history_strata": 2,
+    "qualification_probe_count": 3,
+    "heldout_probe_count": 8,
+    "total_model_evaluations_upper_bound": 240,
+    "contract_max_model_calls": 256
+  },
+  "authority": {
+    "qualification_probe_execution": false,
+    "heldout_future_probe_execution": false,
+    "p0": false,
+    "gpu": false
+  },
+  "notes": [
+    "This artifact classifies only the non-formal six-pair cache/runtime content check.",
+    "It is not an official huggingface.co exact-revision provenance receipt and cannot authorize qualification or any outcome-bearing execution."
+  ],
+  "generated_at": "2026-08-19T05:18:58+00:00"
+}

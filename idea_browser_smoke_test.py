@@ -134,10 +134,18 @@ def main() -> None:
           agentSafetyStage: window.AGENT_SAFETY_PROGRAM_STATE?.current_stage || '',
           agentSafetyRuntimeStatus: window.AGENT_SAFETY_PROGRAM_STATE?.runtime?.status || '',
           agentSafetyBoundedEvidence: window.AGENT_SAFETY_PROGRAM_STATE?.authority?.bounded_evidence_acquisition === true,
+          agentSafetyQualification: window.AGENT_SAFETY_PROGRAM_STATE?.authority?.qualification_probe_execution === true,
+          agentSafetyMetadata: window.AGENT_SAFETY_PROGRAM_STATE?.runtime?.official_metadata_connectivity || '',
+          agentSafetyReceiptClass: window.AGENT_SAFETY_PROGRAM_STATE?.runtime?.provenance_receipt_class || '',
+          agentSafetyBudget: window.AGENT_SAFETY_PROGRAM_STATE?.canonical_protocol?.execution_invariants?.budget || {},
+          agentSafetySplit: window.AGENT_SAFETY_PROGRAM_STATE?.canonical_protocol?.execution_invariants?.probe_split || {},
           text: document.body.textContent || ''
         };""")
         require(system["chapters"] == 7 and system["readerChapters"] == 7 and system["readerPhases"] == 6 and system["deepDives"] == 4 and system["authorityCards"] == 3, f"research-system reading framework is incomplete: chapters={system['chapters']} roadmap={system['readerChapters']} phases={system['readerPhases']} deep={system['deepDives']} authority={system['authorityCards']}")
-        require(system["agentSafetySummary"] == 1 and system["agentSafetyStage"] == "RUNTIME_MODEL_ASSET_HOLD" and system["agentSafetyRuntimeStatus"] == "HOLD_RUNTIME_MODEL_ASSETS_UNAVAILABLE_OR_UNPINNED" and system["agentSafetyBoundedEvidence"] is False, f"research-system Agent Safety summary/state drift: {system['agentSafetySummary']}/{system['agentSafetyStage']}/{system['agentSafetyRuntimeStatus']}/{system['agentSafetyBoundedEvidence']}")
+        require(system["agentSafetySummary"] == 1 and system["agentSafetyStage"] == "RUNTIME_MODEL_ASSET_HOLD" and system["agentSafetyRuntimeStatus"] == "HOLD_RUNTIME_MODEL_ASSETS_UNAVAILABLE_OR_UNPINNED" and system["agentSafetyBoundedEvidence"] is False and system["agentSafetyQualification"] is False, f"research-system Agent Safety summary/state drift: {system['agentSafetySummary']}/{system['agentSafetyStage']}/{system['agentSafetyRuntimeStatus']}/{system['agentSafetyBoundedEvidence']}/{system['agentSafetyQualification']}")
+        sab=system["agentSafetyBudget"]; sas=system["agentSafetySplit"]
+        require((sab.get("states"),sab.get("history_strata"),sas.get("qualification_count"),sas.get("heldout_count"),sab.get("total_model_evaluations_upper_bound"),sab.get("contract_max_model_calls")) == (4,2,3,8,240,256) and sas.get("disjoint") is True, f"research-system Agent Safety canonical harness-v2 drift: {sab}/{sas}")
+        require(system["agentSafetyMetadata"] == "HOLD" and system["agentSafetyReceiptClass"] == "NON_AUTHORITATIVE_CACHE_CONTENT_CHECK" and "NON_AUTHORITATIVE_CACHE_CONTENT_CHECK" in system["text"] and "240/256" in system["text"], f"research-system Agent Safety provenance/display drift: {system['agentSafetyMetadata']}/{system['agentSafetyReceiptClass']}")
         require(system["responsibilityLayers"] == 6 and system["temporalStages"] == 11 and system["componentLayerHeaders"] == 6 and system["aiCheckpoints"] == 5, f"research-system architecture/AI clinic is incomplete: layers={system['responsibilityLayers']} stages={system['temporalStages']} component-groups={system['componentLayerHeaders']} ai={system['aiCheckpoints']}")
         require((system["architectureSummary"].get("temporal_stages"),system["architectureSummary"].get("reader_chapters"),system["architectureSummary"].get("reader_stage_coverage"),system["architectureSummary"].get("reader_stage_missing"),system["architectureSummary"].get("reader_stage_duplicates"),system["architectureSummary"].get("reader_stage_extra"),system["architectureSummary"].get("functional_layers"),system["architectureSummary"].get("assigned_components"),system["architectureSummary"].get("unassigned_components"),system["architectureSummary"].get("cross_cutting_controls"),system["architectureSummary"].get("orphan_cross_cutting_controls")) == (11,7,11,0,0,0,6,27,0,3,0), f"backend architecture manifest is stale in browser state: {system['architectureSummary']}")
         require(system["methodologyControls"] == 3 and "Are candidate problems too similar?" in system["text"] and "Can another person rerun the key result from scratch?" in system["text"], f"cross-cutting methodology controls are missing: {system['methodologyControls']}")
@@ -261,6 +269,11 @@ def main() -> None:
           agentSafetyStage: window.AGENT_SAFETY_PROGRAM_STATE?.current_stage || '',
           agentSafetyRuntimeStatus: window.AGENT_SAFETY_PROGRAM_STATE?.runtime?.status || '',
           agentSafetyBoundedEvidence: window.AGENT_SAFETY_PROGRAM_STATE?.authority?.bounded_evidence_acquisition === true,
+          agentSafetyQualification: window.AGENT_SAFETY_PROGRAM_STATE?.authority?.qualification_probe_execution === true,
+          agentSafetyMetadata: window.AGENT_SAFETY_PROGRAM_STATE?.runtime?.official_metadata_connectivity || '',
+          agentSafetyReceiptClass: window.AGENT_SAFETY_PROGRAM_STATE?.runtime?.provenance_receipt_class || '',
+          agentSafetyBudget: window.AGENT_SAFETY_PROGRAM_STATE?.canonical_protocol?.execution_invariants?.budget || {},
+          agentSafetySplit: window.AGENT_SAFETY_PROGRAM_STATE?.canonical_protocol?.execution_invariants?.probe_split || {},
           discussedGroups: document.querySelectorAll('.human-science-group').length,
           discussedCards: document.querySelectorAll('.human-review-idea-card').length,
           readyCards: document.querySelectorAll('.human-review-idea-card.human-tone-ready').length,
@@ -334,7 +347,10 @@ def main() -> None:
           text: document.body.textContent || ''
         };""")
         require(ideas["chapters"] == 2, f"paper-ideas should merge standalone methods and Paper-first new problems into Chapter II, got {ideas['chapters']}")
-        require(ideas["agentSafetyProgram"] == 1 and ideas["agentSafetyStage"] == system["agentSafetyStage"] and ideas["agentSafetyRuntimeStatus"] == system["agentSafetyRuntimeStatus"] and ideas["agentSafetyBoundedEvidence"] is False, f"Paper Ideas Agent Safety program/state drift: {ideas['agentSafetyProgram']}/{ideas['agentSafetyStage']}/{ideas['agentSafetyRuntimeStatus']}/{ideas['agentSafetyBoundedEvidence']}")
+        require(ideas["agentSafetyProgram"] == 1 and ideas["agentSafetyStage"] == system["agentSafetyStage"] and ideas["agentSafetyRuntimeStatus"] == system["agentSafetyRuntimeStatus"] and ideas["agentSafetyBoundedEvidence"] is False and ideas["agentSafetyQualification"] is False, f"Paper Ideas Agent Safety program/state drift: {ideas['agentSafetyProgram']}/{ideas['agentSafetyStage']}/{ideas['agentSafetyRuntimeStatus']}/{ideas['agentSafetyBoundedEvidence']}/{ideas['agentSafetyQualification']}")
+        iab=ideas["agentSafetyBudget"]; ias=ideas["agentSafetySplit"]
+        require((iab.get("states"),iab.get("history_strata"),ias.get("qualification_count"),ias.get("heldout_count"),iab.get("total_model_evaluations_upper_bound"),iab.get("contract_max_model_calls")) == (4,2,3,8,240,256) and ias.get("disjoint") is True, f"Paper Ideas Agent Safety canonical harness-v2 drift: {iab}/{ias}")
+        require(ideas["agentSafetyMetadata"] == "HOLD" and ideas["agentSafetyReceiptClass"] == "NON_AUTHORITATIVE_CACHE_CONTENT_CHECK" and "NON_AUTHORITATIVE_CACHE_CONTENT_CHECK" in ideas["text"] and "240/256" in ideas["text"], f"Paper Ideas Agent Safety provenance/display drift: {ideas['agentSafetyMetadata']}/{ideas['agentSafetyReceiptClass']}")
         require(ideas["p0Entry"] == 0 and ideas["p0Boards"] == 0 and ideas["experimentLinks"] >= 1, f"legacy P0-entry/control boards must stay off canonical Paper Ideas: {ideas['p0Entry']}/{ideas['p0Boards']}/{ideas['experimentLinks']}")
         require(ideas["p0AdmissionSummary"].get("active_p0") == 27 and ideas["p0AdmissionSummary"].get("transitioned_from_p0_ready") == 16 and ideas["p0AdmissionSummary"].get("revived_from_drop") == 7 and ideas["p0AdmissionSummary"].get("settings_complete") == 27 and ideas["p0AdmissionSummary"].get("execution_authorized") == 0, f"paper-ideas unified P0 admission state is stale: {ideas['p0AdmissionSummary']}")
         require(ideas["p0Summary"].get("ready_now") == 0 and ideas["p0Summary"].get("pre_p0_blocked") == 4 and ideas["p0Summary"].get("gpu_hours_cap_ready_now") == 0 and ideas["p0Summary"].get("p1_authorized") == 0, f"P0 Pre-P0/resource summary is wrong: {ideas['p0Summary']}")

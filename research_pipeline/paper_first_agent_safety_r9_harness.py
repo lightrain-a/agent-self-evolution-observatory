@@ -56,6 +56,9 @@ R9_EVALUATOR_MODEL_REVISION = "0cd31cdc8b53209dd5b153b20026ff085901bb14"
 R9_MODEL_REVISION_MARKER = ".r9-model-revision.json"
 R9_MODEL_VERIFICATION_RECEIPT = ".r9-hf-verification.json"
 R9_MODEL_SOURCE_METADATA = ".r9-hf-source-metadata.json"
+R9_FORMAL_HF_RECEIPT_CLASS = "FORMAL_HF_EXACT_REVISION_CONTENT_ADDRESSED_VERIFICATION"
+R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS = "NON_AUTHORITATIVE_CACHE_CONTENT_CHECK"
+R9_FORMAL_RUNTIME_ASSET_GATE_CLASS = "FORMAL_R9_RUNTIME_MODEL_ASSET_GATE"
 R9_REQUIRED_MODEL_FILES = {
     "agent": (
         "config.json",
@@ -86,6 +89,7 @@ R9_REQUIRED_MODEL_FILES = {
 }
 R9_FROZEN_BUDGET_SHAPE = {
     "states": 4,
+    "history_strata": 2,
     "qualification_probes_per_state": 3,
     "branches_per_state": 3,
     "future_horizon_updates": 3,
@@ -478,6 +482,8 @@ def acquire_and_prepare_hf_model_provenance(
     source_metadata_path.write_bytes(bytes(raw))
     receipt = {
         "schema_version": "2.0",
+        "receipt_class": R9_FORMAL_HF_RECEIPT_CLASS,
+        "formal_gate_eligible": True,
         "model_id": model_id,
         "revision": revision,
         "source_domain": "huggingface.co",
@@ -497,6 +503,7 @@ def acquire_and_prepare_hf_model_provenance(
     receipt_path.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     marker = {
         "schema_version": "2.0",
+        "verification_receipt_class": R9_FORMAL_HF_RECEIPT_CLASS,
         "model_id": model_id,
         "revision": revision,
         "verification_receipt": R9_MODEL_VERIFICATION_RECEIPT,
@@ -561,6 +568,7 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
             "local_file_hashes_match": False,
             "source_content_matches_local": False,
             "hf_exact_revision_verified": False,
+            "receipt_class": "",
         }
         role_failures: list[str] = []
         if not root.is_dir():
@@ -582,11 +590,14 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
                 role_failures.append("revision-mismatch")
 
             receipt_name = str(marker_payload.get("verification_receipt") or "").strip()
+            marker_receipt_class = str(marker_payload.get("verification_receipt_class") or "").strip()
             marker_receipt_sha = str(marker_payload.get("verification_receipt_sha256") or "").strip().lower()
             marker_manifest_sha = str(marker_payload.get("files_manifest_sha256") or "").strip().lower()
             marker_source_manifest_sha = str(marker_payload.get("source_manifest_sha256") or "").strip().lower()
             if receipt_name != R9_MODEL_VERIFICATION_RECEIPT:
                 role_failures.append("verification-receipt-reference-invalid")
+            if marker_receipt_class != R9_FORMAL_HF_RECEIPT_CLASS:
+                role_failures.append("verification-marker-receipt-class-not-formal")
             if not re.fullmatch(r"[0-9a-f]{64}", marker_receipt_sha):
                 role_failures.append("verification-receipt-digest-invalid")
             if not re.fullmatch(r"[0-9a-f]{64}", marker_manifest_sha):
@@ -610,6 +621,8 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
                     receipt = {}
 
             if receipt:
+                receipt_class = str(receipt.get("receipt_class") or "").strip()
+                row["receipt_class"] = receipt_class
                 receipt_id = str(receipt.get("model_id") or "")
                 receipt_revision = str(receipt.get("revision") or "")
                 source_domain = str(receipt.get("source_domain") or "").strip().lower()
@@ -618,6 +631,7 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
                 source_http_status = receipt.get("source_http_status")
                 expected_source_url = _hf_revision_api_url(model_id, revision)
                 exact_verified = receipt.get("exact_revision_verified") is True
+                formal_gate_eligible = receipt.get("formal_gate_eligible") is True
                 source_metadata_name = str(receipt.get("source_metadata") or "").strip()
                 source_metadata_sha = str(receipt.get("source_metadata_sha256") or "").strip().lower()
                 row.update({
@@ -631,6 +645,8 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
                 })
                 if receipt_id != model_id or receipt_revision != revision:
                     role_failures.append("verification-receipt-identity-mismatch")
+                if receipt_class != R9_FORMAL_HF_RECEIPT_CLASS or not formal_gate_eligible:
+                    role_failures.append("verification-receipt-class-not-formal")
                 if source_domain != "huggingface.co":
                     role_failures.append("verification-source-not-huggingface")
                 if source_url != expected_source_url or source_final_url != expected_source_url or source_http_status != 200:
@@ -751,6 +767,8 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
                     and source_final_url == _hf_revision_api_url(model_id, revision)
                     and source_http_status == 200
                     and exact_verified
+                    and receipt_class == R9_FORMAL_HF_RECEIPT_CLASS
+                    and formal_gate_eligible
                     and source_metadata
                     and _hf_metadata_identity(source_metadata)[:2] == (model_id, revision)
                     and receipt.get("scientific_authority") is False
@@ -764,10 +782,13 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
         rows.append(row)
     ready = not failures and all(row.get("hf_exact_revision_verified") is True for row in rows)
     return {
+        "artifact_class": R9_FORMAL_RUNTIME_ASSET_GATE_CLASS,
         "status": "READY_RUNTIME_MODEL_ASSETS_PINNED" if ready else "HOLD_RUNTIME_MODEL_ASSETS_UNAVAILABLE_OR_UNPINNED",
         "execution_authorized": ready,
         "fallback_allowed": False,
         "verification_contract": {
+            "accepted_receipt_class": R9_FORMAL_HF_RECEIPT_CLASS,
+            "non_authoritative_cache_receipt_class": R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS,
             "marker_only_is_insufficient": True,
             "content_addressed_hf_receipt_required": True,
             "exact_hf_revision_metadata_required": True,

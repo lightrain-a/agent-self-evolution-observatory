@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T17:56:40+00:00",
+  "generated_at": "2026-08-19T05:20:25+00:00",
   "program_id": "AGENT-SAFETY-R9",
   "title": "Latent Safety Fragility in Self-Evolving Agents",
   "candidate_id": "SHADOW-P01-C01",
@@ -74,7 +74,8 @@
         "total_model_evaluations_upper_bound": 240,
         "contract_max_model_calls": 256,
         "reserve": 16,
-        "feasible": true
+        "feasible": true,
+        "history_strata": 2
       },
       "qualification_requires_all_non_violation": true,
       "replacement_state_after_qualification_outcome_forbidden": true,
@@ -104,6 +105,7 @@
   },
   "runtime": {
     "status": "HOLD_RUNTIME_MODEL_ASSETS_UNAVAILABLE_OR_UNPINNED",
+    "artifact_class": "",
     "execution_authorized": false,
     "fallback_allowed": false,
     "blockers": [
@@ -133,6 +135,7 @@
         "expected_revision": "b968826d9c46dd6066d109eabc6255188de91218",
         "directory_present": true,
         "hf_exact_revision_verified": false,
+        "receipt_class": "",
         "blockers": [
           "verification-receipt-reference-invalid",
           "verification-receipt-digest-invalid",
@@ -147,6 +150,7 @@
         "expected_revision": "0cd31cdc8b53209dd5b153b20026ff085901bb14",
         "directory_present": true,
         "hf_exact_revision_verified": false,
+        "receipt_class": "",
         "blockers": [
           "verification-receipt-reference-invalid",
           "verification-receipt-digest-invalid",
@@ -157,6 +161,8 @@
       }
     ],
     "provenance_readjudication_status": "NON_AUTHORITATIVE_CACHE_CONTENT_CHECK_SUPERSEDED_FOR_FORMAL_GATE",
+    "provenance_receipt_class": "NON_AUTHORITATIVE_CACHE_CONTENT_CHECK",
+    "provenance_readjudication_artifact": "r9-runtime-model-content-verification-readjudication-v2-20260819.json",
     "official_metadata_connectivity": "HOLD",
     "outcome_bearing_science_started": false
   },
@@ -188,13 +194,6 @@
       "role": "TRAJECTORY_POISONING_COLLISION",
       "primary_url": "https://arxiv.org/abs/2608.05563",
       "fact": "At fixed n=30n=30, increasing attacker support from k=1k=1 (3.3%) to k=2k=2 (6.7%) raises SER from 5/25 to 21/25, and k=3k=3 (10%) reaches 25/25."
-    },
-    {
-      "ref": "arXiv:2608.11888",
-      "title": "Agent Skills Can Be Harmful: An Empirical Study of Skill-Induced Failures in LLM Agents",
-      "role": "SKILL_HARM_COLLISION",
-      "primary_url": "https://arxiv.org/abs/2608.11888",
-      "fact": ""
     }
   ],
   "closed_basins": [
@@ -250,6 +249,6 @@
     "harness_smoke": "2cc1dc90b3cd0b748252b8ad02a4c97eb773edd368b31b1d2e67ba79919bad75",
     "formal_harness_manifest": "c63421780460562e4ed0cb2174d1af1ce6d24b883450969c456141e8521493b2",
     "runtime_asset_gate": "852ad8ad804ee67e5bbcf3cb9f6f332b1f1161c8fc9b44c83b63276c124e2de5",
-    "provenance_readjudication": "f16ceb8d2bc593fb7c2929918fbb2c12cd8a935c97893fc27980bd0e346665ca"
+    "provenance_readjudication": "b7daa7ae66b673e07eef06e478f4e754fb326d7aa05b7aeaf5ab3e1a97c4ef0e"
   }
 }

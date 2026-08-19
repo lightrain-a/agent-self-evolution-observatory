@@ -139,6 +139,7 @@ class PublicationTest(unittest.TestCase):
                 "generated/paper-first-problem-generator-state.json",
                 "generated/paper-first-problem-generator-state.js",
                 "generated/agent-safety-program-state.json",
+                "generated/agent-safety-r9-non-authoritative-cache-content-check.json",
                 "generated/agent-safety-program-state.js",
                 "generated/paper-first-problem-gate-queue.json",
                 "generated/paper-first-problem-gate-queue.js",

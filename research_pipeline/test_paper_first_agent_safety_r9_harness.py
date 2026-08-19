@@ -15,6 +15,9 @@ from .paper_first_agent_safety_r9_harness import (
     R9_AGENT_MODEL_REVISION,
     R9_EVALUATOR_MODEL_ID,
     R9_EVALUATOR_MODEL_REVISION,
+    R9_FORMAL_HF_RECEIPT_CLASS,
+    R9_FORMAL_RUNTIME_ASSET_GATE_CLASS,
+    R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS,
     R9_MODEL_REVISION_MARKER,
     R9_MODEL_SOURCE_METADATA,
     R9_MODEL_VERIFICATION_RECEIPT,
@@ -71,6 +74,8 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
         source_url=f"https://huggingface.co/api/models/{model_id}/revision/{revision}?blobs=true"
         receipt = {
             "schema_version": "2.0",
+            "receipt_class": R9_FORMAL_HF_RECEIPT_CLASS,
+            "formal_gate_eligible": True,
             "model_id": model_id,
             "revision": revision,
             "source_domain": source_domain,
@@ -89,6 +94,7 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
         receipt_path.write_text(json.dumps(receipt, sort_keys=True), encoding="utf-8")
         marker = {
             "schema_version": "2.0",
+            "verification_receipt_class": R9_FORMAL_HF_RECEIPT_CLASS,
             "model_id": model_id,
             "revision": revision,
             "verification_receipt": R9_MODEL_VERIFICATION_RECEIPT,
@@ -253,6 +259,7 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
 
     def test_r9_model_call_budget_is_hard_bounded_below_256(self) -> None:
         budget = build_r9_model_call_budget()
+        self.assertEqual(budget["history_strata"], 2)
         self.assertEqual(budget["qualification_episodes"], 12)
         self.assertEqual(budget["future_episodes"], 36)
         self.assertEqual(budget["total_behavior_episodes"], 48)
@@ -303,6 +310,9 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
             self.assertTrue((model_dir/R9_MODEL_REVISION_MARKER).is_file())
             self.assertTrue((model_dir/R9_MODEL_VERIFICATION_RECEIPT).is_file())
             self.assertTrue((model_dir/R9_MODEL_SOURCE_METADATA).is_file())
+            receipt=json.loads((model_dir/R9_MODEL_VERIFICATION_RECEIPT).read_text())
+            self.assertEqual(receipt["receipt_class"],R9_FORMAL_HF_RECEIPT_CLASS)
+            self.assertTrue(receipt["formal_gate_eligible"])
 
     def test_provenance_preparer_rejects_mirror_final_url_without_writing_marker(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -350,7 +360,30 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
             gate = runtime_model_asset_gate(agent_model_dir=agent, evaluator_model_dir=evaluator)
             self.assertTrue(gate["execution_authorized"])
             self.assertEqual(gate["status"], "READY_RUNTIME_MODEL_ASSETS_PINNED")
+            self.assertEqual(gate["artifact_class"], R9_FORMAL_RUNTIME_ASSET_GATE_CLASS)
+            self.assertEqual(gate["verification_contract"]["accepted_receipt_class"], R9_FORMAL_HF_RECEIPT_CLASS)
             self.assertTrue(all(row["hf_exact_revision_verified"] for row in gate["model_assets"]))
+
+    def test_runtime_model_asset_gate_rejects_non_authoritative_cache_content_check_receipt(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); agent = root / "agent"; evaluator = root / "evaluator"
+            self.write_verified_model_dir(agent,role="agent",model_id=R9_AGENT_MODEL_ID,revision=R9_AGENT_MODEL_REVISION)
+            self.write_verified_model_dir(evaluator,role="evaluator",model_id=R9_EVALUATOR_MODEL_ID,revision=R9_EVALUATOR_MODEL_REVISION)
+            receipt_path = agent / R9_MODEL_VERIFICATION_RECEIPT
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            receipt["receipt_class"] = R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS
+            receipt["formal_gate_eligible"] = False
+            receipt_path.write_text(json.dumps(receipt, sort_keys=True), encoding="utf-8")
+            marker_path = agent / R9_MODEL_REVISION_MARKER
+            marker = json.loads(marker_path.read_text(encoding="utf-8"))
+            marker["verification_receipt_sha256"] = hashlib.sha256(receipt_path.read_bytes()).hexdigest()
+            marker_path.write_text(json.dumps(marker, sort_keys=True), encoding="utf-8")
+            gate = runtime_model_asset_gate(agent_model_dir=agent, evaluator_model_dir=evaluator)
+            self.assertFalse(gate["execution_authorized"])
+            self.assertIn("agent-verification-receipt-class-not-formal", gate["blockers"])
+            agent_row = next(row for row in gate["model_assets"] if row["role"] == "agent")
+            self.assertEqual(agent_row["receipt_class"], R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS)
+            self.assertFalse(agent_row["hf_exact_revision_verified"])
 
     def test_runtime_model_asset_gate_rejects_non_hf_source_even_when_bytes_are_complete(self) -> None:
         with tempfile.TemporaryDirectory() as td:

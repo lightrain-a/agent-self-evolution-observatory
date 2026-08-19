@@ -8,10 +8,17 @@ from pathlib import Path
 from typing import Any
 
 from .config import PROJECT_ROOT
-from .paper_first_agent_safety_r9_harness import CANDIDATE_ID, CONTRACT_SHA256
+from .paper_first_agent_safety_r9_harness import (
+    CANDIDATE_ID,
+    CONTRACT_SHA256,
+    R9_FORMAL_HF_RECEIPT_CLASS,
+    R9_FORMAL_RUNTIME_ASSET_GATE_CLASS,
+    R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS,
+)
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "agent-safety-program-state.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "agent-safety-program-state.js"
+DEFAULT_SURVEY_SUPPLEMENT = PROJECT_ROOT / "generated" / "agent-safety-literature-survey-supplement.json"
 PUBLIC_GLOBAL = "AGENT_SAFETY_PROGRAM_STATE"
 SURVEY_REFS = (
     "arXiv:2604.16968",
@@ -77,6 +84,7 @@ def build_agent_safety_program_state(
     *,
     r9_root: Path,
     canonical_primary_state_path: Path | None = None,
+    survey_supplement_path: Path | None = DEFAULT_SURVEY_SUPPLEMENT,
     harness_smoke_path: Path | None = None,
     harness_manifest_path: Path | None = None,
     runtime_asset_gate_path: Path | None = None,
@@ -101,6 +109,13 @@ def build_agent_safety_program_state(
     frozen_primary = _load(paths["frozen_primary"])
     memory = _load(paths["dead_end_memory"])
     canonical_primary = _load(canonical_primary_state_path) if canonical_primary_state_path and Path(canonical_primary_state_path).is_file() else {}
+    survey_supplement = _load(survey_supplement_path) if survey_supplement_path and Path(survey_supplement_path).is_file() else {}
+    if survey_supplement and (
+        survey_supplement.get("scientific_authority") is not False
+        or survey_supplement.get("primary_transaction_authority") is not False
+        or survey_supplement.get("scope") != "RELATED_PRIMARY_LITERATURE_SURVEY_ONLY"
+    ):
+        raise ValueError("agent-safety literature supplement must remain survey-only and zero-authority")
     harness_smoke = _load(harness_smoke_path) if harness_smoke_path and Path(harness_smoke_path).is_file() else {}
     harness_manifest = _load(harness_manifest_path) if harness_manifest_path and Path(harness_manifest_path).is_file() else {}
     runtime_asset_gate = _load(runtime_asset_gate_path) if runtime_asset_gate_path and Path(runtime_asset_gate_path).is_file() else {}
@@ -181,6 +196,10 @@ def build_agent_safety_program_state(
     ):
         raise ValueError("R9 harness smoke cannot change scientific or execution authority")
 
+    public_invariants = json.loads(json.dumps(harness_manifest.get("execution_invariants") or {}))
+    if public_invariants:
+        public_invariants.setdefault("budget", {})["history_strata"] = 2
+
     if harness_manifest:
         if harness_manifest.get("candidate_id") != CANDIDATE_ID or harness_manifest.get("contract_sha256") != CONTRACT_SHA256:
             raise ValueError("R9 formal harness manifest identity/contract drift")
@@ -189,6 +208,7 @@ def build_agent_safety_program_state(
         split = invariants.get("probe_split") or {}
         if (
             int(budget.get("states") or 0) != 4
+            or int(budget.get("history_strata") or 2) != 2
             or int(split.get("qualification_count") or 0) != 3
             or int(split.get("heldout_count") or 0) != 8
             or int(budget.get("future_horizon_updates") or 0) != 3
@@ -206,8 +226,20 @@ def build_agent_safety_program_state(
             raise ValueError("R9 runtime asset gate identity/contract drift")
         if runtime_asset_gate.get("scientific_authority") not in (None, False):
             raise ValueError("R9 runtime asset gate cannot carry scientific authority")
+        runtime_assets = [row for row in runtime_gate.get("model_assets") or [] if isinstance(row, dict)]
+        formal_runtime_gate = (
+            runtime_gate.get("artifact_class") == R9_FORMAL_RUNTIME_ASSET_GATE_CLASS
+            and (runtime_gate.get("verification_contract") or {}).get("accepted_receipt_class") == R9_FORMAL_HF_RECEIPT_CLASS
+            and len(runtime_assets) == 2
+            and all(
+                row.get("hf_exact_revision_verified") is True
+                and row.get("receipt_class") == R9_FORMAL_HF_RECEIPT_CLASS
+                for row in runtime_assets
+            )
+        )
         runtime_gate_ready = (
-            runtime_status == "READY_RUNTIME_MODEL_ASSETS_PINNED"
+            formal_runtime_gate
+            and runtime_status == "READY_RUNTIME_MODEL_ASSETS_PINNED"
             and runtime_asset_gate.get("execution_authorized") is True
             and runtime_gate.get("execution_authorized") is True
             and not (runtime_gate.get("blockers") or [])
@@ -215,11 +247,21 @@ def build_agent_safety_program_state(
         if runtime_asset_gate.get("execution_authorized") is True and not runtime_gate_ready:
             raise ValueError("R9 runtime asset gate has malformed positive execution authority")
 
+    public_runtime_status = (
+        runtime_status
+        if runtime_gate_ready or runtime_status != "READY_RUNTIME_MODEL_ASSETS_PINNED"
+        else "HOLD_RUNTIME_MODEL_ASSETS_UNAVAILABLE_OR_UNPINNED"
+    )
+
     if provenance_readjudication:
         if provenance_readjudication.get("candidate_id") != CANDIDATE_ID or provenance_readjudication.get("contract_sha256") != CONTRACT_SHA256:
             raise ValueError("R9 provenance readjudication identity/contract drift")
         if provenance_readjudication.get("scientific_authority") is not False or provenance_readjudication.get("execution_authorized") is not False:
             raise ValueError("R9 provenance readjudication cannot authorize science/execution")
+        if provenance_readjudication.get("receipt_class") != R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS:
+            raise ValueError("R9 non-formal receipt must be classified as NON_AUTHORITATIVE_CACHE_CONTENT_CHECK")
+        if provenance_readjudication.get("formal_gate_eligible") is not False:
+            raise ValueError("R9 cache-content receipt cannot be formal-gate eligible")
 
     bounded_execution_ready = bounded_plan_authority and runtime_gate_ready
 
@@ -232,7 +274,7 @@ def build_agent_safety_program_state(
         "source_run_id": r9_root.name,
         "contract_sha256": CONTRACT_SHA256,
         "current_stage": "EVIDENCE_EXECUTION_READY" if bounded_execution_ready else ("RUNTIME_MODEL_ASSET_HOLD" if runtime_asset_gate else str(plan.get("status") or "")),
-        "candidate_stage": "READY_FOR_BOUNDED_EVIDENCE_ACQUISITION" if bounded_execution_ready else (runtime_status if runtime_asset_gate else str(entry.get("status") or "")),
+        "candidate_stage": "READY_FOR_BOUNDED_EVIDENCE_ACQUISITION" if bounded_execution_ready else (public_runtime_status if runtime_asset_gate else str(entry.get("status") or "")),
         "generic_evidence_plan_stage": str(plan.get("status") or ""),
         "generic_candidate_stage": str(entry.get("status") or ""),
         "scientific_question": _bounded(candidate_body.get("irreducible_object"), 2000),
@@ -261,13 +303,14 @@ def build_agent_safety_program_state(
             "formal_harness_commit": str(harness_manifest.get("harness_commit") or ""),
         },
         "canonical_protocol": {
-            "execution_invariants": harness_manifest.get("execution_invariants") or {},
+            "execution_invariants": public_invariants,
             "pinned_models": harness_manifest.get("pinned_models") or {},
             "source_pins": harness_manifest.get("source_pins") or {},
             "formal_runtime_gate_policy": harness_manifest.get("policy") or {},
         },
         "runtime": {
-            "status": runtime_status,
+            "status": public_runtime_status,
+            "artifact_class": str(runtime_gate.get("artifact_class") or ""),
             "execution_authorized": runtime_gate_ready,
             "fallback_allowed": runtime_gate.get("fallback_allowed") is True,
             "blockers": list(runtime_gate.get("blockers") or []),
@@ -279,13 +322,16 @@ def build_agent_safety_program_state(
                     "expected_revision": str(row.get("expected_revision") or ""),
                     "directory_present": row.get("directory_present") is True,
                     "hf_exact_revision_verified": row.get("hf_exact_revision_verified") is True,
+                    "receipt_class": str(row.get("receipt_class") or ""),
                     "blockers": list(row.get("blockers") or []),
                 }
                 for row in runtime_gate.get("model_assets") or []
                 if isinstance(row, dict)
             ],
             "provenance_readjudication_status": str(provenance_readjudication.get("status") or ""),
-            "official_metadata_connectivity": "HOLD" if runtime_status != "READY_RUNTIME_MODEL_ASSETS_PINNED" else "VERIFIED",
+            "provenance_receipt_class": str(provenance_readjudication.get("receipt_class") or ""),
+            "provenance_readjudication_artifact": (Path(provenance_readjudication_path).name if provenance_readjudication_path else ""),
+            "official_metadata_connectivity": "VERIFIED" if runtime_gate_ready else "HOLD",
             "outcome_bearing_science_started": False,
         },
         "survey": survey,
@@ -339,16 +385,31 @@ def validate_agent_safety_program_state(state: dict[str, Any]) -> list[str]:
         errors.append("agent-safety public state leaked downstream/heldout authority")
     runtime = state.get("runtime") or {}
     runtime_ready = runtime.get("status") == "READY_RUNTIME_MODEL_ASSETS_PINNED" and runtime.get("execution_authorized") is True
+    runtime_assets = [row for row in runtime.get("model_assets") or [] if isinstance(row, dict)]
+    if runtime_ready and (
+        runtime.get("artifact_class") != R9_FORMAL_RUNTIME_ASSET_GATE_CLASS
+        or runtime.get("official_metadata_connectivity") != "VERIFIED"
+        or (runtime.get("verification_contract") or {}).get("accepted_receipt_class") != R9_FORMAL_HF_RECEIPT_CLASS
+        or len(runtime_assets) != 2
+        or any(
+            row.get("hf_exact_revision_verified") is not True
+            or row.get("receipt_class") != R9_FORMAL_HF_RECEIPT_CLASS
+            for row in runtime_assets
+        )
+    ):
+        errors.append("agent-safety public runtime READY lacks formal HF receipt authority")
     bounded = authority.get("bounded_evidence_acquisition") is True
     if bool(state.get("execution_authorized")) != bool(bounded and runtime_ready):
         errors.append("agent-safety public bounded execution/runtime-asset accounting mismatch")
     if authority.get("qualification_probe_execution") is True and not bounded:
         errors.append("agent-safety qualification authority requires bounded evidence authority")
+    if runtime.get("provenance_receipt_class") == R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS and bounded:
+        errors.append("agent-safety cache-content receipt cannot authorize bounded evidence")
     protocol = state.get("canonical_protocol") or {}
     invariants = protocol.get("execution_invariants") or {}
     budget = invariants.get("budget") or {}
     split = invariants.get("probe_split") or {}
-    if invariants and (int(budget.get("states") or 0) != 4 or int(split.get("qualification_count") or 0) != 3 or int(split.get("heldout_count") or 0) != 8 or int(budget.get("total_model_evaluations_upper_bound") or 0) != 240):
+    if invariants and (int(budget.get("states") or 0) != 4 or int(budget.get("history_strata") or 0) != 2 or int(split.get("qualification_count") or 0) != 3 or int(split.get("heldout_count") or 0) != 8 or int(budget.get("total_model_evaluations_upper_bound") or 0) != 240 or int(budget.get("contract_max_model_calls") or 0) != 256):
         errors.append("agent-safety public canonical harness-v2 protocol drift")
     if (state.get("evidence_contract") or {}).get("review_verdict") != "CLEAR_FOR_SUBSTRATE_PREFLIGHT":
         errors.append("agent-safety public evidence-contract review drift")
@@ -403,7 +464,7 @@ def main() -> None:
     parser.add_argument("--harness-smoke", type=Path)
     parser.add_argument("--harness-manifest", type=Path)
     parser.add_argument("--runtime-asset-gate", type=Path)
-    parser.add_argument("--provenance-readjudication", type=Path)
+    parser.add_argument("--provenance-readjudication", type=Path, default=PROJECT_ROOT / "generated" / "agent-safety-r9-non-authoritative-cache-content-check.json")
     parser.add_argument("--json", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--js", type=Path, default=DEFAULT_JS)
     args = parser.parse_args()

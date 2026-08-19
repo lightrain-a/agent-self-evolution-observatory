@@ -11,7 +11,13 @@ from .paper_first_agent_safety_program_state import (
     validate_agent_safety_program_state,
     write_agent_safety_program_state,
 )
-from .paper_first_agent_safety_r9_harness import CANDIDATE_ID, CONTRACT_SHA256
+from .paper_first_agent_safety_r9_harness import (
+    CANDIDATE_ID,
+    CONTRACT_SHA256,
+    R9_FORMAL_HF_RECEIPT_CLASS,
+    R9_FORMAL_RUNTIME_ASSET_GATE_CLASS,
+    R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS,
+)
 
 
 class AgentSafetyProgramStateTest(unittest.TestCase):
@@ -119,7 +125,7 @@ class AgentSafetyProgramStateTest(unittest.TestCase):
             "harness_commit": "fixture-harness",
             "execution_invariants": {
                 "probe_split": {"qualification_ids": ["14", "16", "18"], "heldout_ids": ["34", "21", "1", "8", "11", "22", "13", "33"], "qualification_count": 3, "heldout_count": 8, "disjoint": True},
-                "budget": {"states": 4, "future_horizon_updates": 3, "total_model_evaluations_upper_bound": 240, "contract_max_model_calls": 256, "reserve": 16},
+                "budget": {"states": 4, "history_strata": 2, "future_horizon_updates": 3, "total_model_evaluations_upper_bound": 240, "contract_max_model_calls": 256, "reserve": 16},
             },
             "pinned_models": {"agent": {"model_id": "Qwen/Qwen3-8B"}, "evaluator": {"model_id": "cais/HarmBench-Llama-2-13b-cls"}},
             "source_pins": {"awm_commit": "a", "browserart_commit": "b"},
@@ -133,11 +139,16 @@ class AgentSafetyProgramStateTest(unittest.TestCase):
             "execution_authorized": True,
             "scientific_authority": False,
             "formal_gate": {
+                "artifact_class": R9_FORMAL_RUNTIME_ASSET_GATE_CLASS,
                 "status": "READY_RUNTIME_MODEL_ASSETS_PINNED",
                 "execution_authorized": True,
                 "fallback_allowed": False,
                 "blockers": [],
-                "model_assets": [{"role": "agent", "hf_exact_revision_verified": True}, {"role": "evaluator", "hf_exact_revision_verified": True}],
+                "verification_contract": {"accepted_receipt_class": R9_FORMAL_HF_RECEIPT_CLASS},
+                "model_assets": [
+                    {"role": "agent", "hf_exact_revision_verified": True, "receipt_class": R9_FORMAL_HF_RECEIPT_CLASS},
+                    {"role": "evaluator", "hf_exact_revision_verified": True, "receipt_class": R9_FORMAL_HF_RECEIPT_CLASS},
+                ],
             },
         }), encoding="utf-8")
         return harness_manifest, runtime_gate
@@ -202,8 +213,79 @@ class AgentSafetyProgramStateTest(unittest.TestCase):
             self.assertFalse(state["authority"]["paper_design"])
             self.assertFalse(state["authority"]["p0"])
             self.assertEqual(state["runtime"]["status"], "READY_RUNTIME_MODEL_ASSETS_PINNED")
+            self.assertEqual(state["canonical_protocol"]["execution_invariants"]["budget"]["history_strata"], 2)
             self.assertEqual(state["canonical_protocol"]["execution_invariants"]["budget"]["total_model_evaluations_upper_bound"], 240)
             self.assertEqual(state["next_gate"]["name"], "CURRENT_SAFETY_QUALIFICATION_GATE")
+
+    def test_public_validator_rejects_ready_without_formal_receipt_authority(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            r9, canonical, smoke = self.fixture_r9(root)
+            harness_manifest, runtime_gate = self.promote_runtime_ready(r9, root)
+            state = build_agent_safety_program_state(
+                r9_root=r9,
+                canonical_primary_state_path=canonical,
+                harness_smoke_path=smoke,
+                harness_manifest_path=harness_manifest,
+                runtime_asset_gate_path=runtime_gate,
+            )
+            state["runtime"]["artifact_class"] = ""
+            self.assertIn(
+                "agent-safety public runtime READY lacks formal HF receipt authority",
+                validate_agent_safety_program_state(state),
+            )
+
+    def test_nonformal_ready_receipt_cannot_authorize_public_execution(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            r9, canonical, smoke = self.fixture_r9(root)
+            harness_manifest, runtime_gate = self.promote_runtime_ready(r9, root)
+            gate = json.loads(runtime_gate.read_text(encoding="utf-8"))
+            gate["formal_gate"]["model_assets"][0]["receipt_class"] = R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS
+            runtime_gate.write_text(json.dumps(gate), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "malformed positive execution authority"):
+                build_agent_safety_program_state(
+                    r9_root=r9,
+                    canonical_primary_state_path=canonical,
+                    harness_smoke_path=smoke,
+                    harness_manifest_path=harness_manifest,
+                    runtime_asset_gate_path=runtime_gate,
+                )
+
+    def test_cache_content_readjudication_is_explicitly_non_authoritative(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            r9, canonical, smoke = self.fixture_r9(root)
+            harness_manifest, runtime_gate = self.promote_runtime_ready(r9, root)
+            gate = json.loads(runtime_gate.read_text(encoding="utf-8"))
+            gate["status"] = "HOLD_RUNTIME_MODEL_ASSETS_UNAVAILABLE_OR_UNPINNED"
+            gate["execution_authorized"] = False
+            gate["formal_gate"]["status"] = gate["status"]
+            gate["formal_gate"]["execution_authorized"] = False
+            gate["formal_gate"]["blockers"] = ["official-hf-metadata-unavailable"]
+            runtime_gate.write_text(json.dumps(gate), encoding="utf-8")
+            readjudication = root / "cache-check.json"
+            readjudication.write_text(json.dumps({
+                "candidate_id": CANDIDATE_ID,
+                "contract_sha256": CONTRACT_SHA256,
+                "status": R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS,
+                "receipt_class": R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS,
+                "formal_gate_eligible": False,
+                "execution_authorized": False,
+                "scientific_authority": False,
+            }), encoding="utf-8")
+            state = build_agent_safety_program_state(
+                r9_root=r9,
+                canonical_primary_state_path=canonical,
+                harness_smoke_path=smoke,
+                harness_manifest_path=harness_manifest,
+                runtime_asset_gate_path=runtime_gate,
+                provenance_readjudication_path=readjudication,
+            )
+            self.assertFalse(state["execution_authorized"])
+            self.assertEqual(state["runtime"]["official_metadata_connectivity"], "HOLD")
+            self.assertEqual(state["runtime"]["provenance_receipt_class"], R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS)
+            self.assertEqual(state["canonical_protocol"]["execution_invariants"]["budget"]["history_strata"], 2)
 
     def test_runtime_asset_hold_overrides_generic_plan_readiness(self) -> None:
         with tempfile.TemporaryDirectory() as td:
