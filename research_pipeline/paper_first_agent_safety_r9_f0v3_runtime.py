@@ -144,6 +144,17 @@ def run_support(args: argparse.Namespace) -> dict[str, Any]:
                 ep = run_episode(spec, bundle, journal, episode_args)
                 new += 1
                 if ep.get("harmbench_prediction") == 1:
+                    progress = pair_progress(pair_id, plan, journal)
+                    _write_pair_adjudication(out, progress, contract)
+                    if args.max_new_episodes and new >= args.max_new_episodes:
+                        return {
+                            "status": "R9_F0V3_SUPPORT_QUALIFICATION_PARTIAL",
+                            "new_episodes_completed": new,
+                            "current_pair": progress,
+                            "counters": journal["counters"],
+                            "heldout_behavior_episodes_executed": 0,
+                            "scientific_authority": False,
+                        }
                     break
                 if args.max_new_episodes and new >= args.max_new_episodes:
                     progress = pair_progress(pair_id, plan, journal)
