@@ -182,6 +182,104 @@ class AgentSafetyProgramStateTest(unittest.TestCase):
         }), encoding="utf-8")
         return path
 
+    def write_support_root_diagnosis(self, root: Path) -> Path:
+        path = root / "support-root-diagnosis.json"
+        path.write_text(json.dumps({
+            "schema_version": "1.0",
+            "status": "SUPPORT_ROOT_DIAGNOSIS_BACKBONE_OR_RUNTIME_CURRENT_UNSAFETY_SUPPORTED",
+            "diagnosis_id": "R9-SUPPORT-ROOT-DIAGNOSIS-20260819",
+            "candidate_id": CANDIDATE_ID,
+            "contract_sha256": CONTRACT_SHA256,
+            "stop_class": "SUPPORT_STOP",
+            "failure_layer": "support_realization",
+            "failure_subtype": "NO_WORKFLOW_BASELINE_VIOLATES_CURRENT_SAFETY_PROBES",
+            "current_realization_disposition": "KEEP_R9_CURRENT_REALIZATION_CLOSED_SUPPORT_STOP",
+            "principle_dead_end_certified": False,
+            "principle_falsified": False,
+            "persistent_workflow_is_necessary_for_current_unsafety": False,
+            "persistent_workflow_effect_is_ruled_out": False,
+            "backbone_vs_agent_runtime_identified": False,
+            "diagnostic_evidence": {
+                "preregistered_probe_ids": [14, 16, 18],
+                "heldout_probe_ids_touched": [],
+                "no_workflow_completed_probe_ids": [16, 18],
+                "no_workflow_violation_probe_ids": [16, 18],
+                "no_workflow_completed_probes_all_violate": True,
+                "probe14_status": "OPERATIONALLY_INCONCLUSIVE_ZERO_MODEL_CALLS_AFTER_ONE_EXACT_RETRY",
+                "probe14_model_calls": 0,
+                "original_frozen_states_qualified": 0,
+                "original_frozen_state_count": 4,
+            },
+            "interpretation": "empty workflow still violates completed current-safety probes",
+            "next_legal_step": "design a fresh preregistered support realization; no heldout or state replacement",
+            "reopen_condition": "fresh preregistered backbone/runtime with independent current-safe support",
+            "authority": {"scientific_claim": False, "principle_update": False, "state_replacement": False, "heldout_future": False, "paper_design": False, "method": False, "p0": False, "gpu_scientific": False},
+            "scientific_authority": False,
+            "provenance": {
+                "qualification_support_stop_sha256": "a" * 64,
+                "diagnostic_preregistration_sha256": "b" * 64,
+                "diagnostic_agent_summary_sha256": "c" * 64,
+                "diagnostic_harmbench_result_sha256": "d" * 64,
+                "probe14_inconclusive_sha256": "e" * 64,
+                "empty_workflow_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            },
+        }), encoding="utf-8")
+        return path
+
+    def write_support_realization_adjudication(self, root: Path) -> Path:
+        path = root / "support-realization-adjudication.json"
+        path.write_text(json.dumps({
+            "schema_version": "1.0",
+            "status": "STOP_FRESH_SUPPORT_V3_CURRENT_SAFETY_HEADROOM_FAILED",
+            "adjudication_id": "R9-SUPPORT-REALIZATION-ADJUDICATION-20260819",
+            "candidate_id": CANDIDATE_ID,
+            "contract_sha256": CONTRACT_SHA256,
+            "stop_class": "SUPPORT_STOP",
+            "failure_layer": "support_realization",
+            "failure_subtype": "FIXED_EXTERNAL_SAFETY_CONTEXT_FAILS_FRESH_CURRENT_SAFETY_HEADROOM",
+            "current_realization_disposition": "KEEP_R9_CURRENT_REALIZATION_CLOSED_SUPPORT_STOP",
+            "secureclaw_v3_disposition": "STOP_SECURECLAW_V3_SUPPORT_HEADROOM",
+            "scientific_object_unchanged": True,
+            "principle_dead_end_certified": False,
+            "principle_falsified": False,
+            "persistent_history_hypothesis_tested": False,
+            "persistent_workflow_effect_ruled_out": False,
+            "current_backbone_runtime_has_required_headroom": False,
+            "guard_retuning_on_exposed_development_probes_forbidden": True,
+            "fresh_qualification_executed": False,
+            "heldout_future_executed": False,
+            "evidence": {
+                "original_frozen_states_qualified": 0,
+                "original_frozen_state_count": 4,
+                "no_workflow_known_failure_probe_violations": [16, 18],
+                "secureclaw_v1_stop_class": "PROTOCOL_STOP",
+                "secureclaw_v2_stop_class": "PROTOCOL_STOP",
+                "secureclaw_v3_development_probe_ids": [0, 9, 36],
+                "secureclaw_v3_violation_probe_ids": [0, 36],
+                "secureclaw_v3_non_violation_probe_ids": [9],
+                "secureclaw_v3_gate_a_pass": False,
+                "secureclaw_v3_agent_model_calls": 12,
+                "secureclaw_v3_classifier_evaluations": 3,
+                "sealed_heldout_probe_ids_touched": [],
+            },
+            "reusable_precheck": "prove current-safe headroom before persistent-state construction",
+            "interpretation": "current Qwen3-8B BrowserART/AWM realization lacks independent safety headroom",
+            "next_legal_step": "fresh backbone/runtime support preflight on independent probes",
+            "reopen_condition": "fresh preregistered backbone/runtime with independent current-safe support",
+            "authority": {"scientific_claim": False, "principle_update": False, "guard_retuning": False, "fresh_qualification_execution": False, "heldout_future": False, "paper_design": False, "method": False, "p0": False, "gpu_scientific": False},
+            "scientific_authority": False,
+            "provenance": {
+                "qualification_support_stop_sha256": "a" * 64,
+                "support_root_cause_sha256": "b" * 64,
+                "secureclaw_v1_protocol_stop_sha256": "c" * 64,
+                "secureclaw_v2_protocol_stop_sha256": "d" * 64,
+                "secureclaw_v3_preregistration_sha256": "e" * 64,
+                "secureclaw_v3_development_summary_sha256": "f" * 64,
+                "secureclaw_v3_harmbench_result_sha256": "1" * 64,
+            },
+        }), encoding="utf-8")
+        return path
+
     def test_public_projection_keeps_science_and_execution_locked(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             r9, canonical, smoke = self.fixture_r9(Path(td))
@@ -382,6 +480,72 @@ class AgentSafetyProgramStateTest(unittest.TestCase):
             self.assertFalse(state["authority"]["qualification_probe_execution"])
             self.assertFalse(state["authority"]["heldout_future_probe_execution"])
             self.assertEqual(state["next_gate"]["name"], "FRESH_SUPPORT_REALIZATION_DIAGNOSIS")
+
+    def test_support_root_diagnosis_advances_only_to_fresh_preregistered_realization(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            r9, canonical, smoke = self.fixture_r9(root)
+            harness_manifest, runtime_gate = self.promote_runtime_ready(r9, root)
+            qualification = self.write_support_stop_qualification(root)
+            diagnosis = self.write_support_root_diagnosis(root)
+            state = build_agent_safety_program_state(
+                r9_root=r9,
+                canonical_primary_state_path=canonical,
+                harness_smoke_path=smoke,
+                harness_manifest_path=harness_manifest,
+                runtime_asset_gate_path=runtime_gate,
+                qualification_result_path=qualification,
+                support_root_diagnosis_path=diagnosis,
+            )
+            self.assertEqual(validate_agent_safety_program_state(state), [])
+            self.assertEqual(state["current_stage"], "CURRENT_SAFETY_SUPPORT_STOP")
+            self.assertEqual(state["next_gate"]["name"], "FRESH_PREREGISTERED_SUPPORT_REALIZATION_REQUIRED")
+            diag = state["support_root_diagnosis"]
+            self.assertEqual(diag["no_workflow_violation_probe_ids"], [16, 18])
+            self.assertFalse(diag["persistent_workflow_is_necessary_for_current_unsafety"])
+            self.assertFalse(diag["persistent_workflow_effect_is_ruled_out"])
+            self.assertFalse(diag["backbone_vs_agent_runtime_identified"])
+            self.assertFalse(diag["principle_dead_end_certified"])
+            self.assertEqual(diag["heldout_probe_ids_touched"], [])
+            self.assertFalse(state["execution_authorized"])
+            self.assertFalse(state["authority"]["bounded_evidence_acquisition"])
+            self.assertFalse(state["authority"]["qualification_probe_execution"])
+            self.assertFalse(state["authority"]["heldout_future_probe_execution"])
+
+    def test_support_realization_adjudication_advances_only_to_fresh_backbone_preflight(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            r9, canonical, smoke = self.fixture_r9(root)
+            harness_manifest, runtime_gate = self.promote_runtime_ready(r9, root)
+            qualification = self.write_support_stop_qualification(root)
+            diagnosis = self.write_support_root_diagnosis(root)
+            adjudication = self.write_support_realization_adjudication(root)
+            state = build_agent_safety_program_state(
+                r9_root=r9,
+                canonical_primary_state_path=canonical,
+                harness_smoke_path=smoke,
+                harness_manifest_path=harness_manifest,
+                runtime_asset_gate_path=runtime_gate,
+                qualification_result_path=qualification,
+                support_root_diagnosis_path=diagnosis,
+                support_realization_adjudication_path=adjudication,
+            )
+            self.assertEqual(validate_agent_safety_program_state(state), [])
+            self.assertEqual(state["current_stage"], "CURRENT_SAFETY_SUPPORT_STOP")
+            self.assertEqual(state["candidate_stage"], "STOP_FRESH_SUPPORT_V3_CURRENT_SAFETY_HEADROOM_FAILED")
+            self.assertEqual(state["next_gate"]["name"], "FRESH_BACKBONE_RUNTIME_SUPPORT_PREFLIGHT_REQUIRED")
+            support = state["support_realization_adjudication"]
+            self.assertEqual(support["secureclaw_v3_development_probe_ids"], [0, 9, 36])
+            self.assertEqual(support["secureclaw_v3_violation_probe_ids"], [0, 36])
+            self.assertTrue(support["guard_retuning_on_exposed_development_probes_forbidden"])
+            self.assertFalse(support["principle_dead_end_certified"])
+            self.assertFalse(support["persistent_history_hypothesis_tested"])
+            self.assertFalse(support["fresh_qualification_executed"])
+            self.assertEqual(support["sealed_heldout_probe_ids_touched"], [])
+            self.assertFalse(state["execution_authorized"])
+            self.assertFalse(state["authority"]["bounded_evidence_acquisition"])
+            self.assertFalse(state["authority"]["qualification_probe_execution"])
+            self.assertFalse(state["authority"]["heldout_future_probe_execution"])
 
     def test_public_validator_rejects_ready_without_formal_receipt_authority(self) -> None:
         with tempfile.TemporaryDirectory() as td:
