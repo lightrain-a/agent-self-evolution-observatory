@@ -5,9 +5,12 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -59,13 +62,31 @@ def verify_snapshot(destination: Path, manifest: list[dict]) -> list[dict]:
         if not path.is_file():
             continue
         rel = str(path.relative_to(destination))
-        if rel == RECEIPT_NAME or rel.startswith(".cache/"):
+        if rel == RECEIPT_NAME or rel.startswith(".cache/") or rel.startswith(".r9-gemma4-"):
             continue
         if rel not in expected_paths:
             extras.append(rel)
     if extras:
         raise RuntimeError("unexpected non-cache files:" + ",".join(sorted(extras)))
     return verified
+
+
+def download_missing_with_aria2(destination: Path, manifest: list[dict], endpoint: str, connections: int) -> None:
+    exe = shutil.which("aria2c")
+    if not exe:
+        raise RuntimeError("aria2c is unavailable")
+    for row in manifest:
+        rel = str(row["path"]); target = destination / rel
+        if target.is_file() and target.stat().st_size == int(row["size"]):
+            continue
+        target.parent.mkdir(parents=True, exist_ok=True)
+        url = f"{endpoint.rstrip('/')}/{BACKBONE_MODEL_ID}/resolve/{BACKBONE_MODEL_REVISION}/{quote(rel, safe='/')}"
+        cmd = [exe, "--allow-overwrite=true", "--auto-file-renaming=false", "--continue=true", "--file-allocation=none",
+               f"--max-connection-per-server={connections}", f"--split={connections}", "--min-split-size=16M", "--piece-length=16M",
+               "--connect-timeout=8", "--timeout=30", "--retry-wait=2", "--max-tries=20", "--summary-interval=10",
+               "--console-log-level=notice", "-d", str(target.parent), "-o", target.name, url]
+        print(json.dumps({"status": "ARIA2_FILE_START", "path": rel, "expected_bytes": int(row["size"]), "connections": connections}), flush=True)
+        subprocess.run(cmd, check=True)
 
 
 def load_authority(path: Path) -> dict:
@@ -92,7 +113,9 @@ def main() -> None:
     p.add_argument("--authorization", type=Path, default=AUTH_PATH)
     p.add_argument("--capture", type=Path, default=DEFAULT_CAPTURE)
     p.add_argument("--endpoint", default=MIRROR_ENDPOINT)
+    p.add_argument("--transport", choices=("huggingface_hub", "aria2"), default="huggingface_hub")
     p.add_argument("--max-workers", type=int, default=2)
+    p.add_argument("--aria2-connections", type=int, default=8)
     a = p.parse_args()
     auth = load_authority(a.authorization); capture = validate_capture(a.capture); model = capture["model"]
     if auth["official_capture"]["sha256"] != sha_file(a.capture) or auth["official_capture"]["source_manifest_sha256"] != model["source_manifest_sha256"]:
@@ -101,18 +124,21 @@ def main() -> None:
     existing = validate_existing_receipt(receipt, auth=auth, capture=capture)
     if existing is not None:
         print(json.dumps({"status": existing["status"], "receipt": str(receipt), "resumed": True})); return
-    from huggingface_hub import snapshot_download
     manifest = model["source_manifest"]; patterns = [str(row["path"]) for row in manifest]
     print(json.dumps({"status": "DOWNLOAD_START", "model": BACKBONE_MODEL_ID, "revision": BACKBONE_MODEL_REVISION,
-                      "endpoint": a.endpoint, "destination": str(destination), "file_count": len(patterns)}, ensure_ascii=False), flush=True)
+                      "endpoint": a.endpoint, "transport": a.transport, "destination": str(destination), "file_count": len(patterns)}, ensure_ascii=False), flush=True)
     try:
-        snapshot_download(repo_id=BACKBONE_MODEL_ID, revision=BACKBONE_MODEL_REVISION, local_dir=destination,
-                          allow_patterns=patterns, max_workers=a.max_workers, endpoint=a.endpoint, token=False)
+        if a.transport == "aria2":
+            download_missing_with_aria2(destination, manifest, a.endpoint, a.aria2_connections)
+        else:
+            from huggingface_hub import snapshot_download
+            snapshot_download(repo_id=BACKBONE_MODEL_ID, revision=BACKBONE_MODEL_REVISION, local_dir=destination,
+                              allow_patterns=patterns, max_workers=a.max_workers, endpoint=a.endpoint, token=False)
         verified = verify_snapshot(destination, manifest)
     except Exception as exc:
         stop = {"schema_version": "1.0", "status": "PROTOCOL_STOP_ASSET_TRANSPORT_OR_INTEGRITY", "realization_id": REALIZATION_ID,
                 "contract_sha256": auth["contract_sha256"], "model_id": BACKBONE_MODEL_ID, "exact_revision": BACKBONE_MODEL_REVISION,
-                "transport_endpoint": a.endpoint, "error_type": type(exc).__name__, "error_message": str(exc)[:1000],
+                "transport_endpoint": a.endpoint, "transport_method": a.transport, "error_type": type(exc).__name__, "error_message": str(exc)[:1000],
                 "partial_resume_allowed": True, "model_loading_authorized": False, "model_inference_authorized": False,
                 "scientific_authority": False, "recorded_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat()}
         stop_path = destination / ".r9-gemma4-asset-protocol-stop.json"
@@ -121,7 +147,7 @@ def main() -> None:
         raise
     state = {"schema_version": "1.0", "receipt_class": RECEIPT_CLASS, "status": "FORMAL_LOCAL_ASSET_VERIFIED",
              "realization_id": REALIZATION_ID, "contract_sha256": auth["contract_sha256"], "model_id": BACKBONE_MODEL_ID,
-             "exact_revision": BACKBONE_MODEL_REVISION, "destination": str(destination), "transport_endpoint": a.endpoint,
+             "exact_revision": BACKBONE_MODEL_REVISION, "destination": str(destination), "transport_endpoint": a.endpoint, "transport_method": a.transport,
              "transport_is_non_authoritative": a.endpoint != "https://huggingface.co", "official_capture_sha256": sha_file(a.capture),
              "official_source_manifest_sha256": model["source_manifest_sha256"], "verified_file_count": len(verified),
              "verified_files": verified, "formal_asset_verified": True, "model_loading_authorized": False,

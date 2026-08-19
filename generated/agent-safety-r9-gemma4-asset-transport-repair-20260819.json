@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "status": "AUTHORIZED_TRANSPORT_REPAIR_WITHIN_ASSET_GATE",
+  "realization_id": "R9-FRESH-BACKBONE-GEMMA4-26B-A4B-IT-V1",
+  "contract_sha256": "89cedfbf4c63ec54099d389866f01fd95c65c73519de7af04317214d2430486f",
+  "asset_download_authorization_sha256": "c48cf327c783bcc63d022cd7e85f5ab297dabcf4658dfe693b783728a4ea02ca",
+  "source_manifest_sha256": "039ea1e26e19a5d6095f61a301e655bd55b6c03338a8a9110dc2338b06868cd3",
+  "prior_transport_stop": {
+    "sha256": "1b8a00d499912ab66e2b9b2325601e7f59a7b87b7282e5ef50acdcbff5d0deed",
+    "status": "PROTOCOL_STOP_ASSET_TRANSPORT_STALL"
+  },
+  "diagnosis": "huggingface_hub full-file transport stalled on the 49.9GB shard after the other manifest assets transferred; direct huggingface.co is unreachable from server 69, while the same hf-mirror exact-revision object supports byte ranges and an 8-connection aria2 diagnostic transferred successfully.",
+  "repair": {
+    "changed_axis": "transport_method_only",
+    "from": "huggingface_hub snapshot stream",
+    "to": "aria2 parallel HTTP Range",
+    "endpoint": "https://hf-mirror.com",
+    "exact_revision_unchanged": true,
+    "official_manifest_unchanged": true,
+    "destination_unchanged": true,
+    "partial_resume_allowed": true,
+    "aria2_connections": 8,
+    "piece_length": "16M"
+  },
+  "diagnostic_only_evidence": {
+    "mirror_16MiB_range_http": 206,
+    "mirror_16MiB_range_bytes": 16777216,
+    "aria2_short_diagnostic_connections": 8,
+    "aria2_short_diagnostic_completed": false,
+    "diagnostic_bytes_must_not_be_used_as_model_assets": true
+  },
+  "verification_required": "Full 12-file official content-addressed manifest verification remains mandatory after transport completion.",
+  "authority": {
+    "model_weight_download": true,
+    "model_loading": false,
+    "model_inference": false,
+    "benign_capability_execution": false,
+    "development_safety_execution": false,
+    "persistent_state_construction": false,
+    "fresh_qualification_execution": false,
+    "heldout_future": false,
+    "scientific_claim": false,
+    "gpu_scientific": false
+  },
+  "scientific_authority": false,
+  "recorded_at": "2026-08-19T14:06:48+00:00"
+}
