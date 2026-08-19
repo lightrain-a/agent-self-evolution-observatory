@@ -1,0 +1,131 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-19T06:13:08Z",
+  "status": "HOLD_SUPPORT_FAILURE_LABEL_JOIN_UNAVAILABLE",
+  "candidate_id": "SHADOW-P01-C02",
+  "title": "History-Dependent Skill-Induced Failure: Why the Same Skill Causes Different Failure Modes Across Tasks",
+  "source_ref": "arXiv:2608.11888",
+  "frozen_required_unit": "Use the released SkillsBench or SWE-Skills-Bench datasets to identify matched task pairs where the same loaded skill causes a Task-Implementation Fault in both tasks. Control for task-requirement-level compatibility and skill content. If the failure mode (IRF vs. RRO) is identical across all matched pairs, the context-sensitive uptake mechanism is falsified. If failure modes vary but are predicted by static compatibility alone, the mechanism is falsified.",
+  "benchmark_provenance_disposition": "RESOLVED_TO_FIRST_PARTY_COMMIT_SNAPSHOTS",
+  "official_benchmark_repo": "https://github.com/benchflow-ai/skillsbench.git",
+  "current_upstream": {
+    "commit": "9a1f4dd5f7659f75707435da3ce854b6e48321d1",
+    "tree": "b8d2c71efa86fbef1a6530373b622065eff33a24",
+    "commit_date": "2026-07-23T19:04:59+00:00",
+    "task_count": 87,
+    "task_skill_binding_count": 232,
+    "unique_bundled_skill_dir_id_count": 195,
+    "map_artifact": "generated/skillsbench-current-upstream-task-skill-map-20260819.json",
+    "map_sha256": "0fef47076efb361ecad93f29a6dcf0c7f5aa6911b954d0d0b45aaf7670a0132a",
+    "semantic_role": "Answers what the current author download chain contains; it is not substituted for the paper-time experiment snapshot."
+  },
+  "paper_v1": {
+    "commit": "adbaf4d7b5a9f1243c6e592e461da4414fffc997",
+    "tree": "4f51bb4564087d5cb1ca8c8c75f3b1f07609e00e",
+    "commit_date": "2026-02-12T04:36:02-08:00",
+    "task_count": 86,
+    "paper_reported_evaluated_task_count": 84,
+    "paper_reported_excluded_task_count": 2,
+    "task_skill_binding_count": 222,
+    "unique_bundled_skill_dir_id_count": 182,
+    "author_registry_resolved_binding_count": 220,
+    "author_registry_unparsable_skill_file_count": 2,
+    "map_artifact": "generated/skillsbench-paper-v1-task-skill-map-20260819.json",
+    "map_sha256": "d2552bbc7ba559564d74644bfd2649f1af9ee8752a52908747f803c8c36374a8",
+    "provenance_basis": {
+      "resolver_snapshot_commit": "9a1f4dd5f7659f75707435da3ce854b6e48321d1",
+      "resolver_path": "docs/dataset-versioning.md",
+      "resolver_blob_sha": "552b6ad26b61f969b121b9195c962ed57640dcbf",
+      "resolution": "First-party dataset-versioning documentation identifies the retired original arXiv-v1 86-task paper snapshot as reproducible at commit adbaf4d7; this receipt resolves that short SHA to the full commit above.",
+      "paper_count_basis": {
+        "path": "website/src/content/news/introducing-skillsbench.mdx",
+        "blob_sha": "0fbce32b7c7db2d6cbec03c38d6d4d50c2ac8e1e",
+        "reported_tasks": 86,
+        "reported_evaluated_tasks": 84,
+        "reported_excluded_runtime_error_tasks": 2
+      }
+    },
+    "semantic_role": "First-party commit snapshot identified for reproducing the original arXiv-v1 paper task suite; this is distinct from the later/current 87-task roster."
+  },
+  "snapshot_roster_comparison": {
+    "overlap_task_count": 74,
+    "current_only_task_count": 13,
+    "paper_only_task_count": 12,
+    "current_only_task_ids": [
+      "ada-bathroom-plan-repair",
+      "bike-rebalance",
+      "debug-trl-grpo",
+      "drone-planning-control",
+      "edit-pdf",
+      "energy-unit-commitment",
+      "exam-block-sequencing",
+      "llm-prefix-cache-replay",
+      "paratransit-routing",
+      "pddl-airport-planning",
+      "radar-vital-signs",
+      "tictoc-unnecessary-abort-detection",
+      "video-silence-remover"
+    ],
+    "paper_only_task_ids": [
+      "find-topk-similiar-chemicals",
+      "gh-repo-analytics",
+      "mhc-layer-impl",
+      "pedestrian-traffic-counting",
+      "pg-essay-to-audiobook",
+      "scheduling-email-assistant",
+      "speaker-diarization-subtitles",
+      "taxonomy-tree-merge",
+      "trend-anomaly-causal-inference",
+      "video-filler-word-remover",
+      "video-tutorial-indexer",
+      "virtualhome-agent-planning"
+    ],
+    "conclusion": "Current upstream is not a one-task extension of the paper snapshot; current identities must not be used to backfill paper-run joins."
+  },
+  "skill_identity_semantics": {
+    "author_explicit_gold_mapping": false,
+    "gold_skill_ids_claimed": false,
+    "stable_runtime_binding_identity": "Exact skill directory under tasks/<task-id>/environment/skills/",
+    "author_registry_identity_is_supplemental": true,
+    "paper_v1_registry_quirk": {
+      "unparsable_skill_files": [
+        "tasks/threejs-structure-parser/environment/skills/threejs/SKILL.md",
+        "tasks/threejs-to-obj/environment/skills/threejs/SKILL.md"
+      ],
+      "name_vs_dir_id_mismatch_count": 8
+    },
+    "conclusion": "The receipts call these bundled curated skill IDs, not author-provided gold labels."
+  },
+  "missing_independent_truth": [
+    "author/independent-truth per-case IRF versus RRO root-cause label",
+    "paper-run host-task identity joined to each manually adjudicated failure case",
+    "paper-run loaded-skill identity joined to each manually adjudicated failure case"
+  ],
+  "why_hold": "Benchmark identity/provenance is no longer the blocker. The first-party SkillsBench repository fixes current upstream at commit 9a1f4dd5f7659f75707435da3ce854b6e48321d1 and its dataset-versioning documentation identifies the original arXiv-v1 86-task paper snapshot as reproducible at commit adbaf4d7b5a9f1243c6e592e461da4414fffc997. Author task/skill code is sufficient to reconstruct agent-visible task text and the bundled curated skill-directory binding for both snapshots. However, the frozen C02 falsifier still requires independently adjudicated per-case IRF/RRO root-cause labels joined to the corresponding paper-run host-task identity and loaded-skill identity. Those manual per-case joins are not encoded in the audited SkillsBench task packages, and the audited source arXiv:2608.11888 provides aggregate/manual-consensus failure information rather than a released per-case annotation table usable as independent truth. Inferring IRF/RRO from task text, outcomes, heuristics, or an LLM would replace the frozen truth source. Support therefore remains HOLD, narrowed specifically to the failure-label join rather than benchmark provenance.",
+  "reopen_only_if": "Reopen only when a first-party per-case annotation/release, or an independently reviewed equivalent truth source, joins each manually adjudicated IRF/RRO case to stable paper-time host-task identity and loaded-skill identity without inferring labels from task text/outcomes and without substituting current-upstream task identities for the paper-time experiment.",
+  "evidence_basis": [
+    "arXiv:2608.11888",
+    "SkillsBench current upstream commit 9a1f4dd5f7659f75707435da3ce854b6e48321d1",
+    "SkillsBench first-party docs/dataset-versioning.md at blob 552b6ad26b61f969b121b9195c962ed57640dcbf",
+    "SkillsBench paper-v1 reproducibility commit adbaf4d7b5a9f1243c6e592e461da4414fffc997",
+    "SkillsBench paper-era website/src/content/news/introducing-skillsbench.mdx at blob 0fbce32b7c7db2d6cbec03c38d6d4d50c2ac8e1e",
+    "generated/skillsbench-current-upstream-task-skill-map-20260819.json#sha256:0fef47076efb361ecad93f29a6dcf0c7f5aa6911b954d0d0b45aaf7670a0132a",
+    "generated/skillsbench-paper-v1-task-skill-map-20260819.json#sha256:d2552bbc7ba559564d74644bfd2649f1af9ee8752a52908747f803c8c36374a8"
+  ],
+  "policy": {
+    "benchmark_provenance_resolved": true,
+    "paper_snapshot_commit_recovered": true,
+    "current_upstream_snapshot_is_not_paper_experiment_identity": true,
+    "bundled_curated_skill_ids_are_not_author_explicit_gold_labels": true,
+    "failure_label_join_missing": true,
+    "inferred_irf_rro_labels_forbidden": true,
+    "support_availability_is_not_scientific_failure": true,
+    "dead_end_certified": false,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_experiment_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false
+  },
+  "scientific_authority": false
+}

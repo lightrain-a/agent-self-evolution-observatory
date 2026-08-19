@@ -345,19 +345,24 @@
         "basin": "near-miss-terminal-support-hold-c5be78568fb874db",
         "title": "History-Dependent Skill-Induced Failure: Why the Same Skill Causes Different Failure Modes Across Tasks",
         "disposition": "HOLD_SUPPORT_UNAVAILABLE",
-        "support_status": "SOURCE_SPECIFIC_PRIMARY_ASSET_UNAVAILABLE",
+        "support_status": "BENCHMARK_PROVENANCE_RESOLVED_FAILURE_LABEL_JOIN_UNAVAILABLE",
         "required_unit": "Use the released SkillsBench or SWE-Skills-Bench datasets to identify matched task pairs where the same loaded skill causes a Task-Implementation Fault in both tasks. Control for task-requirement-level compatibility and skill content. If the failure mode (IRF vs. RRO) is identical across all matched pairs, the context-sensitive uptake mechanism is falsified. If failure modes vary but are predicted by static compatibility alone, the mechanism is falsified.",
         "evidence_basis": [
-          "arXiv:2608.11888"
+          "arXiv:2608.11888",
+          "SkillsBench first-party paper-v1 reproducibility commit adbaf4d7b5a9f1243c6e592e461da4414fffc997",
+          "generated/shadow-p01-c02-skillsbench-provenance-support-audit-20260819.json#sha256:2d492fa694573afe915802f4d9126ae405134b02b1dc9341f79753da0503c40d"
         ],
         "strongest_reduction": "the proposed residual remains unresolved until the frozen same-information falsifier can be executed on source-faithful or independently equivalent assets",
-        "reason": "The frozen C02 falsifier requires author-assigned per-case IRF/RRO root-cause labels joined to stable skill identity and host-task identity. The current arXiv v1 source reports 125 manually confirmed functional failures (46 IRF, 36 RRO) and describes the manual consensus labeling procedure, but the arXiv landing page/source exposes no author code/data repository and no per-case annotation table. Base SkillsBench/SWE-Skills-Bench task/skill assets cannot substitute for these manual root-cause labels without changing independent truth; LLM- or rule-inferred replacement labels are forbidden by the frozen contract.",
+        "reason": "Benchmark identity/provenance is no longer the blocker. The first-party SkillsBench repository fixes current upstream at commit 9a1f4dd5f7659f75707435da3ce854b6e48321d1 and its dataset-versioning documentation identifies the original arXiv-v1 86-task paper snapshot as reproducible at commit adbaf4d7b5a9f1243c6e592e461da4414fffc997. Author task/skill code is sufficient to reconstruct agent-visible task text and the bundled curated skill-directory binding for both snapshots. However, the frozen C02 falsifier still requires independently adjudicated per-case IRF/RRO root-cause labels joined to the corresponding paper-run host-task identity and loaded-skill identity. Those manual per-case joins are not encoded in the audited SkillsBench task packages, and the audited source arXiv:2608.11888 provides aggregate/manual-consensus failure information rather than a released per-case annotation table usable as independent truth. Inferring IRF/RRO from task text, outcomes, heuristics, or an LLM would replace the frozen truth source. Support therefore remains HOLD, narrowed specifically to the failure-label join rather than benchmark provenance.",
         "avoid": [
           "re-proposing the unsupported problem object without resolving its frozen asset dependency: History-Dependent Skill-Induced Failure: Why the Same Skill Causes Different Failure Modes Across Tasks",
           "substituting a locally invented, randomly initialized, differently trained, or outcome-tuned asset for the source-specific scientific object",
-          "treating missing source assets as scientific evidence for or against the proposed residual"
+          "treating missing source assets as scientific evidence for or against the proposed residual",
+          "substituting current-upstream task/skill identities for the paper-time experiment join",
+          "relabeling bundled curated skill-directory identities as an author-provided gold-skill annotation table",
+          "inferring IRF/RRO labels from task text, outcome, heuristics, or an LLM in place of independent truth"
         ],
-        "reopen_only_if": "Reopen only when the source-specific/released assets required by the frozen falsifier become available with provenance sufficient to execute the same scientific object, or when an independently reviewed operationalization proves equivalent without changing the frozen prediction, same-information baseline, or causal unit.",
+        "reopen_only_if": "Reopen only when a first-party per-case annotation/release, or an independently reviewed equivalent truth source, joins each manually adjudicated IRF/RRO case to stable paper-time host-task identity and loaded-skill identity without inferring labels from task text/outcomes and without substituting current-upstream task identities for the paper-time experiment.",
         "source_run_id": "shadow-auto-3eb8aa25b7961110",
         "source_stage_manifest_sha256": "134455840dda0adb81570843095a0c5e4325d1b0412a68afc4265b49fc000c97",
         "hold_origin": "bounded-evidence-acquisition",
@@ -368,7 +373,15 @@
         "automatic_experiment_authority": false,
         "automatic_p0_authority": false,
         "automatic_gpu_authority": false,
-        "scientific_authority": false
+        "scientific_authority": false,
+        "benchmark_provenance_resolved": true,
+        "support_scope_remaining": "PER_CASE_IRF_RRO_HOST_TASK_LOADED_SKILL_JOIN",
+        "current_upstream_commit": "9a1f4dd5f7659f75707435da3ce854b6e48321d1",
+        "paper_v1_snapshot_commit": "adbaf4d7b5a9f1243c6e592e461da4414fffc997",
+        "support_audit_artifact": "generated/shadow-p01-c02-skillsbench-provenance-support-audit-20260819.json",
+        "support_audit_sha256": "2d492fa694573afe915802f4d9126ae405134b02b1dc9341f79753da0503c40d",
+        "bundled_curated_skill_ids_are_not_author_explicit_gold_labels": true,
+        "current_upstream_must_not_backfill_paper_experiment_identity": true
       },
       {
         "source_candidate_id": "SP-15",
