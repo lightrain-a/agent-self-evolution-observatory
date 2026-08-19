@@ -53,18 +53,18 @@
     "remote_directory": "/data/wyt/agent-self-evolution-observatory/submission-packages",
     "pdf": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816.pdf",
-      "sha256": "f2100998f3967faf29ce7aa00e4b1006f8b93fbb7a28087c325e75a438cf0291"
+      "sha256": "b6a30dbca94539a85cafdc1b867883ba42017ce01fba5b30fe152cd8b43bfaf4"
     },
     "source_zip": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-source.zip",
-      "sha256": "851198e0e4202c4a15844265c6a48a7af39446c49db7680c237f5abdef7fc8ec",
+      "sha256": "476af7f9808ec475e93ce2e2828071ad9de9f674e6e1709c2dd73b67c4bb1c14",
       "files": 12,
       "isolated_compile_verified": true
     },
     "supplement_zip": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-      "sha256": "ead253c9049958d44690fe63607610bfefac3dc6983c4b70de14c011e6891f35",
-      "manifest_sha256": "a9133b2b66bc1d3ccf04157f0e985271ffe4abf8055b47508fb687b47859a47e",
+      "sha256": "8b14c78e4dbd53afe458edeea9c0ccdebacbccef3e4b510e85987c093e29d930",
+      "manifest_sha256": "5c941fa85e276f25fbaf50d3bd23e2060b206769339688c93bacf62f9503c4fb",
       "isolated_reproduction_verified": true,
       "unit_tests": "13/13 PASS",
       "identity_path_scan": "PASS",

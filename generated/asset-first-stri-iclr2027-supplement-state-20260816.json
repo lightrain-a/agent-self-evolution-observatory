@@ -5,14 +5,14 @@
   "status": "PASS",
   "package": {
     "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-    "sha256": "ead253c9049958d44690fe63607610bfefac3dc6983c4b70de14c011e6891f35",
-    "manifest_sha256": "a9133b2b66bc1d3ccf04157f0e985271ffe4abf8055b47508fb687b47859a47e",
-    "package_metadata_sha256": "a73d146b6abde6d6fac300c0460e36efab3d5ab0752ed232c1c2f8b07ed935c1"
+    "sha256": "8b14c78e4dbd53afe458edeea9c0ccdebacbccef3e4b510e85987c093e29d930",
+    "manifest_sha256": "5c941fa85e276f25fbaf50d3bd23e2060b206769339688c93bacf62f9503c4fb",
+    "package_metadata_sha256": "8c535d613ad23d226f600f9ee64ce7ec3333835a73d4ed3570f09a35a33aa77c"
   },
   "isolated_verification": {
     "fresh_extract_manifest": "PASS",
     "reproduce_py": "PASS",
-    "unit_tests": "19/19 PASS",
+    "unit_tests": "29/29 PASS",
     "binary_identity_path_scan": "PASS",
     "text_identity_path_scan": "PASS",
     "figure_regeneration": "PASS_4_OF_4_FIGURES",
@@ -145,6 +145,22 @@
           "post-hoc seed/model/task expansion"
         ]
       }
+    },
+    "released_controller_audit": {
+      "author_repo_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+      "all_checks_pass": true,
+      "base_package_probability": 0.06666666666666667,
+      "clone_family_probability": 0.125,
+      "released_prompt_mixture_tv": [
+        0.05833333333333333
+      ],
+      "quotient_prompt_mixture_tv": [
+        0.0
+      ],
+      "quotient_exposure_profile_tv": [
+        0.0
+      ],
+      "third_party_author_repo_packaged": false
     }
   },
   "frozen_external_repositories": {
@@ -169,7 +185,8 @@
       "empirical SQC success",
       "LP algorithm novelty",
       "using the qualification-failed Qwen3 pilot as scientific evidence for or against dynamic STRI",
-      "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end"
+      "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end",
+      "treating quotient-conserved clone allocation as downstream utility validation or as a repair for non-realizable partial-overlap support geometry"
     ]
   },
   "new_gpu_evidence_required_for_current_claim_scope": false,
