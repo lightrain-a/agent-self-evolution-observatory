@@ -9,9 +9,10 @@
     const architectureDetail = `${sections.renderLifecycle ? sections.renderLifecycle(state) : ""}${sections.renderSystemLayers ? sections.renderSystemLayers(state) : ""}${sections.renderMethodologyControls ? sections.renderMethodologyControls(state) : ""}`;
     const machineCompileDetail = sections.renderPreflight ? sections.renderPreflight(state) : "";
     const runtimeReference = sections.renderOperations ? sections.renderOperations(state) : "";
+    const agentSafetySummary = window.renderAgentSafetySummary ? window.renderAgentSafetySummary() : "";
 
     const bodies = [
-      `${sections.renderPurpose ? sections.renderPurpose(state,s2) : ""}${sections.renderReaderRoadmap ? sections.renderReaderRoadmap(state) : ""}${sections.renderAuthorityModel ? sections.renderAuthorityModel(state) : ""}${deep("机器架构：11 个阶段、6 层职责与横向方法学控制","Machine architecture: 11 stages, six layers, and cross-cutting controls",architectureDetail)}`,
+      `${sections.renderPurpose ? sections.renderPurpose(state,s2) : ""}${sections.renderReaderRoadmap ? sections.renderReaderRoadmap(state) : ""}${agentSafetySummary}${sections.renderAuthorityModel ? sections.renderAuthorityModel(state) : ""}${deep("机器架构：11 个阶段、6 层职责与横向方法学控制","Machine architecture: 11 stages, six layers, and cross-cutting controls",architectureDetail)}`,
       `${sections.renderProblemDiscoveryPhase ? sections.renderProblemDiscoveryPhase(state) : ""}${deep("证据入口与 AI 会诊节点","Evidence intake and AI consultation checkpoints",sections.renderResearchIntake ? sections.renderResearchIntake(state) : "")}`,
       `${sections.renderPaperDesignPhase ? sections.renderPaperDesignPhase(state) : ""}`,
       `${sections.renderExperimentCompilePhase ? sections.renderExperimentCompilePhase(state) : ""}${deep("完整机器门 / 问题发现 / 论文设计编译细节","Full machine gates, discovery, and paper-design compiler detail",machineCompileDetail)}`,
