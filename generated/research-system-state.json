@@ -6325,13 +6325,13 @@
     "paper_first_relation_scan_admission_failed": 5,
     "paper_first_relation_scan_manual_eligible": false,
     "paper_first_relation_scan_automatic_authorized": false,
-    "paper_first_shadow_search_admission_status": "HOLD_CANONICAL_DISCOVERY_TRANSACTION_OPEN",
+    "paper_first_shadow_search_admission_status": "READY_FOR_SHADOW_QUALIFICATION",
     "paper_first_shadow_search_same_source_transaction": false,
-    "paper_first_shadow_search_qualification_allowed": false,
+    "paper_first_shadow_search_qualification_allowed": true,
     "paper_first_shadow_search_automatic_provider_calls": 0,
-    "paper_first_shadow_continuation_status": "HOLD_CANONICAL_DISCOVERY_TRANSACTION_OPEN",
-    "paper_first_shadow_continuation_next_action": "wait-canonical-discovery-close",
-    "paper_first_shadow_continuation_active_actions": 0,
+    "paper_first_shadow_continuation_status": "READY_FOR_ZERO_PROVIDER_SHADOW_QUALIFICATION",
+    "paper_first_shadow_continuation_next_action": "canonical-private-pool-shadow-qualification",
+    "paper_first_shadow_continuation_active_actions": 1,
     "paper_first_shadow_continuation_external_wait": 0,
     "paper_first_discovery_frontier_status": "LIVE_SOURCE_DISCOVERY_PENDING",
     "paper_first_discovery_frontier_open_internal": 4,
@@ -6562,7 +6562,7 @@
     "search_funnel_bottleneck": "PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE",
     "research_harness_assurance_passed": 10,
     "research_harness_assurance_checks": 10,
-    "research_memory_entries": 58,
+    "research_memory_entries": 59,
     "research_memory_lint_warnings": 6
   },
   "evidence_graph": {
@@ -31738,6 +31738,10 @@
       "single_source_anomaly_first_search_enabled": true,
       "primary_anomaly_can_trigger_controlled_residual_search_without_cross_paper_metric_match": true,
       "support_feasibility_is_search_priority_not_novelty_authority": true,
+      "reopenable_support_hold_search_prior_enabled": true,
+      "support_stop_is_not_search_closure": true,
+      "support_hold_revisit_requires_reopen_evidence": true,
+      "support_hold_missing_support_is_not_scientific_negative": true,
       "closed_basin_inversion_search_enabled": true,
       "search_closure_inversion_requires_certified_counter_explanation": true,
       "search_closure_inversion_is_search_prior_not_scientific_authority": true,
@@ -35742,7 +35746,7 @@
   },
   "paper_first_search_portfolio_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-18T18:31:25+00:00",
+    "generated_at": "2026-08-19T05:53:50+00:00",
     "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
     "target_venue": "ICLR",
     "component_owner": "paper-design-contract",
@@ -35798,7 +35802,7 @@
     },
     "shadow_near_miss_preflight": {
       "schema_version": "1.0",
-      "generated_at": "2026-08-18T18:31:25+00:00",
+      "generated_at": "2026-08-19T05:53:50+00:00",
       "audit_id": "shadow-r2-near-miss-preflight-20260814",
       "policy": {
         "shadow_search_control_only": true,
@@ -38032,6 +38036,74 @@
           "scientific_authority": false
         },
         {
+          "source_candidate_id": "PORT-010",
+          "basin": "principle-readjudication-87314ba086321bf6",
+          "search_primitive": "COMPOSITION_INTERACTION",
+          "title": "Skill-extraction detector-general whitewashing does not survive attack-framing-matched detection control",
+          "avoid": [
+            "re-proposing the certified scoped closure without satisfying its reopen condition: Skill-extraction detector-general whitewashing does not survive attack-framing-matched detection control",
+            "using the negative experiment metric alone as the reason for a scientific dead end",
+            "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+          ],
+          "strongest_reduction": "On the preregistered released-SkillJack 20-trajectory holdout, attack-framing support mismatch positively explains the binary detection failure attributed to extraction. Cross-framing word/character detectors score 100% on direct-naive attacks but 0% on the raw framed attacks before extraction, while framing-matched detectors retain 95%->95% (word) and 80%->100% (character) binary detection after extraction. The extraction-specific residual is therefore absent under the matched framing control even though extraction can change continuous detector scores.",
+          "current_source_refs": [
+            "arXiv:2608.03509"
+          ],
+          "evidence_basis": [
+            "arXiv:2608.03509",
+            "generated/agent-safety-port010-f0-framing-matched-immutable-20260819.json",
+            "generated/agent-safety-port010-f0-extraction-receipt-20260819.json",
+            "generated/agent-safety-port010-framing-replay-receipt-20260819.json",
+            "generated/agent-safety-port010-result-adjudication-20260819.json"
+          ],
+          "problem_text": "PORT-010 exact standalone residual on released SkillJack/SkillX: SkillX extraction causes a detector-general detection failure on framed attacks that remains after controlling attack-framing/distribution shift.",
+          "reason": "PORT-010's exact detector-general whitewashing residual is closed in the released SkillJack/SkillX setting: framing/support mismatch can create the detector failure before extraction, while framing-matched learned detectors retain high binary detection after extraction. This does not imply that extraction has zero score effect, that SkillJack is invalid, that SkillX is safe, or that agent-safety/skill-extraction research is exhausted.",
+          "reopen_only_if": "Reopen only with fresh preregistered evidence, not threshold changes or post-hoc subgroups: on a new holdout with attack-framing-matched detector training/support, at least two independent competent detector families must show a statistically supported and practically large extraction-specific binary detection drop that exceeds the matched framing-shift control, or a new pre-outcome structural variable must force such a prediction under matched information.",
+          "search_closure_certified": true,
+          "dead_end_certified": true,
+          "closure_layer": "core_principle",
+          "failure_layer": "core_principle",
+          "memory_class": "CORE_PRINCIPLE_STOP",
+          "principle_update_allowed": true,
+          "broader_core_principle_falsified": false,
+          "source_stop_class": "PRINCIPLE_STOP",
+          "failure_layer_reason": "The current artifact explicitly types this scoped scientific closure as PRINCIPLE_STOP after a scope-matched positive counter-explanation or exact same-information reduction.",
+          "failure_layer_review_basis": "durable-readjudication-re-review-2026-08-18",
+          "experiment_run_for_this_readjudication": true,
+          "experiment_alone_authorizes_closure": false,
+          "counter_explanation": {
+            "type": "COUNTER_MECHANISM_SUPPORTED",
+            "statement": "On the preregistered released-SkillJack 20-trajectory holdout, attack-framing support mismatch positively explains the binary detection failure attributed to extraction. Cross-framing word/character detectors score 100% on direct-naive attacks but 0% on the raw framed attacks before extraction, while framing-matched detectors retain 95%->95% (word) and 80%->100% (character) binary detection after extraction. The extraction-specific residual is therefore absent under the matched framing control even though extraction can change continuous detector scores.",
+            "opposite_prediction": "If attack-framing support mismatch, rather than SkillX extraction, is the dominant cause of detector failure, detectors trained only on direct-naive attacks should fail on raw framed trajectories before extraction, while detectors trained on framed attacks should retain high binary detection after extraction. Both predictions are observed in the immutable framing-matched F0 replay.",
+            "opposite_principle": "A raw-to-skill detector-score change is not evidence of detector-general extraction whitewashing unless detector support is matched to attack framing and the extraction-induced binary failure remains larger than the matched framing shift.",
+            "opposite_search_seed": "Search for fresh preregistered settings where attack-framing-matched competent detectors still show a practically large extraction-specific binary detection collapse across at least two independent detector families; otherwise move to a different decision object such as semantic-effect retention rather than reusing detector score drop.",
+            "scope": "PORT-010 exact standalone residual on released SkillJack/SkillX: SkillX extraction causes a detector-general detection failure on framed attacks that remains after controlling attack-framing/distribution shift.",
+            "same_information_or_scope_matched": true,
+            "counter_prediction_observed": true,
+            "positive_support": true,
+            "evidence_refs": [
+              "arXiv:2608.03509",
+              "generated/agent-safety-port010-f0-framing-matched-immutable-20260819.json",
+              "generated/agent-safety-port010-f0-extraction-receipt-20260819.json",
+              "generated/agent-safety-port010-framing-replay-receipt-20260819.json",
+              "generated/agent-safety-port010-result-adjudication-20260819.json"
+            ],
+            "alternative_explanations_ruled_out": [
+              "Mutable-result provenance drift: the adjudicated F0 bytes were deterministically rebuilt with zero provider calls and reproduced SHA-256 56a670d7... exactly before certification.",
+              "Detector incapacity: framing-matched word and character detectors detect 95% and 80% of raw held-out framed attacks, while direct-naive-trained cross-framing detectors detect 100% of direct-naive attacks.",
+              "Extraction/substrate failure: the frozen extraction receipt records full source-linked pairing for all 20 required holdout units.",
+              "Threshold leakage: detector thresholds were selected from five-fold OOF training data with the F0 holdout excluded.",
+              "A weak fixed regex detector is sufficient: regex has only 45% raw framed sensitivity, whereas the two competent learned families preserve or improve binary detection after extraction."
+            ],
+            "reopen_condition": "Reopen only with fresh preregistered evidence, not threshold changes or post-hoc subgroups: on a new holdout with attack-framing-matched detector training/support, at least two independent competent detector families must show a statistically supported and practically large extraction-specific binary detection drop that exceeds the matched framing-shift control, or a new pre-outcome structural variable must force such a prediction under matched information."
+          },
+          "source_readjudication_artifact": "generated/agent-safety-port010-principle-readjudication-20260819.json",
+          "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {},
+          "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+          "scientific_authority": false
+        },
+        {
           "source_candidate_id": "DOUBLE-RATCHET-HELDOUT-SELECTION-CLIFF",
           "basin": "principle-readjudication-8bf944906e5e63ab",
           "search_primitive": "",
@@ -39159,7 +39231,7 @@
           "scientific_authority": false
         }
       ],
-      "closed_basin_count": 40,
+      "closed_basin_count": 41,
       "closure_layer_counts": {
         "problem_novelty": 4,
         "execution": 0,
@@ -39168,7 +39240,7 @@
         "operationalization": 3,
         "method_realization": 28,
         "assumption_scope": 2,
-        "core_principle": 1
+        "core_principle": 2
       },
       "failure_layer_counts": {
         "execution": 0,
@@ -39177,7 +39249,7 @@
         "operationalization": 3,
         "method_realization": 28,
         "assumption_scope": 2,
-        "core_principle": 1
+        "core_principle": 2
       },
       "problem_novelty_stop_count": 4,
       "execution_stop_count": 0,
@@ -39186,12 +39258,12 @@
       "operationalization_stop_count": 3,
       "method_realization_stop_count": 28,
       "assumption_scope_stop_count": 2,
-      "core_principle_stop_count": 1,
+      "core_principle_stop_count": 2,
       "broader_core_principle_falsification_count": 0,
-      "principle_dead_end_count": 1,
-      "core_principle_dead_end_count": 1,
-      "principle_readjudication_closed_basin_count": 36,
-      "principle_readjudication_dead_end_count": 1,
+      "principle_dead_end_count": 2,
+      "core_principle_dead_end_count": 2,
+      "principle_readjudication_closed_basin_count": 37,
+      "principle_readjudication_dead_end_count": 2,
       "fresh_phenomenon_closure_count": 20,
       "fresh_phenomenon_closed_evidence_count": 35,
       "inversion_asset_evidence": [
@@ -39367,7 +39439,7 @@
       "near_miss_base_preflight_count": 4,
       "near_miss_terminal_support_hold_count": 3,
       "search_control_only": true,
-      "closed_object_count": 40
+      "closed_object_count": 41
     },
     "shadow_dead_end_memory": {
       "memory_id": "shadow-paper-design-core-principle-dead-end-memory-20260818-v1",
@@ -39447,10 +39519,78 @@
           "fresh_phenomenon_closure": {},
           "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
           "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "PORT-010",
+          "basin": "principle-readjudication-87314ba086321bf6",
+          "search_primitive": "COMPOSITION_INTERACTION",
+          "title": "Skill-extraction detector-general whitewashing does not survive attack-framing-matched detection control",
+          "avoid": [
+            "re-proposing the certified scoped closure without satisfying its reopen condition: Skill-extraction detector-general whitewashing does not survive attack-framing-matched detection control",
+            "using the negative experiment metric alone as the reason for a scientific dead end",
+            "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+          ],
+          "strongest_reduction": "On the preregistered released-SkillJack 20-trajectory holdout, attack-framing support mismatch positively explains the binary detection failure attributed to extraction. Cross-framing word/character detectors score 100% on direct-naive attacks but 0% on the raw framed attacks before extraction, while framing-matched detectors retain 95%->95% (word) and 80%->100% (character) binary detection after extraction. The extraction-specific residual is therefore absent under the matched framing control even though extraction can change continuous detector scores.",
+          "current_source_refs": [
+            "arXiv:2608.03509"
+          ],
+          "evidence_basis": [
+            "arXiv:2608.03509",
+            "generated/agent-safety-port010-f0-framing-matched-immutable-20260819.json",
+            "generated/agent-safety-port010-f0-extraction-receipt-20260819.json",
+            "generated/agent-safety-port010-framing-replay-receipt-20260819.json",
+            "generated/agent-safety-port010-result-adjudication-20260819.json"
+          ],
+          "problem_text": "PORT-010 exact standalone residual on released SkillJack/SkillX: SkillX extraction causes a detector-general detection failure on framed attacks that remains after controlling attack-framing/distribution shift.",
+          "reason": "PORT-010's exact detector-general whitewashing residual is closed in the released SkillJack/SkillX setting: framing/support mismatch can create the detector failure before extraction, while framing-matched learned detectors retain high binary detection after extraction. This does not imply that extraction has zero score effect, that SkillJack is invalid, that SkillX is safe, or that agent-safety/skill-extraction research is exhausted.",
+          "reopen_only_if": "Reopen only with fresh preregistered evidence, not threshold changes or post-hoc subgroups: on a new holdout with attack-framing-matched detector training/support, at least two independent competent detector families must show a statistically supported and practically large extraction-specific binary detection drop that exceeds the matched framing-shift control, or a new pre-outcome structural variable must force such a prediction under matched information.",
+          "search_closure_certified": true,
+          "dead_end_certified": true,
+          "closure_layer": "core_principle",
+          "failure_layer": "core_principle",
+          "memory_class": "CORE_PRINCIPLE_STOP",
+          "principle_update_allowed": true,
+          "broader_core_principle_falsified": false,
+          "source_stop_class": "PRINCIPLE_STOP",
+          "failure_layer_reason": "The current artifact explicitly types this scoped scientific closure as PRINCIPLE_STOP after a scope-matched positive counter-explanation or exact same-information reduction.",
+          "failure_layer_review_basis": "durable-readjudication-re-review-2026-08-18",
+          "experiment_run_for_this_readjudication": true,
+          "experiment_alone_authorizes_closure": false,
+          "counter_explanation": {
+            "type": "COUNTER_MECHANISM_SUPPORTED",
+            "statement": "On the preregistered released-SkillJack 20-trajectory holdout, attack-framing support mismatch positively explains the binary detection failure attributed to extraction. Cross-framing word/character detectors score 100% on direct-naive attacks but 0% on the raw framed attacks before extraction, while framing-matched detectors retain 95%->95% (word) and 80%->100% (character) binary detection after extraction. The extraction-specific residual is therefore absent under the matched framing control even though extraction can change continuous detector scores.",
+            "opposite_prediction": "If attack-framing support mismatch, rather than SkillX extraction, is the dominant cause of detector failure, detectors trained only on direct-naive attacks should fail on raw framed trajectories before extraction, while detectors trained on framed attacks should retain high binary detection after extraction. Both predictions are observed in the immutable framing-matched F0 replay.",
+            "opposite_principle": "A raw-to-skill detector-score change is not evidence of detector-general extraction whitewashing unless detector support is matched to attack framing and the extraction-induced binary failure remains larger than the matched framing shift.",
+            "opposite_search_seed": "Search for fresh preregistered settings where attack-framing-matched competent detectors still show a practically large extraction-specific binary detection collapse across at least two independent detector families; otherwise move to a different decision object such as semantic-effect retention rather than reusing detector score drop.",
+            "scope": "PORT-010 exact standalone residual on released SkillJack/SkillX: SkillX extraction causes a detector-general detection failure on framed attacks that remains after controlling attack-framing/distribution shift.",
+            "same_information_or_scope_matched": true,
+            "counter_prediction_observed": true,
+            "positive_support": true,
+            "evidence_refs": [
+              "arXiv:2608.03509",
+              "generated/agent-safety-port010-f0-framing-matched-immutable-20260819.json",
+              "generated/agent-safety-port010-f0-extraction-receipt-20260819.json",
+              "generated/agent-safety-port010-framing-replay-receipt-20260819.json",
+              "generated/agent-safety-port010-result-adjudication-20260819.json"
+            ],
+            "alternative_explanations_ruled_out": [
+              "Mutable-result provenance drift: the adjudicated F0 bytes were deterministically rebuilt with zero provider calls and reproduced SHA-256 56a670d7... exactly before certification.",
+              "Detector incapacity: framing-matched word and character detectors detect 95% and 80% of raw held-out framed attacks, while direct-naive-trained cross-framing detectors detect 100% of direct-naive attacks.",
+              "Extraction/substrate failure: the frozen extraction receipt records full source-linked pairing for all 20 required holdout units.",
+              "Threshold leakage: detector thresholds were selected from five-fold OOF training data with the F0 holdout excluded.",
+              "A weak fixed regex detector is sufficient: regex has only 45% raw framed sensitivity, whereas the two competent learned families preserve or improve binary detection after extraction."
+            ],
+            "reopen_condition": "Reopen only with fresh preregistered evidence, not threshold changes or post-hoc subgroups: on a new holdout with attack-framing-matched detector training/support, at least two independent competent detector families must show a statistically supported and practically large extraction-specific binary detection drop that exceeds the matched framing-shift control, or a new pre-outcome structural variable must force such a prediction under matched information."
+          },
+          "source_readjudication_artifact": "generated/agent-safety-port010-principle-readjudication-20260819.json",
+          "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {},
+          "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+          "scientific_authority": false
         }
       ],
       "hold_objects": [],
-      "principle_dead_end_count": 1,
+      "principle_dead_end_count": 2,
       "scientific_authority_for_live_discovery": false,
       "cannot_mutate_canonical_generator_or_queue": true
     },
@@ -39503,10 +39643,10 @@
       "revise_paper_problem": 1,
       "stop_standalone": 1,
       "support_inventory_required": 1,
-      "shadow_dead_end_objects": 1,
-      "shadow_closed_basins": 40,
-      "principle_readjudication_dead_ends": 1,
-      "principle_readjudication_closed_basins": 36,
+      "shadow_dead_end_objects": 2,
+      "shadow_closed_basins": 41,
+      "principle_readjudication_dead_ends": 2,
+      "principle_readjudication_closed_basins": 37,
       "problem_novelty_stops": 4,
       "execution_stops": 0,
       "experiment_identifiability_stops": 2,
@@ -39514,9 +39654,9 @@
       "operationalization_stops": 3,
       "method_realization_stops": 28,
       "assumption_scope_stops": 2,
-      "core_principle_stops": 1,
+      "core_principle_stops": 2,
       "broader_core_principle_falsifications": 0,
-      "core_principle_dead_ends": 1,
+      "core_principle_dead_ends": 2,
       "shadow_hold_objects": 9,
       "current_source_hard_veto_dead_ends": 0,
       "current_source_hard_veto_added_from_latest_run": 0,
@@ -39825,7 +39965,7 @@
   },
   "paper_first_discovery_frontier": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-18T18:31:26+00:00",
+    "generated_at": "2026-08-19T08:46:03+00:00",
     "status": "LIVE_SOURCE_DISCOVERY_PENDING",
     "policy": {
       "scientific_authority": false,
@@ -39917,7 +40057,7 @@
   },
   "paper_first_fresh_phenomenon_portfolio": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-18T18:31:26+00:00",
+    "generated_at": "2026-08-19T05:57:41+00:00",
     "status": "NO_ACTIVE_F0",
     "policy": {
       "portfolio_is_outside_canonical_problem_queue": true,
@@ -40326,7 +40466,7 @@
       },
       "dead_end_memory": {
         "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-        "sha256": "1d6edb75ced94f6fa4b472fd28a9465de55cec38d9fbf56e049298b728826450"
+        "sha256": "1978a43749fcb3802a3c45582ff77dad6ac7b62643f1e73f1f009904f11a8fa1"
       },
       "defense_principle_reduction": {
         "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
@@ -41394,8 +41534,8 @@
   },
   "paper_first_shadow_search_admission": {
     "schema_version": "1.0",
-    "status": "HOLD_CANONICAL_DISCOVERY_TRANSACTION_OPEN",
-    "reason": "Canonical Primary -> Generator -> Queue is not a closed, internally consistent zero-authority discovery transaction.",
+    "status": "READY_FOR_SHADOW_QUALIFICATION",
+    "reason": "Canonical discovery is closed and the current source transaction differs from the latest terminal shadow source identity.",
     "policy": {
       "scientific_authority": false,
       "admission_is_deterministic_search_control_only": true,
@@ -41407,7 +41547,7 @@
     },
     "summary": {
       "primary_records": 32,
-      "canonical_transaction_closed": false,
+      "canonical_transaction_closed": true,
       "latest_shadow_present": true,
       "latest_shadow_terminal": true,
       "same_source_transaction": false,
@@ -41416,11 +41556,11 @@
       "same_discovery_operator_version": false,
       "operator_upgrade_recompile": false,
       "source_identity_conflict": false,
-      "qualification_allowed": false,
+      "qualification_allowed": true,
       "automatic_provider_calls_authorized": 0,
       "checks": 14,
-      "passed_checks": 13,
-      "failed_checks": 1
+      "passed_checks": 14,
+      "failed_checks": 0
     },
     "source_identity": {
       "current_source_generated_at": "2026-08-18T15:10:57+00:00",
@@ -41439,8 +41579,8 @@
   },
   "paper_first_shadow_continuation_frontier": {
     "schema_version": "1.0",
-    "status": "HOLD_CANONICAL_DISCOVERY_TRANSACTION_OPEN",
-    "next_control_action": "wait-canonical-discovery-close",
+    "status": "READY_FOR_ZERO_PROVIDER_SHADOW_QUALIFICATION",
+    "next_control_action": "canonical-private-pool-shadow-qualification",
     "policy": {
       "scientific_authority": false,
       "frontier_is_deterministic_control_projection_only": true,
@@ -41452,13 +41592,13 @@
       "zero_active_action_is_valid_external_wait": true
     },
     "summary": {
-      "shadow_qualification_ready": 0,
+      "shadow_qualification_ready": 1,
       "release_recheck_required": 0,
       "asset_recheck_queued": 0,
       "support_inventory_handoff_ready": 0,
       "support_handoff_provenance_hold": 0,
       "support_holds": 0,
-      "active_control_actions": 0,
+      "active_control_actions": 1,
       "external_wait": 0,
       "automatic_provider_calls_authorized": 0,
       "scientific_authority": 0,
@@ -41470,7 +41610,7 @@
       "gpu_authorized": 0
     },
     "source_status": {
-      "shadow_admission": "HOLD_CANONICAL_DISCOVERY_TRANSACTION_OPEN",
+      "shadow_admission": "READY_FOR_SHADOW_QUALIFICATION",
       "support_release_watch": "SUPPORT_RELEASE_WATCH_COMPLETE",
       "support_asset_queue": "SUPPORT_ASSET_RECHECK_QUEUE_EMPTY",
       "support_inventory_handoff": "SUPPORT_ASSET_RECHECK_HANDOFF_EMPTY"
@@ -82576,7 +82716,7 @@
   },
   "research_memory_wiki": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-19T06:45:36+00:00",
+    "generated_at": "2026-08-19T08:43:46+00:00",
     "status": "MEMORY_COMPILED",
     "policy": {
       "schema_version": "1.0",
@@ -82595,7 +82735,7 @@
       "idea_search_and_experiment_design_use_distinct_memory_priorities": true
     },
     "source_manifest": {
-      "search_memory_closed_objects": 40,
+      "search_memory_closed_objects": 41,
       "search_memory_hold_objects": 9,
       "failure_assets": 6,
       "candidate_portfolio_visible": 2,
@@ -82603,18 +82743,18 @@
       "generator_blocked_attempts": 13
     },
     "summary": {
-      "entries": 58,
+      "entries": 59,
       "search_closures": 39,
-      "scientific_closures": 1,
+      "scientific_closures": 2,
       "holds": 9,
       "failure_assets": 3,
       "success_assets": 3,
       "open_questions": 2,
       "repeated_review_blocks": 1,
-      "prompt_eligible": 58,
+      "prompt_eligible": 59,
       "transient": 0,
       "recurring_systemic": 3,
-      "scientific": 55
+      "scientific": 56
     },
     "entries": [
       {
@@ -83003,6 +83143,30 @@
           "arXiv:2405.17503",
           "arXiv:2409.16120",
           "arXiv:2608.14441"
+        ],
+        "source_artifact": "shadow_search_memory",
+        "reuse_effectiveness": {},
+        "scientific_authority": false
+      },
+      {
+        "memory_id": "MEM-SCIE-77c61f9dd2885367c0",
+        "kind": "SCIENTIFIC_CLOSURE",
+        "title": "Skill-extraction detector-general whitewashing does not survive attack-framing-matched detection control",
+        "summary": "On the preregistered released-SkillJack 20-trajectory holdout, attack-framing support mismatch positively explains the binary detection failure attributed to extraction. Cross-framing word/character detectors score 100% on direct-naive attacks but 0% on the raw framed attacks before extraction, while framing-matched detectors retain 95%->95% (word) and 80%->100% (character) binary detection after extraction. The extraction-specific residual is therefore absent under the matched framing control even though extraction can change continuous detector scores.",
+        "candidate_id": "PORT-010",
+        "scope": "PORT-010 exact standalone residual on released SkillJack/SkillX: SkillX extraction causes a detector-general detection failure on framed attacks that remains after controlling attack-framing/distribution shift.",
+        "affected_layer": "core_principle",
+        "memory_class": "CORE_PRINCIPLE_STOP",
+        "durability_class": "scientific",
+        "prompt_eligible": true,
+        "search_closure_certified": true,
+        "scientific_dead_end_certified": true,
+        "principle_update_allowed": true,
+        "reopen_condition": "Reopen only with fresh preregistered evidence, not threshold changes or post-hoc subgroups: on a new holdout with attack-framing-matched detector training/support, at least two independent competent detector families must show a statistically supported and practically large extraction-specific binary detection drop that exceeds the matched framing-shift control, or a new pre-outcome structural variable must force such a prediction under matched information.",
+        "opposite_search_seed": "Search for fresh preregistered settings where attack-framing-matched competent detectors still show a practically large extraction-specific binary detection collapse across at least two independent detector families; otherwise move to a different decision object such as semantic-effect retention rather than reusing detector score drop.",
+        "reusable_precheck": "",
+        "source_refs": [
+          "arXiv:2608.03509"
         ],
         "source_artifact": "shadow_search_memory",
         "reuse_effectiveness": {},
@@ -84058,7 +84222,7 @@
       "p0": false,
       "gpu": false
     },
-    "wiki_sha256": "b55d7b441cddf624ecd5aee927df100a29fb1f99a65e983fc9c73b16c497421d",
+    "wiki_sha256": "3531943234ba708716a43625709adf01fd57f346e22a7a1b83dace2b96815f29",
     "lint": {
       "schema_version": "1.0",
       "status": "PASS",

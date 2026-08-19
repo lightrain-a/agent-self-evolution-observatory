@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "status": "HOLD_CANONICAL_DISCOVERY_TRANSACTION_OPEN",
-  "reason": "Canonical Primary -> Generator -> Queue is not a closed, internally consistent zero-authority discovery transaction.",
+  "status": "READY_FOR_SHADOW_QUALIFICATION",
+  "reason": "Canonical discovery is closed and the current source transaction differs from the latest terminal shadow source identity.",
   "policy": {
     "scientific_authority": false,
     "admission_is_deterministic_search_control_only": true,
@@ -13,7 +13,7 @@
   },
   "summary": {
     "primary_records": 32,
-    "canonical_transaction_closed": false,
+    "canonical_transaction_closed": true,
     "latest_shadow_present": true,
     "latest_shadow_terminal": true,
     "same_source_transaction": false,
@@ -22,11 +22,11 @@
     "same_discovery_operator_version": false,
     "operator_upgrade_recompile": false,
     "source_identity_conflict": false,
-    "qualification_allowed": false,
+    "qualification_allowed": true,
     "automatic_provider_calls_authorized": 0,
     "checks": 14,
-    "passed_checks": 13,
-    "failed_checks": 1
+    "passed_checks": 14,
+    "failed_checks": 0
   },
   "source_identity": {
     "current_source_generated_at": "2026-08-18T15:10:57+00:00",

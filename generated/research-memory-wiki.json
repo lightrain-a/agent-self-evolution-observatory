@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-19T06:45:36+00:00",
+  "generated_at": "2026-08-19T08:43:46+00:00",
   "status": "MEMORY_COMPILED",
   "policy": {
     "schema_version": "1.0",
@@ -19,7 +19,7 @@
     "idea_search_and_experiment_design_use_distinct_memory_priorities": true
   },
   "source_manifest": {
-    "search_memory_closed_objects": 40,
+    "search_memory_closed_objects": 41,
     "search_memory_hold_objects": 9,
     "failure_assets": 6,
     "candidate_portfolio_visible": 2,
@@ -27,18 +27,18 @@
     "generator_blocked_attempts": 13
   },
   "summary": {
-    "entries": 58,
+    "entries": 59,
     "search_closures": 39,
-    "scientific_closures": 1,
+    "scientific_closures": 2,
     "holds": 9,
     "failure_assets": 3,
     "success_assets": 3,
     "open_questions": 2,
     "repeated_review_blocks": 1,
-    "prompt_eligible": 58,
+    "prompt_eligible": 59,
     "transient": 0,
     "recurring_systemic": 3,
-    "scientific": 55
+    "scientific": 56
   },
   "entries": [
     {
@@ -427,6 +427,30 @@
         "arXiv:2405.17503",
         "arXiv:2409.16120",
         "arXiv:2608.14441"
+      ],
+      "source_artifact": "shadow_search_memory",
+      "reuse_effectiveness": {},
+      "scientific_authority": false
+    },
+    {
+      "memory_id": "MEM-SCIE-77c61f9dd2885367c0",
+      "kind": "SCIENTIFIC_CLOSURE",
+      "title": "Skill-extraction detector-general whitewashing does not survive attack-framing-matched detection control",
+      "summary": "On the preregistered released-SkillJack 20-trajectory holdout, attack-framing support mismatch positively explains the binary detection failure attributed to extraction. Cross-framing word/character detectors score 100% on direct-naive attacks but 0% on the raw framed attacks before extraction, while framing-matched detectors retain 95%->95% (word) and 80%->100% (character) binary detection after extraction. The extraction-specific residual is therefore absent under the matched framing control even though extraction can change continuous detector scores.",
+      "candidate_id": "PORT-010",
+      "scope": "PORT-010 exact standalone residual on released SkillJack/SkillX: SkillX extraction causes a detector-general detection failure on framed attacks that remains after controlling attack-framing/distribution shift.",
+      "affected_layer": "core_principle",
+      "memory_class": "CORE_PRINCIPLE_STOP",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": true,
+      "scientific_dead_end_certified": true,
+      "principle_update_allowed": true,
+      "reopen_condition": "Reopen only with fresh preregistered evidence, not threshold changes or post-hoc subgroups: on a new holdout with attack-framing-matched detector training/support, at least two independent competent detector families must show a statistically supported and practically large extraction-specific binary detection drop that exceeds the matched framing-shift control, or a new pre-outcome structural variable must force such a prediction under matched information.",
+      "opposite_search_seed": "Search for fresh preregistered settings where attack-framing-matched competent detectors still show a practically large extraction-specific binary detection collapse across at least two independent detector families; otherwise move to a different decision object such as semantic-effect retention rather than reusing detector score drop.",
+      "reusable_precheck": "",
+      "source_refs": [
+        "arXiv:2608.03509"
       ],
       "source_artifact": "shadow_search_memory",
       "reuse_effectiveness": {},
@@ -1482,7 +1506,7 @@
     "p0": false,
     "gpu": false
   },
-  "wiki_sha256": "b55d7b441cddf624ecd5aee927df100a29fb1f99a65e983fc9c73b16c497421d",
+  "wiki_sha256": "3531943234ba708716a43625709adf01fd57f346e22a7a1b83dace2b96815f29",
   "lint": {
     "schema_version": "1.0",
     "status": "PASS",
