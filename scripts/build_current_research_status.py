@@ -52,6 +52,7 @@ stri_p0d_review = load("asset-first-stri-skillrl-fixed-task-p0d-review-20260816.
 stri_p0d_dead_end = load("asset-first-stri-skillrl-p0d-dead-end-diagnosis-20260816.json")
 stri_p0e_principle = load("asset-first-stri-skillrl-final-policy-p0e-principle-disposition-20260817.json")
 stri_p0e_diagnosis = load("asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json")
+stri_autoskill_p19 = load("asset-first-stri-autoskill-p19-stage3-result-20260819.json")
 support_release = load("paper-first-support-release-targets.json")
 fresh_phenomenon = load("paper-first-fresh-phenomenon-portfolio-20260817.json")
 shadow_admission = load("paper-first-shadow-search-admission.json")
@@ -195,6 +196,7 @@ state = {
         "title": sys_stri.get("title"),
         "status": sys_stri.get("status"),
         "submission_status": sys_stri.get("submission_status"),
+        "claims": dict(sys_stri.get("claims") or {}),
         "stage": paper_quality.get("status"),
         "track": sys_stri.get("track", "ASSET_FIRST_PAPER_QUALITY_REPAIR"),
         "claims_supported": int(stri_summary.get("claims_supported", 0)),
@@ -344,6 +346,17 @@ state = {
             "calibration": dict(stri_p0e_diagnosis.get("qualification") or {}),
             "endpoint_result": dict(stri_p0e_diagnosis.get("endpoint_result") or {}),
             "role": "qualified optional C4 realization negative; does not expand or invalidate N1-N3",
+            "scientific_authority": False,
+        },
+        "autoskill_p19": {
+            "status": str(stri_autoskill_p19.get("decision") or "UNKNOWN"),
+            "groups": dict(stri_autoskill_p19.get("groups") or {}),
+            "fisher_exact_p": float((stri_autoskill_p19.get("statistics") or {}).get("fisher_exact_p") or 0.0),
+            "frozen_gates": dict(stri_autoskill_p19.get("frozen_gates") or {}),
+            "judge_calls": int(stri_autoskill_p19.get("judge_calls") or 0),
+            "fresh_container_per_run": bool(stri_autoskill_p19.get("fresh_container_per_run", False)),
+            "claim_boundary": str(stri_autoskill_p19.get("scientific_claim_boundary") or ""),
+            "role": "bounded P19 representation-to-retrieval-to-executed-behavior positive; does not authorize task utility or general AutoSkill safety claims",
             "scientific_authority": False,
         },
     },
