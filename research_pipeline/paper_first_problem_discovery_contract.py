@@ -5,7 +5,7 @@ from typing import Any
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS, REDUCTION_FALSIFIABILITY_CONTRACT, reduction_pattern_audit
 
 
-DISCOVERY_OPERATOR_VERSION = "double-funnel-paperability-evolution-v17"
+DISCOVERY_OPERATOR_VERSION = "double-funnel-paperability-evolution-v18-memory-wiki"
 
 # Paperability is broader than principle novelty. These axes are search/triage
 # coordinates only: none grants Method, Experiment, P0, GPU, or Paper authority.
@@ -196,7 +196,7 @@ POLICY: dict[str, Any] = {
     # Harness invariants: breadth agents generate search material but cannot acquit
     # themselves scientifically. Deterministic merge/dedup is mechanical only; the
     # independent semantic jury stays BLOCK-only and exact scientific gates remain
-    # downstream. These controls do not change the v17 scientific search operator.
+    # downstream. v18 additionally injects the compiled zero-authority Research Memory Wiki.
     "fanout_is_generation_only": True,
     "pre_jury_dedup_is_deterministic_mechanical_only": True,
     "fanout_role_cannot_authorize_terminal_scientific_verdict": True,
@@ -204,6 +204,10 @@ POLICY: dict[str, Any] = {
     "jury_clear_is_not_scientific_pass": True,
     "portfolio_retains_multiple_survivors_before_scientific_gate": True,
     "effort_profile_cannot_change_assurance_thresholds": True,
+    "research_memory_query_pack_required_before_generation": True,
+    "research_memory_query_pack_is_zero_authority": True,
+    "transient_operational_memory_excluded_from_generation": True,
+    "research_memory_query_pack_receipt_required": True,
     "paperability_axes": dict(PAPERABILITY_AXES),
     "principle_reduction_does_not_auto_close_other_paperability_axes": True,
     "cheap_problem_falsifier_may_precede_exact_reduction": True,

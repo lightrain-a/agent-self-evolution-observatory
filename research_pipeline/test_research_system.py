@@ -476,7 +476,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(discovery["policy"]["observed_dependency_graph_is_not_an_identifiability_gap"])
         self.assertTrue(discovery["policy"]["reciprocal_coupling_claim_requires_downstream_residual_beyond_distribution_shift"])
         self.assertTrue(discovery["policy"]["feedback_mechanism_requires_causal_write_path_before_experiment"])
-        self.assertEqual(discovery["policy"]["discovery_operator_version"],"double-funnel-paperability-evolution-v17")
+        self.assertEqual(discovery["policy"]["discovery_operator_version"],"double-funnel-paperability-evolution-v18-memory-wiki")
         self.assertTrue(discovery["policy"]["inactive_search_assets_hidden_from_generator"])
         self.assertTrue(discovery["policy"]["no_active_asset_fallback_requires_latest_primary_quantitative_anomaly"])
         self.assertTrue(discovery["policy"]["fresh_phenomenon_seed_must_name_measured_boundary_or_failure"])

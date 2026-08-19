@@ -9,6 +9,8 @@ from .paper_first_evidence_acquisition import (
     compile_evidence_reviews,
     compile_operationalization_recompiles,
     compile_substrate_preflight,
+    evidence_design_prompt,
+    operationalization_recompile_prompt,
     validate_evidence_plan,
 )
 
@@ -73,6 +75,14 @@ class EvidenceAcquisitionTest(unittest.TestCase):
         m=machine(1);m["problem_falsifier_queue"][0]["candidate"]={"empirical_evidence":{"source_a":{"ref":"arXiv:2608.13040"},"source_b":{"ref":"arXiv:2608.13040"}}}
         state=build_provisional_evidence_plan(m)
         self.assertEqual(state["entries"][0]["source_refs"],["arXiv:2608.13040"])
+
+    def test_memory_query_pack_is_mandatory_prompt_context_not_authority(self):
+        plan=build_provisional_evidence_plan(machine(1));pack={"purpose":"EXPERIMENT_DESIGN","query_pack_sha256":"a"*64,"selected_memory_ids":["MEM-X"],"text":"MEM-X precheck=check prior runtime integrity","scientific_authority":False}
+        prompt,ids=evidence_design_prompt(plan,research_memory_query_pack=pack)
+        self.assertEqual(ids,["C1"]);self.assertIn("HISTORICAL_RESEARCH_MEMORY",prompt);self.assertIn("MEM-X",prompt);self.assertIn("never a scientific veto",prompt)
+        source=design_for(plan["entries"][0],source="SOURCE_SPECIFIC_REQUIRED",mode="PRIMARY_ASSET_REUSE",adapter="PRIMARY_ASSET_ONLY");pending=compile_evidence_designs(plan,{"designs":[source]})
+        reprompt,rids=operationalization_recompile_prompt(pending,research_memory_query_pack=pack)
+        self.assertEqual(rids,["C1"]);self.assertIn("MEM-X",reprompt);self.assertIn("historical success cannot authorize transport",reprompt)
 
     def test_first_party_design_gets_execution_not_scientific_authority(self):
         plan=build_provisional_evidence_plan(machine(1))

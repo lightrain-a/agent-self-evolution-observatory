@@ -89,6 +89,7 @@ from .principle_adjudication import build_principle_layer_state
 from .research_capability_registry import build_research_capability_registry
 from .research_candidate_portfolio import build_research_candidate_portfolio
 from .research_harness_assurance import build_research_harness_assurance
+from .research_memory_wiki import build_research_memory_wiki, write_research_memory_wiki
 from .search_funnel_telemetry import build_search_funnel_telemetry
 from .premium_model_policy import policy_summary as premium_model_policy_summary
 from .public_state_redaction import redact_private_paths
@@ -229,6 +230,8 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     principle = state["principle_layer"]["summary"]
     meta_trace = state["scientific_meta_trace"]["summary"]
     research_graph = state["scientific_research_graph"]["summary"]
+    research_memory = state["research_memory_wiki"]["summary"]
+    research_memory_lint = state["research_memory_wiki"]["lint"]["summary"]
     failure_assets = state["failure_asset_library"]["summary"]
     value_scheduler = state["experiment_value_scheduler"]["summary"]
     replay = state["research_system_replay"]["summary"]
@@ -266,7 +269,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"Advisor paper-first research contract", "component":{"en":"Paper novelty → method → experiment blueprint contract","zh":"论文 Novelty → 方法 → 实验蓝图合同"}, "status":"running", "evidence":{"en":f"{paper_first['paper_design_passed']}/{paper_first['cards']} live cards satisfy paper-first / visual portfolio {visual_evidence['planned_main_visualizations']} planned across {visual_evidence['paper_first_designs']} paper-first designs + {visual_evidence['stri_completed_main_visualizations']} STRI completed / post-C2: {paper_post_c2['decision']}","zh":f"当前 {paper_first['paper_design_passed']}/{paper_first['cards']} 份 live 卡满足 paper-first / 可视化组合：{visual_evidence['paper_first_designs']} 个 paper-first 设计共规划 {visual_evidence['planned_main_visualizations']} 张主图 + STRI 已完成 {visual_evidence['stri_completed_main_visualizations']} 张 / post-C2：{paper_post_c2['decision']}"}},
         {"source":"FirstResearch / Popper / Co-Scientist / RD-Agent", "component":{"en":"Principle Certificate + epistemic adjudicator","zh":"原理证书 + 认识论裁决器"}, "status":"running", "evidence":{"en":f"{principle['certificates_passed']}/{principle['cards']} principle certificates valid / {principle.get('registered_prediction_rejections_pending_counterexplanation',0)} prediction rejections awaiting counter-explanation / {principle.get('principle_dead_end_certifications',0)} certified principle dead ends","zh":f"{principle['certificates_passed']}/{principle['cards']} 份原理证书有效 / {principle.get('registered_prediction_rejections_pending_counterexplanation',0)} 个预测反证待反机制解释 / {principle.get('principle_dead_end_certifications',0)} 个原理级 Dead-End 已认证"}},
         {"source":"Qiushi / Kosmos / MLEvolve", "component":{"en":"Scientific Meta-Trace + cross-branch world state","zh":"Scientific Meta-Trace + 跨分支科研状态"}, "status":"running", "evidence":{"en":f"{meta_trace['principles']} principles / {meta_trace['unresolved_principles']} unresolved / {meta_trace['cross_branch_reference_edges']} cross-branch links","zh":f"{meta_trace['principles']} 个原理 / {meta_trace['unresolved_principles']} 个未决 / {meta_trace['cross_branch_reference_edges']} 条跨分支引用"}},
-        {"source":"ARIS research wiki pattern + local typed closure", "component":{"en":"Typed Scientific Research Graph","zh":"类型化科学研究图谱"}, "status":"running", "evidence":{"en":f"{research_graph['nodes']} nodes / {research_graph['edges']} edges / {research_graph['experiment_nodes']} experiment nodes / {research_graph['failure_asset_nodes']} typed failures / {research_graph['principle_closure_edges']} certified principle-closure edges","zh":f"{research_graph['nodes']} 个节点 / {research_graph['edges']} 条边 / {research_graph['experiment_nodes']} 个实验节点 / {research_graph['failure_asset_nodes']} 个类型化失败 / {research_graph['principle_closure_edges']} 条原理认证 closure 边"}},
+        {"source":"ARIS research wiki pattern + local typed closure", "component":{"en":"Typed Scientific Research Graph","zh":"类型化科学研究图谱"}, "status":"running", "evidence":{"en":f"{research_graph['nodes']} graph nodes / {research_graph['edges']} edges; memory wiki {research_memory['entries']} entries / {research_memory['failure_assets']} failure / {research_memory['success_assets']} success / lint warnings {research_memory_lint['warnings']}","zh":f"研究图谱 {research_graph['nodes']} 个节点 / {research_graph['edges']} 条边；Memory Wiki {research_memory['entries']} 条 / 失败 {research_memory['failure_assets']} / 成功 {research_memory['success_assets']} / lint warning {research_memory_lint['warnings']}"}},
         {"source":"MLEvolve / InternAgent / AutoResearchClaw", "component":{"en":"Failure Asset + dead-end memory","zh":"失败资产 + Dead-End 记忆库"}, "status":"running", "evidence":{"en":f"{failure_assets['assets']} failure assets / {failure_assets['unique_signatures']} reusable signatures / {failure_assets.get('experimental_stops_not_dead_ends',0)} experimental stops retained as diagnostics / {failure_assets.get('principle_dead_ends',0)} principle-certified dead ends","zh":f"{failure_assets['assets']} 条失败资产 / {failure_assets['unique_signatures']} 类可复用签名 / {failure_assets.get('experimental_stops_not_dead_ends',0)} 个实验 STOP 仅作诊断 / {failure_assets.get('principle_dead_ends',0)} 个原理认证 Dead-End"}},
         {"source":"Ai2 AutoDiscovery / MLEvolve / AI-Scientist-v2", "component":{"en":"Information-gain experiment portfolio scheduler","zh":"信息增益实验组合调度器"}, "status":"running", "evidence":{"en":f"{value_scheduler['candidates']} candidate tests / {value_scheduler['cross_branch_reference_edges']} cross-branch references / advisory only","zh":f"{value_scheduler['candidates']} 个候选实验 / {value_scheduler['cross_branch_reference_edges']} 条跨分支引用 / 仅建议不授权"}},
         {"source":"ResearchClawBench / HackDetect / ScienceAgentBench / AutoLabs", "component":{"en":"Protocol-validity auditor + research-system replay benchmark","zh":"协议有效性审计 + 科研系统回放基准"}, "status":"running", "evidence":{"en":f"protocol {pre_experiment['protocol_validity_pass']}/{pre_experiment['compiled_cards']} / replay {replay['passed']}/{replay['cases']}","zh":f"Protocol {pre_experiment['protocol_validity_pass']}/{pre_experiment['compiled_cards']} / 回放 {replay['passed']}/{replay['cases']}"}},
@@ -508,6 +511,14 @@ def build_research_system_state() -> dict[str, Any]:
     p0_decision_ledger_public = {"summary": p0_decision_ledger["summary"], "policy": p0_decision_ledger["policy"]}
     scientific_meta_trace = build_scientific_meta_trace(pre_experiment_compiler, principle_layer, experiment_iteration, p0_decision_ledger_public)
     failure_asset_library = build_failure_asset_library(experiment_iteration, p0_economy_public, paper_first_post_c2, paper_first_p0_f0, principle_layer)
+    research_memory_wiki = build_research_memory_wiki(
+        search_design_state=paper_first_search_portfolio_design,
+        failure_asset_library=failure_asset_library,
+        scientific_meta_trace=scientific_meta_trace,
+        candidate_portfolio=research_candidate_portfolio,
+        experiment_iteration=experiment_iteration,
+        generator_state=paper_first_problem_generator,
+    )
     scientific_research_graph = build_scientific_research_graph(
         evidence_graph=evidence_graph,
         candidate_portfolio=research_candidate_portfolio,
@@ -848,6 +859,8 @@ def build_research_system_state() -> dict[str, Any]:
             "meta_trace_unresolved":scientific_meta_trace["summary"]["unresolved_principles"],
             "scientific_research_graph_nodes":scientific_research_graph["summary"]["nodes"],
             "scientific_research_graph_edges":scientific_research_graph["summary"]["edges"],
+            "research_memory_entries":research_memory_wiki["summary"]["entries"],
+            "research_memory_lint_warnings":research_memory_wiki["lint"]["summary"]["warnings"],
             "failure_assets":failure_asset_library["summary"]["assets"],
             "value_scheduler_candidates":experiment_value_scheduler["summary"]["candidates"],
             "research_replay_passed":research_system_replay["summary"]["passed"],
@@ -1006,6 +1019,7 @@ def build_research_system_state() -> dict[str, Any]:
         "principle_layer":principle_layer,
         "scientific_meta_trace":scientific_meta_trace,
         "scientific_research_graph":scientific_research_graph,
+        "research_memory_wiki":research_memory_wiki,
         "failure_asset_library":failure_asset_library,
         "experiment_value_scheduler":experiment_value_scheduler,
         "research_system_replay":research_system_replay,
@@ -1103,6 +1117,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         and generator_operator_version != DISCOVERY_OPERATOR_VERSION
         and generator_status in {
             "GENERATED_ZERO_CANDIDATES",
+            "GENERATED_PRE_F0_EVIDENCE_ACQUISITION",
             "GENERATED_AWAIT_PROBLEM_GATE",
             "SKIPPED_SOURCE_COVERAGE_SATURATED",
             "SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE",
@@ -1111,7 +1126,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
             "SKIPPED_STALE_PRIMARY_EVIDENCE",
         }
         and generator_policy.get("source_coverage_saturation_reopens_once_on_operator_change") is True
-        and generator_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator") is True
+        and ((generator_policy.get("search_portfolio_enabled") is True and generator_policy.get("one_content_addressed_pool_allows_at_most_one_discovery_transaction") is True) or (generator_policy.get("search_portfolio_enabled") is not True and generator_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator") is True))
         and generator_policy.get("source_coverage_saturation_operator_upgrade_recompile_is_explicit_exception") is True
     )
     current_generator_double_funnel = bool(
@@ -1384,6 +1399,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"paper-first-p0-f0", "pass":state["paper_first_p0_f0"]["summary"].get("ideas") == 4 and state["paper_first_p0_f0"]["summary"].get("quarantined") == 4 and state["paper_first_p0_f0"]["summary"].get("scientifically_authorized") == 0 and state["paper_first_p0_f0"]["summary"].get("method_fail_authorized") == 0 and state["paper_first_p0_f0"]["policy"].get("unauthorized_execution_is_preserved_as_diagnostic_not_scientific_authority") is True, "detail":state["paper_first_p0_f0"]["summary"]},
         {"key":"paper-first-premature-method-diagnostics", "pass":state["paper_first_premature_method_diagnostics"]["summary"].get("directions") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("completed_diagnostics") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("same_information_reducibility_findings") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("scientifically_authorized") == 0 and state["paper_first_premature_method_diagnostics"]["summary"].get("p0_lifecycle_mutations") == 0 and state["paper_first_premature_method_diagnostics"]["authority"].get("cannot_retroactively_authorize") is True, "detail":state["paper_first_premature_method_diagnostics"]["summary"]},
         {"key":"research-learning-loop", "pass":state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"] and state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"] and state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"] and state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"] and state["research_system_replay"]["summary"]["failed"] == 0 and state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"], "detail":{"meta":state["scientific_meta_trace"]["summary"],"failure_assets":state["failure_asset_library"]["summary"],"scheduler":state["experiment_value_scheduler"]["summary"],"replay":state["research_system_replay"]["summary"],"external":state["external_system_learning"]["summary"]}},
+        {"key":"research-memory-wiki", "pass":state["research_memory_wiki"].get("status")=="MEMORY_COMPILED" and state["research_memory_wiki"].get("scientific_authority") is False and int(((state["research_memory_wiki"].get("lint") or {}).get("summary") or {}).get("errors") or 0)==0 and (state["research_memory_wiki"].get("policy") or {}).get("transient_operational_noise_is_not_prompt_eligible") is True and (state["research_memory_wiki"].get("policy") or {}).get("query_pack_never_relaxes_downstream_gates") is True, "detail":{"summary":state["research_memory_wiki"].get("summary"),"lint":(state["research_memory_wiki"].get("lint") or {}).get("summary")}},
         {"key":"aris-harness-alignment", "pass":state["research_harness_assurance"].get("status")=="PASS_HARNESS_ASSURANCE" and int((state["research_harness_assurance"].get("summary") or {}).get("failed") or 0)==0 and state["research_candidate_portfolio"].get("scientific_authority") is False and int((state["research_candidate_portfolio"].get("summary") or {}).get("automatic_promotions") or 0)==0 and state["search_funnel_telemetry"].get("scientific_authority") is False and state["scientific_research_graph"].get("scientific_authority") is False and (state["scientific_research_graph"].get("policy") or {}).get("experiment_failure_edge_cannot_close_core_principle") is True, "detail":{"assurance":state["research_harness_assurance"].get("summary"),"portfolio":state["research_candidate_portfolio"].get("summary"),"funnel":state["search_funnel_telemetry"].get("summary"),"graph":state["scientific_research_graph"].get("summary")}},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
@@ -1524,6 +1540,7 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         and generator_operator_version != DISCOVERY_OPERATOR_VERSION
         and generator.get("status") in {
             "GENERATED_ZERO_CANDIDATES",
+            "GENERATED_PRE_F0_EVIDENCE_ACQUISITION",
             "GENERATED_AWAIT_PROBLEM_GATE",
             "SKIPPED_SOURCE_COVERAGE_SATURATED",
             "SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE",
@@ -1532,7 +1549,7 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             "SKIPPED_STALE_PRIMARY_EVIDENCE",
         }
         and generator_policy.get("source_coverage_saturation_reopens_once_on_operator_change") is True
-        and generator_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator") is True
+        and ((generator_policy.get("search_portfolio_enabled") is True and generator_policy.get("one_content_addressed_pool_allows_at_most_one_discovery_transaction") is True) or (generator_policy.get("search_portfolio_enabled") is not True and generator_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator") is True))
         and generator_policy.get("source_coverage_saturation_operator_upgrade_recompile_is_explicit_exception") is True
     )
     current_double_funnel_operator_ok=bool(
@@ -1931,6 +1948,10 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if not state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"]: errors.append("active scientific authority must never decay as memory")
     if not state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"]: errors.append("failure assets must be retrieved before new experiment design")
     if not state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"]: errors.append("institutional failure memory must track scope and reuse effectiveness")
+    memory_wiki=state.get("research_memory_wiki") or {};memory_policy=memory_wiki.get("policy") or {};memory_lint=memory_wiki.get("lint") or {};memory_summary=memory_wiki.get("summary") or {}
+    if memory_wiki.get("status")!="MEMORY_COMPILED" or memory_wiki.get("scientific_authority") is not False or int((memory_lint.get("summary") or {}).get("errors") or 0)!=0: errors.append("research memory wiki must compile with zero lint errors and zero scientific authority")
+    if memory_policy.get("wiki_is_compiled_from_canonical_artifacts_not_a_second_source_of_truth") is not True or memory_policy.get("transient_operational_noise_is_not_prompt_eligible") is not True or memory_policy.get("query_pack_never_relaxes_downstream_gates") is not True: errors.append("research memory wiki must remain a derived zero-authority query-pack layer")
+    if int(memory_summary.get("search_closures") or 0)+int(memory_summary.get("scientific_closures") or 0)!=len((((state.get("paper_first_search_portfolio_design_adjudication") or {}).get("shadow_search_memory") or {}).get("closed_objects") or [])): errors.append("research memory closure accounting must match canonical shadow search memory")
     if not state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"]: errors.append("experiment value scheduler must remain advisory")
     if state["research_system_replay"]["summary"].get("failed") != 0: errors.append("research-system replay benchmark has failing epistemic cases")
     if not state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"]: errors.append("external system designs require a local gap test before adoption")
@@ -2025,6 +2046,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_governance_state(PROJECT_ROOT / "generated" / "research-governance-v2.json", PROJECT_ROOT / "generated" / "research-governance-v2.js")
     errors=validate_state(state)
     if errors: raise ValueError("Invalid research system state:\n- " + "\n- ".join(errors))
+    write_research_memory_wiki(redact_private_paths(state["research_memory_wiki"],storage=StorageSettings.from_env()))
     public_state=redact_private_paths(state,storage=StorageSettings.from_env())
     json_path.parent.mkdir(parents=True, exist_ok=True)
     json_path.write_text(json.dumps(public_state, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")

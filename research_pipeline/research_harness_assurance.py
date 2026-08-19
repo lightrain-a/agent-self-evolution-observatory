@@ -9,7 +9,7 @@ ARIS_REFERENCE = {
     "name": "ARIS / Auto-Research-In-Sleep",
     "paper": "arXiv:2605.03042",
     "repository": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep",
-    "adopted_boundary": "Harness invariants only: breadth generation is separated from adjudication, execution completeness cannot self-acquit scientific quality, artifacts persist across stages, and effort is orthogonal to assurance. Local scientific gates remain authoritative.",
+    "adopted_boundary": "Harness invariants only: breadth generation is separated from adjudication, execution completeness cannot self-acquit scientific quality, artifacts persist across stages, failed/open/success research memory is compiled into bounded receipted query packs, and effort is orthogonal to assurance. Local scientific gates remain authoritative.",
 }
 
 EFFORT_PROFILES: dict[str, dict[str, Any]] = {
@@ -129,6 +129,18 @@ def build_research_harness_assurance(
             and len(EFFORT_PROFILES) >= 4
             and len(ASSURANCE_PROFILES) >= 4,
             {"effort_profiles": sorted(EFFORT_PROFILES), "assurance_profiles": sorted(ASSURANCE_PROFILES)},
+        ),
+        _check(
+            "research-memory-query-pack",
+            dp.get("research_memory_query_pack_required_before_generation") is True
+            and dp.get("research_memory_query_pack_is_zero_authority") is True
+            and dp.get("transient_operational_memory_excluded_from_generation") is True
+            and dp.get("research_memory_query_pack_receipt_required") is True
+            and gp.get("research_memory_query_pack_required_before_generation") is True
+            and gp.get("research_memory_query_pack_is_zero_authority") is True
+            and gp.get("transient_operational_memory_excluded_from_generation") is True
+            and gp.get("research_memory_query_pack_receipt_required") is True,
+            {"discovery_operator": dp.get("discovery_operator_version"), "query_pack_required": gp.get("research_memory_query_pack_required_before_generation")},
         ),
         _check(
             "meta-telemetry-zero-authority",

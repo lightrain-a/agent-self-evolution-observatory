@@ -43,6 +43,10 @@ POLICY={
  "automatic_method_training_forbidden":True,
  "second_backbone_forbidden":True,
  "hidden_outcome_retuning_forbidden":True,
+ "research_memory_query_pack_required_before_evidence_design":True,
+ "research_memory_query_pack_is_zero_authority":True,
+ "transient_operational_memory_excluded_from_evidence_design":True,
+ "research_memory_query_pack_receipt_required":True,
  "scientific_authority":False,
 }
 
@@ -102,11 +106,12 @@ def write_provisional_evidence_plan(*,run_root:Path,machine_audit:dict|None=None
  machine_audit=machine_audit or json.loads((run_root/"machine-audit.json").read_text(encoding="utf-8"));state=build_provisional_evidence_plan(machine_audit,run_id=run_root.name)
  (run_root/PLAN_FILENAME).write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return state
 
-def evidence_design_prompt(plan:dict,*,part:int=1,batch_size:int=2)->tuple[str,list[str]]:
+def evidence_design_prompt(plan:dict,*,part:int=1,batch_size:int=2,research_memory_query_pack:dict|None=None)->tuple[str,list[str]]:
  selected=[r for r in plan.get("entries") or [] if isinstance(r,dict) and r.get("design_selected") is True and r.get("status") in {"NEEDS_BOUNDED_EVIDENCE_DESIGN","BRANCH_REPAIR_READY"}]
  batch=selected[:batch_size]
  if not batch: raise ValueError(f"empty bounded-evidence design batch part={part}")
  compact=[{"candidate_id":r["candidate_id"],"title":r.get("title"),"exact_prediction":r.get("frozen_exact_prediction"),"strongest_same_information_baseline":r.get("frozen_same_information_baseline"),"falsifier_expression":r.get("frozen_falsifier_expression"),"prior_support":r.get("prior_support") or {},"blockers":r.get("blockers") or [],"tree_depth":int((r.get("tree") or {}).get("depth") or 0),"required_single_variable_repair":_b((r.get("branch_repair") or {}).get("changed_variable"),1800),"required_design_revision":_b(r.get("review_feedback"),1800)} for r in batch]
+ memory_pack=research_memory_query_pack or {"purpose":"EXPERIMENT_DESIGN","selected_memory_ids":[],"text":"","scientific_authority":False}
  prompt=f'''You design bounded scientific evidence acquisition for REDUCTION-PENDING paper problems. This is exploration only, not novelty certification and not method design.
 
 For each candidate produce exactly one cheapest discriminating contract. New FIRST-PARTY evidence is allowed when the phenomenon can be independently reproduced. prior_support records the old source-asset audit: it is context, not an automatic veto. You must explicitly avoid substituting a synthetic proxy when prior_support says the frozen unit depends on source-specific provenance, latent state, lineage, hidden trace, or unreleased exact arms. Do not require an author release merely because the original paper did not expose the needed unit. If the claim is inherently about an unreleased source-specific unit and first-party reproduction would change the scientific object, use SOURCE_SPECIFIC_REQUIRED + PRIMARY_ASSET_REUSE.
@@ -121,7 +126,10 @@ Hard rules:
 - An INCONCLUSIVE repair is optional. If you provide one, name exactly one changed variable; leaving it empty means stop/hold on INCONCLUSIVE. If required_single_variable_repair is nonempty, the new branch must change exactly that variable and preserve every other frozen element.
 - If required_design_revision is nonempty, revise only the evidence contract defect named there; do not change the frozen scientific question, prediction, baseline, or falsifier.
 - Caps: max_units<={MAX_UNITS}, max_wall_minutes<={MAX_WALL_MIN}, max_gpu_hours<={MAX_GPU_HOURS}, max_model_calls<={MAX_MODEL_CALLS}.
+- HISTORICAL RESEARCH MEMORY is mandatory context. Read every selected item. FAILURE_ASSET supplies a reusable precheck, never a scientific veto; HOLD is reopenable; SUCCESS_ASSET is scope-bound. Do not repeat a recorded failure mode without satisfying its precheck or explaining why the scope differs.
 Allowed acquisition_mode={sorted(MODES)}; source_specificity={sorted(SOURCE_MODES)}. Do not choose a concrete execution adapter: the compiler maps PRIMARY_ASSET_REUSE to PRIMARY_ASSET_ONLY and every first-party mode to SUBSTRATE_PREFLIGHT_REQUIRED.
+
+HISTORICAL_RESEARCH_MEMORY={json.dumps(memory_pack,ensure_ascii=False,separators=(",",":"))}
 
 Return JSON only: {{"designs":[{{"candidate_id":"...","changed_variable":"","source_specificity":"...","acquisition_mode":"...","reproduction_target":"...","independent_truth":"...","causal_unit":"...","observable":"...","intervention":"...","same_information_lock":"...","matched_baseline_execution":"...","anti_bake_in_controls":["...","...","..."],"decision_criteria":{{"baseline_reduction_supported":"criterion under which the strongest same-information baseline explains the frozen prediction and the candidate should STOP","candidate_residual_survives":"criterion under which a distinguishing residual remains after the strongest baseline and the candidate returns to semantic/current-source review","inconclusive":"criterion for no valid separation"}},"single_variable_repair_if_inconclusive":"","adapter_intent":"brief description of the runtime you expect","budget":{{"max_units":1,"max_wall_minutes":1,"max_gpu_hours":0.0,"max_model_calls":0}}}}]}}
 CANDIDATES={json.dumps(compact,ensure_ascii=False,separators=(",",":"))}'''
@@ -191,10 +199,11 @@ def compile_evidence_designs(plan:dict,payload:dict,*,part:int=1,design_model:st
  out["status"]=_plan_status(entries)
  return out
 
-def operationalization_recompile_prompt(plan:dict,*,part:int=1,batch_size:int=2)->tuple[str,list[str]]:
+def operationalization_recompile_prompt(plan:dict,*,part:int=1,batch_size:int=2,research_memory_query_pack:dict|None=None)->tuple[str,list[str]]:
  rows=[r for r in plan.get("entries") or [] if isinstance(r,dict) and r.get("status")=="NEEDS_OPERATIONALIZATION_RECOMPILE"][:batch_size]
  if not rows:raise ValueError(f"empty operationalization-recompile batch part={part}")
  compact=[{"candidate_id":r.get("candidate_id"),"title":r.get("title"),"frozen_irreducible_object":r.get("frozen_irreducible_object"),"frozen_exact_prediction":r.get("frozen_exact_prediction"),"frozen_same_information_baseline":r.get("frozen_same_information_baseline"),"frozen_falsifier_expression":r.get("frozen_falsifier_expression"),"frozen_endpoint_headroom_requirement":r.get("frozen_endpoint_headroom_requirement"),"prior_support":r.get("prior_support") or {},"source_specific_design":r.get("source_specific_design") or r.get("design") or {}} for r in rows]
+ memory_pack=research_memory_query_pack or {"purpose":"EXPERIMENT_DESIGN","selected_memory_ids":[],"text":"","scientific_authority":False}
  prompt=f'''You are recompiling only the OPERATIONALIZATION of a reduction falsifier whose first attempt depended on unavailable author/source assets. This is not permission to change the paper problem.
 
 Immutable compiler-owned fields: irreducible scientific object, exact prediction, strongest same-information baseline, and endpoint headroom requirement. You may change only how new evidence is instantiated and measured.
@@ -214,6 +223,9 @@ RECOMPILED_FIRST_PARTY requirements:
 7. Stay within caps: units<={MAX_UNITS}, wall<={MAX_WALL_MIN} min, GPU<={MAX_GPU_HOURS} h, model calls<={MAX_MODEL_CALLS}.
 8. No proposed-method training, second backbone, hidden-outcome tuning, or paper-scale search.
 9. The output design must use source_specificity=REPRODUCIBLE_FIRST_PARTY and a non-PRIMARY_ASSET_REUSE acquisition mode.
+10. Read HISTORICAL RESEARCH MEMORY before recompiling. Reuse relevant prechecks, but historical failure cannot replace the current equivalence test and historical success cannot authorize transport.
+
+HISTORICAL_RESEARCH_MEMORY={json.dumps(memory_pack,ensure_ascii=False,separators=(",",":"))}
 
 Return JSON only: {{"recompiles":[{{"candidate_id":"...","verdict":"RECOMPILED_FIRST_PARTY|INTRINSIC_SOURCE_SPECIFIC|BLOCK_NO_EQUIVALENT_OPERATIONALIZATION","reason":"...","scientific_object_invariants":["...","...","...","..."],"source_specific_dependencies_removed":["..."],"why_dependencies_are_not_scientific_object":"...","transport_scope":"...","equivalence_probe":"...","equivalence_failure_action":"return to source-specific wait","design":{{"candidate_id":"...","changed_variable":"operationalization only","source_specificity":"REPRODUCIBLE_FIRST_PARTY","acquisition_mode":"FIRST_PARTY_REPLAY|FIRST_PARTY_SANDBOX|FIRST_PARTY_ROLLOUT|FIRST_PARTY_SIMULATION","reproduction_target":"...","independent_truth":"...","causal_unit":"...","observable":"...","intervention":"...","same_information_lock":"...","matched_baseline_execution":"...","anti_bake_in_controls":["...","...","..."],"decision_criteria":{{"baseline_reduction_supported":"...","candidate_residual_survives":"...","inconclusive":"..."}},"single_variable_repair_if_inconclusive":"","adapter_intent":"brief description of expected runtime","budget":{{"max_units":1,"max_wall_minutes":1,"max_gpu_hours":0.0,"max_model_calls":0}}}}}}]}}
 CANDIDATES={json.dumps(compact,ensure_ascii=False,separators=(",",":"))}'''

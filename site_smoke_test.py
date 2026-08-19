@@ -68,6 +68,7 @@ REQUIRED_STATIC = [
     "content-system-overview.js", "system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-reader.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js", "system-overview.css", "system-overview-v2.css",
     "idea-lab.css",
     "current-research-status-view.js", "generated/current-research-status.json", "generated/current-research-status.js",
+    "generated/research-memory-wiki.json", "generated/research-memory-wiki.js",
     "generated/p0-experiment-plan.js", "generated/p0-collision-recheck.js", "generated/p0-runtime-readiness.js",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
@@ -84,6 +85,14 @@ def main() -> None:
 
     current_status = json.loads((ROOT / "generated" / "current-research-status.json").read_text(encoding="utf-8"))
     research_system = json.loads((ROOT / "generated" / "research-system-state.json").read_text(encoding="utf-8"))
+    research_memory = json.loads((ROOT / "generated" / "research-memory-wiki.json").read_text(encoding="utf-8"))
+    embedded_memory = research_system.get("research_memory_wiki") or {}
+    if research_memory.get("wiki_sha256") != embedded_memory.get("wiki_sha256") or (research_memory.get("summary") or {}) != (embedded_memory.get("summary") or {}) or (research_memory.get("lint") or {}) != (embedded_memory.get("lint") or {}):
+        fail("research memory wiki is stale versus embedded research-system state")
+    if research_memory.get("scientific_authority") is not False or int(((research_memory.get("lint") or {}).get("summary") or {}).get("errors") or 0) != 0:
+        fail("research memory wiki must remain zero-authority with zero hard lint errors")
+    if any(row.get("durability_class") == "transient" and row.get("prompt_eligible") is True for row in research_memory.get("entries") or [] if isinstance(row, dict)):
+        fail("transient operational memory cannot enter research query packs")
     durable_shadow_admission = json.loads((ROOT / "generated" / "paper-first-shadow-search-admission.json").read_text(encoding="utf-8"))
     embedded_shadow_admission = research_system.get("paper_first_shadow_search_admission") or {}
     durable_summary = durable_shadow_admission.get("summary") or {}

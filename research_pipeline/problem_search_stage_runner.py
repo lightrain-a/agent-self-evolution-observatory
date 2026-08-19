@@ -11,6 +11,7 @@ from .paper_first_problem_discovery_contract import SEARCH_PORTFOLIO_PRIMITIVES,
 from .paper_first_problem_generator import _ark,_apply_reviews,_normalize
 from .paper_first_problem_generator_prompts import reviewer_prompt
 from .premium_model_policy import PREMIUM_AUTO, preferred_model
+from .research_memory_wiki import compile_research_memory_query_pack, load_research_memory_wiki
 from .paper_first_problem_falsifier_preflight import write_problem_falsifier_preflight,write_support_inventory_request
 from .paper_first_evidence_acquisition import (
     PLAN_FILENAME as EVIDENCE_PLAN_FILENAME,
@@ -36,6 +37,16 @@ from .paper_first_problem_search_portfolio import (
 
 DEFAULT_SHADOW_SEARCH_MEMORY_PATH=PROJECT_ROOT/"generated"/"paper-first-search-portfolio-design-adjudication.json"
 DEFAULT_SHADOW_DEAD_END_MEMORY_PATH=DEFAULT_SHADOW_SEARCH_MEMORY_PATH  # legacy import alias
+
+
+def _evidence_memory_pack(plan:dict)->dict:
+    rows=[r for r in plan.get("entries") or [] if isinstance(r,dict) and r.get("design_selected") is True]
+    context=[{k:r.get(k) for k in ("candidate_id","title","discovery_lane","source_refs","frozen_irreducible_object","frozen_exact_prediction","frozen_same_information_baseline","blockers")} for r in rows[:4]]
+    return compile_research_memory_query_pack(load_research_memory_wiki(),purpose="EXPERIMENT_DESIGN",context=context)
+
+
+def _record_memory_receipt(state:dict,*,stage:str,part:int,pack:dict)->None:
+    receipts=state.setdefault("research_memory_query_receipts",{});receipts[f"{stage}-p{part}"]={"purpose":pack.get("purpose"),"wiki_sha256":pack.get("wiki_sha256"),"query_pack_sha256":pack.get("query_pack_sha256"),"selected_memory_ids":list(pack.get("selected_memory_ids") or []),"selected":int((pack.get("summary") or {}).get("selected") or 0),"scientific_authority":False}
 
 
 def _resolve_run_pool(run_root:Path,pool_path:Path|None=None)->Path|None:
@@ -629,11 +640,11 @@ def evidence_design(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,mod
         plan=build_provisional_evidence_plan(machine,run_id=run_root.name);plan["control_snapshot_sha256"]=control_sha;plan_path.write_text(json.dumps(plan,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     plan=json.loads(plan_path.read_text(encoding="utf-8"))
     if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
-    prompt,candidate_ids=evidence_design_prompt(plan,part=part,batch_size=batch_size)
-    res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-design-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=0.0)
+    memory_pack=_evidence_memory_pack(plan);prompt,candidate_ids=evidence_design_prompt(plan,part=part,batch_size=batch_size,research_memory_query_pack=memory_pack)
+    res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-design-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha,"research_memory_query_pack_sha256":memory_pack.get("query_pack_sha256"),"research_memory_selected_ids":memory_pack.get("selected_memory_ids") or []},prompt=prompt,max_output_tokens=5200,temperature=0.0)
     raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_evidence_design_json(run_root,f"evidence-design-p{part}",raw,resolved)
-    state=compile_evidence_designs(plan,payload,part=part,design_model=resolved);state["control_snapshot_sha256"]=control_sha;plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":candidate_ids,"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"designs":payload.get("designs") or [],"plan_summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+    state=compile_evidence_designs(plan,payload,part=part,design_model=resolved);state["control_snapshot_sha256"]=control_sha;_record_memory_receipt(state,stage="evidence-design",part=part,pack=memory_pack);plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":candidate_ids,"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"research_memory_query_pack_sha256":memory_pack.get("query_pack_sha256"),"research_memory_selected_ids":memory_pack.get("selected_memory_ids") or [],"designs":payload.get("designs") or [],"plan_summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
     (run_root/f"evidence-design-p{part}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {"part":part,"candidate_ids":candidate_ids,"resolved_model":resolved,"raw_sha256":sha,"summary":state.get("summary") or {},"scientific_authority":False}
 
@@ -642,9 +653,9 @@ def evidence_operationalization_recompile(*,run_root:Path,part:int,batch_size:in
     model=preferred_model("evidence_recompile",model)
     control_sha=_assert_run_control(run_root);plan_path=run_root/EVIDENCE_PLAN_FILENAME;plan=json.loads(plan_path.read_text(encoding="utf-8"))
     if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
-    prompt,candidate_ids=operationalization_recompile_prompt(plan,part=part,batch_size=batch_size);res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-recompile-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5600,temperature=0.0)
-    raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_evidence_design_json(run_root,f"evidence-recompile-p{part}",raw,resolved);state=compile_operationalization_recompiles(plan,payload,part=part,recompiler_model=resolved);state["control_snapshot_sha256"]=control_sha;plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":candidate_ids,"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"recompiles":payload.get("recompiles") or [],"plan_summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+    memory_pack=_evidence_memory_pack(plan);prompt,candidate_ids=operationalization_recompile_prompt(plan,part=part,batch_size=batch_size,research_memory_query_pack=memory_pack);res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-recompile-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha,"research_memory_query_pack_sha256":memory_pack.get("query_pack_sha256"),"research_memory_selected_ids":memory_pack.get("selected_memory_ids") or []},prompt=prompt,max_output_tokens=5600,temperature=0.0)
+    raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_evidence_design_json(run_root,f"evidence-recompile-p{part}",raw,resolved);state=compile_operationalization_recompiles(plan,payload,part=part,recompiler_model=resolved);state["control_snapshot_sha256"]=control_sha;_record_memory_receipt(state,stage="evidence-recompile",part=part,pack=memory_pack);plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":candidate_ids,"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"research_memory_query_pack_sha256":memory_pack.get("query_pack_sha256"),"research_memory_selected_ids":memory_pack.get("selected_memory_ids") or [],"recompiles":payload.get("recompiles") or [],"plan_summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
     (run_root/f"evidence-recompile-p{part}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return {"part":part,"candidate_ids":candidate_ids,"resolved_model":resolved,"raw_sha256":sha,"summary":state.get("summary") or {},"scientific_authority":False}
 
 
