@@ -321,6 +321,26 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
         self.assertEqual(result["content"], raw)
         self.assertEqual(result["transport_tls_mode"], "tls1.2-fallback")
 
+    def test_official_hf_request_uses_curl_fallback_without_changing_frozen_url(self) -> None:
+        expected_url = f"https://huggingface.co/api/models/{R9_AGENT_MODEL_ID}/revision/{R9_AGENT_MODEL_REVISION}?blobs=true"
+        raw = b'{"ok":true}'
+        stdout = raw + b"\n__R9_CURL_META__:200|" + expected_url.encode()
+        completed = harness_module.subprocess.CompletedProcess(args=["curl"], returncode=0, stdout=stdout, stderr=b"")
+
+        with mock.patch.object(harness_module.urllib.request, "urlopen", side_effect=OSError("simulated TLS reset")), \
+             mock.patch.object(harness_module.shutil, "which", return_value="/usr/bin/curl"), \
+             mock.patch.object(harness_module.subprocess, "run", return_value=completed) as run_mock:
+            result = harness_module._request_official_hf_exact_revision(expected_url)
+
+        command = run_mock.call_args.args[0]
+        self.assertIn(expected_url, command)
+        self.assertIn("--http1.1", command)
+        self.assertIn("--tlsv1.2", command)
+        self.assertEqual(result["status"], 200)
+        self.assertEqual(result["final_url"], expected_url)
+        self.assertEqual(result["content"], raw)
+        self.assertEqual(result["transport_tls_mode"], "curl-http1.1-tls1.2-fallback")
+
     def test_provenance_preparer_uses_literal_official_hf_and_stages_only_source_verified_cache(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td); model_dir=root/"model"; cache=root/"cache"; model_dir.mkdir(); cache.mkdir()

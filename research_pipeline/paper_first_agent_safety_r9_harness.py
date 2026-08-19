@@ -379,6 +379,64 @@ def _hf_revision_api_url(model_id: str, revision: str) -> str:
     return f"https://huggingface.co/api/models/{model_id}/revision/{revision}?blobs=true"
 
 
+def _request_official_hf_exact_revision_with_curl(url: str) -> dict[str, Any]:
+    curl = shutil.which("curl")
+    if not curl:
+        raise RuntimeError("official HF curl fallback is unavailable")
+    marker = b"\n__R9_CURL_META__:"
+    last_error = ""
+    for _ in range(3):
+        try:
+            result = subprocess.run(
+                [
+                    curl,
+                    "-4",
+                    "--http1.1",
+                    "--tlsv1.2",
+                    "--tls-max",
+                    "1.2",
+                    "-L",
+                    "--connect-timeout",
+                    "8",
+                    "--max-time",
+                    "40",
+                    "-sS",
+                    "-o",
+                    "-",
+                    "-w",
+                    "\n__R9_CURL_META__:%{http_code}|%{url_effective}",
+                    url,
+                ],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=False,
+                timeout=50,
+            )
+        except subprocess.TimeoutExpired as error:
+            last_error = f"curl-timeout:{error}"
+            continue
+        if result.returncode != 0:
+            last_error = result.stderr.decode("utf-8", errors="replace").strip()
+            continue
+        raw, separator, metadata = result.stdout.rpartition(marker)
+        if not separator:
+            last_error = "curl-write-out-marker-missing"
+            continue
+        try:
+            status_text, final_url = metadata.decode("utf-8").split("|", 1)
+            status = int(status_text)
+        except (UnicodeDecodeError, ValueError):
+            last_error = "curl-write-out-metadata-invalid"
+            continue
+        return {
+            "status": status,
+            "final_url": final_url.strip(),
+            "content": raw,
+            "transport_tls_mode": "curl-http1.1-tls1.2-fallback",
+        }
+    raise RuntimeError("official HF curl fallback failed:" + last_error)
+
+
 def _request_official_hf_exact_revision(url: str) -> dict[str, Any]:
     request = urllib.request.Request(url, headers={"User-Agent": "Agent-Self-Evolution-Observatory/R9-HF-Provenance"})
     try:
@@ -387,20 +445,20 @@ def _request_official_hf_exact_revision(url: str) -> dict[str, Any]:
             final_url = str(response.geturl() or "")
             raw = response.read()
         return {"status": status, "final_url": final_url, "content": raw, "transport_tls_mode": "default"}
-    except OSError as default_error:
+    except OSError:
         context = ssl.create_default_context()
-        if not hasattr(ssl, "TLSVersion"):
-            raise RuntimeError("official HF exact-revision request failed and TLS1.2 fallback is unavailable") from default_error
-        context.minimum_version = ssl.TLSVersion.TLSv1_2
-        context.maximum_version = ssl.TLSVersion.TLSv1_2
-        try:
-            with urllib.request.urlopen(request, timeout=20, context=context) as response:
-                status = int(getattr(response, "status", 0) or response.getcode() or 0)
-                final_url = str(response.geturl() or "")
-                raw = response.read()
-            return {"status": status, "final_url": final_url, "content": raw, "transport_tls_mode": "tls1.2-fallback"}
-        except OSError as fallback_error:
-            raise RuntimeError("official HF exact-revision request failed under default TLS and TLS1.2 fallback") from fallback_error
+        if hasattr(ssl, "TLSVersion"):
+            context.minimum_version = ssl.TLSVersion.TLSv1_2
+            context.maximum_version = ssl.TLSVersion.TLSv1_2
+            try:
+                with urllib.request.urlopen(request, timeout=20, context=context) as response:
+                    status = int(getattr(response, "status", 0) or response.getcode() or 0)
+                    final_url = str(response.geturl() or "")
+                    raw = response.read()
+                return {"status": status, "final_url": final_url, "content": raw, "transport_tls_mode": "tls1.2-fallback"}
+            except OSError:
+                pass
+        return _request_official_hf_exact_revision_with_curl(url)
 
 
 def _source_identity_matches_file(path: Path, source_item: dict[str, Any]) -> tuple[bool, str, str]:
