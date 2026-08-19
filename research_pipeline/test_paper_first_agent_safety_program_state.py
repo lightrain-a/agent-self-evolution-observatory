@@ -154,6 +154,34 @@ class AgentSafetyProgramStateTest(unittest.TestCase):
         }), encoding="utf-8")
         return harness_manifest, runtime_gate
 
+    def write_support_stop_qualification(self, root: Path) -> Path:
+        path = root / "qualification-support-stop.json"
+        path.write_text(json.dumps({
+            "status": "STOP_SUPPORT_ZERO_CURRENTLY_SAFE_FROZEN_STATES",
+            "stop_class": "SUPPORT_STOP",
+            "candidate_id": CANDIDATE_ID,
+            "contract_sha256": CONTRACT_SHA256,
+            "protocol_valid": True,
+            "principle_dead_end_certified": False,
+            "principle_falsified": False,
+            "scientific_authority": False,
+            "qualification": {
+                "state_count": 4,
+                "probes_per_state": 3,
+                "episode_count": 12,
+                "agent_model_calls": 48,
+                "agent_call_cap": 48,
+                "classifier_evaluations": 12,
+                "empty_classifier_input_count": 5,
+                "qualified_state_count": 0,
+                "replacement_state_allowed": False,
+                "heldout_future_executed": False,
+            },
+            "interpretation": "zero currently-safe support in the frozen realization",
+            "next_legal_step": "diagnose support without using qualification outcomes for within-run replacement",
+        }), encoding="utf-8")
+        return path
+
     def test_public_projection_keeps_science_and_execution_locked(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             r9, canonical, smoke = self.fixture_r9(Path(td))
@@ -300,6 +328,35 @@ class AgentSafetyProgramStateTest(unittest.TestCase):
             self.assertTrue(state["authority"]["qualification_probe_execution"])
             self.assertEqual(state["runtime"]["provenance_receipt_class"], R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS)
             self.assertEqual(state["runtime"]["official_metadata_transport"], "DIRECT_LITERAL_HUGGINGFACE")
+
+    def test_support_stop_after_qualification_revokes_execution_but_preserves_runtime_ready(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            r9, canonical, smoke = self.fixture_r9(root)
+            harness_manifest, runtime_gate = self.promote_runtime_ready(r9, root)
+            qualification = self.write_support_stop_qualification(root)
+            state = build_agent_safety_program_state(
+                r9_root=r9,
+                canonical_primary_state_path=canonical,
+                harness_smoke_path=smoke,
+                harness_manifest_path=harness_manifest,
+                runtime_asset_gate_path=runtime_gate,
+                qualification_result_path=qualification,
+            )
+            self.assertEqual(validate_agent_safety_program_state(state), [])
+            self.assertEqual(state["current_stage"], "CURRENT_SAFETY_SUPPORT_STOP")
+            self.assertEqual(state["candidate_stage"], "STOP_SUPPORT_ZERO_CURRENTLY_SAFE_FROZEN_STATES")
+            self.assertEqual(state["runtime"]["status"], "READY_RUNTIME_MODEL_ASSETS_PINNED")
+            self.assertTrue(state["runtime"]["execution_authorized"])
+            self.assertTrue(state["runtime"]["outcome_bearing_science_started"])
+            self.assertEqual(state["qualification"]["stop_class"], "SUPPORT_STOP")
+            self.assertEqual(state["qualification"]["qualified_state_count"], 0)
+            self.assertFalse(state["qualification"]["principle_dead_end_certified"])
+            self.assertFalse(state["execution_authorized"])
+            self.assertFalse(state["authority"]["bounded_evidence_acquisition"])
+            self.assertFalse(state["authority"]["qualification_probe_execution"])
+            self.assertFalse(state["authority"]["heldout_future_probe_execution"])
+            self.assertEqual(state["next_gate"]["name"], "FRESH_SUPPORT_REALIZATION_DIAGNOSIS")
 
     def test_public_validator_rejects_ready_without_formal_receipt_authority(self) -> None:
         with tempfile.TemporaryDirectory() as td:
