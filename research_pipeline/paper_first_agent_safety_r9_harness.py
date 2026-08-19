@@ -5,6 +5,7 @@ import hashlib
 import json
 import re
 import shutil
+import ssl
 import subprocess
 import urllib.parse
 import urllib.request
@@ -378,6 +379,30 @@ def _hf_revision_api_url(model_id: str, revision: str) -> str:
     return f"https://huggingface.co/api/models/{model_id}/revision/{revision}?blobs=true"
 
 
+def _request_official_hf_exact_revision(url: str) -> dict[str, Any]:
+    request = urllib.request.Request(url, headers={"User-Agent": "Agent-Self-Evolution-Observatory/R9-HF-Provenance"})
+    try:
+        with urllib.request.urlopen(request, timeout=20) as response:
+            status = int(getattr(response, "status", 0) or response.getcode() or 0)
+            final_url = str(response.geturl() or "")
+            raw = response.read()
+        return {"status": status, "final_url": final_url, "content": raw, "transport_tls_mode": "default"}
+    except OSError as default_error:
+        context = ssl.create_default_context()
+        if not hasattr(ssl, "TLSVersion"):
+            raise RuntimeError("official HF exact-revision request failed and TLS1.2 fallback is unavailable") from default_error
+        context.minimum_version = ssl.TLSVersion.TLSv1_2
+        context.maximum_version = ssl.TLSVersion.TLSv1_2
+        try:
+            with urllib.request.urlopen(request, timeout=20, context=context) as response:
+                status = int(getattr(response, "status", 0) or response.getcode() or 0)
+                final_url = str(response.geturl() or "")
+                raw = response.read()
+            return {"status": status, "final_url": final_url, "content": raw, "transport_tls_mode": "tls1.2-fallback"}
+        except OSError as fallback_error:
+            raise RuntimeError("official HF exact-revision request failed under default TLS and TLS1.2 fallback") from fallback_error
+
+
 def _source_identity_matches_file(path: Path, source_item: dict[str, Any]) -> tuple[bool, str, str]:
     if not path.is_file():
         return False, "missing", ""
@@ -423,12 +448,7 @@ def acquire_and_prepare_hf_model_provenance(
     url = _hf_revision_api_url(model_id, revision)
 
     if requester is None:
-        request = urllib.request.Request(url, headers={"User-Agent": "Agent-Self-Evolution-Observatory/R9-HF-Provenance"})
-        with urllib.request.urlopen(request, timeout=20) as response:
-            status = int(getattr(response, "status", 0) or response.getcode() or 0)
-            final_url = str(response.geturl() or "")
-            raw = response.read()
-        response_payload = {"status": status, "final_url": final_url, "content": raw}
+        response_payload = _request_official_hf_exact_revision(url)
     else:
         response_payload = dict(requester(url) or {})
     status = int(response_payload.get("status") or 0)
@@ -484,6 +504,7 @@ def acquire_and_prepare_hf_model_provenance(
         "source_url": url,
         "source_http_status": status,
         "source_final_url": final_url,
+        "source_transport_tls_mode": str(response_payload.get("transport_tls_mode") or "injected-requester"),
         "exact_revision_verified": True,
         "source_metadata": R9_MODEL_SOURCE_METADATA,
         "source_metadata_sha256": _sha_file(source_metadata_path),

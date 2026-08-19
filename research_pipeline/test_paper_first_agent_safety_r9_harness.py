@@ -5,7 +5,9 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
+from . import paper_first_agent_safety_r9_harness as harness_module
 from .paper_first_agent_safety_r9_harness import (
     AWM_REQUIRED_FILES,
     BROWSERART_REQUIRED_FILES,
@@ -275,6 +277,49 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
         self.assertFalse(bad["protocol_valid"])
         self.assertFalse(bad["cap_relaxation_allowed"])
 
+
+    def test_official_hf_request_retries_tls12_without_changing_frozen_url(self) -> None:
+        expected_url = f"https://huggingface.co/api/models/{R9_AGENT_MODEL_ID}/revision/{R9_AGENT_MODEL_REVISION}?blobs=true"
+        raw = b'{"ok":true}'
+
+        class FakeResponse:
+            status = 200
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc, tb):
+                return False
+
+            def getcode(self):
+                return 200
+
+            def geturl(self):
+                return expected_url
+
+            def read(self):
+                return raw
+
+        calls = []
+
+        def fake_urlopen(request, timeout=0, **kwargs):
+            calls.append({"url": request.full_url, "timeout": timeout, "context": kwargs.get("context")})
+            if len(calls) == 1:
+                raise OSError("simulated default TLS reset")
+            return FakeResponse()
+
+        with mock.patch.object(harness_module.urllib.request, "urlopen", side_effect=fake_urlopen):
+            result = harness_module._request_official_hf_exact_revision(expected_url)
+
+        self.assertEqual([row["url"] for row in calls], [expected_url, expected_url])
+        self.assertIsNone(calls[0]["context"])
+        self.assertIsNotNone(calls[1]["context"])
+        self.assertEqual(calls[1]["context"].minimum_version, harness_module.ssl.TLSVersion.TLSv1_2)
+        self.assertEqual(calls[1]["context"].maximum_version, harness_module.ssl.TLSVersion.TLSv1_2)
+        self.assertEqual(result["status"], 200)
+        self.assertEqual(result["final_url"], expected_url)
+        self.assertEqual(result["content"], raw)
+        self.assertEqual(result["transport_tls_mode"], "tls1.2-fallback")
 
     def test_provenance_preparer_uses_literal_official_hf_and_stages_only_source_verified_cache(self) -> None:
         with tempfile.TemporaryDirectory() as td:
