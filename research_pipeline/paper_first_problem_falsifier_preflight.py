@@ -7,6 +7,7 @@ import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 from .config import PROJECT_ROOT
 from .paper_first_pre_f0_queue import load_pre_f0_queue
@@ -19,6 +20,7 @@ PRE_F0_PREFLIGHT_JSON=PROJECT_ROOT/"generated"/"paper-first-pre-f0-problem-falsi
 ALLOWED_DISPOSITIONS = {"SUPPORT_QUALIFIED", "HOLD_SUPPORT_UNAVAILABLE"}
 SUPPORT_MODES = {"RELEASED_UNITS", "FIRST_PARTY_CODE_RECONSTRUCTION", "EXISTING_PROVENANCE_SUBSTRATE"}
 RECONSTRUCTED_SUPPORT_MODES = {"FIRST_PARTY_CODE_RECONSTRUCTION", "EXISTING_PROVENANCE_SUBSTRATE"}
+RELEASE_WATCH_KINDS = {"FIRST_PARTY_REPOSITORY"}
 AUTHORITY = {
     "canonical_generator": False,
     "canonical_problem_gate": False,
@@ -78,6 +80,65 @@ def _sha(path: Path) -> str:
 
 def _bounded(value: Any, limit: int = 1800) -> str:
     return " ".join(str(value or "").split())[:limit]
+
+
+def _normalized_repo_url(value: Any) -> str:
+    url = str(value or "").strip().rstrip("/.,;:)]}")
+    if url.endswith(".git"):
+        url = url[:-4]
+    return url.rstrip("/")
+
+
+def _validated_release_watch_targets(
+    receipt: dict[str, Any],
+    request_refs: set[str],
+    *,
+    candidate_id: str,
+    support_audit_payload: dict[str, Any] | None,
+) -> list[dict[str, Any]]:
+    targets = receipt.get("release_watch_targets") or []
+    if not isinstance(targets, list):
+        raise ValueError(f"release_watch_targets must be a list: {candidate_id}")
+    if targets and support_audit_payload is None:
+        raise ValueError(f"release watch targets require a durable support audit: {candidate_id}")
+    official_repo = _normalized_repo_url((support_audit_payload or {}).get("official_repo"))
+    official_revision = str(
+        (support_audit_payload or {}).get("origin_main_head")
+        or (support_audit_payload or {}).get("official_commit")
+        or ""
+    ).strip().lower()
+    out: list[dict[str, Any]] = []
+    seen: set[tuple[str, str]] = set()
+    for row in targets:
+        if not isinstance(row, dict):
+            raise ValueError(f"release_watch_targets rows must be objects: {candidate_id}")
+        source_ref = str(row.get("source_ref") or "").strip()
+        url = _normalized_repo_url(row.get("url"))
+        kind = str(row.get("declaration_kind") or "").strip().upper()
+        revision = str(row.get("baseline_revision") or "").strip().lower()
+        parsed = urlparse(url)
+        parts = [part for part in parsed.path.strip("/").split("/") if part]
+        endpoint_ok = parsed.scheme in {"http", "https"} and parsed.netloc.lower() == "github.com" and len(parts) == 2
+        if source_ref not in request_refs or kind not in RELEASE_WATCH_KINDS or not endpoint_ok or row.get("scientific_authority") is not False:
+            raise ValueError(f"invalid first-party release watch target: {candidate_id}")
+        if not re.fullmatch(r"[0-9a-f]{40}", revision):
+            raise ValueError(f"release watch baseline revision must be a full git sha: {candidate_id}")
+        if official_repo and url != official_repo:
+            raise ValueError(f"release watch target does not match audited official repo: {candidate_id}")
+        if official_revision and revision != official_revision:
+            raise ValueError(f"release watch baseline revision does not match audited repo revision: {candidate_id}")
+        key = (source_ref, url)
+        if key in seen:
+            raise ValueError(f"duplicate release watch target: {candidate_id}")
+        seen.add(key)
+        out.append({
+            "source_ref": source_ref,
+            "url": url,
+            "declaration_kind": kind,
+            "baseline_revision": revision,
+            "scientific_authority": False,
+        })
+    return out
 
 
 def _candidate_index(machine: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -243,9 +304,34 @@ def _validate_receipt_row(request: dict[str, Any], receipt: dict[str, Any]) -> d
             raise ValueError(f"support HOLD requires reopen condition: {candidate_id}")
         if support_audit_payload is not None and _bounded(support_audit_payload.get("reopen_only_if"), 1800) != reopen:
             raise ValueError(f"support audit reopen contract mismatch: {candidate_id}")
+        release_targets = _validated_release_watch_targets(
+            receipt,
+            request_refs,
+            candidate_id=candidate_id,
+            support_audit_payload=support_audit_payload,
+        )
+        bounded_design_allowed = receipt.get("bounded_first_party_evidence_design_allowed", True)
+        if not isinstance(bounded_design_allowed, bool):
+            raise ValueError(f"bounded evidence design flag must be boolean: {candidate_id}")
+        if bounded_design_allowed is False:
+            audit_policy = (support_audit_payload or {}).get("policy") or {}
+            if (
+                audit_policy.get("wrapper_or_validator_modification_cannot_clear_same_substrate_hold") is not True
+                or audit_policy.get("release_change_requires_reaudit_before_clearing_hold") is not True
+                or not release_targets
+            ):
+                raise ValueError(f"release-change-only HOLD requires audited immutable-substrate blocker and watch target: {candidate_id}")
         out["reopen_only_if"] = reopen
-        out["bounded_first_party_evidence_design_allowed"] = True
-        out["next_route"] = "BOUNDED_EVIDENCE_DESIGN_OR_WAIT_PRIMARY_ASSET"
+        if release_targets:
+            out["release_watch_targets"] = release_targets
+        out["bounded_first_party_evidence_design_allowed"] = bounded_design_allowed
+        out["next_route"] = (
+            "BOUNDED_EVIDENCE_DESIGN_OR_WAIT_PRIMARY_ASSET"
+            if bounded_design_allowed
+            else "WAIT_FIRST_PARTY_RELEASE_CHANGE"
+        )
+        if not bounded_design_allowed:
+            out["support_recheck_mode"] = "FIRST_PARTY_RELEASE_CHANGE_ONLY"
         return out
     qualified_units = receipt.get("qualified_units")
     manifest_sha = str(receipt.get("unit_manifest_sha256") or "").strip().lower()

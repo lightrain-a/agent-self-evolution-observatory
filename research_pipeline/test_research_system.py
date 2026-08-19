@@ -774,7 +774,9 @@ class ResearchSystemTest(unittest.TestCase):
     def test_support_release_watch_is_public_safe_and_zero_authority(self) -> None:
         watch=copy.deepcopy(self.state["paper_first_support_release_watch"])
         self.assertFalse(watch["scientific_authority"])
-        self.assertTrue(watch["policy"]["primary_declared_release_endpoints_only"])
+        self.assertTrue(watch["policy"]["primary_declared_or_support_audited_release_endpoints_only"])
+        self.assertTrue(watch["policy"]["support_audited_pre_f0_repository_targets_allowed"])
+        self.assertTrue(watch["policy"]["pre_f0_release_change_only_holds_included"])
         self.assertTrue(watch["policy"]["related_work_repository_links_are_not_watch_targets"])
         self.assertTrue(watch["policy"]["release_surface_change_only_requests_recheck"])
         self.assertTrue(watch["policy"]["release_watch_cannot_mark_support_qualified"])
@@ -791,7 +793,7 @@ class ResearchSystemTest(unittest.TestCase):
         state.pop("paper_first_shadow_continuation_frontier",None)
         state["paper_first_support_release_watch"]={
             "schema_version":"1.0","status":"SUPPORT_RELEASE_WATCH_COMPLETE","scientific_authority":False,
-            "policy":{"scientific_authority":False,"primary_declared_release_endpoints_only":True,"related_work_repository_links_are_not_watch_targets":True,"release_surface_change_only_requests_recheck":True,"release_watch_cannot_mark_support_qualified":True,"release_watch_cannot_reopen_generator_or_problem_gate":True,"release_watch_has_zero_source_exposure_effect":True,"network_checks_are_cooldown_bounded":True,"no_endpoint_primary_refresh_is_primary_source_only":True,"primary_declaration_refresh_has_zero_source_exposure_effect":True,"primary_declaration_refresh_cannot_qualify_support":True,"public_summary_excludes_urls_refs_required_units_and_private_paths":True},
+            "policy":{"scientific_authority":False,"primary_declared_or_support_audited_release_endpoints_only":True,"support_audited_pre_f0_repository_targets_allowed":True,"pre_f0_release_change_only_holds_included":True,"related_work_repository_links_are_not_watch_targets":True,"release_surface_change_only_requests_recheck":True,"release_watch_cannot_mark_support_qualified":True,"release_watch_cannot_reopen_generator_or_problem_gate":True,"release_watch_has_zero_source_exposure_effect":True,"network_checks_are_cooldown_bounded":True,"no_endpoint_primary_refresh_is_primary_source_only":True,"primary_declaration_refresh_has_zero_source_exposure_effect":True,"primary_declaration_refresh_cannot_qualify_support":True,"public_summary_excludes_urls_refs_required_units_and_private_paths":True},
             "summary":{"support_holds":4,"explicit_release_targets":2,"no_explicit_endpoint":2,"recheck_required":1,"support_qualified":0,"generator_reopen_authorized":0,"problem_gate_authorized":0,"primary_declaration_refresh_checked":2,"primary_declaration_refresh_changed":0},
             "status_counts":{"RECHECK_REQUIRED_RELEASE_CHANGED":1},
         }

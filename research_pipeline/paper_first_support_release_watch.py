@@ -83,8 +83,87 @@ def _terminal_support_holds(design_state: dict[str, Any]) -> list[dict[str, Any]
     return out
 
 
+def _load_pre_f0_support_preflight(storage: StorageSettings) -> dict[str, Any]:
+    path = storage.site_artifact_dir / "paper-first-pre-f0-problem-falsifier-preflight.json"
+    if not path.exists():
+        return {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def _pre_f0_support_holds(storage: StorageSettings) -> list[dict[str, Any]]:
+    """Expose only canonical Pre-F0 HOLDs that are explicitly release-change-only."""
+    state = _load_pre_f0_support_preflight(storage)
+    if state.get("scientific_authority") is not False:
+        return []
+    authority = state.get("authority") or {}
+    if any(authority.get(key) is not False for key in ("canonical_generator", "canonical_problem_gate", "paper_design", "method", "experiment", "p0", "gpu")):
+        return []
+    run_id = str(state.get("run_id") or "").strip()
+    support_sha = str(state.get("support_inventory_sha256") or "").strip().lower()
+    if not run_id or not re.fullmatch(r"[0-9a-f]{64}", support_sha):
+        return []
+    out: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for row in state.get("rows") or []:
+        if not isinstance(row, dict):
+            continue
+        candidate_id = str(row.get("candidate_id") or "").strip()
+        targets = [dict(target) for target in row.get("release_watch_targets") or [] if isinstance(target, dict)]
+        refs = sorted({str(ref).strip() for ref in row.get("primary_refs") or [] if str(ref).strip().startswith("arXiv:")})
+        audit_sha = str(row.get("support_audit_sha256") or "").strip().lower()
+        if (
+            not candidate_id
+            or candidate_id in seen
+            or str(row.get("disposition") or "") != "HOLD_SUPPORT_UNAVAILABLE"
+            or row.get("scientific_authority") is not False
+            or row.get("bounded_first_party_evidence_design_allowed") is not False
+            or str(row.get("next_route") or "") != "WAIT_FIRST_PARTY_RELEASE_CHANGE"
+            or str(row.get("support_recheck_mode") or "") != "FIRST_PARTY_RELEASE_CHANGE_ONLY"
+            or not refs
+            or not targets
+            or not re.fullmatch(r"[0-9a-f]{64}", audit_sha)
+        ):
+            continue
+        seen.add(candidate_id)
+        out.append({
+            "source_candidate_id": candidate_id,
+            "source_run_id": run_id,
+            "source_stage_manifest_sha256": support_sha,
+            "support_audit_sha256": audit_sha,
+            "basin": "pre-f0-support-hold-" + _sha(f"{candidate_id}\n{run_id}\n{support_sha}")[:16],
+            "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+            "support_status": "SUPPORT_UNAVAILABLE_FOR_FROZEN_PROBLEM_FALSIFIER",
+            "required_unit": _bounded(row.get("required_unit")),
+            "reopen_only_if": _bounded(row.get("reopen_only_if")),
+            "evidence_basis": refs,
+            "current_source_refs": refs,
+            "release_watch_targets": targets,
+            "memory_class": "PRE_F0_RELEASE_CHANGE_ONLY_HOLD",
+            "dead_end_certified": False,
+            "scientific_authority": False,
+        })
+    return out
+
+
+def _support_holds(design_state: dict[str, Any], *, storage: StorageSettings) -> list[dict[str, Any]]:
+    rows = _terminal_support_holds(design_state) + _pre_f0_support_holds(storage)
+    dedup: dict[tuple[str, str, str], dict[str, Any]] = {}
+    for row in rows:
+        key = (
+            str(row.get("source_candidate_id") or ""),
+            str(row.get("source_run_id") or ""),
+            str(row.get("basin") or ""),
+        )
+        dedup.setdefault(key, row)
+    return list(dedup.values())
+
+
 def _arxiv_ids(row: dict[str, Any]) -> list[str]:
-    refs = list(row.get("evidence_basis") or []) + list(row.get("current_source_refs") or [])
+    refs = list(row.get("evidence_basis") or []) + list(row.get("current_source_refs") or []) + list(row.get("primary_refs") or [])
     out: list[str] = []
     for ref in refs:
         match = re.fullmatch(r"arXiv:(\d{4}\.\d+)", str(ref or "").strip(), flags=re.I)
@@ -156,9 +235,40 @@ def explicit_release_targets(
     root = _primary_root(storage)
     targets: list[dict[str, Any]] = []
     no_endpoint: list[dict[str, Any]] = []
-    for hold in _terminal_support_holds(design_state):
+    for hold in _support_holds(design_state, storage=storage):
         candidate_id = str(hold.get("source_candidate_id") or "")
+        refs = [f"arXiv:{value}" for value in _arxiv_ids(hold)]
         found: list[dict[str, Any]] = []
+        for target in hold.get("release_watch_targets") or []:
+            if not isinstance(target, dict):
+                continue
+            source_ref = str(target.get("source_ref") or "").strip()
+            url = _clean_url(str(target.get("url") or ""))
+            kind = str(target.get("declaration_kind") or "").strip().upper()
+            baseline_revision = str(target.get("baseline_revision") or "").strip().lower()
+            if (
+                source_ref not in refs
+                or not _acceptable_release_url(url)
+                or kind != "FIRST_PARTY_REPOSITORY"
+                or not re.fullmatch(r"[0-9a-f]{40}", baseline_revision)
+                or target.get("scientific_authority") is not False
+            ):
+                continue
+            found.append({
+                "candidate_id": candidate_id,
+                "source_ref": source_ref,
+                "url": url,
+                "declaration_kind": kind,
+                "declaration_context": "durable-support-audit-first-party-repository",
+                "primary_cache_sha256": "",
+                "endpoint_provenance_kind": "SUPPORT_AUDIT",
+                "endpoint_provenance_sha256": str(hold.get("support_audit_sha256") or ""),
+                "baseline_revision": baseline_revision,
+                "required_unit": _bounded(hold.get("required_unit")),
+                "reopen_only_if": _bounded(hold.get("reopen_only_if")),
+                "support_audited_target": True,
+                "scientific_authority": False,
+            })
         for arxiv_id in _arxiv_ids(hold):
             for path in sorted(root.glob(f"arxiv-{arxiv_id}-*.html")) + sorted(root.glob(f"arxiv-full-{arxiv_id}-*.html")):
                 raw = path.read_text(encoding="utf-8", errors="replace")
@@ -171,24 +281,32 @@ def explicit_release_targets(
                         "declaration_kind": link["declaration_kind"],
                         "declaration_context": link["declaration_context"],
                         "primary_cache_sha256": cache_sha,
+                        "endpoint_provenance_kind": "PRIMARY_CACHE",
+                        "endpoint_provenance_sha256": cache_sha,
+                        "baseline_revision": "",
                         "required_unit": _bounded(hold.get("required_unit")),
                         "reopen_only_if": _bounded(hold.get("reopen_only_if")),
+                        "support_audited_target": False,
                         "scientific_authority": False,
                     })
         dedup: dict[tuple[str, str, str], dict[str, Any]] = {}
         for row in found:
-            dedup[(row["candidate_id"], row["source_ref"], row["url"])] = row
+            key = (row["candidate_id"], row["source_ref"], row["url"])
+            previous = dedup.get(key)
+            if previous is None or row.get("support_audited_target") is True:
+                dedup[key] = row
         if dedup:
             targets.extend(dedup.values())
         else:
             no_endpoint.append({
                 "candidate_id": candidate_id,
-                "source_refs": [f"arXiv:{x}" for x in _arxiv_ids(hold)],
+                "source_refs": refs,
                 "status": "NO_EXPLICIT_AUTHOR_RELEASE_ENDPOINT",
                 "required_unit": _bounded(hold.get("required_unit")),
                 "reopen_only_if": _bounded(hold.get("reopen_only_if")),
                 "scientific_authority": False,
             })
+    targets.sort(key=lambda row: (str(row.get("candidate_id") or ""), str(row.get("source_ref") or ""), str(row.get("url") or "")))
     return targets, no_endpoint
 
 
@@ -206,6 +324,13 @@ def build_portable_release_target_manifest(
     targets, _ = explicit_release_targets(design_state, storage=storage)
     safe = []
     for row in targets:
+        # Portable schema 1.0 carries only endpoints grounded directly in the
+        # canonical primary cache. Support-audited Pre-F0 repository targets
+        # stay local until the portable contract is explicitly versioned.
+        if str(row.get("endpoint_provenance_kind") or "PRIMARY_CACHE") != "PRIMARY_CACHE":
+            continue
+        if not re.fullmatch(r"[0-9a-f]{64}", str(row.get("primary_cache_sha256") or "")):
+            continue
         safe.append({
             "candidate_id": str(row.get("candidate_id") or ""),
             "source_ref": str(row.get("source_ref") or ""),
@@ -379,6 +504,13 @@ def _default_fetcher(target: dict[str, Any]) -> dict[str, Any]:
             return {"status_code": status, "fingerprint": _sha(json.dumps(material, sort_keys=True, separators=(",", ":"))), "surface_nonempty": False, "artifact_file_count": 0, "fingerprint_version": FINGERPRINT_VERSION, "resolved_endpoint": api}
         payload = response.json()
         default_branch = str(payload.get("default_branch") or "main")
+        commit_url = f"{api}/commits/{default_branch}"
+        commit_response = requests.get(commit_url, timeout=20.0, headers=headers)
+        if int(commit_response.status_code) != 200:
+            raise RuntimeError(f"github-commit-http-{int(commit_response.status_code)}")
+        resolved_revision = str((commit_response.json() or {}).get("sha") or "").strip().lower()
+        if not re.fullmatch(r"[0-9a-f]{40}", resolved_revision):
+            raise RuntimeError("github-default-branch-revision-invalid")
         tree_url = f"{api}/git/trees/{default_branch}?recursive=1"
         tree_response = requests.get(tree_url, timeout=20.0, headers=headers)
         if int(tree_response.status_code) != 200:
@@ -390,9 +522,9 @@ def _default_fetcher(target: dict[str, Any]) -> dict[str, Any]:
             if row.get("type") == "blob" and _is_release_artifact_path(str(row.get("path") or ""))
         )
         artifact_digest = _sha("\n".join(f"{path}:{blob_sha}" for path, blob_sha in artifacts))
-        material = {"status_code": status, "endpoint": url, "default_branch": default_branch, "artifact_file_count": len(artifacts), "artifact_blob_digest": artifact_digest, "fingerprint_version": FINGERPRINT_VERSION}
+        material = {"status_code": status, "endpoint": url, "default_branch": default_branch, "resolved_revision": resolved_revision, "artifact_file_count": len(artifacts), "artifact_blob_digest": artifact_digest, "fingerprint_version": FINGERPRINT_VERSION}
         fingerprint = _sha(json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
-        return {"status_code": status, "fingerprint": fingerprint, "surface_nonempty": bool(artifacts), "artifact_file_count": len(artifacts), "artifact_path_digest": _sha("\n".join(path for path, _ in artifacts)), "fingerprint_version": FINGERPRINT_VERSION, "resolved_endpoint": api}
+        return {"status_code": status, "fingerprint": fingerprint, "surface_nonempty": bool(artifacts), "artifact_file_count": len(artifacts), "artifact_path_digest": _sha("\n".join(path for path, _ in artifacts)), "fingerprint_version": FINGERPRINT_VERSION, "resolved_endpoint": api, "resolved_revision": resolved_revision}
     if urlparse(url).netloc.lower().endswith(".github.io"):
         response = requests.head(url, timeout=20.0, headers=headers, allow_redirects=True)
         status = int(response.status_code)
@@ -578,7 +710,9 @@ def public_support_release_watch_summary(state: dict[str, Any]) -> dict[str, Any
         "status": str(state.get("status") or "NOT_RUN"),
         "policy": {
             "scientific_authority": False,
-            "primary_declared_release_endpoints_only": True,
+            "primary_declared_or_support_audited_release_endpoints_only": True,
+            "support_audited_pre_f0_repository_targets_allowed": True,
+            "pre_f0_release_change_only_holds_included": True,
             "related_work_repository_links_are_not_watch_targets": True,
             "release_surface_change_only_requests_recheck": True,
             "release_watch_cannot_mark_support_qualified": True,
@@ -666,7 +800,15 @@ def run_support_release_watch(
             surface_nonempty = bool(result.get("surface_nonempty"))
             artifact_count_raw = result.get("artifact_file_count")
             artifact_file_count = int(artifact_count_raw) if artifact_count_raw is not None else (1 if surface_nonempty else 0)
-            if target["declaration_kind"] == "FUTURE_CODE_RELEASE" and 200 <= status_code < 300 and artifact_file_count <= 0:
+            baseline_revision = str(target.get("baseline_revision") or "").strip().lower()
+            resolved_revision = str(result.get("resolved_revision") or "").strip().lower()
+            revision_bound = bool(re.fullmatch(r"[0-9a-f]{40}", baseline_revision))
+            resolved_revision_valid = bool(re.fullmatch(r"[0-9a-f]{40}", resolved_revision))
+            if revision_bound and 200 <= status_code < 300 and not resolved_revision_valid:
+                raise ValueError("release-watch-resolved-revision-missing-for-bound-target")
+            if revision_bound and 200 <= status_code < 300:
+                status = "NO_RELEASE_CHANGE" if resolved_revision == baseline_revision else "RECHECK_REQUIRED_RELEASE_CHANGED"
+            elif target["declaration_kind"] == "FUTURE_CODE_RELEASE" and 200 <= status_code < 300 and artifact_file_count <= 0:
                 status = "WAITING_RELEASE_ARTIFACTS"
             elif target["declaration_kind"] == "FUTURE_CODE_RELEASE" and not prior_fingerprint and 200 <= status_code < 300:
                 status = "RECHECK_REQUIRED_NEW_RELEASE_SURFACE"
@@ -686,11 +828,13 @@ def run_support_release_watch(
                 "previous_fingerprint": prior_fingerprint,
                 "surface_nonempty": surface_nonempty,
                 "artifact_file_count": artifact_file_count,
+                "baseline_revision": baseline_revision,
+                "resolved_revision": resolved_revision,
                 "fingerprint_version": result_version,
                 "checked_at": current.isoformat(),
                 "scientific_authority": False,
             }
-            observations[key] = {k: row[k] for k in ("candidate_id", "url", "declaration_kind", "status", "http_status", "fingerprint", "fingerprint_version", "checked_at", "scientific_authority")}
+            observations[key] = {k: row[k] for k in ("candidate_id", "url", "declaration_kind", "status", "http_status", "fingerprint", "baseline_revision", "resolved_revision", "fingerprint_version", "checked_at", "scientific_authority")}
             rows.append(row)
         except Exception as error:
             provider_errors += 1
@@ -702,7 +846,9 @@ def run_support_release_watch(
         "status": "SUPPORT_RELEASE_WATCH_COMPLETE" if provider_errors == 0 else "SUPPORT_RELEASE_WATCH_PARTIAL",
         "policy": {
             "scientific_authority": False,
-            "primary_declared_release_endpoints_only": True,
+            "primary_declared_or_support_audited_release_endpoints_only": True,
+            "support_audited_pre_f0_repository_targets_allowed": True,
+            "pre_f0_release_change_only_holds_included": True,
             "related_work_repository_links_are_not_watch_targets": True,
             "release_surface_change_only_requests_recheck": True,
             "release_watch_cannot_mark_support_qualified": True,
@@ -721,7 +867,7 @@ def run_support_release_watch(
             "cooldown_days": float(cooldown_days),
         },
         "summary": {
-            "support_holds": len(_terminal_support_holds(design_state)),
+            "support_holds": len(_support_holds(design_state, storage=storage)),
             "explicit_release_targets": len(targets),
             "no_explicit_endpoint": len(no_endpoint),
             "checked": checked,

@@ -261,6 +261,63 @@ class SupportReleaseWatchTest(unittest.TestCase):
         self.assertEqual(second["summary"]["skipped_cooldown"], 1)
         self.assertEqual(second["rows"][0]["status"], "SKIPPED_COOLDOWN")
 
+    def test_pre_f0_release_change_only_repo_uses_audited_revision_without_portable_leak(self) -> None:
+        baseline="6129934d53ea00ac306c14723874321dc3667246"
+        changed="7"*40
+        with tempfile.TemporaryDirectory() as td:
+            storage=self.storage(Path(td))
+            storage.site_artifact_dir.mkdir(parents=True,exist_ok=True)
+            preflight={
+                "schema_version":"1.0-shadow","run_id":"pre-f0-z1","scientific_authority":False,
+                "support_inventory_sha256":"a"*64,
+                "authority":{"canonical_generator":False,"canonical_problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+                "rows":[{
+                    "candidate_id":"PORT-003","disposition":"HOLD_SUPPORT_UNAVAILABLE","scientific_authority":False,
+                    "primary_refs":["arXiv:2608.09096","arXiv:2608.16590"],
+                    "required_unit":"Frozen Zetta state with independent intermediate timescale arms.",
+                    "reopen_only_if":"A first-party revision exposes native contract-valid intermediate arms.",
+                    "support_audit_sha256":"b"*64,
+                    "release_watch_targets":[{
+                        "source_ref":"arXiv:2608.16590","url":"https://github.com/air-embodied-brain/Zetta-Embodiment",
+                        "declaration_kind":"FIRST_PARTY_REPOSITORY","baseline_revision":baseline,"scientific_authority":False,
+                    }],
+                    "bounded_first_party_evidence_design_allowed":False,
+                    "next_route":"WAIT_FIRST_PARTY_RELEASE_CHANGE",
+                    "support_recheck_mode":"FIRST_PARTY_RELEASE_CHANGE_ONLY",
+                }],
+            }
+            (storage.site_artifact_dir/"paper-first-pre-f0-problem-falsifier-preflight.json").write_text(__import__("json").dumps(preflight),encoding="utf-8")
+            design=self.design([])
+            targets,missing=explicit_release_targets(design,storage=storage)
+            self.assertEqual(missing,[])
+            self.assertEqual(len(targets),1)
+            self.assertTrue(targets[0]["support_audited_target"])
+            self.assertEqual(targets[0]["baseline_revision"],baseline)
+            portable=build_portable_release_target_manifest(design,storage=storage)
+            self.assertEqual(portable["targets"],[])
+            self.assertEqual(portable["summary"]["explicit_release_targets"],0)
+
+            same=run_support_release_watch(
+                storage=storage,design_state=design,portable_targets_path=Path(td)/"missing-portable.json",
+                fetcher=lambda target:{"status_code":200,"fingerprint":"c"*64,"surface_nonempty":True,"artifact_file_count":250,"resolved_revision":baseline},
+                now=datetime(2026,8,19,tzinfo=timezone.utc),write_ledger=False,
+            )
+            drift=run_support_release_watch(
+                storage=storage,design_state=design,portable_targets_path=Path(td)/"missing-portable.json",
+                fetcher=lambda target:{"status_code":200,"fingerprint":"d"*64,"surface_nonempty":True,"artifact_file_count":251,"resolved_revision":changed},
+                now=datetime(2026,8,20,tzinfo=timezone.utc),write_ledger=False,
+            )
+        self.assertEqual(same["rows"][0]["status"],"NO_RELEASE_CHANGE")
+        self.assertEqual(same["summary"]["recheck_required"],0)
+        self.assertEqual(drift["rows"][0]["status"],"RECHECK_REQUIRED_RELEASE_CHANGED")
+        self.assertEqual(drift["summary"]["recheck_required"],1)
+        for state in (same,drift):
+            self.assertEqual(state["summary"]["support_holds"],1)
+            self.assertEqual(state["summary"]["support_qualified"],0)
+            self.assertEqual(state["summary"]["generator_reopen_authorized"],0)
+            self.assertEqual(state["summary"]["problem_gate_authorized"],0)
+            self.assertFalse(state["scientific_authority"])
+
 
 if __name__ == "__main__":
     unittest.main()

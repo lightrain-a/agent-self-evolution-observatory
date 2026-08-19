@@ -244,6 +244,55 @@ class ProblemFalsifierPreflightTest(unittest.TestCase):
             self.assertTrue((root/"problem-falsifier-support-inventory-request.json").exists())
             self.assertTrue((root/"problem-falsifier-preflight.json").exists())
 
+    def test_release_change_only_hold_routes_to_watch_without_problem_authority(self) -> None:
+        project_root=Path(__file__).resolve().parents[1]
+        audit_path=project_root/"generated"/"zetta-timescale-support-audit-20260819.json"
+        audit=json.loads(audit_path.read_text(encoding="utf-8"))
+        audit_sha=hashlib.sha256(audit_path.read_bytes()).hexdigest()
+        queue=self.pre_f0();row=queue["rows"][0]
+        row.update({
+            "candidate_id":"PORT-003",
+            "title":"Timescale-isolated ablation",
+            "primary_refs":["arXiv:2608.09096","arXiv:2608.16590"],
+        })
+        inventory={"inventory_origin":"unit-test-zetta-schema-audit","rows":[{
+            "candidate_id":"PORT-003",
+            "disposition":"HOLD_SUPPORT_UNAVAILABLE",
+            "required_unit":audit["required_unit"],
+            "asset_audit":"The released Zetta schema couples Critic and Recovery and blocks the required intermediate arms.",
+            "primary_refs":["arXiv:2608.09096","arXiv:2608.16590"],
+            "support_audit_artifact":"generated/zetta-timescale-support-audit-20260819.json",
+            "support_audit_sha256":audit_sha,
+            "release_watch_targets":[{
+                "source_ref":"arXiv:2608.16590",
+                "url":"https://github.com/air-embodied-brain/Zetta-Embodiment",
+                "declaration_kind":"FIRST_PARTY_REPOSITORY",
+                "baseline_revision":"6129934d53ea00ac306c14723874321dc3667246",
+                "scientific_authority":False,
+            }],
+            "bounded_first_party_evidence_design_allowed":False,
+            "reopen_only_if":audit["reopen_only_if"],
+        }],"scientific_authority":False}
+        state=compile_pre_f0_problem_falsifier_preflight(queue,inventory,run_id="pre-f0-r1",inventory_sha256="a"*64)
+        compiled=state["rows"][0]
+        self.assertEqual(compiled["next_route"],"WAIT_FIRST_PARTY_RELEASE_CHANGE")
+        self.assertEqual(compiled["support_recheck_mode"],"FIRST_PARTY_RELEASE_CHANGE_ONLY")
+        self.assertFalse(compiled["bounded_first_party_evidence_design_allowed"])
+        self.assertEqual(compiled["release_watch_targets"][0]["baseline_revision"],"6129934d53ea00ac306c14723874321dc3667246")
+        self.assertEqual(state["summary"]["support_qualified"],0)
+        self.assertEqual(state["summary"]["problem_gate_authorized"],0)
+        self.assertTrue(all(value is False for value in state["authority"].values()))
+
+        bad=json.loads(json.dumps(inventory))
+        bad["rows"][0]["release_watch_targets"][0]["url"]="https://github.com/example/not-zetta"
+        with self.assertRaisesRegex(ValueError,"does not match audited official repo"):
+            compile_pre_f0_problem_falsifier_preflight(queue,bad,run_id="pre-f0-r1")
+
+        bad_revision=json.loads(json.dumps(inventory))
+        bad_revision["rows"][0]["release_watch_targets"][0]["baseline_revision"]="0"*40
+        with self.assertRaisesRegex(ValueError,"does not match audited repo revision"):
+            compile_pre_f0_problem_falsifier_preflight(queue,bad_revision,run_id="pre-f0-r1")
+
 
 if __name__=="__main__":
     unittest.main()

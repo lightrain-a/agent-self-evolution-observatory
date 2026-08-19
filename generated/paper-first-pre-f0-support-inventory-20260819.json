@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0-pre-f0",
-  "generated_at": "2026-08-19T06:09:44+00:00",
+  "generated_at": "2026-08-19T06:45:19+00:00",
   "inventory_origin": "first-party-release-and-code-audit-20260819",
   "source_generator_run_id": "20260818T164230Z-ingestion-replay",
   "source_transaction_id": "d6a0782a420512261c96d43e9e6a796bbc5e114f923decb1f79638c922021367",
@@ -28,6 +28,16 @@
       ],
       "support_audit_artifact": "generated/zetta-timescale-support-audit-20260819.json",
       "support_audit_sha256": "0c55ccce2d3506d92fc8680f4da864408aa712d9d5927f123e2463e2ac186218",
+      "release_watch_targets": [
+        {
+          "source_ref": "arXiv:2608.16590",
+          "url": "https://github.com/air-embodied-brain/Zetta-Embodiment",
+          "declaration_kind": "FIRST_PARTY_REPOSITORY",
+          "baseline_revision": "6129934d53ea00ac306c14723874321dc3667246",
+          "scientific_authority": false
+        }
+      ],
+      "bounded_first_party_evidence_design_allowed": false,
       "reopen_only_if": "Reopen only if a first-party revision changes the released CandidateBundle/atomic-inheritance contract or runtime so that the required intermediate one-factor timescale arms are native and contract-valid on the same frozen bundle. Validator weakening, wrapper-based masking, synthetic mechanism injection, retraining, hidden-outcome tuning, or changing the base policy/skill state does not clear this hold."
     }
   ],

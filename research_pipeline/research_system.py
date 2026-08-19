@@ -1263,7 +1263,9 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
     )
     support_release_boundary_ok=bool(
         support_release_watch.get("scientific_authority") is False
-        and support_release_policy.get("primary_declared_release_endpoints_only") is True
+        and support_release_policy.get("primary_declared_or_support_audited_release_endpoints_only") is True
+        and support_release_policy.get("support_audited_pre_f0_repository_targets_allowed") is True
+        and support_release_policy.get("pre_f0_release_change_only_holds_included") is True
         and support_release_policy.get("related_work_repository_links_are_not_watch_targets") is True
         and support_release_policy.get("release_surface_change_only_requests_recheck") is True
         and support_release_policy.get("release_watch_cannot_mark_support_qualified") is True
@@ -1675,8 +1677,8 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if support_release_watch:
         support_primary_refresh_present="primary_declaration_refresh_checked" in support_release_summary
         support_primary_refresh_boundary_ok=(not support_primary_refresh_present) or (support_release_policy.get("no_endpoint_primary_refresh_is_primary_source_only") is True and support_release_policy.get("primary_declaration_refresh_has_zero_source_exposure_effect") is True and support_release_policy.get("primary_declaration_refresh_cannot_qualify_support") is True)
-        if support_release_watch.get("scientific_authority") is not False or support_release_policy.get("primary_declared_release_endpoints_only") is not True or support_release_policy.get("related_work_repository_links_are_not_watch_targets") is not True or support_release_policy.get("release_surface_change_only_requests_recheck") is not True or support_release_policy.get("release_watch_cannot_mark_support_qualified") is not True or support_release_policy.get("release_watch_cannot_reopen_generator_or_problem_gate") is not True or support_release_policy.get("release_watch_has_zero_source_exposure_effect") is not True or support_release_policy.get("network_checks_are_cooldown_bounded") is not True or support_primary_refresh_boundary_ok is not True or support_release_policy.get("public_summary_excludes_urls_refs_required_units_and_private_paths") is not True:
-            errors.append("support release watch public state must remain primary-declared, bounded, redacted, and zero-authority")
+        if support_release_watch.get("scientific_authority") is not False or support_release_policy.get("primary_declared_or_support_audited_release_endpoints_only") is not True or support_release_policy.get("support_audited_pre_f0_repository_targets_allowed") is not True or support_release_policy.get("pre_f0_release_change_only_holds_included") is not True or support_release_policy.get("related_work_repository_links_are_not_watch_targets") is not True or support_release_policy.get("release_surface_change_only_requests_recheck") is not True or support_release_policy.get("release_watch_cannot_mark_support_qualified") is not True or support_release_policy.get("release_watch_cannot_reopen_generator_or_problem_gate") is not True or support_release_policy.get("release_watch_has_zero_source_exposure_effect") is not True or support_release_policy.get("network_checks_are_cooldown_bounded") is not True or support_primary_refresh_boundary_ok is not True or support_release_policy.get("public_summary_excludes_urls_refs_required_units_and_private_paths") is not True:
+            errors.append("support release watch public state must remain primary-declared-or-support-audited, bounded, redacted, and zero-authority")
         if support_release_status not in {"NOT_RUN","SUPPORT_RELEASE_WATCH_COMPLETE","SUPPORT_RELEASE_WATCH_PARTIAL","STATE_UNREADABLE","STATE_INVALID"}:
             errors.append("support release watch status invalid")
         if int(support_release_summary.get("support_qualified") or 0)!=0 or int(support_release_summary.get("generator_reopen_authorized") or 0)!=0 or int(support_release_summary.get("problem_gate_authorized") or 0)!=0:

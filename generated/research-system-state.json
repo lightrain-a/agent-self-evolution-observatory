@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-19T06:45:36+00:00",
+  "generated_at": "2026-08-19T08:43:58+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -6270,9 +6270,9 @@
     "paper_first_search_portfolio_near_miss_mature_theory_stops": 1,
     "paper_first_search_portfolio_memory_last_ingested_run_id": "shadow-auto-3eb8aa25b7961110",
     "paper_first_support_release_watch_status": "SUPPORT_RELEASE_WATCH_COMPLETE",
-    "paper_first_support_release_holds": 0,
-    "paper_first_support_release_targets": 0,
-    "paper_first_support_release_no_endpoint": 0,
+    "paper_first_support_release_holds": 7,
+    "paper_first_support_release_targets": 1,
+    "paper_first_support_release_no_endpoint": 6,
     "paper_first_support_release_recheck_required": 0,
     "paper_first_support_release_support_qualified": 0,
     "paper_first_support_release_generator_reopen": 0,
@@ -35586,11 +35586,11 @@
   },
   "paper_first_pre_f0_problem_falsifier_preflight": {
     "schema_version": "1.0-shadow",
-    "generated_at": "2026-08-19T06:10:10+00:00",
+    "generated_at": "2026-08-19T06:45:45+00:00",
     "run_id": "20260818T164230Z-ingestion-replay",
     "status": "PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE",
     "support_inventory_origin": "first-party-release-and-code-audit-20260819",
-    "support_inventory_sha256": "e77ae40388ccaf845d8f80e2b0406ea2c9143b03b035c49ff55c846d4d7e4b2f",
+    "support_inventory_sha256": "e18772c29a5054a5ebce202c6164bd8b8a910a6d822fd8f00d5b74aa5e7764d8",
     "policy": {
       "problem_falsifier_queue_is_zero_authority": true,
       "support_inventory_precedes_falsifier_execution": true,
@@ -35661,8 +35661,18 @@
         "support_audit_artifact": "generated/zetta-timescale-support-audit-20260819.json",
         "support_audit_sha256": "0c55ccce2d3506d92fc8680f4da864408aa712d9d5927f123e2463e2ac186218",
         "reopen_only_if": "Reopen only if a first-party revision changes the released CandidateBundle/atomic-inheritance contract or runtime so that the required intermediate one-factor timescale arms are native and contract-valid on the same frozen bundle. Validator weakening, wrapper-based masking, synthetic mechanism injection, retraining, hidden-outcome tuning, or changing the base policy/skill state does not clear this hold.",
-        "bounded_first_party_evidence_design_allowed": true,
-        "next_route": "BOUNDED_EVIDENCE_DESIGN_OR_WAIT_PRIMARY_ASSET"
+        "release_watch_targets": [
+          {
+            "source_ref": "arXiv:2608.16590",
+            "url": "https://github.com/air-embodied-brain/Zetta-Embodiment",
+            "declaration_kind": "FIRST_PARTY_REPOSITORY",
+            "baseline_revision": "6129934d53ea00ac306c14723874321dc3667246",
+            "scientific_authority": false
+          }
+        ],
+        "bounded_first_party_evidence_design_allowed": false,
+        "next_route": "WAIT_FIRST_PARTY_RELEASE_CHANGE",
+        "support_recheck_mode": "FIRST_PARTY_RELEASE_CHANGE_ONLY"
       }
     ],
     "authority": {
@@ -39854,7 +39864,9 @@
     "status": "SUPPORT_RELEASE_WATCH_COMPLETE",
     "policy": {
       "scientific_authority": false,
-      "primary_declared_release_endpoints_only": true,
+      "primary_declared_or_support_audited_release_endpoints_only": true,
+      "support_audited_pre_f0_repository_targets_allowed": true,
+      "pre_f0_release_change_only_holds_included": true,
       "related_work_repository_links_are_not_watch_targets": true,
       "release_surface_change_only_requests_recheck": true,
       "release_watch_cannot_mark_support_qualified": true,
@@ -39869,10 +39881,10 @@
       "public_summary_excludes_urls_refs_required_units_and_private_paths": true
     },
     "summary": {
-      "support_holds": 0,
-      "explicit_release_targets": 0,
-      "no_explicit_endpoint": 0,
-      "checked": 0,
+      "support_holds": 7,
+      "explicit_release_targets": 1,
+      "no_explicit_endpoint": 6,
+      "checked": 1,
       "skipped_cooldown": 0,
       "provider_errors": 0,
       "recheck_required": 0,
@@ -39886,7 +39898,10 @@
       "primary_declaration_refresh_errors": 0,
       "portable_release_targets_used": 0
     },
-    "status_counts": {},
+    "status_counts": {
+      "NO_RELEASE_CHANGE": 1,
+      "NO_EXPLICIT_AUTHOR_RELEASE_ENDPOINT": 6
+    },
     "scientific_authority": false
   },
   "paper_first_support_asset_recheck_queue": {
@@ -41597,7 +41612,7 @@
       "asset_recheck_queued": 0,
       "support_inventory_handoff_ready": 0,
       "support_handoff_provenance_hold": 0,
-      "support_holds": 0,
+      "support_holds": 7,
       "active_control_actions": 1,
       "external_wait": 0,
       "automatic_provider_calls_authorized": 0,
@@ -79767,10 +79782,10 @@
         "detail": {
           "status": "SUPPORT_RELEASE_WATCH_COMPLETE",
           "summary": {
-            "support_holds": 0,
-            "explicit_release_targets": 0,
-            "no_explicit_endpoint": 0,
-            "checked": 0,
+            "support_holds": 7,
+            "explicit_release_targets": 1,
+            "no_explicit_endpoint": 6,
+            "checked": 1,
             "skipped_cooldown": 0,
             "provider_errors": 0,
             "recheck_required": 0,
@@ -79784,7 +79799,10 @@
             "primary_declaration_refresh_errors": 0,
             "portable_release_targets_used": 0
           },
-          "status_counts": {}
+          "status_counts": {
+            "NO_RELEASE_CHANGE": 1,
+            "NO_EXPLICIT_AUTHOR_RELEASE_ENDPOINT": 6
+          }
         }
       },
       {
@@ -79844,7 +79862,7 @@
             "asset_recheck_queued": 0,
             "support_inventory_handoff_ready": 0,
             "support_handoff_provenance_hold": 0,
-            "support_holds": 0,
+            "support_holds": 7,
             "active_control_actions": 0,
             "external_wait": 0,
             "automatic_provider_calls_authorized": 0,
