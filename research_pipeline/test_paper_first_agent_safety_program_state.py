@@ -195,6 +195,31 @@ class AgentSafetyProgramStateTest(unittest.TestCase):
             self.assertFalse(state["authority"]["bounded_evidence_acquisition"])
             self.assertTrue(state["next_gate"]["required"])
 
+    def test_canonical_search_memory_retypes_legacy_safety_closures_and_adds_port010(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            r9, canonical, smoke = self.fixture_r9(root)
+            search = root / "canonical-search.json"
+            search.write_text(json.dumps({
+                "shadow_search_memory": {
+                    "closed_objects": [
+                        {"source_candidate_id": "AUTO-1-RELEVANT-SKILL-MISEXECUTION", "title": "auto1 typed", "search_closure_certified": True, "dead_end_certified": False, "failure_layer": "method_realization", "memory_class": "METHOD_REALIZATION_STOP", "source_stop_class": "", "reason": "typed method reduction", "reopen_only_if": "fresh matched uptake evidence"},
+                        {"source_candidate_id": "P03-AUTOSKILL-CONTEXT-UPTAKE", "title": "p03 typed", "search_closure_certified": True, "dead_end_certified": False, "failure_layer": "method_realization", "memory_class": "METHOD_REALIZATION_STOP", "source_stop_class": "", "reason": "typed uptake reduction", "reopen_only_if": "same uptake different harm"},
+                        {"source_candidate_id": "PORT-010", "title": "port010 typed", "search_closure_certified": True, "dead_end_certified": True, "failure_layer": "core_principle", "memory_class": "CORE_PRINCIPLE_STOP", "source_stop_class": "PRINCIPLE_STOP", "reason": "framing-matched counter mechanism", "reopen_only_if": "fresh matched detector residual"},
+                    ]
+                }
+            }), encoding="utf-8")
+            state = build_agent_safety_program_state(r9_root=r9, canonical_primary_state_path=canonical, canonical_search_memory_path=search, harness_smoke_path=smoke)
+            self.assertEqual(validate_agent_safety_program_state(state), [])
+            rows = {row["candidate_id"]: row for row in state["closed_basins"]}
+            self.assertEqual(rows["AUTO-1-RELEVANT-SKILL-MISEXECUTION"]["memory_class"], "METHOD_REALIZATION_STOP")
+            self.assertEqual(rows["P03-AUTOSKILL-CONTEXT-UPTAKE"]["failure_layer"], "method_realization")
+            self.assertFalse(rows["P03-AUTOSKILL-CONTEXT-UPTAKE"]["dead_end_certified"])
+            self.assertEqual(rows["AGENT-SAFETY-DUAL-LOOP-RHO-CRITICAL"]["memory_class"], "LEGACY_SEARCH_CLOSURE_UNTYPED")
+            self.assertFalse(rows["AGENT-SAFETY-DUAL-LOOP-RHO-CRITICAL"]["dead_end_certified"])
+            self.assertEqual((rows["PORT-010"]["failure_layer"], rows["PORT-010"]["memory_class"], rows["PORT-010"]["dead_end_certified"]), ("core_principle", "CORE_PRINCIPLE_STOP", True))
+            self.assertEqual(state["closed_basin_summary"], {"total": 4, "canonical_typed": 3, "legacy_untyped": 1, "core_principle_dead_ends": 1, "method_realization_closures": 2})
+
     def test_survey_supplement_restores_related_work_without_primary_authority(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)

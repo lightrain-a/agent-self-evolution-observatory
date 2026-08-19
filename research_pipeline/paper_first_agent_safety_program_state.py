@@ -21,6 +21,7 @@ from .paper_first_agent_safety_r9_harness import (
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "agent-safety-program-state.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "agent-safety-program-state.js"
 DEFAULT_SURVEY_SUPPLEMENT = PROJECT_ROOT / "generated" / "agent-safety-literature-survey-supplement.json"
+DEFAULT_CANONICAL_SEARCH_MEMORY = PROJECT_ROOT / "generated" / "paper-first-search-portfolio-design-adjudication.json"
 PUBLIC_GLOBAL = "AGENT_SAFETY_PROGRAM_STATE"
 SURVEY_REFS = (
     "arXiv:2604.16968",
@@ -34,6 +35,7 @@ CLOSED_CANDIDATES = (
     "P03-AUTOSKILL-CONTEXT-UPTAKE",
     "AGENT-SAFETY-DUAL-LOOP-RHO-CRITICAL",
 )
+CANONICAL_SAFETY_CLOSED_CANDIDATES = ("PORT-010",)
 
 
 def _now() -> str:
@@ -87,6 +89,7 @@ def build_agent_safety_program_state(
     r9_root: Path,
     canonical_primary_state_path: Path | None = None,
     survey_supplement_path: Path | None = None,
+    canonical_search_memory_path: Path | None = None,
     harness_smoke_path: Path | None = None,
     harness_manifest_path: Path | None = None,
     runtime_asset_gate_path: Path | None = None,
@@ -113,6 +116,7 @@ def build_agent_safety_program_state(
     memory = _load(paths["dead_end_memory"])
     canonical_primary = _load(canonical_primary_state_path) if canonical_primary_state_path and Path(canonical_primary_state_path).is_file() else {}
     survey_supplement = _load(survey_supplement_path) if survey_supplement_path and Path(survey_supplement_path).is_file() else {}
+    canonical_search_state = _load(canonical_search_memory_path) if canonical_search_memory_path and Path(canonical_search_memory_path).is_file() else {}
     if survey_supplement and (
         survey_supplement.get("scientific_authority") is not False
         or survey_supplement.get("primary_transaction_authority") is not False
@@ -161,20 +165,58 @@ def build_agent_safety_program_state(
         )
 
     blocked = [row for row in memory.get("blocked_objects") or [] if isinstance(row, dict)]
+    canonical_memory = canonical_search_state.get("shadow_search_memory") or {}
+    canonical_closed = {
+        str(row.get("source_candidate_id") or ""): row
+        for row in canonical_memory.get("closed_objects") or []
+        if isinstance(row, dict) and row.get("search_closure_certified") is True and str(row.get("source_candidate_id") or "")
+    }
     closed = []
     for cid in CLOSED_CANDIDATES:
-        row = next((item for item in blocked if item.get("source_candidate_id") == cid), None)
-        if not row:
+        legacy_row = next((item for item in blocked if item.get("source_candidate_id") == cid), None)
+        if not legacy_row:
             raise ValueError(f"expected safety closure missing from R9 memory: {cid}")
+        typed_row = canonical_closed.get(cid)
+        source_row = typed_row or legacy_row
         closed.append(
             {
                 "candidate_id": cid,
-                "title": _bounded(row.get("title"), 400),
-                "memory_class": str(row.get("memory_class") or ""),
-                "reason": _bounded(row.get("reason") or row.get("strongest_reduction"), 1200),
-                "reopen_only_if": _bounded(row.get("reopen_only_if"), 1200),
+                "title": _bounded(source_row.get("title") or legacy_row.get("title"), 400),
+                "memory_class": str(typed_row.get("memory_class") or "") if typed_row else "LEGACY_SEARCH_CLOSURE_UNTYPED",
+                "failure_layer": typed_row.get("failure_layer") if typed_row else None,
+                "stop_class": str(typed_row.get("source_stop_class") or "") if typed_row else "",
+                "search_closure_certified": typed_row.get("search_closure_certified") is True if typed_row else False,
+                "dead_end_certified": typed_row.get("dead_end_certified") is True if typed_row else False,
+                "typing_status": "CANONICAL_TYPED_CLOSURE" if typed_row else "LEGACY_UNTYPED_SEARCH_CLOSURE",
+                "reason": _bounded(source_row.get("reason") or source_row.get("strongest_reduction") or legacy_row.get("reason"), 1200),
+                "reopen_only_if": _bounded(source_row.get("reopen_only_if") or legacy_row.get("reopen_only_if"), 1200),
             }
         )
+    for cid in CANONICAL_SAFETY_CLOSED_CANDIDATES:
+        typed_row = canonical_closed.get(cid)
+        if not typed_row:
+            continue
+        closed.append(
+            {
+                "candidate_id": cid,
+                "title": _bounded(typed_row.get("title"), 400),
+                "memory_class": str(typed_row.get("memory_class") or ""),
+                "failure_layer": typed_row.get("failure_layer"),
+                "stop_class": str(typed_row.get("source_stop_class") or ""),
+                "search_closure_certified": typed_row.get("search_closure_certified") is True,
+                "dead_end_certified": typed_row.get("dead_end_certified") is True,
+                "typing_status": "CANONICAL_TYPED_CLOSURE",
+                "reason": _bounded(typed_row.get("reason") or typed_row.get("strongest_reduction"), 1200),
+                "reopen_only_if": _bounded(typed_row.get("reopen_only_if"), 1200),
+            }
+        )
+    closed_summary = {
+        "total": len(closed),
+        "canonical_typed": sum(row.get("typing_status") == "CANONICAL_TYPED_CLOSURE" for row in closed),
+        "legacy_untyped": sum(row.get("typing_status") == "LEGACY_UNTYPED_SEARCH_CLOSURE" for row in closed),
+        "core_principle_dead_ends": sum(row.get("dead_end_certified") is True for row in closed),
+        "method_realization_closures": sum(row.get("failure_layer") == "method_realization" for row in closed),
+    }
 
     design = entry.get("design") or {}
     authority = entry.get("authority") or {}
@@ -404,6 +446,7 @@ def build_agent_safety_program_state(
         "qualification": qualification_public,
         "survey": survey,
         "closed_basins": closed,
+        "closed_basin_summary": closed_summary,
         "next_gate": {
             "name": "FRESH_SUPPORT_REALIZATION_DIAGNOSIS" if qualification_support_stop else ("CURRENT_SAFETY_QUALIFICATION_GATE" if bounded_execution_ready else "RUNTIME_MODEL_ASSET_PROVENANCE_GATE"),
             "required": True,
@@ -441,6 +484,7 @@ def build_agent_safety_program_state(
             **({"provenance_readjudication": _sha(Path(provenance_readjudication_path))} if provenance_readjudication_path and Path(provenance_readjudication_path).is_file() else {}),
             **({"current_safety_qualification": _sha(Path(qualification_result_path))} if qualification_result_path and Path(qualification_result_path).is_file() else {}),
             **({"literature_survey_supplement": _sha(Path(survey_supplement_path))} if survey_supplement_path and Path(survey_supplement_path).is_file() else {}),
+            **({"canonical_search_memory": _sha(Path(canonical_search_memory_path))} if canonical_search_memory_path and Path(canonical_search_memory_path).is_file() else {}),
         },
     }
     return state
@@ -513,9 +557,20 @@ def validate_agent_safety_program_state(state: dict[str, Any]) -> list[str]:
     refs = {row.get("ref") for row in state.get("survey") or [] if isinstance(row, dict)}
     if not set(SURVEY_REFS).issubset(refs):
         errors.append("agent-safety public survey lost audited primary-literature coverage")
-    closed = {row.get("candidate_id") for row in state.get("closed_basins") or [] if isinstance(row, dict)}
-    if closed != set(CLOSED_CANDIDATES):
-        errors.append("agent-safety public closed-basin projection drift")
+    closed_rows = [row for row in state.get("closed_basins") or [] if isinstance(row, dict)]
+    closed = {row.get("candidate_id") for row in closed_rows}
+    if not set(CLOSED_CANDIDATES).issubset(closed):
+        errors.append("agent-safety public closed-basin projection lost R9 archived closures")
+    if any(row.get("dead_end_certified") is True and (row.get("failure_layer") != "core_principle" or row.get("memory_class") != "CORE_PRINCIPLE_STOP") for row in closed_rows):
+        errors.append("agent-safety public state may certify dead-end only for canonical core-principle closures")
+    if any(row.get("memory_class") == "PRINCIPLE_DEAD_END" for row in closed_rows):
+        errors.append("agent-safety public state cannot expose legacy untyped PRINCIPLE_DEAD_END labels")
+    port010 = next((row for row in closed_rows if row.get("candidate_id") == "PORT-010"), None)
+    if port010 and (port010.get("failure_layer"), port010.get("memory_class"), port010.get("dead_end_certified")) != ("core_principle", "CORE_PRINCIPLE_STOP", True):
+        errors.append("PORT-010 canonical safety closure must remain scoped core-principle dead-end")
+    summary = state.get("closed_basin_summary") or {}
+    if summary and (int(summary.get("total") or 0) != len(closed_rows) or int(summary.get("core_principle_dead_ends") or 0) != sum(row.get("dead_end_certified") is True for row in closed_rows)):
+        errors.append("agent-safety closed-basin typed summary drift")
     if not (state.get("next_gate") or {}).get("required"):
         errors.append("agent-safety public state must retain runtime/budget preflight")
     return errors
@@ -526,6 +581,7 @@ def write_agent_safety_program_state(
     r9_root: Path,
     canonical_primary_state_path: Path | None = None,
     survey_supplement_path: Path | None = None,
+    canonical_search_memory_path: Path | None = None,
     harness_smoke_path: Path | None = None,
     harness_manifest_path: Path | None = None,
     runtime_asset_gate_path: Path | None = None,
@@ -538,6 +594,7 @@ def write_agent_safety_program_state(
         r9_root=r9_root,
         canonical_primary_state_path=canonical_primary_state_path,
         survey_supplement_path=survey_supplement_path,
+        canonical_search_memory_path=canonical_search_memory_path,
         harness_smoke_path=harness_smoke_path,
         harness_manifest_path=harness_manifest_path,
         runtime_asset_gate_path=runtime_asset_gate_path,
@@ -561,6 +618,7 @@ def main() -> None:
     parser.add_argument("--r9-root", type=Path, required=True)
     parser.add_argument("--canonical-primary", type=Path, default=PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.json")
     parser.add_argument("--survey-supplement", type=Path, default=DEFAULT_SURVEY_SUPPLEMENT)
+    parser.add_argument("--canonical-search-memory", type=Path, default=DEFAULT_CANONICAL_SEARCH_MEMORY)
     parser.add_argument("--harness-smoke", type=Path)
     parser.add_argument("--harness-manifest", type=Path)
     parser.add_argument("--runtime-asset-gate", type=Path)
@@ -573,6 +631,7 @@ def main() -> None:
         r9_root=args.r9_root,
         canonical_primary_state_path=args.canonical_primary,
         survey_supplement_path=args.survey_supplement,
+        canonical_search_memory_path=args.canonical_search_memory,
         harness_smoke_path=args.harness_smoke,
         harness_manifest_path=args.harness_manifest,
         runtime_asset_gate_path=args.runtime_asset_gate,
