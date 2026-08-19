@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-19T05:51:27Z",
+  "candidate_id": "PORT-010",
+  "primary_ref": "arXiv:2608.03509",
+  "status": "ZERO_PROVIDER_IMMUTABLE_REPLAY_VERIFIED",
+  "replay_kind": "DETERMINISTIC_REBUILD_FROM_FROZEN_EXTRACTION_CACHE",
+  "mutable_result_incident": {
+    "historical_mutable_name": "generated/agent-safety-port010-f0-result-20260819.json",
+    "adjudicated_expected_sha256": "56a670d7a4096e917a425b4ebc408d1fbf835e23eac21017c41ce268f0ef0b95",
+    "later_overwrite_observed_sha256": "7b63b8a37f36706451faabd468be3eb8248889ff35836cd7e9ea70d0357cd58e",
+    "provenance_break_detected": true,
+    "mutable_name_forbidden_as_canonical_scientific_binding": true
+  },
+  "replay_inputs": {
+    "protocol_sha256": "f702df8e74157829347c2c5d769ddecd934c1c78daf2ed2b97e6e25a5591bb65",
+    "extraction_cache_sha256": "5f605e82dbbf3b93a33db7b797b0c8861a0b3f57b992eb978910b5174dadcdc3",
+    "extraction_receipt_artifact": "generated/agent-safety-port010-f0-extraction-receipt-20260819.json",
+    "extraction_receipt_sha256": "988d5677c0278b356da5f880cd8ecfe47be637cbd2f758a2417c6192448c2f68",
+    "producer_script_sha256": "2ec91ef03a0f066446900a3d8ae9048c5c3739b774bd0d0445310ece7dee4181"
+  },
+  "replay_environment": {
+    "python": "3.10.19",
+    "numpy": "2.2.6",
+    "scikit_learn": "1.7.2"
+  },
+  "replay_result": {
+    "artifact": "generated/agent-safety-port010-f0-framing-matched-immutable-20260819.json",
+    "sha256": "56a670d7a4096e917a425b4ebc408d1fbf835e23eac21017c41ce268f0ef0b95",
+    "byte_identical_to_adjudicated_result": true,
+    "provider_calls_executed": 0,
+    "real_external_action_execution": false,
+    "decision": "PORT010_E_AXIS_F0_NEGATIVE_NO_PRINCIPLE_STOP"
+  },
+  "independent_adjudication": {
+    "artifact": "generated/agent-safety-port010-result-adjudication-20260819.json",
+    "sha256": "370efd416c4c33724f990ff8fae1e596b973f505a04aa503e1c3ce572d3d1871",
+    "bound_f0_sha256": "56a670d7a4096e917a425b4ebc408d1fbf835e23eac21017c41ce268f0ef0b95",
+    "kimi_disposition": "STOP_SCOPED_RESIDUAL",
+    "deepseek_disposition": "STOP_SCOPED_RESIDUAL"
+  },
+  "scientific_interpretation": {
+    "negative_f0_alone_is_not_a_dead_end": true,
+    "principle_stop_requires_positive_counter_mechanism": true,
+    "counter_mechanism": "Attack-framing/support mismatch produces the detection failure before extraction, while framing-matched learned detectors retain high binary detection after extraction.",
+    "scope": "PORT-010 exact standalone detector-general extraction-whitewashing residual only; not SkillJack, skill extraction, or agent safety as a whole."
+  },
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  },
+  "scientific_authority": false
+}

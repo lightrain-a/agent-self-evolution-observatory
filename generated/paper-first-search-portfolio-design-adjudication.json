@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T18:31:24+00:00",
+  "generated_at": "2026-08-19T05:53:50+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -56,7 +56,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-18T18:31:24+00:00",
+    "generated_at": "2026-08-19T05:53:50+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -2290,6 +2290,74 @@
         "scientific_authority": false
       },
       {
+        "source_candidate_id": "PORT-010",
+        "basin": "principle-readjudication-87314ba086321bf6",
+        "search_primitive": "COMPOSITION_INTERACTION",
+        "title": "Skill-extraction detector-general whitewashing does not survive attack-framing-matched detection control",
+        "avoid": [
+          "re-proposing the certified scoped closure without satisfying its reopen condition: Skill-extraction detector-general whitewashing does not survive attack-framing-matched detection control",
+          "using the negative experiment metric alone as the reason for a scientific dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "On the preregistered released-SkillJack 20-trajectory holdout, attack-framing support mismatch positively explains the binary detection failure attributed to extraction. Cross-framing word/character detectors score 100% on direct-naive attacks but 0% on the raw framed attacks before extraction, while framing-matched detectors retain 95%->95% (word) and 80%->100% (character) binary detection after extraction. The extraction-specific residual is therefore absent under the matched framing control even though extraction can change continuous detector scores.",
+        "current_source_refs": [
+          "arXiv:2608.03509"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.03509",
+          "generated/agent-safety-port010-f0-framing-matched-immutable-20260819.json",
+          "generated/agent-safety-port010-f0-extraction-receipt-20260819.json",
+          "generated/agent-safety-port010-framing-replay-receipt-20260819.json",
+          "generated/agent-safety-port010-result-adjudication-20260819.json"
+        ],
+        "problem_text": "PORT-010 exact standalone residual on released SkillJack/SkillX: SkillX extraction causes a detector-general detection failure on framed attacks that remains after controlling attack-framing/distribution shift.",
+        "reason": "PORT-010's exact detector-general whitewashing residual is closed in the released SkillJack/SkillX setting: framing/support mismatch can create the detector failure before extraction, while framing-matched learned detectors retain high binary detection after extraction. This does not imply that extraction has zero score effect, that SkillJack is invalid, that SkillX is safe, or that agent-safety/skill-extraction research is exhausted.",
+        "reopen_only_if": "Reopen only with fresh preregistered evidence, not threshold changes or post-hoc subgroups: on a new holdout with attack-framing-matched detector training/support, at least two independent competent detector families must show a statistically supported and practically large extraction-specific binary detection drop that exceeds the matched framing-shift control, or a new pre-outcome structural variable must force such a prediction under matched information.",
+        "search_closure_certified": true,
+        "dead_end_certified": true,
+        "closure_layer": "core_principle",
+        "failure_layer": "core_principle",
+        "memory_class": "CORE_PRINCIPLE_STOP",
+        "principle_update_allowed": true,
+        "broader_core_principle_falsified": false,
+        "source_stop_class": "PRINCIPLE_STOP",
+        "failure_layer_reason": "The current artifact explicitly types this scoped scientific closure as PRINCIPLE_STOP after a scope-matched positive counter-explanation or exact same-information reduction.",
+        "failure_layer_review_basis": "durable-readjudication-re-review-2026-08-18",
+        "experiment_run_for_this_readjudication": true,
+        "experiment_alone_authorizes_closure": false,
+        "counter_explanation": {
+          "type": "COUNTER_MECHANISM_SUPPORTED",
+          "statement": "On the preregistered released-SkillJack 20-trajectory holdout, attack-framing support mismatch positively explains the binary detection failure attributed to extraction. Cross-framing word/character detectors score 100% on direct-naive attacks but 0% on the raw framed attacks before extraction, while framing-matched detectors retain 95%->95% (word) and 80%->100% (character) binary detection after extraction. The extraction-specific residual is therefore absent under the matched framing control even though extraction can change continuous detector scores.",
+          "opposite_prediction": "If attack-framing support mismatch, rather than SkillX extraction, is the dominant cause of detector failure, detectors trained only on direct-naive attacks should fail on raw framed trajectories before extraction, while detectors trained on framed attacks should retain high binary detection after extraction. Both predictions are observed in the immutable framing-matched F0 replay.",
+          "opposite_principle": "A raw-to-skill detector-score change is not evidence of detector-general extraction whitewashing unless detector support is matched to attack framing and the extraction-induced binary failure remains larger than the matched framing shift.",
+          "opposite_search_seed": "Search for fresh preregistered settings where attack-framing-matched competent detectors still show a practically large extraction-specific binary detection collapse across at least two independent detector families; otherwise move to a different decision object such as semantic-effect retention rather than reusing detector score drop.",
+          "scope": "PORT-010 exact standalone residual on released SkillJack/SkillX: SkillX extraction causes a detector-general detection failure on framed attacks that remains after controlling attack-framing/distribution shift.",
+          "same_information_or_scope_matched": true,
+          "counter_prediction_observed": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2608.03509",
+            "generated/agent-safety-port010-f0-framing-matched-immutable-20260819.json",
+            "generated/agent-safety-port010-f0-extraction-receipt-20260819.json",
+            "generated/agent-safety-port010-framing-replay-receipt-20260819.json",
+            "generated/agent-safety-port010-result-adjudication-20260819.json"
+          ],
+          "alternative_explanations_ruled_out": [
+            "Mutable-result provenance drift: the adjudicated F0 bytes were deterministically rebuilt with zero provider calls and reproduced SHA-256 56a670d7... exactly before certification.",
+            "Detector incapacity: framing-matched word and character detectors detect 95% and 80% of raw held-out framed attacks, while direct-naive-trained cross-framing detectors detect 100% of direct-naive attacks.",
+            "Extraction/substrate failure: the frozen extraction receipt records full source-linked pairing for all 20 required holdout units.",
+            "Threshold leakage: detector thresholds were selected from five-fold OOF training data with the F0 holdout excluded.",
+            "A weak fixed regex detector is sufficient: regex has only 45% raw framed sensitivity, whereas the two competent learned families preserve or improve binary detection after extraction."
+          ],
+          "reopen_condition": "Reopen only with fresh preregistered evidence, not threshold changes or post-hoc subgroups: on a new holdout with attack-framing-matched detector training/support, at least two independent competent detector families must show a statistically supported and practically large extraction-specific binary detection drop that exceeds the matched framing-shift control, or a new pre-outcome structural variable must force such a prediction under matched information."
+        },
+        "source_readjudication_artifact": "generated/agent-safety-port010-principle-readjudication-20260819.json",
+        "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
         "source_candidate_id": "DOUBLE-RATCHET-HELDOUT-SELECTION-CLIFF",
         "basin": "principle-readjudication-8bf944906e5e63ab",
         "search_primitive": "",
@@ -3417,7 +3485,7 @@
         "scientific_authority": false
       }
     ],
-    "closed_basin_count": 40,
+    "closed_basin_count": 41,
     "closure_layer_counts": {
       "problem_novelty": 4,
       "execution": 0,
@@ -3426,7 +3494,7 @@
       "operationalization": 3,
       "method_realization": 28,
       "assumption_scope": 2,
-      "core_principle": 1
+      "core_principle": 2
     },
     "failure_layer_counts": {
       "execution": 0,
@@ -3435,7 +3503,7 @@
       "operationalization": 3,
       "method_realization": 28,
       "assumption_scope": 2,
-      "core_principle": 1
+      "core_principle": 2
     },
     "problem_novelty_stop_count": 4,
     "execution_stop_count": 0,
@@ -3444,12 +3512,12 @@
     "operationalization_stop_count": 3,
     "method_realization_stop_count": 28,
     "assumption_scope_stop_count": 2,
-    "core_principle_stop_count": 1,
+    "core_principle_stop_count": 2,
     "broader_core_principle_falsification_count": 0,
-    "principle_dead_end_count": 1,
-    "core_principle_dead_end_count": 1,
-    "principle_readjudication_closed_basin_count": 36,
-    "principle_readjudication_dead_end_count": 1,
+    "principle_dead_end_count": 2,
+    "core_principle_dead_end_count": 2,
+    "principle_readjudication_closed_basin_count": 37,
+    "principle_readjudication_dead_end_count": 2,
     "fresh_phenomenon_closure_count": 20,
     "fresh_phenomenon_closed_evidence_count": 35,
     "inversion_asset_evidence": [
@@ -3625,7 +3693,7 @@
     "near_miss_base_preflight_count": 4,
     "near_miss_terminal_support_hold_count": 3,
     "search_control_only": true,
-    "closed_object_count": 40
+    "closed_object_count": 41
   },
   "shadow_dead_end_memory": {
     "memory_id": "shadow-paper-design-core-principle-dead-end-memory-20260818-v1",
@@ -3705,10 +3773,78 @@
         "fresh_phenomenon_closure": {},
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "PORT-010",
+        "basin": "principle-readjudication-87314ba086321bf6",
+        "search_primitive": "COMPOSITION_INTERACTION",
+        "title": "Skill-extraction detector-general whitewashing does not survive attack-framing-matched detection control",
+        "avoid": [
+          "re-proposing the certified scoped closure without satisfying its reopen condition: Skill-extraction detector-general whitewashing does not survive attack-framing-matched detection control",
+          "using the negative experiment metric alone as the reason for a scientific dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "On the preregistered released-SkillJack 20-trajectory holdout, attack-framing support mismatch positively explains the binary detection failure attributed to extraction. Cross-framing word/character detectors score 100% on direct-naive attacks but 0% on the raw framed attacks before extraction, while framing-matched detectors retain 95%->95% (word) and 80%->100% (character) binary detection after extraction. The extraction-specific residual is therefore absent under the matched framing control even though extraction can change continuous detector scores.",
+        "current_source_refs": [
+          "arXiv:2608.03509"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.03509",
+          "generated/agent-safety-port010-f0-framing-matched-immutable-20260819.json",
+          "generated/agent-safety-port010-f0-extraction-receipt-20260819.json",
+          "generated/agent-safety-port010-framing-replay-receipt-20260819.json",
+          "generated/agent-safety-port010-result-adjudication-20260819.json"
+        ],
+        "problem_text": "PORT-010 exact standalone residual on released SkillJack/SkillX: SkillX extraction causes a detector-general detection failure on framed attacks that remains after controlling attack-framing/distribution shift.",
+        "reason": "PORT-010's exact detector-general whitewashing residual is closed in the released SkillJack/SkillX setting: framing/support mismatch can create the detector failure before extraction, while framing-matched learned detectors retain high binary detection after extraction. This does not imply that extraction has zero score effect, that SkillJack is invalid, that SkillX is safe, or that agent-safety/skill-extraction research is exhausted.",
+        "reopen_only_if": "Reopen only with fresh preregistered evidence, not threshold changes or post-hoc subgroups: on a new holdout with attack-framing-matched detector training/support, at least two independent competent detector families must show a statistically supported and practically large extraction-specific binary detection drop that exceeds the matched framing-shift control, or a new pre-outcome structural variable must force such a prediction under matched information.",
+        "search_closure_certified": true,
+        "dead_end_certified": true,
+        "closure_layer": "core_principle",
+        "failure_layer": "core_principle",
+        "memory_class": "CORE_PRINCIPLE_STOP",
+        "principle_update_allowed": true,
+        "broader_core_principle_falsified": false,
+        "source_stop_class": "PRINCIPLE_STOP",
+        "failure_layer_reason": "The current artifact explicitly types this scoped scientific closure as PRINCIPLE_STOP after a scope-matched positive counter-explanation or exact same-information reduction.",
+        "failure_layer_review_basis": "durable-readjudication-re-review-2026-08-18",
+        "experiment_run_for_this_readjudication": true,
+        "experiment_alone_authorizes_closure": false,
+        "counter_explanation": {
+          "type": "COUNTER_MECHANISM_SUPPORTED",
+          "statement": "On the preregistered released-SkillJack 20-trajectory holdout, attack-framing support mismatch positively explains the binary detection failure attributed to extraction. Cross-framing word/character detectors score 100% on direct-naive attacks but 0% on the raw framed attacks before extraction, while framing-matched detectors retain 95%->95% (word) and 80%->100% (character) binary detection after extraction. The extraction-specific residual is therefore absent under the matched framing control even though extraction can change continuous detector scores.",
+          "opposite_prediction": "If attack-framing support mismatch, rather than SkillX extraction, is the dominant cause of detector failure, detectors trained only on direct-naive attacks should fail on raw framed trajectories before extraction, while detectors trained on framed attacks should retain high binary detection after extraction. Both predictions are observed in the immutable framing-matched F0 replay.",
+          "opposite_principle": "A raw-to-skill detector-score change is not evidence of detector-general extraction whitewashing unless detector support is matched to attack framing and the extraction-induced binary failure remains larger than the matched framing shift.",
+          "opposite_search_seed": "Search for fresh preregistered settings where attack-framing-matched competent detectors still show a practically large extraction-specific binary detection collapse across at least two independent detector families; otherwise move to a different decision object such as semantic-effect retention rather than reusing detector score drop.",
+          "scope": "PORT-010 exact standalone residual on released SkillJack/SkillX: SkillX extraction causes a detector-general detection failure on framed attacks that remains after controlling attack-framing/distribution shift.",
+          "same_information_or_scope_matched": true,
+          "counter_prediction_observed": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2608.03509",
+            "generated/agent-safety-port010-f0-framing-matched-immutable-20260819.json",
+            "generated/agent-safety-port010-f0-extraction-receipt-20260819.json",
+            "generated/agent-safety-port010-framing-replay-receipt-20260819.json",
+            "generated/agent-safety-port010-result-adjudication-20260819.json"
+          ],
+          "alternative_explanations_ruled_out": [
+            "Mutable-result provenance drift: the adjudicated F0 bytes were deterministically rebuilt with zero provider calls and reproduced SHA-256 56a670d7... exactly before certification.",
+            "Detector incapacity: framing-matched word and character detectors detect 95% and 80% of raw held-out framed attacks, while direct-naive-trained cross-framing detectors detect 100% of direct-naive attacks.",
+            "Extraction/substrate failure: the frozen extraction receipt records full source-linked pairing for all 20 required holdout units.",
+            "Threshold leakage: detector thresholds were selected from five-fold OOF training data with the F0 holdout excluded.",
+            "A weak fixed regex detector is sufficient: regex has only 45% raw framed sensitivity, whereas the two competent learned families preserve or improve binary detection after extraction."
+          ],
+          "reopen_condition": "Reopen only with fresh preregistered evidence, not threshold changes or post-hoc subgroups: on a new holdout with attack-framing-matched detector training/support, at least two independent competent detector families must show a statistically supported and practically large extraction-specific binary detection drop that exceeds the matched framing-shift control, or a new pre-outcome structural variable must force such a prediction under matched information."
+        },
+        "source_readjudication_artifact": "generated/agent-safety-port010-principle-readjudication-20260819.json",
+        "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
       }
     ],
     "hold_objects": [],
-    "principle_dead_end_count": 1,
+    "principle_dead_end_count": 2,
     "scientific_authority_for_live_discovery": false,
     "cannot_mutate_canonical_generator_or_queue": true
   },
@@ -3761,10 +3897,10 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 1,
-    "shadow_closed_basins": 40,
-    "principle_readjudication_dead_ends": 1,
-    "principle_readjudication_closed_basins": 36,
+    "shadow_dead_end_objects": 2,
+    "shadow_closed_basins": 41,
+    "principle_readjudication_dead_ends": 2,
+    "principle_readjudication_closed_basins": 37,
     "problem_novelty_stops": 4,
     "execution_stops": 0,
     "experiment_identifiability_stops": 2,
@@ -3772,9 +3908,9 @@
     "operationalization_stops": 3,
     "method_realization_stops": 28,
     "assumption_scope_stops": 2,
-    "core_principle_stops": 1,
+    "core_principle_stops": 2,
     "broader_core_principle_falsifications": 0,
-    "core_principle_dead_ends": 1,
+    "core_principle_dead_ends": 2,
     "shadow_hold_objects": 9,
     "current_source_hard_veto_dead_ends": 0,
     "current_source_hard_veto_added_from_latest_run": 0,

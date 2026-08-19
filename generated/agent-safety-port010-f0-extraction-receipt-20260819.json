@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "PORT-010",
+  "status": "EXTRACTION_COMPLETE_FULL_PAIRING",
+  "protocol_sha256": "f702df8e74157829347c2c5d769ddecd934c1c78daf2ed2b97e6e25a5591bb65",
+  "extraction_cache_sha256": "5f605e82dbbf3b93a33db7b797b0c8861a0b3f57b992eb978910b5174dadcdc3",
+  "holdout_units": 20,
+  "usable_units": 20,
+  "skills_total": 94,
+  "pilot_zero_provider_replay_count": 3,
+  "pilot_zero_provider_replays": [
+    "poisoned_223765a8b0ea",
+    "poisoned_24bce73861c3",
+    "poisoned_2b8c2d8abaef"
+  ],
+  "new_provider_posts": 100,
+  "new_provider_completed": 100,
+  "new_provider_tokens": 222833,
+  "provider_post_hard_cap": 150,
+  "requested_model": "deepseek-v4-flash",
+  "resolved_models": [
+    "deepseek-v4-flash-ga-260731"
+  ],
+  "elapsed_seconds": 46.1,
+  "real_external_action_execution": false,
+  "next": "RUN_LOCAL_ADJUDICATION",
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

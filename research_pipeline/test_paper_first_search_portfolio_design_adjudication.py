@@ -155,7 +155,7 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
 
     def test_current_closed_basins_are_typed_by_actual_failure_layer(self) -> None:
         memory = self.state["shadow_search_memory"]
-        self.assertEqual(memory["closed_basin_count"], 40)
+        self.assertEqual(memory["closed_basin_count"], 41)
         self.assertEqual(memory["closure_layer_counts"], {
             "problem_novelty": 4,
             "execution": 0,
@@ -164,7 +164,7 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
             "operationalization": 3,
             "method_realization": 28,
             "assumption_scope": 2,
-            "core_principle": 1,
+            "core_principle": 2,
         })
         self.assertEqual(memory["failure_layer_counts"], {
             "execution": 0,
@@ -173,12 +173,12 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
             "operationalization": 3,
             "method_realization": 28,
             "assumption_scope": 2,
-            "core_principle": 1,
+            "core_principle": 2,
         })
-        self.assertEqual(memory["principle_dead_end_count"], 1)
-        self.assertEqual(memory["core_principle_stop_count"], 1)
+        self.assertEqual(memory["principle_dead_end_count"], 2)
+        self.assertEqual(memory["core_principle_stop_count"], 2)
         self.assertEqual(memory["broader_core_principle_falsification_count"], 0)
-        self.assertEqual(memory["core_principle_dead_end_count"], 1)
+        self.assertEqual(memory["core_principle_dead_end_count"], 2)
         self.assertEqual(len(memory["hold_objects"]), 9)
         self.assertTrue(all(row.get("dead_end_certified") is False for row in memory["hold_objects"]))
         pace = next(row for row in memory["closed_objects"] if row.get("source_candidate_id") == "PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY")
@@ -190,6 +190,14 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertEqual(pa01["memory_class"], "METHOD_REALIZATION_STOP")
         self.assertTrue(pa01["experiment_run_for_this_readjudication"])
         self.assertFalse(pa01["experiment_alone_authorizes_closure"])
+        port010 = next(row for row in memory["closed_objects"] if row.get("source_candidate_id") == "PORT-010")
+        self.assertEqual(port010["failure_layer"], "core_principle")
+        self.assertEqual(port010["memory_class"], "CORE_PRINCIPLE_STOP")
+        self.assertTrue(port010["principle_update_allowed"])
+        self.assertTrue(port010["dead_end_certified"])
+        self.assertFalse(port010["broader_core_principle_falsified"])
+        self.assertFalse(port010["experiment_alone_authorizes_closure"])
+        self.assertIn("framing", port010["counter_explanation"]["statement"].lower())
         sp09 = next(row for row in memory["closed_objects"] if row.get("source_candidate_id") == "SP-09")
         self.assertEqual(sp09["memory_class"], "PROBLEM_NOVELTY_STOP")
 
@@ -221,12 +229,12 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertEqual((sp15["memory_class"],sp15["stop_class"],sp15["failure_layer"],sp15["failure_subtype"]),("REOPENABLE_HOLD","SUPPORT_STOP","experiment_identifiability","NO_MATCHED_QUERY_IDENTIFIABILITY_UNIT"))
         self.assertFalse(sp15["dead_end_certified"]); self.assertFalse(sp15["principle_dead_end_certified"]); self.assertFalse(sp15["principle_update_allowed"])
         self.assertTrue(all(row["search_closure_certified"] is True and row.get("counter_explanation") for row in memory["closed_objects"]))
-        self.assertEqual(sum(row.get("dead_end_certified") is True for row in memory["closed_objects"]), 1)
+        self.assertEqual(sum(row.get("dead_end_certified") is True for row in memory["closed_objects"]), 2)
         self.assertFalse(dead["scientific_authority"])
         self.assertEqual(dead["persistent_dead_end_authority_scope"], "core_principle-only")
         self.assertTrue(dead["only_principle_stop_may_enter_persistent_dead_end_memory"])
         self.assertEqual(dead.get("hold_objects"), [])
-        self.assertEqual([row.get("source_candidate_id") for row in dead.get("blocked_objects") or []], ["PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY"])
+        self.assertEqual([row.get("source_candidate_id") for row in dead.get("blocked_objects") or []], ["PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY", "PORT-010"])
         self.assertTrue(all(row.get("failure_layer")=="core_principle" and row.get("dead_end_certified") is True for row in dead.get("blocked_objects") or []))
         self.assertEqual(memory.get("inversion_asset_evidence_count"),len(memory.get("inversion_asset_evidence") or []))
         self.assertEqual(memory.get("inversion_asset_search_active_count"),0)

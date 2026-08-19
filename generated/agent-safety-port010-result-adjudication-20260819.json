@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "PORT-010",
+  "status": "RESULT_ADJUDICATION_COMPLETE",
+  "f0_result_sha256": "56a670d7a4096e917a425b4ebc408d1fbf835e23eac21017c41ce268f0ef0b95",
+  "kimiz_diagnosis": {
+    "disposition": "STOP_SCOPED_RESIDUAL",
+    "deepest_explanation": "The preregistered F0 hypothesis—that skill extraction causes detector-general detection failure beyond attack-framing/distribution shift—is refuted by the evidence. All three detectors (word, char, regex) show zero extraction-shift significance (gate1_extraction_shift_detectors: []) and zero exceedance of framing shift (gate2_exceeds_framing_shift_detectors: []). The paired extraction permutation tests are non-significant or marginal (word p=1.049e-05 is significant but in the wrong direction: extraction_minus_framing_margin=-1.0 means framing dominates extraction; char p=0.65; regex p=0.0625). Framing confounds all three detectors (framing_confound_detectors: [word, char, regex]), meaning the naive cross-detection (raw_direct_naive_cross_detection_rate=1.0) is entirely explained by attack-framing artifacts, not by any extraction-specific vulnerability. The candidate residual 'SkillX extraction causes detector-general detection failure beyond attack-framing/distribution shift' is therefore counter-explained under the same information: detection failure is fully attributable to framing/distribution shift, and extraction adds no additional failure mode.",
+    "failure_layer": "core_principle",
+    "why": "The core preregistered principle—that extraction itself induces detection failure independent of framing—is directly contradicted by the gate audit. No detector passes gate 1 (extraction shift), no detector passes gate 2 (exceeds framing), and the extraction_minus_framing_margin is negative for all detectors, meaning extraction effects are subsumed by framing effects. This is not a support failure (training audits show perfect OOF performance: word cross OOF TPR=1.0/FPR=0.0, char cross OOF TPR=1.0/FPR=0.0), not a protocol failure (thresholds were preregistered via 5-fold OOF Youden J with F0 holdout excluded; full 20-pairing confirmed), and not an operationalization failure (detectors performed as designed on within-distribution data). The negative result cleanly falsifies the exact residual hypothesis.",
+    "persistent_dead_end_authorized": true,
+    "persistent_dead_end_scope": "PORT-010 exact residual only: 'SkillX extraction causes detector-general detection failure beyond attack-framing/distribution shift.' This dead-end does NOT extend to SkillJack, agent safety, or skill extraction as a whole—only to the specific claim that extraction induces detection failure beyond framing effects.",
+    "prospective_split": {
+      "allowed": false,
+      "object": "",
+      "why_not_posthoc": "No prospective split is permitted because the F0 hypothesis was cleanly falsified at the core principle layer. Any attempt to rescue the claim by narrowing to subgroups (e.g., persistent_backdoor) or changing aggregation methods would constitute post-hoc cherry-picking, which the instructions explicitly forbid.",
+      "fresh_evidence_required": ""
+    },
+    "implications_for_PORT013_PORT014": "PORT-013 and PORT-014 should not proceed under the assumption that extraction-induced detection failure is a live threat vector. Resources should be redirected toward framing/distribution-shift robustness, which the evidence identifies as the actual confound.",
+    "next_portfolio_action": "Close PORT-010 with a scoped principle stop. Document the exact residual as a persistent dead-end. Redirect portfolio effort toward mitigating framing/distribution-shift vulnerabilities in agent-safety detectors, as these are the empirically supported failure mode."
+  },
+  "independent_adjudication": {
+    "disposition": "STOP_SCOPED_RESIDUAL",
+    "deepest_explanation": "The preregistered F0 hypothesis—that skill extraction causes detector-general detection failure beyond attack-framing/distribution shift—is refuted by the evidence. All three detectors (word, char, regex) show zero extraction-shift significance (gate1_extraction_shift_detectors: []) and zero exceedance of framing shift (gate2_exceeds_framing_shift_detectors: []). The paired extraction permutation tests are non-significant or marginal (word p=1.049e-05 is significant but in the wrong direction: extraction_minus_framing_margin=-1.0 means framing dominates extraction; char p=0.65; regex p=0.0625). Framing confounds all three detectors (framing_confound_detectors: [word, char, regex]), meaning the naive cross-detection (raw_direct_naive_cross_detection_rate=1.0) is entirely explained by attack-framing artifacts, not by any extraction-specific vulnerability. The candidate residual 'SkillX extraction causes detector-general detection failure beyond attack-framing/distribution shift' is therefore counter-explained under the same information: detection failure is fully attributable to framing/distribution shift, and extraction adds no additional failure mode.",
+    "failure_layer": "core_principle",
+    "why": "The core preregistered principle—that extraction itself induces detection failure independent of framing—is directly contradicted by the gate audit. No detector passes gate 1 (extraction shift), no detector passes gate 2 (exceeds framing), and the extraction_minus_framing_margin is negative for all detectors, meaning extraction effects are subsumed by framing effects. This is not a support failure (training audits show perfect OOF performance: word cross OOF TPR=1.0/FPR=0.0, char cross OOF TPR=1.0/FPR=0.0), not a protocol failure (thresholds were preregistered via 5-fold OOF Youden J with F0 holdout excluded; full 20-pairing confirmed), and not an operationalization failure (detectors performed as designed on within-distribution data). The negative result cleanly falsifies the exact residual hypothesis.",
+    "persistent_dead_end_authorized": true,
+    "persistent_dead_end_scope": "PORT-010 exact residual only: 'SkillX extraction causes detector-general detection failure beyond attack-framing/distribution shift.' This dead-end does NOT extend to SkillJack, agent safety, or skill extraction as a whole—only to the specific claim that extraction induces detection failure beyond framing effects.",
+    "prospective_split": {
+      "allowed": false,
+      "object": "",
+      "why_not_posthoc": "No prospective split is permitted because the F0 hypothesis was cleanly falsified at the core principle layer. Any attempt to rescue the claim by narrowing to subgroups (e.g., persistent_backdoor) or changing aggregation methods would constitute post-hoc cherry-picking, which the instructions explicitly forbid.",
+      "fresh_evidence_required": ""
+    },
+    "implications_for_PORT013_PORT014": "PORT-013 and PORT-014 should not proceed under the assumption that extraction-induced detection failure is a live threat vector. Resources should be redirected toward framing/distribution-shift robustness, which the evidence identifies as the actual confound.",
+    "next_portfolio_action": "Close PORT-010 with a scoped principle stop. Document the exact residual as a persistent dead-end. Redirect portfolio effort toward mitigating framing/distribution-shift vulnerabilities in agent-safety detectors, as these are the empirically supported failure mode."
+  },
+  "provider_receipts": {
+    "kimi": {
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "response_id": "resp_02178707625935597147f4f1a42e833cb78104cc60692b046fecc",
+      "raw_sha256": "9d297f1b11d74681d13920fec8f719ea3e91c5dc125e56f899feb3f993aa7f6c",
+      "transport_attempts": [
+        {
+          "stage": "agent-safety-port010:result-diagnosis:kimi",
+          "prompt_sha256": "6ca82ab95885569b1b033cbb2fbc4964c683c10bb8d9d238f71e62230cf2da6d",
+          "requested_model": "kimi-k3",
+          "max_output_tokens": 4200,
+          "temperature": 0.1,
+          "thinking_profile": "disabled",
+          "request_fingerprint": "a58efba774f23daddceaae23dcf877f490ce7ea30b0a9caa91c2d7c69406030d",
+          "scientific_authority": false,
+          "status": "success",
+          "resolved_model": "kimi-k3",
+          "assistant_output_present": true,
+          "wall_clock_seconds": 600.0
+        }
+      ]
+    },
+    "deepseek": {
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-260425",
+      "response_id": "resp_021787076284442f0c372f6e4f4854baf3c7c3163c5b79d451150",
+      "raw_sha256": "ce63c35028bbe873e374e36e136f352c490dbaa73861dcff01319471649fb0b5",
+      "transport_attempts": [
+        {
+          "stage": "agent-safety-port010:result-adjudication:deepseek",
+          "prompt_sha256": "e4e22fa104dfae2000f07e085a71040ac6bddd46d8ca4add510c46bece66cff1",
+          "requested_model": "deepseek-v4-pro",
+          "max_output_tokens": 3800,
+          "temperature": 0.1,
+          "thinking_profile": "disabled",
+          "request_fingerprint": "a06858ad3eb60ac16221b937341abdb41878329bddbbf531aeaa07fb50ccb5fd",
+          "scientific_authority": false,
+          "status": "success",
+          "resolved_model": "deepseek-v4-pro-260425",
+          "assistant_output_present": true,
+          "wall_clock_seconds": 600.0
+        }
+      ]
+    }
+  },
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
