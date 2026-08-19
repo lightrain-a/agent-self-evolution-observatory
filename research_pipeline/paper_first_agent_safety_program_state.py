@@ -11,6 +11,8 @@ from .config import PROJECT_ROOT
 from .paper_first_agent_safety_r9_harness import (
     CANDIDATE_ID,
     CONTRACT_SHA256,
+    R9_CAPTURE_HF_ACQUISITION_MODE,
+    R9_DIRECT_HF_ACQUISITION_MODE,
     R9_FORMAL_HF_RECEIPT_CLASS,
     R9_FORMAL_RUNTIME_ASSET_GATE_CLASS,
     R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS,
@@ -223,6 +225,7 @@ def build_agent_safety_program_state(
     runtime_gate = runtime_asset_gate.get("formal_gate") if isinstance(runtime_asset_gate.get("formal_gate"), dict) else runtime_asset_gate
     runtime_status = str(runtime_asset_gate.get("status") or runtime_gate.get("status") or "NOT_RUN")
     runtime_gate_ready = False
+    runtime_assets: list[dict[str, Any]] = []
     if runtime_asset_gate:
         if runtime_asset_gate.get("candidate_id") not in (None, CANDIDATE_ID) or runtime_asset_gate.get("contract_sha256") not in (None, CONTRACT_SHA256):
             raise ValueError("R9 runtime asset gate identity/contract drift")
@@ -266,6 +269,15 @@ def build_agent_safety_program_state(
             raise ValueError("R9 cache-content receipt cannot be formal-gate eligible")
 
     bounded_execution_ready = bounded_plan_authority and runtime_gate_ready
+    runtime_acquisition_modes = sorted({str(row.get("acquisition_mode") or "") for row in runtime_assets if row.get("acquisition_mode")})
+    if runtime_gate_ready and runtime_acquisition_modes == [R9_CAPTURE_HF_ACQUISITION_MODE]:
+        official_metadata_transport = "GITHUB_ACTIONS_LITERAL_HF_CAPTURE"
+    elif runtime_gate_ready and runtime_acquisition_modes == [R9_DIRECT_HF_ACQUISITION_MODE]:
+        official_metadata_transport = "DIRECT_LITERAL_HUGGINGFACE"
+    elif runtime_gate_ready:
+        official_metadata_transport = "MIXED_FORMAL_LITERAL_HF"
+    else:
+        official_metadata_transport = "NONE"
 
     state = {
         "schema_version": "1.0",
@@ -325,6 +337,13 @@ def build_agent_safety_program_state(
                     "directory_present": row.get("directory_present") is True,
                     "hf_exact_revision_verified": row.get("hf_exact_revision_verified") is True,
                     "receipt_class": str(row.get("receipt_class") or ""),
+                    "acquisition_mode": str(row.get("acquisition_mode") or ""),
+                    "source_capture_verified": row.get("source_capture_verified") is True,
+                    "capture_environment": {
+                        "github_repository": str((row.get("capture_environment") or {}).get("github_repository") or ""),
+                        "github_run_id": str((row.get("capture_environment") or {}).get("github_run_id") or ""),
+                        "github_sha": str((row.get("capture_environment") or {}).get("github_sha") or ""),
+                    } if isinstance(row.get("capture_environment"), dict) else {},
                     "blockers": list(row.get("blockers") or []),
                 }
                 for row in runtime_gate.get("model_assets") or []
@@ -334,6 +353,7 @@ def build_agent_safety_program_state(
             "provenance_receipt_class": str(provenance_readjudication.get("receipt_class") or ""),
             "provenance_readjudication_artifact": (Path(provenance_readjudication_path).name if provenance_readjudication_path else ""),
             "official_metadata_connectivity": "VERIFIED" if runtime_gate_ready else "HOLD",
+            "official_metadata_transport": official_metadata_transport,
             "outcome_bearing_science_started": False,
         },
         "survey": survey,
@@ -397,6 +417,8 @@ def validate_agent_safety_program_state(state: dict[str, Any]) -> list[str]:
         or any(
             row.get("hf_exact_revision_verified") is not True
             or row.get("receipt_class") != R9_FORMAL_HF_RECEIPT_CLASS
+            or row.get("acquisition_mode") not in {R9_DIRECT_HF_ACQUISITION_MODE, R9_CAPTURE_HF_ACQUISITION_MODE}
+            or (row.get("acquisition_mode") == R9_CAPTURE_HF_ACQUISITION_MODE and row.get("source_capture_verified") is not True)
             for row in runtime_assets
         )
     ):
@@ -406,8 +428,8 @@ def validate_agent_safety_program_state(state: dict[str, Any]) -> list[str]:
         errors.append("agent-safety public bounded execution/runtime-asset accounting mismatch")
     if authority.get("qualification_probe_execution") is True and not bounded:
         errors.append("agent-safety qualification authority requires bounded evidence authority")
-    if runtime.get("provenance_receipt_class") == R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS and bounded:
-        errors.append("agent-safety cache-content receipt cannot authorize bounded evidence")
+    if runtime.get("provenance_receipt_class") == R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS and bounded and not runtime_ready:
+        errors.append("agent-safety cache-content receipt cannot authorize bounded evidence without formal runtime receipts")
     protocol = state.get("canonical_protocol") or {}
     invariants = protocol.get("execution_invariants") or {}
     budget = invariants.get("budget") or {}

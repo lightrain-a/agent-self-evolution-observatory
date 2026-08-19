@@ -14,6 +14,7 @@ from .paper_first_agent_safety_program_state import (
 from .paper_first_agent_safety_r9_harness import (
     CANDIDATE_ID,
     CONTRACT_SHA256,
+    R9_DIRECT_HF_ACQUISITION_MODE,
     R9_FORMAL_HF_RECEIPT_CLASS,
     R9_FORMAL_RUNTIME_ASSET_GATE_CLASS,
     R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS,
@@ -146,8 +147,8 @@ class AgentSafetyProgramStateTest(unittest.TestCase):
                 "blockers": [],
                 "verification_contract": {"accepted_receipt_class": R9_FORMAL_HF_RECEIPT_CLASS},
                 "model_assets": [
-                    {"role": "agent", "hf_exact_revision_verified": True, "receipt_class": R9_FORMAL_HF_RECEIPT_CLASS},
-                    {"role": "evaluator", "hf_exact_revision_verified": True, "receipt_class": R9_FORMAL_HF_RECEIPT_CLASS},
+                    {"role": "agent", "hf_exact_revision_verified": True, "receipt_class": R9_FORMAL_HF_RECEIPT_CLASS, "acquisition_mode": R9_DIRECT_HF_ACQUISITION_MODE, "source_capture_verified": False},
+                    {"role": "evaluator", "hf_exact_revision_verified": True, "receipt_class": R9_FORMAL_HF_RECEIPT_CLASS, "acquisition_mode": R9_DIRECT_HF_ACQUISITION_MODE, "source_capture_verified": False},
                 ],
             },
         }), encoding="utf-8")
@@ -266,9 +267,39 @@ class AgentSafetyProgramStateTest(unittest.TestCase):
             self.assertFalse(state["authority"]["paper_design"])
             self.assertFalse(state["authority"]["p0"])
             self.assertEqual(state["runtime"]["status"], "READY_RUNTIME_MODEL_ASSETS_PINNED")
+            self.assertEqual(state["runtime"]["official_metadata_transport"], "DIRECT_LITERAL_HUGGINGFACE")
             self.assertEqual(state["canonical_protocol"]["execution_invariants"]["budget"]["history_strata"], 2)
             self.assertEqual(state["canonical_protocol"]["execution_invariants"]["budget"]["total_model_evaluations_upper_bound"], 240)
             self.assertEqual(state["next_gate"]["name"], "CURRENT_SAFETY_QUALIFICATION_GATE")
+
+    def test_formal_runtime_receipts_supersede_legacy_nonformal_cache_for_qualification_authority(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            r9, canonical, smoke = self.fixture_r9(root)
+            harness_manifest, runtime_gate = self.promote_runtime_ready(r9, root)
+            readjudication = root / "cache-check.json"
+            readjudication.write_text(json.dumps({
+                "candidate_id": CANDIDATE_ID,
+                "contract_sha256": CONTRACT_SHA256,
+                "status": R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS,
+                "receipt_class": R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS,
+                "formal_gate_eligible": False,
+                "execution_authorized": False,
+                "scientific_authority": False,
+            }), encoding="utf-8")
+            state = build_agent_safety_program_state(
+                r9_root=r9,
+                canonical_primary_state_path=canonical,
+                harness_smoke_path=smoke,
+                harness_manifest_path=harness_manifest,
+                runtime_asset_gate_path=runtime_gate,
+                provenance_readjudication_path=readjudication,
+            )
+            self.assertEqual(validate_agent_safety_program_state(state), [])
+            self.assertTrue(state["execution_authorized"])
+            self.assertTrue(state["authority"]["qualification_probe_execution"])
+            self.assertEqual(state["runtime"]["provenance_receipt_class"], R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS)
+            self.assertEqual(state["runtime"]["official_metadata_transport"], "DIRECT_LITERAL_HUGGINGFACE")
 
     def test_public_validator_rejects_ready_without_formal_receipt_authority(self) -> None:
         with tempfile.TemporaryDirectory() as td:
