@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-19T08:42:30+00:00",
+  "generated_at": "2026-08-19T09:05:10+00:00",
   "program_id": "AGENT-SAFETY-R9",
   "title": "Latent Safety Fragility in Self-Evolving Agents",
   "candidate_id": "SHADOW-P01-C01",
@@ -230,25 +230,59 @@
     {
       "candidate_id": "AUTO-1-RELEVANT-SKILL-MISEXECUTION",
       "title": "High topical relevance plus skill-induced implementation faults does not identify a new over-utilization primitive",
-      "memory_class": "PRINCIPLE_DEAD_END",
+      "memory_class": "METHOD_REALIZATION_STOP",
+      "failure_layer": "method_realization",
+      "stop_class": "",
+      "search_closure_certified": true,
+      "dead_end_certified": false,
+      "typing_status": "CANONICAL_TYPED_CLOSURE",
       "reason": "The cited papers support two real but different observations: annotated-skill use precision can decouple from endpoint success, and loaded on-topic skills can causally induce implementation faults. They do not establish one shared convergent functional-failure object, and the TIF evidence already supports a same-information task-artifact alignment / negative-transfer explanation rather than a new over-utilization primitive.",
       "reopen_only_if": "Reopen only with provenance-audited matched units that oracle-load the same candidate skill, independently verify task-requirement-level compatibility and absence of conflicting/missing skill guidance, match executor, budget, generic instruction-following difficulty, and observable action-level uptake, and still expose a preregistered procedural-structure variable that predicts functional failure beyond same-information compatibility, negative-transfer, retrieval-utilization, and instruction-following baselines. A topical-relevance score, ground-truth skill label, aggregate TIF count, or retrieval-precision/success decoupling is insufficient."
     },
     {
       "candidate_id": "P03-AUTOSKILL-CONTEXT-UPTAKE",
       "title": "Selective fresh-session harm from one frozen skill library does not by itself identify a latent carryover-activation mechanism",
-      "memory_class": "PRINCIPLE_DEAD_END",
+      "memory_class": "METHOD_REALIZATION_STOP",
+      "failure_layer": "method_realization",
+      "stop_class": "",
+      "search_closure_certified": true,
+      "dead_end_certified": false,
+      "typing_status": "CANONICAL_TYPED_CLOSURE",
       "reason": "The current smoke contains a real positive persistent-library effect on P19, but its selective task dependence is already compatible with observable context-conditioned artifact uptake. It does not support a standalone latent carryover-activation mechanism beyond mature retrieval-utilization/instruction-following and effect-heterogeneity explanations.",
       "reopen_only_if": "Reopen only with provenance-audited matched units that hold the frozen library, task-artifact compatibility, and observable action-level uptake fixed yet show different fresh-session harm, or with harm that persists despite absence of corresponding artifact uptake, and show that same-information retrieval-utilization/instruction-following plus task-conditioned effect-heterogeneity baselines cannot express the residual."
     },
     {
       "candidate_id": "AGENT-SAFETY-DUAL-LOOP-RHO-CRITICAL",
       "title": "Writable-support overlap is not an independently manipulable composition variable for a fixed pair of self-evolution loops",
-      "memory_class": "PRINCIPLE_DEAD_END",
+      "memory_class": "LEGACY_SEARCH_CLOSURE_UNTYPED",
+      "failure_layer": null,
+      "stop_class": "",
+      "search_closure_certified": false,
+      "dead_end_certified": false,
+      "typing_status": "LEGACY_UNTYPED_SEARCH_CLOSURE",
       "reason": "The broader observation that independently useful self-evolution loops may interfere remains scientifically open. What is closed is the current standalone causal formulation that uses writable-support Jaccard overlap rho as an independently varying property of a fixed loop pair: rho is fixed by the treatment-defining supports, and changing it changes at least one component identity. The R6 support-matched evidence independently confirms that support identity is behaviorally consequential rather than an exchangeable nuisance.",
       "reopen_only_if": "Reopen only after reformulating the object around a pre-composition structural variable that admits an explicit intervention while the exact component update operators, support identities, independently validated behaviors, information, and budgets remain fixed; or after making an exchangeability/symmetry construction an explicit part of a new scientific object and independently validating that support identity is outcome-invariant. Another support-overlap statistic, finer matching, more seeds, outcome-selected masks, or a symmetry-enforced toy substrate does not reopen the current rho-critical formulation."
+    },
+    {
+      "candidate_id": "PORT-010",
+      "title": "Skill-extraction detector-general whitewashing does not survive attack-framing-matched detection control",
+      "memory_class": "CORE_PRINCIPLE_STOP",
+      "failure_layer": "core_principle",
+      "stop_class": "PRINCIPLE_STOP",
+      "search_closure_certified": true,
+      "dead_end_certified": true,
+      "typing_status": "CANONICAL_TYPED_CLOSURE",
+      "reason": "PORT-010's exact detector-general whitewashing residual is closed in the released SkillJack/SkillX setting: framing/support mismatch can create the detector failure before extraction, while framing-matched learned detectors retain high binary detection after extraction. This does not imply that extraction has zero score effect, that SkillJack is invalid, that SkillX is safe, or that agent-safety/skill-extraction research is exhausted.",
+      "reopen_only_if": "Reopen only with fresh preregistered evidence, not threshold changes or post-hoc subgroups: on a new holdout with attack-framing-matched detector training/support, at least two independent competent detector families must show a statistically supported and practically large extraction-specific binary detection drop that exceeds the matched framing-shift control, or a new pre-outcome structural variable must force such a prediction under matched information."
     }
   ],
+  "closed_basin_summary": {
+    "total": 4,
+    "canonical_typed": 3,
+    "legacy_untyped": 1,
+    "core_principle_dead_ends": 1,
+    "method_realization_closures": 2
+  },
   "next_gate": {
     "name": "FRESH_SUPPORT_REALIZATION_DIAGNOSIS",
     "required": true,
@@ -281,6 +315,7 @@
     "runtime_asset_gate": "bf01f256dad6ef1e4fe3207f5cfaa3ea392a61b99e98693f56dd2d0a9e0d7ba9",
     "provenance_readjudication": "7730aa5bedc96c358c3563e4e6ca3bd9bbe8c31a6bc02c765d64bc7f11ebde62",
     "current_safety_qualification": "d6fae9af4b8fd4a331d9a6bfe51ce91dd72fec8e3442c014097478e9adeaefd7",
-    "literature_survey_supplement": "bb572fe63b188f9fb7cc1a1a17c38b76e5473e70da765b15bf120bead2c91ca2"
+    "literature_survey_supplement": "bb572fe63b188f9fb7cc1a1a17c38b76e5473e70da765b15bf120bead2c91ca2",
+    "canonical_search_memory": "1978a43749fcb3802a3c45582ff77dad6ac7b62643f1e73f1f009904f11a8fa1"
   }
 }
