@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import hashlib
 import json
 import re
@@ -56,9 +57,13 @@ R9_EVALUATOR_MODEL_REVISION = "0cd31cdc8b53209dd5b153b20026ff085901bb14"
 R9_MODEL_REVISION_MARKER = ".r9-model-revision.json"
 R9_MODEL_VERIFICATION_RECEIPT = ".r9-hf-verification.json"
 R9_MODEL_SOURCE_METADATA = ".r9-hf-source-metadata.json"
+R9_MODEL_SOURCE_CAPTURE = ".r9-hf-source-capture.json"
 R9_FORMAL_HF_RECEIPT_CLASS = "FORMAL_HF_EXACT_REVISION_CONTENT_ADDRESSED_VERIFICATION"
 R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS = "NON_AUTHORITATIVE_CACHE_CONTENT_CHECK"
+R9_OFFICIAL_HF_CAPTURE_CLASS = "OFFICIAL_HF_EXACT_REVISION_METADATA_CAPTURE"
 R9_FORMAL_RUNTIME_ASSET_GATE_CLASS = "FORMAL_R9_RUNTIME_MODEL_ASSET_GATE"
+R9_DIRECT_HF_ACQUISITION_MODE = "DIRECT_LITERAL_HUGGINGFACE"
+R9_CAPTURE_HF_ACQUISITION_MODE = "VERIFIED_LITERAL_HUGGINGFACE_CAPTURE"
 R9_REQUIRED_MODEL_FILES = {
     "agent": (
         "config.json",
@@ -382,6 +387,75 @@ def _hf_revision_api_url(model_id: str, revision: str) -> str:
     return f"https://huggingface.co/api/models/{model_id}/revision/{revision}?blobs=true"
 
 
+def _load_official_hf_metadata_capture(
+    *, capture_path: Path, role: str, model_id: str, revision: str
+) -> dict[str, Any]:
+    capture_path = Path(capture_path)
+    raw_capture = capture_path.read_bytes()
+    try:
+        capture = json.loads(raw_capture.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise RuntimeError("official HF metadata capture is not valid JSON") from error
+    if capture.get("artifact_class") != R9_OFFICIAL_HF_CAPTURE_CLASS:
+        raise RuntimeError("official HF metadata capture class mismatch")
+    if capture.get("scientific_authority") is not False or capture.get("execution_authorized") is not False:
+        raise RuntimeError("official HF metadata capture cannot carry science/execution authority")
+    environment = capture.get("capture_environment") or {}
+    repository = str(environment.get("github_repository") or "")
+    run_id = str(environment.get("github_run_id") or "")
+    github_sha = str(environment.get("github_sha") or "").lower()
+    if repository != "lightrain-a/agent-self-evolution-observatory":
+        raise RuntimeError("official HF metadata capture repository mismatch")
+    if not run_id.isdigit() or not re.fullmatch(r"[0-9a-f]{40}", github_sha):
+        raise RuntimeError("official HF metadata capture GitHub run provenance invalid")
+    row = (capture.get("models") or {}).get(role)
+    if not isinstance(row, dict):
+        raise RuntimeError(f"official HF metadata capture missing role:{role}")
+    expected_url = _hf_revision_api_url(model_id, revision)
+    if (
+        row.get("model_id") != model_id
+        or row.get("revision") != revision
+        or row.get("source_url") != expected_url
+        or row.get("source_final_url") != expected_url
+        or row.get("source_http_status") != 200
+    ):
+        raise RuntimeError("official HF metadata capture source identity mismatch")
+    encoded = str(row.get("raw_metadata_base64") or "")
+    try:
+        raw = base64.b64decode(encoded.encode("ascii"), validate=True)
+    except (UnicodeEncodeError, ValueError) as error:
+        raise RuntimeError("official HF metadata capture raw metadata encoding invalid") from error
+    if not raw or _sha_bytes(raw) != str(row.get("raw_metadata_sha256") or "").lower():
+        raise RuntimeError("official HF metadata capture raw metadata digest mismatch")
+    try:
+        metadata = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise RuntimeError("captured official HF exact-revision metadata is not valid JSON") from error
+    if _hf_metadata_identity(metadata)[:2] != (model_id, revision):
+        raise RuntimeError("captured official HF exact-revision metadata identity mismatch")
+    required_files = set(R9_REQUIRED_MODEL_FILES[role])
+    source_manifest, source_manifest_sha = _hf_source_manifest(metadata, required_files)
+    if source_manifest_sha != str(row.get("source_manifest_sha256") or ""):
+        raise RuntimeError("official HF metadata capture source manifest digest mismatch")
+    return {
+        "status": 200,
+        "final_url": expected_url,
+        "content": raw,
+        "capture_bytes": raw_capture,
+        "capture_sha256": _sha_bytes(raw_capture),
+        "capture_environment": {
+            "github_repository": repository,
+            "github_run_id": run_id,
+            "github_sha": github_sha,
+            "github_workflow": str(environment.get("github_workflow") or ""),
+            "runner_name": str(environment.get("runner_name") or ""),
+        },
+        "captured_at": str(capture.get("captured_at") or ""),
+        "source_manifest": source_manifest,
+        "source_manifest_sha256": source_manifest_sha,
+    }
+
+
 def _source_identity_matches_file(path: Path, source_item: dict[str, Any]) -> tuple[bool, str, str]:
     if not path.is_file():
         return False, "missing", ""
@@ -405,6 +479,7 @@ def acquire_and_prepare_hf_model_provenance(
     model_dir: Path,
     ancillary_cache_dir: Path | None = None,
     requester: Callable[[str], dict[str, Any]] | None = None,
+    official_capture_path: Path | None = None,
 ) -> dict[str, Any]:
     """Acquire official HF exact-revision metadata and prepare an R9 model receipt.
 
@@ -426,15 +501,30 @@ def acquire_and_prepare_hf_model_provenance(
     model_dir.mkdir(parents=True, exist_ok=True)
     url = _hf_revision_api_url(model_id, revision)
 
-    if requester is None:
+    capture_payload: dict[str, Any] = {}
+    if official_capture_path is not None:
+        if requester is not None:
+            raise ValueError("official_capture_path and requester are mutually exclusive")
+        capture_payload = _load_official_hf_metadata_capture(
+            capture_path=Path(official_capture_path), role=role, model_id=model_id, revision=revision
+        )
+        response_payload = {
+            "status": capture_payload["status"],
+            "final_url": capture_payload["final_url"],
+            "content": capture_payload["content"],
+        }
+        acquisition_mode = R9_CAPTURE_HF_ACQUISITION_MODE
+    elif requester is None:
         request = urllib.request.Request(url, headers={"User-Agent": "Agent-Self-Evolution-Observatory/R9-HF-Provenance"})
         with urllib.request.urlopen(request, timeout=20) as response:
             status = int(getattr(response, "status", 0) or response.getcode() or 0)
             final_url = str(response.geturl() or "")
             raw = response.read()
         response_payload = {"status": status, "final_url": final_url, "content": raw}
+        acquisition_mode = R9_DIRECT_HF_ACQUISITION_MODE
     else:
         response_payload = dict(requester(url) or {})
+        acquisition_mode = R9_DIRECT_HF_ACQUISITION_MODE
     status = int(response_payload.get("status") or 0)
     final_url = str(response_payload.get("final_url") or "")
     raw = response_payload.get("content")
@@ -480,10 +570,22 @@ def acquire_and_prepare_hf_model_provenance(
 
     source_metadata_path = model_dir / R9_MODEL_SOURCE_METADATA
     source_metadata_path.write_bytes(bytes(raw))
+    source_capture_receipt: dict[str, Any] = {}
+    if acquisition_mode == R9_CAPTURE_HF_ACQUISITION_MODE:
+        source_capture_path = model_dir / R9_MODEL_SOURCE_CAPTURE
+        source_capture_path.write_bytes(bytes(capture_payload["capture_bytes"]))
+        source_capture_receipt = {
+            "source_capture": R9_MODEL_SOURCE_CAPTURE,
+            "source_capture_sha256": _sha_file(source_capture_path),
+            "capture_artifact_class": R9_OFFICIAL_HF_CAPTURE_CLASS,
+            "capture_environment": capture_payload["capture_environment"],
+            "captured_at": capture_payload["captured_at"],
+        }
     receipt = {
-        "schema_version": "2.0",
+        "schema_version": "2.1",
         "receipt_class": R9_FORMAL_HF_RECEIPT_CLASS,
         "formal_gate_eligible": True,
+        "acquisition_mode": acquisition_mode,
         "model_id": model_id,
         "revision": revision,
         "source_domain": "huggingface.co",
@@ -497,12 +599,13 @@ def acquire_and_prepare_hf_model_provenance(
         "files": verified_files,
         "files_manifest_sha256": files_manifest_sha,
         "staged_from_ancillary_cache": staged_from_cache,
+        **source_capture_receipt,
         "scientific_authority": False,
     }
     receipt_path = model_dir / R9_MODEL_VERIFICATION_RECEIPT
     receipt_path.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     marker = {
-        "schema_version": "2.0",
+        "schema_version": "2.1",
         "verification_receipt_class": R9_FORMAL_HF_RECEIPT_CLASS,
         "model_id": model_id,
         "revision": revision,
@@ -520,6 +623,7 @@ def acquire_and_prepare_hf_model_provenance(
         "model_id": model_id,
         "revision": revision,
         "source_url": url,
+        "acquisition_mode": acquisition_mode,
         "source_metadata_sha256": receipt["source_metadata_sha256"],
         "source_manifest_sha256": source_manifest_sha,
         "files_manifest_sha256": files_manifest_sha,
@@ -550,6 +654,7 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
         marker = root / R9_MODEL_REVISION_MARKER
         receipt_path = root / R9_MODEL_VERIFICATION_RECEIPT
         source_metadata_path = root / R9_MODEL_SOURCE_METADATA
+        source_capture_path = root / R9_MODEL_SOURCE_CAPTURE
         required_files = set(R9_REQUIRED_MODEL_FILES[role])
         row: dict[str, Any] = {
             "role": role,
@@ -560,6 +665,8 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
             "revision_marker_present": marker.is_file(),
             "verification_receipt_present": receipt_path.is_file(),
             "source_metadata_present": source_metadata_path.is_file(),
+            "source_capture_present": source_capture_path.is_file(),
+            "source_capture_verified": False,
             "revision_match": False,
             "verification_receipt_digest_match": False,
             "source_metadata_digest_match": False,
@@ -632,6 +739,7 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
                 expected_source_url = _hf_revision_api_url(model_id, revision)
                 exact_verified = receipt.get("exact_revision_verified") is True
                 formal_gate_eligible = receipt.get("formal_gate_eligible") is True
+                acquisition_mode = str(receipt.get("acquisition_mode") or "").strip()
                 source_metadata_name = str(receipt.get("source_metadata") or "").strip()
                 source_metadata_sha = str(receipt.get("source_metadata_sha256") or "").strip().lower()
                 row.update({
@@ -642,6 +750,7 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
                     "source_final_url": source_final_url,
                     "source_http_status": source_http_status,
                     "exact_revision_claim": exact_verified,
+                    "acquisition_mode": acquisition_mode,
                 })
                 if receipt_id != model_id or receipt_revision != revision:
                     role_failures.append("verification-receipt-identity-mismatch")
@@ -655,6 +764,36 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
                     role_failures.append("exact-revision-not-verified")
                 if receipt.get("scientific_authority") is not False:
                     role_failures.append("verification-receipt-authority-invalid")
+                if acquisition_mode not in {R9_DIRECT_HF_ACQUISITION_MODE, R9_CAPTURE_HF_ACQUISITION_MODE}:
+                    role_failures.append("verification-acquisition-mode-invalid")
+                capture_check: dict[str, Any] = {}
+                acquisition_provenance_valid = acquisition_mode == R9_DIRECT_HF_ACQUISITION_MODE
+                if acquisition_mode == R9_CAPTURE_HF_ACQUISITION_MODE:
+                    source_capture_name = str(receipt.get("source_capture") or "").strip()
+                    source_capture_sha = str(receipt.get("source_capture_sha256") or "").strip().lower()
+                    if source_capture_name != R9_MODEL_SOURCE_CAPTURE:
+                        role_failures.append("source-capture-reference-invalid")
+                    if not re.fullmatch(r"[0-9a-f]{64}", source_capture_sha):
+                        role_failures.append("source-capture-digest-invalid")
+                    if not source_capture_path.is_file():
+                        role_failures.append("source-capture-missing")
+                    elif _sha_file(source_capture_path) != source_capture_sha:
+                        role_failures.append("source-capture-digest-mismatch")
+                    else:
+                        try:
+                            capture_check = _load_official_hf_metadata_capture(
+                                capture_path=source_capture_path,
+                                role=role,
+                                model_id=model_id,
+                                revision=revision,
+                            )
+                        except RuntimeError:
+                            role_failures.append("source-capture-verification-invalid")
+                        else:
+                            acquisition_provenance_valid = True
+                            row["source_capture_sha256"] = source_capture_sha
+                            row["source_capture_verified"] = True
+                            row["capture_environment"] = capture_check["capture_environment"]
                 if source_metadata_name != R9_MODEL_SOURCE_METADATA:
                     role_failures.append("source-metadata-reference-invalid")
                 if not re.fullmatch(r"[0-9a-f]{64}", source_metadata_sha):
@@ -669,6 +808,8 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
                     row["source_metadata_digest_match"] = actual_source_sha == source_metadata_sha
                     if not row["source_metadata_digest_match"]:
                         role_failures.append("source-metadata-digest-mismatch")
+                    if capture_check and _sha_bytes(capture_check["content"]) != actual_source_sha:
+                        role_failures.append("source-capture-metadata-content-mismatch")
                     try:
                         source_metadata = json.loads(source_metadata_path.read_text(encoding="utf-8"))
                     except (OSError, json.JSONDecodeError):
@@ -769,6 +910,7 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
                     and exact_verified
                     and receipt_class == R9_FORMAL_HF_RECEIPT_CLASS
                     and formal_gate_eligible
+                    and acquisition_provenance_valid
                     and source_metadata
                     and _hf_metadata_identity(source_metadata)[:2] == (model_id, revision)
                     and receipt.get("scientific_authority") is False
@@ -792,6 +934,8 @@ def runtime_model_asset_gate(*, agent_model_dir: Path, evaluator_model_dir: Path
             "marker_only_is_insufficient": True,
             "content_addressed_hf_receipt_required": True,
             "exact_hf_revision_metadata_required": True,
+            "direct_or_github_actions_literal_hf_capture_required": True,
+            "accepted_acquisition_modes": [R9_DIRECT_HF_ACQUISITION_MODE, R9_CAPTURE_HF_ACQUISITION_MODE],
             "complete_role_runtime_file_set_required": True,
             "lfs_files_must_match_hf_metadata_sha256": True,
             "git_files_must_match_hf_metadata_blob_id": True,
@@ -1075,6 +1219,7 @@ def main() -> None:
     parser.add_argument("--role", choices=("agent", "evaluator"))
     parser.add_argument("--model-dir", type=Path)
     parser.add_argument("--ancillary-cache", type=Path)
+    parser.add_argument("--official-metadata-capture", type=Path)
     parser.add_argument("--evidence-plan", type=Path)
     parser.add_argument("--agent-model-dir", type=Path)
     parser.add_argument("--evaluator-model-dir", type=Path)
@@ -1089,6 +1234,7 @@ def main() -> None:
             role=args.role,
             model_dir=args.model_dir,
             ancillary_cache_dir=args.ancillary_cache,
+            official_capture_path=args.official_metadata_capture,
         )
     elif args.execution_preflight:
         required = {

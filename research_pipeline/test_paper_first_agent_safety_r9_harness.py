@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 import tempfile
@@ -15,13 +16,19 @@ from .paper_first_agent_safety_r9_harness import (
     R9_AGENT_MODEL_REVISION,
     R9_EVALUATOR_MODEL_ID,
     R9_EVALUATOR_MODEL_REVISION,
+    R9_CAPTURE_HF_ACQUISITION_MODE,
+    R9_DIRECT_HF_ACQUISITION_MODE,
     R9_FORMAL_HF_RECEIPT_CLASS,
     R9_FORMAL_RUNTIME_ASSET_GATE_CLASS,
     R9_NON_AUTHORITATIVE_CACHE_RECEIPT_CLASS,
+    R9_OFFICIAL_HF_CAPTURE_CLASS,
     R9_MODEL_REVISION_MARKER,
+    R9_MODEL_SOURCE_CAPTURE,
     R9_MODEL_SOURCE_METADATA,
     R9_MODEL_VERIFICATION_RECEIPT,
     R9_REQUIRED_MODEL_FILES,
+    _hf_revision_api_url,
+    _hf_source_manifest,
     acquire_and_prepare_hf_model_provenance,
     clone_future_branch,
     build_r9_model_call_budget,
@@ -76,6 +83,7 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
             "schema_version": "2.0",
             "receipt_class": R9_FORMAL_HF_RECEIPT_CLASS,
             "formal_gate_eligible": True,
+            "acquisition_mode": R9_DIRECT_HF_ACQUISITION_MODE,
             "model_id": model_id,
             "revision": revision,
             "source_domain": source_domain,
@@ -104,6 +112,43 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
             "scientific_authority": False,
         }
         (root / R9_MODEL_REVISION_MARKER).write_text(json.dumps(marker, sort_keys=True), encoding="utf-8")
+
+    def write_official_capture(self, path: Path, *, role: str, model_id: str, revision: str, metadata: dict) -> None:
+        raw = json.dumps(metadata, sort_keys=True).encode("utf-8")
+        manifest, manifest_sha = _hf_source_manifest(metadata, set(R9_REQUIRED_MODEL_FILES[role]))
+        url = _hf_revision_api_url(model_id, revision)
+        payload = {
+            "schema_version": "1.0",
+            "artifact_class": R9_OFFICIAL_HF_CAPTURE_CLASS,
+            "captured_at": "2026-08-19T05:30:00+00:00",
+            "capture_environment": {
+                "github_repository": "lightrain-a/agent-self-evolution-observatory",
+                "github_run_id": "123456789",
+                "github_sha": "a" * 40,
+                "github_workflow": "Capture R9 official HF provenance",
+                "runner_name": "GitHub Actions 1",
+            },
+            "models": {
+                role: {
+                    "role": role,
+                    "model_id": model_id,
+                    "revision": revision,
+                    "source_url": url,
+                    "source_final_url": url,
+                    "source_http_status": 200,
+                    "raw_metadata_sha256": hashlib.sha256(raw).hexdigest(),
+                    "raw_metadata_base64": base64.b64encode(raw).decode("ascii"),
+                    "source_manifest": manifest,
+                    "source_manifest_sha256": manifest_sha,
+                    "required_file_count": len(R9_REQUIRED_MODEL_FILES[role]),
+                }
+            },
+            "capture_is_transport_provenance_only": True,
+            "formal_gate_eligible_as_transport": True,
+            "execution_authorized": False,
+            "scientific_authority": False,
+        }
+        path.write_text(json.dumps(payload, sort_keys=True), encoding="utf-8")
 
     def fixture_sources(self, root: Path) -> tuple[Path, Path]:
         awm = root / "awm"
@@ -312,7 +357,61 @@ class AgentSafetyR9HarnessTest(unittest.TestCase):
             self.assertTrue((model_dir/R9_MODEL_SOURCE_METADATA).is_file())
             receipt=json.loads((model_dir/R9_MODEL_VERIFICATION_RECEIPT).read_text())
             self.assertEqual(receipt["receipt_class"],R9_FORMAL_HF_RECEIPT_CLASS)
+            self.assertEqual(receipt["acquisition_mode"],R9_DIRECT_HF_ACQUISITION_MODE)
             self.assertTrue(receipt["formal_gate_eligible"])
+
+    def test_provenance_preparer_accepts_verified_github_actions_literal_hf_capture(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); agent = root / "agent"; evaluator = root / "evaluator"; capture = root / "capture.json"
+            self.write_verified_model_dir(agent, role="agent", model_id=R9_AGENT_MODEL_ID, revision=R9_AGENT_MODEL_REVISION)
+            metadata = json.loads((agent / R9_MODEL_SOURCE_METADATA).read_text(encoding="utf-8"))
+            self.write_official_capture(
+                capture,
+                role="agent",
+                model_id=R9_AGENT_MODEL_ID,
+                revision=R9_AGENT_MODEL_REVISION,
+                metadata=metadata,
+            )
+            for name in (R9_MODEL_REVISION_MARKER, R9_MODEL_VERIFICATION_RECEIPT, R9_MODEL_SOURCE_METADATA):
+                (agent / name).unlink()
+            result = acquire_and_prepare_hf_model_provenance(
+                role="agent",
+                model_dir=agent,
+                official_capture_path=capture,
+            )
+            self.assertEqual(result["acquisition_mode"], R9_CAPTURE_HF_ACQUISITION_MODE)
+            self.assertTrue((agent / R9_MODEL_SOURCE_CAPTURE).is_file())
+            receipt = json.loads((agent / R9_MODEL_VERIFICATION_RECEIPT).read_text(encoding="utf-8"))
+            self.assertEqual(receipt["acquisition_mode"], R9_CAPTURE_HF_ACQUISITION_MODE)
+            self.assertEqual(receipt["source_capture"], R9_MODEL_SOURCE_CAPTURE)
+            self.assertEqual(receipt["capture_artifact_class"], R9_OFFICIAL_HF_CAPTURE_CLASS)
+
+            self.write_verified_model_dir(evaluator, role="evaluator", model_id=R9_EVALUATOR_MODEL_ID, revision=R9_EVALUATOR_MODEL_REVISION)
+            gate = runtime_model_asset_gate(agent_model_dir=agent, evaluator_model_dir=evaluator)
+            self.assertTrue(gate["execution_authorized"])
+            agent_row = next(row for row in gate["model_assets"] if row["role"] == "agent")
+            self.assertEqual(agent_row["acquisition_mode"], R9_CAPTURE_HF_ACQUISITION_MODE)
+            self.assertTrue(agent_row["source_capture_verified"])
+
+            (agent / R9_MODEL_SOURCE_CAPTURE).write_text("{}", encoding="utf-8")
+            broken = runtime_model_asset_gate(agent_model_dir=agent, evaluator_model_dir=evaluator)
+            self.assertFalse(broken["execution_authorized"])
+            self.assertIn("agent-source-capture-digest-mismatch", broken["blockers"])
+
+    def test_provenance_preparer_rejects_wrong_repository_capture(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); agent = root / "agent"; capture = root / "capture.json"
+            self.write_verified_model_dir(agent, role="agent", model_id=R9_AGENT_MODEL_ID, revision=R9_AGENT_MODEL_REVISION)
+            metadata = json.loads((agent / R9_MODEL_SOURCE_METADATA).read_text(encoding="utf-8"))
+            self.write_official_capture(capture, role="agent", model_id=R9_AGENT_MODEL_ID, revision=R9_AGENT_MODEL_REVISION, metadata=metadata)
+            payload = json.loads(capture.read_text(encoding="utf-8"))
+            payload["capture_environment"]["github_repository"] = "untrusted/example"
+            capture.write_text(json.dumps(payload), encoding="utf-8")
+            for name in (R9_MODEL_REVISION_MARKER, R9_MODEL_VERIFICATION_RECEIPT, R9_MODEL_SOURCE_METADATA):
+                (agent / name).unlink()
+            with self.assertRaisesRegex(RuntimeError, "repository mismatch"):
+                acquire_and_prepare_hf_model_provenance(role="agent", model_dir=agent, official_capture_path=capture)
+            self.assertFalse((agent / R9_MODEL_REVISION_MARKER).exists())
 
     def test_provenance_preparer_rejects_mirror_final_url_without_writing_marker(self) -> None:
         with tempfile.TemporaryDirectory() as td:
