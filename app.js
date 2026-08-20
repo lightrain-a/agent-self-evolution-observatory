@@ -683,6 +683,7 @@ const ZH_PURE_TEXT = new Map([
   ["Use frozen existing P0 evidence; do not rerun identical compute.","使用已冻结的现有 P0 证据；不要重复运行相同计算。"],
   ["Merge branch soft-audit into research-system scheduling; stop standalone A-1 repair and do not spend GPU unless a materially new observable/substrate is proposed.","把分支 soft-audit 并入科研系统调度；停止独立 A-1 修复，除非提出实质全新的可观测量/实验底座，否则不再消耗 GPU。"],
   ["Merge evidence-depth scheduling into A-1/system soft audit; stop standalone A-2 repair and do not launch controller GPU training.","把 evidence-depth 调度并入 A-1/系统 soft audit；停止独立 A-2 修复，不启动控制器 GPU 训练。"],
+  ["Human authors must verify the live ICLR/OpenReview deadline because official ICLR pages currently conflict.","作者必须在提交前人工核验实时 ICLR/OpenReview 截止日期；当前官方 ICLR 页面信息存在冲突。"],
   ["4 · GATED INBOX","4 · 门控收件箱"],
 ]);
 function localizeZhInline(value = "") {
@@ -1305,7 +1306,7 @@ function renderProjectStatusStrip(){
   const statusLabels = language === "zh"
     ? [["投稿就绪论文",h.paper_ready||0],["还缺的论文证据",h.paper_quality_evidence_debt||0],["通过正式问题检查的新研究问题",h.canonical_live_ideas||0],["正在做最小验证的新现象",h.fresh_active_f0||0],["因缺证据暂缓的新现象",h.fresh_support_holds||0],["现在允许启动的正式实验",h.launchable_formal_experiments||0],["已关闭的精确候选表述",h.shadow_closed_basins||h.shadow_dead_ends||0],["真正关闭到核心原理层",h.shadow_core_principle_stops||0],["整个基准或现象也被判定不成立",h.shadow_broader_core_principle_falsifications||0],["等待具体证据的暂定候选",h.shadow_holds||0]]
     : [["submission-ready papers",h.paper_ready||0],["unfinished paper evidence",h.paper_quality_evidence_debt||0],["new ideas past formal problem check",h.canonical_live_ideas||0],["fresh phenomena in minimal validation",h.fresh_active_f0||0],["fresh phenomena waiting for evidence",h.fresh_support_holds||0],["formal experiments launchable now",h.launchable_formal_experiments||0],["closed exact candidate formulations",h.shadow_closed_basins||h.shadow_dead_ends||0],["core-principle scientific closures",h.shadow_core_principle_stops||0],["whole benchmark/phenomenon falsifications",h.shadow_broader_core_principle_falsifications||0],["tentative candidates waiting for evidence",h.shadow_holds||0]];
-  return `<section class="project-status-strip current"><div><b>${selectedPaper?(language==="zh"?"当前选中论文 · STRI":"Current selected paper · STRI"):(language==="zh"?`当前科研状态${asOf?` · ${asOf}`:""}`:`Current research state${asOf?` · ${asOf}`:""}`)}</b><span>${message}</span></div><dl>${statusLabels.map(([label,value])=>`<div><dt>${label}</dt><dd>${value}</dd></div>`).join("")}</dl></section>`;
+  return `<section class="project-status-strip current"><div class="project-status-copy"><b>${selectedPaper?(language==="zh"?"当前选中论文 · STRI":"Current selected paper · STRI"):(language==="zh"?`当前科研状态${asOf?` · ${asOf}`:""}`:`Current research state${asOf?` · ${asOf}`:""}`)}</b><span>${message}</span></div><dl class="project-status-metrics">${statusLabels.map(([label,value])=>`<div><dt>${label}</dt><dd>${value}</dd></div>`).join("")}</dl></section>`;
 }
 function pageHeader(config) {
   return `<div class="eyebrow">${esc(textOf(config.eyebrow))}</div><h1>${textOf(config.title)}</h1><p class="lead">${textOf(config.lead)}</p>${config.callout ? `<div class="callout">${textOf(config.callout)}</div>` : ""}${renderProjectStatusStrip()}`;
@@ -1993,6 +1994,8 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
   const currentStatus = terminal?.terminal_state || meta.status;
   const tone = humanReviewStatusTone(currentStatus);
   const code = terminal?.code || meta.code || idea.id;
+  const lifecycleStage = currentStatus === "p0" ? (language === "zh" ? "历史 P0 生命周期" : "Historical P0 lifecycle") : currentStatus === "p0-ready" ? (language === "zh" ? "历史 Pre-P0 / P0 就绪" : "Historical Pre-P0 / P0-ready") : (language === "zh" ? "人工终态" : "Human terminal state");
+  const experimentAuthority = Number(projectStatusState().headline?.launchable_formal_experiments || 0);
   const canonicalReview = canonicalHumanReviewData().ideas?.[idea.id] || {};
   const humanOpinion = textOf(canonicalReview.opinion || meta.feedback || {});
   const originalNumber = Number(canonicalReview.original_number || 0);
@@ -2012,6 +2015,7 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
   return `<details class="human-review-idea-card human-tone-${tone}" id="idea-${esc(code.toLowerCase())}" data-terminal-status="${esc(currentStatus)}">
     <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(current.title)}</b><small>${originalNumber ? `${language === "zh" ? "原讨论" : "Original"} Idea ${originalNumber} · ` : ""}${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><span class="human-status-badge human-status-${tone}">${esc(humanReviewStatusLabel(currentStatus))}</span><p>${esc(textOf(terminal?.terminal_reason || {}) || iterationSummary || humanOpinion)}</p></div></summary>
     <div class="human-idea-body">
+      <div class="canonical-lifecycle-strip"><span><b>${language === "zh" ? "研究阶段" : "Research stage"}</b>${esc(lifecycleStage)}</span><span><b>${language === "zh" ? "当前决策" : "Current decision"}</b>${esc(humanReviewStatusLabel(currentStatus))}</span><span><b>${language === "zh" ? "正式实验权限" : "Formal experiment authority"}</b>${experimentAuthority}</span></div>
       <div class="human-review-history">
         <section class="human-opinion-box"><h4 data-toc="false">${language === "zh" ? `人工意见 · 2026-08-10（原讨论 Idea ${originalNumber || "?"}）` : `Human opinion · 2026-08-10 (original Idea ${originalNumber || "?"})`}</h4><p>${esc(humanOpinion || "—")}</p><small class="human-recommendation-label tone-${humanRecommendationTone(humanRecommendation)}">${esc(humanRecommendationLabel(humanRecommendation))}</small></section>
         ${iterationSummary ? `<section class="human-iteration-box"><h4 data-toc="false">${language === "zh" ? `本轮方法迭代 · ${esc(iteration.round || "2026-08-10")}` : `Current method iteration · ${esc(iteration.round || "2026-08-10")}`}</h4><p>${esc(iterationSummary)}</p>${iteration.verdict ? `<small>${language === "zh" ? "当前门禁" : "Current gate"}: ${esc(iteration.verdict)}</small>` : ""}${finalRecommendation ? `<div class="human-final-refinement"><b>${language === "zh" ? "最终分流" : "Final recommendation"}</b><span>${esc(finalRecommendationDisplay)}</span>${finalOfflineGate ? `<p>${language === "zh" ? "GPU 前先做：" : "Before GPU: "}${esc(finalOfflineGate)}</p>` : ""}</div>` : ""}</section>` : ""}
@@ -2498,14 +2502,90 @@ function renderExperimentDashboard(config) {
   const chapters = pageArchitecture("experiments").chapters || [];
   return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("experiments"))}${renderCustomChapter(chapters[0],0,renderExperimentMasterBoard())}${renderCustomChapter(chapters[1],1,renderExperimentCurrentEvidenceHub())}${renderCustomChapter(chapters[2],2,renderExperimentTraceabilityHub())}`;
 }
+const CANONICAL_PF_GROUPS = {
+  A:["PF-1","PF-4","PF-5","PF-6","PF-7"],
+  B:["PF-3"],
+  C:["PF-8"],
+  D:[],
+  E:["PF-2","PF-9"],
+  F:[],
+  G:[]
+};
+function canonicalIdeaGroups() {
+  const base=(humanReviewData().groups||[]).map(group=>({...group}));
+  return [...base,{id:"G",title:{zh:"Agent 安全与风险演化",en:"Agent safety and risk evolution"},question:{zh:"当前静态安全检查能否预测持久状态与经验继续演化后的未来 first-violation hazard？",en:"Can current static safety evaluation predict future first-violation hazard after persistent state and experience continue to evolve?"}}];
+}
+function canonicalIndependentRows() {
+  const ledger=humanTerminalState();
+  const discovery=[...(window.RESEARCH_SYSTEM_STATE?.idea_discovery_v3?.all_children||[]),...(window.RESEARCH_SYSTEM_STATE?.idea_discovery_v31?.children||[])];
+  return Object.entries(ledger.independent_methods||{}).map(([id,terminal])=>{
+    const rich=currentFinalIdeaById(id)||discovery.find(idea=>(idea.idea_id||idea.id)===id)||{};
+    return {source:"terminal-independent",idea:{...rich,...terminal,id,idea_id:id,status:terminal.terminal_state,group:terminal.group||supplementalGroupId({...rich,...terminal,id})}};
+  });
+}
+function canonicalParentRows() {
+  const bank=iclrIdeaBank(), review=humanReviewData(), byId=new Map((bank.passed_ideas||[]).map(idea=>[idea.id,idea]));
+  return Object.entries(review.ideas||{}).map(([id,meta])=>{
+    const terminal=terminalParentState(id);
+    return {id,meta:{...meta,status:terminal?.terminal_state||meta.status,code:terminal?.code||meta.code,group:terminal?.group||meta.group},idea:byId.get(id)};
+  }).filter(row=>row.idea);
+}
+function canonicalStatusControls(rows=[]) {
+  const statuses=["p0","p0-ready","merge","drop"];
+  return `<div class="canonical-filter-bar"><div><b>${language==="zh"?"按当前决策筛选 26 个父 Idea":"Filter the 26 parent ideas by decision"}</b><span>${language==="zh"?"研究大类是主结构；阶段、决策和权限是独立维度。":"Research category is primary; stage, decision, and authority remain separate."}</span></div><div class="canonical-filter-actions">${["all",...statuses].map((status,index)=>{
+    const count=status==="all"?rows.length:rows.filter(row=>row.meta.status===status).length;
+    const label=status==="all"?(language==="zh"?"全部父 Idea":"All parent ideas"):humanReviewStatusLabel(status);
+    return `<button class="canonical-filter-btn${index===0?" active":""}" data-canonical-status="${esc(status)}" aria-pressed="${index===0?"true":"false"}">${esc(label)} <b>${count}</b></button>`;
+  }).join("")}</div></div>`;
+}
+function renderCanonicalCategoryIndex(groups,parents,independent) {
+  const closedCounts=window.closedCandidateCategoryCounts?window.closedCandidateCategoryCounts():{};
+  return `<section class="panel canonical-category-index"><div class="idea-panel-heading"><div><div class="eyebrow">${language==="zh"?"研究大类导航":"RESEARCH CATEGORY INDEX"}</div><h2 id="canonical-category-index">${language==="zh"?"先按科学问题分大类，再在一张卡里看完一个 Idea":"Classify by scientific problem first, then read each idea in one complete card"}</h2><p class="section-intro">${language==="zh"?"26 个经人工审查的父 Idea 是唯一一级对象；独立方法、Paper-first 提案和关闭候选都归回相应大类，但不会冒充新的一级父 Idea。":"The 26 human-reviewed parents are the only first-level objects. Standalone methods, Paper-first proposals, and closed candidates return to their scientific categories without becoming duplicate parents."}</p></div><strong>${parents.length}<span>${language==="zh"?"个一级父 Idea":"first-level parents"}</span></strong></div><nav class="canonical-category-nav" aria-label="${language==="zh"?"研究大类":"Research categories"}">${groups.map(group=>{
+    const p=parents.filter(row=>row.meta.group===group.id).length;
+    const related=independent.filter(row=>(row.idea.group||supplementalGroupId(row.idea))===group.id).length+(CANONICAL_PF_GROUPS[group.id]||[]).length;
+    return `<a href="#canonical-group-${esc(group.id.toLowerCase())}"><span>${esc(group.id)}</span><div><b>${textOf(group.title)}</b><small>${p} ${language==="zh"?"个父 Idea":"parents"} · ${related} ${language==="zh"?"个关联提案/方法":"related proposals/methods"} · ${closedCounts[group.id]||0} ${language==="zh"?"个关闭候选":"closed"}</small></div></a>`;
+  }).join("")}</nav></section>`;
+}
+function renderCanonicalRelatedBank(group,independent) {
+  const methods=independent.filter(row=>(row.idea.group||supplementalGroupId(row.idea))===group.id);
+  const pfIds=CANONICAL_PF_GROUPS[group.id]||[];
+  const pfCards=pfIds.length&&window.renderPaperFirstIdeaCards?window.renderPaperFirstIdeaCards(pfIds):"";
+  const methodCards=methods.map(renderSupplementalIdeaCard).join("");
+  if(!methodCards&&!pfCards)return "";
+  return `<details class="canonical-related-bank"><summary><div><b>${language==="zh"?"关联方法与 Paper-first 提案":"Related methods and Paper-first proposals"}</b><span>${language==="zh"?"作为父 Idea 的机制组件、方法资产或问题提案呈现，不重复计入一级 Idea。":"Shown as components, method assets, or problem proposals; not recounted as first-level ideas."}</span></div><strong>${methods.length+pfIds.length}</strong></summary><div class="canonical-related-body">${methodCards?`<section class="canonical-related-section"><h3 data-toc="false">${language==="zh"?"独立方法／衍生方法资产":"Standalone / derived method assets"}</h3><div class="supplemental-list">${methodCards}</div></section>`:""}${pfCards?`<section class="canonical-related-section"><h3 data-toc="false">${language==="zh"?"Paper-first 新问题与终态裁决":"Paper-first problems and terminal decisions"}</h3><div class="paper-incubation-list">${pfCards}</div></section>`:""}</div></details>`;
+}
+function renderCanonicalIdeaGroup(group,parents,independent) {
+  const rows=parents.filter(row=>row.meta.group===group.id).sort((a,b)=>{
+    const order={"p0":0,"p0-ready":1,merge:2,drop:3};
+    return (order[a.meta.status]??9)-(order[b.meta.status]??9)||String(a.meta.code).localeCompare(String(b.meta.code),undefined,{numeric:true});
+  });
+  const parentCards=rows.map((row,index)=>`<div class="canonical-parent-item" data-canonical-status="${esc(row.meta.status)}" data-canonical-group="${esc(group.id)}">${renderHumanReviewedIdeaCard(row.idea,row.meta,index)}</div>`).join("");
+  const safety=group.id==="G"&&window.renderAgentSafetyProgram?window.renderAgentSafetyProgram():"";
+  const related=group.id==="G"?"":renderCanonicalRelatedBank(group,independent);
+  const closed=window.renderClosedCandidateArchive?window.renderClosedCandidateArchive(group.id):"";
+  const counts=Object.fromEntries(["p0","p0-ready","merge","drop"].map(status=>[status,rows.filter(row=>row.meta.status===status).length]));
+  return `<section class="canonical-idea-group" id="canonical-group-${esc(group.id.toLowerCase())}" data-canonical-group="${esc(group.id)}"><header class="canonical-group-header"><span>${esc(group.id)}</span><div><h2>${textOf(group.title)}</h2><p>${textOf(group.question)}</p><div class="canonical-group-counts">${rows.length?`<b>${rows.length} ${language==="zh"?"个父 Idea":"parents"}</b><small>P0 ${counts.p0||0} · P0-ready ${counts["p0-ready"]||0} · ${language==="zh"?"并入":"merge"} ${counts.merge||0} · ${language==="zh"?"停止":"stop"} ${counts.drop||0}</small>`:`<b>${language==="zh"?"当前系统主线":"Current system program"}</b>`}</div></div></header>${parentCards?`<div class="canonical-parent-list">${parentCards}</div>`:""}${safety}${related}${closed}</section>`;
+}
+function renderCanonicalIdeaLedger() {
+  const groups=canonicalIdeaGroups(), parents=canonicalParentRows(), independent=canonicalIndependentRows();
+  const terminal=humanTerminalState().summary||{};
+  const terminalSummary=`<div class="human-final-summary canonical-terminal-summary"><div><b>${terminal.p0||0}</b><span>${language==="zh"?"历史 P0":"historical P0"}</span></div><div><b>${terminal.p0_ready||0}</b><span>${language==="zh"?"历史 P0 就绪":"historical P0-ready"}</span></div><div><b>${terminal.merge||0}</b><span>${language==="zh"?"已并入":"merged"}</span></div><div><b>${terminal.drop||0}</b><span>${language==="zh"?"已停止":"stopped"}</span></div><small>${language==="zh"?"人工终态账本只记录历史分流；当前实验权限以顶部状态为准。":"The human-terminal ledger records historical routing only; current experiment authority comes from the status panel above."}</small></div>`;
+  const paperFirstSummary=window.renderPaperFirstIdeaIncubation?window.renderPaperFirstIdeaIncubation().split('<div class="paper-incubation-list">')[0]:"";
+  const appendix=`<section class="panel canonical-audit-appendix"><h2 id="canonical-audit-appendix">${language==="zh"?"审计说明：怎样理解阶段、停止与重开":"Audit guide: how to read stage, stop, and reopen"}</h2><div class="canonical-audit-grid"><section><b>${language==="zh"?"阶段不等于权限":"Stage is not authority"}</b><p>${language==="zh"?"历史上进入 P0，只说明当时形成过可证伪合同；当前是否能运行，仍以正式实验权限为准。":"Historical P0 means a falsifiable contract once existed; current execution still requires formal authority."}</p></section><section><b>${language==="zh"?"失败必须分层":"Failures stay typed"}</b><p>${language==="zh"?"执行、协议、证据支持、方法实现和核心原理不会互相替代；只有核心原理级裁决才是科学死路。":"Execution, protocol, support, method-realization, and core-principle failures do not substitute for one another; only a core-principle ruling is a scientific dead end."}</p></section><section><b>${language==="zh"?"重开需要新证据":"Reopen requires new evidence"}</b><p>${language==="zh"?"换名字、换术语或重复同一实验不足以重开；必须满足卡片中写明的新增证据条件。":"Renaming or repeating the same test is insufficient; the card-specific new-evidence condition must be met."}</p></section></div>${paperFirstSummary}${renderHumanReviewMethodology()}</section>`;
+  return `${renderCanonicalCategoryIndex(groups,parents,independent)}${terminalSummary}${canonicalStatusControls(parents)}${groups.map(group=>renderCanonicalIdeaGroup(group,parents,independent)).join("")}${appendix}`;
+}
+function initCanonicalIdeaFilters(){
+  const buttons=[...document.querySelectorAll(".canonical-filter-btn")];
+  if(!buttons.length)return;
+  buttons.forEach(button=>button.addEventListener("click",()=>{
+    const status=button.dataset.canonicalStatus||"all";
+    buttons.forEach(item=>{const active=item===button;item.classList.toggle("active",active);item.setAttribute("aria-pressed",active?"true":"false");});
+    document.querySelectorAll(".canonical-parent-item").forEach(item=>{item.hidden=status!=="all"&&item.dataset.canonicalStatus!==status;});
+  }));
+}
 function renderIdeaPortfolio(config) {
-  const chapters = pageArchitecture("paper-ideas").chapters || [];
-  const discussed = renderDiscussedIdeaBank();
-  const newIdeas = renderNewIdeaCandidates();
-  const incubation = window.renderPaperFirstIdeaIncubation ? window.renderPaperFirstIdeaIncubation() : "";
-  const current=window.renderCurrentResearchPortfolio?window.renderCurrentResearchPortfolio():"";
-  const agentSafety=window.renderAgentSafetyProgram?window.renderAgentSafetyProgram():"";
-  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${current}${agentSafety}${renderCustomChapter(chapters[0],0,discussed)}${renderCustomChapter(chapters[1],1,`${newIdeas}${incubation}`)}`;
+  const current=window.renderCurrentResearchPortfolio?window.renderCurrentResearchPortfolio({includeClosed:false}):"";
+  return `${pageHeader(config)}${current}${renderCanonicalIdeaLedger()}`;
 }
 function renderIdeaRanking(config) {
   return `${pageHeader(config)}${(config.sections || []).map(renderSection).join("")}${renderIdeaRankingPanels()}`;
@@ -3184,6 +3264,7 @@ function renderPage() {
   else root.innerHTML = `${pageHeader(config)}${renderOverviewFigure(config)}${(config.sections || []).map(renderSection).join("")}`;
   document.querySelector(".language-toggle")?.replaceChildren(document.createTextNode(language === "en" ? "中文" : "English"));
   bindPageEvents();
+  if (pageId === "paper-ideas") initCanonicalIdeaFilters();
   if (pageId === "bibliography") renderPaperList(document.getElementById("site-search")?.value || "");
   bindPaperCardEvents();
   hydrateCitations(root);
