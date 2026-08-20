@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "stage": "POST_MEDIATOR_ISOLATION_INDEPENDENT_REVIEW_ADJUDICATION",
+  "decision": "FREEZE_NARROW_SUBMISSION_NO_FURTHER_EXPERIMENT_SCORE_CHASING",
+  "review_packet_scope": "Current 9-page manuscript, Stage-3 AutoSkill four-arm receipt, and Stage-4 v2 matched mediator-isolation receipt.",
+  "reviews": {
+    "deepseek_pre_isolation": {
+      "artifact": "generated/stri-r3-independent-review-20260819/deepseek.json",
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-260425",
+      "recommendation": "weak_reject",
+      "score_1_to_10": 4,
+      "submission_advice": "major_revision",
+      "autoskill_closes_old_significance_gap": "partially",
+      "fatal_flaws": 0
+    },
+    "kimi_evidence_critic": {
+      "artifact": "generated/stri-r3-independent-review-20260819/kimi.json",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "evidence_chain_valid": true,
+      "significance_effect": "material",
+      "extra_experiment_needed_before_submission": false,
+      "advisory_verdict": "revise"
+    },
+    "deepseek_post_isolation": {
+      "artifact": "generated/stri-r3-independent-review-20260819/deepseek-post-isolation.json",
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-260425",
+      "recommendation": "borderline",
+      "score_1_to_10": 6,
+      "confidence_1_to_5": 4,
+      "submission_advice": "minor_revision",
+      "autoskill_closes_old_significance_gap": "partially",
+      "fatal_flaws": 0,
+      "empirical_sufficiency_for_narrow_claims": "sufficient",
+      "highest_value_next_action_is_future_work_not_current_requirement": true
+    }
+  },
+  "scientific_interpretation": "The mediator-isolation extension materially strengthens the causal chain and moves an independent strict reviewer from weak reject 4/10 to borderline 6/10. The remaining concern is external/practical significance beyond one P19 substrate, not correctness, mechanism identification within P19, or evidence sufficiency for the manuscript's narrow claims.",
+  "submission_policy": {
+    "freeze_scientific_claim_scope": true,
+    "no_more_p19_condition_chasing": true,
+    "no_second_backbone_for_score_chasing": true,
+    "no_task_utility_experiment_required_for_current_narrow_submission": true,
+    "future_work_may_test_task_utility_or_second_substrate": true,
+    "minor_wording_release_updates_allowed": true
+  },
+  "claim_boundary": "Keep the AutoSkill result as one-substrate representation-to-retrieval-to-mediator-to-executed-behavior evidence. Do not promote it to task utility, longitudinal regret, population prevalence, end-to-end AutoSkill, or general safety.",
+  "scientific_authority": false,
+  "authority": {"canonical_problem_gate": false, "method": false, "new_experiment": false, "gpu": false}
+}

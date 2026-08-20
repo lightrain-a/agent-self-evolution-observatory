@@ -5,9 +5,9 @@
   "status": "PASS",
   "package": {
     "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-    "sha256": "f99a01a92c3db432417baee440ddb7b9cae1fc98f22d56da053d41693cad576b",
-    "manifest_sha256": "971859539b2722aea2d306d5e7a3330f3aef1bb87931ed6754aeb02bdf98cc6e",
-    "package_metadata_sha256": "6f952a8949190f2b4b98b4186f5dee662d088bc67b72da1b0ea99d801636bbc4"
+    "sha256": "5bc87d31d8d1b1d65f9250ee1f0230915fe7961103d030f7c6b7861b6c81cec2",
+    "manifest_sha256": "bdfde50f80915b35e0738daa593299f9bb099f366d124a64959c5948a8fc116e",
+    "package_metadata_sha256": "d39a2713bb8be53c4306996cad2301c4b32fe7a17f649b073870ad8762f4d879"
   },
   "isolated_verification": {
     "fresh_extract_manifest": "PASS",
@@ -190,6 +190,23 @@
       "run_count": 18,
       "all_valid": true,
       "claim_boundary": "Single archived P19 behavioral-harm substrate. Supports a representation-to-retrieval-to-executed-behavior consequence under the frozen AutoSkill top-k operationalization; does not establish task-utility effects, general AutoSkill safety, or automatic full-paper authority."
+    },
+    "autoskill_p19_mediator_isolation": {
+      "decision": "GO_MEDIATOR_ISOLATION_P19",
+      "groups": {
+        "E_post_addback": {
+          "valid_runs": 3,
+          "positive": 3
+        },
+        "F_cleanup_control": {
+          "valid_runs": 3,
+          "positive": 0
+        }
+      },
+      "exact_fisher": "1/20",
+      "stage3_replay_agreement": "18/18",
+      "judge_calls": 0,
+      "claim_boundary": "Specific mediator attribution on one archived P19 substrate only. This strengthens the representation-to-retrieval-to-executed-behavior chain but does not establish task utility, longitudinal regret, end-to-end AutoSkill behavior, or general AutoSkill safety."
     }
   },
   "frozen_external_repositories": {

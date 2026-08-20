@@ -103,9 +103,9 @@ for phrase in [
     "$1/30+1/30$",
     "questioner message builder does not expose package ID",
     "$7/120=0.0583$",
-    "We \\textbf{do not} generalize this to task utility, longitudinal regret, or system-wide safety",
-    "claim a new LP algorithm",
-    "broadly validated dynamic repair",
+    "we \\textbf{do not} claim task utility, longitudinal regret, system-wide safety",
+    "LP novelty",
+    "broadly validated repair",
     "not a population-level no-effect theorem",
 ]:
     check(f"claim_boundary_{phrase[:24]}", phrase in body)

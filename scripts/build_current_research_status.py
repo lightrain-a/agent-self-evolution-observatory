@@ -53,6 +53,8 @@ stri_p0d_dead_end = load("asset-first-stri-skillrl-p0d-dead-end-diagnosis-202608
 stri_p0e_principle = load("asset-first-stri-skillrl-final-policy-p0e-principle-disposition-20260817.json")
 stri_p0e_diagnosis = load("asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json")
 stri_autoskill_p19 = load("asset-first-stri-autoskill-p19-stage3-result-20260819.json")
+stri_autoskill_mediator = load("asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json")
+stri_post_isolation_review = load("asset-first-stri-post-isolation-review-adjudication-20260819.json")
 support_release = load("paper-first-support-release-targets.json")
 fresh_phenomenon = load("paper-first-fresh-phenomenon-portfolio-20260817.json")
 shadow_admission = load("paper-first-shadow-search-admission.json")
@@ -242,6 +244,15 @@ state = {
             else (stri.get("next_action") or quality_debt.get("cheap_first"))
         ),
         "claim_boundary": sys_stri.get("claim_boundary", {}),
+        "post_isolation_review": {
+            "decision": str(stri_post_isolation_review.get("decision") or ""),
+            "deepseek_pre_score": int((((stri_post_isolation_review.get("reviews") or {}).get("deepseek_pre_isolation") or {}).get("score_1_to_10")) or 0),
+            "deepseek_post_score": int((((stri_post_isolation_review.get("reviews") or {}).get("deepseek_post_isolation") or {}).get("score_1_to_10")) or 0),
+            "deepseek_post_recommendation": str((((stri_post_isolation_review.get("reviews") or {}).get("deepseek_post_isolation") or {}).get("recommendation")) or ""),
+            "deepseek_post_submission_advice": str((((stri_post_isolation_review.get("reviews") or {}).get("deepseek_post_isolation") or {}).get("submission_advice")) or ""),
+            "fatal_flaws": int((((stri_post_isolation_review.get("reviews") or {}).get("deepseek_post_isolation") or {}).get("fatal_flaws")) or 0),
+            "no_more_experiment_score_chasing": bool((stri_post_isolation_review.get("submission_policy") or {}).get("no_more_p19_condition_chasing", False)),
+        },
     },
     "idea_search_funnel": {
         "installed_operator_version": discovery_policy.get("discovery_operator_version"),
@@ -356,7 +367,16 @@ state = {
             "judge_calls": int(stri_autoskill_p19.get("judge_calls") or 0),
             "fresh_container_per_run": bool(stri_autoskill_p19.get("fresh_container_per_run", False)),
             "claim_boundary": str(stri_autoskill_p19.get("scientific_claim_boundary") or ""),
-            "role": "bounded P19 representation-to-retrieval-to-executed-behavior positive; does not authorize task utility or general AutoSkill safety claims",
+            "mediator_isolation": {
+                "status": str(stri_autoskill_mediator.get("decision") or "UNKNOWN"),
+                "groups": dict(stri_autoskill_mediator.get("groups") or {}),
+                "statistics": dict(stri_autoskill_mediator.get("statistics") or {}),
+                "all_executions_valid": bool(stri_autoskill_mediator.get("all_executions_valid", False)),
+                "judge_calls": int(stri_autoskill_mediator.get("judge_calls") or 0),
+                "measurement_repair": dict(stri_autoskill_mediator.get("measurement_repair") or {}),
+                "claim_boundary": str(stri_autoskill_mediator.get("claim_boundary") or ""),
+            },
+            "role": "bounded P19 representation-to-retrieval-to-mediator-to-executed-behavior positive; does not authorize task utility or general AutoSkill safety claims",
             "scientific_authority": False,
         },
     },

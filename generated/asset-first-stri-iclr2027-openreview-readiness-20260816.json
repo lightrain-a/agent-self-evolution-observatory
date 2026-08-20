@@ -14,9 +14,9 @@
     "resolved_citations": 16,
     "ai_use_statement_present": true,
     "reproducibility_statement_present": true,
-    "paper_pdf_sha256": "50a2770ffa5989a5a3994d738729c064ca1c4a485a5666fb577ca24a5fc8ccda",
-    "paper_source_zip_sha256": "3c3a0a892398c5539456226475c281a008d34f7c983d578c15b823703c7ed2e7",
-    "anonymous_supplement_zip_sha256": "f99a01a92c3db432417baee440ddb7b9cae1fc98f22d56da053d41693cad576b",
+    "paper_pdf_sha256": "56a26d51d20a2683e3718d63ba86f047561626b8203d437f7b0ce3da402621c5",
+    "paper_source_zip_sha256": "7b5dbe61e9c76f8226c0f0f3da727afb5455a20ec445e51edf0a3cbf0f92db20",
+    "anonymous_supplement_zip_sha256": "5bc87d31d8d1b1d65f9250ee1f0230915fe7961103d030f7c6b7861b6c81cec2",
     "supplement_reproduction": "PASS",
     "supplement_unit_tests": "13/13 PASS",
     "final_independent_review": "READY_TO_SUBMIT",
@@ -34,7 +34,12 @@
     "autoskill_p19_fisher_exact_p": 0.0010822510822510823,
     "autoskill_p19_claim_scope": "ONE_ARCHIVED_P19_BEHAVIOR_LEVEL_SUBSTRATE_ONLY",
     "autoskill_p19_task_utility_claim_authorized": false,
-    "autoskill_p19_generalization_claim_authorized": false
+    "autoskill_p19_generalization_claim_authorized": false,
+    "post_isolation_independent_review": "borderline 6/10; minor_revision; no fatal flaws",
+    "post_isolation_submission_policy": "FREEZE_NARROW_SUBMISSION_NO_FURTHER_EXPERIMENT_SCORE_CHASING",
+    "autoskill_p19_mediator_isolation": "3/3 post-checkout add-back; 0/3 matched cleanup add-back",
+    "autoskill_p19_mediator_exact_fisher": "1/20",
+    "autoskill_p19_stage3_replay_agreement": "18/18"
   },
   "human_signoff_required": [
     {

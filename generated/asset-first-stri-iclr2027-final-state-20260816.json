@@ -47,6 +47,16 @@
       "confidence": 0.93,
       "overall_score_1_to_10": 7,
       "required_revisions": 0
+    },
+    "post_mediator_isolation_review": {
+      "decision": "FREEZE_NARROW_SUBMISSION_NO_FURTHER_EXPERIMENT_SCORE_CHASING",
+      "deepseek_pre_score": 4,
+      "deepseek_post_score": 6,
+      "deepseek_post_recommendation": "borderline",
+      "deepseek_post_submission_advice": "minor_revision",
+      "fatal_flaws": 0,
+      "no_more_experiment_score_chasing": true,
+      "scientific_authority": false
     }
   },
   "new_gpu_evidence_required_for_current_claim_scope": false,
@@ -54,18 +64,18 @@
     "remote_directory": "/data/wyt/agent-self-evolution-observatory/submission-packages",
     "pdf": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816.pdf",
-      "sha256": "50a2770ffa5989a5a3994d738729c064ca1c4a485a5666fb577ca24a5fc8ccda"
+      "sha256": "56a26d51d20a2683e3718d63ba86f047561626b8203d437f7b0ce3da402621c5"
     },
     "source_zip": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-source.zip",
-      "sha256": "3c3a0a892398c5539456226475c281a008d34f7c983d578c15b823703c7ed2e7",
+      "sha256": "7b5dbe61e9c76f8226c0f0f3da727afb5455a20ec445e51edf0a3cbf0f92db20",
       "files": 12,
       "isolated_compile_verified": true
     },
     "supplement_zip": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-      "sha256": "f99a01a92c3db432417baee440ddb7b9cae1fc98f22d56da053d41693cad576b",
-      "manifest_sha256": "971859539b2722aea2d306d5e7a3330f3aef1bb87931ed6754aeb02bdf98cc6e",
+      "sha256": "5bc87d31d8d1b1d65f9250ee1f0230915fe7961103d030f7c6b7861b6c81cec2",
+      "manifest_sha256": "bdfde50f80915b35e0738daa593299f9bb099f366d124a64959c5948a8fc116e",
       "isolated_reproduction_verified": true,
       "unit_tests": "13/13 PASS",
       "identity_path_scan": "PASS",
@@ -155,10 +165,42 @@
       "fresh_container_per_run": true,
       "source_run_manifest_sha256": "043e2cefc82b2a97c8834dc231b33d4dc37551dd0e2b0be39ed5a03f97fc6564",
       "packaged_run_manifest_sha256": "dbd6244430677b65bc7a1202ea1b4d2eae64dd06cd74b204eb673d511639360b",
-      "run_manifest_canonical_sha256": "f7eaed62b6b2f72f609bdcad7895175b1e2649a4758895e9c7b67483a4e9971a"
+      "run_manifest_canonical_sha256": "f7eaed62b6b2f72f609bdcad7895175b1e2649a4758895e9c7b67483a4e9971a",
+      "mediator_isolation": {
+        "decision": "GO_MEDIATOR_ISOLATION_P19",
+        "groups": {
+          "E_post_addback": {
+            "valid_runs": 3,
+            "positive": 3
+          },
+          "F_cleanup_control": {
+            "valid_runs": 3,
+            "positive": 0
+          }
+        },
+        "statistics": {
+          "alternative": "greater",
+          "exact_fraction": "1/20",
+          "exact_decimal": 0.05,
+          "scipy_float_audit": 0.05000000000000001,
+          "frozen_gate_p_le": "1/20",
+          "gate_pass_exact": true
+        },
+        "all_executions_valid": true,
+        "judge_calls": 0,
+        "claim_boundary": "Specific mediator attribution on one archived P19 substrate only. This strengthens the representation-to-retrieval-to-executed-behavior chain but does not establish task utility, longitudinal regret, end-to-end AutoSkill behavior, or general AutoSkill safety.",
+        "measurement_repair": {
+          "stage3_replay_agreement": "18/18",
+          "sequence_aware_replay_sha256": "1b6c001d2be1441a83d773ac9ca20613547b9cb4b222fd9f6dab8a93fa67f5c8",
+          "v1_runs_excluded_from_v2_inference": true
+        }
+      }
     },
     "autoskill_p19_behavioral_claim_supported": true,
     "autoskill_p19_task_utility_claim_authorized": false,
-    "autoskill_p19_generalization_claim_authorized": false
+    "autoskill_p19_generalization_claim_authorized": false,
+    "autoskill_p19_mediator_claim_supported": true,
+    "autoskill_p19_mediator_exact_fisher": "1/20",
+    "autoskill_p19_stage3_replay_agreement": "18/18"
   }
 }

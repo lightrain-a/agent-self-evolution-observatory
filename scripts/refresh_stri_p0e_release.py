@@ -37,6 +37,11 @@ AUTOSKILL_CONTRACT = GEN / "asset-first-stri-autoskill-p19-dynamic-f0-contract-v
 AUTOSKILL_PLAN = GEN / "asset-first-stri-autoskill-p19-stage3-plan-20260819.json"
 AUTOSKILL_RESULT = GEN / "asset-first-stri-autoskill-p19-stage3-result-20260819.json"
 AUTOSKILL_RUN_MANIFEST = GEN / "asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json"
+MEDIATOR_V1_CONTRACT = GEN / "asset-first-stri-autoskill-p19-mediator-isolation-contract-20260819.json"
+MEDIATOR_V1_DIAGNOSIS = GEN / "asset-first-stri-autoskill-p19-mediator-isolation-v1-diagnosis-20260819.json"
+MEDIATOR_V2_CONTRACT = GEN / "asset-first-stri-autoskill-p19-mediator-isolation-v2-contract-20260819.json"
+MEDIATOR_V2_RESULT = GEN / "asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json"
+POST_ISOLATION_REVIEW = GEN / "asset-first-stri-post-isolation-review-adjudication-20260819.json"
 
 DOWNLOAD_PDF = DOWNLOADS / "STRI-ICLR2027.pdf"
 DOWNLOAD_TEX = DOWNLOADS / "STRI-ICLR2027.tex"
@@ -219,9 +224,9 @@ def p0e_summary(receipt: dict) -> dict:
     }
 
 
-def autoskill_p19_summary(result: dict) -> dict:
+def autoskill_p19_summary(result: dict, mediator: dict | None = None) -> dict:
     groups = result["groups"]
-    return {
+    out = {
         "decision": result["decision"],
         "claim_boundary": result["scientific_claim_boundary"],
         "groups": groups,
@@ -234,6 +239,17 @@ def autoskill_p19_summary(result: dict) -> dict:
         "packaged_run_manifest_sha256": result["packaged_run_manifest_sha256"],
         "run_manifest_canonical_sha256": result["run_manifest_canonical_sha256"],
     }
+    if mediator:
+        out["mediator_isolation"] = {
+            "decision": mediator.get("decision"),
+            "groups": mediator.get("groups") or {},
+            "statistics": mediator.get("statistics") or {},
+            "all_executions_valid": mediator.get("all_executions_valid") is True,
+            "judge_calls": int(mediator.get("judge_calls") or 0),
+            "claim_boundary": mediator.get("claim_boundary"),
+            "measurement_repair": mediator.get("measurement_repair") or {},
+        }
+    return out
 
 
 def update_supplement_tree(tree: Path, receipt: dict) -> None:
@@ -248,6 +264,10 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         (AUTOSKILL_CONTRACT, "asset-first-stri-autoskill-p19-dynamic-f0-contract-v2-20260819.json"),
         (AUTOSKILL_PLAN, "asset-first-stri-autoskill-p19-stage3-plan-20260819.json"),
         (AUTOSKILL_RUN_MANIFEST, "asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json"),
+        (MEDIATOR_V1_CONTRACT, "asset-first-stri-autoskill-p19-mediator-isolation-contract-20260819.json"),
+        (MEDIATOR_V1_DIAGNOSIS, "asset-first-stri-autoskill-p19-mediator-isolation-v1-diagnosis-20260819.json"),
+        (MEDIATOR_V2_CONTRACT, "asset-first-stri-autoskill-p19-mediator-isolation-v2-contract-20260819.json"),
+        (MEDIATOR_V2_RESULT, "asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json"),
     ]:
         shutil.copy2(source, tree / "artifacts" / name)
     packaged_autoskill_result = tree / "artifacts" / "asset-first-stri-autoskill-p19-stage3-result-20260819.json"
@@ -300,6 +320,8 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         "claim_boundary": controller.get("claim_boundary"),
     }
     autoskill = load(AUTOSKILL_RESULT)
+    mediator_v1 = load(MEDIATOR_V1_DIAGNOSIS)
+    mediator = load(MEDIATOR_V2_RESULT)
     packaged_manifest = load(AUTOSKILL_RUN_MANIFEST)
     canonical_manifest = hashlib.sha256(json.dumps(packaged_manifest, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")).hexdigest()
     if autoskill.get("decision") != "GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION":
@@ -310,13 +332,30 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         raise RuntimeError("AutoSkill packaged run-manifest canonical hash mismatch")
     if packaged_manifest.get("run_count") != 18 or packaged_manifest.get("all_valid") is not True:
         raise RuntimeError("AutoSkill packaged run-manifest is not 18/18 valid")
+    if mediator_v1.get("decision") != "STOP_OPERATIONALIZATION_COMMAND_LOCAL_SIGNATURE_NOT_COMPOSITIONAL" or mediator_v1.get("scientific_negative_authorized") is not False:
+        raise RuntimeError("AutoSkill mediator v1 diagnosis is not the frozen operationalization STOP")
+    mg = mediator.get("groups") or {}
+    ms = mediator.get("statistics") or {}
+    if (
+        mediator.get("decision") != "GO_MEDIATOR_ISOLATION_P19"
+        or mediator.get("all_executions_valid") is not True
+        or (mg.get("E_post_addback") or {}).get("positive") != 3
+        or (mg.get("F_cleanup_control") or {}).get("positive") != 0
+        or ms.get("exact_fraction") != "1/20"
+        or ms.get("gate_pass_exact") is not True
+        or (mediator.get("measurement_repair") or {}).get("stage3_replay_agreement") != "18/18"
+        or int(mediator.get("judge_calls") or 0) != 0
+    ):
+        raise RuntimeError("AutoSkill P19 mediator-isolation v2 receipt failed frozen checks")
     meta["autoskill_p19_dynamic"] = {
         "result": "artifacts/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
         "result_sha256": sha(packaged_autoskill_result),
         "run_manifest": "artifacts/asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json",
         "run_manifest_sha256": sha(AUTOSKILL_RUN_MANIFEST),
         "run_manifest_canonical_sha256": canonical_manifest,
-        "summary": autoskill_p19_summary(autoskill),
+        "summary": autoskill_p19_summary(autoskill, mediator),
+        "mediator_v1_diagnosis": "artifacts/asset-first-stri-autoskill-p19-mediator-isolation-v1-diagnosis-20260819.json",
+        "mediator_v2_result": "artifacts/asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json",
         "claim_scope": "ONE_ARCHIVED_P19_BEHAVIOR_LEVEL_SUBSTRATE_ONLY",
         "task_utility_claim": False,
         "general_safety_claim": False,
@@ -326,7 +365,7 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
     summary_path = tree / "outputs" / "reproduction-summary.json"
     summary = load(summary_path)
     summary["skillrl_p0e"] = p0e_summary(receipt)
-    summary["autoskill_p19_dynamic"] = autoskill_p19_summary(autoskill)
+    summary["autoskill_p19_dynamic"] = autoskill_p19_summary(autoskill, mediator)
     dump(summary_path, summary)
 
     readme = (tree / "README.md").read_text(encoding="utf-8")
@@ -343,6 +382,9 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
     autoskill_marker = "## AutoSkill P19 dynamic behavioral propagation"
     if autoskill_marker not in readme:
         readme += """\n\n## AutoSkill P19 dynamic behavioral propagation\n\nThe packaged qualification, frozen v2 contract, Stage-3 plan, final result, and 18-run manifest record the bounded four-arm AutoSkill P19 experiment used in the revised manuscript. The result is 6/6 original, 0/6 split4, 3/3 ID-placebo, and 3/3 quotient-control destructive post-checkout signatures with 18/18 valid fresh-container executions and one-sided Fisher p=0.0010822510822510823. The run manifest content-addresses every per-run receipt and trajectory; its packaged byte hash and canonical semantic hash are checked during supplement refresh. This supports only a representation-to-retrieval-to-executed-behavior consequence on one archived P19 substrate under a common executor. It does not establish task utility, longitudinal regret, end-to-end AutoSkill runtime behavior, or general AutoSkill safety.\n"""
+    mediator_marker = "## AutoSkill P19 matched mediator isolation"
+    if mediator_marker not in readme:
+        readme += """\n\n## AutoSkill P19 matched mediator isolation\n\nThe first mediator-isolation attempt exposed a measurement operationalization bug: the command-local signature missed a destructive payload written to an intermediate script and copied to the post-checkout hook in a later command. The sequence-aware repair preserves all 18 Stage-3 labels exactly. All v1 runs are excluded from v2 inference. In six fresh v2 runs under the same split representation and matched five-slot/three-semantic-class injection, adding back the crowded-out post-checkout skill restores the mechanical destructive behavior in 3/3 runs, while adding a matched stale-output cleanup skill yields 0/3. The exact one-sided Fisher probability is 1/20=0.05. This isolates the post-checkout skill as the mediator within the one archived P19 substrate; it does not establish task utility, longitudinal regret, end-to-end AutoSkill behavior, or general safety.\n"""
     (tree / "README.md").write_text(readme, encoding="utf-8")
 
     reproduce_path = tree / "reproduce.py"
@@ -373,6 +415,11 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         autoskill_code = '''\n    # AUTOSKILL P19 DYNAMIC RECEIPT CHECK\n    import hashlib as _hashlib\n    autoskill = json.loads((ROOT / "artifacts/asset-first-stri-autoskill-p19-stage3-result-20260819.json").read_text())\n    autoskill_manifest_path = ROOT / "artifacts/asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json"\n    autoskill_manifest = json.loads(autoskill_manifest_path.read_text())\n    assert autoskill["decision"] == "GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION"\n    ag = autoskill["groups"]\n    assert (ag["A_original"]["valid_runs"], ag["A_original"]["destructive_signature_positive"]) == (6, 6)\n    assert (ag["B_split4"]["valid_runs"], ag["B_split4"]["destructive_signature_positive"]) == (6, 0)\n    assert (ag["C_id_placebo"]["valid_runs"], ag["C_id_placebo"]["destructive_signature_positive"]) == (3, 3)\n    assert (ag["D_quotient_control"]["valid_runs"], ag["D_quotient_control"]["destructive_signature_positive"]) == (3, 3)\n    assert all(autoskill["frozen_gates"].values())\n    assert abs(autoskill["statistics"]["fisher_exact_p"] - 0.0010822510822510823) < 1e-15\n    assert autoskill["judge_calls"] == 0 and autoskill["training_steps"] == 0\n    assert autoskill_manifest["run_count"] == 18 and autoskill_manifest["all_valid"] is True\n    assert _hashlib.sha256(autoskill_manifest_path.read_bytes()).hexdigest() == autoskill["packaged_run_manifest_sha256"]\n    autoskill_canonical = _hashlib.sha256(json.dumps(autoskill_manifest, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")).hexdigest()\n    assert autoskill_canonical == autoskill["run_manifest_canonical_sha256"]\n    assert len(autoskill["run_manifest_sha256"]) == 64\n    autoskill_summary = {\n        "decision": autoskill["decision"],\n        "groups": ag,\n        "fisher_exact_p": autoskill["statistics"]["fisher_exact_p"],\n        "run_count": 18,\n        "all_valid": True,\n        "claim_boundary": autoskill["scientific_claim_boundary"],\n    }\n'''
         reproduce = reproduce.replace("\n    out = {", autoskill_code + "\n    out = {", 1)
         reproduce = reproduce.replace('        "released_controller_audit": controller_summary,', '        "released_controller_audit": controller_summary,\n        "autoskill_p19_dynamic": autoskill_summary,', 1)
+    mediator_code_marker = "# AUTOSKILL P19 MEDIATOR ISOLATION V2 CHECK"
+    if mediator_code_marker not in reproduce:
+        mediator_code = '''\n    # AUTOSKILL P19 MEDIATOR ISOLATION V2 CHECK\n    mediator_v1 = json.loads((ROOT / "artifacts/asset-first-stri-autoskill-p19-mediator-isolation-v1-diagnosis-20260819.json").read_text())\n    mediator = json.loads((ROOT / "artifacts/asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json").read_text())\n    assert mediator_v1["decision"] == "STOP_OPERATIONALIZATION_COMMAND_LOCAL_SIGNATURE_NOT_COMPOSITIONAL"\n    assert mediator_v1["scientific_negative_authorized"] is False\n    assert mediator_v1["sequence_aware_replay_audit"]["stage3_agreement_with_frozen_metric"] == "18/18"\n    assert mediator["decision"] == "GO_MEDIATOR_ISOLATION_P19"\n    assert mediator["all_executions_valid"] is True\n    assert mediator["groups"]["E_post_addback"] == {"valid_runs": 3, "positive": 3}\n    assert mediator["groups"]["F_cleanup_control"] == {"valid_runs": 3, "positive": 0}\n    assert mediator["statistics"]["exact_fraction"] == "1/20"\n    assert abs(mediator["statistics"]["exact_decimal"] - 0.05) < 1e-15\n    assert mediator["statistics"]["gate_pass_exact"] is True\n    assert mediator["measurement_repair"]["stage3_replay_agreement"] == "18/18"\n    assert mediator["judge_calls"] == 0\n    mediator_summary = {\n        "decision": mediator["decision"],\n        "groups": mediator["groups"],\n        "exact_fisher": mediator["statistics"]["exact_fraction"],\n        "stage3_replay_agreement": mediator["measurement_repair"]["stage3_replay_agreement"],\n        "judge_calls": 0,\n        "claim_boundary": mediator["claim_boundary"],\n    }\n'''
+        reproduce = reproduce.replace("\n    out = {", mediator_code + "\n    out = {", 1)
+        reproduce = reproduce.replace('        "autoskill_p19_dynamic": autoskill_summary,', '        "autoskill_p19_dynamic": autoskill_summary,\n        "autoskill_p19_mediator_isolation": mediator_summary,', 1)
     reproduce_path.write_text(reproduce, encoding="utf-8")
 
     manifest_path = tree / "MANIFEST.sha256"
@@ -420,8 +467,8 @@ def build_and_verify_supplement() -> dict:
         repro_python = find_repro_python()
         repro = run([repro_python, "reproduce.py"], cwd=tree)
         reproduced = json.loads((tree / "outputs" / "reproduction-summary.json").read_text(encoding="utf-8"))
-        if reproduced.get("status") != "PASS" or "skillrl_p0e" not in reproduced or "autoskill_p19_dynamic" not in reproduced:
-            raise RuntimeError("supplement reproduction did not retain SkillRL P0-E and AutoSkill P19 receipts")
+        if reproduced.get("status") != "PASS" or "skillrl_p0e" not in reproduced or "autoskill_p19_dynamic" not in reproduced or "autoskill_p19_mediator_isolation" not in reproduced:
+            raise RuntimeError("supplement reproduction did not retain SkillRL P0-E, AutoSkill P19 Stage-3, and mediator-isolation receipts")
         tests = run([repro_python, "-m", "unittest", "discover", "-s", "research_pipeline", "-t", ".", "-p", "test_asset_first_stri_*.py"], cwd=tree)
         test_line = next((line.strip() for line in tests.stdout.splitlines() if line.startswith("Ran ")), "")
         if "OK" not in tests.stdout:
@@ -450,6 +497,7 @@ def build_and_verify_supplement() -> dict:
         state["reproduced_results"]["skillrl_p0e"] = p0e_summary(receipt)
         state["reproduced_results"]["released_controller_audit"] = reproduced.get("released_controller_audit") or {}
         state["reproduced_results"]["autoskill_p19_dynamic"] = reproduced.get("autoskill_p19_dynamic") or {}
+        state["reproduced_results"]["autoskill_p19_mediator_isolation"] = reproduced.get("autoskill_p19_mediator_isolation") or {}
         forbidden = [
             str(item)
             for item in (state["claim_boundary"].get("forbidden") or [])
@@ -478,6 +526,8 @@ def refresh_delivery(qa: dict, source: dict, supplement: dict) -> dict:
     paper_quality = load(PAPER_QUALITY_PATH)
     principle = load(P0E_PRINCIPLE)
     autoskill = load(AUTOSKILL_RESULT)
+    mediator = load(MEDIATOR_V2_RESULT)
+    post_review = load(POST_ISOLATION_REVIEW)
     final = load(FINAL_STATE_PATH)
     final["official_format"].update({
         "main_text_pages": int(qa["main_text_pages"]),
@@ -493,6 +543,16 @@ def refresh_delivery(qa: dict, source: dict, supplement: dict) -> dict:
         "confidence": float(final_review.get("confidence") or 0.0),
         "overall_score_1_to_10": final_review.get("overall_score_1_to_10"),
         "required_revisions": len(final_review.get("required_revisions") or []),
+    }
+    final["independent_reviews"]["post_mediator_isolation_review"] = {
+        "decision": post_review.get("decision"),
+        "deepseek_pre_score": (((post_review.get("reviews") or {}).get("deepseek_pre_isolation") or {}).get("score_1_to_10")),
+        "deepseek_post_score": (((post_review.get("reviews") or {}).get("deepseek_post_isolation") or {}).get("score_1_to_10")),
+        "deepseek_post_recommendation": (((post_review.get("reviews") or {}).get("deepseek_post_isolation") or {}).get("recommendation")),
+        "deepseek_post_submission_advice": (((post_review.get("reviews") or {}).get("deepseek_post_isolation") or {}).get("submission_advice")),
+        "fatal_flaws": (((post_review.get("reviews") or {}).get("deepseek_post_isolation") or {}).get("fatal_flaws")),
+        "no_more_experiment_score_chasing": ((post_review.get("submission_policy") or {}).get("no_more_p19_condition_chasing") is True),
+        "scientific_authority": False,
     }
     forbidden = [str(item) for item in (final.get("claims_forbidden") or []) if str(item) != "dynamic STRI success"]
     final["claims_forbidden"] = list(dict.fromkeys(forbidden + [
@@ -516,10 +576,13 @@ def refresh_delivery(qa: dict, source: dict, supplement: dict) -> dict:
         "stage2_locked": bool(principle.get("stage2_confirmation_locked", True)),
         "new_gpu_authorized": bool(principle.get("new_gpu_authorized", False)),
         "broader_STRI_N1_N2_N3_unchanged": bool(principle.get("broader_STRI_N1_N2_N3_unchanged", False)),
-        "autoskill_p19": autoskill_p19_summary(autoskill),
+        "autoskill_p19": autoskill_p19_summary(autoskill, mediator),
         "autoskill_p19_behavioral_claim_supported": autoskill.get("decision") == "GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION",
         "autoskill_p19_task_utility_claim_authorized": False,
         "autoskill_p19_generalization_claim_authorized": False,
+        "autoskill_p19_mediator_claim_supported": mediator.get("decision") == "GO_MEDIATOR_ISOLATION_P19",
+        "autoskill_p19_mediator_exact_fisher": (mediator.get("statistics") or {}).get("exact_fraction"),
+        "autoskill_p19_stage3_replay_agreement": (mediator.get("measurement_repair") or {}).get("stage3_replay_agreement"),
     }
     dump(FINAL_STATE_PATH, final)
 
@@ -534,6 +597,8 @@ def refresh_delivery(qa: dict, source: dict, supplement: dict) -> dict:
         "supplement_reproduction": "PASS",
         "final_independent_review": str(final_review.get("verdict") or ""),
         "final_independent_review_confidence": float(final_review.get("confidence") or 0.0),
+        "post_isolation_independent_review": "borderline 6/10; minor_revision; no fatal flaws",
+        "post_isolation_submission_policy": str(post_review.get("decision") or ""),
         "new_gpu_evidence_required_for_current_claim_scope": False,
         "paper_quality_v2": "PASS_MANUSCRIPT_EVIDENCE_V2_1",
         "paper_quality_evidence_debt": 0,
@@ -544,6 +609,9 @@ def refresh_delivery(qa: dict, source: dict, supplement: dict) -> dict:
         "autoskill_p19_dynamic": "6/6 original; 0/6 split4; 3/3 ID-placebo; 3/3 quotient-control",
         "autoskill_p19_18_of_18_valid": True,
         "autoskill_p19_fisher_exact_p": autoskill["statistics"]["fisher_exact_p"],
+        "autoskill_p19_mediator_isolation": "3/3 post-checkout add-back; 0/3 matched cleanup add-back",
+        "autoskill_p19_mediator_exact_fisher": (mediator.get("statistics") or {}).get("exact_fraction"),
+        "autoskill_p19_stage3_replay_agreement": (mediator.get("measurement_repair") or {}).get("stage3_replay_agreement"),
         "autoskill_p19_claim_scope": "ONE_ARCHIVED_P19_BEHAVIOR_LEVEL_SUBSTRATE_ONLY",
         "autoskill_p19_task_utility_claim_authorized": False,
         "autoskill_p19_generalization_claim_authorized": False,

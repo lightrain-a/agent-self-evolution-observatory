@@ -68,8 +68,8 @@ required_boundaries = [
     "representation-independent semantic target",
     "induction-time admission path would store a literal exact text duplicate",
     "questioner message builder does not expose package ID",
-    "We \\textbf{do not} generalize this to task utility, longitudinal regret, or system-wide safety",
-    "claim a new LP algorithm or broadly validated dynamic repair",
+    "we \\textbf{do not} claim task utility, longitudinal regret, system-wide safety",
+    "LP novelty",
     "not a population-level no-effect theorem",
 ]
 for text in required_boundaries:

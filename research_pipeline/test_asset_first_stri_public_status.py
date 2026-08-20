@@ -30,7 +30,7 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         self.assertEqual(state["summary"]["paper_quality_source_binding"], 1)
         self.assertTrue(state["gates"]["paper_quality_source_binding"])
         self.assertEqual(state["summary"]["paper_quality_content_addressed_completion"], 1)
-        self.assertEqual(state["summary"]["paper_quality_content_addressed_files"], 25)
+        self.assertEqual(state["summary"]["paper_quality_content_addressed_files"], 29)
         self.assertTrue(state["gates"]["paper_quality_content_addressed_completion"])
         self.assertEqual(state["summary"]["paper_quality_evidence_debt"], 0)
         self.assertEqual(state["summary"]["paper_quality_main_visualizations"], 4)
@@ -54,6 +54,9 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         self.assertEqual(state["summary"]["autoskill_p19_behavioral_claim_supported"], 1)
         self.assertEqual(state["summary"]["autoskill_p19_valid_runs"], 18)
         self.assertLessEqual(state["summary"]["autoskill_p19_fisher_exact_p"], 0.05)
+        self.assertEqual(state["summary"]["autoskill_p19_mediator_claim_supported"], 1)
+        self.assertEqual(state["summary"]["autoskill_p19_mediator_exact_fisher"], "1/20")
+        self.assertEqual(state["summary"]["autoskill_p19_stage3_replay_agreement"], "18/18")
         self.assertIn("executed behavior", state["claims"]["N1"]["object"])
         self.assertIn("no task utility", state["claims"]["N1"]["forbidden"])
         p0e = state["claim_boundary"]["skillrl_p0e"]
@@ -71,6 +74,12 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         self.assertEqual(autoskill["groups"]["D_quotient_control"]["destructive_signature_positive"], 3)
         self.assertFalse(autoskill["task_utility_claim_authorized"])
         self.assertFalse(autoskill["generalization_claim_authorized"])
+        mediator = autoskill["mediator_isolation"]
+        self.assertEqual(mediator["decision"], "GO_MEDIATOR_ISOLATION_P19")
+        self.assertEqual(mediator["groups"]["E_post_addback"]["positive"], 3)
+        self.assertEqual(mediator["groups"]["F_cleanup_control"]["positive"], 0)
+        self.assertEqual(mediator["statistics"]["exact_fraction"], "1/20")
+        self.assertEqual(mediator["measurement_repair"]["stage3_replay_agreement"], "18/18")
         self.assertTrue(state["gates"]["public_download_assets"])
         handoff = state["submission_handoff"]
         self.assertEqual(handoff["recorded_author_guide_abstract_deadline_aoe"], "2026-09-18")
