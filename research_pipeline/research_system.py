@@ -90,6 +90,9 @@ from .principle_adjudication import build_principle_layer_state
 from .research_capability_registry import build_research_capability_registry
 from .research_candidate_portfolio import build_research_candidate_portfolio
 from .research_harness_assurance import build_research_harness_assurance
+from .research_integration_lint import build_research_integration_lint
+from .research_harness_meta_optimization import build_research_harness_meta_optimization
+from .research_stall_pivot_controller import frame_signature, load_research_stall_state, source_set_sha256_from_primary
 from .research_memory_wiki import build_research_memory_wiki, write_research_memory_wiki
 from .search_funnel_telemetry import build_search_funnel_telemetry
 from .premium_model_policy import policy_summary as premium_model_policy_summary
@@ -239,6 +242,9 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     external_learning = state["external_system_learning"]["summary"]
     candidate_portfolio = state["research_candidate_portfolio"]["summary"]
     search_funnel = state["search_funnel_telemetry"]
+    integration_lint = state["research_integration_lint"]["summary"]
+    stall_pivot = state["research_stall_pivot"]
+    meta_optimization = state["research_harness_meta_optimization"]["summary"]
     harness_assurance = state["research_harness_assurance"]["summary"]
     economy = state["p0_economy_gate"]["summary"]
     p0_ledger = state["p0_decision_ledger"]["summary"]
@@ -266,6 +272,9 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"ARIS + local double-funnel", "component":{"en":"Adversarial fan-out + independent jury harness","zh":"对抗式 Fan-out + 独立 Jury Harness"}, "status":"running", "evidence":{"en":f"{harness_assurance['passed']}/{harness_assurance['checks']} harness invariants pass; resolved-model violations={harness_assurance['resolved_model_independence_violations']}","zh":f"Harness 不变量 {harness_assurance['passed']}/{harness_assurance['checks']} 通过；resolved-model 独立性违规={harness_assurance['resolved_model_independence_violations']}"}},
         {"source":"ARIS portfolio persistence + local scientific gates", "component":{"en":"Persistent multi-candidate research portfolio","zh":"持久化多候选科研组合"}, "status":"running", "evidence":{"en":f"{candidate_portfolio['visible_candidates']} visible / {candidate_portfolio['active_problem_lines']} active / {candidate_portfolio['search_holds']} search holds; capacity targets are advisory only","zh":f"{candidate_portfolio['visible_candidates']} 条可见 / {candidate_portfolio['active_problem_lines']} 条 active / {candidate_portfolio['search_holds']} 条 search hold；容量目标仅用于调度"}},
         {"source":"ARIS meta-optimization pattern + local typed failure semantics", "component":{"en":"Search funnel + bottleneck telemetry","zh":"搜索漏斗 + 瓶颈遥测"}, "status":"running", "evidence":{"en":f"current bottleneck={search_funnel['bottleneck']['key']}; telemetry has zero scientific authority","zh":f"当前瓶颈={search_funnel['bottleneck']['key']}；遥测不拥有科学权限"}},
+        {"source":"ARIS integration inventory + local release contracts", "component":{"en":"Research integration contract lint","zh":"科研组件接线审计"}, "status":"running", "evidence":{"en":f"{integration_lint['passed']}/{integration_lint['contracts']} required producer→consumer contracts wired; orphan required integrations={integration_lint['orphan_required_integrations']}","zh":f"{integration_lint['passed']}/{integration_lint['contracts']} 条必需 producer→consumer 接线通过；孤立必需接线={integration_lint['orphan_required_integrations']}"}},
+        {"source":"ARIS iteration heartbeat + local zero-authority search control", "component":{"en":"Stall-to-pivot research heartbeat","zh":"停滞→结构换向科研心跳"}, "status":"running", "evidence":{"en":f"stale_count={(stall_pivot.get('summary') or {}).get('stale_count',0)} / action={(stall_pivot.get('directive') or {}).get('action','CONTINUE_CURRENT_SEARCH')}; same-frame retries cannot relax scientific gates","zh":f"连续零新增={(stall_pivot.get('summary') or {}).get('stale_count',0)} / 当前动作={(stall_pivot.get('directive') or {}).get('action','CONTINUE_CURRENT_SEARCH')}；同框架重试不能放宽科学门"}},
+        {"source":"ARIS meta-optimize producer/apply separation + local independent landing gate", "component":{"en":"Review-gated harness meta-optimization","zh":"独立落地门控的科研 Harness 元优化"}, "status":"running", "evidence":{"en":f"{meta_optimization['proposals']} unapplied proposals; producer has zero patch authority","zh":f"{meta_optimization['proposals']} 条未应用改进提案；proposal producer 没有代码落地权限"}},
         {"source":"AIDE / AI-Scientist-v2 / R&D-Agent", "component":{"en":"Pre-P0 identifiability auditor","zh":"Pre-P0 实验可识别性审计"}, "status":"running", "evidence":{"en":f"{pre_p0['execution_ready']}/{pre_p0['audited']} retrospective contracts execution-ready","zh":f"当前 {pre_p0['execution_ready']}/{pre_p0['audited']} 份 retrospective 合同允许启动"}},
         {"source":"Advisor paper-first research contract", "component":{"en":"Paper novelty → method → experiment blueprint contract","zh":"论文 Novelty → 方法 → 实验蓝图合同"}, "status":"running", "evidence":{"en":f"{paper_first['paper_design_passed']}/{paper_first['cards']} live cards satisfy paper-first / visual portfolio {visual_evidence['planned_main_visualizations']} planned across {visual_evidence['paper_first_designs']} paper-first designs + {visual_evidence['stri_completed_main_visualizations']} STRI completed / post-C2: {paper_post_c2['decision']}","zh":f"当前 {paper_first['paper_design_passed']}/{paper_first['cards']} 份 live 卡满足 paper-first / 可视化组合：{visual_evidence['paper_first_designs']} 个 paper-first 设计共规划 {visual_evidence['planned_main_visualizations']} 张主图 + STRI 已完成 {visual_evidence['stri_completed_main_visualizations']} 张 / post-C2：{paper_post_c2['decision']}"}},
         {"source":"FirstResearch / Popper / Co-Scientist / RD-Agent", "component":{"en":"Principle Certificate + epistemic adjudicator","zh":"原理证书 + 认识论裁决器"}, "status":"running", "evidence":{"en":f"{principle['certificates_passed']}/{principle['cards']} principle certificates valid / {principle.get('registered_prediction_rejections_pending_counterexplanation',0)} prediction rejections awaiting counter-explanation / {principle.get('principle_dead_end_certifications',0)} certified principle dead ends","zh":f"{principle['certificates_passed']}/{principle['cards']} 份原理证书有效 / {principle.get('registered_prediction_rejections_pending_counterexplanation',0)} 个预测反证待反机制解释 / {principle.get('principle_dead_end_certifications',0)} 个原理级 Dead-End 已认证"}},
@@ -448,6 +457,17 @@ def build_research_system_state() -> dict[str, Any]:
         discovery_frontier_state=paper_first_discovery_frontier,
         candidate_portfolio_state=research_candidate_portfolio,
     )
+    research_integration_lint = build_research_integration_lint()
+    stall_source_sha = source_set_sha256_from_primary(paper_first_primary_evidence)
+    stall_frame = frame_signature(operator_version=DISCOVERY_OPERATOR_VERSION, source_set_sha256=stall_source_sha)
+    research_stall_pivot = load_research_stall_state(storage=storage, current_frame_signature=stall_frame)
+    research_stall_pivot["current_frame"] = {"operator_version": DISCOVERY_OPERATOR_VERSION, "source_set_sha256": stall_source_sha, "frame_signature": stall_frame}
+    research_harness_meta_optimization = build_research_harness_meta_optimization(
+        integration_lint=research_integration_lint,
+        stall_state=research_stall_pivot,
+        search_telemetry=search_funnel_telemetry,
+        automation_dir=storage.run_dir / "automation",
+    )
     paper_first_fresh_phenomenon_portfolio = build_fresh_phenomenon_portfolio()
     paper_first_shadow_latest = paper_first_problem_search_portfolio.get("latest_run") or {}
     paper_first_shadow_latest_summary = paper_first_shadow_latest.get("summary") or {}
@@ -474,6 +494,9 @@ def build_research_system_state() -> dict[str, Any]:
         paper_quality_policy=PAPER_QUALITY_POLICY,
         candidate_portfolio_state=research_candidate_portfolio,
         search_telemetry_state=search_funnel_telemetry,
+        integration_lint_state=research_integration_lint,
+        stall_pivot_state=research_stall_pivot,
+        meta_optimization_state=research_harness_meta_optimization,
     )
     mem_xfer_workflow = build_mem_xfer_workflow_state(experiment_data_root)
     pilot_registry = build_pilot_registry(
@@ -872,6 +895,10 @@ def build_research_system_state() -> dict[str, Any]:
             "search_funnel_bottleneck":search_funnel_telemetry["bottleneck"]["key"],
             "research_harness_assurance_passed":research_harness_assurance["summary"]["passed"],
             "research_harness_assurance_checks":research_harness_assurance["summary"]["checks"],
+            "research_integration_lint_failed":research_integration_lint["summary"]["failed"],
+            "research_stall_count":research_stall_pivot["summary"]["stale_count"],
+            "research_stall_action":research_stall_pivot["directive"]["action"],
+            "research_meta_patch_proposals":research_harness_meta_optimization["summary"]["proposals"],
             "repair_queue":repair_queue["summary"]["queued_ideas"],
             "human_terminal_parents":human_terminal_ideas["summary"]["human_parents"],
             "human_terminal_p0":human_terminal_ideas["summary"]["p0"],
@@ -1027,6 +1054,9 @@ def build_research_system_state() -> dict[str, Any]:
         "external_system_learning":external_system_learning,
         "research_candidate_portfolio":research_candidate_portfolio,
         "search_funnel_telemetry":search_funnel_telemetry,
+        "research_integration_lint":research_integration_lint,
+        "research_stall_pivot":research_stall_pivot,
+        "research_harness_meta_optimization":research_harness_meta_optimization,
         "research_harness_assurance":research_harness_assurance,
         "human_terminal_ideas":human_terminal_ideas,
         "p0_admission":p0_admission_public,

@@ -76,11 +76,35 @@ from .paper_first_support_release_watch import load_private_support_release_watc
 from .paper_first_support_asset_recheck import load_private_support_asset_recheck_queue, public_support_asset_recheck_summary, write_private_support_asset_recheck_queue
 from .paper_first_support_asset_recheck_handoff import load_private_support_asset_recheck_handoff, public_support_asset_recheck_handoff_summary, write_private_support_asset_recheck_handoff
 from .research_system import write_research_system_state
+from .research_stall_pivot_controller import frame_signature, load_research_stall_state, observe_research_stall, source_set_sha256_from_primary
+from .paper_first_problem_discovery_contract import DISCOVERY_OPERATOR_VERSION
 from .publication import PUBLICATION_OK_STATES, publish_generated_state
 
 
 def _now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+
+
+def _primary_source_set_sha256() -> str:
+    return source_set_sha256_from_primary(load_primary_evidence_state())
+
+
+def _stall_preflight(storage: StorageSettings) -> dict[str, Any]:
+    source_sha = _primary_source_set_sha256()
+    frame = frame_signature(operator_version=DISCOVERY_OPERATOR_VERSION, source_set_sha256=source_sha)
+    state = load_research_stall_state(storage=storage, current_frame_signature=frame)
+    state["current_frame"] = {"operator_version": DISCOVERY_OPERATOR_VERSION, "source_set_sha256": source_sha, "frame_signature": frame}
+    return state
+
+
+def _stall_observation(storage: StorageSettings, *, execution_failed: bool = False) -> dict[str, Any]:
+    return observe_research_stall(
+        generator_state=load_problem_generator_state(),
+        operator_version=DISCOVERY_OPERATOR_VERSION,
+        source_set_sha256=_primary_source_set_sha256(),
+        storage=storage,
+        execution_failed=execution_failed,
+    )
 
 
 def _pid_is_alive(pid: int) -> bool:
@@ -296,7 +320,27 @@ def run_cycle(
             # Global Relation Recall supplements cross-tranche recall without gaining canonical Problem-Gate authority.
             report["steps"].append(_step("paper-design-backlog-pre-discovery", write_paper_design_backlog))
             report["steps"].append(_step("paper-first-fresh-saturation", write_fresh_saturation_state))
-            report["steps"].append(_step("paper-first-discovery-transaction", lambda: write_problem_discovery_transaction(storage=storage,generator_kwargs={"portfolio_mode":True})))
+            stall_preflight = _stall_preflight(storage)
+            report["steps"].append({"name":"research-stall-pivot-preflight","status":"pass","duration_seconds":0.0,"summary":_safe_summary(stall_preflight)})
+            same_frame_allowed = bool((stall_preflight.get("directive") or {}).get("same_frame_automatic_discovery_allowed", True))
+            if same_frame_allowed:
+                discovery_step = _step("paper-first-discovery-transaction", lambda: write_problem_discovery_transaction(storage=storage,generator_kwargs={"portfolio_mode":True}))
+                report["steps"].append(discovery_step)
+                report["steps"].append(_step("research-stall-pivot-observation", lambda: _stall_observation(storage, execution_failed=discovery_step.get("status") == "fail")))
+            else:
+                report["steps"].append({
+                    "name":"paper-first-discovery-transaction",
+                    "status":"pass",
+                    "duration_seconds":0.0,
+                    "summary":{
+                        "status":"DEFERRED_STALE_SEARCH_FRAME",
+                        "directive":(stall_preflight.get("directive") or {}).get("action"),
+                        "stale_count":(stall_preflight.get("summary") or {}).get("stale_count",0),
+                        "reason":"Automatic weekly discovery will not repeat the same operator/source frame after the stall threshold. Change the scientific-object/search-primitive/source frame; more fan-out alone is not a structural pivot.",
+                        "provider_calls_authorized":False,
+                        "scientific_authority":False,
+                    },
+                })
             report["steps"].append(_step("paper-first-pre-f0-queue", write_pre_f0_queue))
             report["steps"].append(_step("paper-first-shadow-search-admission", _run_shadow_search_admission_control))
             # Shadow scientific-object recall is strictly downstream of the live atomic transaction.

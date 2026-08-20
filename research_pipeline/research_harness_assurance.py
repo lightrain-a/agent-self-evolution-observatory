@@ -36,6 +36,9 @@ POLICY: dict[str, Any] = {
     "effort_and_assurance_are_orthogonal": True,
     "increasing_firepower_cannot_relax_assurance": True,
     "harness_assurance_cannot_override_local_scientific_gates": True,
+    "required_integration_contracts_must_be_machine_wired": True,
+    "stall_pivot_cannot_change_scientific_assurance": True,
+    "meta_optimization_producer_cannot_self_apply": True,
 }
 
 
@@ -53,6 +56,9 @@ def build_research_harness_assurance(
     paper_quality_policy: dict[str, Any],
     candidate_portfolio_state: dict[str, Any],
     search_telemetry_state: dict[str, Any],
+    integration_lint_state: dict[str, Any] | None = None,
+    stall_pivot_state: dict[str, Any] | None = None,
+    meta_optimization_state: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     dp = discovery_contract_state.get("policy") or {}
     gp = installed_generator_policy or {}
@@ -77,6 +83,12 @@ def build_research_harness_assurance(
         if review.get("independent_resolved_model") is False:
             independence_violations.append(str(row.get("candidate_id") or ""))
 
+    integration_lint_state = integration_lint_state or {}
+    stall_pivot_state = stall_pivot_state or {}
+    meta_optimization_state = meta_optimization_state or {}
+    extended_controls_supplied = bool(
+        integration_lint_state or stall_pivot_state or meta_optimization_state
+    )
     checks = [
         _check(
             "fanout-generation-only",
@@ -148,6 +160,35 @@ def build_research_harness_assurance(
             and tp.get("telemetry_is_observability_not_scientific_authority") is True
             and tp.get("portfolio_capacity_pressure_cannot_relax_gates") is True,
             {"bottleneck": (search_telemetry_state.get("bottleneck") or {}).get("key")},
+        ),
+        *(
+            [
+                _check(
+                    "integration-contract-live-wiring",
+                    integration_lint_state.get("status") == "PASS_INTEGRATION_LINT"
+                    and integration_lint_state.get("scientific_authority") is False
+                    and (integration_lint_state.get("policy") or {}).get("declared_writer_requires_machine_verifiable_consumer") is True,
+                    integration_lint_state.get("summary") or {},
+                ),
+                _check(
+                    "stall-pivot-zero-authority",
+                    stall_pivot_state.get("scientific_authority") is False
+                    and (stall_pivot_state.get("policy") or {}).get("stall_controller_cannot_change_scientific_thresholds") is True
+                    and (stall_pivot_state.get("policy") or {}).get("effort_increase_alone_does_not_satisfy_structural_pivot") is True,
+                    {"stale_count": (stall_pivot_state.get("summary") or {}).get("stale_count"), "directive": (stall_pivot_state.get("directive") or {}).get("action")},
+                ),
+                _check(
+                    "meta-optimize-propose-apply-separated",
+                    meta_optimization_state.get("scientific_authority") is False
+                    and (meta_optimization_state.get("authority") or {}).get("apply_patch") is False
+                    and (meta_optimization_state.get("policy") or {}).get("meta_optimizer_is_read_only_proposal_producer") is True
+                    and (meta_optimization_state.get("policy") or {}).get("proposal_application_requires_separate_landing_gate") is True
+                    and (meta_optimization_state.get("policy") or {}).get("meta_optimization_cannot_relax_assurance_thresholds") is True,
+                    meta_optimization_state.get("summary") or {},
+                ),
+            ]
+            if extended_controls_supplied
+            else []
         ),
     ]
     passed = sum(item["pass"] for item in checks)
