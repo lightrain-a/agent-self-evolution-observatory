@@ -2,15 +2,15 @@
   const pick=(zh,en)=>language==="zh"?zh:en;
   const txt=(value)=>{if(value&&typeof value==="object"&&(value.zh||value.en)) return language==="zh"?(value.zh||value.en):(value.en||value.zh); return String(value||"");};
   const pfCanonicalNames={
-    "PF-1":{code:"PF-01",zh:"固定进化器下的未来可学习性审计",en:"Future-Learnability Audit under a Frozen Evolver"},
-    "PF-2":{code:"PF-02",zh:"持久更新的修复表面可辨识性",en:"Repair-Surface Identifiability under Persistent Updates"},
-    "PF-3":{code:"PF-03",zh:"决策保持的经验压缩生命周期",en:"Decision-Preserving Experience Compression Lifecycle"},
-    "PF-4":{code:"PF-04",zh:"更新后的诊断通道保持",en:"Post-Update Diagnostic-Channel Preservation"},
-    "PF-5":{code:"PF-05",zh:"更新差异驱动的验证",en:"Update-Difference-Guided Verification"},
-    "PF-6":{code:"PF-06",zh:"自进化后的失败风险迁移",en:"Failure-Risk Transport under Self-Evolution"},
-    "PF-7":{code:"PF-07",zh:"更新影响范围的证据重验证",en:"Update-Impact-Aware Evidence Revalidation"},
-    "PF-8":{code:"PF-08",zh:"自写验证器漂移",en:"Self-Authored Verifier Drift"},
-    "PF-9":{code:"PF-09",zh:"更新后的决策上下文有效性",en:"Post-Update Decision-Context Validity"}
+    "PF-1":{code:"A-8",zh:"固定进化器下的未来可学习性审计",en:"Future-Learnability Audit under a Frozen Evolver"},
+    "PF-2":{code:"E-5",zh:"持久更新的修复表面可辨识性",en:"Repair-Surface Identifiability under Persistent Updates"},
+    "PF-3":{code:"B-11",zh:"决策保持的经验压缩生命周期",en:"Decision-Preserving Experience Compression Lifecycle"},
+    "PF-4":{code:"A-9",zh:"更新后的诊断通道保持",en:"Post-Update Diagnostic-Channel Preservation"},
+    "PF-5":{code:"A-10",zh:"更新差异驱动的验证",en:"Update-Difference-Guided Verification"},
+    "PF-6":{code:"A-11",zh:"自进化后的失败风险迁移",en:"Failure-Risk Transport under Self-Evolution"},
+    "PF-7":{code:"A-12",zh:"更新影响范围的证据重验证",en:"Update-Impact-Aware Evidence Revalidation"},
+    "PF-8":{code:"C-6",zh:"自写验证器漂移",en:"Self-Authored Verifier Drift"},
+    "PF-9":{code:"E-6",zh:"更新后的决策上下文有效性",en:"Post-Update Decision-Context Validity"}
   };
   const canonicalPF=(id)=>pfCanonicalNames[id]||{code:String(id||"PF"),zh:String(id||"PF"),en:String(id||"PF")};
   const verdictMeta=(value)=>({

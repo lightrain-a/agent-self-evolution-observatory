@@ -303,6 +303,7 @@ def main() -> None:
           categorizedContextBanks: document.querySelectorAll('.categorized-context-bank').length,
           categorizedContextCards: document.querySelectorAll('.categorized-context-card').length,
           categorizedContextIds: [...document.querySelectorAll('.categorized-context-card')].map(x=>x.dataset.researchObject||''),
+          categorizedContextCodes: [...document.querySelectorAll('.categorized-context-card header > div > span:first-child')].map(x=>(x.textContent||'').trim()),
           pfCodes: [...document.querySelectorAll('.paper-incubation-card')].map(x=>x.dataset.pfCode||''),
           safetyCodes: [...document.querySelectorAll('[data-safety-code]')].map(x=>x.dataset.safetyCode||''),
           parentItems: document.querySelectorAll('.canonical-parent-item').length,
@@ -413,8 +414,9 @@ def main() -> None:
         require((ideas["discussedGroups"],ideas["categoryLinks"],ideas["parentItems"],ideas["lifecycleStrips"],ideas["discussedCards"]) == (7,7,26,26,26), f"category-first ledger must expose seven groups and 26 complete parent cards: {ideas['discussedGroups']}/{ideas['categoryLinks']}/{ideas['parentItems']}/{ideas['lifecycleStrips']}/{ideas['discussedCards']}")
         require((ideas["objectHierarchyPanels"],ideas["objectLevelCards"],ideas["legacyMixedStatusRows"]) == (1,3,0), f"paper-ideas must separate parent ideas from paper/evidence/experiment objects and remove the old mixed ledger: {ideas['objectHierarchyPanels']}/{ideas['objectLevelCards']}/{ideas['legacyMixedStatusRows']}")
         require(ideas["categorizedContextBanks"] == 2 and ideas["categorizedContextCards"] == 6 and set(ideas["categorizedContextIds"]) == {"STRI","STRI-AUTOSKILL-P19","STRI-P0A","STRI-P0E","MEM-HISTORY","SP-15"}, f"categorized paper/evidence/archive context is incomplete: {ideas['categorizedContextBanks']}/{ideas['categorizedContextCards']}/{ideas['categorizedContextIds']}")
-        require(set(ideas["pfCodes"]) == {f"PF-{i:02d}" for i in range(1,10)}, f"PF directions are not normalized to PF-01..PF-09: {ideas['pfCodes']}")
-        require(set(ideas["safetyCodes"]) == {f"SAF-{i:02d}" for i in range(1,6)}, f"safety directions are not normalized to SAF-01..SAF-05: {ideas['safetyCodes']}")
+        require(set(ideas["categorizedContextCodes"]) == {"E-7","E-7a","E-7b","E-7c","B-12","B-13"}, f"categorized context objects are not normalized to A-G taxonomy: {ideas['categorizedContextCodes']}")
+        require(set(ideas["pfCodes"]) == {"A-8","A-9","A-10","A-11","A-12","B-11","C-6","E-5","E-6"}, f"former PF directions are not distributed into A/B/C/E categories: {ideas['pfCodes']}")
+        require(set(ideas["safetyCodes"]) == {"G-1","G-2","G-3","G-4","G-5"}, f"safety directions are not normalized to G-1..G-5: {ideas['safetyCodes']}")
         require((ideas["readyCards"], ideas["mergedCards"], ideas["droppedCards"]) == (13, 6, 7), f"frozen terminal tone counts are wrong: {ideas['readyCards']}/{ideas['mergedCards']}/{ideas['droppedCards']}")
         require((ideas["terminalCounts"].get("p0"),ideas["terminalCounts"].get("p0-ready"),ideas["terminalCounts"].get("merge"),ideas["terminalCounts"].get("drop")) == (2,11,6,7), f"frozen human terminal counts must be 2/11/6/7: {ideas['terminalCounts']}")
         require(ideas["historicalCounts"].get("p0") == 20 and ideas["historicalCounts"].get("merge") == 6, f"historical P0 lifecycle must remain separately preserved: {ideas['historicalCounts']}")
@@ -515,7 +517,7 @@ def main() -> None:
             "通过正式问题检查的新研究问题",
             "先分清对象层级",
             "终态主体",
-            "PF · SAF",
+            "A–G",
             "局部反例记忆修复",
         )
         require(all(marker in ideas["text"] for marker in chinese_reader_markers), f"paper-ideas Chinese reader layer is incomplete; missing={[m for m in chinese_reader_markers if m not in ideas['text']]}")
