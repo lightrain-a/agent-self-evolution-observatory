@@ -297,6 +297,14 @@ def main() -> None:
           agentSafetyClosedSummary: window.AGENT_SAFETY_PROGRAM_STATE?.closed_basin_summary || {},
           discussedGroups: document.querySelectorAll('.canonical-idea-group').length,
           categoryLinks: document.querySelectorAll('.canonical-category-nav a').length,
+          objectHierarchyPanels: document.querySelectorAll('.current-object-hierarchy').length,
+          objectLevelCards: document.querySelectorAll('.research-object-levels > article').length,
+          legacyMixedStatusRows: document.querySelectorAll('.current-object-hierarchy .current-research-table tbody tr').length,
+          categorizedContextBanks: document.querySelectorAll('.categorized-context-bank').length,
+          categorizedContextCards: document.querySelectorAll('.categorized-context-card').length,
+          categorizedContextIds: [...document.querySelectorAll('.categorized-context-card')].map(x=>x.dataset.researchObject||''),
+          pfCodes: [...document.querySelectorAll('.paper-incubation-card')].map(x=>x.dataset.pfCode||''),
+          safetyCodes: [...document.querySelectorAll('[data-safety-code]')].map(x=>x.dataset.safetyCode||''),
           parentItems: document.querySelectorAll('.canonical-parent-item').length,
           lifecycleStrips: document.querySelectorAll('.canonical-lifecycle-strip').length,
           discussedCards: document.querySelectorAll('.human-review-idea-card').length,
@@ -403,6 +411,10 @@ def main() -> None:
         require(ideas["p0Policy"].get("pre_p0_identifiability_required") is True and ideas["p0Policy"].get("automatic_p0_to_p1_forbidden") is True and ideas["p0Policy"].get("p0_pass_requires_human_approval") is True, f"P0 human/Pre-P0 approval policy is missing: {ideas['p0Policy']}")
         require(ideas["toc2"] >= 2 and ideas["toc3"] >= 7 and ideas["toc4"] == 0, f"paper-ideas category-first TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
         require((ideas["discussedGroups"],ideas["categoryLinks"],ideas["parentItems"],ideas["lifecycleStrips"],ideas["discussedCards"]) == (7,7,26,26,26), f"category-first ledger must expose seven groups and 26 complete parent cards: {ideas['discussedGroups']}/{ideas['categoryLinks']}/{ideas['parentItems']}/{ideas['lifecycleStrips']}/{ideas['discussedCards']}")
+        require((ideas["objectHierarchyPanels"],ideas["objectLevelCards"],ideas["legacyMixedStatusRows"]) == (1,3,0), f"paper-ideas must separate parent ideas from paper/evidence/experiment objects and remove the old mixed ledger: {ideas['objectHierarchyPanels']}/{ideas['objectLevelCards']}/{ideas['legacyMixedStatusRows']}")
+        require(ideas["categorizedContextBanks"] == 2 and ideas["categorizedContextCards"] == 6 and set(ideas["categorizedContextIds"]) == {"STRI","STRI-AUTOSKILL-P19","STRI-P0A","STRI-P0E","MEM-HISTORY","SP-15"}, f"categorized paper/evidence/archive context is incomplete: {ideas['categorizedContextBanks']}/{ideas['categorizedContextCards']}/{ideas['categorizedContextIds']}")
+        require(set(ideas["pfCodes"]) == {f"PF-{i:02d}" for i in range(1,10)}, f"PF directions are not normalized to PF-01..PF-09: {ideas['pfCodes']}")
+        require(set(ideas["safetyCodes"]) == {f"SAF-{i:02d}" for i in range(1,6)}, f"safety directions are not normalized to SAF-01..SAF-05: {ideas['safetyCodes']}")
         require((ideas["readyCards"], ideas["mergedCards"], ideas["droppedCards"]) == (13, 6, 7), f"frozen terminal tone counts are wrong: {ideas['readyCards']}/{ideas['mergedCards']}/{ideas['droppedCards']}")
         require((ideas["terminalCounts"].get("p0"),ideas["terminalCounts"].get("p0-ready"),ideas["terminalCounts"].get("merge"),ideas["terminalCounts"].get("drop")) == (2,11,6,7), f"frozen human terminal counts must be 2/11/6/7: {ideas['terminalCounts']}")
         require(ideas["historicalCounts"].get("p0") == 20 and ideas["historicalCounts"].get("merge") == 6, f"historical P0 lifecycle must remain separately preserved: {ideas['historicalCounts']}")
@@ -501,7 +513,9 @@ def main() -> None:
             "仅诊断（DIAGNOSTIC ONLY）",
             "停止 PF-1 独立论文",
             "通过正式问题检查的新研究问题",
-            "缺证据、暂不推进的候选",
+            "先分清对象层级",
+            "终态主体",
+            "PF · SAF",
             "局部反例记忆修复",
         )
         require(all(marker in ideas["text"] for marker in chinese_reader_markers), f"paper-ideas Chinese reader layer is incomplete; missing={[m for m in chinese_reader_markers if m not in ideas['text']]}")

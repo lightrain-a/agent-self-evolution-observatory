@@ -2567,7 +2567,7 @@ const CANONICAL_PF_GROUPS = {
 };
 function canonicalIdeaGroups() {
   const base=(humanReviewData().groups||[]).map(group=>({...group}));
-  return [...base,{id:"G",title:{zh:"Agent 安全与风险演化",en:"Agent safety and risk evolution"},question:{zh:"当前静态安全检查能否预测持久状态与经验继续演化后的未来 first-violation hazard？",en:"Can current static safety evaluation predict future first-violation hazard after persistent state and experience continue to evolve?"}}];
+  return [...base,{id:"G",title:{zh:"Agent 自进化安全与未来风险",en:"Safety and future risk in agent self-evolution"},question:{zh:"当前静态安全检查能否预测持久状态与经验继续演化后的未来首次违规风险？",en:"Can current static safety evaluation predict future first-violation risk after persistent state and experience continue to evolve?"}}];
 }
 function canonicalIndependentRows() {
   const ledger=humanTerminalState();
@@ -2594,9 +2594,9 @@ function canonicalStatusControls(rows=[]) {
 }
 function renderCanonicalCategoryIndex(groups,parents,independent) {
   const closedCounts=window.closedCandidateCategoryCounts?window.closedCandidateCategoryCounts():{};
-  return `<section class="panel canonical-category-index"><div class="idea-panel-heading"><div><div class="eyebrow">${language==="zh"?"研究大类导航":"RESEARCH CATEGORY INDEX"}</div><h2 id="canonical-category-index">${language==="zh"?"先按科学问题分大类，再在一张卡里看完一个 Idea":"Classify by scientific problem first, then read each idea in one complete card"}</h2><p class="section-intro">${language==="zh"?"26 个经人工审查的父 Idea 是唯一一级对象；独立方法、Paper-first 提案和关闭候选都归回相应大类，但不会冒充新的一级父 Idea。":"The 26 human-reviewed parents are the only first-level objects. Standalone methods, Paper-first proposals, and closed candidates return to their scientific categories without becoming duplicate parents."}</p></div><strong>${parents.length}<span>${language==="zh"?"个一级父 Idea":"first-level parents"}</span></strong></div><nav class="canonical-category-nav" aria-label="${language==="zh"?"研究大类":"Research categories"}">${groups.map(group=>{
+  return `<section class="panel canonical-category-index"><div class="idea-panel-heading"><div><div class="eyebrow">${language==="zh"?"研究大类导航":"RESEARCH CATEGORY INDEX"}</div><h2 id="canonical-category-index">${language==="zh"?"先按科学问题分大类，再在一张卡里看完一个 Idea":"Classify by scientific problem first, then read each idea in one complete card"}</h2><p class="section-intro">${language==="zh"?"26 个经人工审查的父 Idea 是唯一一级对象；PF、SAF、独立方法、论文证据和关闭候选都归回相应大类，但不会冒充新的一级父 Idea。":"The 26 human-reviewed parents are the only first-level objects. PF/SAF directions, standalone methods, paper evidence, and closed candidates return to their scientific categories without becoming duplicate parents."}</p></div><strong>${parents.length}<span>${language==="zh"?"个一级父 Idea":"first-level parents"}</span></strong></div><nav class="canonical-category-nav" aria-label="${language==="zh"?"研究大类":"Research categories"}">${groups.map(group=>{
     const p=parents.filter(row=>row.meta.group===group.id).length;
-    const related=independent.filter(row=>(row.idea.group||supplementalGroupId(row.idea))===group.id).length+(CANONICAL_PF_GROUPS[group.id]||[]).length;
+    const related=independent.filter(row=>(row.idea.group||supplementalGroupId(row.idea))===group.id).length+(CANONICAL_PF_GROUPS[group.id]||[]).length+(group.id==="G"?5:0);
     return `<a href="#canonical-group-${esc(group.id.toLowerCase())}"><span>${esc(group.id)}</span><div><b>${textOf(group.title)}</b><small>${p} ${language==="zh"?"个父 Idea":"parents"} · ${related} ${language==="zh"?"个关联提案/方法":"related proposals/methods"} · ${closedCounts[group.id]||0} ${language==="zh"?"个关闭候选":"closed"}</small></div></a>`;
   }).join("")}</nav></section>`;
 }
@@ -2606,7 +2606,7 @@ function renderCanonicalRelatedBank(group,independent) {
   const pfCards=pfIds.length&&window.renderPaperFirstIdeaCards?window.renderPaperFirstIdeaCards(pfIds):"";
   const methodCards=methods.map(renderSupplementalIdeaCard).join("");
   if(!methodCards&&!pfCards)return "";
-  return `<details class="canonical-related-bank"><summary><div><b>${language==="zh"?"关联方法与 Paper-first 提案":"Related methods and Paper-first proposals"}</b><span>${language==="zh"?"作为父 Idea 的机制组件、方法资产或问题提案呈现，不重复计入一级 Idea。":"Shown as components, method assets, or problem proposals; not recounted as first-level ideas."}</span></div><strong>${methods.length+pfIds.length}</strong></summary><div class="canonical-related-body">${methodCards?`<section class="canonical-related-section"><h3 data-toc="false">${language==="zh"?"独立方法／衍生方法资产":"Standalone / derived method assets"}</h3><div class="supplemental-list">${methodCards}</div></section>`:""}${pfCards?`<section class="canonical-related-section"><h3 data-toc="false">${language==="zh"?"Paper-first 新问题与终态裁决":"Paper-first problems and terminal decisions"}</h3><div class="paper-incubation-list">${pfCards}</div></section>`:""}</div></details>`;
+  return `<details class="canonical-related-bank"><summary><div><b>${language==="zh"?"关联研究方向与方法资产":"Related research directions and method assets"}</b><span>${language==="zh"?"PF 系列、独立方法和衍生资产统一归入科学问题大类；它们是关联对象，不重复计入 26 个父 Idea。":"PF directions, standalone methods, and derived assets are grouped by scientific problem; they are related objects and are not recounted among the 26 parents."}</span></div><strong>${methods.length+pfIds.length}</strong></summary><div class="canonical-related-body">${methodCards?`<section class="canonical-related-section"><h3 data-toc="false">${language==="zh"?"独立方法／衍生方法资产":"Standalone / derived method assets"}</h3><div class="supplemental-list">${methodCards}</div></section>`:""}${pfCards?`<section class="canonical-related-section"><h3 data-toc="false">${language==="zh"?"PF · Paper-first 研究方向与终态裁决":"PF · Paper-first directions and terminal decisions"}</h3><div class="paper-incubation-list">${pfCards}</div></section>`:""}</div></details>`;
 }
 function renderCanonicalIdeaGroup(group,parents,independent) {
   const rows=parents.filter(row=>row.meta.group===group.id).sort((a,b)=>{
@@ -2614,11 +2614,12 @@ function renderCanonicalIdeaGroup(group,parents,independent) {
     return (order[a.meta.status]??9)-(order[b.meta.status]??9)||String(a.meta.code).localeCompare(String(b.meta.code),undefined,{numeric:true});
   });
   const parentCards=rows.map((row,index)=>`<div class="canonical-parent-item" data-canonical-status="${esc(row.meta.status)}" data-canonical-group="${esc(group.id)}">${renderHumanReviewedIdeaCard(row.idea,row.meta,index)}</div>`).join("");
+  const context=window.renderCategorizedResearchContext?window.renderCategorizedResearchContext(group.id):"";
   const safety=group.id==="G"&&window.renderAgentSafetyProgram?window.renderAgentSafetyProgram():"";
-  const related=group.id==="G"?"":renderCanonicalRelatedBank(group,independent);
+  const related=renderCanonicalRelatedBank(group,independent);
   const closed=window.renderClosedCandidateArchive?window.renderClosedCandidateArchive(group.id):"";
   const counts=Object.fromEntries(["p0","p0-ready","merge","drop"].map(status=>[status,rows.filter(row=>row.meta.status===status).length]));
-  return `<section class="canonical-idea-group" id="canonical-group-${esc(group.id.toLowerCase())}" data-canonical-group="${esc(group.id)}"><header class="canonical-group-header"><span>${esc(group.id)}</span><div><h2>${textOf(group.title)}</h2><p>${textOf(group.question)}</p><div class="canonical-group-counts">${rows.length?`<b>${rows.length} ${language==="zh"?"个父 Idea":"parents"}</b><small>P0 ${counts.p0||0} · P0-ready ${counts["p0-ready"]||0} · ${language==="zh"?"并入":"merge"} ${counts.merge||0} · ${language==="zh"?"停止":"stop"} ${counts.drop||0}</small>`:`<b>${language==="zh"?"当前系统主线":"Current system program"}</b>`}</div></div></header>${parentCards?`<div class="canonical-parent-list">${parentCards}</div>`:""}${safety}${related}${closed}</section>`;
+  return `<section class="canonical-idea-group" id="canonical-group-${esc(group.id.toLowerCase())}" data-canonical-group="${esc(group.id)}"><header class="canonical-group-header"><span>${esc(group.id)}</span><div><h2>${textOf(group.title)}</h2><p>${textOf(group.question)}</p><div class="canonical-group-counts">${rows.length?`<b>${rows.length} ${language==="zh"?"个父 Idea":"parents"}</b><small>P0 ${counts.p0||0} · P0-ready ${counts["p0-ready"]||0} · ${language==="zh"?"并入":"merge"} ${counts.merge||0} · ${language==="zh"?"停止":"stop"} ${counts.drop||0}</small>`:group.id==="G"?`<b>5 ${language==="zh"?"个 SAF 安全方向":"SAF safety directions"}</b><small>${language==="zh"?"SAF-01 当前研究主线 · SAF-02—SAF-05 已关闭候选":"SAF-01 current program · SAF-02—SAF-05 closed candidates"}</small>`:`<b>${language==="zh"?"当前系统主线":"Current system program"}</b>`}</div></div></header>${parentCards?`<div class="canonical-parent-list">${parentCards}</div>`:""}${context}${safety}${related}${closed}</section>`;
 }
 function renderCanonicalIdeaLedger() {
   const groups=canonicalIdeaGroups(), parents=canonicalParentRows(), independent=canonicalIndependentRows();
@@ -2638,7 +2639,7 @@ function initCanonicalIdeaFilters(){
   }));
 }
 function renderIdeaPortfolio(config) {
-  const current=window.renderCurrentResearchPortfolio?window.renderCurrentResearchPortfolio({includeClosed:false}):"";
+  const current=window.renderCurrentResearchPortfolio?window.renderCurrentResearchPortfolio({includeClosed:false,ideasPage:true}):"";
   return `${pageHeader(config)}${current}${renderCanonicalIdeaLedger()}`;
 }
 function renderIdeaRanking(config) {

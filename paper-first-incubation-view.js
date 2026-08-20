@@ -1,6 +1,18 @@
 (() => {
   const pick=(zh,en)=>language==="zh"?zh:en;
   const txt=(value)=>{if(value&&typeof value==="object"&&(value.zh||value.en)) return language==="zh"?(value.zh||value.en):(value.en||value.zh); return String(value||"");};
+  const pfCanonicalNames={
+    "PF-1":{code:"PF-01",zh:"固定进化器下的未来可学习性审计",en:"Future-Learnability Audit under a Frozen Evolver"},
+    "PF-2":{code:"PF-02",zh:"持久更新的修复表面可辨识性",en:"Repair-Surface Identifiability under Persistent Updates"},
+    "PF-3":{code:"PF-03",zh:"决策保持的经验压缩生命周期",en:"Decision-Preserving Experience Compression Lifecycle"},
+    "PF-4":{code:"PF-04",zh:"更新后的诊断通道保持",en:"Post-Update Diagnostic-Channel Preservation"},
+    "PF-5":{code:"PF-05",zh:"更新差异驱动的验证",en:"Update-Difference-Guided Verification"},
+    "PF-6":{code:"PF-06",zh:"自进化后的失败风险迁移",en:"Failure-Risk Transport under Self-Evolution"},
+    "PF-7":{code:"PF-07",zh:"更新影响范围的证据重验证",en:"Update-Impact-Aware Evidence Revalidation"},
+    "PF-8":{code:"PF-08",zh:"自写验证器漂移",en:"Self-Authored Verifier Drift"},
+    "PF-9":{code:"PF-09",zh:"更新后的决策上下文有效性",en:"Post-Update Decision-Context Validity"}
+  };
+  const canonicalPF=(id)=>pfCanonicalNames[id]||{code:String(id||"PF"),zh:String(id||"PF"),en:String(id||"PF")};
   const verdictMeta=(value)=>({
     ADVANCE_TO_PAPER_DESIGN:{tone:"advance",label:pick("论文优先 · 推进（ADVANCE）","ADVANCE · PAPER-FIRST")},
     REVISE_NOVELTY_BOUNDARY:{tone:"revise",label:pick("收紧新颖性边界（REVISE）","REVISE · NOVELTY")},
@@ -68,6 +80,7 @@
   const prematureMethodFor=(id)=>(prematureMethodState().cards||[]).find(x=>String(x.incubation_id||"")===String(id||""))||null;
   const nearestLinks=(rows)=> (rows||[]).map(row=>{const ref=String(row.ref||""); const arxiv=ref.match(/arXiv:(\d+\.\d+)/i); const href=arxiv?`https://arxiv.org/abs/${arxiv[1]}`:"#"; return `<a href="${esc(href)}" target="_blank" rel="noopener"><b>${esc(row.title||ref)}</b><span>${esc(ref)}</span></a>`}).join("");
   const card=(row)=>{
+    const canonical=canonicalPF(row.id);
     const v=verdictMeta(row.verdict), promotion=promotionFor(row), promoted=!!promotion, design=designFor(row.id);
     const ideaId=promotion?.[0]||row.p0_idea_id||"", meta=promotion?.[1]||{}; const f0=f0For(ideaId);
     const badge=promoted?`${meta.code||row.p0_code||"P0"} · P0 ${f0?.decision||"F0_PENDING"}`:v.label;
@@ -98,7 +111,7 @@
     const summaryTheme=themeText(row.theme||"");
     const summaryDesign=design?pick(` · 论文设计 ${pfDecision(design.verdict||"")}`,` · DESIGN ${design.verdict||""}`):"";
     const summaryTerminal=pf1Problem.decision?pick(` · 问题终态 ${pfDecision(pf1Problem.decision)}`,terminalTag):(pf2Method.decision?pick(` · 方法终态 ${pfDecision(pf2Method.decision)}`,terminalTag):(pf357.decision?pick(` · 问题终态 ${pfDecision(pf357.decision)}`,terminalTag):""));
-    return `<details class="paper-incubation-card incubation-${tone}" id="incubation-${esc(String(row.id||"").toLowerCase())}"><summary><div><span>${esc(promoted?(meta.code||row.p0_code||row.id):row.id||"")}</span><b>${esc(txt(row.title))}</b><small>${esc(promoted?`${row.id} · ${summaryTheme}`:summaryTheme)}${summaryDesign}${summaryTerminal}</small></div><em>${esc(language==="zh"&&!promoted?pfDecision(row.verdict||badge):badge)}</em></summary><div class="paper-incubation-body"><section class="incubation-wide"><h4 data-toc="false">${pick("论文问题","Paper problem")}</h4><p>${esc(pfText(txt(row.paper_problem)))}</p></section><section class="incubation-wide novelty"><h4 data-toc="false">${pick("新颖性边界／最近工作之后真正剩什么","Novelty boundary / what remains after closest work")}</h4><p>${esc(pfText(txt(row.novelty_boundary)))}</p></section>${designSection}${terminalSection}${diagnosticSection}<section><h4 data-toc="false">${pick("原理直觉","Principle")}</h4><p>${esc(pfText(txt(row.principle)))}</p></section><section><h4 data-toc="false">${pick("方法草图","Method sketch")}</h4><p>${esc(pfText(txt(row.method)))}</p></section><section><h4 data-toc="false">${pick("最强同信息对照","Strongest same-information baseline")}</h4><p>${esc(pfText(txt(row.strongest_baseline)))}</p></section><section><h4 data-toc="false">${pick("最便宜的局部证伪","Cheapest local falsifier")}</h4><p>${esc(pfText(txt(row.local_falsifier)))}</p></section><section class="incubation-wide"><h4 data-toc="false">${pick("最近工作","Closest work")}</h4><div class="incubation-nearest">${nearestLinks(row.nearest_work)}</div></section><section class="incubation-wide risk"><h4 data-toc="false">${pick("碰撞风险／当前动作","Collision risk / current action")}</h4><p>${esc(row.collision_risk&&typeof row.collision_risk==="object"?txt(row.collision_risk):pfText(row.collision_risk))}</p><small>${esc(next)}</small></section></div></details>`;
+    return `<details class="paper-incubation-card incubation-${tone}" id="incubation-${esc(String(row.id||"").toLowerCase())}" data-pf-code="${esc(canonical.code)}"><summary><div><span>${esc(promoted?(meta.code||row.p0_code||canonical.code):canonical.code)}</span><b>${esc(language==="zh"?canonical.zh:canonical.en)}</b><small>${esc(promoted?`${row.id} · ${summaryTheme}`:`${row.id} · ${summaryTheme}`)}${summaryDesign}${summaryTerminal}</small></div><em>${esc(language==="zh"&&!promoted?pfDecision(row.verdict||badge):badge)}</em></summary><div class="paper-incubation-body"><section class="incubation-wide"><h4 data-toc="false">${pick("论文问题","Paper problem")}</h4><p>${esc(pfText(txt(row.paper_problem)))}</p></section><section class="incubation-wide novelty"><h4 data-toc="false">${pick("新颖性边界／最近工作之后真正剩什么","Novelty boundary / what remains after closest work")}</h4><p>${esc(pfText(txt(row.novelty_boundary)))}</p></section>${designSection}${terminalSection}${diagnosticSection}<section><h4 data-toc="false">${pick("原理直觉","Principle")}</h4><p>${esc(pfText(txt(row.principle)))}</p></section><section><h4 data-toc="false">${pick("方法草图","Method sketch")}</h4><p>${esc(pfText(txt(row.method)))}</p></section><section><h4 data-toc="false">${pick("最强同信息对照","Strongest same-information baseline")}</h4><p>${esc(pfText(txt(row.strongest_baseline)))}</p></section><section><h4 data-toc="false">${pick("最便宜的局部证伪","Cheapest local falsifier")}</h4><p>${esc(pfText(txt(row.local_falsifier)))}</p></section><section class="incubation-wide"><h4 data-toc="false">${pick("最近工作","Closest work")}</h4><div class="incubation-nearest">${nearestLinks(row.nearest_work)}</div></section><section class="incubation-wide risk"><h4 data-toc="false">${pick("碰撞风险／当前动作","Collision risk / current action")}</h4><p>${esc(row.collision_risk&&typeof row.collision_risk==="object"?txt(row.collision_risk):pfText(row.collision_risk))}</p><small>${esc(next)}</small></section></div></details>`;
   };
   window.renderPaperFirstIdeaCards=function(ids=[]){
     const wanted=new Set((ids||[]).map(String));
