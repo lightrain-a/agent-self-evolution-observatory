@@ -34,6 +34,9 @@ POLICY: dict[str, Any] = {
     "governance_bindings_may_block_but_cannot_self_authorize": True,
     "belief_authority_never_implies_automatic_claim_mutation": True,
     "candidate_provenance_hold_cannot_be_promoted_by_memory": True,
+    "incubation_portfolio_is_zero_authority_search_memory": True,
+    "incubation_claims_are_proposals_not_canonical_claim_ledger_entries": True,
+    "incubation_support_hold_blocks_method_experiment_and_paper_authority": True,
 }
 
 
@@ -192,12 +195,14 @@ def build_scientific_research_graph(
     claim_ledger: list[dict[str, Any]] | None = None,
     experiment_iteration: dict[str, Any] | None = None,
     governance_layer: dict[str, Any] | None = None,
+    incubation_portfolio: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Compile a typed, read-only overlay over canonical scientific artifacts."""
     research_memory_wiki = research_memory_wiki or {}
     claim_ledger = claim_ledger or []
     experiment_iteration = experiment_iteration or {}
     governance_layer = governance_layer or {}
+    incubation_portfolio = incubation_portfolio or {}
     failure_governance = {
         (_text(row.get("idea_id")), _text(row.get("signature"))): row
         for row in governance_layer.get("failure_authority_records") or []
@@ -246,9 +251,16 @@ def build_scientific_research_graph(
             "label": idea_id, "source": source,
         })
 
-    for row in candidate_portfolio.get("rows") or []:
-        if not isinstance(row, dict):
-            continue
+    candidate_rows = [
+        (row, "research_candidate_portfolio")
+        for row in candidate_portfolio.get("rows") or []
+        if isinstance(row, dict)
+    ] + [
+        (row, "fresh_phenomenon_portfolio")
+        for row in incubation_portfolio.get("candidates") or []
+        if isinstance(row, dict)
+    ]
+    for row, row_source in candidate_rows:
         cid = _text(row.get("candidate_id"))
         if not cid:
             continue
@@ -256,15 +268,17 @@ def build_scientific_research_graph(
         candidate_id = add_node({
             "id": f"candidate:{cid}", "kind": "candidate_problem",
             "label": _text(row.get("title")) or cid, "candidate_id": cid,
-            "stage": _text(row.get("stage")),
-            "portfolio_state": _text(row.get("portfolio_state")),
+            "stage": _first_text(row, "stage", "paper_state", "status"),
+            "portfolio_state": _first_text(row, "portfolio_state", "status"),
             "lineage_id": _text(lineage_record.get("lineage_id")),
             "parent_candidate": _text(lineage_record.get("parent_candidate")),
-            "provenance_status": _text(lineage_record.get("provenance_status")),
-            "downstream_authorization_blocked": lineage_record.get("downstream_authorization_blocked") is True,
-            "source": "research_candidate_portfolio",
+            "provenance_status": _text(lineage_record.get("provenance_status"))
+            or _text((row.get("provenance") or {}).get("provenance_status")),
+            "downstream_authorization_blocked": lineage_record.get("downstream_authorization_blocked") is True
+            or row_source == "fresh_phenomenon_portfolio",
+            "source": row_source,
         })
-        idea_id = ensure_idea(cid, "research_candidate_portfolio")
+        idea_id = ensure_idea(cid, row_source)
         add_edge(idea_id, candidate_id, "formulated_as")
         phenomenon = _first_text(row, "phenomenon", "phenomenon_text", "target_phenomenon")
         if phenomenon:
@@ -272,7 +286,7 @@ def build_scientific_research_graph(
                 "id": f"phenomenon:{_short_hash(cid + '|' + phenomenon)}",
                 "kind": "phenomenon", "label": phenomenon,
                 "scientific_object": _first_text(row, "scientific_object", "object") or cid,
-                "source": "research_candidate_portfolio",
+                "source": row_source,
             })
             add_edge(phenomenon_id, candidate_id, "motivates_problem_contract")
         problem_text = _first_text(row, "problem_contract", "problem_text", "research_question")
@@ -283,7 +297,7 @@ def build_scientific_research_graph(
                 "scientific_object": _first_text(row, "scientific_object", "object") or cid,
                 "mechanism": _first_text(row, "mechanism", "mechanism_axis"),
                 "claim_type": _first_text(row, "claim_type", "claim_kind"),
-                "source": "research_candidate_portfolio",
+                "source": row_source,
             })
             add_edge(candidate_id, contract_id, "defines_problem_contract")
         method = _first_text(row, "method", "method_name", "proposed_method")
@@ -291,9 +305,85 @@ def build_scientific_research_graph(
             method_id = add_node({
                 "id": f"method:{_short_hash(cid + '|' + method)}",
                 "kind": "method", "label": method,
-                "source": "research_candidate_portfolio",
+                "source": row_source,
             })
             add_edge(candidate_id, method_id, "proposes_method")
+
+        for source_ref in row.get("source_refs") or []:
+            ref = _text(source_ref)
+            if not ref:
+                continue
+            evidence_id = add_node({
+                "id": f"evidence-reference:{_short_hash(ref)}",
+                "kind": "evidence_reference", "label": ref,
+                "source_ref": ref, "source": row_source,
+            })
+            add_edge(
+                evidence_id,
+                candidate_id,
+                "grounds_incubation_candidate" if row_source == "fresh_phenomenon_portfolio" else "grounds_candidate",
+            )
+
+        if row_source == "fresh_phenomenon_portfolio" and _text(row.get("status")).startswith("HOLD"):
+            reopen_text = _text(row.get("reopen_only_if")) or (
+                "A source-bound reopen condition must be supplied before this hold can be lifted."
+            )
+            reopen_id = add_node({
+                "id": f"reopen-condition:{_short_hash(cid + '|' + reopen_text)}",
+                "kind": "reopen_condition", "label": reopen_text,
+                "source": row_source,
+            })
+            hold_status = _text(row.get("status"))
+            hold_layer = (
+                "support" if "SUPPORT" in hold_status
+                else ("execution" if "EXECUTION" in hold_status else "reduction")
+            )
+            hold_id = add_node({
+                "id": f"hold:{_short_hash(cid + '|' + hold_status)}",
+                "kind": "hold", "label": _text(row.get("support_status")) or hold_status,
+                "affected_layer": hold_layer, "reopen_condition_id": reopen_id,
+                "source": row_source,
+            })
+            add_edge(hold_id, candidate_id, "blocks")
+            add_edge(hold_id, reopen_id, "reopens_if")
+
+        if row_source == "fresh_phenomenon_portfolio":
+            for proposed_claim in (row.get("evidence") or {}).get("claim_ledger") or []:
+                if not isinstance(proposed_claim, dict):
+                    continue
+                proposed_claim_id = _text(proposed_claim.get("claim_id"))
+                statement = _first_text(proposed_claim, "statement", "claim_text", "claim")
+                if not proposed_claim_id or not statement:
+                    continue
+                claim_node_id = add_node({
+                    "id": f"claim:incubation:{cid}:{proposed_claim_id}",
+                    "kind": "claim", "label": statement,
+                    "claim_id": proposed_claim_id,
+                    "claim_type": _first_text(row, "claim_type", "claim_kind"),
+                    "scientific_object": _first_text(row, "scientific_object", "object") or cid,
+                    "mechanism": _first_text(row, "mechanism", "mechanism_axis"),
+                    "adjudication_status": _text(proposed_claim.get("status")),
+                    "trace_complete": False,
+                    "evidence_ids": [str(value) for value in proposed_claim.get("evidence_refs") or [] if str(value)],
+                    "canonical_claim_ledger_entry": False,
+                    "source": row_source,
+                })
+                add_edge(candidate_id, claim_node_id, "proposes_unadjudicated_claim")
+
+        acquisition_failure = (row.get("substrate") or {}).get("acquisition_failure") or {}
+        if row_source == "fresh_phenomenon_portfolio" and acquisition_failure:
+            failure_id = add_node({
+                "id": f"failure:{_short_hash(cid + '|' + _text(acquisition_failure.get('event')))}",
+                "kind": "failure_asset",
+                "label": _text(acquisition_failure.get("event")) or _text(acquisition_failure.get("failure_code")),
+                "failure_code": _text(acquisition_failure.get("failure_code")),
+                "failure_class": _failure_class(_text(acquisition_failure.get("affected_layer"))),
+                "affected_layer": _text(acquisition_failure.get("affected_layer")),
+                "belief_authority": acquisition_failure.get("belief_authority") is True,
+                "scientific_negative": False,
+                "source": row_source,
+            })
+            add_edge(failure_id, candidate_id, "blocks_execution_only")
 
     claim_nodes: list[dict[str, Any]] = []
     claim_groups: dict[tuple[str, str, str, str], list[dict[str, Any]]] = defaultdict(list)

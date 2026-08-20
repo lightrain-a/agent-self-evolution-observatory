@@ -17,6 +17,11 @@ from .paper_first_skill_validation_transfer_scout import (
     F0_HARNESS as SKILL_VALIDATION_F0_HARNESS,
     validate_skill_validation_transfer_scout,
 )
+from .paper_first_schedule_conditional_evolution_scout import (
+    DEFAULT_JSON as SCHEDULE_CONDITIONAL_SCOUT_JSON,
+    build_schedule_conditional_evolution_scout,
+    validate_schedule_conditional_evolution_scout,
+)
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-fresh-phenomenon-portfolio-20260817.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-fresh-phenomenon-portfolio-20260817.js"
@@ -143,6 +148,7 @@ def build_fresh_phenomenon_portfolio(
     pace_transport_f0: dict[str, Any] | None = None,
     pace_principle_evidence: dict[str, Any] | None = None,
     pace_redesign_readjudication: dict[str, Any] | None = None,
+    schedule_conditional_scout: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Compile multiple paper scouts without letting unsupported ideas consume experiment slots.
 
@@ -176,6 +182,11 @@ def build_fresh_phenomenon_portfolio(
     pace_transport_f0 = _load(PACE_TRANSPORT_F0_JSON) if pace_transport_f0 is None else (pace_transport_f0 or {})
     pace_principle_evidence = _load(PACE_PRINCIPLE_EVIDENCE_JSON) if pace_principle_evidence is None else (pace_principle_evidence or {})
     pace_redesign_readjudication = _load(PACE_REDESIGN_READJUDICATION_JSON) if pace_redesign_readjudication is None else (pace_redesign_readjudication or {})
+    if schedule_conditional_scout is None:
+        schedule_conditional_scout = _load(SCHEDULE_CONDITIONAL_SCOUT_JSON) or build_schedule_conditional_evolution_scout()
+    else:
+        schedule_conditional_scout = schedule_conditional_scout or {}
+    schedule_conditional_errors = validate_schedule_conditional_evolution_scout(schedule_conditional_scout)
     ps = primary_state.get("summary") or {}
     defense_reduction = _load(DEFENSE_PRINCIPLE_REDUCTION_JSON)
     defense_reduction_certified = bool(
@@ -714,6 +725,49 @@ def build_fresh_phenomenon_portfolio(
             ),
         ),
         _candidate(
+            candidate_id="PA-07-SCHEDULE-CONDITIONAL-EVOLUTION",
+            title=str(schedule_conditional_scout.get("title") or "Evolution Gain Is Schedule-Conditional"),
+            source_refs=[
+                str(row.get("source_ref"))
+                for row in schedule_conditional_scout.get("primary_evidence") or []
+                if isinstance(row, dict) and row.get("source_ref")
+            ],
+            phenomenon=str(((schedule_conditional_scout.get("phenomenon") or {}).get("source_grounded")) or ""),
+            strongest_reduction=str(
+                ((schedule_conditional_scout.get("problem_contract") or {}).get("strongest_same_information_reduction"))
+                or "ordinary curriculum/order effects"
+            ),
+            cheapest_falsifier=str(
+                ((schedule_conditional_scout.get("cheapest_problem_falsifier") or {}).get("decision_rule"))
+                or "Verify a first-party frozen-schedule replay path before F0 design."
+            ),
+            support_status=(
+                "SUPPORT_HOLD_NATIVE_REPLAY_PATH_UNVERIFIED"
+                if not schedule_conditional_errors
+                else "INCOMPLETE_RECEIPT"
+            ),
+            status="HOLD_SUPPORT",
+            priority=95,
+            why_now=(
+                "Current co-evolution and continual-learning evaluations occupy generic task-order claims, but leave a narrow "
+                "benchmark-identifiability question: separate the direct persistent-update path from the endogenous "
+                "challenger-schedule path. The direction remains a scout until exact current-source collision review and "
+                "a native first-party frozen-replay path are verified."
+            ),
+            substrate=dict(schedule_conditional_scout.get("substrate_audit") or {}),
+            evidence={
+                "receipt_sha256": schedule_conditional_scout.get("receipt_sha256"),
+                "paper_state": schedule_conditional_scout.get("paper_state"),
+                "paperability_axes": dict(schedule_conditional_scout.get("paperability_axes") or {}),
+                "novelty_review": dict(schedule_conditional_scout.get("novelty_review") or {}),
+                "claim_ledger": list(schedule_conditional_scout.get("claim_ledger") or []),
+                "paper_progression": list(schedule_conditional_scout.get("paper_progression") or []),
+                "receipt_valid": not schedule_conditional_errors,
+                "validation_errors": list(schedule_conditional_errors),
+            },
+            reopen_only_if=str(schedule_conditional_scout.get("reopen_condition") or ""),
+        ),
+        _candidate(
             candidate_id="PA-04-SPATIAL-MEMORY-CONFLICT",
             title="High-Relevance Procedure Memory Can Still Fail When Visual Grounding or Procedure Compatibility Breaks",
             source_refs=["arXiv:2608.12743"],
@@ -745,6 +799,19 @@ def build_fresh_phenomenon_portfolio(
             ),
         ),
     ]
+
+    schedule_row = next(row for row in candidates if row["candidate_id"] == "PA-07-SCHEDULE-CONDITIONAL-EVOLUTION")
+    schedule_problem = schedule_conditional_scout.get("problem_contract") or {}
+    schedule_phenomenon = schedule_conditional_scout.get("phenomenon") or {}
+    schedule_row.update({
+        "paper_state": schedule_conditional_scout.get("paper_state"),
+        "problem_contract": schedule_problem.get("research_question"),
+        "scientific_object": schedule_phenomenon.get("scientific_object"),
+        "mechanism": schedule_phenomenon.get("mechanism_axis"),
+        "claim_type": schedule_phenomenon.get("claim_type"),
+        "provenance": dict(schedule_conditional_scout.get("provenance") or {}),
+        "f0_design_ready": False,
+    })
 
     echo_row = next(row for row in candidates if row["candidate_id"] == "PA-01-EVIDENCE-ECHO")
     echo_row["f0_design_ready"] = echo_design_ready
@@ -926,6 +993,14 @@ def build_fresh_phenomenon_portfolio(
                 "path": str(DEFENSE_PRINCIPLE_REDUCTION_JSON.relative_to(PROJECT_ROOT)),
                 "sha256": _sha(DEFENSE_PRINCIPLE_REDUCTION_JSON),
                 "certified": defense_reduction_certified,
+            },
+            "schedule_conditional_evolution_scout": {
+                "path": str(SCHEDULE_CONDITIONAL_SCOUT_JSON.relative_to(PROJECT_ROOT)),
+                "sha256": _sha(SCHEDULE_CONDITIONAL_SCOUT_JSON),
+                "receipt_sha256": schedule_conditional_scout.get("receipt_sha256"),
+                "status": schedule_conditional_scout.get("status"),
+                "valid": not schedule_conditional_errors,
+                "validation_errors": list(schedule_conditional_errors),
             },
             "skill_validation_transfer_scout": {
                 "path": str(SKILL_VALIDATION_SCOUT_JSON.relative_to(PROJECT_ROOT)),
@@ -1133,6 +1208,35 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
                 errors.append("PA-06 reduced residual cannot authorize revised F0/provider formulation")
         elif pace_rows[0].get("status") != "HOLD_REDUCTION":
             errors.append("PA-06 unresolved redesign-identifiability reduction must remain HOLD_REDUCTION")
+    schedule_binding = bindings.get("schedule_conditional_evolution_scout") or {}
+    schedule_rows = [row for row in rows if row.get("candidate_id") == "PA-07-SCHEDULE-CONDITIONAL-EVOLUTION"]
+    if len(schedule_rows) != 1:
+        errors.append("PA-07 schedule-conditional scout row missing or duplicated")
+    else:
+        bound_schedule = _load(SCHEDULE_CONDITIONAL_SCOUT_JSON)
+        bound_schedule_errors = validate_schedule_conditional_evolution_scout(bound_schedule)
+        schedule_row = schedule_rows[0]
+        if (
+            bound_schedule_errors
+            or schedule_binding.get("sha256") != _sha(SCHEDULE_CONDITIONAL_SCOUT_JSON)
+            or schedule_binding.get("receipt_sha256") != bound_schedule.get("receipt_sha256")
+            or schedule_binding.get("valid") is not True
+        ):
+            errors.append("PA-07 schedule-conditional scout binding is stale or invalid")
+        if (
+            schedule_row.get("status") != "HOLD_SUPPORT"
+            or schedule_row.get("support_status") != "SUPPORT_HOLD_NATIVE_REPLAY_PATH_UNVERIFIED"
+            or schedule_row.get("f0_design_ready") is not False
+            or schedule_row.get("paper_state") != "INCUBATION_EVIDENCE_BOUND"
+        ):
+            errors.append("PA-07 must remain evidence-bound substrate HOLD")
+        schedule_evidence = schedule_row.get("evidence") or {}
+        if (
+            schedule_evidence.get("receipt_sha256") != bound_schedule.get("receipt_sha256")
+            or schedule_evidence.get("receipt_valid") is not True
+        ):
+            errors.append("PA-07 candidate lost content-addressed evidence receipt")
+
     skill_binding = bindings.get("skill_validation_transfer_scout") or {}
     skill_harness_binding = bindings.get("skill_validation_transfer_f0_harness") or {}
     skill_rows = [row for row in rows if row.get("candidate_id") == "PA-05-SKILL-VALIDATION-TRANSFER"]

@@ -54,6 +54,7 @@ from .paper_first_support_asset_recheck_handoff import load_private_support_asse
 from .paper_first_discovery_frontier import build_paper_first_discovery_frontier, validate_paper_first_discovery_frontier
 from .paper_first_fresh_phenomenon_portfolio import DEFAULT_JSON as FRESH_PHENOMENON_PORTFOLIO_JSON, build_fresh_phenomenon_portfolio, validate_fresh_phenomenon_portfolio, write_fresh_phenomenon_portfolio
 from .paper_first_skill_validation_transfer_scout import write_skill_validation_transfer_scout
+from .paper_first_schedule_conditional_evolution_scout import write_schedule_conditional_evolution_scout
 from .paper_first_legacy_reduction_migration import load_public_migration, validate_public_migration
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
 from .paper_first_problem_generator import installed_problem_generator_policy, load_problem_generator_state
@@ -570,6 +571,7 @@ def build_research_system_state() -> dict[str, Any]:
         claim_ledger=claim_ledger,
         experiment_iteration=experiment_iteration,
         governance_layer=aris_governance_layer,
+        incubation_portfolio=paper_first_fresh_phenomenon_portfolio,
     )
     experiment_value_scheduler = build_experiment_value_scheduler(experiment_iteration, scientific_meta_trace)
     research_system_replay = build_research_system_replay(pre_experiment_compiler)
@@ -2106,6 +2108,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_pf357_problem_adjudication()
     write_fresh_saturation_state()
     write_skill_validation_transfer_scout()
+    write_schedule_conditional_evolution_scout()
     # Persistent search memory must be rebuilt before the fresh portfolio because
     # the latter content-addresses the former. Reversing this order guarantees a
     # one-generation stale dead-end-memory binding whenever a new principle closure

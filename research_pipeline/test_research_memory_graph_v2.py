@@ -112,6 +112,56 @@ class ResearchMemoryGraphV2Test(unittest.TestCase):
         self.assertFalse(failure["scientific_negative"])
         self.assertFalse(any(edge["source"] == failure["id"] and edge["relation"].startswith("closes_") for edge in graph["overlay_edges"]))
 
+    def test_incubation_candidate_materializes_typed_hold_without_authority(self):
+        graph = _graph(incubation_portfolio={
+            "candidates": [{
+                "candidate_id": "PA-07",
+                "title": "schedule conditional evolution",
+                "status": "HOLD_SUPPORT",
+                "paper_state": "INCUBATION_EVIDENCE_BOUND",
+                "phenomenon": "aggregate gain mixes direct update and schedule paths",
+                "problem_contract": "separate update from endogenous schedule",
+                "scientific_object": "coevolving-agent",
+                "mechanism": "schedule-mediation",
+                "claim_type": "benchmark-identifiability",
+                "source_refs": ["arXiv:one", "arXiv:two"],
+                "support_status": "SUPPORT_HOLD_NATIVE_REPLAY_PATH_UNVERIFIED",
+                "reopen_only_if": "native frozen replay is verified",
+                "evidence": {
+                    "claim_ledger": [{
+                        "claim_id": "PA-07-C3",
+                        "statement": "schedule mediation is nonzero",
+                        "status": "UNSUPPORTED_AWAIT_F0",
+                        "evidence_refs": [],
+                    }]
+                },
+                "substrate": {
+                    "acquisition_failure": {
+                        "failure_code": "RUNTIME_ERROR",
+                        "affected_layer": "execution-acquisition",
+                        "event": "clone timed out",
+                        "belief_authority": False,
+                    }
+                },
+                "provenance": {"provenance_status": "PRIMARY_METADATA_BOUND"},
+            }]
+        })
+        self.assertEqual("PASS", graph["lint"]["status"])
+        candidate = next(row for row in graph["overlay_nodes"] if row["id"] == "candidate:PA-07")
+        self.assertTrue(candidate["downstream_authorization_blocked"])
+        self.assertEqual("fresh_phenomenon_portfolio", candidate["source"])
+        failure = next(row for row in graph["overlay_nodes"] if row.get("label") == "clone timed out")
+        self.assertEqual("execution", failure["failure_class"])
+        self.assertFalse(failure["belief_authority"])
+        self.assertFalse(failure["scientific_negative"])
+        self.assertTrue(any(edge["source"] == failure["id"] and edge["relation"] == "blocks_execution_only" for edge in graph["overlay_edges"]))
+        hold = next(row for row in graph["overlay_nodes"] if row["kind"] == "hold")
+        self.assertTrue(any(edge["source"] == hold["id"] and edge["relation"] == "reopens_if" for edge in graph["overlay_edges"]))
+        proposed = next(row for row in graph["overlay_nodes"] if row["id"] == "claim:incubation:PA-07:PA-07-C3")
+        self.assertEqual("UNSUPPORTED_AWAIT_F0", proposed["adjudication_status"])
+        self.assertFalse(proposed["canonical_claim_ledger_entry"])
+        self.assertFalse(proposed["trace_complete"])
+
     def test_closure_propagates_only_on_exact_three_key_scope(self):
         graph = _graph()
         propagation = [edge for edge in graph["overlay_edges"] if edge["relation"] == "propagates_closure"]
