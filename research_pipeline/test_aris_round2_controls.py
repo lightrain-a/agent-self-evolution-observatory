@@ -24,6 +24,14 @@ class ArisRound2ControlsTest(unittest.TestCase):
   with tempfile.TemporaryDirectory() as tmp:
    path=Path(tmp)/"stall.jsonl";first=observe_research_stall(generator_state=self.gen(),operator_version="v1",path=path,execution_failed=True,generated_at="t")
    self.assertEqual(first["status"],"RECOVER_EXECUTION_WITHOUT_SCIENTIFIC_UPDATE");self.assertEqual(first["summary"]["stale_count"],0);self.assertFalse(first["scientific_authority"])
+ def test_discovery_receipt_is_bound_into_stall_ledger(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   path=Path(tmp)/"stall.jsonl"
+   receipt={"status":"COMMITTED","transaction_id":"a"*64,"generator_receipt_sha256":"b"*64,"discovery_operator_version":"v1","scientific_authority":False}
+   state=observe_research_stall(generator_state=self.gen("NEW"),operator_version="v1",path=path,transaction_receipt=receipt,generated_at="t")
+   self.assertTrue(state["summary"]["discovery_receipt_bound"]);self.assertEqual(state["observation"]["discovery_transaction_id"],"a"*64)
+   with self.assertRaises(ValueError):observe_research_stall(generator_state=self.gen(),operator_version="v1",path=path,transaction_receipt={**receipt,"scientific_authority":True})
+
  def test_meta_optimizer_proposes_and_separate_landing_gate_never_applies(self):
   state=build_research_harness_meta_optimization(integration_lint={"summary":{"failed":1}},stall_state={"summary":{"stale_count":2},"directive":{"action":"FORCE_STRUCTURAL_PIVOT"}},search_telemetry={"bottleneck":{"key":"FORMULATION_OR_EXACT_REDUCTION"}});self.assertGreaterEqual(state["summary"]["proposals"],2);self.assertFalse(state["authority"]["apply_patch"]);p=state["proposals"][0]
   bad=validate_meta_change_landing(p,{"explicit_human_approval":True,"author_model_family":"kimi","reviewer_model_family":"kimi","regression_tests_pass":True,"git_diff_sha256":"a"*64,"assurance_thresholds_unchanged":True});self.assertEqual(bad["status"],"LANDING_GATE_BLOCK")

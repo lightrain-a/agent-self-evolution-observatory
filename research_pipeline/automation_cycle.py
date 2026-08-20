@@ -97,13 +97,19 @@ def _stall_preflight(storage: StorageSettings) -> dict[str, Any]:
     return state
 
 
-def _stall_observation(storage: StorageSettings, *, execution_failed: bool = False) -> dict[str, Any]:
+def _stall_observation(
+    storage: StorageSettings,
+    *,
+    execution_failed: bool = False,
+    transaction_receipt: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     return observe_research_stall(
         generator_state=load_problem_generator_state(),
         operator_version=DISCOVERY_OPERATOR_VERSION,
         source_set_sha256=_primary_source_set_sha256(),
         storage=storage,
         execution_failed=execution_failed,
+        transaction_receipt=transaction_receipt,
     )
 
 
@@ -324,9 +330,21 @@ def run_cycle(
             report["steps"].append({"name":"research-stall-pivot-preflight","status":"pass","duration_seconds":0.0,"summary":_safe_summary(stall_preflight)})
             same_frame_allowed = bool((stall_preflight.get("directive") or {}).get("same_frame_automatic_discovery_allowed", True))
             if same_frame_allowed:
-                discovery_step = _step("paper-first-discovery-transaction", lambda: write_problem_discovery_transaction(storage=storage,generator_kwargs={"portfolio_mode":True}))
+                discovery_receipt: dict[str, Any] = {}
+                def _run_discovery_transaction() -> dict[str, Any]:
+                    receipt = write_problem_discovery_transaction(storage=storage, generator_kwargs={"portfolio_mode": True})
+                    discovery_receipt.update(receipt)
+                    return receipt
+                discovery_step = _step("paper-first-discovery-transaction", _run_discovery_transaction)
                 report["steps"].append(discovery_step)
-                report["steps"].append(_step("research-stall-pivot-observation", lambda: _stall_observation(storage, execution_failed=discovery_step.get("status") == "fail")))
+                report["steps"].append(_step(
+                    "research-stall-pivot-observation",
+                    lambda: _stall_observation(
+                        storage,
+                        execution_failed=discovery_step.get("status") == "fail",
+                        transaction_receipt=discovery_receipt or None,
+                    ),
+                ))
             else:
                 report["steps"].append({
                     "name":"paper-first-discovery-transaction",

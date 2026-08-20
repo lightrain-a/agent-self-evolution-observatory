@@ -4,7 +4,36 @@ import unittest
 from pathlib import Path
 
 from .config import StorageSettings, resolve_experiment_data_root
-from .p0_offline_qualification import build_p0_offline_qualification_state
+from .p0_offline_qualification import (
+    _preserve_frozen_shared_evidence,
+    build_p0_offline_qualification_state,
+)
+
+
+
+class FrozenEvidenceReplayTest(unittest.TestCase):
+    def test_host_missing_replay_cannot_downgrade_frozen_evidence(self) -> None:
+        frozen = {
+            "shared_evidence": {
+                "real_probe": {
+                    "status": "invalid-development",
+                    "plan_hash": "frozen-plan",
+                    "decision": {"decision": "INVALID_DEVELOPMENT_ONLY"},
+                },
+                "still_pending": {"status": "pending", "decision": None},
+            }
+        }
+        replay = {
+            "shared_evidence": {
+                "real_probe": {"status": "missing", "plan_hash": None, "decision": None},
+                "still_pending": {"status": "pending", "decision": None},
+            }
+        }
+
+        merged = _preserve_frozen_shared_evidence(replay, frozen)
+
+        self.assertEqual(merged["shared_evidence"]["real_probe"], frozen["shared_evidence"]["real_probe"])
+        self.assertEqual(merged["shared_evidence"]["still_pending"], replay["shared_evidence"]["still_pending"])
 
 
 class P0OfflineQualificationTest(unittest.TestCase):

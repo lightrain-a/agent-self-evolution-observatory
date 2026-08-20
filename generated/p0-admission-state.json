@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T18:31:24+00:00",
+  "generated_at": "2026-08-20T07:19:24+00:00",
   "policy": {
     "stage_semantics": "P0 lifecycle entry is distinct from execution authorization",
     "entry_requires": "10/10 admission checks",
@@ -54,7 +54,7 @@
   },
   "economy_gate": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-18T18:31:24+00:00",
+    "generated_at": "2026-08-20T07:19:24+00:00",
     "policy": {
       "schema_version": "1.2",
       "stage_semantics": "resource-economy gate before P0 execution compilation; not a ninth Pre-Experiment gate",
@@ -3296,14 +3296,12 @@
           ]
         },
         "runtime_throughput": {
-          "status": "pending-harness-smoke"
+          "status": "complete"
         },
         "execution_authorized": false,
         "blockers": [
           "economy-gate",
-          "pre-p0-empirical-checks",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-complete-second-model-hold"
         ]
       }
     },
@@ -3537,14 +3535,12 @@
           ]
         },
         "runtime_throughput": {
-          "status": "pending-harness-smoke"
+          "status": "complete"
         },
         "execution_authorized": false,
         "blockers": [
           "economy-gate",
-          "pre-p0-empirical-checks",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-complete-second-model-hold"
         ]
       }
     },

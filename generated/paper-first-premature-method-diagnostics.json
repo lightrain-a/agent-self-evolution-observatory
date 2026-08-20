@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-12T18:48:51+00:00",
+  "generated_at": "2026-08-20T07:19:24+00:00",
   "run_root": "/data/wyt/agent-self-evolution-observatory/runs/paper-first-p0-method-20260812",
   "authority": {
     "authority_type": "premature-paper-first-method-diagnostic-only",
@@ -93,8 +93,8 @@
       "dominant_problem_authority": {
         "decision": "STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT",
         "paper_problem_status": "TERMINATED_AS_STANDALONE_AFTER_FINAL_COLLISION_REVIEW",
-        "artifact_generated_at": "2026-08-12T16:48:27+00:00",
-        "artifact_sha256": "aca168a8a0bb491bc4ea366c637a07df07d0d9687fd66bdc8f34839699c1f013",
+        "artifact_generated_at": "2026-08-20T07:19:24+00:00",
+        "artifact_sha256": "bda2c9281cc3e8b4887a13b017a30e1688397ea61722293b0e7dd497aa912c57",
         "timestamp_is_not_authority": true,
         "problem_stop_dominates_diagnostic_regardless_of_rebuild_timestamp": true,
         "p0_authorized": false,

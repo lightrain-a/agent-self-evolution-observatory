@@ -19,6 +19,8 @@ POLICY={
  "stall_controller_has_zero_scientific_authority":True,
  "stall_controller_cannot_change_scientific_thresholds":True,
  "effort_increase_alone_does_not_satisfy_structural_pivot":True,
+ "stall_observation_accepts_only_committed_discovery_receipt":True,
+ "discovery_receipt_is_provenance_not_scientific_evidence":True,
 }
 
 def _now():return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -52,9 +54,14 @@ def _directive(stale:int,*,execution_failed:bool=False)->dict[str,Any]:
 def load_research_stall_state(*,path:Path|None=None,storage:StorageSettings|None=None,current_frame_signature:str="")->dict[str,Any]:
  path=path or default_ledger_path(storage);rows=_load_rows(path);last=rows[-1] if rows else {};stale=int(last.get("stale_count") or 0);changed=bool(current_frame_signature and last.get("frame_signature") and current_frame_signature!=last.get("frame_signature"));stale=0 if changed else stale;directive=_directive(stale)
  return {"schema_version":SCHEMA_VERSION,"status":"STALL_STATE_READY","policy":dict(POLICY),"summary":{"observations":len(rows),"stale_count":stale,"frame_changed":changed,"last_new_findings":int(last.get("new_findings") or 0)},"directive":directive,"last_observation":last,"scientific_authority":False,"authority":{"provider_calls":False,"problem_gate":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
-def observe_research_stall(*,generator_state:dict[str,Any],operator_version:str,source_set_sha256:str="",path:Path|None=None,storage:StorageSettings|None=None,execution_failed:bool=False,generated_at:str|None=None)->dict[str,Any]:
+def observe_research_stall(*,generator_state:dict[str,Any],operator_version:str,source_set_sha256:str="",path:Path|None=None,storage:StorageSettings|None=None,execution_failed:bool=False,transaction_receipt:dict[str,Any]|None=None,generated_at:str|None=None)->dict[str,Any]:
+ receipt=dict(transaction_receipt or {})
+ receipt_bound=False
+ if receipt:
+  receipt_bound=bool(receipt.get("status")=="COMMITTED" and len(str(receipt.get("transaction_id") or ""))==64 and receipt.get("scientific_authority") is False and str(receipt.get("discovery_operator_version") or "")==str(operator_version or ""))
+  if not receipt_bound:raise ValueError("stall observation requires a committed zero-authority discovery transaction receipt bound to the current operator")
  path=path or default_ledger_path(storage);rows=_load_rows(path);frame=frame_signature(operator_version=operator_version,source_set_sha256=source_set_sha256);prior=[r for r in rows if r.get("frame_signature")==frame and r.get("execution_failed") is not True];seen={str(x) for r in prior for x in r.get("finding_fingerprints") or []};findings=finding_fingerprints(generator_state);new=sorted(set(findings)-seen);prev=int(prior[-1].get("stale_count") or 0) if prior else 0;stale=prev if execution_failed else (0 if new else prev+1);directive=_directive(stale,execution_failed=execution_failed)
- row={"schema_version":SCHEMA_VERSION,"generated_at":generated_at or _now(),"run_id":str(generator_state.get("run_id") or ""),"generator_status":str(generator_state.get("status") or ""),"operator_version":str(operator_version or ""),"source_set_sha256":str(source_set_sha256 or ""),"frame_signature":frame,"finding_fingerprints":findings,"new_finding_fingerprints":new,"new_findings":len(new),"stale_count":stale,"execution_failed":bool(execution_failed),"directive":directive,"scientific_authority":False}
+ row={"schema_version":SCHEMA_VERSION,"generated_at":generated_at or _now(),"run_id":str(generator_state.get("run_id") or ""),"generator_status":str(generator_state.get("status") or ""),"operator_version":str(operator_version or ""),"source_set_sha256":str(source_set_sha256 or ""),"frame_signature":frame,"discovery_transaction_id":str(receipt.get("transaction_id") or ""),"discovery_generator_receipt_sha256":str(receipt.get("generator_receipt_sha256") or ""),"discovery_receipt_bound":receipt_bound,"finding_fingerprints":findings,"new_finding_fingerprints":new,"new_findings":len(new),"stale_count":stale,"execution_failed":bool(execution_failed),"directive":directive,"scientific_authority":False}
  path.parent.mkdir(parents=True,exist_ok=True)
  with path.open("a",encoding="utf-8") as h:h.write(json.dumps(row,ensure_ascii=False,sort_keys=True)+"\n")
- return {"schema_version":SCHEMA_VERSION,"status":directive["action"],"policy":dict(POLICY),"summary":{"stale_count":stale,"findings":len(findings),"new_findings":len(new),"execution_failed":bool(execution_failed)},"directive":directive,"observation":row,"scientific_authority":False,"authority":{"provider_calls":False,"problem_gate":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+ return {"schema_version":SCHEMA_VERSION,"status":directive["action"],"policy":dict(POLICY),"summary":{"stale_count":stale,"findings":len(findings),"new_findings":len(new),"execution_failed":bool(execution_failed),"discovery_receipt_bound":receipt_bound},"directive":directive,"observation":row,"scientific_authority":False,"authority":{"provider_calls":False,"problem_gate":False,"method":False,"experiment":False,"p0":False,"gpu":False}}

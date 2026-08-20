@@ -51,6 +51,32 @@ def _pending() -> dict[str, Any]:
     return _ck("pending", "No mechanism-aligned real offline evidence has cleared this check yet.", kind="pending")
 
 
+_HOST_MISSING_STATUSES = {"missing", "pending", "unavailable", "not-found", "not_found"}
+
+
+def _preserve_frozen_shared_evidence(candidate: dict[str, Any], frozen: dict[str, Any]) -> dict[str, Any]:
+    """Preserve a versioned evidence node when replay only reports host-local absence."""
+
+    def merge(current: Any, previous: Any) -> Any:
+        if not isinstance(current, dict) or not isinstance(previous, dict):
+            return current
+        current_status = str(current.get("status") or "").strip().lower()
+        previous_status = str(previous.get("status") or "").strip().lower()
+        if current_status in _HOST_MISSING_STATUSES and previous_status not in _HOST_MISSING_STATUSES:
+            return previous
+        return {
+            key: merge(value, previous[key]) if key in previous else value
+            for key, value in current.items()
+        }
+
+    result = dict(candidate)
+    result["shared_evidence"] = merge(
+        candidate.get("shared_evidence") or {},
+        frozen.get("shared_evidence") or {},
+    )
+    return result
+
+
 def _prefer_more_informative_frozen_state(candidate: dict[str, Any]) -> dict[str, Any]:
     """Do not downgrade frozen scientific evidence merely because a compute host lacks source run trees."""
     try:
@@ -61,6 +87,7 @@ def _prefer_more_informative_frozen_state(candidate: dict[str, Any]) -> dict[str
     new = candidate.get("summary") or {}
     if old.get("ideas") != new.get("ideas"):
         return candidate
+    candidate = _preserve_frozen_shared_evidence(candidate, frozen)
     old_information = int(old.get("checks_passed") or 0) + int(old.get("checks_failed") or 0)
     new_information = int(new.get("checks_passed") or 0) + int(new.get("checks_failed") or 0)
     new_failures = int(new.get("checks_failed") or 0)
