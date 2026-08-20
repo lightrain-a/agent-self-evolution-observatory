@@ -281,6 +281,31 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertFalse(queue["policy"]["terminal_human_parent_repair_forbidden"])
         self.assertTrue(queue["policy"]["absorbed_child_repair_forbidden"])
 
+    def test_agent_safety_current_projection_matches_memory_graph(self) -> None:
+        current = self.state["agent_safety_current_state"]
+        future = current["future_evidence"]
+        memory = self.state["agent_safety_r9_memory_graph"]
+        self.assertEqual(
+            current["current_stage"],
+            "PAPER_EVIDENCE_READY_CAUSAL_ATTRIBUTION_HOLD",
+        )
+        self.assertEqual(future["receipt_ref"], memory["receipt_ref"])
+        self.assertEqual(
+            future["claim_adjudication"]["supported_status"],
+            "SUPPORTED_NARROWLY",
+        )
+        self.assertEqual(
+            future["claim_adjudication"]["causal_hold_status"],
+            "HOLD_METHOD_IDENTIFICATION",
+        )
+        self.assertTrue(current["historical_projection"]["historical_only"])
+        self.assertEqual(
+            current["historical_projection"]["current_stage"],
+            "CURRENT_SAFETY_SUPPORT_STOP",
+        )
+        self.assertFalse(current["execution_authorized"])
+        self.assertFalse(current["authority"]["heldout_future_probe_execution"])
+
     def test_reference_components_are_explicit(self) -> None:
         sources = {item["source"] for item in self.state["components"]}
         self.assertIn("ResearchAgent", sources)

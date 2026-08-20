@@ -598,6 +598,12 @@ def build_agent_safety_program_state(
 
 
 def validate_agent_safety_program_state(state: dict[str, Any]) -> list[str]:
+    if state.get("future_evidence"):
+        from .paper_first_agent_safety_current_projection import (
+            validate_current_agent_safety_projection,
+        )
+
+        return validate_current_agent_safety_projection(state)
     errors: list[str] = []
     if state.get("program_id") != "AGENT-SAFETY-R9" or state.get("candidate_id") != CANDIDATE_ID:
         errors.append("agent-safety public program identity mismatch")

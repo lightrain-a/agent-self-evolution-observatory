@@ -96,6 +96,10 @@ from .research_harness_meta_optimization import build_research_harness_meta_opti
 from .research_stall_pivot_controller import frame_signature, load_research_stall_state, source_set_sha256_from_primary
 from .research_memory_wiki import build_research_memory_wiki, load_default_claim_ledger, write_research_memory_wiki
 from .paper_first_agent_safety_r9_memory_graph import compile_memory_graph_inputs
+from .paper_first_agent_safety_current_projection import (
+    CURRENT_STAGE as AGENT_SAFETY_CURRENT_STAGE,
+    load_current_agent_safety_program_state,
+)
 from .search_funnel_telemetry import build_search_funnel_telemetry
 from .premium_model_policy import policy_summary as premium_model_policy_summary
 from .public_state_redaction import redact_private_paths
@@ -552,6 +556,12 @@ def build_research_system_state() -> dict[str, Any]:
         governance_layer_state=aris_governance_layer,
     )
     agent_safety_r9_paper_claim_table, agent_safety_r9_memory_graph = compile_memory_graph_inputs()
+    agent_safety_current_state = load_current_agent_safety_program_state()
+    if (
+        (agent_safety_current_state.get("future_evidence") or {}).get("receipt_ref")
+        != agent_safety_r9_memory_graph.get("receipt_ref")
+    ):
+        raise ValueError("Agent Safety current-state receipt does not match Memory Graph 2.1")
     claim_ledger = load_default_claim_ledger() + list(agent_safety_r9_memory_graph["claim_ledger"])
     research_memory_wiki = build_research_memory_wiki(
         search_design_state=paper_first_search_portfolio_design,
@@ -911,6 +921,7 @@ def build_research_system_state() -> dict[str, Any]:
             "research_memory_lint_warnings":research_memory_wiki["lint"]["summary"]["warnings"],
             "agent_safety_r9_claim_rows":len(agent_safety_r9_paper_claim_table["rows"]),
             "agent_safety_r9_reopen_conditions":agent_safety_r9_memory_graph["summary"]["reopen_conditions"],
+            "agent_safety_current_stage":agent_safety_current_state["current_stage"],
             "failure_assets":failure_asset_library["summary"]["assets"],
             "value_scheduler_candidates":experiment_value_scheduler["summary"]["candidates"],
             "research_replay_passed":research_system_replay["summary"]["passed"],
@@ -1076,6 +1087,7 @@ def build_research_system_state() -> dict[str, Any]:
         "research_memory_wiki":research_memory_wiki,
         "agent_safety_r9_paper_claim_table":agent_safety_r9_paper_claim_table,
         "agent_safety_r9_memory_graph":agent_safety_r9_memory_graph,
+        "agent_safety_current_state":agent_safety_current_state,
         "failure_asset_library":failure_asset_library,
         "experiment_value_scheduler":experiment_value_scheduler,
         "research_system_replay":research_system_replay,
@@ -1464,6 +1476,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"research-learning-loop", "pass":state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"] and state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"] and state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"] and state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"] and state["research_system_replay"]["summary"]["failed"] == 0 and state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"], "detail":{"meta":state["scientific_meta_trace"]["summary"],"failure_assets":state["failure_asset_library"]["summary"],"scheduler":state["experiment_value_scheduler"]["summary"],"replay":state["research_system_replay"]["summary"],"external":state["external_system_learning"]["summary"]}},
         {"key":"research-memory-wiki", "pass":state["research_memory_wiki"].get("status")=="MEMORY_COMPILED" and state["research_memory_wiki"].get("scientific_authority") is False and int(((state["research_memory_wiki"].get("lint") or {}).get("summary") or {}).get("errors") or 0)==0 and (state["research_memory_wiki"].get("policy") or {}).get("transient_operational_noise_is_not_prompt_eligible") is True and (state["research_memory_wiki"].get("policy") or {}).get("query_pack_never_relaxes_downstream_gates") is True, "detail":{"summary":state["research_memory_wiki"].get("summary"),"lint":(state["research_memory_wiki"].get("lint") or {}).get("summary")}},
         {"key":"agent-safety-r9-memory-graph-binding", "pass":state["agent_safety_r9_memory_graph"].get("status")=="READY_AGENT_SAFETY_R9_MEMORY_GRAPH_2_1_INPUTS" and state["agent_safety_r9_memory_graph"].get("scientific_authority") is False and (state["agent_safety_r9_memory_graph"].get("summary") or {}).get("supported_narrowly")==1 and (state["agent_safety_r9_memory_graph"].get("summary") or {}).get("method_holds")==1 and (state["agent_safety_r9_memory_graph"].get("summary") or {}).get("scientific_closures")==0 and (state["agent_safety_r9_memory_graph"].get("reopen_condition") or {}).get("condition").startswith("Separate persistent update effect from held-out schedule effect") and state["agent_safety_r9_paper_claim_table"].get("status")=="READY_AGENT_SAFETY_R9_PAPER_CLAIM_TABLE", "detail":{"memory":state["agent_safety_r9_memory_graph"].get("summary"),"claim_table":state["agent_safety_r9_paper_claim_table"].get("evidence_summary")}},
+        {"key":"agent-safety-current-state-projection", "pass":state["agent_safety_current_state"].get("current_stage")==AGENT_SAFETY_CURRENT_STAGE and (state["agent_safety_current_state"].get("future_evidence") or {}).get("receipt_ref")==state["agent_safety_r9_memory_graph"].get("receipt_ref") and (state["agent_safety_current_state"].get("historical_projection") or {}).get("historical_only") is True and state["agent_safety_current_state"].get("execution_authorized") is False and (state["agent_safety_current_state"].get("authority") or {}).get("heldout_future_probe_execution") is False, "detail":{"current_stage":state["agent_safety_current_state"].get("current_stage"),"historical_stage":(state["agent_safety_current_state"].get("historical_projection") or {}).get("current_stage"),"receipt_ref":(state["agent_safety_current_state"].get("future_evidence") or {}).get("receipt_ref")}},
         {"key":"research-memory-graph-v2.1", "pass":state["scientific_research_graph"].get("schema_version")=="2.1" and state["scientific_research_graph"].get("status")=="RESEARCH_GRAPH_COMPILED" and state["scientific_research_graph"].get("scientific_authority") is False and int((((state["scientific_research_graph"].get("lint") or {}).get("summary") or {}).get("errors") or 0))==0 and (state["scientific_research_graph"].get("policy") or {}).get("closure_propagation_requires_same_scientific_object_mechanism_and_claim_type") is True and (state["scientific_research_graph"].get("policy") or {}).get("claim_conflict_is_reported_not_automatically_resolved") is True and (state["scientific_research_graph"].get("governance_bindings") or {}).get("scientific_authority") is False, "detail":{"summary":state["scientific_research_graph"].get("summary"),"lint":(state["scientific_research_graph"].get("lint") or {}).get("summary"),"typed_coverage":state["scientific_research_graph"].get("typed_coverage"),"governance_bindings":state["scientific_research_graph"].get("governance_bindings")}},
         {"key":"aris-governance-layer", "pass":state["aris_governance_layer"].get("status")=="GOVERNANCE_COMPILED" and state["aris_governance_layer"].get("scientific_authority") is False and int((((state["aris_governance_layer"].get("lint") or {}).get("summary") or {}).get("errors") or 0))==0 and (state["aris_governance_layer"].get("policy") or {}).get("governance_may_block_or_require_review_but_cannot_self_authorize") is True and (state["aris_governance_layer"].get("authority") or {}).get("claim_mutation") is False and (state["aris_governance_layer"].get("authority") or {}).get("experiment") is False, "detail":{"summary":state["aris_governance_layer"].get("summary"),"lint":(state["aris_governance_layer"].get("lint") or {}).get("summary")}},
         {"key":"aris-harness-alignment", "pass":state["research_harness_assurance"].get("status")=="PASS_HARNESS_ASSURANCE" and int((state["research_harness_assurance"].get("summary") or {}).get("failed") or 0)==0 and state["research_candidate_portfolio"].get("scientific_authority") is False and int((state["research_candidate_portfolio"].get("summary") or {}).get("automatic_promotions") or 0)==0 and state["search_funnel_telemetry"].get("scientific_authority") is False and state["scientific_research_graph"].get("scientific_authority") is False and (state["scientific_research_graph"].get("policy") or {}).get("experiment_failure_edge_cannot_close_core_principle") is True, "detail":{"assurance":state["research_harness_assurance"].get("summary"),"portfolio":state["research_candidate_portfolio"].get("summary"),"funnel":state["search_funnel_telemetry"].get("summary"),"graph":state["scientific_research_graph"].get("summary")}},
@@ -2044,6 +2057,17 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if funnel.get("scientific_authority") is not False or funnel_policy.get("typed_reduction_or_support_holds_must_not_be_reported_as_idea_generation_failure") is not True or funnel_policy.get("telemetry_cannot_authorize_provider_calls_problem_gate_method_experiment_p0_or_gpu") is not True: errors.append("search-funnel telemetry must remain zero-authority and preserve typed bottleneck semantics")
     research_graph_lint = research_graph.get("lint") or {}
     if research_graph.get("schema_version") != "2.1" or research_graph.get("status") != "RESEARCH_GRAPH_COMPILED" or research_graph.get("scientific_authority") is not False or research_graph_policy.get("experiment_failure_edge_cannot_close_core_principle") is not True or research_graph_policy.get("only_certified_principle_dead_end_may_emit_principle_closure_edge") is not True or research_graph_policy.get("closure_propagation_requires_same_scientific_object_mechanism_and_claim_type") is not True or research_graph_policy.get("governance_bindings_may_block_but_cannot_self_authorize") is not True or int((research_graph_lint.get("summary") or {}).get("errors") or 0) != 0 or int(research_graph_summary.get("principle_closure_edges") or 0) > int(research_graph_summary.get("scientific_closure_nodes") or 0): errors.append("scientific research graph must preserve typed failure/closure/governance authority boundaries")
+    agent_safety_current = state.get("agent_safety_current_state") or {}
+    agent_safety_future = agent_safety_current.get("future_evidence") or {}
+    agent_safety_memory = state.get("agent_safety_r9_memory_graph") or {}
+    if (
+        agent_safety_current.get("current_stage") != AGENT_SAFETY_CURRENT_STAGE
+        or agent_safety_future.get("receipt_ref") != agent_safety_memory.get("receipt_ref")
+        or (agent_safety_current.get("historical_projection") or {}).get("historical_only") is not True
+        or agent_safety_current.get("execution_authorized") is not False
+        or (agent_safety_current.get("authority") or {}).get("heldout_future_probe_execution") is not False
+    ):
+        errors.append("Agent Safety public program/system/memory projections must share the final evidence receipt while retaining historical stops without new execution authority")
     aris_governance = state.get("aris_governance_layer") or {}; aris_policy = aris_governance.get("policy") or {}; aris_lint = aris_governance.get("lint") or {}; aris_summary = aris_governance.get("summary") or {}
     if aris_governance.get("status") != "GOVERNANCE_COMPILED" or aris_governance.get("scientific_authority") is not False or int((aris_lint.get("summary") or {}).get("errors") or 0) != 0: errors.append("ARIS Governance Layer must compile with zero errors and zero scientific authority")
     if aris_policy.get("governance_may_block_or_require_review_but_cannot_self_authorize") is not True or aris_policy.get("execution_failure_has_no_belief_authority") is not True or aris_policy.get("belief_authority_does_not_equal_automatic_claim_mutation") is not True: errors.append("ARIS Governance Layer authority boundaries are missing")
@@ -2094,6 +2118,34 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if state["pilot_registry"]["summary"]["invalid_approval_files"] != 0: errors.append("invalid pilot approval files")
     if not state["summary"]["final_ready"] or state["summary"]["final_pass"] != state["summary"]["discussion_target"]: errors.append("final advisor gate not ready")
     return errors
+
+
+def write_research_system_projection_only(
+    json_path: Path = DEFAULT_JSON,
+    js_path: Path = DEFAULT_JS,
+) -> dict[str, Any]:
+    """Materialize the current derived public state without rebuilding source artifacts."""
+    state = build_research_system_state()
+    errors = validate_state(state)
+    if errors:
+        raise ValueError("Invalid research system projection:\n- " + "\n- ".join(errors))
+    public_memory = redact_private_paths(
+        state["research_memory_wiki"], storage=StorageSettings.from_env()
+    )
+    write_research_memory_wiki(public_memory)
+    public_state = redact_private_paths(state, storage=StorageSettings.from_env())
+    json_path.parent.mkdir(parents=True, exist_ok=True)
+    json_path.write_text(
+        json.dumps(public_state, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    js_path.write_text(
+        "window.RESEARCH_SYSTEM_STATE = "
+        + json.dumps(public_state, ensure_ascii=False, separators=(",", ":"))
+        + ";\n",
+        encoding="utf-8",
+    )
+    return public_state
 
 
 def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAULT_JS) -> dict[str, Any]:
