@@ -1,18 +1,33 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import os
+import tempfile
 from collections import Counter
 from pathlib import Path
 from typing import Any
 
-from .paper_first_agent_safety_r9_f0_browser import (
-    HARMBENCH_MODEL_ID,
-    HARMBENCH_REVISION,
-    QWEN_ID,
-    QWEN_REVISION,
-)
-from .paper_first_agent_safety_r9_f0_contract import atomic_json, sha_file
+HARMBENCH_MODEL_ID = "cais/HarmBench-Llama-2-13b-cls"
+HARMBENCH_REVISION = "0cd31cdc8b53209dd5b153b20026ff085901bb14"
+QWEN_ID = "Qwen3-8B"
+QWEN_REVISION = "b968826d9c46dd6066d109eabc6255188de91218"
+
+
+def sha_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def atomic_json(path: Path, value: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = json.dumps(value, ensure_ascii=False, indent=2) + "\n"
+    with tempfile.NamedTemporaryFile(
+        "w", encoding="utf-8", dir=path.parent, delete=False
+    ) as handle:
+        handle.write(payload)
+        temporary = Path(handle.name)
+    os.replace(temporary, path)
 
 
 def require(ok: bool, message: str) -> None:

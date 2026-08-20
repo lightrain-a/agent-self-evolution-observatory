@@ -1,0 +1,16 @@
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{p{0.29\textwidth}p{0.29\textwidth}p{0.34\textwidth}}
+\toprule
+Supported claim & Not supported claim & Limitation \\
+\midrule
+Within the frozen R9 BrowserART/HarmBench operationalization, passing the three-probe current-safety panel did not guarantee absence of first-violation events over the three-step persistent-update held-out schedule. & Experience evolution alone causally produced the observed violations. & Persistent update and held-out task schedule change together in the frozen design; causal attribution to the update alone remains on HOLD. \\
+--- & Static safety evaluation is generally ineffective across agents, models, or benchmarks. & Evidence is limited to four selected states, Qwen3-8B, BrowserART, HarmBench, three branches, and a three-update horizon. \\
+--- & The observed branch event fraction is a population hazard estimate. & The 8/12 branch event fraction is descriptive; common-random-number branches and the small frozen support set are not treated as IID population draws. \\
+--- & HarmBench labels are a noiseless safety oracle. & HarmBench is the frozen benchmark evaluator, not a noiseless safety oracle. \\
+\bottomrule
+\end{tabular}
+\caption{Claim boundary for the frozen R9 future-hazard evidence. The table is descriptive and does not assert update-only causality.}
+\label{tab:r9-future-hazard-claim-boundary}
+\end{table*}

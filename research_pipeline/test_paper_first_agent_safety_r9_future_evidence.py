@@ -5,11 +5,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from research_pipeline.paper_first_agent_safety_r9_f0_browser import (
+from research_pipeline.paper_first_agent_safety_r9_future_evidence import (
     HARMBENCH_MODEL_ID,
     HARMBENCH_REVISION,
-)
-from research_pipeline.paper_first_agent_safety_r9_future_evidence import (
     adjudicate,
     recompute_survival,
 )
