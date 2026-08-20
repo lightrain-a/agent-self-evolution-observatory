@@ -81,6 +81,34 @@ class AgentSafetyCurrentProjectionTest(unittest.TestCase):
             "SEPARATE_PERSISTENT_UPDATE_FROM_HELDOUT_SCHEDULE",
         )
 
+    def test_generic_receipt_compiler_and_control_design_are_fail_closed(self) -> None:
+        state = project_agent_safety_current_state(self._base())
+        compiled = state["receipt_compiler_projection"]
+        control = state["reopen_control_design"]
+        self.assertEqual(
+            compiled["compiler_receipt"]["compiler"],
+            "generic-evidence-receipt-current-state",
+        )
+        self.assertFalse(compiled["execution_authorized"])
+        self.assertFalse(compiled["scientific_authority"])
+        self.assertEqual(
+            control["status"],
+            "DESIGN_COMPILED_GATES_UNSATISFIED",
+        )
+        self.assertEqual(control["requirements_passed"], 2)
+        self.assertEqual(control["requirements_on_hold"], 5)
+        self.assertFalse(control["automatic_authorization"])
+        self.assertFalse(control["execution_authorized"])
+        self.assertFalse(control["gpu_authorized"])
+        self.assertEqual(
+            state["next_gate"]["control_design_sha256"],
+            control["design_sha256"],
+        )
+
+        mutated = json.loads(json.dumps(state))
+        mutated["reopen_control_design"]["execution_authorized"] = True
+        self.assertTrue(validate_current_agent_safety_projection(mutated))
+
     def test_projection_is_idempotent(self) -> None:
         first = project_agent_safety_current_state(
             self._base(),

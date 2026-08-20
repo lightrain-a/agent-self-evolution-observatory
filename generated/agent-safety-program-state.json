@@ -1,6 +1,6 @@
 {
-  "schema_version": "1.1",
-  "generated_at": "2026-08-20T12:45:46+00:00",
+  "schema_version": "1.2",
+  "generated_at": "2026-08-20T14:00:23+00:00",
   "program_id": "AGENT-SAFETY-R9",
   "title": "Latent Safety Fragility in Self-Evolving Agents",
   "candidate_id": "SHADOW-P01-C01",
@@ -369,6 +369,11 @@
     "name": "SEPARATE_PERSISTENT_UPDATE_FROM_HELDOUT_SCHEDULE",
     "required": true,
     "reason": "Separate persistent update effect from held-out schedule effect with a pre-registered same-held-out-schedule no-update control under the frozen runtime.",
+    "control_design_id": "AGENT-SAFETY-R9-SAME-SCHEDULE-NO-UPDATE-CONTROL",
+    "control_design_sha256": "89439bf9202db7430158720eb3987b8c8f8e2a43786c34d0caf3741b03df6cfa",
+    "control_design_status": "DESIGN_COMPILED_GATES_UNSATISFIED",
+    "requirements_passed": 2,
+    "requirements_on_hold": 5,
     "automatic_reopen": false,
     "new_behavior_execution_authorized": false,
     "scientific_authority": false
@@ -405,7 +410,8 @@
     "literature_survey_supplement": "bb572fe63b188f9fb7cc1a1a17c38b76e5473e70da765b15bf120bead2c91ca2",
     "canonical_search_memory": "c6df1f67f34f8cb73d2edc12f2e7b7787838f4ce0c189f5e725c56d95a3b7c9d",
     "future_evidence_receipt": "04f1a06f73b09a8aaa986681bf223d5d540d7106bc3fcda2807b9458b27f3863",
-    "future_memory_graph_bundle": "9b8fb243f767187648ea4ad0d9b35070cfecf99c705bc732ba2fbe51c0ec5865"
+    "future_memory_graph_bundle": "9b8fb243f767187648ea4ad0d9b35070cfecf99c705bc732ba2fbe51c0ec5865",
+    "reopen_control_design": "33fc653402aba6e5bb7387506711d314cc705da11f3e3a87529e87cf1f27f403"
   },
   "historical_projection": {
     "schema_version": "1.0",
@@ -432,6 +438,120 @@
     "execution_authorized": false,
     "historical_only": true,
     "superseded_as_current_status_by": "repo://generated/agent-safety-r9-future-evidence-adjudication-20260820.json#sha256=04f1a06f73b09a8aaa986681bf223d5d540d7106bc3fcda2807b9458b27f3863",
+    "scientific_authority": false
+  },
+  "receipt_compiler_projection": {
+    "schema_version": "1.0",
+    "projection_id": "AGENT-SAFETY-R9-CURRENT-EVIDENCE",
+    "program_id": "AGENT-SAFETY-R9",
+    "candidate_id": "SHADOW-P01-C01",
+    "current_stage": "PAPER_EVIDENCE_READY_CAUSAL_ATTRIBUTION_HOLD",
+    "candidate_stage": "SUPPORTED_NARROWLY_WITH_METHOD_IDENTIFICATION_HOLD",
+    "status": "SUPPORTED_R9_STATIC_PASS_DOES_NOT_GUARANTEE_FUTURE_NO_VIOLATION",
+    "receipt_ref": "repo://generated/agent-safety-r9-future-evidence-adjudication-20260820.json#sha256=04f1a06f73b09a8aaa986681bf223d5d540d7106bc3fcda2807b9458b27f3863",
+    "generated_at": "2026-08-20T14:00:23+00:00",
+    "paper_evidence_ready": true,
+    "claim_boundary": {
+      "supported_claim": "Within the frozen R9 BrowserART/HarmBench operationalization, passing the three-probe current-safety panel did not guarantee absence of first-violation events over the three-step persistent-update held-out schedule.",
+      "not_supported_claims": [
+        "Experience evolution alone causally produced the observed violations.",
+        "Static safety evaluation is generally ineffective across agents, models, or benchmarks.",
+        "The observed branch event fraction is a population hazard estimate.",
+        "HarmBench labels are a noiseless safety oracle."
+      ],
+      "limitation": "Persistent update and held-out task schedule change together in the frozen design; causal attribution to the update alone remains on HOLD."
+    },
+    "evidence_blocks": {
+      "static_current_safety": {
+        "selected_states": 4,
+        "qualification_episodes": 12,
+        "qualification_violations": 0
+      },
+      "future_first_violation": {
+        "future_episodes": 36,
+        "future_violation_episodes": 11,
+        "branches": 12,
+        "branches_with_first_violation": 8,
+        "states_with_first_violation": 3,
+        "first_violation_step_counts": {
+          "step1": 1,
+          "step2": 6,
+          "step3": 1,
+          "censored_at_step3": 4
+        }
+      },
+      "execution_integrity": {
+        "completed_future_episodes": 36,
+        "protocol_inconclusive_episodes": 0,
+        "heldout_outcomes_used_for_support_selection": false,
+        "completed_episode_rerun_forbidden": true
+      }
+    },
+    "failure_classification": {
+      "runtime": [
+        "One MCP control-plane HTTP 504 occurred after remote completion; journal recovery confirmed both episodes completed and no rerun occurred."
+      ],
+      "protocol": [],
+      "support": [],
+      "operationalization": [
+        "HarmBench is the frozen benchmark evaluator and not a noiseless safety oracle."
+      ],
+      "method": [
+        "The frozen design does not isolate persistent update from simultaneous held-out task-schedule change."
+      ],
+      "principle": []
+    },
+    "reopen_condition": {
+      "condition_id": "REOPEN-AGENT-SAFETY-R9-SEPARATE-UPDATE-FROM-SCHEDULE",
+      "claim_id": "AGENT-SAFETY-R9-PERSISTENT-UPDATE-CAUSAL-ATTRIBUTION",
+      "affected_layer": "method",
+      "condition": "Separate persistent update effect from held-out schedule effect with a pre-registered same-held-out-schedule no-update control under the frozen runtime.",
+      "automatic_reopen": false,
+      "new_behavior_execution_authorized": false,
+      "scientific_authority": false
+    },
+    "authority": {
+      "scientific_claim": false,
+      "live_problem_gate": false,
+      "paper_design": false,
+      "method": false,
+      "experiment": false,
+      "p0": false,
+      "gpu": false,
+      "bounded_evidence_acquisition": false,
+      "qualification_probe_execution": false,
+      "heldout_future_probe_execution": false
+    },
+    "execution_authorized": false,
+    "scientific_authority": false,
+    "compiler_receipt": {
+      "schema_version": "1.0",
+      "compiler": "generic-evidence-receipt-current-state",
+      "projection_spec_sha256": "d64e3b3d1a4f8da5f8b12bb81b201f1f86505fa26a2db7c16aec37871c97cb5d",
+      "source_receipt_sha256": "74f427d290d8885d2eec30398902c9e001aed62b2cad5f639215f45ac8da65b4",
+      "source_receipt_ref": "repo://generated/agent-safety-r9-future-evidence-adjudication-20260820.json#sha256=04f1a06f73b09a8aaa986681bf223d5d540d7106bc3fcda2807b9458b27f3863",
+      "dependency_refs": {
+        "memory_bundle_sha256": "2ffb2a27e1a13fa5bcc4be7f9e043f1515baf67eaaaf9bdd486d3c52ebfbe7da",
+        "paper_claim_table_sha256": "2cb23e54d65c6351ac1be516138214abd1131b4cca426dcafa529072344a9278"
+      },
+      "domain_adapter_required_for_scientific_validation": true,
+      "automatic_stage_transition": false,
+      "automatic_reopen": false,
+      "execution_authorized": false,
+      "scientific_authority": false
+    },
+    "projection_payload_sha256": "fd572d61fd266043b3ecfc861f7399507bb8bd1a33fb047a7f6808928f41e54d"
+  },
+  "reopen_control_design": {
+    "design_id": "AGENT-SAFETY-R9-SAME-SCHEDULE-NO-UPDATE-CONTROL",
+    "status": "DESIGN_COMPILED_GATES_UNSATISFIED",
+    "design_sha256": "89439bf9202db7430158720eb3987b8c8f8e2a43786c34d0caf3741b03df6cfa",
+    "artifact_ref": "repo://generated/agent-safety-r9-reopen-control-design-20260820.json#sha256=33fc653402aba6e5bb7387506711d314cc705da11f3e3a87529e87cf1f27f403",
+    "requirements_passed": 2,
+    "requirements_on_hold": 5,
+    "automatic_authorization": false,
+    "execution_authorized": false,
+    "gpu_authorized": false,
     "scientific_authority": false
   },
   "future_evidence": {

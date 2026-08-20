@@ -306,6 +306,37 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertFalse(current["execution_authorized"])
         self.assertFalse(current["authority"]["heldout_future_probe_execution"])
 
+    def test_agent_safety_traceability_and_reopen_control_are_graph_native(self) -> None:
+        trace = self.state["agent_safety_claim_evidence_traceability"]
+        graph = self.state["scientific_research_graph"]
+        control = self.state["agent_safety_reopen_control_design"]
+        trace_summary = trace["summary"]
+        self.assertEqual(trace_summary["nodes"], 14)
+        self.assertEqual(trace_summary["edges"], 20)
+        self.assertEqual(trace_summary["supported_claims_bound"], 1)
+        self.assertEqual(trace_summary["causal_holds_bound"], 1)
+        self.assertEqual(trace_summary["not_supported_claim_boundaries"], 4)
+        self.assertEqual(trace_summary["limitations_bound"], 4)
+        self.assertEqual(trace_summary["counterevidence_bound"], 2)
+        self.assertEqual(trace_summary["reopen_conditions_bound"], 1)
+        self.assertEqual(trace_summary["control_designs_bound"], 1)
+        self.assertEqual(trace_summary["authorization_gates_bound"], 1)
+        self.assertEqual(
+            graph["claim_evidence_bindings"]["source_bundle_sha256"],
+            trace["bundle_sha256"],
+        )
+        gate = control["authorization_gate"]
+        self.assertEqual(control["status"], "DESIGN_COMPILED_GATES_UNSATISFIED")
+        self.assertEqual(gate["passed"], 2)
+        self.assertEqual(gate["holds"], 5)
+        self.assertFalse(gate["automatic_authorization"])
+        self.assertFalse(gate["execution_authorized"])
+        self.assertFalse(gate["p0_authorized"])
+        self.assertFalse(gate["gpu_authorized"])
+        self.assertTrue(all(value is False for value in control["queue_mutation"].values()))
+        self.assertFalse(control["execution_authorized"])
+        self.assertFalse(control["scientific_authority"])
+
     def test_reference_components_are_explicit(self) -> None:
         sources = {item["source"] for item in self.state["components"]}
         self.assertIn("ResearchAgent", sources)
@@ -325,7 +356,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertIn("ARIS portfolio persistence + local scientific gates", sources)
         self.assertIn("ARIS meta-optimization pattern + local typed failure semantics", sources)
         self.assertIn("ARIS research wiki pattern + local typed closure", sources)
-        self.assertEqual(len(self.state["components"]), 35)
+        self.assertEqual(len(self.state["components"]), 37)
         self.assertIn("Human terminal ledger", sources)
         self.assertIn("P0 retrospective economy review", sources)
         self.assertIn("Web GPT + domestic-model independent consultation", sources)
@@ -343,14 +374,14 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(architecture["summary"]["reader_stage_extra"], 0)
         self.assertEqual(self.state["summary"]["architecture_reader_chapters"], 7)
         self.assertEqual(architecture["summary"]["functional_layers"], 6)
-        self.assertEqual(architecture["summary"]["assigned_components"], 35)
+        self.assertEqual(architecture["summary"]["assigned_components"], 37)
         self.assertEqual(architecture["summary"]["unassigned_components"], 0)
         self.assertEqual(architecture["summary"]["duplicate_component_keys"], 0)
         self.assertEqual(architecture["summary"]["cross_cutting_controls"], 3)
         self.assertEqual(architecture["summary"]["orphan_cross_cutting_controls"], 0)
         self.assertEqual(self.state["summary"]["methodology_cross_cutting_controls"], 3)
         self.assertEqual(self.state["summary"]["methodology_primary_components_added"], 0)
-        self.assertEqual(len({item["key"] for item in self.state["components"]}), 35)
+        self.assertEqual(len({item["key"] for item in self.state["components"]}), 37)
         self.assertTrue(all(item.get("primary_layer") for item in self.state["components"]))
         self.assertTrue(self.state["research_governance_v2"]["policy"]["paper_novelty_precedes_method_design"])
         self.assertTrue(self.state["research_governance_v2"]["policy"]["method_design_precedes_experiment_plan"])

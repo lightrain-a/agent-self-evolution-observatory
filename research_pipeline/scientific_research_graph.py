@@ -11,7 +11,8 @@ OVERLAY_NODE_KINDS = {
     "phenomenon", "problem_contract", "candidate_problem", "idea", "claim",
     "method", "experiment", "evidence_reference", "core_principle",
     "failure_asset", "success", "scientific_closure", "search_closure",
-    "hold", "reopen_condition",
+    "hold", "reopen_condition", "limitation", "counterevidence",
+    "control_design", "authorization_gate",
 }
 POLICY: dict[str, Any] = {
     "schema_version": SCHEMA_VERSION,
@@ -34,6 +35,9 @@ POLICY: dict[str, Any] = {
     "governance_bindings_may_block_but_cannot_self_authorize": True,
     "belief_authority_never_implies_automatic_claim_mutation": True,
     "candidate_provenance_hold_cannot_be_promoted_by_memory": True,
+    "claim_evidence_counterevidence_limitation_and_reopen_are_explicitly_bound": True,
+    "control_design_and_authorization_gate_are_distinct_zero_authority_nodes": True,
+    "not_supported_claim_boundary_is_not_a_scientific_negative": True,
 }
 
 
@@ -150,6 +154,11 @@ def lint_scientific_research_graph(graph: dict[str, Any]) -> dict[str, Any]:
                 errors.append({"code": "closure-or-hold-missing-reopen-node", "node_id": node_id})
             if kind == "scientific_closure" and node.get("principle_dead_end_certified") is not True:
                 errors.append({"code": "scientific-closure-without-principle-certificate", "node_id": node_id})
+        if kind in {"control_design", "authorization_gate"}:
+            if node.get("execution_authorized") is not False:
+                errors.append({"code": "control-or-gate-execution-authority-leak", "node_id": node_id})
+        if kind == "authorization_gate" and node.get("automatic_authorization") is not False:
+            errors.append({"code": "authorization-gate-became-automatic", "node_id": node_id})
     known_ids = base_ids | set(ids)
     for edge in edges:
         source, target = _text(edge.get("source")), _text(edge.get("target"))
@@ -166,9 +175,24 @@ def lint_scientific_research_graph(graph: dict[str, Any]) -> dict[str, Any]:
             source_node = by_id.get(source) or {}
             if source_node.get("kind") == "failure_asset" and source_node.get("failure_class") != "principle":
                 errors.append({"code": "non-principle-failure-emitted-closure-edge", "source": source, "target": target})
+        if relation in {
+            "supports_claim",
+            "informs_claim_without_identifying",
+            "limits_claim",
+            "challenges_claim",
+            "limits_measurement_interpretation",
+            "bounds_out_claim",
+            "tests_identification_for",
+        }:
+            target_node = by_id.get(target) or {}
+            if target not in base_ids and target_node.get("kind") != "claim":
+                errors.append({"code": "claim-traceability-edge-target-is-not-claim", "source": source, "target": target, "relation": relation})
     bindings = graph.get("governance_bindings") or {}
     if bindings and bindings.get("scientific_authority") is not False:
         errors.append({"code": "governance-bindings-authority-leak"})
+    claim_bindings = graph.get("claim_evidence_bindings") or {}
+    if claim_bindings and claim_bindings.get("scientific_authority") is not False:
+        errors.append({"code": "claim-evidence-bindings-authority-leak"})
     for missing in (graph.get("typed_coverage") or {}).get("missing_pipeline_kinds") or []:
         warnings.append({"code": "typed-pipeline-kind-not-yet-materialized", "kind": missing})
     return {
@@ -192,12 +216,14 @@ def build_scientific_research_graph(
     claim_ledger: list[dict[str, Any]] | None = None,
     experiment_iteration: dict[str, Any] | None = None,
     governance_layer: dict[str, Any] | None = None,
+    claim_evidence_traceability: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Compile a typed, read-only overlay over canonical scientific artifacts."""
     research_memory_wiki = research_memory_wiki or {}
     claim_ledger = claim_ledger or []
     experiment_iteration = experiment_iteration or {}
     governance_layer = governance_layer or {}
+    claim_evidence_traceability = claim_evidence_traceability or {}
     failure_governance = {
         (_text(row.get("idea_id")), _text(row.get("signature"))): row
         for row in governance_layer.get("failure_authority_records") or []
@@ -329,6 +355,27 @@ def build_scientific_research_graph(
             })
             add_edge(evidence_node, node_id, "supports_claim")
 
+    if claim_evidence_traceability:
+        if claim_evidence_traceability.get("status") != "CLAIM_EVIDENCE_TRACEABILITY_COMPILED":
+            raise ValueError("claim/evidence traceability bundle is not compiled")
+        for node in claim_evidence_traceability.get("nodes") or []:
+            if not isinstance(node, dict):
+                raise ValueError("claim/evidence traceability node must be an object")
+            add_node(dict(node))
+        for edge in claim_evidence_traceability.get("edges") or []:
+            if not isinstance(edge, dict):
+                raise ValueError("claim/evidence traceability edge must be an object")
+            data = {
+                key: value
+                for key, value in edge.items()
+                if key not in {"source", "target", "relation", "scientific_authority"}
+            }
+            add_edge(
+                _text(edge.get("source")),
+                _text(edge.get("target")),
+                _text(edge.get("relation")),
+                **data,
+            )
 
     for row in scientific_meta_trace.get("principles") or []:
         if not isinstance(row, dict):
@@ -536,6 +583,20 @@ def build_scientific_research_graph(
         "bindings_are_derived_zero_authority": True,
         "scientific_authority": False,
     }
+    claim_evidence_bindings = {
+        "schema_version": "1.0",
+        "source_bundle_sha256": claim_evidence_traceability.get("bundle_sha256"),
+        "supported_claims_bound": int((claim_evidence_traceability.get("summary") or {}).get("supported_claims_bound") or 0),
+        "causal_holds_bound": int((claim_evidence_traceability.get("summary") or {}).get("causal_holds_bound") or 0),
+        "not_supported_claim_boundaries": int((claim_evidence_traceability.get("summary") or {}).get("not_supported_claim_boundaries") or 0),
+        "limitations_bound": int((claim_evidence_traceability.get("summary") or {}).get("limitations_bound") or 0),
+        "counterevidence_bound": int((claim_evidence_traceability.get("summary") or {}).get("counterevidence_bound") or 0),
+        "reopen_conditions_bound": int((claim_evidence_traceability.get("summary") or {}).get("reopen_conditions_bound") or 0),
+        "control_designs_bound": int((claim_evidence_traceability.get("summary") or {}).get("control_designs_bound") or 0),
+        "authorization_gates_bound": int((claim_evidence_traceability.get("summary") or {}).get("authorization_gates_bound") or 0),
+        "bindings_are_derived_zero_authority": True,
+        "scientific_authority": False,
+    }
     graph = {
         "schema_version": SCHEMA_VERSION,
         "status": "RESEARCH_GRAPH_COMPILED",
@@ -548,6 +609,7 @@ def build_scientific_research_graph(
         "typed_coverage": typed_coverage,
         "claim_conflicts": conflicts,
         "governance_bindings": governance_bindings,
+        "claim_evidence_bindings": claim_evidence_bindings,
         "summary": {
             "nodes": len(base_ids | set(overlay_nodes)),
             "edges": len(base_edges) + len(overlay_edges),
@@ -569,6 +631,12 @@ def build_scientific_research_graph(
             "scientific_closure_nodes": overlay_kinds.get("scientific_closure", 0),
             "search_closure_nodes": overlay_kinds.get("search_closure", 0),
             "reopen_condition_nodes": overlay_kinds.get("reopen_condition", 0),
+            "limitation_nodes": overlay_kinds.get("limitation", 0),
+            "counterevidence_nodes": overlay_kinds.get("counterevidence", 0),
+            "control_design_nodes": overlay_kinds.get("control_design", 0),
+            "authorization_gate_nodes": overlay_kinds.get("authorization_gate", 0),
+            "claim_evidence_traceability_nodes": int((claim_evidence_traceability.get("summary") or {}).get("nodes") or 0),
+            "claim_evidence_traceability_edges": int((claim_evidence_traceability.get("summary") or {}).get("edges") or 0),
             "principle_closure_edges": closure_edges,
             "exact_scope_propagation_edges": propagation_edges,
             "claim_conflicts": len(conflicts),

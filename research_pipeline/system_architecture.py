@@ -131,6 +131,8 @@ COMPONENT_BINDINGS: dict[str, tuple[str, str]] = {
     "Principle Certificate + epistemic adjudicator": ("principle-adjudicator", "paper-design"),
     "Scientific Meta-Trace + cross-branch world state": ("scientific-meta-trace", "memory-publication"),
     "Typed Scientific Research Graph": ("scientific-research-graph", "memory-publication"),
+    "Receipt-derived current research state compiler": ("evidence-receipt-current-state", "memory-publication"),
+    "Claim/evidence/limitation/reopen control bindings": ("claim-evidence-reopen-bindings", "memory-publication"),
     "Failure Asset + dead-end memory": ("failure-assets", "memory-publication"),
     "Information-gain experiment portfolio scheduler": ("experiment-value-scheduler", "experiment-design"),
     "Protocol-validity auditor + research-system replay benchmark": ("protocol-and-replay", "experiment-design"),

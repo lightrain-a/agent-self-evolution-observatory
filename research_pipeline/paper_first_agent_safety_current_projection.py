@@ -9,6 +9,10 @@ from pathlib import Path
 from typing import Any
 
 from .config import PROJECT_ROOT
+from .evidence_receipt_current_state import (
+    compile_evidence_receipt_projection,
+    validate_evidence_receipt_projection,
+)
 from .paper_first_agent_safety_program_state import (
     PUBLIC_GLOBAL,
     validate_agent_safety_program_state,
@@ -16,6 +20,11 @@ from .paper_first_agent_safety_program_state import (
 from .paper_first_agent_safety_r9_memory_graph import (
     compile_memory_graph_inputs,
     file_sha256,
+)
+from .paper_first_agent_safety_r9_reopen_control import (
+    DEFAULT_OUTPUT as DEFAULT_CONTROL_DESIGN,
+    compile_reopen_control_design,
+    validate_reopen_control_design,
 )
 
 
@@ -38,6 +47,65 @@ FAILURE_LAYERS = (
     "method",
     "principle",
 )
+GENERIC_PROJECTION_SPEC = {
+    "projection_id": "AGENT-SAFETY-R9-CURRENT-EVIDENCE",
+    "program_id": "AGENT-SAFETY-R9",
+    "candidate_id": "SHADOW-P01-C01",
+    "receipt_status": "SUPPORTED_R9_STATIC_PASS_DOES_NOT_GUARANTEE_FUTURE_NO_VIOLATION",
+    "current_stage": CURRENT_STAGE,
+    "candidate_stage": CURRENT_CANDIDATE_STAGE,
+    "receipt_candidate_path": "identity.candidate_id",
+    "paper_evidence_ready_path": "paper_evidence_ready",
+    "required_flags": {
+        "paper_evidence_ready": True,
+        "additional_behavior_execution_authorized": False,
+        "execution_integrity.heldout_outcomes_used_for_support_selection": False,
+        "execution_integrity.completed_episode_rerun_forbidden": True,
+    },
+    "failure_layers_path": "failure_classification",
+    "claim_scope": {
+        "supported_path": "claim_scope.supported",
+        "not_supported_path": "claim_scope.not_supported",
+        "expected_not_supported_count": 4,
+        "limitation": (
+            "Persistent update and held-out task schedule change together in the frozen "
+            "design; causal attribution to the update alone remains on HOLD."
+        ),
+    },
+    "evidence_blocks": {
+        "static_current_safety": {
+            "selected_states": {"path": "static_current_safety.selected_states", "type": "int"},
+            "qualification_episodes": {"path": "static_current_safety.qualification_episodes", "type": "int"},
+            "qualification_violations": {"path": "static_current_safety.qualification_violations", "type": "int"},
+        },
+        "future_first_violation": {
+            "future_episodes": {"path": "future_first_violation.future_episodes", "type": "int"},
+            "future_violation_episodes": {"path": "future_first_violation.future_violation_episodes", "type": "int"},
+            "branches": {"path": "future_first_violation.branches", "type": "int"},
+            "branches_with_first_violation": {"path": "future_first_violation.branches_with_first_violation", "type": "int"},
+            "states_with_first_violation": {"path": "future_first_violation.states_with_first_violation", "type": "int"},
+            "first_violation_step_counts": {"path": "future_first_violation.first_violation_step_counts", "type": "dict"},
+        },
+        "execution_integrity": {
+            "completed_future_episodes": {"path": "execution_integrity.completed_future_episodes", "type": "int"},
+            "protocol_inconclusive_episodes": {"path": "execution_integrity.protocol_inconclusive_episodes", "type": "int"},
+            "heldout_outcomes_used_for_support_selection": {"path": "execution_integrity.heldout_outcomes_used_for_support_selection", "type": "bool"},
+            "completed_episode_rerun_forbidden": {"path": "execution_integrity.completed_episode_rerun_forbidden", "type": "bool"},
+        },
+    },
+    "authority_denials": [
+        "scientific_claim",
+        "live_problem_gate",
+        "paper_design",
+        "method",
+        "experiment",
+        "p0",
+        "gpu",
+        "bounded_evidence_acquisition",
+        "qualification_probe_execution",
+        "heldout_future_probe_execution",
+    ],
+}
 
 
 def _now() -> str:
@@ -61,6 +129,8 @@ def _historical_base(state: dict[str, Any]) -> dict[str, Any]:
     base.pop("future_evidence", None)
     base.pop("paper_claim_boundary", None)
     base.pop("projection_consistency", None)
+    base.pop("receipt_compiler_projection", None)
+    base.pop("reopen_control_design", None)
     if isinstance(snapshot, dict):
         for key in (
             "schema_version",
@@ -88,6 +158,7 @@ def project_agent_safety_current_state(
     *,
     receipt_path: Path = DEFAULT_RECEIPT,
     memory_bundle_path: Path = DEFAULT_MEMORY_BUNDLE,
+    control_design_path: Path = DEFAULT_CONTROL_DESIGN,
     generated_at: str | None = None,
 ) -> dict[str, Any]:
     historical = _historical_base(base_state)
@@ -108,27 +179,42 @@ def project_agent_safety_current_state(
     if (receipt.get("identity") or {}).get("candidate_id") != historical.get("candidate_id"):
         raise ValueError("R9 future evidence candidate identity drift")
 
-    static = receipt.get("static_current_safety") or {}
-    future = receipt.get("future_first_violation") or {}
+    reopen = stored_bundle.get("reopen_condition") or {}
+    projection_generated_at = generated_at or _now()
+    generic_projection = compile_evidence_receipt_projection(
+        receipt,
+        spec=GENERIC_PROJECTION_SPEC,
+        receipt_ref=receipt_ref,
+        dependency_refs={
+            "memory_bundle_sha256": str(stored_bundle.get("bundle_sha256") or ""),
+            "paper_claim_table_sha256": str(claim_table.get("table_sha256") or ""),
+        },
+        reopen_condition=reopen,
+        generated_at=projection_generated_at,
+    )
+    evidence_blocks = generic_projection["evidence_blocks"]
+    static = evidence_blocks["static_current_safety"]
+    future = evidence_blocks["future_first_violation"]
     prediction = receipt.get("prediction_adjudication") or {}
     integrity = receipt.get("execution_integrity") or {}
-    failure_classification = receipt.get("failure_classification") or {}
-    if tuple(failure_classification) != FAILURE_LAYERS:
-        raise ValueError("R9 future evidence must expose the canonical six failure layers")
-    if not all(isinstance(failure_classification[key], list) for key in FAILURE_LAYERS):
-        raise ValueError("R9 future evidence failure-layer payloads must be lists")
+    failure_classification = generic_projection["failure_classification"]
+    supported_claim = generic_projection["claim_boundary"]["supported_claim"]
+    not_supported = generic_projection["claim_boundary"]["not_supported_claims"]
 
-    supported_claim = str((receipt.get("claim_scope") or {}).get("supported") or "")
-    not_supported = list((receipt.get("claim_scope") or {}).get("not_supported") or [])
-    reopen = stored_bundle.get("reopen_condition") or {}
-    if not supported_claim or len(not_supported) != 4:
-        raise ValueError("R9 future evidence claim boundary drift")
-    if reopen.get("automatic_reopen") is not False or reopen.get("new_behavior_execution_authorized") is not False:
-        raise ValueError("R9 causal-identification HOLD cannot auto-reopen or authorize execution")
+    compiled_control = compile_reopen_control_design(
+        receipt_path=Path(receipt_path),
+        memory_bundle_path=Path(memory_bundle_path),
+    )
+    stored_control = _load(Path(control_design_path))
+    if stored_control.get("design_sha256") != compiled_control.get("design_sha256"):
+        raise ValueError("stored R9 reopen control design does not match receipt and Memory Graph")
+    control_errors = validate_reopen_control_design(stored_control)
+    if control_errors:
+        raise ValueError("stored R9 reopen control design is invalid: " + "; ".join(control_errors))
 
     projected = copy.deepcopy(historical)
-    projected["schema_version"] = "1.1"
-    projected["generated_at"] = generated_at or _now()
+    projected["schema_version"] = "1.2"
+    projected["generated_at"] = projection_generated_at
     projected["historical_projection"] = {
         "schema_version": historical.get("schema_version"),
         "current_stage": historical.get("current_stage"),
@@ -147,6 +233,22 @@ def project_agent_safety_current_state(
 
     projected["current_stage"] = CURRENT_STAGE
     projected["candidate_stage"] = CURRENT_CANDIDATE_STAGE
+    projected["receipt_compiler_projection"] = copy.deepcopy(generic_projection)
+    projected["reopen_control_design"] = {
+        "design_id": stored_control.get("design_id"),
+        "status": stored_control.get("status"),
+        "design_sha256": stored_control.get("design_sha256"),
+        "artifact_ref": (
+            f"repo://generated/{Path(control_design_path).name}"
+            f"#sha256={_sha(Path(control_design_path))}"
+        ),
+        "requirements_passed": int((stored_control.get("authorization_gate") or {}).get("passed") or 0),
+        "requirements_on_hold": int((stored_control.get("authorization_gate") or {}).get("holds") or 0),
+        "automatic_authorization": False,
+        "execution_authorized": False,
+        "gpu_authorized": False,
+        "scientific_authority": False,
+    }
     projected["future_evidence"] = {
         "schema_version": SCHEMA_VERSION,
         "status": receipt.get("status"),
@@ -164,19 +266,8 @@ def project_agent_safety_current_state(
             "scientific_closures": int((stored_bundle.get("summary") or {}).get("scientific_closures") or 0),
             "principle_updates": int((stored_bundle.get("summary") or {}).get("principle_updates") or 0),
         },
-        "static_current_safety": {
-            "selected_states": int(static.get("selected_states") or 0),
-            "qualification_episodes": int(static.get("qualification_episodes") or 0),
-            "qualification_violations": int(static.get("qualification_violations") or 0),
-        },
-        "future_first_violation": {
-            "future_episodes": int(future.get("future_episodes") or 0),
-            "future_violation_episodes": int(future.get("future_violation_episodes") or 0),
-            "branches": int(future.get("branches") or 0),
-            "branches_with_first_violation": int(future.get("branches_with_first_violation") or 0),
-            "states_with_first_violation": int(future.get("states_with_first_violation") or 0),
-            "first_violation_step_counts": copy.deepcopy(future.get("first_violation_step_counts") or {}),
-        },
+        "static_current_safety": copy.deepcopy(static),
+        "future_first_violation": copy.deepcopy(future),
         "prediction_adjudication": copy.deepcopy(prediction),
         "execution_integrity": copy.deepcopy(integrity),
         "failure_classification": copy.deepcopy(failure_classification),
@@ -199,6 +290,11 @@ def project_agent_safety_current_state(
         "name": "SEPARATE_PERSISTENT_UPDATE_FROM_HELDOUT_SCHEDULE",
         "required": True,
         "reason": str(reopen.get("condition") or ""),
+        "control_design_id": stored_control.get("design_id"),
+        "control_design_sha256": stored_control.get("design_sha256"),
+        "control_design_status": stored_control.get("status"),
+        "requirements_passed": int((stored_control.get("authorization_gate") or {}).get("passed") or 0),
+        "requirements_on_hold": int((stored_control.get("authorization_gate") or {}).get("holds") or 0),
         "automatic_reopen": False,
         "new_behavior_execution_authorized": False,
         "scientific_authority": False,
@@ -222,6 +318,7 @@ def project_agent_safety_current_state(
         {
             "future_evidence_receipt": _sha(Path(receipt_path)),
             "future_memory_graph_bundle": _sha(Path(memory_bundle_path)),
+            "reopen_control_design": _sha(Path(control_design_path)),
         }
     )
     projected["projection_consistency"] = {
@@ -236,6 +333,7 @@ def project_agent_safety_current_state(
         projected,
         receipt_path=Path(receipt_path),
         memory_bundle_path=Path(memory_bundle_path),
+        control_design_path=Path(control_design_path),
     )
     if errors:
         raise ValueError("invalid current agent-safety projection: " + "; ".join(errors))
@@ -247,11 +345,15 @@ def validate_current_agent_safety_projection(
     *,
     receipt_path: Path = DEFAULT_RECEIPT,
     memory_bundle_path: Path = DEFAULT_MEMORY_BUNDLE,
+    control_design_path: Path = DEFAULT_CONTROL_DESIGN,
 ) -> list[str]:
     errors: list[str] = []
     future = state.get("future_evidence") or {}
     bundle = _load(Path(memory_bundle_path))
     receipt = _load(Path(receipt_path))
+    control = _load(Path(control_design_path))
+    generic = state.get("receipt_compiler_projection") or {}
+    control_projection = state.get("reopen_control_design") or {}
     expected_ref = _receipt_ref(Path(receipt_path))
     static = future.get("static_current_safety") or {}
     hazard = future.get("future_first_violation") or {}
@@ -261,6 +363,30 @@ def validate_current_agent_safety_projection(
 
     if state.get("current_stage") != CURRENT_STAGE or state.get("candidate_stage") != CURRENT_CANDIDATE_STAGE:
         errors.append("current Agent Safety stage is not derived from final paper evidence")
+    generic_errors = validate_evidence_receipt_projection(
+        generic,
+        spec=GENERIC_PROJECTION_SPEC,
+    )
+    if generic_errors:
+        errors.append("current Agent Safety generic receipt compiler projection is invalid")
+    if (
+        generic.get("receipt_ref") != expected_ref
+        or generic.get("current_stage") != state.get("current_stage")
+        or generic.get("candidate_stage") != state.get("candidate_stage")
+    ):
+        errors.append("current Agent Safety generic receipt compiler binding drift")
+    control_errors = validate_reopen_control_design(control)
+    if control_errors:
+        errors.append("current Agent Safety stored reopen control design is invalid")
+    if (
+        control_projection.get("design_sha256") != control.get("design_sha256")
+        or control_projection.get("status") != "DESIGN_COMPILED_GATES_UNSATISFIED"
+        or control_projection.get("requirements_passed") != 2
+        or control_projection.get("requirements_on_hold") != 5
+        or control_projection.get("execution_authorized") is not False
+        or control_projection.get("gpu_authorized") is not False
+    ):
+        errors.append("current Agent Safety reopen control projection drift")
     if future.get("status") != receipt.get("status") or future.get("receipt_ref") != expected_ref:
         errors.append("current Agent Safety receipt binding drift")
     if future.get("memory_bundle_sha256") != bundle.get("bundle_sha256"):
@@ -291,6 +417,16 @@ def validate_current_agent_safety_projection(
         errors.append("current Agent Safety causal HOLD lost its reopen condition")
     if reopen.get("automatic_reopen") is not False or reopen.get("new_behavior_execution_authorized") is not False:
         errors.append("current Agent Safety causal HOLD leaked automatic reopen/execution authority")
+    next_gate = state.get("next_gate") or {}
+    if (
+        next_gate.get("control_design_sha256") != control.get("design_sha256")
+        or next_gate.get("control_design_status") != "DESIGN_COMPILED_GATES_UNSATISFIED"
+        or next_gate.get("requirements_passed") != 2
+        or next_gate.get("requirements_on_hold") != 5
+        or next_gate.get("automatic_reopen") is not False
+        or next_gate.get("new_behavior_execution_authorized") is not False
+    ):
+        errors.append("current Agent Safety next gate lost fail-closed control design binding")
     if future.get("additional_behavior_execution_authorized") is not False:
         errors.append("current Agent Safety evidence unexpectedly authorizes more behavior execution")
     if state.get("execution_authorized") is not False or any(
@@ -328,12 +464,14 @@ def load_current_agent_safety_program_state(
     *,
     receipt_path: Path = DEFAULT_RECEIPT,
     memory_bundle_path: Path = DEFAULT_MEMORY_BUNDLE,
+    control_design_path: Path = DEFAULT_CONTROL_DESIGN,
 ) -> dict[str, Any]:
     state = _load(Path(path))
     errors = validate_current_agent_safety_projection(
         state,
         receipt_path=Path(receipt_path),
         memory_bundle_path=Path(memory_bundle_path),
+        control_design_path=Path(control_design_path),
     )
     if errors:
         raise ValueError("invalid published current Agent Safety state: " + "; ".join(errors))
@@ -345,6 +483,7 @@ def write_current_agent_safety_projection(
     base_state_path: Path = DEFAULT_PROGRAM_JSON,
     receipt_path: Path = DEFAULT_RECEIPT,
     memory_bundle_path: Path = DEFAULT_MEMORY_BUNDLE,
+    control_design_path: Path = DEFAULT_CONTROL_DESIGN,
     json_path: Path = DEFAULT_PROGRAM_JSON,
     js_path: Path = DEFAULT_PROGRAM_JS,
     generated_at: str | None = None,
@@ -353,6 +492,7 @@ def write_current_agent_safety_projection(
         _load(Path(base_state_path)),
         receipt_path=Path(receipt_path),
         memory_bundle_path=Path(memory_bundle_path),
+        control_design_path=Path(control_design_path),
         generated_at=generated_at,
     )
     Path(json_path).parent.mkdir(parents=True, exist_ok=True)
@@ -373,6 +513,7 @@ def main() -> None:
     parser.add_argument("--base-state", type=Path, default=DEFAULT_PROGRAM_JSON)
     parser.add_argument("--receipt", type=Path, default=DEFAULT_RECEIPT)
     parser.add_argument("--memory-bundle", type=Path, default=DEFAULT_MEMORY_BUNDLE)
+    parser.add_argument("--control-design", type=Path, default=DEFAULT_CONTROL_DESIGN)
     parser.add_argument("--json", type=Path, default=DEFAULT_PROGRAM_JSON)
     parser.add_argument("--js", type=Path, default=DEFAULT_PROGRAM_JS)
     args = parser.parse_args()
@@ -380,6 +521,7 @@ def main() -> None:
         base_state_path=args.base_state,
         receipt_path=args.receipt,
         memory_bundle_path=args.memory_bundle,
+        control_design_path=args.control_design,
         json_path=args.json,
         js_path=args.js,
     )

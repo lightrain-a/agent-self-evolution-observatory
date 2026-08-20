@@ -41,7 +41,7 @@ class SystemArchitectureTest(unittest.TestCase):
 
     def test_all_declared_component_bindings_are_unique(self) -> None:
         component_keys = [binding[0] for binding in COMPONENT_BINDINGS.values()]
-        self.assertEqual(len(COMPONENT_BINDINGS), 35)
+        self.assertEqual(len(COMPONENT_BINDINGS), 37)
         self.assertEqual(len(component_keys), len(set(component_keys)))
 
     def test_unknown_component_is_visible_not_silently_assigned(self) -> None:

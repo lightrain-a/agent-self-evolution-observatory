@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from .candidate_identity import validate_candidate_identity
+from .claim_evidence_traceability import build_claim_evidence_traceability
 from .config import PROJECT_ROOT, StorageSettings, resolve_experiment_data_root
 from .asset_first_stri_public_status import build_asset_first_stri_public_status, validate_asset_first_stri_public_status
 from .asset_first_stri_paper_quality import write_asset_first_stri_paper_quality
@@ -96,6 +97,7 @@ from .research_harness_meta_optimization import build_research_harness_meta_opti
 from .research_stall_pivot_controller import frame_signature, load_research_stall_state, source_set_sha256_from_primary
 from .research_memory_wiki import build_research_memory_wiki, load_default_claim_ledger, write_research_memory_wiki
 from .paper_first_agent_safety_r9_memory_graph import compile_memory_graph_inputs
+from .paper_first_agent_safety_r9_reopen_control import compile_reopen_control_design
 from .paper_first_agent_safety_current_projection import (
     CURRENT_STAGE as AGENT_SAFETY_CURRENT_STAGE,
     load_current_agent_safety_program_state,
@@ -242,6 +244,9 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     research_graph = state["scientific_research_graph"]["summary"]
     research_memory = state["research_memory_wiki"]["summary"]
     research_memory_lint = state["research_memory_wiki"]["lint"]["summary"]
+    agent_safety_current = state["agent_safety_current_state"]
+    agent_safety_trace = state["agent_safety_claim_evidence_traceability"]["summary"]
+    agent_safety_control = state["agent_safety_reopen_control_design"]
     failure_assets = state["failure_asset_library"]["summary"]
     value_scheduler = state["experiment_value_scheduler"]["summary"]
     replay = state["research_system_replay"]["summary"]
@@ -287,6 +292,8 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"FirstResearch / Popper / Co-Scientist / RD-Agent", "component":{"en":"Principle Certificate + epistemic adjudicator","zh":"原理证书 + 认识论裁决器"}, "status":"running", "evidence":{"en":f"{principle['certificates_passed']}/{principle['cards']} principle certificates valid / {principle.get('registered_prediction_rejections_pending_counterexplanation',0)} prediction rejections awaiting counter-explanation / {principle.get('principle_dead_end_certifications',0)} certified principle dead ends","zh":f"{principle['certificates_passed']}/{principle['cards']} 份原理证书有效 / {principle.get('registered_prediction_rejections_pending_counterexplanation',0)} 个预测反证待反机制解释 / {principle.get('principle_dead_end_certifications',0)} 个原理级 Dead-End 已认证"}},
         {"source":"Qiushi / Kosmos / MLEvolve", "component":{"en":"Scientific Meta-Trace + cross-branch world state","zh":"Scientific Meta-Trace + 跨分支科研状态"}, "status":"running", "evidence":{"en":f"{meta_trace['principles']} principles / {meta_trace['unresolved_principles']} unresolved / {meta_trace['cross_branch_reference_edges']} cross-branch links","zh":f"{meta_trace['principles']} 个原理 / {meta_trace['unresolved_principles']} 个未决 / {meta_trace['cross_branch_reference_edges']} 条跨分支引用"}},
         {"source":"ARIS research wiki pattern + local typed closure", "component":{"en":"Typed Scientific Research Graph","zh":"类型化科学研究图谱"}, "status":"running", "evidence":{"en":f"{research_graph['nodes']} graph nodes / {research_graph['edges']} edges; memory wiki {research_memory['entries']} entries / {research_memory['failure_assets']} failure / {research_memory['success_assets']} success / lint warnings {research_memory_lint['warnings']}","zh":f"研究图谱 {research_graph['nodes']} 个节点 / {research_graph['edges']} 条边；Memory Wiki {research_memory['entries']} 条 / 失败 {research_memory['failure_assets']} / 成功 {research_memory['success_assets']} / lint warning {research_memory_lint['warnings']}"}},
+        {"source":"Generic evidence-receipt compiler + domain scientific adapters", "component":{"en":"Receipt-derived current research state compiler","zh":"Evidence Receipt 派生当前科研状态编译器"}, "status":"running", "evidence":{"en":f"Agent Safety stage={agent_safety_current['current_stage']}; compiler zero execution authority","zh":f"Agent Safety 阶段={agent_safety_current['current_stage']}；compiler 无执行权限"}},
+        {"source":"Research Memory Graph 2.1 claim traceability + fail-closed control design", "component":{"en":"Claim/evidence/limitation/reopen control bindings","zh":"Claim／证据／限制／重开对照绑定"}, "status":"running", "evidence":{"en":f"{agent_safety_trace['nodes']} trace nodes / {agent_safety_trace['edges']} edges; control gate {agent_safety_control['authorization_gate']['passed']} PASS + {agent_safety_control['authorization_gate']['holds']} HOLD / execution=false","zh":f"{agent_safety_trace['nodes']} 个追溯节点 / {agent_safety_trace['edges']} 条边；对照门 {agent_safety_control['authorization_gate']['passed']} PASS + {agent_safety_control['authorization_gate']['holds']} HOLD / execution=false"}},
         {"source":"MLEvolve / InternAgent / AutoResearchClaw", "component":{"en":"Failure Asset + dead-end memory","zh":"失败资产 + Dead-End 记忆库"}, "status":"running", "evidence":{"en":f"{failure_assets['assets']} failure assets / {failure_assets['unique_signatures']} reusable signatures / {failure_assets.get('experimental_stops_not_dead_ends',0)} experimental stops retained as diagnostics / {failure_assets.get('principle_dead_ends',0)} principle-certified dead ends","zh":f"{failure_assets['assets']} 条失败资产 / {failure_assets['unique_signatures']} 类可复用签名 / {failure_assets.get('experimental_stops_not_dead_ends',0)} 个实验 STOP 仅作诊断 / {failure_assets.get('principle_dead_ends',0)} 个原理认证 Dead-End"}},
         {"source":"Ai2 AutoDiscovery / MLEvolve / AI-Scientist-v2", "component":{"en":"Information-gain experiment portfolio scheduler","zh":"信息增益实验组合调度器"}, "status":"running", "evidence":{"en":f"{value_scheduler['candidates']} candidate tests / {value_scheduler['cross_branch_reference_edges']} cross-branch references / advisory only","zh":f"{value_scheduler['candidates']} 个候选实验 / {value_scheduler['cross_branch_reference_edges']} 条跨分支引用 / 仅建议不授权"}},
         {"source":"ResearchClawBench / HackDetect / ScienceAgentBench / AutoLabs", "component":{"en":"Protocol-validity auditor + research-system replay benchmark","zh":"协议有效性审计 + 科研系统回放基准"}, "status":"running", "evidence":{"en":f"protocol {pre_experiment['protocol_validity_pass']}/{pre_experiment['compiled_cards']} / replay {replay['passed']}/{replay['cases']}","zh":f"Protocol {pre_experiment['protocol_validity_pass']}/{pre_experiment['compiled_cards']} / 回放 {replay['passed']}/{replay['cases']}"}},
@@ -556,12 +563,26 @@ def build_research_system_state() -> dict[str, Any]:
         governance_layer_state=aris_governance_layer,
     )
     agent_safety_r9_paper_claim_table, agent_safety_r9_memory_graph = compile_memory_graph_inputs()
+    agent_safety_reopen_control_design = compile_reopen_control_design()
     agent_safety_current_state = load_current_agent_safety_program_state()
     if (
         (agent_safety_current_state.get("future_evidence") or {}).get("receipt_ref")
         != agent_safety_r9_memory_graph.get("receipt_ref")
     ):
         raise ValueError("Agent Safety current-state receipt does not match Memory Graph 2.1")
+    if (
+        (agent_safety_current_state.get("reopen_control_design") or {}).get("design_sha256")
+        != agent_safety_reopen_control_design.get("design_sha256")
+    ):
+        raise ValueError("Agent Safety current-state control design binding drift")
+    agent_safety_claim_evidence_traceability = build_claim_evidence_traceability(
+        program_id="AGENT-SAFETY-R9",
+        candidate_id=str(agent_safety_current_state.get("candidate_id") or ""),
+        claim_table=agent_safety_r9_paper_claim_table,
+        memory_bundle=agent_safety_r9_memory_graph,
+        receipt_ref=str(agent_safety_r9_memory_graph.get("receipt_ref") or ""),
+        control_design=agent_safety_reopen_control_design,
+    )
     claim_ledger = load_default_claim_ledger() + list(agent_safety_r9_memory_graph["claim_ledger"])
     research_memory_wiki = build_research_memory_wiki(
         search_design_state=paper_first_search_portfolio_design,
@@ -583,6 +604,7 @@ def build_research_system_state() -> dict[str, Any]:
         claim_ledger=claim_ledger,
         experiment_iteration=experiment_iteration,
         governance_layer=aris_governance_layer,
+        claim_evidence_traceability=agent_safety_claim_evidence_traceability,
     )
     experiment_value_scheduler = build_experiment_value_scheduler(experiment_iteration, scientific_meta_trace)
     research_system_replay = build_research_system_replay(pre_experiment_compiler)
@@ -921,6 +943,12 @@ def build_research_system_state() -> dict[str, Any]:
             "research_memory_lint_warnings":research_memory_wiki["lint"]["summary"]["warnings"],
             "agent_safety_r9_claim_rows":len(agent_safety_r9_paper_claim_table["rows"]),
             "agent_safety_r9_reopen_conditions":agent_safety_r9_memory_graph["summary"]["reopen_conditions"],
+            "agent_safety_claim_evidence_nodes":agent_safety_claim_evidence_traceability["summary"]["nodes"],
+            "agent_safety_claim_evidence_edges":agent_safety_claim_evidence_traceability["summary"]["edges"],
+            "agent_safety_control_design_status":agent_safety_reopen_control_design["status"],
+            "agent_safety_control_requirements_passed":agent_safety_reopen_control_design["authorization_gate"]["passed"],
+            "agent_safety_control_requirements_on_hold":agent_safety_reopen_control_design["authorization_gate"]["holds"],
+            "agent_safety_control_execution_authorized":agent_safety_reopen_control_design["execution_authorized"],
             "agent_safety_current_stage":agent_safety_current_state["current_stage"],
             "failure_assets":failure_asset_library["summary"]["assets"],
             "value_scheduler_candidates":experiment_value_scheduler["summary"]["candidates"],
@@ -1087,6 +1115,8 @@ def build_research_system_state() -> dict[str, Any]:
         "research_memory_wiki":research_memory_wiki,
         "agent_safety_r9_paper_claim_table":agent_safety_r9_paper_claim_table,
         "agent_safety_r9_memory_graph":agent_safety_r9_memory_graph,
+        "agent_safety_claim_evidence_traceability":agent_safety_claim_evidence_traceability,
+        "agent_safety_reopen_control_design":agent_safety_reopen_control_design,
         "agent_safety_current_state":agent_safety_current_state,
         "failure_asset_library":failure_asset_library,
         "experiment_value_scheduler":experiment_value_scheduler,
@@ -1476,7 +1506,9 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"research-learning-loop", "pass":state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"] and state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"] and state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"] and state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"] and state["research_system_replay"]["summary"]["failed"] == 0 and state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"], "detail":{"meta":state["scientific_meta_trace"]["summary"],"failure_assets":state["failure_asset_library"]["summary"],"scheduler":state["experiment_value_scheduler"]["summary"],"replay":state["research_system_replay"]["summary"],"external":state["external_system_learning"]["summary"]}},
         {"key":"research-memory-wiki", "pass":state["research_memory_wiki"].get("status")=="MEMORY_COMPILED" and state["research_memory_wiki"].get("scientific_authority") is False and int(((state["research_memory_wiki"].get("lint") or {}).get("summary") or {}).get("errors") or 0)==0 and (state["research_memory_wiki"].get("policy") or {}).get("transient_operational_noise_is_not_prompt_eligible") is True and (state["research_memory_wiki"].get("policy") or {}).get("query_pack_never_relaxes_downstream_gates") is True, "detail":{"summary":state["research_memory_wiki"].get("summary"),"lint":(state["research_memory_wiki"].get("lint") or {}).get("summary")}},
         {"key":"agent-safety-r9-memory-graph-binding", "pass":state["agent_safety_r9_memory_graph"].get("status")=="READY_AGENT_SAFETY_R9_MEMORY_GRAPH_2_1_INPUTS" and state["agent_safety_r9_memory_graph"].get("scientific_authority") is False and (state["agent_safety_r9_memory_graph"].get("summary") or {}).get("supported_narrowly")==1 and (state["agent_safety_r9_memory_graph"].get("summary") or {}).get("method_holds")==1 and (state["agent_safety_r9_memory_graph"].get("summary") or {}).get("scientific_closures")==0 and (state["agent_safety_r9_memory_graph"].get("reopen_condition") or {}).get("condition").startswith("Separate persistent update effect from held-out schedule effect") and state["agent_safety_r9_paper_claim_table"].get("status")=="READY_AGENT_SAFETY_R9_PAPER_CLAIM_TABLE", "detail":{"memory":state["agent_safety_r9_memory_graph"].get("summary"),"claim_table":state["agent_safety_r9_paper_claim_table"].get("evidence_summary")}},
-        {"key":"agent-safety-current-state-projection", "pass":state["agent_safety_current_state"].get("current_stage")==AGENT_SAFETY_CURRENT_STAGE and (state["agent_safety_current_state"].get("future_evidence") or {}).get("receipt_ref")==state["agent_safety_r9_memory_graph"].get("receipt_ref") and (state["agent_safety_current_state"].get("historical_projection") or {}).get("historical_only") is True and state["agent_safety_current_state"].get("execution_authorized") is False and (state["agent_safety_current_state"].get("authority") or {}).get("heldout_future_probe_execution") is False, "detail":{"current_stage":state["agent_safety_current_state"].get("current_stage"),"historical_stage":(state["agent_safety_current_state"].get("historical_projection") or {}).get("current_stage"),"receipt_ref":(state["agent_safety_current_state"].get("future_evidence") or {}).get("receipt_ref")}},
+        {"key":"agent-safety-current-state-projection", "pass":state["agent_safety_current_state"].get("current_stage")==AGENT_SAFETY_CURRENT_STAGE and (state["agent_safety_current_state"].get("future_evidence") or {}).get("receipt_ref")==state["agent_safety_r9_memory_graph"].get("receipt_ref") and (state["agent_safety_current_state"].get("historical_projection") or {}).get("historical_only") is True and (state["agent_safety_current_state"].get("receipt_compiler_projection") or {}).get("execution_authorized") is False and (state["agent_safety_current_state"].get("reopen_control_design") or {}).get("execution_authorized") is False and state["agent_safety_current_state"].get("execution_authorized") is False and (state["agent_safety_current_state"].get("authority") or {}).get("heldout_future_probe_execution") is False, "detail":{"current_stage":state["agent_safety_current_state"].get("current_stage"),"historical_stage":(state["agent_safety_current_state"].get("historical_projection") or {}).get("current_stage"),"receipt_ref":(state["agent_safety_current_state"].get("future_evidence") or {}).get("receipt_ref")}},
+        {"key":"agent-safety-claim-evidence-traceability", "pass":state["agent_safety_claim_evidence_traceability"].get("status")=="CLAIM_EVIDENCE_TRACEABILITY_COMPILED" and (state["agent_safety_claim_evidence_traceability"].get("summary") or {}).get("limitations_bound")==4 and (state["agent_safety_claim_evidence_traceability"].get("summary") or {}).get("counterevidence_bound")==2 and (state["agent_safety_claim_evidence_traceability"].get("summary") or {}).get("control_designs_bound")==1 and state["agent_safety_claim_evidence_traceability"].get("scientific_authority") is False and (state["scientific_research_graph"].get("claim_evidence_bindings") or {}).get("source_bundle_sha256")==state["agent_safety_claim_evidence_traceability"].get("bundle_sha256"), "detail":state["agent_safety_claim_evidence_traceability"].get("summary")},
+        {"key":"agent-safety-reopen-control-design", "pass":state["agent_safety_reopen_control_design"].get("status")=="DESIGN_COMPILED_GATES_UNSATISFIED" and (state["agent_safety_reopen_control_design"].get("authorization_gate") or {}).get("passed")==2 and (state["agent_safety_reopen_control_design"].get("authorization_gate") or {}).get("holds")==5 and state["agent_safety_reopen_control_design"].get("execution_authorized") is False and (state["agent_safety_reopen_control_design"].get("authorization_gate") or {}).get("gpu_authorized") is False and not any((state["agent_safety_reopen_control_design"].get("queue_mutation") or {}).values()), "detail":{"status":state["agent_safety_reopen_control_design"].get("status"),"gate":state["agent_safety_reopen_control_design"].get("authorization_gate")}},
         {"key":"research-memory-graph-v2.1", "pass":state["scientific_research_graph"].get("schema_version")=="2.1" and state["scientific_research_graph"].get("status")=="RESEARCH_GRAPH_COMPILED" and state["scientific_research_graph"].get("scientific_authority") is False and int((((state["scientific_research_graph"].get("lint") or {}).get("summary") or {}).get("errors") or 0))==0 and (state["scientific_research_graph"].get("policy") or {}).get("closure_propagation_requires_same_scientific_object_mechanism_and_claim_type") is True and (state["scientific_research_graph"].get("policy") or {}).get("claim_conflict_is_reported_not_automatically_resolved") is True and (state["scientific_research_graph"].get("governance_bindings") or {}).get("scientific_authority") is False, "detail":{"summary":state["scientific_research_graph"].get("summary"),"lint":(state["scientific_research_graph"].get("lint") or {}).get("summary"),"typed_coverage":state["scientific_research_graph"].get("typed_coverage"),"governance_bindings":state["scientific_research_graph"].get("governance_bindings")}},
         {"key":"aris-governance-layer", "pass":state["aris_governance_layer"].get("status")=="GOVERNANCE_COMPILED" and state["aris_governance_layer"].get("scientific_authority") is False and int((((state["aris_governance_layer"].get("lint") or {}).get("summary") or {}).get("errors") or 0))==0 and (state["aris_governance_layer"].get("policy") or {}).get("governance_may_block_or_require_review_but_cannot_self_authorize") is True and (state["aris_governance_layer"].get("authority") or {}).get("claim_mutation") is False and (state["aris_governance_layer"].get("authority") or {}).get("experiment") is False, "detail":{"summary":state["aris_governance_layer"].get("summary"),"lint":(state["aris_governance_layer"].get("lint") or {}).get("summary")}},
         {"key":"aris-harness-alignment", "pass":state["research_harness_assurance"].get("status")=="PASS_HARNESS_ASSURANCE" and int((state["research_harness_assurance"].get("summary") or {}).get("failed") or 0)==0 and state["research_candidate_portfolio"].get("scientific_authority") is False and int((state["research_candidate_portfolio"].get("summary") or {}).get("automatic_promotions") or 0)==0 and state["search_funnel_telemetry"].get("scientific_authority") is False and state["scientific_research_graph"].get("scientific_authority") is False and (state["scientific_research_graph"].get("policy") or {}).get("experiment_failure_edge_cannot_close_core_principle") is True, "detail":{"assurance":state["research_harness_assurance"].get("summary"),"portfolio":state["research_candidate_portfolio"].get("summary"),"funnel":state["search_funnel_telemetry"].get("summary"),"graph":state["scientific_research_graph"].get("summary")}},
@@ -2056,14 +2088,38 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if portfolio.get("scientific_authority") is not False or portfolio_policy.get("portfolio_cannot_promote_candidate_stage") is not True or portfolio_policy.get("soft_capacity_targets_do_not_relax_scientific_thresholds") is not True or int(portfolio_summary.get("visible_candidates") or 0) != len(portfolio.get("rows") or []) or int(portfolio_summary.get("automatic_promotions") or 0) != 0: errors.append("persistent candidate portfolio must remain zero-authority capacity/persistence control")
     if funnel.get("scientific_authority") is not False or funnel_policy.get("typed_reduction_or_support_holds_must_not_be_reported_as_idea_generation_failure") is not True or funnel_policy.get("telemetry_cannot_authorize_provider_calls_problem_gate_method_experiment_p0_or_gpu") is not True: errors.append("search-funnel telemetry must remain zero-authority and preserve typed bottleneck semantics")
     research_graph_lint = research_graph.get("lint") or {}
-    if research_graph.get("schema_version") != "2.1" or research_graph.get("status") != "RESEARCH_GRAPH_COMPILED" or research_graph.get("scientific_authority") is not False or research_graph_policy.get("experiment_failure_edge_cannot_close_core_principle") is not True or research_graph_policy.get("only_certified_principle_dead_end_may_emit_principle_closure_edge") is not True or research_graph_policy.get("closure_propagation_requires_same_scientific_object_mechanism_and_claim_type") is not True or research_graph_policy.get("governance_bindings_may_block_but_cannot_self_authorize") is not True or int((research_graph_lint.get("summary") or {}).get("errors") or 0) != 0 or int(research_graph_summary.get("principle_closure_edges") or 0) > int(research_graph_summary.get("scientific_closure_nodes") or 0): errors.append("scientific research graph must preserve typed failure/closure/governance authority boundaries")
+    if research_graph.get("schema_version") != "2.1" or research_graph.get("status") != "RESEARCH_GRAPH_COMPILED" or research_graph.get("scientific_authority") is not False or research_graph_policy.get("experiment_failure_edge_cannot_close_core_principle") is not True or research_graph_policy.get("only_certified_principle_dead_end_may_emit_principle_closure_edge") is not True or research_graph_policy.get("closure_propagation_requires_same_scientific_object_mechanism_and_claim_type") is not True or research_graph_policy.get("governance_bindings_may_block_but_cannot_self_authorize") is not True or research_graph_policy.get("claim_evidence_counterevidence_limitation_and_reopen_are_explicitly_bound") is not True or research_graph_policy.get("control_design_and_authorization_gate_are_distinct_zero_authority_nodes") is not True or int((research_graph_lint.get("summary") or {}).get("errors") or 0) != 0 or int(research_graph_summary.get("principle_closure_edges") or 0) > int(research_graph_summary.get("scientific_closure_nodes") or 0): errors.append("scientific research graph must preserve typed failure/closure/governance authority boundaries")
     agent_safety_current = state.get("agent_safety_current_state") or {}
     agent_safety_future = agent_safety_current.get("future_evidence") or {}
     agent_safety_memory = state.get("agent_safety_r9_memory_graph") or {}
+    agent_safety_trace = state.get("agent_safety_claim_evidence_traceability") or {}
+    agent_safety_control = state.get("agent_safety_reopen_control_design") or {}
+    graph_claim_bindings = research_graph.get("claim_evidence_bindings") or {}
+    if (
+        graph_claim_bindings.get("source_bundle_sha256") != agent_safety_trace.get("bundle_sha256")
+        or graph_claim_bindings.get("limitations_bound") != 4
+        or graph_claim_bindings.get("counterevidence_bound") != 2
+        or graph_claim_bindings.get("control_designs_bound") != 1
+        or graph_claim_bindings.get("authorization_gates_bound") != 1
+        or graph_claim_bindings.get("scientific_authority") is not False
+    ):
+        errors.append("Research Memory Graph 2.1 must bind Agent Safety claims, evidence, limitations, counterevidence, reopen condition, control design, and authorization gate")
+    if (
+        agent_safety_control.get("status") != "DESIGN_COMPILED_GATES_UNSATISFIED"
+        or (agent_safety_control.get("authorization_gate") or {}).get("passed") != 2
+        or (agent_safety_control.get("authorization_gate") or {}).get("holds") != 5
+        or agent_safety_control.get("execution_authorized") is not False
+        or (agent_safety_control.get("authorization_gate") or {}).get("gpu_authorized") is not False
+        or any((agent_safety_control.get("queue_mutation") or {}).values())
+    ):
+        errors.append("Agent Safety reopen control must remain a compiled zero-execution design with unsatisfied authorization gates")
     if (
         agent_safety_current.get("current_stage") != AGENT_SAFETY_CURRENT_STAGE
         or agent_safety_future.get("receipt_ref") != agent_safety_memory.get("receipt_ref")
         or (agent_safety_current.get("historical_projection") or {}).get("historical_only") is not True
+        or (agent_safety_current.get("receipt_compiler_projection") or {}).get("execution_authorized") is not False
+        or (agent_safety_current.get("reopen_control_design") or {}).get("design_sha256") != agent_safety_control.get("design_sha256")
+        or (agent_safety_current.get("reopen_control_design") or {}).get("execution_authorized") is not False
         or agent_safety_current.get("execution_authorized") is not False
         or (agent_safety_current.get("authority") or {}).get("heldout_future_probe_execution") is not False
     ):
