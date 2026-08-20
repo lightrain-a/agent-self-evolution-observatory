@@ -353,6 +353,12 @@ def main() -> None:
           currentShadowSearch: window.CURRENT_RESEARCH_STATUS?.shadow_search || {},
           closedAuditPanels: document.querySelectorAll('.current-closed-basin-audit').length,
           closedAuditRows: document.querySelectorAll('.current-closed-basin-audit tbody tr').length,
+          closedAuditReasonsAllZh: [...document.querySelectorAll('.current-closed-basin-audit tbody tr td:nth-child(3)')].every(node => /[\u3400-\u9fff]/.test(node.textContent || '')),
+          closedAuditReopensAllZh: [...document.querySelectorAll('.current-closed-basin-audit tbody tr td:nth-child(5)')].every(node => /[\u3400-\u9fff]/.test(node.textContent || '')),
+          statusOuterTracks: getComputedStyle(document.querySelector('.project-status-strip.current')).gridTemplateColumns.trim().split(/\\s+/).length,
+          statusCopyTracks: getComputedStyle(document.querySelector('.project-status-copy')).gridTemplateColumns.trim().split(/\\s+/).length,
+          statusMetricTracks: getComputedStyle(document.querySelector('.project-status-metrics')).gridTemplateColumns.trim().split(/\\s+/).length,
+          statusMetricCount: document.querySelectorAll('.project-status-metrics > div').length,
           shadowSourceSummary: window.PAPER_FIRST_SEARCH_PORTFOLIO_DESIGN_ADJUDICATION?.shadow_source?.summary || {},
           shadowQueueSummary: window.PAPER_FIRST_SEARCH_PORTFOLIO_DESIGN_ADJUDICATION?.shadow_source?.queue_summary || {},
           shadowLatestRun: window.RESEARCH_SYSTEM_STATE?.paper_first_problem_search_portfolio?.latest_run || {},
@@ -427,6 +433,8 @@ def main() -> None:
         closed_rows=(ideas["currentShadowSearch"].get("closed_rows") or [])
         expected_closed=int(sds.get("shadow_closed_basins") or 0)
         require(ideas["closedAuditPanels"] == 1 and ideas["closedAuditRows"] == expected_closed and len(closed_rows) == expected_closed, f"closed-basin per-candidate audit table is incomplete: panels={ideas['closedAuditPanels']} rows={ideas['closedAuditRows']} state={len(closed_rows)} expected={expected_closed}")
+        require(ideas["closedAuditReasonsAllZh"] and ideas["closedAuditReopensAllZh"], "all 41 closed-candidate stop reasons and reopen conditions must render in Chinese")
+        require((ideas["statusOuterTracks"],ideas["statusCopyTracks"],ideas["statusMetricTracks"],ideas["statusMetricCount"]) == (1,2,5,10), f"current research status must render as title/message row plus full-width five-column metrics row: {ideas['statusOuterTracks']}/{ideas['statusCopyTracks']}/{ideas['statusMetricTracks']}/{ideas['statusMetricCount']}")
         pa01_closed=next((row for row in closed_rows if row.get("candidate_id")=="PA-01-EVIDENCE-ECHO"),{})
         pace_closed=next((row for row in closed_rows if row.get("candidate_id")=="PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY"),{})
         require(pa01_closed.get("failure_layer")=="method_realization" and pa01_closed.get("experiment_run_for_this_readjudication") is True and pa01_closed.get("experiment_alone_authorizes_closure") is False, f"PA-01 must remain experiment-informed but method-realization scoped, not experiment-failed principle: {pa01_closed}")
@@ -651,7 +659,7 @@ def main() -> None:
         ecs=experiments["currentStatus"]; ep=experiments["currentPaperTrack"]
         current_keys=("paper_ready","paper_quality_hold","paper_quality_evidence_debt","canonical_live_ideas","launchable_formal_experiments","shadow_qualification_ready","fresh_active_f0","fresh_design_ready_f0","fresh_execution_holds","fresh_support_holds","fresh_ready_problem_review","method_authorized","gpu_authorized","shadow_dead_ends","shadow_holds")
         require(all(ecs.get(key) == expected_headline.get(key) for key in current_keys), f"experiments current-status snapshot diverges from generated/current-research-status.json: rendered={ecs} expected={expected_headline}")
-        require((ep.get("paper_id"),ep.get("status"),ep.get("submission_status"),ep.get("claims_supported"),ep.get("claims_total"),ep.get("paper_quality_v2_passed"),ep.get("paper_quality_content_addressed_completion"),ep.get("paper_quality_content_addressed_files"),ep.get("paper_quality_evidence_debt"),ep.get("new_gpu_evidence_required")) == ("STRI","READY_NARROW_ICLR","READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",3,3,True,True,20,0,False), f"STRI paper-quality projection is stale: {ep}")
+        require((ep.get("paper_id"),ep.get("status"),ep.get("submission_status"),ep.get("claims_supported"),ep.get("claims_total"),ep.get("paper_quality_v2_passed"),ep.get("paper_quality_content_addressed_completion"),ep.get("paper_quality_content_addressed_files"),ep.get("paper_quality_evidence_debt"),ep.get("new_gpu_evidence_required")) == ("STRI","READY_NARROW_ICLR","READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",3,3,True,True,29,0,False), f"STRI paper-quality projection is stale: {ep}")
         pace=experiments["paceStatus"]; pace_child=pace.get("historical_child") or {}
         require((pace.get("status"),pace.get("support_status"),pace.get("stop_class"),pace.get("benchmark_level_dead_end_certified"),pace.get("revised_f0_authorized"),pace.get("provider_formulation_review_required")) == ("STOP_REDUCTION","PRINCIPLE_CLOSED_GENERIC_PROGRAM_SYNTHESIS_REDUCTION","PRINCIPLE_STOP",False,False,False), f"PACE current scoped principle status regressed: {pace}")
         require((pace_child.get("status"),pace_child.get("stop_class"),pace_child.get("principle_dead_end_certified")) == ("ARCHIVED_INVALID_OPERATIONALIZATION","PROTOCOL_STOP",False), f"PACE historical rank-reversal child regressed into a scientific negative: {pace_child}")
