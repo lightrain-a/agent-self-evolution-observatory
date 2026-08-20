@@ -304,6 +304,13 @@ def main() -> None:
           mergedCards: document.querySelectorAll('.human-review-idea-card.human-tone-merged').length,
           droppedCards: document.querySelectorAll('.human-review-idea-card.human-tone-dropped').length,
           terminalCounts: [...document.querySelectorAll('.human-review-idea-card')].reduce((a,x)=>{const k=x.dataset.terminalStatus||'';a[k]=(a[k]||0)+1;return a;},{}),
+          historicalCounts: [...document.querySelectorAll('.human-review-idea-card')].reduce((a,x)=>{const k=x.dataset.historicalStatus||'';a[k]=(a[k]||0)+1;return a;},{}),
+          evidenceDispositionCounts: [...document.querySelectorAll('.human-review-idea-card')].reduce((a,x)=>{const k=x.dataset.evidenceDisposition||'';a[k]=(a[k]||0)+1;return a;},{}),
+          parentStatusByCode: Object.fromEntries([...document.querySelectorAll('.human-review-idea-card')].map(x=>[x.querySelector('.human-idea-code')?.textContent?.trim()||'',x.dataset.terminalStatus||''])),
+          lifecycleCells: document.querySelectorAll('.canonical-lifecycle-strip > span').length,
+          explicitLegacyP0Badges: [...document.querySelectorAll('.human-status-badge')].filter(x=>(x.textContent||'').trim()==='已进入 P0').length,
+          formalAuthorityZero: [...document.querySelectorAll('.canonical-lifecycle-strip > span:last-child')].filter(x=>(x.textContent||'').trim().endsWith('0')).length,
+          evidenceDispositionPanels: document.querySelectorAll('.terminal-evidence-disposition').length,
           terminalSummary: window.HUMAN_TERMINAL_IDEA_STATE?.summary || {},
           absorbedChildCount: Object.keys(window.HUMAN_TERMINAL_IDEA_STATE?.absorbed_children || {}).length,
           feedbackSummaries: document.querySelectorAll('.human-review-idea-card .human-idea-summary p').length,
@@ -396,13 +403,20 @@ def main() -> None:
         require(ideas["p0Policy"].get("pre_p0_identifiability_required") is True and ideas["p0Policy"].get("automatic_p0_to_p1_forbidden") is True and ideas["p0Policy"].get("p0_pass_requires_human_approval") is True, f"P0 human/Pre-P0 approval policy is missing: {ideas['p0Policy']}")
         require(ideas["toc2"] >= 2 and ideas["toc3"] >= 7 and ideas["toc4"] == 0, f"paper-ideas category-first TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
         require((ideas["discussedGroups"],ideas["categoryLinks"],ideas["parentItems"],ideas["lifecycleStrips"],ideas["discussedCards"]) == (7,7,26,26,26), f"category-first ledger must expose seven groups and 26 complete parent cards: {ideas['discussedGroups']}/{ideas['categoryLinks']}/{ideas['parentItems']}/{ideas['lifecycleStrips']}/{ideas['discussedCards']}")
-        require((ideas["readyCards"], ideas["mergedCards"], ideas["droppedCards"]) == (20, 6, 0), f"terminal tone counts are wrong: {ideas['readyCards']}/{ideas['mergedCards']}/{ideas['droppedCards']}")
-        require(ideas["terminalCounts"].get("p0") == 20 and ideas["terminalCounts"].get("p0-ready",0) == 0 and ideas["terminalCounts"].get("merge") == 6 and ideas["terminalCounts"].get("drop",0) == 0, f"terminal parent counts are wrong: {ideas['terminalCounts']}")
-        require((ideas["terminalSummary"].get("human_parents"), ideas["terminalSummary"].get("revived_to_p0"), ideas["absorbedChildCount"]) == (26,7,17), f"terminal ledger or absorbed-child count is wrong: {ideas['terminalSummary']}/{ideas['absorbedChildCount']}")
+        require((ideas["readyCards"], ideas["mergedCards"], ideas["droppedCards"]) == (13, 6, 7), f"frozen terminal tone counts are wrong: {ideas['readyCards']}/{ideas['mergedCards']}/{ideas['droppedCards']}")
+        require((ideas["terminalCounts"].get("p0"),ideas["terminalCounts"].get("p0-ready"),ideas["terminalCounts"].get("merge"),ideas["terminalCounts"].get("drop")) == (2,11,6,7), f"frozen human terminal counts must be 2/11/6/7: {ideas['terminalCounts']}")
+        require(ideas["historicalCounts"].get("p0") == 20 and ideas["historicalCounts"].get("merge") == 6, f"historical P0 lifecycle must remain separately preserved: {ideas['historicalCounts']}")
+        require(ideas["evidenceDispositionCounts"] == {"stop":16,"hold":4,"merge":6} and ideas["evidenceDispositionPanels"] == 26, f"latest evidence disposition is missing or collapsed into terminal state: {ideas['evidenceDispositionCounts']}/{ideas['evidenceDispositionPanels']}")
+        require(ideas["lifecycleCells"] == 104 and ideas["explicitLegacyP0Badges"] == 0 and ideas["formalAuthorityZero"] == 26, f"lifecycle/current-decision/authority separation failed: {ideas['lifecycleCells']}/{ideas['explicitLegacyP0Badges']}/{ideas['formalAuthorityZero']}")
+        expected_parent_states={"A-1":"p0","A-2":"p0","A-3":"p0-ready","A-5":"p0-ready","B-1":"merge","C-1":"drop","C-4":"drop","D-1":"p0-ready","D-2":"drop","E-2":"p0-ready","F-1":"drop","F-3":"drop"}
+        require(all(ideas["parentStatusByCode"].get(code)==state for code,state in expected_parent_states.items()), f"representative parent terminal states are wrong: {ideas['parentStatusByCode']}")
+        filter_state = execute(session_id, """const visible=()=>[...document.querySelectorAll('.canonical-parent-item')].filter(x=>!x.hidden).length; const click=s=>document.querySelector('.canonical-filter-btn[data-canonical-status="'+s+'"]')?.click(); click('p0-ready'); const ready=visible(); click('drop'); const drop=visible(); click('all'); return {ready,drop,all:visible()};""")
+        require(filter_state == {"ready":11,"drop":7,"all":26}, f"frozen terminal filter counts are wrong: {filter_state}")
+        require((ideas["terminalSummary"].get("human_parents"), ideas["terminalSummary"].get("revived_to_p0"), ideas["absorbedChildCount"]) == (26,7,17), f"historical admission ledger or absorbed-child count is wrong: {ideas['terminalSummary']}/{ideas['absorbedChildCount']}")
         require(ideas["feedbackSummaries"] == 26, f"every discussed idea must expose one current summary, got {ideas['feedbackSummaries']}")
         require(ideas["humanOpinionBoxes"] == 26, f"all 26 discussed ideas must preserve the human opinion, got {ideas['humanOpinionBoxes']}")
         require(ideas["iterationBoxes"] == 17 and ideas["finalRefinementBoxes"] == 17, f"all 17 refined methods must show the final iteration and routing: {ideas['iterationBoxes']}/{ideas['finalRefinementBoxes']}")
-        require(ideas["finalRefinementCounts"] == [20,0,6,0], f"terminal routing must be 20 P0 / 0 P0-ready / 6 merge / 0 drop, got {ideas['finalRefinementCounts']}")
+        require(ideas["finalRefinementCounts"] == [2,11,6,7], f"frozen human terminal routing must be 2 P0 / 11 P0-ready / 6 merge / 7 stop, got {ideas['finalRefinementCounts']}")
         require(ideas["methodologyPanels"] == 1 and ideas["originalEvalGuides"] == 1, f"human-opinion audit/original-eval methodology panels are missing: {ideas['methodologyPanels']}/{ideas['originalEvalGuides']}")
         require(ideas["canonicalReviewCount"] == 26, f"canonical human-review map must cover all 26 ideas, got {ideas['canonicalReviewCount']}")
         require(ideas["humanRecommendationStats"] == [4,14,7,1], f"canonical human recommendation counts are wrong: {ideas['humanRecommendationStats']}")
@@ -520,7 +534,7 @@ def main() -> None:
         pmd=ideas["prematureMethodSummary"]
         require((pmd.get("directions"),pmd.get("completed_diagnostics"),pmd.get("design_holds"),pmd.get("same_information_reducibility_findings"),pmd.get("hidden_executions"),pmd.get("scientifically_authorized")) == (2,2,1,2,0,0) and ideas["prematureMethodPanels"] == 2, f"premature Method diagnostics must be visible as two non-authoritative PF-1/PF-4 archives: {pmd}/{ideas['prematureMethodPanels']}")
         require("STOP_MATCHED_POST_ONLY_EQUIVALENT" in ideas["text"] and "STOP_MATCHED_SOFT_SCALAR_EQUIVALENT" in ideas["text"] and "DIAGNOSTIC ONLY" in ideas["text"], "Paper-first diagnostic archive markers are not visible")
-        require(("Human terminal ledger" in ideas["text"] or "人工终态账本" in ideas["text"]) and ideas["newCards"] == 7 and ideas["absorbedChildCount"] == 17, "terminal/current idea summary or standalone-method rendering is missing")
+        require(("frozen human terminal" in ideas["text"].lower() or "人工冻结终态" in ideas["text"]) and ideas["newCards"] == 7 and ideas["absorbedChildCount"] == 17, "frozen-terminal/current idea summary or standalone-method rendering is missing")
 
         expanded_before_refresh = execute(session_id, """document.documentElement.style.scrollBehavior='auto'; const card=document.getElementById('idea-a-1'); if(!card) return null; card.open=true; card.querySelectorAll('details').forEach(x=>x.open=true); const top=card.getBoundingClientRect().top+window.scrollY; window.scrollTo(0, top+Math.min(900,Math.max(500,card.scrollHeight*.55))); return {y:window.scrollY,open:document.querySelectorAll('#dynamic-page details[open]').length};""")
         time.sleep(1)
