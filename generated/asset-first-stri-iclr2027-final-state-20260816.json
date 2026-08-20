@@ -74,10 +74,10 @@
     },
     "supplement_zip": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-      "sha256": "5bc87d31d8d1b1d65f9250ee1f0230915fe7961103d030f7c6b7861b6c81cec2",
-      "manifest_sha256": "bdfde50f80915b35e0738daa593299f9bb099f366d124a64959c5948a8fc116e",
+      "sha256": "c0f2ece30cab3a816549acf963f5e0a6351f8a473347f7c424e2186fb5f8172b",
+      "manifest_sha256": "a98b706a5ede42c618597d66e54dd2d2a5e76caa48b4d3c2dc134eb7941dc8fb",
       "isolated_reproduction_verified": true,
-      "unit_tests": "13/13 PASS",
+      "unit_tests": "29/29 PASS",
       "identity_path_scan": "PASS",
       "paper_quality_v2_reproduction": "PASS_V2_1_VISUAL_EVIDENCE"
     }
