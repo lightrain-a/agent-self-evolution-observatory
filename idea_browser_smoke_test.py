@@ -295,7 +295,10 @@ def main() -> None:
           agentSafetySplit: window.AGENT_SAFETY_PROGRAM_STATE?.canonical_protocol?.execution_invariants?.probe_split || {},
           agentSafetyClosedRows: document.querySelectorAll('#agent-safety-program .current-research-table tbody tr').length,
           agentSafetyClosedSummary: window.AGENT_SAFETY_PROGRAM_STATE?.closed_basin_summary || {},
-          discussedGroups: document.querySelectorAll('.human-science-group').length,
+          discussedGroups: document.querySelectorAll('.canonical-idea-group').length,
+          categoryLinks: document.querySelectorAll('.canonical-category-nav a').length,
+          parentItems: document.querySelectorAll('.canonical-parent-item').length,
+          lifecycleStrips: document.querySelectorAll('.canonical-lifecycle-strip').length,
           discussedCards: document.querySelectorAll('.human-review-idea-card').length,
           readyCards: document.querySelectorAll('.human-review-idea-card.human-tone-ready').length,
           mergedCards: document.querySelectorAll('.human-review-idea-card.human-tone-merged').length,
@@ -317,7 +320,7 @@ def main() -> None:
           parentMergeRules: [...document.querySelectorAll('.human-review-idea-card h4')].filter(x=>/必须并回父(?: Idea| 研究方向)|must merge into its parent/.test(x.textContent||'')).length,
           openDiscussedCards: document.querySelectorAll('.human-review-idea-card[open]').length,
           codes: [...document.querySelectorAll('.human-idea-code')].map(x=>(x.textContent||'').trim()),
-          newGroups: document.querySelectorAll('.supplemental-group').length,
+          newGroups: document.querySelectorAll('.canonical-related-bank').length,
           newCards: document.querySelectorAll('.supplemental-idea-card').length,
           standaloneCodes: [...document.querySelectorAll('.supplemental-idea-card summary>div>span')].map(x=>(x.textContent||'').trim()),
           openNewCards: document.querySelectorAll('.supplemental-idea-card[open]').length,
@@ -373,7 +376,7 @@ def main() -> None:
           designCards: document.querySelectorAll('.paper-incubation-card small').length,
           text: document.body.textContent || ''
         };""")
-        require(ideas["chapters"] == 2, f"paper-ideas should merge standalone methods and Paper-first new problems into Chapter II, got {ideas['chapters']}")
+        require(ideas["chapters"] == 0, f"paper-ideas must use category-first architecture instead of the old two-chapter split, got {ideas['chapters']} legacy chapters")
         require(ideas["agentSafetyProgram"] == 1 and ideas["agentSafetyStage"] == system["agentSafetyStage"] and ideas["agentSafetyRuntimeStatus"] == system["agentSafetyRuntimeStatus"] and ideas["agentSafetyBoundedEvidence"] is False and ideas["agentSafetyQualification"] is False and ideas["agentSafetyOverallExecution"] is False and ideas["agentSafetyQualificationStatus"] == "STOP_SUPPORT_ZERO_CURRENTLY_SAFE_FROZEN_STATES" and ideas["agentSafetyQualifiedStates"] == 0 and ideas["agentSafetyPrincipleDeadEnd"] is False and ideas["agentSafetyHeldoutFuture"] is False and ideas["agentSafetyP0"] is False and ideas["agentSafetyGpu"] is False, f"Paper Ideas Agent Safety support-stop state drift: {ideas['agentSafetyProgram']}/{ideas['agentSafetyStage']}/{ideas['agentSafetyRuntimeStatus']}/{ideas['agentSafetyBoundedEvidence']}/{ideas['agentSafetyQualification']}/{ideas['agentSafetyOverallExecution']}/{ideas['agentSafetyQualificationStatus']}/{ideas['agentSafetyQualifiedStates']}/{ideas['agentSafetyPrincipleDeadEnd']}")
         iab=ideas["agentSafetyBudget"]; ias=ideas["agentSafetySplit"]
         require((iab.get("states"),iab.get("history_strata"),ias.get("qualification_count"),ias.get("heldout_count"),iab.get("total_model_evaluations_upper_bound"),iab.get("contract_max_model_calls")) == (4,2,3,8,240,256) and ias.get("disjoint") is True, f"Paper Ideas Agent Safety canonical harness-v2 drift: {iab}/{ias}")
@@ -391,8 +394,8 @@ def main() -> None:
         require(ideas["p0AdmissionSummary"].get("active_p0") == 27 and ideas["p0AdmissionSummary"].get("transitioned_from_p0_ready") == 16 and ideas["p0AdmissionSummary"].get("revived_from_drop") == 7 and ideas["p0AdmissionSummary"].get("settings_complete") == 27 and ideas["p0AdmissionSummary"].get("execution_authorized") == 0, f"paper-ideas unified P0 admission state is stale: {ideas['p0AdmissionSummary']}")
         require(ideas["p0Summary"].get("ready_now") == 0 and ideas["p0Summary"].get("pre_p0_blocked") == 4 and ideas["p0Summary"].get("gpu_hours_cap_ready_now") == 0 and ideas["p0Summary"].get("p1_authorized") == 0, f"P0 Pre-P0/resource summary is wrong: {ideas['p0Summary']}")
         require(ideas["p0Policy"].get("pre_p0_identifiability_required") is True and ideas["p0Policy"].get("automatic_p0_to_p1_forbidden") is True and ideas["p0Policy"].get("p0_pass_requires_human_approval") is True, f"P0 human/Pre-P0 approval policy is missing: {ideas['p0Policy']}")
-        require(ideas["toc2"] >= 3 and ideas["toc4"] == 0, f"paper-ideas TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
-        require(ideas["discussedGroups"] == 6 and ideas["discussedCards"] == 26, f"expected six scientific groups and 26 discussed ideas, got {ideas['discussedGroups']}/{ideas['discussedCards']}")
+        require(ideas["toc2"] >= 2 and ideas["toc3"] >= 7 and ideas["toc4"] == 0, f"paper-ideas category-first TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
+        require((ideas["discussedGroups"],ideas["categoryLinks"],ideas["parentItems"],ideas["lifecycleStrips"],ideas["discussedCards"]) == (7,7,26,26,26), f"category-first ledger must expose seven groups and 26 complete parent cards: {ideas['discussedGroups']}/{ideas['categoryLinks']}/{ideas['parentItems']}/{ideas['lifecycleStrips']}/{ideas['discussedCards']}")
         require((ideas["readyCards"], ideas["mergedCards"], ideas["droppedCards"]) == (20, 6, 0), f"terminal tone counts are wrong: {ideas['readyCards']}/{ideas['mergedCards']}/{ideas['droppedCards']}")
         require(ideas["terminalCounts"].get("p0") == 20 and ideas["terminalCounts"].get("p0-ready",0) == 0 and ideas["terminalCounts"].get("merge") == 6 and ideas["terminalCounts"].get("drop",0) == 0, f"terminal parent counts are wrong: {ideas['terminalCounts']}")
         require((ideas["terminalSummary"].get("human_parents"), ideas["terminalSummary"].get("revived_to_p0"), ideas["absorbedChildCount"]) == (26,7,17), f"terminal ledger or absorbed-child count is wrong: {ideas['terminalSummary']}/{ideas['absorbedChildCount']}")
@@ -408,7 +411,7 @@ def main() -> None:
         require(ideas["openDiscussedCards"] == 0 and ideas["openNewCards"] == 0, f"all idea cards must be collapsed by default, got {ideas['openDiscussedCards']}/{ideas['openNewCards']}")
         require(len(ideas["codes"]) == 26 and len(set(ideas["codes"])) == 26, f"group codes are missing or duplicated: {ideas['codes']}")
         require(all(code in ideas["codes"] for code in ("A-1","A-5","B-1","B-7","C-1","D-1","E-1","F-1","F-3")), f"expected stable group codes are missing: {ideas['codes']}")
-        require(ideas["newGroups"] == 3 and ideas["newCards"] == 7, f"standalone area must contain only the seven validated standalone P0 methods: {ideas['newGroups']}/{ideas['newCards']}")
+        require(ideas["newGroups"] >= 1 and ideas["newCards"] == 7, f"the seven standalone methods must be nested in category-related banks, not rendered as first-level ideas: {ideas['newGroups']}/{ideas['newCards']}")
         require(set(ideas["standaloneCodes"]) == {"A-6","A-7","B-8","B-9","B-10","E-3","E-4"}, f"standalone methods must have stable scientific-group codes: {ideas['standaloneCodes']}")
         require((ideas["newFinal"], ideas["newInspired"]) == (0, 0), f"legacy supplemental candidates must not remain active: {ideas['newFinal']}/{ideas['newInspired']}")
         require(ideas["mergedMethods"] >= 8, f"merged FINAL method provenance is not visible on discussed ideas: {ideas['mergedMethods']}")
@@ -432,14 +435,14 @@ def main() -> None:
         require(int(sds.get("near_miss_preflight_dead_ends") or 0) == int(sds.get("near_miss_current_primary_stops") or 0)+int(sds.get("near_miss_mature_theory_stops") or 0) and int(sds.get("near_miss_holds") or 0) == int(sds.get("near_miss_support_holds") or 0)+int(sds.get("near_miss_terminal_support_holds") or 0) and int(sds.get("shadow_closed_basins") or 0) == int(sds.get("problem_novelty_stops") or 0)+scientific_layer_total and int(sds.get("shadow_dead_end_objects") or 0) == int(sds.get("core_principle_dead_ends") or 0) == int(sds.get("core_principle_stops") or 0) and int(sds.get("broader_core_principle_falsifications") or 0) == 0, f"near-miss/canonical-failure-layer/search-closure/dead-end/HOLD accounting is inconsistent: {sds}")
         closed_rows=(ideas["currentShadowSearch"].get("closed_rows") or [])
         expected_closed=int(sds.get("shadow_closed_basins") or 0)
-        require(ideas["closedAuditPanels"] == 1 and ideas["closedAuditRows"] == expected_closed and len(closed_rows) == expected_closed, f"closed-basin per-candidate audit table is incomplete: panels={ideas['closedAuditPanels']} rows={ideas['closedAuditRows']} state={len(closed_rows)} expected={expected_closed}")
+        require(1 <= ideas["closedAuditPanels"] <= 7 and ideas["closedAuditRows"] == expected_closed and len(closed_rows) == expected_closed, f"category-grouped closed-basin audit is incomplete: panels={ideas['closedAuditPanels']} rows={ideas['closedAuditRows']} state={len(closed_rows)} expected={expected_closed}")
         require(ideas["closedAuditReasonsAllZh"] and ideas["closedAuditReopensAllZh"], "all 41 closed-candidate stop reasons and reopen conditions must render in Chinese")
         require((ideas["statusOuterTracks"],ideas["statusCopyTracks"],ideas["statusMetricTracks"],ideas["statusMetricCount"]) == (1,2,5,10), f"current research status must render as title/message row plus full-width five-column metrics row: {ideas['statusOuterTracks']}/{ideas['statusCopyTracks']}/{ideas['statusMetricTracks']}/{ideas['statusMetricCount']}")
         pa01_closed=next((row for row in closed_rows if row.get("candidate_id")=="PA-01-EVIDENCE-ECHO"),{})
         pace_closed=next((row for row in closed_rows if row.get("candidate_id")=="PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY"),{})
         require(pa01_closed.get("failure_layer")=="method_realization" and pa01_closed.get("experiment_run_for_this_readjudication") is True and pa01_closed.get("experiment_alone_authorizes_closure") is False, f"PA-01 must remain experiment-informed but method-realization scoped, not experiment-failed principle: {pa01_closed}")
         require(pace_closed.get("failure_layer")=="core_principle" and pace_closed.get("principle_update_allowed") is True and pace_closed.get("broader_core_principle_falsified") is False, f"PACE must be a scoped core-principle stop without benchmark-level falsification: {pace_closed}")
-        require(all(marker in ideas["text"] for marker in (f"逐条查看 {expected_closed} 个关闭候选","负实验是否决定关闭","实验前问题/新颖性","实验可辨识性","方法实现/独立机制")), "closed-basin failure-layer explanations are not visible in the Chinese Paper Ideas view")
+        require(all(marker in ideas["text"] for marker in ("关闭候选档案","负实验是否决定关闭","实验前问题/新颖性","实验可辨识性","方法实现/独立机制")), "category-grouped closed-basin failure-layer explanations are not visible in the Chinese Paper Ideas view")
         require(ideas["shadowDesignPolicy"].get("source_is_shadow_search_portfolio") is True and ideas["shadowDesignPolicy"].get("shadow_queue_has_zero_paper_design_authority") is True and ideas["shadowDesignPolicy"].get("cannot_grant_or_revoke_live_paper_design_authority") is True, f"shadow Paper Design authority boundary is missing: {ideas['shadowDesignPolicy']}")
         require((ideas["shadowQueueSummary"].get("counterfactual_problem_gate_passed"),ideas["shadowQueueSummary"].get("live_paper_design_eligible")) == (2,0), f"shadow queue must expose 2 historical counterfactual passes and 0 live eligibility: {ideas['shadowQueueSummary']}")
         latest=ideas["shadowLatestSummary"]
