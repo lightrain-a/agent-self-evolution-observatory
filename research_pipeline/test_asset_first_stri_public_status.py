@@ -84,11 +84,13 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         handoff = state["submission_handoff"]
         self.assertEqual(handoff["recorded_author_guide_abstract_deadline_aoe"], "2026-09-18")
         self.assertEqual(handoff["recorded_author_guide_full_paper_deadline_aoe"], "2026-09-25")
-        self.assertTrue(handoff["official_source_conflict"])
-        self.assertEqual(handoff["official_source_conflict_status"], "HUMAN_VERIFICATION_REQUIRED")
-        self.assertEqual(handoff["conflicting_official_dates"]["dates_cfp_conference_pages"], {"abstract": "2026-09-11", "full_paper": "2026-09-16"})
-        self.assertEqual(handoff["operational_safe_abstract_deadline_aoe"], "2026-09-11")
-        self.assertEqual(handoff["operational_safe_full_paper_deadline_aoe"], "2026-09-16")
+        self.assertFalse(handoff["official_source_conflict"])
+        self.assertEqual(handoff["official_source_conflict_status"], "AUTHOR_SUBMISSION_SOURCES_ALIGNED")
+        self.assertEqual(handoff["verified_official_dates"]["dates_and_call_for_papers"], {"abstract": "2026-09-18", "full_paper": "2026-09-25"})
+        self.assertEqual(handoff["stale_non_authoritative_reference"]["full_paper"], "2026-09-16")
+        self.assertFalse(handoff["stale_non_authoritative_reference"]["used_for_submission_planning"])
+        self.assertEqual(handoff["operational_safe_abstract_deadline_aoe"], "2026-09-18")
+        self.assertEqual(handoff["operational_safe_full_paper_deadline_aoe"], "2026-09-25")
         self.assertTrue(handoff["author_membership_freezes_at_abstract_deadline"])
         self.assertTrue(handoff["title_freezes_at_full_paper_deadline"])
         self.assertEqual(
@@ -142,13 +144,13 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         errors = validate_asset_first_stri_public_status(drift)
         self.assertTrue(any("download URLs" in error for error in errors))
 
-    def test_official_deadline_conflict_and_fail_safe_rules_are_fail_closed(self) -> None:
+    def test_official_submission_deadlines_are_fail_closed(self) -> None:
         state = self.forced_ready_projection()
         drift = copy.deepcopy(state)
-        drift["submission_handoff"]["official_source_conflict"] = False
-        drift["submission_handoff"]["operational_safe_abstract_deadline_aoe"] = "2026-09-18"
+        drift["submission_handoff"]["official_source_conflict"] = True
+        drift["submission_handoff"]["operational_safe_abstract_deadline_aoe"] = "2026-09-11"
         errors = validate_asset_first_stri_public_status(drift)
-        self.assertTrue(any("deadline conflict/fail-safe policy drift" in error for error in errors))
+        self.assertTrue(any("submission deadline metadata drift" in error for error in errors))
 
 
 if __name__ == "__main__":

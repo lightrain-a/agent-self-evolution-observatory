@@ -422,6 +422,10 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         reproduce = reproduce.replace('        "autoskill_p19_dynamic": autoskill_summary,', '        "autoskill_p19_dynamic": autoskill_summary,\n        "autoskill_p19_mediator_isolation": mediator_summary,', 1)
     reproduce_path.write_text(reproduce, encoding="utf-8")
 
+    refresh_manifest(tree)
+
+
+def refresh_manifest(tree: Path) -> None:
     manifest_path = tree / "MANIFEST.sha256"
     entries = []
     for path in sorted(p for p in tree.rglob("*") if p.is_file() and p != manifest_path):
@@ -462,7 +466,7 @@ def build_and_verify_supplement() -> dict:
         with zipfile.ZipFile(REMOTE_SUPPLEMENT) as zf:
             zf.extractall(tree)
         update_supplement_tree(tree, receipt)
-        manifest_entries = verify_manifest(tree)
+        verify_manifest(tree)
         anonymity_scan(tree)
         repro_python = find_repro_python()
         repro = run([repro_python, "reproduce.py"], cwd=tree)
@@ -477,6 +481,14 @@ def build_and_verify_supplement() -> dict:
         unit_test_count = int(match.group(1)) if match else 0
         if unit_test_count <= 0:
             raise RuntimeError(f"could not parse supplement unit-test count: {test_line!r}")
+        for cache_dir in sorted(tree.rglob("__pycache__"), reverse=True):
+            if cache_dir.is_dir():
+                shutil.rmtree(cache_dir)
+        for bytecode in tree.rglob("*.pyc"):
+            bytecode.unlink()
+        refresh_manifest(tree)
+        manifest_entries = verify_manifest(tree)
+        anonymity_scan(tree)
         refreshed = Path(tmp) / "supplement.zip"
         file_count = deterministic_zip_tree(tree, refreshed)
         REMOTE.mkdir(parents=True, exist_ok=True)
@@ -517,9 +529,14 @@ def build_and_verify_supplement() -> dict:
 def refresh_delivery(qa: dict, source: dict, supplement: dict) -> dict:
     DOWNLOADS.mkdir(parents=True, exist_ok=True)
     REMOTE.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(PDF, DOWNLOAD_PDF)
+    if not DOWNLOAD_PDF.is_file():
+        raise FileNotFoundError(DOWNLOAD_PDF)
+    built_text = run(["pdftotext", str(PDF), "-"], cwd=ROOT).stdout
+    frozen_text = run(["pdftotext", str(DOWNLOAD_PDF), "-"], cwd=ROOT).stdout
+    if built_text != frozen_text:
+        raise RuntimeError("frozen download PDF text differs from the currently verified manuscript")
     shutil.copy2(MAIN, DOWNLOAD_TEX)
-    shutil.copy2(PDF, REMOTE_PDF)
+    shutil.copy2(DOWNLOAD_PDF, REMOTE_PDF)
     shutil.copy2(DOWNLOAD_SOURCE, REMOTE_SOURCE)
 
     final_review = load(FINAL_REVIEW_PATH)
@@ -563,7 +580,7 @@ def refresh_delivery(qa: dict, source: dict, supplement: dict) -> dict:
     final["new_gpu_evidence_required_for_current_claim_scope"] = False
     final["delivery"]["pdf"].update({"path": str(REMOTE_PDF), "sha256": sha(REMOTE_PDF)})
     final["delivery"]["source_zip"].update({"path": str(REMOTE_SOURCE), "sha256": sha(REMOTE_SOURCE), "files": source["files"], "isolated_compile_verified": True})
-    final["delivery"]["supplement_zip"].update({"path": str(REMOTE_SUPPLEMENT), "sha256": supplement["sha256"], "manifest_sha256": supplement["manifest_sha256"], "isolated_reproduction_verified": True})
+    final["delivery"]["supplement_zip"].update({"path": str(REMOTE_SUPPLEMENT), "sha256": supplement["sha256"], "manifest_sha256": supplement["manifest_sha256"], "isolated_reproduction_verified": True, "unit_tests": supplement["unit_tests"]})
     final["paper_quality_v2"].update({
         "status": str(paper_quality.get("status") or ""),
         "passed": bool(paper_quality.get("paper_quality_gate_passed", False)),
@@ -595,6 +612,7 @@ def refresh_delivery(qa: dict, source: dict, supplement: dict) -> dict:
         "paper_source_zip_sha256": sha(REMOTE_SOURCE),
         "anonymous_supplement_zip_sha256": supplement["sha256"],
         "supplement_reproduction": "PASS",
+        "supplement_unit_tests": supplement["unit_tests"],
         "final_independent_review": str(final_review.get("verdict") or ""),
         "final_independent_review_confidence": float(final_review.get("confidence") or 0.0),
         "post_isolation_independent_review": "borderline 6/10; minor_revision; no fatal flaws",

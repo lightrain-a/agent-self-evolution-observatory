@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-20T04:11:11+00:00",
-  "source_revision": "71b0fc2e261bc5b139dbedc26bcb03f54513a159",
+  "generated_at": "2026-08-20T07:18:37+00:00",
+  "source_revision": "6e0f0a0777e35cb28c9743f6ca0bd3bb1c22ec23",
   "as_of_date": "2026-08-20",
   "headline": {
     "paper_ready": 1,
@@ -114,16 +114,16 @@
       "pdf": "downloads/STRI-ICLR2027.pdf",
       "source_zip": "downloads/STRI-ICLR2027-source.zip"
     },
-    "deadline_status": "HUMAN_VERIFICATION_REQUIRED",
-    "official_source_conflict": true,
-    "operational_safe_abstract_deadline_aoe": "2026-09-11",
-    "operational_safe_full_paper_deadline_aoe": "2026-09-16",
+    "deadline_status": "AUTHOR_SUBMISSION_SOURCES_ALIGNED",
+    "official_source_conflict": false,
+    "operational_safe_abstract_deadline_aoe": "2026-09-18",
+    "operational_safe_full_paper_deadline_aoe": "2026-09-25",
     "recorded_author_guide_abstract_deadline_aoe": "2026-09-18",
     "recorded_author_guide_full_paper_deadline_aoe": "2026-09-25",
     "author_membership_freezes_at_abstract_deadline": true,
     "title_freezes_at_full_paper_deadline": true,
     "prior_mechanical_submission_state": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
-    "next_action": "Human authors must verify the live ICLR/OpenReview deadline because official ICLR pages currently conflict. Until resolved, operate against the earlier published dates: genuine abstract and frozen author membership by 2026-09-11 AoE; full paper and anonymous supplement by 2026-09-16 AoE. Complete profile/quota/reviewer/dual-submission/ethics/AI-use signoff; do not reopen dynamic P0 or broaden N1-N3.",
+    "next_action": "Human authors review and accept responsibility for the final manuscript and AI-use disclosure, freeze the complete author list before the ICLR abstract deadline, complete the OpenReview signoff checklist, then submit the genuine abstract by 2026-09-18 AoE and the paper plus anonymous supplement by 2026-09-25 AoE. Do not reopen dynamic P0 or broaden N1-N3 unless independently qualified new evidence appears.",
     "claim_boundary": {
       "dynamic_p0": "Qwen3 qualification failure is excluded from narrow evidence; the separate SkillRL P0-E fixed-policy bridge is a qualified C4 realization STOP only",
       "skillrl_p0e": {

@@ -10,10 +10,11 @@ from .config import PROJECT_ROOT
 SCHEMA_VERSION = "1.0"
 AUTHOR_GUIDE_ABSTRACT_DEADLINE_AOE = "2026-09-18"
 AUTHOR_GUIDE_FULL_PAPER_DEADLINE_AOE = "2026-09-25"
-OTHER_OFFICIAL_ABSTRACT_DEADLINE_AOE = "2026-09-11"
-OTHER_OFFICIAL_FULL_PAPER_DEADLINE_AOE = "2026-09-16"
-OPERATIONAL_SAFE_ABSTRACT_DEADLINE_AOE = "2026-09-11"
-OPERATIONAL_SAFE_FULL_PAPER_DEADLINE_AOE = "2026-09-16"
+DATES_CFP_ABSTRACT_DEADLINE_AOE = "2026-09-18"
+DATES_CFP_FULL_PAPER_DEADLINE_AOE = "2026-09-25"
+OPERATIONAL_ABSTRACT_DEADLINE_AOE = "2026-09-18"
+OPERATIONAL_FULL_PAPER_DEADLINE_AOE = "2026-09-25"
+STALE_REVIEWER_GUIDE_FULL_PAPER_REFERENCE_AOE = "2026-09-16"
 
 FINAL_REVIEW = "generated/asset-first-stri-narrow-final-review-20260816.json"
 COHERENCE = "generated/asset-first-stri-narrow-paper-coherence-20260816.json"
@@ -252,18 +253,23 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
         "submission_handoff": {
             "recorded_author_guide_abstract_deadline_aoe": str((official_final.get("official_deadlines_aoe") or {}).get("abstract") or ""),
             "recorded_author_guide_full_paper_deadline_aoe": str((official_final.get("official_deadlines_aoe") or {}).get("full_paper") or ""),
-            "official_source_conflict": True,
-            "official_source_conflict_status": "HUMAN_VERIFICATION_REQUIRED",
-            "conflicting_official_dates": {
+            "official_source_conflict": False,
+            "official_source_conflict_status": "AUTHOR_SUBMISSION_SOURCES_ALIGNED",
+            "verified_official_dates": {
                 "author_guidelines": {"abstract": AUTHOR_GUIDE_ABSTRACT_DEADLINE_AOE, "full_paper": AUTHOR_GUIDE_FULL_PAPER_DEADLINE_AOE},
-                "dates_cfp_conference_pages": {"abstract": OTHER_OFFICIAL_ABSTRACT_DEADLINE_AOE, "full_paper": OTHER_OFFICIAL_FULL_PAPER_DEADLINE_AOE},
+                "dates_and_call_for_papers": {"abstract": DATES_CFP_ABSTRACT_DEADLINE_AOE, "full_paper": DATES_CFP_FULL_PAPER_DEADLINE_AOE},
             },
-            "operational_safe_abstract_deadline_aoe": OPERATIONAL_SAFE_ABSTRACT_DEADLINE_AOE,
-            "operational_safe_full_paper_deadline_aoe": OPERATIONAL_SAFE_FULL_PAPER_DEADLINE_AOE,
+            "stale_non_authoritative_reference": {
+                "source": "ICLR 2027 Reviewer Guidelines contemporaneous-work FAQ",
+                "full_paper": STALE_REVIEWER_GUIDE_FULL_PAPER_REFERENCE_AOE,
+                "used_for_submission_planning": False,
+            },
+            "operational_safe_abstract_deadline_aoe": OPERATIONAL_ABSTRACT_DEADLINE_AOE,
+            "operational_safe_full_paper_deadline_aoe": OPERATIONAL_FULL_PAPER_DEADLINE_AOE,
             "author_membership_freezes_at_abstract_deadline": True,
             "title_freezes_at_full_paper_deadline": True,
-            "deadline_source_verified_on": "2026-08-17",
-            "deadline_human_action": "Confirm the live OpenReview/ICLR deadline before submission; until resolved, plan against the earlier published official dates.",
+            "deadline_source_verified_on": "2026-08-20",
+            "deadline_human_action": "Use the aligned ICLR 2027 author-facing deadlines: genuine abstract and frozen author membership by 2026-09-18 AoE; full paper and anonymous supplement by 2026-09-25 AoE.",
             "pdf_sha256": str((((official_final.get("delivery") or {}).get("pdf") or {}).get("sha256")) or ""),
             "source_zip_sha256": str((((official_final.get("delivery") or {}).get("source_zip") or {}).get("sha256")) or ""),
             "supplement_zip_sha256": str((((official_final.get("delivery") or {}).get("supplement_zip") or {}).get("sha256")) or ""),
@@ -416,22 +422,25 @@ def validate_asset_first_stri_public_status(state: dict[str, Any]) -> list[str]:
         if int(summary.get("new_gpu_evidence_required") or 0) != 0:
             errors.append("current narrow STRI submission cannot require a new GPU rescue")
         handoff = state.get("submission_handoff") or {}
-        deadline_conflict = handoff.get("conflicting_official_dates") or {}
+        verified_dates = handoff.get("verified_official_dates") or {}
+        stale_reference = handoff.get("stale_non_authoritative_reference") or {}
         if (
             handoff.get("recorded_author_guide_abstract_deadline_aoe") != AUTHOR_GUIDE_ABSTRACT_DEADLINE_AOE
             or handoff.get("recorded_author_guide_full_paper_deadline_aoe") != AUTHOR_GUIDE_FULL_PAPER_DEADLINE_AOE
-            or handoff.get("official_source_conflict") is not True
-            or handoff.get("official_source_conflict_status") != "HUMAN_VERIFICATION_REQUIRED"
-            or (deadline_conflict.get("author_guidelines") or {}).get("abstract") != AUTHOR_GUIDE_ABSTRACT_DEADLINE_AOE
-            or (deadline_conflict.get("author_guidelines") or {}).get("full_paper") != AUTHOR_GUIDE_FULL_PAPER_DEADLINE_AOE
-            or (deadline_conflict.get("dates_cfp_conference_pages") or {}).get("abstract") != OTHER_OFFICIAL_ABSTRACT_DEADLINE_AOE
-            or (deadline_conflict.get("dates_cfp_conference_pages") or {}).get("full_paper") != OTHER_OFFICIAL_FULL_PAPER_DEADLINE_AOE
-            or handoff.get("operational_safe_abstract_deadline_aoe") != OPERATIONAL_SAFE_ABSTRACT_DEADLINE_AOE
-            or handoff.get("operational_safe_full_paper_deadline_aoe") != OPERATIONAL_SAFE_FULL_PAPER_DEADLINE_AOE
+            or handoff.get("official_source_conflict") is not False
+            or handoff.get("official_source_conflict_status") != "AUTHOR_SUBMISSION_SOURCES_ALIGNED"
+            or (verified_dates.get("author_guidelines") or {}).get("abstract") != AUTHOR_GUIDE_ABSTRACT_DEADLINE_AOE
+            or (verified_dates.get("author_guidelines") or {}).get("full_paper") != AUTHOR_GUIDE_FULL_PAPER_DEADLINE_AOE
+            or (verified_dates.get("dates_and_call_for_papers") or {}).get("abstract") != DATES_CFP_ABSTRACT_DEADLINE_AOE
+            or (verified_dates.get("dates_and_call_for_papers") or {}).get("full_paper") != DATES_CFP_FULL_PAPER_DEADLINE_AOE
+            or stale_reference.get("full_paper") != STALE_REVIEWER_GUIDE_FULL_PAPER_REFERENCE_AOE
+            or stale_reference.get("used_for_submission_planning") is not False
+            or handoff.get("operational_safe_abstract_deadline_aoe") != OPERATIONAL_ABSTRACT_DEADLINE_AOE
+            or handoff.get("operational_safe_full_paper_deadline_aoe") != OPERATIONAL_FULL_PAPER_DEADLINE_AOE
             or handoff.get("author_membership_freezes_at_abstract_deadline") is not True
             or handoff.get("title_freezes_at_full_paper_deadline") is not True
         ):
-            errors.append("READY_NARROW_ICLR official deadline conflict/fail-safe policy drift")
+            errors.append("READY_NARROW_ICLR official submission deadline metadata drift")
         for key in ("pdf_sha256", "source_zip_sha256", "supplement_zip_sha256"):
             if len(str(handoff.get(key) or "")) != 64:
                 errors.append(f"READY_NARROW_ICLR submission handoff digest invalid:{key}")
