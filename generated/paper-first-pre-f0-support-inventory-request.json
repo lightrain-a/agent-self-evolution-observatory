@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0-pre-f0",
-  "generated_at": "2026-08-19T13:09:40+00:00",
-  "run_id": "20260818T164230Z-ingestion-replay",
+  "generated_at": "2026-08-20T14:22:26+00:00",
+  "run_id": "20260820T142226Z-ingestion-replay",
   "status": "PROBLEM_FALSIFIER_SUPPORT_INVENTORY_REQUEST_READY",
   "source": "CANONICAL_PRE_F0_QUEUE",
   "policy": {
@@ -30,8 +30,8 @@
     "automatic_gpu_authority": false
   },
   "summary": {
-    "queued": 2,
-    "inventory_requests": 2,
+    "queued": 3,
+    "inventory_requests": 3,
     "problem_gate_authorized": 0,
     "paper_design_authorized": 0,
     "method_authorized": 0,
@@ -41,20 +41,19 @@
   },
   "rows": [
     {
-      "candidate_id": "PORT-001",
+      "candidate_id": "PORT-003",
       "candidate_identity_version": "candidate-content-v1",
-      "candidate_snapshot_sha256": "9b255e3ac6e3896a155b185b507073e6e36c65761f9e99d4e9bb5a0b7004bdd4",
-      "title": "Rank-inverted skill harm across harnesses as a non-composability witness",
-      "discovery_lane": "ASSUMPTION_BREAK",
-      "source_branch_id": "ASSUMPTION_BREAK-P2-001-R1",
+      "candidate_snapshot_sha256": "6d22f8aae4c4130b41a5b14a2a9d961c695087fb45cb2581397b6c9ca676b447",
+      "title": "Procedural Interference Score as a Predictor of Negative Transfer in Memory-Augmented Agents",
+      "discovery_lane": "UNEXPLAINED_BOUNDARY",
+      "source_branch_id": "UNEXPLAINED_BOUNDARY-P1-006-R1",
       "primary_refs": [
-        "arXiv:2608.08303",
-        "arXiv:2608.14036"
+        "arXiv:2608.16114"
       ],
-      "exact_prediction": "If a fixed TBA-poisoned library from arXiv:2608.08303 is evaluated on two harnesses (Codex, Gemini-CLI) with matched retrieval-hit-rate, context distribution, and invocation depth, the harm ranking of triggered tasks will either (a) remain stable, in which case the cross-harness divergence in arXiv:2608.14036 is a measurable interaction term, or (b) invert, in which case the joint object is non-composable and the separability assumption is empirically broken.",
-      "strongest_same_information_baseline": "A monotone composition function h(L, H) = f(L) + g(H) + α(L)·β(H) where f is library harm, g is harness baseline harm, and α·β is the interaction term, fit to the same matched-statistics data. If this baseline reproduces the observed cross-harness ranking, irreducibility is refuted.",
-      "falsifier_expression": "Take a frozen TBA-poisoned library from arXiv:2608.08303, instrument two harnesses (Codex, Gemini-CLI) to record retrieval-hit-rate, context distribution, and invocation depth, then evaluate the library on the same task suite with matched statistics. If the harm ranking is stable, irreducibility is refuted and the branch returns to 'measurable interaction term.' If the ranking inverts, the joint object is non-composable and the candidate survives.",
-      "endpoint_headroom_requirement": "Requires running a controlled matched-invocation experiment, which depends on access to both harnesses and the ability to instrument the retrieval-invocation boundary. This is non-trivial but within reach of the paper's authors if they have framework access.",
+      "exact_prediction": "For xBench tasks where Cheatsheet or Voyager is used, the procedural interference score (defined as a measure of discrepancy between the retrieved skill's executable procedure and the task's required step sequence) will predict a negative transfer event (performance below the no-memory baseline) with AUC > 0.7 on a held-out set, and this AUC will be statistically significantly higher than a same-information conflict-detection baseline and a same-information utilization-diagnostic baseline.",
+      "strongest_same_information_baseline": "A conflict-detection baseline that flags retrieved memories containing explicit contradiction markers (supersedes, contradicts, applicability-boundary violations) relative to the task requirements, receiving the same retrieved memory, task requirements, and retrieval confidence as the interference score.",
+      "falsifier_expression": "Run a controlled comparison on xBench with Cheatsheet and Voyager: (1) oracle-load the retrieved memory (force utilization), (2) compute the proposed procedural interference score on each instance, (3) compute a same-information conflict-detection baseline on the same instances, (4) measure whether the score predicts negative transfer with higher AUC than the baseline. If not, the score is reduced.",
+      "endpoint_headroom_requirement": "The interference score must be defined as a pre-outcome measure (computable from retrieved memory + task requirements alone, before observing the agent's trajectory or outcome). Post-hoc trajectory geometry or endpoint-leaking features are not admissible.",
       "support_inventory_question": "Determine whether primary/author-released artifacts directly expose the observational/interventional units and fields needed for this frozen Pre-F0 falsifier, or whether author-released first-party code / an existing provenance-audited substrate can materialize those units as independent truth under the frozen operationalization. Reconstructed support is admissible only after materialization and provenance hashing, without synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.",
       "required_receipt_dispositions": [
         "HOLD_SUPPORT_UNAVAILABLE",
@@ -63,20 +62,40 @@
       "scientific_authority": false
     },
     {
-      "candidate_id": "PORT-003",
+      "candidate_id": "PORT-004",
       "candidate_identity_version": "candidate-content-v1",
-      "candidate_snapshot_sha256": "d15348638054d336246774f5f9410dcc33faccb4942b02ec842eb8c831fbf366",
-      "title": "Timescale-isolated ablation of action-frequency governance on a frozen skill set",
-      "discovery_lane": "ASSUMPTION_BREAK",
-      "source_branch_id": "ASSUMPTION_BREAK-P2-004-R1",
+      "candidate_snapshot_sha256": "2c43d3a2af96523948cab81d83e489de020e82116175ec9a3c71f2d3ed5f641d",
+      "title": "Information-Set Dependence of Irrecoverable Contamination Loss in Self-Evolving Skill Pools",
+      "discovery_lane": "UNEXPLAINED_BOUNDARY",
+      "source_branch_id": "UNEXPLAINED_BOUNDARY-P1-005-R1",
       "primary_refs": [
-        "arXiv:2608.09096",
-        "arXiv:2608.16590"
+        "arXiv:2608.05810"
       ],
-      "exact_prediction": "On the released frozen GR00T + LIBERO-Pro + RoboCasa substrate with matched skill library, base policy, and compute, the C→D contribution will be ≥5pp macro-average success and will exceed the matched-frequency HRL baseline's C→D contribution by ≥2pp; if either inequality fails, the primitive claim is falsified.",
-      "strongest_same_information_baseline": "A hierarchical-RL controller with matched fast-timescale decision frequency, matched slow-timescale structure, matched skill library, matched base policy, and matched per-action compute, but no governance/closed-loop module — the strongest same-information baseline that does not implement the claimed primitive.",
-      "falsifier_expression": "Run the four-arm ablation (A, B, C, D) on the released GR00T + LIBERO-Pro subset (or a smaller frozen-skill frozen-base-policy subset thereof) with matched compute, matched skill library, and matched per-action re-ranking baseline. If C→D < 2pp or if the matched-frequency HRL baseline reproduces ≥90% of the C→D gap, the primitive claim is falsified. Estimated cost: small relative to full Zetta training because the base policy and skill library are frozen.",
-      "endpoint_headroom_requirement": "The C→D contribution must be measured on tasks where the full Zetta D has not yet saturated (e.g., tasks where D is in the 70–90% range), not on tasks where D is at ceiling; otherwise the gap is unmeasurable.",
+      "exact_prediction": "Under a preregistered information-set sweep on the released Terminal-Bench 2 skill pools from arXiv:2608.05810, the recovery curve indexed by information kind (source identity < +descendant text < +embedding state < full activation trace) will either be flat at 5.6pp irrecoverable (falsifying the P+M axes) or non-flat (supporting them). A non-flat curve with a strictly positive sub-component unlocked by information beyond source identity is the cheapest positive result.",
+      "strongest_same_information_baseline": "The existing Oracle protocol in arXiv:2608.05810 Figure 4, extended to be a multi-level oracle stratified by information kind, run on the same Terminal-Bench 2 tasks and same released R1–R5 skill pools.",
+      "falsifier_expression": "On the released arXiv:2608.05810 Terminal-Bench 2 R5 skill pool, run a 4-level information-set sweep: (L0) source-identity-only oracle, (L1) + distilled text of descendants, (L2) + embedding centroids of descendants, (L3) full Oracle as in Figure 4. Measure recovery at each level on the same held-out task set. If recovery is constant across L0–L3 (within noise), the 5.6pp is information-invariant and the P+M axes collapse. If recovery increases by a practically large amount from L0 to L3, the P+M axes survive. This is implementable from the primary source's released artifacts at zero method-development cost.",
+      "endpoint_headroom_requirement": "Branch requires headroom on the recovery axis (the 5.6pp is the unresolved headroom) and on the information-set axis (no curve is published); both are pre-existing headroom in the primary source's own measurement, not new degrees of freedom introduced by the branch.",
+      "support_inventory_question": "Determine whether primary/author-released artifacts directly expose the observational/interventional units and fields needed for this frozen Pre-F0 falsifier, or whether author-released first-party code / an existing provenance-audited substrate can materialize those units as independent truth under the frozen operationalization. Reconstructed support is admissible only after materialization and provenance hashing, without synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.",
+      "required_receipt_dispositions": [
+        "HOLD_SUPPORT_UNAVAILABLE",
+        "SUPPORT_QUALIFIED"
+      ],
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "PORT-006",
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "f58d45a4c280b17df06d70acf0845f8f1317078724b228ee5bbc460eafdc5071",
+      "title": "Cross-Round Contamination Irreversibility Boundary: A 5.6pp Irrecoverable Performance Residual Under Oracle Cleanup",
+      "discovery_lane": "UNEXPLAINED_BOUNDARY",
+      "source_branch_id": "UNEXPLAINED_BOUNDARY-P1-005",
+      "primary_refs": [
+        "arXiv:2608.05810"
+      ],
+      "exact_prediction": "Under oracle cleanup (perfect information about all contaminating skills and their full descendant lineages), a measurable performance residual of 5.6pp ± noise will persist, and this residual will scale with the number of distillation rounds (R), not with the size of the contaminating skill set alone.",
+      "strongest_same_information_baseline": "AGM belief contraction + standard unlearning + iterated self-distillation persistence: the best same-information model is one that combines full belief contraction under oracle information, complete descendant lineage removal, and a distillation-persistence bound that accounts for path-dependence. If this combined model predicts zero residual and the 5.6pp persists, the candidate survives.",
+      "falsifier_expression": "Re-run the source paper's experiment (Ungated skill accumulation on Terminal-Bench 2) with an additional condition: after R5, condition the skill-generation operator on the *full pre-R1 trajectory history* (not just the current skill pool) and measure whether the 5.6pp residual collapses. If it does, the residual is explained by same-information history-dependence and the candidate is reduced. If it persists, the candidate survives. This is a zero-authority evidence-acquisition falsifier.",
+      "endpoint_headroom_requirement": "The candidate is not a gating method (VaG exists); it is a boundary object. The contribution is the formalization of the boundary, the protocol for measuring it, and the prediction about its scaling. The 'headroom' is in the theory (what determines the 5.6pp magnitude and how to predict it before accumulation) and the benchmark (a standardized irreversibility decomposition protocol).",
       "support_inventory_question": "Determine whether primary/author-released artifacts directly expose the observational/interventional units and fields needed for this frozen Pre-F0 falsifier, or whether author-released first-party code / an existing provenance-audited substrate can materialize those units as independent truth under the frozen operationalization. Reconstructed support is admissible only after materialization and provenance hashing, without synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.",
       "required_receipt_dispositions": [
         "HOLD_SUPPORT_UNAVAILABLE",

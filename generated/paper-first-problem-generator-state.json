@@ -1,12 +1,12 @@
 {
   "schema_version": "3.0-double-funnel",
-  "generated_at": "2026-08-18T16:42:30+00:00",
-  "run_id": "20260818T164230Z-ingestion-replay",
-  "generator_model": "minimax-m3",
+  "generated_at": "2026-08-20T14:22:26+00:00",
+  "run_id": "20260820T142226Z-ingestion-replay",
+  "generator_model": "premium-auto",
   "reviewer_model": "deepseek-v4-pro",
   "policy": {
     "zero_candidates_is_valid": true,
-    "discovery_operator_version": "double-funnel-paperability-evolution-v17",
+    "discovery_operator_version": "double-funnel-paperability-evolution-v18-memory-wiki",
     "single_source_anomaly_first_enabled": true,
     "source_coverage_saturation_reopens_once_on_operator_change": true,
     "search_portfolio_enabled": true,
@@ -36,6 +36,17 @@
     "expansion_precedes_reduction": true,
     "attack_repair_split_before_formulation": true,
     "reviewer_objection_is_evolution_input_not_terminal_stop": true,
+    "fanout_is_generation_only": true,
+    "pre_jury_dedup_is_deterministic_mechanical_only": true,
+    "fanout_role_cannot_authorize_terminal_scientific_verdict": true,
+    "terminal_semantic_jury_requires_resolved_model_independence": true,
+    "jury_clear_is_not_scientific_pass": true,
+    "portfolio_retains_multiple_survivors_before_scientific_gate": true,
+    "effort_profile_cannot_change_assurance_thresholds": true,
+    "research_memory_query_pack_required_before_generation": true,
+    "research_memory_query_pack_is_zero_authority": true,
+    "transient_operational_memory_excluded_from_generation": true,
+    "research_memory_query_pack_receipt_required": true,
     "paperability_axes": {
       "P": "principle_or_problem_formulation",
       "M": "method_or_method_boundary",
@@ -54,8 +65,8 @@
     "reduction_falsifiability_contract_required": true,
     "generic_theory_label_cannot_veto": true,
     "format_retry_forbidden": true,
-    "transport_only_no_output_fallback_allowed": false,
-    "transport_fallback_max_additional_provider_attempts": 0,
+    "transport_only_no_output_fallback_allowed": true,
+    "transport_fallback_max_additional_provider_attempts": 1,
     "transport_fallback_requires_zero_auditable_assistant_output": true,
     "transport_fallback_is_single_logical_generator_call": true,
     "thinking_disabled": true,
@@ -113,9 +124,9 @@
     "automatic_method_authority": false,
     "automatic_experiment_authority": false,
     "automatic_p0_authority": false,
-    "strict_provider_transport": true,
+    "strict_provider_transport": false,
     "semantic_reviewer_deferred": false,
-    "thinking_compatibility_repost_allowed": false,
+    "thinking_compatibility_repost_allowed": true,
     "generator_thinking_profile": "disabled",
     "generator_max_output_tokens": 6500,
     "provider_orphan_replay_forbidden": true,
@@ -125,17 +136,17 @@
   },
   "summary": {
     "primary_evidence_records": 32,
-    "raw_seeds": 2,
-    "semantic_unique_seeds": 2,
-    "unique_problem_families": 2,
-    "breadth_archive": 2,
-    "archive_pairwise_distance": 0.8826,
-    "evolved_branches": 0,
-    "max_branch_depth": 1,
-    "reviewer_attacks": 2,
-    "repair_children": 4,
-    "portfolio_calls": 3,
-    "pre_f0_eligible": 2,
+    "raw_seeds": 90,
+    "semantic_unique_seeds": 36,
+    "unique_problem_families": 36,
+    "breadth_archive": 36,
+    "archive_pairwise_distance": 0.8902,
+    "evolved_branches": 36,
+    "max_branch_depth": 3,
+    "reviewer_attacks": 10,
+    "repair_children": 20,
+    "portfolio_calls": 31,
+    "pre_f0_eligible": 3,
     "generated": 0,
     "structurally_reviewable": 0,
     "semantic_clear": 0,
@@ -172,20 +183,20 @@
   },
   "raw_artifacts": {
     "generator": {
-      "sha256": "bfceaa00c61a6782a872c3702844cbe3c35a662b783de59a835f1be17f717534",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "2d5acebb164408d9b65a3e6a94b8f2ab1abfd8c6b917f35c946d7e71781bb9f9",
+      "requested_model": "premium-auto",
+      "resolved_model": "deepseek-v4-pro-260425|kimi-k3|minimax-m3",
       "portfolio": true,
-      "portfolio_sha256": "28d17ad9c7aeddbc6f9c89c58439e91f05dfd328b53636be7b86703b59f56f93",
+      "portfolio_sha256": "c9b1375da22d621f111217a5f07b83c1cf02299f132407fe73e0bed9be106c72",
       "calls": 0,
       "provider_calls_executed": 0,
-      "archived_replay_subcalls": 3,
+      "archived_replay_subcalls": 12,
       "raw_replayed_without_provider": true,
-      "raw_origin_run_id": "20260818T151150Z",
-      "raw_origin_sha256": "65b4f8f8cea19ecb2268dae679c7f6d2d6647030da02642bd0732c9a470a272e"
+      "raw_origin_run_id": "20260820T141425Z",
+      "raw_origin_sha256": "56416126f181ccfc24b536d10f5e6c1a324b5ec96b0dda041c936752194e417e"
     }
   },
-  "generation_notes": "Zero-provider archived formulation-ingestion replay recovered 3 complete formulation candidates from the source double-funnel transaction; 2 are reduction-limited Pre-F0 evidence-acquisition rows, 1 remain machine-blocked, and no semantic-review-required candidate was silently downgraded. Exact same-information reduction remains mandatory before Problem Gate.",
+  "generation_notes": "Zero-provider archived formulation-ingestion replay recovered 6 complete formulation candidates from the source double-funnel transaction; 3 are reduction-limited Pre-F0 evidence-acquisition rows, 3 remain machine-blocked, and no semantic-review-required candidate was silently downgraded. Exact same-information reduction remains mandatory before Problem Gate.",
   "search_diagnostics": {
     "lane_search_priority": [
       "CONTRADICTION",
@@ -203,71 +214,71 @@
     "lane_search": [
       {
         "lane": "CONTRADICTION",
-        "status": "EMPTY",
-        "raw_seed_count": 0,
-        "reason": "No machine-valid grounded seed survived expansion contract."
+        "status": "EXPANDED",
+        "raw_seed_count": 6,
+        "reason": "Search Portfolio expansion shard produced grounded seeds."
       },
       {
         "lane": "CONVERGENT_FAILURE",
-        "status": "EMPTY",
-        "raw_seed_count": 0,
-        "reason": "No machine-valid grounded seed survived expansion contract."
+        "status": "EXPANDED",
+        "raw_seed_count": 12,
+        "reason": "Search Portfolio expansion shard produced grounded seeds."
       },
       {
         "lane": "ASSUMPTION_BREAK",
         "status": "EXPANDED",
-        "raw_seed_count": 2,
+        "raw_seed_count": 6,
         "reason": "Search Portfolio expansion shard produced grounded seeds."
       },
       {
         "lane": "UNEXPLAINED_BOUNDARY",
-        "status": "EMPTY",
-        "raw_seed_count": 0,
-        "reason": "No machine-valid grounded seed survived expansion contract."
+        "status": "EXPANDED",
+        "raw_seed_count": 12,
+        "reason": "Search Portfolio expansion shard produced grounded seeds."
       },
       {
         "lane": "IDENTIFIABILITY_GAP",
-        "status": "EMPTY",
-        "raw_seed_count": 0,
-        "reason": "No machine-valid grounded seed survived expansion contract."
+        "status": "EXPANDED",
+        "raw_seed_count": 6,
+        "reason": "Search Portfolio expansion shard produced grounded seeds."
       },
       {
         "lane": "MISSING_DECISION_OBJECT",
-        "status": "EMPTY",
-        "raw_seed_count": 0,
-        "reason": "No machine-valid grounded seed survived expansion contract."
+        "status": "EXPANDED",
+        "raw_seed_count": 6,
+        "reason": "Search Portfolio expansion shard produced grounded seeds."
       },
       {
         "lane": "COMPOSITION_INTERACTION",
-        "status": "EMPTY",
-        "raw_seed_count": 0,
-        "reason": "No machine-valid grounded seed survived expansion contract."
+        "status": "EXPANDED",
+        "raw_seed_count": 6,
+        "reason": "Search Portfolio expansion shard produced grounded seeds."
       },
       {
         "lane": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
-        "status": "EMPTY",
-        "raw_seed_count": 0,
-        "reason": "No machine-valid grounded seed survived expansion contract."
+        "status": "EXPANDED",
+        "raw_seed_count": 12,
+        "reason": "Search Portfolio expansion shard produced grounded seeds."
       },
       {
         "lane": "NEW_CAPABILITY_QUESTION",
-        "status": "EMPTY",
-        "raw_seed_count": 0,
-        "reason": "No machine-valid grounded seed survived expansion contract."
+        "status": "EXPANDED",
+        "raw_seed_count": 12,
+        "reason": "Search Portfolio expansion shard produced grounded seeds."
       },
       {
         "lane": "LONGITUDINAL_EMERGENCE",
-        "status": "EMPTY",
-        "raw_seed_count": 0,
-        "reason": "No machine-valid grounded seed survived expansion contract."
+        "status": "EXPANDED",
+        "raw_seed_count": 12,
+        "reason": "Search Portfolio expansion shard produced grounded seeds."
       }
     ],
     "last_completed_lane_search": {
-      "run_id": "20260818T164230Z-ingestion-replay",
+      "run_id": "20260820T142226Z-ingestion-replay",
       "generator_status": "GENERATED_PRE_F0_EVIDENCE_ACQUISITION",
-      "generated_at": "2026-08-18T16:42:30+00:00",
+      "generated_at": "2026-08-20T14:22:26+00:00",
       "mode": "portfolio_expansion",
-      "discovery_operator_version": "double-funnel-paperability-evolution-v17",
+      "discovery_operator_version": "double-funnel-paperability-evolution-v18-memory-wiki",
       "lane_search_priority": [
         "CONTRADICTION",
         "CONVERGENT_FAILURE",
@@ -283,103 +294,113 @@
       "lane_search": [
         {
           "lane": "CONTRADICTION",
-          "status": "EMPTY",
-          "raw_seed_count": 0,
-          "reason": "No machine-valid grounded seed survived expansion contract."
+          "status": "EXPANDED",
+          "raw_seed_count": 6,
+          "reason": "Search Portfolio expansion shard produced grounded seeds."
         },
         {
           "lane": "CONVERGENT_FAILURE",
-          "status": "EMPTY",
-          "raw_seed_count": 0,
-          "reason": "No machine-valid grounded seed survived expansion contract."
+          "status": "EXPANDED",
+          "raw_seed_count": 12,
+          "reason": "Search Portfolio expansion shard produced grounded seeds."
         },
         {
           "lane": "ASSUMPTION_BREAK",
           "status": "EXPANDED",
-          "raw_seed_count": 2,
+          "raw_seed_count": 6,
           "reason": "Search Portfolio expansion shard produced grounded seeds."
         },
         {
           "lane": "UNEXPLAINED_BOUNDARY",
-          "status": "EMPTY",
-          "raw_seed_count": 0,
-          "reason": "No machine-valid grounded seed survived expansion contract."
+          "status": "EXPANDED",
+          "raw_seed_count": 12,
+          "reason": "Search Portfolio expansion shard produced grounded seeds."
         },
         {
           "lane": "IDENTIFIABILITY_GAP",
-          "status": "EMPTY",
-          "raw_seed_count": 0,
-          "reason": "No machine-valid grounded seed survived expansion contract."
+          "status": "EXPANDED",
+          "raw_seed_count": 6,
+          "reason": "Search Portfolio expansion shard produced grounded seeds."
         },
         {
           "lane": "MISSING_DECISION_OBJECT",
-          "status": "EMPTY",
-          "raw_seed_count": 0,
-          "reason": "No machine-valid grounded seed survived expansion contract."
+          "status": "EXPANDED",
+          "raw_seed_count": 6,
+          "reason": "Search Portfolio expansion shard produced grounded seeds."
         },
         {
           "lane": "COMPOSITION_INTERACTION",
-          "status": "EMPTY",
-          "raw_seed_count": 0,
-          "reason": "No machine-valid grounded seed survived expansion contract."
+          "status": "EXPANDED",
+          "raw_seed_count": 6,
+          "reason": "Search Portfolio expansion shard produced grounded seeds."
         },
         {
           "lane": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
-          "status": "EMPTY",
-          "raw_seed_count": 0,
-          "reason": "No machine-valid grounded seed survived expansion contract."
+          "status": "EXPANDED",
+          "raw_seed_count": 12,
+          "reason": "Search Portfolio expansion shard produced grounded seeds."
         },
         {
           "lane": "NEW_CAPABILITY_QUESTION",
-          "status": "EMPTY",
-          "raw_seed_count": 0,
-          "reason": "No machine-valid grounded seed survived expansion contract."
+          "status": "EXPANDED",
+          "raw_seed_count": 12,
+          "reason": "Search Portfolio expansion shard produced grounded seeds."
         },
         {
           "lane": "LONGITUDINAL_EMERGENCE",
-          "status": "EMPTY",
-          "raw_seed_count": 0,
-          "reason": "No machine-valid grounded seed survived expansion contract."
+          "status": "EXPANDED",
+          "raw_seed_count": 12,
+          "reason": "Search Portfolio expansion shard produced grounded seeds."
         }
       ],
-      "generation_notes": "Canonical double funnel expanded 2 grounded raw seeds into 2 semantic-unique / 2 structural families, evolved 0 branches, issued 2 attacks and 4 repair children, formulated 0, routed 0 to zero-authority pre-F0 evidence acquisition, and left 0 candidates eligible for independent semantic review after exact machine reduction. Pre-F0 is not a Problem-Gate pass; exact same-information reduction remains mandatory before Paper Design.",
+      "generation_notes": "Canonical double funnel expanded 90 grounded raw seeds into 36 semantic-unique / 36 structural families, evolved 36 branches, issued 10 attacks and 20 repair children, formulated 1, routed 0 to zero-authority pre-F0 evidence acquisition, and left 0 candidates eligible for independent semantic review after exact machine reduction. Pre-F0 is not a Problem-Gate pass; exact same-information reduction remains mandatory before Paper Design.",
+      "scientific_authority": false
+    },
+    "research_memory_query_receipt": {
+      "purpose": "IDEA_SEARCH",
+      "wiki_sha256": "7920f1fc9776f9efa38af76b1a80cec865df5566d0c620587f716615eb2410b5",
+      "query_pack_sha256": "99bf6f6e9bc54e088fedd7f2da304b842ade9443fe26277a087803c48069558e",
+      "selected_memory_ids": [
+        "MEM-SCIE-77c61f9dd2885367c0",
+        "MEM-SEAR-ad180c70ac80541fa2",
+        "MEM-SEAR-d12c6b33551e19336e",
+        "MEM-SCIE-63da8f6c3c1c818d32",
+        "MEM-FAIL-3e2becf9494c7fbbcc"
+      ],
+      "selected": 5,
       "scientific_authority": false
     },
     "scientific_authority": false
   },
   "saturation_memory": {
-    "ledger_entries": 2,
+    "ledger_entries": 1,
     "prior_identical_zero_runs": 0,
     "current_run_recorded": true,
     "current_review_receipt": {
-      "run_id": "20260818T164230Z-ingestion-replay",
-      "pool_sha256": "469610a945fd220e53c5b59708c23e5f3d08aa125281821d528c577aff2c5eb3",
+      "run_id": "20260820T142226Z-ingestion-replay",
+      "pool_sha256": "b2794d6d77d4ef76fcfcf85676ec5ae2128c9c234a29a9ef90c94525f6ce3526",
       "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
-      "discovery_operator_version": "double-funnel-paperability-evolution-v17",
+      "discovery_operator_version": "double-funnel-paperability-evolution-v18-memory-wiki",
       "source_refs": [
-        "arXiv:2606.23075",
-        "arXiv:2606.23303",
-        "arXiv:2606.24081",
-        "arXiv:2608.07955",
-        "arXiv:2608.08303",
-        "arXiv:2608.08466",
-        "arXiv:2608.08600",
-        "arXiv:2608.09044",
-        "arXiv:2608.09096",
-        "arXiv:2608.09292",
-        "arXiv:2608.09476",
-        "arXiv:2608.09819",
-        "arXiv:2608.09885",
-        "arXiv:2608.10157",
-        "arXiv:2608.10178",
-        "arXiv:2608.12851",
-        "arXiv:2608.12977",
-        "arXiv:2608.13040",
+        "arXiv:2608.03392",
+        "arXiv:2608.03509",
+        "arXiv:2608.03764",
+        "arXiv:2608.04872",
+        "arXiv:2608.04968",
+        "arXiv:2608.05030",
+        "arXiv:2608.05144",
+        "arXiv:2608.05446",
+        "arXiv:2608.05563",
+        "arXiv:2608.05628",
+        "arXiv:2608.05810",
+        "arXiv:2608.06020",
+        "arXiv:2608.06144",
+        "arXiv:2608.06474",
+        "arXiv:2608.07449",
+        "arXiv:2608.07622",
         "arXiv:2608.13951",
         "arXiv:2608.14036",
         "arXiv:2608.14270",
-        "arXiv:2608.14441",
-        "arXiv:2608.14621",
         "arXiv:2608.15071",
         "arXiv:2608.15089",
         "arXiv:2608.15165",
@@ -388,12 +409,16 @@
         "arXiv:2608.16211",
         "arXiv:2608.16411",
         "arXiv:2608.16590",
-        "arXiv:2608.16806"
+        "arXiv:2608.17684",
+        "arXiv:2608.17774",
+        "arXiv:2608.17933",
+        "arXiv:2608.18066",
+        "arXiv:2608.19013"
       ],
       "status": "GENERATED_PRE_F0_EVIDENCE_ACQUISITION",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
-      "raw_sha256": "bfceaa00c61a6782a872c3702844cbe3c35a662b783de59a835f1be17f717534",
+      "requested_model": "premium-auto",
+      "resolved_model": "deepseek-v4-pro-260425|kimi-k3|minimax-m3",
+      "raw_sha256": "2d5acebb164408d9b65a3e6a94b8f2ab1abfd8c6b917f35c946d7e71781bb9f9",
       "scientific_authority": false
     },
     "portable_review_receipts": [
@@ -1580,34 +1605,30 @@
         "scientific_authority": false
       },
       {
-        "run_id": "20260818T164230Z-ingestion-replay",
-        "pool_sha256": "469610a945fd220e53c5b59708c23e5f3d08aa125281821d528c577aff2c5eb3",
+        "run_id": "20260820T141425Z",
+        "pool_sha256": "b2794d6d77d4ef76fcfcf85676ec5ae2128c9c234a29a9ef90c94525f6ce3526",
         "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
-        "discovery_operator_version": "double-funnel-paperability-evolution-v17",
+        "discovery_operator_version": "double-funnel-paperability-evolution-v18-memory-wiki",
         "source_refs": [
-          "arXiv:2606.23075",
-          "arXiv:2606.23303",
-          "arXiv:2606.24081",
-          "arXiv:2608.07955",
-          "arXiv:2608.08303",
-          "arXiv:2608.08466",
-          "arXiv:2608.08600",
-          "arXiv:2608.09044",
-          "arXiv:2608.09096",
-          "arXiv:2608.09292",
-          "arXiv:2608.09476",
-          "arXiv:2608.09819",
-          "arXiv:2608.09885",
-          "arXiv:2608.10157",
-          "arXiv:2608.10178",
-          "arXiv:2608.12851",
-          "arXiv:2608.12977",
-          "arXiv:2608.13040",
+          "arXiv:2608.03392",
+          "arXiv:2608.03509",
+          "arXiv:2608.03764",
+          "arXiv:2608.04872",
+          "arXiv:2608.04968",
+          "arXiv:2608.05030",
+          "arXiv:2608.05144",
+          "arXiv:2608.05446",
+          "arXiv:2608.05563",
+          "arXiv:2608.05628",
+          "arXiv:2608.05810",
+          "arXiv:2608.06020",
+          "arXiv:2608.06144",
+          "arXiv:2608.06474",
+          "arXiv:2608.07449",
+          "arXiv:2608.07622",
           "arXiv:2608.13951",
           "arXiv:2608.14036",
           "arXiv:2608.14270",
-          "arXiv:2608.14441",
-          "arXiv:2608.14621",
           "arXiv:2608.15071",
           "arXiv:2608.15089",
           "arXiv:2608.15165",
@@ -1616,12 +1637,61 @@
           "arXiv:2608.16211",
           "arXiv:2608.16411",
           "arXiv:2608.16590",
-          "arXiv:2608.16806"
+          "arXiv:2608.17684",
+          "arXiv:2608.17774",
+          "arXiv:2608.17933",
+          "arXiv:2608.18066",
+          "arXiv:2608.19013"
+        ],
+        "status": "GENERATED_ZERO_CANDIDATES",
+        "requested_model": "premium-auto",
+        "resolved_model": "deepseek-v4-pro-260425|kimi-k3|minimax-m3",
+        "raw_sha256": "56416126f181ccfc24b536d10f5e6c1a324b5ec96b0dda041c936752194e417e",
+        "scientific_authority": false
+      },
+      {
+        "run_id": "20260820T142226Z-ingestion-replay",
+        "pool_sha256": "b2794d6d77d4ef76fcfcf85676ec5ae2128c9c234a29a9ef90c94525f6ce3526",
+        "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
+        "discovery_operator_version": "double-funnel-paperability-evolution-v18-memory-wiki",
+        "source_refs": [
+          "arXiv:2608.03392",
+          "arXiv:2608.03509",
+          "arXiv:2608.03764",
+          "arXiv:2608.04872",
+          "arXiv:2608.04968",
+          "arXiv:2608.05030",
+          "arXiv:2608.05144",
+          "arXiv:2608.05446",
+          "arXiv:2608.05563",
+          "arXiv:2608.05628",
+          "arXiv:2608.05810",
+          "arXiv:2608.06020",
+          "arXiv:2608.06144",
+          "arXiv:2608.06474",
+          "arXiv:2608.07449",
+          "arXiv:2608.07622",
+          "arXiv:2608.13951",
+          "arXiv:2608.14036",
+          "arXiv:2608.14270",
+          "arXiv:2608.15071",
+          "arXiv:2608.15089",
+          "arXiv:2608.15165",
+          "arXiv:2608.15763",
+          "arXiv:2608.16114",
+          "arXiv:2608.16211",
+          "arXiv:2608.16411",
+          "arXiv:2608.16590",
+          "arXiv:2608.17684",
+          "arXiv:2608.17774",
+          "arXiv:2608.17933",
+          "arXiv:2608.18066",
+          "arXiv:2608.19013"
         ],
         "status": "GENERATED_PRE_F0_EVIDENCE_ACQUISITION",
-        "requested_model": "minimax-m3",
-        "resolved_model": "minimax-m3",
-        "raw_sha256": "bfceaa00c61a6782a872c3702844cbe3c35a662b783de59a835f1be17f717534",
+        "requested_model": "premium-auto",
+        "resolved_model": "deepseek-v4-pro-260425|kimi-k3|minimax-m3",
+        "raw_sha256": "2d5acebb164408d9b65a3e6a94b8f2ab1abfd8c6b917f35c946d7e71781bb9f9",
         "scientific_authority": false
       }
     ],
@@ -1821,48 +1891,47 @@
       "scientific_authority": false
     },
     "scientific_authority": false,
-    "portable_review_receipt_count": 28
+    "portable_review_receipt_count": 29
   },
   "pre_f0_candidates": [
     {
-      "candidate_id": "PORT-001",
-      "title": "Rank-inverted skill harm across harnesses as a non-composability witness",
-      "discovery_lane": "ASSUMPTION_BREAK",
-      "source_branch_id": "ASSUMPTION_BREAK-P2-001-R1",
+      "candidate_id": "PORT-003",
+      "title": "Procedural Interference Score as a Predictor of Negative Transfer in Memory-Augmented Agents",
+      "discovery_lane": "UNEXPLAINED_BOUNDARY",
+      "source_branch_id": "UNEXPLAINED_BOUNDARY-P1-006-R1",
       "primary_refs": [
-        "arXiv:2608.08303",
-        "arXiv:2608.14036"
+        "arXiv:2608.16114"
       ],
       "paperability_axes": {
         "P": {
           "label": "principle_or_problem_formulation",
-          "status": "OPEN",
-          "rationale": "The separability/irreducibility question (is the library-harness joint object a non-composability witness or a measurable interaction term?) is a genuine new problem formulation that has not been posed this way; it requires matched-invocation-statistics evaluation to separate interaction from irreducibility. Not fully supported yet because no published work has stated this exact witness or designed the matched-invocation protocol."
+          "status": "REDUCED",
+          "rationale": "The boundary phenomenon (memory augmentation hurting performance) is a specific instance of the mature procedural-memory-nonmonotonicity pattern in the reduction ledger. Nonmonotonic reasoning and belief revision formalisms already express how adding a relevant memory can retract previously correct behavior. The exact reduction test is unresolved (pending_pattern: procedural-memory-nonmonotonicity) but the principle axis is reduced."
         },
         "M": {
           "label": "method_or_method_boundary",
           "status": "PLAUSIBLE",
-          "rationale": "A method-axis contribution is conceivable as a matched-retrieval-statistics evaluation protocol (instrumenting the harness retrieval-to-action boundary to record hit rate, context distribution, and invocation depth, then computing rank correlations across harnesses). This is a concrete, testable method but not yet established as superior to existing cross-harness transfer protocols in arXiv:2608.14036."
+          "rationale": "The procedural interference score itself, if it survives same-information baselines (e.g., a simple retrieval-similarity mismatch score, a skill-content vs. task-requirement alignment score), could constitute a novel measurement/method-boundary contribution. However, the score is not yet concretely defined; it needs an ex-ante formula, not just a description."
         },
         "E": {
           "label": "empirical_phenomenon",
           "status": "PLAUSIBLE",
-          "rationale": "An empirical phenomenon axis (rank inversion under matched retrieval statistics) is testable: the experiment holds the library fixed, varies the harness, and measures whether the harm ranking inverts. This is the cheapest falsifier and the most concrete surviving axis."
+          "rationale": "The empirical phenomenon (Cheatsheet −9.00, Voyager −7.00 vs. HyperSkill +6.00 to +11.18 on the same xBench tasks) is a genuine measurable failure regime. However, the phenomenon is already documented in the primary source (arXiv:2608.16114) as a single observation; the contribution would need a systematic characterization across a controlled grid of interference levels and method types."
         },
         "B": {
           "label": "benchmark_or_evaluation",
           "status": "OPEN",
-          "rationale": "A benchmark/evaluation axis could emerge if a matched-invocation protocol becomes a reusable artifact, but the current branch does not yet propose a benchmark; only an evaluation protocol."
+          "rationale": "No benchmark/evaluation protocol for measuring procedural interference exists. A controlled benchmark that pairs memory methods with task-misalignment conditions and measures the resulting negative transfer would be a concrete contribution, but it is not yet defined."
         },
         "T": {
           "label": "theory_or_guarantee",
-          "status": "REDUCED",
-          "rationale": "The theory axis is reduced by the interaction-effect / CATE mature theory: a monotone composition function with harness-specific invocation rates is a standard interaction-term model, so the theory contribution cannot survive without an irreducibility result."
+          "status": "OPEN",
+          "rationale": "No theoretical guarantee is proposed. A bounded prediction (e.g., interference score X predicts negative transfer with probability P) would be a contribution, but it is not formulated."
         },
         "S": {
           "label": "system_or_capability",
           "status": "NOT_CLAIMED",
-          "rationale": "No system capability is claimed."
+          "rationale": "No system/capability contribution is claimed. The branch is diagnostic/explanatory, not constructive."
         }
       },
       "surviving_paperability_axes": [
@@ -1875,13 +1944,13 @@
       ],
       "route_reason": "EXACT_REDUCTION_PENDING",
       "reduction_blockers": [
-        "saturation-exact-reduction-pending:harness-update-scope-heterogeneity",
+        "saturation-exact-reduction-pending:procedural-memory-nonmonotonicity",
         "unresolved-exact-reduction-test:1"
       ],
-      "exact_prediction": "If a fixed TBA-poisoned library from arXiv:2608.08303 is evaluated on two harnesses (Codex, Gemini-CLI) with matched retrieval-hit-rate, context distribution, and invocation depth, the harm ranking of triggered tasks will either (a) remain stable, in which case the cross-harness divergence in arXiv:2608.14036 is a measurable interaction term, or (b) invert, in which case the joint object is non-composable and the separability assumption is empirically broken.",
-      "strongest_same_information_baseline": "A monotone composition function h(L, H) = f(L) + g(H) + α(L)·β(H) where f is library harm, g is harness baseline harm, and α·β is the interaction term, fit to the same matched-statistics data. If this baseline reproduces the observed cross-harness ranking, irreducibility is refuted.",
-      "cheapest_problem_falsifier": "Take a frozen TBA-poisoned library from arXiv:2608.08303, instrument two harnesses (Codex, Gemini-CLI) to record retrieval-hit-rate, context distribution, and invocation depth, then evaluate the library on the same task suite with matched statistics. If the harm ranking is stable, irreducibility is refuted and the branch returns to 'measurable interaction term.' If the ranking inverts, the joint object is non-composable and the candidate survives.",
-      "endpoint_headroom_requirement": "Requires running a controlled matched-invocation experiment, which depends on access to both harnesses and the ability to instrument the retrieval-invocation boundary. This is non-trivial but within reach of the paper's authors if they have framework access.",
+      "exact_prediction": "For xBench tasks where Cheatsheet or Voyager is used, the procedural interference score (defined as a measure of discrepancy between the retrieved skill's executable procedure and the task's required step sequence) will predict a negative transfer event (performance below the no-memory baseline) with AUC > 0.7 on a held-out set, and this AUC will be statistically significantly higher than a same-information conflict-detection baseline and a same-information utilization-diagnostic baseline.",
+      "strongest_same_information_baseline": "A conflict-detection baseline that flags retrieved memories containing explicit contradiction markers (supersedes, contradicts, applicability-boundary violations) relative to the task requirements, receiving the same retrieved memory, task requirements, and retrieval confidence as the interference score.",
+      "cheapest_problem_falsifier": "Run a controlled comparison on xBench with Cheatsheet and Voyager: (1) oracle-load the retrieved memory (force utilization), (2) compute the proposed procedural interference score on each instance, (3) compute a same-information conflict-detection baseline on the same instances, (4) measure whether the score predicts negative transfer with higher AUC than the baseline. If not, the score is reduced.",
+      "endpoint_headroom_requirement": "The interference score must be defined as a pre-outcome measure (computable from retrieved memory + task requirements alone, before observing the agent's trajectory or outcome). Post-hoc trajectory geometry or endpoint-leaking features are not admissible.",
       "post_f0_requirement": "RERUN_EXACT_SAME_INFORMATION_REDUCTION_BEFORE_PROBLEM_GATE",
       "scientific_authority": false,
       "authority": {
@@ -1890,68 +1959,68 @@
         "experiment": false,
         "p0": false,
         "gpu": false
-      }
+      },
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "6d22f8aae4c4130b41a5b14a2a9d961c695087fb45cb2581397b6c9ca676b447"
     },
     {
-      "candidate_id": "PORT-003",
-      "title": "Timescale-isolated ablation of action-frequency governance on a frozen skill set",
-      "discovery_lane": "ASSUMPTION_BREAK",
-      "source_branch_id": "ASSUMPTION_BREAK-P2-004-R1",
+      "candidate_id": "PORT-004",
+      "title": "Information-Set Dependence of Irrecoverable Contamination Loss in Self-Evolving Skill Pools",
+      "discovery_lane": "UNEXPLAINED_BOUNDARY",
+      "source_branch_id": "UNEXPLAINED_BOUNDARY-P1-005-R1",
       "primary_refs": [
-        "arXiv:2608.09096",
-        "arXiv:2608.16590"
+        "arXiv:2608.05810"
       ],
       "paperability_axes": {
         "P": {
           "label": "principle_or_problem_formulation",
-          "status": "REDUCED",
-          "rationale": "The principle that closed-loop self-evolution is regime-dependent is already stated in arXiv:2608.16590 itself; the problem is not to argue the principle but to test it under a controlled ablation the source omits."
+          "status": "PLAUSIBLE",
+          "rationale": "The paper would formulate a previously-unnamed structural decomposition: 'recoverable under partial-info' vs 'recoverable under full-oracle' vs 'irrecoverable under any known-info'. This is a genuine problem-formulation axis because the primary source only defines two levels (partial removal and full oracle) and does not isolate the specific information dimension that controls each sub-recovery."
         },
         "M": {
           "label": "method_or_method_boundary",
-          "status": "SUPPORTED",
-          "rationale": "The methodological move is concrete and fresh: a four-arm timescale-isolated ablation (A post-hoc only, B episode-level+retrieval, C skill-level closed-loop, D full Zetta) holding skill library, base policy, compute, and task suite fixed, where C is a standalone insertable module. This is not a generic ablation; it specifically isolates the fast-timescale contribution that no current source implements as a separately testable module."
+          "status": "PLAUSIBLE",
+          "rationale": "A method-boundary contribution is plausible: systematically varying the information set available to a cleanup oracle (e.g., skill identity only, skill identity + distilled text of descendants, skill identity + embedding-space signature, full intermediate activation trace) and measuring the resulting recovery curve. This is a different method from the existing Oracle because it probes the information dimension, not just the completeness of it."
         },
         "E": {
           "label": "empirical_phenomenon",
-          "status": "SUPPORTED",
-          "rationale": "The empirical phenomenon — a monotone A<B<C<D ordering with a dominant C→D jump on a frozen skill library and frozen base policy — is a falsifiable, measurable prediction. If C→D is the dominant contributor on the released GR00T+LIBERO-Pro+RoboCasa suite, the primitive is supported; if B→C dominates and C→D is near zero, the primitive is falsified."
+          "status": "OPEN",
+          "rationale": "The primary source already supplies the endpoint (5.6pp irrecoverable) but does not supply the curve. A controlled empirical sweep across information-set levels would constitute a new empirical phenomenon only if the curve is non-flat (i.e., some sub-recovery is unlocked by adding dimensions beyond source-identity) and is not a simple artifact of detection/coverage limits. The first-party setup in arXiv:2608.05810 is sufficient to materialize the sweep, but the result is not yet observed."
         },
         "B": {
           "label": "benchmark_or_evaluation",
           "status": "OPEN",
-          "rationale": "A new evaluation protocol (timescale-isolated ablation harness) is implicitly proposed, but its portability beyond the Zetta/GR00T substrate is unverified; status kept OPEN because the contribution can stand on M+E without a standalone B claim."
+          "rationale": "A new benchmark axis is conceivable (e.g., a per-round information-set-stratified recovery benchmark on Terminal-Bench 2), but the existing primary-source benchmark already suffices for the cheapest falsifier; no standalone benchmark claim is required for the core paper."
         },
         "T": {
           "label": "theory_or_guarantee",
           "status": "OPEN",
-          "rationale": "No formal guarantee is claimed. A theoretical account of why action-frequency governance is necessary could be added (e.g., under what R ratio it is needed), but the candidate as stated is empirical."
+          "rationale": "A theoretical guarantee axis (e.g., a lower bound on irrecoverable loss as a function of pool contamination depth) is conceivable but unformulated; the primary source gives no theorem to match against, so a theory contribution would require independent derivation and a same-information comparison with the procedural-memory-nonmonotonicity and belief-revision ledgers."
         },
         "S": {
           "label": "system_or_capability",
           "status": "NOT_CLAIMED",
-          "rationale": "No new system or capability is being released; the contribution is an evaluation artifact on top of released infrastructure."
+          "rationale": "No system-capability claim is being advanced; the paper is about the characterization of an existing system's failure mode, not a new system."
         }
       },
       "surviving_paperability_axes": [
-        "M",
-        "E"
+        "P",
+        "M"
       ],
       "non_principle_surviving_axes": [
-        "M",
-        "E"
+        "M"
       ],
       "route_reason": "EXACT_REDUCTION_PENDING",
       "reduction_blockers": [
-        "saturation-exact-reduction-pending:harness-update-scope-heterogeneity",
-        "saturation-exact-reduction-pending:persistent-update-vs-test-time-compute",
+        "saturation-exact-reduction-pending:cross-layer-behavior-persistence",
+        "saturation-exact-reduction-pending:procedural-memory-nonmonotonicity",
         "unresolved-exact-reduction-test:1",
         "unresolved-exact-reduction-test:2"
       ],
-      "exact_prediction": "On the released frozen GR00T + LIBERO-Pro + RoboCasa substrate with matched skill library, base policy, and compute, the C→D contribution will be ≥5pp macro-average success and will exceed the matched-frequency HRL baseline's C→D contribution by ≥2pp; if either inequality fails, the primitive claim is falsified.",
-      "strongest_same_information_baseline": "A hierarchical-RL controller with matched fast-timescale decision frequency, matched slow-timescale structure, matched skill library, matched base policy, and matched per-action compute, but no governance/closed-loop module — the strongest same-information baseline that does not implement the claimed primitive.",
-      "cheapest_problem_falsifier": "Run the four-arm ablation (A, B, C, D) on the released GR00T + LIBERO-Pro subset (or a smaller frozen-skill frozen-base-policy subset thereof) with matched compute, matched skill library, and matched per-action re-ranking baseline. If C→D < 2pp or if the matched-frequency HRL baseline reproduces ≥90% of the C→D gap, the primitive claim is falsified. Estimated cost: small relative to full Zetta training because the base policy and skill library are frozen.",
-      "endpoint_headroom_requirement": "The C→D contribution must be measured on tasks where the full Zetta D has not yet saturated (e.g., tasks where D is in the 70–90% range), not on tasks where D is at ceiling; otherwise the gap is unmeasurable.",
+      "exact_prediction": "Under a preregistered information-set sweep on the released Terminal-Bench 2 skill pools from arXiv:2608.05810, the recovery curve indexed by information kind (source identity < +descendant text < +embedding state < full activation trace) will either be flat at 5.6pp irrecoverable (falsifying the P+M axes) or non-flat (supporting them). A non-flat curve with a strictly positive sub-component unlocked by information beyond source identity is the cheapest positive result.",
+      "strongest_same_information_baseline": "The existing Oracle protocol in arXiv:2608.05810 Figure 4, extended to be a multi-level oracle stratified by information kind, run on the same Terminal-Bench 2 tasks and same released R1–R5 skill pools.",
+      "cheapest_problem_falsifier": "On the released arXiv:2608.05810 Terminal-Bench 2 R5 skill pool, run a 4-level information-set sweep: (L0) source-identity-only oracle, (L1) + distilled text of descendants, (L2) + embedding centroids of descendants, (L3) full Oracle as in Figure 4. Measure recovery at each level on the same held-out task set. If recovery is constant across L0–L3 (within noise), the 5.6pp is information-invariant and the P+M axes collapse. If recovery increases by a practically large amount from L0 to L3, the P+M axes survive. This is implementable from the primary source's released artifacts at zero method-development cost.",
+      "endpoint_headroom_requirement": "Branch requires headroom on the recovery axis (the 5.6pp is the unresolved headroom) and on the information-set axis (no curve is published); both are pre-existing headroom in the primary source's own measurement, not new degrees of freedom introduced by the branch.",
       "post_f0_requirement": "RERUN_EXACT_SAME_INFORMATION_REDUCTION_BEFORE_PROBLEM_GATE",
       "scientific_authority": false,
       "authority": {
@@ -1960,28 +2029,102 @@
         "experiment": false,
         "p0": false,
         "gpu": false
-      }
+      },
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "2c43d3a2af96523948cab81d83e489de020e82116175ec9a3c71f2d3ed5f641d"
+    },
+    {
+      "candidate_id": "PORT-006",
+      "title": "Cross-Round Contamination Irreversibility Boundary: A 5.6pp Irrecoverable Performance Residual Under Oracle Cleanup",
+      "discovery_lane": "UNEXPLAINED_BOUNDARY",
+      "source_branch_id": "UNEXPLAINED_BOUNDARY-P1-005",
+      "primary_refs": [
+        "arXiv:2608.05810"
+      ],
+      "paperability_axes": {
+        "P": {
+          "label": "principle_or_problem_formulation",
+          "status": "REDUCED",
+          "rationale": "Non-monotonic capability degradation under accumulation is partially addressed by the source paper's own phase-transition formalization. However, the *irreversibility boundary* (oracle-cleanup-resistant residual) is not formulated as a distinct problem elsewhere. The P axis is reduced but the distinctness lies in the boundary object, not the nonmonotonicity problem."
+        },
+        "M": {
+          "label": "method_or_method_boundary",
+          "status": "NOT_CLAIMED",
+          "rationale": "This is not a method paper; VaG is the source paper's own solution, not the candidate's contribution."
+        },
+        "E": {
+          "label": "empirical_phenomenon",
+          "status": "SUPPORTED",
+          "rationale": "The 12.3pp → 6.7pp (recoverable) → 5.6pp (irrecoverable) decomposition is a strong, concrete, replicable empirical phenomenon from Terminal-Bench 2 with 50-task statistical support, a clear measurement protocol, and a sharp boundary observation. The boundary at 5.6pp is a genuinely new measured failure regime that defines a specific regime change in self-evolution dynamics."
+        },
+        "B": {
+          "label": "benchmark_or_evaluation",
+          "status": "SUPPORTED",
+          "rationale": "The cleanup decomposition (source removal → 1.7pp, lineage cleanup → 5.0pp, oracle cleanup → 5.6pp residual) is itself a benchmark protocol for evaluating any pre-commit gating method. Other gating systems can be scored on what fraction of their contamination is pre-commit vs irrecoverable post-hoc."
+        },
+        "T": {
+          "label": "theory_or_guarantee",
+          "status": "PLAUSIBLE",
+          "rationale": "The source paper provides a phase-transition formalization. An exact theoretical account of *why* the 5.6pp is irrecoverable (e.g., a lower bound on the information loss from cross-round contamination in a sampling/distillation process) would elevate T, but this requires a new theoretical contribution, not just a restatement."
+        },
+        "S": {
+          "label": "system_or_capability",
+          "status": "NOT_CLAIMED",
+          "rationale": "No system capability claim is made."
+        }
+      },
+      "surviving_paperability_axes": [
+        "E",
+        "B",
+        "T"
+      ],
+      "non_principle_surviving_axes": [
+        "E",
+        "B",
+        "T"
+      ],
+      "route_reason": "EXACT_REDUCTION_PENDING",
+      "reduction_blockers": [
+        "saturation-exact-reduction-pending:procedural-memory-nonmonotonicity",
+        "unresolved-exact-reduction-test:1",
+        "unresolved-exact-reduction-test:2",
+        "unresolved-exact-reduction-test:3"
+      ],
+      "exact_prediction": "Under oracle cleanup (perfect information about all contaminating skills and their full descendant lineages), a measurable performance residual of 5.6pp ± noise will persist, and this residual will scale with the number of distillation rounds (R), not with the size of the contaminating skill set alone.",
+      "strongest_same_information_baseline": "AGM belief contraction + standard unlearning + iterated self-distillation persistence: the best same-information model is one that combines full belief contraction under oracle information, complete descendant lineage removal, and a distillation-persistence bound that accounts for path-dependence. If this combined model predicts zero residual and the 5.6pp persists, the candidate survives.",
+      "cheapest_problem_falsifier": "Re-run the source paper's experiment (Ungated skill accumulation on Terminal-Bench 2) with an additional condition: after R5, condition the skill-generation operator on the *full pre-R1 trajectory history* (not just the current skill pool) and measure whether the 5.6pp residual collapses. If it does, the residual is explained by same-information history-dependence and the candidate is reduced. If it persists, the candidate survives. This is a zero-authority evidence-acquisition falsifier.",
+      "endpoint_headroom_requirement": "The candidate is not a gating method (VaG exists); it is a boundary object. The contribution is the formalization of the boundary, the protocol for measuring it, and the prediction about its scaling. The 'headroom' is in the theory (what determines the 5.6pp magnitude and how to predict it before accumulation) and the benchmark (a standardized irreversibility decomposition protocol).",
+      "post_f0_requirement": "RERUN_EXACT_SAME_INFORMATION_REDUCTION_BEFORE_PROBLEM_GATE",
+      "scientific_authority": false,
+      "authority": {
+        "paper_design": false,
+        "method": false,
+        "experiment": false,
+        "p0": false,
+        "gpu": false
+      },
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "f58d45a4c280b17df06d70acf0845f8f1317078724b228ee5bbc460eafdc5071"
     }
   ],
   "candidates": [],
-  "primary_pool_age_hours": 0.015,
+  "primary_pool_age_hours": 0.0157,
   "source_coverage": {
-    "coverage_exhausted": true,
+    "coverage_exhausted": false,
     "source_retrieval_complete": true,
-    "eligible_lane_linked_sources": 184,
-    "reviewed_lane_linked_sources": 184,
-    "unreviewed_lane_linked_sources": 0,
-    "unreviewed_no_lane_sources": 3,
-    "carrier_probe_required": true,
+    "eligible_lane_linked_sources": 187,
+    "reviewed_lane_linked_sources": 183,
+    "unreviewed_lane_linked_sources": 4,
+    "unreviewed_no_lane_sources": 4,
+    "carrier_probe_required": false,
     "carrier_probe_pending": 0,
     "carrier_probe_complete": true,
     "scientific_authority": false
   },
-  "operator_recompile_reason": "Source coverage is saturated, but this evidence pool has no completed receipt for the current anomaly-first discovery operator. One bounded recompilation is allowed; scientific gates are unchanged.",
   "discovery_transaction_audit": {
     "mode": "CANONICAL_DOUBLE_FUNNEL",
-    "pool_sha256": "469610a945fd220e53c5b59708c23e5f3d08aa125281821d528c577aff2c5eb3",
-    "discovery_operator_version": "double-funnel-paperability-evolution-v17",
+    "pool_sha256": "b2794d6d77d4ef76fcfcf85676ec5ae2128c9c234a29a9ef90c94525f6ce3526",
+    "discovery_operator_version": "double-funnel-paperability-evolution-v18-memory-wiki",
     "target_raw_seeds": 120,
     "generator_subcall_budget": 48,
     "semantic_reviewer_subcall_budget": 4,
@@ -1991,592 +2134,458 @@
   "portfolio_provenance": [
     {
       "role": "expand-contradiction-p2",
-      "sha256": "25e4f97ba4d9d96cc17b01ef5ef0bf6781497b506e09e9dff7ea1892c29d6fbc",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "d1d41087e9a35a6457e1f9c223d678d8e8e122ff329b3a23a3202a5ca00fd848",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.85,
-      "request_fingerprint": "d38420a826cc8c3e8bfa5ace60f594703b55ed67e53b3d8e884bbfdd492e0cae",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "b8a7adad1d3a5b67c7c10edf2abee76cc7e3644b129d799e2e0b75d4b1b59475",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "2cfc3b50078435305d8acc21c423f9303001fee0a9c51891c91f660e83948b2a",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "c7c44a5202cad7c5193d5ab3a2dffd05a72b552cc68f303cde461668b02c36cf",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "d1d41087e9a35a6457e1f9c223d678d8e8e122ff329b3a23a3202a5ca00fd848",
+      "raw_origin_request_fingerprint": "c7c44a5202cad7c5193d5ab3a2dffd05a72b552cc68f303cde461668b02c36cf"
     },
     {
       "role": "expand-contradiction-p1",
-      "sha256": "c4ab6a50f8c5fa9821086d353b55df9a9af6fd98904a0c833d25a5d12b7bb045",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "125ba00ded9b6415a0840307c7ac6130a8dfe5311660a69208759bd820257e6f",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.85,
-      "request_fingerprint": "5d943d0519489a1222bd4500890bcd8dc469e37379f1a4b557931cc7f493fb95",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "b8a7adad1d3a5b67c7c10edf2abee76cc7e3644b129d799e2e0b75d4b1b59475",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "2cfc3b50078435305d8acc21c423f9303001fee0a9c51891c91f660e83948b2a",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
-    },
-    {
-      "role": "expand-convergent_failure-p2",
-      "sha256": "9613ab6eebede39f55efadf9631a4308f838ea3d8ed85402885db9fe8daba885",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
-      "temperature": 0.85,
-      "request_fingerprint": "4add8440f40aa3c328941141267edf840394e1817ff7a2072ee8c7813b578aa7",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "732d755027aafb0fe18d1565f4ddd43cd3498b692f29cad24db7a2249aa6d00a",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "d34417484f1f04ff3b5d9b12ac68366998f0701d3d570be499dc66893695d939",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "108d72122d95e00edc13f4890969ddb6776ceb0d1fa0a40462f524f6db3fd32e",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "125ba00ded9b6415a0840307c7ac6130a8dfe5311660a69208759bd820257e6f",
+      "raw_origin_request_fingerprint": "108d72122d95e00edc13f4890969ddb6776ceb0d1fa0a40462f524f6db3fd32e"
     },
     {
       "role": "expand-convergent_failure-p1",
-      "sha256": "fe7899b4525402bf268025f952ee33957c8cc4702aa55601b766cd6dc1c071ca",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "c7cb9c8803410ab8289325792ec3d67ad370cce139e0c38ba461244c9dbf3e8b",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.85,
-      "request_fingerprint": "79a30bdcd8d8052b8f3a819369c54fcdecb7b2868c0bb944d6b440ebf20d0047",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "732d755027aafb0fe18d1565f4ddd43cd3498b692f29cad24db7a2249aa6d00a",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "d34417484f1f04ff3b5d9b12ac68366998f0701d3d570be499dc66893695d939",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "38b19921f0c6eee71b99e25a9241f2ff61ea4d2411f0148e13005b678f1b5548",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "c7cb9c8803410ab8289325792ec3d67ad370cce139e0c38ba461244c9dbf3e8b",
+      "raw_origin_request_fingerprint": "38b19921f0c6eee71b99e25a9241f2ff61ea4d2411f0148e13005b678f1b5548"
+    },
+    {
+      "role": "expand-convergent_failure-p2",
+      "sha256": "7da5394734b6f47587e8eb701e1b24bc0596d216162a7fe9fdc15ed9d5559fd1",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "temperature": 0.85,
+      "request_fingerprint": "43f909594b049bce32692c8a596e28c0585594ed1e8598f79bdf41ae7a9c23e7",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "7da5394734b6f47587e8eb701e1b24bc0596d216162a7fe9fdc15ed9d5559fd1",
+      "raw_origin_request_fingerprint": "43f909594b049bce32692c8a596e28c0585594ed1e8598f79bdf41ae7a9c23e7"
     },
     {
       "role": "expand-assumption_break-p1",
-      "sha256": "7479154d83c08838dae6e0c2c45dc6f06dfec53291f5d7f250a20a349eacdb91",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "9de7b8a47d317008c748fdc75c31aa32416987f0c700fcf983b0901b3fd3e19b",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.85,
-      "request_fingerprint": "f022c80374b35f5a0067781727ced7d63613f1ea6f099e4f968bcb9e4e947d59",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "538e4b7c93084af92f0aedb3551384ddc4185ab6896d04fcf4b28270c23cea9d",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "d253a3d87058e782bd55099227c7ce602a048c87ab44b3e0e5182768412b0696",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "7cfe049918918fc45fd8662f1c33cc91737172c6d3bc4e224a020af73841d0c2",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "9de7b8a47d317008c748fdc75c31aa32416987f0c700fcf983b0901b3fd3e19b",
+      "raw_origin_request_fingerprint": "7cfe049918918fc45fd8662f1c33cc91737172c6d3bc4e224a020af73841d0c2"
     },
     {
       "role": "expand-assumption_break-p2",
-      "sha256": "609746132eb53c0e663c24d6508f3eb4aea1da305c480db95cd778eb987b4625",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "1138f93db77dbf9643254e8e698e33c6f534d14d22f9e71c6abee01099941f32",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.85,
-      "request_fingerprint": "14bbf76dd96129bbb023ae5a739ad1df771a6499ec846c38cb3dd3783c13fb4d",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "538e4b7c93084af92f0aedb3551384ddc4185ab6896d04fcf4b28270c23cea9d",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "d253a3d87058e782bd55099227c7ce602a048c87ab44b3e0e5182768412b0696",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
-    },
-    {
-      "role": "expand-unexplained_boundary-p1",
-      "sha256": "4bae7c19a3a01f3e33e8b52b368514b3457d071290bb2148e43cba444a39c319",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
-      "temperature": 0.85,
-      "request_fingerprint": "5c6f91b6e61155b886eafcf9c0042705c5ca91e5fd0fe08aa9272e1415230f45",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "a69f01ffda08bf55a6b2790d16278ccd855d0bc8f6a544cdb75388b12efb356d",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "4488c97075b1207d0740cccbdcc8408b781b79546e7bd0637c0abdbddfcc7dba",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "c081e034d429c2ed1c8b96b965a6a8f6590e1b05d2887bb56d3db3ee1dea288f",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "1138f93db77dbf9643254e8e698e33c6f534d14d22f9e71c6abee01099941f32",
+      "raw_origin_request_fingerprint": "c081e034d429c2ed1c8b96b965a6a8f6590e1b05d2887bb56d3db3ee1dea288f"
     },
     {
       "role": "expand-unexplained_boundary-p2",
-      "sha256": "8fc7af3bf2c10727a92aa91128aa4878fd7aa4234dcd9c0596fa1366926a514d",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "aa6bf047945c53745476fbe522344179d777d6aaf98b9ada9bca9d24579bcf9a",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.85,
-      "request_fingerprint": "c7fc0d219a88895e357a269e58c76c06fc705a43de58ee5aa7a7d7e28e8cdb43",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "a69f01ffda08bf55a6b2790d16278ccd855d0bc8f6a544cdb75388b12efb356d",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "4488c97075b1207d0740cccbdcc8408b781b79546e7bd0637c0abdbddfcc7dba",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "8e816565fe89813d5705393882e2821c76016080ef3a88c02382493a14fbe68b",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "aa6bf047945c53745476fbe522344179d777d6aaf98b9ada9bca9d24579bcf9a",
+      "raw_origin_request_fingerprint": "8e816565fe89813d5705393882e2821c76016080ef3a88c02382493a14fbe68b"
+    },
+    {
+      "role": "expand-unexplained_boundary-p1",
+      "sha256": "53176c4b9cbbd2143ed2251ac635313a717506964793b72f77f55eb5b53c5901",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "temperature": 0.85,
+      "request_fingerprint": "c36baa13ecb798965b321c1fff8dbcac8be72e57897efe347775ef15ff664bb8",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "53176c4b9cbbd2143ed2251ac635313a717506964793b72f77f55eb5b53c5901",
+      "raw_origin_request_fingerprint": "c36baa13ecb798965b321c1fff8dbcac8be72e57897efe347775ef15ff664bb8"
     },
     {
       "role": "expand-identifiability_gap-p1",
-      "sha256": "6cc15d05d577b91493297bad8ce0ca7a496c3b072b99b015d7f23590dd4f7254",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "d3d7806cd84a187055a707e2aa6fd0ccb7708eaf8c3a573e4afb7b7fa6aad0e0",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.85,
-      "request_fingerprint": "d64fa7f90fbb0a79efef436018b795c37fd6d3587a3b939361c0e54378bd0163",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "96f600f3aaf31d830dd52eadaceb23fa1c4d919f6a48b90ca7cea35b022500e9",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "2cb2d209be8787965170b18edbb180ef8da2728cd051c51e15ee469c5d341849",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "952e3f1c7597eb0b0783c922e8e3b0fca20ba31ea2ada19a7cc5931a520e01c1",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "d3d7806cd84a187055a707e2aa6fd0ccb7708eaf8c3a573e4afb7b7fa6aad0e0",
+      "raw_origin_request_fingerprint": "952e3f1c7597eb0b0783c922e8e3b0fca20ba31ea2ada19a7cc5931a520e01c1"
     },
     {
       "role": "expand-identifiability_gap-p2",
-      "sha256": "5cc58648e4ca7b3090b3b0fb5f38049d2402830466d604485af59a9a361b0767",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "98cb9de87d2c94536625becce8194cfd9094fd74e2a0d24f321de346d1d7fb98",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.85,
-      "request_fingerprint": "3c316222c2518e677234edeea4f7ab5af5f39c7be8fe69ba1aa8f23603e98117",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "96f600f3aaf31d830dd52eadaceb23fa1c4d919f6a48b90ca7cea35b022500e9",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "2cb2d209be8787965170b18edbb180ef8da2728cd051c51e15ee469c5d341849",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
-    },
-    {
-      "role": "expand-missing_decision_object-p1",
-      "sha256": "d760f24c81779ea87f59e21ae503e961391b77565366e6ed888504f9b2f5c1f7",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
-      "temperature": 0.85,
-      "request_fingerprint": "1e0f91bf6f74c79b6eaaeddc95f5a2dee8e11b1c001cb65d36d2f106a44665ab",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "4c7645e263a57351029d5b7eb4b0a7a5b6ae70534b00747df6955b0111593756",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "f2b5b492d45bda0da89c79d6d8495b7d774b5b00e396aa27e9d23b795e3d6b9a",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "ab9020093583eed5ca08bec364bfee5463e227209ceb5f97ab0b7d0e2e52002f",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "98cb9de87d2c94536625becce8194cfd9094fd74e2a0d24f321de346d1d7fb98",
+      "raw_origin_request_fingerprint": "ab9020093583eed5ca08bec364bfee5463e227209ceb5f97ab0b7d0e2e52002f"
     },
     {
       "role": "expand-missing_decision_object-p2",
-      "sha256": "b41617fe85e2c9f879e52bdb43665717a30d24f057e53720ac86080e10c3c582",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "9aac0616a8cb84c389b185d461bc3d45d08febc202b51e6780f9f7784098991b",
+      "requested_model": "kimi-k3",
+      "resolved_model": "deepseek-v4-pro-260425",
       "temperature": 0.85,
-      "request_fingerprint": "dff9aa4e5eb397b856b749c52a993684838181db0133962e2fdf595ffe3efff0",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "4c7645e263a57351029d5b7eb4b0a7a5b6ae70534b00747df6955b0111593756",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "f2b5b492d45bda0da89c79d6d8495b7d774b5b00e396aa27e9d23b795e3d6b9a",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "a495ff31bbc94a9cc9ee8186261edc224c9b580f345734fbd32949c98a13eae9",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "9aac0616a8cb84c389b185d461bc3d45d08febc202b51e6780f9f7784098991b",
+      "raw_origin_request_fingerprint": "a495ff31bbc94a9cc9ee8186261edc224c9b580f345734fbd32949c98a13eae9"
+    },
+    {
+      "role": "expand-missing_decision_object-p1",
+      "sha256": "770846dc91ed5ff2ead65123524580bbf1716e6ad9d5b106d2bb0831780048cd",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "temperature": 0.85,
+      "request_fingerprint": "677ea6edc4ab086372a8735e9b331c44960fb920bf00f06732fcce5df80b129b",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "770846dc91ed5ff2ead65123524580bbf1716e6ad9d5b106d2bb0831780048cd",
+      "raw_origin_request_fingerprint": "677ea6edc4ab086372a8735e9b331c44960fb920bf00f06732fcce5df80b129b"
     },
     {
       "role": "expand-composition_interaction-p1",
-      "sha256": "8b9c06aa1721fdb16a6db4620451a7ce7eaebdb1de93d690081cbcee6cef9d0f",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "82813c4f6fe99e3c7115eb57b2795b0f2b5b9643fcd94a9b43f33e0362db28c9",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.85,
-      "request_fingerprint": "7dbc898a1b1a9899b92183cff799708c862da79ca0328753c3e1006fd9de45f4",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "0bbb9df803a6b61ee47816b2043e8dd7927f71e47476e2ed86204c7795124eec",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "2bfbd937b556abf305d1be552fdf334d928f9ea8f0357758361979c84b0752f9",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "ec77d51baed65e04c47231df72f892be74fb50fd37cce6d9979123e672416f3d",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "82813c4f6fe99e3c7115eb57b2795b0f2b5b9643fcd94a9b43f33e0362db28c9",
+      "raw_origin_request_fingerprint": "ec77d51baed65e04c47231df72f892be74fb50fd37cce6d9979123e672416f3d"
     },
     {
       "role": "expand-composition_interaction-p2",
-      "sha256": "06b302aebb4bd7de5fceab5cc4d3a5640c7a0eba193e34f991931eae771d73f5",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "9a08ec572be78b36ff43362c3ec8ce3a858d0cd02d7a72c710738d8dd230673a",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.85,
-      "request_fingerprint": "2ed1c15c2f50f0b57feb4c78b05e6a19e25d0a3a8e081dca6cc80ff138ba728e",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "0bbb9df803a6b61ee47816b2043e8dd7927f71e47476e2ed86204c7795124eec",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "2bfbd937b556abf305d1be552fdf334d928f9ea8f0357758361979c84b0752f9",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "9cdc2230b43796afa327e3faf47afec617bab9eec26425fd74aa10b30e86287a",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "9a08ec572be78b36ff43362c3ec8ce3a858d0cd02d7a72c710738d8dd230673a",
+      "raw_origin_request_fingerprint": "9cdc2230b43796afa327e3faf47afec617bab9eec26425fd74aa10b30e86287a"
     },
     {
       "role": "expand-cross_domain_structural_analogy-p1",
-      "sha256": "9dbeca3d76a5e7ac1a6b9c6cc92c1147ef9978ad87289ee27fe4b3755ef6cb06",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "68312462b028f1afd2e17a740bde7a7e36ced44314459b057d5a5c9b64016cbd",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.85,
-      "request_fingerprint": "417bb84fe3d1a7c7e1e3795a00326b0405e098f6dea878dd5d1eadb6b6f73873",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "993db09d5116d64739d6a37bc01360fbfb166dd6a96c45eca78b91b3e1991bba",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "396632a0d8e8788cb7a90f140505b46f7d1e257c0ddb0c953d32709c6deb18f3",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "61fe4690266b8e4f4d5288a173d060bdae624c7893347af9bc0d072b8f35f885",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "68312462b028f1afd2e17a740bde7a7e36ced44314459b057d5a5c9b64016cbd",
+      "raw_origin_request_fingerprint": "61fe4690266b8e4f4d5288a173d060bdae624c7893347af9bc0d072b8f35f885"
     },
     {
       "role": "expand-cross_domain_structural_analogy-p2",
-      "sha256": "dc04d60893ff6e1de904450ed562ba0c905293c0e1d53b29a9ea84ab2de782df",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "1e6e112e5c48430fe18523f18bc978e2bf180df99433c93f705471ccaac75d77",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.85,
-      "request_fingerprint": "30584cfdadad563b1da65e94294bce64c489cebc04588fd55635325e01580417",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "993db09d5116d64739d6a37bc01360fbfb166dd6a96c45eca78b91b3e1991bba",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "396632a0d8e8788cb7a90f140505b46f7d1e257c0ddb0c953d32709c6deb18f3",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "ad2f0558362aa76429629f448c5a0f7684a0e4b31f1fd0cad37fe11125078288",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "1e6e112e5c48430fe18523f18bc978e2bf180df99433c93f705471ccaac75d77",
+      "raw_origin_request_fingerprint": "ad2f0558362aa76429629f448c5a0f7684a0e4b31f1fd0cad37fe11125078288"
     },
     {
       "role": "expand-new_capability_question-p1",
-      "sha256": "2099800972c21614133eb8a6d9effa24c6beea943828130bd201f4971d517bfe",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "0c45a025b09c2eee8549317faf0b9b94d98214ad330d6bbc64183cccb9f29d80",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.85,
-      "request_fingerprint": "be386c71cb68218d39ce32314e64e071b073841958bd869fc94c25119b0b3b53",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "9044a3f0aa7d1eaae407411fb9b5f7dc3b3e2ab868f882c10e18a38a588ef083",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "f96cd31e1f42f7e2a3968951b7371d6f81ed58df1c386e2facdb8be7b8136832",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "b5c4d474ecdc251e7a1880da4977a3bc37952ff47b23c028a2f6718d59815e1b",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "0c45a025b09c2eee8549317faf0b9b94d98214ad330d6bbc64183cccb9f29d80",
+      "raw_origin_request_fingerprint": "b5c4d474ecdc251e7a1880da4977a3bc37952ff47b23c028a2f6718d59815e1b"
     },
     {
       "role": "expand-new_capability_question-p2",
-      "sha256": "4952d75b0112d190f718a3c5ba88600a31208c82480d27067a8177f2b7112a73",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "e455bb52139e1e3dcb669f8b520417c864845fd83a0cb809e69c1e7c4708fd80",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.85,
-      "request_fingerprint": "b5bec372df47e9e4b56515319ca0e91a2be150131cd354c59bcdffcdb90301c3",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "9044a3f0aa7d1eaae407411fb9b5f7dc3b3e2ab868f882c10e18a38a588ef083",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "f96cd31e1f42f7e2a3968951b7371d6f81ed58df1c386e2facdb8be7b8136832",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "0138b9dd6dfa943a1a6474eb24c74e53f28da639484145f44e29c8281432fbfe",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "e455bb52139e1e3dcb669f8b520417c864845fd83a0cb809e69c1e7c4708fd80",
+      "raw_origin_request_fingerprint": "0138b9dd6dfa943a1a6474eb24c74e53f28da639484145f44e29c8281432fbfe"
     },
     {
       "role": "expand-longitudinal_emergence-p1",
-      "sha256": "aaa066d93a7a172cd623e9468558dc92d6fed064ba373bde04e6bc3e252369b3",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "fa4662c0d085832e46d996494c891a1febc7dcdcf9b39c628faa320cbba4d1c6",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.85,
-      "request_fingerprint": "60b4340a66a7866bd3a3b507a29af51553bfbed2b0c7adac548bbf2ab7f4735e",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "5c2ec417fc15cf5ef4e25fec186ba5f30f9083624cf66bd62e9ee9f9661e89ed",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "ac37c6e5a7264a25c2d44dbbf466907094da46d9ccf5f37b994a0d612bec0bbc",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "6ccbc3452f990cb5e8aee7012049276939e1dc08093d81b4378adf414118f2aa",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "fa4662c0d085832e46d996494c891a1febc7dcdcf9b39c628faa320cbba4d1c6",
+      "raw_origin_request_fingerprint": "6ccbc3452f990cb5e8aee7012049276939e1dc08093d81b4378adf414118f2aa"
     },
     {
       "role": "expand-longitudinal_emergence-p2",
-      "sha256": "7c069a4e8a96cf62dfa991afe48e0be4e010b591b07315aaa250bd52bc3ffd7b",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "d739cc9dd22607b63953821fb6ba69980f0561c2d8c4ceb80548d15226a3e5ad",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.85,
-      "request_fingerprint": "e2fd5903535107a64df280b8835b49a2610021bb2342ec62f984e1b1ca060dd7",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "5c2ec417fc15cf5ef4e25fec186ba5f30f9083624cf66bd62e9ee9f9661e89ed",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 5200,
-          "temperature": 0.85,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "ac37c6e5a7264a25c2d44dbbf466907094da46d9ccf5f37b994a0d612bec0bbc",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "9c469bec92f9b1150f468802e09edfedd1639d0067a0791504e67e7f0becfb23",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "d739cc9dd22607b63953821fb6ba69980f0561c2d8c4ceb80548d15226a3e5ad",
+      "raw_origin_request_fingerprint": "9c469bec92f9b1150f468802e09edfedd1639d0067a0791504e67e7f0becfb23"
     },
     {
       "role": "evolve-g1-1",
-      "sha256": "53e177e42be25c5498d7a6c3b655c6991ed96e44aafecd1589e85fe89da5580b",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "cab499ab6c5089ccc3b6afa14e663f9d25b3fc784ecd46af8c5e34ddea458679",
+      "requested_model": "glm-5.3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.6,
-      "request_fingerprint": "b78dc63c57ca923be6bc4b62fc2350f8795541ed99810bab4d1b9497c576ed0b",
-      "transport_attempts": [
-        {
-          "stage": "problem_generation",
-          "prompt_sha256": "051d095c2711b8f36eb4183db62229123f6d105b6b11a181362b1fcf66be1d8e",
-          "requested_model": "minimax-m3",
-          "max_output_tokens": 6200,
-          "temperature": 0.6,
-          "thinking_profile": "disabled",
-          "request_fingerprint": "051277c570997ad21844449531f343ba0f9c535979c391b8c14d98a234140854",
-          "scientific_authority": false,
-          "status": "success",
-          "resolved_model": "minimax-m3",
-          "assistant_output_present": true,
-          "wall_clock_seconds": 360.0
-        }
-      ],
-      "provider_calls_executed": 1,
-      "scientific_authority": false
+      "request_fingerprint": "bdbd6e951a013a9a1e335034f62521acbbf6664db6c951e9791018c39ebf269d",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "cab499ab6c5089ccc3b6afa14e663f9d25b3fc784ecd46af8c5e34ddea458679",
+      "raw_origin_request_fingerprint": "bdbd6e951a013a9a1e335034f62521acbbf6664db6c951e9791018c39ebf269d"
+    },
+    {
+      "role": "evolve-g1-2",
+      "sha256": "8c12385378318bdf8ad5f470b312dbe36d2afbac8c9a8cf21c9dcb85a40e2978",
+      "requested_model": "glm-5.3",
+      "resolved_model": "kimi-k3",
+      "temperature": 0.6,
+      "request_fingerprint": "816576411ddb9712bbfd6efe978df1f53e305382ed8f55488bc7f5a4ba493cf4",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "8c12385378318bdf8ad5f470b312dbe36d2afbac8c9a8cf21c9dcb85a40e2978",
+      "raw_origin_request_fingerprint": "816576411ddb9712bbfd6efe978df1f53e305382ed8f55488bc7f5a4ba493cf4"
+    },
+    {
+      "role": "evolve-g1-3",
+      "sha256": "da43689d21027887e290de90d12b1cf6a04d45ee100d03b61c58183be0b7b987",
+      "requested_model": "glm-5.3",
+      "resolved_model": "kimi-k3",
+      "temperature": 0.6,
+      "request_fingerprint": "015545efb39fface872ca8c9490694ef9e27421519e3f7dfa4323fa24b477679",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "da43689d21027887e290de90d12b1cf6a04d45ee100d03b61c58183be0b7b987",
+      "raw_origin_request_fingerprint": "015545efb39fface872ca8c9490694ef9e27421519e3f7dfa4323fa24b477679"
+    },
+    {
+      "role": "evolve-g2-1",
+      "sha256": "0cef7a002fc88c838b9036d318dfc36b035f3379614711e9a2e8ebc5a201f6c2",
+      "requested_model": "glm-5.3",
+      "resolved_model": "kimi-k3",
+      "temperature": 0.35,
+      "request_fingerprint": "fe3cc128a849ff3dc7ccf51cd631687f7b488dada4bd1fd9c4b61ef5c5c791a4",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "0cef7a002fc88c838b9036d318dfc36b035f3379614711e9a2e8ebc5a201f6c2",
+      "raw_origin_request_fingerprint": "fe3cc128a849ff3dc7ccf51cd631687f7b488dada4bd1fd9c4b61ef5c5c791a4"
+    },
+    {
+      "role": "evolve-g2-2",
+      "sha256": "9cbc70a4a63200ced899b021e857fa6b040be9c253a42a28d3420e1ef01a2991",
+      "requested_model": "glm-5.3",
+      "resolved_model": "kimi-k3",
+      "temperature": 0.35,
+      "request_fingerprint": "762ed10faa800e7f7b1c0ba8aa0bb06bb9511c646fb5a80d76c6215782158ef6",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "9cbc70a4a63200ced899b021e857fa6b040be9c253a42a28d3420e1ef01a2991",
+      "raw_origin_request_fingerprint": "762ed10faa800e7f7b1c0ba8aa0bb06bb9511c646fb5a80d76c6215782158ef6"
+    },
+    {
+      "role": "repair-2",
+      "sha256": "36207adabbb3621273df074fe63cfdfdef90830a5b811e6d7900067ba4c484b2",
+      "requested_model": "glm-5.3",
+      "resolved_model": "kimi-k3",
+      "temperature": 0.45,
+      "request_fingerprint": "301e0c4f4a97406a2c0186cfa5bc6cf72550e999ab7224655256c561ef6952dd",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "36207adabbb3621273df074fe63cfdfdef90830a5b811e6d7900067ba4c484b2",
+      "raw_origin_request_fingerprint": "301e0c4f4a97406a2c0186cfa5bc6cf72550e999ab7224655256c561ef6952dd"
+    },
+    {
+      "role": "repair-3",
+      "sha256": "ebab3c95b25b017fa43c0915533622f27f16c370cb3ce58f98953e0eebfed085",
+      "requested_model": "glm-5.3",
+      "resolved_model": "kimi-k3",
+      "temperature": 0.45,
+      "request_fingerprint": "75a4f83554cf829b602474673579c3541de3d06d7cf7457ac55512f791a1bce3",
+      "transport_attempts": [],
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "raw_replayed_without_provider": true,
+      "raw_origin_run_id": "20260820T131636Z",
+      "raw_origin_sha256": "ebab3c95b25b017fa43c0915533622f27f16c370cb3ce58f98953e0eebfed085",
+      "raw_origin_request_fingerprint": "75a4f83554cf829b602474673579c3541de3d06d7cf7457ac55512f791a1bce3"
     },
     {
       "role": "repair-1",
-      "sha256": "f9c2562e63054d7ac8fdee7ea0de7cb0550ea55b58382a0b81a7631fe691c751",
-      "requested_model": "minimax-m3",
-      "resolved_model": "minimax-m3",
+      "sha256": "f8ffc1083b3a4a32aa5c1ebe8d4aeb3257483c8c7649c73a0a39b72ccf4e2d9f",
+      "requested_model": "glm-5.3",
+      "resolved_model": "kimi-k3",
       "temperature": 0.45,
-      "request_fingerprint": "4934a51fc5a734b4a8f53111b763720abbd904b07d01864b35af3de9ac7ce79f",
+      "request_fingerprint": "8104bbc828c007ba27052b55cfc2dc3438a2a6001be505fc39895c00898656e4",
       "transport_attempts": [
         {
           "stage": "problem_generation",
-          "prompt_sha256": "ef04a68ff86ed99ed6e7b03997ed2f9c5a4c8117e8a52030447ced5e9ccea105",
-          "requested_model": "minimax-m3",
+          "prompt_sha256": "0a851d2b5a175ba46d646b14abf301b39ad6eb5e2e662c925b5776c4605db43a",
+          "requested_model": "kimi-k3",
           "max_output_tokens": 7000,
           "temperature": 0.45,
           "thinking_profile": "disabled",
-          "request_fingerprint": "040b23d97fb864214db07f2ffce868f475d45be5d6b4af5dbaf450ddf1c33041",
+          "request_fingerprint": "3500737b24d4afac6af059fbd229faf88b3e43e12178427e98fc0418da1eb469",
           "scientific_authority": false,
           "status": "success",
-          "resolved_model": "minimax-m3",
+          "resolved_model": "kimi-k3",
           "assistant_output_present": true,
           "wall_clock_seconds": 360.0
         }
       ],
       "provider_calls_executed": 1,
-      "scientific_authority": false
+      "scientific_authority": false,
+      "operator_model_override": {
+        "role": "repair-1",
+        "requested_model": "glm-5.3",
+        "executed_model": "kimi-k3",
+        "reason": "explicit-resume-after-audited-provider-orphan",
+        "scientific_authority": false
+      }
     },
     {
       "role": "formulate-1",
-      "sha256": "fa6f66a5a60b841eff2031febf3b1694c3f633124ca3b61c7932bdea4d6a0139",
+      "sha256": "20ab78564cfbbdb56632f172be3d2bbfc2a5bad1b70d8cbb91913065b33350ab",
       "requested_model": "minimax-m3",
       "resolved_model": "minimax-m3",
       "temperature": 0.15,
-      "request_fingerprint": "09f2c89aec79aa598ed50652c24a5a01d467e9b45a5f6793febff6c6368214af",
+      "request_fingerprint": "6068494132c93d1d80a98f1794bc8fc8d42718ea373318b69b54eea81231274b",
       "transport_attempts": [
         {
           "stage": "problem_generation",
-          "prompt_sha256": "2faf50527c6d077ebc154a5b54453988c1075192c004901aecf72250e934c1a4",
+          "prompt_sha256": "9c8b0f7063e0eb04e23251efbb6a98050e39f888af1417d83b2fa65d42e0ca64",
           "requested_model": "minimax-m3",
           "max_output_tokens": 5600,
           "temperature": 0.15,
           "thinking_profile": "disabled",
-          "request_fingerprint": "48beb20bf24e44c69fcc12c0b0b2a68e21d594c514a799d550c0afcfada9583e",
+          "request_fingerprint": "accb81f56839fd344b834c60c7c0abedd6c778193cb22d1a487c2f311f37e5d5",
           "scientific_authority": false,
           "status": "success",
           "resolved_model": "minimax-m3",
@@ -2589,20 +2598,20 @@
     },
     {
       "role": "formulate-2",
-      "sha256": "7caa4160cffa133a91a75bf9c055419dc795b576cebf324a86e014f3d59bdbae",
+      "sha256": "0bf3a8797c661a28a04ff020a76d8be76ba3305ba75383ddafb09c3db68e1b74",
       "requested_model": "minimax-m3",
       "resolved_model": "minimax-m3",
       "temperature": 0.15,
-      "request_fingerprint": "4c35fb28f8bceee18c21878fe023edc7770ac1cfee2741c7c5274f49c4c44ab9",
+      "request_fingerprint": "79439710facd38446ebc229dd872bd8d802afe904d4fed2ae4241eaf02686e2c",
       "transport_attempts": [
         {
           "stage": "problem_generation",
-          "prompt_sha256": "08c79779b5e1714e67f9190d188830783332ec6a42f6be816d7447ef400d5ff3",
+          "prompt_sha256": "56528bd1d9ac935e917384467bfa83a34d77fbcdbf6bea7145cf7fede81643ca",
           "requested_model": "minimax-m3",
           "max_output_tokens": 5600,
           "temperature": 0.15,
           "thinking_profile": "disabled",
-          "request_fingerprint": "0c21a446647f55f7c7ae636f839fd2bf5e6fb64c8d36ca72b4587bd1f669dd97",
+          "request_fingerprint": "f1518fd85a779af25075d4869fbf7d4ad1d17ef7390649aaee4b683c2a8ec759",
           "scientific_authority": false,
           "status": "success",
           "resolved_model": "minimax-m3",
@@ -2615,20 +2624,254 @@
     },
     {
       "role": "formulate-3",
-      "sha256": "f3610e9bf93d116499e2c772464f562a273a26a3213c9022ef4607d03848d9a3",
+      "sha256": "0f65cef441cb9204bc3c945e32f9272050ebc8cb47f26a5a99a2a44574f422ee",
       "requested_model": "minimax-m3",
       "resolved_model": "minimax-m3",
       "temperature": 0.15,
-      "request_fingerprint": "197bda81b46c7339693d721042490026d3ec8426d6fddffe2359b76a1334b2ed",
+      "request_fingerprint": "29939fd1f8226a4757a38a2998822ef5cca8759f3d9b9433e126b7b2f6d8b647",
       "transport_attempts": [
         {
           "stage": "problem_generation",
-          "prompt_sha256": "63f19ef96aae8a51ac20609d68dc3abfcaa2dc9e391b3261842c17d2415ae3cf",
+          "prompt_sha256": "8719a25ad621f09f73550d515c57851160bf23bc9bdeea9722d21574bc8ef8d6",
           "requested_model": "minimax-m3",
           "max_output_tokens": 5600,
           "temperature": 0.15,
           "thinking_profile": "disabled",
-          "request_fingerprint": "09f1b373c0e30030e1595186ae2586be60e785d01fa8c7eabbffe66962e37bd4",
+          "request_fingerprint": "b9f0cd5b41600c8d36e80a1ef05864a2d41722ec7257d9cac5eb71325becb8c1",
+          "scientific_authority": false,
+          "status": "success",
+          "resolved_model": "minimax-m3",
+          "assistant_output_present": true,
+          "wall_clock_seconds": 360.0
+        }
+      ],
+      "provider_calls_executed": 1,
+      "scientific_authority": false
+    },
+    {
+      "role": "formulate-4",
+      "sha256": "3a402c10522d3dc5a1ea83281b3d56bc373e9c013bf1ea34ecdff0798908f181",
+      "requested_model": "minimax-m3",
+      "resolved_model": "minimax-m3",
+      "temperature": 0.15,
+      "request_fingerprint": "89050dd5b242e7fac93230efc0c3328ea5b0a0b83268321873070a46fbcfbed1",
+      "transport_attempts": [
+        {
+          "stage": "problem_generation",
+          "prompt_sha256": "28c12c7e2021e1885d76cc8ccf06b97cb489944d1bb2c602d4e38cced664cbe4",
+          "requested_model": "minimax-m3",
+          "max_output_tokens": 5600,
+          "temperature": 0.15,
+          "thinking_profile": "disabled",
+          "request_fingerprint": "bace6b221957d462a4b0fced9b847657f5b1f5d2bd66005ffc0070026200c216",
+          "scientific_authority": false,
+          "status": "success",
+          "resolved_model": "minimax-m3",
+          "assistant_output_present": true,
+          "wall_clock_seconds": 360.0
+        }
+      ],
+      "provider_calls_executed": 1,
+      "scientific_authority": false
+    },
+    {
+      "role": "formulate-6",
+      "sha256": "329da00757fa4faf5a72722f3a1ef86e927fa35768f9de877d38f9e52d311b14",
+      "requested_model": "minimax-m3",
+      "resolved_model": "minimax-m3",
+      "temperature": 0.15,
+      "request_fingerprint": "46ddd67ef0f8ae0fd816946bfbd142e8067af435aed4fe0bcd66b9390c9ec29b",
+      "transport_attempts": [
+        {
+          "stage": "problem_generation",
+          "prompt_sha256": "be3d6c92959a93ac80aa767730fefd2f824c6398150a477111ddd6985d3db92a",
+          "requested_model": "minimax-m3",
+          "max_output_tokens": 5600,
+          "temperature": 0.15,
+          "thinking_profile": "disabled",
+          "request_fingerprint": "7ff5cf1a4aec831c42679ac278e62b87f5b581d8db2113c3582dd3316e7aba14",
+          "scientific_authority": false,
+          "status": "success",
+          "resolved_model": "minimax-m3",
+          "assistant_output_present": true,
+          "wall_clock_seconds": 360.0
+        }
+      ],
+      "provider_calls_executed": 1,
+      "scientific_authority": false
+    },
+    {
+      "role": "formulate-5",
+      "sha256": "33edc00a0a52068decfa8396101821493c9522b7b2654717af56ff1faa85ab59",
+      "requested_model": "minimax-m3",
+      "resolved_model": "minimax-m3",
+      "temperature": 0.15,
+      "request_fingerprint": "20e0dff38e3bd2c32e84cff3d944fa9b710a04aabb29cf567f07ed11c1db6680",
+      "transport_attempts": [
+        {
+          "stage": "problem_generation",
+          "prompt_sha256": "5ef3ce02a9ca024773ad15177c8d5a7a722ba436cd1a9400113271074821574e",
+          "requested_model": "minimax-m3",
+          "max_output_tokens": 5600,
+          "temperature": 0.15,
+          "thinking_profile": "disabled",
+          "request_fingerprint": "7d849a45cf03f475cf1af177608064a3e16e2db81aba7dbfdef2f1e073a525b7",
+          "scientific_authority": false,
+          "status": "success",
+          "resolved_model": "minimax-m3",
+          "assistant_output_present": true,
+          "wall_clock_seconds": 360.0
+        }
+      ],
+      "provider_calls_executed": 1,
+      "scientific_authority": false
+    },
+    {
+      "role": "formulate-7",
+      "sha256": "e70392722d058029fa5283786fcdf16b7cdf2fee2b452ba98c8ca0d2c2788aad",
+      "requested_model": "minimax-m3",
+      "resolved_model": "minimax-m3",
+      "temperature": 0.15,
+      "request_fingerprint": "b84f61573f045cfaffac3f5cef9fd720596239106f2d04fdb22e3473c2d7af52",
+      "transport_attempts": [
+        {
+          "stage": "problem_generation",
+          "prompt_sha256": "7f0de071848278c9f4ae90e69977bbc1cb0d868a765b834f09e152cebec168ed",
+          "requested_model": "minimax-m3",
+          "max_output_tokens": 5600,
+          "temperature": 0.15,
+          "thinking_profile": "disabled",
+          "request_fingerprint": "7db7e8da6540c84ea9a279c2137d1c96881fcc5607232710b517099e617939ba",
+          "scientific_authority": false,
+          "status": "success",
+          "resolved_model": "minimax-m3",
+          "assistant_output_present": true,
+          "wall_clock_seconds": 360.0
+        }
+      ],
+      "provider_calls_executed": 1,
+      "scientific_authority": false
+    },
+    {
+      "role": "formulate-8",
+      "sha256": "728b1aee45a92087bf4404b9a240d26ebf56853e9a34f7d08187f8d3f5263917",
+      "requested_model": "minimax-m3",
+      "resolved_model": "minimax-m3",
+      "temperature": 0.15,
+      "request_fingerprint": "77918aec76f0567ea69266e416aaab7c668ef657f452ad282587f6d547154a7c",
+      "transport_attempts": [
+        {
+          "stage": "problem_generation",
+          "prompt_sha256": "1b93c223a14ac8c9f23aba2076862473a0c4af5bcdd26781784627d0be50baa4",
+          "requested_model": "minimax-m3",
+          "max_output_tokens": 5600,
+          "temperature": 0.15,
+          "thinking_profile": "disabled",
+          "request_fingerprint": "bfa29be00e4194ea10fe097470e7b084591aec814bbd4f328cd4d5fe8ad5d45f",
+          "scientific_authority": false,
+          "status": "success",
+          "resolved_model": "minimax-m3",
+          "assistant_output_present": true,
+          "wall_clock_seconds": 360.0
+        }
+      ],
+      "provider_calls_executed": 1,
+      "scientific_authority": false
+    },
+    {
+      "role": "formulate-9",
+      "sha256": "7f454cc7965be375f3c8b26f812a65fa21903124ac106e20177ace61749bf9c2",
+      "requested_model": "minimax-m3",
+      "resolved_model": "minimax-m3",
+      "temperature": 0.15,
+      "request_fingerprint": "4bbd3e5d9587acd2b8208cddc07592d30ac2c64462a06e9562b602e11890b5a8",
+      "transport_attempts": [
+        {
+          "stage": "problem_generation",
+          "prompt_sha256": "5a0f5e5d2410111872984a0fdd4b21c973f653716caa482210e4bf3beda6be7e",
+          "requested_model": "minimax-m3",
+          "max_output_tokens": 5600,
+          "temperature": 0.15,
+          "thinking_profile": "disabled",
+          "request_fingerprint": "0b211ce3dae1c4cd297c12cca8f131176c388157e99a46304ff4669d32045f02",
+          "scientific_authority": false,
+          "status": "success",
+          "resolved_model": "minimax-m3",
+          "assistant_output_present": true,
+          "wall_clock_seconds": 360.0
+        }
+      ],
+      "provider_calls_executed": 1,
+      "scientific_authority": false
+    },
+    {
+      "role": "formulate-10",
+      "sha256": "7a0db20650562556d6214327d57eb0e53e0a580f4f2897e5913c1db303e0d11e",
+      "requested_model": "minimax-m3",
+      "resolved_model": "minimax-m3",
+      "temperature": 0.15,
+      "request_fingerprint": "0b3ec6cb5bb55a0ac0032288bd8b0d2d46345a1ee2143c3d7fbe08d8978d1eb1",
+      "transport_attempts": [
+        {
+          "stage": "problem_generation",
+          "prompt_sha256": "b4a59c0161ae820441ce4ec83e205ff78de699b07f74910505160690b6115c69",
+          "requested_model": "minimax-m3",
+          "max_output_tokens": 5600,
+          "temperature": 0.15,
+          "thinking_profile": "disabled",
+          "request_fingerprint": "757fc3ac0f065724e93d401d2e3c738d885e73930bb6fd3969768ab9f73732f3",
+          "scientific_authority": false,
+          "status": "success",
+          "resolved_model": "minimax-m3",
+          "assistant_output_present": true,
+          "wall_clock_seconds": 360.0
+        }
+      ],
+      "provider_calls_executed": 1,
+      "scientific_authority": false
+    },
+    {
+      "role": "formulate-11",
+      "sha256": "280b6da37b90099270aa08527f0e03e240523e08f8b2a641ef84190e3b0d59d2",
+      "requested_model": "minimax-m3",
+      "resolved_model": "minimax-m3",
+      "temperature": 0.15,
+      "request_fingerprint": "e39ec2ad34dc6b47a0ac21feaedf8f83e92cce4a26e5ec0ec7f5fc648b69d908",
+      "transport_attempts": [
+        {
+          "stage": "problem_generation",
+          "prompt_sha256": "cd6d31e6888e7c02e8def27c9a2f8360db193e6364861d622c29202d818c3e42",
+          "requested_model": "minimax-m3",
+          "max_output_tokens": 5600,
+          "temperature": 0.15,
+          "thinking_profile": "disabled",
+          "request_fingerprint": "167ef2474161b1aa704841d432de3fc281b9030ae472b65214561a9caf62aa7f",
+          "scientific_authority": false,
+          "status": "success",
+          "resolved_model": "minimax-m3",
+          "assistant_output_present": true,
+          "wall_clock_seconds": 360.0
+        }
+      ],
+      "provider_calls_executed": 1,
+      "scientific_authority": false
+    },
+    {
+      "role": "formulate-12",
+      "sha256": "e140f35b12e5ee65adcb640b151f85c2c726d9a0d000b816367603615cacd7dc",
+      "requested_model": "minimax-m3",
+      "resolved_model": "minimax-m3",
+      "temperature": 0.15,
+      "request_fingerprint": "a0f2f9941d1e4f3f43826e1da81e904f783c68c49b26b9b9748df494f225158b",
+      "transport_attempts": [
+        {
+          "stage": "problem_generation",
+          "prompt_sha256": "04eb51e995c3eb964c4983af72253e42b384955f1ded766ca356a06338e83a90",
+          "requested_model": "minimax-m3",
+          "max_output_tokens": 5600,
+          "temperature": 0.15,
+          "thinking_profile": "disabled",
+          "request_fingerprint": "366585ccd9712abb2065b55113f24eac99140ad5919f54a6a8d158f970ed471b",
           "scientific_authority": false,
           "status": "success",
           "resolved_model": "minimax-m3",
@@ -2678,125 +2921,349 @@
       "max_parallel_calls": 2
     },
     "summary": {
-      "raw_seeds": 2,
-      "semantic_unique": 2,
-      "duplicate_or_near_duplicate": 0,
-      "structural_clusters": 2,
-      "unique_problem_families": 2,
-      "model_named_problem_families": 2,
-      "archive_lane_coverage": 1,
-      "breadth_archive": 2,
-      "evolved_branches": 0,
-      "max_branch_depth": 1,
-      "reviewer_attacks": 2,
-      "repair_children": 4,
+      "raw_seeds": 90,
+      "semantic_unique": 36,
+      "duplicate_or_near_duplicate": 54,
+      "structural_clusters": 36,
+      "unique_problem_families": 36,
+      "model_named_problem_families": 35,
+      "archive_lane_coverage": 10,
+      "breadth_archive": 36,
+      "evolved_branches": 36,
+      "max_branch_depth": 3,
+      "reviewer_attacks": 10,
+      "repair_children": 20,
       "paperability_axis_coverage": {
-        "P": 0,
+        "P": 1,
         "M": 0,
-        "E": 0,
+        "E": 1,
         "B": 0,
         "T": 0,
         "S": 0
       },
-      "formulated_candidates": 0,
-      "formulation_rejected": 2,
-      "portfolio_calls": 3,
-      "mean_archive_pairwise_distance": 0.8826,
-      "errors": 22,
+      "formulated_candidates": 1,
+      "formulation_rejected": 13,
+      "portfolio_calls": 31,
+      "mean_archive_pairwise_distance": 0.8902,
+      "errors": 9,
       "machine_reviewable": 0,
       "pre_f0_eligible": 0,
-      "machine_reduction_blocked": 0,
-      "recovered_formulated_candidates": 3,
-      "recovered_pre_f0_eligible": 2,
-      "recovered_machine_blocked": 1,
+      "machine_reduction_blocked": 1,
+      "recovered_formulated_candidates": 6,
+      "recovered_pre_f0_eligible": 3,
+      "recovered_machine_blocked": 3,
       "recovery_provider_calls_executed": 0
     },
     "lane_counts": {
-      "ASSUMPTION_BREAK": 2
+      "ASSUMPTION_BREAK": 6,
+      "COMPOSITION_INTERACTION": 6,
+      "CONTRADICTION": 6,
+      "CONVERGENT_FAILURE": 12,
+      "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 12,
+      "IDENTIFIABILITY_GAP": 6,
+      "LONGITUDINAL_EMERGENCE": 12,
+      "MISSING_DECISION_OBJECT": 6,
+      "NEW_CAPABILITY_QUESTION": 12,
+      "UNEXPLAINED_BOUNDARY": 12
     },
     "archive_lane_counts": {
-      "ASSUMPTION_BREAK": 2
+      "ASSUMPTION_BREAK": 4,
+      "COMPOSITION_INTERACTION": 4,
+      "CONTRADICTION": 3,
+      "CONVERGENT_FAILURE": 5,
+      "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 4,
+      "IDENTIFIABILITY_GAP": 4,
+      "LONGITUDINAL_EMERGENCE": 4,
+      "MISSING_DECISION_OBJECT": 1,
+      "NEW_CAPABILITY_QUESTION": 4,
+      "UNEXPLAINED_BOUNDARY": 3
     },
     "family_counts": {
-      "interaction / composition of evolution-loop components": 1,
-      "regime-dependence of self-evolution mechanism": 1
+      "causal_identifiability": 2,
+      "regime": 1,
+      "multi-objective conflict emergence in self-modifying systems": 1,
+      "execution-interface transfer validity": 1,
+      "hysteresis_in_contamination": 1,
+      "skill contamination and critical transitions": 1,
+      "memory-valence-asymmetry": 1,
+      "memory provenance and retrieval safety": 1,
+      "procedural-memory accumulation dynamics": 1,
+      "safety_capability_tradeoff": 1,
+      "harness-level continual adaptation stability": 1,
+      "model-scaffold-enactability": 1,
+      "cross-framework skill portability": 1,
+      "coupled capability-security effects of a single evolved artifact": 1,
+      "interface-conditioned sign reversal of transferred artifacts": 1,
+      "consequence": 1,
+      "procedural-memory-nonmonotonicity": 1,
+      "retrieval-utility decoupling in experience reuse": 1,
+      "measurement_composition": 1,
+      "decision-object-under-irreversibility": 1,
+      "critical phenomena / phase transitions": 1,
+      "memory provenance and failure cascades": 1,
+      "nonmonotonic scaling with hysteresis in self-evolving memory": 1,
+      "distributed learning with non-iid data": 1,
+      "mechanism shift in memory utilization under scaling": 1,
+      "order-dependent composition of update rule and task stream": 1,
+      "artifact-uptake-after-retrieval": 1,
+      "cross-layer-behavior-persistence": 1,
+      "information retrieval under adversarial growth": 1,
+      "object": 1,
+      "negative_transfer_boundary": 1,
+      "history-dependent instability in online learning systems": 1,
+      "measurement_transfer": 1,
+      "fault tolerance / recovery limits": 1,
+      "complementary component interaction under sparse reward": 1
     },
     "archive_counts": {
-      "breadth": 2,
-      "novelty": 2,
-      "contradiction": 0,
-      "anomaly": 2,
-      "cross_domain": 0
+      "breadth": 36,
+      "novelty": 16,
+      "contradiction": 3,
+      "anomaly": 16,
+      "cross_domain": 4
     },
     "scientific_authority": false
   },
   "status": "GENERATED_PRE_F0_EVIDENCE_ACQUISITION",
   "portfolio_ingestion_recovery": {
-    "source_generator_run_id": "20260818T151150Z",
-    "source_transaction_id": "51e7909f8d868895c667358a58c80162221ea7aeb0845fd80a1a13d6a49542ba",
-    "source_portfolio_sha256": "28d17ad9c7aeddbc6f9c89c58439e91f05dfd328b53636be7b86703b59f56f93",
-    "recovery_sha256": "bfceaa00c61a6782a872c3702844cbe3c35a662b783de59a835f1be17f717534",
+    "source_generator_run_id": "20260820T141425Z",
+    "source_transaction_id": "ed883b998c767cc6f47f77986c007a76be23a089ac9e7e274c71069e4b669de3",
+    "source_portfolio_sha256": "c9b1375da22d621f111217a5f07b83c1cf02299f132407fe73e0bed9be106c72",
+    "recovery_sha256": "2d5acebb164408d9b65a3e6a94b8f2ab1abfd8c6b917f35c946d7e71781bb9f9",
     "formulation_receipts": [
       {
         "recovery_version": "bounded-complete-object-v1",
-        "mode": "EXACT_TOKEN_REPAIR",
-        "raw_sha256": "fa6f66a5a60b841eff2031febf3b1694c3f633124ca3b61c7932bdea4d6a0139",
-        "repaired_sha256": "7d788a0d68ea9dbe41135965efe160f8ec444457a654922ed7514df24ee22e1f",
-        "replacements": 1,
-        "complete_candidates": 2,
+        "mode": "COMPLETE_OBJECT_PREFIX_ONLY",
+        "raw_sha256": "20ab78564cfbbdb56632f172be3d2bbfc2a5bad1b70d8cbb91913065b33350ab",
+        "repaired_sha256": "20ab78564cfbbdb56632f172be3d2bbfc2a5bad1b70d8cbb91913065b33350ab",
+        "replacements": 0,
+        "complete_candidates": 1,
         "complete_rejected": 0,
+        "truncated_tail_discarded": true,
         "scientific_authority": false,
         "role": "formulate-1",
-        "source_raw_sha256": "fa6f66a5a60b841eff2031febf3b1694c3f633124ca3b61c7932bdea4d6a0139",
+        "source_raw_sha256": "20ab78564cfbbdb56632f172be3d2bbfc2a5bad1b70d8cbb91913065b33350ab",
         "requested_model": "minimax-m3",
         "resolved_model": "minimax-m3",
-        "request_fingerprint": "09f2c89aec79aa598ed50652c24a5a01d467e9b45a5f6793febff6c6368214af"
+        "request_fingerprint": "6068494132c93d1d80a98f1794bc8fc8d42718ea373318b69b54eea81231274b"
       },
       {
         "recovery_version": "bounded-complete-object-v1",
         "mode": "COMPLETE_OBJECT_PREFIX_ONLY",
-        "raw_sha256": "7caa4160cffa133a91a75bf9c055419dc795b576cebf324a86e014f3d59bdbae",
-        "repaired_sha256": "f598a881df2326d5ac2827c03b47c2c0f40596261c4a44ab7425511ab3aa9c6e",
-        "replacements": 1,
+        "raw_sha256": "0bf3a8797c661a28a04ff020a76d8be76ba3305ba75383ddafb09c3db68e1b74",
+        "repaired_sha256": "0bf3a8797c661a28a04ff020a76d8be76ba3305ba75383ddafb09c3db68e1b74",
+        "replacements": 0,
         "complete_candidates": 1,
         "complete_rejected": 0,
         "truncated_tail_discarded": true,
         "scientific_authority": false,
         "role": "formulate-2",
-        "source_raw_sha256": "7caa4160cffa133a91a75bf9c055419dc795b576cebf324a86e014f3d59bdbae",
+        "source_raw_sha256": "0bf3a8797c661a28a04ff020a76d8be76ba3305ba75383ddafb09c3db68e1b74",
         "requested_model": "minimax-m3",
         "resolved_model": "minimax-m3",
-        "request_fingerprint": "4c35fb28f8bceee18c21878fe023edc7770ac1cfee2741c7c5274f49c4c44ab9"
+        "request_fingerprint": "79439710facd38446ebc229dd872bd8d802afe904d4fed2ae4241eaf02686e2c"
       },
       {
         "recovery_version": "bounded-complete-object-v1",
         "mode": "STRICT",
-        "raw_sha256": "f3610e9bf93d116499e2c772464f562a273a26a3213c9022ef4607d03848d9a3",
+        "raw_sha256": "0f65cef441cb9204bc3c945e32f9272050ebc8cb47f26a5a99a2a44574f422ee",
         "replacements": 0,
         "complete_candidates": 0,
         "complete_rejected": 2,
         "scientific_authority": false,
         "role": "formulate-3",
-        "source_raw_sha256": "f3610e9bf93d116499e2c772464f562a273a26a3213c9022ef4607d03848d9a3",
+        "source_raw_sha256": "0f65cef441cb9204bc3c945e32f9272050ebc8cb47f26a5a99a2a44574f422ee",
         "requested_model": "minimax-m3",
         "resolved_model": "minimax-m3",
-        "request_fingerprint": "197bda81b46c7339693d721042490026d3ec8426d6fddffe2359b76a1334b2ed"
+        "request_fingerprint": "29939fd1f8226a4757a38a2998822ef5cca8759f3d9b9433e126b7b2f6d8b647"
+      },
+      {
+        "recovery_version": "bounded-complete-object-v1",
+        "mode": "STRICT",
+        "raw_sha256": "3a402c10522d3dc5a1ea83281b3d56bc373e9c013bf1ea34ecdff0798908f181",
+        "replacements": 0,
+        "complete_candidates": 0,
+        "complete_rejected": 2,
+        "scientific_authority": false,
+        "role": "formulate-4",
+        "source_raw_sha256": "3a402c10522d3dc5a1ea83281b3d56bc373e9c013bf1ea34ecdff0798908f181",
+        "requested_model": "minimax-m3",
+        "resolved_model": "minimax-m3",
+        "request_fingerprint": "89050dd5b242e7fac93230efc0c3328ea5b0a0b83268321873070a46fbcfbed1"
+      },
+      {
+        "recovery_version": "bounded-complete-object-v1",
+        "mode": "COMPLETE_OBJECT_PREFIX_ONLY",
+        "raw_sha256": "33edc00a0a52068decfa8396101821493c9522b7b2654717af56ff1faa85ab59",
+        "repaired_sha256": "72e47db867213eff01f170e3075d234427d1cf96fe9043c5224a949e14a87b1a",
+        "replacements": 1,
+        "complete_candidates": 1,
+        "complete_rejected": 0,
+        "truncated_tail_discarded": true,
+        "scientific_authority": false,
+        "role": "formulate-5",
+        "source_raw_sha256": "33edc00a0a52068decfa8396101821493c9522b7b2654717af56ff1faa85ab59",
+        "requested_model": "minimax-m3",
+        "resolved_model": "minimax-m3",
+        "request_fingerprint": "20e0dff38e3bd2c32e84cff3d944fa9b710a04aabb29cf567f07ed11c1db6680"
+      },
+      {
+        "recovery_version": "bounded-complete-object-v1",
+        "mode": "STRICT",
+        "raw_sha256": "329da00757fa4faf5a72722f3a1ef86e927fa35768f9de877d38f9e52d311b14",
+        "replacements": 0,
+        "complete_candidates": 0,
+        "complete_rejected": 2,
+        "scientific_authority": false,
+        "role": "formulate-6",
+        "source_raw_sha256": "329da00757fa4faf5a72722f3a1ef86e927fa35768f9de877d38f9e52d311b14",
+        "requested_model": "minimax-m3",
+        "resolved_model": "minimax-m3",
+        "request_fingerprint": "46ddd67ef0f8ae0fd816946bfbd142e8067af435aed4fe0bcd66b9390c9ec29b"
+      },
+      {
+        "recovery_version": "bounded-complete-object-v1",
+        "mode": "STRICT",
+        "raw_sha256": "e70392722d058029fa5283786fcdf16b7cdf2fee2b452ba98c8ca0d2c2788aad",
+        "replacements": 0,
+        "complete_candidates": 0,
+        "complete_rejected": 2,
+        "scientific_authority": false,
+        "role": "formulate-7",
+        "source_raw_sha256": "e70392722d058029fa5283786fcdf16b7cdf2fee2b452ba98c8ca0d2c2788aad",
+        "requested_model": "minimax-m3",
+        "resolved_model": "minimax-m3",
+        "request_fingerprint": "b84f61573f045cfaffac3f5cef9fd720596239106f2d04fdb22e3473c2d7af52"
+      },
+      {
+        "recovery_version": "bounded-complete-object-v1",
+        "mode": "STRICT",
+        "raw_sha256": "728b1aee45a92087bf4404b9a240d26ebf56853e9a34f7d08187f8d3f5263917",
+        "replacements": 0,
+        "complete_candidates": 0,
+        "complete_rejected": 2,
+        "scientific_authority": false,
+        "role": "formulate-8",
+        "source_raw_sha256": "728b1aee45a92087bf4404b9a240d26ebf56853e9a34f7d08187f8d3f5263917",
+        "requested_model": "minimax-m3",
+        "resolved_model": "minimax-m3",
+        "request_fingerprint": "77918aec76f0567ea69266e416aaab7c668ef657f452ad282587f6d547154a7c"
+      },
+      {
+        "recovery_version": "bounded-complete-object-v1",
+        "mode": "STRICT",
+        "raw_sha256": "7f454cc7965be375f3c8b26f812a65fa21903124ac106e20177ace61749bf9c2",
+        "replacements": 0,
+        "complete_candidates": 0,
+        "complete_rejected": 2,
+        "scientific_authority": false,
+        "role": "formulate-9",
+        "source_raw_sha256": "7f454cc7965be375f3c8b26f812a65fa21903124ac106e20177ace61749bf9c2",
+        "requested_model": "minimax-m3",
+        "resolved_model": "minimax-m3",
+        "request_fingerprint": "4bbd3e5d9587acd2b8208cddc07592d30ac2c64462a06e9562b602e11890b5a8"
+      },
+      {
+        "recovery_version": "bounded-complete-object-v1",
+        "mode": "COMPLETE_OBJECT_PREFIX_ONLY",
+        "raw_sha256": "7a0db20650562556d6214327d57eb0e53e0a580f4f2897e5913c1db303e0d11e",
+        "repaired_sha256": "7a0db20650562556d6214327d57eb0e53e0a580f4f2897e5913c1db303e0d11e",
+        "replacements": 0,
+        "complete_candidates": 1,
+        "complete_rejected": 0,
+        "truncated_tail_discarded": true,
+        "scientific_authority": false,
+        "role": "formulate-10",
+        "source_raw_sha256": "7a0db20650562556d6214327d57eb0e53e0a580f4f2897e5913c1db303e0d11e",
+        "requested_model": "minimax-m3",
+        "resolved_model": "minimax-m3",
+        "request_fingerprint": "0b3ec6cb5bb55a0ac0032288bd8b0d2d46345a1ee2143c3d7fbe08d8978d1eb1"
+      },
+      {
+        "recovery_version": "bounded-complete-object-v1",
+        "mode": "STRICT",
+        "raw_sha256": "280b6da37b90099270aa08527f0e03e240523e08f8b2a641ef84190e3b0d59d2",
+        "replacements": 0,
+        "complete_candidates": 1,
+        "complete_rejected": 1,
+        "scientific_authority": false,
+        "role": "formulate-11",
+        "source_raw_sha256": "280b6da37b90099270aa08527f0e03e240523e08f8b2a641ef84190e3b0d59d2",
+        "requested_model": "minimax-m3",
+        "resolved_model": "minimax-m3",
+        "request_fingerprint": "e39ec2ad34dc6b47a0ac21feaedf8f83e92cce4a26e5ec0ec7f5fc648b69d908"
+      },
+      {
+        "recovery_version": "bounded-complete-object-v1",
+        "mode": "COMPLETE_OBJECT_PREFIX_ONLY",
+        "raw_sha256": "e140f35b12e5ee65adcb640b151f85c2c726d9a0d000b816367603615cacd7dc",
+        "repaired_sha256": "faab2fafc2e3dd1793b9d75e36c624c505d138f3ead225fae51c4084962d8fcc",
+        "replacements": 1,
+        "complete_candidates": 1,
+        "complete_rejected": 0,
+        "truncated_tail_discarded": true,
+        "scientific_authority": false,
+        "role": "formulate-12",
+        "source_raw_sha256": "e140f35b12e5ee65adcb640b151f85c2c726d9a0d000b816367603615cacd7dc",
+        "requested_model": "minimax-m3",
+        "resolved_model": "minimax-m3",
+        "request_fingerprint": "a0f2f9941d1e4f3f43826e1da81e904f783c68c49b26b9b9748df494f225158b"
       }
     ],
-    "recovered_candidates": 3,
-    "pre_f0_eligible": 2,
+    "recovered_candidates": 6,
+    "pre_f0_eligible": 3,
     "blocked_rows": [
       {
-        "candidate_id": "PORT-002",
-        "title": "Harness-side neutralization of consolidated poisoned skills as a separability falsifier",
-        "source_branch_id": "ASSUMPTION_BREAK-P2-001-R2",
+        "candidate_id": "PORT-001",
+        "title": "Lineage-aware provenance tracking to distinguish contamination propagation mechanisms in self-evolving skill pools",
+        "source_branch_id": "IDENTIFIABILITY_GAP-P1-002-R1",
         "blockers": [
           "need-at-least-two-mature-theory-baselines",
           "reduction-falsifiability-contract-incomplete",
-          "saturation-exact-reduction-pending:harness-update-scope-heterogeneity"
+          "saturation-exact-reduction-pending:procedural-memory-nonmonotonicity",
+          "unknown-discovery-lane:IDENTIFIABILITY_GAP"
         ],
         "surviving_paperability_axes": [
           "M",
+          "E"
+        ]
+      },
+      {
+        "candidate_id": "PORT-002",
+        "title": "Lineage-aware admission control with irreversibility constraints for self-evolving agent skill pools",
+        "source_branch_id": "MISSING_DECISION_OBJECT-P1-001-R1",
+        "blockers": [
+          "reduction-falsifiability-contract-incomplete",
+          "saturation-exact-reduction-pending:procedural-memory-nonmonotonicity",
+          "unknown-discovery-lane:MISSING_DECISION_OBJECT",
+          "unresolved-exact-reduction-test:1",
+          "unresolved-exact-reduction-test:2",
+          "unresolved-exact-reduction-test:3",
+          "unresolved-exact-reduction-test:4"
+        ],
+        "surviving_paperability_axes": [
+          "M",
+          "E"
+        ]
+      },
+      {
+        "candidate_id": "PORT-005",
+        "title": "Necessity-of-Update Decomposition: When Does Harness Evolution Suffice, and When Do Parameter Updates Become Structurally Required?",
+        "source_branch_id": "CONTRADICTION-P1-006",
+        "blockers": [
+          "contradiction-treatment-alignment-failed:comparator_match",
+          "contradiction-treatment-alignment-failed:endpoint_match",
+          "contradiction-treatment-alignment-failed:executor_state_match",
+          "contradiction-treatment-alignment-failed:intervention_surface_match",
+          "contradiction-treatment-alignment-failed:timing_match",
+          "reduction-falsifiability-contract-incomplete",
+          "saturation-exact-reduction-pending:harness-update-scope-heterogeneity",
+          "saturation-exact-reduction-pending:persistent-update-vs-test-time-compute",
+          "saturation-exact-reduction-pending:procedural-memory-nonmonotonicity",
+          "unresolved-exact-reduction-test:3"
+        ],
+        "surviving_paperability_axes": [
+          "P",
           "E"
         ]
       }
@@ -2804,7 +3271,5 @@
     "provider_calls_executed": 0,
     "semantic_reviewer_calls_executed": 0,
     "scientific_authority": false
-  },
-  "discovery_transaction_id": "d6a0782a420512261c96d43e9e6a796bbc5e114f923decb1f79638c922021367",
-  "discovery_transaction_role": "generator"
+  }
 }

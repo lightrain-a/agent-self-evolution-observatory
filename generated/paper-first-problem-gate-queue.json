@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0",
-  "generated_at": "2026-08-18T16:42:30+00:00",
+  "generated_at": "2026-08-20T14:20:47+00:00",
   "source_inbox": "private-data://paper-first-problem-discovery/candidate-inbox.json",
   "source_inboxes": [
     "private-data://paper-first-problem-discovery/candidate-inbox.json",
@@ -63,6 +63,6 @@
   "blocked": [],
   "audited": [],
   "next_action": "Human Paper Design review may inspect passed candidates. Blocked, stale, malformed, or missing candidates do not create a paper, method, experiment, or P0 lifecycle entry.",
-  "discovery_transaction_id": "d6a0782a420512261c96d43e9e6a796bbc5e114f923decb1f79638c922021367",
+  "discovery_transaction_id": "ed883b998c767cc6f47f77986c007a76be23a089ac9e7e274c71069e4b669de3",
   "discovery_transaction_role": "queue"
 }

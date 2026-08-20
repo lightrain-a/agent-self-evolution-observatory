@@ -106,6 +106,65 @@ def _write_raw(storage,run_id,role,model,text):
     d=_root(storage)/"raw-generations";d.mkdir(parents=True,exist_ok=True);sha=_sha(text);p=d/f"{run_id}-{role}-{model.replace('/','-')}-{sha[:12]}.txt";p.write_text(text,encoding="utf-8");return str(p),sha
 
 
+def build_aborted_portfolio_replay_responder(
+    *,
+    storage:StorageSettings,
+    aborted_receipt_path:Path,
+    live_responder:Responder|None=None,
+    role_model_overrides:dict[str,str]|None=None,
+)->Responder:
+    """Resume an aborted portfolio without replaying completed provider subcalls.
+
+    Archived rows are bound to the original role, raw SHA, and portfolio request
+    fingerprint.  Missing roles may call a live responder, but an archived row can
+    never silently fall through to a new provider request.  The resulting model
+    outputs remain zero-authority search material.
+    """
+    receipt_path=Path(aborted_receipt_path)
+    receipt=json.loads(receipt_path.read_text(encoding="utf-8"))
+    if receipt.get("status")!="ABORTED_PUBLIC_STATE_PRESERVED":
+        raise ValueError("portfolio-replay-requires-aborted-public-state-preserved-receipt")
+    diagnostics=receipt.get("stage_diagnostics") or {}
+    origin_run_id=str(diagnostics.get("generator_run_id") or "").strip()
+    if not origin_run_id:
+        raise ValueError("portfolio-replay-origin-run-id-missing")
+    archived={}
+    for row in diagnostics.get("portfolio_provenance") or []:
+        if not isinstance(row,dict):continue
+        role=str(row.get("role") or "").strip();sha=str(row.get("sha256") or "").strip().lower();fingerprint=str(row.get("request_fingerprint") or "").strip().lower()
+        if not role or not re.fullmatch(r"[0-9a-f]{64}",sha) or not re.fullmatch(r"[0-9a-f]{64}",fingerprint):continue
+        if role in archived:raise ValueError(f"portfolio-replay-duplicate-role:{role}")
+        matches=list((_root(storage)/"raw-generations").glob(f"{origin_run_id}-{role}-*-{sha[:12]}.txt"))
+        if len(matches)!=1 or hashlib.sha256(matches[0].read_bytes()).hexdigest()!=sha:
+            raise ValueError(f"portfolio-replay-raw-mismatch:{role}")
+        archived[role]={"row":dict(row),"path":matches[0],"sha256":sha,"request_fingerprint":fingerprint}
+    if not archived:raise ValueError("portfolio-replay-no-archived-subcalls")
+    overrides={str(key):str(value) for key,value in (role_model_overrides or {}).items() if str(key) and str(value)}
+    def responder(*,role,prompt,model,max_output_tokens,temperature=0.0):
+        role=str(role or "").strip()
+        if role in archived:
+            item=archived[role];row=item["row"]
+            return {
+                "text":item["path"].read_text(encoding="utf-8",errors="strict"),
+                "resolved_model":str(row.get("resolved_model") or row.get("requested_model") or model),
+                "transport_attempts":[],
+                "raw_replayed_without_provider":True,
+                "raw_origin_run_id":origin_run_id,
+                "raw_origin_sha256":item["sha256"],
+                "raw_origin_request_fingerprint":item["request_fingerprint"],
+            }
+        actual_model=overrides.get(role,str(model))
+        call=live_responder or (lambda **kwargs:_ark(stage="problem_generation",allow_transport_fallback=False,**kwargs))
+        result=dict(call(prompt=prompt,model=actual_model,max_output_tokens=max_output_tokens,temperature=temperature))
+        if actual_model!=str(model):
+            result["operator_model_override"]={"role":role,"requested_model":str(model),"executed_model":actual_model,"reason":"explicit-resume-after-audited-provider-orphan","scientific_authority":False}
+        return result
+    responder.archived_roles=tuple(sorted(archived))
+    responder.origin_run_id=origin_run_id
+    responder.scientific_authority=False
+    return responder
+
+
 def _archive_provider_receipts(storage:StorageSettings,run_id:str,stage:str,attempts:list[dict[str,Any]]|None)->tuple[list[dict[str,Any]],list[dict[str,Any]]]:
     """Persist exact provider response IDs privately and return public-safe transport attempts.
 
@@ -801,7 +860,7 @@ def installed_problem_generator_policy(*, portfolio: bool = True) -> dict[str, A
     return dict(_base_policy(portfolio=portfolio))
 
 
-def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=None,saturation_ledger_path=None,generator_model=None,reviewer_model=None,generator_responder:Responder|None=None,reviewer_responder:Responder|None=None,now=None,pool_max_age_hours=MAX_POOL_AGE_HOURS,max_candidates=MAX_CANDIDATES,blocked_problem_memory:dict[str,Any]|None=None,portfolio_mode:bool|None=None,target_raw_seeds:int=DEFAULT_RAW_SEEDS,strict_provider:bool=False,defer_reviewer:bool=False,allow_orphan_replay:bool=False):
+def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=None,saturation_ledger_path=None,generator_model=None,reviewer_model=None,generator_responder:Responder|None=None,portfolio_responder:Responder|None=None,reviewer_responder:Responder|None=None,now=None,pool_max_age_hours=MAX_POOL_AGE_HOURS,max_candidates=MAX_CANDIDATES,blocked_problem_memory:dict[str,Any]|None=None,portfolio_mode:bool|None=None,target_raw_seeds:int=DEFAULT_RAW_SEEDS,strict_provider:bool=False,defer_reviewer:bool=False,allow_orphan_replay:bool=False):
     storage=storage or StorageSettings.from_env();primary_pool_path=primary_pool_path or private_primary_pool_path(storage);auto_inbox_path=auto_inbox_path or default_auto_inbox_path(storage)
     generator_model=generator_model or os.getenv("PAPER_FIRST_PROBLEM_GENERATOR_MODEL",GENERATOR_MODEL);reviewer_model=reviewer_model or os.getenv("PAPER_FIRST_PROBLEM_REVIEW_MODEL",REVIEWER_MODEL);current=(now or _now_dt()).astimezone(timezone.utc);run_id=current.strftime("%Y%m%dT%H%M%SZ");portfolio_mode=False if portfolio_mode is None else bool(portfolio_mode)
     archived=_archive_previous(storage,auto_inbox_path);pool=load_private_primary_pool(primary_pool_path) or {};reg=_registry(pool);psha=_pool_sha(pool) if pool else "";d=_parse_iso(pool.get("generated_at"));age=None if d is None else max(0.0,(current-d).total_seconds()/3600)
@@ -862,10 +921,11 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
             if len(provenance)>=generator_subcall_budget:raise RuntimeError("canonical-double-funnel-generator-subcall-budget-exhausted")
             temperature=0.85 if role.startswith("expand-") else (0.60 if role.startswith("evolve-g1") else (0.35 if role.startswith("evolve-g2") else (0.45 if role.startswith("repair-") else 0.15)))
             request_audit=_provider_request_audit(stage=f"portfolio:{role}",prompt=prompt,model=model,max_output_tokens=max_output_tokens,temperature=temperature)
-            if generator_responder is None and not allow_orphan_replay and _provider_orphan_exists(storage,request_audit["request_fingerprint"]):
+            if generator_responder is None and portfolio_responder is None and not allow_orphan_replay and _provider_orphan_exists(storage,request_audit["request_fingerprint"]):
                 portfolio_orphan_audits.append({"request_fingerprint":request_audit["request_fingerprint"],"status":"ORPHANED_POST_NO_RECEIPT","requested_model":model,"stage":f"portfolio:{role}","replay_blocked_before_provider":True,"scientific_authority":False});portfolio_transport_abort.set()
                 raise RuntimeError(f"portfolio-provider-orphan-replay-blocked:{role}:{request_audit['request_fingerprint']}")
-            try:res=call(prompt=prompt,model=model,max_output_tokens=max_output_tokens,temperature=temperature)
+            try:
+                res=(portfolio_responder(role=role,prompt=prompt,model=model,max_output_tokens=max_output_tokens,temperature=temperature) if portfolio_responder is not None else call(prompt=prompt,model=model,max_output_tokens=max_output_tokens,temperature=temperature))
             except Exception as error:
                 attempts=list(getattr(error,"transport_attempts",[]) or []);orphan_audits=_archive_provider_orphans(storage,run_id,f"portfolio:{role}",attempts)
                 if orphan_audits:
@@ -874,6 +934,7 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
             raw=str(res.get("text") or "");path,sha=_write_raw(storage,run_id,role,model,raw);resolved=str(res.get("resolved_model") or model);generator_resolved_models.append(resolved);attempts=list(res.get("transport_attempts") or []);safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,role,attempts);orphan_audits=_archive_provider_orphans(storage,run_id,f"portfolio:{role}",attempts)
             replay_meta=_archived_replay_metadata(res,sha,f"portfolio:{role}",expected_request_fingerprint=request_audit["request_fingerprint"])
             entry={"role":role,"sha256":sha,"requested_model":model,"resolved_model":resolved,"temperature":temperature,"request_fingerprint":request_audit["request_fingerprint"],"transport_attempts":safe_attempts,"provider_calls_executed":0 if replay_meta else 1,"scientific_authority":False,**replay_meta}
+            if isinstance(res.get("operator_model_override"),dict):entry["operator_model_override"]=dict(res["operator_model_override"])
             if receipt_audits:entry["provider_receipt_audits"]=receipt_audits
             if orphan_audits:entry["provider_orphan_audits"]=orphan_audits
             provenance.append(entry);return res

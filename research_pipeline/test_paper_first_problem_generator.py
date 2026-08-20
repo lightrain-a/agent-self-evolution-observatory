@@ -11,7 +11,7 @@ from pathlib import Path
 from .config import StorageSettings
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES, SEARCH_PORTFOLIO_PRIMITIVES
 from .paper_first_problem_gate_queue import build_problem_gate_queue
-from .paper_first_problem_generator import _archived_replay_metadata, _ark, _durable_principle_dead_end_examples, _evidence_excerpt_matches, _normalize_lane_search, _normalize_last_completed_lane_search_receipt, _pre_f0_route, _provider_request_audit, _repair_block_only_reviewer_outer_braces, _respond_with_wall_clock_deadline, _search_closure_reentry_audit, recover_archived_block_only_reviewer_raw, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
+from .paper_first_problem_generator import _archived_replay_metadata, _ark, _durable_principle_dead_end_examples, _evidence_excerpt_matches, _normalize_lane_search, _normalize_last_completed_lane_search_receipt, _pre_f0_route, _provider_request_audit, _repair_block_only_reviewer_outer_braces, _respond_with_wall_clock_deadline, _search_closure_reentry_audit, build_aborted_portfolio_replay_responder, recover_archived_block_only_reviewer_raw, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
 from .paper_first_problem_generator_prompts import generator_prompt, reviewer_prompt
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
@@ -370,6 +370,21 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             _archived_replay_metadata({"raw_replayed_without_provider":True,"raw_origin_run_id":"origin-run","raw_origin_sha256":sha,"raw_origin_request_fingerprint":"c"*64,"transport_attempts":[]},sha,"portfolio:expand",expected_request_fingerprint=fingerprint)
         with self.assertRaisesRegex(ValueError,"cannot-carry-transport-attempts"):
             _archived_replay_metadata({"raw_replayed_without_provider":True,"raw_origin_run_id":"origin-run","raw_origin_sha256":sha,"raw_origin_request_fingerprint":fingerprint,"transport_attempts":[{"status":"success"}]},sha,"portfolio:expand",expected_request_fingerprint=fingerprint)
+
+    def test_aborted_portfolio_replay_is_role_sha_and_request_bound(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);raw_dir=root/"paper-first-problem-discovery"/"raw-generations";raw_dir.mkdir(parents=True)
+            origin_run="20260820T000000Z";role="expand-contradiction-p1";raw='{"seeds":[]}' ;sha=hashlib.sha256(raw.encode()).hexdigest();fingerprint="b"*64
+            (raw_dir/f"{origin_run}-{role}-kimi-k3-{sha[:12]}.txt").write_text(raw)
+            receipt=root/"aborted.json";receipt.write_text(json.dumps({"status":"ABORTED_PUBLIC_STATE_PRESERVED","stage_diagnostics":{"generator_run_id":origin_run,"portfolio_provenance":[{"role":role,"sha256":sha,"request_fingerprint":fingerprint,"requested_model":"kimi-k3","resolved_model":"kimi-k3"}]}}))
+            live=[]
+            def live_responder(**kwargs):
+                live.append(dict(kwargs));return {"text":"{}","resolved_model":kwargs["model"],"transport_attempts":[]}
+            responder=build_aborted_portfolio_replay_responder(storage=storage,aborted_receipt_path=receipt,live_responder=live_responder,role_model_overrides={"repair-1":"kimi-k3"})
+            archived=responder(role=role,prompt="same",model="kimi-k3",max_output_tokens=10,temperature=.1)
+            resumed=responder(role="repair-1",prompt="new",model="glm-5.3",max_output_tokens=10,temperature=.1)
+        self.assertTrue(archived["raw_replayed_without_provider"]);self.assertEqual(archived["raw_origin_sha256"],sha);self.assertEqual(archived["raw_origin_request_fingerprint"],fingerprint)
+        self.assertEqual(live[0]["model"],"kimi-k3");self.assertEqual(resumed["operator_model_override"]["requested_model"],"glm-5.3");self.assertFalse(resumed["operator_model_override"]["scientific_authority"])
 
     def test_explicit_portfolio_mode_is_canonical_double_funnel_but_zero_authority(self) -> None:
         portfolio={"schema_version":"3.0-double-funnel","policy":{"scientific_authority":False},"config":{},"summary":{"raw_seeds":0,"semantic_unique":0,"unique_problem_families":0,"breadth_archive":0,"mean_archive_pairwise_distance":0.0,"evolved_branches":0,"max_branch_depth":0,"reviewer_attacks":0,"repair_children":0,"formulated_candidates":0,"portfolio_calls":0},"lane_counts":{},"archive_lane_counts":{},"family_counts":{},"archives":{},"formulated_candidates":[],"scientific_authority":False}

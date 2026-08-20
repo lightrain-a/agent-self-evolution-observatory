@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0-pre-f0",
+  "generated_at": "2026-08-20T14:30:00+00:00",
+  "inventory_origin": "first-party-release-surface-audit-20260820",
+  "source_generator_run_id": "20260820T142226Z-ingestion-replay",
+  "rows": [
+    {
+      "candidate_id": "PORT-003",
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "6d22f8aae4c4130b41a5b14a2a9d961c695087fb45cb2581397b6c9ca676b447",
+      "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+      "required_unit": "A frozen xBench instance-level unit containing the task requirement, retrieved Cheatsheet/Voyager/HyperSkill procedural memory, retrieval confidence and pre-outcome utilization observables, plus the no-memory and memory-augmented outcomes needed to score negative transfer without endpoint leakage.",
+      "asset_audit": "The verified arXiv:2608.16114 HTML declares code at https://github.com/rux001/HyperSkill. On 2026-08-20, both the GitHub repository API endpoint and the raw main-branch README endpoint returned HTTP 404, so the declared release could not be resolved or content-addressed. The frozen Primary record contains verified arXiv abstract/full-text SHA values but no released dataset, trace bundle, xBench run manifest, per-instance retrieved-memory artifact, or executable baseline receipt. Therefore the proposed pre-outcome interference score and same-information baseline cannot yet be materialized without inventing a substrate.",
+      "primary_refs": ["arXiv:2608.16114"],
+      "bounded_first_party_evidence_design_allowed": true,
+      "reopen_only_if": "Reopen when the declared first-party repository becomes publicly resolvable and exposes a content-addressed xBench execution path plus instance-level task, retrieved-memory, pre-outcome utilization, and outcome units for Cheatsheet/Voyager/HyperSkill and the no-memory baseline. A substitute benchmark, synthetic memory, reconstructed outcome labels, or a newly written wrapper does not clear the hold."
+    },
+    {
+      "candidate_id": "PORT-004",
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "2c43d3a2af96523948cab81d83e489de020e82116175ec9a3c71f2d3ed5f641d",
+      "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+      "required_unit": "The exact first-party Terminal-Bench 2 R5 skill pool, descendant-lineage metadata, evaluation task/seed manifest, and oracle-cleanup implementation needed to vary only the available information set across L0 source identity, L1 descendant text, L2 embedding state, and L3 full oracle while keeping tasks, pool, evaluator, and compute fixed.",
+      "asset_audit": "The verified arXiv:2608.05810 HTML contains the reported contamination and oracle-cleanup measurements but exposes no author repository, dataset, artifact bundle, released R1-R5 skill pool, descendant-lineage file, oracle-cleanup runner, or content-addressed task/seed manifest. The frozen Primary record contains only the verified arXiv abstract/full-text carriers. The claimed information-set sweep therefore cannot be compiled on the paper's exact substrate without reconstructing unavailable units or changing the realization.",
+      "primary_refs": ["arXiv:2608.05810"],
+      "bounded_first_party_evidence_design_allowed": true,
+      "reopen_only_if": "Reopen only when the authors release a content-addressed Terminal-Bench 2 R1-R5 skill-pool bundle with lineage metadata, fixed task/seed manifest, evaluator, and oracle-cleanup runner sufficient to implement L0-L3 as information-only interventions. Recreating the pool, inferring lineages, substituting another benchmark, or writing a new cleanup system does not clear the hold."
+    },
+    {
+      "candidate_id": "PORT-006",
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "f58d45a4c280b17df06d70acf0845f8f1317078724b228ee5bbc460eafdc5071",
+      "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+      "required_unit": "The exact first-party Terminal-Bench 2 ungated R1-R5 trajectories, complete pre-R1 history, skill-pool lineage, oracle-cleanup implementation, and matched task/seed evaluation units required to test whether the reported 5.6pp residual persists after conditioning on full history.",
+      "asset_audit": "The verified arXiv:2608.05810 carrier reports a 5.6pp oracle-cleanup-resistant residual but publishes no resolvable author release endpoint for the exact ungated R1-R5 trajectories, pre-R1 history, skill lineage, oracle runner, or matched evaluation manifest. The residual can be recorded as a primary-source phenomenon, but the candidate's additional history-conditioned falsifier cannot be executed or independently reproduced from the currently frozen support surface.",
+      "primary_refs": ["arXiv:2608.05810"],
+      "bounded_first_party_evidence_design_allowed": true,
+      "reopen_only_if": "Reopen only when first-party artifacts expose the exact ungated R1-R5 histories, skill lineages, oracle-cleanup runner, and matched evaluation manifest needed for a full-history intervention without regeneration or hidden-outcome tuning. A reconstructed trajectory, substitute skill pool, or new benchmark does not clear the hold."
+    }
+  ],
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

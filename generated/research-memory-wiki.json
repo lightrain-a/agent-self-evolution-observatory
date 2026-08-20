@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-20T08:44:45+00:00",
+  "generated_at": "2026-08-20T14:27:35+00:00",
   "status": "MEMORY_COMPILED",
   "policy": {
     "schema_version": "1.0",
@@ -22,7 +22,7 @@
     "search_memory_closed_objects": 41,
     "search_memory_hold_objects": 9,
     "failure_assets": 6,
-    "candidate_portfolio_visible": 2,
+    "candidate_portfolio_visible": 3,
     "unresolved_principles": 2,
     "generator_blocked_attempts": 13
   },
@@ -1600,7 +1600,7 @@
     "p0": false,
     "gpu": false
   },
-  "wiki_sha256": "7920f1fc9776f9efa38af76b1a80cec865df5566d0c620587f716615eb2410b5",
+  "wiki_sha256": "cc27ee40f4cc634aad7974db478fd3ed7739e47b317c36b91930caf8779567bf",
   "lint": {
     "schema_version": "1.0",
     "status": "PASS",

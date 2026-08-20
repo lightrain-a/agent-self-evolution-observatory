@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-18T15:10:57+00:00",
+  "generated_at": "2026-08-20T14:13:29+00:00",
   "policy": {
     "semantic_scholar_is_discovery_metadata_not_primary_evidence": true,
     "verified_primary_page_required": true,
@@ -95,102 +95,192 @@
     "title_mismatches": 0,
     "fulltext_verified": 30,
     "fulltext_fetch_errors": 2,
-    "empirical_fact_candidates": 103,
+    "empirical_fact_candidates": 102,
     "empirical_fact_tier_counts": {
+      "strong-observation": 26,
       "quantitative-directional": 61,
-      "strong-observation": 25,
       "result-section-directional": 13,
-      "owned-directional": 4
+      "owned-directional": 2
     },
     "typed_evidence_candidates": {
       "operational_assumptions": 1,
-      "measured_failures": 22,
-      "boundary_observations": 16
+      "measured_failures": 18,
+      "boundary_observations": 10
     },
-    "recent_verified_cache_reused": 15,
-    "recent_raw_primary_cache_reused": 17,
-    "recent_raw_fulltext_cache_reused": 15,
-    "recent_fulltext_failure_cooldown_skips": 2,
+    "recent_verified_cache_reused": 0,
+    "recent_raw_primary_cache_reused": 32,
+    "recent_raw_fulltext_cache_reused": 30,
+    "recent_fulltext_failure_cooldown_skips": 0,
     "lane_floor": 1,
     "source_coverage_scheduler_active": true,
-    "saturation_ledger_runs": 26,
-    "portable_review_receipts_merged": 25,
+    "saturation_ledger_runs": 27,
+    "portable_review_receipts_merged": 27,
     "prior_reviewed_sources": 245,
-    "eligible_unreviewed": 3,
-    "eligible_lane_unreviewed": 0,
-    "eligible_no_lane_unreviewed": 3,
-    "selected_previously_reviewed": 32,
-    "selected_unreviewed": 0,
-    "selected_object_unreviewed": 0,
-    "selected_lane_unreviewed": 0,
-    "selected_no_lane_unreviewed": 0,
-    "carrier_probe_required": true,
+    "eligible_unreviewed": 8,
+    "eligible_lane_unreviewed": 4,
+    "eligible_no_lane_unreviewed": 4,
+    "selected_previously_reviewed": 27,
+    "selected_unreviewed": 5,
+    "selected_object_unreviewed": 4,
+    "selected_lane_unreviewed": 4,
+    "selected_no_lane_unreviewed": 1,
+    "carrier_probe_required": false,
     "carrier_probe_attempted": 0,
-    "carrier_probe_reused": 3,
+    "carrier_probe_reused": 0,
     "carrier_probe_rescued": 0,
     "carrier_probe_pending": 0,
     "carrier_probe_errors": 0,
     "carrier_probe_complete": true,
-    "eligible_object_linked_sources": 153,
-    "reviewed_object_linked_sources": 153,
-    "unreviewed_object_linked_sources": 0,
-    "eligible_lane_linked_sources": 184,
-    "reviewed_lane_linked_sources": 184,
-    "unreviewed_lane_linked_sources": 0,
-    "unreviewed_no_lane_sources": 3,
-    "source_coverage_exhausted": true,
+    "eligible_object_linked_sources": 156,
+    "reviewed_object_linked_sources": 152,
+    "unreviewed_object_linked_sources": 4,
+    "eligible_lane_linked_sources": 187,
+    "reviewed_lane_linked_sources": 183,
+    "unreviewed_lane_linked_sources": 4,
+    "unreviewed_no_lane_sources": 4,
+    "source_coverage_exhausted": false,
     "source_retrieval_complete": true,
     "coverage_anchor_count": 16,
     "eligible_object_lane_counts": {
-      "skill_harness": 110,
-      "memory_continual": 60,
+      "skill_harness": 111,
+      "memory_continual": 64,
       "world_model": 11,
-      "parametric_model_state": 27
+      "parametric_model_state": 28
     },
     "selected_object_lane_counts": {
-      "skill_harness": 23,
-      "memory_continual": 10,
+      "skill_harness": 24,
+      "memory_continual": 13,
       "world_model": 1,
-      "parametric_model_state": 8
+      "parametric_model_state": 5
     },
     "eligible_lane_counts": {
-      "skill_harness": 110,
-      "memory_continual": 60,
+      "skill_harness": 111,
+      "memory_continual": 64,
       "world_model": 11,
-      "parametric_model_state": 27,
+      "parametric_model_state": 28,
       "embodied": 15,
       "collective": 17,
       "autonomous_science": 8,
-      "runtime_deployment": 60,
-      "safety_reliability": 77
+      "runtime_deployment": 61,
+      "safety_reliability": 81
     },
     "selected_lane_counts": {
-      "skill_harness": 23,
-      "memory_continual": 10,
+      "skill_harness": 24,
+      "memory_continual": 13,
       "world_model": 1,
-      "parametric_model_state": 8,
+      "parametric_model_state": 5,
       "embodied": 2,
       "collective": 1,
-      "autonomous_science": 1,
-      "runtime_deployment": 10,
-      "safety_reliability": 13
+      "autonomous_science": 2,
+      "runtime_deployment": 14,
+      "safety_reliability": 15
     },
     "verified_lane_counts": {
-      "skill_harness": 23,
-      "memory_continual": 10,
+      "skill_harness": 24,
+      "memory_continual": 13,
       "world_model": 1,
-      "parametric_model_state": 8,
+      "parametric_model_state": 5,
       "embodied": 2,
       "collective": 1,
-      "autonomous_science": 1,
-      "runtime_deployment": 10,
-      "safety_reliability": 13
+      "autonomous_science": 2,
+      "runtime_deployment": 14,
+      "safety_reliability": 15
     },
     "undercovered_lanes": [],
     "verified_undercovered_lanes": [],
     "candidate_generation_ready": true
   },
   "records": [
+    {
+      "evidence_id": "984c253a148265e418ee525f7914b97bac1c8db7e168bc3b84d8c7f35fd98d09",
+      "ref": "arXiv:2608.19013",
+      "title": "Harness Continual Learning: Continual Adaptation Beyond Model Parameters",
+      "primary_url": "https://arxiv.org/abs/2608.19013",
+      "source_sha256": "8e470e65566a33a8c7bb43ac686b4f38ed480c79ff2023133fafad2888c89ded",
+      "abstract_sha256": "773acc2a191514ba18612f6fbde67fe3768328fca6f07c760b78f30149f75968",
+      "year": 2026,
+      "publication_date": "2026-08-19",
+      "fetched_at": "2026-08-20T14:14:21+00:00",
+      "fulltext_sha256": "9c77e8e9678a0507784547ed84e2d5f44940ad86390a5d9ac46d483b0bd6c35e",
+      "empirical_fact_count": 4,
+      "typed_evidence_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "evidence_id": "7daf2d8256168f4462cac2d6ecf28acdde895feb841157bb6360415e9eaa5a24",
+      "ref": "arXiv:2608.17684",
+      "title": "Auditing Self-Evolution in Financial Agents: Capability Gains, Security Drift, and Execution-Interface Mismatch",
+      "primary_url": "https://arxiv.org/abs/2608.17684",
+      "source_sha256": "2a98c74f711e939885663e5eec469c3a711954598ea9df1f760aa7fc5a2c1797",
+      "abstract_sha256": "68fc0bdc39a7986667130e23dfa193fb98282c30c32aca4ab30059708c935252",
+      "year": 2026,
+      "publication_date": "2026-08-18",
+      "fetched_at": "2026-08-20T14:14:21+00:00",
+      "fulltext_sha256": "2d24607853cec7142861ffd0b601bc100a9e1d20b38a1640fe8c839299370b5f",
+      "empirical_fact_count": 4,
+      "typed_evidence_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 2,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "evidence_id": "a25208c4c38a496bea4551115574686de11412d0a2d04af4b7367ea5f696f6b3",
+      "ref": "arXiv:2608.18066",
+      "title": "On the Fragility of Self-Improving Agents: Variance, Task Order, and Underspecification",
+      "primary_url": "https://arxiv.org/abs/2608.18066",
+      "source_sha256": "d6c188120b6e2268a4bc44f601282a1b9569e4199743c6ffa09729b1c5c5e2b3",
+      "abstract_sha256": "a0ebca13c07ca38c9142e9bf989061004d55dd09d4e2052c5587bd64a247c54a",
+      "year": 2026,
+      "publication_date": "2026-08-18",
+      "fetched_at": "2026-08-20T14:14:21+00:00",
+      "fulltext_sha256": "12c8bc7ab1f80a19fc296c67748814390c474469b482854923a3768591723650",
+      "empirical_fact_count": 4,
+      "typed_evidence_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 2
+      }
+    },
+    {
+      "evidence_id": "a76f4e8c932736b1b6c4d44360f021bfb3b834e706321a12b2d6073b3d526365",
+      "ref": "arXiv:2608.17933",
+      "title": "EvoTS-Agent: A Self-Evolving LLM Agent for Financial Time Series Change Point Detection",
+      "primary_url": "https://arxiv.org/abs/2608.17933",
+      "source_sha256": "29ad3769d87bdee19d95bcc67ac104f755795e50c64887144e60f90a2c081e08",
+      "abstract_sha256": "f0bb97b55d35577562896ee11eb880553ef6c163055cb55c4212fa758a284b07",
+      "year": 2026,
+      "publication_date": "2026-08-18",
+      "fetched_at": "2026-08-20T14:14:21+00:00",
+      "fulltext_sha256": "0f8963fefee84e0a158792017c9054fe6c6bddbe9aaf19a9607bda67f6b3e998",
+      "empirical_fact_count": 4,
+      "typed_evidence_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "evidence_id": "2512a0cb7f96efa18124e9b13ac7f793092d064c227d504977feb4be533fc42c",
+      "ref": "arXiv:2608.17774",
+      "title": "Edge-Native Embodied Intelligence for Action-Aware Wireless Edge Networks",
+      "primary_url": "https://arxiv.org/abs/2608.17774",
+      "source_sha256": "44c3d9f046166cb8b462a7d9cb8bdf67d40a3a40c08ff0a5eeaf546cdc8030bd",
+      "abstract_sha256": "2fe4be57d76683bf9138912209dffd82075efa24a39934094da17e896bc7eb86",
+      "year": 2026,
+      "publication_date": "2026-08-18",
+      "fetched_at": "2026-08-20T14:14:21+00:00",
+      "fulltext_sha256": "8ed06a30cb7745d46373be1c27f48cea26593fdd97bbf57ba8d77d3930888934",
+      "empirical_fact_count": 0,
+      "typed_evidence_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
     {
       "evidence_id": "701fa57c847d2275d5bd91aa5c5af6ffb48a6af700a429858726c90c73ec04f8",
       "ref": "arXiv:2608.16590",
@@ -200,7 +290,7 @@
       "abstract_sha256": "ae32de532c3fef587b0928db74549f9d5f69c58b8d44c749dd7344fcee04abd2",
       "year": 2026,
       "publication_date": "2026-08-17",
-      "fetched_at": "2026-08-18T14:01:49+00:00",
+      "fetched_at": "2026-08-20T14:14:21+00:00",
       "fulltext_sha256": "6f8f0c1fba3474f86d1ef8246bd4b8e7d91f5603cda7d0ad71f69e197a9b1a0a",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -218,31 +308,13 @@
       "abstract_sha256": "a42e676ca2420ea1870ab6944bfcf35ebce98ecc12630e5f6fe186a220652932",
       "year": 2026,
       "publication_date": "2026-08-17",
-      "fetched_at": "2026-08-18T14:01:49+00:00",
+      "fetched_at": "2026-08-20T14:14:21+00:00",
       "fulltext_sha256": "7b80a6a78b5d4aab731d26b2d8c50660892764008c2494cd0647f6d55219a5dc",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
         "operational_assumptions": 0,
         "measured_failures": 1,
         "boundary_observations": 0
-      }
-    },
-    {
-      "evidence_id": "3a6c694bda49ecd630354e80c021d34c797e606eafca79fbb7ce02dcad43aba0",
-      "ref": "arXiv:2608.16806",
-      "title": "When State Becomes an Attack Surface: State-Semantic Injection in LLM-Driven Embodied Agents",
-      "primary_url": "https://arxiv.org/abs/2608.16806",
-      "source_sha256": "bb9ddd2b49c87d45e727e739ba3f737f00ff5d0841dbb6ed7711db364d503fe9",
-      "abstract_sha256": "7bf628a89633827bfd77b32f9c1eee0372fb954113624ba1adb880902eb09313",
-      "year": 2026,
-      "publication_date": "2026-08-17",
-      "fetched_at": "2026-08-18T14:01:49+00:00",
-      "fulltext_sha256": "9af5f19ff6f782b289063ccdf11b4cba9b95b47eb7ae014aed63758465ada733",
-      "empirical_fact_count": 4,
-      "typed_evidence_counts": {
-        "operational_assumptions": 0,
-        "measured_failures": 0,
-        "boundary_observations": 1
       }
     },
     {
@@ -254,7 +326,7 @@
       "abstract_sha256": "38f596e1bfccd125c647c9ab930eea3c6479a4324b6f5c37fe59c009b1d55a7b",
       "year": 2026,
       "publication_date": "2026-08-17",
-      "fetched_at": "2026-08-18T14:01:49+00:00",
+      "fetched_at": "2026-08-20T14:14:21+00:00",
       "fulltext_sha256": "d2e4f9759abeff7f167152a9dfa28ea2c4837f045c2473f87e11f38b08226367",
       "empirical_fact_count": 0,
       "typed_evidence_counts": {
@@ -272,7 +344,7 @@
       "abstract_sha256": "29225c257369752a6af38ae966079fcf5bb8eafe0ae0e6f4eb9ffc7a847258e0",
       "year": 2026,
       "publication_date": "2026-08-17",
-      "fetched_at": "2026-08-18T14:01:50+00:00",
+      "fetched_at": "2026-08-20T14:14:22+00:00",
       "fulltext_sha256": "9f6f3b4be31d4f962767c099d5a6354ad7c8ea5b6dccc1b247bdc740d9a67a14",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -290,7 +362,7 @@
       "abstract_sha256": "d7e92a6def205cf89bc08ddc2e7a60381121c61143a4452638af84d92877dc58",
       "year": 2026,
       "publication_date": "2026-08-16",
-      "fetched_at": "2026-08-18T14:01:50+00:00",
+      "fetched_at": "2026-08-20T14:14:22+00:00",
       "fulltext_sha256": "d5c81295c69bacc19d64655985225cda73c273aec7f020b60d8be79fb13f92b8",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -308,7 +380,7 @@
       "abstract_sha256": "77a3393a1743d352d81a61ea9ea81fd5c48250bef2fa3785aa9993e8dce81737",
       "year": 2026,
       "publication_date": "2026-08-15",
-      "fetched_at": "2026-08-18T15:11:49+00:00",
+      "fetched_at": "2026-08-20T14:14:22+00:00",
       "fulltext_sha256": "",
       "empirical_fact_count": 0,
       "typed_evidence_counts": {
@@ -326,7 +398,7 @@
       "abstract_sha256": "52b5562f5232065f01fba47fa35149ee7bb6ebb2bfbd79d95d85d7cf254688f3",
       "year": 2026,
       "publication_date": "2026-08-15",
-      "fetched_at": "2026-08-18T14:01:50+00:00",
+      "fetched_at": "2026-08-20T14:14:22+00:00",
       "fulltext_sha256": "95e35e2b9d696d555107a1b8e6cb832506c38750af2002e70d1f302b6e03789a",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -344,7 +416,7 @@
       "abstract_sha256": "10b29aa56e59bfc48085b790826c7f14771bbcd4c2b2bc0f233a21c376654c6f",
       "year": 2026,
       "publication_date": "2026-08-15",
-      "fetched_at": "2026-08-18T15:11:49+00:00",
+      "fetched_at": "2026-08-20T14:14:23+00:00",
       "fulltext_sha256": "",
       "empirical_fact_count": 0,
       "typed_evidence_counts": {
@@ -362,7 +434,7 @@
       "abstract_sha256": "62f052398fec488262c9f076056b780be893cc18aebd6c32c5b097960c63ce31",
       "year": 2026,
       "publication_date": "2026-08-14",
-      "fetched_at": "2026-08-18T14:01:51+00:00",
+      "fetched_at": "2026-08-20T14:14:23+00:00",
       "fulltext_sha256": "e963536344b67399b064ca9c53f952f177a783cc1c1c3ccf41bc1d39a45b945f",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -380,7 +452,7 @@
       "abstract_sha256": "5b533ab6bc1be8cc6040f74d3bc995fbb8e5a349c116a86ccf5e61e206de5705",
       "year": 2026,
       "publication_date": "2026-08-14",
-      "fetched_at": "2026-08-18T14:01:51+00:00",
+      "fetched_at": "2026-08-20T14:14:23+00:00",
       "fulltext_sha256": "85bee03889d0946a31cee8e00a5a6c41ba8d2e4a230d63fdf205341d74f94387",
       "empirical_fact_count": 2,
       "typed_evidence_counts": {
@@ -398,7 +470,7 @@
       "abstract_sha256": "36eaec193de3aaed9020ea646e18a0de88c16e037b98984f253d7f44265345c9",
       "year": 2026,
       "publication_date": "2026-08-14",
-      "fetched_at": "2026-08-18T14:01:51+00:00",
+      "fetched_at": "2026-08-20T14:14:23+00:00",
       "fulltext_sha256": "dfd1f750757e3f8523ba8afbb82962bd17101cfd8a45055865f9e49f30fce2e1",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -408,196 +480,16 @@
       }
     },
     {
-      "evidence_id": "0d280bfd432b402cfe95cf60b956f4eb754c080e02f4fb7ca8cab641b3142323",
-      "ref": "arXiv:2608.14441",
-      "title": "PACE-Bench: Benchmarking Physics Adaptation via Code Evolution in Dynamic Environments",
-      "primary_url": "https://arxiv.org/abs/2608.14441",
-      "source_sha256": "8a6c4d92937a833efb0eb19671a1eeb84d2280c1e4b957b7e7f962bf7fe03054",
-      "abstract_sha256": "a00465db3e70ddc862816673bebe5760d65670ad449bbf481710a010a518d7c6",
+      "evidence_id": "4246bbe6f9ee78c35e3cb12a16d15095662e9ca5d5702199641602e0e66b51dc",
+      "ref": "arXiv:2608.07449",
+      "title": "SkillProx: Self-Evolving Agent Skills via Proximal Textual Gradient Descent",
+      "primary_url": "https://arxiv.org/abs/2608.07449",
+      "source_sha256": "6289b468ecae0596f63ede3e95f7cac6e3247c2a5623b73cc244d6e993c8e678",
+      "abstract_sha256": "f2baac66af2e7c9290a78678a159ff759af47fd8ec5654a56938ba1b26ab8ca1",
       "year": 2026,
-      "publication_date": "2026-08-14",
-      "fetched_at": "2026-08-18T14:01:51+00:00",
-      "fulltext_sha256": "ea6f892f46c8533001b7de87099b040b1305460e738bede7323f4476c5880ff6",
-      "empirical_fact_count": 4,
-      "typed_evidence_counts": {
-        "operational_assumptions": 0,
-        "measured_failures": 2,
-        "boundary_observations": 0
-      }
-    },
-    {
-      "evidence_id": "915078e95c611fdd9ee2fe12739422854b8196c481e6d2b0e615bd7a93489cc0",
-      "ref": "arXiv:2608.12851",
-      "title": "Practice Makes Unsafe: Skill Misevolution in Self-Improving LLM Agents",
-      "primary_url": "https://arxiv.org/abs/2608.12851",
-      "source_sha256": "c318845274c55db475c189ad1a3566259c2d53640b5c2a86a41be66400ba386c",
-      "abstract_sha256": "fe19bdcba3556f0d3bda09731512dd1bbdc8a3074acfebe2eaba9dc810096a3b",
-      "year": 2026,
-      "publication_date": "2026-08-13",
-      "fetched_at": "2026-08-18T14:01:52+00:00",
-      "fulltext_sha256": "88f6f8078cb227fda7846d509652891cf2aa397214cb7783bd24db5d264c134d",
-      "empirical_fact_count": 4,
-      "typed_evidence_counts": {
-        "operational_assumptions": 0,
-        "measured_failures": 0,
-        "boundary_observations": 0
-      }
-    },
-    {
-      "evidence_id": "05c414e5dd01a468f162d5ac028d6c60af5060dc1e5ff8f75a7fb213a28184ff",
-      "ref": "arXiv:2608.13040",
-      "title": "Latent On-Policy Self-Distillation",
-      "primary_url": "https://arxiv.org/abs/2608.13040",
-      "source_sha256": "5286649a98dd8633511961d35fecf5a02c652a3a2cb8c786a509e3e2ea71c864",
-      "abstract_sha256": "0f98d4f523d8ddc6ea13b4f806d7f1e4eab8e5eb1436b50fd4d1fc306207a846",
-      "year": 2026,
-      "publication_date": "2026-08-13",
-      "fetched_at": "2026-08-18T14:01:52+00:00",
-      "fulltext_sha256": "149cbbd1fc5ae506dd1189936968a671a347e412689510f4c42c37b33134fcf8",
-      "empirical_fact_count": 4,
-      "typed_evidence_counts": {
-        "operational_assumptions": 0,
-        "measured_failures": 0,
-        "boundary_observations": 0
-      }
-    },
-    {
-      "evidence_id": "37ce80aa04ade0460705ec74c4013ff47ee98989183109be1a6d3c9b60af39c7",
-      "ref": "arXiv:2608.12977",
-      "title": "Beyond Handcrafted Security: Towards Self-Evolving Defense for LLM Agents",
-      "primary_url": "https://arxiv.org/abs/2608.12977",
-      "source_sha256": "d2231e74ed69ed24985bad8eba932cd71517f91d24472fa707343e1b2d617f9b",
-      "abstract_sha256": "9f6d925001cc85833b8014ca89bc01a8095465ce2b64e3e158b691e627e2a7b3",
-      "year": 2026,
-      "publication_date": "2026-08-13",
-      "fetched_at": "2026-08-18T14:01:52+00:00",
-      "fulltext_sha256": "d810b39f050dd6d3330e08aade701b1325511e98a47cb009be1ca5d975172957",
-      "empirical_fact_count": 4,
-      "typed_evidence_counts": {
-        "operational_assumptions": 0,
-        "measured_failures": 1,
-        "boundary_observations": 1
-      }
-    },
-    {
-      "evidence_id": "a51d9e2112794308111cedb05181711902cb08d191964483bc66f60410b0bfd4",
-      "ref": "arXiv:2608.09044",
-      "title": "Tree-of-Experience: Hierarchical Experience Management for Self-Evolving Agents",
-      "primary_url": "https://arxiv.org/abs/2608.09044",
-      "source_sha256": "adc892caf483d9252eff616681f2b67fb05852dca3cfed93ce802b5c501fe351",
-      "abstract_sha256": "459996c08d7a45fc30b36c9a87f7fa6f51498f3fa362474e8f0aaf29c7b3ce1b",
-      "year": 2026,
-      "publication_date": "2026-08-10",
-      "fetched_at": "2026-08-18T15:11:49+00:00",
-      "fulltext_sha256": "59f0c52e311449053686ce7e34b94cef984b0de1ff59d1711fa5536b64c21441",
-      "empirical_fact_count": 4,
-      "typed_evidence_counts": {
-        "operational_assumptions": 0,
-        "measured_failures": 0,
-        "boundary_observations": 1
-      }
-    },
-    {
-      "evidence_id": "c2b1db843fed70fc082563abb46406b350fe395d4ae45723d8add17ee5e5a15e",
-      "ref": "arXiv:2608.10178",
-      "title": "One Recipe, Many Harnesses: What Self-Evolution Encodes Across Languages and Models",
-      "primary_url": "https://arxiv.org/abs/2608.10178",
-      "source_sha256": "2314ffd6b08b20fc687eb99c4e84d82acb0a18763cf6ef0daa3ff085b06180d1",
-      "abstract_sha256": "d144fbaf6657d2f53438eb47bd75f860e413971e795424beccff5c2932ba7eef",
-      "year": 2026,
-      "publication_date": "2026-08-10",
-      "fetched_at": "2026-08-18T15:11:49+00:00",
-      "fulltext_sha256": "92954253f585e05b95b0b7a7da6a1db08b283bc9a303d1f721b569ffcafbc122",
-      "empirical_fact_count": 4,
-      "typed_evidence_counts": {
-        "operational_assumptions": 0,
-        "measured_failures": 0,
-        "boundary_observations": 0
-      }
-    },
-    {
-      "evidence_id": "5a4513261bcfa3db81f27ba233a6dbe320305cf40580a56a7a207f725eff136c",
-      "ref": "arXiv:2608.10157",
-      "title": "SBCO: Self-Supervised, Verifier-Grounded Harness Optimization For Planning Agents",
-      "primary_url": "https://arxiv.org/abs/2608.10157",
-      "source_sha256": "3e1b16d87defe5949ef291814d544a68619473165ce75654e9dd08ba03669857",
-      "abstract_sha256": "da9adb346966ed532ffc1e39481f522c566861ba3c373a5dd998141f690f38a7",
-      "year": 2026,
-      "publication_date": "2026-08-10",
-      "fetched_at": "2026-08-18T15:11:49+00:00",
-      "fulltext_sha256": "95a5282033b8e10f13085a7e3054f023bd4451894aa9cdf6c5353deef966c23b",
-      "empirical_fact_count": 4,
-      "typed_evidence_counts": {
-        "operational_assumptions": 0,
-        "measured_failures": 1,
-        "boundary_observations": 1
-      }
-    },
-    {
-      "evidence_id": "91c2aebb037d6c8e1811f64a9a8936424dc226139c01001070d6728b9776bc97",
-      "ref": "arXiv:2608.09819",
-      "title": "Macaron-V1: Towards Open Continual Learning with Self-Improvement and Mixture-of-LoRA",
-      "primary_url": "https://arxiv.org/abs/2608.09819",
-      "source_sha256": "f1a8b68554cd053e1fda463baa911740aa3db4b79524bbe5ac961535e01ccf41",
-      "abstract_sha256": "7c99ad928de354faeb96c99556b4897c86feea985531950aef9132ff921c86fe",
-      "year": 2026,
-      "publication_date": "2026-08-10",
-      "fetched_at": "2026-08-18T15:11:49+00:00",
-      "fulltext_sha256": "8f48d5040804024aa2129feca2975e0059531dd93b58fe20e1e8055b589200f0",
-      "empirical_fact_count": 4,
-      "typed_evidence_counts": {
-        "operational_assumptions": 0,
-        "measured_failures": 0,
-        "boundary_observations": 2
-      }
-    },
-    {
-      "evidence_id": "edff4dcc6137a68da280dc22d9e4123480b586d606cd762775c7ec4bbda7470f",
-      "ref": "arXiv:2608.09096",
-      "title": "Evo-Bench: Can Language Models Improve Agent Harness?",
-      "primary_url": "https://arxiv.org/abs/2608.09096",
-      "source_sha256": "73c15a7cbb716e105aab22068d80ef848ea8caa4adfb2376eeb9c9869e62114b",
-      "abstract_sha256": "f44a11fdb2c28c53487e60220dd30ae0a10045b4a709a5cf630529d4d8834ef0",
-      "year": 2026,
-      "publication_date": "2026-08-10",
-      "fetched_at": "2026-08-18T15:11:49+00:00",
-      "fulltext_sha256": "e4b24185c346da95691e8b0e3f539375bc39364d98481af320ee6ee4c485efaf",
-      "empirical_fact_count": 4,
-      "typed_evidence_counts": {
-        "operational_assumptions": 0,
-        "measured_failures": 2,
-        "boundary_observations": 0
-      }
-    },
-    {
-      "evidence_id": "e1b36548703043da812bc5761d616092cb4313409f0bd59d711c17433309db65",
-      "ref": "arXiv:2608.09476",
-      "title": "ActBench: Self-Evolving Benchmark of Behavioral Safety in Cowork Agents",
-      "primary_url": "https://arxiv.org/abs/2608.09476",
-      "source_sha256": "32778f95a3a450a70407a8518b65a45c03cf12f86679be5023869be642d49ef5",
-      "abstract_sha256": "e3b21cdb993a87f9f7ccbbfe1633ac0f514471471d97c38c25ab0c6885ced71f",
-      "year": 2026,
-      "publication_date": "2026-08-10",
-      "fetched_at": "2026-08-18T15:11:49+00:00",
-      "fulltext_sha256": "d15e8eadee8f54129c27f7950c39a7869a3059b4121bbae7a4906d92c900797d",
-      "empirical_fact_count": 4,
-      "typed_evidence_counts": {
-        "operational_assumptions": 0,
-        "measured_failures": 0,
-        "boundary_observations": 1
-      }
-    },
-    {
-      "evidence_id": "d5d84f70e47aab13864854d34bc47cf1a1abe43c50f26d2119b960eb4f35b62b",
-      "ref": "arXiv:2608.09885",
-      "title": "SHE: Trajectory-driven Safety Harness Evolution for LLM Agents",
-      "primary_url": "https://arxiv.org/abs/2608.09885",
-      "source_sha256": "acb1a9974f399d1779bedc58515d0f60004e5ffd7f0903773642f6c2d246ba7b",
-      "abstract_sha256": "3b58d5771fac8c7cce21ba161069c4b683456db91405c535fdb60c18eeda49da",
-      "year": 2026,
-      "publication_date": "2026-08-10",
-      "fetched_at": "2026-08-18T15:11:49+00:00",
-      "fulltext_sha256": "aff353c5933aa0355f3c249a619171b7a7a7eff4dd85ae91f64ba7058a69953c",
+      "publication_date": "2026-08-07",
+      "fetched_at": "2026-08-20T14:14:23+00:00",
+      "fulltext_sha256": "d9aca49a41c0ecfedf4a3edf478b0f4977640c72e02287e1db3f900cbbba2853",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
         "operational_assumptions": 0,
@@ -606,53 +498,17 @@
       }
     },
     {
-      "evidence_id": "0a83c33a50fb937713bfe39f1a1e627c19396ae38e4a287672acfb81662a4fa3",
-      "ref": "arXiv:2608.09292",
-      "title": "Beyond the Capability Boundary: Zeroth-Order Optimization for Self-Evolving LLM Agents",
-      "primary_url": "https://arxiv.org/abs/2608.09292",
-      "source_sha256": "ec65789cde3d55f97beadbe2892356ad22761ad2bbbaa81e739fb914245d5616",
-      "abstract_sha256": "829238d5777dccdd873d57a09d85f59b8050d9bf026e61d3b7e3654e3244c89f",
+      "evidence_id": "33f5d3e3b9f151f558f6ad6115354b808bf2ba49532a2098bf5fcb6f13fc8c62",
+      "ref": "arXiv:2608.07622",
+      "title": "Controlled Memory Interference in Continual LLM Agents",
+      "primary_url": "https://arxiv.org/abs/2608.07622",
+      "source_sha256": "9a55b4e28f1d400a5a5821bedffc2bb1a534f738c0841c6522d9f7691f68c639",
+      "abstract_sha256": "bf56d89ed77cb24d939bbd3443ab6444eaa24da7f3c247f9e79b9fd4df80db84",
       "year": 2026,
-      "publication_date": "2026-08-10",
-      "fetched_at": "2026-08-18T15:11:50+00:00",
-      "fulltext_sha256": "97153ce0e9108b99d9b9d28ed57892f811a204728eba6fe4a3729a1f7b196a0b",
-      "empirical_fact_count": 4,
-      "typed_evidence_counts": {
-        "operational_assumptions": 0,
-        "measured_failures": 1,
-        "boundary_observations": 0
-      }
-    },
-    {
-      "evidence_id": "c1d8ee261b991c334f4b4d82f0117c66869ac984c7fc69604fee5102ef05031c",
-      "ref": "arXiv:2608.08466",
-      "title": "Hierarchical Self-Improvement: A Framework for Task-Specific Evolvable Agent Harnesses",
-      "primary_url": "https://arxiv.org/abs/2608.08466",
-      "source_sha256": "7a5a4581148c989a7837a8bb139975e8f61f80d03676539d508b0d4c5d281dd4",
-      "abstract_sha256": "b3312c66881ce843a5cef24ad5c5e05e4a9fb04532c770730b86f89b30f6f5c4",
-      "year": 2026,
-      "publication_date": "2026-08-09",
-      "fetched_at": "2026-08-18T15:11:50+00:00",
-      "fulltext_sha256": "60672575ab6c5c64fea09983c105d61d0c9bd889a4a51ca3820a49214d48af9e",
-      "empirical_fact_count": 4,
-      "typed_evidence_counts": {
-        "operational_assumptions": 0,
-        "measured_failures": 2,
-        "boundary_observations": 2
-      }
-    },
-    {
-      "evidence_id": "5ec456795208e68bbebeb59b121f8b5dac070635c5189ce988143f3af4fe682a",
-      "ref": "arXiv:2608.08600",
-      "title": "Population-Scalable Multi-Agent World Modeling",
-      "primary_url": "https://arxiv.org/abs/2608.08600",
-      "source_sha256": "91fe6b9c5dd0e4d42cf08b5500bc0a7f605a4da869f62df15dea5f131454c945",
-      "abstract_sha256": "5710e16ec6f5539f557fec10f5f60f00b695713c6c8f5e0e54d41c45b613b98f",
-      "year": 2026,
-      "publication_date": "2026-08-09",
-      "fetched_at": "2026-08-18T15:11:50+00:00",
-      "fulltext_sha256": "65798deffc243e86a329f0a4c12925b45d4ca3af35ff5eba46118fc0959981cb",
-      "empirical_fact_count": 1,
+      "publication_date": "2026-08-07",
+      "fetched_at": "2026-08-20T14:14:24+00:00",
+      "fulltext_sha256": "4a935d98a59735be240a6fef56428e29935bde96ee80b8188c5ae4ef18fb32ea",
+      "empirical_fact_count": 3,
       "typed_evidence_counts": {
         "operational_assumptions": 0,
         "measured_failures": 0,
@@ -660,16 +516,34 @@
       }
     },
     {
-      "evidence_id": "406f8e6d79b852e51c653497a0e6692a834354e1d7fd12088b4cd6a7ddc15164",
-      "ref": "arXiv:2608.07955",
-      "title": "Self-Evolving Neuro-Symbolic Skills for Tool-Augmented Spatial Reasoning",
-      "primary_url": "https://arxiv.org/abs/2608.07955",
-      "source_sha256": "6bb5a1baab9833ab222547f29c041b94712f95bdbdedf0da9b1203383fee27bd",
-      "abstract_sha256": "299313dd898a59538d93b1aaf9e365f9c9bcc4248c8dfbad562201fc44643d22",
+      "evidence_id": "89b7a44717d2d290d37ac4d73d551a4202f556ab842d503be8dd7b4c8b36bf99",
+      "ref": "arXiv:2608.05563",
+      "title": "When Experience Becomes Instruction: Trajectory Poisoning in Self-Evolving Agent Skill Systems",
+      "primary_url": "https://arxiv.org/abs/2608.05563",
+      "source_sha256": "7f9d74fded0c2c698e770d76a78dfac9beba82ef31b93f27dc537e58f815d0f1",
+      "abstract_sha256": "1f38828585ef7e1c12a8cb8b6ac62a4ad2b60033f4bb54765e496d4b80b78ffc",
       "year": 2026,
-      "publication_date": "2026-08-08",
-      "fetched_at": "2026-08-18T15:11:50+00:00",
-      "fulltext_sha256": "e56ac4a66904d60326dc276b4d092891c963d688ed7cee05a6490a650cbf989b",
+      "publication_date": "2026-08-06",
+      "fetched_at": "2026-08-20T14:14:24+00:00",
+      "fulltext_sha256": "c10f2d19a36968d9c2f0958d8eca27cfa887c6e6135c670e6e6a62428d8e1962",
+      "empirical_fact_count": 4,
+      "typed_evidence_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "evidence_id": "da2895c1f0f8ae46155391f264484d3c2dadeecd16e8c583645a1964ad60dac9",
+      "ref": "arXiv:2608.06020",
+      "title": "From Economic Agents to Agentic Economies: A Systems Blueprint for Economic World Models",
+      "primary_url": "https://arxiv.org/abs/2608.06020",
+      "source_sha256": "4c5ad9b11417d2c5597ac934c249470275c7e806dc0b3f2ac05d7f9f51d57273",
+      "abstract_sha256": "fc7703c79d5dd2d8ed323119a66cc415f3265f228809aba23a8baf6245fcf959",
+      "year": 2026,
+      "publication_date": "2026-08-06",
+      "fetched_at": "2026-08-20T14:14:24+00:00",
+      "fulltext_sha256": "6e1e6c90f42e35724b0523a9a8115e24b70ac32910d5f0a7ed51eb7f1a0f29d7",
       "empirical_fact_count": 0,
       "typed_evidence_counts": {
         "operational_assumptions": 0,
@@ -678,34 +552,34 @@
       }
     },
     {
-      "evidence_id": "bc822c7671c5572327fdfca327e814b081c65cb519d6f5cbb777a19f40e88dcc",
-      "ref": "arXiv:2608.08303",
-      "title": "Query-Only Backdoor Attacks on Self-Evolving Skills via Trajectory Poisoning",
-      "primary_url": "https://arxiv.org/abs/2608.08303",
-      "source_sha256": "22a9c050c8b783e713da9bcca64178d55fa5ade6be3974d43aad782519f94bfe",
-      "abstract_sha256": "821fcaf68cc94356c34a6f505ce7858f9b69765cf43947520a9b72e9f8863c5e",
+      "evidence_id": "059744491ad79e9055ff4cb9fe041535db9de80118ab5b772595448456e02a4b",
+      "ref": "arXiv:2608.06144",
+      "title": "FinEvo-Bench: A Longitudinal Benchmark for Self-Evolving Agents in Professional Financial Workflows",
+      "primary_url": "https://arxiv.org/abs/2608.06144",
+      "source_sha256": "6020cd0a452d57a3faad40f6b383f0b15f560c8e85366a8f123a7ceb23d52410",
+      "abstract_sha256": "0817e3b277c2d7e971dd8a87ac41446fa6a744503ef33abaa78a6e1311afc94a",
       "year": 2026,
-      "publication_date": "2026-08-08",
-      "fetched_at": "2026-08-18T15:11:50+00:00",
-      "fulltext_sha256": "fc28f28eff2d5410502ff83d25973f266cec56ebfef581853884af6647a391d0",
+      "publication_date": "2026-08-06",
+      "fetched_at": "2026-08-20T14:14:24+00:00",
+      "fulltext_sha256": "8b334941f0c7a2f347db982ba24a316fcb28836558a32d180a777357e9785e9c",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
         "operational_assumptions": 0,
-        "measured_failures": 2,
-        "boundary_observations": 0
+        "measured_failures": 0,
+        "boundary_observations": 2
       }
     },
     {
-      "evidence_id": "fcd0a3c7db1e02ab4abe30610eaa4485deea87f0445d8f022c364e544bf7c038",
-      "ref": "arXiv:2608.14621",
-      "title": "AutoMem: A Text-Gradient Recursive Self-Improvement Framework for Automated Memory Architectures Search",
-      "primary_url": "https://arxiv.org/abs/2608.14621",
-      "source_sha256": "812f3a11e2b80aeae39fdd8de013f3979a66cbb52da5d8d364537f5adcb634b4",
-      "abstract_sha256": "8002cb42a6e91ff0868e534a9b53aa18e67ed59bc3661b78213a1f9935e30b41",
+      "evidence_id": "bd4dfc3719f1bc5c07d68b20234287ec78feca37506f3735db30d13f91c6efb7",
+      "ref": "arXiv:2608.05810",
+      "title": "When Self-Evolution Backfires: Pre-Commit Gating against Skill Contamination in LLM Agents",
+      "primary_url": "https://arxiv.org/abs/2608.05810",
+      "source_sha256": "3a8856c90429feca99197901d54c1b694277f3aaeeb07e3646d50f904afec413",
+      "abstract_sha256": "21116e1c42d9e8482c283bf36e015b5d078aa70eef52a7da5bd0240a450cbb3b",
       "year": 2026,
-      "publication_date": "2026-07-14",
-      "fetched_at": "2026-08-18T14:01:52+00:00",
-      "fulltext_sha256": "3c2fd027c55a9b70b785fa2d83bb837c05eeaae8139ab4b91e57675e7db7b284",
+      "publication_date": "2026-08-06",
+      "fetched_at": "2026-08-20T14:14:24+00:00",
+      "fulltext_sha256": "5338caf0d00238a185648a761e0d96ad591e777f01c9b0cba30c7b4ca7f5edd7",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
         "operational_assumptions": 0,
@@ -714,34 +588,34 @@
       }
     },
     {
-      "evidence_id": "8299352f5479d06f36b086bf49f6e4c3d49b8edaeade53dc955b3a4879e52935",
-      "ref": "arXiv:2606.24081",
-      "title": "PixJail: Self-Evolving Paper-to-Pipeline Reproduction for Text-to-Image Jailbreak Evaluation",
-      "primary_url": "https://arxiv.org/abs/2606.24081",
-      "source_sha256": "b3503ba3470237af5e795bb553e5eb3a26ae8dcf7e1bd68def0f9ec5d067bb7e",
-      "abstract_sha256": "fc9c09a3572622c590c4f49dfbea185075860a8e40973ef34b12b3bc6527f7ea",
+      "evidence_id": "eb595bdadef3e29827e6e4e25d43978cb5e7af08548eedb866e9030f4fba36a4",
+      "ref": "arXiv:2608.05628",
+      "title": "SkillHEX: Improving Agent Skills via Hypothesis-Driven Autonomous Exploration and Exploitation",
+      "primary_url": "https://arxiv.org/abs/2608.05628",
+      "source_sha256": "07921f5f931b1bdd1e83daf2c42ebd40462c4e570be7472705feee2f74a191f6",
+      "abstract_sha256": "7c5713ca945c51b4625696e88ac9a7c4d2e97069c099b5bb611995dd0c0da273",
       "year": 2026,
-      "publication_date": "2026-06-23",
-      "fetched_at": "2026-08-18T15:11:50+00:00",
-      "fulltext_sha256": "7c89f339a6c0f4b659c64cd6b7162e871a6315d191265aa14af9f3375805f6ee",
+      "publication_date": "2026-08-06",
+      "fetched_at": "2026-08-20T14:14:24+00:00",
+      "fulltext_sha256": "adf24e12b54257befae95cd568fce15d132db4180716c93d9761b1093e32c551",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
         "operational_assumptions": 0,
-        "measured_failures": 0,
-        "boundary_observations": 1
+        "measured_failures": 2,
+        "boundary_observations": 0
       }
     },
     {
-      "evidence_id": "401d9fbc0af369766e3527ff14b5c138712c86845c3ec02109c96b8b532994cd",
-      "ref": "arXiv:2606.23075",
-      "title": "Safety in Self-Evolving LLM Agent Systems: Threats, Amplification, and Case Studies",
-      "primary_url": "https://arxiv.org/abs/2606.23075",
-      "source_sha256": "3917a6fd52df23f8fd9c09b5595e2a7d740316d6f208024110b26e7daf1fb53e",
-      "abstract_sha256": "af45589b8d68d9f028da34db289b8aea59ffa7893314a7aab2f742664d3462b5",
+      "evidence_id": "2ff40f0690851a2f85a1985bc40305559ea9a64227166ae277d89d8a27afb070",
+      "ref": "arXiv:2608.06474",
+      "title": "WebGrader: Training LLMs for Web Development with Self-Evolving Programmatic Grader",
+      "primary_url": "https://arxiv.org/abs/2608.06474",
+      "source_sha256": "14c74e3e23213df95799df2604b095644d9e19a2705f255b2a13b59c1fc44fef",
+      "abstract_sha256": "028ca6e3bcf407885cc590222b551d39935dd15d0f778137372f4bff09794c4c",
       "year": 2026,
-      "publication_date": "2026-06-22",
-      "fetched_at": "2026-08-18T15:11:50+00:00",
-      "fulltext_sha256": "b039c4e4b99ae6b073a14595c0b7e1a22800122b48a863436f13f3f1887b011b",
+      "publication_date": "2026-08-06",
+      "fetched_at": "2026-08-20T14:14:24+00:00",
+      "fulltext_sha256": "8500187244ee15d93ec85127d58239953f6ad09110ff6779be0fa6ac632aa31d",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
         "operational_assumptions": 0,
@@ -750,17 +624,143 @@
       }
     },
     {
-      "evidence_id": "e79b41eeefcabbd13b89ff1e8f779c13c1605cdc88673709794f2afce78038b6",
-      "ref": "arXiv:2606.23303",
-      "title": "Harnessing Josephson-Shapiro physics to verify interlayer exciton superfluidity",
-      "primary_url": "https://arxiv.org/abs/2606.23303",
-      "source_sha256": "146f47ca194ed51dcc031aecdf780b0ba8bd658ba8a4244822dfd1ce8c9a4515",
-      "abstract_sha256": "07c8053e11fdeca84fd837bd693202e6e9af47b25fe2748c3f8845b74a980093",
+      "evidence_id": "d063e2cfeadeba5618f88bdee63f2b1ad2be2af17990aac04b723b0c44a7aced",
+      "ref": "arXiv:2608.04968",
+      "title": "EvolveNet: Collaborative Harness Evolution for Agent Self-Improvement",
+      "primary_url": "https://arxiv.org/abs/2608.04968",
+      "source_sha256": "0fa4740ad57232a522f3f38178da4913de9b5ac08ed8ae4765e628f9aeefdc1b",
+      "abstract_sha256": "bf20482585e87707fbaded4b8d68619b159bea488961201eb52beb7ae01a2f30",
       "year": 2026,
-      "publication_date": "2026-06-22",
-      "fetched_at": "2026-08-18T15:11:50+00:00",
-      "fulltext_sha256": "591f52425c94a11b0e2f87533918f018f4fc2fd5970d3889faa14f908a5fc419",
-      "empirical_fact_count": 0,
+      "publication_date": "2026-08-05",
+      "fetched_at": "2026-08-20T14:14:24+00:00",
+      "fulltext_sha256": "1de0109ad85aa36dd3d595d05992d21408e7b22e3eef0acfe8689f2de4cf1e4e",
+      "empirical_fact_count": 4,
+      "typed_evidence_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "evidence_id": "7a5f79d8b9a04a5785d5616f20b3c0b97f5177f288a63bd4bdbaa6ec2c58335e",
+      "ref": "arXiv:2608.05446",
+      "title": "EvoHarness-RL: Learning Self-Evolving Runtime Harness for Long-Horizon LLM Agents",
+      "primary_url": "https://arxiv.org/abs/2608.05446",
+      "source_sha256": "53ffa3dd491d3b174f7fd850072c42814f6be0f58cd944e92ee8af861e79dbd2",
+      "abstract_sha256": "b241947e6dd2643d264c960138aa11c29ed0a40da73af2c2060cc90e7dfb0aa7",
+      "year": 2026,
+      "publication_date": "2026-08-05",
+      "fetched_at": "2026-08-20T14:14:24+00:00",
+      "fulltext_sha256": "31d6f01c12cf1706a4e90c0e425da0629943ff0a8e38d761d9598eb637e1a99d",
+      "empirical_fact_count": 4,
+      "typed_evidence_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 1,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "evidence_id": "9c36e70f8468389ed25e76c3efbbdd0c9664a6f524afd381a5a1371c9dd30acc",
+      "ref": "arXiv:2608.04872",
+      "title": "A-SR: Self-Evolving Agentic LLMs for Symbolic Regression via Hierarchical Coordination",
+      "primary_url": "https://arxiv.org/abs/2608.04872",
+      "source_sha256": "44b9eb1980a8478b3e5bd2440b9c1cb0f1c01c26bad2e4ec8a66f7c105415ded",
+      "abstract_sha256": "0038406a6bc4f605163906f63d9169a8f37b8208ace7844e151c40eb85e653ab",
+      "year": 2026,
+      "publication_date": "2026-08-05",
+      "fetched_at": "2026-08-20T14:14:24+00:00",
+      "fulltext_sha256": "f99c849538926c870e8df9d73c680590340bc7ac87380932adfc2fa4e6bf1130",
+      "empirical_fact_count": 4,
+      "typed_evidence_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 2,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "evidence_id": "3cf35581c2e75018220f72fc64f56bd804b882718cffa9a67e566380fa4dff9d",
+      "ref": "arXiv:2608.05030",
+      "title": "From Score Matrices to Football-Aware Match-State Simulation: An Auditable LLM Harness for Exact-Score Reranking",
+      "primary_url": "https://arxiv.org/abs/2608.05030",
+      "source_sha256": "2a1ab545864937422c49946d8ae57855535e02f18bd5d008809b5ee26e4197de",
+      "abstract_sha256": "33bde399069c033467232f5172598838d7e225c1173e5e2c90fb379b861fa353",
+      "year": 2026,
+      "publication_date": "2026-08-05",
+      "fetched_at": "2026-08-20T14:14:25+00:00",
+      "fulltext_sha256": "5c294bc4202263a638c4d491b806c097cad7b6eb0be8f99ffbe62ee728afad3a",
+      "empirical_fact_count": 3,
+      "typed_evidence_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "evidence_id": "d35cd035f6859cb671e9b14b709f9475c74518085a356389adc76ac886617cbd",
+      "ref": "arXiv:2608.05144",
+      "title": "Argus: A General-Purpose Agentic Reasoning Runtime for Long-Horizon Tasks",
+      "primary_url": "https://arxiv.org/abs/2608.05144",
+      "source_sha256": "efc7c55054d71b4b76b0c7048cf6ca75630355ccd195fce3311f86a3aea3b8db",
+      "abstract_sha256": "c3c38a95afe22064ca8051394d9d0fe00e95e848cd9c863c5b3daad7516f46d5",
+      "year": 2026,
+      "publication_date": "2026-08-05",
+      "fetched_at": "2026-08-20T14:14:25+00:00",
+      "fulltext_sha256": "364fa7cd7c0f7880426703f658ba3756aec79c176b9c663b523036aa00a7e633",
+      "empirical_fact_count": 4,
+      "typed_evidence_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "evidence_id": "ec85cf9c6d379b5afc5f44507cdbf47d1c41a3d196ff6cbd0de2657060835dab",
+      "ref": "arXiv:2608.03509",
+      "title": "SkillJack: Persistent Skill Backdoors in Self-Evolving Agents",
+      "primary_url": "https://arxiv.org/abs/2608.03509",
+      "source_sha256": "e4a7f9494a1a3bf46bd13474c5c5189e8cf8de0fec8de3dbaa40e4e3f5bfb812",
+      "abstract_sha256": "66ac5caea1d27de6f89034612588f1855ef580a4336fa032ad517baba80f3f72",
+      "year": 2026,
+      "publication_date": "2026-08-04",
+      "fetched_at": "2026-08-20T14:14:25+00:00",
+      "fulltext_sha256": "855e3d4689b7ff08d12ff96b0e598c55b32d28031f5b51968b7ae583c25540a6",
+      "empirical_fact_count": 2,
+      "typed_evidence_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "evidence_id": "a910899db35db92858e432012b74ccb995dfb1a0c931a4055702853b4cc735b9",
+      "ref": "arXiv:2608.03392",
+      "title": "Self-Evolving Coding Agents",
+      "primary_url": "https://arxiv.org/abs/2608.03392",
+      "source_sha256": "fd0b86d766837cffdf219c95c1192fd1092bc248b879ec48cca577e6d253195b",
+      "abstract_sha256": "520e6dfb5dba90c84ca65cc8f79f95ccff5f434ea0e7f52775cf0781c5e520b4",
+      "year": 2026,
+      "publication_date": "2026-08-04",
+      "fetched_at": "2026-08-20T14:14:25+00:00",
+      "fulltext_sha256": "d995b21b9a2b4bef35341f982d6d52a73125fdf896074bc9a7c174181ec1299a",
+      "empirical_fact_count": 4,
+      "typed_evidence_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "evidence_id": "9a211888152eeb38c1ff3af25b40dec421b85ed1c731bbcb248443db6a2b52f4",
+      "ref": "arXiv:2608.03764",
+      "title": "GDPevo: Evaluating Agent Self-Evolution on Real Business Tasks",
+      "primary_url": "https://arxiv.org/abs/2608.03764",
+      "source_sha256": "6490cf8663ada7b4d7820365f62fe108a7034a4235ae96a369b20894786626b5",
+      "abstract_sha256": "289b00261b9319801a96eb1bd396b4d280158cf4f2ff6df807af813c2bdad158",
+      "year": 2026,
+      "publication_date": "2026-08-04",
+      "fetched_at": "2026-08-20T14:14:25+00:00",
+      "fulltext_sha256": "487aa8a25b949b2ca16ac432448ca1328605ac973be61a22359b58d82a07d2b7",
+      "empirical_fact_count": 4,
       "typed_evidence_counts": {
         "operational_assumptions": 0,
         "measured_failures": 0,
@@ -774,11 +774,11 @@
   "corpus_age_days": null,
   "carrier_probe": {
     "enabled": true,
-    "required": true,
-    "classifier_version": "existing-object-carrier-v1",
+    "required": false,
+    "classifier_version": "",
     "probe_limit": 3,
     "attempted": 0,
-    "reused": 3,
+    "reused": 0,
     "rescued": 0,
     "pending": 0,
     "complete": true,
@@ -912,14 +912,14 @@
   "fulltext_errors": [
     {
       "ref": "arXiv:2608.15071",
-      "error": "recent-fulltext-failure-cooldown"
+      "error": "RuntimeError:HTTP 404"
     },
     {
       "ref": "arXiv:2608.15089",
-      "error": "recent-fulltext-failure-cooldown"
+      "error": "RuntimeError:fulltext-page-missing-sections"
     }
   ],
   "status": "READY",
-  "discovery_transaction_id": "d6a0782a420512261c96d43e9e6a796bbc5e114f923decb1f79638c922021367",
+  "discovery_transaction_id": "ed883b998c767cc6f47f77986c007a76be23a089ac9e7e274c71069e4b669de3",
   "discovery_transaction_role": "primary"
 }
