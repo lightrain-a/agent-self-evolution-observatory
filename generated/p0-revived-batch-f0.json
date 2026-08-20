@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-20T07:19:18+00:00",
+  "generated_at": "2026-08-20T08:44:35+00:00",
   "policy": {
     "parent_batch_size": 20,
     "duplicate_existing_p0_compute_forbidden": true,
@@ -228,7 +228,7 @@
     },
     {
       "schema_version": "1.0",
-      "generated_at": "2026-08-20T07:19:18+00:00",
+      "generated_at": "2026-08-20T08:44:35+00:00",
       "idea_id": "failure-frontier-curriculum",
       "code": "D-2",
       "scientific_role": "CPU programmatic versioned boundary-mutation F0; tests simplification before GPU curriculum work",
@@ -326,7 +326,7 @@
     },
     {
       "schema_version": "1.0",
-      "generated_at": "2026-08-20T07:19:18+00:00",
+      "generated_at": "2026-08-20T08:44:35+00:00",
       "idea_id": "world-model-error-gated-learning",
       "code": "F-1",
       "scientific_role": "CPU exact-margin world-model residual F0 with frozen-policy decision truth",
@@ -402,7 +402,7 @@
     },
     {
       "schema_version": "1.0",
-      "generated_at": "2026-08-20T07:19:18+00:00",
+      "generated_at": "2026-08-20T08:44:35+00:00",
       "idea_id": "irreversible-action-counterfactuals",
       "code": "F-2",
       "scientific_role": "topology-held-out finite-state predecessor F0",
@@ -475,7 +475,7 @@
     },
     {
       "schema_version": "1.0",
-      "generated_at": "2026-08-20T07:19:18+00:00",
+      "generated_at": "2026-08-20T08:44:35+00:00",
       "idea_id": "recovery-conditioned-experience",
       "code": "F-3",
       "scientific_role": "120-pair exact-state residual recurrence F0",

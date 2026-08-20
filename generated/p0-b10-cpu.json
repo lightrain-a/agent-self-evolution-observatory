@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "experiment_id": "P0-B10-TYPED-MEMORY-ORDER",
-  "created_at": "2026-08-20T07:19:20+00:00",
+  "created_at": "2026-08-20T08:44:37+00:00",
   "design": {
     "worlds": 4,
     "held_out_combinations": 32,

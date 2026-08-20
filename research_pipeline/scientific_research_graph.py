@@ -6,7 +6,7 @@ from collections import Counter, defaultdict
 from typing import Any
 
 
-SCHEMA_VERSION = "2.0"
+SCHEMA_VERSION = "2.1"
 OVERLAY_NODE_KINDS = {
     "phenomenon", "problem_contract", "candidate_problem", "idea", "claim",
     "method", "experiment", "evidence_reference", "core_principle",
@@ -30,6 +30,10 @@ POLICY: dict[str, Any] = {
     "failure_assets_preserve_affected_layer_and_does_not_imply_scope": True,
     "success_memory_is_scope_bound_and_does_not_generalize_automatically": True,
     "candidate_portfolio_stage_does_not_promote_scientific_status": True,
+    "aris_governance_is_a_separate_constraint_layer_not_a_scientific_truth_store": True,
+    "governance_bindings_may_block_but_cannot_self_authorize": True,
+    "belief_authority_never_implies_automatic_claim_mutation": True,
+    "candidate_provenance_hold_cannot_be_promoted_by_memory": True,
 }
 
 
@@ -133,6 +137,13 @@ def lint_scientific_research_graph(graph: dict[str, Any]) -> dict[str, Any]:
             failure_class = _text(node.get("failure_class"))
             if failure_class != "principle" and node.get("scientific_negative") is True:
                 errors.append({"code": "non-principle-failure-became-scientific-negative", "node_id": node_id})
+            failure_code = _text(node.get("failure_code"))
+            if failure_code in {"IMPLEMENTATION_ERROR", "RUNTIME_ERROR", "PROVENANCE_INCONCLUSIVE", "BUDGET_STOP"} and node.get("belief_authority") is not False:
+                errors.append({"code": "execution-or-provenance-failure-gained-belief-authority", "node_id": node_id})
+        if kind == "experiment" and node.get("effective_execution_authorized") is True and node.get("authorization_blockers"):
+            errors.append({"code": "experiment-authorized-with-governance-blocker", "node_id": node_id})
+        if kind == "candidate_problem" and node.get("provenance_status") == "PROVENANCE_INCONCLUSIVE" and node.get("downstream_authorization_blocked") is not True:
+            errors.append({"code": "candidate-provenance-hold-not-enforced", "node_id": node_id})
         if kind in {"scientific_closure", "search_closure", "hold"}:
             reopen_id = _text(node.get("reopen_condition_id"))
             if not reopen_id or by_id.get(reopen_id, {}).get("kind") != "reopen_condition":
@@ -155,6 +166,9 @@ def lint_scientific_research_graph(graph: dict[str, Any]) -> dict[str, Any]:
             source_node = by_id.get(source) or {}
             if source_node.get("kind") == "failure_asset" and source_node.get("failure_class") != "principle":
                 errors.append({"code": "non-principle-failure-emitted-closure-edge", "source": source, "target": target})
+    bindings = graph.get("governance_bindings") or {}
+    if bindings and bindings.get("scientific_authority") is not False:
+        errors.append({"code": "governance-bindings-authority-leak"})
     for missing in (graph.get("typed_coverage") or {}).get("missing_pipeline_kinds") or []:
         warnings.append({"code": "typed-pipeline-kind-not-yet-materialized", "kind": missing})
     return {
@@ -177,11 +191,28 @@ def build_scientific_research_graph(
     research_memory_wiki: dict[str, Any] | None = None,
     claim_ledger: list[dict[str, Any]] | None = None,
     experiment_iteration: dict[str, Any] | None = None,
+    governance_layer: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Compile a typed, read-only overlay over canonical scientific artifacts."""
     research_memory_wiki = research_memory_wiki or {}
     claim_ledger = claim_ledger or []
     experiment_iteration = experiment_iteration or {}
+    governance_layer = governance_layer or {}
+    failure_governance = {
+        (_text(row.get("idea_id")), _text(row.get("signature"))): row
+        for row in governance_layer.get("failure_authority_records") or []
+        if isinstance(row, dict)
+    }
+    experiment_governance = {
+        (_text(row.get("idea_id")), _text(row.get("phase"))): row
+        for row in governance_layer.get("experiment_authorizations") or []
+        if isinstance(row, dict)
+    }
+    candidate_governance = {
+        _text(row.get("candidate_id")): row
+        for row in governance_layer.get("candidate_lineage") or []
+        if isinstance(row, dict) and _text(row.get("candidate_id"))
+    }
     base_nodes = [
         row for row in evidence_graph.get("nodes") or []
         if isinstance(row, dict) and _text(row.get("id"))
@@ -221,11 +252,16 @@ def build_scientific_research_graph(
         cid = _text(row.get("candidate_id"))
         if not cid:
             continue
+        lineage_record = candidate_governance.get(cid) or {}
         candidate_id = add_node({
             "id": f"candidate:{cid}", "kind": "candidate_problem",
             "label": _text(row.get("title")) or cid, "candidate_id": cid,
             "stage": _text(row.get("stage")),
             "portfolio_state": _text(row.get("portfolio_state")),
+            "lineage_id": _text(lineage_record.get("lineage_id")),
+            "parent_candidate": _text(lineage_record.get("parent_candidate")),
+            "provenance_status": _text(lineage_record.get("provenance_status")),
+            "downstream_authorization_blocked": lineage_record.get("downstream_authorization_blocked") is True,
             "source": "research_candidate_portfolio",
         })
         idea_id = ensure_idea(cid, "research_candidate_portfolio")
@@ -317,11 +353,17 @@ def build_scientific_research_graph(
         idea_id, phase = _text(row.get("idea_id")), _text(row.get("phase"))
         if not idea_id or not phase:
             continue
+        authorization = experiment_governance.get((idea_id, phase)) or {}
         node_id = add_node({
             "id": f"experiment:{idea_id}:{phase}", "kind": "experiment",
             "label": _text(row.get("title")) or f"{idea_id} {phase}",
             "idea_id": idea_id, "phase": phase,
-            "status": _text(row.get("status")), "source": "pilot_registry",
+            "status": _text(row.get("status")),
+            "authorization_id": _text(authorization.get("authorization_id")),
+            "scientific_stage": _text(authorization.get("scientific_stage")),
+            "effective_execution_authorized": authorization.get("effective_execution_authorized") is True,
+            "authorization_blockers": list(authorization.get("blockers") or []),
+            "source": "pilot_registry",
         })
         experiment_nodes[(idea_id, phase)] = node_id
         add_edge(ensure_idea(idea_id, "pilot_registry"), node_id, "tested_by")
@@ -333,10 +375,17 @@ def build_scientific_research_graph(
         signature = _text(row.get("signature")) or f"failure-{idx}"
         affected_layer = _text(row.get("affected_layer"))
         failure_class = _failure_class(affected_layer)
+        authority_record = failure_governance.get((idea_id, signature)) or {}
         node_id = add_node({
             "id": f"failure:{_short_hash(f'{idea_id}|{phase}|{signature}|{idx}')}",
             "kind": "failure_asset", "label": signature,
             "failure_class": failure_class, "affected_layer": affected_layer,
+            "failure_record_id": _text(authority_record.get("failure_record_id")),
+            "failure_code": _text(authority_record.get("failure_code")),
+            "belief_authority": authority_record.get("belief_authority") is True,
+            "allowed_effects": list(authority_record.get("allowed_effects") or []),
+            "forbidden_effects": list(authority_record.get("forbidden_effects") or []),
+            "next_action": _text(authority_record.get("next_action")),
             "does_not_imply": _text(row.get("does_not_imply")),
             "scientific_negative": False, "source": "failure_asset_library",
         })
@@ -478,6 +527,15 @@ def build_scientific_research_graph(
     }
     closure_edges = sum(row.get("relation") == "closes_principle" for row in overlay_edges)
     propagation_edges = sum(row.get("relation") == "propagates_closure" for row in overlay_edges)
+    governance_bindings = {
+        "schema_version": "1.0",
+        "source_state_key": "aris_governance_layer",
+        "failure_records_bound": sum(bool(row.get("failure_record_id")) for row in overlay_nodes.values()),
+        "experiment_authorizations_bound": sum(bool(row.get("authorization_id")) for row in overlay_nodes.values()),
+        "candidate_lineage_bound": sum(bool(row.get("lineage_id")) for row in overlay_nodes.values()),
+        "bindings_are_derived_zero_authority": True,
+        "scientific_authority": False,
+    }
     graph = {
         "schema_version": SCHEMA_VERSION,
         "status": "RESEARCH_GRAPH_COMPILED",
@@ -489,6 +547,7 @@ def build_scientific_research_graph(
         },
         "typed_coverage": typed_coverage,
         "claim_conflicts": conflicts,
+        "governance_bindings": governance_bindings,
         "summary": {
             "nodes": len(base_ids | set(overlay_nodes)),
             "edges": len(base_edges) + len(overlay_edges),
@@ -513,6 +572,9 @@ def build_scientific_research_graph(
             "principle_closure_edges": closure_edges,
             "exact_scope_propagation_edges": propagation_edges,
             "claim_conflicts": len(conflicts),
+            "failure_governance_bindings": governance_bindings["failure_records_bound"],
+            "experiment_authorization_bindings": governance_bindings["experiment_authorizations_bound"],
+            "candidate_lineage_bindings": governance_bindings["candidate_lineage_bound"],
             "typed_pipeline_kinds_materialized": len(typed_coverage["materialized_pipeline_kinds"]),
             "typed_pipeline_kinds_required": len(pipeline_kinds),
         },

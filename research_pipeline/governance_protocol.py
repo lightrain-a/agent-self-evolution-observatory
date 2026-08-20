@@ -69,13 +69,20 @@ def evaluate_repair_budget(root:Path,idea_id:str,substrate_id:str)->dict[str,Any
   except (OSError,json.JSONDecodeError): payload={}
  repairs=[r for r in payload.get("repairs") or [] if str(r.get("substrate_id"))==substrate_id]
  load=[r for r in repairs if str(r.get("repair_kind")) in {"representation","objective"}]; limit=int(POLICY["max_representation_or_objective_repairs_per_substrate"])
- return {"idea_id":idea_id,"substrate_id":substrate_id,"path":str(path),"representation_or_objective_repairs":len(load),"limit":limit,"remaining":max(0,limit-len(load)),"exhausted":len(load)>=limit,"launch_allowed":len(load)<limit,"repairs":repairs}
+ child_counts:dict[str,int]={}
+ for row in load:
+  child_id=str(row.get("child_id") or "").strip()
+  if child_id: child_counts[child_id]=child_counts.get(child_id,0)+1
+ child_violations=[{"child_id":key,"count":value} for key,value in sorted(child_counts.items()) if value>1]
+ exhausted=len(load)>=limit
+ review_required=bool(child_violations)
+ return {"idea_id":idea_id,"substrate_id":substrate_id,"path":str(path),"representation_or_objective_repairs":len(load),"limit":limit,"remaining":max(0,limit-len(load)),"exhausted":exhausted,"one_load_bearing_repair_per_child_violations":child_violations,"review_required":review_required,"launch_allowed":not exhausted and not review_required,"repairs":repairs}
 
-def record_repair(root:Path,idea_id:str,substrate_id:str,repair_kind:str,changed_assumption:str,evidence_id:str="")->dict[str,Any]:
+def record_repair(root:Path,idea_id:str,substrate_id:str,repair_kind:str,changed_assumption:str,evidence_id:str="",*,child_id:str="",original_claim:str="",scientific_distance:str="load-bearing")->dict[str,Any]:
  if repair_kind not in {"representation","objective","substrate","runtime","provenance"}: raise ValueError(repair_kind)
- path=repair_budget_path(root,idea_id); payload={"schema_version":"2.0","idea_id":idea_id,"repairs":[]}
+ path=repair_budget_path(root,idea_id); payload={"schema_version":"2.1","idea_id":idea_id,"repairs":[]}
  if path.exists(): payload=json.loads(path.read_text(encoding="utf-8"))
- row={"repair_id":hashlib.sha256(f"{idea_id}|{substrate_id}|{repair_kind}|{changed_assumption}|{len(payload.get('repairs') or [])}".encode()).hexdigest()[:20],"substrate_id":substrate_id,"repair_kind":repair_kind,"changed_assumption":changed_assumption,"evidence_id":evidence_id,"recorded_at":_now()}
+ row={"repair_id":hashlib.sha256(f"{idea_id}|{substrate_id}|{repair_kind}|{changed_assumption}|{len(payload.get('repairs') or [])}".encode()).hexdigest()[:20],"substrate_id":substrate_id,"child_id":child_id,"repair_kind":repair_kind,"changed_assumption":changed_assumption,"original_claim":original_claim,"scientific_distance":scientific_distance,"evidence_id":evidence_id,"recorded_at":_now()}
  payload.setdefault("repairs",[]).append(row); _atomic(path,payload); return row
 
 def _evidence_path(config:dict[str,Any],root:Path,field:str)->Path|None:
@@ -108,6 +115,7 @@ def evaluate_stage_contract(idea_id:str,config:dict[str,Any],root:Path)->dict[st
  blockers=[]
  if not predecessor["pass"]: blockers.append(str(predecessor.get("reason")))
  if budget["exhausted"] and stage in {"f0-identifiability","p0-support","p0-method"}: blockers.append("repair-budget-exhausted-for-substrate")
+ if budget["review_required"] and stage in {"f0-identifiability","p0-support","p0-method"}: blockers.append("multiple-load-bearing-repairs-for-child-require-review")
  support=predecessor if field=="support_evidence" else {"required":False,"pass":True,"path":""}
  return {"schema_version":"2.0","idea_id":idea_id,"stage":stage,"stage_index":STAGES.index(stage),"predecessor_authorization":predecessor,"support_authorization":support,"repair_budget":budget,"execution_authorized":not blockers,"blockers":blockers,"policy":POLICY}
 

@@ -39,6 +39,7 @@ POLICY: dict[str, Any] = {
     "required_integration_contracts_must_be_machine_wired": True,
     "stall_pivot_cannot_change_scientific_assurance": True,
     "meta_optimization_producer_cannot_self_apply": True,
+    "governance_layer_may_block_but_cannot_self_authorize": True,
 }
 
 
@@ -59,6 +60,7 @@ def build_research_harness_assurance(
     integration_lint_state: dict[str, Any] | None = None,
     stall_pivot_state: dict[str, Any] | None = None,
     meta_optimization_state: dict[str, Any] | None = None,
+    governance_layer_state: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     dp = discovery_contract_state.get("policy") or {}
     gp = installed_generator_policy or {}
@@ -86,6 +88,8 @@ def build_research_harness_assurance(
     integration_lint_state = integration_lint_state or {}
     stall_pivot_state = stall_pivot_state or {}
     meta_optimization_state = meta_optimization_state or {}
+    governance_layer_state = governance_layer_state or {}
+    governance_layer_supplied = bool(governance_layer_state)
     extended_controls_supplied = bool(
         integration_lint_state or stall_pivot_state or meta_optimization_state
     )
@@ -120,6 +124,25 @@ def build_research_harness_assurance(
             gov.get("execution_completeness_cannot_set_scientific_pass") is True
             and gov.get("scientific_status_requires_independent_stage_authority") is True,
             {"execution_completeness_cannot_set_scientific_pass": gov.get("execution_completeness_cannot_set_scientific_pass"), "scientific_status_requires_independent_stage_authority": gov.get("scientific_status_requires_independent_stage_authority")},
+        ),
+        *(
+            [
+                _check(
+                    "aris-governance-memory-bindings",
+                    governance_layer_state.get("status") == "GOVERNANCE_COMPILED"
+                    and governance_layer_state.get("scientific_authority") is False
+                    and int(((governance_layer_state.get("lint") or {}).get("summary") or {}).get("errors") or 0) == 0
+                    and (governance_layer_state.get("policy") or {}).get("execution_failure_has_no_belief_authority") is True
+                    and (governance_layer_state.get("policy") or {}).get("governance_may_block_or_require_review_but_cannot_self_authorize") is True
+                    and not (governance_layer_state.get("repair_budget") or {}).get("review_required"),
+                    {
+                        "summary": governance_layer_state.get("summary") or {},
+                        "lint": (governance_layer_state.get("lint") or {}).get("summary") or {},
+                    },
+                )
+            ]
+            if governance_layer_supplied
+            else []
         ),
         _check(
             "persistent-multi-candidate-portfolio",

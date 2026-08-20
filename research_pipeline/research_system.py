@@ -89,6 +89,7 @@ from .pre_gpu_candidate_gates import build_pre_gpu_candidate_gate_state
 from .principle_adjudication import build_principle_layer_state
 from .research_capability_registry import build_research_capability_registry
 from .research_candidate_portfolio import build_research_candidate_portfolio
+from .research_governance_layer import build_aris_governance_layer
 from .research_harness_assurance import build_research_harness_assurance
 from .research_integration_lint import build_research_integration_lint
 from .research_harness_meta_optimization import build_research_harness_meta_optimization
@@ -251,6 +252,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     ai_clinic = state["ai_consultation_clinic"]["summary"]
     ai_automation = state["ai_consultation_automation"]["summary"]
     governance = state["research_governance_v2"]
+    aris_governance = state["aris_governance_layer"]["summary"]
     iteration = state["experiment_iteration"]["summary"]
     repairs = state["repair_queue"]["summary"]
     terminal = state["human_terminal_ideas"]["summary"]
@@ -289,6 +291,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"Content-addressed AI consultation automation", "component":{"en":"Automatic consultation trigger queue","zh":"AI 会诊自动触发队列"}, "status":"running", "evidence":{"en":f"baseline={ai_automation.get('baseline_initialized')} / {ai_automation.get('cases',0)} cases / {ai_automation.get('pending',0)} pending / {ai_automation.get('unresolved_high_risk',0)} unresolved high-risk","zh":f"baseline={ai_automation.get('baseline_initialized')} / {ai_automation.get('cases',0)} 个 case / {ai_automation.get('pending',0)} 个待执行 / {ai_automation.get('unresolved_high_risk',0)} 个未处置高风险"}},
         {"source":"Unified P0 decision ledger", "component":{"en":"Current experiment-decision ledger","zh":"统一 P0 当前决策账本"}, "status":"running", "evidence":{"en":f"{p0_ledger['active_p0']} active rows / {p0_ledger['experiment_stopped']} stopped awaiting review / {p0_ledger['launchable']} launchable","zh":f"{p0_ledger['active_p0']} 条活跃记录 / {p0_ledger['experiment_stopped']} 条实验 STOP 待人工 / {p0_ledger['launchable']} 条可启动"}},
         {"source":"P0-System v2", "component":{"en":"Stage governance, repair budgets, trace contracts, and resource leases","zh":"阶段治理、修复预算、Trace 合同与资源租约"}, "status":"running", "evidence":{"en":f"{len(governance['stages'])} scientific stages / {len(governance['failure_classes'])} typed failure classes / {governance['runtime']['active_gpu_leases']} active GPU leases","zh":f"{len(governance['stages'])} 个科学阶段 / {len(governance['failure_classes'])} 类失败语义 / {governance['runtime']['active_gpu_leases']} 个活跃 GPU 租约"}},
+        {"source":"ARIS Governance → Research Memory Graph 2.1", "component":{"en":"Transition, authority, authorization, lineage, and repair governance","zh":"迁移、权限、授权、谱系与修复治理层"}, "status":"running", "evidence":{"en":f"{aris_governance['transitions']} transitions / {aris_governance['failure_authority_records']} failure authority records / {aris_governance['experiment_authorization_holds']} experiment holds / {aris_governance['candidate_provenance_holds']} provenance holds","zh":f"{aris_governance['transitions']} 条状态迁移 / {aris_governance['failure_authority_records']} 条失败权限记录 / {aris_governance['experiment_authorization_holds']} 个实验授权 HOLD / {aris_governance['candidate_provenance_holds']} 个谱系 HOLD"}},
         {"source":"AIDE / AI-Scientist-v2 / R&D-Agent / SCION", "component":{"en":"Updater prerequisite + derived Research Execution Plan + eight-gate Pre-Experiment Compiler","zh":"Updater 前置 + 派生 Research Execution Plan + 八门实验启动前编译器"}, "status":"running", "evidence":{"en":f"REP {pre_experiment['research_execution_plans']}/{pre_experiment['compiled_cards']} / updater prerequisite {pre_experiment['updater_prerequisite_pass']}/{pre_experiment['compiled_cards']} / launch-ready {pre_experiment['execution_ready']}/{pre_experiment['compiled_cards']}","zh":f"REP {pre_experiment['research_execution_plans']}/{pre_experiment['compiled_cards']} / Updater prerequisite {pre_experiment['updater_prerequisite_pass']}/{pre_experiment['compiled_cards']} / 可启动 {pre_experiment['execution_ready']}/{pre_experiment['compiled_cards']}"}},
         {"source":"AI-Scientist-v2", "component":{"en":"Pilot registry and result feedback","zh":"Pilot 注册表与结果回流"}, "status":"running", "evidence":{"en":f"{pilots['phases']} phases / {pilots['valid_result_files']} executed results","zh":f"{pilots['phases']} 个阶段 / {pilots['valid_result_files']} 个已执行结果"}},
         {"source":"AI-Scientist-v2 / AIDE / RD-Agent / ML-Master / AIRA / Agent Laboratory", "component":{"en":"Experiment diagnosis and atomic repair tree","zh":"实验诊断与原子修复树"}, "status":"running", "evidence":{"en":f"{iteration['nodes']} pilot nodes / {iteration['repair_children']} atomic repair children / {iteration['scale_up_allowed']} scale-up","zh":f"{iteration['nodes']} 个 Pilot 节点 / {iteration['repair_children']} 个原子修复子节点 / {iteration['scale_up_allowed']} 个可扩大"}},
@@ -485,19 +488,6 @@ def build_research_system_state() -> dict[str, Any]:
         "lease_root": str(experiment_data_root / "resource-leases"),
         "repair_budget_root": str(experiment_data_root / "governance" / "repair-budget"),
     }
-    research_harness_assurance = build_research_harness_assurance(
-        discovery_contract_state=paper_first_problem_discovery_contract,
-        generator_state=paper_first_problem_generator,
-        installed_generator_policy=installed_problem_generator_policy(portfolio=True),
-        premium_model_policy=premium_model_policy_summary(),
-        governance_state=research_governance_v2,
-        paper_quality_policy=PAPER_QUALITY_POLICY,
-        candidate_portfolio_state=research_candidate_portfolio,
-        search_telemetry_state=search_funnel_telemetry,
-        integration_lint_state=research_integration_lint,
-        stall_pivot_state=research_stall_pivot,
-        meta_optimization_state=research_harness_meta_optimization,
-    )
     mem_xfer_workflow = build_mem_xfer_workflow_state(experiment_data_root)
     pilot_registry = build_pilot_registry(
         idea_bank,
@@ -535,6 +525,31 @@ def build_research_system_state() -> dict[str, Any]:
     p0_decision_ledger_public = {"summary": p0_decision_ledger["summary"], "policy": p0_decision_ledger["policy"]}
     scientific_meta_trace = build_scientific_meta_trace(pre_experiment_compiler, principle_layer, experiment_iteration, p0_decision_ledger_public)
     failure_asset_library = build_failure_asset_library(experiment_iteration, p0_economy_public, paper_first_post_c2, paper_first_p0_f0, principle_layer)
+    aris_governance_layer = build_aris_governance_layer(
+        governance_state=research_governance_v2,
+        pilot_registry=pilot_registry,
+        failure_asset_library=failure_asset_library,
+        experiment_iteration=experiment_iteration,
+        generator_state=paper_first_problem_generator,
+        pre_f0_state=paper_first_pre_f0_queue,
+        problem_gate_state=paper_first_problem_gate_queue,
+        candidate_portfolio=research_candidate_portfolio,
+        repair_budget_root=experiment_data_root / "governance" / "repair-budget",
+    )
+    research_harness_assurance = build_research_harness_assurance(
+        discovery_contract_state=paper_first_problem_discovery_contract,
+        generator_state=paper_first_problem_generator,
+        installed_generator_policy=installed_problem_generator_policy(portfolio=True),
+        premium_model_policy=premium_model_policy_summary(),
+        governance_state=research_governance_v2,
+        paper_quality_policy=PAPER_QUALITY_POLICY,
+        candidate_portfolio_state=research_candidate_portfolio,
+        search_telemetry_state=search_funnel_telemetry,
+        integration_lint_state=research_integration_lint,
+        stall_pivot_state=research_stall_pivot,
+        meta_optimization_state=research_harness_meta_optimization,
+        governance_layer_state=aris_governance_layer,
+    )
     claim_ledger = load_default_claim_ledger()
     research_memory_wiki = build_research_memory_wiki(
         search_design_state=paper_first_search_portfolio_design,
@@ -554,6 +569,7 @@ def build_research_system_state() -> dict[str, Any]:
         research_memory_wiki=research_memory_wiki,
         claim_ledger=claim_ledger,
         experiment_iteration=experiment_iteration,
+        governance_layer=aris_governance_layer,
     )
     experiment_value_scheduler = build_experiment_value_scheduler(experiment_iteration, scientific_meta_trace)
     research_system_replay = build_research_system_replay(pre_experiment_compiler)
@@ -1072,6 +1088,7 @@ def build_research_system_state() -> dict[str, Any]:
         "p0_four_direction_iteration":{"policy":four_direction_iteration["policy"],"ideas":four_direction_iteration["ideas"],"source_authority_sha256":four_direction_iteration["source_authority_sha256"]},
         "persistent_updater_program_final":persistent_updater_program_final,
         "research_governance_v2":research_governance_v2,
+        "aris_governance_layer":aris_governance_layer,
         "p0_offline_qualification":p0_offline_public,
         "p0_realizability":p0_realizability_public,
         "p0_revived_batch_f0":p0_revived_batch_public,
@@ -1439,7 +1456,8 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"paper-first-premature-method-diagnostics", "pass":state["paper_first_premature_method_diagnostics"]["summary"].get("directions") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("completed_diagnostics") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("same_information_reducibility_findings") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("scientifically_authorized") == 0 and state["paper_first_premature_method_diagnostics"]["summary"].get("p0_lifecycle_mutations") == 0 and state["paper_first_premature_method_diagnostics"]["authority"].get("cannot_retroactively_authorize") is True, "detail":state["paper_first_premature_method_diagnostics"]["summary"]},
         {"key":"research-learning-loop", "pass":state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"] and state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"] and state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"] and state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"] and state["research_system_replay"]["summary"]["failed"] == 0 and state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"], "detail":{"meta":state["scientific_meta_trace"]["summary"],"failure_assets":state["failure_asset_library"]["summary"],"scheduler":state["experiment_value_scheduler"]["summary"],"replay":state["research_system_replay"]["summary"],"external":state["external_system_learning"]["summary"]}},
         {"key":"research-memory-wiki", "pass":state["research_memory_wiki"].get("status")=="MEMORY_COMPILED" and state["research_memory_wiki"].get("scientific_authority") is False and int(((state["research_memory_wiki"].get("lint") or {}).get("summary") or {}).get("errors") or 0)==0 and (state["research_memory_wiki"].get("policy") or {}).get("transient_operational_noise_is_not_prompt_eligible") is True and (state["research_memory_wiki"].get("policy") or {}).get("query_pack_never_relaxes_downstream_gates") is True, "detail":{"summary":state["research_memory_wiki"].get("summary"),"lint":(state["research_memory_wiki"].get("lint") or {}).get("summary")}},
-        {"key":"research-memory-graph-v2", "pass":state["scientific_research_graph"].get("schema_version")=="2.0" and state["scientific_research_graph"].get("status")=="RESEARCH_GRAPH_COMPILED" and state["scientific_research_graph"].get("scientific_authority") is False and int((((state["scientific_research_graph"].get("lint") or {}).get("summary") or {}).get("errors") or 0))==0 and (state["scientific_research_graph"].get("policy") or {}).get("closure_propagation_requires_same_scientific_object_mechanism_and_claim_type") is True and (state["scientific_research_graph"].get("policy") or {}).get("claim_conflict_is_reported_not_automatically_resolved") is True, "detail":{"summary":state["scientific_research_graph"].get("summary"),"lint":(state["scientific_research_graph"].get("lint") or {}).get("summary"),"typed_coverage":state["scientific_research_graph"].get("typed_coverage")}},
+        {"key":"research-memory-graph-v2.1", "pass":state["scientific_research_graph"].get("schema_version")=="2.1" and state["scientific_research_graph"].get("status")=="RESEARCH_GRAPH_COMPILED" and state["scientific_research_graph"].get("scientific_authority") is False and int((((state["scientific_research_graph"].get("lint") or {}).get("summary") or {}).get("errors") or 0))==0 and (state["scientific_research_graph"].get("policy") or {}).get("closure_propagation_requires_same_scientific_object_mechanism_and_claim_type") is True and (state["scientific_research_graph"].get("policy") or {}).get("claim_conflict_is_reported_not_automatically_resolved") is True and (state["scientific_research_graph"].get("governance_bindings") or {}).get("scientific_authority") is False, "detail":{"summary":state["scientific_research_graph"].get("summary"),"lint":(state["scientific_research_graph"].get("lint") or {}).get("summary"),"typed_coverage":state["scientific_research_graph"].get("typed_coverage"),"governance_bindings":state["scientific_research_graph"].get("governance_bindings")}},
+        {"key":"aris-governance-layer", "pass":state["aris_governance_layer"].get("status")=="GOVERNANCE_COMPILED" and state["aris_governance_layer"].get("scientific_authority") is False and int((((state["aris_governance_layer"].get("lint") or {}).get("summary") or {}).get("errors") or 0))==0 and (state["aris_governance_layer"].get("policy") or {}).get("governance_may_block_or_require_review_but_cannot_self_authorize") is True and (state["aris_governance_layer"].get("authority") or {}).get("claim_mutation") is False and (state["aris_governance_layer"].get("authority") or {}).get("experiment") is False, "detail":{"summary":state["aris_governance_layer"].get("summary"),"lint":(state["aris_governance_layer"].get("lint") or {}).get("summary")}},
         {"key":"aris-harness-alignment", "pass":state["research_harness_assurance"].get("status")=="PASS_HARNESS_ASSURANCE" and int((state["research_harness_assurance"].get("summary") or {}).get("failed") or 0)==0 and state["research_candidate_portfolio"].get("scientific_authority") is False and int((state["research_candidate_portfolio"].get("summary") or {}).get("automatic_promotions") or 0)==0 and state["search_funnel_telemetry"].get("scientific_authority") is False and state["scientific_research_graph"].get("scientific_authority") is False and (state["scientific_research_graph"].get("policy") or {}).get("experiment_failure_edge_cannot_close_core_principle") is True, "detail":{"assurance":state["research_harness_assurance"].get("summary"),"portfolio":state["research_candidate_portfolio"].get("summary"),"funnel":state["search_funnel_telemetry"].get("summary"),"graph":state["scientific_research_graph"].get("summary")}},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
@@ -2017,7 +2035,13 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if portfolio.get("scientific_authority") is not False or portfolio_policy.get("portfolio_cannot_promote_candidate_stage") is not True or portfolio_policy.get("soft_capacity_targets_do_not_relax_scientific_thresholds") is not True or int(portfolio_summary.get("visible_candidates") or 0) != len(portfolio.get("rows") or []) or int(portfolio_summary.get("automatic_promotions") or 0) != 0: errors.append("persistent candidate portfolio must remain zero-authority capacity/persistence control")
     if funnel.get("scientific_authority") is not False or funnel_policy.get("typed_reduction_or_support_holds_must_not_be_reported_as_idea_generation_failure") is not True or funnel_policy.get("telemetry_cannot_authorize_provider_calls_problem_gate_method_experiment_p0_or_gpu") is not True: errors.append("search-funnel telemetry must remain zero-authority and preserve typed bottleneck semantics")
     research_graph_lint = research_graph.get("lint") or {}
-    if research_graph.get("schema_version") != "2.0" or research_graph.get("status") != "RESEARCH_GRAPH_COMPILED" or research_graph.get("scientific_authority") is not False or research_graph_policy.get("experiment_failure_edge_cannot_close_core_principle") is not True or research_graph_policy.get("only_certified_principle_dead_end_may_emit_principle_closure_edge") is not True or research_graph_policy.get("closure_propagation_requires_same_scientific_object_mechanism_and_claim_type") is not True or int((research_graph_lint.get("summary") or {}).get("errors") or 0) != 0 or int(research_graph_summary.get("principle_closure_edges") or 0) > int(research_graph_summary.get("scientific_closure_nodes") or 0): errors.append("scientific research graph must preserve typed failure/closure authority boundaries")
+    if research_graph.get("schema_version") != "2.1" or research_graph.get("status") != "RESEARCH_GRAPH_COMPILED" or research_graph.get("scientific_authority") is not False or research_graph_policy.get("experiment_failure_edge_cannot_close_core_principle") is not True or research_graph_policy.get("only_certified_principle_dead_end_may_emit_principle_closure_edge") is not True or research_graph_policy.get("closure_propagation_requires_same_scientific_object_mechanism_and_claim_type") is not True or research_graph_policy.get("governance_bindings_may_block_but_cannot_self_authorize") is not True or int((research_graph_lint.get("summary") or {}).get("errors") or 0) != 0 or int(research_graph_summary.get("principle_closure_edges") or 0) > int(research_graph_summary.get("scientific_closure_nodes") or 0): errors.append("scientific research graph must preserve typed failure/closure/governance authority boundaries")
+    aris_governance = state.get("aris_governance_layer") or {}; aris_policy = aris_governance.get("policy") or {}; aris_lint = aris_governance.get("lint") or {}; aris_summary = aris_governance.get("summary") or {}
+    if aris_governance.get("status") != "GOVERNANCE_COMPILED" or aris_governance.get("scientific_authority") is not False or int((aris_lint.get("summary") or {}).get("errors") or 0) != 0: errors.append("ARIS Governance Layer must compile with zero errors and zero scientific authority")
+    if aris_policy.get("governance_may_block_or_require_review_but_cannot_self_authorize") is not True or aris_policy.get("execution_failure_has_no_belief_authority") is not True or aris_policy.get("belief_authority_does_not_equal_automatic_claim_mutation") is not True: errors.append("ARIS Governance Layer authority boundaries are missing")
+    if int(aris_summary.get("transitions") or 0) != 7 or int(aris_summary.get("experiment_authorizations") or 0) != int((state.get("pilot_registry",{}).get("summary") or {}).get("phases") or 0): errors.append("ARIS Governance Layer transition/experiment authorization accounting mismatch")
+    if (aris_governance.get("repair_budget") or {}).get("review_required") is True: errors.append("ARIS repair budget violations require review before further launch")
+    if (aris_governance.get("authority") or {}).get("claim_mutation") is not False or (aris_governance.get("authority") or {}).get("experiment") is not False: errors.append("ARIS Governance Layer cannot mutate claims or authorize experiments")
     errors.extend(_mem_xfer_semantic_errors(state["mem_xfer_workflow"]))
     if not state["mem_xfer_workflow"].get("allowed_statuses"): errors.append("mem-xfer workflow must publish typed allowed statuses")
     if not state["mem_xfer_workflow"].get("dependencies"): errors.append("mem-xfer workflow must publish stage dependencies")

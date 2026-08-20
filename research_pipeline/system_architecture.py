@@ -140,6 +140,7 @@ COMPONENT_BINDINGS: dict[str, tuple[str, str]] = {
     "Automatic consultation trigger queue": ("ai-consultation-automation", "runtime-authority"),
     "Current experiment-decision ledger": ("p0-decision-ledger", "memory-publication"),
     "Stage governance, repair budgets, trace contracts, and resource leases": ("p0-governance", "scientific-validation"),
+    "Transition, authority, authorization, lineage, and repair governance": ("aris-governance-memory", "runtime-authority"),
     "Updater prerequisite + derived Research Execution Plan + eight-gate Pre-Experiment Compiler": ("pre-experiment-compiler", "experiment-design"),
     "Pilot registry and result feedback": ("pilot-registry", "scientific-validation"),
     "Experiment diagnosis and atomic repair tree": ("experiment-diagnosis", "scientific-validation"),

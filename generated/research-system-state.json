@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-20T07:19:29+00:00",
+  "generated_at": "2026-08-20T08:44:45+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -328,8 +328,8 @@
     "candidate_portfolio_active": 0,
     "candidate_portfolio_search_holds": 2,
     "search_funnel_bottleneck": "PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE",
-    "research_harness_assurance_passed": 13,
-    "research_harness_assurance_checks": 13,
+    "research_harness_assurance_passed": 14,
+    "research_harness_assurance_checks": 14,
     "research_integration_lint_failed": 0,
     "research_stall_count": 0,
     "research_stall_action": "CONTINUE_CURRENT_SEARCH",
@@ -11144,7 +11144,7 @@
   },
   "lineage": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "summary": {
       "nodes": 278,
       "edges": 258,
@@ -11174,7 +11174,7 @@
           "zh": "受约束持续进化",
           "en": "Constrained continual evolution"
         },
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "track-root:credit",
@@ -11184,7 +11184,7 @@
           "zh": "失败归因与经验准入",
           "en": "Failure credit and experience admission"
         },
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "track-root:memory",
@@ -11194,7 +11194,7 @@
           "zh": "记忆与技能巩固",
           "en": "Memory and skill consolidation"
         },
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "track-root:correction",
@@ -11204,7 +11204,7 @@
           "zh": "自纠正与策略内化",
           "en": "Self-correction and policy internalization"
         },
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "track-root:curriculum",
@@ -11214,7 +11214,7 @@
           "zh": "课程与任务进化",
           "en": "Curriculum and task evolution"
         },
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "track-root:workflow",
@@ -11224,7 +11224,7 @@
           "zh": "工作流与更新表面搜索",
           "en": "Workflow and update-surface search"
         },
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "track-root:evaluator",
@@ -11234,7 +11234,7 @@
           "zh": "奖励与评价器进化",
           "en": "Reward and evaluator evolution"
         },
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "track-root:world",
@@ -11244,7 +11244,7 @@
           "zh": "世界模型与具身持续适应",
           "en": "World models and embodied adaptation"
         },
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "regression-gated-self-evolution",
@@ -11266,7 +11266,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:regression-gated-self-evolution:1",
@@ -11374,7 +11374,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:contradiction-preserving-consolidation:1",
@@ -11482,7 +11482,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:compositional-update-compatibility:1",
@@ -11590,7 +11590,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:update-trust-region:1",
@@ -11698,7 +11698,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:retrieval-interference-auditor:1",
@@ -11806,7 +11806,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:irreversible-action-counterfactuals:1",
@@ -11913,7 +11913,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:self-label-confidence-flow:1",
@@ -12021,7 +12021,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:evaluator-coadaptation-guard:1",
@@ -12129,7 +12129,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:recovery-conditioned-experience:1",
@@ -12237,7 +12237,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:counterexample-generating-curriculum:1",
@@ -12346,7 +12346,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:workflow-generalization-certificate:1",
@@ -12454,7 +12454,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:budgeted-evolution-controller:1",
@@ -12562,7 +12562,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:lineage-aware-rollback:1",
@@ -12670,7 +12670,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:failure-frontier-curriculum:1",
@@ -12778,7 +12778,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:causally-verified-experience-admission:1",
@@ -12886,7 +12886,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:reward-invariance-audit:1",
@@ -12994,7 +12994,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:local-counterexample-memory-repair:1",
@@ -13102,7 +13102,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:self-correction-collapse-detector:1",
@@ -13210,7 +13210,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:intervention-validated-self-correction:1",
@@ -13318,7 +13318,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:workflow-branch-credit:1",
@@ -13426,7 +13426,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:world-model-error-gated-learning:1",
@@ -13534,7 +13534,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:memory-half-life:1",
@@ -13642,7 +13642,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:correction-policy-credit:1",
@@ -13750,7 +13750,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:curriculum-drift-controller:1",
@@ -13859,7 +13859,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:outcome-equivalent-trajectory-contrast:1",
@@ -13967,7 +13967,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "review:applicability-bounded-lessons:1",
@@ -14077,7 +14077,7 @@
         "blocking_reasons": [
           "Module-level intervention labels may require expensive environment-specific instrumentation."
         ],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "programmatic-review:failure-localization-before-reflection:1",
@@ -14178,7 +14178,7 @@
         "blocking_reasons": [
           "Cross-family disagreement may reflect formatting and style rather than distinct error mechanisms."
         ],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "programmatic-review:heterogeneous-critic-disagreement:1",
@@ -14279,7 +14279,7 @@
         "blocking_reasons": [
           "Oracle labels require executing all update surfaces, making supervision close to exhaustive search."
         ],
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "programmatic-review:update-surface-router:1",
@@ -14363,84 +14363,84 @@
         "kind": "early-rejected",
         "title": "更大模型做更多反思",
         "reason": "只增加推理计算，不能证明持久学习。",
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "early-rejected:268",
         "kind": "early-rejected",
         "title": "全参数训练 70B 自进化 Agent",
         "reason": "超出低资源约束且机制难归因。",
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "early-rejected:269",
         "kind": "early-rejected",
         "title": "只在自生成任务上提升",
         "reason": "缺少圈外泛化。",
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "early-rejected:270",
         "kind": "early-rejected",
         "title": "仅商业 API 闭环",
         "reason": "不可复现且依赖供应商快照。",
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "early-rejected:271",
         "kind": "early-rejected",
         "title": "固定多轮 Self-Refine",
         "reason": "属于更多采样，不是进化机制。",
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "early-rejected:272",
         "kind": "early-rejected",
         "title": "同模型 Actor 与 Judge 自我确认",
         "reason": "反馈完整性无法独立验证。",
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "early-rejected:273",
         "kind": "early-rejected",
         "title": "只报告最佳 checkpoint",
         "reason": "掩盖多轮回退与坍塌。",
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "early-rejected:274",
         "kind": "early-rejected",
         "title": "从头训练世界模型和策略",
         "reason": "资源高且无法分离贡献。",
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "early-rejected:275",
         "kind": "early-rejected",
         "title": "单一视觉 benchmark 技巧",
         "reason": "保留为 CVPR 后续，不作为 ICLR 主候选。",
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "early-rejected:276",
         "kind": "early-rejected",
         "title": "只做平均准确率的记忆消融",
         "reason": "无法识别有害条目和负迁移。",
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "early-rejected:277",
         "kind": "early-rejected",
         "title": "无隔离划分的在线适应",
         "reason": "无法排除测试泄漏。",
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       },
       {
         "id": "early-rejected:278",
         "kind": "early-rejected",
         "title": "泛化 Agent 自进化综述",
         "reason": "不是方法或可证伪 benchmark 贡献。",
-        "created_at": "2026-08-20T07:19:24+00:00"
+        "created_at": "2026-08-20T08:44:40+00:00"
       }
     ],
     "edges": [
@@ -16211,7 +16211,7 @@
   },
   "pre_gpu_candidate_gates": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "policy": {
       "gate_order": [
         "offline",
@@ -17058,7 +17058,7 @@
     "cards": [
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-20T07:19:25+00:00",
+        "compiled_at": "2026-08-20T08:44:41+00:00",
         "idea_id": "update-trust-region",
         "phase": "P0-screening",
         "expected_runtime": {
@@ -17859,7 +17859,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-20T07:19:25+00:00",
+        "compiled_at": "2026-08-20T08:44:41+00:00",
         "idea_id": "update-trust-region",
         "phase": "P0",
         "expected_runtime": {
@@ -18668,7 +18668,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-20T07:19:25+00:00",
+        "compiled_at": "2026-08-20T08:44:41+00:00",
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0-screening",
         "expected_runtime": {
@@ -19486,7 +19486,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-20T07:19:25+00:00",
+        "compiled_at": "2026-08-20T08:44:41+00:00",
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0",
         "expected_runtime": {
@@ -20552,7 +20552,7 @@
   },
   "paper_first_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "review_id": "paper-first-pf1-pf2-pf4-pf6-design-20260812",
     "target_venue": "ICLR",
     "policy": {
@@ -20830,7 +20830,7 @@
   },
   "paper_first_pf1_problem_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "incubation_id": "PF-1",
     "paper_id": "evolvability-debt-under-persistent-agent-updates",
     "prior_design_verdict": "REVISE_PAPER_PROBLEM",
@@ -20968,7 +20968,7 @@
   },
   "paper_first_pf2_method_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "paper_id": "repair-surface-identifiability-under-persistent-agent-updates",
     "incubation_id": "PF-2",
     "reviewed_method": "Repair-Surface Identification Certificate",
@@ -21039,7 +21039,7 @@
   },
   "paper_first_pf357_problem_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "review_id": "paper-first-pf357-final-20260813",
     "policy": {
       "domain_transfer_is_not_novelty": true,
@@ -21184,7 +21184,7 @@
   },
   "paper_first_fresh_saturation": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "review_id": "fresh-problem-saturation-20260813-r2",
     "policy": {
       "schema_version": "1.1",
@@ -26874,7 +26874,7 @@
   },
   "paper_first_search_portfolio_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
     "target_venue": "ICLR",
     "component_owner": "paper-design-contract",
@@ -26930,7 +26930,7 @@
     },
     "shadow_near_miss_preflight": {
       "schema_version": "1.0",
-      "generated_at": "2026-08-20T07:19:25+00:00",
+      "generated_at": "2026-08-20T08:44:41+00:00",
       "audit_id": "shadow-r2-near-miss-preflight-20260814",
       "policy": {
         "shadow_search_control_only": true,
@@ -31084,7 +31084,7 @@
   },
   "paper_first_discovery_frontier": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "status": "LIVE_SOURCE_DISCOVERY_PENDING",
     "policy": {
       "scientific_authority": false,
@@ -31175,7 +31175,7 @@
   },
   "paper_first_fresh_phenomenon_portfolio": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "status": "NO_ACTIVE_F0",
     "policy": {
       "portfolio_is_outside_canonical_problem_queue": true,
@@ -31584,7 +31584,7 @@
       },
       "dead_end_memory": {
         "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-        "sha256": "f3a808b6c00f7456397e223abc46759e35bf6105b11453648fa35a078211539a"
+        "sha256": "f19bd42e8988e133817c189faa0482c16baaaf7d7470ffc5bdb340c69e517c1e"
       },
       "defense_principle_reduction": {
         "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
@@ -31593,7 +31593,7 @@
       },
       "skill_validation_transfer_scout": {
         "path": "generated/paper-first-skill-validation-transfer-scout-20260817.json",
-        "sha256": "a12cfe151b6e5a8bca739b68207e24964cc005c1a830b85ddc33a45a6beece9c",
+        "sha256": "86e032104fa656de0bb20c15778613bb9eab2806db7bbe620a5743b5e4fb6033",
         "status": "DESIGN_READY_EXECUTION_ENV_HOLD",
         "plan_sha256": "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c"
       },
@@ -31769,27 +31769,32 @@
     "submission_handoff": {
       "recorded_author_guide_abstract_deadline_aoe": "2026-09-18",
       "recorded_author_guide_full_paper_deadline_aoe": "2026-09-25",
-      "official_source_conflict": true,
-      "official_source_conflict_status": "HUMAN_VERIFICATION_REQUIRED",
-      "conflicting_official_dates": {
+      "official_source_conflict": false,
+      "official_source_conflict_status": "AUTHOR_SUBMISSION_SOURCES_ALIGNED",
+      "verified_official_dates": {
         "author_guidelines": {
           "abstract": "2026-09-18",
           "full_paper": "2026-09-25"
         },
-        "dates_cfp_conference_pages": {
-          "abstract": "2026-09-11",
-          "full_paper": "2026-09-16"
+        "dates_and_call_for_papers": {
+          "abstract": "2026-09-18",
+          "full_paper": "2026-09-25"
         }
       },
-      "operational_safe_abstract_deadline_aoe": "2026-09-11",
-      "operational_safe_full_paper_deadline_aoe": "2026-09-16",
+      "stale_non_authoritative_reference": {
+        "source": "ICLR 2027 Reviewer Guidelines contemporaneous-work FAQ",
+        "full_paper": "2026-09-16",
+        "used_for_submission_planning": false
+      },
+      "operational_safe_abstract_deadline_aoe": "2026-09-18",
+      "operational_safe_full_paper_deadline_aoe": "2026-09-25",
       "author_membership_freezes_at_abstract_deadline": true,
       "title_freezes_at_full_paper_deadline": true,
-      "deadline_source_verified_on": "2026-08-17",
-      "deadline_human_action": "Confirm the live OpenReview/ICLR deadline before submission; until resolved, plan against the earlier published official dates.",
+      "deadline_source_verified_on": "2026-08-20",
+      "deadline_human_action": "Use the aligned ICLR 2027 author-facing deadlines: genuine abstract and frozen author membership by 2026-09-18 AoE; full paper and anonymous supplement by 2026-09-25 AoE.",
       "pdf_sha256": "56a26d51d20a2683e3718d63ba86f047561626b8203d437f7b0ce3da402621c5",
       "source_zip_sha256": "7b5dbe61e9c76f8226c0f0f3da727afb5455a20ec445e51edf0a3cbf0f92db20",
-      "supplement_zip_sha256": "5bc87d31d8d1b1d65f9250ee1f0230915fe7961103d030f7c6b7861b6c81cec2",
+      "supplement_zip_sha256": "c0f2ece30cab3a816549acf963f5e0a6351f8a473347f7c424e2186fb5f8172b",
       "downloads": {
         "tex": "downloads/STRI-ICLR2027.tex",
         "pdf": "downloads/STRI-ICLR2027.pdf",
@@ -31912,7 +31917,7 @@
       },
       "official_final_state": {
         "path": "generated/asset-first-stri-iclr2027-final-state-20260816.json",
-        "sha256": "015fb962748dc69b1a957ed9b9f0221287f2bf6328755281cc3dcb0fcd16621c",
+        "sha256": "0d8cd3c5fc07479514d6edeb1df072ae11e94997bc1b70e2e2f66b868ac1ea9b",
         "present": true
       },
       "official_submission_qa": {
@@ -31922,12 +31927,12 @@
       },
       "supplement_state": {
         "path": "generated/asset-first-stri-iclr2027-supplement-state-20260816.json",
-        "sha256": "a5ee16625b372753f3ffcece110f9fb1b987d2a866df86a8e31ff6b952bc2250",
+        "sha256": "cb3980260a23838555d9647da6e452dbe180ba48e66cfacb286aa6b9b2cd368d",
         "present": true
       },
       "openreview_readiness": {
         "path": "generated/asset-first-stri-iclr2027-openreview-readiness-20260816.json",
-        "sha256": "f0b6242b6c0740c7eb4ddcd6a57be50e22ab432a29351e7704bdf0d2dacbffe9",
+        "sha256": "abfd7978f4745908908efeda79095c538e00854d3660ad2cd0e02774223ec5c0",
         "present": true
       },
       "skillrl_p0e_principle_disposition": {
@@ -31983,7 +31988,7 @@
   },
   "paper_first_sp15_identifiability_support": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "support_id": "sp15-query-only-identifiability-support-20260814",
     "paper_problem_id": "SP-15",
     "revised_claim": "Under fixed query-only inference and a fixed skill library, a minimally sufficient skill set may be observationally non-identifiable when multiple task semantics compatible with the same available query require incompatible sufficient sets.",
@@ -32687,18 +32692,18 @@
     },
     "summary": {
       "new_empirical_sources": 0,
-      "passed": 10,
-      "new_assumption_sources": 0,
+      "new_reviewed_sources": 0,
       "new_failure_sources": 0,
-      "checks": 16,
-      "failed": 6,
-      "new_boundary_sources": 0,
-      "automatic_model_scan_authorized": false,
-      "relation_lane_review_retry_exhausted": false,
       "manual_scan_eligible": false,
-      "last_scanned_sources": 233,
+      "new_assumption_sources": 0,
       "current_reviewed_sources": 245,
-      "new_reviewed_sources": 0
+      "relation_lane_review_retry_exhausted": false,
+      "failed": 6,
+      "passed": 10,
+      "new_boundary_sources": 0,
+      "checks": 16,
+      "last_scanned_sources": 233,
+      "automatic_model_scan_authorized": false
     },
     "failed_check_count": 6,
     "freshness_status": "STALE_RELATION_UNIVERSE",
@@ -33191,7 +33196,7 @@
   },
   "paper_first_post_c2": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "paper_id": "trajectory-mediated-memory-effect-transport",
     "decision": "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM",
     "reason": "All ten strict C2 units are execution-valid and the full pre-divergence policy decision context is reproducible, yet only 2/10 controlled action contrasts are nonzero and the preregistered same-memory cross-context sign reversal is absent. The earliest-divergent-action controlled-mediator mechanism is therefore unsupported by its local falsifier.",
@@ -33305,7 +33310,7 @@
   },
   "paper_first_premature_method_diagnostics": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "run_root": "private-data://external/paper-first-p0-method-20260812",
     "authority": {
       "authority_type": "premature-paper-first-method-diagnostic-only",
@@ -33398,8 +33403,8 @@
         "dominant_problem_authority": {
           "decision": "STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT",
           "paper_problem_status": "TERMINATED_AS_STANDALONE_AFTER_FINAL_COLLISION_REVIEW",
-          "artifact_generated_at": "2026-08-20T07:19:24+00:00",
-          "artifact_sha256": "bda2c9281cc3e8b4887a13b017a30e1688397ea61722293b0e7dd497aa912c57",
+          "artifact_generated_at": "2026-08-20T08:44:40+00:00",
+          "artifact_sha256": "22f0e940459dd61c084f34f890cf03bce4183207edc537d98a8f8fc711f39050",
           "timestamp_is_not_authority": true,
           "problem_stop_dominates_diagnostic_regardless_of_rebuild_timestamp": true,
           "p0_authorized": false,
@@ -33473,7 +33478,7 @@
   },
   "pilot_registry": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "result_dir": "private-data://external/results",
     "approval_dir": "private-data://external/approvals",
     "result_schema": {
@@ -33724,7 +33729,7 @@
         "pre_experiment_gate_status": "blocked",
         "pre_experiment_card": {
           "schema_version": "2.2",
-          "compiled_at": "2026-08-20T07:19:25+00:00",
+          "compiled_at": "2026-08-20T08:44:41+00:00",
           "idea_id": "update-trust-region",
           "phase": "P0",
           "expected_runtime": {
@@ -34879,7 +34884,7 @@
         "pre_experiment_gate_status": "blocked",
         "pre_experiment_card": {
           "schema_version": "2.2",
-          "compiled_at": "2026-08-20T07:19:25+00:00",
+          "compiled_at": "2026-08-20T08:44:41+00:00",
           "idea_id": "budgeted-evolution-controller",
           "phase": "P0",
           "expected_runtime": {
@@ -38749,10 +38754,10 @@
     }
   },
   "scientific_research_graph": {
-    "schema_version": "2.0",
+    "schema_version": "2.1",
     "status": "RESEARCH_GRAPH_COMPILED",
     "policy": {
-      "schema_version": "2.0",
+      "schema_version": "2.1",
       "graph_is_a_derived_traceability_view_not_scientific_authority": true,
       "existing_evidence_graph_is_referenced_not_duplicated": true,
       "canonical_artifacts_remain_the_only_scientific_sources_of_truth": true,
@@ -38767,7 +38772,11 @@
       "claim_conflict_is_reported_not_automatically_resolved": true,
       "failure_assets_preserve_affected_layer_and_does_not_imply_scope": true,
       "success_memory_is_scope_bound_and_does_not_generalize_automatically": true,
-      "candidate_portfolio_stage_does_not_promote_scientific_status": true
+      "candidate_portfolio_stage_does_not_promote_scientific_status": true,
+      "aris_governance_is_a_separate_constraint_layer_not_a_scientific_truth_store": true,
+      "governance_bindings_may_block_but_cannot_self_authorize": true,
+      "belief_authority_never_implies_automatic_claim_mutation": true,
+      "candidate_provenance_hold_cannot_be_promoted_by_memory": true
     },
     "base_graph": {
       "state_key": "evidence_graph",
@@ -39308,6 +39317,15 @@
       ]
     },
     "claim_conflicts": [],
+    "governance_bindings": {
+      "schema_version": "1.0",
+      "source_state_key": "aris_governance_layer",
+      "failure_records_bound": 6,
+      "experiment_authorizations_bound": 78,
+      "candidate_lineage_bound": 2,
+      "bindings_are_derived_zero_authority": true,
+      "scientific_authority": false
+    },
     "summary": {
       "nodes": 780,
       "edges": 817,
@@ -39373,6 +39391,9 @@
       "principle_closure_edges": 0,
       "exact_scope_propagation_edges": 0,
       "claim_conflicts": 0,
+      "failure_governance_bindings": 6,
+      "experiment_authorization_bindings": 78,
+      "candidate_lineage_bindings": 2,
       "typed_pipeline_kinds_materialized": 8,
       "typed_pipeline_kinds_required": 11
     },
@@ -39384,6 +39405,10 @@
         "candidate_id": "PORT-001",
         "stage": "PRE_F0_EVIDENCE_ACQUISITION",
         "portfolio_state": "SEARCH_HOLD",
+        "lineage_id": "candidate-lineage:ed0dfb3b684afc3df8eb",
+        "parent_candidate": "ASSUMPTION_BREAK-P2-001-R1",
+        "provenance_status": "PROVENANCE_INCONCLUSIVE",
+        "downstream_authorization_blocked": true,
         "source": "research_candidate_portfolio",
         "scientific_authority": false
       },
@@ -39394,6 +39419,10 @@
         "candidate_id": "PORT-003",
         "stage": "PRE_F0_EVIDENCE_ACQUISITION",
         "portfolio_state": "SEARCH_HOLD",
+        "lineage_id": "candidate-lineage:16dceeaacb9c21cf37de",
+        "parent_candidate": "ASSUMPTION_BREAK-P2-004-R1",
+        "provenance_status": "PROVENANCE_INCONCLUSIVE",
+        "downstream_authorization_blocked": true,
         "source": "research_candidate_portfolio",
         "scientific_authority": false
       },
@@ -40229,6 +40258,12 @@
         "idea_id": "applicability-bounded-lessons",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:637e4c9eac813a827f3c",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "terminal-merge"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40239,6 +40274,12 @@
         "idea_id": "applicability-bounded-lessons",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:299910bbb03f9d7f4283",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40249,6 +40290,14 @@
         "idea_id": "applicability-bounded-lessons",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:49e2cee1d2479783d745",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40259,6 +40308,12 @@
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:212d0334a49d6efe1b83",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40269,6 +40324,12 @@
         "idea_id": "budgeted-evolution-controller",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:a16edcccc41fe9a0db42",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40279,6 +40340,14 @@
         "idea_id": "budgeted-evolution-controller",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:382b5f203437d0431e69",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40289,6 +40358,12 @@
         "idea_id": "causally-verified-experience-admission",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:2c55c4b67a72ef5a9426",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "terminal-merge"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40299,6 +40374,12 @@
         "idea_id": "causally-verified-experience-admission",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:74de3427c44e7988930a",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40309,6 +40390,14 @@
         "idea_id": "causally-verified-experience-admission",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:10e512a96ae34d57fed1",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40319,6 +40408,12 @@
         "idea_id": "compositional-update-compatibility",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:98023f5387e6f4070d29",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40329,6 +40424,12 @@
         "idea_id": "compositional-update-compatibility",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:fc76f486fff10cb42eec",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40339,6 +40440,14 @@
         "idea_id": "compositional-update-compatibility",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:4d136dfab3364843151f",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40349,6 +40458,12 @@
         "idea_id": "contradiction-preserving-consolidation",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:c50c87c35b71d40c7e13",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40359,6 +40474,12 @@
         "idea_id": "contradiction-preserving-consolidation",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:7c704ee7b103002640c8",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40369,6 +40490,14 @@
         "idea_id": "contradiction-preserving-consolidation",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:63ef59638a0aa153a4cf",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40379,6 +40508,12 @@
         "idea_id": "correction-policy-credit",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:bce9ae4d72a4a1be534b",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "terminal-merge"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40389,6 +40524,12 @@
         "idea_id": "correction-policy-credit",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:061fb09580588915e131",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40399,6 +40540,14 @@
         "idea_id": "correction-policy-credit",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:a8af86d82f18414756f3",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40409,6 +40558,12 @@
         "idea_id": "counterexample-generating-curriculum",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:6a6da8a3c34fe88321d6",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40419,6 +40574,12 @@
         "idea_id": "counterexample-generating-curriculum",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:53bc6da369a84137ecf5",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40429,6 +40590,14 @@
         "idea_id": "counterexample-generating-curriculum",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:055373b25231bd8036f7",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40439,6 +40608,12 @@
         "idea_id": "curriculum-drift-controller",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:24d1487f83e4e099ee7f",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "terminal-merge"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40449,6 +40624,12 @@
         "idea_id": "curriculum-drift-controller",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:684fc6f694b16756478e",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40459,6 +40640,14 @@
         "idea_id": "curriculum-drift-controller",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:c2e17304e9bad455ab57",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40469,6 +40658,12 @@
         "idea_id": "evaluator-coadaptation-guard",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:989c1f4e5004280b2486",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40479,6 +40674,12 @@
         "idea_id": "evaluator-coadaptation-guard",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:e4a5db7c22fd03eb9dfc",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40489,6 +40690,14 @@
         "idea_id": "evaluator-coadaptation-guard",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:607c3088c4eb57ef3df4",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40499,6 +40708,12 @@
         "idea_id": "failure-frontier-curriculum",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:0c961f95b8ba6730eb23",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40509,6 +40724,12 @@
         "idea_id": "failure-frontier-curriculum",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:5ff9708fabcaaede7d39",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40519,6 +40740,14 @@
         "idea_id": "failure-frontier-curriculum",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:0b0eb86a25dd05b117f5",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40529,6 +40758,12 @@
         "idea_id": "intervention-validated-self-correction",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:bf7d31e1ca2631135232",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40539,6 +40774,12 @@
         "idea_id": "intervention-validated-self-correction",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:7212bf8834003c5e0b2c",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40549,6 +40790,14 @@
         "idea_id": "intervention-validated-self-correction",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:5593b37506cb181f453b",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40559,6 +40808,12 @@
         "idea_id": "irreversible-action-counterfactuals",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:cc85b10c30e0724c85e8",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40569,6 +40824,12 @@
         "idea_id": "irreversible-action-counterfactuals",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:08f6c37d6e8e846c3dfb",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40579,6 +40840,14 @@
         "idea_id": "irreversible-action-counterfactuals",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:588cd6a00858b5a60d96",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40589,6 +40858,12 @@
         "idea_id": "lineage-aware-rollback",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:04a2cf46ae76a0f218c8",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40599,6 +40874,12 @@
         "idea_id": "lineage-aware-rollback",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:6bded7c05b7c17844a8a",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40609,6 +40890,14 @@
         "idea_id": "lineage-aware-rollback",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:25528913bca39b2b6d80",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40619,6 +40908,12 @@
         "idea_id": "local-counterexample-memory-repair",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:47b85fdbef0c07d94e49",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40629,6 +40924,12 @@
         "idea_id": "local-counterexample-memory-repair",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:5d364363db611a90fc31",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40639,6 +40940,14 @@
         "idea_id": "local-counterexample-memory-repair",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:5676819871701d855f80",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40649,6 +40958,12 @@
         "idea_id": "memory-half-life",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:41a06bebdc44feb5c026",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40659,6 +40974,12 @@
         "idea_id": "memory-half-life",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:dc4725b3c8936ee364e5",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40669,6 +40990,14 @@
         "idea_id": "memory-half-life",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:6ded1b73c9dbe62a82ef",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40679,6 +41008,12 @@
         "idea_id": "outcome-equivalent-trajectory-contrast",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:eff9673851457ed7e8b0",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "terminal-merge"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40689,6 +41024,12 @@
         "idea_id": "outcome-equivalent-trajectory-contrast",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:eb29cc832ae71923930c",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40699,6 +41040,14 @@
         "idea_id": "outcome-equivalent-trajectory-contrast",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:a0a5496906620533e5d6",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40709,6 +41058,12 @@
         "idea_id": "recovery-conditioned-experience",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:c31e855e678f6bb21820",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40719,6 +41074,12 @@
         "idea_id": "recovery-conditioned-experience",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:368cc57985601c0d061e",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40729,6 +41090,14 @@
         "idea_id": "recovery-conditioned-experience",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:0221786cda05c35e6b12",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40739,6 +41108,12 @@
         "idea_id": "regression-gated-self-evolution",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:dcf5bd8075b26781eaed",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40749,6 +41124,12 @@
         "idea_id": "regression-gated-self-evolution",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:8b021cdc04baaad8e985",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40759,6 +41140,14 @@
         "idea_id": "regression-gated-self-evolution",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:8631562db191103a5888",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40769,6 +41158,12 @@
         "idea_id": "retrieval-interference-auditor",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:c2eba5342aa4621423d2",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40779,6 +41174,12 @@
         "idea_id": "retrieval-interference-auditor",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:7f268c7085e2b8fe50ed",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40789,6 +41190,14 @@
         "idea_id": "retrieval-interference-auditor",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:234305a8ba7c9482ca01",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40799,6 +41208,12 @@
         "idea_id": "reward-invariance-audit",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:704180f4e97f10c7cdde",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "terminal-merge"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40809,6 +41224,12 @@
         "idea_id": "reward-invariance-audit",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:016d2be8c4a7a9f2191d",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40819,6 +41240,14 @@
         "idea_id": "reward-invariance-audit",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:d6c78757b444b2a2d456",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40829,6 +41258,12 @@
         "idea_id": "self-correction-collapse-detector",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:5048a92f568d8c01036e",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40839,6 +41274,12 @@
         "idea_id": "self-correction-collapse-detector",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:e26654ec925043e53427",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40849,6 +41290,14 @@
         "idea_id": "self-correction-collapse-detector",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:51bebfc57013fadf926c",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40859,6 +41308,12 @@
         "idea_id": "self-label-confidence-flow",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:f73cd37be7dae49117ae",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40869,6 +41324,12 @@
         "idea_id": "self-label-confidence-flow",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:21a124663b09fd5f532d",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40879,6 +41340,14 @@
         "idea_id": "self-label-confidence-flow",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:8b45427c5814793839f5",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40889,6 +41358,12 @@
         "idea_id": "update-trust-region",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:a7b202e5ba2f955ecacb",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40899,6 +41374,12 @@
         "idea_id": "update-trust-region",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:aba22f4e74676695e275",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40909,6 +41390,14 @@
         "idea_id": "update-trust-region",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:414c00eacf3ee97302ef",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40919,6 +41408,12 @@
         "idea_id": "workflow-branch-credit",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:e595e2e92aad7aeb735e",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40929,6 +41424,12 @@
         "idea_id": "workflow-branch-credit",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:709dc878159fd2a22b87",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40939,6 +41440,14 @@
         "idea_id": "workflow-branch-credit",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:0f11a0bc6db7e26f4fc8",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40949,6 +41458,12 @@
         "idea_id": "workflow-generalization-certificate",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:54db24cbac23261bc2cb",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40959,6 +41474,12 @@
         "idea_id": "workflow-generalization-certificate",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:ce4b17f300c046708006",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40969,6 +41490,14 @@
         "idea_id": "workflow-generalization-certificate",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:9398372e0255fade6d8f",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40979,6 +41508,12 @@
         "idea_id": "world-model-error-gated-learning",
         "phase": "P0",
         "status": "planned",
+        "authorization_id": "experiment-authorization:43882261a6e959f082b0",
+        "scientific_stage": "p0-method",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "pre-p0-identifiability"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40989,6 +41524,12 @@
         "idea_id": "world-model-error-gated-learning",
         "phase": "P1",
         "status": "planned",
+        "authorization_id": "experiment-authorization:b782692afbde2b84e75a",
+        "scientific_stage": "p1-replication",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P0-pass-required"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -40999,6 +41540,14 @@
         "idea_id": "world-model-error-gated-learning",
         "phase": "P2",
         "status": "planned",
+        "authorization_id": "experiment-authorization:a74a807fb266bf7faa0e",
+        "scientific_stage": "paper-experiment",
+        "effective_execution_authorized": false,
+        "authorization_blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
         "source": "pilot_registry",
         "scientific_authority": false
       },
@@ -41008,6 +41557,19 @@
         "label": "authority-protocol:authority-provenance-mismatch",
         "failure_class": "protocol",
         "affected_layer": "authority-protocol",
+        "failure_record_id": "failure-authority:0c6a8bbe6f0149d4a29e",
+        "failure_code": "PROVENANCE_INCONCLUSIVE",
+        "belief_authority": false,
+        "allowed_effects": [
+          "block_experiment",
+          "repair_provenance_or_rerun"
+        ],
+        "forbidden_effects": [
+          "invalidate_claim",
+          "method_failure",
+          "scientific_closure"
+        ],
+        "next_action": "repair-provenance-or-rerun",
         "does_not_imply": "P0 support PASS/HOLD, method failure, principle failure, or any retrospective scientific authority from the executed rows",
         "scientific_negative": false,
         "source": "failure_asset_library",
@@ -41019,6 +41581,18 @@
         "label": "operationalization:representation-signal-mismatch",
         "failure_class": "operationalization",
         "affected_layer": "operationalization",
+        "failure_record_id": "failure-authority:dd57c1bc03aa26f39d9d",
+        "failure_code": "FAIL_REPRESENTATION",
+        "belief_authority": false,
+        "allowed_effects": [
+          "block_experiment",
+          "atomic_representation_repair"
+        ],
+        "forbidden_effects": [
+          "invalidate_claim",
+          "scientific_closure"
+        ],
+        "next_action": "atomic-representation-repair",
         "does_not_imply": "core-principle failure",
         "scientific_negative": false,
         "source": "failure_asset_library",
@@ -41030,6 +41604,18 @@
         "label": "operationalization:decision-context-support-mismatch",
         "failure_class": "operationalization",
         "affected_layer": "operationalization",
+        "failure_record_id": "failure-authority:3fa174e6e3b199e44bf9",
+        "failure_code": "FAIL_REPRESENTATION",
+        "belief_authority": false,
+        "allowed_effects": [
+          "block_experiment",
+          "atomic_representation_repair"
+        ],
+        "forbidden_effects": [
+          "invalidate_claim",
+          "scientific_closure"
+        ],
+        "next_action": "atomic-representation-repair",
         "does_not_imply": "method failure, core-principle failure, or rescue of the current ALFWorld memory paper",
         "scientific_negative": false,
         "source": "failure_asset_library",
@@ -41041,6 +41627,18 @@
         "label": "experiment:no-label-variation",
         "failure_class": "method",
         "affected_layer": "experiment",
+        "failure_record_id": "failure-authority:783d1fbfa445a9bfd8d4",
+        "failure_code": "FAIL_TARGET_DEGENERACY",
+        "belief_authority": false,
+        "allowed_effects": [
+          "block_experiment",
+          "repair_target_construction"
+        ],
+        "forbidden_effects": [
+          "invalidate_claim",
+          "scientific_closure"
+        ],
+        "next_action": "repair-target-construction",
         "does_not_imply": "core-principle failure",
         "scientific_negative": false,
         "source": "failure_asset_library",
@@ -41052,6 +41650,18 @@
         "label": "method-realization:matched-simplification-tie",
         "failure_class": "method",
         "affected_layer": "method-realization",
+        "failure_record_id": "failure-authority:949b104ca3c06cdda846",
+        "failure_code": "FAIL_BASELINE_CEILING",
+        "belief_authority": true,
+        "allowed_effects": [
+          "block_experiment",
+          "request_simplify_or_merge_review"
+        ],
+        "forbidden_effects": [
+          "automatic_claim_invalidation",
+          "automatic_scientific_closure"
+        ],
+        "next_action": "simplify-or-merge",
         "does_not_imply": "core-principle failure",
         "scientific_negative": false,
         "source": "failure_asset_library",
@@ -41063,6 +41673,18 @@
         "label": "operationalization:objective-claim-mismatch",
         "failure_class": "operationalization",
         "affected_layer": "operationalization",
+        "failure_record_id": "failure-authority:ed21a49d14ceb398ab95",
+        "failure_code": "FAIL_REPRESENTATION",
+        "belief_authority": false,
+        "allowed_effects": [
+          "block_experiment",
+          "atomic_representation_repair"
+        ],
+        "forbidden_effects": [
+          "invalidate_claim",
+          "scientific_closure"
+        ],
+        "next_action": "atomic-representation-repair",
         "does_not_imply": "core-principle failure",
         "scientific_negative": false,
         "source": "failure_asset_library",
@@ -43260,7 +43882,7 @@
     ],
     "scientific_authority": false,
     "lint": {
-      "schema_version": "2.0",
+      "schema_version": "2.1",
       "status": "PASS",
       "errors": [],
       "warnings": [
@@ -43286,7 +43908,7 @@
   },
   "research_memory_wiki": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:29+00:00",
+    "generated_at": "2026-08-20T08:44:45+00:00",
     "status": "MEMORY_COMPILED",
     "policy": {
       "schema_version": "1.0",
@@ -46012,6 +46634,17 @@
         "scientific_authority": false
       },
       {
+        "key": "aris-governance-to-memory-graph",
+        "producer": "research_pipeline/research_governance_layer.py",
+        "consumer": "research_pipeline/scientific_research_graph.py",
+        "producer_exists": true,
+        "consumer_exists": true,
+        "missing_producer_anchors": [],
+        "missing_consumer_anchors": [],
+        "pass": true,
+        "scientific_authority": false
+      },
+      {
         "key": "harness-assurance-to-research-system",
         "producer": "research_pipeline/research_harness_assurance.py",
         "consumer": "research_pipeline/research_system.py",
@@ -46047,8 +46680,8 @@
     ],
     "errors": [],
     "summary": {
-      "contracts": 7,
-      "passed": 7,
+      "contracts": 8,
+      "passed": 8,
       "failed": 0,
       "orphan_required_integrations": 0
     },
@@ -46162,7 +46795,8 @@
       "harness_assurance_cannot_override_local_scientific_gates": true,
       "required_integration_contracts_must_be_machine_wired": true,
       "stall_pivot_cannot_change_scientific_assurance": true,
-      "meta_optimization_producer_cannot_self_apply": true
+      "meta_optimization_producer_cannot_self_apply": true,
+      "governance_layer_may_block_but_cannot_self_authorize": true
     },
     "reference": {
       "name": "ARIS / Auto-Research-In-Sleep",
@@ -46261,6 +46895,31 @@
         }
       },
       {
+        "key": "aris-governance-memory-bindings",
+        "pass": true,
+        "evidence": {
+          "summary": {
+            "stages": 7,
+            "transitions": 7,
+            "failure_authority_records": 6,
+            "belief_authority_true": 1,
+            "belief_authority_false": 5,
+            "experiment_authorizations": 78,
+            "experiments_effectively_authorized": 0,
+            "experiment_authorization_holds": 78,
+            "repair_records": 8,
+            "candidate_lineage_records": 2,
+            "candidate_lineage_complete": 0,
+            "candidate_provenance_holds": 2,
+            "candidate_stage_receipts": 5
+          },
+          "lint": {
+            "errors": 0,
+            "warnings": 2
+          }
+        }
+      },
+      {
         "key": "persistent-multi-candidate-portfolio",
         "pass": true,
         "evidence": {
@@ -46319,8 +46978,8 @@
         "key": "integration-contract-live-wiring",
         "pass": true,
         "evidence": {
-          "contracts": 7,
-          "passed": 7,
+          "contracts": 8,
+          "passed": 8,
           "failed": 0,
           "orphan_required_integrations": 0
         }
@@ -46346,8 +47005,8 @@
       }
     ],
     "summary": {
-      "checks": 13,
-      "passed": 13,
+      "checks": 14,
+      "passed": 14,
       "failed": 0,
       "reviewed_candidate_receipts": 0,
       "resolved_model_independence_violations": 0
@@ -46365,7 +47024,7 @@
   "human_terminal_ideas": {
     "schema_version": "1.0",
     "decision_date": "2026-08-11",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "source_of_truth_priority": [
       "explicit-user-update",
       "latest-human-review",
@@ -48333,7 +48992,7 @@
   },
   "research_governance_v2": {
     "schema_version": "2.4",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "policy": {
       "schema_version": "2.3",
       "paper_novelty_precedes_method_design": true,
@@ -48500,6 +49159,2520 @@
       "active_gpu_leases": 0,
       "lease_root": "private-data://external/resource-leases",
       "repair_budget_root": "private-data://external/repair-budget"
+    }
+  },
+  "aris_governance_layer": {
+    "schema_version": "1.0",
+    "status": "GOVERNANCE_COMPILED",
+    "policy": {
+      "schema_version": "1.0",
+      "layer_name": "ARIS Governance Layer",
+      "memory_graph_version": "2.1",
+      "governance_layer_records_why_a_transition_is_legal_not_what_is_scientifically_true": true,
+      "governance_layer_has_zero_scientific_authority": true,
+      "governance_may_block_or_require_review_but_cannot_self_authorize": true,
+      "execution_failure_has_no_belief_authority": true,
+      "belief_authority_does_not_equal_automatic_claim_mutation": true,
+      "experiment_authorization_is_fail_closed": true,
+      "candidate_lineage_is_receipted_and_missing_provenance_is_a_hold": true,
+      "repair_proposals_do_not_consume_budget_until_recorded": true,
+      "one_load_bearing_repair_per_child": true,
+      "max_representation_or_objective_repairs_per_substrate": 2,
+      "memory_graph_remains_a_derived_traceability_view": true,
+      "source_governance_schema": "2.4"
+    },
+    "scientific_state_machine": {
+      "stages": [
+        "problem",
+        "substrate",
+        "f0-identifiability",
+        "p0-support",
+        "p0-method",
+        "p1-replication",
+        "paper-experiment"
+      ],
+      "transitions_are_fail_closed": true,
+      "automatic_transition_authority": false
+    },
+    "scientific_transitions": [
+      {
+        "transition_id": "transition:entry->problem",
+        "from_stage": "",
+        "to_stage": "problem",
+        "stage_index": 0,
+        "evidence_required": [
+          "problem_contract"
+        ],
+        "canonical_predecessor_evidence_field": "",
+        "authorization": "independent-stage-pass",
+        "automatic_transition": false,
+        "scientific_authority": false
+      },
+      {
+        "transition_id": "transition:problem->substrate",
+        "from_stage": "problem",
+        "to_stage": "substrate",
+        "stage_index": 1,
+        "evidence_required": [
+          "problem_evidence"
+        ],
+        "canonical_predecessor_evidence_field": "problem_evidence",
+        "authorization": "independent-stage-pass",
+        "automatic_transition": false,
+        "scientific_authority": false
+      },
+      {
+        "transition_id": "transition:substrate->f0-identifiability",
+        "from_stage": "substrate",
+        "to_stage": "f0-identifiability",
+        "stage_index": 2,
+        "evidence_required": [
+          "substrate_evidence"
+        ],
+        "canonical_predecessor_evidence_field": "substrate_evidence",
+        "authorization": "independent-stage-pass",
+        "automatic_transition": false,
+        "scientific_authority": false
+      },
+      {
+        "transition_id": "transition:f0-identifiability->p0-support",
+        "from_stage": "f0-identifiability",
+        "to_stage": "p0-support",
+        "stage_index": 3,
+        "evidence_required": [
+          "f0_evidence"
+        ],
+        "canonical_predecessor_evidence_field": "f0_evidence",
+        "authorization": "independent-stage-pass",
+        "automatic_transition": false,
+        "scientific_authority": false
+      },
+      {
+        "transition_id": "transition:p0-support->p0-method",
+        "from_stage": "p0-support",
+        "to_stage": "p0-method",
+        "stage_index": 4,
+        "evidence_required": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_predecessor_evidence_field": "support_evidence",
+        "authorization": "independent-stage-pass",
+        "automatic_transition": false,
+        "scientific_authority": false
+      },
+      {
+        "transition_id": "transition:p0-method->p1-replication",
+        "from_stage": "p0-method",
+        "to_stage": "p1-replication",
+        "stage_index": 5,
+        "evidence_required": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_predecessor_evidence_field": "method_evidence",
+        "authorization": "independent-stage-pass",
+        "automatic_transition": false,
+        "scientific_authority": false
+      },
+      {
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "from_stage": "p1-replication",
+        "to_stage": "paper-experiment",
+        "stage_index": 6,
+        "evidence_required": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_predecessor_evidence_field": "p1_evidence",
+        "authorization": "independent-stage-pass",
+        "automatic_transition": false,
+        "scientific_authority": false
+      }
+    ],
+    "failure_authority_records": [
+      {
+        "failure_record_id": "failure-authority:dd57c1bc03aa26f39d9d",
+        "failure_code": "FAIL_REPRESENTATION",
+        "idea_id": "update-trust-region",
+        "phase": "",
+        "signature": "operationalization:representation-signal-mismatch",
+        "affected_layer": "operationalization",
+        "belief_authority": false,
+        "persistent_dead_end_authority": false,
+        "allowed_effects": [
+          "block_experiment",
+          "atomic_representation_repair"
+        ],
+        "forbidden_effects": [
+          "invalidate_claim",
+          "scientific_closure"
+        ],
+        "next_action": "atomic-representation-repair",
+        "claim_mutation_requires_independent_adjudication": true,
+        "scientific_authority": false
+      },
+      {
+        "failure_record_id": "failure-authority:783d1fbfa445a9bfd8d4",
+        "failure_code": "FAIL_TARGET_DEGENERACY",
+        "idea_id": "budgeted-evolution-controller",
+        "phase": "",
+        "signature": "experiment:no-label-variation",
+        "affected_layer": "experiment",
+        "belief_authority": false,
+        "persistent_dead_end_authority": false,
+        "allowed_effects": [
+          "block_experiment",
+          "repair_target_construction"
+        ],
+        "forbidden_effects": [
+          "invalidate_claim",
+          "scientific_closure"
+        ],
+        "next_action": "repair-target-construction",
+        "claim_mutation_requires_independent_adjudication": true,
+        "scientific_authority": false
+      },
+      {
+        "failure_record_id": "failure-authority:949b104ca3c06cdda846",
+        "failure_code": "FAIL_BASELINE_CEILING",
+        "idea_id": "outcome-equivalent-trajectory-contrast",
+        "phase": "",
+        "signature": "method-realization:matched-simplification-tie",
+        "affected_layer": "method-realization",
+        "belief_authority": true,
+        "persistent_dead_end_authority": false,
+        "allowed_effects": [
+          "block_experiment",
+          "request_simplify_or_merge_review"
+        ],
+        "forbidden_effects": [
+          "automatic_claim_invalidation",
+          "automatic_scientific_closure"
+        ],
+        "next_action": "simplify-or-merge",
+        "claim_mutation_requires_independent_adjudication": true,
+        "scientific_authority": false
+      },
+      {
+        "failure_record_id": "failure-authority:ed21a49d14ceb398ab95",
+        "failure_code": "FAIL_REPRESENTATION",
+        "idea_id": "workflow-generalization-certificate",
+        "phase": "",
+        "signature": "operationalization:objective-claim-mismatch",
+        "affected_layer": "operationalization",
+        "belief_authority": false,
+        "persistent_dead_end_authority": false,
+        "allowed_effects": [
+          "block_experiment",
+          "atomic_representation_repair"
+        ],
+        "forbidden_effects": [
+          "invalidate_claim",
+          "scientific_closure"
+        ],
+        "next_action": "atomic-representation-repair",
+        "claim_mutation_requires_independent_adjudication": true,
+        "scientific_authority": false
+      },
+      {
+        "failure_record_id": "failure-authority:3fa174e6e3b199e44bf9",
+        "failure_code": "FAIL_REPRESENTATION",
+        "idea_id": "scienceworld-persistent-correction-closure",
+        "phase": "",
+        "signature": "operationalization:decision-context-support-mismatch",
+        "affected_layer": "operationalization",
+        "belief_authority": false,
+        "persistent_dead_end_authority": false,
+        "allowed_effects": [
+          "block_experiment",
+          "atomic_representation_repair"
+        ],
+        "forbidden_effects": [
+          "invalidate_claim",
+          "scientific_closure"
+        ],
+        "next_action": "atomic-representation-repair",
+        "claim_mutation_requires_independent_adjudication": true,
+        "scientific_authority": false
+      },
+      {
+        "failure_record_id": "failure-authority:0c6a8bbe6f0149d4a29e",
+        "failure_code": "PROVENANCE_INCONCLUSIVE",
+        "idea_id": "paper-first-p0-20260812-premature-local-validation",
+        "phase": "",
+        "signature": "authority-protocol:authority-provenance-mismatch",
+        "affected_layer": "authority-protocol",
+        "belief_authority": false,
+        "persistent_dead_end_authority": false,
+        "allowed_effects": [
+          "block_experiment",
+          "repair_provenance_or_rerun"
+        ],
+        "forbidden_effects": [
+          "invalidate_claim",
+          "method_failure",
+          "scientific_closure"
+        ],
+        "next_action": "repair-provenance-or-rerun",
+        "claim_mutation_requires_independent_adjudication": true,
+        "scientific_authority": false
+      }
+    ],
+    "experiment_authorizations": [
+      {
+        "authorization_id": "experiment-authorization:dcf5bd8075b26781eaed",
+        "experiment_key": "regression-gated-self-evolution:P0",
+        "idea_id": "regression-gated-self-evolution",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:8b021cdc04baaad8e985",
+        "experiment_key": "regression-gated-self-evolution:P1",
+        "idea_id": "regression-gated-self-evolution",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:8631562db191103a5888",
+        "experiment_key": "regression-gated-self-evolution:P2",
+        "idea_id": "regression-gated-self-evolution",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:c50c87c35b71d40c7e13",
+        "experiment_key": "contradiction-preserving-consolidation:P0",
+        "idea_id": "contradiction-preserving-consolidation",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:7c704ee7b103002640c8",
+        "experiment_key": "contradiction-preserving-consolidation:P1",
+        "idea_id": "contradiction-preserving-consolidation",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:63ef59638a0aa153a4cf",
+        "experiment_key": "contradiction-preserving-consolidation:P2",
+        "idea_id": "contradiction-preserving-consolidation",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:98023f5387e6f4070d29",
+        "experiment_key": "compositional-update-compatibility:P0",
+        "idea_id": "compositional-update-compatibility",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:fc76f486fff10cb42eec",
+        "experiment_key": "compositional-update-compatibility:P1",
+        "idea_id": "compositional-update-compatibility",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:4d136dfab3364843151f",
+        "experiment_key": "compositional-update-compatibility:P2",
+        "idea_id": "compositional-update-compatibility",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:a7b202e5ba2f955ecacb",
+        "experiment_key": "update-trust-region:P0",
+        "idea_id": "update-trust-region",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:aba22f4e74676695e275",
+        "experiment_key": "update-trust-region:P1",
+        "idea_id": "update-trust-region",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:414c00eacf3ee97302ef",
+        "experiment_key": "update-trust-region:P2",
+        "idea_id": "update-trust-region",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:c2eba5342aa4621423d2",
+        "experiment_key": "retrieval-interference-auditor:P0",
+        "idea_id": "retrieval-interference-auditor",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:7f268c7085e2b8fe50ed",
+        "experiment_key": "retrieval-interference-auditor:P1",
+        "idea_id": "retrieval-interference-auditor",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:234305a8ba7c9482ca01",
+        "experiment_key": "retrieval-interference-auditor:P2",
+        "idea_id": "retrieval-interference-auditor",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:cc85b10c30e0724c85e8",
+        "experiment_key": "irreversible-action-counterfactuals:P0",
+        "idea_id": "irreversible-action-counterfactuals",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:08f6c37d6e8e846c3dfb",
+        "experiment_key": "irreversible-action-counterfactuals:P1",
+        "idea_id": "irreversible-action-counterfactuals",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:588cd6a00858b5a60d96",
+        "experiment_key": "irreversible-action-counterfactuals:P2",
+        "idea_id": "irreversible-action-counterfactuals",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:f73cd37be7dae49117ae",
+        "experiment_key": "self-label-confidence-flow:P0",
+        "idea_id": "self-label-confidence-flow",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:21a124663b09fd5f532d",
+        "experiment_key": "self-label-confidence-flow:P1",
+        "idea_id": "self-label-confidence-flow",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:8b45427c5814793839f5",
+        "experiment_key": "self-label-confidence-flow:P2",
+        "idea_id": "self-label-confidence-flow",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:989c1f4e5004280b2486",
+        "experiment_key": "evaluator-coadaptation-guard:P0",
+        "idea_id": "evaluator-coadaptation-guard",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:e4a5db7c22fd03eb9dfc",
+        "experiment_key": "evaluator-coadaptation-guard:P1",
+        "idea_id": "evaluator-coadaptation-guard",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:607c3088c4eb57ef3df4",
+        "experiment_key": "evaluator-coadaptation-guard:P2",
+        "idea_id": "evaluator-coadaptation-guard",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:c31e855e678f6bb21820",
+        "experiment_key": "recovery-conditioned-experience:P0",
+        "idea_id": "recovery-conditioned-experience",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:368cc57985601c0d061e",
+        "experiment_key": "recovery-conditioned-experience:P1",
+        "idea_id": "recovery-conditioned-experience",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:0221786cda05c35e6b12",
+        "experiment_key": "recovery-conditioned-experience:P2",
+        "idea_id": "recovery-conditioned-experience",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:6a6da8a3c34fe88321d6",
+        "experiment_key": "counterexample-generating-curriculum:P0",
+        "idea_id": "counterexample-generating-curriculum",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:53bc6da369a84137ecf5",
+        "experiment_key": "counterexample-generating-curriculum:P1",
+        "idea_id": "counterexample-generating-curriculum",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:055373b25231bd8036f7",
+        "experiment_key": "counterexample-generating-curriculum:P2",
+        "idea_id": "counterexample-generating-curriculum",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:54db24cbac23261bc2cb",
+        "experiment_key": "workflow-generalization-certificate:P0",
+        "idea_id": "workflow-generalization-certificate",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:ce4b17f300c046708006",
+        "experiment_key": "workflow-generalization-certificate:P1",
+        "idea_id": "workflow-generalization-certificate",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:9398372e0255fade6d8f",
+        "experiment_key": "workflow-generalization-certificate:P2",
+        "idea_id": "workflow-generalization-certificate",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:212d0334a49d6efe1b83",
+        "experiment_key": "budgeted-evolution-controller:P0",
+        "idea_id": "budgeted-evolution-controller",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:a16edcccc41fe9a0db42",
+        "experiment_key": "budgeted-evolution-controller:P1",
+        "idea_id": "budgeted-evolution-controller",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:382b5f203437d0431e69",
+        "experiment_key": "budgeted-evolution-controller:P2",
+        "idea_id": "budgeted-evolution-controller",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:04a2cf46ae76a0f218c8",
+        "experiment_key": "lineage-aware-rollback:P0",
+        "idea_id": "lineage-aware-rollback",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:6bded7c05b7c17844a8a",
+        "experiment_key": "lineage-aware-rollback:P1",
+        "idea_id": "lineage-aware-rollback",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:25528913bca39b2b6d80",
+        "experiment_key": "lineage-aware-rollback:P2",
+        "idea_id": "lineage-aware-rollback",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:0c961f95b8ba6730eb23",
+        "experiment_key": "failure-frontier-curriculum:P0",
+        "idea_id": "failure-frontier-curriculum",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:5ff9708fabcaaede7d39",
+        "experiment_key": "failure-frontier-curriculum:P1",
+        "idea_id": "failure-frontier-curriculum",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:0b0eb86a25dd05b117f5",
+        "experiment_key": "failure-frontier-curriculum:P2",
+        "idea_id": "failure-frontier-curriculum",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:2c55c4b67a72ef5a9426",
+        "experiment_key": "causally-verified-experience-admission:P0",
+        "idea_id": "causally-verified-experience-admission",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "terminal-merge"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:74de3427c44e7988930a",
+        "experiment_key": "causally-verified-experience-admission:P1",
+        "idea_id": "causally-verified-experience-admission",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:10e512a96ae34d57fed1",
+        "experiment_key": "causally-verified-experience-admission:P2",
+        "idea_id": "causally-verified-experience-admission",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:704180f4e97f10c7cdde",
+        "experiment_key": "reward-invariance-audit:P0",
+        "idea_id": "reward-invariance-audit",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "terminal-merge"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:016d2be8c4a7a9f2191d",
+        "experiment_key": "reward-invariance-audit:P1",
+        "idea_id": "reward-invariance-audit",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:d6c78757b444b2a2d456",
+        "experiment_key": "reward-invariance-audit:P2",
+        "idea_id": "reward-invariance-audit",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:47b85fdbef0c07d94e49",
+        "experiment_key": "local-counterexample-memory-repair:P0",
+        "idea_id": "local-counterexample-memory-repair",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:5d364363db611a90fc31",
+        "experiment_key": "local-counterexample-memory-repair:P1",
+        "idea_id": "local-counterexample-memory-repair",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:5676819871701d855f80",
+        "experiment_key": "local-counterexample-memory-repair:P2",
+        "idea_id": "local-counterexample-memory-repair",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:5048a92f568d8c01036e",
+        "experiment_key": "self-correction-collapse-detector:P0",
+        "idea_id": "self-correction-collapse-detector",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:e26654ec925043e53427",
+        "experiment_key": "self-correction-collapse-detector:P1",
+        "idea_id": "self-correction-collapse-detector",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:51bebfc57013fadf926c",
+        "experiment_key": "self-correction-collapse-detector:P2",
+        "idea_id": "self-correction-collapse-detector",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:bf7d31e1ca2631135232",
+        "experiment_key": "intervention-validated-self-correction:P0",
+        "idea_id": "intervention-validated-self-correction",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:7212bf8834003c5e0b2c",
+        "experiment_key": "intervention-validated-self-correction:P1",
+        "idea_id": "intervention-validated-self-correction",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:5593b37506cb181f453b",
+        "experiment_key": "intervention-validated-self-correction:P2",
+        "idea_id": "intervention-validated-self-correction",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:e595e2e92aad7aeb735e",
+        "experiment_key": "workflow-branch-credit:P0",
+        "idea_id": "workflow-branch-credit",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:709dc878159fd2a22b87",
+        "experiment_key": "workflow-branch-credit:P1",
+        "idea_id": "workflow-branch-credit",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:0f11a0bc6db7e26f4fc8",
+        "experiment_key": "workflow-branch-credit:P2",
+        "idea_id": "workflow-branch-credit",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:43882261a6e959f082b0",
+        "experiment_key": "world-model-error-gated-learning:P0",
+        "idea_id": "world-model-error-gated-learning",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:b782692afbde2b84e75a",
+        "experiment_key": "world-model-error-gated-learning:P1",
+        "idea_id": "world-model-error-gated-learning",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:a74a807fb266bf7faa0e",
+        "experiment_key": "world-model-error-gated-learning:P2",
+        "idea_id": "world-model-error-gated-learning",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:41a06bebdc44feb5c026",
+        "experiment_key": "memory-half-life:P0",
+        "idea_id": "memory-half-life",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "pre-p0-identifiability"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:dc4725b3c8936ee364e5",
+        "experiment_key": "memory-half-life:P1",
+        "idea_id": "memory-half-life",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:6ded1b73c9dbe62a82ef",
+        "experiment_key": "memory-half-life:P2",
+        "idea_id": "memory-half-life",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:bce9ae4d72a4a1be534b",
+        "experiment_key": "correction-policy-credit:P0",
+        "idea_id": "correction-policy-credit",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "terminal-merge"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:061fb09580588915e131",
+        "experiment_key": "correction-policy-credit:P1",
+        "idea_id": "correction-policy-credit",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:a8af86d82f18414756f3",
+        "experiment_key": "correction-policy-credit:P2",
+        "idea_id": "correction-policy-credit",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:24d1487f83e4e099ee7f",
+        "experiment_key": "curriculum-drift-controller:P0",
+        "idea_id": "curriculum-drift-controller",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "terminal-merge"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:684fc6f694b16756478e",
+        "experiment_key": "curriculum-drift-controller:P1",
+        "idea_id": "curriculum-drift-controller",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:c2e17304e9bad455ab57",
+        "experiment_key": "curriculum-drift-controller:P2",
+        "idea_id": "curriculum-drift-controller",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:eff9673851457ed7e8b0",
+        "experiment_key": "outcome-equivalent-trajectory-contrast:P0",
+        "idea_id": "outcome-equivalent-trajectory-contrast",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "terminal-merge"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:eb29cc832ae71923930c",
+        "experiment_key": "outcome-equivalent-trajectory-contrast:P1",
+        "idea_id": "outcome-equivalent-trajectory-contrast",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:a0a5496906620533e5d6",
+        "experiment_key": "outcome-equivalent-trajectory-contrast:P2",
+        "idea_id": "outcome-equivalent-trajectory-contrast",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:637e4c9eac813a827f3c",
+        "experiment_key": "applicability-bounded-lessons:P0",
+        "idea_id": "applicability-bounded-lessons",
+        "phase": "P0",
+        "scientific_stage": "p0-method",
+        "transition_id": "transition:p0-support->p0-method",
+        "prerequisites": [
+          "support_evidence",
+          "support_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "terminal-merge"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:299910bbb03f9d7f4283",
+        "experiment_key": "applicability-bounded-lessons:P1",
+        "idea_id": "applicability-bounded-lessons",
+        "phase": "P1",
+        "scientific_stage": "p1-replication",
+        "transition_id": "transition:p0-method->p1-replication",
+        "prerequisites": [
+          "method_evidence",
+          "method_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P0-pass-required"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      },
+      {
+        "authorization_id": "experiment-authorization:49e2cee1d2479783d745",
+        "experiment_key": "applicability-bounded-lessons:P2",
+        "idea_id": "applicability-bounded-lessons",
+        "phase": "P2",
+        "scientific_stage": "paper-experiment",
+        "transition_id": "transition:p1-replication->paper-experiment",
+        "prerequisites": [
+          "p1_evidence",
+          "method_freeze",
+          "experiment_blueprint_freeze"
+        ],
+        "canonical_execution_authorized": false,
+        "effective_execution_authorized": false,
+        "blockers": [
+          "P1-pass-required",
+          "method_freeze-missing",
+          "experiment_blueprint_freeze-missing"
+        ],
+        "freeze_receipts": {
+          "method_freeze": "",
+          "experiment_blueprint_freeze": ""
+        },
+        "source": "pilot_registry",
+        "automatic_authorization": false,
+        "scientific_authority": false
+      }
+    ],
+    "repair_history": [
+      {
+        "repair_record_id": "repair-proposal:9d8bfd7e439396142ef5",
+        "idea_id": "update-trust-region",
+        "substrate_id": "private-data://external/a12",
+        "child_id": "A1-R1 contextual-divergence",
+        "repair_kind": "representation",
+        "changed_assumption": "add task/update-surface conditional divergence; keep truth/candidate pool/budget fixed",
+        "precondition": "retrospective leave-one-update-out AUC > 0.65 before new GPU execution",
+        "original_claim": "A-1",
+        "scientific_distance": "load-bearing",
+        "recorded": false,
+        "consumes_budget": false,
+        "proposal_only": true,
+        "scientific_authority": false
+      },
+      {
+        "repair_record_id": "repair-proposal:082d875afa4fa0870629",
+        "idea_id": "update-trust-region",
+        "substrate_id": "private-data://external/a12",
+        "child_id": "A1-S raw-drift simplification",
+        "repair_kind": "proposal",
+        "changed_assumption": "remove learned gate and test whether monotone raw drift is sufficient",
+        "precondition": "if raw drift matches on a larger frozen update pool, stop learned-gate claim",
+        "original_claim": "A-1",
+        "scientific_distance": "diagnostic",
+        "recorded": false,
+        "consumes_budget": false,
+        "proposal_only": true,
+        "scientific_authority": false
+      },
+      {
+        "repair_record_id": "repair-proposal:22792f21ee6d61ee2dea",
+        "idea_id": "budgeted-evolution-controller",
+        "substrate_id": "private-data://external/a12",
+        "child_id": "A2-R1 sequence-archetype qualification",
+        "repair_kind": "proposal",
+        "changed_assumption": "update-sequence generator only",
+        "precondition": "before fitting, frozen sequences must contain early-stop, late-stop, and rollback-optimal cases with label entropy >= 0.6 bits",
+        "original_claim": "A-2",
+        "scientific_distance": "diagnostic",
+        "recorded": false,
+        "consumes_budget": false,
+        "proposal_only": true,
+        "scientific_authority": false
+      },
+      {
+        "repair_record_id": "repair-proposal:c945175ececf1e71bd8c",
+        "idea_id": "budgeted-evolution-controller",
+        "substrate_id": "private-data://external/a12",
+        "child_id": "A2-R2 marginal-value controller",
+        "repair_kind": "objective",
+        "changed_assumption": "predict next-round marginal value instead of categorical optimal round",
+        "precondition": "use the same frozen sequence pool; proceed only if marginal targets have non-trivial variance",
+        "original_claim": "A-2",
+        "scientific_distance": "load-bearing",
+        "recorded": false,
+        "consumes_budget": false,
+        "proposal_only": true,
+        "scientific_authority": false
+      },
+      {
+        "repair_record_id": "repair-proposal:860e90ae4a4a15c0fc2d",
+        "idea_id": "outcome-equivalent-trajectory-contrast",
+        "substrate_id": "private-data://external/b1",
+        "child_id": "B1-R1 disagreement-case miner",
+        "repair_kind": "proposal",
+        "changed_assumption": "case selection only; no new model mechanism",
+        "precondition": "find held-out cases where utility-only and cross-process robustness rank different lessons before another GPU run",
+        "original_claim": "B-1",
+        "scientific_distance": "diagnostic",
+        "recorded": false,
+        "consumes_budget": false,
+        "proposal_only": true,
+        "scientific_authority": false
+      },
+      {
+        "repair_record_id": "repair-proposal:f3ef8de8c6643ac0690c",
+        "idea_id": "outcome-equivalent-trajectory-contrast",
+        "substrate_id": "private-data://external/b1",
+        "child_id": "B1-S merge into utility admission",
+        "repair_kind": "proposal",
+        "changed_assumption": "claim boundary only",
+        "precondition": "merge if retrospective + newly mined cases still produce identical decisions",
+        "original_claim": "B-1",
+        "scientific_distance": "diagnostic",
+        "recorded": false,
+        "consumes_budget": false,
+        "proposal_only": true,
+        "scientific_authority": false
+      },
+      {
+        "repair_record_id": "repair-proposal:aeb23f69228daf5cc15c",
+        "idea_id": "workflow-generalization-certificate",
+        "substrate_id": "private-data://external/e1",
+        "child_id": "E1-R1 pairwise edit ranking",
+        "repair_kind": "objective",
+        "changed_assumption": "replace binary positive-effect loss with pairwise delta-ranking loss; keep edit representation/workflows fixed",
+        "precondition": "calibration top-1 must exceed global-best by >=25pp before opening fresh hidden workflows",
+        "original_claim": "E-1",
+        "scientific_distance": "load-bearing",
+        "recorded": false,
+        "consumes_budget": false,
+        "proposal_only": true,
+        "scientific_authority": false
+      },
+      {
+        "repair_record_id": "repair-proposal:4f1317482e614de3c335",
+        "idea_id": "workflow-generalization-certificate",
+        "substrate_id": "private-data://external/e1",
+        "child_id": "E1-R2 listwise regret prediction",
+        "repair_kind": "objective",
+        "changed_assumption": "predict normalized edit regret within each workflow rather than binary effect",
+        "precondition": "same frozen source workflows and edit library; no hidden access during objective selection",
+        "original_claim": "E-1",
+        "scientific_distance": "load-bearing",
+        "recorded": false,
+        "consumes_budget": false,
+        "proposal_only": true,
+        "scientific_authority": false
+      }
+    ],
+    "repair_budget": {
+      "recorded_repairs": 0,
+      "proposal_only_repairs": 8,
+      "budget_consuming_repairs": 0,
+      "substrate_budget_violations": [],
+      "one_load_bearing_repair_per_child_violations": [],
+      "review_required": false
+    },
+    "candidate_lineage": [
+      {
+        "lineage_id": "candidate-lineage:ed0dfb3b684afc3df8eb",
+        "candidate_id": "PORT-001",
+        "parent_candidate": "ASSUMPTION_BREAK-P2-001-R1",
+        "candidate_snapshot_sha256": "9b255e3ac6e3896a155b185b507073e6e36c65761f9e99d4e9bb5a0b7004bdd4",
+        "source_run_id": "20260818T164230Z-ingestion-replay",
+        "discovery_transaction_id": "d6a0782a420512261c96d43e9e6a796bbc5e114f923decb1f79638c922021367",
+        "generation_receipt_sha256": "bfceaa00c61a6782a872c3702844cbe3c35a662b783de59a835f1be17f717534",
+        "review_receipt_sha256": [],
+        "elimination_reason": [
+          "saturation-exact-reduction-pending:harness-update-scope-heterogeneity",
+          "unresolved-exact-reduction-test:1",
+          "EXACT_REDUCTION_PENDING"
+        ],
+        "portfolio_state": "SEARCH_HOLD",
+        "route_reason": "EXACT_REDUCTION_PENDING",
+        "lineage_complete": false,
+        "provenance_status": "PROVENANCE_INCONCLUSIVE",
+        "downstream_authorization_blocked": true,
+        "belief_authority": false,
+        "scientific_authority": false
+      },
+      {
+        "lineage_id": "candidate-lineage:16dceeaacb9c21cf37de",
+        "candidate_id": "PORT-003",
+        "parent_candidate": "ASSUMPTION_BREAK-P2-004-R1",
+        "candidate_snapshot_sha256": "d15348638054d336246774f5f9410dcc33faccb4942b02ec842eb8c831fbf366",
+        "source_run_id": "20260818T164230Z-ingestion-replay",
+        "discovery_transaction_id": "d6a0782a420512261c96d43e9e6a796bbc5e114f923decb1f79638c922021367",
+        "generation_receipt_sha256": "bfceaa00c61a6782a872c3702844cbe3c35a662b783de59a835f1be17f717534",
+        "review_receipt_sha256": [],
+        "elimination_reason": [
+          "saturation-exact-reduction-pending:harness-update-scope-heterogeneity",
+          "saturation-exact-reduction-pending:persistent-update-vs-test-time-compute",
+          "unresolved-exact-reduction-test:1",
+          "unresolved-exact-reduction-test:2",
+          "EXACT_REDUCTION_PENDING"
+        ],
+        "portfolio_state": "SEARCH_HOLD",
+        "route_reason": "EXACT_REDUCTION_PENDING",
+        "lineage_complete": false,
+        "provenance_status": "PROVENANCE_INCONCLUSIVE",
+        "downstream_authorization_blocked": true,
+        "belief_authority": false,
+        "scientific_authority": false
+      }
+    ],
+    "candidate_stage_receipts": [
+      {
+        "stage_receipt_id": "candidate-stage:76536c6c5cfe405a7726",
+        "stage": "generation-target",
+        "input_count": 120,
+        "output_count": 2,
+        "held_count": 0,
+        "eliminated_count": 0,
+        "unrealized_target": 118,
+        "record_level_elimination_reasons_complete": true,
+        "record_level_disposition_reasons_complete": false,
+        "note": "requested target versus observed raw seeds",
+        "source_run_id": "20260818T164230Z-ingestion-replay",
+        "scientific_authority": false
+      },
+      {
+        "stage_receipt_id": "candidate-stage:9a2ffedcdebb180c77f9",
+        "stage": "semantic-uniqueness",
+        "input_count": 2,
+        "output_count": 2,
+        "held_count": 0,
+        "eliminated_count": 0,
+        "unrealized_target": 0,
+        "record_level_elimination_reasons_complete": true,
+        "record_level_disposition_reasons_complete": false,
+        "note": "raw seeds to semantic-unique candidates",
+        "source_run_id": "20260818T164230Z-ingestion-replay",
+        "scientific_authority": false
+      },
+      {
+        "stage_receipt_id": "candidate-stage:bab8a90ecdf347bb897d",
+        "stage": "pre-f0-route",
+        "input_count": 2,
+        "output_count": 2,
+        "held_count": 0,
+        "eliminated_count": 0,
+        "unrealized_target": 0,
+        "record_level_elimination_reasons_complete": true,
+        "record_level_disposition_reasons_complete": false,
+        "note": "semantic-unique candidates to pre-F0",
+        "source_run_id": "20260818T164230Z-ingestion-replay",
+        "scientific_authority": false
+      },
+      {
+        "stage_receipt_id": "candidate-stage:aec18b35acff66f0b599",
+        "stage": "portfolio-visibility",
+        "input_count": 2,
+        "output_count": 2,
+        "held_count": 0,
+        "eliminated_count": 0,
+        "unrealized_target": 0,
+        "record_level_elimination_reasons_complete": true,
+        "record_level_disposition_reasons_complete": true,
+        "note": "pre-F0 candidates visible in portfolio",
+        "source_run_id": "20260818T164230Z-ingestion-replay",
+        "scientific_authority": false
+      },
+      {
+        "stage_receipt_id": "candidate-stage:9b2a741dc2eee94ecf46",
+        "stage": "problem-gate",
+        "input_count": 2,
+        "output_count": 0,
+        "held_count": 2,
+        "eliminated_count": 0,
+        "unrealized_target": 0,
+        "record_level_elimination_reasons_complete": true,
+        "record_level_disposition_reasons_complete": true,
+        "note": "visible candidates to Problem Gate PASS or HOLD",
+        "source_run_id": "20260818T164230Z-ingestion-replay",
+        "scientific_authority": false
+      }
+    ],
+    "memory_graph_integration": {
+      "memory_graph_schema": "2.1",
+      "failure_binding_key": "failure_record_id",
+      "experiment_binding_key": "authorization_id",
+      "candidate_binding_key": "lineage_id",
+      "bindings_are_derived_zero_authority": true
+    },
+    "summary": {
+      "stages": 7,
+      "transitions": 7,
+      "failure_authority_records": 6,
+      "belief_authority_true": 1,
+      "belief_authority_false": 5,
+      "experiment_authorizations": 78,
+      "experiments_effectively_authorized": 0,
+      "experiment_authorization_holds": 78,
+      "repair_records": 8,
+      "candidate_lineage_records": 2,
+      "candidate_lineage_complete": 0,
+      "candidate_provenance_holds": 2,
+      "candidate_stage_receipts": 5
+    },
+    "scientific_authority": false,
+    "authority": {
+      "claim_mutation": false,
+      "scientific_closure": false,
+      "problem_gate": false,
+      "method": false,
+      "experiment": false,
+      "p0": false,
+      "gpu": false
+    },
+    "lint": {
+      "schema_version": "1.0",
+      "status": "PASS",
+      "errors": [],
+      "warnings": [
+        {
+          "code": "candidate-lineage-provenance-inconclusive",
+          "candidate_id": "PORT-001"
+        },
+        {
+          "code": "candidate-lineage-provenance-inconclusive",
+          "candidate_id": "PORT-003"
+        }
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 2
+      },
+      "scientific_authority": false
     }
   },
   "p0_offline_qualification": {
@@ -48743,7 +51916,7 @@
   },
   "paper_first_p0_f0": {
     "schema_version": "1.3",
-    "generated_at": "2026-08-20T07:19:25+00:00",
+    "generated_at": "2026-08-20T08:44:41+00:00",
     "run_root": "private-data://external/paper-first-p0-20260812",
     "authority": {
       "promotion_authorized": false,
@@ -49387,7 +52560,7 @@
   },
   "idea_discovery_v3": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:29+00:00",
+    "generated_at": "2026-08-20T08:44:45+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -52343,7 +55516,7 @@
   },
   "idea_discovery_v31": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:29+00:00",
+    "generated_at": "2026-08-20T08:44:45+00:00",
     "round": "v3.1",
     "status": "external-reviewed",
     "policy": {
@@ -53056,7 +56229,7 @@
   },
   "idea_discovery_v4": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:29+00:00",
+    "generated_at": "2026-08-20T08:44:45+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -62731,7 +65904,7 @@
   },
   "idea_discovery_v5": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:29+00:00",
+    "generated_at": "2026-08-20T08:44:45+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -72724,7 +75897,7 @@
   },
   "idea_discovery_v51": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:29+00:00",
+    "generated_at": "2026-08-20T08:44:45+00:00",
     "target_venue": "ICLR",
     "policy": {
       "generated_only_from_review_vectors": true,
@@ -74416,7 +77589,7 @@
   },
   "idea_discovery_v52": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:29+00:00",
+    "generated_at": "2026-08-20T08:44:45+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v51_revise": true,
@@ -75394,7 +78567,7 @@
   },
   "idea_discovery_v53": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T07:19:29+00:00",
+    "generated_at": "2026-08-20T08:44:45+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v52_revise_with_single_surviving_boundary": true,
@@ -75733,7 +78906,7 @@
   },
   "discussion_portfolio": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-20T07:19:29+00:00",
+    "generated_at": "2026-08-20T08:44:45+00:00",
     "target": 20,
     "count": 27,
     "remaining": 0,
@@ -78203,8 +81376,8 @@
       },
       "status": "running",
       "evidence": {
-        "en": "13/13 harness invariants pass; resolved-model violations=0",
-        "zh": "Harness 不变量 13/13 通过；resolved-model 独立性违规=0"
+        "en": "14/14 harness invariants pass; resolved-model violations=0",
+        "zh": "Harness 不变量 14/14 通过；resolved-model 独立性违规=0"
       },
       "key": "research-harness-assurance",
       "primary_layer": "paper-design"
@@ -78245,8 +81418,8 @@
       },
       "status": "running",
       "evidence": {
-        "en": "7/7 required producer→consumer contracts wired; orphan required integrations=0",
-        "zh": "7/7 条必需 producer→consumer 接线通过；孤立必需接线=0"
+        "en": "8/8 required producer→consumer contracts wired; orphan required integrations=0",
+        "zh": "8/8 条必需 producer→consumer 接线通过；孤立必需接线=0"
       },
       "key": "research-integration-lint",
       "primary_layer": "runtime-authority"
@@ -78474,6 +81647,20 @@
       },
       "key": "p0-governance",
       "primary_layer": "scientific-validation"
+    },
+    {
+      "source": "ARIS Governance → Research Memory Graph 2.1",
+      "component": {
+        "en": "Transition, authority, authorization, lineage, and repair governance",
+        "zh": "迁移、权限、授权、谱系与修复治理层"
+      },
+      "status": "running",
+      "evidence": {
+        "en": "7 transitions / 6 failure authority records / 78 experiment holds / 2 provenance holds",
+        "zh": "7 条状态迁移 / 6 条失败权限记录 / 78 个实验授权 HOLD / 2 个谱系 HOLD"
+      },
+      "key": "aris-governance-memory",
+      "primary_layer": "runtime-authority"
     },
     {
       "source": "AIDE / AI-Scientist-v2 / R&D-Agent / SCION",
@@ -78908,10 +82095,11 @@
           "research-integration-lint",
           "research-stall-pivot",
           "ai-consultation-automation",
+          "aris-governance-memory",
           "unrestricted-code-execution"
         ],
-        "component_count": 5,
-        "running": 4,
+        "component_count": 6,
+        "running": 5,
         "intentionally_disabled": 1
       },
       {
@@ -78996,8 +82184,8 @@
       "reader_stage_duplicates": 0,
       "reader_stage_extra": 0,
       "functional_layers": 6,
-      "components": 34,
-      "assigned_components": 34,
+      "components": 35,
+      "assigned_components": 35,
       "unassigned_components": 0,
       "duplicate_component_keys": 0,
       "cross_cutting_controls": 3,
@@ -79601,18 +82789,18 @@
           "status": "HOLD_MANUAL_RELATION_SCAN",
           "summary": {
             "new_empirical_sources": 0,
-            "passed": 10,
-            "new_assumption_sources": 0,
+            "new_reviewed_sources": 0,
             "new_failure_sources": 0,
-            "checks": 16,
-            "failed": 6,
-            "new_boundary_sources": 0,
-            "automatic_model_scan_authorized": false,
-            "relation_lane_review_retry_exhausted": false,
             "manual_scan_eligible": false,
-            "last_scanned_sources": 233,
+            "new_assumption_sources": 0,
             "current_reviewed_sources": 245,
-            "new_reviewed_sources": 0
+            "relation_lane_review_retry_exhausted": false,
+            "failed": 6,
+            "passed": 10,
+            "new_boundary_sources": 0,
+            "checks": 16,
+            "last_scanned_sources": 233,
+            "automatic_model_scan_authorized": false
           }
         }
       },
@@ -80012,8 +83200,8 @@
           "reader_stage_duplicates": 0,
           "reader_stage_extra": 0,
           "functional_layers": 6,
-          "components": 34,
-          "assigned_components": 34,
+          "components": 35,
+          "assigned_components": 35,
           "unassigned_components": 0,
           "duplicate_component_keys": 0,
           "cross_cutting_controls": 3,
@@ -80193,7 +83381,7 @@
         }
       },
       {
-        "key": "research-memory-graph-v2",
+        "key": "research-memory-graph-v2.1",
         "pass": true,
         "detail": {
           "summary": {
@@ -80261,6 +83449,9 @@
             "principle_closure_edges": 0,
             "exact_scope_propagation_edges": 0,
             "claim_conflicts": 0,
+            "failure_governance_bindings": 6,
+            "experiment_authorization_bindings": 78,
+            "candidate_lineage_bindings": 2,
             "typed_pipeline_kinds_materialized": 8,
             "typed_pipeline_kinds_required": 11
           },
@@ -80297,6 +83488,40 @@
               "problem_contract",
               "method"
             ]
+          },
+          "governance_bindings": {
+            "schema_version": "1.0",
+            "source_state_key": "aris_governance_layer",
+            "failure_records_bound": 6,
+            "experiment_authorizations_bound": 78,
+            "candidate_lineage_bound": 2,
+            "bindings_are_derived_zero_authority": true,
+            "scientific_authority": false
+          }
+        }
+      },
+      {
+        "key": "aris-governance-layer",
+        "pass": true,
+        "detail": {
+          "summary": {
+            "stages": 7,
+            "transitions": 7,
+            "failure_authority_records": 6,
+            "belief_authority_true": 1,
+            "belief_authority_false": 5,
+            "experiment_authorizations": 78,
+            "experiments_effectively_authorized": 0,
+            "experiment_authorization_holds": 78,
+            "repair_records": 8,
+            "candidate_lineage_records": 2,
+            "candidate_lineage_complete": 0,
+            "candidate_provenance_holds": 2,
+            "candidate_stage_receipts": 5
+          },
+          "lint": {
+            "errors": 0,
+            "warnings": 2
           }
         }
       },
@@ -80305,8 +83530,8 @@
         "pass": true,
         "detail": {
           "assurance": {
-            "checks": 13,
-            "passed": 13,
+            "checks": 14,
+            "passed": 14,
             "failed": 0,
             "reviewed_candidate_receipts": 0,
             "resolved_model_independence_violations": 0
@@ -80396,6 +83621,9 @@
             "principle_closure_edges": 0,
             "exact_scope_propagation_edges": 0,
             "claim_conflicts": 0,
+            "failure_governance_bindings": 6,
+            "experiment_authorization_bindings": 78,
+            "candidate_lineage_bindings": 2,
             "typed_pipeline_kinds_materialized": 8,
             "typed_pipeline_kinds_required": 11
           }
@@ -80574,7 +83802,7 @@
         "pass": true,
         "detail": {
           "schema_version": "2.4",
-          "generated_at": "2026-08-20T07:19:25+00:00",
+          "generated_at": "2026-08-20T08:44:41+00:00",
           "policy": {
             "schema_version": "2.3",
             "paper_novelty_precedes_method_design": true,

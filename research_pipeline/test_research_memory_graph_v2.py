@@ -101,7 +101,7 @@ def _graph(**overrides):
 class ResearchMemoryGraphV2Test(unittest.TestCase):
     def test_typed_pipeline_and_failure_boundaries(self):
         graph = _graph()
-        self.assertEqual(graph["schema_version"], "2.0")
+        self.assertEqual(graph["schema_version"], "2.1")
         self.assertEqual(graph["status"], "RESEARCH_GRAPH_COMPILED")
         self.assertEqual(graph["lint"]["status"], "PASS")
         self.assertGreaterEqual(graph["summary"]["phenomenon_nodes"], 1)
