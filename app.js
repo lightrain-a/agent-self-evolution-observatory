@@ -683,6 +683,7 @@ const ZH_PURE_TEXT = new Map([
   ["Use frozen existing P0 evidence; do not rerun identical compute.","使用已冻结的现有 P0 证据；不要重复运行相同计算。"],
   ["Merge branch soft-audit into research-system scheduling; stop standalone A-1 repair and do not spend GPU unless a materially new observable/substrate is proposed.","把分支 soft-audit 并入科研系统调度；停止独立 A-1 修复，除非提出实质全新的可观测量/实验底座，否则不再消耗 GPU。"],
   ["Merge evidence-depth scheduling into A-1/system soft audit; stop standalone A-2 repair and do not launch controller GPU training.","把 evidence-depth 调度并入 A-1/系统 soft audit；停止独立 A-2 修复，不启动控制器 GPU 训练。"],
+  ["Human authors must verify the live ICLR/OpenReview deadline because official ICLR pages currently conflict.","作者必须在提交前人工核验实时 ICLR/OpenReview 截止日期；当前官方 ICLR 页面信息存在冲突。"],
   ["4 · GATED INBOX","4 · 门控收件箱"],
 ]);
 function localizeZhInline(value = "") {
@@ -1305,7 +1306,7 @@ function renderProjectStatusStrip(){
   const statusLabels = language === "zh"
     ? [["投稿就绪论文",h.paper_ready||0],["还缺的论文证据",h.paper_quality_evidence_debt||0],["通过正式问题检查的新研究问题",h.canonical_live_ideas||0],["正在做最小验证的新现象",h.fresh_active_f0||0],["因缺证据暂缓的新现象",h.fresh_support_holds||0],["现在允许启动的正式实验",h.launchable_formal_experiments||0],["已关闭的精确候选表述",h.shadow_closed_basins||h.shadow_dead_ends||0],["真正关闭到核心原理层",h.shadow_core_principle_stops||0],["整个基准或现象也被判定不成立",h.shadow_broader_core_principle_falsifications||0],["等待具体证据的暂定候选",h.shadow_holds||0]]
     : [["submission-ready papers",h.paper_ready||0],["unfinished paper evidence",h.paper_quality_evidence_debt||0],["new ideas past formal problem check",h.canonical_live_ideas||0],["fresh phenomena in minimal validation",h.fresh_active_f0||0],["fresh phenomena waiting for evidence",h.fresh_support_holds||0],["formal experiments launchable now",h.launchable_formal_experiments||0],["closed exact candidate formulations",h.shadow_closed_basins||h.shadow_dead_ends||0],["core-principle scientific closures",h.shadow_core_principle_stops||0],["whole benchmark/phenomenon falsifications",h.shadow_broader_core_principle_falsifications||0],["tentative candidates waiting for evidence",h.shadow_holds||0]];
-  return `<section class="project-status-strip current"><div><b>${selectedPaper?(language==="zh"?"当前选中论文 · STRI":"Current selected paper · STRI"):(language==="zh"?`当前科研状态${asOf?` · ${asOf}`:""}`:`Current research state${asOf?` · ${asOf}`:""}`)}</b><span>${message}</span></div><dl>${statusLabels.map(([label,value])=>`<div><dt>${label}</dt><dd>${value}</dd></div>`).join("")}</dl></section>`;
+  return `<section class="project-status-strip current"><div class="project-status-copy"><b>${selectedPaper?(language==="zh"?"当前选中论文 · STRI":"Current selected paper · STRI"):(language==="zh"?`当前科研状态${asOf?` · ${asOf}`:""}`:`Current research state${asOf?` · ${asOf}`:""}`)}</b><span>${message}</span></div><dl class="project-status-metrics">${statusLabels.map(([label,value])=>`<div><dt>${label}</dt><dd>${value}</dd></div>`).join("")}</dl></section>`;
 }
 function pageHeader(config) {
   return `<div class="eyebrow">${esc(textOf(config.eyebrow))}</div><h1>${textOf(config.title)}</h1><p class="lead">${textOf(config.lead)}</p>${config.callout ? `<div class="callout">${textOf(config.callout)}</div>` : ""}${renderProjectStatusStrip()}`;

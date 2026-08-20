@@ -363,6 +363,12 @@ def main() -> None:
           currentShadowSearch: window.CURRENT_RESEARCH_STATUS?.shadow_search || {},
           closedAuditPanels: document.querySelectorAll('.current-closed-basin-audit').length,
           closedAuditRows: document.querySelectorAll('.current-closed-basin-audit tbody tr').length,
+          closedAuditReasonsAllZh: [...document.querySelectorAll('.current-closed-basin-audit tbody tr td:nth-child(3)')].every(node => /[\u3400-\u9fff]/.test(node.textContent || '')),
+          closedAuditReopensAllZh: [...document.querySelectorAll('.current-closed-basin-audit tbody tr td:nth-child(5)')].every(node => /[\u3400-\u9fff]/.test(node.textContent || '')),
+          statusOuterTracks: getComputedStyle(document.querySelector('.project-status-strip.current')).gridTemplateColumns.trim().split(/\\s+/).length,
+          statusCopyTracks: getComputedStyle(document.querySelector('.project-status-copy')).gridTemplateColumns.trim().split(/\\s+/).length,
+          statusMetricTracks: getComputedStyle(document.querySelector('.project-status-metrics')).gridTemplateColumns.trim().split(/\\s+/).length,
+          statusMetricCount: document.querySelectorAll('.project-status-metrics > div').length,
           shadowSourceSummary: window.PAPER_FIRST_SEARCH_PORTFOLIO_DESIGN_ADJUDICATION?.shadow_source?.summary || {},
           shadowQueueSummary: window.PAPER_FIRST_SEARCH_PORTFOLIO_DESIGN_ADJUDICATION?.shadow_source?.queue_summary || {},
           shadowLatestRun: window.RESEARCH_SYSTEM_STATE?.paper_first_problem_search_portfolio?.latest_run || {},
@@ -437,6 +443,8 @@ def main() -> None:
         closed_rows=(ideas["currentShadowSearch"].get("closed_rows") or [])
         expected_closed=int(sds.get("shadow_closed_basins") or 0)
         require(ideas["closedAuditPanels"] == 1 and ideas["closedAuditRows"] == expected_closed and len(closed_rows) == expected_closed, f"closed-basin per-candidate audit table is incomplete: panels={ideas['closedAuditPanels']} rows={ideas['closedAuditRows']} state={len(closed_rows)} expected={expected_closed}")
+        require(ideas["closedAuditReasonsAllZh"] and ideas["closedAuditReopensAllZh"], "all 41 closed-candidate stop reasons and reopen conditions must render in Chinese")
+        require((ideas["statusOuterTracks"],ideas["statusCopyTracks"],ideas["statusMetricTracks"],ideas["statusMetricCount"]) == (1,2,5,10), f"current research status must render as title/message row plus full-width five-column metrics row: {ideas['statusOuterTracks']}/{ideas['statusCopyTracks']}/{ideas['statusMetricTracks']}/{ideas['statusMetricCount']}")
         pa01_closed=next((row for row in closed_rows if row.get("candidate_id")=="PA-01-EVIDENCE-ECHO"),{})
         pace_closed=next((row for row in closed_rows if row.get("candidate_id")=="PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY"),{})
         require(pa01_closed.get("failure_layer")=="method_realization" and pa01_closed.get("experiment_run_for_this_readjudication") is True and pa01_closed.get("experiment_alone_authorizes_closure") is False, f"PA-01 must remain experiment-informed but method-realization scoped, not experiment-failed principle: {pa01_closed}")
