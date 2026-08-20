@@ -9,7 +9,7 @@
   "main_text_page_limit": 9,
   "post_main_page": 10,
   "total_pdf_pages": 11,
-  "citation_count": 15,
+  "citation_count": 16,
   "double_blind_anonymity": "PASS",
   "abstract_single_paragraph": true,
   "ai_use_statement": "PRESENT_REQUIRED",
@@ -19,17 +19,18 @@
   "overfull_boxes": 0,
   "official_style_zip_sha256": "0d940dfa9398ae99a18f24a85a8a683f367204b6af6d17d2899e60a67102529e",
   "source_sha256": "3ecb724621e9eb4b1db70bcd009bd73f1b0fedaac8442227675a2f9f3a63be12",
-  "body_sha256": "854ae2ab53b4c94471aa22ea6db5bfda23d5fe08e4c8e9e32854f0735aa44b54",
+  "body_sha256": "aa52efd66f0e2b7dd41430b06cc817079b23ea6cc2a5ab3be5d0d2cce4c1a805",
   "tables_sha256": "57c8967bb68e721317135c96f33c9196d8fed726529fbfbfb9c4b3a2e47df7f7",
-  "bibliography_sha256": "40647045a169b20e3a08c4b47a81b4e89ab9b9236055dc09cd0d5e259d6abe22",
+  "bibliography_sha256": "9971f55a1d27f7ce524446bc36b9e88b359cb0e40ff84914b60b351781c732d2",
   "scientific_claim_scope": [
     "N1 released control-plane representation sensitivity",
     "N2 exact finite support equalizability R*(A)",
     "N3 non-equalizable support geometry boundary"
   ],
   "claims_still_forbidden": [
-    "dynamic STRI success",
+    "generalized dynamic STRI success beyond the frozen AutoSkill/P19 behavior-level result",
     "downstream utility harm",
+    "system-wide AutoSkill safety conclusions",
     "SQC empirical success",
     "LP algorithm novelty",
     "using the Qwen3 qualification-failed bank as scientific evidence",
@@ -38,7 +39,8 @@
   "scientific_authority": false,
   "authority": {
     "paper_claim_expansion": false,
-    "dynamic_claim": false,
+    "autoskill_p19_behavioral_claim": true,
+    "generalized_dynamic_claim": false,
     "full_experiment": false,
     "gpu": false
   },

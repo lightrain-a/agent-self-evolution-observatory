@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "role": "deepseek",
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-260425",
+  "response_id": "resp_021787149708130f1037d74890b775cc53d3d2459e14d19ab242e",
+  "status": "completed",
+  "usage": {
+    "input_tokens": 10178,
+    "output_tokens": 1500,
+    "total_tokens": 11678,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "packet_sha256": "5556c53a0fcca8e5c3ce0212dc0df7e158ae5e56367ff97d62d535519d55b88f",
+  "review": {
+    "summary": "This paper formulates Skill-Taxonomy Representation Invariance (STRI), a property requiring that package-indexed control in self-evolving agents should be invariant to semantics-preserving changes in skill taxonomy. The authors prove that exact-refinement STRI is equivalent to quotient factorization, derive a cone-certificate R*(A;q) for target realizability, and present evidence from three released systems (Skill-SP, SkillRL, AutoSkill) showing representation sensitivity. The core mathematical contribution is elementary: a linear feasibility LP and a factor-2 combinatorial lower bound. The empirical evidence is a mix of post-hoc system inspection and one controlled four-arm dynamic experiment on AutoSkill P19. The paper is clearly written, narrow in its claims, and honest about boundaries. However, the mathematical depth is modest for ICLR, the empirical contribution is observational except for one small-scale controlled experiment, and the practical significance of the identified invariance violation remains unclear beyond the diagnostic itself.",
+    "strengths": [
+      "The STRI formulation is clean and well-scoped: it separates semantic capability from package identity in a precise way, with explicit claim boundaries that are respected throughout the paper.",
+      "The quotient-factorization characterization (Proposition 1) and the cone certificate R*(A;q) provide a principled language for diagnosing representation sensitivity, and the dual certificate (Proposition 3) closes the LP gap rigorously.",
+      "The AutoSkill P19 four-arm experiment is well-designed: original vs. split-four vs. ID-placebo vs. quotient-control, with a mechanically defined destructive signature, zero judge calls, and Fisher p=0.00108. The placebo and quotient controls effectively rule out ID-token-only and generic prompt-perturbation explanations.",
+      "The baseline ladder (Table 2) is honest and escalates systematically from Jaccard dedup to exact global reweighting, showing that the residual survives the strongest same-information baseline. The stress-test evidence (1387 cell flips, 366 edge deletions) is thorough within its scope.",
+      "The paper explicitly distinguishes what it does NOT claim (no task utility, no longitudinal regret, no system-wide safety, no new LP algorithm), which is refreshing and helps the reader assess contribution scope."
+    ],
+    "weaknesses": [
+      "The mathematical core is elementary: R*(A;q) is a simple linear program equivalent to testing membership in the nonnegative cone of A. Theorem 2 is a straightforward combinatorial observation. While correct, this does not constitute a significant algorithmic or theoretical contribution for ICLR.",
+      "The primary empirical evidence (Skill-SP) is observational: the authors inspect released code, identify a sampler-weighting rule that creates clone sensitivity, and compute a counterfactual TV. No intervention is run on Skill-SP itself; the reported accuracy drop from dynamic to uniform routing (66.7 to 64.8) is from the original paper, not the authors' experiment. The AutoSkill experiment is the only true intervention, and it is a single P19 substrate with 18 total runs.",
+      "The SkillRL evidence is shallow: 12/12 clones admitted, 11/12 change retrieval. This is a phenotype observation without independent support truth, making it a weak contribution to the paper's core STRI argument.",
+      "The practical significance of the STRI violation is not demonstrated. The paper shows that a sampler-input clone changes prompt-mixture TV by 0.0583, but does not connect this to any downstream performance consequence. The AutoSkill destructive signature is a mechanical post-checkout behavior, not a task-utility or safety effect. The paper correctly disclaims utility claims, but this leaves the significance of the invariance violation itself somewhat abstract.",
+      "The semantic-first construction (Proposition 2) is presented as a constructive boundary but is trivial: sample semantic intent first, then sample implementation from supported packages. This is essentially a restatement of the fact that the joint distribution can be factored, and it changes the action interface rather than solving the problem within the package-first paradigm.",
+      "The paper's novelty relative to existing work on fairness, representation invariance, and structured bandits is somewhat overstated. The LP is adjacent to fractional covering and max-min fairness; the quotient idea is reminiscent of symmetry-based invariance in other domains. The paper does not deeply engage with these connections."
+    ],
+    "remaining_high_risk": [
+      "No downstream task-utility or safety consequence is demonstrated for the STRI violation; the claim is limited to 'representation can alter realized behavior without semantic change,' which is a structural observation rather than a demonstrated harm."
+    ],
+    "claim_boundary_violations": [
+      "The abstract states 'SkillRL provides an independent identity-sensitivity boundary' but the body text (Sec. 4.4) correctly limits this to a phenotype observation without R* computation. This is a mild tension but not a violation given the careful body-text qualification."
+    ],
+    "highest_value_next_action": "Demonstrate that the STRI violation has a measurable downstream consequence (e.g., task success rate, learning efficiency, or safety) in at least one domain, even at small scale. The AutoSkill experiment shows a behavioral signature but deliberately avoids utility claims; connecting the representation distortion to a performance or safety metric would substantially strengthen the paper.",
+    "recommendation": "weak_reject",
+    "score_1_to_10": 4,
+    "confidence_1_to_5": 4,
+    "correctness": "The mathematical claims (Proposition 1, Corollary 1, Theorem 1, Theorem 2, Proposition 3) are correct and well-proved. The LP formulation and dual are standard. The empirical observations are internally consistent, and the AutoSkill experiment has appropriate controls. No errors were detected.",
+    "novelty": "The STRI formulation is a reasonable framing of a problem that has not been explicitly named, but the mathematical tools (cone feasibility LP, quotient factorization) are elementary. The concept of representation invariance for skill taxonomies is a modest conceptual contribution; the technical apparatus does not advance the state of the art.",
+    "significance": "The problem is real but narrow: self-evolving agents that use package identities as control variables are a specific subclass, and the paper shows that representation can matter but does not demonstrate that it matters in a practically consequential way. The AutoSkill P19 experiment partially closes the prior significance gap by showing a controlled behavioral consequence, but the destructive signature is mechanical and the paper disclaims utility/safety implications. The significance for ICLR is below the acceptance threshold.",
+    "empirical_sufficiency": "The Skill-SP evidence is observational (counterfactual computation on released code), not interventional. The AutoSkill experiment is the only true intervention and, while well-controlled, consists of 18 runs on a single substrate. The SkillRL evidence is phenotype-only. For the paper's narrow claims, the evidence is sufficient but minimal. The empirical contribution would benefit from at least one additional controlled domain or a connection to a downstream metric.",
+    "autoskill_closes_old_significance_gap": "partially",
+    "submission_advice": "major_revision",
+    "fatal_flaws": []
+  },
+  "scientific_authority": false
+}

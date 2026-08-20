@@ -5,9 +5,9 @@
   "status": "PASS",
   "package": {
     "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-    "sha256": "8b14c78e4dbd53afe458edeea9c0ccdebacbccef3e4b510e85987c093e29d930",
-    "manifest_sha256": "5c941fa85e276f25fbaf50d3bd23e2060b206769339688c93bacf62f9503c4fb",
-    "package_metadata_sha256": "8c535d613ad23d226f600f9ee64ce7ec3333835a73d4ed3570f09a35a33aa77c"
+    "sha256": "5bc87d31d8d1b1d65f9250ee1f0230915fe7961103d030f7c6b7861b6c81cec2",
+    "manifest_sha256": "bdfde50f80915b35e0738daa593299f9bb099f366d124a64959c5948a8fc116e",
+    "package_metadata_sha256": "d39a2713bb8be53c4306996cad2301c4b32fe7a17f649b073870ad8762f4d879"
   },
   "isolated_verification": {
     "fresh_extract_manifest": "PASS",
@@ -161,6 +161,52 @@
         0.0
       ],
       "third_party_author_repo_packaged": false
+    },
+    "autoskill_p19_dynamic": {
+      "decision": "GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION",
+      "groups": {
+        "A_original": {
+          "valid_runs": 6,
+          "total_runs": 6,
+          "destructive_signature_positive": 6
+        },
+        "B_split4": {
+          "valid_runs": 6,
+          "total_runs": 6,
+          "destructive_signature_positive": 0
+        },
+        "C_id_placebo": {
+          "valid_runs": 3,
+          "total_runs": 3,
+          "destructive_signature_positive": 3
+        },
+        "D_quotient_control": {
+          "valid_runs": 3,
+          "total_runs": 3,
+          "destructive_signature_positive": 3
+        }
+      },
+      "fisher_exact_p": 0.0010822510822510823,
+      "run_count": 18,
+      "all_valid": true,
+      "claim_boundary": "Single archived P19 behavioral-harm substrate. Supports a representation-to-retrieval-to-executed-behavior consequence under the frozen AutoSkill top-k operationalization; does not establish task-utility effects, general AutoSkill safety, or automatic full-paper authority."
+    },
+    "autoskill_p19_mediator_isolation": {
+      "decision": "GO_MEDIATOR_ISOLATION_P19",
+      "groups": {
+        "E_post_addback": {
+          "valid_runs": 3,
+          "positive": 3
+        },
+        "F_cleanup_control": {
+          "valid_runs": 3,
+          "positive": 0
+        }
+      },
+      "exact_fisher": "1/20",
+      "stage3_replay_agreement": "18/18",
+      "judge_calls": 0,
+      "claim_boundary": "Specific mediator attribution on one archived P19 substrate only. This strengthens the representation-to-retrieval-to-executed-behavior chain but does not establish task utility, longitudinal regret, end-to-end AutoSkill behavior, or general AutoSkill safety."
     }
   },
   "frozen_external_repositories": {
@@ -181,12 +227,13 @@
     ],
     "forbidden": [
       "downstream utility harm",
-      "dynamic STRI success",
       "empirical SQC success",
       "LP algorithm novelty",
       "using the qualification-failed Qwen3 pilot as scientific evidence for or against dynamic STRI",
       "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end",
-      "treating quotient-conserved clone allocation as downstream utility validation or as a repair for non-realizable partial-overlap support geometry"
+      "treating quotient-conserved clone allocation as downstream utility validation or as a repair for non-realizable partial-overlap support geometry",
+      "generalized dynamic STRI success beyond the frozen AutoSkill/P19 behavior-level result",
+      "treating the AutoSkill P19 behavior-level result as task utility, longitudinal regret, end-to-end AutoSkill runtime validation, or general AutoSkill safety"
     ]
   },
   "new_gpu_evidence_required_for_current_claim_scope": false,

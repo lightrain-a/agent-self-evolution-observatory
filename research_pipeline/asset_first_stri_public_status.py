@@ -124,6 +124,13 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
     p0e_diagnosis = values["skillrl_p0e_diagnosis"]
 
     claims = coherence.get("claims") if isinstance(coherence.get("claims"), dict) else {}
+    quality_claim_rows = (((paper_quality.get("audit") or {}).get("claim_ledger")) or [])
+    quality_claims = {
+        str(row.get("claim_id")): row
+        for row in quality_claim_rows
+        if isinstance(row, dict) and str(row.get("claim_id") or "")
+    }
+    autoskill_p19 = (((official_final.get("dynamic_boundary") or {}).get("autoskill_p19")) or {})
     claim_ids = ("N1", "N2", "N3")
     supported = [claim_id for claim_id in claim_ids if (claims.get(claim_id) or {}).get("status") == "SUPPORTED"]
     qa_passed = int(qa.get("checks_passed") or 0)
@@ -189,8 +196,12 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
         "claims": {
             claim_id: {
                 "status": str((claims.get(claim_id) or {}).get("status") or "UNKNOWN"),
-                "object": str((claims.get(claim_id) or {}).get("object") or ""),
-                "forbidden": str((claims.get(claim_id) or {}).get("forbidden") or ""),
+                "object": str((quality_claims.get(claim_id) or {}).get("claim_text") or (claims.get(claim_id) or {}).get("object") or ""),
+                "forbidden": (
+                    "bounded AutoSkill P19 behavior consequence only; no task utility, longitudinal regret, or general AutoSkill safety claim"
+                    if claim_id == "N1" and autoskill_p19.get("decision") == "GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION"
+                    else str((claims.get(claim_id) or {}).get("forbidden") or "")
+                ),
             }
             for claim_id in claim_ids
         },
@@ -224,6 +235,12 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
             "skillrl_p0e_new_gpu_authorized": 1 if p0e_principle.get("new_gpu_authorized") is True else 0,
             "skillrl_p0e_calibration_success": int((p0e_diagnosis.get("qualification") or {}).get("calibration_pristine_success") or 0),
             "skillrl_p0e_paired_units": int((p0e_diagnosis.get("qualification") or {}).get("paired_units") or 0),
+            "autoskill_p19_behavioral_claim_supported": 1 if autoskill_p19.get("decision") == "GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION" else 0,
+            "autoskill_p19_valid_runs": sum(int((row or {}).get("valid_runs") or 0) for row in (autoskill_p19.get("groups") or {}).values()),
+            "autoskill_p19_fisher_exact_p": float(autoskill_p19.get("fisher_exact_p") or 0.0),
+            "autoskill_p19_mediator_claim_supported": 1 if ((autoskill_p19.get("mediator_isolation") or {}).get("decision") == "GO_MEDIATOR_ISOLATION_P19") else 0,
+            "autoskill_p19_mediator_exact_fisher": str((((autoskill_p19.get("mediator_isolation") or {}).get("statistics") or {}).get("exact_fraction")) or ""),
+            "autoskill_p19_stage3_replay_agreement": str((((autoskill_p19.get("mediator_isolation") or {}).get("measurement_repair") or {}).get("stage3_replay_agreement")) or ""),
             "canonical_problem_gate_pass_added": 0,
             "canonical_generator_candidates_added": 0,
             "canonical_queue_candidates_added": 0,
@@ -264,7 +281,16 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
                 "new_gpu_authorized": bool(p0e_principle.get("new_gpu_authorized", False)),
                 "broader_n1_n2_n3_unchanged": bool(p0e_principle.get("broader_STRI_N1_N2_N3_unchanged", False)),
             },
-            "downstream_utility": "not claimed for the frozen N1-N3 scope; the P0-E sample-level endpoint STOP is not a population-level no-effect theorem",
+            "autoskill_p19": {
+                "decision": str(autoskill_p19.get("decision") or "UNKNOWN"),
+                "groups": dict(autoskill_p19.get("groups") or {}),
+                "fisher_exact_p": float(autoskill_p19.get("fisher_exact_p") or 0.0),
+                "claim_boundary": str(autoskill_p19.get("claim_boundary") or ""),
+                "mediator_isolation": dict(autoskill_p19.get("mediator_isolation") or {}),
+                "task_utility_claim_authorized": False,
+                "generalization_claim_authorized": False,
+            },
+            "downstream_utility": "AutoSkill P19 supports one bounded executed-behavior consequence; task utility, longitudinal regret, and general AutoSkill safety are not claimed, and the SkillRL endpoint STOP is not a population-level no-effect theorem",
             "solver_novelty": "STRI-Cert is not claimed as a computationally novel LP solver",
             "repair_method": "no claim that Support-Quotient Control has been empirically validated",
         },
@@ -320,6 +346,47 @@ def validate_asset_first_stri_public_status(state: dict[str, Any]) -> list[str]:
         or p0e.get("broader_n1_n2_n3_unchanged") is not True
     ):
         errors.append("SkillRL P0-E claim boundary drift")
+
+    autoskill = (state.get("claim_boundary") or {}).get("autoskill_p19") or {}
+    autoskill_groups = autoskill.get("groups") or {}
+    mediator = autoskill.get("mediator_isolation") or {}
+    mediator_groups = mediator.get("groups") or {}
+    mediator_stats = mediator.get("statistics") or {}
+    expected_autoskill = {
+        "A_original": (6, 6),
+        "B_split4": (6, 0),
+        "C_id_placebo": (3, 3),
+        "D_quotient_control": (3, 3),
+    }
+    actual_autoskill = {
+        key: (
+            int((autoskill_groups.get(key) or {}).get("valid_runs") or 0),
+            int((autoskill_groups.get(key) or {}).get("destructive_signature_positive") or 0),
+        )
+        for key in expected_autoskill
+    }
+    if (
+        autoskill.get("decision") != "GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION"
+        or actual_autoskill != expected_autoskill
+        or float(autoskill.get("fisher_exact_p") or 1.0) > 0.05
+        or autoskill.get("task_utility_claim_authorized") is not False
+        or autoskill.get("generalization_claim_authorized") is not False
+        or not str(autoskill.get("claim_boundary") or "")
+        or int(summary.get("autoskill_p19_behavioral_claim_supported") or 0) != 1
+        or int(summary.get("autoskill_p19_valid_runs") or 0) != 18
+        or mediator.get("decision") != "GO_MEDIATOR_ISOLATION_P19"
+        or (mediator_groups.get("E_post_addback") or {}).get("positive") != 3
+        or (mediator_groups.get("F_cleanup_control") or {}).get("positive") != 0
+        or mediator_stats.get("exact_fraction") != "1/20"
+        or mediator_stats.get("gate_pass_exact") is not True
+        or mediator.get("all_executions_valid") is not True
+        or int(mediator.get("judge_calls") or 0) != 0
+        or (mediator.get("measurement_repair") or {}).get("stage3_replay_agreement") != "18/18"
+        or int(summary.get("autoskill_p19_mediator_claim_supported") or 0) != 1
+        or str(summary.get("autoskill_p19_mediator_exact_fisher") or "") != "1/20"
+        or str(summary.get("autoskill_p19_stage3_replay_agreement") or "") != "18/18"
+    ):
+        errors.append("AutoSkill P19 public claim boundary drift")
 
     ready = state.get("status") == "READY_NARROW_ICLR"
     if ready:

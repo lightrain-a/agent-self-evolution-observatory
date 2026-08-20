@@ -30,7 +30,7 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         self.assertEqual(state["summary"]["paper_quality_source_binding"], 1)
         self.assertTrue(state["gates"]["paper_quality_source_binding"])
         self.assertEqual(state["summary"]["paper_quality_content_addressed_completion"], 1)
-        self.assertEqual(state["summary"]["paper_quality_content_addressed_files"], 20)
+        self.assertEqual(state["summary"]["paper_quality_content_addressed_files"], 29)
         self.assertTrue(state["gates"]["paper_quality_content_addressed_completion"])
         self.assertEqual(state["summary"]["paper_quality_evidence_debt"], 0)
         self.assertEqual(state["summary"]["paper_quality_main_visualizations"], 4)
@@ -51,6 +51,14 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         self.assertEqual(state["summary"]["skillrl_p0e_new_gpu_authorized"], 0)
         self.assertEqual(state["summary"]["skillrl_p0e_calibration_success"], 18)
         self.assertEqual(state["summary"]["skillrl_p0e_paired_units"], 24)
+        self.assertEqual(state["summary"]["autoskill_p19_behavioral_claim_supported"], 1)
+        self.assertEqual(state["summary"]["autoskill_p19_valid_runs"], 18)
+        self.assertLessEqual(state["summary"]["autoskill_p19_fisher_exact_p"], 0.05)
+        self.assertEqual(state["summary"]["autoskill_p19_mediator_claim_supported"], 1)
+        self.assertEqual(state["summary"]["autoskill_p19_mediator_exact_fisher"], "1/20")
+        self.assertEqual(state["summary"]["autoskill_p19_stage3_replay_agreement"], "18/18")
+        self.assertIn("executed behavior", state["claims"]["N1"]["object"])
+        self.assertIn("no task utility", state["claims"]["N1"]["forbidden"])
         p0e = state["claim_boundary"]["skillrl_p0e"]
         self.assertEqual(p0e["experimental_realization"], "STOP_FIXED_POLICY_DYNAMIC_BRIDGE")
         self.assertEqual(p0e["principle_disposition"], "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED")
@@ -58,6 +66,20 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         self.assertTrue(p0e["stage2_locked"])
         self.assertFalse(p0e["new_gpu_authorized"])
         self.assertTrue(p0e["broader_n1_n2_n3_unchanged"])
+        autoskill = state["claim_boundary"]["autoskill_p19"]
+        self.assertEqual(autoskill["decision"], "GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION")
+        self.assertEqual(autoskill["groups"]["A_original"]["destructive_signature_positive"], 6)
+        self.assertEqual(autoskill["groups"]["B_split4"]["destructive_signature_positive"], 0)
+        self.assertEqual(autoskill["groups"]["C_id_placebo"]["destructive_signature_positive"], 3)
+        self.assertEqual(autoskill["groups"]["D_quotient_control"]["destructive_signature_positive"], 3)
+        self.assertFalse(autoskill["task_utility_claim_authorized"])
+        self.assertFalse(autoskill["generalization_claim_authorized"])
+        mediator = autoskill["mediator_isolation"]
+        self.assertEqual(mediator["decision"], "GO_MEDIATOR_ISOLATION_P19")
+        self.assertEqual(mediator["groups"]["E_post_addback"]["positive"], 3)
+        self.assertEqual(mediator["groups"]["F_cleanup_control"]["positive"], 0)
+        self.assertEqual(mediator["statistics"]["exact_fraction"], "1/20")
+        self.assertEqual(mediator["measurement_repair"]["stage3_replay_agreement"], "18/18")
         self.assertTrue(state["gates"]["public_download_assets"])
         handoff = state["submission_handoff"]
         self.assertEqual(handoff["recorded_author_guide_abstract_deadline_aoe"], "2026-09-18")
@@ -89,6 +111,14 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         drift["authority"]["canonical_problem_gate"] = True
         errors = validate_asset_first_stri_public_status(drift)
         self.assertTrue(any("authority" in error for error in errors))
+
+    def test_autoskill_p19_boundary_is_fail_closed(self) -> None:
+        state = self.forced_ready_projection()
+        drift = copy.deepcopy(state)
+        drift["claim_boundary"]["autoskill_p19"]["groups"]["B_split4"]["destructive_signature_positive"] = 2
+        drift["claim_boundary"]["autoskill_p19"]["task_utility_claim_authorized"] = True
+        errors = validate_asset_first_stri_public_status(drift)
+        self.assertTrue(any("AutoSkill P19" in error for error in errors))
 
     def test_missing_ready_gate_cannot_keep_ready_status(self) -> None:
         state = self.forced_ready_projection()

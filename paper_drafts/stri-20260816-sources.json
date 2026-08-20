@@ -25,6 +25,16 @@
       "paper_role": "independent implementation-level identity-sensitivity evidence system"
     },
     {
+      "key": "yang2026autoskill",
+      "title": "AutoSkill: Experience-Driven Lifelong Learning via Skill Self-Evolution",
+      "authors": ["Yutao Yang", "Junsong Li", "Qianjun Pan", "Bihao Zhan", "Yuxuan Cai", "Lin Du", "Jie Zhou", "Kai Chen", "Qin Chen", "Xin Li", "Bo Zhang", "Liang He"],
+      "year": 2026,
+      "arxiv_id": "2603.01145",
+      "url": "https://arxiv.org/abs/2603.01145",
+      "metadata_provenance": ["author repository README BibTeX at commit 94c47ca488d4ba4117d20272e66d49b9877e68cf"],
+      "paper_role": "first-party dynamic behavior-level representation-to-retrieval substrate"
+    },
+    {
       "key": "zhu2026skillclone",
       "title": "SkillClone: Multi-Modal Clone Detection and Clone Propagation Analysis in the Agent Skill Ecosystem",
       "authors": ["Jiaying Zhu", "Lyuye Zhang", "Wenbo Guo", "Yang Liu"],

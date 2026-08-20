@@ -11,11 +11,12 @@
   ],
   "claims_forbidden": [
     "downstream utility harm",
-    "dynamic STRI success",
     "empirical SQC success",
     "LP algorithm novelty",
     "using the Qwen3-8B proposer-qualification-failed bank as scientific evidence for or against dynamic STRI",
-    "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end"
+    "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end",
+    "generalized dynamic STRI success beyond the frozen AutoSkill/P19 behavior-level result",
+    "treating the AutoSkill P19 behavior-level result as task utility, longitudinal regret, end-to-end AutoSkill runtime validation, or general AutoSkill safety"
   ],
   "official_format": {
     "venue": "ICLR 2027",
@@ -26,7 +27,7 @@
     "abstract_single_paragraph": true,
     "ai_use_statement_present": true,
     "reproducibility_statement_present": true,
-    "resolved_citations": 15,
+    "resolved_citations": 16,
     "overfull_boxes": 0,
     "undefined_citations": 0,
     "undefined_references": 0,
@@ -46,6 +47,16 @@
       "confidence": 0.93,
       "overall_score_1_to_10": 7,
       "required_revisions": 0
+    },
+    "post_mediator_isolation_review": {
+      "decision": "FREEZE_NARROW_SUBMISSION_NO_FURTHER_EXPERIMENT_SCORE_CHASING",
+      "deepseek_pre_score": 4,
+      "deepseek_post_score": 6,
+      "deepseek_post_recommendation": "borderline",
+      "deepseek_post_submission_advice": "minor_revision",
+      "fatal_flaws": 0,
+      "no_more_experiment_score_chasing": true,
+      "scientific_authority": false
     }
   },
   "new_gpu_evidence_required_for_current_claim_scope": false,
@@ -53,18 +64,18 @@
     "remote_directory": "/data/wyt/agent-self-evolution-observatory/submission-packages",
     "pdf": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816.pdf",
-      "sha256": "b6a30dbca94539a85cafdc1b867883ba42017ce01fba5b30fe152cd8b43bfaf4"
+      "sha256": "56a26d51d20a2683e3718d63ba86f047561626b8203d437f7b0ce3da402621c5"
     },
     "source_zip": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-source.zip",
-      "sha256": "476af7f9808ec475e93ce2e2828071ad9de9f674e6e1709c2dd73b67c4bb1c14",
+      "sha256": "7b5dbe61e9c76f8226c0f0f3da727afb5455a20ec445e51edf0a3cbf0f92db20",
       "files": 12,
       "isolated_compile_verified": true
     },
     "supplement_zip": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-      "sha256": "8b14c78e4dbd53afe458edeea9c0ccdebacbccef3e4b510e85987c093e29d930",
-      "manifest_sha256": "5c941fa85e276f25fbaf50d3bd23e2060b206769339688c93bacf62f9503c4fb",
+      "sha256": "5bc87d31d8d1b1d65f9250ee1f0230915fe7961103d030f7c6b7861b6c81cec2",
+      "manifest_sha256": "bdfde50f80915b35e0738daa593299f9bb099f366d124a64959c5948a8fc116e",
       "isolated_reproduction_verified": true,
       "unit_tests": "13/13 PASS",
       "identity_path_scan": "PASS",
@@ -114,6 +125,82 @@
     "persistent_principle_dead_end_certified": false,
     "stage2_locked": true,
     "new_gpu_authorized": false,
-    "broader_STRI_N1_N2_N3_unchanged": true
+    "broader_STRI_N1_N2_N3_unchanged": true,
+    "autoskill_p19": {
+      "decision": "GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION",
+      "claim_boundary": "Single archived P19 behavioral-harm substrate. Supports a representation-to-retrieval-to-executed-behavior consequence under the frozen AutoSkill top-k operationalization; does not establish task-utility effects, general AutoSkill safety, or automatic full-paper authority.",
+      "groups": {
+        "A_original": {
+          "valid_runs": 6,
+          "total_runs": 6,
+          "destructive_signature_positive": 6
+        },
+        "B_split4": {
+          "valid_runs": 6,
+          "total_runs": 6,
+          "destructive_signature_positive": 0
+        },
+        "C_id_placebo": {
+          "valid_runs": 3,
+          "total_runs": 3,
+          "destructive_signature_positive": 3
+        },
+        "D_quotient_control": {
+          "valid_runs": 3,
+          "total_runs": 3,
+          "destructive_signature_positive": 3
+        }
+      },
+      "fisher_exact_p": 0.0010822510822510823,
+      "frozen_gates": {
+        "A_ge_5_of_6": true,
+        "B_le_1_of_6": true,
+        "C_eq_3_of_3": true,
+        "D_eq_3_of_3": true,
+        "zero_invalid_runs": true,
+        "fisher_p_le_0_05": true
+      },
+      "judge_calls": 0,
+      "training_steps": 0,
+      "fresh_container_per_run": true,
+      "source_run_manifest_sha256": "043e2cefc82b2a97c8834dc231b33d4dc37551dd0e2b0be39ed5a03f97fc6564",
+      "packaged_run_manifest_sha256": "dbd6244430677b65bc7a1202ea1b4d2eae64dd06cd74b204eb673d511639360b",
+      "run_manifest_canonical_sha256": "f7eaed62b6b2f72f609bdcad7895175b1e2649a4758895e9c7b67483a4e9971a",
+      "mediator_isolation": {
+        "decision": "GO_MEDIATOR_ISOLATION_P19",
+        "groups": {
+          "E_post_addback": {
+            "valid_runs": 3,
+            "positive": 3
+          },
+          "F_cleanup_control": {
+            "valid_runs": 3,
+            "positive": 0
+          }
+        },
+        "statistics": {
+          "alternative": "greater",
+          "exact_fraction": "1/20",
+          "exact_decimal": 0.05,
+          "scipy_float_audit": 0.05000000000000001,
+          "frozen_gate_p_le": "1/20",
+          "gate_pass_exact": true
+        },
+        "all_executions_valid": true,
+        "judge_calls": 0,
+        "claim_boundary": "Specific mediator attribution on one archived P19 substrate only. This strengthens the representation-to-retrieval-to-executed-behavior chain but does not establish task utility, longitudinal regret, end-to-end AutoSkill behavior, or general AutoSkill safety.",
+        "measurement_repair": {
+          "stage3_replay_agreement": "18/18",
+          "sequence_aware_replay_sha256": "1b6c001d2be1441a83d773ac9ca20613547b9cb4b222fd9f6dab8a93fa67f5c8",
+          "v1_runs_excluded_from_v2_inference": true
+        }
+      }
+    },
+    "autoskill_p19_behavioral_claim_supported": true,
+    "autoskill_p19_task_utility_claim_authorized": false,
+    "autoskill_p19_generalization_claim_authorized": false,
+    "autoskill_p19_mediator_claim_supported": true,
+    "autoskill_p19_mediator_exact_fisher": "1/20",
+    "autoskill_p19_stage3_replay_agreement": "18/18"
   }
 }

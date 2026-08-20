@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-19T14:45:41+00:00",
+  "status": "STOP_PROTOCOL_GEMMA4_MM_BATCH_TOKEN_FLOOR",
+  "stop_class": "PROTOCOL_STOP",
+  "failure_layer": "protocol_validity",
+  "realization_id": "R9-FRESH-BACKBONE-GEMMA4-26B-A4B-IT-V2",
+  "contract_sha256": "7e588b8c79477c5395c6e94f1fb7732a82323e8e962d91723267611d73b2a57f",
+  "protocol_valid": false,
+  "model_id": "google/gemma-4-26B-A4B-it",
+  "exact_revision": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+  "model_loading_started": false,
+  "model_inference_calls_executed": 0,
+  "benign_tasks_executed": 0,
+  "development_safety_executed": false,
+  "fresh_qualification_executed": false,
+  "heldout_future_executed": false,
+  "root_cause": "Frozen vLLM 0.20 resolves Gemma4 max model length 262144 and disables chunked multimodal input; its default max_num_batched_tokens=2048 is below Gemma4 max_tokens_per_mm_item=2496, so server construction fails before model weights or any request are processed.",
+  "minimal_protocol_repair": {
+    "parameter": "max_num_batched_tokens",
+    "from": 2048,
+    "to": 2496,
+    "source": "deterministic vLLM error lower bound",
+    "outcome_selected": false
+  },
+  "principle_dead_end_certified": false,
+  "principle_falsified": false,
+  "scientific_authority": false,
+  "provenance": {
+    "v2_preregistration_sha256": "70c24f319b480d1fac89b79349ba7b30ece188541b2c40dd99811e2464a56a31",
+    "server_log_sha256": "dd1fed3623e4d0b486b967ba0bdb80524538ad9409e95c22dc2eabdc5cab7bc8"
+  }
+}

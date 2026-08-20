@@ -10,17 +10,20 @@
       {
         "id": "N1",
         "claim_type": "empirical_analysis",
-        "statement": "Released skill controllers can assign different semantic control solely because equivalent implementation content is represented by different package identities.",
-        "why_better_or_why_matters": "The released Skill-SP sampler changes the distribution over actual questioner message classes under a same-content representation refinement, while quotient-conserved class mass restores that distribution exactly.",
+        "statement": "Released skill controllers can assign different semantic control solely because equivalent implementation content is represented by different package identities; in one bounded frozen AutoSkill substrate, that representation change propagates to executed behavior.",
+        "why_better_or_why_matters": "Skill-SP shows the released controller-input distribution shift and exact quotient restoration; AutoSkill P19 independently shows a frozen identity split changing the semantic retrieval set and a mechanical downstream behavior across 18 fresh runs, with ID-placebo and quotient controls restoring the original pattern and a matched mediator add-back isolating the crowded-out post-checkout skill.",
         "alternative_explanations": [
           "the apparent change is only a name-level statistic and does not reach the released controller input distribution",
           "literal exact clones are accepted by the author induction path",
+          "the dynamic difference is only an ID-token perturbation or executor randomness",
           "the pattern is driven by one support threshold"
         ],
         "ruling_out_experiments": [
           "rerun the author's released sampling-weight function on a same-state sampler-input clone and compare actual questioner prompt-mixture mass",
           "verify the author induction duplicate filter rejects the literal exact text clone",
-          "compare released identity normalization against quotient-conserved class mass on the same frozen support and prompt strings"
+          "compare released identity normalization against quotient-conserved class mass on the same frozen support and prompt strings",
+          "freeze AutoSkill P19 and compare original, split4, ID-placebo, and semantic-quotient arms under the same prompt/executor with zero judge calls",
+          "under the split representation, compare post-checkout mediator add-back against a matched cleanup add-back with the same five-slot/three-semantic-class structure"
         ],
         "baseline_ids": [
           "B-RAW-OVERLAP",
@@ -35,13 +38,15 @@
           "AN-RULEOUT",
           "AN-FAILURE",
           "AN-SENSITIVITY",
-          "AN-UNCERTAINTY"
+          "AN-UNCERTAINTY",
+          "AN-DYNAMIC-CONSEQUENCE"
         ],
         "output_ids": [
           "O-MAIN",
           "O-ABLATION",
           "O-FAILURE",
-          "O-SENSITIVITY"
+          "O-SENSITIVITY",
+          "O-DYNAMIC"
         ],
         "visualization_ids": [
           "V-OVERVIEW",
@@ -245,6 +250,15 @@
         ],
         "purpose": "Attach sampling/bootstrap or exact finite-population uncertainty to released-system comparative summaries where stochastic sampling is present.",
         "decision_rule": "Do not present point-estimate gaps as robust evidence when their uncertainty overlaps the matched baseline."
+      },
+      {
+        "id": "AN-DYNAMIC-CONSEQUENCE",
+        "analysis_type": "mechanism",
+        "target_claim_ids": [
+          "N1"
+        ],
+        "purpose": "Test whether a semantics-preserving identity split propagates through a released retrieval budget into fresh executed behavior and whether the crowded-out post-checkout skill specifically mediates that behavior under a frozen task and executor.",
+        "decision_rule": "Support only if Stage-3 gives original>=5/6, split<=1/6, ID-placebo=3/3, quotient-control=3/3 with all runs valid and Fisher<=0.05, and fresh mediator isolation gives post-checkout add-back=3/3 versus matched cleanup add-back=0/3 with exact one-sided Fisher<=0.05; otherwise retain only the strongest passed substrate-local subclaim."
       }
     ],
     "planned_outputs": [
@@ -272,6 +286,11 @@
         "id": "O-SENSITIVITY",
         "output_type": "sensitivity",
         "purpose": "Sensitivity panel for thresholds, package constraints, singleton witnesses, and split/merge/clone edits."
+      },
+      {
+        "id": "O-DYNAMIC",
+        "output_type": "mechanism_result",
+        "purpose": "Compact AutoSkill P19 result establishing the bounded representation-to-retrieval-to-mediator-to-behavior chain with ID-placebo, quotient, and matched mediator controls."
       }
     ],
     "visualizations": [
@@ -417,6 +436,15 @@
           "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
           "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
           "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
+          "generated/asset-first-stri-autoskill-p19-substrate-qualification-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-dynamic-f0-contract-v2-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-plan-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-contract-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v1-diagnosis-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-contract-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json",
           "research_pipeline/asset_first_stri_certificate.py",
           "research_pipeline/test_asset_first_stri_certificate.py"
         ]
@@ -442,6 +470,15 @@
           "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
           "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
           "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
+          "generated/asset-first-stri-autoskill-p19-substrate-qualification-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-dynamic-f0-contract-v2-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-plan-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-contract-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v1-diagnosis-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-contract-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json",
           "research_pipeline/asset_first_stri_certificate.py",
           "research_pipeline/test_asset_first_stri_certificate.py"
         ]
@@ -456,6 +493,15 @@
           "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
           "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
           "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
+          "generated/asset-first-stri-autoskill-p19-substrate-qualification-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-dynamic-f0-contract-v2-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-plan-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-contract-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v1-diagnosis-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-contract-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json",
           "research_pipeline/asset_first_stri_certificate.py",
           "research_pipeline/test_asset_first_stri_certificate.py"
         ]
@@ -470,6 +516,15 @@
           "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
           "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
           "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
+          "generated/asset-first-stri-autoskill-p19-substrate-qualification-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-dynamic-f0-contract-v2-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-plan-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-contract-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v1-diagnosis-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-contract-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json",
           "research_pipeline/asset_first_stri_certificate.py",
           "research_pipeline/test_asset_first_stri_certificate.py"
         ]
@@ -484,8 +539,32 @@
           "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
           "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
           "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
+          "generated/asset-first-stri-autoskill-p19-substrate-qualification-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-dynamic-f0-contract-v2-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-plan-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-contract-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v1-diagnosis-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-contract-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json",
           "research_pipeline/asset_first_stri_certificate.py",
           "research_pipeline/test_asset_first_stri_certificate.py"
+        ]
+      },
+      {
+        "id": "AN-DYNAMIC-CONSEQUENCE",
+        "status": "PASS",
+        "artifact_refs": [
+          "generated/asset-first-stri-autoskill-p19-substrate-qualification-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-dynamic-f0-contract-v2-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-plan-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-contract-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v1-diagnosis-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-contract-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json"
         ]
       },
       {
@@ -537,6 +616,22 @@
           "paper_drafts/stri-20260816-tables.tex",
           "generated/asset-first-stri-paper-analysis-suite-20260816.json",
           "generated/asset-first-stri-reviewer-extensions-20260819.json"
+        ]
+      },
+      {
+        "id": "O-DYNAMIC",
+        "status": "PASS",
+        "artifact_refs": [
+          "paper_drafts/stri-20260816-narrow-body.tex",
+          "generated/asset-first-stri-autoskill-p19-substrate-qualification-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-dynamic-f0-contract-v2-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-plan-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-contract-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v1-diagnosis-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-contract-20260819.json",
+          "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json"
         ]
       }
     ],
@@ -636,7 +731,9 @@
           "B-DEDUP",
           "B-ANALYTICAL",
           "A-REDUCTION-TOURNAMENT",
-          "O-MAIN"
+          "AN-DYNAMIC-CONSEQUENCE",
+          "O-MAIN",
+          "O-DYNAMIC"
         ]
       },
       "N2": {
@@ -678,8 +775,8 @@
         "claims": 3,
         "baselines": 3,
         "ablations": 2,
-        "analyses": 5,
-        "planned_outputs": 5,
+        "analyses": 6,
+        "planned_outputs": 6,
         "visualizations": 4,
         "main_visualizations": 4,
         "main_visual_roles": [
@@ -730,8 +827,8 @@
       "claims": 3,
       "baselines": 3,
       "ablations": 2,
-      "analyses": 5,
-      "planned_outputs": 5,
+      "analyses": 6,
+      "planned_outputs": 6,
       "visualizations": 4,
       "main_visualizations": 4,
       "main_visual_roles": [
@@ -745,17 +842,17 @@
         "traceability",
         "uncertainty"
       ],
-      "completed_evidence_rows": 15,
+      "completed_evidence_rows": 17,
       "claim_adjudications": 3,
       "completed_visualizations": 4,
       "content_addressed_required": true,
-      "content_addressed_referenced_files": 20
+      "content_addressed_referenced_files": 29
     },
     "claim_ledger": [
       {
         "claim_id": "N1",
         "claim_type": "empirical_analysis",
-        "claim_text": "Released skill controllers can assign different semantic control solely because equivalent implementation content is represented by different package identities.",
+        "claim_text": "Released skill controllers can assign different semantic control solely because equivalent implementation content is represented by different package identities; in one bounded frozen AutoSkill substrate, that representation change propagates to executed behavior.",
         "adjudication_status": "SUPPORTED_NARROWLY",
         "manuscript_surface": "AFFIRMATIVE_NARROW_ONLY",
         "affirmative_claim_allowed": true,
@@ -765,7 +862,9 @@
           "B-DEDUP",
           "B-ANALYTICAL",
           "A-REDUCTION-TOURNAMENT",
-          "O-MAIN"
+          "AN-DYNAMIC-CONSEQUENCE",
+          "O-MAIN",
+          "O-DYNAMIC"
         ],
         "evidence_trace": [
           {
@@ -797,7 +896,21 @@
             "completed": true
           },
           {
+            "evidence_id": "AN-DYNAMIC-CONSEQUENCE",
+            "registered": true,
+            "linked_to_claim": true,
+            "completion_status": "PASS",
+            "completed": true
+          },
+          {
             "evidence_id": "O-MAIN",
+            "registered": true,
+            "linked_to_claim": true,
+            "completion_status": "PASS",
+            "completed": true
+          },
+          {
+            "evidence_id": "O-DYNAMIC",
             "registered": true,
             "linked_to_claim": true,
             "completion_status": "PASS",
@@ -900,8 +1013,8 @@
       "status": "PASS_CONTENT_ADDRESSED_COMPLETION",
       "blockers": [],
       "summary": {
-        "referenced_files": 20,
-        "registered_digests": 23
+        "referenced_files": 29,
+        "registered_digests": 32
       }
     },
     "policy": {
@@ -951,6 +1064,15 @@
     "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
     "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
     "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
+    "generated/asset-first-stri-autoskill-p19-substrate-qualification-20260819.json",
+    "generated/asset-first-stri-autoskill-p19-dynamic-f0-contract-v2-20260819.json",
+    "generated/asset-first-stri-autoskill-p19-stage3-plan-20260819.json",
+    "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+    "generated/asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json",
+    "generated/asset-first-stri-autoskill-p19-mediator-isolation-contract-20260819.json",
+    "generated/asset-first-stri-autoskill-p19-mediator-isolation-v1-diagnosis-20260819.json",
+    "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-contract-20260819.json",
+    "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json",
     "research_pipeline/asset_first_stri_certificate.py",
     "research_pipeline/test_asset_first_stri_certificate.py",
     "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json",
@@ -976,12 +1098,21 @@
     "generated/asset-first-stri-released-controller-clone-audit-20260819.json": "fd837d785e66540ec85f14b9d0e8b21d5f00f0292fc6b55c98f90483bcdb58bf",
     "research_pipeline/asset_first_stri_released_controller_clone_audit.py": "516b3dccb75c99ad50095c9a1ca6359636cada02ee8cfb55dec4333c4a00aa6f",
     "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py": "c2d354a584a1845daf323855ac9e2401e5a0938716950250e8b8e3bc2c68f0ac",
+    "generated/asset-first-stri-autoskill-p19-substrate-qualification-20260819.json": "bff5c76fa50e8b763586390b5d7c0f1b609698b0b76ecf0a14e7ff8ceead2481",
+    "generated/asset-first-stri-autoskill-p19-dynamic-f0-contract-v2-20260819.json": "525af696c654f0fd411a093a944c49d692a5240572619217a6f29aab019c11fd",
+    "generated/asset-first-stri-autoskill-p19-stage3-plan-20260819.json": "586e88f65b2ceadd828a81a6f4a9fc57a04b42a61681401003d68d1843cb4558",
+    "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json": "7398ccc8c399396f7a32df55fdc3babfc7a0b00dccc0e7ab6d809416c01cc0bd",
+    "generated/asset-first-stri-autoskill-p19-stage3-run-manifest-20260819.json": "dbd6244430677b65bc7a1202ea1b4d2eae64dd06cd74b204eb673d511639360b",
+    "generated/asset-first-stri-autoskill-p19-mediator-isolation-contract-20260819.json": "66bf20e15a493174289a8803e793513074891f77f86f9533a3909f7c2dbe74c5",
+    "generated/asset-first-stri-autoskill-p19-mediator-isolation-v1-diagnosis-20260819.json": "a8ef7e358512545d0b0f1fb7d3ae87957b0e78afc4f8a3787939ce4f0056c204",
+    "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-contract-20260819.json": "235e494939f4182b71998b353352d4ea191661ac35885618f8d1b5bbd2815684",
+    "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json": "472c7270881f38c1e1fd7d571aacf5256095f018c783366206d20cfcfe70c807",
     "research_pipeline/asset_first_stri_certificate.py": "1736ee319d55bcfe060f5a6f32bfb2a482b754e9adad05c38ffa36418c9d6026",
     "research_pipeline/test_asset_first_stri_certificate.py": "3f6296624acc8fc7dfefd1dabd97add147f7a7fa83bebbf3a6796492af40d6f2",
     "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json": "c0a7761fde29b4d3e5f2c5dde752cfed2b5fe8693d1c229bb6e01a0971c86df2",
     "generated/asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json": "5b5827579df4824dea0be8f62ff7c0e2a1757e1cb81c071006e127ef3ba8437a",
     "generated/asset-first-stri-skillrl-final-policy-p0e-principle-disposition-20260817.json": "e4ab9861c8705be4f27abe589d8348c983f4ac2a53d1f17cbd0bd096d7c625d7",
-    "paper_drafts/stri-20260816-narrow-body.tex": "854ae2ab53b4c94471aa22ea6db5bfda23d5fe08e4c8e9e32854f0735aa44b54",
+    "paper_drafts/stri-20260816-narrow-body.tex": "aa52efd66f0e2b7dd41430b06cc817079b23ea6cc2a5ab3be5d0d2cce4c1a805",
     "paper_drafts/stri-20260816-tables.tex": "57c8967bb68e721317135c96f33c9196d8fed726529fbfbfb9c4b3a2e47df7f7",
     "paper_drafts/figures/stri-overview.pdf": "dcb62917f4394ecc5e486220d9d411d0afc9028f8f11525831efb4c3b41aebf9",
     "paper_drafts/figures/stri-factor2-witnesses.pdf": "ed10fb150579d42027e6bb24a773d3a17bd6fa2cadc845099f54d7772bb1506d",
