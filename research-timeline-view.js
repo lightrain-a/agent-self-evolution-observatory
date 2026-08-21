@@ -87,25 +87,37 @@
   };
   const statusDisplay = (value) => language === "zh" ? statusZh(value) : raw(value || "RECORDED");
 
+  const chinaDateFormatter = new Intl.DateTimeFormat("en-US",{timeZone:CHINA_TZ,year:"numeric",month:"2-digit",day:"2-digit"});
+  const chinaDateCache = new Map();
   const chinaDateKey = (iso) => {
+    const key = raw(iso);
+    if (chinaDateCache.has(key)) return chinaDateCache.get(key);
     const d = new Date(iso);
-    if (Number.isNaN(d.getTime())) return raw(iso).slice(0,10) || "unknown";
-    const parts = new Intl.DateTimeFormat("en-US",{timeZone:CHINA_TZ,year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(d);
+    if (Number.isNaN(d.getTime())) return key.slice(0,10) || "unknown";
+    const parts = chinaDateFormatter.formatToParts(d);
     const map = Object.fromEntries(parts.map(p=>[p.type,p.value]));
-    return `${map.year}-${map.month}-${map.day}`;
+    const value = `${map.year}-${map.month}-${map.day}`;
+    chinaDateCache.set(key,value);
+    return value;
   };
   const fmtDate = (iso) => {
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return raw(iso).slice(0,10);
     return new Intl.DateTimeFormat(language === "zh" ? "zh-CN" : "en-US", {year:"numeric",month:"long",day:"numeric",weekday:"short",timeZone:CHINA_TZ}).format(d);
   };
+  let cachedResearchWeekAnchorMs;
   const researchWeekAnchorMs = () => {
-    const dates = dataset().events.map(e=>chinaDateKey(e.occurred_at)).filter(d=>/^\d{4}-\d{2}-\d{2}$/.test(d)).sort();
-    if (!dates.length) return 0;
-    const [year,month,day] = dates[0].split("-").map(Number);
+    if (cachedResearchWeekAnchorMs !== undefined) return cachedResearchWeekAnchorMs;
+    let earliest = "";
+    dataset().events.forEach(e=>{
+      const date = chinaDateKey(e.occurred_at);
+      if (/^\d{4}-\d{2}-\d{2}$/.test(date) && (!earliest || date < earliest)) earliest = date;
+    });
+    if (!earliest) return (cachedResearchWeekAnchorMs = 0);
+    const [year,month,day] = earliest.split("-").map(Number);
     const first = Date.UTC(year,month-1,day);
     const weekday = (new Date(first).getUTCDay()+6)%7;
-    return first - weekday * 86400000;
+    return (cachedResearchWeekAnchorMs = first - weekday * 86400000);
   };
   const researchWeekInfo = (date) => {
     const [year,month,day] = raw(date).split("-").map(Number);
@@ -383,6 +395,6 @@
     document.getElementById("timeline-type")?.addEventListener("change",e=>{state.type=e.target.value;rerender();});
     document.getElementById("timeline-research")?.addEventListener("change",e=>{state.research=e.target.value;rerender();});
   };
-  window.bindResearchTimelineEvents = function(){rerender();};
+  window.bindResearchTimelineEvents = function(){bindControls();};
   window.applyResearchTimelineFilters = function(query){state.query=raw(query);rerender();};
 })();
