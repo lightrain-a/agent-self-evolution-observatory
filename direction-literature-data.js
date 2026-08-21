@@ -31,6 +31,16 @@ window.DIRECTION_LITERATURE = {
       title:"ManimAgent: Self-Evolving Multimodal Agents for Visual Education", short:"ManimAgent", year:2026, venue:"arXiv",
       method:{en:"Carries successful rationales and validated failure patterns across tasks through dual-channel episodic memory.",zh:"通过双通道情景记忆，在任务间保留成功理由与经验证失败模式。"},
       fit:{en:"Provides a multimodal example of persistent memory consolidation and reuse.",zh:"提供多模态持久记忆巩固与复用的具体实例。"}
+    },
+    {
+      title:"RoMeRL: Balancing Feedback Coverage and the Memory-Reward Trap in Self-Evolving Agent Memory via Reduced-Order Utility States", short:"RoMeRL", year:2026, venue:"arXiv",
+      method:{en:"Compresses trajectory-indexed memory utility into reduced-order states and limits self-reinforcing reward credit to irrelevant co-retrieved memories.",zh:"把轨迹级记忆效用压缩为低阶状态，并抑制无关共检索记忆因错误奖励而自我强化。"},
+      fit:{en:"Directly connects memory maintenance with reward attribution and contamination control.",zh:"直接连接记忆维护、奖励归因与污染控制。"}
+    },
+    {
+      title:"FORGE: Self-Evolving Agent Memory With No Weight Updates via Population Broadcast", short:"FORGE", year:2026, venue:"arXiv",
+      method:{en:"Builds natural-language memory from failed trajectories and broadcasts the best instance's memory across an agent population without weight updates.",zh:"从失败轨迹形成自然语言记忆，并在不更新模型权重的情况下把最佳实例记忆广播到 Agent 群体。"},
+      fit:{en:"Shows persistent memory evolution can operate as a population-level experience channel without parameter training.",zh:"说明持久记忆演化可以作为不依赖参数训练的群体级经验通道。"}
     }
   ],
   "skill-tool-lifecycle": [
@@ -48,6 +58,16 @@ window.DIRECTION_LITERATURE = {
       title:"SkillSmith: Co-Evolving Skills and Tools for Self-Improving Agent Systems", short:"SkillSmith", year:2026, venue:"arXiv",
       method:{en:"Jointly evolves reusable skills and the tool layer while modeling complementarity, conflict, and anti-patterns.",zh:"联合进化可复用技能与工具层，并建模互补、冲突和反模式。"},
       fit:{en:"Moves beyond isolated skills to skill-tool co-evolution and maintenance.",zh:"把研究从单个技能扩展到技能—工具共进化与维护。"}
+    },
+    {
+      title:"EmbodiSkill: Skill-Aware Reflection for Self-Evolving Embodied Agents", short:"EmbodiSkill", year:2026, venue:"arXiv",
+      method:{en:"Separates genuine skill defects from execution lapses before revising persistent embodied skills.",zh:"在修订持久具身技能前，区分技能本身缺陷与执行时没有遵循有效技能的失误。"},
+      fit:{en:"Adds trajectory-to-skill attribution to the skill revision lifecycle.",zh:"把轨迹到技能的归因显式加入技能修订生命周期。"}
+    },
+    {
+      title:"SpaceMind: A Modular and Self-Evolving Embodied Vision-Language Agent Framework for Autonomous On-orbit Servicing", short:"SpaceMind", year:2026, venue:"arXiv",
+      method:{en:"Maintains modular VLM skills and persistent skill files that are revised from operational experience through MCP-enabled tools.",zh:"维护模块化 VLM 技能与持久 skill files，并通过 MCP 工具根据运行经验持续修订。"},
+      fit:{en:"Provides an end-to-end embodied example of persistent skill-file maintenance under long-horizon operation.",zh:"提供长期运行下持久技能文件维护的端到端具身实例。"}
     }
   ],
   "system-composition": [
@@ -65,6 +85,11 @@ window.DIRECTION_LITERATURE = {
       title:"Autogenesis: A Self-Evolving Agent Protocol", short:"Autogenesis", year:2026, venue:"arXiv",
       method:{en:"Versions prompts, agents, tools, environments, and memory through an auditable propose-assess-commit protocol.",zh:"通过可审计的提出—评估—提交协议，对提示词、Agent、工具、环境和记忆进行版本化。"},
       fit:{en:"Provides interfaces, lineage, and rollback for composing independently evolving components.",zh:"为独立进化组件的组合提供接口、谱系与回滚机制。"}
+    },
+    {
+      title:"HarnessBank: Semantic Gene-Bank Search with Gated Verification for Agent-Harness Self-Evolution", short:"HarnessBank", year:2026, venue:"arXiv",
+      method:{en:"Recombines a semantic bank of high-performing harnesses and applies gated verification before accepting descendants.",zh:"重组高性能 Harness 的语义基因库，并在接受后代版本前执行门控验证。"},
+      fit:{en:"Links workflow search with version admission and release control at the harness layer.",zh:"把工作流搜索与 Harness 层的版本准入、发布控制连接起来。"}
     }
   ],
   "embodied-world": [
@@ -82,6 +107,21 @@ window.DIRECTION_LITERATURE = {
       title:"Self-Evolving World Models for LLM Agent Planning", short:"Self-Evolving World Models", year:2026, venue:"arXiv",
       method:{en:"Repairs episodic and semantic world-model memory from prediction-observation mismatches.",zh:"根据预测—观测偏差修复情景与语义世界模型记忆。"},
       fit:{en:"Directly connects environmental mismatch to persistent world-model repair.",zh:"直接连接环境偏差与持久世界模型修复。"}
+    },
+    {
+      title:"Robo-Cortex: A Self-Evolving Embodied Agent via Dual-Grain Cognitive Memory and Autonomous Knowledge Induction", short:"Robo-Cortex", year:2026, venue:"arXiv",
+      method:{en:"Combines short-term reflective memory with induced long-term embodied heuristics and an imagine-then-verify decision loop.",zh:"结合短期反思记忆、自动归纳的长期具身启发式知识与 imagine-then-verify 决策闭环。"},
+      fit:{en:"Bridges persistent cognitive memory with adaptation in unseen embodied environments.",zh:"把持久认知记忆与未见具身环境中的适应直接连接起来。"}
+    },
+    {
+      title:"EmbodiSkill: Skill-Aware Reflection for Self-Evolving Embodied Agents", short:"EmbodiSkill", year:2026, venue:"arXiv",
+      method:{en:"Uses skill-aware reflection to decide whether an embodied failure warrants revising the persistent skill or only correcting execution.",zh:"利用 skill-aware reflection 判断具身失败需要修改持久技能，还是只需纠正执行。"},
+      fit:{en:"Makes embodied adaptation selective at the skill-update boundary.",zh:"让具身适应在技能更新边界上变得有选择性。"}
+    },
+    {
+      title:"SpaceMind: A Modular and Self-Evolving Embodied Vision-Language Agent Framework for Autonomous On-orbit Servicing", short:"SpaceMind", year:2026, venue:"arXiv",
+      method:{en:"Revises persistent skill files from closed-loop operational experience in a modular embodied VLM system.",zh:"在模块化具身 VLM 系统中，根据闭环运行经验持续修订持久技能文件。"},
+      fit:{en:"Shows long-horizon embodied self-evolution in simulation and physical-robot operation.",zh:"展示仿真与实体机器人运行中的长时程具身自进化。"}
     }
   ],
   "negative-evaluation": [
@@ -99,6 +139,16 @@ window.DIRECTION_LITERATURE = {
       title:"EvoMemBench: Benchmarking Agent Memory from a Self-Evolving Perspective", short:"EvoMemBench", year:2026, venue:"arXiv",
       method:{en:"Benchmarks memory methods across persistent knowledge and execution tasks under a shared protocol.",zh:"在统一协议下评测持久知识与执行任务中的记忆方法。"},
       fit:{en:"Provides a component-specific longitudinal benchmark for evolving memory.",zh:"为进化记忆提供组件级纵向基准。"}
+    },
+    {
+      title:"Who Grades the Grader? Co-Evolving Evaluation Metrics and Skills for Self-Improving LLM Agents", short:"Who Grades the Grader?", year:2026, venue:"arXiv",
+      method:{en:"Co-evolves transparent evaluation metrics with persistent skills while anchoring the grader with examples, consensus, and held-out audits.",zh:"让透明评价指标与持久技能共同演化，并用锚定样例、共识与留出审计约束不断变化的 grader。"},
+      fit:{en:"Directly studies evaluator drift and governance when the evaluation rule itself evolves.",zh:"直接研究评价规则自身演化时的 evaluator drift 与治理问题。"}
+    },
+    {
+      title:"RoMeRL: Balancing Feedback Coverage and the Memory-Reward Trap in Self-Evolving Agent Memory via Reduced-Order Utility States", short:"RoMeRL", year:2026, venue:"arXiv",
+      method:{en:"Tracks bounded memory utility states to reduce sparse feedback and erroneous reward credit to irrelevant co-retrieved memories.",zh:"用有界记忆效用状态缓解反馈稀疏，并减少无关共检索记忆被错误奖励的问题。"},
+      fit:{en:"Provides a concrete failure mode where reward attribution itself destabilizes persistent evolution.",zh:"提供奖励归因本身会让持久进化失稳的具体失败模式。"}
     }
   ],
   "security-provenance": [

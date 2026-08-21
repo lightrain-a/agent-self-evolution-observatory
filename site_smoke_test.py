@@ -426,11 +426,17 @@ def main() -> None:
     if sorted(literature_direction_ids) != sorted(direction_ids) or len(literature_direction_ids) != 10:
         fail("direction literature must cover all ten research directions exactly once")
     literature_titles = re.findall(r'^      title:"([^"]+)"', direction_literature_text, re.MULTILINE)
-    if len(literature_titles) != 30:
-        fail("direction literature must contain exactly thirty representative paper records")
-    if len(re.findall(r'method:\{en:"[^"]+",zh:"[^"]+"\}', direction_literature_text)) != 30:
+    if len(literature_titles) < 30:
+        fail("direction literature must keep at least three representative papers per research direction")
+    direction_blocks = re.findall(r'^  "([a-z0-9-]+)": \[(.*?)(?=^  "[a-z0-9-]+": \[|^};)', direction_literature_text, re.MULTILINE | re.DOTALL)
+    sparse_directions = [direction_id for direction_id, block in direction_blocks if len(re.findall(r'^      title:"([^"]+)"', block, re.MULTILINE)) < 3]
+    if sparse_directions:
+        fail(f"direction literature has fewer than three representative papers: {sparse_directions}")
+    method_count = len(re.findall(r'method:\{en:"[^"]+",zh:"[^"]+"\}', direction_literature_text))
+    fit_count = len(re.findall(r'fit:\{en:"[^"]+",zh:"[^"]+"\}', direction_literature_text))
+    if method_count != len(literature_titles):
         fail("every representative paper must have a bilingual one-line method")
-    if len(re.findall(r'fit:\{en:"[^"]+",zh:"[^"]+"\}', direction_literature_text)) != 30:
+    if fit_count != len(literature_titles):
         fail("every representative paper must explain its bilingual direction fit")
     curated_text = (ROOT / "data.js").read_text(encoding="utf-8")
     missing_direction_papers = [title for title in literature_titles if title not in curated_text]
