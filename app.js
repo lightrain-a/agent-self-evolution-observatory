@@ -1623,20 +1623,31 @@ function humanTerminalState() {
 function terminalParentState(id) {
   return humanTerminalState().parents?.[id] || null;
 }
+function currentParentDecisionRecord(terminal) {
+  if (!terminal) return {};
+  const batch = window.P0_REVIVED_BATCH_F0 || window.RESEARCH_SYSTEM_STATE?.p0_revived_batch_f0 || {};
+  const revived = (batch.revived || []).find((row) => row.idea_id === terminal.idea_id || row.code === terminal.code) || {};
+  const batchRow = (batch.parent_batch || []).find((row) => row.idea_id === terminal.idea_id || row.code === terminal.code) || {};
+  return {
+    ...batchRow,
+    ...revived,
+    decision: revived.decision || batchRow.decision || terminal.p0_decision || "",
+    detail: revived.gpu0?.evidence || revived.next_action || terminal.current_fact || terminal.terminal_reason || {},
+  };
+}
 function humanParentFinalState(terminal) {
   if (!terminal) return "";
   if (terminal.terminal_state === "merge") return "merge";
-  const revival = (terminal.revival_history || []).at(-1) || {};
-  if (revival.prior_terminal_state === "drop") return "drop";
-  if (terminal.p0_entry?.basis === "p0-admission-contract-frozen") return "p0-ready";
+  if (String(currentParentDecisionRecord(terminal).decision || "").startsWith("STOP_")) return "stop";
   return terminal.terminal_state || "";
 }
 function humanParentFinalStatusLabel(status) {
   const labels = {
-    p0:{zh:"P0（历史终态）",en:"P0 (historical terminal)"},
-    "p0-ready":{zh:"P0-ready（未授权）",en:"P0-ready (not authorized)"},
+    p0:{zh:"历史：曾进入 P0",en:"Historical: entered P0"},
+    "p0-ready":{zh:"历史：曾达到 P0-ready",en:"Historical: reached P0-ready"},
     merge:{zh:"已合并",en:"Merged"},
-    drop:{zh:"已停止",en:"Stopped"},
+    drop:{zh:"历史：曾停止",en:"Historical: previously stopped"},
+    stop:{zh:"当前已停止",en:"Currently stopped"},
   };
   return textOf(labels[status] || {zh:status,en:status});
 }
@@ -1648,10 +1659,12 @@ function humanParentFinalSummary() {
     p0_ready: states.filter(state => state === "p0-ready").length,
     merge: states.filter(state => state === "merge").length,
     drop: states.filter(state => state === "drop").length,
+    stop: states.filter(state => state === "stop").length,
   };
 }
 function humanParentEvidenceDisposition(terminal, finalState = humanParentFinalState(terminal)) {
-  const decision = String(terminal?.p0_decision || "");
+  const current = currentParentDecisionRecord(terminal);
+  const decision = String(current.decision || "");
   const currentFact = textOf(terminal?.current_fact || {});
   const terminalReason = textOf(terminal?.terminal_reason || {});
   const priorReason = textOf(((terminal?.revival_history || []).at(-1) || {}).prior_terminal_reason || {});
@@ -1662,7 +1675,7 @@ function humanParentEvidenceDisposition(terminal, finalState = humanParentFinalS
       label: language === "zh"
         ? (currentInstanceOnly ? "当前实验实例已停止；方法结论未定" : "当前独立路线已停止")
         : (currentInstanceOnly ? "Current experiment instance stopped; method remains inconclusive" : "Current standalone route stopped"),
-      detail: currentFact || terminalReason,
+      detail: textOf(current.detail || {}) || currentFact || terminalReason,
       code: decision,
     };
   }
@@ -1683,6 +1696,7 @@ function humanReviewStatusLabel(status) {
 }
 function humanReviewStatusTone(status) {
   if (status === "p0" || status === "p0-ready") return "ready";
+  if (status === "stop") return "dropped";
   if (status === "merge") return "merged";
   if (status === "drop") return "dropped";
   if (status === "method-redesign") return "redesign";
@@ -2028,7 +2042,7 @@ function renderTerminalDecision(ideaId) {
   const stop = zhOverride.stop || textOf(terminal.exact_stop || {});
   const children = absorbed.length ? `<div class="terminal-child-list"><b>${language === "zh" ? "已吸收子方法" : "Absorbed children"}</b>${absorbed.map((id) => `<span title="${esc(id)}">${esc(localizedPaperIdeaMethodAsset(id))}</span>`).join("")}</div>` : "";
   const finalState = humanParentFinalState(terminal);
-  const reopen = textOf(terminal.reopen_condition || {}) || (["drop","merge"].includes(finalState)
+  const reopen = textOf(terminal.reopen_condition || {}) || (["drop","merge","stop"].includes(finalState)
     ? (language === "zh" ? "只有新的第一手或独立证据在信息、预算和最强同信息基线完全匹配后推翻当前终态边界，才重新人工评审；改名、换术语或重复同一实验不足以重开。" : "Reopen human review only if new primary or independent evidence overturns the current terminal boundary after fully matching information, budget, and the strongest same-information baseline; renaming or repeating the same test is insufficient.")
     : (language === "zh" ? "若前置门或精确终止条件被新的可核验事实实质改变，需重新回到人工评审；历史阶段本身不自动授权继续。" : "Return to human review only if new verifiable facts materially change the pre-gate or exact-stop condition; historical stage alone grants no authority."));
   const disposition = humanParentEvidenceDisposition(terminal, finalState);
@@ -2051,7 +2065,11 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
   const disposition = humanParentEvidenceDisposition(terminal || {}, currentStatus);
   const tone = humanReviewStatusTone(currentStatus);
   const code = terminal?.code || meta.code || idea.id;
-  const lifecycleStage = historicalStatus === "p0" ? (language === "zh" ? "历史上曾进入 P0" : "Historically entered P0") : historicalStatus === "p0-ready" ? (language === "zh" ? "历史 Pre-P0 / P0-ready" : "Historical Pre-P0 / P0-ready") : (language === "zh" ? "人工终态形成" : "Human terminal decision recorded");
+  const revivedFromDrop = (terminal?.revival_history || []).some((row) => row.prior_terminal_state === "drop");
+  const lifecycleStage = historicalStatus === "p0"
+    ? (revivedFromDrop ? (language === "zh" ? "历史 DROP 后重开，并曾进入 P0" : "Reopened after historical DROP and entered P0") : (language === "zh" ? "历史上曾进入 P0" : "Historically entered P0"))
+    : historicalStatus === "p0-ready" ? (language === "zh" ? "历史上曾达到 Pre-P0 / P0-ready" : "Historically reached Pre-P0 / P0-ready")
+    : (language === "zh" ? "历史人工裁决已形成" : "Historical human decision recorded");
   const experimentAuthority = Number(projectStatusState().headline?.launchable_formal_experiments || 0);
   const canonicalReview = canonicalHumanReviewData().ideas?.[idea.id] || {};
   const humanOpinion = textOf(canonicalReview.opinion || meta.feedback || {});
@@ -2072,7 +2090,7 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
   return `<details class="human-review-idea-card human-tone-${tone}" id="idea-${esc(code.toLowerCase())}" data-terminal-status="${esc(currentStatus)}" data-historical-status="${esc(historicalStatus)}" data-evidence-disposition="${esc(disposition.tone)}">
     <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(current.title)}</b><small>${originalNumber ? `${language === "zh" ? "原讨论" : "Original"} Idea ${originalNumber} · ` : ""}${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><span class="human-status-badge human-status-${tone}">${esc(humanParentFinalStatusLabel(currentStatus))}</span><p>${esc(disposition.detail || iterationSummary || humanOpinion)}</p></div></summary>
     <div class="human-idea-body">
-      <div class="canonical-lifecycle-strip"><span><b>${language === "zh" ? "历史阶段" : "Historical stage"}</b>${esc(lifecycleStage)}</span><span><b>${language === "zh" ? "人工终态" : "Human terminal state"}</b>${esc(humanParentFinalStatusLabel(currentStatus))}</span><span><b>${language === "zh" ? "最新证据处置" : "Latest evidence disposition"}</b>${esc(disposition.label)}</span><span><b>${language === "zh" ? "正式实验权限" : "Formal experiment authority"}</b>${experimentAuthority}</span></div>
+      <div class="canonical-lifecycle-strip"><span><b>${language === "zh" ? "当前最终状态" : "Current final state"}</b>${esc(humanParentFinalStatusLabel(currentStatus))}</span><span><b>${language === "zh" ? "历史里程碑" : "Historical milestone"}</b>${esc(lifecycleStage)}</span><span><b>${language === "zh" ? "最新证据处置" : "Latest evidence disposition"}</b>${esc(disposition.label)}</span><span><b>${language === "zh" ? "正式实验权限" : "Formal experiment authority"}</b>${experimentAuthority}</span></div>
       <div class="human-review-history">
         <section class="human-opinion-box"><h4 data-toc="false">${language === "zh" ? `人工意见 · 2026-08-10（原讨论 Idea ${originalNumber || "?"}）` : `Human opinion · 2026-08-10 (original Idea ${originalNumber || "?"})`}</h4><p>${esc(humanOpinion || "—")}</p><small class="human-recommendation-label tone-${humanRecommendationTone(humanRecommendation)}">${esc(humanRecommendationLabel(humanRecommendation))}</small></section>
         ${iterationSummary ? `<section class="human-iteration-box"><h4 data-toc="false">${language === "zh" ? `本轮方法迭代 · ${esc(iteration.round || "2026-08-10")}` : `Current method iteration · ${esc(iteration.round || "2026-08-10")}`}</h4><p>${esc(iterationSummary)}</p>${iteration.verdict ? `<small>${language === "zh" ? "当前门禁" : "Current gate"}: ${esc(iteration.verdict)}</small>` : ""}${finalRecommendation ? `<div class="human-final-refinement"><b>${language === "zh" ? "最终分流" : "Final recommendation"}</b><span>${esc(finalRecommendationDisplay)}</span>${finalOfflineGate ? `<p>${language === "zh" ? "GPU 前先做：" : "Before GPU: "}${esc(finalOfflineGate)}</p>` : ""}</div>` : ""}</section>` : ""}
@@ -2095,7 +2113,7 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
         <section><h4 data-toc="false">${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${textOf(current.collision_boundary)}</p><div class="cvpr-chip-row">${(current.nearest_work || []).map((name) => `<span>${esc(name)}</span>`).join("")}</div></section>
         ${freshBlock}
       </div></details>
-      ${["p0","p0-ready"].includes(currentStatus) ? renderIdeaExperimentSection(current,{...meta,status:currentStatus},absorbedIdeas) : ""}
+      ${["p0","p0-ready"].includes(historicalStatus) ? renderIdeaExperimentSection(current,{...meta,status:historicalStatus},absorbedIdeas) : ""}
     </div>
   </details>`;
 }
@@ -2103,7 +2121,7 @@ function renderDiscussedIdeaBank() {
   const bank = iclrIdeaBank();
   const review = humanReviewData();
   const byId = new Map((bank.passed_ideas || []).map((idea) => [idea.id, idea]));
-  const statuses = ["p0","p0-ready","merge","drop"];
+  const statuses = ["stop","merge"];
   const all = Object.entries(review.ideas || {}).map(([id,meta]) => {
     const terminal = terminalParentState(id);
     return {id,meta:{...meta,status:terminal ? humanParentFinalState(terminal) : meta.status,code:terminal?.code || meta.code,group:terminal?.group || meta.group},idea:byId.get(id)};
@@ -2121,7 +2139,7 @@ function renderDiscussedIdeaBank() {
   const terminalLedger = humanTerminalState();
   const canonicalDate = terminalLedger.decision_date || canonicalHumanReviewData().review_date || review.review_date || "2026-08-11";
   const terminalSummary = humanParentFinalSummary();
-  const finalSummary = `<div class="human-final-summary terminal-summary"><div><b>${terminalSummary.p0 || 0}</b><span>${language === "zh" ? "P0 历史终态" : "P0 historical terminal"}</span></div><div><b>${terminalSummary.p0_ready || 0}</b><span>${language === "zh" ? "P0-ready · 未授权" : "P0-ready · not authorized"}</span></div><div><b>${terminalSummary.merge || 0}</b><span>${language === "zh" ? "已合并" : "merged"}</span></div><div><b>${terminalSummary.drop || 0}</b><span>${language === "zh" ? "已停止" : "stopped"}</span></div><small>${language === "zh" ? `人工冻结终态 · ${canonicalDate}：2 / 11 / 6 / 7；历史 P0 进入与当前执行权限分别记账。` : `Frozen human terminal split · ${canonicalDate}: 2 / 11 / 6 / 7; historical P0 entry and current execution authority are tracked separately.`}</small></div>`;
+  const finalSummary = `<div class="human-final-summary terminal-summary"><div><b>${terminalSummary.stop || 0}</b><span>${language === "zh" ? "当前已停止" : "currently stopped"}</span></div><div><b>${terminalSummary.merge || 0}</b><span>${language === "zh" ? "当前已合并" : "currently merged"}</span></div><div><b>0</b><span>${language === "zh" ? "当前 P0-ready" : "current P0-ready"}</span></div><div><b>0</b><span>${language === "zh" ? "可启动正式实验" : "launchable formal experiments"}</span></div><small>${language === "zh" ? `当前最终状态 · ${canonicalDate}：停止 20 / 合并 6；历史 P0、P0-ready 与 DROP 只作里程碑。` : `Current final state · ${canonicalDate}: 20 stopped / 6 merged; historical P0, P0-ready, and DROP remain milestones only.`}</small></div>`;
   return `<section class="panel human-review-overview"><div class="idea-panel-heading"><div><b class="human-overview-kicker">${language === "zh" ? `H1 · ${esc(canonicalDate)} · 历史谱系` : `H1 · ${esc(canonicalDate)} · HISTORICAL LINEAGE`}</b><p class="section-intro">${language === "zh" ? "这一章保留人工冻结终态，同时单独呈现历史 P0 生命周期、最新实验处置与当前执行权限；三者不能互相覆盖。" : "This chapter preserves the frozen human terminal state while separating historical P0 lifecycle, latest evidence disposition, and current execution authority."}</p></div><strong>${all.length} ${language === "zh" ? "个历史父方向" : "historical parents"}</strong></div><div class="human-review-stats">${statuses.map((status) => `<div class="human-stat human-stat-${humanReviewStatusTone(status)}"><b>${counts[status] || 0}</b><span>${esc(humanParentFinalStatusLabel(status))}</span></div>`).join("")}</div>${finalSummary}</section>${renderHumanReviewMethodology()}${groups}`;
 }
 function supplementalGroupId(idea) {
@@ -2664,8 +2682,8 @@ function canonicalParentRows() {
   }).filter(row=>row.idea);
 }
 function canonicalStatusControls(rows=[]) {
-  const statuses=["p0","p0-ready","merge","drop"];
-  return `<div class="canonical-filter-bar"><div><b>${language==="zh"?"只筛选 26 个父级研究方向的人工冻结终态":"Filter only the 26 parent ideas by frozen human terminal state"}</b><span>${language==="zh"?"该筛选不会隐藏其他研究方向、方法、论文证据或关闭候选；研究大类仍是全页主结构。":"This filter does not hide related directions, methods, paper evidence, or closed candidates; scientific category remains the page-wide structure."}</span></div><div class="canonical-filter-actions">${["all",...statuses].map((status,index)=>{
+  const statuses=["stop","merge"];
+  return `<div class="canonical-filter-bar"><div><b>${language==="zh"?"筛选 26 个父级研究方向的当前最终状态":"Filter the 26 parent ideas by current final state"}</b><span>${language==="zh"?"P0、P0-ready 与历史 DROP 只作为卡片内的历史里程碑，不再充当当前状态；该筛选不会隐藏其他研究对象。":"P0, P0-ready, and historical DROP remain milestones inside cards rather than current states; this filter does not hide other research objects."}</span></div><div class="canonical-filter-actions">${["all",...statuses].map((status,index)=>{
     const count=status==="all"?rows.length:rows.filter(row=>row.meta.status===status).length;
     const label=status==="all"?(language==="zh"?"全部父级研究方向":"All parent ideas"):humanParentFinalStatusLabel(status);
     return `<button class="canonical-filter-btn${index===0?" active":""}" data-canonical-status="${esc(status)}" aria-pressed="${index===0?"true":"false"}">${esc(label)} <b>${count}</b></button>`;
@@ -2687,7 +2705,7 @@ function renderCanonicalRelatedBank(group,independent) {
 }
 function renderCanonicalIdeaGroup(group,parents,independent) {
   const rows=parents.filter(row=>row.meta.group===group.id).sort((a,b)=>{
-    const order={"p0":0,"p0-ready":1,merge:2,drop:3};
+    const order={stop:0,merge:1};
     return (order[a.meta.status]??9)-(order[b.meta.status]??9)||String(a.meta.code).localeCompare(String(b.meta.code),undefined,{numeric:true});
   });
   const parentCards=rows.map((row,index)=>`<div class="canonical-parent-item" data-canonical-status="${esc(row.meta.status)}" data-canonical-group="${esc(group.id)}">${renderHumanReviewedIdeaCard(row.idea,row.meta,index)}</div>`).join("");
@@ -2695,14 +2713,14 @@ function renderCanonicalIdeaGroup(group,parents,independent) {
   const safety=group.id==="G"&&window.renderAgentSafetyProgram?window.renderAgentSafetyProgram():"";
   const related=renderCanonicalRelatedBank(group,independent);
   const closed=window.renderClosedCandidateIdeas?window.renderClosedCandidateIdeas(group.id):"";
-  const counts=Object.fromEntries(["p0","p0-ready","merge","drop"].map(status=>[status,rows.filter(row=>row.meta.status===status).length]));
+  const counts=Object.fromEntries(["stop","merge"].map(status=>[status,rows.filter(row=>row.meta.status===status).length]));
   const inventory=canonicalGroupInventory(group.id,parents,independent,window.closedCandidateCategoryCounts?window.closedCandidateCategoryCounts():{});
-  const terminalLine=inventory.parent?(language==="zh"?`父级方向终态：P0 ${counts.p0||0} · P0-ready ${counts["p0-ready"]||0} · 并入 ${counts.merge||0} · 停止 ${counts.drop||0}`:`Parent terminal states: P0 ${counts.p0||0} · P0-ready ${counts["p0-ready"]||0} · merge ${counts.merge||0} · stop ${counts.drop||0}`):(group.id==="G"?(language==="zh"?"G-1 当前研究主线 · G-2—G-5 已关闭方向":"G-1 current program · G-2—G-5 closed directions"):"");
+  const terminalLine=inventory.parent?(language==="zh"?`父级方向当前终态：停止 ${counts.stop||0} · 合并 ${counts.merge||0}`:`Current parent states: stopped ${counts.stop||0} · merged ${counts.merge||0}`):(group.id==="G"?(language==="zh"?"G-1 支持层停止（可条件重开）· G-2—G-5 已关闭":"G-1 support stop (conditionally reopenable) · G-2—G-5 closed"):"");
   return `<section class="canonical-idea-group" id="canonical-group-${esc(group.id.toLowerCase())}" data-canonical-group="${esc(group.id)}" data-category-total="${inventory.total}"><header class="canonical-group-header"><span>${esc(group.id)}</span><div><h2>${textOf(group.title)}</h2><p>${textOf(group.question)}</p><div class="canonical-group-counts"><b>${inventory.total} ${language==="zh"?"个去重研究对象":"deduplicated objects"}</b><small>${language==="zh"?`父级方向 ${inventory.parent} · 研究方向/方法 ${inventory.related} · 论文/证据 ${inventory.context} · 编号关闭研究方向 ${inventory.closed}`:`${inventory.parent} parents · ${inventory.related} directions/methods · ${inventory.context} paper/evidence · ${inventory.closed} numbered stopped ideas`}</small>${terminalLine?`<small>${terminalLine}</small>`:""}</div></div></header>${parentCards?`<div class="canonical-parent-list">${parentCards}</div>`:""}${context}${safety}${related}${closed}</section>`;
 }
 function renderCanonicalIdeaLedger(groups=canonicalIdeaGroups(),parents=canonicalParentRows(),independent=canonicalIndependentRows(),inventory=canonicalInventorySummary(groups,parents,independent)) {
   const terminal=humanParentFinalSummary();
-  const terminalSummary=`<div class="human-final-summary canonical-terminal-summary"><div><b>${terminal.p0||0}</b><span>${language==="zh"?"P0 历史终态":"P0 historical terminal"}</span></div><div><b>${terminal.p0_ready||0}</b><span>${language==="zh"?"P0-ready · 未授权":"P0-ready · not authorized"}</span></div><div><b>${terminal.merge||0}</b><span>${language==="zh"?"已并入":"merged"}</span></div><div><b>${terminal.drop||0}</b><span>${language==="zh"?"已停止":"stopped"}</span></div><small>${language==="zh"?"这里显示人工冻结终态 2 / 11 / 6 / 7；历史 P0 进入记录、最新实验处置和当前执行权限分别保留，互不覆盖。":"This shows the frozen human terminal split 2 / 11 / 6 / 7. Historical P0 entry, latest evidence disposition, and current execution authority remain separate."}</small></div>`;
+  const terminalSummary=`<div class="human-final-summary canonical-terminal-summary"><div><b>${terminal.stop||0}</b><span>${language==="zh"?"当前已停止":"currently stopped"}</span></div><div><b>${terminal.merge||0}</b><span>${language==="zh"?"当前已合并":"currently merged"}</span></div><div><b>0</b><span>${language==="zh"?"当前 P0-ready":"current P0-ready"}</span></div><div><b>0</b><span>${language==="zh"?"可启动正式实验":"launchable formal experiments"}</span></div><small>${language==="zh"?"这是 26 个父级研究方向的当前最终状态：20 个停止、6 个合并。历史上曾进入 P0、曾达到 P0-ready 或曾从 DROP 重开，只在各卡片的历史里程碑中保留。":"This is the current final split for the 26 parent ideas: 20 stopped and 6 merged. Historical P0, P0-ready, and revived-from-DROP milestones remain inside each card."}</small></div>`;
   const paperFirstSummary=window.renderPaperFirstIdeaIncubation?window.renderPaperFirstIdeaIncubation().split('<div class="paper-incubation-list">')[0]:"";
   const appendix=`<section class="panel canonical-audit-appendix"><h2 id="canonical-audit-appendix">${language==="zh"?"审计说明：怎样理解阶段、停止与重开":"Audit guide: how to read stage, stop, and reopen"}</h2><div class="canonical-audit-grid"><section><b>${language==="zh"?"阶段不等于权限":"Stage is not authority"}</b><p>${language==="zh"?"历史上进入 P0，只说明当时形成过可证伪合同；当前是否能运行，仍以正式实验权限为准。":"Historical P0 means a falsifiable contract once existed; current execution still requires formal authority."}</p></section><section><b>${language==="zh"?"失败必须分层":"Failures stay typed"}</b><p>${language==="zh"?"执行、协议、证据支持、方法实现和核心原理不会互相替代；只有核心原理级裁决才是科学死路。":"Execution, protocol, support, method-realization, and core-principle failures do not substitute for one another; only a core-principle ruling is a scientific dead end."}</p></section><section><b>${language==="zh"?"重开需要新证据":"Reopen requires new evidence"}</b><p>${language==="zh"?"换名字、换术语或重复同一实验不足以重开；必须满足卡片中写明的新增证据条件。":"Renaming or repeating the same test is insufficient; the card-specific new-evidence condition must be met."}</p></section></div>${paperFirstSummary}${renderHumanReviewMethodology()}</section>`;
   return `${renderCanonicalCategoryIndex(groups,parents,independent,inventory)}${terminalSummary}${canonicalStatusControls(parents)}${groups.map(group=>renderCanonicalIdeaGroup(group,parents,independent)).join("")}${appendix}`;

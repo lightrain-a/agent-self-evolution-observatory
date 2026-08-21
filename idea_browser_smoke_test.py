@@ -357,6 +357,8 @@ def main() -> None:
           incubationP0: document.querySelectorAll('.paper-incubation-card.incubation-p0').length,
           incubationRevise: document.querySelectorAll('.paper-incubation-card.incubation-revise').length,
           incubationBlock: document.querySelectorAll('.paper-incubation-card.incubation-block').length,
+          incubationStop: document.querySelectorAll('.paper-incubation-card.incubation-stop').length,
+          incubationMerge: document.querySelectorAll('.paper-incubation-card.incubation-merge').length,
           incubationOpen: document.querySelectorAll('.paper-incubation-card[open]').length,
           incubationSummary: window.PAPER_FIRST_IDEA_INCUBATION?.summary || {},
           designSummary: window.PAPER_FIRST_DESIGN_ADJUDICATION?.summary || {},
@@ -443,20 +445,20 @@ def main() -> None:
         require(set(ideas["categorizedContextCodes"]) == {"E-7","E-7a","E-7b","E-7c","B-12","B-13"}, f"categorized context objects are not normalized to A-G taxonomy: {ideas['categorizedContextCodes']}")
         require(set(ideas["pfCodes"]) == {"A-8","A-9","A-10","A-11","A-12","B-11","C-7","E-5","E-6"}, f"former PF directions are not distributed into A/B/C/E categories without colliding with parent codes: {ideas['pfCodes']}")
         require(set(ideas["safetyCodes"]) == {"G-1","G-2","G-3","G-4","G-5"}, f"safety directions are not normalized to G-1..G-5: {ideas['safetyCodes']}")
-        require((ideas["readyCards"], ideas["mergedCards"], ideas["droppedCards"]) == (13, 6, 7), f"frozen terminal tone counts are wrong: {ideas['readyCards']}/{ideas['mergedCards']}/{ideas['droppedCards']}")
-        require((ideas["terminalCounts"].get("p0"),ideas["terminalCounts"].get("p0-ready"),ideas["terminalCounts"].get("merge"),ideas["terminalCounts"].get("drop")) == (2,11,6,7), f"frozen human terminal counts must be 2/11/6/7: {ideas['terminalCounts']}")
+        require((ideas["readyCards"], ideas["mergedCards"], ideas["droppedCards"]) == (0, 6, 20), f"current terminal tone counts are wrong: {ideas['readyCards']}/{ideas['mergedCards']}/{ideas['droppedCards']}")
+        require((ideas["terminalCounts"].get("stop"),ideas["terminalCounts"].get("merge")) == (20,6) and not any(ideas["terminalCounts"].get(k) for k in ("p0","p0-ready","drop")), f"current human terminal counts must be stop=20/merge=6: {ideas['terminalCounts']}")
         require(ideas["historicalCounts"].get("p0") == 20 and ideas["historicalCounts"].get("merge") == 6, f"historical P0 lifecycle must remain separately preserved: {ideas['historicalCounts']}")
         require(ideas["evidenceDispositionCounts"] == {"stop":16,"hold":4,"merge":6} and ideas["evidenceDispositionPanels"] == 26, f"latest evidence disposition is missing or collapsed into terminal state: {ideas['evidenceDispositionCounts']}/{ideas['evidenceDispositionPanels']}")
         require(ideas["lifecycleCells"] == 104 and ideas["explicitLegacyP0Badges"] == 0 and ideas["formalAuthorityZero"] == 26, f"lifecycle/current-decision/authority separation failed: {ideas['lifecycleCells']}/{ideas['explicitLegacyP0Badges']}/{ideas['formalAuthorityZero']}")
-        expected_parent_states={"A-1":"p0","A-2":"p0","A-3":"p0-ready","A-5":"p0-ready","B-1":"merge","C-1":"drop","C-4":"drop","D-1":"p0-ready","D-2":"drop","E-2":"p0-ready","F-1":"drop","F-3":"drop"}
+        expected_parent_states={"A-1":"stop","A-2":"stop","A-3":"stop","A-5":"stop","B-1":"merge","C-1":"stop","C-4":"stop","D-1":"stop","D-2":"stop","E-2":"stop","F-1":"stop","F-3":"stop"}
         require(all(ideas["parentStatusByCode"].get(code)==state for code,state in expected_parent_states.items()), f"representative parent terminal states are wrong: {ideas['parentStatusByCode']}")
-        filter_state = execute(session_id, """const visible=()=>[...document.querySelectorAll('.canonical-parent-item')].filter(x=>!x.hidden).length; const click=s=>document.querySelector('.canonical-filter-btn[data-canonical-status="'+s+'"]')?.click(); click('p0-ready'); const ready=visible(); click('drop'); const drop=visible(); click('all'); return {ready,drop,all:visible()};""")
-        require(filter_state == {"ready":11,"drop":7,"all":26}, f"frozen terminal filter counts are wrong: {filter_state}")
+        filter_state = execute(session_id, """const visible=()=>[...document.querySelectorAll('.canonical-parent-item')].filter(x=>!x.hidden).length; const click=s=>document.querySelector('.canonical-filter-btn[data-canonical-status="'+s+'"]')?.click(); click('stop'); const stop=visible(); click('merge'); const merge=visible(); click('all'); return {stop,merge,all:visible()};""")
+        require(filter_state == {"stop":20,"merge":6,"all":26}, f"current terminal filter counts are wrong: {filter_state}")
         require((ideas["terminalSummary"].get("human_parents"), ideas["terminalSummary"].get("revived_to_p0"), ideas["absorbedChildCount"]) == (26,7,17), f"historical admission ledger or absorbed-child count is wrong: {ideas['terminalSummary']}/{ideas['absorbedChildCount']}")
         require(ideas["feedbackSummaries"] == 26, f"every discussed idea must expose one current summary, got {ideas['feedbackSummaries']}")
         require(ideas["humanOpinionBoxes"] == 26, f"all 26 discussed ideas must preserve the human opinion, got {ideas['humanOpinionBoxes']}")
         require(ideas["iterationBoxes"] == 17 and ideas["finalRefinementBoxes"] == 17, f"all 17 refined methods must show the final iteration and routing: {ideas['iterationBoxes']}/{ideas['finalRefinementBoxes']}")
-        require(ideas["finalRefinementCounts"] == [2,11,6,7], f"frozen human terminal routing must be 2 P0 / 11 P0-ready / 6 merge / 7 stop, got {ideas['finalRefinementCounts']}")
+        require(ideas["finalRefinementCounts"] == [20,6,0,0], f"current parent routing must be 20 stop / 6 merge / 0 P0-ready / 0 launchable, got {ideas['finalRefinementCounts']}")
         require(ideas["methodologyPanels"] == 1 and ideas["originalEvalGuides"] == 1, f"human-opinion audit/original-eval methodology panels are missing: {ideas['methodologyPanels']}/{ideas['originalEvalGuides']}")
         require(ideas["canonicalReviewCount"] == 26, f"canonical human-review map must cover all 26 ideas, got {ideas['canonicalReviewCount']}")
         require(ideas["humanRecommendationStats"] == [4,14,7,1], f"canonical human recommendation counts are wrong: {ideas['humanRecommendationStats']}")
@@ -472,7 +474,7 @@ def main() -> None:
         require(ideas["mergedMethods"] >= 8, f"merged FINAL method provenance is not visible on discussed ideas: {ideas['mergedMethods']}")
         require(ideas["freshCollisionBlocks"] == 17 and ideas["freshCollisionLinks"] >= 40, f"fresh reducibility sources are missing from refined ideas: {ideas['freshCollisionBlocks']}/{ideas['freshCollisionLinks']}")
         require(all(marker in ideas["text"] for marker in ("ChronoMem","DeltaBox","CausalFlow")), "latest load-bearing collision sources are not visible in refined idea cards")
-        require((ideas["incubationCards"],ideas["incubationAdvance"],ideas["incubationRevise"],ideas["incubationBlock"],ideas["incubationOpen"]) == (9,4,3,2,0), f"Paper-first incubation rendering is wrong: {ideas['incubationCards']}/{ideas['incubationAdvance']}/{ideas['incubationRevise']}/{ideas['incubationBlock']}/{ideas['incubationOpen']}")
+        require((ideas["incubationCards"],ideas["incubationStop"],ideas["incubationMerge"],ideas["incubationAdvance"],ideas["incubationRevise"],ideas["incubationBlock"],ideas["incubationOpen"]) == (9,5,4,0,0,0,0), f"Paper-first current rendering is wrong: {ideas['incubationCards']}/{ideas['incubationStop']}/{ideas['incubationMerge']}/{ideas['incubationAdvance']}/{ideas['incubationRevise']}/{ideas['incubationBlock']}/{ideas['incubationOpen']}")
         require((ideas["incubationSummary"].get("p0_authorized"),ideas["incubationSummary"].get("gpu_authorized")) == (0,0), f"incubation must remain outside P0/GPU authority: {ideas['incubationSummary']}")
         ds=ideas["designSummary"]
         require((ds.get("reviewed"),ds.get("advance_to_method_design"),ds.get("revise_paper_problem"),ds.get("merge_as_cross_cutting_invariant"),ds.get("stop_standalone_merge_risk_axis"),ds.get("local_validation_authorized")) == (4,1,1,1,1,0), f"Paper Design adjudication routing is stale: {ds}")
