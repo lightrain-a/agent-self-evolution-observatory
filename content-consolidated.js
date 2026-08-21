@@ -59,9 +59,10 @@
 
   if (sources.bibliography) {
     pages.bibliography = Object.assign({}, sources.bibliography, {
-      eyebrow:{en:"Literature",zh:"文献与覆盖"},
-      title:{en:"Coverage protocol and live bibliography",zh:"覆盖协议与动态文献库"},
-      lead:{en:"This page shows exactly how the literature list is built: which queries are used, which papers are included or excluded, how duplicate preprint/published versions are merged, when records were last updated, and where to search or export the resulting corpus.",zh:"本页具体说明文献库怎样产生：用了哪些检索词、哪些论文会纳入或排除、预印本与正式版本怎样去重合并、记录何时更新，以及怎样搜索或导出最终文献表。"},
+      eyebrow:{en:"Literature · Evidence Library",zh:"文献 · 证据库"},
+      title:{en:"Literature library: coverage, field maps, and reading guide",zh:"文献库 · 覆盖、领域地图与阅读指南"},
+      lead:{en:"Use this page in four steps: first understand where the corpus comes from and which layers are manually verified; then inspect field density; next choose a reading path; only then search, filter, compare, cite, or export individual records.",zh:"建议按四步使用这页：先看文献从哪里来、哪些层级经过人工核验；再看领域文献分布；然后决定先读哪些论文；最后才进入单篇检索、筛选、比较、引用和导出。"},
+      callout:{en:"Publication status, citation count, automatic taxonomy, and paper-specific analysis answer different questions. Published/preprint describes bibliographic status, citations describe historical visibility, automatic tags support navigation, and only source-grounded paper analysis should be used for scientific claims.",zh:"发表状态、引用量、自动分类和单篇论文梳理回答的是四个不同问题：正式发表／预印本只表示书目状态；引用量主要反映历史可见度；自动标签只用于导航；真正写进科研主张的内容仍应回到原文和可核验的一手来源。"},
       groupsBefore:[group("coverage-method")]
     });
   }

@@ -301,6 +301,11 @@ def main() -> None:
         bibliography = execute(
             session_id,
             """return {
+              chapters: [...document.querySelectorAll('.page-chapter')].map(x=>x.dataset.chapter||''),
+              trustCards: document.querySelectorAll('.bibliography-trust-grid article').length,
+              mapGuideCards: document.querySelectorAll('.bibliography-map-guide-grid article').length,
+              readingPathCards: document.querySelectorAll('.bibliography-reading-path-grid article').length,
+              metaStats: document.querySelectorAll('.bibliography-meta-strip span').length,
               cards: document.querySelectorAll('.reference-card').length,
               loadMore: !!document.querySelector('#load-more-papers'),
               methodMap: !!document.querySelector('#method-time-map'),
@@ -326,6 +331,8 @@ def main() -> None:
               missing: document.querySelectorAll('.citation-missing').length
             };""",
         )
+        require(bibliography["chapters"] == ["coverage-protocol","field-maps","ranking-reading","search-corpus"], f"bibliography reading order is wrong: {bibliography['chapters']}")
+        require((bibliography["trustCards"],bibliography["mapGuideCards"],bibliography["readingPathCards"],bibliography["metaStats"]) == (4,3,3,4), f"bibliography human-first guides are incomplete: {bibliography}")
         require(bibliography["cards"] == 80, "bibliography initial pagination is not 80")
         require(bibliography["loadMore"], "bibliography load-more control is missing")
         require(bibliography["methodMap"] and bibliography["publicationMap"] and bibliography["signalMap"], "one or more bibliography maps are missing")

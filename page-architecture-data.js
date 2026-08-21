@@ -104,10 +104,10 @@ window.PAGE_ARCHITECTURES = {
   },
   bibliography:{
     chapters:[
-      {id:"coverage-protocol",title:{en:"I · Corpus construction and coverage protocol",zh:"第一章 · 语料构建与覆盖协议"},question:{en:"Which papers enter the corpus, how are duplicates resolved, and what uncertainty remains?",zh:"哪些论文进入语料、重复版本如何处理、还剩哪些不确定性？"},sourceIds:["coverage-method"]},
-      {id:"ranking-reading",title:{en:"II · Ranking and structured reading",zh:"第二章 · 排序与结构化阅读"},question:{en:"How are papers prioritized, and how is each paper summarized without overstating evidence?",zh:"论文如何排序，又如何在不过度声称的前提下结构化梳理？"}},
-      {id:"field-maps",title:{en:"III · Field maps",zh:"第三章 · 领域地图"},question:{en:"How do publication time, update surface, feedback signal, and method family shape the field?",zh:"发表时间、更新对象、反馈信号和方法族如何共同塑造领域？"}},
-      {id:"search-corpus",title:{en:"IV · Search, filter, and export the corpus",zh:"第四章 · 检索、筛选与导出语料"},question:{en:"How can readers find, compare, cite, and export individual records?",zh:"读者如何查找、比较、引用和导出单篇记录？"}}
+      {id:"coverage-protocol",title:{en:"I · Where the corpus comes from and how much to trust each layer",zh:"第一章 · 文献从哪里来，以及不同层级能信到什么程度"},question:{en:"Which sources feed the corpus, what enters or stays outside the core, how are duplicate versions merged, and which parts are manually verified versus automatically classified?",zh:"这份文献库由哪些来源组成、什么会进入核心或只作为邻接工作、重复版本怎样合并，以及哪些内容经过人工核验、哪些只是自动分类？"},sourceIds:["coverage-method"]},
+      {id:"field-maps",title:{en:"II · See the field distribution before opening individual papers",zh:"第二章 · 先看领域分布，再决定往哪里深入"},question:{en:"Where is the literature dense by year, update surface, feedback signal, and publication type—and what do those counts describe without turning them into a research-priority score?",zh:"按年份、更新对象、反馈信号和发表类型看，文献主要集中在哪里？这些数量能说明什么，又不能被误读成什么研究优先级？"}},
+      {id:"ranking-reading",title:{en:"III · Decide what to read and how deeply to trust the summary",zh:"第三章 · 再决定先读什么，以及单篇梳理能信到哪一层"},question:{en:"What is the recommended reading path from field overviews to direct self-evolution work and foundations, and which paper summaries are manually curated versus metadata-derived?",zh:"从领域综述、直接自进化方法到基础工作应该按什么顺序读？单篇论文的哪些梳理是人工深度整理，哪些只是基于摘要或元数据的保守归纳？"}},
+      {id:"search-corpus",title:{en:"IV · Search, narrow, compare, cite, and export",zh:"第四章 · 最后检索、缩小范围、比较、引用与导出"},question:{en:"How can readers quickly locate a paper, narrow the corpus by year/publication/signal/update surface, preserve the filter state, and export exactly the records they need?",zh:"怎样快速定位一篇论文，再按年份、发表类型、反馈信号和更新对象缩小范围，并保留筛选状态、导出真正需要的记录？"}}
     ]
   }
 };

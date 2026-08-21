@@ -307,7 +307,7 @@ def main() -> None:
         "research-map": ["layering", "coverage-gaps", "integrated-map", "handoff"],
         "paper-ideas": ["discussed-ideas", "new-ideas"],
         "selected-paper": ["problem-scope", "evidence-experiments", "narrative-execution", "review-gates"],
-        "bibliography": ["coverage-protocol", "ranking-reading", "field-maps", "search-corpus"],
+        "bibliography": ["coverage-protocol", "field-maps", "ranking-reading", "search-corpus"],
     }
     for page_id, chapter_ids in expected_chapter_ids.items():
         for chapter_id in chapter_ids:

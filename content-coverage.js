@@ -1,8 +1,9 @@
 Object.assign(window.PAGE_CONTENT,{
 "coverage-method":{
-  eyebrow:{en:"Evaluation · Coverage Protocol",zh:"评测 · 覆盖协议"},
-  title:{en:"How the literature map is built and kept current",zh:"文献地图如何构建并持续更新"},
-  lead:{en:"“All papers” is not a defensible scientific phrase without an explicit search protocol. This site targets comprehensive coverage within stated sources, dates, inclusion rules, and deduplication procedures.",zh:"如果没有明确检索协议，“所有论文”不是可辩护的科学表述。本网站追求在已声明来源、时间、纳入规则与去重程序下的综合覆盖。"},
+  eyebrow:{en:"Literature provenance · Coverage Protocol",zh:"文献来源 · 覆盖协议"},
+  title:{en:"Where records come from, what enters the core, and what remains uncertain",zh:"文献从哪里来、什么进入核心、哪些地方仍然不确定"},
+  lead:{en:"The goal is not to claim a literally complete list. The defensible object is a versioned corpus with explicit sources, inclusion/exclusion rules, deduplication, publication-status checks, and a visible boundary between manually reviewed core records and automatically synchronized long-tail records.",zh:"这页不声称已经穷尽“所有论文”。真正可核查的是一份有版本的语料：明确记录来源、纳入与排除规则、去重方式、发表状态核验，以及“人工审查核心”和“自动同步长尾”之间的边界。"},
+
   callout:{en:"The live bibliography synchronizes two survey-maintained catalogs, expands an ICLR-first mechanism core through Semantic Scholar topic, failure, mechanism, analogy, seed, citation, and reference queries, and preserves a manually verified visual/CVPR supplement. Citation count remains available as a historical-impact view but does not control the default order.",zh:"动态文献库同步两个综述配套目录，并通过 Semantic Scholar 的主题、失败模式、机制、类比、种子、引用和参考文献查询扩展 ICLR-first 机制核心，同时保留人工核验的视觉／CVPR 补充集。引用量仍可用于查看历史影响，但不再主导默认顺序。"},
   sections:[
     {title:{en:"Inclusion criteria",zh:"纳入标准"},body:{en:`<ol><li>The system contains an agentic loop: perception or input, decision, action/tool/environment interaction, and feedback.</li><li>Experience produces a persistent change to model parameters, prompt/context, memory, tools/skills, workflow/architecture, evaluator, world model, or embodiment model.</li><li>The paper evaluates the updated state on future, held-out, or later-stream tasks, or is a foundational precursor directly used by self-evolving systems.</li><li>The work is a paper, official technical report, benchmark, or survey with a stable public source.</li></ol>`,zh:`<ol><li>系统包含 Agent 闭环：感知或输入、决策、动作／工具／环境交互与反馈。</li><li>经验对模型参数、提示词／上下文、记忆、工具／技能、工作流／架构、评价器、世界模型或具身模型产生持久变化。</li><li>论文在未来、留出或后续任务流上评测更新状态，或属于被自进化系统直接采用的基础前置工作。</li><li>工作具有稳定公开来源，属于论文、正式技术报告、基准或综述。</li></ol>`}},
