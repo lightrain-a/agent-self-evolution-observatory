@@ -72,6 +72,16 @@
     if (Number.isNaN(d.getTime())) return raw(iso).slice(0,10);
     return new Intl.DateTimeFormat(language === "zh" ? "zh-CN" : "en-US", {year:"numeric",month:"long",day:"numeric",weekday:"short",timeZone:CHINA_TZ}).format(d);
   };
+  const weekDayLabel = (date) => {
+    const [year,month,day] = raw(date).split("-").map(Number);
+    if (!year || !month || !day) return date;
+    const firstWeekday = (new Date(Date.UTC(year,month-1,1)).getUTCDay()+6)%7;
+    const week = Math.floor((firstWeekday+day-1)/7)+1;
+    const weekday = (new Date(Date.UTC(year,month-1,day)).getUTCDay()+6)%7;
+    const zhWeekdays = ["周一","周二","周三","周四","周五","周六","周日"];
+    const enWeekdays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+    return language === "zh" ? `第${week}周 · ${zhWeekdays[weekday]}` : `Week ${week} · ${enWeekdays[weekday]}`;
+  };
   const fmtTime = (e) => {
     if (e.time_precision === "date") return pick("日期记录","date record");
     const d = new Date(e.occurred_at);
@@ -178,7 +188,7 @@
     const exact = ordered.filter(e=>e.time_precision !== "date");
     const dateOnlyBlock = dateOnly.length ? `<div class="rt-date-only-note">${pick(`另有 ${dateOnly.length} 条记录只有日期精度，无法可靠判断当天先后，因此放在精确时间事件之后。`,`Another ${dateOnly.length} records have date-only precision and are shown after exact-time events.`)}</div>${dateOnly.map(eventRow).join("")}` : "";
     const thread = dayHeadline(ordered);
-    return `<tr class="rt-day-row" id="timeline-${esc(date)}" data-rt-day-toggle="${esc(date)}" tabindex="0" aria-expanded="false"><td class="rt-table-date"><div class="rt-table-date-inner"><button type="button" class="rt-day-toggle" aria-label="${pick("展开当天详情","Open day details")}">＋</button><div><b>${esc(fmtDate(`${date}T12:00:00+08:00`))}</b><small>${esc(date)}</small></div></div></td><td class="rt-num rt-activity-count"><b>${ordered.length}</b><span>${pick("条","events")}</span></td><td class="rt-num"><b>${keyChanges}</b></td><td class="rt-num"><b>${gitChanges}</b></td><td class="rt-num"><b>${artifactChanges}</b></td><td class="rt-num"><b>${researchLines}</b></td><td class="rt-table-thread"><p>${esc(thread)}</p><div class="rt-day-tags">${tags}</div>${workloadBar(ordered)}</td></tr><tr class="rt-day-detail-row" data-rt-day-detail="${esc(date)}" hidden><td colspan="7"><div class="rt-day-expanded"><div class="rt-order-note">${pick("以下严格按北京时间从早到晚排列，不按 Idea / 实验 / 论文等类别重新分组，便于追踪“什么先发生 → 为什么后来改变研究或系统”。","Events below are strictly chronological rather than grouped by type.")}</div><div class="rt-day-events">${exact.map(eventRow).join("")}${dateOnlyBlock}</div></div></td></tr>`;
+    return `<tr class="rt-day-row" id="timeline-${esc(date)}" data-rt-day-toggle="${esc(date)}" tabindex="0" aria-expanded="false"><td class="rt-table-date"><div class="rt-table-date-inner"><button type="button" class="rt-day-toggle" aria-label="${pick("展开当天详情","Open day details")}">＋</button><div><b>${esc(weekDayLabel(date))}</b><small>${esc(date)}</small></div></div></td><td class="rt-num rt-activity-count"><b>${ordered.length}</b><span>${pick("条","events")}</span></td><td class="rt-num"><b>${keyChanges}</b></td><td class="rt-num"><b>${gitChanges}</b></td><td class="rt-num"><b>${artifactChanges}</b></td><td class="rt-num"><b>${researchLines}</b></td><td class="rt-table-thread"><p>${esc(thread)}</p><div class="rt-day-tags">${tags}</div>${workloadBar(ordered)}</td></tr><tr class="rt-day-detail-row" data-rt-day-detail="${esc(date)}" hidden><td colspan="7"><div class="rt-day-expanded"><div class="rt-order-note">${pick("以下严格按北京时间从早到晚排列，不按 Idea / 实验 / 论文等类别重新分组，便于追踪“什么先发生 → 为什么后来改变研究或系统”。","Events below are strictly chronological rather than grouped by type.")}</div><div class="rt-day-events">${exact.map(eventRow).join("")}${dateOnlyBlock}</div></div></td></tr>`;
   };
   const monthTable = (month,dates,groups) => {
     const total = dates.reduce((n,date)=>n+(groups[date]?.length||0),0);
@@ -213,11 +223,19 @@
     if (!events.length) return "";
     const counts = Object.fromEntries(Object.entries(grouped(events)).map(([d,rows])=>[d,rows.length]));
     const keys = Object.keys(counts).sort();
-    const start = new Date(`${keys[0]}T00:00:00+08:00`), end = new Date(`${keys[keys.length-1]}T00:00:00+08:00`);
-    const all=[]; for(let d=new Date(start); d<=end; d=new Date(d.getTime()+86400000)) all.push(chinaDateKey(d.toISOString()));
+    const monthKeys = [...new Set(keys.map(day=>day.slice(0,7)))].sort((a,b)=>state.order === "asc" ? a.localeCompare(b) : b.localeCompare(a));
     const max=Math.max(1,...Object.values(counts));
-    const weekdayRef=new Date(`${keys[0]}T12:00:00+08:00`), startColumn=((weekdayRef.getUTCDay()+6)%7)+1;
-    return `<section class="rt-heatmap-panel"><div><b>${pick("每日工作量概览","Daily workload overview")}</b><span>${pick("颜色越深，当天记录的操作越多；点击日期可直接展开当天。","Darker cells mean more recorded activity; click a date to open it.")}</span></div><div class="rt-heat-weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div class="rt-heatmap">${all.map((day,i)=>{const n=counts[day]||0,level=n?Math.max(.12,n/max):0;return `<button type="button" class="rt-heat-cell" data-rt-day="${day}" style="--level:${level.toFixed(3)};${i===0?`grid-column-start:${startColumn};`:""}" title="${day} · ${n} ${pick("条活动","activities")}"><span>${Number(day.slice(-2))}</span><b>${n||""}</b></button>`}).join("")}</div></section>`;
+    const monthCalendar = (month) => {
+      const recorded = keys.filter(day=>day.startsWith(`${month}-`));
+      const start = new Date(`${recorded[0]}T00:00:00+08:00`), end = new Date(`${recorded[recorded.length-1]}T00:00:00+08:00`);
+      const days=[]; for(let d=new Date(start); d<=end; d=new Date(d.getTime()+86400000)) days.push(chinaDateKey(d.toISOString()));
+      const [year,monthNumber] = month.split("-").map(Number);
+      const firstDay = Number(recorded[0].slice(-2));
+      const startColumn = ((new Date(Date.UTC(year,monthNumber-1,firstDay)).getUTCDay()+6)%7)+1;
+      const total = recorded.reduce((sum,day)=>sum+(counts[day]||0),0);
+      return `<section class="rt-heat-month" data-rt-heat-month="${esc(month)}"><header class="rt-heat-month-header"><div><b>${esc(monthLabel(month))}</b><span>${esc(month)} · ${pick("北京时间","China Standard Time")}</span></div><div><strong>${recorded.length}</strong><span>${pick("个研究日","research days")}</span><strong>${total}</strong><span>${pick("条活动","activities")}</span></div></header><div class="rt-heat-weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div class="rt-heatmap">${days.map((day,i)=>{const n=counts[day]||0,level=n?Math.max(.12,n/max):0;return `<button type="button" class="rt-heat-cell" data-rt-day="${day}" style="--level:${level.toFixed(3)};${i===0?`grid-column-start:${startColumn};`:""}" title="${day} · ${n} ${pick("条活动","activities")}"><span>${Number(day.slice(-2))}</span><b>${n||""}</b></button>`}).join("")}</div></section>`;
+    };
+    return `<section class="rt-heatmap-panel"><div class="rt-heatmap-heading"><b>${pick("每日工作量概览","Daily workload overview")}</b><span>${pick("按月分开查看；颜色越深，当天记录的操作越多，点击日期可直接展开当天。","Split by month; darker cells mean more recorded activity, and clicking a date opens that day.")}</span></div><div class="rt-heat-months">${monthKeys.map(monthCalendar).join("")}</div></section>`;
   };
 
   const overview = () => {
