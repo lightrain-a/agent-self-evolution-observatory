@@ -538,6 +538,28 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
                 with self.assertRaisesRegex(SystemExit,"STOP_BEFORE_ASSEMBLE_CONTROL_SNAPSHOT_SUPERSEDED"):
                     runner.main()
 
+    def test_cli_batch_size_dispatches_to_evolve(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            run=Path(td)
+            with patch("research_pipeline.problem_search_stage_runner._assert_run_control",return_value="f"*64),patch.object(runner,"evolve",return_value={"ok":True}) as evolve_call,patch("sys.argv",["problem_search_stage_runner","evolve","--run-root",str(run),"--generation","1","--part","2","--batch-size","1","--model","test"]):
+                runner.main()
+        evolve_call.assert_called_once_with(pool=None,run_root=run,generation=1,part=2,batch_size=1,model="test",memory_path=None)
+
+    def test_cli_preserves_formulate_default_batch_size(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            run=Path(td)
+            with patch("research_pipeline.problem_search_stage_runner._assert_run_control",return_value="f"*64),patch.object(runner,"formulate",return_value={"ok":True}) as formulate_call,patch("sys.argv",["problem_search_stage_runner","formulate","--run-root",str(run),"--part","3","--model","test"]):
+                runner.main()
+        formulate_call.assert_called_once_with(pool=None,run_root=run,part=3,batch_size=2,model="test",memory_path=None)
+
+    def test_cli_rejects_nonpositive_batch_size_before_control(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            run=Path(td)
+            with patch("research_pipeline.problem_search_stage_runner._assert_run_control") as control,patch("sys.argv",["problem_search_stage_runner","evolve","--run-root",str(run),"--batch-size","0"]):
+                with self.assertRaisesRegex(SystemExit,"--batch-size must be >= 1"):
+                    runner.main()
+        control.assert_not_called()
+
     def test_formulation_parser_salvages_only_truncated_optional_notes(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);raw='```json\n{"candidates":[],"rejected":[{"source_branch_id":"B1","reason":"complete scientific rejection","reduction_class":"UNDERFORMED"}],\n  "notes": "optional metadata was cut'

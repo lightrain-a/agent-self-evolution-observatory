@@ -735,7 +735,8 @@ def finalize(*,pool:Path|None,run_root:Path)->dict:
 def main()->None:
     ap=argparse.ArgumentParser()
     ap.add_argument("command",choices=("expand","replay-expand","assemble","evolve","formulate","replay-formulate","audit","evidence-design","evidence-recompile","evidence-review","evidence-substrate-request","evidence-substrate-compile","evidence-harness-compile","evidence-adjudicate","falsifier-request","falsifier-preflight","review","finalize"))
-    ap.add_argument("--pool",type=Path);ap.add_argument("--run-root",type=Path,required=True);ap.add_argument("--lane");ap.add_argument("--count",type=int,default=6);ap.add_argument("--part",type=int,default=1);ap.add_argument("--generation",type=int,default=1);ap.add_argument("--model",default=PREMIUM_AUTO);ap.add_argument("--memory",type=Path);ap.add_argument("--raw-input",type=Path);ap.add_argument("--raw-sha256",default="");ap.add_argument("--raw-origin-control",default="");ap.add_argument("--resolved-model",default="");ap.add_argument("--support-inventory",type=Path);ap.add_argument("--evidence-receipts",type=Path);ap.add_argument("--substrate-receipts",type=Path);ap.add_argument("--harness-receipts",type=Path);a=ap.parse_args()
+    ap.add_argument("--pool",type=Path);ap.add_argument("--run-root",type=Path,required=True);ap.add_argument("--lane");ap.add_argument("--count",type=int,default=6);ap.add_argument("--batch-size",type=int);ap.add_argument("--part",type=int,default=1);ap.add_argument("--generation",type=int,default=1);ap.add_argument("--model",default=PREMIUM_AUTO);ap.add_argument("--memory",type=Path);ap.add_argument("--raw-input",type=Path);ap.add_argument("--raw-sha256",default="");ap.add_argument("--raw-origin-control",default="");ap.add_argument("--resolved-model",default="");ap.add_argument("--support-inventory",type=Path);ap.add_argument("--evidence-receipts",type=Path);ap.add_argument("--substrate-receipts",type=Path);ap.add_argument("--harness-receipts",type=Path);a=ap.parse_args()
+    if a.batch_size is not None and a.batch_size<1:raise SystemExit("--batch-size must be >= 1")
     stop_marker=a.run_root/"shadow-run-qualification-stop.json"
     if stop_marker.exists():
         state=json.loads(stop_marker.read_text(encoding="utf-8"));raise SystemExit(f"shadow run stopped by qualification gate: {state.get('status','STOPPED')}")
@@ -745,15 +746,15 @@ def main()->None:
         if a.raw_input is None:raise SystemExit("--raw-input is required for replay-expand")
         result=replay_expand(pool=a.pool,run_root=a.run_root,lane=a.lane,count=a.count,part=a.part,memory_path=a.memory,raw_input=a.raw_input,expected_raw_sha256=a.raw_sha256,requested_model=a.model,resolved_model=a.resolved_model,raw_origin_control_snapshot_sha256=a.raw_origin_control)
     elif a.command=="assemble":result=assemble(run_root=a.run_root)
-    elif a.command=="evolve":result=evolve(pool=a.pool,run_root=a.run_root,generation=a.generation,part=a.part,model=a.model,memory_path=a.memory)
-    elif a.command=="formulate":result=formulate(pool=a.pool,run_root=a.run_root,part=a.part,model=a.model,memory_path=a.memory)
+    elif a.command=="evolve":result=evolve(pool=a.pool,run_root=a.run_root,generation=a.generation,part=a.part,batch_size=a.batch_size or 6,model=a.model,memory_path=a.memory)
+    elif a.command=="formulate":result=formulate(pool=a.pool,run_root=a.run_root,part=a.part,batch_size=a.batch_size or 2,model=a.model,memory_path=a.memory)
     elif a.command=="replay-formulate":
         if a.raw_input is None:raise SystemExit("--raw-input is required for replay-formulate")
-        result=replay_formulate(pool=a.pool,run_root=a.run_root,part=a.part,memory_path=a.memory,raw_input=a.raw_input,expected_raw_sha256=a.raw_sha256,requested_model=a.model,resolved_model=a.resolved_model,raw_origin_control_snapshot_sha256=a.raw_origin_control)
+        result=replay_formulate(pool=a.pool,run_root=a.run_root,part=a.part,batch_size=a.batch_size or 2,memory_path=a.memory,raw_input=a.raw_input,expected_raw_sha256=a.raw_sha256,requested_model=a.model,resolved_model=a.resolved_model,raw_origin_control_snapshot_sha256=a.raw_origin_control)
     elif a.command=="audit":result=machine_audit(pool=a.pool,run_root=a.run_root)
-    elif a.command=="evidence-design":result=evidence_design(pool=a.pool,run_root=a.run_root,part=a.part,model=a.model)
-    elif a.command=="evidence-recompile":result=evidence_operationalization_recompile(run_root=a.run_root,part=a.part,model=a.model)
-    elif a.command=="evidence-review":result=evidence_contract_review(run_root=a.run_root,part=a.part,model=a.model)
+    elif a.command=="evidence-design":result=evidence_design(pool=a.pool,run_root=a.run_root,part=a.part,batch_size=a.batch_size or 2,model=a.model)
+    elif a.command=="evidence-recompile":result=evidence_operationalization_recompile(run_root=a.run_root,part=a.part,batch_size=a.batch_size or 2,model=a.model)
+    elif a.command=="evidence-review":result=evidence_contract_review(run_root=a.run_root,part=a.part,batch_size=a.batch_size or 2,model=a.model)
     elif a.command=="evidence-substrate-request":result=evidence_substrate_request(run_root=a.run_root)
     elif a.command=="evidence-substrate-compile":
         if a.substrate_receipts is None:raise SystemExit("--substrate-receipts is required for evidence-substrate-compile")
@@ -770,7 +771,7 @@ def main()->None:
         if a.support_inventory is None:raise SystemExit("--support-inventory is required for falsifier-preflight")
         machine_path=a.run_root/"machine-audit.json";machine=json.loads(machine_path.read_text(encoding="utf-8"));_require_artifact_control(machine,control_sha,machine_path,"1.3-shadow");state=write_problem_falsifier_preflight(run_root=a.run_root,support_inventory_path=a.support_inventory);result={"status":state.get("status"),"summary":state.get("summary"),"scientific_authority":False}
     elif a.command=="finalize":result=finalize(pool=a.pool,run_root=a.run_root)
-    else:result=review(pool=a.pool,run_root=a.run_root,part=a.part,model=a.model)
+    else:result=review(pool=a.pool,run_root=a.run_root,part=a.part,batch_size=a.batch_size or 2,model=a.model)
     print(json.dumps(result,ensure_ascii=False))
 
 if __name__=="__main__":main()
