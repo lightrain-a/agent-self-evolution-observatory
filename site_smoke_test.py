@@ -16,6 +16,7 @@ CANONICAL_PAGES = {
     "domains.html": "domains",
     "evaluation.html": "evaluation",
     "system-overview.html": "system-overview",
+    "research-timeline.html": "research-timeline",
     "research-directions.html": "research-directions",
     "paper-ideas.html": "paper-ideas",
     "experiments.html": "experiments",
@@ -66,6 +67,7 @@ REQUIRED_STATIC = [
     "generated/idea-discovery-v3.json", "generated/idea-discovery-v3.js", "generated/idea-discovery-v3-external-reviews.json",
     "generated/idea-discovery-v31.json", "generated/idea-discovery-v31.js", "generated/idea-discovery-v31-external-reviews.json",
     "content-system-overview.js", "system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-reader.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js", "system-overview.css", "system-overview-v2.css",
+    "research-timeline.html", "research-timeline-view.js", "research-timeline.css", "generated/research-timeline.js", "generated/research-timeline.json",
     "idea-lab.css",
     "current-research-status-view.js", "generated/current-research-status.json", "generated/current-research-status.js",
     "generated/research-memory-wiki.json", "generated/research-memory-wiki.js",
@@ -86,6 +88,14 @@ def main() -> None:
     current_status = json.loads((ROOT / "generated" / "current-research-status.json").read_text(encoding="utf-8"))
     research_system = json.loads((ROOT / "generated" / "research-system-state.json").read_text(encoding="utf-8"))
     research_memory = json.loads((ROOT / "generated" / "research-memory-wiki.json").read_text(encoding="utf-8"))
+    research_timeline = json.loads((ROOT / "generated" / "research-timeline.json").read_text(encoding="utf-8"))
+    timeline_summary = research_timeline.get("summary") or {}
+    timeline_policy = research_timeline.get("projection_policy") or {}
+    timeline_events = research_timeline.get("events") or []
+    if int(timeline_summary.get("events") or 0) != len(timeline_events) or len(timeline_events) < 756 or int(timeline_summary.get("days") or 0) < 20:
+        fail("research timeline must preserve the full generated history rather than a truncated recent subset")
+    if timeline_policy.get("read_only") is not True or timeline_policy.get("display_timezone") != "Asia/Shanghai":
+        fail("research timeline must remain a read-only China-time projection")
     embedded_memory = research_system.get("research_memory_wiki") or {}
     if research_memory.get("wiki_sha256") != embedded_memory.get("wiki_sha256") or (research_memory.get("summary") or {}) != (embedded_memory.get("summary") or {}) or (research_memory.get("lint") or {}) != (embedded_memory.get("lint") or {}):
         fail("research memory wiki is stale versus embedded research-system state")
@@ -147,12 +157,18 @@ def main() -> None:
             fail(f"{filename} must have a non-empty title and meta description")
         if "data.js" not in scripts or "app.js" not in scripts:
             fail(f"{filename} must load data.js and app.js")
-        if "page-architecture-data.js" not in scripts:
-            fail(f"{filename} must load page-architecture-data.js")
-        if "generated/current-research-status.js" not in scripts or "current-research-status-view.js" not in scripts:
-            fail(f"{filename} must load the unified public current-research status before app.js")
-        if scripts.index("generated/current-research-status.js") > scripts.index("app.js") or scripts.index("current-research-status-view.js") > scripts.index("app.js"):
-            fail(f"{filename} must load current-research status/view before app.js")
+        if filename == "research-timeline.html":
+            if "generated/research-timeline.js" not in scripts or "research-timeline-view.js" not in scripts:
+                fail("research-timeline.html must load its generated projection and dedicated renderer")
+            if scripts.index("generated/research-timeline.js") > scripts.index("app.js") or scripts.index("research-timeline-view.js") > scripts.index("app.js"):
+                fail("research timeline data/view must load before app.js")
+        else:
+            if "page-architecture-data.js" not in scripts:
+                fail(f"{filename} must load page-architecture-data.js")
+            if "generated/current-research-status.js" not in scripts or "current-research-status-view.js" not in scripts:
+                fail(f"{filename} must load the unified public current-research status before app.js")
+            if scripts.index("generated/current-research-status.js") > scripts.index("app.js") or scripts.index("current-research-status-view.js") > scripts.index("app.js"):
+                fail(f"{filename} must load current-research status/view before app.js")
         for script in scripts:
             referenced_scripts.add(script)
             if not (ROOT / script).exists():
@@ -170,8 +186,8 @@ def main() -> None:
     if {"content-review.js", "content-review-external.js"} & selected_scripts:
         fail("selected-paper must not load stale review overrides")
     selected_html = (ROOT / "selected-paper.html").read_text(encoding="utf-8")
-    if "Selected ICLR Paper · STRI" not in selected_html:
-        fail("selected-paper must be explicitly labeled as the current STRI workspace")
+    if "Papers · STRI" not in selected_html:
+        fail("selected-paper must be explicitly labeled as the STRI PaperState workspace")
     if "current-research-status-view.js" not in selected_html:
         fail("selected-paper must load the unified current-paper renderer")
 
@@ -246,11 +262,11 @@ def main() -> None:
     # Reader-facing clarity contract: canonical entry copy must explain concrete
     # user questions/actions before exposing internal machine terminology.
     clarity_markers = {
-        "data.js": ("集中回答四个具体问题", "是否有新 Idea 通过正式问题检查", "现在是否还有正式实验可以启动"),
+        "data.js": ("集中回答四个具体问题", "统一科研工作区", "每个 ResearchItem"),
         "content-system-overview.js": ("一个研究 Idea 怎样才能变成实验，再变成论文", "AI 评审可以指出文献撞车", "只有人工负责人可以修改核心科学主张"),
         "system-overview-reader.js": ("这个失败真的存在吗", "这个最小实验无论成功或失败，都会改变下一步吗", "什么时候才允许说“这个原理走不通”"),
         "system-overview-operations.js": ("长实验怎样安全启动、断线后怎样继续", "哪些文件必须留下，才能以后证明当时到底发生了什么"),
-        "content-idea-portfolio.js": ("这页不是“看起来不错的 Idea 清单”", "最近一轮问题发现又审查了 41 条草案", "第一章直接回答现在什么还能跑、为什么"),
+        "content-idea-portfolio.js": ("这页不是“看起来不错的 Idea 清单”", "最近一轮问题发现又审查了 41 条草案", "先从 ResearchItem 理解问题和当前结论"),
         "current-research-status-view.js": ("先看现在该做什么", "以前观察到的记忆效应为什么现在不继续做", "现在到底有没有实验可以正式启动"),
         "content-selected-iclr.js": ("这个旧项目现在没有任何实验允许启动", "不能只靠追加样本或换第二个模型重开"),
         "content-research-directions.js": ("研究方向”表示一个长期值得研究的问题", "历史项目只是过去尝试过的方案"),
@@ -742,6 +758,8 @@ def main() -> None:
     if any(position < 0 for position in script_positions) or script_positions != sorted(script_positions):
         fail("bibliography must load ranking and analysis scripts before app.js")
     for filename in CANONICAL_PAGES:
+        if filename == "research-timeline.html":
+            continue
         html = (ROOT / filename).read_text(encoding="utf-8")
         if html.find('src="citation-ranking-data.js"') < 0 or html.find('src="citation-ranking-data.js"') > html.find('src="app.js"'):
             fail(f"{filename} must load citation-ranking-data.js before app.js for stable reference numbering")
@@ -755,8 +773,9 @@ def main() -> None:
             fail(f"literature ranking implementation is missing {marker}")
 
     nav_targets = sorted(set(re.findall(r'\["([a-z0-9-]+\.html)"', data_text.split("window.SUPPLEMENTAL_PAPERS", 1)[0])))
-    if set(nav_targets) != set(CANONICAL_PAGES):
-        fail(f"navigation must contain only canonical pages: {nav_targets}")
+    expected_nav = set(CANONICAL_PAGES) - {"experiments.html"}
+    if set(nav_targets) != expected_nav:
+        fail(f"primary navigation must contain canonical reader pages while keeping experiments as a deep-audit route: {nav_targets}")
 
     sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
     for filename in CANONICAL_PAGES:

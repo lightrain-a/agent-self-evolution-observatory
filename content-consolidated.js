@@ -77,16 +77,16 @@
 
   if (sources["paper-ideas"]) {
     pages["paper-ideas"] = Object.assign({}, sources["paper-ideas"], {
-      title:{en:"ICLR-first current research contracts and terminal decisions",zh:"ICLR 优先：当前研究合同与终态决策"},
-      lead:{en:"Read the top table for the current answer. STRI is ready for submission. No new research idea has yet passed the check that asks whether the problem is real, not already solved by prior work, and not already explained by a simpler known mechanism. The earlier memory-effect observation is kept only as history because no independent mechanism survived. Tentative candidates are either waiting for one named piece of evidence or already closed. The 27 old P0 directions are historical decisions, not experiments waiting to run.",zh:"只想知道现在该做什么，先看顶部状态表：STRI 已达到投稿就绪；目前还没有新研究问题同时通过“问题确实存在、已有论文没有解决、简单成熟解释也不足”这三项检查。之前的记忆效应只保留为历史现象，因为没有独立机制继续存活。暂定候选要么明确写着还缺哪一项证据，要么已经关闭；27 个旧 P0 方向只是历史决策，不是等待启动的实验队列。"},
+      title:{en:"Research Portfolio: ideas, experiments, evidence, and decisions",zh:"研究组合：Idea、实验、证据与当前决策"},
+      lead:{en:"This is the canonical workspace before paper writing. Research is grouped by A–G scientific themes, and every ResearchItem keeps the problem, proposed mechanism, strongest same-information baseline, experiment/evidence trail, current scientific decision, execution authority, and reopen condition together. Historical P0 is a milestone inside the item—not a separate queue.",zh:"这是进入论文阶段之前的统一科研工作区。所有研究按 A–G 科学问题大类组织；每个 ResearchItem 在同一张卡里串起问题、候选机制、最强同信息简单对照、实验/证据轨迹、当前科学结论、执行权限和重开条件。历史 P0 只是 ResearchItem 内的里程碑，不再是一张平行实验队列。"},
       includeRanking:true
     });
   }
 
   pages["selected-paper"] = {
-    eyebrow:{en:"Selected ICLR Paper · STRI",zh:"当前选中 ICLR 论文 · STRI"},
+    eyebrow:{en:"Papers · STRI",zh:"论文 · STRI"},
     title:{en:"STRI: Self-Evolution Should Not Depend on How Skills Are Split",zh:"STRI：技能如何拆分不应影响自进化（Self-Evolution Should Not Depend on How Skills Are Split）"},
-    lead:{en:"This page answers the submission question directly: what STRI claims, which experiments support each claim, which broader claims are excluded, whether the manuscript and supplement pass checks, which files are ready to download, and what the authors still need to verify before uploading to OpenReview. The older Regression-Gated project is shown only as history below.",zh:"本页直接回答投稿前最需要确认的问题：STRI 到底主张什么、每条主张由哪些实验支持、哪些更宽的结论明确不说、正文和补充材料是否检查通过、哪些文件已经可以下载，以及作者上传 OpenReview 前还要人工确认什么。旧 Regression-Gated 项目只在下方作为历史记录保留。"},
+    lead:{en:"This is the PaperState workspace for research that has already passed into writing. It only manages STRI's supported and excluded claims, claim–evidence mapping, manuscript figures, QA, supplement, release artifacts, and submission handoff. Research discovery, stopped ideas, and experiment queues remain in the Research Portfolio.",zh:"这是已经通过科研阶段、进入论文阶段后的 PaperState 工作区。这里只管理 STRI 的支持/排除主张、主张—证据映射、论文图表、文稿 QA、补充材料、发布工件和投稿交接。新 Idea、停止方向和实验运行状态统一留在 Research Portfolio。"},
     callout:{en:"Submission status: all three STRI claims are supported, the evidence checklist has no remaining debt, the main text is within the 9-page limit, and the anonymous supplement is ready. The remaining work is human author/signoff and deadline/account verification before OpenReview submission; no new experiment is required for the current narrow paper.",zh:"投稿状态：STRI 的 3 条主张都有对应证据，证据清单没有未完成项，正文符合 9 页限制，匿名补充材料也已就绪。当前剩余工作是作者责任确认、截止日期和 OpenReview 账号等人工核验；这篇窄范围论文不需要再补新的实验。"},
     renderMode:"selected-paper-current",
     chapters:chaptersFor("selected-paper")

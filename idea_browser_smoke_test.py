@@ -264,6 +264,23 @@ def main() -> None:
         request("POST", f"/session/{session_id}/window/rect", {"width": 1440, "height": 1000})
         time.sleep(1)
 
+        navigate("/research-timeline.html", 3)
+        timeline = execute(session_id, """return {
+          title: document.querySelector('h1')?.textContent?.trim() || '',
+          dayGroups: document.querySelectorAll('.rt-day').length,
+          openDays: document.querySelectorAll('.rt-day[open]').length,
+          eventRows: document.querySelectorAll('.rt-event').length,
+          visibleCount: Number(document.querySelector('.rt-stats article:first-child b')?.textContent || 0),
+          summary: window.RESEARCH_TIMELINE?.summary || {},
+          timezone: window.RESEARCH_TIMELINE?.projection_policy?.display_timezone || '',
+          ascActive: document.querySelector('[data-rt-order="asc"]')?.classList.contains('active') === true,
+          zhText: document.body.textContent || ''
+        };""")
+        require(timeline["title"] == "研究时间轴", f"timeline must default to its Chinese page title: {timeline}")
+        require(timeline["dayGroups"] >= 20 and timeline["openDays"] == 0, f"timeline must expose the full dated history while keeping days collapsed by default: {timeline}")
+        require(timeline["eventRows"] == timeline["visibleCount"] == int(timeline["summary"].get("events") or 0) and timeline["eventRows"] >= 756, f"timeline rendered event count must match the generated full projection: {timeline}")
+        require(timeline["timezone"] == "Asia/Shanghai" and timeline["ascActive"] and "北京时间" in timeline["zhText"] and "本页只是只读历史投影" in timeline["zhText"], f"timeline timezone/order/authority boundary is incomplete: {timeline}")
+
         navigate("/paper-ideas.html", 6)
         ideas = execute(session_id, """return {
           chapters: document.querySelectorAll('.page-chapter').length,
@@ -272,7 +289,7 @@ def main() -> None:
           toc4: document.querySelectorAll('.toc-level-4').length,
           p0Entry: document.querySelectorAll('.p0-entry-panel').length,
           p0Boards: document.querySelectorAll('.p0-control-board').length,
-          experimentLinks: [...document.querySelectorAll('a')].filter(x=>x.getAttribute('href')==='experiments.html').length,
+          experimentLinks: [...document.querySelectorAll('a')].filter(x=>(x.getAttribute('href')||'').startsWith('experiments.html')).length,
           p0Summary: window.P0_EXPERIMENT_PLAN?.summary || {},
           p0Policy: window.P0_EXPERIMENT_PLAN?.policy || {},
           p0AdmissionSummary: window.RESEARCH_SYSTEM_STATE?.p0_admission?.summary || {},
@@ -315,6 +332,11 @@ def main() -> None:
           categorizedContextCards: document.querySelectorAll('.categorized-context-card').length,
           categorizedContextIds: [...document.querySelectorAll('.categorized-context-card')].map(x=>x.dataset.researchObject||''),
           categorizedContextCodes: [...document.querySelectorAll('.categorized-context-card header > div > span:first-child')].map(x=>(x.textContent||'').trim()),
+          paperHandoffs: document.querySelectorAll('.paper-handoff-research-item').length,
+          paperHandoffEvidence: document.querySelectorAll('.paper-handoff-evidence-step').length,
+          paperHandoffCodes: [...document.querySelectorAll('.paper-handoff-research-item,.paper-handoff-evidence-step')].map(x=>x.dataset.researchCode||''),
+          researchCategoryLanes: document.querySelectorAll('.research-category-lane').length,
+          researchItemEvidenceTracks: document.querySelectorAll('.human-review-idea-card .research-item-evidence-track').length,
           pfCodes: [...document.querySelectorAll('.paper-incubation-card')].map(x=>x.dataset.pfCode||''),
           safetyCodes: [...document.querySelectorAll('[data-safety-code]')].map(x=>x.dataset.safetyCode||''),
           parentItems: document.querySelectorAll('.canonical-parent-item').length,
@@ -413,6 +435,7 @@ def main() -> None:
             ...[...document.querySelectorAll('.supplemental-idea-card summary>div>span')].map(x=>(x.textContent||'').trim()),
             ...[...document.querySelectorAll('.paper-incubation-card')].map(x=>x.dataset.pfCode||''),
             ...[...document.querySelectorAll('.categorized-context-card header>div>span:first-child')].map(x=>(x.textContent||'').trim()),
+            ...[...document.querySelectorAll('[data-research-code]')].map(x=>x.dataset.researchCode||''),
             ...[...document.querySelectorAll('[data-safety-code]')].map(x=>x.dataset.safetyCode||''),
             ...[...document.querySelectorAll('.closed-idea-card')].map(x=>x.dataset.closedCode||''),
           ],
@@ -461,8 +484,9 @@ def main() -> None:
         require((ideas["discussedGroups"],ideas["categoryLinks"],ideas["parentItems"],ideas["lifecycleStrips"],ideas["discussedCards"]) == (7,7,26,26,26), f"category-first ledger must expose seven groups and 26 complete parent cards: {ideas['discussedGroups']}/{ideas['categoryLinks']}/{ideas['parentItems']}/{ideas['lifecycleStrips']}/{ideas['discussedCards']}")
         require((ideas["objectHierarchyPanels"],ideas["objectLevelCards"],ideas["legacyMixedStatusRows"]) == (1,4,0), f"paper-ideas must expose parent, related-direction, numbered-closure, and evidence ledgers separately and remove the old mixed table: {ideas['objectHierarchyPanels']}/{ideas['objectLevelCards']}/{ideas['legacyMixedStatusRows']}")
         require(ideas["inventoryTotals"] == [91,91] and ideas["categoryRecordTotals"] == [12,20,10,3,27,6,13] and sum(ideas["categoryRecordTotals"]) == 91, f"full A-G research inventory must expose 91 deduplicated research objects after three closure merges: {ideas['inventoryTotals']}/{ideas['categoryRecordTotals']}")
-        require(ideas["categorizedContextBanks"] == ideas["openCategorizedContextBanks"] == 2 and ideas["categorizedContextCards"] == 6 and set(ideas["categorizedContextIds"]) == {"STRI","STRI-AUTOSKILL-P19","STRI-P0A","STRI-P0E","MEM-HISTORY","SP-15"}, f"categorized paper/evidence/archive context must be complete and expanded: {ideas['categorizedContextBanks']}/{ideas['openCategorizedContextBanks']}/{ideas['categorizedContextCards']}/{ideas['categorizedContextIds']}")
-        require(set(ideas["categorizedContextCodes"]) == {"E-7","E-7a","E-7b","E-7c","B-12","B-13"}, f"categorized context objects are not normalized to A-G taxonomy: {ideas['categorizedContextCodes']}")
+        require(ideas["categorizedContextBanks"] == ideas["openCategorizedContextBanks"] == 1 and ideas["categorizedContextCards"] == 2 and set(ideas["categorizedContextIds"]) == {"MEM-HISTORY","SP-15"}, f"B-category evidence context must stay complete without splitting the STRI paper chain into peer cards: {ideas['categorizedContextBanks']}/{ideas['openCategorizedContextBanks']}/{ideas['categorizedContextCards']}/{ideas['categorizedContextIds']}")
+        require(set(ideas["categorizedContextCodes"]) == {"B-12","B-13"} and ideas["paperHandoffs"] == 1 and ideas["paperHandoffEvidence"] == 3 and set(ideas["paperHandoffCodes"]) == {"E-7","E-7a","E-7b","E-7c"}, f"E-7 must render as one ResearchItem→PaperState handoff with three nested evidence records: {ideas['categorizedContextCodes']}/{ideas['paperHandoffs']}/{ideas['paperHandoffEvidence']}/{ideas['paperHandoffCodes']}")
+        require(ideas["researchCategoryLanes"] == 21 and ideas["researchItemEvidenceTracks"] == 26, f"seven A-G categories must each expose current/concluded/assets lanes and every parent ResearchItem must expose one integrated evidence trail: {ideas['researchCategoryLanes']}/{ideas['researchItemEvidenceTracks']}")
         require(set(ideas["pfCodes"]) == {"A-8","A-9","A-10","A-11","A-12","B-11","C-7","E-5","E-6"}, f"former PF directions are not distributed into A/B/C/E categories without colliding with parent codes: {ideas['pfCodes']}")
         require(set(ideas["safetyCodes"]) == {"G-1","G-2","G-3","G-4","G-5"}, f"safety directions are not normalized to G-1..G-5: {ideas['safetyCodes']}")
         require((ideas["readyCards"], ideas["mergedCards"], ideas["droppedCards"]) == (0, 6, 20), f"current terminal tone counts are wrong: {ideas['readyCards']}/{ideas['mergedCards']}/{ideas['droppedCards']}")
@@ -494,7 +518,7 @@ def main() -> None:
         require(briefing_mode == {"parents":26,"supplemental":7,"pf":9,"closed":38,"auditClass":True,"resetParents":0,"resetAuditClass":False}, f"briefing/full-audit switch is incomplete: {briefing_mode}")
         require(len(ideas["codes"]) == 26 and len(set(ideas["codes"])) == 26, f"group codes are missing or duplicated: {ideas['codes']}")
         require(all(code in ideas["codes"] for code in ("A-1","A-5","B-1","B-7","C-1","D-1","E-1","F-1","F-3")), f"expected stable group codes are missing: {ideas['codes']}")
-        require(ideas["newGroups"] == ideas["openRelatedBanks"] == 11 and ideas["categoryRelatedBanks"] == ideas["openCategoryRelatedBanks"] == 9 and ideas["newCards"] == 7, f"all related-direction, context, and numbered-closure banks must be visible by default while preserving seven standalone methods: {ideas['newGroups']}/{ideas['openRelatedBanks']}/{ideas['categoryRelatedBanks']}/{ideas['openCategoryRelatedBanks']}/{ideas['newCards']}")
+        require(ideas["newGroups"] == ideas["openRelatedBanks"] == 10 and ideas["categoryRelatedBanks"] == ideas["openCategoryRelatedBanks"] == 9 and ideas["newCards"] == 7, f"related-direction, B-context, and numbered-closure banks must be visible by default while the E-7 paper chain renders as one ResearchItem handoff: {ideas['newGroups']}/{ideas['openRelatedBanks']}/{ideas['categoryRelatedBanks']}/{ideas['openCategoryRelatedBanks']}/{ideas['newCards']}")
         require(set(ideas["standaloneCodes"]) == {"A-6","A-7","B-8","B-9","B-10","E-3","E-4"}, f"standalone methods must have stable scientific-group codes: {ideas['standaloneCodes']}")
         require(not ideas["supplementalBlankPrimaryFields"], f"standalone method cards contain blank primary fields: {ideas['supplementalBlankPrimaryFields']}")
         require((ideas["newFinal"], ideas["newInspired"]) == (0, 0), f"legacy supplemental candidates must not remain active: {ideas['newFinal']}/{ideas['newInspired']}")
@@ -745,6 +769,7 @@ def main() -> None:
           p0AuthorizedState: Number(window.RESEARCH_SYSTEM_STATE?.pilot_registry?.summary?.p0_authorized || 0),
           p1AuthorizedState: Number(window.RESEARCH_SYSTEM_STATE?.pilot_registry?.summary?.p1_authorized || 0),
           validResults: Number(window.RESEARCH_SYSTEM_STATE?.pilot_registry?.summary?.valid_result_files || 0),
+          portfolioBackLinks: [...document.querySelectorAll('a')].filter(x=>(x.getAttribute('href')||'')==='paper-ideas.html').length,
           text: document.body.textContent || ''
         };""")
         require(experiments["chapters"] == 3, f"experiments page must have three chapters, got {experiments['chapters']}")
@@ -798,8 +823,29 @@ def main() -> None:
         require((experiments["p0AuthorizedState"], experiments["p1AuthorizedState"]) == (0, 0), f"live authorization state is wrong: {experiments['p0AuthorizedState']}/{experiments['p1AuthorizedState']}")
         require(("结果与效果总表" in experiments["text"] or "Results and effect snapshot" in experiments["text"]) and ("人工审批与下一阶段锁" in experiments["text"] or "Human approvals and next-phase locks" in experiments["text"]), "experiment result/approval sections are not visible")
         require(("Pre-P0" in experiments["text"] and ("实验诊断与原子修复树" in experiments["text"] or "Experiment diagnosis and atomic repair tree" in experiments["text"])), "Pre-P0 or experiment diagnosis/repair section is not visible")
+        require("科学结论统一回到 ResearchItem" in experiments["text"] and experiments["portfolioBackLinks"] >= 1, "experiments page must stay a deep technical audit with an explicit route back to the Research Portfolio")
+
+        navigate("/selected-paper.html", 4)
+        selected = execute(session_id, """return {
+          chapters: document.querySelectorAll('.page-chapter').length,
+          currentSTRI: document.querySelectorAll('#selected-stri-current').length,
+          archive: document.querySelectorAll('#historical-paper-archive').length,
+          archiveOpen: document.querySelector('#historical-paper-archive')?.open === true,
+          currentStatus: window.CURRENT_RESEARCH_STATUS?.headline || {},
+          currentPaper: window.CURRENT_RESEARCH_STATUS?.leading_paper_track || {},
+          currentDynamic: window.CURRENT_RESEARCH_STATUS?.stri_dynamic_evidence || {},
+          title: document.title,
+          text: document.body.textContent || ''
+        };""")
+        require((selected["chapters"],selected["currentSTRI"],selected["archive"],selected["archiveOpen"]) == (5,1,1,False), f"PaperState must keep STRI current and the former project inside one collapsed historical archive: {selected}")
+        paper=selected["currentPaper"]
+        require(paper.get("paper_id") == "STRI" and paper.get("paper_quality_v2_passed") is True and paper.get("paper_quality_content_addressed_completion") is True and paper.get("paper_quality_content_addressed_files") == 29 and paper.get("paper_quality_evidence_debt") == 0 and (paper.get("qa_passed"),paper.get("qa_total")) == (60,60) and (paper.get("official_qa_passed"),paper.get("official_qa_total")) == (60,60) and paper.get("paper_quality_schema_version") == "2.1" and paper.get("paper_quality_main_visualizations") == 4 and paper.get("paper_visual_figure_qa") == "PASS" and paper.get("supplement_unit_tests") == "29/29 PASS" and paper.get("official_source_conflict") is False and paper.get("deadline_status") == "AUTHOR_SUBMISSION_SOURCES_ALIGNED" and paper.get("operational_safe_abstract_deadline_aoe") == "2026-09-18" and paper.get("operational_safe_full_paper_deadline_aoe") == "2026-09-25" and paper.get("recorded_author_guide_abstract_deadline_aoe") == "2026-09-18" and paper.get("recorded_author_guide_full_paper_deadline_aoe") == "2026-09-25" and paper.get("author_membership_freezes_at_abstract_deadline") is True and paper.get("title_freezes_at_full_paper_deadline") is True and selected["currentStatus"].get("paper_ready") == 1, f"STRI PaperState projection is stale: {paper}")
+        p0e=selected["currentDynamic"].get("skillrl_p0e") or {}
+        require(p0e.get("status") == "STOP_FIXED_POLICY_DYNAMIC_BRIDGE" and p0e.get("persistent_principle_dead_end_certified") is False and p0e.get("principle_disposition") == "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED" and p0e.get("stage2_locked") is True and p0e.get("new_gpu_authorized") is False and (p0e.get("calibration") or {}).get("calibration_pristine_success") == 18 and (p0e.get("calibration") or {}).get("paired_units") == 24, f"PaperState P0-E scientific boundary is stale: {p0e}")
+        require("论文 · STRI" in selected["text"] and "非当前 PaperState · 历史归档" in selected["text"] and "下一步只做人工责任确认与 OpenReview 提交交接" in selected["text"], "PaperState reader boundary or submission handoff is missing")
+
         print("PASS")
-        print("Focused system/idea pages verified in a real browser")
+        print("Focused timeline / Research Portfolio / experiment audit / PaperState pages verified in a real browser")
     finally:
         if session_id:
             try:

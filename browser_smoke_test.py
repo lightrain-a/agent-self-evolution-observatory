@@ -156,7 +156,7 @@ def main() -> None:
               corpus: Number(document.querySelector('.stat b')?.textContent || 0)
             };""",
         )
-        require(home["nav"] == 11, f"expected 11 canonical navigation targets, got {home['nav']}")
+        require(home["nav"] == 11, f"expected 11 primary navigation targets including the Research Timeline, with experiments retained only as a deep-audit route, got {home['nav']}")
         require(home["figure"], "knowledge-map figure is missing")
         require(home["distribution"] >= 6, "live update-surface distribution is missing")
         require(home["missing"] == 0, "home contains unresolved citations")
@@ -470,6 +470,11 @@ def main() -> None:
             session_id,
             """return {
               chapters: document.querySelectorAll('.page-chapter').length,
+              categoryGroups: document.querySelectorAll('.canonical-idea-group').length,
+              categoryLanes: document.querySelectorAll('.research-category-lane').length,
+              evidenceTracks: document.querySelectorAll('.human-review-idea-card .research-item-evidence-track').length,
+              paperHandoffs: document.querySelectorAll('.paper-handoff-research-item').length,
+              paperHandoffEvidence: document.querySelectorAll('.paper-handoff-evidence-step').length,
               parentCards: document.querySelectorAll('.human-review-idea-card').length,
               standaloneCards: document.querySelectorAll('.supplemental-idea-card').length,
               incubationCards: document.querySelectorAll('.paper-incubation-card').length,
@@ -480,7 +485,8 @@ def main() -> None:
               legacyPreGpuBoards: document.querySelectorAll('.pre-gpu-candidate-board').length,
               legacyP0Entry: document.querySelectorAll('.p0-entry-panel').length,
               currentLedger: document.querySelectorAll('#current-research-portfolio').length,
-              currentRows: document.querySelectorAll('#current-research-portfolio .current-research-table tbody tr').length,
+              currentInventoryTotal: Number(document.querySelector('[data-research-inventory-total]')?.getAttribute('data-research-inventory-total') || 0),
+              legacyCurrentRows: document.querySelectorAll('#current-research-portfolio .current-research-table tbody tr').length,
               leadingPaperTracks: document.querySelectorAll('#current-research-portfolio .current-paper-track-card').length,
               currentStatus: window.CURRENT_RESEARCH_STATUS?.headline || {},
               striP0E: window.CURRENT_RESEARCH_STATUS?.stri_dynamic_evidence?.skillrl_p0e || {},
@@ -489,36 +495,37 @@ def main() -> None:
               text: document.body.textContent || ''
             };""",
         )
-        require(idea_portfolio["chapters"] == 2, f"Paper Ideas must merge standalone methods and paper-first new problems into Chapter II, got {idea_portfolio['chapters']}")
+        require(idea_portfolio["chapters"] == 0 and idea_portfolio["categoryGroups"] == 7 and idea_portfolio["categoryLanes"] == 21 and idea_portfolio["evidenceTracks"] == 26 and idea_portfolio["paperHandoffs"] == 1 and idea_portfolio["paperHandoffEvidence"] == 3, f"Research Portfolio must use seven A-G groups, three reading lanes per group, one integrated evidence trail per parent ResearchItem, and one STRI PaperState handoff: {idea_portfolio}")
         require(idea_portfolio["parentCards"] == 26, f"expected all 26 human-parent histories, got {idea_portfolio['parentCards']}")
         require(idea_portfolio["standaloneCards"] == 7, f"expected only the seven validated standalone methods after paper-first authority quarantine, got {idea_portfolio['standaloneCards']}")
         require((idea_portfolio["incubationCards"],idea_portfolio["incubationP0"],idea_portfolio["incubationSummary"].get("p0_authorized"),idea_portfolio["incubationSummary"].get("gpu_authorized")) == (9,0,0,0), f"paper-first queue must remain nine design candidates with zero validated P0/GPU authority: {idea_portfolio}")
         require("STOP_MATCHED_POST_ONLY_EQUIVALENT" in idea_portfolio["text"] and "STOP_MATCHED_SOFT_SCALAR_EQUIVALENT" in idea_portfolio["text"] and "DIAGNOSTIC ONLY" in idea_portfolio["text"], "completed premature Method diagnostics are not visible on Paper Ideas")
-        require(idea_portfolio["terminalGroups"] >= 3 and idea_portfolio["terminalStats"] == 4, f"terminal routing UI is incomplete: {idea_portfolio['terminalGroups']}/{idea_portfolio['terminalStats']}")
+        require(idea_portfolio["terminalGroups"] == 0 and idea_portfolio["terminalStats"] == 0, f"legacy terminal-status grouping must not compete with the A-G ResearchItem lanes: {idea_portfolio['terminalGroups']}/{idea_portfolio['terminalStats']}")
         require(idea_portfolio["legacyPreGpuBoards"] == 0 and idea_portfolio["legacyP0Entry"] == 0, "legacy Pre-GPU/P0-entry boards leaked back into canonical Paper Ideas")
-        require(idea_portfolio["currentLedger"] == 1 and idea_portfolio["currentRows"] >= 7 and idea_portfolio["leadingPaperTracks"] == 1, f"unified current idea ledger is incomplete: {idea_portfolio}")
+        require(idea_portfolio["currentLedger"] == 1 and idea_portfolio["currentInventoryTotal"] == 91 and idea_portfolio["legacyCurrentRows"] == 0 and idea_portfolio["leadingPaperTracks"] == 1, f"complete ResearchItem accounting or PaperState handoff is incomplete, or the legacy current-status row table leaked back in: {idea_portfolio}")
         p0e=idea_portfolio["striP0E"]
         require(p0e.get("status") == "STOP_FIXED_POLICY_DYNAMIC_BRIDGE" and p0e.get("principle_disposition") == "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED" and p0e.get("persistent_principle_dead_end_certified") is False and p0e.get("stage2_locked") is True and p0e.get("new_gpu_authorized") is False, f"qualified STRI P0-E machine boundary is stale: {p0e}")
-        require("STRI-P0E" in idea_portfolio["text"] and "这条额外路线已经停止继续扩实验" in idea_portfolio["text"] and "新 GPU=未授权" in idea_portfolio["text"], "STRI P0-E plain-language boundary is missing from the current ledger")
+        require("E-7c" in idea_portfolio["text"] and "这条额外路线已经停止继续扩实验" in idea_portfolio["text"] and "新 GPU=未授权" in idea_portfolio["text"], "STRI P0-E must stay visible as nested E-7c evidence rather than a peer Idea")
         cs=idea_portfolio["currentStatus"]
         require((cs.get("paper_ready"),cs.get("paper_quality_hold"),cs.get("paper_quality_evidence_debt"),cs.get("canonical_live_ideas"),cs.get("launchable_formal_experiments"),cs.get("legacy_p0_lifecycle")) == (1,0,0,0,0,27) and cs.get("shadow_qualification_ready") == expected_headline.get("shadow_qualification_ready") and int(cs.get("shadow_dead_ends") or 0) >= 0 and int(cs.get("shadow_holds") or 0) >= 0, f"current status invariants are wrong: rendered={cs} expected={expected_headline}")
         require(idea_portfolio["legacyFinalPass"] == 20 and idea_portfolio["experimentStops"] >= 16, f"historical lineage state is unexpectedly missing: {idea_portfolio}")
         require("Historical ICLR Paper Workspace" not in idea_portfolio["text"] and "Selected ICLR Paper Workspace" not in idea_portfolio["text"], "historical paper workspace content leaked into Paper Ideas")
-        require((("当前科研状态" in idea_portfolio["text"] and "以前观察到的记忆效应为什么现在不继续做" in idea_portfolio["text"]) or ("Current research state" in idea_portfolio["text"] and "Why the previously observed memory effect is not being pursued now" in idea_portfolio["text"])) and "20 个当前 FINAL-PASS" not in idea_portfolio["text"], "Paper Ideas current-state explanation is incomplete or stale FINAL-PASS framing leaked into the current view")
-        require(all(marker in idea_portfolio["text"] for marker in ("论文就绪","还缺的论文证据项","通过正式问题检查的新研究问题","已设计最小验证实验的新现象","缺证据、暂不推进的候选")), "Paper Ideas plain-language current-status labels are incomplete")
+        require((("当前科研状态" in idea_portfolio["text"] and "以前的记忆效应只保留为历史观察" in idea_portfolio["text"]) or ("Current research state" in idea_portfolio["text"] and "The earlier memory effect is historical only" in idea_portfolio["text"])) and "20 个当前 FINAL-PASS" not in idea_portfolio["text"], "Paper Ideas current-state explanation is incomplete or stale FINAL-PASS framing leaked into the current view")
+        require(all(marker in idea_portfolio["text"] for marker in ("投稿就绪论文","还缺的论文证据","通过正式问题检查的新研究问题","正在做最小验证的新现象","因缺证据暂缓的新现象","现在允许启动的正式实验")), "Paper Ideas briefing-first current-status labels are incomplete")
 
         navigate("/selected-paper.html", 4)
         selected = execute(session_id, """return {
           chapters: document.querySelectorAll('.page-chapter').length,
           currentSTRI: document.querySelectorAll('#selected-stri-current').length,
           archive: document.querySelectorAll('#historical-paper-archive').length,
+          archiveOpen: document.querySelector('#historical-paper-archive')?.open === true,
           currentStatus: window.CURRENT_RESEARCH_STATUS?.headline || {},
           currentPaper: window.CURRENT_RESEARCH_STATUS?.leading_paper_track || {},
           currentDynamic: window.CURRENT_RESEARCH_STATUS?.stri_dynamic_evidence || {},
           title: document.title,
           text: document.body.textContent || ''
         };""")
-        require(selected["chapters"] == 5 and selected["currentSTRI"] == 1 and selected["archive"] == 1, f"selected-paper must render one current STRI chapter plus four historical archive chapters: {selected}")
+        require(selected["chapters"] == 5 and selected["currentSTRI"] == 1 and selected["archive"] == 1 and not selected["archiveOpen"], f"Papers must render one current STRI PaperState while keeping the four former-project chapters inside one collapsed historical archive: {selected}")
         require(selected["currentPaper"].get("paper_id") == "STRI" and selected["currentPaper"].get("paper_quality_v2_passed") is True and selected["currentPaper"].get("paper_quality_content_addressed_completion") is True and selected["currentPaper"].get("paper_quality_content_addressed_files") == 29 and selected["currentPaper"].get("paper_quality_evidence_debt") == 0 and (selected["currentPaper"].get("qa_passed"),selected["currentPaper"].get("qa_total")) == (60,60) and (selected["currentPaper"].get("official_qa_passed"),selected["currentPaper"].get("official_qa_total")) == (60,60) and selected["currentPaper"].get("paper_quality_schema_version") == "2.1" and selected["currentPaper"].get("paper_quality_main_visualizations") == 4 and selected["currentPaper"].get("paper_visual_figure_qa") == "PASS" and selected["currentPaper"].get("supplement_unit_tests") == "29/29 PASS" and selected["currentPaper"].get("official_source_conflict") is False and selected["currentPaper"].get("deadline_status") == "AUTHOR_SUBMISSION_SOURCES_ALIGNED" and selected["currentPaper"].get("operational_safe_abstract_deadline_aoe") == "2026-09-18" and selected["currentPaper"].get("operational_safe_full_paper_deadline_aoe") == "2026-09-25" and selected["currentPaper"].get("recorded_author_guide_abstract_deadline_aoe") == "2026-09-18" and selected["currentPaper"].get("recorded_author_guide_full_paper_deadline_aoe") == "2026-09-25" and selected["currentPaper"].get("author_membership_freezes_at_abstract_deadline") is True and selected["currentPaper"].get("title_freezes_at_full_paper_deadline") is True and selected["currentStatus"].get("paper_ready") == 1, f"selected-paper current STRI projection is stale: {selected}")
         p0e = selected["currentDynamic"].get("skillrl_p0e") or {}
         require(p0e.get("status") == "STOP_FIXED_POLICY_DYNAMIC_BRIDGE" and p0e.get("persistent_principle_dead_end_certified") is False and p0e.get("principle_disposition") == "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED" and p0e.get("stage2_locked") is True and p0e.get("new_gpu_authorized") is False and (p0e.get("calibration") or {}).get("calibration_pristine_success") == 18 and (p0e.get("calibration") or {}).get("paired_units") == 24, f"selected-paper P0-E boundary is stale: {selected}")

@@ -30,10 +30,11 @@ EXPECTATIONS = {
     "domains": (3, 4, 3, 0),
     "evaluation": (3, 4, 5, 0),
     "system-overview": (7, 8, 15, 0),
+    "research-timeline": (0, 0, 0, 0),
     "research-directions": (4, 5, 9, 0),
-    "paper-ideas": (2, 3, 11, 0),
+    "paper-ideas": (0, 2, 9, 0),
     "experiments": (3, 4, 3, 0),
-    "selected-paper": (5, 6, 7, 0),
+    "selected-paper": (5, 5, 7, 0),
     "bibliography": (4, 5, 8, 0),
 }
 
@@ -169,19 +170,20 @@ def main() -> None:
                     count(dom, "toc-level-3"),
                     count(dom, "toc-level-4"),
                 )
-                if actual == expected and 'id="page-framework"' in dom:
+                needs_framework = page not in {"paper-ideas", "selected-paper", "research-timeline"}
+                if actual == expected and (not needs_framework or 'id="page-framework"' in dom):
                     break
                 time.sleep(0.5)
             if actual != expected:
                 raise AssertionError(f"{page}: expected chapters/toc={expected}, got {actual}")
-            if 'id="page-framework"' not in dom:
+            if page not in {"paper-ideas", "selected-paper", "research-timeline"} and 'id="page-framework"' not in dom:
                 raise AssertionError(f"{page}: page framework overview is missing")
             group_headers = re.findall(r'<header class="merged-group-header".*?</header>', dom, re.DOTALL)
             if any(re.search(r'<h2(?:\s|>)', header) for header in group_headers):
                 raise AssertionError(f"{page}: merged group is still rendered as H2")
             print(f"{page}: chapters={actual[0]}, toc={actual[1]}/{actual[2]}/{actual[3]}")
         print("PASS")
-        print("Eleven canonical pages have page-specific chapter/H2/H3 hierarchy with H4 excluded from the sidebar TOC")
+        print("Twelve canonical pages have page-specific hierarchy, with the read-only timeline intentionally using no chapter/TOC headings")
     finally:
         if session_id:
             try:
