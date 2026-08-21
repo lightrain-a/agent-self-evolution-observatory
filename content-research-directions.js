@@ -1,9 +1,9 @@
 Object.assign(window.PAGE_CONTENT,{
 "research-directions":{
-  eyebrow:{en:"Field Atlas · Problem History",zh:"领域图谱 · 研究问题史"},
-  title:{en:"Field problems and historical research directions",zh:"领域研究问题与历史方向"},
-  lead:{en:"This page preserves the field taxonomy we previously built: ten historical direction coordinates, representative papers, scientific boundaries, older idea lineage, and the former long-term agenda. It is now a field-knowledge asset rather than a current project plan. For today's portfolio, use Current Research Map and Research Portfolio.",zh:"这页保留我们之前已经梳理好的领域资产：D1–D10 十个历史方向坐标、代表论文、科学边界、旧 Idea 谱系和当时的长期议程。它现在属于“领域图谱”，用于解释这个学科的问题空间怎样形成，不再承担当前项目排期。今天真正研究什么，请看“当前研究组合图谱”和“研究组合”。"},
-  callout:{en:"Historical D1–D10 and current A–G are different coordinate systems. D1–D10 explains the field and the evolution of our thinking; A–G is the authoritative coordinate system for today's ResearchItems, experiments, and papers.",zh:"请区分两套坐标：历史 D1–D10 用来解释领域问题和我们过去怎样搜索；当前 A–G 才是今天 ResearchItem、实验与论文统一使用的权威坐标。两者通过本页的“分类迁移”连接，而不是互相覆盖。"},
+  eyebrow:{en:"Field Atlas · Landscape",zh:"领域图谱 · 全景入口"},
+  title:{en:"Field landscape: history and research-problem map",zh:"领域全景 · 历史与问题图谱"},
+  lead:{en:"This page is the field-atlas entry point: historical evolution, D1–D10 problem coordinates, representative literature, scientific boundaries, and the bridge to the current A–G ResearchItem map. Mechanism, application domain, and evaluation are treated as three orthogonal reading views rather than separate competing taxonomies.",zh:"这页是领域图谱总入口：统一维护历史演化、D1–D10 问题坐标、代表论文、科学边界，以及它们与当前 A–G ResearchItem 的连接。进化机制、应用场景和评测证据被视为三个正交阅读切面，不再像三套彼此竞争的分类。"},
+  callout:{en:"A research direction is a durable scientific problem, while a historical project is only one earlier attempt to solve it. Historical D1–D10 explains the field and the evolution of our thinking; current A–G is the authoritative coordinate system for today's ResearchItems, experiments, and papers.",zh:"这里先区分两个层级：“研究方向”表示一个长期值得研究的问题；历史项目只是过去尝试过的方案，不等于这个问题本身已经结束。历史 D1–D10 用来解释领域问题和我们过去怎样搜索；当前 A–G 才是今天 ResearchItem、实验与论文统一使用的权威坐标。"},
   overviewFigure:{
     src:{en:"agent-self-evolution-directions-en.svg",zh:"agent-self-evolution-directions-zh.svg"},
     caption:{en:"Historical map of ten research-question coordinates supported by representative literature. The 34 former paper ideas preserve our search lineage; they are field-history evidence, not a current project list. Current A–G coverage lives on Current Research Map.",zh:"十个历史研究问题坐标及其代表文献。图中的 34 个旧论文 Idea 保留我们过去的搜索谱系，是领域研究史，而不是当前项目列表；今天的 A–G 覆盖请看“当前研究组合图谱”。"}

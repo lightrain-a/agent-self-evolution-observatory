@@ -18,6 +18,7 @@ CANONICAL_PAGES = {
     "system-overview.html": "system-overview",
     "research-map.html": "research-map",
     "research-timeline.html": "research-timeline",
+    "research-map.html": "research-map",
     "research-directions.html": "research-directions",
     "paper-ideas.html": "paper-ideas",
     "experiments.html": "experiments",
@@ -269,11 +270,12 @@ def main() -> None:
     architecture_text = (ROOT / "page-architecture-data.js").read_text(encoding="utf-8")
     expected_chapter_ids = {
         "home": ["understand-field", "select-research", "execute-audit"],
-        "foundations": ["boundary-history", "taxonomy-evidence"],
+        "foundations": ["boundary", "taxonomy-evidence"],
         "mechanisms": ["model-internal", "externalized-experience", "system-level"],
         "domains": ["multimodal-reasoning", "digital-interaction", "physical-world"],
         "evaluation": ["validity-safety", "tasks-benchmarks", "reproducibility"],
         "research-directions": ["orientation", "landscape", "direction-clusters", "long-term-agenda"],
+        "research-map": ["layering", "coverage-gaps", "integrated-map", "handoff"],
         "paper-ideas": ["discussed-ideas", "new-ideas"],
         "selected-paper": ["problem-scope", "evidence-experiments", "narrative-execution", "review-gates"],
         "bibliography": ["coverage-protocol", "ranking-reading", "field-maps", "search-corpus"],
@@ -305,13 +307,13 @@ def main() -> None:
     # user questions/actions before exposing internal machine terminology.
     clarity_markers = {
         "data.js": ("集中回答四个具体问题", "统一科研工作区", "每个 ResearchItem"),
-        "content-system-overview.js": ("一个研究方向，怎样才能变成实验，再变成论文", "AI 评审可以指出文献撞车", "只有人工负责人可以修改核心科学主张"),
-        "system-overview-reader.js": ("这个失败真的存在吗", "这个最小实验无论成功或失败，都会改变下一步吗", "什么时候才允许说“这个原理走不通”"),
+        "content-system-overview.js": ("一个研究方向，怎样才能变成实验，再变成论文", "AI 评审负责找文献撞车", "只有人工负责人可以改变核心科学主张"),
+        "system-overview-reader.js": ("先确认异常现象真实存在", "这个最小实验无论成功或失败，都会改变下一步吗", "什么时候才允许说“这个原理走不通”"),
         "system-overview-operations.js": ("长实验怎样安全启动、断线后怎样继续", "哪些文件必须留下，才能以后证明当时到底发生了什么"),
         "content-idea-portfolio.js": ("这页不是“看起来不错的 Idea 清单”", "最近一轮问题发现又审查了 41 条草案", "先从 ResearchItem 理解问题和当前结论"),
         "current-research-status-view.js": ("先看现在该做什么", "以前观察到的记忆效应为什么现在不继续做", "现在到底有没有实验可以正式启动"),
         "content-selected-iclr.js": ("这个旧项目现在没有任何实验允许启动", "不能只靠追加样本或换第二个模型重开"),
-        "content-research-directions.js": ("D1–D10 十个历史方向坐标", "不再承担当前项目排期", "当前 A–G 才是今天 ResearchItem、实验与论文统一使用的权威坐标"),
+        "content-research-directions.js": ("领域图谱总入口", "历史项目只是过去尝试过的方案", "当前 A–G 才是今天 ResearchItem、实验与论文统一使用的权威坐标"),
     }
     for filename, markers in clarity_markers.items():
         text = (ROOT / filename).read_text(encoding="utf-8")
@@ -650,7 +652,7 @@ def main() -> None:
         fail("system overview must not load current idea-bank or discussion-pool artifacts")
     system_files = ["system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-methodology.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-reader.js", "system-overview-governance-v2.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js"]
     system_text = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in system_files)
-    for marker in ("PAPER-FIRST RESEARCH OS", "READ THIS PAGE IN 10 CHAPTERS", "ONE AUTHORITY MODEL", "DECIDE WHETHER A NEW PROBLEM EXISTS", "DESIGN THE SCIENTIFIC CONTRIBUTION BEFORE CODING", "CHECK THE SMALLEST TEST BEFORE GPU", "RUN SMALL, DIAGNOSE, THEN DECIDE WHETHER TO SCALE", "CHECK THAT EVERY CLAIM HAS EVIDENCE", "SEARCH THE STORY, THEN BUILD THE MANUSCRIPT", "SIMULATE REJECTION RISK AND REPAIR WITHIN THE EVIDENCE BOUNDARY", "CLOSE PREBUTTAL, SUBMISSION AUTHORITY, AND REAL REVIEW IN THE SAME LEDGER", "REMEMBER WHY WE CONTINUED, STOPPED, ACCEPTED, OR WERE REJECTED", "WHO OWNS EACH BACKEND JOB", "CROSS-CUTTING METHODOLOGY CONTROLS", "Are candidate problems too similar?", "Search-Time Contamination", "Can another person rerun the key result from scratch?",  "21 BACKEND STEPS FROM LITERATURE TO SUBMISSION LEARNING", "system-layer-list", "P0 ECONOMY", "PRE-EXPERIMENT COMPILER", "8 / 8", "CAN THE EXPERIMENT DISTINGUISH THE MECHANISM?", "10 / 10", "SHADOW SEARCH LAB", "v2.9 · MACHINE-ENFORCED", "LOCAL VALIDATION SUB-MACHINE · P0-SYSTEM v2", "system-failure-layer", "How long experiments are launched safely and resumed after disconnects", "CURRENT DECISION → CAUSE → NEXT-RUN RULE"):
+    for marker in ("READ THIS PAGE IN 10 CHAPTERS", "ONE AUTHORITY MODEL", "DECIDE WHETHER A NEW PROBLEM EXISTS", "DESIGN THE SCIENTIFIC CONTRIBUTION BEFORE CODING", "CHECK THE SMALLEST TEST BEFORE GPU", "RUN SMALL, DIAGNOSE, THEN DECIDE WHETHER TO SCALE", "CHECK THAT EVERY CLAIM HAS EVIDENCE", "SEARCH THE STORY, THEN BUILD THE MANUSCRIPT", "SIMULATE REJECTION RISK AND REPAIR WITHIN THE EVIDENCE BOUNDARY", "CLOSE PREBUTTAL, SUBMISSION AUTHORITY, AND REAL REVIEW IN THE SAME LEDGER", "REMEMBER WHY WE CONTINUED, STOPPED, ACCEPTED, OR WERE REJECTED", "WHO OWNS EACH BACKEND JOB", "CROSS-CUTTING METHODOLOGY CONTROLS", "Are candidate problems too similar?", "Search-Time Contamination", "Can another person rerun the key result from scratch?",  "21 BACKEND STEPS FROM LITERATURE TO SUBMISSION LEARNING", "system-layer-list", "P0 ECONOMY", "PRE-EXPERIMENT COMPILER", "8 / 8", "CAN THE EXPERIMENT DISTINGUISH THE MECHANISM?", "10 / 10", "SHADOW SEARCH LAB", "v2.9 · MACHINE-ENFORCED", "LOCAL VALIDATION SUB-MACHINE · P0-SYSTEM v2", "system-failure-layer", "How long experiments are launched safely and resumed after disconnects", "CURRENT DECISION → CAUSE → NEXT-RUN RULE"):
         if marker not in system_text:
             fail(f"system overview implementation is missing {marker}")
     shadow_portfolio = json.loads((ROOT / "generated" / "paper-first-problem-search-portfolio-state.json").read_text(encoding="utf-8"))
@@ -700,7 +702,7 @@ def main() -> None:
     forbidden_idea_markers = ("主 ICLR Idea Bank", "最终师兄讨论门槛", "Main ICLR idea bank", "Final advisor gate", "paper-ideas.html#discussed-ideas")
     if any(marker in system_text or marker in system_content for marker in forbidden_idea_markers):
         fail("system overview must contain only the research system, not current idea decisions")
-    for marker in ("自动执行", "条件自动", "人工控制", "8/8 Pre-Experiment", "10/10 identifiability", "从这里开始——一篇论文怎样一路变成可执行实验", "先判断到底有没有新的科学问题", "写代码前先把科学贡献设计完整", "找到最便宜、但足以改变结论的实验", "先小规模运行，弄清哪里失败，再决定是否扩量", "冻结论文科学证据", "先竞争故事线，再形成成稿", "模拟审稿、定向修复、主张审计与 PDF QA", "预答辩、投稿权限与真实审稿决策", "记住为什么继续、停止、被接收或被拒绝", "当前科学结论记录"):
+    for marker in ("自动执行", "条件自动", "人工控制", "8/8 Pre-Experiment", "10/10 identifiability", "整体流程与权限：从研究问题到实验，再到论文", "确认是否真的存在新的科学问题", "写代码前先把科学贡献设计完整", "找到最便宜、但足以改变结论的实验", "先小规模验证，弄清失败原因，再决定是否扩量", "冻结论文科学证据", "先选出最佳故事线，再形成成稿", "模拟审稿、定向修稿与主张审计", "投稿准备、人工授权与真实审稿", "记住为什么继续、停止、被接收或被拒绝", "当前科学结论记录"):
         if marker not in system_text and marker not in system_content and marker not in (ROOT / "page-architecture-data.js").read_text(encoding="utf-8"):
             fail(f"Chinese research-system documentation is missing {marker}")
 

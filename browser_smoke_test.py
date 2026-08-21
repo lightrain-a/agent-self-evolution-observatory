@@ -158,15 +158,17 @@ def main() -> None:
             session_id,
             """return {
               nav: document.querySelectorAll('.nav-level2').length,
+              stats: document.querySelectorAll('.stat').length,
+              routeCards: document.querySelectorAll('.page-chapter .framework-card').length,
               figure: !!document.querySelector('.overview-figure img'),
               distribution: document.querySelectorAll('.distribution-row').length,
               missing: document.querySelectorAll('.citation-missing').length,
               corpus: Number(document.querySelector('.stat b')?.textContent || 0)
             };""",
         )
-        require(home["nav"] == 12, f"expected 12 primary navigation targets including the Current Research Map and Research Timeline, with experiments retained only as a deep-audit route, got {home['nav']}")
-        require(home["figure"], "knowledge-map figure is missing")
-        require(home["distribution"] >= 6, "live update-surface distribution is missing")
+        require(home["nav"] == 12, f"expected 12 primary navigation targets across Start Here, Field Atlas, Current Research, and Literature, got {home['nav']}")
+        require(home["stats"] == 4 and home["routeCards"] == 11, f"home should stay lightweight with four status metrics and eleven route cards, got {home}")
+        require(not home["figure"] and home["distribution"] == 0, "home should route readers instead of duplicating the field-history figure or literature distribution")
         require(home["missing"] == 0, "home contains unresolved citations")
         require(home["corpus"] >= 100, "curated literature snapshot did not load")
 
@@ -228,11 +230,11 @@ def main() -> None:
               text: document.body.textContent || ''
             };""",
         )
-        require(system_overview["chapters"] == 10 and system_overview["readerChapters"] == 10 and system_overview["readerPhases"] == 9 and system_overview["deepDives"] == 4 and system_overview["authorityCards"] == 3, f"system overview reading framework is incomplete: chapters={system_overview['chapters']} roadmap={system_overview['readerChapters']} phases={system_overview['readerPhases']} deep={system_overview['deepDives']} authority={system_overview['authorityCards']}")
+        require(system_overview["chapters"] == 10 and system_overview["readerChapters"] == 0 and system_overview["readerPhases"] == 9 and system_overview["deepDives"] == 4 and system_overview["authorityCards"] == 3, f"system overview reading framework is incomplete after the roadmap was consolidated into the two-row page framework: chapters={system_overview['chapters']} legacy-roadmap={system_overview['readerChapters']} phases={system_overview['readerPhases']} deep={system_overview['deepDives']} authority={system_overview['authorityCards']}")
         require(system_overview["toc2"] == 11 and system_overview["toc3"] >= 10 and system_overview["toc4"] == 0, f"system overview TOC must expose chapter + section hierarchy without machine-level h4 noise: {system_overview['toc2']}/{system_overview['toc3']}/{system_overview['toc4']}")
         require(system_overview["minVisibleFont"] >= 11.5 and system_overview["minVisibleProseFont"] >= 12, f"system overview readability floor regressed: visible={system_overview['minVisibleFont']} prose={system_overview['minVisibleProseFont']}")
         require(system_overview["stats"] == 6, f"research-system hero statistics are incomplete: {system_overview['stats']}")
-        require(system_overview["readerChapters"] == 10 and system_overview["responsibilityLayers"] == 6 and system_overview["lifecycleSteps"] == 21 and system_overview["componentLayerHeaders"] == 6, f"canonical architecture is incomplete: reader={system_overview['readerChapters']} layers={system_overview['responsibilityLayers']} stages={system_overview['lifecycleSteps']} component-groups={system_overview['componentLayerHeaders']}")
+        require(system_overview["chapters"] == 10 and system_overview["responsibilityLayers"] == 6 and system_overview["lifecycleSteps"] == 21 and system_overview["componentLayerHeaders"] == 6, f"canonical architecture is incomplete: chapters={system_overview['chapters']} layers={system_overview['responsibilityLayers']} stages={system_overview['lifecycleSteps']} component-groups={system_overview['componentLayerHeaders']}")
         require((system_overview["architectureSummary"].get("temporal_stages"),system_overview["architectureSummary"].get("reader_chapters"),system_overview["architectureSummary"].get("reader_stage_coverage"),system_overview["architectureSummary"].get("reader_stage_missing"),system_overview["architectureSummary"].get("reader_stage_duplicates"),system_overview["architectureSummary"].get("reader_stage_extra"),system_overview["architectureSummary"].get("functional_layers"),system_overview["architectureSummary"].get("assigned_components"),system_overview["architectureSummary"].get("unassigned_components"),system_overview["architectureSummary"].get("cross_cutting_controls"),system_overview["architectureSummary"].get("orphan_cross_cutting_controls")) == (21,10,21,0,0,0,6,32,0,3,0), f"backend architecture manifest is stale in browser state: {system_overview['architectureSummary']}")
         require(system_overview["methodologyControls"] == 3 and "Are candidate problems too similar?" in system_overview["text"] and "Freeze the setup before results and check leakage" in system_overview["text"] and "Can another person rerun the key result from scratch?" in system_overview["text"], f"plain-language methodology controls are missing: {system_overview['methodologyControls']}")
         require(system_overview["memorySummary"].get("entries") >= 50 and int(system_overview["memorySummary"].get("scientific_closures") or 0) == int(system_overview["searchClosureSummary"].get("core_principle_dead_ends") or 0) and int(system_overview["memorySummary"].get("search_closures") or 0) + int(system_overview["memorySummary"].get("scientific_closures") or 0) == int(system_overview["searchClosureSummary"].get("shadow_closed_basins") or 0) and system_overview["memorySummary"].get("failure_assets") >= 3 and system_overview["memorySummary"].get("success_assets") >= 3 and system_overview["memoryLint"].get("errors") == 0, f"Research Memory Wiki state is missing or inconsistent with canonical typed closures: summary={system_overview['memorySummary']} canonical={system_overview['searchClosureSummary']} lint={system_overview['memoryLint']}")
@@ -272,7 +274,7 @@ def main() -> None:
         };""")
         require((zh_system["toc2"], zh_system["toc4"]) == (11,0) and zh_system["toc3"] >= 10, f"Chinese system TOC must expose second/third-level headings: {zh_system['toc2']}/{zh_system['toc3']}/{zh_system['toc4']}")
         require(zh_system["minVisibleFont"] >= 11.5, f"Chinese system overview readability floor regressed: {zh_system['minVisibleFont']}")
-        require(all(marker in zh_system["readerText"] for marker in ("输入","核心判断","阶段产出","这个失败真的存在吗","先尝试已有解释","这个最小实验无论成功或失败，都会改变下一步吗","方法稳定后冻结版本","论文每条主张是否都有直接证据","自动重放旧案例","谁能提建议、谁能启动实验、谁能改论文结论")), "Chinese reader flow is missing the plain-language research decisions")
+        require(all(marker in zh_system["readerText"] for marker in ("输入","核心判断","阶段产出","先确认异常现象真实存在","最后才做正式科学筛选","这个最小实验无论成功或失败，都会改变下一步吗","方法稳定后冻结版本","论文每条主张是否都有直接证据","自动重放旧案例","谁能提建议、谁能启动实验、谁能改论文结论")), "Chinese reader flow is missing the plain-language research decisions")
         require("自动执行" in zh_system["automationText"] and "条件自动" in zh_system["automationText"] and "人工控制" in zh_system["automationText"], "Chinese automation boundary headings are incomplete")
         require("主张与训练目标对齐" in zh_system["preflightText"] and "方法与最强简化会做出不同决策" in zh_system["preflightText"] and "小样本可拟合性" in zh_system["preflightText"], "Chinese Pre-P0 hard gates are incomplete")
         system_ui_leaks = (
@@ -419,8 +421,11 @@ def main() -> None:
                   groups: document.querySelectorAll('.merged-group').length,
                   sections: document.querySelectorAll('.topic-section').length,
                   resources: document.querySelectorAll('.live-resource-panel').length,
+                  axisSwitcher: document.querySelectorAll('.field-axis-switcher').length,
+                  axisPrimer: document.querySelectorAll('.field-axis-primer').length,
                   historySrc: document.querySelector('.overview-figure img')?.getAttribute('src') || '',
                   missing: document.querySelectorAll('.citation-missing').length,
+                  pageOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
                   text: document.body.textContent || ''
                 };""",
             )
@@ -428,8 +433,13 @@ def main() -> None:
             require(result["groups"] == expected["groups"], f"{page} group count mismatch")
             require(result["sections"] >= expected["sections"], f"{page} has too few sections")
             require(result["missing"] == 0, f"{page} contains unresolved citations")
+            require(not result["pageOverflow"], f"{page} causes page-level horizontal overflow")
+            if page in {"/mechanisms.html", "/domains.html", "/evaluation.html"}:
+                require(result["axisSwitcher"] == 1 and result["axisPrimer"] == 1, f"{page} is missing the shared field-axis switcher or at-a-glance primer")
+            else:
+                require(result["axisSwitcher"] == 0 and result["axisPrimer"] == 0, f"{page} should not render a field-axis switcher/primer")
             if page == "/foundations.html":
-                require(result["historySrc"].endswith("agent-self-evolution-history-en.svg"), "foundations history SVG is missing")
+                require(not result["historySrc"], "foundations should stay focused on definition/taxonomy instead of duplicating the field-history figure")
             if page == "/evaluation.html":
                 require(result["resources"] == 2, "evaluation live resource indexes are incomplete")
             if page == "/selected-paper.html":
@@ -451,6 +461,9 @@ def main() -> None:
               evidenceCitations: document.querySelectorAll('.direction-paper-evidence .inline-citations a').length,
               evidenceMethods: document.querySelectorAll('.direction-paper-evidence > p').length,
               evidenceFits: document.querySelectorAll('.direction-paper-evidence > div').length,
+              fieldAxes: document.querySelector('#field-reading-axes')?.closest('.panel')?.querySelectorAll('.framework-card').length || 0,
+              historyFigures: document.querySelectorAll('.history-overview-figure').length,
+              historyStages: document.querySelectorAll('.history-overview-figure .history-stage').length,
               missing: document.querySelectorAll('.citation-missing').length,
               src: document.querySelector('.overview-figure img')?.getAttribute('src') || '',
               text: document.body.textContent || ''
@@ -458,6 +471,8 @@ def main() -> None:
         )
         require(direction_map["directions"] == 10, f"expected 10 directions, got {direction_map['directions']}")
         require(direction_map["chips"] == 34 and direction_map["chipLinks"] == 0, f"expected 34 read-only historical idea-lineage chips, got {direction_map['chips']} with {direction_map['chipLinks']} links")
+        require(direction_map["fieldAxes"] == 3, "field landscape must expose mechanism, application-domain, and evaluation as three orthogonal reading views")
+        require(direction_map["historyFigures"] == 1 and direction_map["historyStages"] == 6, "field landscape must own the historical evolution figure")
         require(direction_map["macroCards"] == 4, "four-question direction primer is incomplete")
         require(direction_map["explanationGrids"] == 10, "plain-language direction explanations are incomplete")
         require(direction_map["exampleRows"] == 10, "running example does not cover all directions")
@@ -465,13 +480,30 @@ def main() -> None:
         require(direction_map["evidenceCitations"] == 30 and direction_map["evidenceMethods"] == 30 and direction_map["evidenceFits"] == 30, "direction literature cards are incomplete")
         require(direction_map["missing"] == 0, "direction literature contains unresolved citations")
         require(direction_map["src"].endswith("agent-self-evolution-directions-en.svg"), "English direction figure is not active")
+        require("Representative papers" in direction_map["text"] and "Why here" in direction_map["text"], "English direction literature is not active")
         ensure_language("zh")
         zh_state = execute(session_id, "return {src:document.querySelector('.overview-figure img')?.getAttribute('src')||'', text:document.querySelector('.direction-literature')?.textContent||''};")
         require(zh_state["src"].endswith("agent-self-evolution-directions-zh.svg"), "Chinese direction figure did not switch")
         require("代表论文" in zh_state["text"] and "方向关联" in zh_state["text"], "Chinese direction literature did not switch")
         shell_zh = execute(session_id, """return {brand:[document.querySelector('.brand strong')?.textContent||'',document.querySelector('.brand span')?.textContent||''],nav:[...document.querySelectorAll('.nav-level1 span:first-child,.nav-level2')].map(x=>x.textContent.trim()),placeholder:document.querySelector('#site-search')?.getAttribute('placeholder')||'',status:document.querySelector('.field-current-status-strip,.project-status-strip')?.textContent||''};""")
-        require(shell_zh["brand"] == ["Agent 自进化","科研观测站"] and "开始阅读" in shell_zh["nav"] and "领域图谱" in shell_zh["nav"] and "研究规划" in shell_zh["nav"] and "文献" in shell_zh["nav"] and "Start Here" not in shell_zh["nav"] and shell_zh["placeholder"] == "搜索研究站内容…", f"shared shell did not fully switch to Chinese: {shell_zh}")
-        require(all(marker in shell_zh["status"] for marker in ("当前科研状态","可提交论文","正式新问题","可启动实验")), f"field-atlas current-status strip is not plain-language Chinese: {shell_zh['status']}")
+        require(shell_zh["brand"] == ["Agent 自进化","科研观测站"] and "开始阅读" in shell_zh["nav"] and "领域图谱" in shell_zh["nav"] and "当前科研" in shell_zh["nav"] and "文献" in shell_zh["nav"] and "Start Here" not in shell_zh["nav"] and shell_zh["placeholder"] == "搜索研究站内容…", f"shared shell did not fully switch to Chinese: {shell_zh}")
+        require(all(marker in shell_zh["status"] for marker in ("当前科研状态","可提交论文","正式新问题","可启动实验","查看当前研究组合图谱")), f"field-atlas current-status bridge is incomplete: {shell_zh['status']}")
+
+        navigate("/research-map.html", 7)
+        ensure_language("zh")
+        research_map = execute(session_id, """return {
+          chapters:document.querySelectorAll('.page-chapter').length,
+          toc2:document.querySelectorAll('.toc-level-2').length,
+          bridgeLinks:document.querySelectorAll('.rpm-bridge-grid a').length,
+          categories:document.querySelectorAll('.rpm-category').length,
+          overviewCards:document.querySelectorAll('.rpm-overview-card').length,
+          graphAppendix:document.querySelectorAll('.rpm-graph-schema').length,
+          pageOverflow:document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
+          text:document.body.textContent||''
+        };""")
+        require((research_map["chapters"],research_map["toc2"],research_map["bridgeLinks"],research_map["categories"],research_map["overviewCards"],research_map["graphAppendix"]) == (4,5,3,7,7,1), f"current research map hierarchy is incomplete: {research_map}")
+        require(not research_map["pageOverflow"], "current research map causes page-level horizontal overflow")
+        require("领域全景" in research_map["text"] and "研究组合：完整证据" in research_map["text"] and "A–G 快速总览" in research_map["text"] and "完整知识图谱技术结构" in research_map["text"], "current research map reading chain is incomplete")
 
         navigate("/paper-ideas.html", 7)
         ensure_language("zh")

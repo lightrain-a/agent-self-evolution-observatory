@@ -24,15 +24,15 @@ def _free_local_port() -> int:
 HTTP_PORT = _free_local_port()
 WEBDRIVER_PORT = _free_local_port()
 EXPECTATIONS = {
-    "index": (3, 4, 4, 0),
+    "index": (3, 4, 0, 0),
     "foundations": (2, 3, 2, 0),
     "mechanisms": (3, 4, 6, 0),
     "domains": (3, 4, 3, 0),
     "evaluation": (3, 4, 5, 0),
-    "system-overview": (10, 11, 18, 0),
-    "research-map": (0, 3, 0, 0),
+    "system-overview": (10, 11, 17, 0),
     "research-timeline": (0, 0, 0, 0),
-    "research-directions": (4, 6, 9, 0),
+    "research-map": (4, 5, 0, 0),
+    "research-directions": (4, 6, 8, 0),
     "paper-ideas": (0, 2, 9, 0),
     "experiments": (3, 4, 3, 0),
     "selected-paper": (5, 5, 7, 0),
@@ -184,7 +184,7 @@ def main() -> None:
                 raise AssertionError(f"{page}: merged group is still rendered as H2")
             print(f"{page}: chapters={actual[0]}, toc={actual[1]}/{actual[2]}/{actual[3]}")
         print("PASS")
-        print("Thirteen canonical pages have page-specific hierarchy; the timeline and current research map intentionally use dedicated non-chapter layouts")
+        print("Thirteen canonical pages have page-specific hierarchy, with the read-only timeline intentionally using no chapter/TOC headings")
     finally:
         if session_id:
             try:

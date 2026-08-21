@@ -1,16 +1,16 @@
 window.PAGE_ARCHITECTURES = {
   home:{
     chapters:[
-      {id:"understand-field",title:{en:"Understand the field",zh:"理解领域"},question:{en:"What counts as self-evolution, what can change, where does the field come from, and which structural research problems have emerged?",zh:"什么算自进化、哪些对象可以变化、这个领域从哪里发展而来，以及已经形成了哪些结构性研究问题？"},links:["foundations.html","mechanisms.html","domains.html","evaluation.html","research-directions.html"]},
-      {id:"select-research",title:{en:"Choose the next research problem",zh:"选择下一轮研究问题"},question:{en:"How do we turn new paper evidence into candidate problems, reject ideas already explained by prior work or simpler theory, and decide which surviving problem is worth a small decisive experiment?",zh:"怎样把最新论文证据变成候选问题、淘汰已经被已有工作或更简单理论解释的 Idea，并决定哪个真正剩下的问题值得做一次小规模决定性实验？"},links:["system-overview.html","research-map.html","paper-ideas.html","research-timeline.html"]},
+      {id:"understand-field",title:{en:"Understand the field",zh:"理解领域"},question:{en:"What counts as self-evolution, how did the field form, and how can it be read through mechanism, application domain, and evaluation evidence?",zh:"什么算自进化、这个领域怎样形成，以及怎样分别从进化机制、应用场景和评测证据三个切面理解它？"},links:["foundations.html","research-directions.html","mechanisms.html","domains.html","evaluation.html"]},
+      {id:"select-research",title:{en:"Understand current research",zh:"理解当前科研"},question:{en:"Where are our current A–G ResearchItems in the field, what is each authoritative decision, how did those decisions change over time, and which workflow produced them?",zh:"我们的 A–G ResearchItem 在领域里处于什么位置、每个对象当前的权威结论是什么、这些结论怎样随时间变化，以及科研系统怎样产生这些状态？"},links:["research-map.html","paper-ideas.html","research-timeline.html","system-overview.html"]},
 
       {id:"execute-audit",title:{en:"Run, inspect, and submit",zh:"运行、核查与投稿"},question:{en:"Which experiments are still allowed to run, what exact evidence supports the current STRI submission, and how can old projects be inspected without mistaking their archived plans for today's work?",zh:"哪些实验现在仍允许运行、STRI 当前投稿具体由哪些证据支持，以及怎样查看旧项目而不把它们已经归档的计划误当成今天的待办？"},links:["experiments.html","selected-paper.html","bibliography.html"]}
     ]
   },
   foundations:{
     chapters:[
-      {id:"boundary-history",title:{en:"Field boundary and historical evolution",zh:"领域边界与历史演化"},question:{en:"How do we distinguish persistent evolution from retries and self-correction, and how did the field emerge?",zh:"如何区分持久进化、重试与自纠错，这个领域又如何形成？"},sourceIds:["foundations"],includeOverview:true},
-      {id:"taxonomy-evidence",title:{en:"Taxonomy and evidence requirements",zh:"分类体系与证据要求"},question:{en:"What changes, what drives it, when is it committed, and what evidence validates the claim?",zh:"更新什么、由什么驱动、何时提交，以及什么证据才能支持主张？"},sourceIds:["taxonomy"]}
+      {id:"boundary",title:{en:"I · Definition and boundary",zh:"第一章 · 定义与边界"},question:{en:"What is the minimum condition for self-evolution, and how is it different from retrying, self-correction, or temporary context adaptation?",zh:"什么条件下才能称为自进化？它与重试、自纠错和临时上下文适应到底有什么区别？"},sourceIds:["foundations"]},
+      {id:"taxonomy-evidence",title:{en:"II · Four questions for classifying any system",zh:"第二章 · 用四个问题判断任何系统"},question:{en:"What changes, what feedback drives the change, when is the new state reused, and what gate decides whether the change is kept?",zh:"到底改了什么、什么反馈驱动修改、新状态什么时候再次被使用，以及通过什么门控才决定保留这次修改？"},sourceIds:["taxonomy"]}
     ]
   },
   mechanisms:{
@@ -60,8 +60,8 @@ window.PAGE_ARCHITECTURES = {
   },
   "research-directions":{
     chapters:[
-      {id:"orientation",title:{en:"I · How the historical field taxonomy was formed",zh:"第一章 · 历史领域分类怎样形成"},question:{en:"How did the ten D1–D10 directions decompose the agent self-evolution lifecycle, and what field questions were they trying to make explicit?",zh:"D1–D10 十个历史方向怎样拆解 Agent 自进化生命周期，它们分别把哪些领域问题显式化？"}},
-      {id:"landscape",title:{en:"II · Historical D1–D10 and current A–G",zh:"第二章 · 历史 D1–D10 与当前 A–G 的关系"},question:{en:"How did the historical taxonomy and former idea lineage migrate into the A–G coordinate system used by today's ResearchItems?",zh:"历史方向分类与旧 Idea 谱系怎样迁移到今天 ResearchItem 使用的 A–G 坐标系？"}},
+      {id:"orientation",title:{en:"I · Field evolution and three reading axes",zh:"第一章 · 领域怎样形成，以及三种阅读切面"},question:{en:"How did self-evolution expand from local model/prompt changes to memory, skills, workflows, and world adaptation, and how should the field now be read through mechanism, application domain, and evaluation?",zh:"Agent 自进化怎样从局部模型/Prompt 更新扩展到记忆、技能、工作流和世界适应？今天又该怎样分别从机制、场景和评测三个切面理解这个领域？"}},
+      {id:"landscape",title:{en:"II · Historical problem map and migration to current A–G",zh:"第二章 · 历史问题图谱，以及如何迁移到当前 A–G"},question:{en:"How did D1–D10 form from the historical evolution of the field, and how does that field-history coordinate system connect to today's authoritative A–G ResearchItems?",zh:"D1–D10 怎样从领域历史中形成？这套“理解领域”的历史坐标又怎样连接到今天真正维护 ResearchItem 的 A–G 坐标？"}},
       {id:"direction-clusters",title:{en:"III · Ten historical directions, boundaries, and literature",zh:"第三章 · 十个历史方向、科学边界与代表文献"},question:{en:"What did each direction study, how did it differ from neighboring questions, and which papers grounded the boundary?",zh:"每个历史方向研究什么、与相邻问题有何区别、哪些代表论文支撑了它的边界？"}},
       {id:"long-term-agenda",title:{en:"IV · Former agenda and still-open field questions",zh:"第四章 · 历史长期议程与仍开放的领域问题"},question:{en:"Which older program-level questions remain useful as field knowledge even though today's work is scheduled by ResearchItems rather than a static agenda?",zh:"哪些过去的项目级长期问题仍值得作为领域知识保留，即使今天的研究调度已经由 ResearchItem 而不是静态议程决定？"},sourceIds:["research-agenda"]}
     ]
