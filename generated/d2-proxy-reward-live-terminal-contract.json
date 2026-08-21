@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "D2-PROXY-REWARD-LIVE-WEBARENA-TERMINAL-F3",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "status": "FROZEN_WAITING_ENVIRONMENT",
+  "central_question": "Do memories written from the same source trajectory under different reward-conditioned reflection modes change terminal WebArena success when the future task, reset state, replayed prefix, policy, and evaluator are held fixed?",
+  "source_artifacts": {
+    "f0": "generated/d2-proxy-reward-memory-f0.json",
+    "f0_sha256": "f2e4f3424faf1e3a9ec7aba7958e538eac457e89308552ef7a9c3d69c6a914f9",
+    "f1_r2_contract": "generated/d2-proxy-reward-memory-f1-r2-contract.json",
+    "f1_r2_contract_sha256": "8c0ff6ce57ff136c4e0ca5a47f5da6b987bd0f3f08e970ee330152de79fd5a9a",
+    "released_parquet": "generated/research-data/paper-yield-d5-c01/parquet-cache/wa_awm_shuffle1-shopping_run1.parquet",
+    "released_parquet_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e",
+    "webarena_task_config": "generated/research-data/paper-yield-d5-c01/self-improve-fragility/webarena/src/walt/benchmarks/wa/test_configs/test.raw.json",
+    "webarena_task_config_sha256": "d25e83078ec728adc82bd43871338a24a3907e101b5a5fdb1ae81bb7f72f36a6"
+  },
+  "paired_interventions": [
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "future_task_prompt_sha256": "036f789da041039ee7768f16b04c368e353d51728508f371a8accec6d30b05cf",
+      "browser_agent_system_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "intervention_state_sha256": "52643100ba9b7332812539017a28cef604756eff2aa9f784459478b280ba00b9",
+      "intervention_state_chars": 9476,
+      "released_prefix_sha256": "2a2f0d3a44421a05d37107cb2f1d3e3a8f85535f05fcc68d4ca22af86b5c797a"
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "future_task_prompt_sha256": "3fc171d792ab2815e212431d11fe0833b3bf265c99d08085382661a168fa4aed",
+      "browser_agent_system_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "intervention_state_sha256": "a36f5a36213468b1c716c8dc502d3628ebd97cf4bf823e9e5c0db171c0b3aa31",
+      "intervention_state_chars": 11131,
+      "released_prefix_sha256": "132d95e5fe10326046f54109f40bcbc0dea2771279ea845b4a61338c466df1a2"
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "future_task_prompt_sha256": "820f8e4417b4eceb396ab95cb1e8b580ca44cc4531ad7c781e53668b9aa85026",
+      "browser_agent_system_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "intervention_state_sha256": "8664d73802a4c4a4c64443b43d4957a6723bb03d2fc5221500e3e28ddf16a5a6",
+      "intervention_state_chars": 8326,
+      "released_prefix_sha256": "f99e7938f32abb5aba3a70053f632863a8787fc9746a1721e88a71cb17157acb"
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "future_task_prompt_sha256": "3fbb4fdc334675a715905743e22d62bbd2371aab6e22617317de000816bde693",
+      "browser_agent_system_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "intervention_state_sha256": "f4aed9150ef58e061a000ea0c54485e3c4dd791d0287d93572ced927cc970d7c",
+      "intervention_state_chars": 12772,
+      "released_prefix_sha256": "3a868d5b4d23c6a31ae252d639665709030e3a5354d64a77d460daa337fba7d8"
+    }
+  ],
+  "conditions": [
+    "success_label_memory",
+    "failure_label_memory",
+    "no_memory"
+  ],
+  "rollouts_per_condition": 8,
+  "design": {
+    "future_states": 4,
+    "primary_memory_conditions": 2,
+    "secondary_no_memory_condition": true,
+    "primary_live_episodes": 64,
+    "secondary_live_episodes": 32,
+    "total_live_episodes": 96,
+    "no_state_or_memory_pair_selection_after_outcomes": true
+  },
+  "policy_model": {
+    "requested": "doubao-seed-2.0-mini",
+    "temperature": 0.2,
+    "max_output_tokens": 1200,
+    "provider_retries": 0,
+    "store": true,
+    "thinking": "disabled",
+    "allow_thinking_compatibility_fallback": false
+  },
+  "environment": {
+    "source_shopping_url": "http://ec2-18-116-41-41.us-east-2.compute.amazonaws.com:7770",
+    "source_reset_url": "http://ec2-18-116-41-41.us-east-2.compute.amazonaws.com:4399",
+    "required_reset_before_each_episode": true,
+    "prefix_replay_required": true,
+    "intervention_state_exact_hash_match_required": true,
+    "environment_mismatch_class": "SUPPORT_FAILURE_NO_SCIENTIFIC_AUTHORITY"
+  },
+  "primary_outcome": {
+    "metric": "original WebArena benchmark terminal success under the frozen future task evaluator",
+    "first_divergence_step_secondary": true
+  },
+  "terminal_gate": {
+    "primary_statistic": "mean across four frozen future tasks of absolute terminal success-rate difference between success-label-memory and failure-label-memory conditions",
+    "permutation_scheme": "Within each future task, pool sixteen binary terminal outcomes and randomly assign eight to each reward-memory label; average absolute success-rate difference across four tasks.",
+    "permutation_repetitions": 100000,
+    "permutation_seed": 20260821,
+    "alpha": 0.05,
+    "min_mean_absolute_success_rate_difference": 0.15,
+    "support_if": [
+      "mean absolute terminal success-rate difference >= 0.15",
+      "stratified permutation p < 0.05"
+    ],
+    "otherwise": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+    "equivalence_margin_preregistered": false
+  },
+  "execution_gate": {
+    "before_any_episode": [
+      "Shopping service reachable",
+      "reset path reachable",
+      "all source artifact hashes match",
+      "frozen task evaluator configs load"
+    ],
+    "before_each_condition_episode": [
+      "reset succeeds",
+      "frozen released prefix replays",
+      "intervention state hash matches the frozen future-task state exactly"
+    ],
+    "on_failure": "Do not substitute a surrogate environment. Record environment/support failure with zero scientific authority."
+  },
+  "forbidden_repairs": [
+    "change future task set after outcomes",
+    "change source memory pairs after outcomes",
+    "replace source evaluator",
+    "relax intervention-state fidelity",
+    "add more first-action-only evidence instead of terminal execution"
+  ],
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "preflight_id": "D2-PROXY-REWARD-LIVE-WEBARENA-TERMINAL-ENVIRONMENT-PREFLIGHT",
+  "contract": "generated/d2-proxy-reward-live-terminal-contract.json",
+  "contract_sha256": "66637b636033971599db9d6f46d7207000be5ad600ba88107250fe8b868e194c",
+  "status": "HOLD_ENVIRONMENT",
+  "asset_gate": {
+    "pass": true,
+    "checks": [
+      {
+        "key": "f0_sha256",
+        "path_key": "f0",
+        "pass": true,
+        "expected_sha256": "f2e4f3424faf1e3a9ec7aba7958e538eac457e89308552ef7a9c3d69c6a914f9",
+        "actual_sha256": "f2e4f3424faf1e3a9ec7aba7958e538eac457e89308552ef7a9c3d69c6a914f9"
+      },
+      {
+        "key": "f1_r2_contract_sha256",
+        "path_key": "f1_r2_contract",
+        "pass": true,
+        "expected_sha256": "8c0ff6ce57ff136c4e0ca5a47f5da6b987bd0f3f08e970ee330152de79fd5a9a",
+        "actual_sha256": "8c0ff6ce57ff136c4e0ca5a47f5da6b987bd0f3f08e970ee330152de79fd5a9a"
+      },
+      {
+        "key": "released_parquet_sha256",
+        "path_key": "released_parquet",
+        "pass": true,
+        "expected_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e",
+        "actual_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e"
+      },
+      {
+        "key": "webarena_task_config_sha256",
+        "path_key": "webarena_task_config",
+        "pass": true,
+        "expected_sha256": "d25e83078ec728adc82bd43871338a24a3907e101b5a5fdb1ae81bb7f72f36a6",
+        "actual_sha256": "d25e83078ec728adc82bd43871338a24a3907e101b5a5fdb1ae81bb7f72f36a6"
+      }
+    ]
+  },
+  "network_gate": {
+    "method": "TCP_CONNECT_ONLY_NO_HTTP_RESET_OR_EPISODE_EXECUTION",
+    "shopping": {
+      "host": "ec2-18-116-41-41.us-east-2.compute.amazonaws.com",
+      "port": 7770,
+      "reachable": false,
+      "error_class": "TimeoutError"
+    },
+    "reset": {
+      "host": "ec2-18-116-41-41.us-east-2.compute.amazonaws.com",
+      "port": 4399,
+      "reachable": false,
+      "error_class": "TimeoutError"
+    },
+    "pass": false
+  },
+  "next_if_ready": "Run reset plus frozen prefix replay for all four future tasks and require exact intervention-state SHA matches before any policy episode.",
+  "on_hold": "No scientific update. Do not replace live execution with additional surrogate rollouts.",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}
