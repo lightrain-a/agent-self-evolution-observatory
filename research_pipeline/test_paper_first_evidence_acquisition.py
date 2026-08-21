@@ -7,6 +7,8 @@ from .paper_first_evidence_acquisition import (
     build_provisional_evidence_plan,
     compile_evidence_designs,
     compile_evidence_reviews,
+    compile_harness_implementation_receipts,
+    compile_harness_runtime_invalidations,
     compile_operationalization_recompiles,
     compile_substrate_preflight,
     evidence_design_prompt,
@@ -119,6 +121,33 @@ class EvidenceAcquisitionTest(unittest.TestCase):
         held=compile_evidence_reviews(state,payload,reviewer_model="independent")
         self.assertEqual(held["entries"][0]["status"],"HOLD_EVIDENCE_REVIEW_BLOCKED")
         self.assertFalse(held["entries"][0]["execution_authorized"])
+
+    def test_execution_ready_harness_can_be_invalidated_by_later_runtime_support_evidence(self):
+        plan=build_provisional_evidence_plan(machine(1));entry=plan["entries"][0]
+        state=clear_review(compile_evidence_designs(plan,{"designs":[design_for(entry)]}));row=state["entries"][0]
+        preflight={"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"disposition":"MINIMAL_HARNESS_IMPLEMENTATION_READY","reason":"bounded adapter is implementable","inventory_summary":"pinned substrate is available","harness_plan_sha256":"e"*64,"implementation_scope":"implement frozen adapter only","budget_feasible":True}]}
+        pending=compile_substrate_preflight(state,preflight);row=pending["entries"][0]
+        passed=compile_harness_implementation_receipts(pending,{"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"harness_manifest_sha256":"a"*64,"implementation_summary":"outcome-free runtime probe initially passed","sandboxed":True,"probe_passed":True,"budget_feasible":True}]});row=passed["entries"][0]
+        self.assertTrue(row["execution_authorized"])
+        invalid=compile_harness_runtime_invalidations(passed,{"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"harness_manifest_sha256":"a"*64,"failure_manifest_sha256":"b"*64,"failure_class":"support/runtime","reason":"later workload probe invalidated the transport implementation","reopen_condition":"restore the original transport or pass a provider-neutral workload probe","provider_calls_charged":0,"remaining_model_call_budget":256}]});row=invalid["entries"][0]
+        self.assertEqual(row["status"],"HOLD_HARNESS_RUNTIME_SUPPORT")
+        self.assertFalse(row["execution_authorized"])
+        self.assertEqual(row["harness_runtime_invalidation"]["remaining_model_call_budget"],256)
+        self.assertEqual(validate_evidence_plan(invalid),[])
+
+    def test_harness_runtime_support_failure_is_reopenable_zero_authority_hold(self):
+        plan=build_provisional_evidence_plan(machine(1));entry=plan["entries"][0]
+        state=clear_review(compile_evidence_designs(plan,{"designs":[design_for(entry)]}))
+        row=state["entries"][0]
+        preflight={"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"disposition":"MINIMAL_HARNESS_IMPLEMENTATION_READY","reason":"public substrate exists but needs a bounded adapter","inventory_summary":"pinned public code and benchmark are available","harness_plan_sha256":"e"*64,"implementation_scope":"implement only the frozen runtime adapter","budget_feasible":True}]}
+        pending=compile_substrate_preflight(state,preflight);row=pending["entries"][0]
+        receipt={"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"implementation_status":"SUPPORT_BLOCKED","failure_manifest_sha256":"f"*64,"failure_class":"support/runtime","reason":"required web transport is unavailable in the current environment","reopen_condition":"original transport credentials or a provider-neutral adapter passes the frozen workload admissibility probe"}]}
+        held=compile_harness_implementation_receipts(pending,receipt);row=held["entries"][0]
+        self.assertEqual(row["status"],"HOLD_HARNESS_RUNTIME_SUPPORT")
+        self.assertFalse(row["execution_authorized"])
+        self.assertFalse(row["harness_implementation_failure"]["belief_authority"])
+        self.assertEqual(held["summary"]["harness_runtime_hold"],1)
+        self.assertEqual(validate_evidence_plan(held),[])
 
     def test_substrate_protocol_defect_routes_back_to_one_bounded_design_repair(self):
         plan=build_provisional_evidence_plan(machine(1));state=clear_review(compile_evidence_designs(plan,{"designs":[design_for(plan["entries"][0])]},design_model="designer"));row=state["entries"][0]

@@ -86,7 +86,7 @@ def build_provisional_evidence_plan(machine:dict,*,run_id:str="",max_active:int=
 def _summary(entries:list[dict])->dict:
  return {
   "provisional_problem_candidates":len(entries),"design_selected":sum(r.get("design_selected") is True for r in entries),"design_pending":sum(r.get("status")=="NEEDS_BOUNDED_EVIDENCE_DESIGN" for r in entries),"design_invalid":sum(r.get("status")=="HOLD_EVIDENCE_DESIGN_INVALID" for r in entries),
-  "wait_primary_asset":sum(r.get("status")=="WAIT_PRIMARY_ASSET_RELEASE" for r in entries),"operationalization_recompile_pending":sum(r.get("status")=="NEEDS_OPERATIONALIZATION_RECOMPILE" for r in entries),"operationalization_recompiled":sum(bool(r.get("operationalization_recompile")) for r in entries),"operationalization_intrinsic_source_specific":sum((r.get("operationalization_recompile_adjudication") or {}).get("verdict")=="INTRINSIC_SOURCE_SPECIFIC" for r in entries),"review_pending":sum(r.get("status")=="NEEDS_INDEPENDENT_EVIDENCE_REVIEW" for r in entries),"review_clear":sum((r.get("evidence_review") or {}).get("verdict")=="CLEAR_FOR_SUBSTRATE_PREFLIGHT" for r in entries),"review_revise":sum((r.get("evidence_review") or {}).get("verdict")=="REVISE" for r in entries),"review_blocked":sum(r.get("status")=="HOLD_EVIDENCE_REVIEW_BLOCKED" for r in entries),"substrate_preflight_pending":sum(r.get("status")=="READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT" for r in entries),"substrate_ready":sum((r.get("substrate_preflight") or {}).get("disposition")=="EXISTING_HARNESS_READY" for r in entries),"substrate_implementation_pending":sum(r.get("status")=="NEEDS_MINIMAL_HARNESS_IMPLEMENTATION" for r in entries),"substrate_hold":sum(r.get("status") in {"HOLD_SUBSTRATE_UNAVAILABLE","HOLD_SUBSTRATE_BUDGET_INFEASIBLE"} for r in entries),"execution_ready":sum(r.get("status")=="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION" for r in entries),"execution_completed":sum(bool(r.get("evidence_receipt")) for r in entries),
+  "wait_primary_asset":sum(r.get("status")=="WAIT_PRIMARY_ASSET_RELEASE" for r in entries),"operationalization_recompile_pending":sum(r.get("status")=="NEEDS_OPERATIONALIZATION_RECOMPILE" for r in entries),"operationalization_recompiled":sum(bool(r.get("operationalization_recompile")) for r in entries),"operationalization_intrinsic_source_specific":sum((r.get("operationalization_recompile_adjudication") or {}).get("verdict")=="INTRINSIC_SOURCE_SPECIFIC" for r in entries),"review_pending":sum(r.get("status")=="NEEDS_INDEPENDENT_EVIDENCE_REVIEW" for r in entries),"review_clear":sum((r.get("evidence_review") or {}).get("verdict")=="CLEAR_FOR_SUBSTRATE_PREFLIGHT" for r in entries),"review_revise":sum((r.get("evidence_review") or {}).get("verdict")=="REVISE" for r in entries),"review_blocked":sum(r.get("status")=="HOLD_EVIDENCE_REVIEW_BLOCKED" for r in entries),"substrate_preflight_pending":sum(r.get("status")=="READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT" for r in entries),"substrate_ready":sum((r.get("substrate_preflight") or {}).get("disposition")=="EXISTING_HARNESS_READY" for r in entries),"substrate_implementation_pending":sum(r.get("status")=="NEEDS_MINIMAL_HARNESS_IMPLEMENTATION" for r in entries),"harness_runtime_hold":sum(r.get("status")=="HOLD_HARNESS_RUNTIME_SUPPORT" for r in entries),"substrate_hold":sum(r.get("status") in {"HOLD_SUBSTRATE_UNAVAILABLE","HOLD_SUBSTRATE_BUDGET_INFEASIBLE"} for r in entries),"execution_ready":sum(r.get("status")=="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION" for r in entries),"execution_completed":sum(bool(r.get("evidence_receipt")) for r in entries),
   "reduction_supported":sum(r.get("status")=="STOP_EXACT_REDUCTION_SUPPORTED" for r in entries),"residual_survives":sum(r.get("status")=="RETURN_TO_SEMANTIC_CURRENT_SOURCE_REVIEW" for r in entries),"inconclusive":sum(r.get("status") in {"BRANCH_REPAIR_READY","HOLD_INCONCLUSIVE_TREE_BUDGET_EXHAUSTED"} for r in entries),"branch_repair_ready":sum(r.get("status")=="BRANCH_REPAIR_READY" for r in entries),
   "deferred_by_portfolio_budget":sum(r.get("status")=="DEFERRED_BY_ACTIVE_PORTFOLIO_BUDGET" for r in entries),"paper_design_authorized":0,"method_authorized":0,"p0_authorized":0,"full_experiment_authorized":0}
 
@@ -100,6 +100,7 @@ def _plan_status(entries:list[dict])->str:
  if s["review_pending"]:return "EVIDENCE_REVIEW_PENDING"
  if s["operationalization_recompile_pending"]:return "EVIDENCE_OPERATIONALIZATION_RECOMPILE_PENDING"
  if s["design_pending"]:return "EVIDENCE_DESIGN_PENDING"
+ if s["harness_runtime_hold"]:return "EVIDENCE_HARNESS_RUNTIME_HOLD"
  return "EVIDENCE_WAIT_OR_HOLD"
 
 def write_provisional_evidence_plan(*,run_root:Path,machine_audit:dict|None=None)->dict:
@@ -355,10 +356,35 @@ def compile_harness_implementation_receipts(plan:dict,receipt_payload:dict)->dic
   seen.add(cid);e=by.get(cid)
   if not e or e.get("status")!="NEEDS_MINIMAL_HARNESS_IMPLEMENTATION":raise ValueError(f"no bounded harness implementation pending:{cid}")
   if str(rec.get("contract_sha256") or "")!=str(e.get("contract_sha256") or ""):raise ValueError(f"harness implementation contract digest mismatch:{cid}")
+  implementation_status=str(rec.get("implementation_status") or "PASS").strip().upper()
+  if implementation_status=="SUPPORT_BLOCKED":
+   manifest=str(rec.get("failure_manifest_sha256") or "").strip().lower();reason=_b(rec.get("reason"),2400);reopen=_b(rec.get("reopen_condition"),1800);failure_class=str(rec.get("failure_class") or "").strip().lower()
+   if not re.fullmatch(r"[0-9a-f]{64}",manifest) or not reason or not reopen or failure_class not in {"support","runtime","support/runtime"}:raise ValueError(f"harness support-blocked receipt incomplete:{cid}")
+   e["harness_implementation_failure"]={"implementation_status":"SUPPORT_BLOCKED","failure_manifest_sha256":manifest,"failure_class":failure_class,"reason":reason,"reopen_condition":reopen,"belief_authority":False,"scientific_authority":False};e["status"]="HOLD_HARNESS_RUNTIME_SUPPORT";e["execution_authorized"]=False;e["authority"]=dict(AUTHORITY);continue
+  if implementation_status!="PASS":raise ValueError(f"invalid harness implementation status:{cid}:{implementation_status}")
   sha=str(rec.get("harness_manifest_sha256") or "").strip().lower();summary=_b(rec.get("implementation_summary"),2400)
   if not re.fullmatch(r"[0-9a-f]{64}",sha) or not summary or rec.get("sandboxed") is not True or rec.get("probe_passed") is not True or rec.get("budget_feasible") is not True:raise ValueError(f"bounded harness implementation receipt incomplete:{cid}")
-  e["harness_implementation"]={"harness_manifest_sha256":sha,"implementation_summary":summary,"sandboxed":True,"probe_passed":True,"budget_feasible":True,"scientific_authority":False};e["status"]="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION";e["execution_authorized"]=True;e["authority"]={**dict(AUTHORITY),"bounded_evidence_acquisition":True}
+  e["harness_implementation"]={"implementation_status":"PASS","harness_manifest_sha256":sha,"implementation_summary":summary,"sandboxed":True,"probe_passed":True,"budget_feasible":True,"scientific_authority":False};e["status"]="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION";e["execution_authorized"]=True;e["authority"]={**dict(AUTHORITY),"bounded_evidence_acquisition":True}
  result=dict(plan);result.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"scientific_authority":False,"authority":dict(AUTHORITY)});result["status"]=_plan_status(entries);return result
+
+def compile_harness_runtime_invalidations(plan:dict,receipt_payload:dict)->dict:
+ entries=[dict(r) for r in plan.get("entries") or [] if isinstance(r,dict)];by={str(r.get("candidate_id") or ""):r for r in entries};seen=set()
+ for rec in [x for x in receipt_payload.get("receipts") or [] if isinstance(x,dict)]:
+  cid=str(rec.get("candidate_id") or "").strip()
+  if not cid or cid in seen:raise ValueError("harness runtime invalidation ids must be nonempty and unique")
+  seen.add(cid);e=by.get(cid)
+  if not e or e.get("status")!="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION" or e.get("execution_authorized") is not True:raise ValueError(f"no execution-ready harness to invalidate:{cid}")
+  if str(rec.get("contract_sha256") or "")!=str(e.get("contract_sha256") or ""):raise ValueError(f"harness invalidation contract digest mismatch:{cid}")
+  current=(e.get("harness_implementation") or {}).get("harness_manifest_sha256")
+  if str(rec.get("harness_manifest_sha256") or "")!=str(current or ""):raise ValueError(f"harness invalidation manifest mismatch:{cid}")
+  failure_manifest=str(rec.get("failure_manifest_sha256") or "").strip().lower();failure_class=str(rec.get("failure_class") or "").strip().lower();reason=_b(rec.get("reason"),2800);reopen=_b(rec.get("reopen_condition"),2200)
+  charged=rec.get("provider_calls_charged",0);remaining=rec.get("remaining_model_call_budget",MAX_MODEL_CALLS)
+  if not re.fullmatch(r"[0-9a-f]{64}",failure_manifest) or failure_class not in {"support","runtime","support/runtime","protocol","operational"} or not reason or not reopen:raise ValueError(f"harness runtime invalidation incomplete:{cid}")
+  if not isinstance(charged,int) or charged<0 or not isinstance(remaining,int) or not 0<=remaining<=MAX_MODEL_CALLS:raise ValueError(f"harness runtime invalidation budget invalid:{cid}")
+  e["harness_runtime_invalidation"]={"failure_manifest_sha256":failure_manifest,"failure_class":failure_class,"reason":reason,"reopen_condition":reopen,"provider_calls_charged":charged,"remaining_model_call_budget":remaining,"belief_authority":False,"scientific_authority":False}
+  e["execution_authorized"]=False;e["status"]="HOLD_HARNESS_RUNTIME_SUPPORT";e["authority"]=dict(AUTHORITY)
+ result=dict(plan);result.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"scientific_authority":False,"authority":dict(AUTHORITY)});result["status"]=_plan_status(entries);return result
+
 
 def write_compiled_evidence_designs(*,run_root:Path,payload:dict,part:int=1,design_model:str="")->dict:
  path=run_root/PLAN_FILENAME;state=compile_evidence_designs(json.loads(path.read_text(encoding="utf-8")),payload,part=part,design_model=design_model);path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return state

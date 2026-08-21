@@ -10,6 +10,8 @@ from .p22_xbench_runtime import (
     CANDIDATE_ID,
     CONTRACT_SHA256,
     HARNESS_PLAN_SHA256,
+    _transport_failures,
+    acquire_unit_lock,
     execute_unit,
     prediction_manifest_valid,
 )
@@ -26,6 +28,22 @@ class P22XBenchRuntimeTest(unittest.TestCase):
                 xbench_root=Path("/does/not/matter"),
                 prediction_manifest=None,
             )
+
+    def test_transport_failures_are_censored_not_scientific_negatives(self):
+        trajectory=[{"obs":"Search failed after 3 attempts: timeout"},{"obs":"ok"}]
+        self.assertEqual(_transport_failures(trajectory),["Search failed after"])
+
+    def test_unit_lock_blocks_duplicate_before_execution(self):
+        with tempfile.TemporaryDirectory() as td:
+            output = Path(td) / "unit.json"
+            lock = acquire_unit_lock(output, phase="calibration", task_id="87", kval=1)
+            self.assertTrue(lock.is_file())
+            with self.assertRaisesRegex(RuntimeError, "P22_UNIT_ALREADY_RUNNING_OR_STALE_LOCK"):
+                acquire_unit_lock(output, phase="calibration", task_id="87", kval=1)
+            lock.unlink()
+            output.write_text("{}", encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "P22_UNIT_RECEIPT_ALREADY_EXISTS"):
+                acquire_unit_lock(output, phase="calibration", task_id="87", kval=1)
 
     def test_prediction_manifest_digest_is_verified(self):
         core = {

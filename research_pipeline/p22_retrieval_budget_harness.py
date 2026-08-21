@@ -187,13 +187,12 @@ def runtime_probe(python_bin: Path, memevolve_root: Path, xbench_root: Path, env
     env = dict(os.environ if env is None else env)
     flash = memevolve_root / "Flash-Searcher-main"
     link = flash / "xbench-evals-main"
-    missing = [k for k in ("OPENAI_API_KEY","SERPER_API_KEY") if not env.get(k)]
-    provider = (env.get("WEB_ACCESS_PROVIDER") or "jina").lower()
-    if provider == "jina" and not env.get("JINA_API_KEY"): missing.append("JINA_API_KEY")
+    missing = [k for k in ("ARK_API_KEY","ARK_BASE_URL","P22_WEB_CACHE_DIR","SERPER_API_KEY") if not env.get(k)]
+    if (env.get("WEB_ACCESS_PROVIDER") or "jina").lower()=="jina" and not env.get("JINA_API_KEY"): missing.append("JINA_API_KEY")
     cmd = f"import sys;sys.path.insert(0,{str(flash)!r});import base_agent,run_flash_searcher_mm_xbench;print('OK')"
     proc = subprocess.run([str(python_bin),"-c",cmd], cwd=str(flash), capture_output=True, text=True)
-    checks = {"python_exists":python_bin.is_file(),"xbench_link":link.exists() and link.resolve()==xbench_root.resolve(),"runner_import":proc.returncode==0,"credentials":not missing}
-    return {"status":"PASS" if all(checks.values()) else "BLOCKED_RUNTIME_SUPPORT","checks":checks,"missing_credential_keys":sorted(set(missing)),"web_access_provider":provider,"import_stderr_tail":proc.stderr[-800:],"scientific_authority":False,"belief_authority":False}
+    checks = {"python_exists":python_bin.is_file(),"xbench_link":link.exists() and link.resolve()==xbench_root.resolve(),"runner_import":proc.returncode==0,"p22_runtime_config":not missing}
+    return {"status":"PASS" if all(checks.values()) else "BLOCKED_RUNTIME_SUPPORT","checks":checks,"missing_runtime_keys":sorted(set(missing)),"model_transport":"Ark OpenAI-compatible chat/completions","web_transport":"pinned Serper/Jina semantics + frozen byte replay cache","import_stderr_tail":proc.stderr[-800:],"scientific_authority":False,"belief_authority":False}
 
 
 def _vector(row: dict[str, Any]) -> list[float]:

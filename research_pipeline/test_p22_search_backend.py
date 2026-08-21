@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import unittest
+import os
+import tempfile
 from unittest.mock import patch
 
 from .p22_search_backend import bing_search, direct_read_page
@@ -39,6 +41,25 @@ class P22SearchBackendTest(unittest.TestCase):
 
     def test_direct_reader_rejects_non_http_url(self):
         self.assertTrue(direct_read_page("file:///tmp/a").startswith("Error reading page"))
+
+    def test_search_cache_replays_identical_bytes_without_second_network_call(self):
+        html = '<ol><li class="b_algo"><h2><a href="https://example.com/a">Example A</a></h2><p>Alpha snippet.</p></li></ol>'
+        with tempfile.TemporaryDirectory() as td, patch.dict(os.environ,{"P22_WEB_CACHE_DIR":td},clear=False):
+            with patch("research_pipeline.p22_search_backend.requests.get", return_value=_Response(html)) as get:
+                first = bing_search("ambiguous alpha", max_retries=1)
+                second = bing_search("ambiguous alpha", max_retries=1)
+            self.assertEqual(first,second)
+            self.assertEqual(get.call_count,1)
+
+    def test_crawl_cache_replays_and_js_only_pages_fail_closed(self):
+        html = '<html><body><div id="root"></div><script src="app.js"></script>Please enable JavaScript</body></html>'
+        with tempfile.TemporaryDirectory() as td, patch.dict(os.environ,{"P22_WEB_CACHE_DIR":td},clear=False):
+            with patch("research_pipeline.p22_search_backend.requests.get", return_value=_Response(html)) as get:
+                first=direct_read_page("https://example.test/js")
+                second=direct_read_page("https://example.test/js")
+            self.assertEqual(first,"Error reading page: P22_UNSUPPORTED_JS_ONLY_PAGE")
+            self.assertEqual(second,first)
+            self.assertEqual(get.call_count,1)
 
 
 if __name__ == "__main__":
