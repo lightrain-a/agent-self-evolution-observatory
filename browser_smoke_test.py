@@ -131,7 +131,8 @@ def main() -> None:
 
         def navigate(path: str, wait: float = 5) -> None:
             request("POST", f"/session/{session_id}/url", {"url": base + path})
-            time.sleep(wait)
+            wait_cap = float(os.getenv("BROWSER_SMOKE_WAIT_CAP", "0") or 0)
+            time.sleep(min(wait, wait_cap) if wait_cap > 0 else wait)
 
         def wait_until(script: str, timeout: float = 45, interval: float = 0.5) -> bool:
             deadline = time.time() + timeout
@@ -583,7 +584,7 @@ def main() -> None:
               const rows=[...document.querySelectorAll('.layout *')].filter(visible).map(e=>({e,t:own(e)})).filter(x=>x.t);
               const withoutMachineIds=t=>t
                 .replace(/\\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+\\b/g,'')
-                .replace(/\\b(?:PA|PF|SP|STRI)(?:-[A-Za-z0-9]+)+\\b/g,'')
+                .replace(/\\b[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+\\b/g,'')
                 .replace(/\\b[a-z0-9]+(?:-[a-z0-9]+){2,}\\b/g,'')
                 .replace(/\\b[a-f0-9]{12,64}\\b/g,'');
               const mixed=rows.filter(x=>{const t=withoutMachineIds(x.t);return /[\\u3400-\\u9fff]/.test(t)&&/\\b(?:Idea|Fresh|Shadow|Paper-first|Paper Design|Method Design|Memory|Workflow|Baseline|Pilot|standalone|thesis|support-pass|support-hold|scientific authority|qualification|provider|operator|formulation|matched baseline|dead-end|Evaluation and Benchmarks|Paper \\/ technical report)\\b/i.test(t)}).map(x=>x.t);
