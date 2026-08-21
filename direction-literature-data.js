@@ -11,9 +11,9 @@ window.DIRECTION_LITERATURE = {
       fit:{en:"Represents experience acquisition before admission and updating.",zh:"代表持久准入与更新之前的经验获取过程。"}
     },
     {
-      title:"Self-Evolving Agent Harnesses via Gated Semantic Quality-Diversity", short:"Gated Harness QD", year:2026, venue:"arXiv",
-      method:{en:"Separates proposed harness mutations from deterministic validity, credit, and sealed-test gates.",zh:"把候选 Harness 变异与确定性有效性、归因和封闭测试门控分离。"},
-      fit:{en:"Provides a concrete commit gate for deciding which candidate updates survive.",zh:"为候选更新是否能够提交提供具体门控机制。"}
+      title:"HarnessBank: Semantic Gene-Bank Search with Gated Verification for Agent-Harness Self-Evolution", short:"HarnessBank", year:2026, venue:"arXiv",
+      method:{en:"Maintains a semantic gene bank of strong harnesses, recombines them into new candidates, and separates candidate generation from gated verification.",zh:"维护高质量 Harness 的语义基因库，通过重组产生新候选，并把候选生成与门控验证分离。"},
+      fit:{en:"Provides a concrete commit gate while preserving diversity across reusable harness variants.",zh:"在保留可复用 Harness 多样性的同时，为候选更新是否提交提供具体验证门。"}
     }
   ],
   "memory-lifecycle": [

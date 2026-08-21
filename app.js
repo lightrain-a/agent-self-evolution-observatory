@@ -61,7 +61,7 @@ const PAGE_CITATIONS = {
     ["Self-Improvements in Modern Agentic Systems: A Survey", "Agent Harness Engineering: A Survey"],
     ["A Survey of Self-Evolving Agents: What, When, How, and Where to Evolve"],
     ["A Comprehensive Survey of Self-Evolving AI Agents: A New Paradigm Bridging Foundation Models and Lifelong Agentic Systems"],
-    ["Self-Evolving Agent Harnesses via Gated Semantic Quality-Diversity", "VASO: Formally Verifiable Self-Evolving Skills for Physical AI Agents"],
+    ["HarnessBank: Semantic Gene-Bank Search with Gated Verification for Agent-Harness Self-Evolution", "VASO: Formally Verifiable Self-Evolving Skills for Physical AI Agents"],
   ],
   "model-improvement": [
     ["WebRL: Training LLM Web Agents via Self-Evolving Online Curriculum Reinforcement Learning", "Agent0: Unleashing Self-Evolving Agents from Zero Data", "VisPlay: Self-Evolving Vision-Language Models"],
@@ -94,7 +94,7 @@ const PAGE_CITATIONS = {
     ["Self-Improvements in Modern Agentic Systems: A Survey", "Agent Harness Engineering: A Survey"],
     ["Language Agents as Optimizable Graphs", "Automated Design of Agentic Systems", "AFlow: Automating Agentic Workflow Generation", "Multi-agent Architecture Search via Agentic Supernet", "Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents"],
     ["HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry", "Autogenesis: A Self-Evolving Agent Protocol"],
-    ["AgentDevel: Reframing Self-Evolving LLM Agents as Release Engineering", "Self-Evolving Agent Harnesses via Gated Semantic Quality-Diversity"],
+    ["AgentDevel: Reframing Self-Evolving LLM Agents as Release Engineering", "HarnessBank: Semantic Gene-Bank Search with Gated Verification for Agent-Harness Self-Evolution"],
     ["Teaching LLMs to Self-Evolve: Cultivating Core Meta-Skills with Reinforcement Learning", "The Red Queen Gödel Machine: Co-Evolving Agents and Their Evaluators"],
     ["Adaptive Auto-Harness: Sustained Self-Improvement for Agentic System Deployment on Open-Ended Task Streams", "AFlow: Automating Agentic Workflow Generation"],
   ],
@@ -121,7 +121,7 @@ const PAGE_CITATIONS = {
     ["Hidden Forgetting in Continual Multimodal Learning: When Accuracy Survives but Grounding Fails", "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks"],
     ["MemEye: Visual-Centric Evaluation for Multimodal Agent Memory", "MemLens: Benchmarking Multimodal Long-Term Memory", "MemoryArena: Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks"],
     ["SEA-Eval: A Benchmark for Evaluating Self-Evolving Agents Beyond Episodic Assessment"],
-    ["VASO: Formally Verifiable Self-Evolving Skills for Physical AI Agents", "Self-Evolving Agent Harnesses via Gated Semantic Quality-Diversity"],
+    ["VASO: Formally Verifiable Self-Evolving Skills for Physical AI Agents", "HarnessBank: Semantic Gene-Bank Search with Gated Verification for Agent-Harness Self-Evolution"],
     ["DrunkAgent: Stealthy Memory Corruption in LLM-Powered Recommender Agents", "ST-WebAgentBench: A Benchmark for Evaluating Safety and Trustworthiness in Web Agents"],
     ["Safety in Self-Evolving LLM Agent Systems: Threats, Amplification, and Case Studies", "Separating Capability from Permission: A Governance Framework for Agentic AI Autonomy Levels", "Before the Tool Call: Deterministic Pre-Action Authorization for Autonomous AI Agents", "Governing Dynamic Capabilities: Cryptographic Binding and Reproducibility Verification for AI Agent Tool Use", "From Agent Traces to Trust: Evidence Tracing and Execution Provenance in LLM Agents"],
   ],
@@ -141,7 +141,7 @@ const PAGE_CITATIONS = {
   "research-agenda": [
     ["Counterfactual Trace Auditing of LLM Agent Skills", "EVE-Agent: Evidence-Verifiable Self-Evolving Agents"],
     ["MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents", "SkillSmith: Co-Evolving Skills and Tools for Self-Improving Agent Systems", "From Memory to Skills: Evidence-Grounded Co-Evolution Governance for Long-Horizon LLM Agents"],
-    ["AgentDevel: Reframing Self-Evolving LLM Agents as Release Engineering", "Self-Evolving Agent Harnesses via Gated Semantic Quality-Diversity", "Autogenesis: A Self-Evolving Agent Protocol", "HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry"],
+    ["AgentDevel: Reframing Self-Evolving LLM Agents as Release Engineering", "HarnessBank: Semantic Gene-Bank Search with Gated Verification for Agent-Harness Self-Evolution", "Autogenesis: A Self-Evolving Agent Protocol", "HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry"],
     ["Self-evolving Embodied AI", "WorldEvolver: Self-Evolving World Models for LLM Agent Planning"],
     ["SEA-Eval: A Benchmark for Evaluating Self-Evolving Agents Beyond Episodic Assessment", "Hidden Forgetting in Continual Multimodal Learning: When Accuracy Survives but Grounding Fails"],
     ["HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry", "MemPoison: Uncovering Persistent Memory Threats and Structural Blind Spots in LLM Agents", "Hidden in Memory: Sleeper Memory Poisoning in LLM Agents", "Teaching LLMs to Self-Evolve: Cultivating Core Meta-Skills with Reinforcement Learning", "From Memory to Skills: Evidence-Grounded Co-Evolution Governance for Long-Horizon LLM Agents", "FSFM: A Biologically-Inspired Framework for Selective Forgetting of Agent Memory"],
@@ -151,7 +151,7 @@ const PAGE_CITATIONS = {
   ],
   "paper-problem": [
     ["VISCO: Benchmarking Fine-Grained Critique and Correction towards Self-Improvement in Visual Reasoning", "Hidden Forgetting in Continual Multimodal Learning: When Accuracy Survives but Grounding Fails"],
-    ["EVE-Agent: Evidence-Verifiable Self-Evolving Agents", "Self-Evolving Agent Harnesses via Gated Semantic Quality-Diversity"],
+    ["EVE-Agent: Evidence-Verifiable Self-Evolving Agents", "HarnessBank: Semantic Gene-Bank Search with Gated Verification for Agent-Harness Self-Evolution"],
     ["MemEye: Visual-Centric Evaluation for Multimodal Agent Memory"],
   ],
   "paper-ideas": [
@@ -185,7 +185,7 @@ const PAGE_CITATIONS = {
   ],
   "paper-roadmap": [
     ["VisPlay: Self-Evolving Vision-Language Models", "META: Meta Evolution of Tool Trajectory Adaptation for Long-Video Understanding"],
-    ["VASO: Formally Verifiable Self-Evolving Skills for Physical AI Agents", "Self-Evolving Agent Harnesses via Gated Semantic Quality-Diversity"],
+    ["VASO: Formally Verifiable Self-Evolving Skills for Physical AI Agents", "HarnessBank: Semantic Gene-Bank Search with Gated Verification for Agent-Harness Self-Evolution"],
   ],
   "review-log": [
     ["A Survey of Self-Evolving Agents: What, When, How, and Where to Evolve", "Self-Improvements in Modern Agentic Systems: A Survey", "Counterfactual Trace Auditing of LLM Agent Skills", "SkillSmith: Co-Evolving Skills and Tools for Self-Improving Agent Systems", "MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents", "SEA-Eval: A Benchmark for Evaluating Self-Evolving Agents Beyond Episodic Assessment"],
