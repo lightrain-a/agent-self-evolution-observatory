@@ -30,7 +30,9 @@ const pageId = document.body.dataset.page || "home";
 const NAVIGATION_TYPE = performance.getEntriesByType?.("navigation")?.[0]?.type || "navigate";
 if (pageId === "paper-ideas" && "scrollRestoration" in history) history.scrollRestoration = "manual";
 const initialQuery = new URLSearchParams(location.search);
-let language = localStorage.getItem("agent-evolution-language") || (pageId === "research-timeline" ? "zh" : "en");
+let language = pageId === "research-timeline"
+  ? (localStorage.getItem("research-timeline-language") || "zh")
+  : (localStorage.getItem("agent-evolution-language") || "en");
 let catalog = [];
 let activeFilter = initialQuery.get("method") || "all";
 let activeYear = initialQuery.get("year") || "all";
@@ -745,7 +747,9 @@ function syncShellLanguage() {
   if (brandStrong) brandStrong.textContent = language === "zh" ? "Agent 自进化" : "Agent Self-Evolution";
   if (brandSpan) brandSpan.textContent = language === "zh" ? "科研观测站" : "Research Observatory";
   const searchInput = document.getElementById("site-search");
-  if (searchInput) searchInput.placeholder = language === "zh" ? "搜索研究站内容…" : "Search the observatory…";
+  if (searchInput) searchInput.placeholder = pageId === "research-timeline"
+    ? (language === "zh" ? "搜索时间轴、Idea、实验、论文或状态…" : "Search timeline, ideas, experiments, papers, or states…")
+    : (language === "zh" ? "搜索研究站内容…" : "Search the observatory…");
   const resultCount = document.getElementById("result-count");
   if (resultCount && pageId === "paper-ideas") resultCount.textContent = language === "zh" ? "当前研究方向账本" : "Current idea ledger";
   const languageToggle = document.querySelector(".language-toggle");
@@ -756,7 +760,9 @@ function syncShellLanguage() {
   if (sidebarNote) {
     sidebarNote.textContent = pageId === "system-overview"
       ? (language === "zh" ? "7 个阅读章节 · 统一 11 阶段生命周期 · 6 个职责层 · P0 七阶段验证子状态机" : "7 reader chapters · canonical 11-stage lifecycle · 6 responsibility layers · P0 7-stage validation sub-machine")
-      : (language === "zh" ? "实时科研状态 · 文献、实验与论文证据持续更新" : "Live research state · literature, experiments, and paper evidence update continuously");
+      : pageId === "research-timeline"
+        ? (language === "zh" ? "完整研究历史只读投影 · 北京时间 UTC+8 · 时间轴不新增科研权限" : "Read-only full research history · Asia/Shanghai UTC+8 · no new scientific authority")
+        : (language === "zh" ? "实时科研状态 · 文献、实验与论文证据持续更新" : "Live research state · literature, experiments, and paper evidence update continuously");
   }
   renderNavigation();
   renderFooter();
@@ -765,7 +771,7 @@ function setLanguage(next) {
   const oldHeight = Math.max(document.documentElement.scrollHeight, 1);
   const ratio = window.scrollY / oldHeight;
   language = next;
-  localStorage.setItem("agent-evolution-language", language);
+  localStorage.setItem(pageId === "research-timeline" ? "research-timeline-language" : "agent-evolution-language", language);
   syncShellLanguage();
   renderPage();
   requestAnimationFrame(() => window.scrollTo(0, ratio * document.documentElement.scrollHeight));
