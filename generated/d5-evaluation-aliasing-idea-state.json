@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "idea_id": "D5-C03-EVALUATION-ALIASING",
+  "basin_id": "D5-EVALUATION-ALIASING",
+  "title": "Evaluation Aliasing in Persistent Agent Memory",
+  "status": "F0_READY_STAGE_A",
+  "relationship_to_existing_d5": {
+    "existing_paper_basin": "D5-ENV-ORDER-CONTAMINATION",
+    "relationship": "SEPARATE_BASIN",
+    "reason": "The environment-order paper audits benchmark backend carryover under task permutation. This idea studies whether a finite current evaluation aliases distinct persistent memory states that later have different controlled effects. The causal variables and decisive experiments are different."
+  },
+  "scientific_question": "Can distinct persistent memories receive the same non-degenerate score signature on one common current panel while producing different controlled effects on a sealed future panel?",
+  "hypothesis": "Finite current task evaluation can induce behavioral alias classes over persistent memory states: at least one class that is exactly score-equivalent on a common current panel will contain memories with different placebo-controlled future effects across multiple task families.",
+  "claim_boundary": "No claim of byte-identical internal-state history effects. No claim of a new bisimulation theorem. The target is an empirical and methodological failure mode of finite evaluation for persistent agent memory.",
+  "novelty_state": {
+    "risk": "MEDIUM",
+    "problem_gate": "generated/d5-evaluation-aliasing-problem-gate.json",
+    "closest_reductions": [
+      "classical behavioral state abstraction and bisimulation",
+      "persistent-state sufficiency under hidden-thought erasure",
+      "model-level completion-score aliasing versus state-tracking ability",
+      "procedural-memory transfer heterogeneity",
+      "regime-dependent memory substrate performance"
+    ],
+    "residual": "No located work first constructs exact same-current-evaluation alias classes over persistent external memories and then opens an outcome-sealed future panel to test controlled effect divergence."
+  },
+  "lineage": {
+    "legacy_v1_freeze_receipt": "generated/d5-state-sufficiency-v1-freeze-receipt.json",
+    "legacy_v1_invalidation": "generated/d5-state-sufficiency-v1-invalidation.json",
+    "gemma_trio_qualification_stop": "generated/d5-evaluation-aliasing-gemma-v1-stop.json",
+    "qwen_v2_frozen_contract": "generated/d5-evaluation-aliasing-qwen-v2-contract.json",
+    "qwen_v2_preflight": "generated/d5-evaluation-aliasing-qwen-v2-preflight.json",
+    "qwen_v2_supersession": "generated/d5-evaluation-aliasing-qwen-v2-supersession.json"
+  },
+  "current_f0": {
+    "contract": "generated/d5-evaluation-aliasing-gemma-balanced-v1-contract.json",
+    "preflight": "generated/d5-evaluation-aliasing-gemma-balanced-v1-preflight.json",
+    "status": "READY_FOR_STAGE_A",
+    "memory_pool": "four heldout-candidate memories, exactly one from each frozen source family",
+    "stage_a_max_episodes": 48,
+    "stage_a_early_stop": true,
+    "stage_b_sealed": true,
+    "stage_b_open_condition": "At least one size>=2 non-degenerate exact Stage-A alias class with reproducible no-memory controls."
+  },
+  "transitions": {
+    "stage_a_no_alias_or_repro_failure": "STOP_CURRENT_GEMMA_REALIZATION",
+    "stage_a_pass": "OPEN_PRESEALED_STAGE_B_FOR_ALL_QUALIFIED_ALIAS_MEMBERS",
+    "stage_b_go": "PROSPECTIVE_CONFIRMATION",
+    "stage_b_stop": "STOP_CURRENT_GEMMA_REALIZATION",
+    "prospective_confirmation_go": "PAPER_DESIGN_ELIGIBLE",
+    "prospective_confirmation_missing_or_fail": "NO_PAPERSTATE"
+  },
+  "anti_outcome_shopping": [
+    "Do not replace memories after Stage-A outcomes.",
+    "Do not replace Stage-B tasks after Stage-A outcomes.",
+    "Do not reopen the superseded Qwen panel once Gemma consumes its frozen task identities.",
+    "Do not create a manuscript from Stage-A alias discovery alone.",
+    "Do not create a paper from a one-task or one-family future divergence."
+  ],
+  "paperstate_created": false,
+  "manuscript_started": false,
+  "scientific_authority": false,
+  "paper_design_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

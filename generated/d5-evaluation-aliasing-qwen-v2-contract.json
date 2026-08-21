@@ -1,0 +1,171 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "D5-EVALUATION-ALIASING-QWEN-v2",
+  "status": "FROZEN_BEFORE_COMMON_PANEL_OUTCOMES",
+  "working_term": "evaluation aliasing",
+  "scientific_question": "Can distinct persistent memories be exactly indistinguishable on the same non-degenerate current evaluation panel yet have different future controlled transfer effects?",
+  "claim_boundary": "Tests insufficiency of a finite observable evaluation signature as a behavioral state descriptor; does not claim history has an effect after byte-identical complete internal-state equality.",
+  "frozen_history_object": {
+    "source_family": "pick_heat_then_place_in_recep",
+    "memory_ids": [
+      "se-m-pick_heat_then_place_in_recep-1",
+      "se-m-pick_heat_then_place_in_recep-2",
+      "se-m-pick_heat_then_place_in_recep-3"
+    ],
+    "selection_note": "The trio predates all Qwen-v2 common-panel outcomes. Legacy v1 equivalence is invalidated and contributes no support.",
+    "memories": [
+      {
+        "memory_id": "se-m-pick_heat_then_place_in_recep-1",
+        "source_family": "pick_heat_then_place_in_recep",
+        "source_task_relpath": "json_2.1.1/valid_unseen/pick_heat_then_place_in_recep-Mug-None-CoffeeMachine-10/trial_T20190907_171933_349922/game.tw-pddl",
+        "memory_text_sha256": "afbe7b067280913c5d59aa3521022f1a9331d07c7309b03cac546642fe1f1a18",
+        "candidate_index": 1,
+        "candidate_role": "development"
+      },
+      {
+        "memory_id": "se-m-pick_heat_then_place_in_recep-2",
+        "source_family": "pick_heat_then_place_in_recep",
+        "source_task_relpath": "json_2.1.1/valid_unseen/pick_heat_then_place_in_recep-Mug-None-Cabinet-10/trial_T20190909_021200_669381/game.tw-pddl",
+        "memory_text_sha256": "c6187ab4bcf7b7bb10282549abaf30a1544f02d8b1cccb25e169f55cb03a77bd",
+        "candidate_index": 2,
+        "candidate_role": "development"
+      },
+      {
+        "memory_id": "se-m-pick_heat_then_place_in_recep-3",
+        "source_family": "pick_heat_then_place_in_recep",
+        "source_task_relpath": "json_2.1.1/valid_unseen/pick_heat_then_place_in_recep-Apple-None-GarbageCan-10/trial_T20190908_145143_820541/game.tw-pddl",
+        "memory_text_sha256": "0c4a03d35e184a5fa9664f5bf40a544e33d9bb1511dc185b4f3eb85ccf591f15",
+        "candidate_index": 3,
+        "candidate_role": "heldout_candidate"
+      }
+    ]
+  },
+  "stage_a": {
+    "name": "COMMON_CURRENT_EVALUATION_QUALIFICATION",
+    "tasks": [
+      {
+        "target_family": "pick_and_place_simple",
+        "task_relpath": "json_2.1.1/valid_unseen/pick_and_place_simple-Pencil-None-Shelf-308/trial_T20190908_122024_052056/game.tw-pddl"
+      },
+      {
+        "target_family": "pick_cool_then_place_in_recep",
+        "task_relpath": "json_2.1.1/valid_unseen/pick_cool_then_place_in_recep-Mug-None-Cabinet-10/trial_T20190909_121559_082363/game.tw-pddl"
+      },
+      {
+        "target_family": "pick_heat_then_place_in_recep",
+        "task_relpath": "json_2.1.1/valid_unseen/pick_heat_then_place_in_recep-Apple-None-Fridge-10/trial_T20190906_182353_418140/game.tw-pddl"
+      }
+    ],
+    "episodes": 27,
+    "arms": [
+      "no-memory",
+      "placebo",
+      "retrieved"
+    ],
+    "pass_rule": "Every memory must have exactly the same (retrieved, placebo, no-memory) success triple on every identical task; no-memory success+actions must reproduce; the full common signature cannot be all-zero or all-one.",
+    "failure_action": "STOP_QWEN_REALIZATION_WITHOUT_OPENING_STAGE_B"
+  },
+  "stage_b": {
+    "name": "SEALED_FUTURE_ALIASING_TEST",
+    "tasks": [
+      {
+        "target_family": "pick_and_place_simple",
+        "task_relpath": "json_2.1.1/valid_unseen/pick_and_place_simple-PepperShaker-None-Drawer-10/trial_T20190918_154424_844749/game.tw-pddl"
+      },
+      {
+        "target_family": "pick_cool_then_place_in_recep",
+        "task_relpath": "json_2.1.1/valid_unseen/pick_cool_then_place_in_recep-Pan-None-CounterTop-10/trial_T20190908_114622_738670/game.tw-pddl"
+      },
+      {
+        "target_family": "pick_heat_then_place_in_recep",
+        "task_relpath": "json_2.1.1/valid_unseen/pick_heat_then_place_in_recep-Apple-None-Fridge-10/trial_T20190906_182435_622538/game.tw-pddl"
+      }
+    ],
+    "episodes": 27,
+    "arms": [
+      "no-memory",
+      "placebo",
+      "retrieved"
+    ],
+    "sealed_before_stage_a_outcomes": true,
+    "unlock_requires_stage_a_pass": true,
+    "controlled_delta": "retrieved_success-placebo_success",
+    "go_min_divergent_tasks": 2,
+    "go_min_divergent_target_families": 2,
+    "go_requires_no_memory_success_and_actions_reproducible": true
+  },
+  "task_selection": {
+    "origin": "The six identities were frozen outcome-independently in D5-STATE-SUFFICIENCY-F0-v1 and have no execution-bearing outcomes in the historical run store.",
+    "legacy_v1_freeze_receipt": "generated/d5-state-sufficiency-v1-freeze-receipt.json",
+    "legacy_v1_freeze_receipt_sha256": "b46400fe2aa84313c06363b4480a4d75336255bc35ed96e037938fbd01e3ac63",
+    "legacy_v1_private_contract_file_sha256": "9b8f91fdd9b73138387e31c793962208cca0d9e6ecc4e0ff32f8cf9a43cd7500",
+    "legacy_v1_private_contract_material_sha256": "e5d6cb4223fd1833f8c421a37cb63dd16d7d722fd08b01833209f1874d772875",
+    "split_rule": "Within each frozen family, lexicographically first task is Stage A and second is sealed Stage B.",
+    "historical_exposed_task_count": 85,
+    "historical_exposure_sha256": "74166731941264ffa71e491ee8eba373ef82b6bf2a4fafd48bf3e5259c21b6ff"
+  },
+  "runtime": {
+    "alfworld_asset": "ALFWorld json_2.1.1 valid_unseen",
+    "alfworld_config": "research_pipeline/p0_alfworld_config.yaml",
+    "alfworld_config_sha256": "8d426273308fa7f043739df3074cf773fe1dc48920d38298f53246a189847e20",
+    "policy_mode": "react-family",
+    "max_steps": 50,
+    "decoding": "temperature=0",
+    "placebo": "token-matched, absolute token-count gap <=1",
+    "outcome_truth": "ALFWorld won/success; no LLM judge"
+  },
+  "model": {
+    "files": {
+      "config.json": {
+        "size": 663,
+        "sha256": "7463bb0ea78315365e6c6b74de4e73bbcc8359dfb0c5a737584e077d42c0b03c"
+      },
+      "model.safetensors.index.json": {
+        "size": 27752,
+        "sha256": "624bf7c47cd12468fdc16e38a47cf4f19e0415b859a223ba3c027eed2f0e1028"
+      },
+      "tokenizer_config.json": {
+        "size": 7305,
+        "sha256": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583"
+      },
+      "tokenizer.json": {
+        "size": 7031645,
+        "sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539"
+      },
+      "weights": [
+        {
+          "name": "model-00001-of-00004.safetensors",
+          "size": 3945441440
+        },
+        {
+          "name": "model-00002-of-00004.safetensors",
+          "size": 3864726352
+        },
+        {
+          "name": "model-00003-of-00004.safetensors",
+          "size": 3864726424
+        },
+        {
+          "name": "model-00004-of-00004.safetensors",
+          "size": 3556377672
+        }
+      ]
+    },
+    "full_weight_hashes": false,
+    "fingerprint_sha256": "63ceadb035df83c36c7f0d142567bf5cf5a8ef8ad0ab71b28c920e5defa808fc"
+  },
+  "source_artifacts": {
+    "source_memories_asset": "p0-mem-xfer-support-enriched-qwen-v1/source-memories.jsonl",
+    "source_memories_sha256": "badf536cc4051cc29341e3c0a3a5c90b8c5c75b5a091d879aee5e22feb17c53f",
+    "legacy_v1_invalidation": "generated/d5-state-sufficiency-v1-invalidation.json",
+    "legacy_v1_invalidation_sha256": "bc4343270a1c50002c5dacc1a77a8c9f64e644c5c6aec4d9a1f3d0933355b482"
+  },
+  "authority": {
+    "scientific": false,
+    "paper_design": false,
+    "canonical_gpu": false
+  },
+  "contract_sha256": "4edb417b4070fee94e36754e1391b9b27c5d7ad3eb1c5eaca4a95c58e10b49c7",
+  "created_at": "2026-08-21T17:19:07Z",
+  "scientific_authority": false
+}

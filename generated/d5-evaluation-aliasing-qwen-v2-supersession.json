@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "D5-EVALUATION-ALIASING-QWEN-V2-SUPERSESSION",
+  "status": "SUPERSEDED_BEFORE_ANY_STAGE_A_OUTCOME",
+  "superseded_contract": "generated/d5-evaluation-aliasing-qwen-v2-contract.json",
+  "superseded_contract_material_sha256": "4edb417b4070fee94e36754e1391b9b27c5d7ad3eb1c5eaca4a95c58e10b49c7",
+  "superseded_preflight": "generated/d5-evaluation-aliasing-qwen-v2-preflight.json",
+  "outcome_calls_executed": 0,
+  "reason": "The Qwen v2 realization was scientifically valid after common-panel repair but held on unavailable local GPU memory. Before any Qwen v2 current-panel outcome was generated, a stronger immediately executable Gemma design was chosen that selects a balanced memory pool solely from frozen historical metadata and discovers all alias classes on one fresh common panel instead of preselecting a trio believed to be equivalent.",
+  "consequence": "The Qwen v2 frozen task identities may be consumed by the stronger Gemma realization. Qwen v2 must not later be resumed on those exposed tasks; any future Qwen realization requires a new outcome-independent fresh current/future panel.",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

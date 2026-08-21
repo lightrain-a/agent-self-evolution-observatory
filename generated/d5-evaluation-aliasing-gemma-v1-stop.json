@@ -1,0 +1,151 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "D5-EVALUATION-ALIASING-GEMMA-V1-QUALIFICATION-STOP",
+  "status": "STOP_REALIZATION_CURRENT_EQUIVALENCE_NOT_QUALIFIED",
+  "original_contract_file_sha256": "904dca4917aafa3cdf6a39fb7a94affd48c07409af86b603ce478de66159d5e5",
+  "original_contract_material_sha256": "e8b410a4309403be9dc611d678fabc269744678805e1e407a12cd90fa6958a0c",
+  "original_created_at": "2026-08-21T09:39:11Z",
+  "experiment_id": "D5-STATE-SUFFICIENCY-GEMMA-v1",
+  "memory_ids": [
+    "se-m-pick_heat_then_place_in_recep-1",
+    "se-m-pick_heat_then_place_in_recep-2",
+    "se-m-pick_heat_then_place_in_recep-3"
+  ],
+  "memories": [
+    {
+      "memory_id": "se-m-pick_heat_then_place_in_recep-1",
+      "source_family": "pick_heat_then_place_in_recep",
+      "source_task_relpath": "json_2.1.1/valid_unseen/pick_heat_then_place_in_recep-Mug-None-CoffeeMachine-10/trial_T20190907_171933_349922/game.tw-pddl",
+      "memory_text_sha256": "afbe7b067280913c5d59aa3521022f1a9331d07c7309b03cac546642fe1f1a18",
+      "candidate_index": 1,
+      "candidate_role": "development"
+    },
+    {
+      "memory_id": "se-m-pick_heat_then_place_in_recep-2",
+      "source_family": "pick_heat_then_place_in_recep",
+      "source_task_relpath": "json_2.1.1/valid_unseen/pick_heat_then_place_in_recep-Mug-None-Cabinet-10/trial_T20190909_021200_669381/game.tw-pddl",
+      "memory_text_sha256": "c6187ab4bcf7b7bb10282549abaf30a1544f02d8b1cccb25e169f55cb03a77bd",
+      "candidate_index": 2,
+      "candidate_role": "development"
+    },
+    {
+      "memory_id": "se-m-pick_heat_then_place_in_recep-3",
+      "source_family": "pick_heat_then_place_in_recep",
+      "source_task_relpath": "json_2.1.1/valid_unseen/pick_heat_then_place_in_recep-Apple-None-GarbageCan-10/trial_T20190908_145143_820541/game.tw-pddl",
+      "memory_text_sha256": "0c4a03d35e184a5fa9664f5bf40a544e33d9bb1511dc185b4f3eb85ccf591f15",
+      "candidate_index": 3,
+      "candidate_role": "heldout_candidate"
+    }
+  ],
+  "stage_a_tasks": [
+    {
+      "target_family": "pick_and_place_simple",
+      "task_relpath": "json_2.1.1/valid_unseen/pick_and_place_simple-SoapBottle-None-Toilet-424/trial_T20190907_004351_281384/game.tw-pddl"
+    },
+    {
+      "target_family": "pick_clean_then_place_in_recep",
+      "task_relpath": "json_2.1.1/valid_unseen/pick_clean_then_place_in_recep-Cloth-None-Cabinet-424/trial_T20190908_022436_073995/game.tw-pddl"
+    },
+    {
+      "target_family": "pick_heat_then_place_in_recep",
+      "task_relpath": "json_2.1.1/valid_unseen/pick_heat_then_place_in_recep-Apple-None-GarbageCan-10/trial_T20190908_145050_918567/game.tw-pddl"
+    }
+  ],
+  "sealed_stage_b_tasks": [
+    {
+      "target_family": "pick_and_place_simple",
+      "task_relpath": "json_2.1.1/valid_unseen/pick_and_place_simple-Vase-None-Safe-219/trial_T20190908_205221_748352/game.tw-pddl"
+    },
+    {
+      "target_family": "pick_clean_then_place_in_recep",
+      "task_relpath": "json_2.1.1/valid_unseen/pick_clean_then_place_in_recep-Cloth-None-CounterTop-424/trial_T20190908_100632_546757/game.tw-pddl"
+    },
+    {
+      "target_family": "pick_heat_then_place_in_recep",
+      "task_relpath": "json_2.1.1/valid_unseen/pick_heat_then_place_in_recep-Apple-None-GarbageCan-10/trial_T20190908_145356_918528/game.tw-pddl"
+    }
+  ],
+  "stage_b_was_opened": false,
+  "model": {
+    "model_id": "google/gemma-4-26B-A4B-it",
+    "exact_revision": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+    "formal_asset_receipt_sha256": "d70ef10d064f27e33deabdb29ca833a558457b5884519dbd41988bf0b1a4b54c",
+    "official_source_manifest_sha256": "039ea1e26e19a5d6095f61a301e655bd55b6c03338a8a9110dc2338b06868cd3",
+    "verified_weight_digests": {
+      "model-00001-of-00002.safetensors": "1127684971bbca40465435a5cad69d67ad603bf5e61c6dfd5561fae4a3bcfdb3",
+      "model-00002-of-00002.safetensors": "aab47033e1e8a492ef8e581efae1cf36478d0433567e7729b3c1728bc8970db7"
+    }
+  },
+  "source_memories_sha256": "badf536cc4051cc29341e3c0a3a5c90b8c5c75b5a091d879aee5e22feb17c53f",
+  "stage_a_raw_sha256": "f988d0bbf0fe9f629493cbaacfd2bb5708f60f8357df825a34f2d3ed598140c2",
+  "stage_a_original_manifest_sha256": "1cacb18164f0b7cfd3a047da9bcc2088c2ef8499dba59f391198ca84f8e1f7c7",
+  "qualification_reanalysis": {
+    "schema_version": "1.0",
+    "experiment_id": "D5-STATE-SUFFICIENCY-GEMMA-v1",
+    "stage": "A",
+    "status": "EARLY_STOP_QUALIFICATION_FAILED",
+    "contract_sha256": "e8b410a4309403be9dc611d678fabc269744678805e1e407a12cd90fa6958a0c",
+    "rows": 18,
+    "expected": 27,
+    "completed_tasks": 2,
+    "exact_score_equivalence_all_completed_tasks": false,
+    "no_memory_reproducible_all_completed_tasks": true,
+    "tasks": [
+      {
+        "task_relpath": "json_2.1.1/valid_unseen/pick_and_place_simple-SoapBottle-None-Toilet-424/trial_T20190907_004351_281384/game.tw-pddl",
+        "target_family": "pick_and_place_simple",
+        "triples": {
+          "se-m-pick_heat_then_place_in_recep-1": [
+            1,
+            1,
+            1
+          ],
+          "se-m-pick_heat_then_place_in_recep-2": [
+            1,
+            1,
+            1
+          ],
+          "se-m-pick_heat_then_place_in_recep-3": [
+            1,
+            1,
+            1
+          ]
+        },
+        "exact_score_equivalent": true,
+        "no_memory_reproducible": true
+      },
+      {
+        "task_relpath": "json_2.1.1/valid_unseen/pick_clean_then_place_in_recep-Cloth-None-Cabinet-424/trial_T20190908_022436_073995/game.tw-pddl",
+        "target_family": "pick_clean_then_place_in_recep",
+        "triples": {
+          "se-m-pick_heat_then_place_in_recep-1": [
+            0,
+            0,
+            0
+          ],
+          "se-m-pick_heat_then_place_in_recep-2": [
+            0,
+            1,
+            0
+          ],
+          "se-m-pick_heat_then_place_in_recep-3": [
+            0,
+            0,
+            0
+          ]
+        },
+        "exact_score_equivalent": false,
+        "no_memory_reproducible": true
+      }
+    ],
+    "decision": "STOP_GEMMA_SUBSTRATE_NO_CURRENT_EQUIVALENCE",
+    "stage_b_authorized_by_this_gate": false,
+    "remaining_stage_a_rows_not_required": 9,
+    "stop_logic": "Stage A is a conjunctive qualification gate. One completed task violating exact score equivalence or no-memory reproducibility cannot be repaired by later tasks.",
+    "scientific_authority": false
+  },
+  "interpretation": "The fixed memory trio did not requalify as current-evaluation-equivalent on the common Gemma panel. This is a realization qualification stop and has no authority against the broader evaluation-aliasing hypothesis.",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

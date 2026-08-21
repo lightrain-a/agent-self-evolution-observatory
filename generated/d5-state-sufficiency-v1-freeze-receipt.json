@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "D5-STATE-SUFFICIENCY-V1-ORIGINAL-FREEZE-RECEIPT",
+  "status": "HISTORICAL_FREEZE_SUPERSEDED_BEFORE_EXECUTION",
+  "original_contract_file_sha256": "9b8f91fdd9b73138387e31c793962208cca0d9e6ecc4e0ff32f8cf9a43cd7500",
+  "original_contract_material_sha256": "e5d6cb4223fd1833f8c421a37cb63dd16d7d722fd08b01833209f1874d772875",
+  "original_created_at": "2026-08-21T09:24:49Z",
+  "experiment_id": "D5-STATE-SUFFICIENCY-F0-v1",
+  "memory_ids": [
+    "se-m-pick_heat_then_place_in_recep-1",
+    "se-m-pick_heat_then_place_in_recep-2",
+    "se-m-pick_heat_then_place_in_recep-3"
+  ],
+  "memories": [
+    {
+      "memory_id": "se-m-pick_heat_then_place_in_recep-1",
+      "source_family": "pick_heat_then_place_in_recep",
+      "memory_text_sha256": "afbe7b067280913c5d59aa3521022f1a9331d07c7309b03cac546642fe1f1a18",
+      "candidate_index": 1,
+      "candidate_role": "development"
+    },
+    {
+      "memory_id": "se-m-pick_heat_then_place_in_recep-2",
+      "source_family": "pick_heat_then_place_in_recep",
+      "memory_text_sha256": "c6187ab4bcf7b7bb10282549abaf30a1544f02d8b1cccb25e169f55cb03a77bd",
+      "candidate_index": 2,
+      "candidate_role": "development"
+    },
+    {
+      "memory_id": "se-m-pick_heat_then_place_in_recep-3",
+      "source_family": "pick_heat_then_place_in_recep",
+      "memory_text_sha256": "0c4a03d35e184a5fa9664f5bf40a544e33d9bb1511dc185b4f3eb85ccf591f15",
+      "candidate_index": 3,
+      "candidate_role": "heldout_candidate"
+    }
+  ],
+  "frozen_task_relpaths": [
+    "json_2.1.1/valid_unseen/pick_and_place_simple-Pencil-None-Shelf-308/trial_T20190908_122024_052056/game.tw-pddl",
+    "json_2.1.1/valid_unseen/pick_and_place_simple-PepperShaker-None-Drawer-10/trial_T20190918_154424_844749/game.tw-pddl",
+    "json_2.1.1/valid_unseen/pick_cool_then_place_in_recep-Mug-None-Cabinet-10/trial_T20190909_121559_082363/game.tw-pddl",
+    "json_2.1.1/valid_unseen/pick_cool_then_place_in_recep-Pan-None-CounterTop-10/trial_T20190908_114622_738670/game.tw-pddl",
+    "json_2.1.1/valid_unseen/pick_heat_then_place_in_recep-Apple-None-Fridge-10/trial_T20190906_182353_418140/game.tw-pddl",
+    "json_2.1.1/valid_unseen/pick_heat_then_place_in_recep-Apple-None-Fridge-10/trial_T20190906_182435_622538/game.tw-pddl"
+  ],
+  "model": {
+    "fingerprint_sha256": "63ceadb035df83c36c7f0d142567bf5cf5a8ef8ad0ab71b28c920e5defa808fc",
+    "config_sha256": "7463bb0ea78315365e6c6b74de4e73bbcc8359dfb0c5a737584e077d42c0b03c",
+    "tokenizer_sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539"
+  },
+  "source_hashes": {
+    "source_memories_sha256": "badf536cc4051cc29341e3c0a3a5c90b8c5c75b5a091d879aee5e22feb17c53f",
+    "historical_main_table_sha256": "eb861663351041e1f1a297b6791c7d31b4ba18285c3a13f0603d5d80c09b324f",
+    "historical_exposure_sha256": "74166731941264ffa71e491ee8eba373ef82b6bf2a4fafd48bf3e5259c21b6ff",
+    "alfworld_config_sha256": "8d426273308fa7f043739df3074cf773fe1dc48920d38298f53246a189847e20"
+  },
+  "superseded_by": "generated/d5-state-sufficiency-v1-invalidation.json",
+  "scientific_authority": false,
+  "experiment_authority": false
+}

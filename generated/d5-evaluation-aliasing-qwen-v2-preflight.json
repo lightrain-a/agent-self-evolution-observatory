@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "preflight_id": "D5-EVALUATION-ALIASING-QWEN-V2-PREFLIGHT",
+  "status": "HOLD_COMPUTE",
+  "contract_sha256": "4edb417b4070fee94e36754e1391b9b27c5d7ad3eb1c5eaca4a95c58e10b49c7",
+  "provenance_gate": {
+    "pass": true,
+    "contract_rebuild_matches": true,
+    "frozen_tasks": 6,
+    "frozen_tasks_exist": true,
+    "frozen_tasks_with_execution_exposure": [],
+    "frozen_memories_present": true
+  },
+  "compute_gate": {
+    "pass": false,
+    "required_free_memory_mib": 18000,
+    "gpu": {
+      "available": true,
+      "index": 0,
+      "name": "NVIDIA A100-SXM4-80GB",
+      "memory_total_mib": 81920,
+      "memory_used_mib": 75423,
+      "memory_free_mib": 5731,
+      "utilization_percent": 0
+    },
+    "existing_local_vllm_model": "google/gemma-4-26B-A4B-it",
+    "preempt_existing_service_authorized": false
+  },
+  "next_if_ready": "Execute only Stage A common-panel qualification. Stage B remains sealed until Stage A exact-equivalence and nondegeneracy gates pass.",
+  "on_hold": "No scientific update. Do not replace the frozen model, task panel, memory trio, or placebo definition to obtain a runnable realization.",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

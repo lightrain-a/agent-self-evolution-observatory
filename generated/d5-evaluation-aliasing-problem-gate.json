@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "idea_id": "D5-EVALUATION-ALIASING",
+  "title": "Evaluation Aliasing in Persistent Agent Memory",
+  "status": "PROMISING_F0_REQUIRED_HOLD_COMPUTE",
+  "scientific_question": "Can distinct persistent memories be exactly indistinguishable on the same non-degenerate current evaluation panel yet induce different controlled effects on a sealed future panel?",
+  "problem_statement": "Memory-based self-evolving agents are often judged by a finite current task panel or scalar utility summary. If that evaluation maps behaviorally distinct persistent memory states to the same observed signature, a system can incorrectly treat those states as equivalent even though they make different future predictions or decisions. The paper-level object is the evaluation-induced aliasing relation, not hidden history after complete state equality.",
+  "closest_work": [
+    {
+      "id": "arXiv:2606.05201",
+      "title": "State commitment learning: training language models to distinguish computation from memory",
+      "relationship": "Defines persistent-state sufficiency through a paired hidden-thought erasure intervention under the same prefix. It asks whether visible committed answer state remains usable when temporary computation is removed. It does not test whether two distinct external persistent memories with the same current evaluation signature have different future controlled effects."
+    },
+    {
+      "id": "arXiv:2603.27343",
+      "title": "Beyond Completion: Probing Cumulative State Tracking to Predict LLM Agent Performance",
+      "relationship": "Shows that models with identical task-completion scores can differ in intermediate state-tracking ability and that an additional probe predicts agent performance. This is a close measurement-aliasing precedent at the model-capability level, but it does not manipulate persistent memory states or require a sealed future memory-effect test."
+    },
+    {
+      "id": "ACL-2026-long.27",
+      "title": "How Memory Management Impacts LLM Agents: An Empirical Study of Experience-Following Behavior",
+      "relationship": "Shows that memory quality and replay choices affect future agent behavior and that future tasks can reveal memory quality. It does not condition on exact equality under one common current evaluation panel before testing future divergence."
+    },
+    {
+      "id": "ACL-2026-long.1150",
+      "title": "Locomo-Plus: Beyond-Factual Cognitive Memory Evaluation Framework for LLM Agents",
+      "relationship": "Shows conventional memory metrics can miss latent constraints under cue-trigger disconnect. It motivates evaluation insufficiency in conversational memory but does not test execution-grounded persistent-memory behavioral equivalence."
+    },
+    {
+      "id": "arXiv:2606.23127",
+      "title": "Managing Procedural Memory in LLM Agents: Control, Adaptation, and Evaluation",
+      "relationship": "Evaluates procedural-memory transfer across tasks, roles, and backbones and finds that some skills generalize while others specialize. This is a strong transfer-heterogeneity baseline. The residual here requires future effect divergence only after memories are first proven to alias under one identical current evaluation panel."
+    },
+    {
+      "id": "arXiv:2608.15008",
+      "title": "Harness the Memory: A Holistic Evaluation of Memory Substrates in Memory Agents",
+      "relationship": "Shows memory substrate utility depends on operating regime and that excessive retrieval can harm sequential decision-making. It strengthens the need for regime-aware evaluation but does not construct same-current-signature alias classes with sealed future divergence."
+    },
+    {
+      "id": "bisimulation-and-predictive-state-abstraction",
+      "title": "Classical behavioral state abstraction / predictive representation literature",
+      "relationship": "Provides the theoretical reduction: states should only be merged when future rewards and transition behavior are preserved. Therefore the general principle is not a new theorem. Novelty must come from an agent-memory empirical phenomenon and an evaluation protocol that exposes aliases missed by current memory evaluation."
+    }
+  ],
+  "strongest_reductions": [
+    {
+      "attack": "The current probe panel is simply too weak or at floor, so equal scores are uninformative.",
+      "required_control": "All compared memories must run on identical current task IDs; the entire common signature must be non-degenerate; complete all-zero and complete all-one panels are rejected before future outcomes are opened."
+    },
+    {
+      "attack": "Future differences are generic prompt-length or irrelevant-context effects.",
+      "required_control": "Use token-matched placebo memory for each persistent memory and define the future effect as retrieved_success minus placebo_success."
+    },
+    {
+      "attack": "The environment or task itself is stochastic across repeated arms.",
+      "required_control": "Require exact no-memory success and action-sequence reproducibility for every common and future task."
+    },
+    {
+      "attack": "The result is task-specific noise or one pathological endpoint.",
+      "required_control": "The F0 GO gate requires future controlled-effect divergence on at least two sealed tasks from at least two task families."
+    },
+    {
+      "attack": "This is already implied by bisimulation theory and has no agent-specific contribution.",
+      "required_control": "Do not claim a new state-equivalence theorem. The contribution must be a demonstrated failure mode of finite memory evaluation in a self-evolving agent plus an execution-grounded future-predictive evaluation protocol and independent prospective replication."
+    }
+  ],
+  "frozen_f0": {
+    "primary_contract": "generated/d5-evaluation-aliasing-gemma-balanced-v1-contract.json",
+    "superseded_qwen_contract": "generated/d5-evaluation-aliasing-qwen-v2-contract.json",
+    "stage_a": "Balanced metadata-selected memory pool: one heldout-candidate memory from each of four source families. All four run on the same four fresh current tasks. Stage A discovers exact score-signature alias classes and rejects complete floor/ceiling aliases.",
+    "stage_b": "Four disjoint future tasks are sealed before Stage A outcomes. Only members of every qualified alias class may enter Stage B.",
+    "go_condition": "At least one non-degenerate Stage-A alias class has controlled-effect divergence on at least two sealed future tasks across at least two families, with reproducible no-memory controls.",
+    "stop_condition": "Stop immediately if no partial alias class can remain, if no-memory is nonreproducible, or if full aliases are only floor/ceiling. If Stage B misses the cross-family divergence gate, stop this Gemma realization.",
+    "current_execution_state": "READY_FOR_STAGE_A_AFTER_PREFLIGHT"
+  },
+  "paper_admission_rule": {
+    "f0_go_is_sufficient_for": "PROSPECTIVE_CONFIRMATION_ONLY",
+    "f0_go_is_not_sufficient_for": "MANUSCRIPT_OR_BROAD_CLAIM",
+    "required_after_f0_go": "Freeze an independent memory pool and common/future panels before their outcomes, then replicate evaluation aliasing without reusing the exposed Stage A/B objects. A second backbone is preferred if support permits.",
+    "paper_level_claim_if_confirmed": "Finite current evaluations can behaviorally alias persistent agent memory states: memories that are indistinguishable on a common current panel can have different future controlled effects. Memory evaluation should therefore include future-predictive sufficiency tests before states are treated as interchangeable.",
+    "novelty_risk": "MEDIUM",
+    "main_novelty_boundary": "Empirical and methodological agent-memory evaluation; no claim of inventing predictive state abstraction or bisimulation."
+  },
+  "anti_outcome_shopping": [
+    "Do not search a replacement memory trio on the exposed Qwen v2 Stage A tasks if Stage A fails.",
+    "Do not open Stage B unless Stage A passes exactly.",
+    "Do not lower the two-task/two-family future-divergence gate after outcomes.",
+    "Do not use the invalid legacy v1 different-task all-zero signature as supporting evidence.",
+    "Do not treat the Gemma qualification stop as counterevidence against the broader hypothesis."
+  ],
+  "scientific_authority": false,
+  "paper_design_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}
