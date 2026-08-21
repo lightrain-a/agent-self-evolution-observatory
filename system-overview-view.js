@@ -12,11 +12,11 @@
     const agentSafetySummary = window.renderAgentSafetySummary ? window.renderAgentSafetySummary() : "";
 
     const bodies = [
-      `${sections.renderPurpose ? sections.renderPurpose(state,s2) : ""}${sections.renderReaderRoadmap ? sections.renderReaderRoadmap(state) : ""}${agentSafetySummary}${sections.renderAuthorityModel ? sections.renderAuthorityModel(state) : ""}${deep("机器架构：21 个阶段、6 层职责与横向方法学控制","Machine architecture: 21 stages, six layers, and cross-cutting controls",architectureDetail)}`,
-      `${sections.renderProblemDiscoveryPhase ? sections.renderProblemDiscoveryPhase(state) : ""}${deep("证据入口与 AI 会诊节点","Evidence intake and AI consultation checkpoints",sections.renderResearchIntake ? sections.renderResearchIntake(state) : "")}`,
+      `${sections.renderPurpose ? sections.renderPurpose(state,s2) : ""}${agentSafetySummary}${sections.renderAuthorityModel ? sections.renderAuthorityModel(state) : ""}${deep("后台架构与权限审计","Machine architecture, ownership, and authority audit",architectureDetail)}`,
+      `${sections.renderProblemDiscoveryPhase ? sections.renderProblemDiscoveryPhase(state) : ""}${deep("证据入口与 AI 检查节点","Evidence intake and AI checkpoints",sections.renderResearchIntake ? sections.renderResearchIntake(state) : "")}`,
       `${sections.renderPaperDesignPhase ? sections.renderPaperDesignPhase(state) : ""}`,
-      `${sections.renderExperimentCompilePhase ? sections.renderExperimentCompilePhase(state) : ""}${deep("完整机器门 / 问题发现 / 论文设计编译细节","Full machine gates, discovery, and paper-design compiler detail",machineCompileDetail)}`,
-      `${sections.renderValidationScalePhase ? sections.renderValidationScalePhase(state) : ""}${sections.renderGovernanceV2 ? sections.renderGovernanceV2(state) : ""}${sections.renderFailureSemantics ? sections.renderFailureSemantics(state) : ""}${deep("运行时、GPU、科研工件、自动化与组件清单","Runtime, GPU, artifacts, automation, and component inventory",runtimeReference)}`,
+      `${sections.renderExperimentCompilePhase ? sections.renderExperimentCompilePhase(state) : ""}${deep("问题发现与实验启动的后台审计","Backend audit for discovery and experiment launch",machineCompileDetail)}`,
+      `${sections.renderValidationScalePhase ? sections.renderValidationScalePhase(state) : ""}${sections.renderGovernanceV2 ? sections.renderGovernanceV2(state) : ""}${sections.renderFailureSemantics ? sections.renderFailureSemantics(state) : ""}${deep("运行、资源、科研工件与组件审计","Runtime, resources, artifacts, and component audit",runtimeReference)}`,
       `${sections.renderPaperEvidencePhase ? sections.renderPaperEvidencePhase(state) : ""}`,
       `${sections.renderPaperConstructionPhase ? sections.renderPaperConstructionPhase(state) : ""}`,
       `${sections.renderReviewRepairPhase ? sections.renderReviewRepairPhase(state) : ""}`,

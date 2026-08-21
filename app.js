@@ -1321,17 +1321,19 @@ function renderProjectStatusStrip(){
     return `<section class="field-current-status-strip" aria-label="${language==="zh"?"当前科研状态":"Current research state"}"><b>${language==="zh"?`当前科研状态${asOf?` · ${asOf}`:""}`:`Current research state${asOf?` · ${asOf}`:""}`}</b><div class="field-current-status-metrics">${labels.map(([label,value])=>`<span><strong>${value}</strong>${label}</span>`).join("")}</div><a href="research-map.html">${language==="zh"?"查看当前研究组合图谱 →":"Open current research map →"}</a></section>`;
   }
   if(pageId==="system-overview") {
+    const overviewAsOf=window.RESEARCH_SYSTEM_STATE?.generated_at?.slice?.(0,10)||asOf;
     const acceptance=window.RESEARCH_SYSTEM_STATE?.paper_acceptance||{}, index=acceptance.ledger_index||{}, entries=index.entries||[];
     const stri=entries.find(row=>row.paper_id==="STRI-ICLR2027")||{}, safety=entries.find(row=>row.paper_id==="AGENT-SAFETY-R9")||{};
     const story=stri.latest_story_search||{}, mockModes=stri.mock_pc_modes||{};
     const mockDone=[mockModes.BLIND_MANUSCRIPT,mockModes.ARTIFACT_AWARE].filter(Boolean).length;
+    const striHuman=language==="zh"?({PAPER_EVIDENCE:"证据已冻结",PAPER_DESIGN:"故事线设计中",MANUSCRIPT:"成稿中",MOCK_PC:"模拟审稿中",TARGETED_REPAIR:"定向修稿中",CLAIM_AUDIT:"主张审计中",PDF_QA:"PDF 质检中",PREBUTTAL:"预答辩中",SUBMISSION_READY:"已准备投稿",SUBMITTED:"已投稿",REBUTTAL:"答辩中",LEARN:"复盘中"}[stri.current_state]||stri.current_state||"--"):(stri.current_state||"--");
     const labels=language==="zh"
-      ? [["STRI",stri.current_state||"--"],["Story",story.pass?"PASS":"PENDING"],["Mock PC",`${mockDone}/2`],["Scientific HOLD",acceptance.summary?.scientific_holds??index.summary?.scientific_holds??0],["可启动实验",h.launchable_formal_experiments||0]]
-      : [["STRI",stri.current_state||"--"],["Story",story.pass?"PASS":"PENDING"],["Mock PC",`${mockDone}/2`],["Scientific holds",acceptance.summary?.scientific_holds??index.summary?.scientific_holds??0],["Launchable",h.launchable_formal_experiments||0]];
+      ? [[`STRI · ${stri.current_state||"--"}`,striHuman],[`故事线 · ${story.pass?"PASS":"PENDING"}`,story.pass?"已确定":"待确定"],["模拟审稿",`${mockDone}/2 完成`],["科学暂缓论文",acceptance.summary?.scientific_holds??index.summary?.scientific_holds??0],["可启动正式实验",h.launchable_formal_experiments||0]]
+      : [["STRI",stri.current_state||"--"],["Story",story.pass?"PASS":"PENDING"],["Mock review",`${mockDone}/2 complete`],["Scientific holds",acceptance.summary?.scientific_holds??index.summary?.scientific_holds??0],["Launchable experiments",h.launchable_formal_experiments||0]];
     const message=language==="zh"
-      ? `STRI 科学证据已闭环，当前为 ${stri.current_state||"PAPER_EVIDENCE"}；${safety.paper_id?`Agent-Safety-R9 保持 ${safety.scientific_status||"CAUSAL_HOLD"} / ${safety.current_state||"PAPER_EVIDENCE"}`:"Agent Safety 仍保持科学 HOLD"}。`
-      : `STRI scientific evidence is closed and the paper is at ${stri.current_state||"PAPER_EVIDENCE"}; ${safety.paper_id?`Agent-Safety-R9 remains ${safety.scientific_status||"CAUSAL_HOLD"} / ${safety.current_state||"PAPER_EVIDENCE"}`:"Agent Safety remains on scientific hold"}.`;
-    return `<section class="project-status-strip current system-overview-status"><div class="project-status-copy"><b>${language==="zh"?`当前科研状态${asOf?` · ${asOf}`:""}`:`Current research state${asOf?` · ${asOf}`:""}`}</b><span>${message}</span></div><div class="system-overview-status-metrics">${labels.map(([label,value])=>`<span><strong>${value}</strong><small>${label}</small></span>`).join("")}</div></section>`;
+      ? `STRI 的科学证据已经冻结，目前正按两种模拟审稿的意见做定向修稿；${safety.paper_id?"Agent Safety 因关键科学证据尚未闭环而暂缓。":"Agent Safety 仍处于科学暂缓状态。"}`
+      : `STRI's scientific evidence is frozen and the manuscript is now being repaired against both mock-review modes; ${safety.paper_id?"Agent Safety remains on hold because its key scientific evidence is not yet closed.":"Agent Safety remains on scientific hold."}`;
+    return `<section class="project-status-strip current system-overview-status"><div class="project-status-copy"><b>${language==="zh"?`当前科研状态${overviewAsOf?` · ${overviewAsOf}`:""}`:`Current research state${overviewAsOf?` · ${overviewAsOf}`:""}`}</b><span>${message}</span></div><div class="system-overview-status-metrics">${labels.map(([label,value])=>`<span><strong>${value}</strong><small>${label}</small></span>`).join("")}</div></section>`;
   }
   const selectedPaper=pageId==="selected-paper";
   const acceptance=window.RESEARCH_SYSTEM_STATE?.paper_acceptance||{}, acceptanceIndex=acceptance.ledger_index||{}, acceptanceEntry=(acceptanceIndex.entries||[]).find(row=>row.paper_id==="STRI-ICLR2027")||{}, acceptanceSummary=acceptance.summary||acceptanceIndex.summary||{};
@@ -1383,10 +1385,10 @@ function renderArchitectureOverview(architecture = pageArchitecture()) {
   if (!chapters.length) return "";
   const compactThreeRows=pageId==="system-overview";
   const intro=compactThreeRows
-    ? (language === "zh" ? "按编号从左到右、从上到下阅读。三行依次覆盖：发现与设计 → 实验与证据 → 成稿、投稿与系统学习；每章的详细问题在下方正文展开。" : "Read by number from left to right and top to bottom. The three rows cover discovery/design, experiment/evidence, then manuscript/submission/system learning; each chapter's full question is expanded below.")
+    ? (language === "zh" ? "按编号从左到右、从上到下阅读。三行依次覆盖：整体流程与科学设计 → 验证、证据与成稿 → 审稿、投稿与系统学习；每章的详细问题在下方正文展开。" : "Read by number from left to right and top to bottom. The three rows cover overall workflow/scientific design, validation/evidence/manuscript, then review/submission/system learning; each chapter's full question is expanded below.")
     : (language === "zh" ? "先理解各章解决的主问题，再进入方法族、任务域或具体子问题。箭头表示推荐阅读顺序，不表示严格因果关系。" : "Start with the main question of each chapter, then move to method families, domains, or concrete subproblems. Arrows indicate the recommended reading order rather than strict causality.");
   const separator=compactThreeRows?"":"<i>→</i>";
-  return `<section class="panel page-architecture${compactThreeRows?" page-architecture-three-rows":""}"><h2 id="page-framework">${language === "zh" ? "本页框架与阅读顺序" : "Page framework and reading order"}</h2><p class="section-intro">${intro}</p><div class="page-architecture-flow">${chapters.map((chapter, index) => {const rawTitle=textOf(chapter.title);const cardTitle=compactThreeRows?rawTitle.replace(language==="zh"?/^第[一二三四五六七八九十0-9]+章\s*·\s*/:/^[IVX]+\s*·\s*/,""):rawTitle;return `<a class="page-architecture-card" href="#chapter-${esc(chapter.id)}"><span>${String(index + 1).padStart(2,"0")}</span><div><b>${cardTitle}</b>${compactThreeRows?"":`<small>${textOf(chapter.question)}</small>`}</div></a>`;}).join(separator)}</div></section>`;
+  return `<section class="panel page-architecture${compactThreeRows?" page-architecture-three-rows":""}"><h2 id="page-framework">${language === "zh" ? "本页框架与阅读顺序" : "Page framework and reading order"}</h2><p class="section-intro">${intro}</p><div class="page-architecture-flow">${chapters.map((chapter, index) => {const rawTitle=textOf(chapter.title);const cardTitle=compactThreeRows&&chapter.navTitle?textOf(chapter.navTitle):(compactThreeRows?rawTitle.replace(language==="zh"?/^第[一二三四五六七八九十0-9]+章\s*[·：]\s*/:/^[IVX]+\s*·\s*/,""):rawTitle);return `<a class="page-architecture-card" href="#chapter-${esc(chapter.id)}"><span>${String(index + 1).padStart(2,"0")}</span><div><b>${cardTitle}</b>${compactThreeRows?"":`<small>${textOf(chapter.question)}</small>`}</div></a>`;}).join(separator)}</div></section>`;
 }
 function renderPageChapter(chapter, chapterIndex, config) {
   const groups = chapter.groups || [];
