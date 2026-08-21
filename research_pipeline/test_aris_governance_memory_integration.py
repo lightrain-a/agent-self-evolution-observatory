@@ -297,8 +297,9 @@ class ArisGovernanceLayerTest(unittest.TestCase):
         by_stage = {row["stage"]: row for row in receipts}
         self.assertEqual(by_stage["semantic-uniqueness"]["eliminated_count"], 2)
         self.assertFalse(by_stage["semantic-uniqueness"]["record_level_elimination_reasons_complete"])
-        self.assertEqual(by_stage["pre-f0-route"]["eliminated_count"], 1)
-        self.assertFalse(by_stage["pre-f0-route"]["record_level_elimination_reasons_complete"])
+        self.assertEqual(by_stage["pre-f0-route"]["eliminated_count"], 0)
+        self.assertEqual(by_stage["pre-f0-route"]["unresolved_lineage_count"], 1)
+        self.assertTrue(by_stage["pre-f0-route"]["record_level_elimination_reasons_complete"])
 
     def test_memory_graph_binds_governance_without_new_truth_nodes(self) -> None:
         pilot_registry = {

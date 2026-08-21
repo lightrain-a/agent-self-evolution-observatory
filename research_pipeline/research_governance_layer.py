@@ -573,16 +573,19 @@ def candidate_stage_receipts(
     held_at_problem_gate = max(0, visible - passed)
     run_id = _text(generator_state.get("run_id"))
     rows = [
-        ("generation-target", requested, raw, 0, "requested target versus observed raw seeds"),
-        ("semantic-uniqueness", raw, unique, 0, "raw seeds to semantic-unique candidates"),
-        ("pre-f0-route", unique, pre_f0, 0, "semantic-unique candidates to pre-F0"),
-        ("portfolio-visibility", pre_f0, visible, 0, "pre-F0 candidates visible in portfolio"),
-        ("problem-gate", visible, passed, held_at_problem_gate, "visible candidates to Problem Gate PASS or HOLD"),
+        ("generation-target", requested, raw, 0, 0, "requested target versus observed raw seeds"),
+        ("semantic-uniqueness", raw, unique, 0, 0, "raw seeds to semantic-unique candidates"),
+        # Evolution and repair expand the branch count between these endpoints. The
+        # aggregate 36 -> 3 projection is therefore not a conservative elimination
+        # funnel; until the branch DAG manifest is loaded, the remainder is unresolved.
+        ("pre-f0-route", unique, pre_f0, 0, max(0, unique - pre_f0), "semantic-unique roots through a branching evolution/repair/formulation DAG to Pre-F0"),
+        ("portfolio-visibility", pre_f0, visible, 0, 0, "pre-F0 candidates visible in portfolio"),
+        ("problem-gate", visible, passed, held_at_problem_gate, 0, "visible candidates to Problem Gate PASS or HOLD"),
     ]
     receipts: list[dict[str, Any]] = []
-    for stage, input_count, output_count, held_count, note in rows:
+    for stage, input_count, output_count, held_count, unresolved_lineage_count, note in rows:
         eliminated_count = (
-            max(0, input_count - output_count - held_count)
+            max(0, input_count - output_count - held_count - unresolved_lineage_count)
             if stage != "generation-target"
             else 0
         )
@@ -598,6 +601,7 @@ def candidate_stage_receipts(
             "unrealized_target": (
                 max(0, input_count - output_count) if stage == "generation-target" else 0
             ),
+            "unresolved_lineage_count": unresolved_lineage_count,
             "record_level_elimination_reasons_complete": eliminated_count == 0,
             "record_level_disposition_reasons_complete": stage in {
                 "portfolio-visibility", "problem-gate"
@@ -653,7 +657,7 @@ def lint_governance_layer(layer: dict[str, Any]) -> dict[str, Any]:
     for row in layer.get("candidate_stage_receipts") or []:
         input_count = int(row.get("input_count") or 0)
         accounted = sum(int(row.get(key) or 0) for key in (
-            "output_count", "held_count", "eliminated_count", "unrealized_target"
+            "output_count", "held_count", "eliminated_count", "unrealized_target", "unresolved_lineage_count"
         ))
         if accounted != input_count:
             errors.append({
@@ -667,6 +671,12 @@ def lint_governance_layer(layer: dict[str, Any]) -> dict[str, Any]:
                 "code": "candidate-stage-record-level-elimination-lineage-incomplete",
                 "stage": row.get("stage"),
                 "eliminated_count": int(row.get("eliminated_count") or 0),
+            })
+        if int(row.get("unresolved_lineage_count") or 0) > 0:
+            warnings.append({
+                "code": "candidate-stage-branch-dag-lineage-unresolved",
+                "stage": row.get("stage"),
+                "unresolved_lineage_count": int(row.get("unresolved_lineage_count") or 0),
             })
     repair_summary = layer.get("repair_budget") or {}
     for row in repair_summary.get("substrate_budget_violations") or []:
@@ -769,14 +779,21 @@ def build_aris_governance_layer(
             ),
             "candidate_stage_receipts": len(stage_receipts),
             "candidate_stage_lineage_gaps": sum(
-                int(row.get("eliminated_count") or 0) > 0
-                and row.get("record_level_elimination_reasons_complete") is not True
+                (
+                    int(row.get("eliminated_count") or 0) > 0
+                    and row.get("record_level_elimination_reasons_complete") is not True
+                )
+                or int(row.get("unresolved_lineage_count") or 0) > 0
                 for row in stage_receipts
             ),
             "candidate_stage_unreceipted_elimination_events": sum(
                 int(row.get("eliminated_count") or 0)
                 for row in stage_receipts
                 if row.get("record_level_elimination_reasons_complete") is not True
+            ),
+            "candidate_stage_unresolved_branch_lineage_events": sum(
+                int(row.get("unresolved_lineage_count") or 0)
+                for row in stage_receipts
             ),
         },
         "scientific_authority": False,
