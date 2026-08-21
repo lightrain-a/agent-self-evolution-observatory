@@ -7,8 +7,8 @@
     "checks": 22,
     "passed": 22,
     "pages": 6,
-    "pdf_sha256": "7df2a16754b329a2713219797f487b33a485e9b0b7195a9bb6a58453546c082f",
-    "pdf_bytes": 153098,
+    "pdf_sha256": "a3274e0af73058662e34f9462187e5638af8f59da8d77f1f4af76ad2de4efe90",
+    "pdf_bytes": 153271,
     "active_unrefuted_claims": [
       "C3",
       "C4"
@@ -200,7 +200,7 @@
     },
     {
       "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/06_limitations_conclusion.tex",
-      "sha256": "8e8d6f45b70dbcef2caad6020b97dee41a7b75cd67404d6c327c26ab775b8dc1"
+      "sha256": "51233c539b3a73444fa029479bd05cd37b8d601ef72d728a4bbf54387c18b17c"
     },
     {
       "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/07_appendix.tex",
