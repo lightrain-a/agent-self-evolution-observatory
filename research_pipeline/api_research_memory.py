@@ -873,6 +873,9 @@ def record_provider_failure(
     if not should_auto_record(run_root) and root is None:
         return {"status": "SKIPPED_NONCANONICAL_RUN_ROOT", "scientific_authority": False}
     run_id = Path(run_root).name
+    failure_class = str(payload.get("failure_class") or "execution").strip().lower()
+    if failure_class not in {"execution", "runtime", "protocol", "support", "operationalization", "method", "principle"}:
+        raise ValueError(f"invalid zero-authority provider failure class: {failure_class}")
     db = database_path(storage, root=root)
     with connect(db) as connection:
         insert_run_stub(connection, run_id, metadata={"incremental": True})
@@ -897,7 +900,7 @@ def record_provider_failure(
                 ),
                 "parse_status": "NO_RESPONSE",
                 "provider_calls_executed": 1,
-                "failure_class": "execution",
+                "failure_class": failure_class,
                 "metadata": {
                     "error_fingerprint": str(payload.get("error_fingerprint") or "")
                 },

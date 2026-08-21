@@ -202,11 +202,12 @@ class ApiResearchMemoryTest(unittest.TestCase):
     def test_provider_failure_refreshes_run_projection_counts(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td); run=root/"scratch"/"failed-r1"; run.mkdir(parents=True)
-            record_provider_failure(run_root=run,stage="expand-p1",payload={"status":"PROVIDER_TIMEOUT_ZERO_AUTHORITY","requested_model":"model","error_fingerprint":"a"*64,"prompt_sha256":"b"*64},root=root/"persistent")
+            record_provider_failure(run_root=run,stage="expand-p1",payload={"status":"PROTOCOL_ERROR_ZERO_AUTHORITY","requested_model":"model","error_fingerprint":"a"*64,"prompt_sha256":"b"*64,"failure_class":"protocol"},root=root/"persistent")
             with sqlite3.connect(database_path(root=root/"persistent")) as db:
                 projected=db.execute("SELECT call_count,artifact_count,object_count FROM runs WHERE run_id='failed-r1'").fetchone()
+                call=db.execute("SELECT failure_class FROM api_calls WHERE run_id='failed-r1'").fetchone()
                 actual=db.execute("SELECT COUNT(*) FROM api_calls WHERE run_id='failed-r1'").fetchone()[0]
-            self.assertEqual(projected,(1,0,0)); self.assertEqual(actual,1)
+            self.assertEqual(projected,(1,0,0)); self.assertEqual(call,("protocol",)); self.assertEqual(actual,1)
             self.assertEqual(lint_api_research_memory(root=root/"persistent")["status"],"PASS")
 
     def test_successful_parse_is_persisted_immediately_with_zero_authority_object(self) -> None:

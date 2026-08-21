@@ -16,7 +16,7 @@ from .api_research_memory import (
 from .ark_provider import extract_json_object
 
 HARD_REVIEWER_MODEL = "deepseek-v4-pro"
-AGENT_REVIEWER_MODEL = "glm-5.3"
+AGENT_REVIEWER_MODEL = "doubao-seed-2.1-turbo"
 REDUCTION_REVIEWER_MODEL = "minimax-m3"
 
 
@@ -207,15 +207,7 @@ def run_hard(*, root: Path, study: Path) -> dict[str, Any]:
 
 
 def run_agent(*, root: Path, study: Path) -> dict[str, Any]:
-    prep = _load(study / "review-prepared.json")
-    return run_stage(
-        root=root,
-        study=study,
-        name="agent",
-        model=AGENT_REVIEWER_MODEL,
-        prompt=agent_prompt(prep),
-        expected_ids={row["blind_id"] for row in prep["blinded"]},
-    )
+    raise RuntimeError("18-item agent-specificity review is disabled after repeated length/protocol failures; use api_memory_portfolio_smoke_agent_items for 18x1 itemized review")
 
 
 def run_reduction(*, root: Path, study: Path) -> dict[str, Any]:

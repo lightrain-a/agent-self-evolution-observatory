@@ -16,27 +16,31 @@ from .api_memory_search_smoke_staged import _load, _lock, _write
 from .api_research_memory import record_api_memory_consumption, record_parsed_api_output
 
 
+def _successful_review(study: Path, name: str, expected_status: str) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    paths = [study / f"review-{name}-result.json"] + sorted(study.glob(f"review-{name}-result-r*.json"))
+    attempts: list[dict[str, Any]] = []
+    successes: list[dict[str, Any]] = []
+    for path in paths:
+        if not path.is_file():
+            continue
+        payload = _load(path)
+        attempts.append({"path": path.name, "status": payload.get("status"), "run_id": payload.get("run_id", "")})
+        if payload.get("status") == expected_status:
+            successes.append(payload)
+    if len(successes) != 1:
+        raise RuntimeError(f"expected exactly one successful {name} review, found {len(successes)}: {attempts}")
+    return successes[0], attempts
+
+
 def finalize(*, root: Path, study: Path) -> dict[str, Any]:
     output = study / "report.json"
     lock = _lock(output, {"stage": "finalize"})
     try:
         prep = _load(study / "state-prepared.json")
         rprep = _load(study / "review-prepared.json")
-        hard = _load(study / "review-hard-result.json")
-        agent = _load(study / "review-agent-result.json")
-        reduction = _load(study / "review-reduction-result.json")
-        expected = {
-            "hard": "HARD_REVIEW_COMPLETE",
-            "agent": "AGENT_REVIEW_COMPLETE",
-            "reduction": "REDUCTION_REVIEW_COMPLETE",
-        }
-        observed = {
-            "hard": hard.get("status"),
-            "agent": agent.get("status"),
-            "reduction": reduction.get("status"),
-        }
-        if observed != expected:
-            raise RuntimeError(f"criterion reviews incomplete: {observed}")
+        hard, hard_attempts = _successful_review(study, "hard", "HARD_REVIEW_COMPLETE")
+        agent, agent_attempts = _successful_review(study, "agent", "AGENT_REVIEW_COMPLETE")
+        reduction, reduction_attempts = _successful_review(study, "reduction", "REDUCTION_REVIEW_COMPLETE")
 
         hard_by = {str(row["blind_id"]): row for row in hard["reviews"]}
         agent_by = {str(row["blind_id"]): row for row in agent["reviews"]}
@@ -137,9 +141,9 @@ def finalize(*, root: Path, study: Path) -> dict[str, Any]:
             "history_pool_available_objects": int((prep["packs"]["portfolio"].get("summary") or {}).get("available") or 0),
             "generator_model": GENERATOR_MODEL,
             "reviewers": {
-                "hard": {"requested": HARD_REVIEWER_MODEL, "resolved": hard["resolved_model"], "usage": hard["usage"]},
-                "agent": {"requested": AGENT_REVIEWER_MODEL, "resolved": agent["resolved_model"], "usage": agent["usage"]},
-                "reduction": {"requested": REDUCTION_REVIEWER_MODEL, "resolved": reduction["resolved_model"], "usage": reduction["usage"]},
+                "hard": {"requested": HARD_REVIEWER_MODEL, "resolved": hard["resolved_model"], "usage": hard["usage"], "attempts": hard_attempts},
+                "agent": {"requested": AGENT_REVIEWER_MODEL, "resolved": agent["resolved_model"], "usage": agent["usage"], "attempts": agent_attempts},
+                "reduction": {"requested": REDUCTION_REVIEWER_MODEL, "resolved": reduction["resolved_model"], "usage": reduction["usage"], "attempts": reduction_attempts},
             },
             "metrics": metrics,
             "primary_comparison": primary,
