@@ -294,18 +294,33 @@ def main() -> None:
           controlsHeight: Math.round(document.querySelector('.rt-controls')?.getBoundingClientRect().height || 0),
           aug21WeekLabel: document.querySelector('#timeline-2026-08-21 .rt-table-date b')?.textContent?.trim() || '',
           aug21DateLabel: document.querySelector('#timeline-2026-08-21 .rt-table-date small')?.textContent?.trim() || '',
+          jul28WeekLabel: document.querySelector('#timeline-2026-07-28 .rt-table-date b')?.textContent?.trim() || '',
+          aug21HeatActivity: document.querySelector('.rt-heat-cell[data-rt-day="2026-08-21"] .rt-heat-activity')?.textContent?.replace(/\\s+/g,'').trim() || '',
+          heatCellDisplay: getComputedStyle(document.querySelector('.rt-heat-cell[data-rt-day="2026-08-21"]')).display || '',
+          visibleTimezoneChrome: [...document.querySelectorAll('.rt-hero,.rt-heat-month-header,.rt-month-header,.sidebar-note,.rt-policy-note,.counter')].map(x=>x.textContent||'').join(' '),
           aug21Thread: document.querySelector('#timeline-2026-08-21 .rt-table-thread p')?.textContent?.trim() || '',
+          aug21Workload: document.querySelector('#timeline-2026-08-21 .rt-table-workload')?.textContent?.trim() || '',
+          threadClamp: getComputedStyle(document.querySelector('#timeline-2026-08-21 .rt-table-thread p')).webkitLineClamp || '',
+          weekCards: document.querySelectorAll('.rt-week-card').length,
+          weekLabels: [...document.querySelectorAll('.rt-week-card header>div:first-child b')].map(x=>x.textContent.trim()),
+          latestWeekSummary: document.querySelector('.rt-week-card p')?.textContent?.trim() || '',
+          ideaLegend: document.querySelector('.rt-legend-idea')?.textContent?.trim() || '',
+          searchPlaceholder: document.querySelector('#site-search')?.getAttribute('placeholder') || '',
           zhText: document.body.textContent || ''
         };""")
         require(timeline["title"] == "研究时间轴", f"timeline must default to its Chinese page title: {timeline}")
         require(timeline["monthTables"] == timeline["heatMonths"] == timeline["sourceMonths"] and timeline["monthTables"] >= 2 and timeline["firstHeatMonth"] >= timeline["lastHeatMonth"] and timeline["dayGroups"] >= 20 and timeline["openDays"] == 0, f"timeline must render one workload calendar and one collapsed table per month: {timeline}")
         require(timeline["eventRows"] == timeline["visibleCount"] == int(timeline["summary"].get("events") or 0) and timeline["eventRows"] >= 756, f"timeline rendered event count must match the generated full projection: {timeline}")
-        require(timeline["timezone"] == "Asia/Shanghai" and timeline["descActive"] and timeline["firstMonth"] >= timeline["lastMonth"] and timeline["firstDay"] >= timeline["lastDay"] and "月历和月表" in timeline["zhText"] and "北京时间" in timeline["zhText"] and "本页只是只读历史投影" in timeline["zhText"], f"timeline paired-month/newest-first/timezone/authority boundary is incomplete: {timeline}")
+        require(timeline["timezone"] == "Asia/Shanghai" and timeline["descActive"] and timeline["firstHeatMonth"] == "2026-08" and timeline["lastHeatMonth"] == "2026-07" and timeline["firstMonth"] == "2026-08" and timeline["lastMonth"] == "2026-07" and timeline["firstDay"] >= timeline["lastDay"] and "月历和月表" in timeline["zhText"] and "本页只是只读历史投影" in timeline["zhText"], f"timeline paired-month/newest-first/internal-timezone/authority boundary is incomplete: {timeline}")
         require(timeline["legendItems"] == 7 and timeline["legendBackgrounds"] == 7 and "linear-gradient" in timeline["heroAccent"], f"timeline compact header must reuse all seven semantic colors in its legend and accent: {timeline}")
         require(timeline["oldTopLayers"] == 0 and len(set(timeline["heatPairTop"])) == 1 and len(set(timeline["tablePairTop"])) == 1 and timeline["controlsTop"] >= timeline["heatBottom"] and timeline["controlsHeight"] <= 64, f"timeline must use one compact header, paired months, and one-line filters below calendars: {timeline}")
-        require(timeline["aug21WeekLabel"] == "第4周 · 周五" and timeline["aug21DateLabel"] == "2026-08-21", f"timeline date row must show monthly week/weekday above the ISO date: {timeline}")
+        require(timeline["jul28WeekLabel"] == "第1周 · 周二" and timeline["aug21WeekLabel"] == "第4周 · 周五" and timeline["aug21DateLabel"] == "2026-08-21", f"timeline research weeks must run continuously from the first recorded week: {timeline}")
+        require("北京时间" not in timeline["visibleTimezoneChrome"] and "UTC+8" not in timeline["visibleTimezoneChrome"] and "Asia/Shanghai" not in timeline["visibleTimezoneChrome"], f"timeline UI must keep timezone handling internal rather than visually emphasizing it: {timeline}")
+        require(timeline["aug21HeatActivity"].endswith("次活动") and timeline["heatCellDisplay"] == "grid", f"timeline calendar cells must separate the date from an explicitly labeled activity count: {timeline}")
         aug21_parts = [part.strip() for part in timeline["aug21Thread"].split("→") if part.strip()]
-        require(len(aug21_parts) <= 3 and len(aug21_parts) == len(set(aug21_parts)), f"timeline main thread must deduplicate and diversify daily highlights: {timeline}")
+        require(2 <= len(aug21_parts) <= 4 and len(aug21_parts) == len(set(aug21_parts)) and timeline["aug21Workload"] and timeline["threadClamp"] == "3", f"timeline main thread must be slightly richer while staying deduplicated and paired with workload detail: {timeline}")
+        require(timeline["weekCards"] >= 4 and timeline["weekLabels"][0] == "第4周" and timeline["weekLabels"][-1] == "第1周" and "一周总结" in timeline["latestWeekSummary"], f"timeline must expose stable weekly summaries from newest research week to week 1: {timeline}")
+        require(timeline["ideaLegend"] == "研究方向 / 问题发现" and "研究问题" in timeline["searchPlaceholder"] and "Research Memory" not in timeline["latestWeekSummary"], f"timeline Chinese UI should prefer Chinese terminology while preserving technical identifiers only when necessary: {timeline}")
         execute(session_id, "document.querySelector('.rt-day-row')?.click();")
         time.sleep(0.3)
         timeline_expand = execute(session_id, """const row=document.querySelector('.rt-day-row'); const detail=row?.nextElementSibling; return {expanded:row?.getAttribute('aria-expanded')||'',detailVisible:detail?.hidden===false,toggle:row?.querySelector('.rt-day-toggle')?.textContent||''};""")

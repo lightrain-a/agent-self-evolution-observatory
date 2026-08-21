@@ -4,8 +4,8 @@
     eyebrow:{en:"Research history",zh:"科研进展历史"},
     title:{en:"Research Timeline",zh:"研究时间轴"},
     lead:{
-      en:"A workload-first chronology of the complete Observatory research history. Each month is shown as its own table, with the newest month and newest day first by default. Open any day row to inspect that day’s events from earlier to later in China Standard Time (Asia/Shanghai, UTC+8).",
-      zh:"按北京时间（Asia/Shanghai，UTC+8）回看 Observatory 从建立至今的完整研究历史。每个月单独一张表，默认最新月份、最新日期在前；每个研究日先压缩成一行，点开后再严格按时间从早到晚阅读当天发生的 Idea、实验、论文、系统更新与关闭过程。"
+      en:"A workload-first chronology of the complete Observatory research history. Each month is shown as its own table, with the newest month and newest day first by default. Open any day row to inspect that day’s events from earlier to later.",
+      zh:"回看 Observatory 从建立至今的完整研究历史。每个月单独一张表，默认最新月份、最新日期在前；每个研究日先压缩成一行，点开后再严格按时间从早到晚阅读当天发生的研究问题、实验、论文、系统更新与关闭过程。"
     },
     callout:{
       en:"This page is a read-only projection, not a scientific decision-maker. Runtime/API/provenance activity with zero authority remains system activity and cannot become a scientific result merely by appearing here.",
@@ -19,15 +19,42 @@
   const dataset = () => window.RESEARCH_TIMELINE || {events:[],summary:{}};
   const pick = (zh,en) => language === "zh" ? zh : en;
   const raw = (v) => String(v ?? "");
-  const localText = (v) => raw(v?.[language] || v?.en || v?.zh || v);
-  const localTitle = (e) => language === "zh" ? raw(e.title_zh || e.title) : raw(e.title || e.title_zh);
-  const localResearch = (e) => language === "zh" ? raw(e.research_label_zh || e.research_id) : raw(e.research_id);
-  const localNext = (e) => language === "zh" ? raw(e.next_action_zh || e.next_action) : raw(e.next_action);
-  const localReopen = (e) => language === "zh" ? raw(e.reopen_condition_zh || e.reopen_condition) : raw(e.reopen_condition);
-  const localAuthorityScope = (e) => language === "zh" ? raw(e.authority?.scope_zh || e.authority?.scope) : raw(e.authority?.scope);
+  const zhPhraseMap = {
+    "Default research timeline to Chinese":"时间轴默认显示中文",
+    "Preserve full timeline in shallow Pages builds":"保留完整时间轴历史",
+    "Expand timeline with full China-time history":"补全时间轴完整历史",
+    "Add read-only research timeline view":"新增只读研究时间轴",
+    "Add briefing-first idea portfolio view":"新增面向汇报的研究问题组合视图",
+    "Show current final idea statuses":"展示当前研究问题终态",
+    "Normalize numbered closure terminology":"统一编号关闭术语",
+    "Harden closure ledger browser assertion":"加强关闭台账浏览器校验",
+    "Merge closure records into numbered idea ledger":"将关闭记录合并进编号研究问题台账",
+    "Expand CVPR candidate portfolio and add Friday decision board":"扩展 CVPR 候选组合并新增周五决策看板",
+    "Expand self-evolution portfolio to twenty vetted ideas":"将自进化候选组合扩展至 20 个已审查研究问题",
+    "Add published-paper historical overview":"新增已发表论文历史概览",
+    "Add literature evidence to direction map":"为研究方向图谱补充文献证据",
+    "Replace FakeMark R2 archive with fully audited reviewer-closure package.":"用完整审计的评审闭环包替换 FakeMark R2 归档",
+    "Publish minimal FakeMark R2 submission package.":"发布 FakeMark R2 最小投稿包",
+    "Prepare gated P0 experiment queue":"准备受门控的 P0 实验队列",
+    "idea-discovery-v3-external-reviews":"研究问题发现 v3 外部评审",
+    "current-final-ideas":"当前研究问题终态",
+    "p0-offline-qualification":"P0 离线资格验证",
+    "Canonical 双漏斗 研究问题 发现状态快照":"规范双漏斗研究问题发现状态快照"
+  };
+  const zhUiText = (value) => {
+    let text = raw(value).replace(/北京时间/g,"").replace(/\bResearch Memory\b/g,"科研记忆").replace(/\bIdea\b/g,"研究问题");
+    Object.entries(zhPhraseMap).forEach(([en,zh])=>{ text=text.split(en).join(zh); });
+    return text.replace(/\s{2,}/g," ").replace(/（\s*，/g,"（").trim();
+  };
+  const localText = (v) => language === "zh" ? zhUiText(v?.zh || v?.en || v) : raw(v?.en || v?.zh || v);
+  const localTitle = (e) => language === "zh" ? zhUiText(e.title_zh || e.title) : raw(e.title || e.title_zh);
+  const localResearch = (e) => language === "zh" ? zhUiText(e.research_label_zh || e.research_id) : raw(e.research_id);
+  const localNext = (e) => language === "zh" ? zhUiText(e.next_action_zh || e.next_action) : raw(e.next_action);
+  const localReopen = (e) => language === "zh" ? zhUiText(e.reopen_condition_zh || e.reopen_condition) : raw(e.reopen_condition);
+  const localAuthorityScope = (e) => language === "zh" ? zhUiText(e.authority?.scope_zh || e.authority?.scope) : raw(e.authority?.scope);
 
   const classes = {
-    idea:{en:"Idea / problem",zh:"Idea / 问题发现",tone:"idea"},
+    idea:{en:"Idea / problem",zh:"研究方向 / 问题发现",tone:"idea"},
     experiment:{en:"Experiment",zh:"实验 / 验证",tone:"experiment"},
     scientific:{en:"Scientific result",zh:"科学结论",tone:"scientific"},
     paper:{en:"Paper",zh:"论文推进",tone:"paper"},
@@ -72,15 +99,34 @@
     if (Number.isNaN(d.getTime())) return raw(iso).slice(0,10);
     return new Intl.DateTimeFormat(language === "zh" ? "zh-CN" : "en-US", {year:"numeric",month:"long",day:"numeric",weekday:"short",timeZone:CHINA_TZ}).format(d);
   };
-  const weekDayLabel = (date) => {
+  const researchWeekAnchorMs = () => {
+    const dates = dataset().events.map(e=>chinaDateKey(e.occurred_at)).filter(d=>/^\d{4}-\d{2}-\d{2}$/.test(d)).sort();
+    if (!dates.length) return 0;
+    const [year,month,day] = dates[0].split("-").map(Number);
+    const first = Date.UTC(year,month-1,day);
+    const weekday = (new Date(first).getUTCDay()+6)%7;
+    return first - weekday * 86400000;
+  };
+  const researchWeekInfo = (date) => {
     const [year,month,day] = raw(date).split("-").map(Number);
-    if (!year || !month || !day) return date;
-    const firstWeekday = (new Date(Date.UTC(year,month-1,1)).getUTCDay()+6)%7;
-    const week = Math.floor((firstWeekday+day-1)/7)+1;
-    const weekday = (new Date(Date.UTC(year,month-1,day)).getUTCDay()+6)%7;
+    if (!year || !month || !day) return {number:1,weekday:0,monday:date};
+    const target = Date.UTC(year,month-1,day);
+    const weekday = (new Date(target).getUTCDay()+6)%7;
+    const mondayMs = target - weekday * 86400000;
+    const anchor = researchWeekAnchorMs();
+    const number = Math.max(1,anchor ? Math.floor((mondayMs-anchor)/(7*86400000))+1 : 1);
+    return {number,weekday,monday:new Date(mondayMs).toISOString().slice(0,10)};
+  };
+  const weekDayLabel = (date) => {
+    const info = researchWeekInfo(date);
     const zhWeekdays = ["周一","周二","周三","周四","周五","周六","周日"];
     const enWeekdays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-    return language === "zh" ? `第${week}周 · ${zhWeekdays[weekday]}` : `Week ${week} · ${enWeekdays[weekday]}`;
+    return language === "zh" ? `第${info.number}周 · ${zhWeekdays[info.weekday]}` : `Week ${info.number} · ${enWeekdays[info.weekday]}`;
+  };
+  const shortDateLabel = (date) => {
+    const [year,month,day] = raw(date).split("-").map(Number);
+    if (!year || !month || !day) return raw(date);
+    return language === "zh" ? `${month}月${day}日` : new Intl.DateTimeFormat("en-US",{month:"short",day:"numeric",timeZone:"UTC"}).format(new Date(Date.UTC(year,month-1,day)));
   };
   const fmtTime = (e) => {
     if (e.time_precision === "date") return pick("日期记录","date record");
@@ -96,7 +142,7 @@
       "recorded call failures":"记录到的调用失败","experiment run":"是否运行实验","closure layer":"关闭层级","fisher p":"Fisher 检验 p 值",
       "exact p":"精确检验 p 值","replay agreement":"回放一致率","official review":"正式评审","supplement tests":"补充材料测试",
       "paper evidence":"论文证据状态","claims":"主张支持数","qa":"质量检查","evidence debt":"未完成证据项","human signoff pending":"是否等待作者确认",
-      "raw seeds":"原始 Idea seed 数","pre-f0 queued":"Pre-F0 候选数","support ready":"支持条件已就绪","support holds":"因支持不足暂缓",
+      "raw seeds":"原始候选问题数","pre-f0 queued":"Pre-F0 候选数","support ready":"支持条件已就绪","support holds":"因支持不足暂缓",
       "formal launchable":"当前可启动正式实验数","commit":"提交","提交":"提交","提交次数":"提交次数","最新提交":"最新提交","代表变更":"代表变更",
       "原始状态码":"原始状态码"
     };
@@ -163,7 +209,7 @@
   const dayCounts = (events) => events.reduce((m,e)=>(m[e.event_class]=(m[e.event_class]||0)+1,m),{});
   const headlineTitle = (e) => {
     let title = localTitle(e).trim();
-    if (language === "zh") title = title.replace(/^(系统建设里程碑|Idea \/ 研究问题相关提交|实验 \/ 证据相关提交|论文 \/ 评审相关提交|关闭 \/ 裁决相关提交|系统与治理记录|停止 \/ 关闭裁决)\s*[：:·]\s*/i, "");
+    if (language === "zh") title = title.replace(/^(系统建设里程碑|研究问题 \/ 研究问题相关提交|研究问题 \/ 问题发现记录|实验 \/ 证据相关提交|论文 \/ 评审相关提交|关闭 \/ 裁决相关提交|系统与治理记录|停止 \/ 关闭裁决)\s*[：:·]\s*/i, "");
     return title;
   };
   const headlineKey = (title) => raw(title).toLowerCase().replace(/[\s·：:—–_\-]+/g," ").trim();
@@ -174,7 +220,7 @@
     const genericRuntime = /append-only research run imported|新的科研运行记录写入 research memory/i.test(`${e.title||""} ${e.title_zh||""}`) ? -140 : 0;
     return classScore + importanceScore + originScore + genericRuntime;
   };
-  const dayHeadline = (events) => {
+  const headlineItems = (events,limit=4) => {
     const ordered = sortDayEvents(events);
     const source = ordered.filter(e => e.origin !== "git_daily_summary");
     const pool = source.length ? source : ordered;
@@ -189,14 +235,21 @@
     });
     const ranked = [...unique.values()].sort((a,b)=>b.score-a.score || a.index-b.index);
     const selected = [], usedClasses = new Set();
-    ranked.forEach(item=>{ if (selected.length < 3 && !usedClasses.has(item.e.event_class)){ selected.push(item); usedClasses.add(item.e.event_class); } });
-    ranked.forEach(item=>{ if (selected.length < 3 && !selected.includes(item)) selected.push(item); });
-    selected.sort((a,b)=>a.index-b.index);
-    return selected.length ? selected.map(item=>item.title).join(" → ") : pick("当日以系统维护与追溯工作为主。","Primarily system/provenance work.");
+    ranked.forEach(item=>{ if (selected.length < limit && !usedClasses.has(item.e.event_class)){ selected.push(item); usedClasses.add(item.e.event_class); } });
+    ranked.forEach(item=>{ if (selected.length < limit && !selected.includes(item)) selected.push(item); });
+    return selected.sort((a,b)=>a.index-b.index).map(item=>item.title);
   };
-  const workloadBar = (events) => {
+  const dayHeadline = (events) => {
+    const chosen = headlineItems(events,4);
+    return chosen.length ? chosen.join(" → ") : pick("当日以系统维护与追溯工作为主。","Primarily system/provenance work.");
+  };
+  const workloadSummary = (events,limit=3) => {
+    const counts = dayCounts(events);
+    return Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,limit).map(([k,v])=>`${labelClass(k)} ${v}`).join(" · ");
+  };
+  const workloadBar = (events,label=pick("工作量构成","Workload composition")) => {
     const counts = dayCounts(events), total = Math.max(events.length,1);
-    return `<div class="rt-workload-bar" aria-label="${pick("当日工作量构成","Daily workload composition")}">${Object.keys(classes).filter(k=>counts[k]).map(k=>`<i class="rt-work-${classes[k].tone}" style="width:${(counts[k]/total*100).toFixed(2)}%" title="${esc(labelClass(k))} ${counts[k]}"></i>`).join("")}</div>`;
+    return `<div class="rt-workload-bar" aria-label="${esc(label)}">${Object.keys(classes).filter(k=>counts[k]).map(k=>`<i class="rt-work-${classes[k].tone}" style="width:${(counts[k]/total*100).toFixed(2)}%" title="${esc(labelClass(k))} ${counts[k]}"></i>`).join("")}</div>`;
   };
   const monthLabel = (month) => {
     const d = new Date(`${month}-15T12:00:00+08:00`);
@@ -204,8 +257,7 @@
     return new Intl.DateTimeFormat(language === "zh" ? "zh-CN" : "en-US", {year:"numeric",month:"long",timeZone:CHINA_TZ}).format(d);
   };
   const dayRows = (date,events) => {
-    const ordered = sortDayEvents(events), counts = dayCounts(ordered);
-    const tags = Object.entries(counts).map(([k,v])=>`<span>${esc(labelClass(k))} ${v}</span>`).join("");
+    const ordered = sortDayEvents(events);
     const keyChanges = ordered.filter(e=>e.importance === "key").length;
     const researchLines = new Set(ordered.map(e=>e.research_id).filter(Boolean)).size;
     const gitChanges = ordered.filter(e=>e.origin === "git_relevant_history").length;
@@ -213,12 +265,12 @@
     const dateOnly = ordered.filter(e=>e.time_precision === "date");
     const exact = ordered.filter(e=>e.time_precision !== "date");
     const dateOnlyBlock = dateOnly.length ? `<div class="rt-date-only-note">${pick(`另有 ${dateOnly.length} 条记录只有日期精度，无法可靠判断当天先后，因此放在精确时间事件之后。`,`Another ${dateOnly.length} records have date-only precision and are shown after exact-time events.`)}</div>${dateOnly.map(eventRow).join("")}` : "";
-    const thread = dayHeadline(ordered);
-    return `<tr class="rt-day-row" id="timeline-${esc(date)}" data-rt-day-toggle="${esc(date)}" tabindex="0" aria-expanded="false"><td class="rt-table-date"><div class="rt-table-date-inner"><button type="button" class="rt-day-toggle" aria-label="${pick("展开当天详情","Open day details")}">＋</button><div><b>${esc(weekDayLabel(date))}</b><small>${esc(date)}</small></div></div></td><td class="rt-num rt-activity-count"><b>${ordered.length}</b><span>${pick("条","events")}</span></td><td class="rt-num"><b>${keyChanges}</b></td><td class="rt-num"><b>${gitChanges}</b></td><td class="rt-num"><b>${artifactChanges}</b></td><td class="rt-num"><b>${researchLines}</b></td><td class="rt-table-thread"><p>${esc(thread)}</p><div class="rt-day-tags">${tags}</div>${workloadBar(ordered)}</td></tr><tr class="rt-day-detail-row" data-rt-day-detail="${esc(date)}" hidden><td colspan="7"><div class="rt-day-expanded"><div class="rt-order-note">${pick("以下严格按北京时间从早到晚排列，不按 Idea / 实验 / 论文等类别重新分组，便于追踪“什么先发生 → 为什么后来改变研究或系统”。","Events below are strictly chronological rather than grouped by type.")}</div><div class="rt-day-events">${exact.map(eventRow).join("")}${dateOnlyBlock}</div></div></td></tr>`;
+    const thread = dayHeadline(ordered), workload = workloadSummary(ordered,3);
+    return `<tr class="rt-day-row" id="timeline-${esc(date)}" data-rt-day-toggle="${esc(date)}" tabindex="0" aria-expanded="false"><td class="rt-table-date"><div class="rt-table-date-inner"><button type="button" class="rt-day-toggle" aria-label="${pick("展开当天详情","Open day details")}">＋</button><div><b>${esc(weekDayLabel(date))}</b><small>${esc(date)}</small></div></div></td><td class="rt-num rt-activity-count"><b>${ordered.length}</b><span>${pick("条","events")}</span></td><td class="rt-num"><b>${keyChanges}</b></td><td class="rt-num"><b>${gitChanges}</b></td><td class="rt-num"><b>${artifactChanges}</b></td><td class="rt-num"><b>${researchLines}</b></td><td class="rt-table-thread"><p>${esc(thread)}</p>${workload?`<div class="rt-table-workload">${esc(workload)}</div>`:""}${workloadBar(ordered,pick("当日工作量构成","Daily workload composition"))}</td></tr><tr class="rt-day-detail-row" data-rt-day-detail="${esc(date)}" hidden><td colspan="7"><div class="rt-day-expanded"><div class="rt-order-note">${pick("以下严格按时间从早到晚排列，不按研究问题 / 实验 / 论文等类别重新分组，便于追踪“什么先发生 → 为什么后来改变研究或系统”。","Events below are strictly chronological rather than grouped by type.")}</div><div class="rt-day-events">${exact.map(eventRow).join("")}${dateOnlyBlock}</div></div></td></tr>`;
   };
   const monthTable = (month,dates,groups) => {
     const total = dates.reduce((n,date)=>n+(groups[date]?.length||0),0);
-    return `<section class="rt-month" data-rt-month="${esc(month)}"><header class="rt-month-header"><div><h2>${esc(monthLabel(month))}</h2><span>${esc(month)} · ${pick("北京时间","China Standard Time")}</span></div><div><b>${dates.length}</b><span>${pick("个研究日","research days")}</span><b>${total}</b><span>${pick("条活动","activities")}</span></div></header><div class="rt-month-table-wrap"><table class="rt-month-table"><thead><tr><th>${pick("日期","Date")}</th><th>${pick("活动","Activity")}</th><th>${pick("关键变化","Key")}</th><th>${pick("代码 / 系统","Code / system")}</th><th>${pick("科研记录","Research")}</th><th>${pick("研究对象","Objects")}</th><th>${pick("主要脉络 / 工作量","Main thread / workload")}</th></tr></thead><tbody>${dates.map(date=>dayRows(date,groups[date])).join("")}</tbody></table></div></section>`;
+    return `<section class="rt-month" data-rt-month="${esc(month)}"><header class="rt-month-header"><div><h2>${esc(monthLabel(month))}</h2><span>${esc(month)}</span></div><div><b>${dates.length}</b><span>${pick("个研究日","research days")}</span><b>${total}</b><span>${pick("条活动","activities")}</span></div></header><div class="rt-month-table-wrap"><table class="rt-month-table"><thead><tr><th>${pick("日期","Date")}</th><th>${pick("活动","Activity")}</th><th>${pick("关键变化","Key")}</th><th>${pick("代码 / 系统","Code / system")}</th><th>${pick("科研记录","Research")}</th><th>${pick("研究对象","Objects")}</th><th>${pick("主要脉络 / 工作量","Main thread / workload")}</th></tr></thead><tbody>${dates.map(date=>dayRows(date,groups[date])).join("")}</tbody></table></div></section>`;
   };
 
   const stats = (events) => {
@@ -227,7 +279,7 @@
     const experiments = events.filter(e=>e.event_class === "experiment").length;
     const advances = events.filter(e=>e.event_class === "scientific" || e.event_class === "paper").length;
     const stops = events.filter(e=>e.event_class === "closure" || e.event_class === "blocker").length;
-    return `<div class="rt-stats"><article><b>${events.length}</b><span>${pick("当前展示事件","visible events")}</span></article><article><b>${days}</b><span>${pick("有记录的研究日","recorded research days")}</span></article><article><b>${ideas}</b><span>${pick("Idea / 问题发现","idea / problem events")}</span></article><article><b>${experiments}</b><span>${pick("实验 / 验证","experiment events")}</span></article><article><b>${advances}</b><span>${pick("科学结论 / 论文推进","scientific / paper advances")}</span></article><article><b>${stops}</b><span>${pick("停止 / 暂缓","closures / holds")}</span></article></div>`;
+    return `<div class="rt-stats"><article><b>${events.length}</b><span>${pick("当前展示事件","visible events")}</span></article><article><b>${days}</b><span>${pick("有记录的研究日","recorded research days")}</span></article><article><b>${ideas}</b><span>${pick("研究方向 / 问题发现","idea / problem events")}</span></article><article><b>${experiments}</b><span>${pick("实验 / 验证","experiment events")}</span></article><article><b>${advances}</b><span>${pick("科学结论 / 论文推进","scientific / paper advances")}</span></article><article><b>${stops}</b><span>${pick("停止 / 暂缓","closures / holds")}</span></article></div>`;
   };
 
   const researchOptions = () => [...new Set(dataset().events.map(e=>e.research_id).filter(Boolean))].sort((a,b)=>a.localeCompare(b)).map(r=>{
@@ -245,6 +297,25 @@
     return months.map(month=>monthTable(month,dates.filter(date=>date.startsWith(`${month}-`)),groups)).join("");
   };
 
+  const weeklySummary = (events) => {
+    if (!events.length) return "";
+    const weeks = new Map();
+    sortDayEvents(events).forEach(e=>{
+      const date = chinaDateKey(e.occurred_at), info = researchWeekInfo(date);
+      const entry = weeks.get(info.number) || {number:info.number,events:[],dates:new Set()};
+      entry.events.push(e); entry.dates.add(date); weeks.set(info.number,entry);
+    });
+    const orderedWeeks = [...weeks.values()].sort((a,b)=>state.order === "asc" ? a.number-b.number : b.number-a.number);
+    const cards = orderedWeeks.map(week=>{
+      const dates=[...week.dates].sort(), rows=sortDayEvents(week.events), keyChanges=rows.filter(e=>e.importance === "key").length;
+      const start=dates[0], end=dates[dates.length-1], range=start===end?shortDateLabel(start):`${shortDateLabel(start)}–${shortDateLabel(end)}`;
+      const highlights=headlineItems(rows,4), summary=highlights.length?highlights.join("；"):pick("本周以系统维护与追溯工作为主。","Primarily system and provenance work this week.");
+      const workload=workloadSummary(rows,4);
+      return `<article class="rt-week-card" data-rt-week="${week.number}"><header><div><b>${pick(`第${week.number}周`,`Week ${week.number}`)}</b><span>${esc(range)}</span></div><div><strong>${rows.length}</strong><span>${pick("条活动","events")}</span><strong>${dates.length}</strong><span>${pick("个研究日","research days")}</span></div></header><p><b>${pick("一周总结","Weekly summary")}</b>${esc(summary)}</p><div class="rt-week-bottom"><span>${esc(workload)}</span><em>${pick(`${keyChanges} 个关键变化`,`${keyChanges} key changes`)}</em></div>${workloadBar(rows,pick("本周工作量构成","Weekly workload composition"))}</article>`;
+    }).join("");
+    return `<section class="rt-weekly"><div class="rt-weekly-heading"><b>${pick("一周总结","Weekly summaries")}</b><span>${pick("把每日事件压缩成周级进展，先看这一周推进了什么，再下钻到具体日期。","Compress daily events into weekly progress before drilling into individual days.")}</span></div><div class="rt-week-grid">${cards}</div></section>`;
+  };
+
   const activityHeatmap = (events) => {
     if (!events.length) return "";
     const counts = Object.fromEntries(Object.entries(grouped(events)).map(([d,rows])=>[d,rows.length]));
@@ -259,7 +330,7 @@
       const firstDay = Number(recorded[0].slice(-2));
       const startColumn = ((new Date(Date.UTC(year,monthNumber-1,firstDay)).getUTCDay()+6)%7)+1;
       const total = recorded.reduce((sum,day)=>sum+(counts[day]||0),0);
-      return `<section class="rt-heat-month" data-rt-heat-month="${esc(month)}"><header class="rt-heat-month-header"><div><b>${esc(monthLabel(month))}</b><span>${esc(month)} · ${pick("北京时间","China Standard Time")}</span></div><div><strong>${recorded.length}</strong><span>${pick("个研究日","research days")}</span><strong>${total}</strong><span>${pick("条活动","activities")}</span></div></header><div class="rt-heat-weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div class="rt-heatmap">${days.map((day,i)=>{const n=counts[day]||0,level=n?Math.max(.12,n/max):0;return `<button type="button" class="rt-heat-cell" data-rt-day="${day}" style="--level:${level.toFixed(3)};${i===0?`grid-column-start:${startColumn};`:""}" title="${day} · ${n} ${pick("条活动","activities")}"><span>${Number(day.slice(-2))}</span><b>${n||""}</b></button>`}).join("")}</div></section>`;
+      return `<section class="rt-heat-month" data-rt-heat-month="${esc(month)}"><header class="rt-heat-month-header"><div><b>${esc(monthLabel(month))}</b><span>${esc(month)}</span></div><div><strong>${recorded.length}</strong><span>${pick("个研究日","research days")}</span><strong>${total}</strong><span>${pick("条活动","activities")}</span></div></header><div class="rt-heat-weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div class="rt-heatmap">${days.map((day,i)=>{const n=counts[day]||0,level=n?Math.max(.12,n/max):0;return `<button type="button" class="rt-heat-cell" data-rt-day="${day}" style="--level:${level.toFixed(3)};${i===0?`grid-column-start:${startColumn};`:""}" title="${day} · ${n} ${pick("条活动","activities")}"><span class="rt-heat-date">${Number(day.slice(-2))}</span>${n?`<span class="rt-heat-activity"><b>${n}</b><small>${pick("次活动","activities")}</small></span>`:""}</button>`}).join("")}</div></section>`;
     };
     return `<section class="rt-heatmap-panel"><div class="rt-heatmap-heading"><b>${pick("每日工作量概览","Daily workload overview")}</b><span>${pick("按月分开查看；颜色越深，当天记录的操作越多，点击日期可直接展开当天。","Split by month; darker cells mean more recorded activity, and clicking a date opens that day.")}</span></div><div class="rt-heat-months">${monthKeys.map(monthCalendar).join("")}</div></section>`;
   };
@@ -270,23 +341,24 @@
     const experiments = events.filter(e=>e.event_class === "experiment").length;
     const advances = events.filter(e=>e.event_class === "scientific" || e.event_class === "paper").length;
     const stops = events.filter(e=>e.event_class === "closure" || e.event_class === "blocker").length;
-    return `<section class="rt-hero"><div class="rt-hero-main"><div class="rt-hero-title"><span>${pick("科研进展历史","Research history")}</span><h1>${pick("研究时间轴","Research Timeline")}</h1></div><p>${pick("按北京时间回看完整研究历史。月历先定位工作量变化，下面的月表再展开当天 Idea、实验、论文、裁决与系统更新；时间轴只读，不新增科研权限。","Review the complete research history in China Standard Time. Use monthly calendars to locate workload changes, then expand daily idea, experiment, paper, decision, and system events below. This timeline is read-only and adds no scientific authority.")}</p><div class="rt-hero-kpis"><span><b>${events.length}</b>${pick("活动","events")}</span><span><b>${days}</b>${pick("研究日","days")}</span><span><b>${ideas}</b>${pick("问题 / Idea","ideas")}</span><span><b>${experiments}</b>${pick("实验","experiments")}</span><span><b>${advances}</b>${pick("结论 / 论文","advances")}</span><span><b>${stops}</b>${pick("停止 / 暂缓","stops / holds")}</span></div></div><aside class="rt-hero-side"><div class="rt-hero-time"><b>${pick("北京时间","China Standard Time")}</b><span>Asia/Shanghai · UTC+8</span></div><div class="rt-legend" aria-label="${pick("事件颜色图例","Event color legend")}">${Object.keys(classes).map(k=>`<span class="rt-legend-item rt-legend-${classes[k].tone}" data-rt-legend="${classes[k].tone}"><i></i>${esc(labelClass(k))}</span>`).join("")}</div></aside><div class="rt-hero-boundary">${pick("本页只是只读历史投影；工程 / 运行 / 追溯记录不会因为进入时间轴而获得科研权限，工程失败也不会自动改写成科学失败。","Read-only history projection: engineering, runtime, and provenance records gain no scientific authority here, and engineering failures do not automatically become scientific failures.")}</div></section>`;
+    return `<section class="rt-hero"><div class="rt-hero-main"><div class="rt-hero-title"><span>${pick("科研进展历史","Research history")}</span><h1>${pick("研究时间轴","Research Timeline")}</h1></div><p>${pick("回看完整研究历史。月历先定位工作量变化，一周总结提炼阶段性推进，下面的月表再展开当天研究问题、实验、论文、裁决与系统更新；时间轴只读，不新增科研权限。","Review the complete research history. Use monthly calendars to locate workload changes, weekly summaries to capture progress, then expand daily idea, experiment, paper, decision, and system events below. This timeline is read-only and adds no scientific authority.")}</p><div class="rt-hero-kpis"><span><b>${events.length}</b>${pick("活动","events")}</span><span><b>${days}</b>${pick("研究日","days")}</span><span><b>${ideas}</b>${pick("研究问题","ideas")}</span><span><b>${experiments}</b>${pick("实验","experiments")}</span><span><b>${advances}</b>${pick("结论 / 论文","advances")}</span><span><b>${stops}</b>${pick("停止 / 暂缓","stops / holds")}</span></div></div><aside class="rt-hero-side"><div class="rt-legend" aria-label="${pick("事件颜色图例","Event color legend")}">${Object.keys(classes).map(k=>`<span class="rt-legend-item rt-legend-${classes[k].tone}" data-rt-legend="${classes[k].tone}"><i></i>${esc(labelClass(k))}</span>`).join("")}</div></aside><div class="rt-hero-boundary">${pick("本页只是只读历史投影；工程 / 运行 / 追溯记录不会因为进入时间轴而获得科研权限，工程失败也不会自动改写成科学失败。","Read-only history projection: engineering, runtime, and provenance records gain no scientific authority here, and engineering failures do not automatically become scientific failures.")}</div></section>`;
   };
 
   window.renderResearchTimeline = function(){
     const events=visible();
-    return `<div id="research-timeline-summary">${compactHeader(events)}</div><div id="research-timeline-heatmap">${activityHeatmap(events)}</div><div id="research-timeline-controls">${controls()}</div><div id="research-timeline-feed" class="rt-feed">${feed(events)}</div><section class="rt-policy-note"><b>${pick("读取规则","Reading rule")}</b><span>${pick("① 月历和月表都按两个月一行排列，默认最新月份、最新日期在前；② 月历用于定位工作量高峰，筛选栏位于月历下方；③ 点开当天后，事件严格按北京时间从早到晚排列；④ 无法可靠回填具体时刻的记录仍标记为日期精度；⑤ 系统工程与追溯记录不会因此获得科研权限。","Calendars and month tables are arranged two per row, newest-first by default. Filters sit below the calendars; expanded events remain chronological and date-only precision remains explicit.")}</span></section>`;
+    return `<div id="research-timeline-summary">${compactHeader(events)}</div><div id="research-timeline-heatmap">${activityHeatmap(events)}</div><div id="research-timeline-controls">${controls()}</div><div id="research-timeline-weekly">${weeklySummary(events)}</div><div id="research-timeline-feed" class="rt-feed">${feed(events)}</div><section class="rt-policy-note"><b>${pick("读取规则","Reading rule")}</b><span>${pick("① 月历和月表都按两个月一行排列，默认最新月份、最新日期在前；② 月历用于定位工作量高峰，筛选栏位于月历下方；③ 一周总结先概括这一周推进了什么，再下钻到每日记录；④ 点开当天后，事件严格按时间从早到晚排列；⑤ 无法可靠回填具体时刻的记录仍标记为日期精度，系统工程与追溯记录不会因此获得科研权限。","Calendars and month tables are arranged two per row, newest-first by default. Filters sit below the calendars; weekly summaries capture progress before daily drill-down, while expanded events remain chronological and date-only precision stays explicit.")}</span></section>`;
   };
 
   const rerender = () => {
-    const summary=document.getElementById("research-timeline-summary"), c=document.getElementById("research-timeline-controls"), h=document.getElementById("research-timeline-heatmap"), f=document.getElementById("research-timeline-feed");
+    const summary=document.getElementById("research-timeline-summary"), c=document.getElementById("research-timeline-controls"), h=document.getElementById("research-timeline-heatmap"), w=document.getElementById("research-timeline-weekly"), f=document.getElementById("research-timeline-feed");
     const events=visible();
     if(summary) summary.innerHTML=compactHeader(events);
     if(c) c.innerHTML=controls();
     if(h) h.innerHTML=activityHeatmap(events);
+    if(w) w.innerHTML=weeklySummary(events);
     if(f) f.innerHTML=feed(events);
     const counter=document.getElementById("result-count");
-    if(counter) counter.textContent=pick(`${events.length} 条事件 · 北京时间`,`${events.length} events · UTC+8`);
+    if(counter) counter.textContent=pick(`${events.length} 条事件`,`${events.length} events`);
     bindControls();
   };
   const toggleDay = (date,forceOpen) => {
