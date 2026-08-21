@@ -61,14 +61,16 @@
         "The fragility study reports substantial multi-run variance and explicitly treats proxy LLM reward as a noisy confound, using ground-truth reward in its main memory construction experiments.",
         "Released ReasoningBank code maps score=1 to a success-reflection prompt and score=0 to a failure-reflection prompt, so one reward bit changes the memory-construction objective for the same trajectory.",
         "The paired F0 intervention holds each released trajectory fixed and changes only the reward-conditioned reflection mode; all 4 complete pairs change normalized memory content and title sets, with mean token-set Jaccard distance 0.734789.",
+        "A disjoint eight-trajectory prompt-perturbation control uses same-mode paraphrases whose lexical perturbation exceeds the released reward-mode prompt difference; between-mode memory distance is 0.699949 versus 0.594971 within mode, giving mean paired excess 0.104978 with exact sign-flip p=0.0078125.",
         "Memory Reward Inflation independently shows that proxy reward errors can accumulate through memory reuse."
       ],
       "experiment_debt": [
-        "matched future-task memory injection",
-        "downstream action and success variance under fixed benchmark state"
+        "live matched browser terminal continuation under paired memories",
+        "controlled reward-corruption-rate variance experiment"
       ],
       "support_debt": [
-        "Two requested F0 failure-label responses remain provider-incomplete after GET-only recovery and are excluded from scientific counts."
+        "Two requested F0 failure-label responses remain provider-incomplete after GET-only recovery and are excluded from scientific counts.",
+        "The released WebArena shopping endpoint and reset endpoint used by the source trajectories were unreachable from the execution host during the terminal-continuation preflight; this blocks live-browser terminal execution and has zero scientific authority."
       ],
       "f0_contract": "generated/d2-proxy-reward-memory-f0-contract.json",
       "f0_result": {
@@ -79,21 +81,42 @@
         "title_set_change_rate": 1.0,
         "mean_token_jaccard_distance": 0.734789
       },
+      "f0_prompt_control_result": {
+        "artifact": "generated/d2-proxy-reward-memory-f0c-prompt-control.json",
+        "status": "SUPPORT_REWARD_MODE_BEYOND_GENERIC_PROMPT_WORDING",
+        "fresh_trajectories": 8,
+        "mean_between_mode_distance": 0.699949,
+        "mean_within_mode_distance": 0.594971,
+        "mean_delta": 0.104978,
+        "exact_sign_flip_p": 0.0078125
+      },
       "f1_support_state": {
-        "artifact": "generated/d2-proxy-reward-memory-f1.json",
-        "status": "SUPPORT_INCOMPLETE_NO_SCIENTIFIC_AUTHORITY",
-        "complete_policy_calls": 0,
-        "aligned_success_failure_rollouts": 0,
-        "falsifier_evaluable": false,
-        "claim_update": "NONE"
+        "r1_artifact": "generated/d2-proxy-reward-memory-f1.json",
+        "r1_status": "SUPPORT_INCOMPLETE_NO_SCIENTIFIC_AUTHORITY",
+        "r2_artifact": "generated/d2-proxy-reward-memory-f1-r2.json",
+        "r2_status": "F1_COMPLETE_SURVIVES_EXISTENCE_FALSIFIER",
+        "r2_aligned_rollouts": 12,
+        "r2_paired_action_divergence_rate": 0.583333,
+        "deterministic_control_artifact": "generated/d2-proxy-reward-memory-f1c-deterministic-audit.json",
+        "deterministic_control_status": "INCONCLUSIVE_TRIGGER_FRESH_DISTRIBUTIONAL_REPLICATION",
+        "distributional_artifact": "generated/d2-proxy-reward-memory-f1d-distributional-audit.json",
+        "distributional_status": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+        "distributional_mean_tv": 0.34375,
+        "distributional_permutation_p": 0.310527,
+        "fixed_evidence_terminal_artifact": "generated/d2-proxy-reward-terminal-fixed-evidence.json",
+        "fixed_evidence_terminal_status": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+        "fixed_evidence_terminal_calls_complete": 108,
+        "fixed_evidence_terminal_mean_absolute_success_rate_difference": 0.145833,
+        "fixed_evidence_terminal_permutation_p": 0.160128,
+        "claim_update": "KEEP_DOWNSTREAM_VARIANCE_ACTIVE; NO_DISTRIBUTION_OR_FIXED_EVIDENCE_TERMINAL_LEVEL_SUPPORT"
       },
       "manuscript_dir": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027",
       "limitations_source": "sections/06_limitations_conclusion.tex",
       "scientific_authority": false,
       "paper_qa_artifact": "generated/d2-proxy-reward-memory-variance-paper-qa.json",
       "paper_qa_pass": true,
-      "pdf_sha256": "39d0f2182d26f37fcad3fa20afea3fa1324b6b2683506a60da745e88ab290457",
-      "pdf_pages": 7,
+      "pdf_sha256": "607442885c688760e9ed9a7754b540aa5eb3d0404331cd24d1f6e93e2225aeaf",
+      "pdf_pages": 8,
       "manuscript_complete": true,
       "evidence_complete": false
     },

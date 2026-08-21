@@ -1,0 +1,35 @@
+\section{A Stronger Prompt-Perturbation Control}
+\label{sec:prompt-control}
+The F0 intervention changes the released reflection prompt as a consequence of the reward label. A generic prompt-sensitivity reduction therefore predicts comparable memory changes after a semantic-preserving wording change within one reflection mode. We test this reduction on eight fresh released trajectories that are disjoint from the six trajectories requested by F0. The fresh set is balanced across original success and failure outcomes.
+
+Before provider calls, we freeze one success-mode paraphrase and one failure-mode paraphrase. Both use the same deterministic wording substitutions while preserving the original reflection objective and output format. The released success-versus-failure system prompts have token-set Jaccard distance 0.114. The success-mode original-versus-paraphrase distance is 0.171. The corresponding failure-mode distance is 0.152. The same-mode controls therefore perturb prompt wording more strongly than the released reward-mode contrast under this lexical measure.
+
+Each fresh trajectory is written under four conditions using the same DeepSeek-V4-Flash writer at temperature zero. We compare the released success and failure memories with two same-mode paraphrase controls. For trajectory $i$, let $B_i$ denote the token-set Jaccard distance between the released success-mode and failure-mode memories. Let $W_i$ be the mean of the success-mode and failure-mode original-versus-paraphrase distances. The frozen statistic is
+\begin{equation}
+\Delta_{\mathrm{prompt}}=\frac{1}{8}\sum_{i=1}^{8}(B_i-W_i).
+\end{equation}
+
+\begin{table}[t]
+\centering
+\caption{Fresh prompt-perturbation control. Between-mode memory divergence exceeds the average same-mode wording control.}
+\label{tab:prompt-control}
+\small
+\begin{tabular}{lcrrr}
+\toprule
+Task & Original outcome & Between & Within & $B_i-W_i$ \\
+\midrule
+26  & failure & 0.726 & 0.662 & 0.065 \\
+50  & failure & 0.668 & 0.599 & 0.069 \\
+51  & failure & 0.776 & 0.534 & 0.242 \\
+96  & failure & 0.682 & 0.549 & 0.134 \\
+48  & success & 0.716 & 0.656 & 0.059 \\
+49  & success & 0.573 & 0.594 & -0.022 \\
+117 & success & 0.703 & 0.593 & 0.110 \\
+126 & success & 0.755 & 0.572 & 0.182 \\
+\midrule
+Mean & & 0.700 & 0.595 & 0.105 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All 32 control outputs complete successfully. The mean between-mode distance is 0.700, compared with 0.595 for the stronger same-mode wording perturbations. The paired excess is 0.105. An exact one-sided sign-flip test over the eight frozen trajectory-level differences gives $p=0.0078$. This passes the preregistered margin of 0.10 together with the $p<0.05$ gate. The reward-conditioned reflection contrast therefore produces memory separation beyond the generic prompt-wording effect measured by this stronger same-mode control.

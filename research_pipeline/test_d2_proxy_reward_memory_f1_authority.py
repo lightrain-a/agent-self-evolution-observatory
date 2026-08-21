@@ -4,13 +4,24 @@ import json
 import unittest
 from pathlib import Path
 
-from .d2_proxy_reward_memory_f1 import _falsifier_result
+from .d2_proxy_reward_memory_f1 import _action_signature, _falsifier_result, _parse_policy_output
 
 
 ROOT = Path(__file__).resolve().parent.parent
 
 
 class ProxyRewardMemoryF1AuthorityTest(unittest.TestCase):
+    def test_nested_current_state_action_is_parsed(self) -> None:
+        payload = {"current_state": {"action": [{"extract_content": {"goal": "reviews"}}]}}
+        self.assertEqual(_action_signature(payload), "extract_content")
+
+    def test_truncated_outer_json_recovers_only_complete_action_array(self) -> None:
+        text = '{"current_state":{"next_goal":"inspect","action":[{"extract_content":{"goal":"reviews"}}]}'
+        signature, next_goal, recovered = _parse_policy_output(text)
+        self.assertEqual(signature, "extract_content")
+        self.assertEqual(next_goal, "inspect")
+        self.assertTrue(recovered)
+
     def test_divergence_witness_survives_even_before_full_completion(self) -> None:
         self.assertEqual(
             _falsifier_result(paired_complete=1, paired_divergent=1, required_aligned=12),

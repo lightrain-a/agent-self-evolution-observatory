@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "amendment_id": "D2-PROXY-REWARD-MEMORY-F1-SUPPORT-R2",
+  "contract_path": "generated/d2-proxy-reward-memory-f1-r2-contract.json",
+  "fixed_stage": "future-22-success_label_memory-r1",
+  "status": "PASS",
+  "assistant_text_present": true,
+  "parse_ok": true,
+  "action_signature": "extract_content",
+  "resolved_model": "doubao-seed-2-0-mini-260215",
+  "usage": {
+    "input_tokens": 5061,
+    "output_tokens": 193,
+    "total_tokens": 5254,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "canonical_request_fingerprint": "7694916b595d3cadf75e1d16ffa7cd4b63c9844031d642acf296364cdab9d299",
+  "canonical_raw_sha256": "9a312cc84f820a184e9aa7726ec12c7b47148761c198a58f1c8968d8fe5bb573",
+  "scientific_authority": false
+}

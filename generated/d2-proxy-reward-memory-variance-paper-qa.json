@@ -4,11 +4,11 @@
   "status": "PASS",
   "paper_dir": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027",
   "summary": {
-    "checks": 22,
-    "passed": 22,
-    "pages": 7,
-    "pdf_sha256": "39d0f2182d26f37fcad3fa20afea3fa1324b6b2683506a60da745e88ab290457",
-    "pdf_bytes": 147537,
+    "checks": 38,
+    "passed": 38,
+    "pages": 8,
+    "pdf_sha256": "607442885c688760e9ed9a7754b540aa5eb3d0404331cd24d1f6e93e2225aeaf",
+    "pdf_bytes": 198330,
     "active_unrefuted_claims": [
       "C4"
     ]
@@ -17,7 +17,7 @@
     {
       "name": "page_limit",
       "pass": true,
-      "detail": 7
+      "detail": 8
     },
     {
       "name": "anonymous_placeholder",
@@ -85,6 +85,41 @@
       "detail": null
     },
     {
+      "name": "pdf_fragment:0.700",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.595",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.105",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.0078",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.311",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.146",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.160",
+      "pass": true,
+      "detail": null
+    },
+    {
       "name": "active_retain:C4",
       "pass": true,
       "detail": null
@@ -102,7 +137,7 @@
     {
       "name": "claim_ledger_has_claims",
       "pass": true,
-      "detail": 5
+      "detail": 6
     },
     {
       "name": "artifact:summary.paired_trajectories_complete",
@@ -135,6 +170,78 @@
         "actual": "SURVIVES_F0",
         "expected": "SURVIVES_F0"
       }
+    },
+    {
+      "name": "artifact:summary.gate_pass",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
+    },
+    {
+      "name": "artifact:summary.mean_delta_between_minus_within",
+      "pass": true,
+      "detail": {
+        "actual": 0.104978,
+        "expected": 0.104978
+      }
+    },
+    {
+      "name": "artifact:summary.exact_one_sided_sign_flip_p",
+      "pass": true,
+      "detail": {
+        "actual": 0.007812,
+        "expected": 0.007812
+      }
+    },
+    {
+      "name": "artifact:decision",
+      "pass": true,
+      "detail": {
+        "actual": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+        "expected": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY"
+      }
+    },
+    {
+      "name": "artifact:summary.complete_primary_calls",
+      "pass": true,
+      "detail": {
+        "actual": 96,
+        "expected": 96
+      }
+    },
+    {
+      "name": "artifact:summary.complete_no_memory_calls",
+      "pass": true,
+      "detail": {
+        "actual": 12,
+        "expected": 12
+      }
+    },
+    {
+      "name": "artifact:summary.observed_mean_absolute_success_rate_difference",
+      "pass": true,
+      "detail": {
+        "actual": 0.145833,
+        "expected": 0.145833
+      }
+    },
+    {
+      "name": "artifact:summary.permutation_p_ge_observed",
+      "pass": true,
+      "detail": {
+        "actual": 0.160128,
+        "expected": 0.160128
+      }
+    },
+    {
+      "name": "artifact:decision",
+      "pass": true,
+      "detail": {
+        "actual": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+        "expected": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY"
+      }
     }
   ],
   "style_audit": {
@@ -164,7 +271,7 @@
       "serial_enumeration_sentence_forbidden": true
     },
     "limitations_source": "sections/06_limitations_conclusion.tex",
-    "sources_audited": 9,
+    "sources_audited": 10,
     "passed": true,
     "violations": []
   },
@@ -196,20 +303,83 @@
       "actual": "SURVIVES_F0",
       "expected": "SURVIVES_F0",
       "pass": true
+    },
+    {
+      "path": "generated/d2-proxy-reward-memory-f0c-prompt-control.json",
+      "key": "summary.gate_pass",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-proxy-reward-memory-f0c-prompt-control.json",
+      "key": "summary.mean_delta_between_minus_within",
+      "actual": 0.104978,
+      "expected": 0.104978,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-proxy-reward-memory-f0c-prompt-control.json",
+      "key": "summary.exact_one_sided_sign_flip_p",
+      "actual": 0.007812,
+      "expected": 0.007812,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-proxy-reward-memory-f1d-distributional-audit.json",
+      "key": "decision",
+      "actual": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+      "expected": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+      "pass": true
+    },
+    {
+      "path": "generated/d2-proxy-reward-terminal-fixed-evidence.json",
+      "key": "summary.complete_primary_calls",
+      "actual": 96,
+      "expected": 96,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-proxy-reward-terminal-fixed-evidence.json",
+      "key": "summary.complete_no_memory_calls",
+      "actual": 12,
+      "expected": 12,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-proxy-reward-terminal-fixed-evidence.json",
+      "key": "summary.observed_mean_absolute_success_rate_difference",
+      "actual": 0.145833,
+      "expected": 0.145833,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-proxy-reward-terminal-fixed-evidence.json",
+      "key": "summary.permutation_p_ge_observed",
+      "actual": 0.160128,
+      "expected": 0.160128,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-proxy-reward-terminal-fixed-evidence.json",
+      "key": "decision",
+      "actual": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+      "expected": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+      "pass": true
     }
   ],
   "manuscript_files": [
     {
       "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/main.tex",
-      "sha256": "fd28390dc1308309b3e0091015ba672f32fc07cdc639d23827fabdaeabd066b6"
+      "sha256": "1156c670f4a6361d41b2c9634bc1d354ee532c668923855409a875062a4e693f"
     },
     {
       "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/sections/00_abstract.tex",
-      "sha256": "41f4f5b6bfafa8a214264e4fc0dc8b852741d0480390a7798a544e91b26de943"
+      "sha256": "01ff50e7db582c641fc7d3676256afbe0547ed8b00bd2aea5422e9e4bd9de331"
     },
     {
       "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/sections/01_intro.tex",
-      "sha256": "c4584fbdcc8e077ac3477f6f730bffce562529683b9c66e16732d7bd10f4f9b2"
+      "sha256": "b15fafdc64085e1c22c77662cc4ea8719ece4356e389ec0a274d40c78d037b41"
     },
     {
       "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/sections/02_mechanism.tex",
@@ -218,6 +388,10 @@
     {
       "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/sections/03_f0.tex",
       "sha256": "b0a1af619d2b7687bafc2548d20c08effd1e3c40ac7d57b9819fe5b7e50f0170"
+    },
+    {
+      "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/sections/03a_prompt_control.tex",
+      "sha256": "35f5c340949b945c36e53975a9fd00d1de06cb3a1011b890ac7a380193879502"
     },
     {
       "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/sections/04_variance_protocol.tex",
@@ -229,7 +403,7 @@
     },
     {
       "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/sections/06_limitations_conclusion.tex",
-      "sha256": "c301847b2fac7a42d18ee91ff0b3d4eb7549feb53b17aee238a88366c4c143b2"
+      "sha256": "2124edcf94dd83e6277ef02d85b48f4203df718712ccabf2b164c474752a82bf"
     },
     {
       "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/sections/07_appendix.tex",
@@ -242,7 +416,7 @@
   ],
   "claim_ledger": {
     "path": "generated/d2-proxy-reward-memory-variance-claim-ledger.json",
-    "sha256": "bdf8eb46bbf708cbdcfe72f69d98a3b6a501618409b543c2b44bc085646040d9"
+    "sha256": "2d09a4697354cc8ca8acad520a5586d6d4070049fd966889bb8287a4d58a0cb8"
   },
   "scientific_authority": false
 }

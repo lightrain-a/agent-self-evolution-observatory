@@ -13,7 +13,7 @@ from typing import Any
 
 from .ark_provider import ArkResponsesClient, ArkSettings, extract_json_object
 from .config import StorageSettings
-from .discovery_engine_terminal_replication import _call, _jsha, _write_json
+from .discovery_engine_terminal_replication import _archive, _jsha, _now, _write_json
 
 
 def _import_parquet(vendor: Path):
@@ -27,7 +27,8 @@ def _load_raw(root: Path, sha: str) -> str:
 
 
 def _action_signature(payload: dict[str, Any]) -> str:
-    actions = payload.get("action") or []
+    current_state = payload.get("current_state") or {}
+    actions = payload.get("action") or (current_state.get("action") if isinstance(current_state, dict) else None) or []
     if not actions or not isinstance(actions[0], dict):
         return "NO_ACTION"
     action = actions[0]
@@ -36,6 +37,42 @@ def _action_signature(payload: dict[str, Any]) -> str:
     if name == "click_element" and isinstance(args, dict):
         return f"click_element:{args.get('index')}"
     return name
+
+
+def _parse_policy_output(text: str) -> tuple[str, str, bool]:
+    """Return (action signature, next goal, support-recovered).
+
+    The fallback is intentionally narrow: it recovers only a fully emitted action array from
+    provider text whose outer JSON object was truncated after the action. It never invents a
+    missing action and therefore carries no scientific selection authority.
+    """
+    try:
+        payload = extract_json_object(text)
+        signature = _action_signature(payload)
+        current = payload.get("current_state") or {}
+        next_goal = str(current.get("next_goal") or "") if isinstance(current, dict) else ""
+        return signature, next_goal, False
+    except Exception as strict_error:
+        action_match = re.search(r'"action"\s*:\s*\[\s*\{\s*"([^"]+)"\s*:\s*\{(.*?)\}\s*\}\s*\]', text, re.DOTALL)
+        if not action_match:
+            raise strict_error
+        name = action_match.group(1)
+        body = action_match.group(2)
+        if name == "click_element":
+            index_match = re.search(r'"index"\s*:\s*(\d+)', body)
+            if not index_match:
+                raise strict_error
+            signature = f"click_element:{index_match.group(1)}"
+        else:
+            signature = name
+        goal_match = re.search(r'"next_goal"\s*:\s*"((?:\\.|[^"\\])*)"', text, re.DOTALL)
+        next_goal = ""
+        if goal_match:
+            try:
+                next_goal = json.loads('"' + goal_match.group(1) + '"')
+            except Exception:
+                next_goal = goal_match.group(1)
+        return signature, next_goal, True
 
 
 def _entropy(signatures: list[str]) -> float:
@@ -67,8 +104,8 @@ def _falsifier_result(*, paired_complete: int, paired_divergent: int, required_a
     return "SUPPORT_INCOMPLETE_NO_SCIENTIFIC_AUTHORITY"
 
 
-def _request_fingerprint(*, experiment_id: str, stage: str, engine_id: str, prompt_sha: str, model: str, tokens: int, temp: float) -> str:
-    material = {
+def _request_material(*, experiment_id: str, stage: str, engine_id: str, prompt_sha: str, model: str, tokens: int, temp: float, thinking: str | None = None) -> dict[str, Any]:
+    return {
         "transaction_id": experiment_id,
         "stage": stage,
         "engine_id": engine_id,
@@ -77,13 +114,19 @@ def _request_fingerprint(*, experiment_id: str, stage: str, engine_id: str, prom
         "max_output_tokens": int(tokens),
         "temperature": float(temp),
         "store": True,
+        "thinking": thinking,
     }
-    return _jsha(material)
 
 
-def _cached_call(*, responder, root: Path, experiment_id: str, stage: str, engine_id: str, prompt: str, model: str, tokens: int, temp: float):
-    prompt_sha = hashlib.sha256(prompt.encode()).hexdigest()
-    fp = _request_fingerprint(experiment_id=experiment_id, stage=stage, engine_id=engine_id, prompt_sha=prompt_sha, model=model, tokens=tokens, temp=temp)
+def _request_fingerprint(*, experiment_id: str, stage: str, engine_id: str, prompt_sha: str, model: str, tokens: int, temp: float, thinking: str | None = None) -> str:
+    return _jsha(_request_material(experiment_id=experiment_id, stage=stage, engine_id=engine_id, prompt_sha=prompt_sha, model=model, tokens=tokens, temp=temp, thinking=thinking))
+
+
+def _cached_call(*, responder, root: Path, experiment_id: str, stage: str, engine_id: str, prompt: str, model: str, tokens: int, temp: float, thinking: str | None = None):
+    prompt_archive = _archive(root, "prompts", prompt)
+    prompt_sha = prompt_archive["sha256"]
+    material = _request_material(experiment_id=experiment_id, stage=stage, engine_id=engine_id, prompt_sha=prompt_sha, model=model, tokens=tokens, temp=temp, thinking=thinking)
+    fp = _jsha(material)
     receipt_path = root / "provider-receipts" / fp[:2] / f"{fp}.json"
     if receipt_path.exists():
         receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
@@ -91,11 +134,23 @@ def _cached_call(*, responder, root: Path, experiment_id: str, stage: str, engin
         sha = str(response.get("raw_sha256") or "")
         if sha:
             text = _load_raw(root, sha)
-            return {"text": text, "resolved_model": response.get("resolved_model"), "usage": response.get("usage") or {}, "status": response.get("status")}, {
+            return {"text": text, "resolved_model": response.get("resolved_model"), "usage": response.get("usage") or {}, "status": response.get("status"), "response_id": response.get("response_id")}, {
                 "stage": stage, "engine_id": engine_id, "requested_model": model, "resolved_model": response.get("resolved_model"), "prompt_sha256": prompt_sha, "raw_sha256": sha, "request_fingerprint": fp, "usage": response.get("usage") or {}, "status": response.get("status"), "provider_response_id_archived_privately": bool(response.get("response_id")), "scientific_authority": False, "replayed": True,
             }
         return None, {"stage": stage, "engine_id": engine_id, "requested_model": model, "prompt_sha256": prompt_sha, "request_fingerprint": fp, "status": "CACHED_PROVIDER_FAILURE", "scientific_authority": False, "replayed": True}
-    return _call(responder, root, experiment_id, stage, engine_id, prompt, model, tokens, temp)
+    try:
+        result = responder(prompt=prompt, model=model, max_output_tokens=tokens, temperature=temp)
+    except Exception as error:
+        rid = str(getattr(error, "response_id", "") or "")
+        private = {"schema_version": "1.0", "generated_at": _now(), "request": material, "request_fingerprint": fp, "provider_error": {"type": type(error).__name__, "detail_sha256": hashlib.sha256(str(error).encode()).hexdigest(), "response_id": rid, "status": str(getattr(error, "response_status", "") or "")}, "scientific_authority": False}
+        _write_json(receipt_path, private)
+        return None, {"stage": stage, "engine_id": engine_id, "requested_model": model, "prompt_sha256": prompt_sha, "request_fingerprint": fp, "status": "PROVIDER_FAILURE", "error_type": type(error).__name__, "provider_response_id_archived_privately": bool(rid), "scientific_authority": False}
+    raw = str(result.get("text") or "")
+    raw_archive = _archive(root, "raw", raw)
+    private = {"schema_version": "1.0", "generated_at": _now(), "request": material, "request_fingerprint": fp, "response": {"response_id": str(result.get("response_id") or ""), "status": str(result.get("status") or ""), "resolved_model": str(result.get("resolved_model") or model), "usage": result.get("usage") or {}, "raw_sha256": raw_archive["sha256"]}, "scientific_authority": False}
+    _write_json(receipt_path, private)
+    public = {"stage": stage, "engine_id": engine_id, "requested_model": model, "resolved_model": str(result.get("resolved_model") or model), "prompt_sha256": prompt_sha, "raw_sha256": raw_archive["sha256"], "request_fingerprint": fp, "usage": result.get("usage") or {}, "status": str(result.get("status") or ""), "provider_response_id_archived_privately": bool(result.get("response_id")), "scientific_authority": False}
+    return result, public
 
 
 def _decision_prompt(system: str, task: str, state: str, memory: str) -> str:
@@ -114,10 +169,12 @@ def run(contract: dict[str, Any], *, output: Path, private_root: Path) -> dict[s
     released = {str(row["task_id"]): row for row in pq.read_table(parquet, columns=["task_id", "task_prompt", "trajectory_json"]).to_pylist()}
 
     model_cfg = contract["model"]
+    thinking = model_cfg.get("thinking")
+    allow_thinking_fallback = bool(model_cfg.get("allow_thinking_compatibility_fallback", True))
     base = ArkSettings.from_env()
     client = ArkResponsesClient(ArkSettings(api_key=base.api_key, base_url=base.base_url, default_model=base.default_model, timeout_seconds=120.0, max_retries=0))
     def responder(**kw: Any) -> dict[str, Any]:
-        return client.respond(kw["prompt"], model=kw["model"], max_output_tokens=kw["max_output_tokens"], temperature=kw["temperature"], thinking=None, store=True)
+        return client.respond(kw["prompt"], model=kw["model"], max_output_tokens=kw["max_output_tokens"], temperature=kw["temperature"], thinking=thinking, store=True, allow_thinking_compatibility_fallback=allow_thinking_fallback)
 
     rows = []
     receipts = []
@@ -141,21 +198,18 @@ def run(contract: dict[str, Any], *, output: Path, private_root: Path) -> dict[s
             for rollout in range(1, int(contract["rollouts_per_condition"]) + 1):
                 prompt = _decision_prompt(system, released[future_id]["task_prompt"], state, memory)
                 stage = f"future-{future_id}-{condition}-r{rollout}"
-                result, receipt = _cached_call(responder=responder, root=private_root, experiment_id=str(contract["experiment_id"]), stage=stage, engine_id=f"memory-{source_id}", prompt=prompt, model=str(model_cfg["requested"]), tokens=int(model_cfg["max_output_tokens"]), temp=float(model_cfg["temperature"]))
+                result, receipt = _cached_call(responder=responder, root=private_root, experiment_id=str(contract["experiment_id"]), stage=stage, engine_id=f"memory-{source_id}", prompt=prompt, model=str(model_cfg["requested"]), tokens=int(model_cfg["max_output_tokens"]), temp=float(model_cfg["temperature"]), thinking=thinking)
                 receipts.append(receipt)
                 if result is None:
                     failures.append({"source_memory_task": source_id, "future_task": future_id, "condition": condition, "rollout": rollout, **receipt})
                     continue
                 text = str(result.get("text") or "")
                 try:
-                    payload = extract_json_object(text)
-                    signature = _action_signature(payload)
-                    current = payload.get("current_state") or {}
-                    next_goal = str(current.get("next_goal") or "")
+                    signature, next_goal, parse_recovered = _parse_policy_output(text)
                 except Exception as error:
                     failures.append({"source_memory_task": source_id, "future_task": future_id, "condition": condition, "rollout": rollout, "status": "PARSE_FAILURE", "raw_sha256": receipt.get("raw_sha256"), "error_type": type(error).__name__, "scientific_authority": False})
                     continue
-                rows.append({"source_memory_task": source_id, "future_task": future_id, "future_step": step_id, "condition": condition, "rollout": rollout, "action_signature": signature, "next_goal": next_goal, "raw_sha256": receipt.get("raw_sha256"), "scientific_authority": False})
+                rows.append({"source_memory_task": source_id, "future_task": future_id, "future_step": step_id, "condition": condition, "rollout": rollout, "action_signature": signature, "next_goal": next_goal, "parse_recovered": parse_recovered, "raw_sha256": receipt.get("raw_sha256"), "scientific_authority": False})
 
     by_task = []
     paired_complete = 0

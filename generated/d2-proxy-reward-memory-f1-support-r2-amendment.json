@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "amendment_id": "D2-PROXY-REWARD-MEMORY-F1-SUPPORT-R2",
+  "status": "FROZEN_OPERATIONAL_AMENDMENT",
+  "parent_experiment_id": "D2-PROXY-REWARD-MEMORY-F1-ACTION-DIVERGENCE",
+  "original_contract_sha256": "91c6d6d4e49d707d91fee5bd35355f8445bf92936fafd0a7515ff3c6279982d0",
+  "trigger": {
+    "class": "PROVIDER_SUPPORT_FAILURE",
+    "observed_provider_failures": 35,
+    "observed_parse_failures": 1,
+    "aligned_rollouts": 0,
+    "diagnosis": "incomplete responses consumed the full 1200-token output budget as reasoning tokens and produced no assistant text",
+    "scientific_authority": false
+  },
+  "scientific_design_unchanged": true,
+  "frozen_scientific_fields": [
+    "paired_interventions",
+    "conditions",
+    "rollouts_per_condition",
+    "future task prompt",
+    "future browser observation",
+    "browser-agent system instruction",
+    "policy model family",
+    "temperature",
+    "output schema",
+    "primary metrics",
+    "falsifier"
+  ],
+  "operational_change": {
+    "thinking": "disabled",
+    "allow_thinking_compatibility_fallback": false,
+    "max_output_tokens": 1200,
+    "provider_post_retries": 0,
+    "model_unchanged": true,
+    "temperature_unchanged": true
+  },
+  "preflight": {
+    "fixed_stage": "future-22-success_label_memory-r1",
+    "pass_if": "one assistant response is present and contains a parseable structured browser action",
+    "on_pass": "execute all frozen F1 cells with the same amended transport",
+    "on_fail": "STOP_SUPPORT_REPAIR_NO_SCIENTIFIC_UPDATE"
+  },
+  "policy": {
+    "no_outcome_driven_cell_selection": true,
+    "support_failure_has_no_scientific_authority": true,
+    "single_post_per_amended_request_fingerprint": true
+  },
+  "scientific_authority": false,
+  "experiment_authority": false
+}

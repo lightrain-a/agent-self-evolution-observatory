@@ -1,0 +1,1129 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "D2-PROXY-REWARD-MEMORY-F0C-PROMPT-PERTURBATION",
+  "status": "PROMPT_CONTROL_COMPLETE",
+  "contract_sha256": "10851eebbc6da47883e0fd9154ecb03a055e374a0392dd7ac048738cb7bd8242",
+  "hypothesis": "Reward-conditioned success-versus-failure reflection changes written memory more than a stronger same-mode wording perturbation that preserves reflection semantics.",
+  "prompt_control_qualification": {
+    "released_success_vs_failure_token_jaccard_distance": 0.114286,
+    "success_original_vs_paraphrase_distance": 0.171429,
+    "failure_original_vs_paraphrase_distance": 0.151786,
+    "pass_if_each_same_mode_distance_gte_released_between_mode_distance": true,
+    "qualified": true,
+    "paraphrase_transformations": [
+      [
+        "You are an expert in web navigation.",
+        "You are a specialist in browser navigation."
+      ],
+      [
+        "You will be given",
+        "You will receive"
+      ],
+      [
+        "user query",
+        "user request"
+      ],
+      [
+        "corresponding trajectory",
+        "accompanying trajectory"
+      ],
+      [
+        "represents how an agent",
+        "shows how an agent"
+      ],
+      [
+        "extract and summarize useful insights",
+        "identify and summarize useful lessons"
+      ],
+      [
+        "helpful and generalizable",
+        "useful and reusable"
+      ],
+      [
+        "## Important notes",
+        "## Important constraints"
+      ]
+    ]
+  },
+  "summary": {
+    "tasks_requested": 8,
+    "tasks_complete": 8,
+    "provider_failures": 0,
+    "mean_between_original_distance": 0.699949,
+    "mean_within_mode_distance": 0.594971,
+    "mean_delta_between_minus_within": 0.104978,
+    "exact_one_sided_sign_flip_p": 0.007812,
+    "frozen_effect_margin": 0.1,
+    "frozen_alpha": 0.05,
+    "gate_pass": true
+  },
+  "decision": "SUPPORT_REWARD_MODE_BEYOND_GENERIC_PROMPT_WORDING",
+  "rows": [
+    {
+      "task_id": "26",
+      "task_prompt": "List out reviewers, if exist, who mention about complain of the customer service",
+      "original_is_successful": false,
+      "complete": true,
+      "between_original_distance": 0.726415,
+      "within_success_distance": 0.619048,
+      "within_failure_distance": 0.704036,
+      "within_mean_distance": 0.661542,
+      "between_paraphrase_distance": 0.777293,
+      "delta_between_minus_within": 0.064873,
+      "title_sets": {
+        "success_original": [
+          "Systematic Review Pagination Navigation",
+          "Keyword-Based Review Scanning Strategy",
+          "Structured Data Collection from Reviews"
+        ],
+        "success_paraphrase": [
+          "Systematic Review Pagination Scanning",
+          "Keyword-Based Review Filtering",
+          "Precise Evidence Collection for Review Findings"
+        ],
+        "failure_original": [
+          "Verify pagination coverage when scanning reviews",
+          "Use precise keyword matching for complaint detection",
+          "Record complete reviewer information during scanning"
+        ],
+        "failure_paraphrase": [
+          "Verify review pagination coverage before concluding no matches exist",
+          "Use keyword variations and context to identify customer service complaints",
+          "Re-scan previously visited pages when returning to them"
+        ]
+      },
+      "exact_content_sha": {
+        "success_original": "d3ebd70818f2e154e84b140d3c2b0b6a1212ea0413fe3d47b64fde3c6e00e2e2",
+        "success_paraphrase": "20cb1de6054fea55e5ce08aa880bf61993b3180a90000fd43926886bc6dfb49c",
+        "failure_original": "7dd17b53c471d1dc2a7bc6dcbe8ace482af7bf515c14cbab75adc74accbe6c35",
+        "failure_paraphrase": "37a75171a90c919eff0aeb1bcd4920d5d06f3a3c92465264b693ca4fa05f4c2a"
+      },
+      "scientific_authority": false
+    },
+    {
+      "task_id": "50",
+      "task_prompt": "Today is 6/12/2023. Tell me how many fulfilled orders I have over the past year, and the total amount of money I spent.",
+      "original_is_successful": false,
+      "complete": true,
+      "between_original_distance": 0.668246,
+      "within_success_distance": 0.550898,
+      "within_failure_distance": 0.647887,
+      "within_mean_distance": 0.599393,
+      "between_paraphrase_distance": 0.668449,
+      "delta_between_minus_within": 0.068854,
+      "title_sets": {
+        "success_original": [
+          "Systematic Pagination for Order History Extraction",
+          "Filter Orders by Status and Date Range",
+          "Aggregate Order Totals for Financial Calculations"
+        ],
+        "success_paraphrase": [
+          "Filtering orders by status and date range",
+          "Handling paginated order lists",
+          "Aggregating order totals for reporting"
+        ],
+        "failure_original": [
+          "Verify date range boundaries when filtering orders",
+          "Distinguish order statuses before aggregating totals",
+          "Ensure complete data collection across all paginated pages"
+        ],
+        "failure_paraphrase": [
+          "Verify date range before collecting order data",
+          "Distinguish between order statuses when calculating fulfilled orders",
+          "Avoid redundant page navigation and re-extraction"
+        ]
+      },
+      "exact_content_sha": {
+        "success_original": "c91f020fba75bcf4e2629e0f35fd42a4f69fb632ed6c0859979572351c68879c",
+        "success_paraphrase": "122af6d8d49b0fd919b8a9721a51b46f536bf218a1b7c511d85e63ea14b8360c",
+        "failure_original": "dd104111bd9850aa8e4ade0dec460bf6c6ef2f5a9cac10127d5d7c3310f6f7cc",
+        "failure_paraphrase": "f2413f7232d53b2f810ae9fbe2e2e4d7b0fc9e9ca2980e768b23f264a5da828d"
+      },
+      "scientific_authority": false
+    },
+    {
+      "task_id": "51",
+      "task_prompt": "Today is 6/12/2023. Tell me how many fulfilled orders I have over the past six month, and the total amount of money I spent.",
+      "original_is_successful": false,
+      "complete": true,
+      "between_original_distance": 0.776423,
+      "within_success_distance": 0.505155,
+      "within_failure_distance": 0.56338,
+      "within_mean_distance": 0.534267,
+      "between_paraphrase_distance": 0.760504,
+      "delta_between_minus_within": 0.242155,
+      "title_sets": {
+        "success_original": [
+          "Navigating to Order History via Account Section",
+          "Systematic Pagination Scanning for Date-Range Filtering",
+          "Defining Fulfillment Status and Calculating Totals"
+        ],
+        "success_paraphrase": [
+          "Navigating to order history through account menu",
+          "Systematic pagination scanning for date-range filtering",
+          "Defining fulfillment status criteria for order counting"
+        ],
+        "failure_original": [
+          "Verify date-range boundaries when calculating six-month windows",
+          "Confirm the meaning of \"fulfilled\" before aggregating order data",
+          "Ensure all paginated order pages are scanned before reporting totals"
+        ],
+        "failure_paraphrase": [
+          "Verify date-range boundaries when calculating \"past six months\"",
+          "Distinguish order statuses that count as \"fulfilled\"",
+          "Ensure complete pagination coverage before finalizing counts"
+        ]
+      },
+      "exact_content_sha": {
+        "success_original": "161aa2d651ef0eaf8c2d2c8963b82413a24d309b87bbd5d0a6ba94528ba1c87c",
+        "success_paraphrase": "8f40f051e9eaca9d4b6c8b0e20a3d24d31db20a8b40fe013091f0c6757e793e8",
+        "failure_original": "14620425117926bcff4af0a0ff46ea9dd7ba08965b81cee5d4a6ee985f1c1a07",
+        "failure_paraphrase": "81868f58224cc6b9527109298088ac4d3eab38d6c7e043663fb49775af8441e8"
+      },
+      "scientific_authority": false
+    },
+    {
+      "task_id": "96",
+      "task_prompt": "Tell me the status of my latest order and when will it arrive",
+      "original_is_successful": false,
+      "complete": true,
+      "between_original_distance": 0.682464,
+      "within_success_distance": 0.417178,
+      "within_failure_distance": 0.680628,
+      "within_mean_distance": 0.548903,
+      "between_paraphrase_distance": 0.73913,
+      "delta_between_minus_within": 0.133561,
+      "title_sets": {
+        "success_original": [
+          "Locating Order Status via Account Navigation",
+          "Handling Missing Delivery Information",
+          "Comprehensive Order Summary Reporting"
+        ],
+        "success_paraphrase": [
+          "Locating Order Status via Account Navigation",
+          "Handling Missing Delivery Date Information",
+          "Comprehensive Order Summary Reporting"
+        ],
+        "failure_original": [
+          "Verify Order Status and Delivery Information on Order Details Page",
+          "Distinguish Between Order Status and Delivery Estimate",
+          "Provide Complete Order Summary with Explicit Missing-Information Handling"
+        ],
+        "failure_paraphrase": [
+          "Verify all order details before reporting completion",
+          "Check for delivery estimates on multiple page sections"
+        ]
+      },
+      "exact_content_sha": {
+        "success_original": "5b5ba6ac4579d24f459e65acafdbbc1074b258efddeaaf9aea8f804644c3facd",
+        "success_paraphrase": "40ca07075dbd1b965ee40cec1ceb0dfee041f4743062a1aefa9e5e8ec24ce859",
+        "failure_original": "068af44832ce7eda6f6653e81700797c8782541ff607f408dc7665ebca1bb6e6",
+        "failure_paraphrase": "52ca6d458145027902f2b00025b6acc65563ef12276331cce5227fc5481ccc08"
+      },
+      "scientific_authority": false
+    },
+    {
+      "task_id": "48",
+      "task_prompt": "Today is 6/12/2023. Tell me how many fulfilled orders I have over the past three days, and the total amount of money I spent.",
+      "original_is_successful": true,
+      "complete": true,
+      "between_original_distance": 0.715517,
+      "within_success_distance": 0.654709,
+      "within_failure_distance": 0.657407,
+      "within_mean_distance": 0.656058,
+      "between_paraphrase_distance": 0.66055,
+      "delta_between_minus_within": 0.059459,
+      "title_sets": {
+        "success_original": [
+          "Setting pagination to display all orders before extraction",
+          "Using explicit date filtering and status keywords in extraction",
+          "Verifying zero-result outcomes before concluding the task"
+        ],
+        "success_paraphrase": [
+          "Verify date range and status keywords before concluding zero results",
+          "Use per-page limit to avoid missing orders across pagination",
+          "Report zero results with actionable follow-up options"
+        ],
+        "failure_original": [
+          "Verify Pagination and Data Completeness Before Concluding No Results",
+          "Validate Date Range Interpretation Against Available Data",
+          "Cross-Check Order Statuses on Individual Order Pages"
+        ],
+        "failure_paraphrase": [
+          "Verify pagination and data completeness before concluding no results",
+          "Confirm date range interpretation aligns with user intent",
+          "Cross-check order statuses on individual order pages when summary data is sparse"
+        ]
+      },
+      "exact_content_sha": {
+        "success_original": "a43ad10ed2dd6e27b71cfca7e48e9dc134b4bb8a9cc4dab97d2344910f81c65b",
+        "success_paraphrase": "8fd8edb98cde7be38d921684f49923b131430bd8ca8560a7a575a4644a0dd2e1",
+        "failure_original": "8fe657571eb7c87b23948b5e19b06721a3e6dc7e92842bc247ed1449f9421266",
+        "failure_paraphrase": "866de87bc53c8f37ec181a8ec4c45040aabb3980db47194ba0e5133905714041"
+      },
+      "scientific_authority": false
+    },
+    {
+      "task_id": "49",
+      "task_prompt": "Today is 6/12/2023. Tell me how many fulfilled orders I have over the past four month, and the total amount of money I spent.",
+      "original_is_successful": true,
+      "complete": true,
+      "between_original_distance": 0.572864,
+      "within_success_distance": 0.544118,
+      "within_failure_distance": 0.64467,
+      "within_mean_distance": 0.594394,
+      "between_paraphrase_distance": 0.733032,
+      "delta_between_minus_within": -0.02153,
+      "title_sets": {
+        "success_original": [
+          "Adjust pagination to view all records before extracting data",
+          "Define clear date ranges and fulfillment status keywords for filtering",
+          "Handle date inconsistencies between page headers and data rows"
+        ],
+        "success_paraphrase": [
+          "Adjust orders-per-page before extracting order data",
+          "Filter orders by both date range and fulfillment status keywords",
+          "Verify date consistency and note discrepancies without blocking progress"
+        ],
+        "failure_original": [
+          "Verify Date Consistency Between Page Headers and Data Rows",
+          "Use Pagination Controls to Ensure Complete Data Extraction",
+          "Define Fulfillment Status Keywords Explicitly for Filtering"
+        ],
+        "failure_paraphrase": [
+          "Verify date format and year interpretation before filtering orders",
+          "Ensure all relevant orders are visible before extracting data",
+          "Cross-check extracted results against visible page data"
+        ]
+      },
+      "exact_content_sha": {
+        "success_original": "a96c0da8a26e4d64c5931f1a78378b7dadb121ba87f8966cad5f84007b202a09",
+        "success_paraphrase": "942527ed1b8d96c69b3abdd9e9484fc17ffc964f33148f1ea5f7cf1ea248aedf",
+        "failure_original": "040ae28ff467c5f8eb07048a3dd93c22074f3f79a5611a8159dc03562d5b08c2",
+        "failure_paraphrase": "88e5799ed71aa34c24ba3063b8f0a303688070ff3dc2cd39baf27c13c96cd1df"
+      },
+      "scientific_authority": false
+    },
+    {
+      "task_id": "117",
+      "task_prompt": "What is the date when I made my first purchase on this site?",
+      "original_is_successful": true,
+      "complete": true,
+      "between_original_distance": 0.70303,
+      "within_success_distance": 0.64497,
+      "within_failure_distance": 0.540984,
+      "within_mean_distance": 0.592977,
+      "between_paraphrase_distance": 0.721854,
+      "delta_between_minus_within": 0.110053,
+      "title_sets": {
+        "success_original": [
+          "Locating Earliest Purchase Date via Account Order History",
+          "Handling Paginated Order Lists for Chronological Queries",
+          "Verifying and Reporting the Earliest Order with Context"
+        ],
+        "success_paraphrase": [
+          "Locating earliest purchase date via order history pagination",
+          "Using \"View All\" to access complete order history",
+          "Confirming earliest date across multiple orders on the same day"
+        ],
+        "failure_original": [
+          "Verify Order Status Before Reporting Purchase Dates",
+          "Confirm Pagination Reaches the True End of Order History"
+        ],
+        "failure_paraphrase": [
+          "Verify order status before reporting purchase dates",
+          "Confirm pagination covers the complete order history"
+        ]
+      },
+      "exact_content_sha": {
+        "success_original": "e876f9d32766ae91aeec7083fb48e297e1268fe7f0bf2af0d28b42dd05ea7701",
+        "success_paraphrase": "14e304aef7f352aa4563937402ed8dccd7c3bbd67a8e2625967a5d484849d5e1",
+        "failure_original": "93bb3e10e46e80382646a3e7eee086ea5dc0796c088397e7407a266a67f03534",
+        "failure_paraphrase": "072ceb6e1ba1a93c70a9c4aa622e2fb50a06e38ad461b24d2b8bbe306ee8dcec"
+      },
+      "scientific_authority": false
+    },
+    {
+      "task_id": "126",
+      "task_prompt": "What is the price range of Canon photo printer in the One Stop Market?",
+      "original_is_successful": true,
+      "complete": true,
+      "between_original_distance": 0.75463,
+      "within_success_distance": 0.550265,
+      "within_failure_distance": 0.594203,
+      "within_mean_distance": 0.572234,
+      "between_paraphrase_distance": 0.724138,
+      "delta_between_minus_within": 0.182396,
+      "title_sets": {
+        "success_original": [
+          "Extracting Price Ranges from Search Results",
+          "Handling Anomalous Price Values",
+          "Completing Price Range Tasks with Evidence"
+        ],
+        "success_paraphrase": [
+          "Extracting Price Range from Search Results",
+          "Handling Anomalous Price Values in Results",
+          "Completing Tasks with Comprehensive Final Reports"
+        ],
+        "failure_original": [
+          "Verify Unusually Low Prices Before Finalizing Price Range Calculations",
+          "Ensure Complete Data Extraction Before Computing Results",
+          "Distinguish Between Product Categories Within Search Results"
+        ],
+        "failure_paraphrase": [
+          "Verify outlier prices before finalizing price range calculations",
+          "Ensure all relevant search results are captured before concluding",
+          "Distinguish between product categories when interpreting search results"
+        ]
+      },
+      "exact_content_sha": {
+        "success_original": "881e9c6dc5cd8e8bb7ea90fc9cadae2990ef3d0a116b4c25ec6a1da7ea0b6ae8",
+        "success_paraphrase": "bd40cc1ae32ef08dc588d66ac0ae6e967d612ff40a584569dca544e677de5faf",
+        "failure_original": "becc84238db580ff68274d6118f5b9af8f2931b6842713b0246e4605dcbe3e42",
+        "failure_paraphrase": "cfcaa32dbf3569c53aef06f0da41aa5408bd6bd571f566a9243c340fc59f9ea0"
+      },
+      "scientific_authority": false
+    }
+  ],
+  "provider_receipts": [
+    {
+      "stage": "memory-success_original",
+      "engine_id": "task-26",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "596b049f6c4906de1bffc8081716c71f41344779f5123586ee45fa1985612009",
+      "raw_sha256": "726bf2ab12a7d6771ae5dbef30011d73920aba9a5d7704148cec6004ccca1697",
+      "request_fingerprint": "4d4016109c0b0b431880f4b576601942dcd76b52cf8e5b6dd52270daa17a81fa",
+      "usage": {
+        "input_tokens": 957,
+        "output_tokens": 292,
+        "total_tokens": 1249,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success_paraphrase",
+      "engine_id": "task-26",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "9bdd000b858c7135cc2f098747febcbf55f91c0b52bb5debee51769e0144ccac",
+      "raw_sha256": "189d1575ddc2645e379063c2a5ded532b10c7e43ed065a08ad49e5976dbb3e12",
+      "request_fingerprint": "c4b4741b1ac744d67ec286c0a60c52f1ca0f1a170682d5feae3347a1ecb053b7",
+      "usage": {
+        "input_tokens": 955,
+        "output_tokens": 281,
+        "total_tokens": 1236,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure_original",
+      "engine_id": "task-26",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "5b978ca3c10a0d4e54b51f25669519958e39a7cb33a6815bf431222409b17e9d",
+      "raw_sha256": "bfa72592549cd32b984ca0c1333cadf43f1b543011608797d918e03c8d47cfcd",
+      "request_fingerprint": "033ef0656072c93eac281f901c65a9b872370ea3cf54aecae62028efdf391d77",
+      "usage": {
+        "input_tokens": 975,
+        "output_tokens": 293,
+        "total_tokens": 1268,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure_paraphrase",
+      "engine_id": "task-26",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "8d1ad360dac270b321729632450a22a29829397bf164099c6959aca51fedb893",
+      "raw_sha256": "5f5baa9ec3e5278ce450cf0680510aa920d78ecb9269286e3ac13028f951320f",
+      "request_fingerprint": "640278b58b0ec3692bc9bf8b2580b07ed88b82d535e0b652927e5dfc250b5005",
+      "usage": {
+        "input_tokens": 973,
+        "output_tokens": 346,
+        "total_tokens": 1319,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success_original",
+      "engine_id": "task-50",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "e3ec4249b12a9637ca4da2ca984cc139306fbde221ffb8fc0c680df662705936",
+      "raw_sha256": "99e54d8855fcf3d8ab3ddf43a34e7495374a6e446ffbb8ab951a641e59a06f15",
+      "request_fingerprint": "36ee903cbd23065b7823ac9e9fb7af2fd64bdfbf0b12569a6f66f12162007409",
+      "usage": {
+        "input_tokens": 2786,
+        "output_tokens": 333,
+        "total_tokens": 3119,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success_paraphrase",
+      "engine_id": "task-50",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "78cbd671b49b20069e2a0d0399b5cda4fd46a550e3495ebaedd642e79c322f8f",
+      "raw_sha256": "79863f536f034cdb8bf04178c91bdc9015fe157d526f7ca7c7cc77a088964e41",
+      "request_fingerprint": "9c1d368d86344e11813350922c9355f0493f465d6feffa5d81d0ada9aa508ac0",
+      "usage": {
+        "input_tokens": 2784,
+        "output_tokens": 296,
+        "total_tokens": 3080,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure_original",
+      "engine_id": "task-50",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "0b054dc2db033ab3894f06ce9fe03249c0817470e471a1147c61529c8f6d3740",
+      "raw_sha256": "4d7c7f12c1d7e08d78f27cb65fe368a5867d818521f2ab2288bca90fd9a5253b",
+      "request_fingerprint": "c1cd45226b62e67174c07dd362c5760725a43a0a7f0ca8ae1331f76c6c76bb3c",
+      "usage": {
+        "input_tokens": 2804,
+        "output_tokens": 366,
+        "total_tokens": 3170,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure_paraphrase",
+      "engine_id": "task-50",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "d213a3b2e74f3068a618b729a0989cf7f62fd8cea36802ab88b768fa497472c0",
+      "raw_sha256": "9c6fb4327e9c7d63719262383caf23d72343eeb900ef77b2a3d409ca52418426",
+      "request_fingerprint": "f33051cd890753420bec9abf21b406f0d7e8851c510467f2e22cf6db1ee6f102",
+      "usage": {
+        "input_tokens": 2802,
+        "output_tokens": 379,
+        "total_tokens": 3181,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success_original",
+      "engine_id": "task-51",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "5e632a1f2ad5f3a146f22a2d77c34450955cc94d1742f4d2cac702de87098ffd",
+      "raw_sha256": "1cee2f8289f9913b8ab3e31f3c804df17282a55b10cb46288c4a9c1e97cd217b",
+      "request_fingerprint": "d5156312c9fcf8d0cf1767910812ce6f0c3d2f6fdbca95562fbeb492ccecb5cb",
+      "usage": {
+        "input_tokens": 1164,
+        "output_tokens": 334,
+        "total_tokens": 1498,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success_paraphrase",
+      "engine_id": "task-51",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "471a3d64390da144c83f34f653b6eaeb4435a7e3e17c3959a917e220eb8e3746",
+      "raw_sha256": "061e03338b4f41a0754219c298d13fc24e54dac91266cf52f5ddc889e99d2cc6",
+      "request_fingerprint": "f3f867a6260be50dd5ead59b1a72c1ad067aef5808ec22d3f6e74a4feea1dc6e",
+      "usage": {
+        "input_tokens": 1162,
+        "output_tokens": 324,
+        "total_tokens": 1486,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure_original",
+      "engine_id": "task-51",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "658112251ae22d3bc739f8b00849ce4bb2981920953cd99df91e7df0464a4012",
+      "raw_sha256": "a905b83735424537bd225f25864ba48e0fdc204063f07aa35ab75916d8284416",
+      "request_fingerprint": "2217835a23da40ba4a64aa999ca0ae75dd56d6987baecbd93fce1c281c3eb9fc",
+      "usage": {
+        "input_tokens": 1182,
+        "output_tokens": 391,
+        "total_tokens": 1573,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure_paraphrase",
+      "engine_id": "task-51",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "bc0f923c32dff650decbc39f07eae28870ec72ead1c597ddec9e8cdf809989bd",
+      "raw_sha256": "512f454e3810ef174d57553e8d857fcaf33f229efad714484650368fd915d2cc",
+      "request_fingerprint": "adcbf02317c1cc5ecb3ce0eacde90e98a512a6497b61cfacb8e27c5b55a13a5c",
+      "usage": {
+        "input_tokens": 1180,
+        "output_tokens": 373,
+        "total_tokens": 1553,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success_original",
+      "engine_id": "task-96",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "fec20b79723c6cfa3af111df9fa615f826e243e58c7749bb1a26a7082082b3f8",
+      "raw_sha256": "41849aba72bbd44b0987b9fcdd08c4cfcdd1da0dcbf5c491e998c5928c1e766b",
+      "request_fingerprint": "c19a19e1af40ac177b906156c9720fe80807e866639d0353cf3cd1920510708c",
+      "usage": {
+        "input_tokens": 763,
+        "output_tokens": 308,
+        "total_tokens": 1071,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success_paraphrase",
+      "engine_id": "task-96",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "04e97b0b9afca56f2a586d0d9a38765b0c92257067770f61b9afbd5d2b5f3542",
+      "raw_sha256": "e0857eaf18764f7adec37eb10e5d497d6f6585e6d86ad4ac6f20c8205ba85b83",
+      "request_fingerprint": "037b48b312d5faa41a5079e074d482a7bcf185d6184965d01b38e949a2bf2357",
+      "usage": {
+        "input_tokens": 761,
+        "output_tokens": 300,
+        "total_tokens": 1061,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure_original",
+      "engine_id": "task-96",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "bbdb7eeb9e7fe522e85de1a2947312c0fed4ecf5485ccd2710cd406e0f6b113b",
+      "raw_sha256": "d6a6e3ea848d99cb67309473096fabced6321f6304b29ed4c808b5a300ddc014",
+      "request_fingerprint": "a49e940dec842d60a49e4157c4a85395423dfcf10c5e8dcca1ed7b92f34e4e5c",
+      "usage": {
+        "input_tokens": 781,
+        "output_tokens": 370,
+        "total_tokens": 1151,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure_paraphrase",
+      "engine_id": "task-96",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "11fc2207a3fb8e4d9457eb3fea244377b5593d1462658f0955e270a9f63cc2f3",
+      "raw_sha256": "4e06d5dffe806bd5ea0b47f5eb0129c39b736488a41c75d371d12c6f920e5ff5",
+      "request_fingerprint": "711c7bcbd59148e214f6f7a36fab7bae729574e2c306d39fb72c815231c3f5f1",
+      "usage": {
+        "input_tokens": 779,
+        "output_tokens": 208,
+        "total_tokens": 987,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success_original",
+      "engine_id": "task-48",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "f1d21878794e02cff539c41832dad0847090c4841633b2921cb619218829f7bb",
+      "raw_sha256": "abc77ebfab0dddf32ab5cf3ca24406dd3793d9c94ecd0bb62e41cc5e68ce8f54",
+      "request_fingerprint": "f40c2c5ac35e8ef3d127b158fb8b8a4d3352e8be0dbe65f97b4cc42de8af85f0",
+      "usage": {
+        "input_tokens": 1134,
+        "output_tokens": 348,
+        "total_tokens": 1482,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success_paraphrase",
+      "engine_id": "task-48",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "228c2300357860aac2ca3e2a858f07b72f423dd068216f539f9eaff2250d606e",
+      "raw_sha256": "98e66e5b26dfd3658066d62ed943748091b22e9c334c3b8f256fb1ac8f60e195",
+      "request_fingerprint": "8bd047e44f420b9b6c4dcdcda68a113a6c932d2d661f43f4b1c2e9a8ad737eef",
+      "usage": {
+        "input_tokens": 1132,
+        "output_tokens": 333,
+        "total_tokens": 1465,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure_original",
+      "engine_id": "task-48",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "315af02dcef752caf6da307c7fbbec86cf83559c2f35e99f10642459a6117e05",
+      "raw_sha256": "cdd3be88cf2c1ede9ec1696d8afe42f3e8efd977dfa6215c41933d823d662147",
+      "request_fingerprint": "86680f24a3673dc55f4ef22509e59b7ccaa53e3d930367e286c568e1ab4e8125",
+      "usage": {
+        "input_tokens": 1152,
+        "output_tokens": 367,
+        "total_tokens": 1519,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure_paraphrase",
+      "engine_id": "task-48",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "455c9cd4297d049ef9081998096941b8f19f83edc8744233599949de86db76ab",
+      "raw_sha256": "63a8e167604e616586586c6c4486a30ffd0b1c8f21447777544eea7725a2ae9c",
+      "request_fingerprint": "5992e6afc0b9db6ba8e40ea9f12037963b23255c9247c1e2f417e531da1c4d04",
+      "usage": {
+        "input_tokens": 1150,
+        "output_tokens": 359,
+        "total_tokens": 1509,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success_original",
+      "engine_id": "task-49",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "d26a0627f04cf64ae87940b637022a5ad248eb26bd36e7eff4d6ca3d72da3261",
+      "raw_sha256": "adb1c988438bfc717c925af1fdb20bb91f99f634d8fb67e4dac7fc2452fc3a62",
+      "request_fingerprint": "e0fdba16301dadbbe420714b6c5adcad8e023f2e483d3147bf1402cf6e9fa922",
+      "usage": {
+        "input_tokens": 1413,
+        "output_tokens": 347,
+        "total_tokens": 1760,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success_paraphrase",
+      "engine_id": "task-49",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "8e65f58959d4e1e5dd083ef03a38baac616fba7deb89f4cc5ace88845fb3276d",
+      "raw_sha256": "9138a6affd3673f681fee000b77e1a5b6d377ad0cdef94013257e1da9b458547",
+      "request_fingerprint": "12535e70930795056e4e3e9f505e134ee84107f88f630016680266b91c4922b7",
+      "usage": {
+        "input_tokens": 1411,
+        "output_tokens": 327,
+        "total_tokens": 1738,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure_original",
+      "engine_id": "task-49",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "8180ebd25072bde27f077c12d2daf1cb2980b49d0e88ef1dbdb583afa5939056",
+      "raw_sha256": "f6d8036020f3229b1fad0faf79a0aed8e84b534fcc4ec83e6025d0f34515a2d8",
+      "request_fingerprint": "74fa7cf5c4144f20dad932681aa299552b975a1424b83594d9ebc0ec57ff03f5",
+      "usage": {
+        "input_tokens": 1431,
+        "output_tokens": 312,
+        "total_tokens": 1743,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure_paraphrase",
+      "engine_id": "task-49",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "a05310168d8bda834e00aa3008205275d10e917e4453bab289579d3315620b32",
+      "raw_sha256": "0126ba0857ed032da22e5264a6fefa45d694a8c3d77515179129847c3bb2bd9a",
+      "request_fingerprint": "3ac064f84fde9eeb71c4bc6719e15b593b6adff62822938c23a90e66bea7ce95",
+      "usage": {
+        "input_tokens": 1429,
+        "output_tokens": 357,
+        "total_tokens": 1786,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success_original",
+      "engine_id": "task-117",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "59fde59c669bc3e2cb2508dc69bd28cb4b7913898701648900a07dede94a8368",
+      "raw_sha256": "79d404bff8bc5d3dedb7d5407e74db56cf4b213958c2599c4dd0f16375687798",
+      "request_fingerprint": "02d7116912dce9144229a7f1b280d3526b7da624c5014feb02dfe7d9ee191e64",
+      "usage": {
+        "input_tokens": 745,
+        "output_tokens": 325,
+        "total_tokens": 1070,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success_paraphrase",
+      "engine_id": "task-117",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "4c16a998a8a402bb4f145dbb40e2999a7e5377122ba6f90c8c970fdca7a99e7e",
+      "raw_sha256": "29c1de33ae68e75a0f135f462efa5d600ec007edfe0cf3d7d76971523fb5c86e",
+      "request_fingerprint": "3c1f8aa706903849dc519eb47a3d7b8e49b868d2768ead19d251855c1f94937b",
+      "usage": {
+        "input_tokens": 743,
+        "output_tokens": 291,
+        "total_tokens": 1034,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure_original",
+      "engine_id": "task-117",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "14e2ff66daa2d27626036baf2157ed572f0b07abe21494ca9296029ddac2a19a",
+      "raw_sha256": "3b656d1f1d9d9fe72355b6e50d72abda270490c64d621d624880b1dfb2d0e23b",
+      "request_fingerprint": "701e6e4691be247d57c1d17a4e722df803a6e42e9a0a9ef5f68d7ffe7a4f8e8e",
+      "usage": {
+        "input_tokens": 763,
+        "output_tokens": 215,
+        "total_tokens": 978,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure_paraphrase",
+      "engine_id": "task-117",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "2ccf6f18cb15ad76fbbb5be9854d63ef2e2b4711a5c28462ae3afe0148421819",
+      "raw_sha256": "6a2183620ea6e2a5209a67842f3d6ed7671a98a6557838429b86caf206c3fdaa",
+      "request_fingerprint": "7f7c1f32b7ebff63ff4bc3796ae0a8dd230e5e31603b81a194732d66f73528d8",
+      "usage": {
+        "input_tokens": 761,
+        "output_tokens": 240,
+        "total_tokens": 1001,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success_original",
+      "engine_id": "task-126",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "242a22c4e9caf8b7c9e75449c6799387997dd52eac77a39366cb51a7ca283655",
+      "raw_sha256": "9e6b8d2a13868d6feb730c123abdeeed2d5f4ad46fc890d4b88315284e19a04e",
+      "request_fingerprint": "62a83ba256b67f7beb60186c53cb67a835e04f5015de671b2e78b3199fc0d4be",
+      "usage": {
+        "input_tokens": 1203,
+        "output_tokens": 300,
+        "total_tokens": 1503,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success_paraphrase",
+      "engine_id": "task-126",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "4ce70d57a91d3a7d96d1f2922f9e2ff885851d25f8dd842dcb054516872082ec",
+      "raw_sha256": "813013f06081e4f0ae1cebeb5cc97cd03d34d8286d15e06e07e3076c1c7b2764",
+      "request_fingerprint": "9e57fb47eca9e09a2ee501ed51e5be1edf4c74b8a7ae1d5f7b9f70ac4418db03",
+      "usage": {
+        "input_tokens": 1201,
+        "output_tokens": 333,
+        "total_tokens": 1534,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure_original",
+      "engine_id": "task-126",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "15f5fe74d6cc6ecf07765497a925b3f27194f46c58bd0795c56e546da2f9d44e",
+      "raw_sha256": "8251ebbd654ca017bf5449239aa549b1e9a7ecfcd9c503eab869c036f131f0d0",
+      "request_fingerprint": "15e98a60f372a8c06c2d8b980768aef244d8f413ebf021fc471109cf1db65578",
+      "usage": {
+        "input_tokens": 1221,
+        "output_tokens": 321,
+        "total_tokens": 1542,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure_paraphrase",
+      "engine_id": "task-126",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "3ecc38709681034c4163f0dc671814545ece005271b4197af64eeb83e6189567",
+      "raw_sha256": "1a57c1ee10ba8aefccd8a601131d5efe4ed2064d03dbbb47cca0c98e472de45e",
+      "request_fingerprint": "998df7a9431a9d29e26181e6a39679373e9c3078d42852ebbbe20cc11f6d5c7a",
+      "usage": {
+        "input_tokens": 1219,
+        "output_tokens": 375,
+        "total_tokens": 1594,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    }
+  ],
+  "failures": [],
+  "scientific_authority": false,
+  "experiment_authority": false
+}

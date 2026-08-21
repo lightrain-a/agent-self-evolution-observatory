@@ -1,0 +1,129 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "D2-PROXY-REWARD-MEMORY-F1C-DETERMINISTIC-CONTROL",
+  "status": "DETERMINISTIC_CONTROL_INCONCLUSIVE",
+  "frozen_rule": {
+    "pass_if": "At least one future state has 3/3 identical success-memory actions, 3/3 identical failure-memory actions, and different stable signatures between the two memory conditions.",
+    "on_inconclusive": "Run a larger fresh distributional replication over all four frozen held-out states; do not select states by observed outcomes."
+  },
+  "summary": {
+    "states": 4,
+    "stable_condition_difference_states": [],
+    "stable_condition_difference_count": 0,
+    "success_condition_stable_states": 0,
+    "failure_condition_stable_states": 2,
+    "no_memory_condition_stable_states": 1,
+    "paired_action_signature_divergence_rate": 0.583333,
+    "modal_action_signature_difference_rate": 0.75
+  },
+  "decision": "INCONCLUSIVE_TRIGGER_FRESH_DISTRIBUTIONAL_REPLICATION",
+  "interpretation": "Temperature zero does not eliminate within-condition policy variability in this provider/model stack. The deterministic-control criterion therefore does not identify a stable memory-conditioned action mapping. This is not counterevidence to F1; it changes the next falsifier from deterministic attribution to a larger fresh distributional comparison.",
+  "rows": [
+    {
+      "future_task": "22",
+      "source_memory_task": "21",
+      "success_signatures": [
+        "extract_content",
+        "click_element:46",
+        "click_element:23"
+      ],
+      "failure_signatures": [
+        "click_element:47",
+        "click_element:47",
+        "extract_content"
+      ],
+      "no_memory_signatures": [
+        "click_element:47",
+        "click_element:46",
+        "extract_content"
+      ],
+      "success_within_condition_stable": false,
+      "failure_within_condition_stable": false,
+      "no_memory_within_condition_stable": false,
+      "stable_success_failure_difference": false,
+      "success_entropy_bits": 1.584963,
+      "failure_entropy_bits": 0.918296,
+      "no_memory_entropy_bits": 1.584963
+    },
+    {
+      "future_task": "23",
+      "source_memory_task": "22",
+      "success_signatures": [
+        "extract_content",
+        "click_element:36",
+        "extract_content"
+      ],
+      "failure_signatures": [
+        "extract_content",
+        "extract_content",
+        "extract_content"
+      ],
+      "no_memory_signatures": [
+        "extract_content",
+        "extract_content",
+        "extract_content"
+      ],
+      "success_within_condition_stable": false,
+      "failure_within_condition_stable": true,
+      "no_memory_within_condition_stable": true,
+      "stable_success_failure_difference": false,
+      "success_entropy_bits": 0.918296,
+      "failure_entropy_bits": 0.0,
+      "no_memory_entropy_bits": 0.0
+    },
+    {
+      "future_task": "24",
+      "source_memory_task": "23",
+      "success_signatures": [
+        "extract_content",
+        "extract_content",
+        "click_element:25"
+      ],
+      "failure_signatures": [
+        "click_element:40",
+        "extract_content",
+        "click_element:25"
+      ],
+      "no_memory_signatures": [
+        "extract_content",
+        "extract_content",
+        "click_element:25"
+      ],
+      "success_within_condition_stable": false,
+      "failure_within_condition_stable": false,
+      "no_memory_within_condition_stable": false,
+      "stable_success_failure_difference": false,
+      "success_entropy_bits": 0.918296,
+      "failure_entropy_bits": 1.584963,
+      "no_memory_entropy_bits": 0.918296
+    },
+    {
+      "future_task": "26",
+      "source_memory_task": "25",
+      "success_signatures": [
+        "click_element:23",
+        "click_element:23",
+        "extract_content"
+      ],
+      "failure_signatures": [
+        "extract_content",
+        "extract_content",
+        "extract_content"
+      ],
+      "no_memory_signatures": [
+        "extract_content",
+        "click_element:23",
+        "click_element:39"
+      ],
+      "success_within_condition_stable": false,
+      "failure_within_condition_stable": true,
+      "no_memory_within_condition_stable": false,
+      "stable_success_failure_difference": false,
+      "success_entropy_bits": 0.918296,
+      "failure_entropy_bits": 0.0,
+      "no_memory_entropy_bits": 1.584963
+    }
+  ],
+  "scientific_authority": false,
+  "experiment_authority": false
+}

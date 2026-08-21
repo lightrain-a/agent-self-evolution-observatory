@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "planning_id": "D2-PROXY-REWARD-MEMORY-F1D-POWER-PLAN",
+  "source_artifact": "generated/d2-proxy-reward-memory-f1c-deterministic-control.json",
+  "status": "FROZEN_BEFORE_F1D",
+  "planning_only": true,
+  "candidate_rollouts_per_condition": {
+    "5": {
+      "estimated_power": 0.884,
+      "total_calls": 60
+    },
+    "8": {
+      "estimated_power": 0.996,
+      "total_calls": 96
+    },
+    "10": {
+      "estimated_power": 1.0,
+      "total_calls": 120
+    }
+  },
+  "selected_rollouts_per_condition": 8,
+  "selection_reason": "Smallest tested budget with plug-in estimated power >=0.95; avoids spending 24 additional calls for negligible estimated gain at n=10.",
+  "simulation_seed": 20260821,
+  "scientific_authority": false,
+  "experiment_authority": false
+}

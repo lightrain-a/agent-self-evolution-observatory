@@ -21,13 +21,22 @@
       "claim_ledger": "generated/d2-proxy-reward-memory-variance-claim-ledger.json",
       "output": "generated/d2-proxy-reward-memory-variance-paper-qa.json",
       "title_fragments": ["noisy rewards write noisy memories", "reward error as a variance amplifier"],
-      "required_pdf_fragments": ["0.735", "0.691", "0.770", "every complete pair"],
+      "required_pdf_fragments": ["0.735", "0.691", "0.770", "every complete pair", "0.700", "0.595", "0.105", "0.0078", "0.311", "0.146", "0.160"],
       "max_pages": 9,
       "artifact_checks": [
         {"path": "generated/d2-proxy-reward-memory-f0.json", "key": "summary.paired_trajectories_complete", "equals": 4},
         {"path": "generated/d2-proxy-reward-memory-f0.json", "key": "summary.paired_exact_content_change_rate", "equals": 1.0},
         {"path": "generated/d2-proxy-reward-memory-f0.json", "key": "summary.mean_token_jaccard_distance", "equals": 0.734789},
-        {"path": "generated/d2-proxy-reward-memory-f0.json", "key": "falsifier_result", "equals": "SURVIVES_F0"}
+        {"path": "generated/d2-proxy-reward-memory-f0.json", "key": "falsifier_result", "equals": "SURVIVES_F0"},
+        {"path": "generated/d2-proxy-reward-memory-f0c-prompt-control.json", "key": "summary.gate_pass", "equals": true},
+        {"path": "generated/d2-proxy-reward-memory-f0c-prompt-control.json", "key": "summary.mean_delta_between_minus_within", "equals": 0.104978},
+        {"path": "generated/d2-proxy-reward-memory-f0c-prompt-control.json", "key": "summary.exact_one_sided_sign_flip_p", "equals": 0.007812},
+        {"path": "generated/d2-proxy-reward-memory-f1d-distributional-audit.json", "key": "decision", "equals": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY"},
+        {"path": "generated/d2-proxy-reward-terminal-fixed-evidence.json", "key": "summary.complete_primary_calls", "equals": 96},
+        {"path": "generated/d2-proxy-reward-terminal-fixed-evidence.json", "key": "summary.complete_no_memory_calls", "equals": 12},
+        {"path": "generated/d2-proxy-reward-terminal-fixed-evidence.json", "key": "summary.observed_mean_absolute_success_rate_difference", "equals": 0.145833},
+        {"path": "generated/d2-proxy-reward-terminal-fixed-evidence.json", "key": "summary.permutation_p_ge_observed", "equals": 0.160128},
+        {"path": "generated/d2-proxy-reward-terminal-fixed-evidence.json", "key": "decision", "equals": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY"}
       ]
     },
     {

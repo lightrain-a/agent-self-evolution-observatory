@@ -1,0 +1,5880 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "D2-PROXY-REWARD-TERMINAL-FIXED-EVIDENCE-F2",
+  "status": "TERMINAL_FIXED_EVIDENCE_COMPLETE",
+  "contract_sha256": "c4938f384b2ad58e8d1ed3b2747d0aa98c8968b80e044e8535dd37d58367b09b",
+  "summary": {
+    "source_memory_pairs": 4,
+    "future_tasks": 4,
+    "source_future_cells": 16,
+    "requested_primary_calls": 96,
+    "complete_primary_calls": 96,
+    "requested_no_memory_calls": 12,
+    "complete_no_memory_calls": 12,
+    "provider_failures": 0,
+    "observed_mean_absolute_success_rate_difference": 0.145833,
+    "mean_signed_failure_minus_success": 0.0625,
+    "permutation_p_ge_observed": 0.160128,
+    "gate_pass": false,
+    "no_memory_success_rate_by_task": {
+      "164": 1.0,
+      "385": 0.0,
+      "387": 0.0,
+      "388": 1.0
+    }
+  },
+  "cell_results": [
+    {
+      "source_memory_task": "21",
+      "future_task": "164",
+      "success_memory_rate": 1.0,
+      "failure_memory_rate": 1.0,
+      "absolute_rate_difference": 0.0,
+      "signed_failure_minus_success": 0.0
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "385",
+      "success_memory_rate": 0.0,
+      "failure_memory_rate": 0.333333,
+      "absolute_rate_difference": 0.333333,
+      "signed_failure_minus_success": 0.333333
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "387",
+      "success_memory_rate": 0.0,
+      "failure_memory_rate": 0.333333,
+      "absolute_rate_difference": 0.333333,
+      "signed_failure_minus_success": 0.333333
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "388",
+      "success_memory_rate": 1.0,
+      "failure_memory_rate": 0.333333,
+      "absolute_rate_difference": 0.666667,
+      "signed_failure_minus_success": -0.666667
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "164",
+      "success_memory_rate": 1.0,
+      "failure_memory_rate": 1.0,
+      "absolute_rate_difference": 0.0,
+      "signed_failure_minus_success": 0.0
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "385",
+      "success_memory_rate": 0.0,
+      "failure_memory_rate": 0.666667,
+      "absolute_rate_difference": 0.666667,
+      "signed_failure_minus_success": 0.666667
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "387",
+      "success_memory_rate": 0.0,
+      "failure_memory_rate": 0.0,
+      "absolute_rate_difference": 0.0,
+      "signed_failure_minus_success": 0.0
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "388",
+      "success_memory_rate": 1.0,
+      "failure_memory_rate": 1.0,
+      "absolute_rate_difference": 0.0,
+      "signed_failure_minus_success": 0.0
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "164",
+      "success_memory_rate": 1.0,
+      "failure_memory_rate": 1.0,
+      "absolute_rate_difference": 0.0,
+      "signed_failure_minus_success": 0.0
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "385",
+      "success_memory_rate": 0.0,
+      "failure_memory_rate": 0.0,
+      "absolute_rate_difference": 0.0,
+      "signed_failure_minus_success": 0.0
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "387",
+      "success_memory_rate": 0.0,
+      "failure_memory_rate": 0.0,
+      "absolute_rate_difference": 0.0,
+      "signed_failure_minus_success": 0.0
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "388",
+      "success_memory_rate": 0.666667,
+      "failure_memory_rate": 1.0,
+      "absolute_rate_difference": 0.333333,
+      "signed_failure_minus_success": 0.333333
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "164",
+      "success_memory_rate": 1.0,
+      "failure_memory_rate": 1.0,
+      "absolute_rate_difference": 0.0,
+      "signed_failure_minus_success": 0.0
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "385",
+      "success_memory_rate": 0.0,
+      "failure_memory_rate": 0.0,
+      "absolute_rate_difference": 0.0,
+      "signed_failure_minus_success": 0.0
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "387",
+      "success_memory_rate": 0.0,
+      "failure_memory_rate": 0.0,
+      "absolute_rate_difference": 0.0,
+      "signed_failure_minus_success": 0.0
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "388",
+      "success_memory_rate": 1.0,
+      "failure_memory_rate": 1.0,
+      "absolute_rate_difference": 0.0,
+      "signed_failure_minus_success": 0.0
+    }
+  ],
+  "rollouts": [
+    {
+      "source_memory_task": "21",
+      "future_task": "164",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "answer_sha256": "f646c05f1e448489a6e20d884b0ad9eb4b1aca665689fd85c2ffdf0505e68ffb",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "f646c05f1e448489a6e20d884b0ad9eb4b1aca665689fd85c2ffdf0505e68ffb",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "164",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "answer_sha256": "84dc26fa2fef676c51f7b20fc7a30a8958aeb6d16bcdbbbac565a3d39c5bb8d5",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "84dc26fa2fef676c51f7b20fc7a30a8958aeb6d16bcdbbbac565a3d39c5bb8d5",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "164",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "answer_sha256": "84dc26fa2fef676c51f7b20fc7a30a8958aeb6d16bcdbbbac565a3d39c5bb8d5",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "84dc26fa2fef676c51f7b20fc7a30a8958aeb6d16bcdbbbac565a3d39c5bb8d5",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "164",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "answer_sha256": "cbaef45f1441e02d8531cc693a27f0e8b7ee7533ccf5b7b5f2273fc7fbda4081",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "cbaef45f1441e02d8531cc693a27f0e8b7ee7533ccf5b7b5f2273fc7fbda4081",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "164",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "answer_sha256": "335daa7f04af347dcd1d098c072295783b79c62757bea3c8bdcd810498519522",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "335daa7f04af347dcd1d098c072295783b79c62757bea3c8bdcd810498519522",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "164",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "answer_sha256": "55a2eb77c08c39e478f4c143b68a8e1c1cb7947b21cd1ff7cda14b7198b628b2",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "55a2eb77c08c39e478f4c143b68a8e1c1cb7947b21cd1ff7cda14b7198b628b2",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "385",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "answer_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 0.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "385",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "answer_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 0.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "385",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "answer_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "385",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "answer_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "385",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "answer_sha256": "17c92f810a01af6d9f40aacafc8961a4f905c0496755325837a1bdf09e2fff0b",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 1.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 1.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "17c92f810a01af6d9f40aacafc8961a4f905c0496755325837a1bdf09e2fff0b",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "385",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "answer_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "387",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "answer_sha256": "1fa278024517185ac649b08d3189243d48265f2616196dfce7cbdc06344c346f",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "1fa278024517185ac649b08d3189243d48265f2616196dfce7cbdc06344c346f",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "387",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "answer_sha256": "f41915752d71f32b945f877e18ff155cdb18de14ea2da2a82d9aca6f4d7ce774",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "f41915752d71f32b945f877e18ff155cdb18de14ea2da2a82d9aca6f4d7ce774",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "387",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "answer_sha256": "1fa278024517185ac649b08d3189243d48265f2616196dfce7cbdc06344c346f",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "1fa278024517185ac649b08d3189243d48265f2616196dfce7cbdc06344c346f",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "387",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "answer_sha256": "414d5775ff6cf38316ef38b8c899a76f26349461ae16721db605e32fac77d352",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 1.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "414d5775ff6cf38316ef38b8c899a76f26349461ae16721db605e32fac77d352",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "387",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "answer_sha256": "d919fbf911108c6793dda72510d675cd64586285afa145e0d2077d914458c97b",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 1.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "d919fbf911108c6793dda72510d675cd64586285afa145e0d2077d914458c97b",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "387",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "answer_sha256": "e1bfcb05dc00197a9d690d8e5d5397da01102d4a83d1122d8d1f529e23feaeff",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "e1bfcb05dc00197a9d690d8e5d5397da01102d4a83d1122d8d1f529e23feaeff",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "388",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "answer_sha256": "998518c308f4f2dbbb6527771556c3591c30addf2a6d50ac95bd610c3ee8084c",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "998518c308f4f2dbbb6527771556c3591c30addf2a6d50ac95bd610c3ee8084c",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "388",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "answer_sha256": "397d2d44d9e7bc625743d7e78e0e4e10e6bfc78d766bd1a45b61cae5a5a244f4",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "397d2d44d9e7bc625743d7e78e0e4e10e6bfc78d766bd1a45b61cae5a5a244f4",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "388",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "answer_sha256": "55309183233c1c8e4baba570db7a28d07723b956c93203eee7126e06b9a6da0f",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "55309183233c1c8e4baba570db7a28d07723b956c93203eee7126e06b9a6da0f",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "388",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "answer_sha256": "9690ae2884279e524dc7d5cd487a358c89bb1e9cf6c5edba81f64ef62180c5ba",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 0.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        }
+      ],
+      "raw_sha256": "9690ae2884279e524dc7d5cd487a358c89bb1e9cf6c5edba81f64ef62180c5ba",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "388",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "answer_sha256": "5575fab3da5da83a1cd2c92ca046d4f23a3b289973f285001c6674639e04421a",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 0.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        }
+      ],
+      "raw_sha256": "5575fab3da5da83a1cd2c92ca046d4f23a3b289973f285001c6674639e04421a",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "388",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "answer_sha256": "6edad1c7c472120ad99953aefc1d5d6c47c95c3a966f916e736f5f2b6ce304d4",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "6edad1c7c472120ad99953aefc1d5d6c47c95c3a966f916e736f5f2b6ce304d4",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "164",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "answer_sha256": "3b27b0e34c6812cf40198ce1f1350ef490a28fa2056f4bd4e891c1a446d10595",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "3b27b0e34c6812cf40198ce1f1350ef490a28fa2056f4bd4e891c1a446d10595",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "164",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "answer_sha256": "3b27b0e34c6812cf40198ce1f1350ef490a28fa2056f4bd4e891c1a446d10595",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "3b27b0e34c6812cf40198ce1f1350ef490a28fa2056f4bd4e891c1a446d10595",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "164",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "answer_sha256": "3b27b0e34c6812cf40198ce1f1350ef490a28fa2056f4bd4e891c1a446d10595",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "3b27b0e34c6812cf40198ce1f1350ef490a28fa2056f4bd4e891c1a446d10595",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "164",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "answer_sha256": "55a2eb77c08c39e478f4c143b68a8e1c1cb7947b21cd1ff7cda14b7198b628b2",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "55a2eb77c08c39e478f4c143b68a8e1c1cb7947b21cd1ff7cda14b7198b628b2",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "164",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "answer_sha256": "b591817aaedaedb4667abf642a3c3c417b7b58e0b8a8b65b31c7226dcaa65062",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "b591817aaedaedb4667abf642a3c3c417b7b58e0b8a8b65b31c7226dcaa65062",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "164",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "answer_sha256": "9d8846fd9c0449de2038de5076ab2421049a1b7894e718e853e8c06d01fb2c2b",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "9d8846fd9c0449de2038de5076ab2421049a1b7894e718e853e8c06d01fb2c2b",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "385",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "answer_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 0.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "385",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "answer_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 0.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "385",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "answer_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 0.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "385",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "answer_sha256": "f8ca087572b583997a43df236ec6ae8440a0cc33ba7bafa1719e0a857d951c64",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 1.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 1.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "f8ca087572b583997a43df236ec6ae8440a0cc33ba7bafa1719e0a857d951c64",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "385",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "answer_sha256": "6e836f4517c7f5ad723d7364da9e76aada12776e11a4cfd25b3d87637dc20358",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "6e836f4517c7f5ad723d7364da9e76aada12776e11a4cfd25b3d87637dc20358",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "385",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "answer_sha256": "17c92f810a01af6d9f40aacafc8961a4f905c0496755325837a1bdf09e2fff0b",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 1.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 1.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "17c92f810a01af6d9f40aacafc8961a4f905c0496755325837a1bdf09e2fff0b",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "387",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "answer_sha256": "66cce809150be9ffd97592c3fcd2f7922d89d6dc0e7bf9ecd93cd2e88ccf3f32",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "66cce809150be9ffd97592c3fcd2f7922d89d6dc0e7bf9ecd93cd2e88ccf3f32",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "387",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "answer_sha256": "66cce809150be9ffd97592c3fcd2f7922d89d6dc0e7bf9ecd93cd2e88ccf3f32",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "66cce809150be9ffd97592c3fcd2f7922d89d6dc0e7bf9ecd93cd2e88ccf3f32",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "387",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "answer_sha256": "66cce809150be9ffd97592c3fcd2f7922d89d6dc0e7bf9ecd93cd2e88ccf3f32",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "66cce809150be9ffd97592c3fcd2f7922d89d6dc0e7bf9ecd93cd2e88ccf3f32",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "387",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "answer_sha256": "66cce809150be9ffd97592c3fcd2f7922d89d6dc0e7bf9ecd93cd2e88ccf3f32",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "66cce809150be9ffd97592c3fcd2f7922d89d6dc0e7bf9ecd93cd2e88ccf3f32",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "387",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "answer_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "387",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "answer_sha256": "66cce809150be9ffd97592c3fcd2f7922d89d6dc0e7bf9ecd93cd2e88ccf3f32",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "66cce809150be9ffd97592c3fcd2f7922d89d6dc0e7bf9ecd93cd2e88ccf3f32",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "388",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "answer_sha256": "8052956e1c77167b23c85432da283b959a7f3d657e69574fbb8ab77843a683ef",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "8052956e1c77167b23c85432da283b959a7f3d657e69574fbb8ab77843a683ef",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "388",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "answer_sha256": "6edad1c7c472120ad99953aefc1d5d6c47c95c3a966f916e736f5f2b6ce304d4",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "6edad1c7c472120ad99953aefc1d5d6c47c95c3a966f916e736f5f2b6ce304d4",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "388",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "answer_sha256": "f555e512f5dafd952a696bf9106a8ea794e364710257fce27a135ea011df79e3",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "f555e512f5dafd952a696bf9106a8ea794e364710257fce27a135ea011df79e3",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "388",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "answer_sha256": "df8064aaafa65359be52a950a6b33bd5f789b5ddad37143803251661ff58b4f4",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "df8064aaafa65359be52a950a6b33bd5f789b5ddad37143803251661ff58b4f4",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "388",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "answer_sha256": "e35bf33213487ca6a62a7a3797843d9c7e99419289e74459507d4086ef3f2918",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "e35bf33213487ca6a62a7a3797843d9c7e99419289e74459507d4086ef3f2918",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "388",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "answer_sha256": "2fb5816a965437073bdf74d4f377a8103664e689e4f310271dae3a594770e743",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "2fb5816a965437073bdf74d4f377a8103664e689e4f310271dae3a594770e743",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "164",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "answer_sha256": "3b27b0e34c6812cf40198ce1f1350ef490a28fa2056f4bd4e891c1a446d10595",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "3b27b0e34c6812cf40198ce1f1350ef490a28fa2056f4bd4e891c1a446d10595",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "164",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "answer_sha256": "2c4da9b2d6920e5739775c9436cb4ceb2013216cdf2b69d64dce6d73c1d480fd",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "2c4da9b2d6920e5739775c9436cb4ceb2013216cdf2b69d64dce6d73c1d480fd",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "164",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "answer_sha256": "3b27b0e34c6812cf40198ce1f1350ef490a28fa2056f4bd4e891c1a446d10595",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "3b27b0e34c6812cf40198ce1f1350ef490a28fa2056f4bd4e891c1a446d10595",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "164",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "answer_sha256": "7c41aa4efa79d03d4e8c0d4ce545f0a2d2a969f070ac4b7952a100724eebe638",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "7c41aa4efa79d03d4e8c0d4ce545f0a2d2a969f070ac4b7952a100724eebe638",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "164",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "answer_sha256": "6385489354e4a1f1959bf05cefc8a7f9e6dbf7289489126c1a901e9f4ff7898d",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "6385489354e4a1f1959bf05cefc8a7f9e6dbf7289489126c1a901e9f4ff7898d",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "164",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "answer_sha256": "b591817aaedaedb4667abf642a3c3c417b7b58e0b8a8b65b31c7226dcaa65062",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "b591817aaedaedb4667abf642a3c3c417b7b58e0b8a8b65b31c7226dcaa65062",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "385",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "answer_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "385",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "answer_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "385",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "answer_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "385",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "answer_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "385",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "answer_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "385",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "answer_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "387",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "answer_sha256": "46a81a658565861a07aee80f874715513efa320360775776c8f5c1c8206159e2",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "46a81a658565861a07aee80f874715513efa320360775776c8f5c1c8206159e2",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "387",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "answer_sha256": "46a81a658565861a07aee80f874715513efa320360775776c8f5c1c8206159e2",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "46a81a658565861a07aee80f874715513efa320360775776c8f5c1c8206159e2",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "387",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "answer_sha256": "46a81a658565861a07aee80f874715513efa320360775776c8f5c1c8206159e2",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "46a81a658565861a07aee80f874715513efa320360775776c8f5c1c8206159e2",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "387",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "answer_sha256": "e1bfcb05dc00197a9d690d8e5d5397da01102d4a83d1122d8d1f529e23feaeff",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "e1bfcb05dc00197a9d690d8e5d5397da01102d4a83d1122d8d1f529e23feaeff",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "387",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "answer_sha256": "a73f3caeec3586400fb83d09e32c8d28af9948fd01e720df472cd6334f9daf89",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "a73f3caeec3586400fb83d09e32c8d28af9948fd01e720df472cd6334f9daf89",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "387",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "answer_sha256": "a73f3caeec3586400fb83d09e32c8d28af9948fd01e720df472cd6334f9daf89",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "a73f3caeec3586400fb83d09e32c8d28af9948fd01e720df472cd6334f9daf89",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "388",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "answer_sha256": "9d53280538a2142a8585938031b6592d5d2084d5aa829a4f0419d126f4893a88",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "9d53280538a2142a8585938031b6592d5d2084d5aa829a4f0419d126f4893a88",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "388",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "answer_sha256": "fecf4e0f82ee4de81543a4bca3d5ce45895283620e68ed304eb219ce3bbffeb1",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "fecf4e0f82ee4de81543a4bca3d5ce45895283620e68ed304eb219ce3bbffeb1",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "388",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "answer_sha256": "e42bbbbf8c53b5f56576f045a8ddcbe68ed30109d357e60aa5ff0aa44d80cfef",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 0.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        }
+      ],
+      "raw_sha256": "e42bbbbf8c53b5f56576f045a8ddcbe68ed30109d357e60aa5ff0aa44d80cfef",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "388",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "answer_sha256": "25de278f12320efbf9f4c9879c5a39ac550cf7fb7ec073d654f736eabdd6d4da",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "25de278f12320efbf9f4c9879c5a39ac550cf7fb7ec073d654f736eabdd6d4da",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "388",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "answer_sha256": "60994cfd2dd39b0f94f4495ff77d15742f524c42cc6145afa9b60ebfb6eda130",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "60994cfd2dd39b0f94f4495ff77d15742f524c42cc6145afa9b60ebfb6eda130",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "388",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "answer_sha256": "ae6a2f90fe17fcb3eaead23d883899acfc56d88e7d1922df61c36b4d45b1685b",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "ae6a2f90fe17fcb3eaead23d883899acfc56d88e7d1922df61c36b4d45b1685b",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "164",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "answer_sha256": "a78741b9a88b5618df36d02667ac7e6e9c2c105b942a95a7a8d98a949a21f998",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "a78741b9a88b5618df36d02667ac7e6e9c2c105b942a95a7a8d98a949a21f998",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "164",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "answer_sha256": "a78741b9a88b5618df36d02667ac7e6e9c2c105b942a95a7a8d98a949a21f998",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "a78741b9a88b5618df36d02667ac7e6e9c2c105b942a95a7a8d98a949a21f998",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "164",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "answer_sha256": "9f7eb191f61ebd2e5ae41abcb9852ddec739c2efcbc4b0de55196cb08cc0e4bd",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "9f7eb191f61ebd2e5ae41abcb9852ddec739c2efcbc4b0de55196cb08cc0e4bd",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "164",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "answer_sha256": "b591817aaedaedb4667abf642a3c3c417b7b58e0b8a8b65b31c7226dcaa65062",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "b591817aaedaedb4667abf642a3c3c417b7b58e0b8a8b65b31c7226dcaa65062",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "164",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "answer_sha256": "4606952655ef56e3e3125d410f0c44f20da50ec17cc4c25f615f5b546447db31",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "4606952655ef56e3e3125d410f0c44f20da50ec17cc4c25f615f5b546447db31",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "164",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "answer_sha256": "b591817aaedaedb4667abf642a3c3c417b7b58e0b8a8b65b31c7226dcaa65062",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "b591817aaedaedb4667abf642a3c3c417b7b58e0b8a8b65b31c7226dcaa65062",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "385",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "answer_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "385",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "answer_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "385",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "answer_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "385",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "answer_sha256": "6e836f4517c7f5ad723d7364da9e76aada12776e11a4cfd25b3d87637dc20358",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "6e836f4517c7f5ad723d7364da9e76aada12776e11a4cfd25b3d87637dc20358",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "385",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "answer_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "385",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "answer_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "387",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "answer_sha256": "e1bfcb05dc00197a9d690d8e5d5397da01102d4a83d1122d8d1f529e23feaeff",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "e1bfcb05dc00197a9d690d8e5d5397da01102d4a83d1122d8d1f529e23feaeff",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "387",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "answer_sha256": "e1bfcb05dc00197a9d690d8e5d5397da01102d4a83d1122d8d1f529e23feaeff",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "e1bfcb05dc00197a9d690d8e5d5397da01102d4a83d1122d8d1f529e23feaeff",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "387",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "answer_sha256": "e1bfcb05dc00197a9d690d8e5d5397da01102d4a83d1122d8d1f529e23feaeff",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "e1bfcb05dc00197a9d690d8e5d5397da01102d4a83d1122d8d1f529e23feaeff",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "387",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "answer_sha256": "316b41fd01d7abb12f074cbeaad2892e53ed4b9fbcfa61cd9e127ee2f2ed27b4",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "316b41fd01d7abb12f074cbeaad2892e53ed4b9fbcfa61cd9e127ee2f2ed27b4",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "387",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "answer_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "387",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "answer_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "388",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "answer_sha256": "8e6ddf1bbf646f19f2003c47e3c316ab68b6da8d6dabc20bebd155bb21252bef",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "8e6ddf1bbf646f19f2003c47e3c316ab68b6da8d6dabc20bebd155bb21252bef",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "388",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "answer_sha256": "c480bd35de73af56e4b0ef7de9b9193dfc5b9c89995b3397fa05789a39022914",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "c480bd35de73af56e4b0ef7de9b9193dfc5b9c89995b3397fa05789a39022914",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "388",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "answer_sha256": "8d2e0772feed7829aa54f74fd008f5982c9785d50f61c82d5ed35e049b7fb4a3",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "8d2e0772feed7829aa54f74fd008f5982c9785d50f61c82d5ed35e049b7fb4a3",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "388",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "answer_sha256": "55088877e79ad23452f0a8c905e7eb75ad6626797a7246568ba230183341e3fe",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "55088877e79ad23452f0a8c905e7eb75ad6626797a7246568ba230183341e3fe",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "388",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "answer_sha256": "8963cde5e41906203cc51a0516f52d2b5da60c17d040ee74c9a9c808c50ab4ce",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "8963cde5e41906203cc51a0516f52d2b5da60c17d040ee74c9a9c808c50ab4ce",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "388",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "answer_sha256": "6edad1c7c472120ad99953aefc1d5d6c47c95c3a966f916e736f5f2b6ce304d4",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "6edad1c7c472120ad99953aefc1d5d6c47c95c3a966f916e736f5f2b6ce304d4",
+      "scientific_authority": false
+    }
+  ],
+  "no_memory_calibration": [
+    {
+      "future_task": "164",
+      "condition": "no_memory",
+      "rollout": 1,
+      "answer_sha256": "ebe3cb9ce077e0d1ac198fb1851c1624833d64cea691cff32356923927531ee5",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "ebe3cb9ce077e0d1ac198fb1851c1624833d64cea691cff32356923927531ee5",
+      "scientific_authority": false
+    },
+    {
+      "future_task": "164",
+      "condition": "no_memory",
+      "rollout": 2,
+      "answer_sha256": "ebe3cb9ce077e0d1ac198fb1851c1624833d64cea691cff32356923927531ee5",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "ebe3cb9ce077e0d1ac198fb1851c1624833d64cea691cff32356923927531ee5",
+      "scientific_authority": false
+    },
+    {
+      "future_task": "164",
+      "condition": "no_memory",
+      "rollout": 3,
+      "answer_sha256": "ebe3cb9ce077e0d1ac198fb1851c1624833d64cea691cff32356923927531ee5",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Dry",
+          "score": 1.0
+        },
+        {
+          "ref": "Uneven color",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "ebe3cb9ce077e0d1ac198fb1851c1624833d64cea691cff32356923927531ee5",
+      "scientific_authority": false
+    },
+    {
+      "future_task": "385",
+      "condition": "no_memory",
+      "rollout": 1,
+      "answer_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "scientific_authority": false
+    },
+    {
+      "future_task": "385",
+      "condition": "no_memory",
+      "rollout": 2,
+      "answer_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 0.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "scientific_authority": false
+    },
+    {
+      "future_task": "385",
+      "condition": "no_memory",
+      "rollout": 3,
+      "answer_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "Lisa Lee",
+          "score": 0.0
+        },
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 1.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 0.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "scientific_authority": false
+    },
+    {
+      "future_task": "387",
+      "condition": "no_memory",
+      "rollout": 1,
+      "answer_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "scientific_authority": false
+    },
+    {
+      "future_task": "387",
+      "condition": "no_memory",
+      "rollout": 2,
+      "answer_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "scientific_authority": false
+    },
+    {
+      "future_task": "387",
+      "condition": "no_memory",
+      "rollout": 3,
+      "answer_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "benchmark_score": 0.0,
+      "evaluator_checks": [
+        {
+          "ref": "MH",
+          "score": 1.0
+        },
+        {
+          "ref": "Misba009",
+          "score": 0.0
+        },
+        {
+          "ref": "Amanda",
+          "score": 1.0
+        },
+        {
+          "ref": "Amazon Customer",
+          "score": 0.0
+        },
+        {
+          "ref": "Cally",
+          "score": 1.0
+        },
+        {
+          "ref": "Bethany Robertson",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "scientific_authority": false
+    },
+    {
+      "future_task": "388",
+      "condition": "no_memory",
+      "rollout": 1,
+      "answer_sha256": "758c8c33d375d3cbfea05181606b4c04de0e355d56c036cbf0d280db1c3bac8f",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "758c8c33d375d3cbfea05181606b4c04de0e355d56c036cbf0d280db1c3bac8f",
+      "scientific_authority": false
+    },
+    {
+      "future_task": "388",
+      "condition": "no_memory",
+      "rollout": 2,
+      "answer_sha256": "9a73eb1e7ef718c03ea48aa2aa28badd11fb3c12c0b8551587e1a3d4f29e9b75",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "9a73eb1e7ef718c03ea48aa2aa28badd11fb3c12c0b8551587e1a3d4f29e9b75",
+      "scientific_authority": false
+    },
+    {
+      "future_task": "388",
+      "condition": "no_memory",
+      "rollout": 3,
+      "answer_sha256": "758c8c33d375d3cbfea05181606b4c04de0e355d56c036cbf0d280db1c3bac8f",
+      "benchmark_score": 1.0,
+      "evaluator_checks": [
+        {
+          "ref": "Evelyn Kurver",
+          "score": 1.0
+        },
+        {
+          "ref": "N Randall",
+          "score": 1.0
+        }
+      ],
+      "raw_sha256": "758c8c33d375d3cbfea05181606b4c04de0e355d56c036cbf0d280db1c3bac8f",
+      "scientific_authority": false
+    }
+  ],
+  "provider_receipts": [
+    {
+      "stage": "terminal-164-source-21-success_label_memory-r1",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "125f88dfed1ea81cd3dc43795c34037a046762d669662acd31bbc4ca7d9ce7af",
+      "raw_sha256": "f646c05f1e448489a6e20d884b0ad9eb4b1aca665689fd85c2ffdf0505e68ffb",
+      "request_fingerprint": "606ac89a820f6c1e798980333974c7ba45e23cc2a7d6d44980ba2f96736bd427",
+      "usage": {
+        "input_tokens": 5754,
+        "output_tokens": 72,
+        "total_tokens": 5826,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false,
+      "replayed": true
+    },
+    {
+      "stage": "terminal-164-source-21-success_label_memory-r2",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "125f88dfed1ea81cd3dc43795c34037a046762d669662acd31bbc4ca7d9ce7af",
+      "raw_sha256": "84dc26fa2fef676c51f7b20fc7a30a8958aeb6d16bcdbbbac565a3d39c5bb8d5",
+      "request_fingerprint": "9d1970a40568038cdca752056d1c0aa4d73a00135083a57e5c6b8e6966d74c16",
+      "usage": {
+        "input_tokens": 5754,
+        "output_tokens": 64,
+        "total_tokens": 5818,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-21-success_label_memory-r3",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "125f88dfed1ea81cd3dc43795c34037a046762d669662acd31bbc4ca7d9ce7af",
+      "raw_sha256": "84dc26fa2fef676c51f7b20fc7a30a8958aeb6d16bcdbbbac565a3d39c5bb8d5",
+      "request_fingerprint": "c95dcfb31cac8cfc2a7ab0b27ea26f4891ea63c5db198a443cfaaf8a2615e196",
+      "usage": {
+        "input_tokens": 5754,
+        "output_tokens": 64,
+        "total_tokens": 5818,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-21-failure_label_memory-r1",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "69a7476ee55e2a26a681549a2f3c92385c58ac8d4015cbf49222241e97dd9e91",
+      "raw_sha256": "cbaef45f1441e02d8531cc693a27f0e8b7ee7533ccf5b7b5f2273fc7fbda4081",
+      "request_fingerprint": "a3d1320c187e960554eabdb61c0e9711677f9c159e9f3cfb831d4c3262b796bd",
+      "usage": {
+        "input_tokens": 5721,
+        "output_tokens": 64,
+        "total_tokens": 5785,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-21-failure_label_memory-r2",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "69a7476ee55e2a26a681549a2f3c92385c58ac8d4015cbf49222241e97dd9e91",
+      "raw_sha256": "335daa7f04af347dcd1d098c072295783b79c62757bea3c8bdcd810498519522",
+      "request_fingerprint": "f3a61ceef9b6a044db2f775720535f7f2de0019bbef177fe0ba0a6c025636d3e",
+      "usage": {
+        "input_tokens": 5721,
+        "output_tokens": 59,
+        "total_tokens": 5780,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-21-failure_label_memory-r3",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "69a7476ee55e2a26a681549a2f3c92385c58ac8d4015cbf49222241e97dd9e91",
+      "raw_sha256": "55a2eb77c08c39e478f4c143b68a8e1c1cb7947b21cd1ff7cda14b7198b628b2",
+      "request_fingerprint": "0ccec37409cbb2a49df1b96c15b7e543b653d074490b84950954e1d2f9964f4c",
+      "usage": {
+        "input_tokens": 5721,
+        "output_tokens": 34,
+        "total_tokens": 5755,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-21-success_label_memory-r1",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "10e2ffcebd5ac43b0418cd5e28acb4afed43233f9cd3aa33cc70387a26b7368e",
+      "raw_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "request_fingerprint": "0380a599d4ad43d3a19259d2c6495010ca0013d3da4e5e197f6b08668ebd22f1",
+      "usage": {
+        "input_tokens": 12976,
+        "output_tokens": 14,
+        "total_tokens": 12990,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-21-success_label_memory-r2",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "10e2ffcebd5ac43b0418cd5e28acb4afed43233f9cd3aa33cc70387a26b7368e",
+      "raw_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "request_fingerprint": "77de2de1a43b0e115e19ed096b61dcd30d08fc868938a349787bafbd4decf6ea",
+      "usage": {
+        "input_tokens": 12976,
+        "output_tokens": 14,
+        "total_tokens": 12990,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-21-success_label_memory-r3",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "10e2ffcebd5ac43b0418cd5e28acb4afed43233f9cd3aa33cc70387a26b7368e",
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "request_fingerprint": "240e5da8d9eefbad890bdfedc27b74cc2426f72fbf72fde4b364d52aed808d91",
+      "usage": {
+        "input_tokens": 12976,
+        "output_tokens": 16,
+        "total_tokens": 12992,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-21-failure_label_memory-r1",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "f8629fcb2979515ed29daa887231ba2b1827a81b9757895886e1198659716949",
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "request_fingerprint": "87c4055aaf4dd6a3b91786239039efbd661f7dce3123015a9c3f2630b46f0f33",
+      "usage": {
+        "input_tokens": 12943,
+        "output_tokens": 16,
+        "total_tokens": 12959,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-21-failure_label_memory-r2",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "f8629fcb2979515ed29daa887231ba2b1827a81b9757895886e1198659716949",
+      "raw_sha256": "17c92f810a01af6d9f40aacafc8961a4f905c0496755325837a1bdf09e2fff0b",
+      "request_fingerprint": "8d437f51c017facda42e54a747700f056a142622dded512f6582d8b2a2c43a84",
+      "usage": {
+        "input_tokens": 12943,
+        "output_tokens": 34,
+        "total_tokens": 12977,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-21-failure_label_memory-r3",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "f8629fcb2979515ed29daa887231ba2b1827a81b9757895886e1198659716949",
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "request_fingerprint": "50ccdb6562f237da471d0c9a10a6f077ad546b1e8b1877b29ddf6408d4a2e555",
+      "usage": {
+        "input_tokens": 12943,
+        "output_tokens": 16,
+        "total_tokens": 12959,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-21-success_label_memory-r1",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "4ad9e2a01003295a0529a3a27520330b45c33ab6a40e33848476a7b4148a6b6a",
+      "raw_sha256": "1fa278024517185ac649b08d3189243d48265f2616196dfce7cbdc06344c346f",
+      "request_fingerprint": "db75b9a333461a94e1ba41cbb1cc683644452455ee22b3e7779853b9cccf8af4",
+      "usage": {
+        "input_tokens": 12978,
+        "output_tokens": 388,
+        "total_tokens": 13366,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-21-success_label_memory-r2",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "4ad9e2a01003295a0529a3a27520330b45c33ab6a40e33848476a7b4148a6b6a",
+      "raw_sha256": "f41915752d71f32b945f877e18ff155cdb18de14ea2da2a82d9aca6f4d7ce774",
+      "request_fingerprint": "a4305b97b5009459f32deafdb44b1c7f40c3d9f251e0a7680217040e9682f17d",
+      "usage": {
+        "input_tokens": 12978,
+        "output_tokens": 337,
+        "total_tokens": 13315,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-21-success_label_memory-r3",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "4ad9e2a01003295a0529a3a27520330b45c33ab6a40e33848476a7b4148a6b6a",
+      "raw_sha256": "1fa278024517185ac649b08d3189243d48265f2616196dfce7cbdc06344c346f",
+      "request_fingerprint": "60f1ce4b17f1227dd6eb03f74df0efc37f6e51b8ecf1698d06ef080a7bf3b5a6",
+      "usage": {
+        "input_tokens": 12978,
+        "output_tokens": 388,
+        "total_tokens": 13366,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-21-failure_label_memory-r1",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "425babf46593d3dcfbe8aba341cb5ed40cca3bd184bdb54e3218987c371c9724",
+      "raw_sha256": "414d5775ff6cf38316ef38b8c899a76f26349461ae16721db605e32fac77d352",
+      "request_fingerprint": "c8b4684bfb574073602afbf691233d22f16599f6f35f32a9b27207eeccbec605",
+      "usage": {
+        "input_tokens": 12945,
+        "output_tokens": 13,
+        "total_tokens": 12958,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-21-failure_label_memory-r2",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "425babf46593d3dcfbe8aba341cb5ed40cca3bd184bdb54e3218987c371c9724",
+      "raw_sha256": "d919fbf911108c6793dda72510d675cd64586285afa145e0d2077d914458c97b",
+      "request_fingerprint": "01e48cf001c01d4d74cda022d13b44f94772931e06c52489cc3b3371feec686c",
+      "usage": {
+        "input_tokens": 12945,
+        "output_tokens": 34,
+        "total_tokens": 12979,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-21-failure_label_memory-r3",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "425babf46593d3dcfbe8aba341cb5ed40cca3bd184bdb54e3218987c371c9724",
+      "raw_sha256": "e1bfcb05dc00197a9d690d8e5d5397da01102d4a83d1122d8d1f529e23feaeff",
+      "request_fingerprint": "5cf2af361deaaf655f07025ea6059797b14f20b43ab9a2013a24cb007b3cf3cb",
+      "usage": {
+        "input_tokens": 12945,
+        "output_tokens": 8,
+        "total_tokens": 12953,
+        "input_tokens_details": {
+          "cached_tokens": 12856
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-21-success_label_memory-r1",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "c6c4d23d98071244178afc073d22d13fa9c2dd55d9a822dcf1b95e97da825e9b",
+      "raw_sha256": "998518c308f4f2dbbb6527771556c3591c30addf2a6d50ac95bd610c3ee8084c",
+      "request_fingerprint": "a1343ec52636800465faa8ddc4c91231cd71efe0dbd490f24a56e4521c6ff9f3",
+      "usage": {
+        "input_tokens": 12977,
+        "output_tokens": 131,
+        "total_tokens": 13108,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-21-success_label_memory-r2",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "c6c4d23d98071244178afc073d22d13fa9c2dd55d9a822dcf1b95e97da825e9b",
+      "raw_sha256": "397d2d44d9e7bc625743d7e78e0e4e10e6bfc78d766bd1a45b61cae5a5a244f4",
+      "request_fingerprint": "aa2e7a96aef1cc6480105fcf66e42b93820f9b24bc93eb32ee1d7c803f070c68",
+      "usage": {
+        "input_tokens": 12977,
+        "output_tokens": 136,
+        "total_tokens": 13113,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-21-success_label_memory-r3",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "c6c4d23d98071244178afc073d22d13fa9c2dd55d9a822dcf1b95e97da825e9b",
+      "raw_sha256": "55309183233c1c8e4baba570db7a28d07723b956c93203eee7126e06b9a6da0f",
+      "request_fingerprint": "3bb80263a6732406e12e2029fccf1f3f4bc0ca15b4ee0c23eebcaea27be4f943",
+      "usage": {
+        "input_tokens": 12977,
+        "output_tokens": 131,
+        "total_tokens": 13108,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-21-failure_label_memory-r1",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "894a75f7da689967cb2e7aa0614cd8e8cd1288ed019ee4eb25711d228030c35f",
+      "raw_sha256": "9690ae2884279e524dc7d5cd487a358c89bb1e9cf6c5edba81f64ef62180c5ba",
+      "request_fingerprint": "2c8242444025b0725a866d4608c7d8424adf60e39055db1eb37bc7023074e14b",
+      "usage": {
+        "input_tokens": 12944,
+        "output_tokens": 45,
+        "total_tokens": 12989,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-21-failure_label_memory-r2",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "894a75f7da689967cb2e7aa0614cd8e8cd1288ed019ee4eb25711d228030c35f",
+      "raw_sha256": "5575fab3da5da83a1cd2c92ca046d4f23a3b289973f285001c6674639e04421a",
+      "request_fingerprint": "6cd7759e00d7c727a4acbfb55f0cc044dae98290645575576b7fec63bb6b9b04",
+      "usage": {
+        "input_tokens": 12944,
+        "output_tokens": 26,
+        "total_tokens": 12970,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-21-failure_label_memory-r3",
+      "engine_id": "source-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "894a75f7da689967cb2e7aa0614cd8e8cd1288ed019ee4eb25711d228030c35f",
+      "raw_sha256": "6edad1c7c472120ad99953aefc1d5d6c47c95c3a966f916e736f5f2b6ce304d4",
+      "request_fingerprint": "5cccf2078dfe03ecdd426daf6e42dc81a8a267ebcba494db9d6d971c67a25e75",
+      "usage": {
+        "input_tokens": 12944,
+        "output_tokens": 7,
+        "total_tokens": 12951,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-22-success_label_memory-r1",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "e6b338d7aa4cdffb78e26d32af66f40d8b531fa71f480dfe1326bd83214ffd1a",
+      "raw_sha256": "3b27b0e34c6812cf40198ce1f1350ef490a28fa2056f4bd4e891c1a446d10595",
+      "request_fingerprint": "dc2228830246927b95b50e4053c37b75b05afdce4cdc44e0f55db23782e0dc8b",
+      "usage": {
+        "input_tokens": 5750,
+        "output_tokens": 33,
+        "total_tokens": 5783,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-22-success_label_memory-r2",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "e6b338d7aa4cdffb78e26d32af66f40d8b531fa71f480dfe1326bd83214ffd1a",
+      "raw_sha256": "3b27b0e34c6812cf40198ce1f1350ef490a28fa2056f4bd4e891c1a446d10595",
+      "request_fingerprint": "9dfe86dd0724798962753c6d558bbbeb42d73241ea3894e5624fbf887110755b",
+      "usage": {
+        "input_tokens": 5750,
+        "output_tokens": 33,
+        "total_tokens": 5783,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-22-success_label_memory-r3",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "e6b338d7aa4cdffb78e26d32af66f40d8b531fa71f480dfe1326bd83214ffd1a",
+      "raw_sha256": "3b27b0e34c6812cf40198ce1f1350ef490a28fa2056f4bd4e891c1a446d10595",
+      "request_fingerprint": "7616ce2d2c4cadefa6dcf017e18820ce3c9293281666604dbd355f15623b46a1",
+      "usage": {
+        "input_tokens": 5750,
+        "output_tokens": 33,
+        "total_tokens": 5783,
+        "input_tokens_details": {
+          "cached_tokens": 5688
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-22-failure_label_memory-r1",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "1989e67aa786fbe439ba542ab2e7dd0b26a3be97f17953acbc7bf967d27bf448",
+      "raw_sha256": "55a2eb77c08c39e478f4c143b68a8e1c1cb7947b21cd1ff7cda14b7198b628b2",
+      "request_fingerprint": "70893ae0350390bb523a1c7e198c9cd9e1c0de7432ae2209b6f846b9ff555428",
+      "usage": {
+        "input_tokens": 5765,
+        "output_tokens": 34,
+        "total_tokens": 5799,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-22-failure_label_memory-r2",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "1989e67aa786fbe439ba542ab2e7dd0b26a3be97f17953acbc7bf967d27bf448",
+      "raw_sha256": "b591817aaedaedb4667abf642a3c3c417b7b58e0b8a8b65b31c7226dcaa65062",
+      "request_fingerprint": "c53b7580125ad8cf4ffe289f535aab853acf888192331cb3199b00bb2c4ad0c2",
+      "usage": {
+        "input_tokens": 5765,
+        "output_tokens": 29,
+        "total_tokens": 5794,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-22-failure_label_memory-r3",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "1989e67aa786fbe439ba542ab2e7dd0b26a3be97f17953acbc7bf967d27bf448",
+      "raw_sha256": "9d8846fd9c0449de2038de5076ab2421049a1b7894e718e853e8c06d01fb2c2b",
+      "request_fingerprint": "6ef988970aa1b5fe931586f0c3f8848ab5e58e83a13f7284ec49e77c9c0b09a2",
+      "usage": {
+        "input_tokens": 5765,
+        "output_tokens": 23,
+        "total_tokens": 5788,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-22-success_label_memory-r1",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "84fbdd299b3c2fb324b785965f16fffd60f46c4bcdc4532bc1e1bfae139d2a78",
+      "raw_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "request_fingerprint": "dccbf8913d512ceb3f437578be4bffe6da621b93ffeecf3f844a727467870f95",
+      "usage": {
+        "input_tokens": 12972,
+        "output_tokens": 14,
+        "total_tokens": 12986,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-22-success_label_memory-r2",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "84fbdd299b3c2fb324b785965f16fffd60f46c4bcdc4532bc1e1bfae139d2a78",
+      "raw_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "request_fingerprint": "f37b2ff53cb8a4ec4ed72055c21f602ea4e2728eb19a04fbc4134e7e40467646",
+      "usage": {
+        "input_tokens": 12972,
+        "output_tokens": 14,
+        "total_tokens": 12986,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-22-success_label_memory-r3",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "84fbdd299b3c2fb324b785965f16fffd60f46c4bcdc4532bc1e1bfae139d2a78",
+      "raw_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "request_fingerprint": "73ce08800b4c28b006f0a4fad59fc4280cb0471ee5844e1f7008237aa08f52ff",
+      "usage": {
+        "input_tokens": 12972,
+        "output_tokens": 14,
+        "total_tokens": 12986,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-22-failure_label_memory-r1",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "6ca71613996591847845952f4f1a807d9ae3eabd52a204631cd71bc78c17ba17",
+      "raw_sha256": "f8ca087572b583997a43df236ec6ae8440a0cc33ba7bafa1719e0a857d951c64",
+      "request_fingerprint": "7f89e1e8cbae95e471a9d0d53dd1c2b00e5bd148c14e4ff7d1704449918f8cb5",
+      "usage": {
+        "input_tokens": 12987,
+        "output_tokens": 34,
+        "total_tokens": 13021,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-22-failure_label_memory-r2",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "6ca71613996591847845952f4f1a807d9ae3eabd52a204631cd71bc78c17ba17",
+      "raw_sha256": "6e836f4517c7f5ad723d7364da9e76aada12776e11a4cfd25b3d87637dc20358",
+      "request_fingerprint": "2a4310b48227bc106571ccb2e8c00f95339d2ddf9c0456d046e7e46a06d39822",
+      "usage": {
+        "input_tokens": 12987,
+        "output_tokens": 16,
+        "total_tokens": 13003,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-22-failure_label_memory-r3",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "6ca71613996591847845952f4f1a807d9ae3eabd52a204631cd71bc78c17ba17",
+      "raw_sha256": "17c92f810a01af6d9f40aacafc8961a4f905c0496755325837a1bdf09e2fff0b",
+      "request_fingerprint": "d3b8954f27b3968f66e639daa9f4e580324c1d718dbba8bbc3dae0300181a999",
+      "usage": {
+        "input_tokens": 12987,
+        "output_tokens": 34,
+        "total_tokens": 13021,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-22-success_label_memory-r1",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "8310add5ba33d32052f0ec54674770dc46f551f9af6245c19dfcc14f01f84201",
+      "raw_sha256": "66cce809150be9ffd97592c3fcd2f7922d89d6dc0e7bf9ecd93cd2e88ccf3f32",
+      "request_fingerprint": "e6827bd71fe8f224a233c67dc2bdb1906e1ad43b82ec197e814b40a8fcd89339",
+      "usage": {
+        "input_tokens": 12974,
+        "output_tokens": 10,
+        "total_tokens": 12984,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-22-success_label_memory-r2",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "8310add5ba33d32052f0ec54674770dc46f551f9af6245c19dfcc14f01f84201",
+      "raw_sha256": "66cce809150be9ffd97592c3fcd2f7922d89d6dc0e7bf9ecd93cd2e88ccf3f32",
+      "request_fingerprint": "83216d9a898056533e58c283c21db7bfd59438cf0575108fb71e68ce9bece645",
+      "usage": {
+        "input_tokens": 12974,
+        "output_tokens": 10,
+        "total_tokens": 12984,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-22-success_label_memory-r3",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "8310add5ba33d32052f0ec54674770dc46f551f9af6245c19dfcc14f01f84201",
+      "raw_sha256": "66cce809150be9ffd97592c3fcd2f7922d89d6dc0e7bf9ecd93cd2e88ccf3f32",
+      "request_fingerprint": "46fe22226742a2d52947b7235182913de7b2dc16ccb439b322985b5a780ca397",
+      "usage": {
+        "input_tokens": 12974,
+        "output_tokens": 10,
+        "total_tokens": 12984,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-22-failure_label_memory-r1",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "dec0bfd26a7519d99b49f389cc91554bebb008cb3eaeb0bafc3cc40563f7e3b7",
+      "raw_sha256": "66cce809150be9ffd97592c3fcd2f7922d89d6dc0e7bf9ecd93cd2e88ccf3f32",
+      "request_fingerprint": "fc94dfc4be864590baf205be85fc1da3b128935c1c79ff5a0fa9f1b1f48f759d",
+      "usage": {
+        "input_tokens": 12989,
+        "output_tokens": 10,
+        "total_tokens": 12999,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-22-failure_label_memory-r2",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "dec0bfd26a7519d99b49f389cc91554bebb008cb3eaeb0bafc3cc40563f7e3b7",
+      "raw_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "request_fingerprint": "20f95d54f430d80423ec06a0a662bf89385948e131947754849fed384ea73ddd",
+      "usage": {
+        "input_tokens": 12989,
+        "output_tokens": 13,
+        "total_tokens": 13002,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-22-failure_label_memory-r3",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "dec0bfd26a7519d99b49f389cc91554bebb008cb3eaeb0bafc3cc40563f7e3b7",
+      "raw_sha256": "66cce809150be9ffd97592c3fcd2f7922d89d6dc0e7bf9ecd93cd2e88ccf3f32",
+      "request_fingerprint": "45e5c7e49fcf5b6d46035869beee71545cbd0245e2a671222e7a0d0f0af81e37",
+      "usage": {
+        "input_tokens": 12989,
+        "output_tokens": 10,
+        "total_tokens": 12999,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-22-success_label_memory-r1",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "64ba13f106c32b5150f7fd310d7dd608ca763ade2b4db89c3cf47b388b7b2726",
+      "raw_sha256": "8052956e1c77167b23c85432da283b959a7f3d657e69574fbb8ab77843a683ef",
+      "request_fingerprint": "2a5703bb49f9e15f40b5003e20e36362ffb78782a5c7f6b7e9463293267eef3f",
+      "usage": {
+        "input_tokens": 12973,
+        "output_tokens": 173,
+        "total_tokens": 13146,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-22-success_label_memory-r2",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "64ba13f106c32b5150f7fd310d7dd608ca763ade2b4db89c3cf47b388b7b2726",
+      "raw_sha256": "6edad1c7c472120ad99953aefc1d5d6c47c95c3a966f916e736f5f2b6ce304d4",
+      "request_fingerprint": "632f7a5435a4af38a14c6eb1b5b7d7b38ddbcc0c512802756bdf4d0db29e1833",
+      "usage": {
+        "input_tokens": 12973,
+        "output_tokens": 7,
+        "total_tokens": 12980,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-22-success_label_memory-r3",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "64ba13f106c32b5150f7fd310d7dd608ca763ade2b4db89c3cf47b388b7b2726",
+      "raw_sha256": "f555e512f5dafd952a696bf9106a8ea794e364710257fce27a135ea011df79e3",
+      "request_fingerprint": "31ee19d646e378ef42253dbebb2f5f4d7723046eb13970d8ac7f82c4e0314595",
+      "usage": {
+        "input_tokens": 12973,
+        "output_tokens": 161,
+        "total_tokens": 13134,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-22-failure_label_memory-r1",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "a95a475ca0aa87ad2029b1ffb5a6981b2b54952b7c45122a55f22f8a87cb6a39",
+      "raw_sha256": "df8064aaafa65359be52a950a6b33bd5f789b5ddad37143803251661ff58b4f4",
+      "request_fingerprint": "124987c1372cc7e3ed31aa5d8d77718c8843806bb67b2bbee7837c9cba811baa",
+      "usage": {
+        "input_tokens": 12988,
+        "output_tokens": 788,
+        "total_tokens": 13776,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-22-failure_label_memory-r2",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "a95a475ca0aa87ad2029b1ffb5a6981b2b54952b7c45122a55f22f8a87cb6a39",
+      "raw_sha256": "e35bf33213487ca6a62a7a3797843d9c7e99419289e74459507d4086ef3f2918",
+      "request_fingerprint": "193adfe6d4ebe585596aa92ff7d2ba104052b8ffc6bdf100e9b60a34f223746c",
+      "usage": {
+        "input_tokens": 12988,
+        "output_tokens": 231,
+        "total_tokens": 13219,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-22-failure_label_memory-r3",
+      "engine_id": "source-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "a95a475ca0aa87ad2029b1ffb5a6981b2b54952b7c45122a55f22f8a87cb6a39",
+      "raw_sha256": "2fb5816a965437073bdf74d4f377a8103664e689e4f310271dae3a594770e743",
+      "request_fingerprint": "3567614359e229d7f026323ad5ee03aa6f88a6c7d10c6a0aa1fd1e5f4878676c",
+      "usage": {
+        "input_tokens": 12988,
+        "output_tokens": 214,
+        "total_tokens": 13202,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-23-success_label_memory-r1",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "5dc58c925f96df9bf37ea8d7e89a0980478ce3acbac26bbd10eac57ed180d122",
+      "raw_sha256": "3b27b0e34c6812cf40198ce1f1350ef490a28fa2056f4bd4e891c1a446d10595",
+      "request_fingerprint": "2932c6947bf0a24c6907ec250788d0b8b9a69c839cf08ef74c1636322b34080b",
+      "usage": {
+        "input_tokens": 5731,
+        "output_tokens": 33,
+        "total_tokens": 5764,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-23-success_label_memory-r2",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "5dc58c925f96df9bf37ea8d7e89a0980478ce3acbac26bbd10eac57ed180d122",
+      "raw_sha256": "2c4da9b2d6920e5739775c9436cb4ceb2013216cdf2b69d64dce6d73c1d480fd",
+      "request_fingerprint": "0979a15b4da18586861a9e5b58a646f6c10c78075b9b445070a1474e9f4f50e7",
+      "usage": {
+        "input_tokens": 5731,
+        "output_tokens": 42,
+        "total_tokens": 5773,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-23-success_label_memory-r3",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "5dc58c925f96df9bf37ea8d7e89a0980478ce3acbac26bbd10eac57ed180d122",
+      "raw_sha256": "3b27b0e34c6812cf40198ce1f1350ef490a28fa2056f4bd4e891c1a446d10595",
+      "request_fingerprint": "810ae7fb781f9a48c59e1a4711cadbd81c280870f1685fd24046aedd7548d912",
+      "usage": {
+        "input_tokens": 5731,
+        "output_tokens": 33,
+        "total_tokens": 5764,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-23-failure_label_memory-r1",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "11c97f73f6810254a1514167c47b2c4c462bf96ec49c9ed0799c00b43b4fff56",
+      "raw_sha256": "7c41aa4efa79d03d4e8c0d4ce545f0a2d2a969f070ac4b7952a100724eebe638",
+      "request_fingerprint": "ab9783c5c9a3da64c9db749ece45fa45fd0ba861ba5b3d7a0c237a1b0a359dfd",
+      "usage": {
+        "input_tokens": 5754,
+        "output_tokens": 30,
+        "total_tokens": 5784,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-23-failure_label_memory-r2",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "11c97f73f6810254a1514167c47b2c4c462bf96ec49c9ed0799c00b43b4fff56",
+      "raw_sha256": "6385489354e4a1f1959bf05cefc8a7f9e6dbf7289489126c1a901e9f4ff7898d",
+      "request_fingerprint": "1ce4da47e112d859ecb4f8c77c247c58ff049c1ea2fb4696b75456d3c702ea2a",
+      "usage": {
+        "input_tokens": 5754,
+        "output_tokens": 32,
+        "total_tokens": 5786,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-23-failure_label_memory-r3",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "11c97f73f6810254a1514167c47b2c4c462bf96ec49c9ed0799c00b43b4fff56",
+      "raw_sha256": "b591817aaedaedb4667abf642a3c3c417b7b58e0b8a8b65b31c7226dcaa65062",
+      "request_fingerprint": "45c57f88f9961be661a1a22a5f7bdd35306b7967ffee00f16792d64317cbf3c7",
+      "usage": {
+        "input_tokens": 5754,
+        "output_tokens": 29,
+        "total_tokens": 5783,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-23-success_label_memory-r1",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "09f9388d79b57c1de81e5e39f49383ba357ad909ce414aaf356aa7bd1686e371",
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "request_fingerprint": "311897c13800a54ec48b6aa46d49d486b43ecc38b8df946b25d248d6c4707e28",
+      "usage": {
+        "input_tokens": 12953,
+        "output_tokens": 16,
+        "total_tokens": 12969,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-23-success_label_memory-r2",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "09f9388d79b57c1de81e5e39f49383ba357ad909ce414aaf356aa7bd1686e371",
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "request_fingerprint": "bf18ecb7aa07e69bc281b0c42e7cb8c800b99ec5877f65f0f5e32b604f655f2f",
+      "usage": {
+        "input_tokens": 12953,
+        "output_tokens": 16,
+        "total_tokens": 12969,
+        "input_tokens_details": {
+          "cached_tokens": 12856
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-23-success_label_memory-r3",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "09f9388d79b57c1de81e5e39f49383ba357ad909ce414aaf356aa7bd1686e371",
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "request_fingerprint": "7e649aa8a40df13e297c1b50720e5871ec32c74f5ef561ee18c3218b56389702",
+      "usage": {
+        "input_tokens": 12953,
+        "output_tokens": 16,
+        "total_tokens": 12969,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-23-failure_label_memory-r1",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "1fa40b79b5a36ef3d6a80338fc9f1a839a27953d658245fd6d7b1d6721d1a6ae",
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "request_fingerprint": "93d511c651449756d95e9adbeaa77143863a9b3da9c7836ea2c5c4b57dbdd4e0",
+      "usage": {
+        "input_tokens": 12976,
+        "output_tokens": 16,
+        "total_tokens": 12992,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-23-failure_label_memory-r2",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "1fa40b79b5a36ef3d6a80338fc9f1a839a27953d658245fd6d7b1d6721d1a6ae",
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "request_fingerprint": "62c8727a7d61919593d8159a1ab69615a1f5c1e664ae905143dfe9eb0d917722",
+      "usage": {
+        "input_tokens": 12976,
+        "output_tokens": 16,
+        "total_tokens": 12992,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-23-failure_label_memory-r3",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "1fa40b79b5a36ef3d6a80338fc9f1a839a27953d658245fd6d7b1d6721d1a6ae",
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "request_fingerprint": "25c9dcb471c8d4f9ce01199cc99cde8c232eacc5592a5c153e3b7b2d723a1d4c",
+      "usage": {
+        "input_tokens": 12976,
+        "output_tokens": 16,
+        "total_tokens": 12992,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-23-success_label_memory-r1",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "6639c5c56fc3ff2842d9c855450be585c7115d902884bb5a8beaa914d8a5bc48",
+      "raw_sha256": "46a81a658565861a07aee80f874715513efa320360775776c8f5c1c8206159e2",
+      "request_fingerprint": "e24f3bf9fa3555a89e21309e690f0f13a8077c0f03ed1687d299b74bd79ed846",
+      "usage": {
+        "input_tokens": 12955,
+        "output_tokens": 293,
+        "total_tokens": 13248,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-23-success_label_memory-r2",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "6639c5c56fc3ff2842d9c855450be585c7115d902884bb5a8beaa914d8a5bc48",
+      "raw_sha256": "46a81a658565861a07aee80f874715513efa320360775776c8f5c1c8206159e2",
+      "request_fingerprint": "16b0bfc40f64578f6aef49957f24108b860068ddbe70ac14c717d57358ed11cd",
+      "usage": {
+        "input_tokens": 12955,
+        "output_tokens": 293,
+        "total_tokens": 13248,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-23-success_label_memory-r3",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "6639c5c56fc3ff2842d9c855450be585c7115d902884bb5a8beaa914d8a5bc48",
+      "raw_sha256": "46a81a658565861a07aee80f874715513efa320360775776c8f5c1c8206159e2",
+      "request_fingerprint": "9c3ceacad5558f1b0220d3bc3db29dd5fc3f51f817b4600820159c1aa36a8814",
+      "usage": {
+        "input_tokens": 12955,
+        "output_tokens": 293,
+        "total_tokens": 13248,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-23-failure_label_memory-r1",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "57615d452c6f8ac70b61789ee191d4d376a7724d36ba248c6ceae91f1d20a9a4",
+      "raw_sha256": "e1bfcb05dc00197a9d690d8e5d5397da01102d4a83d1122d8d1f529e23feaeff",
+      "request_fingerprint": "be1ee27b42a02ada8fee63a321cae6d391ed306b28b0fd46642fd013e1c13fc8",
+      "usage": {
+        "input_tokens": 12978,
+        "output_tokens": 8,
+        "total_tokens": 12986,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-23-failure_label_memory-r2",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "57615d452c6f8ac70b61789ee191d4d376a7724d36ba248c6ceae91f1d20a9a4",
+      "raw_sha256": "a73f3caeec3586400fb83d09e32c8d28af9948fd01e720df472cd6334f9daf89",
+      "request_fingerprint": "8993114881a42913ee7b37f7e8d9eaa3d162080bbe3f73379d228f8f9a7953b3",
+      "usage": {
+        "input_tokens": 12978,
+        "output_tokens": 10,
+        "total_tokens": 12988,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-23-failure_label_memory-r3",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "57615d452c6f8ac70b61789ee191d4d376a7724d36ba248c6ceae91f1d20a9a4",
+      "raw_sha256": "a73f3caeec3586400fb83d09e32c8d28af9948fd01e720df472cd6334f9daf89",
+      "request_fingerprint": "33d6c217095b6f331377a575c254e6eebc5b031fa37e8214a89dcc0e37fb244c",
+      "usage": {
+        "input_tokens": 12978,
+        "output_tokens": 10,
+        "total_tokens": 12988,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-23-success_label_memory-r1",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "5667f0920ca17e56e536ea08d1c55379df71c1878f17d8f9c8ea1e168a20ce3a",
+      "raw_sha256": "9d53280538a2142a8585938031b6592d5d2084d5aa829a4f0419d126f4893a88",
+      "request_fingerprint": "3b0eaf36e6bf3c06f33c1020390fd054af587ae9af90f35bf97d068e870a0244",
+      "usage": {
+        "input_tokens": 12954,
+        "output_tokens": 811,
+        "total_tokens": 13765,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-23-success_label_memory-r2",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "5667f0920ca17e56e536ea08d1c55379df71c1878f17d8f9c8ea1e168a20ce3a",
+      "raw_sha256": "fecf4e0f82ee4de81543a4bca3d5ce45895283620e68ed304eb219ce3bbffeb1",
+      "request_fingerprint": "303bc3e52382185471283cfb70cccd7e9173230afd8e475185eb9c173b0b3acc",
+      "usage": {
+        "input_tokens": 12954,
+        "output_tokens": 791,
+        "total_tokens": 13745,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-23-success_label_memory-r3",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "5667f0920ca17e56e536ea08d1c55379df71c1878f17d8f9c8ea1e168a20ce3a",
+      "raw_sha256": "e42bbbbf8c53b5f56576f045a8ddcbe68ed30109d357e60aa5ff0aa44d80cfef",
+      "request_fingerprint": "9bb91a4f08e07ce3eaae0fcd87775a17c5e28eaa105f27d706accb43eeffedec",
+      "usage": {
+        "input_tokens": 12954,
+        "output_tokens": 28,
+        "total_tokens": 12982,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-23-failure_label_memory-r1",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "b1daaa6f26f2162ef14bd56cefcce30ab93db1d186349559a6a5ba2bf787d299",
+      "raw_sha256": "25de278f12320efbf9f4c9879c5a39ac550cf7fb7ec073d654f736eabdd6d4da",
+      "request_fingerprint": "59ffc6b36a5249b89b9b83a1d20a44dc7ccfc9eb067e7c1e3df3260fad194ed7",
+      "usage": {
+        "input_tokens": 12977,
+        "output_tokens": 736,
+        "total_tokens": 13713,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-23-failure_label_memory-r2",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "b1daaa6f26f2162ef14bd56cefcce30ab93db1d186349559a6a5ba2bf787d299",
+      "raw_sha256": "60994cfd2dd39b0f94f4495ff77d15742f524c42cc6145afa9b60ebfb6eda130",
+      "request_fingerprint": "b09904e5638a3687fb147be2d00896af4c1d25a24a2c3b6b299342c497937396",
+      "usage": {
+        "input_tokens": 12977,
+        "output_tokens": 119,
+        "total_tokens": 13096,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-23-failure_label_memory-r3",
+      "engine_id": "source-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "b1daaa6f26f2162ef14bd56cefcce30ab93db1d186349559a6a5ba2bf787d299",
+      "raw_sha256": "ae6a2f90fe17fcb3eaead23d883899acfc56d88e7d1922df61c36b4d45b1685b",
+      "request_fingerprint": "bdd1cc2db5cbd279a19df833f64b8634a5a976a31f466a8f6f3c6945c436bf24",
+      "usage": {
+        "input_tokens": 12977,
+        "output_tokens": 120,
+        "total_tokens": 13097,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-25-success_label_memory-r1",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "24a277ef41d9053f21754d9b2618a8bbf4bcd265438c023553f8d176f8c52299",
+      "raw_sha256": "a78741b9a88b5618df36d02667ac7e6e9c2c105b942a95a7a8d98a949a21f998",
+      "request_fingerprint": "d7df1b49199933f5ea9278812922dacc047943670b39e30a7db1890a464b9bbc",
+      "usage": {
+        "input_tokens": 5750,
+        "output_tokens": 60,
+        "total_tokens": 5810,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-25-success_label_memory-r2",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "24a277ef41d9053f21754d9b2618a8bbf4bcd265438c023553f8d176f8c52299",
+      "raw_sha256": "a78741b9a88b5618df36d02667ac7e6e9c2c105b942a95a7a8d98a949a21f998",
+      "request_fingerprint": "f795c94afb19dab64dd564f5e2b43ca46d233f1df102858008ca3e2df97db1a6",
+      "usage": {
+        "input_tokens": 5750,
+        "output_tokens": 60,
+        "total_tokens": 5810,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-25-success_label_memory-r3",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "24a277ef41d9053f21754d9b2618a8bbf4bcd265438c023553f8d176f8c52299",
+      "raw_sha256": "9f7eb191f61ebd2e5ae41abcb9852ddec739c2efcbc4b0de55196cb08cc0e4bd",
+      "request_fingerprint": "0ffef07b439edc328bf44af882e70a976b20f9cb789aa9288c692485b646e9a7",
+      "usage": {
+        "input_tokens": 5750,
+        "output_tokens": 68,
+        "total_tokens": 5818,
+        "input_tokens_details": {
+          "cached_tokens": 5688
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-25-failure_label_memory-r1",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "06de41ef370112a1434c055e499e956a6282f372d5ddec78ba3a3fbf65e86346",
+      "raw_sha256": "b591817aaedaedb4667abf642a3c3c417b7b58e0b8a8b65b31c7226dcaa65062",
+      "request_fingerprint": "b4c654e0459f515c9bc9cb42f788245fa6aa62840607c019e007a4054dbca98e",
+      "usage": {
+        "input_tokens": 5743,
+        "output_tokens": 29,
+        "total_tokens": 5772,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-25-failure_label_memory-r2",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "06de41ef370112a1434c055e499e956a6282f372d5ddec78ba3a3fbf65e86346",
+      "raw_sha256": "4606952655ef56e3e3125d410f0c44f20da50ec17cc4c25f615f5b546447db31",
+      "request_fingerprint": "5b8110293fae4a77dc584699f47f757d1c3e4c91df5e804512479911e9957587",
+      "usage": {
+        "input_tokens": 5743,
+        "output_tokens": 41,
+        "total_tokens": 5784,
+        "input_tokens_details": {
+          "cached_tokens": 5688
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-source-25-failure_label_memory-r3",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "06de41ef370112a1434c055e499e956a6282f372d5ddec78ba3a3fbf65e86346",
+      "raw_sha256": "b591817aaedaedb4667abf642a3c3c417b7b58e0b8a8b65b31c7226dcaa65062",
+      "request_fingerprint": "d4b4b1d7a3ef4128311b95a44cf66f799e645c679b97e9ef3fccdb958d95d32c",
+      "usage": {
+        "input_tokens": 5743,
+        "output_tokens": 29,
+        "total_tokens": 5772,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-25-success_label_memory-r1",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "b0c2b2520da58a1c4c1271fd27a00ee0b4795c5f809a74a0283e609760afa892",
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "request_fingerprint": "38d10639ed198d570cf6247e28d13184fd393ea2d1b6d12ff4b91a152501b265",
+      "usage": {
+        "input_tokens": 12972,
+        "output_tokens": 16,
+        "total_tokens": 12988,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-25-success_label_memory-r2",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "b0c2b2520da58a1c4c1271fd27a00ee0b4795c5f809a74a0283e609760afa892",
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "request_fingerprint": "ff5f918951bc69ce5eb126bfbe5aaeec853ce535e70ee5e94ae40b4b117a68c1",
+      "usage": {
+        "input_tokens": 12972,
+        "output_tokens": 16,
+        "total_tokens": 12988,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-25-success_label_memory-r3",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "b0c2b2520da58a1c4c1271fd27a00ee0b4795c5f809a74a0283e609760afa892",
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "request_fingerprint": "a97425cc237a126b905cb9925d6f2a3be9ac5023358d71a3a47ca6b85172f94e",
+      "usage": {
+        "input_tokens": 12972,
+        "output_tokens": 16,
+        "total_tokens": 12988,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-25-failure_label_memory-r1",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "18a51cbdb4ad337439e1a75fa17a778f4ddaadb7e3e4ee37165aee8901f2375b",
+      "raw_sha256": "6e836f4517c7f5ad723d7364da9e76aada12776e11a4cfd25b3d87637dc20358",
+      "request_fingerprint": "44d4157e4caa4a1f2e9012ddead1eafcfd87beb14e8bfc2e74eeda0c6a610178",
+      "usage": {
+        "input_tokens": 12965,
+        "output_tokens": 16,
+        "total_tokens": 12981,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-25-failure_label_memory-r2",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "18a51cbdb4ad337439e1a75fa17a778f4ddaadb7e3e4ee37165aee8901f2375b",
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "request_fingerprint": "691c54a010300c87ddf5dcb44d1935ebc6119c55f82450f4777bd0dd9c0fb24e",
+      "usage": {
+        "input_tokens": 12965,
+        "output_tokens": 16,
+        "total_tokens": 12981,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-source-25-failure_label_memory-r3",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "18a51cbdb4ad337439e1a75fa17a778f4ddaadb7e3e4ee37165aee8901f2375b",
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "request_fingerprint": "1855e7a4e605ed15d47101d5deddb66b5987d21b0ccb80fe5ec6db06fff0c4d6",
+      "usage": {
+        "input_tokens": 12965,
+        "output_tokens": 16,
+        "total_tokens": 12981,
+        "input_tokens_details": {
+          "cached_tokens": 12856
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-25-success_label_memory-r1",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "dbf89d20a4e1d5cea35a589b053cc0da83b06f05c54e91dff4c7cacec9154002",
+      "raw_sha256": "e1bfcb05dc00197a9d690d8e5d5397da01102d4a83d1122d8d1f529e23feaeff",
+      "request_fingerprint": "345d8acf9a08f2c4de7f37ae1831fbbbb3d3d3b2ac022e5a8d6fcb3f3a185d01",
+      "usage": {
+        "input_tokens": 12974,
+        "output_tokens": 8,
+        "total_tokens": 12982,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-25-success_label_memory-r2",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "dbf89d20a4e1d5cea35a589b053cc0da83b06f05c54e91dff4c7cacec9154002",
+      "raw_sha256": "e1bfcb05dc00197a9d690d8e5d5397da01102d4a83d1122d8d1f529e23feaeff",
+      "request_fingerprint": "ea818667b530756bb58eacf89ba86a3876a0d3d144552cd9d83649764aea4fed",
+      "usage": {
+        "input_tokens": 12974,
+        "output_tokens": 8,
+        "total_tokens": 12982,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-25-success_label_memory-r3",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "dbf89d20a4e1d5cea35a589b053cc0da83b06f05c54e91dff4c7cacec9154002",
+      "raw_sha256": "e1bfcb05dc00197a9d690d8e5d5397da01102d4a83d1122d8d1f529e23feaeff",
+      "request_fingerprint": "993b978f894a57a152638498b50e9b1da0b74eae1827a6e12aca994b1ad29f62",
+      "usage": {
+        "input_tokens": 12974,
+        "output_tokens": 8,
+        "total_tokens": 12982,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-25-failure_label_memory-r1",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "da65ace7ed6b246202bde2fc2e8a8d9db99c0adfe5edf372680ad65f1185a8b7",
+      "raw_sha256": "316b41fd01d7abb12f074cbeaad2892e53ed4b9fbcfa61cd9e127ee2f2ed27b4",
+      "request_fingerprint": "e96b56de6cee46942ebd5a14e0256c9a03274930af88a681b0e26361bee4ce86",
+      "usage": {
+        "input_tokens": 12967,
+        "output_tokens": 128,
+        "total_tokens": 13095,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-25-failure_label_memory-r2",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "da65ace7ed6b246202bde2fc2e8a8d9db99c0adfe5edf372680ad65f1185a8b7",
+      "raw_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "request_fingerprint": "01a218cba5fe3e26f171e1fd67954440bcf204dc665cbb740c464f60e1a2f336",
+      "usage": {
+        "input_tokens": 12967,
+        "output_tokens": 13,
+        "total_tokens": 12980,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-source-25-failure_label_memory-r3",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "da65ace7ed6b246202bde2fc2e8a8d9db99c0adfe5edf372680ad65f1185a8b7",
+      "raw_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "request_fingerprint": "821796dce23428b4c24a03d04c6942af2ebf3166221568208bb9534bf7cd7b30",
+      "usage": {
+        "input_tokens": 12967,
+        "output_tokens": 13,
+        "total_tokens": 12980,
+        "input_tokens_details": {
+          "cached_tokens": 12856
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-25-success_label_memory-r1",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "a57be7681721655f1e453033e12ac1a47913877419747ed8667849333e295985",
+      "raw_sha256": "8e6ddf1bbf646f19f2003c47e3c316ab68b6da8d6dabc20bebd155bb21252bef",
+      "request_fingerprint": "c9e4da77aa2459e618f5753a40aa35027bbf8b9c69dcefa7aca31935e864743b",
+      "usage": {
+        "input_tokens": 12973,
+        "output_tokens": 253,
+        "total_tokens": 13226,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-25-success_label_memory-r2",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "a57be7681721655f1e453033e12ac1a47913877419747ed8667849333e295985",
+      "raw_sha256": "c480bd35de73af56e4b0ef7de9b9193dfc5b9c89995b3397fa05789a39022914",
+      "request_fingerprint": "c8f667833a47cd119740889991998512dd55fe2965becf87071f30a6666e0037",
+      "usage": {
+        "input_tokens": 12973,
+        "output_tokens": 37,
+        "total_tokens": 13010,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-25-success_label_memory-r3",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "a57be7681721655f1e453033e12ac1a47913877419747ed8667849333e295985",
+      "raw_sha256": "8d2e0772feed7829aa54f74fd008f5982c9785d50f61c82d5ed35e049b7fb4a3",
+      "request_fingerprint": "c7bb257d9b7713ac46dd64572a37202ce425aafe6c18ed7b09162fef37c7779a",
+      "usage": {
+        "input_tokens": 12973,
+        "output_tokens": 150,
+        "total_tokens": 13123,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-25-failure_label_memory-r1",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ec481afd096bc003e33b6071faf08237656d1b1332d0467e72e331a4c30763fb",
+      "raw_sha256": "55088877e79ad23452f0a8c905e7eb75ad6626797a7246568ba230183341e3fe",
+      "request_fingerprint": "cf5312f95c98cf6008fd40120b86c7a384dbc66055e9bcb77b2875ec931f3775",
+      "usage": {
+        "input_tokens": 12966,
+        "output_tokens": 448,
+        "total_tokens": 13414,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-25-failure_label_memory-r2",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ec481afd096bc003e33b6071faf08237656d1b1332d0467e72e331a4c30763fb",
+      "raw_sha256": "8963cde5e41906203cc51a0516f52d2b5da60c17d040ee74c9a9c808c50ab4ce",
+      "request_fingerprint": "931638dd245e6668f43c81a3e1c6da90d2ffd3dc3d9410eda578d8e8abdca634",
+      "usage": {
+        "input_tokens": 12966,
+        "output_tokens": 220,
+        "total_tokens": 13186,
+        "input_tokens_details": {
+          "cached_tokens": 12856
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-source-25-failure_label_memory-r3",
+      "engine_id": "source-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ec481afd096bc003e33b6071faf08237656d1b1332d0467e72e331a4c30763fb",
+      "raw_sha256": "6edad1c7c472120ad99953aefc1d5d6c47c95c3a966f916e736f5f2b6ce304d4",
+      "request_fingerprint": "5d3e592a7e00127e1fbc0f80ac7b67e64e260f8420920c11aceb0caddf438c1b",
+      "usage": {
+        "input_tokens": 12966,
+        "output_tokens": 7,
+        "total_tokens": 12973,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-no-memory-r1",
+      "engine_id": "no-memory",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "e5579fd6bcd0dcccf36677feb47ef8e32a9dd68c8aed39ce86c6be756ad3c90b",
+      "raw_sha256": "ebe3cb9ce077e0d1ac198fb1851c1624833d64cea691cff32356923927531ee5",
+      "request_fingerprint": "e2459a3cbd3a308a6f012f8e5a256ffbfc4fe8576067c3ec5e1b92b78c4eacb8",
+      "usage": {
+        "input_tokens": 5484,
+        "output_tokens": 26,
+        "total_tokens": 5510,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-no-memory-r2",
+      "engine_id": "no-memory",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "e5579fd6bcd0dcccf36677feb47ef8e32a9dd68c8aed39ce86c6be756ad3c90b",
+      "raw_sha256": "ebe3cb9ce077e0d1ac198fb1851c1624833d64cea691cff32356923927531ee5",
+      "request_fingerprint": "6ac63b29d3c189c42d99dad2bcf7c3a0f4ab67cfc7669563f27157128579923d",
+      "usage": {
+        "input_tokens": 5484,
+        "output_tokens": 26,
+        "total_tokens": 5510,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-164-no-memory-r3",
+      "engine_id": "no-memory",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "e5579fd6bcd0dcccf36677feb47ef8e32a9dd68c8aed39ce86c6be756ad3c90b",
+      "raw_sha256": "ebe3cb9ce077e0d1ac198fb1851c1624833d64cea691cff32356923927531ee5",
+      "request_fingerprint": "1c60a61ce42fc746e53043aaffc9580061676eee216360aa0bc7a100068ce5cf",
+      "usage": {
+        "input_tokens": 5484,
+        "output_tokens": 26,
+        "total_tokens": 5510,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-no-memory-r1",
+      "engine_id": "no-memory",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "135f500dafa0b3dade8e26ea5a7407b78d831e16d4cb098dc7ada37575b84332",
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "request_fingerprint": "31d42adfc1145fa711aaad98f2ead8c1b5a9085d4cf68349a763c1b2f7d76b48",
+      "usage": {
+        "input_tokens": 12706,
+        "output_tokens": 16,
+        "total_tokens": 12722,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-no-memory-r2",
+      "engine_id": "no-memory",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "135f500dafa0b3dade8e26ea5a7407b78d831e16d4cb098dc7ada37575b84332",
+      "raw_sha256": "d8c08c5888a8b8628956a73aa9c8701ad00c361d8cd90e2f56309a65aa1d1677",
+      "request_fingerprint": "f86b8087a1bfa810f900889eaac31e8c1ee7a399f037e970e43db89aaeca327b",
+      "usage": {
+        "input_tokens": 12706,
+        "output_tokens": 14,
+        "total_tokens": 12720,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-385-no-memory-r3",
+      "engine_id": "no-memory",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "135f500dafa0b3dade8e26ea5a7407b78d831e16d4cb098dc7ada37575b84332",
+      "raw_sha256": "340587e0510835ff6785e767c1e372b6559e71dd64c194fec4d4ea985d793437",
+      "request_fingerprint": "3b02d64346e0ecf2b286a887ec692046f300bdca63c178d5624c5cc5e79cf3b9",
+      "usage": {
+        "input_tokens": 12706,
+        "output_tokens": 16,
+        "total_tokens": 12722,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-no-memory-r1",
+      "engine_id": "no-memory",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "fbff326c06e07560c0df61a5a56c0b3a9464cc8412156c23fe7f0fa1a30e9c8b",
+      "raw_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "request_fingerprint": "05c1e69098f42b4ef9edec5b045545f237a41c98c7ede3ee38a4e877fbe58e76",
+      "usage": {
+        "input_tokens": 12708,
+        "output_tokens": 13,
+        "total_tokens": 12721,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-no-memory-r2",
+      "engine_id": "no-memory",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "fbff326c06e07560c0df61a5a56c0b3a9464cc8412156c23fe7f0fa1a30e9c8b",
+      "raw_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "request_fingerprint": "7753b3c59f9cbb8f5aeb9771f23734ab486c9735d7e51b5dda9f98e5dd785689",
+      "usage": {
+        "input_tokens": 12708,
+        "output_tokens": 13,
+        "total_tokens": 12721,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-387-no-memory-r3",
+      "engine_id": "no-memory",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "fbff326c06e07560c0df61a5a56c0b3a9464cc8412156c23fe7f0fa1a30e9c8b",
+      "raw_sha256": "19be6966d5b4ed7d9144814aa9c9f2d1c22d52ec9cf0554904e0ace847e9fed5",
+      "request_fingerprint": "587822f1a5de0eca1676610c9b8f1e7490eea065f8a8a9dfcb1cf1e3bd8ad47d",
+      "usage": {
+        "input_tokens": 12708,
+        "output_tokens": 13,
+        "total_tokens": 12721,
+        "input_tokens_details": {
+          "cached_tokens": 12600
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-no-memory-r1",
+      "engine_id": "no-memory",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ab9f54c4881e614d4d897924909ea80a76013e91729edc0707fe04380448b0d8",
+      "raw_sha256": "758c8c33d375d3cbfea05181606b4c04de0e355d56c036cbf0d280db1c3bac8f",
+      "request_fingerprint": "82c834858ee71e8b04f46e7d0f158bd0bbdc018527d18a096d29f44d476be9dc",
+      "usage": {
+        "input_tokens": 12707,
+        "output_tokens": 9,
+        "total_tokens": 12716,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-no-memory-r2",
+      "engine_id": "no-memory",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ab9f54c4881e614d4d897924909ea80a76013e91729edc0707fe04380448b0d8",
+      "raw_sha256": "9a73eb1e7ef718c03ea48aa2aa28badd11fb3c12c0b8551587e1a3d4f29e9b75",
+      "request_fingerprint": "d9c52540b2b0b49fd2f81391e9e21bcaf0ef8c789fe9cb93d400b871343e09a8",
+      "usage": {
+        "input_tokens": 12707,
+        "output_tokens": 25,
+        "total_tokens": 12732,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "terminal-388-no-memory-r3",
+      "engine_id": "no-memory",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ab9f54c4881e614d4d897924909ea80a76013e91729edc0707fe04380448b0d8",
+      "raw_sha256": "758c8c33d375d3cbfea05181606b4c04de0e355d56c036cbf0d280db1c3bac8f",
+      "request_fingerprint": "8c0fca6408f0454840310cd5b5e87220e5a9dcf02b17cdb09f929e3030e53d46",
+      "usage": {
+        "input_tokens": 12707,
+        "output_tokens": 9,
+        "total_tokens": 12716,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    }
+  ],
+  "failures": [],
+  "decision": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+  "scope": "Terminal benchmark answer correctness under fixed released browser evidence; does not claim live browser-navigation transport.",
+  "scientific_authority": false,
+  "experiment_authority": false
+}

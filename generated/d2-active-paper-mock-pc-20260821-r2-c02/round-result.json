@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0",
+  "round": "R2_AFTER_PROMPT_CONTROL",
+  "paper": {
+    "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+    "title": "Noisy Rewards Write Noisy Memories: Reward Error as a Variance Amplifier in Self-Improving Agents",
+    "current_state": "TARGETED_REPAIR",
+    "voting_reviews": 2,
+    "mean_score_1_to_10": 4,
+    "mean_empirical_sufficiency_1_to_5": 2,
+    "recommendations": [
+      "weak_reject",
+      "weak_reject"
+    ],
+    "submission_advice": [
+      "major_revision",
+      "new_experiment"
+    ],
+    "decision_critical_missing_evidence": 3,
+    "highest_value_next_actions": [
+      "Complete the downstream variance experiment (Section 5) and demonstrate that reward-induced memory divergence produces statistically significant behavioral divergence in future tasks. This is the decisive missing evidence. Additionally, run the experiment with at least two different writer models and across multiple WebArena task domains to establish generalizability.",
+      "Execute the matched future-task terminal continuation experiment under paired memories with a frozen success-variance gate, followed by the controlled reward-corruption-rate experiment; these are the only results that can convert C4 from an active hypothesis into the paper's headline claim."
+    ],
+    "extra_experiment_votes": 2,
+    "review_artifacts": [
+      "generated/d2-active-paper-mock-pc-20260821-r2-c02/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE__BLIND_MANUSCRIPT.json",
+      "generated/d2-active-paper-mock-pc-20260821-r2-c02/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE__ARTIFACT_AWARE.json"
+    ],
+    "scientific_authority": false,
+    "experiment_authority": false
+  },
+  "ledger_index": {
+    "schema_version": "1.0",
+    "policy": {
+      "source_ledgers_are_append_only": true,
+      "public_projection_excludes_raw_reviewer_prose": true,
+      "public_projection_excludes_filesystem_paths_and_actors": true,
+      "invalid_ledgers_are_visible_and_never_silently_dropped": true,
+      "ledger_projection_has_zero_authority": true
+    },
+    "summary": {
+      "papers": 1,
+      "invalid_ledgers": 0,
+      "scientific_holds": 0,
+      "submission_ready": 0,
+      "by_state": {
+        "TARGETED_REPAIR": 1
+      }
+    },
+    "entries": [
+      {
+        "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+        "title": "Noisy Rewards Write Noisy Memories: Reward Error as a Variance Amplifier in Self-Improving Agents",
+        "central_question": "Can an erroneous reward label become persistent agent state by changing the memory written from an otherwise identical trajectory, and does that perturbation reach later behavior?",
+        "contract_sha256": "3ba644a86ed78071fb5c4dc2077c974e7b48201e71494f8426f6641829068155",
+        "scientific_status": "READY",
+        "current_state": "TARGETED_REPAIR",
+        "supported_claims": 5,
+        "active_unrefuted_claims": 1,
+        "unsupported_claims": 2,
+        "limitations": [
+          "The F0 intervention requests six paired memories. Four pairs return complete outputs in both reward conditions. Two failure-label provider responses terminate as incomplete before assistant text is produced. Their provider response identifiers are archived and GET-only recovery confirms that no text is available. These two cases remain support debt. They do not change the observed 4/4 content-divergence result among complete pairs.",
+          "F0 and the fresh prompt control establish the reward-to-memory write channel. The downstream reward-to-future-outcome effect remains active experiment debt. We executed fixed-state first-action follow-ups before terminal continuation. The largest fresh distributional replication completed 96/96 policy calls over four held-out states. Its mean success-memory versus failure-memory action-distribution TV was 0.344, while the frozen 100,000-permutation audit gave $p=0.311$. The preregistered distribution-level support gate therefore remained unresolved. This result has no negative authority because no equivalence margin was frozen. Matched terminal continuation and controlled reward-corruption experiments remain the decisive downstream tests.",
+          "The paired intervention uses DeepSeek-V4-Flash as the memory writer. The released ReasoningBank implementation can use other writer models. Replication across memory-writer families remains experiment debt for a model-independent effect-size claim.",
+          "The released trajectories used for F0 come from one WebArena Shopping run. They include both original-success and original-failure episodes, which supports the mechanism across outcome strata. Broader task-family replication remains experiment debt.",
+          "Token-set Jaccard distance measures content divergence at a coarse lexical level. Title-set changes supply an additional structural measure. A semantic representation analysis can further quantify whether reward labels move memories toward distinct strategy clusters.",
+          "Support debt: Two requested F0 failure-label responses remain provider-incomplete after GET-only recovery and are excluded from scientific counts."
+        ],
+        "reopen_conditions": [],
+        "summary": {
+          "events": 8,
+          "allowed_transitions": 4,
+          "blocked_transitions": 0,
+          "story_search_receipts": 1,
+          "mock_reviews": 2,
+          "claim_audit_receipts": 0,
+          "manuscript_ci_receipts": 0,
+          "prebuttal_receipts": 0,
+          "submission_readiness_receipts": 0
+        },
+        "latest_story_search": {
+          "pass": true,
+          "selected_story_id": "S1-CURRENT-CHAIN",
+          "selected_story_title": "Current mechanism chain",
+          "story_search_sha256": "f6480d2640a6bab52189af9261ab2bc625b7415612845ca3aa1e3d4a2a01a1e9",
+          "valid_candidates": 3
+        },
+        "mock_pc_modes": {
+          "BLIND_MANUSCRIPT": "270f5f837d171bc05bdd09fa28c00726f0c5220017b720ed1d4cf03512d73964",
+          "ARTIFACT_AWARE": "4a09c3ab9ffbde33dd721f9437c3cdc28bd46c3dcdd1644160736340ca77b0a2"
+        },
+        "latest_mock_review": {
+          "mode": "ARTIFACT_AWARE",
+          "review_sha256": "4a09c3ab9ffbde33dd721f9437c3cdc28bd46c3dcdd1644160736340ca77b0a2",
+          "summary": {
+            "objections": 4,
+            "decision_critical": 1,
+            "targeted_experiment_proposals": 1,
+            "claim_expansion_requests_preserved_as_limitations": 0
+          }
+        },
+        "latest_claim_audit": {
+          "pass": false,
+          "claim_audit_sha256": "",
+          "blockers": []
+        },
+        "latest_manuscript_ci": {
+          "pass": false,
+          "required": 0,
+          "passed": 0,
+          "missing": [],
+          "failed": []
+        },
+        "latest_prebuttal": {
+          "pass": false,
+          "decision_critical": 0,
+          "blockers": []
+        },
+        "latest_submission_readiness": {
+          "submission_ready": false,
+          "receipt_sha256": "",
+          "blockers": []
+        },
+        "latest_transition": {
+          "from": "MOCK_PC",
+          "to": "TARGETED_REPAIR",
+          "allowed": true,
+          "blockers": []
+        },
+        "authority": {
+          "scientific": false,
+          "experiment": false,
+          "gpu": false,
+          "submission": false
+        }
+      }
+    ],
+    "invalid": [],
+    "scientific_authority": false
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "submission_authority": false
+}

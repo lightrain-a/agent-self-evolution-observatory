@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "D2-PROXY-REWARD-MEMORY-F1D-DISTRIBUTIONAL-REPLICATION",
+  "status": "DISTRIBUTIONAL_INCONCLUSIVE",
+  "frozen_gate": {
+    "primary_statistic": "mean per-state empirical total-variation distance between success-label-memory and failure-label-memory first-action distributions",
+    "permutation_scheme": "Within each future state, pool the 16 memory-conditioned actions and randomly assign 8 to each label; repeat independently across all four states.",
+    "permutation_repetitions": 100000,
+    "permutation_seed": 20260821,
+    "support_if": [
+      "Monte Carlo permutation p < 0.05",
+      "observed mean TV >= 0.20"
+    ],
+    "otherwise": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+    "no_state_selection_after_outcomes": true,
+    "no_memory_condition_is_secondary_context_only": true
+  },
+  "summary": {
+    "observed_mean_tv": 0.34375,
+    "permutation_repetitions": 100000,
+    "permutation_seed": 20260821,
+    "permutation_p_ge_observed": 0.310527,
+    "mean_tv_threshold": 0.2,
+    "alpha": 0.05,
+    "distributional_gate_pass": false,
+    "paired_action_signature_divergence_rate": 0.5,
+    "modal_action_signature_difference_rate": 0.25,
+    "memory_condition_shift_from_no_memory": 0.5
+  },
+  "task_results": [
+    {
+      "future_task": "22",
+      "source_memory_task": "21",
+      "success_vs_failure_tv": 0.625,
+      "success_vs_no_memory_tv": 0.5,
+      "failure_vs_no_memory_tv": 0.125,
+      "success_entropy_bits": 1.405639,
+      "failure_entropy_bits": 2.155639,
+      "no_memory_entropy_bits": 1.905639,
+      "success_counts": {
+        "click_element:46": 4,
+        "click_element:23": 1,
+        "extract_content": 3
+      },
+      "failure_counts": {
+        "click_element:46": 1,
+        "click_element:48": 1,
+        "click_element:23": 2,
+        "click_element:47": 3,
+        "extract_content": 1
+      },
+      "no_memory_counts": {
+        "click_element:47": 3,
+        "click_element:23": 2,
+        "click_element:46": 2,
+        "extract_content": 1
+      },
+      "success_mode": "click_element:46",
+      "failure_mode": "click_element:47",
+      "no_memory_mode": "click_element:47"
+    },
+    {
+      "future_task": "23",
+      "source_memory_task": "22",
+      "success_vs_failure_tv": 0.375,
+      "success_vs_no_memory_tv": 0.375,
+      "failure_vs_no_memory_tv": 0.125,
+      "success_entropy_bits": 0.954434,
+      "failure_entropy_bits": -0.0,
+      "no_memory_entropy_bits": 0.543564,
+      "success_counts": {
+        "extract_content": 5,
+        "click_element:36": 3
+      },
+      "failure_counts": {
+        "extract_content": 8
+      },
+      "no_memory_counts": {
+        "extract_content": 7,
+        "click_element:35": 1
+      },
+      "success_mode": "extract_content",
+      "failure_mode": "extract_content",
+      "no_memory_mode": "extract_content"
+    },
+    {
+      "future_task": "24",
+      "source_memory_task": "23",
+      "success_vs_failure_tv": 0.125,
+      "success_vs_no_memory_tv": 0.375,
+      "failure_vs_no_memory_tv": 0.5,
+      "success_entropy_bits": 1.0,
+      "failure_entropy_bits": 1.405639,
+      "no_memory_entropy_bits": 0.543564,
+      "success_counts": {
+        "click_element:40": 4,
+        "extract_content": 4
+      },
+      "failure_counts": {
+        "click_element:40": 4,
+        "extract_content": 3,
+        "click_element:25": 1
+      },
+      "no_memory_counts": {
+        "extract_content": 7,
+        "click_element:40": 1
+      },
+      "success_mode": "click_element:40",
+      "failure_mode": "click_element:40",
+      "no_memory_mode": "extract_content"
+    },
+    {
+      "future_task": "26",
+      "source_memory_task": "25",
+      "success_vs_failure_tv": 0.25,
+      "success_vs_no_memory_tv": 0.375,
+      "failure_vs_no_memory_tv": 0.25,
+      "success_entropy_bits": 1.5,
+      "failure_entropy_bits": 1.905639,
+      "no_memory_entropy_bits": 1.905639,
+      "success_counts": {
+        "extract_content": 2,
+        "click_element:38": 2,
+        "click_element:23": 4
+      },
+      "failure_counts": {
+        "extract_content": 2,
+        "click_element:39": 2,
+        "click_element:23": 3,
+        "click_element:38": 1
+      },
+      "no_memory_counts": {
+        "click_element:40": 2,
+        "click_element:39": 1,
+        "click_element:23": 3,
+        "extract_content": 2
+      },
+      "success_mode": "click_element:23",
+      "failure_mode": "click_element:23",
+      "no_memory_mode": "click_element:23"
+    }
+  ],
+  "decision": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+  "interpretation": "A pass supports a narrow immediate-action distribution shift under the frozen held-out states. It does not establish terminal success variance. A non-pass has no negative authority because no equivalence margin was preregistered.",
+  "scientific_authority": false,
+  "experiment_authority": false
+}

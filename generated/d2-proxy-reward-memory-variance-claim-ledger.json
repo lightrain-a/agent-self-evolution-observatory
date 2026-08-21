@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
   "title": "Noisy Rewards Write Noisy Memories: Reward Error as a Variance Amplifier in Self-Improving Agents",
-  "status": "ASSERTIVE_MANUSCRIPT_WITH_F0_SUPPORT",
+  "status": "ASSERTIVE_MANUSCRIPT_WITH_F0_AND_PROMPT_CONTROL_SUPPORT",
   "manuscript_policy": {
     "unrefuted_hypothesis_stays_active": true,
     "missing_evidence_creates_experiment_debt": true,
@@ -33,16 +33,28 @@
       "retain_in_manuscript": true
     },
     {
+      "claim_id": "C3A",
+      "claim": "On eight fresh trajectories, reward-mode memory divergence exceeds stronger same-mode semantic-preserving prompt rewording: mean between-mode Jaccard distance is 0.699949, mean within-mode distance is 0.594971, mean paired excess is 0.104978, and the exact one-sided sign-flip p-value is 0.0078125.",
+      "verdict": "SUPPORTED",
+      "evidence_refs": ["generated/d2-proxy-reward-memory-f0c-prompt-control.json"],
+      "retain_in_manuscript": true
+    },
+    {
       "claim_id": "C4",
       "claim": "Reward-induced memory perturbations amplify downstream action variance and success variance when the memories are reused on matched future tasks.",
       "verdict": "ACTIVE_UNREFUTED_HYPOTHESIS",
-      "evidence_state": "DOWNSTREAM_INJECTION_PENDING",
+      "evidence_state": "FIRST_ACTION_AND_FIXED_EVIDENCE_TERMINAL_INCONCLUSIVE_LIVE_BROWSER_TERMINAL_PENDING",
       "closure_authority": "",
       "retain_in_manuscript": true,
       "claim_narrowing_required": false,
+      "evidence_refs": [
+        "generated/d2-proxy-reward-memory-f1-r2.json",
+        "generated/d2-proxy-reward-memory-f1c-deterministic-audit.json",
+        "generated/d2-proxy-reward-memory-f1d-distributional-audit.json",
+        "generated/d2-proxy-reward-terminal-fixed-evidence.json"
+      ],
       "experiment_debt": [
-        "matched future-task paired memory injection",
-        "fixed-state repeated rollout variance measurement",
+        "live matched browser terminal continuation under paired memories",
         "controlled reward-corruption-rate experiment"
       ]
     },

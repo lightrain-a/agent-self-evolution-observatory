@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "mode": "BLIND_MANUSCRIPT",
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-260425",
+  "status": "completed",
+  "usage": {
+    "input_tokens": 7064,
+    "output_tokens": 1767,
+    "total_tokens": 8831,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "packet_sha256": "c8609f3b2170aa8671577ff56edcce73747094e0fbd96e03e812fc964261f725",
+  "review": {
+    "recommendation": "weak_reject",
+    "score_1_to_10": 4,
+    "confidence_1_to_5": 3,
+    "novelty_1_to_5": 3,
+    "significance_1_to_5": 3,
+    "technical_quality_1_to_5": 2,
+    "empirical_sufficiency_1_to_5": 2,
+    "clarity_1_to_5": 4,
+    "strengths": [
+      "The paper identifies a clean, testable causal mechanism: reward label → memory-writing objective → persistent memory content → potential future behavior. The causal diagram is well-specified and the intervention is precisely defined.",
+      "The prompt-perturbation control (Section 4) is a thoughtful design choice. Using same-mode paraphrases with stronger lexical perturbation than the released reward-mode contrast to rule out generic prompt sensitivity is methodologically sound, and the sign-flip test (p=0.0078) is appropriately conservative for the sample size.",
+      "The paper is honest about its limitations and clearly distinguishes completed evidence (F0) from active experiment debt (downstream variance). The support failures (provider non-responses) are properly archived and not used to inflate claims.",
+      "The connection to prior work (Ye et al., 2026; Asadolahi et al., 2026) is well-motivated and the proposed mechanism bridges two phenomena that have been studied separately."
+    ],
+    "weaknesses": [
+      "The central claim that reward noise 'amplifies variance' and 'becomes persistent state' is actively hypothesized but critically unsupported by downstream evidence. The manuscript's own downstream experiment (Section 5) is described only as a protocol. The fixed-state first-action follow-up yielded p=0.311 against a frozen distribution-level gate, which means the authors have not yet demonstrated that memory divergence actually changes future behavior in a statistically reliable way. This is the paper's decisive claim and it remains unresolved.",
+      "The empirical base is very small. F0 rests on 4 complete trajectory pairs (n=4). The prompt control uses 8 fresh trajectories. While the sign-flip test is exact, the effect size (0.105 excess) and the p-value (0.0078) are estimated from a single-digit sample. The claim that 'a reward-label perturbation can survive as a persistent memory perturbation' is established on n=4 complete pairs from one WebArena Shopping run using one writer model (DeepSeek-V4-Flash). Generalizability is unknown.",
+      "The two provider failures (task 24 and 47) are described as having 'zero scientific authority,' which is correct. However, with only 4/6 complete pairs, the effective sample is fragile. If the missing pairs had shown no divergence, the conclusion would weaken. The failure rate (2/6 = 33%) is itself noteworthy and not analyzed.",
+      "The paper uses token-set Jaccard distance as the primary divergence metric. This is a coarse lexical measure that cannot distinguish substantive strategic differences from superficial paraphrasing. The authors acknowledge this limitation but do not provide any semantic analysis (e.g., embedding-based distance, LLM-as-judge strategy classification) to validate that the observed divergence is behaviorally meaningful rather than lexically variable.",
+      "The manuscript conflates 'reward error' as a causal concept with the empirical intervention of flipping the reward bit. The experiment shows that the reward label matters — that is, the success and failure writers produce different memories. But this does not demonstrate that reward error (as opposed to correct reward) is the mechanism of concern. The paper needs to show that incorrect reward labels produce systematically different memory content than correct labels would, and that this difference is harmful. The current experiment only shows that the two reflection modes differ, which is almost tautological given they ask different questions."
+    ],
+    "decision_critical_objections": [
+      {
+        "objection_id": "O1",
+        "category": "missing_downstream_evidence",
+        "text": "The paper's core contribution is the claim that reward-induced memory divergence causes downstream behavioral variance. Section 5 describes a protocol but reports no completed experiment. The fixed-state follow-up (Section 7) failed to pass the preregistered gate (p=0.311). The paper therefore provides no evidence that the memory perturbation demonstrated in F0 actually affects future agent behavior, terminal success, or run-level variance. Without this link, the paper establishes only that flipping a reward bit changes the reflection prompt's output — which is expected given the prompts ask different questions (success analysis vs. failure analysis).",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "reward_to_behavior_claim",
+          "variance_amplification_claim"
+        ]
+      },
+      {
+        "objection_id": "O2",
+        "category": "generalizability",
+        "text": "The empirical results derive from n=4 complete trajectory pairs from one WebArena Shopping run with one writer model (DeepSeek-V4-Flash). The paper acknowledges this as a limitation but does not address whether the effect would replicate across different writer models, different task domains (WebArena uses multiple domains), or different self-improvement frameworks beyond ReasoningBank. For a paper claiming a general mechanism in self-improving agents, this evidence base is insufficient.",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "general_mechanism_claim"
+        ]
+      },
+      {
+        "objection_id": "O3",
+        "category": "construct_validity",
+        "text": "The paper interprets the memory divergence result as evidence that 'reward error' can change persistent state. However, the intervention flips the reward label to the opposite mode, which changes the reflection prompt to ask a fundamentally different question (success analysis vs. failure analysis with corrective strategy). It is not surprising that asking 'why did this succeed?' and 'why did this fail and how to fix it?' produce different outputs for the same trajectory. The paper has not shown what happens when a reward label is simply wrong (e.g., a trajectory that succeeded is labeled as failure) versus when it is correct. The causal claim about 'reward error' requires showing that the erroneous label produces a memory that is harmful or distorting relative to the correct label, not merely different.",
+        "decision_critical": true,
+        "evidence_state": "REQUIRES_NEW_CLAIM",
+        "claim_ids": [
+          "reward_error_claim"
+        ]
+      },
+      {
+        "objection_id": "O4",
+        "category": "metric_validity",
+        "text": "Token-set Jaccard distance measures lexical overlap. The paper claims that reward-conditioned memories differ 'beyond surface phrasing' (line 159) but provides only qualitative examples, not quantitative semantic validation. The prompt-perturbation control partially addresses this by showing reward-mode divergence exceeds same-mode wording divergence, but this still only shows that the reward-mode contrast is larger than a particular lexical perturbation, not that the divergence is semantically or strategically meaningful for downstream behavior.",
+        "decision_critical": false,
+        "evidence_state": "EXISTING_EVIDENCE",
+        "claim_ids": [
+          "memory_content_claim"
+        ]
+      }
+    ],
+    "strongest_reject_reason": "The paper's central claim — that reward noise amplifies variance in self-improving agents through persistent memory perturbation — has no downstream behavioral evidence. The completed experiment (F0) shows only that flipping the reward bit changes the reflection prompt output, which is expected given the success and failure prompts ask semantically different questions. The fixed-state follow-up failed to reach significance (p=0.311). The paper is therefore a well-motivated hypothesis with a clean experimental design but no evidence that the demonstrated memory perturbation actually matters for agent behavior. Without this link, the contribution is a mechanistic observation of an expected prompt-sensitivity effect, not a demonstration of reward error as a variance amplifier.",
+    "highest_value_next_action": "Complete the downstream variance experiment (Section 5) and demonstrate that reward-induced memory divergence produces statistically significant behavioral divergence in future tasks. This is the decisive missing evidence. Additionally, run the experiment with at least two different writer models and across multiple WebArena task domains to establish generalizability.",
+    "extra_experiment_needed_before_submission": true,
+    "submission_advice": "major_revision"
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "provider_response_id_archived_privately": true,
+  "provider_response_id_sha256": "b0bb2537000d057008d2d4e21faf6fd6cde126974e63d049e5336a9e0cd6e220"
+}

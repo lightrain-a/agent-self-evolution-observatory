@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "mode": "ARTIFACT_AWARE",
+  "requested_model": "kimi-k3",
+  "resolved_model": "kimi-k3",
+  "status": "completed",
+  "usage": {
+    "input_tokens": 64375,
+    "output_tokens": 1509,
+    "total_tokens": 65884,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "packet_sha256": "9d9254d811aa6594f946dadf6b505e7cc4bbc22e83083cf2170fbecf39eadcbb",
+  "review": {
+    "recommendation": "weak_reject",
+    "score_1_to_10": 4,
+    "confidence_1_to_5": 4,
+    "novelty_1_to_5": 3,
+    "significance_1_to_5": 3,
+    "technical_quality_1_to_5": 3,
+    "empirical_sufficiency_1_to_5": 2,
+    "clarity_1_to_5": 4,
+    "strengths": [
+      "Clean causal identification of the write channel: the F0 paired intervention holds the trajectory, task, and writer model fixed while flipping only the reward-conditioned reflection mode, and all 4 complete pairs change memory content and title sets (mean token-set Jaccard distance 0.735).",
+      "The disjoint eight-trajectory prompt-perturbation control is a genuinely good falsification-oriented design: same-mode paraphrases lexically perturb the prompt more than the released success/failure contrast, yet between-mode memory divergence still exceeds within-mode divergence (0.700 vs 0.595, paired excess 0.105, exact sign-flip p = 0.0078). This rules out the most obvious generic prompt-sensitivity reduction.",
+      "The paper is unusually honest about its evidence boundary: support debt (two provider-incomplete F0 responses) is excluded from scientific counts, the inconclusive first-action distributional audit (TV 0.344, p = 0.311) is reported with no negative authority claimed, and C4 is explicitly retained as an active unrefuted hypothesis with named experiment debt.",
+      "The mechanism connects two previously separate observations (run variance in self-improving agents, memory reward inflation) into a coherent causal decomposition: reward error -> memory-writing objective -> persistent context -> downstream variance."
+    ],
+    "weaknesses": [
+      "The paper's central question has two conjuncts: (a) does reward error change written memory, and (b) does that perturbation reach later behavior. Only (a) is empirically established. The downstream claim C4 (variance amplification) is supported only by a protocol description in Section 5 and an inconclusive first-action audit; the title's 'Variance Amplifier' framing therefore outruns the evidence.",
+      "The F0 sample is tiny and narrow: 4 complete pairs from a single WebArena Shopping run, one writer model (DeepSeek-V4-Flash), one memory system (ReasoningBank). The prompt control adds 8 trajectories but from the same task family and writer. Claims about a general 'state channel' rest on a thin empirical base.",
+      "Token-set Jaccard distance is a coarse lexical proxy. The paper acknowledges this but the headline numbers (0.735, 0.700 vs 0.595) are all lexical; the title-set change is structural but still shallow. No semantic or behavioral measure of memory difference is established in the completed evidence.",
+      "The one completed downstream probe (F1-R2, 12 aligned rollouts) shows a 0.583 paired action-signature divergence rate, but the deterministic control failed (temperature zero did not stabilize within-condition actions) and the 96-call distributional replication did not pass its own preregistered gate (p = 0.311 against p < 0.05). The paper correctly declines to claim this as negative evidence, but it means the behavioral half of the story currently has no positive support at the distribution level.",
+      "Section 5 (Downstream Variance Protocol) is a proposed experiment presented with equation-level formalism (Eq. 7) and directional predictions; per reviewing norms this cannot be credited as evidence, and its prominence in the abstract/intro risks reader confusion about what is established."
+    ],
+    "decision_critical_objections": [
+      {
+        "objection_id": "O1",
+        "category": "empirical_sufficiency",
+        "text": "The manuscript's framing ('Reward Error as a Variance Amplifier') and central question require evidence that reward-induced memory perturbations change later behavior. The only completed downstream evidence is an inconclusive first-action distributional audit (mean TV 0.344, permutation p = 0.311, gate unresolved) with no terminal-outcome or corruption-rate results. C4 is legitimately retained as an active unrefuted hypothesis and must not be punished for being active, but for acceptance the missing terminal-continuation and reward-corruption evidence is decision-critical: without it, the paper establishes a write-channel curiosity, not a variance amplifier.",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "C4"
+        ]
+      },
+      {
+        "objection_id": "O2",
+        "category": "scope_and_generality",
+        "text": "All completed evidence comes from one WebArena Shopping run, one writer model, and one memory implementation, with 4 complete F0 pairs and 8 control trajectories. The paper's own limitations concede writer-family and task-family replication are experiment debt. This caps the strength of the general 'state channel' claim even though the local claim is supported.",
+        "decision_critical": false,
+        "evidence_state": "EXISTING_EVIDENCE",
+        "claim_ids": [
+          "C2",
+          "C3",
+          "C3A"
+        ]
+      },
+      {
+        "objection_id": "O3",
+        "category": "measurement_validity",
+        "text": "The headline divergence metrics are lexical (token-set Jaccard) plus title-set changes. The paper itself notes a semantic representation analysis is future work. The write-channel conclusion is probably robust to this (the prompt control helps), but the magnitude claims (0.735 mean distance) should not be read as semantic or behavioral effect sizes.",
+        "decision_critical": false,
+        "evidence_state": "EXISTING_EVIDENCE",
+        "claim_ids": [
+          "C3",
+          "C3A"
+        ]
+      },
+      {
+        "objection_id": "O4",
+        "category": "support_debt_handling",
+        "text": "Two of six requested F0 failure-label responses are provider-incomplete and correctly excluded from scientific counts with zero authority. This is handled properly and is not counterevidence, but it further reduces the already small complete-pair base from 6 to 4.",
+        "decision_critical": false,
+        "evidence_state": "EXISTING_EVIDENCE",
+        "claim_ids": [
+          "C2",
+          "C3"
+        ]
+      }
+    ],
+    "strongest_reject_reason": "The paper empirically establishes only the first half of its central question (reward bit changes written memory) while the title, abstract, and contribution framing center on variance amplification, for which the decisive downstream experiments (matched terminal continuation, controlled reward-corruption variance) remain unexecuted and the one completed downstream probe is inconclusive.",
+    "highest_value_next_action": "Execute the matched future-task terminal continuation experiment under paired memories with a frozen success-variance gate, followed by the controlled reward-corruption-rate experiment; these are the only results that can convert C4 from an active hypothesis into the paper's headline claim.",
+    "extra_experiment_needed_before_submission": true,
+    "submission_advice": "new_experiment"
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "provider_response_id_archived_privately": true,
+  "provider_response_id_sha256": "3c8a96ce96e5755b43f8b6a9675075546d4de7d2204b7cb842b2ad90184cbb7f"
+}

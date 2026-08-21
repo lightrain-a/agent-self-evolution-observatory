@@ -1,0 +1,203 @@
+{
+  "schema_version": "1.0",
+  "support_id": "D2-PROXY-REWARD-FIXED-EVIDENCE-TERMINAL-SUPPORT",
+  "status": "SUPPORT_QUALIFIED",
+  "selection_policy": {
+    "future_task_ids_frozen_before_policy_calls": [
+      "164",
+      "385",
+      "387",
+      "388"
+    ],
+    "all_tasks_fresh_to_f0_f0c_f1": true,
+    "review_or_opinion_semantic_family_only": true,
+    "pure_deterministic_must_include_only": true,
+    "all_reference_strings_must_be_visible_in_released_browser_evidence": true,
+    "historical_agent_outputs_excluded_from_evidence": true,
+    "historical_agent_memory_excluded_from_evidence": true
+  },
+  "source_artifacts": {
+    "parquet": "generated/research-data/paper-yield-d5-c01/parquet-cache/wa_awm_shuffle1-shopping_run1.parquet",
+    "parquet_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e",
+    "task_config": "generated/research-data/paper-yield-d5-c01/self-improve-fragility/webarena/src/walt/benchmarks/wa/test_configs/test.raw.json",
+    "task_config_sha256": "d25e83078ec728adc82bd43871338a24a3907e101b5a5fdb1ae81bb7f72f36a6",
+    "evaluator_source": "generated/research-data/paper-yield-d5-c01/self-improve-fragility/webarena/src/walt/browser_use/custom/evaluators/wa/wa_evaluators.py",
+    "evaluator_source_sha256": "f78eb61554c811f9411e7d72e0bdf2b5baa27379cbf632ade7fe49ce51a3f30d"
+  },
+  "tasks": [
+    {
+      "task_id": "164",
+      "task_prompt": "What are the main criticisms of this product? Please extract the relevant sentences.",
+      "intent_template_id": 136,
+      "released_original_success": true,
+      "reference_answers": [
+        "Dry",
+        "Uneven color"
+      ],
+      "reference_visibility": [
+        {
+          "ref": "Dry",
+          "visible": true
+        },
+        {
+          "ref": "Uneven color",
+          "visible": true
+        }
+      ],
+      "released_state_count": 2,
+      "released_state_sha256": [
+        "b95bc27a28c3f9027be62e4312a2d52cdbfdee9c3a8ed3cd11280e1ce6101ffb",
+        "abfdb0ac7f6fdb038ecfa3b5bbabd41272aee828a2c6f017515670e40d30507b"
+      ],
+      "evidence_sha256": "51a6e2048cc9ff53f99a1a2c979a877a884317d70a2c225c8ebeebb3f77054b9",
+      "evidence_chars": 16975,
+      "qualified": true,
+      "blockers": []
+    },
+    {
+      "task_id": "385",
+      "task_prompt": "List the customer names who thinks EYZUTAK phone cases are of good looking",
+      "intent_template_id": 666,
+      "released_original_success": false,
+      "reference_answers": [
+        "Lisa Lee",
+        "MH",
+        "Misba009",
+        "Amanda",
+        "N Randall",
+        "Amazon Customer",
+        "Cally",
+        "Bethany Robertson"
+      ],
+      "reference_visibility": [
+        {
+          "ref": "Lisa Lee",
+          "visible": true
+        },
+        {
+          "ref": "MH",
+          "visible": true
+        },
+        {
+          "ref": "Misba009",
+          "visible": true
+        },
+        {
+          "ref": "Amanda",
+          "visible": true
+        },
+        {
+          "ref": "N Randall",
+          "visible": true
+        },
+        {
+          "ref": "Amazon Customer",
+          "visible": true
+        },
+        {
+          "ref": "Cally",
+          "visible": true
+        },
+        {
+          "ref": "Bethany Robertson",
+          "visible": true
+        }
+      ],
+      "released_state_count": 4,
+      "released_state_sha256": [
+        "dff0a5a7988abbb901535b2ee437a41f83d155ef5a99398a4e67d9ef1fd356a6",
+        "a604d92cb17e954e8c8476dda9e83de854d3e506a2d1a814720f7da1a28ca9bb",
+        "de2c3bf25fae1f9126844a8b2fda2cb482f5849247914e5102d5444314b9ef50",
+        "9759c884637b04a6c79cef2212f209e35bf2fa09302bb706894359799fbf50e6"
+      ],
+      "evidence_sha256": "553ba12a630fd0e111f320550d79fbd2845e9f78d8b30bb699a8e5850ddf1ca9",
+      "evidence_chars": 39190,
+      "qualified": true,
+      "blockers": []
+    },
+    {
+      "task_id": "387",
+      "task_prompt": "Who gave 4 or 5 stars for phone cases from EYZUTAK",
+      "intent_template_id": 1356,
+      "released_original_success": true,
+      "reference_answers": [
+        "MH",
+        "Misba009",
+        "Amanda",
+        "Amazon Customer",
+        "Cally",
+        "Bethany Robertson"
+      ],
+      "reference_visibility": [
+        {
+          "ref": "MH",
+          "visible": true
+        },
+        {
+          "ref": "Misba009",
+          "visible": true
+        },
+        {
+          "ref": "Amanda",
+          "visible": true
+        },
+        {
+          "ref": "Amazon Customer",
+          "visible": true
+        },
+        {
+          "ref": "Cally",
+          "visible": true
+        },
+        {
+          "ref": "Bethany Robertson",
+          "visible": true
+        }
+      ],
+      "released_state_count": 4,
+      "released_state_sha256": [
+        "0c367abe59c378f8ac877a75cf895003f836c7d68530c68b0fb4888aced3fc3f",
+        "d5d752d041a131781865520d85533f3f3dc4740ffc29928ed91b9b4bc2c824c6",
+        "912b2aa8fb857e60fd5a71b60880dfd2facba82c90ec29021a8b2430fd98c1df",
+        "97f90fed7c975585dec6ac76a51ae38383c81e7cefffd5490e1982e00aba4a04"
+      ],
+      "evidence_sha256": "a6fa97e45587ca0db42e8f74710f6a1e9c5acedef67405d4dd8db2d562647d58",
+      "evidence_chars": 39190,
+      "qualified": true,
+      "blockers": []
+    },
+    {
+      "task_id": "388",
+      "task_prompt": "Who gave 1 or 2 stars for phone cases from EYZUTAK",
+      "intent_template_id": 1356,
+      "released_original_success": true,
+      "reference_answers": [
+        "Evelyn Kurver",
+        "N Randall"
+      ],
+      "reference_visibility": [
+        {
+          "ref": "Evelyn Kurver",
+          "visible": true
+        },
+        {
+          "ref": "N Randall",
+          "visible": true
+        }
+      ],
+      "released_state_count": 4,
+      "released_state_sha256": [
+        "5a6c48a7a58dd50d26102222385e20b36d42034417c2a3784d11528ab30755af",
+        "7dd0cbdaaf38b1ea7e44cc39117be570c1b44cb142812b3b385da15fd21faf24",
+        "a4b8d43a028a46332334e12774af673b1de8ee347f1312f25dc55342711b8df0",
+        "08fbf7037dd8e232f34a9b0fe62d964d8df0de37591a4b8a393f6525b17a6984"
+      ],
+      "evidence_sha256": "db17b04c6c50ef4241ee9147916ef0ad60a111d71cf90c97924bbbe328c44121",
+      "evidence_chars": 39190,
+      "qualified": true,
+      "blockers": []
+    }
+  ],
+  "scientific_authority": false,
+  "experiment_authority": false
+}

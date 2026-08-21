@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "D2-PROXY-REWARD-MEMORY-F1C-DETERMINISTIC-CONTROL",
+  "status": "FROZEN_BEFORE_PROVIDER_CALLS",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "hypothesis": "Reward-induced memory divergence changes future action decisions under a fixed held-out browser observation.",
+  "source_artifacts": {
+    "f0": "generated/d2-proxy-reward-memory-f0.json",
+    "released_parquet": "generated/research-data/paper-yield-d5-c01/parquet-cache/wa_awm_shuffle1-shopping_run1.parquet"
+  },
+  "paired_interventions": [
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2"
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2"
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2"
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2"
+    }
+  ],
+  "conditions": [
+    "success_label_memory",
+    "failure_label_memory",
+    "no_memory"
+  ],
+  "rollouts_per_condition": 3,
+  "fixed": [
+    "future task prompt",
+    "future browser observation",
+    "browser-agent system instruction",
+    "policy model family",
+    "temperature",
+    "output schema"
+  ],
+  "model": {
+    "requested": "doubao-seed-2.0-mini",
+    "temperature": 0.0,
+    "max_output_tokens": 1200,
+    "provider_retries": 0,
+    "store": true,
+    "thinking": "disabled",
+    "allow_thinking_compatibility_fallback": false
+  },
+  "primary_metrics": {
+    "paired_action_signature_divergence_rate": "aligned-rollout fraction where success-memory and failure-memory conditions choose different first structured action signatures",
+    "modal_action_signature_difference_rate": "future-task fraction whose modal first action differs between success-memory and failure-memory conditions",
+    "memory_condition_shift_from_no_memory": "future-task fraction where either memory condition changes the modal first action relative to no-memory"
+  },
+  "action_signature": "first action name; click actions also include the fixed interactive-element index",
+  "falsifier": {
+    "stop_second_link_if": "all complete aligned success-memory versus failure-memory rollouts have identical action signatures across all four held-out future observations"
+  },
+  "experiment_debt_after_f1": [
+    "execute paired policies through terminal environment outcomes",
+    "measure success variance across controlled reward-corruption rates"
+  ],
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  },
+  "parent_experiment_id": "D2-PROXY-REWARD-MEMORY-F1-ACTION-DIVERGENCE-R2",
+  "support_amendment": {
+    "path": "generated/d2-proxy-reward-memory-f1-support-r2-amendment.json",
+    "sha256": "44a6f738972cb7903266c62f412bea8a2364865e99906ecc006a689f3c507ba5"
+  },
+  "transport_note": "Scientific design unchanged; R2 disables reasoning output after R1 support failure consumed the full output budget without assistant text.",
+  "targeted_repair_role": "Cheapest falsifier for whether R2 action divergence exceeds within-condition sampling variability.",
+  "deterministic_control": {
+    "all_four_held_out_states_retained": true,
+    "conditions_unchanged": true,
+    "rollouts_per_condition": 3,
+    "primary_support_rule": "A stable condition effect requires at least one future state where all three success-memory actions agree, all three failure-memory actions agree, and the two stable signatures differ.",
+    "inconclusive_rule": "Within-condition disagreement at temperature 0 prevents deterministic attribution and triggers a larger fresh distributional replication.",
+    "no_outcome_driven_state_selection": true
+  },
+  "experiment_authority": false
+}

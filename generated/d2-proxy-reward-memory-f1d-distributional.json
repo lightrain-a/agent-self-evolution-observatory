@@ -1,0 +1,3597 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "D2-PROXY-REWARD-MEMORY-F1D-DISTRIBUTIONAL-REPLICATION",
+  "status": "F1_COMPLETE",
+  "contract_sha256": "4844002cf022edfe95c35ee6f0d0516dd06f1e5526335fec55e0e6b396cfa839",
+  "hypothesis": "Reward-induced memory divergence changes future action decisions under a fixed held-out browser observation.",
+  "summary": {
+    "requested_policy_calls": 96,
+    "complete_policy_calls": 96,
+    "provider_or_parse_failures": 0,
+    "aligned_success_failure_rollouts": 32,
+    "required_aligned_success_failure_rollouts": 32,
+    "falsifier_evaluable": true,
+    "paired_action_signature_divergence_rate": 0.5,
+    "modal_action_signature_comparable_tasks": 4,
+    "modal_action_signature_difference_rate": 0.25,
+    "no_memory_comparable_tasks": 4,
+    "memory_condition_shift_from_no_memory": 0.5
+  },
+  "falsifier_result": "SURVIVES_F1",
+  "task_results": [
+    {
+      "future_task": "22",
+      "source_memory_task": "21",
+      "signatures": {
+        "success_label_memory": [
+          "click_element:46",
+          "click_element:23",
+          "extract_content",
+          "click_element:46",
+          "click_element:46",
+          "extract_content",
+          "click_element:46",
+          "extract_content"
+        ],
+        "failure_label_memory": [
+          "click_element:46",
+          "click_element:48",
+          "click_element:23",
+          "click_element:47",
+          "click_element:47",
+          "click_element:23",
+          "click_element:47",
+          "extract_content"
+        ],
+        "no_memory": [
+          "click_element:47",
+          "click_element:47",
+          "click_element:23",
+          "click_element:46",
+          "click_element:47",
+          "click_element:23",
+          "extract_content",
+          "click_element:46"
+        ]
+      },
+      "modal_signatures": {
+        "success_label_memory": "click_element:46",
+        "failure_label_memory": "click_element:47",
+        "no_memory": "click_element:47"
+      },
+      "entropy_bits": {
+        "success_label_memory": 1.405639,
+        "failure_label_memory": 2.155639,
+        "no_memory": 1.905639
+      },
+      "aligned_pair_count": 8,
+      "aligned_divergent_count": 6,
+      "scientific_authority": false
+    },
+    {
+      "future_task": "23",
+      "source_memory_task": "22",
+      "signatures": {
+        "success_label_memory": [
+          "extract_content",
+          "click_element:36",
+          "click_element:36",
+          "extract_content",
+          "extract_content",
+          "extract_content",
+          "extract_content",
+          "click_element:36"
+        ],
+        "failure_label_memory": [
+          "extract_content",
+          "extract_content",
+          "extract_content",
+          "extract_content",
+          "extract_content",
+          "extract_content",
+          "extract_content",
+          "extract_content"
+        ],
+        "no_memory": [
+          "extract_content",
+          "extract_content",
+          "click_element:35",
+          "extract_content",
+          "extract_content",
+          "extract_content",
+          "extract_content",
+          "extract_content"
+        ]
+      },
+      "modal_signatures": {
+        "success_label_memory": "extract_content",
+        "failure_label_memory": "extract_content",
+        "no_memory": "extract_content"
+      },
+      "entropy_bits": {
+        "success_label_memory": 0.954434,
+        "failure_label_memory": 0.0,
+        "no_memory": 0.543564
+      },
+      "aligned_pair_count": 8,
+      "aligned_divergent_count": 3,
+      "scientific_authority": false
+    },
+    {
+      "future_task": "24",
+      "source_memory_task": "23",
+      "signatures": {
+        "success_label_memory": [
+          "click_element:40",
+          "click_element:40",
+          "extract_content",
+          "click_element:40",
+          "click_element:40",
+          "extract_content",
+          "extract_content",
+          "extract_content"
+        ],
+        "failure_label_memory": [
+          "click_element:40",
+          "extract_content",
+          "click_element:40",
+          "click_element:40",
+          "click_element:40",
+          "extract_content",
+          "extract_content",
+          "click_element:25"
+        ],
+        "no_memory": [
+          "extract_content",
+          "extract_content",
+          "extract_content",
+          "extract_content",
+          "extract_content",
+          "extract_content",
+          "click_element:40",
+          "extract_content"
+        ]
+      },
+      "modal_signatures": {
+        "success_label_memory": "click_element:40",
+        "failure_label_memory": "click_element:40",
+        "no_memory": "extract_content"
+      },
+      "entropy_bits": {
+        "success_label_memory": 1.0,
+        "failure_label_memory": 1.405639,
+        "no_memory": 0.543564
+      },
+      "aligned_pair_count": 8,
+      "aligned_divergent_count": 3,
+      "scientific_authority": false
+    },
+    {
+      "future_task": "26",
+      "source_memory_task": "25",
+      "signatures": {
+        "success_label_memory": [
+          "extract_content",
+          "click_element:38",
+          "click_element:23",
+          "click_element:38",
+          "extract_content",
+          "click_element:23",
+          "click_element:23",
+          "click_element:23"
+        ],
+        "failure_label_memory": [
+          "extract_content",
+          "click_element:39",
+          "click_element:39",
+          "click_element:23",
+          "extract_content",
+          "click_element:23",
+          "click_element:23",
+          "click_element:38"
+        ],
+        "no_memory": [
+          "click_element:40",
+          "click_element:39",
+          "click_element:23",
+          "click_element:23",
+          "click_element:23",
+          "extract_content",
+          "click_element:40",
+          "extract_content"
+        ]
+      },
+      "modal_signatures": {
+        "success_label_memory": "click_element:23",
+        "failure_label_memory": "click_element:23",
+        "no_memory": "click_element:23"
+      },
+      "entropy_bits": {
+        "success_label_memory": 1.5,
+        "failure_label_memory": 1.905639,
+        "no_memory": 1.905639
+      },
+      "aligned_pair_count": 8,
+      "aligned_divergent_count": 4,
+      "scientific_authority": false
+    }
+  ],
+  "rollouts": [
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "action_signature": "click_element:46",
+      "next_goal": "First, load the full reviews section by clicking the reviews tab to ensure all review content is visible, then extract all reviews to search for mentions of underwater photos.",
+      "parse_recovered": false,
+      "raw_sha256": "113231f4e5490ef655a5d52eacd6fd4f4b2c3a9cd50bacac13f298933cb61f9d",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "action_signature": "click_element:23",
+      "next_goal": "First, navigate to the full reviews page (click the [23]<a>Reviews link) to load all 12 reviews properly, then check if there are reviews about underwater photos, or go to page 2 if available to see more reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "e675ac650a5d04294ed84fdc7c3c059d6ec2457ce352d35f4b83383efbf9c897",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "action_signature": "extract_content",
+      "next_goal": "First, confirm we are viewing the reviews section, then extract all reviews on this page that mention underwater photos, and check the next page if needed. Start by extracting the current review content with the goal of finding reviews mentioning underwater photo or underwater photography.",
+      "parse_recovered": false,
+      "raw_sha256": "bfcd01d07edfa1ef33e21ee535b63b0667ce95d423938736522b801e15e27b9a",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 4,
+      "action_signature": "click_element:46",
+      "next_goal": "First, confirm we are viewing the reviews section, then extract all reviews to search for mentions of underwater photo, or navigate to the full reviews page if needed. First, click the reviews tab [46] to ensure full review content is loaded, then extract review content looking for 'underwater photo' mentions.",
+      "parse_recovered": false,
+      "raw_sha256": "ba61607ea4c442b294b3d84ad1a3f19677e66b7b1bb1fb14bf6da3fe98ce180e",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 5,
+      "action_signature": "click_element:46",
+      "next_goal": "First, load the full reviews section by clicking the reviews tab to ensure all review content is visible, then extract reviews that mention underwater photo or underwater photography.",
+      "parse_recovered": false,
+      "raw_sha256": "88b74a1dc3d466a5607befde9e5fdfb1e86d92bef41b0d34deffa6da7414290f",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 6,
+      "action_signature": "extract_content",
+      "next_goal": "First, check all existing reviews to find mentions of underwater photos, start by extracting the full reviews content, or navigate to page 2 if needed, but first extract the current reviews to look for the keyword \"underwater photo",
+      "parse_recovered": true,
+      "raw_sha256": "3d4336f4362e31ecee2a37c8485f025a95c3e0d3a3abf71ff9e753463cbea629",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 7,
+      "action_signature": "click_element:46",
+      "next_goal": "First, load the full reviews section properly, then extract all reviews to search for mentions of underwater photo. First, click the reviews tab if needed, then use extract_content to find reviews about underwater photography.",
+      "parse_recovered": false,
+      "raw_sha256": "13eedd019d63bbbceb05f19d34c543a13ab6abf89f85bd03e087289982cdd28d",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 8,
+      "action_signature": "extract_content",
+      "next_goal": "First, confirm we are viewing the full reviews section, then extract all reviews on this page to search for mentions of underwater photography, and then check the next page if needed. Start by extracting the current review content with a goal to find reviews mentioning underwater photo or underwater photography.",
+      "parse_recovered": false,
+      "raw_sha256": "15e2be9c957bb5ef30f218cae7e2babf5c0adb2e37cf115ae9d03b7fac4caf51",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "action_signature": "click_element:46",
+      "next_goal": "First, navigate to the full reviews page by clicking the reviews link to see all customer reviews, then check for mentions of underwater photography, and also check the second review page since there is a page 2 link.",
+      "parse_recovered": true,
+      "raw_sha256": "7455c6b03cfa80cf6503b7e26927b85fb956007a8c0501cbb40e8b7d8cc6929f",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "action_signature": "click_element:48",
+      "next_goal": "First, check the remaining review pages to find all mentions of underwater photos. The next page of reviews is at index [48], so click the Next page button to view the second set of reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "a1e8f084a6d1d72881b61fe6b3b3f092812885c7fa29f6a9ad1cd236f9692d44",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "action_signature": "click_element:23",
+      "next_goal": "First, navigate to the full reviews page to see all 12 reviews, then check each review for mentions of underwater photography. First, click the reviews link to load all review content.",
+      "parse_recovered": false,
+      "raw_sha256": "7d14c76af0ba3401ad14eb9cff39420715168f64ebfd092630f367b89b9e245a",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 4,
+      "action_signature": "click_element:47",
+      "next_goal": "Navigate to the second review page to check for mentions of underwater photography in the reviews there, since the first page of reviews does not mention underwater photos.",
+      "parse_recovered": false,
+      "raw_sha256": "0b7660fed1ba8ceeceeb3a08792784d499d04ec701931289f4a5ea2bb897b84f",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 5,
+      "action_signature": "click_element:47",
+      "next_goal": "First, check the second review page to see if any reviewers mention underwater photos, since the current page only shows 3 reviews and there are 12 total reviews across pages.",
+      "parse_recovered": false,
+      "raw_sha256": "f9e9e8ca35a56a3a702fd81bb4cb9c8a9b23b1002455dd1c5c6ac96e2349e4b5",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 6,
+      "action_signature": "click_element:23",
+      "next_goal": "First, navigate to the full reviews page by clicking the [23]<a 12 Reviews/> element to view all reviews, then check for mentions of underwater photos, then move to page 2 if needed.",
+      "parse_recovered": false,
+      "raw_sha256": "0e047ce18a50d99529d4d0713cd6e63fa5a5d4fbf2f96dee6235d0a29bf63e78",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 7,
+      "action_signature": "click_element:47",
+      "next_goal": "Check the second page of reviews to see if any mention underwater photography, as the first page's reviews do not currently reference underwater photos.",
+      "parse_recovered": false,
+      "raw_sha256": "d84fa0e2cb62d4cff7395c4a52c25acfae4249b92ecb18e7a1841a5ca7c6f8cd",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 8,
+      "action_signature": "extract_content",
+      "next_goal": "First, extract the current reviews to check for mentions of underwater photos, then navigate to page 2 of reviews if there are more reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "ec994e2446f46782fe9f34d78314b2e7d85b0c73b854a0325b462697c658dd93",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 1,
+      "action_signature": "click_element:47",
+      "next_goal": "First, check the second review page to see if any reviews mention underwater photos, by clicking the page 2 link at index [47].",
+      "parse_recovered": false,
+      "raw_sha256": "5dd126cbb028c13fedc4e0300b9726cf1c62af418256ea89f31d9be9951b3755",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 2,
+      "action_signature": "click_element:47",
+      "next_goal": "First, check the full list of reviews (there are 12 total, current view shows partial reviews) and either navigate to page 2 or search/filter reviews for mentions of underwater photography. The quickest next step is to click the 'Page 2' link [47] to see additional reviews, or use the search/filter options, but first view all reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "7de772c4d16b389bd74992e5c898b72e2e5cdbbd27756e11592906740ddfb07b",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 3,
+      "action_signature": "click_element:23",
+      "next_goal": "First, navigate to the full reviews page (click the 12 Reviews link) to access all customer reviews, then search for mentions of underwater photos, or extract the current review content first to check for relevant keywords.",
+      "parse_recovered": false,
+      "raw_sha256": "a59bbf53ee17799905fcfc7f992a4f6a0ee2e9780f1fb272df8f0d6e15241394",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 4,
+      "action_signature": "click_element:46",
+      "next_goal": "First, view the full reviews section, then check all review pages to find reviewers who mention underwater photos. Start by clicking the [46]<a Reviews 12/> element to load the full reviews page, or scroll to see more existing reviews, or navigate to page 2 of reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "ceab8ab8351469ce6138c820c2a7791abd34220a48603f97e243e342c19489e1",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 5,
+      "action_signature": "click_element:47",
+      "next_goal": "First, check the second page of reviews to see if any reviewers mention underwater photos, then continue searching all review pages if needed.",
+      "parse_recovered": false,
+      "raw_sha256": "b105dbf16bf7f5b75422f8fcc617c959632e3a43ecbf124e0a5a6b475f3703a2",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 6,
+      "action_signature": "click_element:23",
+      "next_goal": "First, navigate to the full reviews page to see all reviews, then search for mentions of underwater photos. Start by clicking the [23]<a 12 Reviews/> element to view all customer reviews.",
+      "parse_recovered": true,
+      "raw_sha256": "24819233ae62ca776b5a950904d401e9453a4ca50df65d108529f8e14e8d9ef3",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 7,
+      "action_signature": "extract_content",
+      "next_goal": "First, check the existing reviews on this page for mentions of underwater photography, then navigate to review page 2 to see the remaining reviews. Start by extracting the current review content to scan for relevant keywords.",
+      "parse_recovered": false,
+      "raw_sha256": "2dcef670243d888499c4b8d24deccf2e836bb9787bef3aaabee6171dfc5df8ba",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "21",
+      "future_task": "22",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 8,
+      "action_signature": "click_element:46",
+      "next_goal": "First, view all available reviews to find those that mention underwater photos. Start by navigating to the full reviews page by clicking the reviews link [23]<a 12 Reviews/> or the active reviews tab [46]<a Reviews 12/> to load all review content.",
+      "parse_recovered": false,
+      "raw_sha256": "497602719307312871951b87c80e155c4a0f6ceaeb16a442482490f48bd4bfc1",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "action_signature": "extract_content",
+      "next_goal": "First, confirm we are on the Reviews tab (we already are, index 35 is active), then extract all reviews that mention fingerprint resistant, and check the second review page if needed to find all relevant reviewers. First, let's extract the current review content to capture the first matching review, then proceed to page 2 if there are more reviews.",
+      "parse_recovered": true,
+      "raw_sha256": "2869d93d0d2ca684616f5f82d46b379ebf1723e5d326c225b137fa05ac9a41bb",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "action_signature": "click_element:36",
+      "next_goal": "First, check if there are more reviews by navigating to page 2 using the page 2 link, then extract all reviews that mention 'good fingerprint resistant' or similar phrases about fingerprint resistance.",
+      "parse_recovered": false,
+      "raw_sha256": "6a0e2e87bd9ff7421d3f902282a14dbb79315eb788a09f07c0e900c4e37ff939",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "action_signature": "click_element:36",
+      "next_goal": "First, confirm we are on the Reviews tab (we already are, index 35), then either go to page 2 to see remaining reviews or extract all relevant review data including mentions of fingerprint resistant.",
+      "parse_recovered": false,
+      "raw_sha256": "04ccc9bdf61e96a86768785a3564845341f727d456d38df4acf60ae2d6fb929f",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 4,
+      "action_signature": "extract_content",
+      "next_goal": "First, confirm we are on the Reviews tab (we already are, index 35 is active), then extract all reviews to find those mentioning fingerprint resistant quality, or check the second review page if needed. First, extract the current review content to look for the target phrase.",
+      "parse_recovered": false,
+      "raw_sha256": "bcc2c7385ff8a34a225beba51b8679f9d2cef4fe5bbd07e369e04cc0f8f39432",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 5,
+      "action_signature": "extract_content",
+      "next_goal": "First, confirm we are on the Reviews tab (already active at index [35]), then extract all reviews that mention 'fingerprint resistant' to identify matching reviewers. Start by extracting the current reviews page content.",
+      "parse_recovered": false,
+      "raw_sha256": "96668981da18ed43576e90c381b8b9ab21ef4e8947407d319a0bcd9a1995e242",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 6,
+      "action_signature": "extract_content",
+      "next_goal": "First, extract the current reviews to capture the already visible mentions, then navigate to page 2 to check remaining reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "726d9d6f8dbd1bdb32ae29c0f0c8fc7916485480ea13b818c723906450add008",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 7,
+      "action_signature": "extract_content",
+      "next_goal": "First, extract all current reviews to capture the already found mention, then check the next page of reviews to see if there are more mentions of good fingerprint resistant.",
+      "parse_recovered": false,
+      "raw_sha256": "a0fb28e54aef5e2b39560e976e49879f60afa2fb34d4e89fa27c8582676ca124",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 8,
+      "action_signature": "click_element:36",
+      "next_goal": "First, check if there are more reviews on page 2 by clicking the [36]<a Page 2/> element, then extract all reviews that mention 'good fingerprint resistant' or 'fingerprint resistant' to compile the full list of relevant reviewers.",
+      "parse_recovered": false,
+      "raw_sha256": "3f7fcaf1182b4a5e1d3d67ce0c8dbb71cfe657467644f2ed256b15076d8d5fc2",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "action_signature": "extract_content",
+      "next_goal": "First extract the current reviews to capture all mentions of fingerprint resistant on this page, then navigate to the next review page if it exists to check remaining reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "5425cdc8ee0c8da76991c8c1de9d6bb2c514789cc2c97016d9ee45ffd5ec0f23",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "action_signature": "extract_content",
+      "next_goal": "First, extract all visible review content from this page to confirm and collect all relevant reviewers, then navigate to the next review page if more reviews exist.",
+      "parse_recovered": false,
+      "raw_sha256": "ab23b72136374350dc2d92947af4104ad956bd432cc129e6b7cc3fae6c8b959e",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "action_signature": "extract_content",
+      "next_goal": "First, extract the current customer review content to confirm and collect reviewers who mention fingerprint resistant, then check additional review pages if needed.",
+      "parse_recovered": false,
+      "raw_sha256": "2631ade9157d2b1047f9f8a057e0a4355df2b098418d01a1bd9ed2d44fbd78fa",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 4,
+      "action_signature": "extract_content",
+      "next_goal": "First, extract all customer reviews from this page to identify every reviewer who mentions good fingerprint resistant, then check the second review page if it exists to gather all relevant reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "720387f39ee2dc812ef50670fab68a5acfc7a150998fc087755f4cbd3587e40b",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 5,
+      "action_signature": "extract_content",
+      "next_goal": "First, extract all visible review content from this page to capture all existing mentions of fingerprint resistant, then navigate to page 2 to check the remaining reviews using the pagination control.",
+      "parse_recovered": false,
+      "raw_sha256": "0404641fefeffa0a55014bc3bd1a77bbaf188534364f399f2b5014d26b39ad88",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 6,
+      "action_signature": "extract_content",
+      "next_goal": "First, extract the current review content to confirm all reviews on this page, then navigate to page 2 if there are more reviews to check for mentions of fingerprint resistant",
+      "parse_recovered": false,
+      "raw_sha256": "bcb66076f331b866f48081385f9445a42a94a4abe44c87b482b7ca1ed6a523fb",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 7,
+      "action_signature": "extract_content",
+      "next_goal": "First, extract all current review content to capture the relevant reviewer, then navigate to page 2 to check remaining reviews, and continue until all pages are reviewed.",
+      "parse_recovered": false,
+      "raw_sha256": "90a6bb966b8cf3a10a3a8caaa75766a62a89d5f65c29f2268e48d32295457545",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 8,
+      "action_signature": "extract_content",
+      "next_goal": "First, extract all visible review content to confirm and collect all reviewers who mention good fingerprint resistant, then check the second review page if there are more reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "bf1181a77e57d39be2af8dffe52679f6f561e271248a8bc618dd147fcb56b1e8",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 1,
+      "action_signature": "extract_content",
+      "next_goal": "First, extract all current reviews to confirm which mention fingerprint resistant, then check the second review page if needed to find all relevant reviewers.",
+      "parse_recovered": false,
+      "raw_sha256": "0e2cc9aa41fa00f1d20259f15bebe3c9fb6f735de6fc31660f1adfd8a4b8f2d6",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 2,
+      "action_signature": "extract_content",
+      "next_goal": "Extract all customer reviews to find every reviewer who mentions good fingerprint resistant, and check the second review page if needed using index [36].",
+      "parse_recovered": false,
+      "raw_sha256": "3ed19e4d94c1cfa7de2bac3ec3034d8ccc74ddd131449aa53cb9de8391f92d4c",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 3,
+      "action_signature": "click_element:35",
+      "next_goal": "First, view the full reviews section, then extract reviewers that mention fingerprint resistant. Start by clicking the reviews tab or navigating to the full review page, or use the review pagination/extract content to get all relevant reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "76fb6d177c41ea49aaedc502fb43d146e3709800b045862ad0b59d284b0bd700",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 4,
+      "action_signature": "extract_content",
+      "next_goal": "Extract all reviews that mention fingerprint resistant to identify matching reviewers, first check the current reviews visible on the page then navigate to page 2 if needed.",
+      "parse_recovered": false,
+      "raw_sha256": "b8db080eeb4f0c7edc9ab22774c8c902f50847095bfab3ba90e28f89ddbcf7ba",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 5,
+      "action_signature": "extract_content",
+      "next_goal": "First, extract all existing reviews to find every reviewer that mentions good fingerprint resistant, then check the second review page if needed. Start by extracting the current review section content.",
+      "parse_recovered": true,
+      "raw_sha256": "514f22a607a1809c9bd0cefb3ae745cede1382692888d268cba6d3ef8426a714",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 6,
+      "action_signature": "extract_content",
+      "next_goal": "Extract the customer reviews that mention fingerprint resistant, starting with the first visible review, and check if there are more review pages.",
+      "parse_recovered": false,
+      "raw_sha256": "bba9449055925865e732da9fcb86e3df2328609e8b8ea1cb43811b8623dca048",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 7,
+      "action_signature": "extract_content",
+      "next_goal": "First, extract all visible reviews to gather reviewers who mention good fingerprint resistant, then check the next review pages if needed.",
+      "parse_recovered": false,
+      "raw_sha256": "938638c605f2a63b9e1e3869a85fce924b822bd5ac75e3a71c5b57b699eca9fb",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "22",
+      "future_task": "23",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 8,
+      "action_signature": "extract_content",
+      "next_goal": "First, extract all current reviews to document the reviewer who mentioned fingerprint resistant, then check the second review page if needed to find additional relevant reviewers.",
+      "parse_recovered": false,
+      "raw_sha256": "b7936f7fd8f0c51dc68398cc56532d8036c978807ec5e3e7a990dacb2fde1bd3",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "action_signature": "click_element:40",
+      "next_goal": "First, view all available customer reviews to check for mentions of unfair price, then extract relevant review content.",
+      "parse_recovered": false,
+      "raw_sha256": "09ca906094b26a18ffc746a00a577b6d39328fc3042f839336a4167ea8310883",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "action_signature": "click_element:40",
+      "next_goal": "First, check all existing customer reviews on this product page to find any mentions of unfair pricing. We should first view the full reviews section, and extract or check all review content.",
+      "parse_recovered": false,
+      "raw_sha256": "656fef06829a137322d6d40cff606be5a6dbdf157fab5839b6d6bce16aa50453",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "action_signature": "extract_content",
+      "next_goal": "First, extract and check the existing customer reviews to see if any mention unfair pricing, then check if there are more review pages to inspect.",
+      "parse_recovered": false,
+      "raw_sha256": "451aae4964fb59f2db0d2c1d3e8306fe9a41c3a13af6e949fd858cb4b9c4a2e5",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 4,
+      "action_signature": "click_element:40",
+      "next_goal": "First, view the full list of reviews by clicking the [25]<a 2 Reviews/> or [40]<a Reviews 2/> element to access all customer reviews, then check each review for references to unfair price.",
+      "parse_recovered": false,
+      "raw_sha256": "5e598a0c504eff1421869e024ef729b310b991e326336b02050023b438df0aaf",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 5,
+      "action_signature": "click_element:40",
+      "next_goal": "First, view the full customer reviews section to properly check for mentions of unfair pricing, then extract relevant review content. Start by clicking the reviews tab link to ensure we are on the full reviews page, or use extract_content to get all visible review text.",
+      "parse_recovered": false,
+      "raw_sha256": "0937521983570a579db45398c9079f0a9116d0207b2854be2dd47454b9b6646b",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 6,
+      "action_signature": "extract_content",
+      "next_goal": "First, check the existing customer reviews fully, then extract or check if any mention unfair pricing. First, let's view all available reviews and extract their content.",
+      "parse_recovered": false,
+      "raw_sha256": "c635547300c69430ef49bc46274732f86c5f6a2adaea7be8f650262dfdc8cbfd",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 7,
+      "action_signature": "extract_content",
+      "next_goal": "First, view all available reviews (or the full list) and extract the review content to check for mentions of unfair price. First, use extract_content to get the full customer reviews section content.",
+      "parse_recovered": false,
+      "raw_sha256": "87e44846bcb197564287ed03acf601a624b2f0e38080d2853841bc62534544c9",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 8,
+      "action_signature": "extract_content",
+      "next_goal": "First, view the full reviews section, extract the existing reviews to check for mentions of unfair pricing, and check if there are more review pages.",
+      "parse_recovered": false,
+      "raw_sha256": "6795ef52907612d859a0c2648a3468b9d30bbccdd78a163788d8f1978c154d58",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "action_signature": "click_element:40",
+      "next_goal": "First, navigate to the full reviews page by clicking the [25]<a 2 Reviews/> or [40]<a Reviews 2/> element to view all customer reviews, then scan for mentions of price being unfair.",
+      "parse_recovered": false,
+      "raw_sha256": "57b35d8388d36e06803d745ebae1d534614de237005f7c644b8f5a002bda1c3b",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "action_signature": "extract_content",
+      "next_goal": "Extract and review the existing customer reviews to check for mentions of unfair price, first extract the full review content visible on the page.",
+      "parse_recovered": false,
+      "raw_sha256": "f1a31faef814ef80201cecade11d3aa255f114a88f0a329fee360a9c1b9cecb0",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "action_signature": "click_element:40",
+      "next_goal": "View the full reviews section and check both existing reviews for mentions of price being unfair, first by clicking the reviews tab element to ensure we are on the full reviews page, or extract the full review content.",
+      "parse_recovered": false,
+      "raw_sha256": "11b91fc8923e26682890181d8100cc11b3f0792d82dd80793e1434a7a77ff5fc",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 4,
+      "action_signature": "click_element:40",
+      "next_goal": "First, navigate to the full reviews page by clicking the [25]<a 2 Reviews/> or [40]<a Reviews 2/> element to view all customer reviews and search for mentions of unfair price.",
+      "parse_recovered": false,
+      "raw_sha256": "6ac468b01d0cee4a536d49a65976be026af6900de907f78f2d97e03fd25c6e3a",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 5,
+      "action_signature": "click_element:40",
+      "next_goal": "First, view all available reviews (there is a reviews tab and pagination options) and extract all review content to check for mentions of unfair price. Start by clicking the reviews tab if needed, then use extract_content to gather all review text.",
+      "parse_recovered": false,
+      "raw_sha256": "271c9fcb01ca6367e24911d4e215cbfc724610043cd9d4d59d08bd780e6679ed",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 6,
+      "action_signature": "extract_content",
+      "next_goal": "Extract and review all existing customer comments to find any mentions of unfair pricing, first check the visible reviews and then confirm if there are more pages of reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "7596f22825d2c765d2ff625c95f23c33cbfe45810877ce04ed761fda23a0e5ea",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 7,
+      "action_signature": "extract_content",
+      "next_goal": "Extract and review all customer comments on this page to identify mentions of unfair pricing, first by viewing the full reviews section and checking existing reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "e0a0bc7e08b518357f3b37a26836fafa95eed4cd9219f96e00f134da0b9dd5a1",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 8,
+      "action_signature": "click_element:25",
+      "next_goal": "First, view the full reviews section, and check if there are more review pages, then extract all reviews to look for mentions of unfair price.",
+      "parse_recovered": false,
+      "raw_sha256": "20e81877b13a5bfe036a9be5cdf2c1bd3bef1328e7af421021a4522c77c95b36",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 1,
+      "action_signature": "extract_content",
+      "next_goal": "First, view the full reviews section (we can see the reviews tab is already active, but let's extract the current review content to check for price unfairness mentions, or check if there are more review pages)",
+      "parse_recovered": false,
+      "raw_sha256": "ce4b53f2e9a57f19e03b8f3f6f72cf4be852028f8984f8efc65762bf5c3a24c2",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 2,
+      "action_signature": "extract_content",
+      "next_goal": "First, check all existing customer reviews thoroughly. The reviews tab is already active, we can extract the current review content to look for mentions of unfair price, or scroll to see more if available, but first extract the visible review content.",
+      "parse_recovered": false,
+      "raw_sha256": "b71667fab634995f4c56045599db70a36ea5278f09bb34501c755886cb2c1214",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 3,
+      "action_signature": "extract_content",
+      "next_goal": "Check both existing customer reviews to find any mention of price being unfair, first look at the full review content and extract relevant information.",
+      "parse_recovered": false,
+      "raw_sha256": "7c8a9a62bbb76a215e85a2df61b04ae75a2399d51d3a33d6502f29325cd2e9f9",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 4,
+      "action_signature": "extract_content",
+      "next_goal": "First, check if there are more reviews by looking at the review section, or extract all current review content to scan for price-related unfairness comments. We can use extract_content to get all review text from the current page.",
+      "parse_recovered": false,
+      "raw_sha256": "a5b984c42375003ee01eec3a32ae304bbd18f229c21ee2544b1261c21c95ac6f",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 5,
+      "action_signature": "extract_content",
+      "next_goal": "Check both existing reviews to see if either mentions the price being unfair, first extract the full review content to capture all details.",
+      "parse_recovered": false,
+      "raw_sha256": "cc4625bc3ada7e9160d05a73f4f36b16648ef7263242ee302f797d385dd68ee7",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 6,
+      "action_signature": "extract_content",
+      "next_goal": "First, check the full reviews section (there are 2 total reviews shown, but we should view all existing reviews and also check if there are more review pages or if we need to extract all review text to look for price-related complaints about unfair pricing). First, use extract_content to get all visible review content to scan for price unfairness mentions.",
+      "parse_recovered": false,
+      "raw_sha256": "41671a0a8fd9f15fdec26e75db88b1147dacc3d92ca4019831550d8def3a7542",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 7,
+      "action_signature": "click_element:40",
+      "next_goal": "First, view all available reviews by clicking the reviews tab or the 2 reviews link to see full customer feedback, then check each review for mentions of unfair price.",
+      "parse_recovered": false,
+      "raw_sha256": "d18d12d358be9019321d7483438d3710f2c08f5d364bdd4e27ff22c34adc23f4",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "23",
+      "future_task": "24",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 8,
+      "action_signature": "extract_content",
+      "next_goal": "First, view all available customer reviews to check for mentions of unfair price, start by extracting the current review section content to analyze the existing reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "75d328bebd5ba96bb297001c9003acd1dcb732b9353ad5d3c59a482081ab87fd",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 1,
+      "action_signature": "extract_content",
+      "next_goal": "First, extract all visible review content to check for mentions of customer service complaints, then navigate through pages if needed to see all reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "236b3b4faf71a410272b5bf86aaadaca160b37a10a218ac92c814a07e9249632",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 2,
+      "action_signature": "click_element:38",
+      "next_goal": "First confirm we are on the reviews tab (we already are at index 38), then extract all reviews that mention customer service complaints, or navigate to the full reviews page and filter for relevant feedback.",
+      "parse_recovered": false,
+      "raw_sha256": "76490e84b58a1ec865627a96e13ca688835f932fb9356f7b123db3500bf123b3",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 3,
+      "action_signature": "click_element:23",
+      "next_goal": "First, navigate to the full reviews section by clicking the [23]<a>12 Reviews</a> element to view all customer reviews, then extract reviews that mention complaints about customer service.",
+      "parse_recovered": false,
+      "raw_sha256": "9e556ccc645b84cef89263e7303ff1233ca53b823e606ae96f8c743d509aca7d",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 4,
+      "action_signature": "click_element:38",
+      "next_goal": "First, navigate to the full reviews tab to access all customer reviews, then extract reviews that mention complaints about customer service.",
+      "parse_recovered": false,
+      "raw_sha256": "52a79061a61ebed95b32dfd1ed16ea97503d8b4e5848ccd43183491cef8ccc3e",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 5,
+      "action_signature": "extract_content",
+      "next_goal": "First, navigate to the full reviews section (we already see the reviews tab is active, but we need to extract reviews that mention customer service complaints, or check if there are more review pages). First, use extract_content to search the current reviews for mentions of customer service complaints, then check the next review page if needed.",
+      "parse_recovered": false,
+      "raw_sha256": "7318207d0467f130695243afb7856b9183fbf4fedafab12f6aee61e49a5931ff",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 6,
+      "action_signature": "click_element:23",
+      "next_goal": "First, access the full reviews section to properly view and extract reviews that mention customer service complaints, then identify relevant reviewers.",
+      "parse_recovered": false,
+      "raw_sha256": "121b3822bf5c32d4c75684e6e3c48a809ce519b1dc5f5177bc3db3f5718a98d9",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 7,
+      "action_signature": "click_element:23",
+      "next_goal": "First, navigate to the full reviews tab to see all reviews properly, then extract reviews that mention customer service complaints. First, click the [23]<a 12 Reviews/> element to open the full reviews section.",
+      "parse_recovered": false,
+      "raw_sha256": "13f0a50c0a42bc73b502c708f2aad93e39a22d669945abdbea30ac607717fde8",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "success_label_memory",
+      "rollout": 8,
+      "action_signature": "click_element:23",
+      "next_goal": "First, navigate to the full reviews section by clicking the [23]<a 12 Reviews/> element to view all customer reviews and filter for those mentioning complaints about customer service.",
+      "parse_recovered": false,
+      "raw_sha256": "ed1112dbe5548e0fbe66fba644926d9bfa10e8a19e44b4370cd5df928b552d8b",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 1,
+      "action_signature": "extract_content",
+      "next_goal": "First, view the full reviews section, check if there are customer service complaints on this first page, then navigate to additional review pages if needed. Start by extracting the current review content to check for relevant complaints.",
+      "parse_recovered": false,
+      "raw_sha256": "e432bf016ffb25358a7a6be370a28bd30cf4a251f4b6b52d58501813ae1a8c86",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 2,
+      "action_signature": "click_element:39",
+      "next_goal": "First, check the second page of reviews to look for mentions of customer service complaints, then continue scanning all available review pages until complete.",
+      "parse_recovered": false,
+      "raw_sha256": "71a5ebcd2e97d657a3cd121814cacce0a375ddc923570ccbd742a55a8b7f48c9",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 3,
+      "action_signature": "click_element:39",
+      "next_goal": "Navigate to the second review page to check for any customer service complaints, as the first page has no relevant reviews.",
+      "parse_recovered": true,
+      "raw_sha256": "22dd2173eb90ea3b12f003ef112ebdd7a7dde031eca115c02ac15d275a74a3aa",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 4,
+      "action_signature": "click_element:23",
+      "next_goal": "First, navigate to the full reviews page to see all customer feedback, then extract reviews that mention complaints about customer service. Start by clicking the [23]<a>12 Reviews</a> element to view all reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "4c3dc73be96bba1e59ffafa377710bd11e24a2e5f627672c6920df9b21e6b054",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 5,
+      "action_signature": "extract_content",
+      "next_goal": "First, check the current reviews for mentions of customer service complaints, then navigate to additional review pages if needed. First, extract the content of the current review section to look for relevant complaints.",
+      "parse_recovered": true,
+      "raw_sha256": "3c59f5db2bf16f3927403111440cc954454035116fa9de895e44b211e276408e",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 6,
+      "action_signature": "click_element:23",
+      "next_goal": "First, view the full list of reviews by clicking the reviews link to access all customer feedback, then scan reviews for mentions of customer service complaints, or check the second page of reviews if needed.",
+      "parse_recovered": false,
+      "raw_sha256": "7f6e275c3733a771185c09d3a321f2cb609996a023563bd7ca79398887ee73aa",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 7,
+      "action_signature": "click_element:23",
+      "next_goal": "First, navigate to the full reviews page to view all reviews, then extract reviews that mention complaints about customer service. Start by clicking the [23]<a>12 Reviews</a> link to access the full reviews section.",
+      "parse_recovered": false,
+      "raw_sha256": "9b20ae5767598c08d5e59f5d4c70a653de64af52e90cd251234c67791e6c83dc",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "failure_label_memory",
+      "rollout": 8,
+      "action_signature": "click_element:38",
+      "next_goal": "First, view all available reviews to find those mentioning customer service complaints. The current page has a 'Reviews' tab and pagination controls, so first confirm we are on the reviews section, then check for reviews that complain about customer service, starting by either viewing the full first page or navigating to other pages if needed.",
+      "parse_recovered": false,
+      "raw_sha256": "bc25a97b5aacaf069d9c330c5631747d1df4e5c5fc406928909c358f231b9179",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 1,
+      "action_signature": "click_element:40",
+      "next_goal": "First, view all available customer reviews to look for mentions of customer service complaints. The current page only shows the first page of reviews, so click the 'Next' button to see additional reviews, or check the review page fully.",
+      "parse_recovered": false,
+      "raw_sha256": "d14dc33f75c0256181da5ea6c13a65e0a15d1d92cc6b4a22319b8c31d5957f16",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 2,
+      "action_signature": "click_element:39",
+      "next_goal": "First, view all available customer reviews to find mentions of customer service complaints. We can either navigate to page 2 of reviews using index [39] or extract the current review content first, then check additional pages.",
+      "parse_recovered": false,
+      "raw_sha256": "4977fc65f8ec4a3a35f26a34ac42daae703f963cfca9e11e1436444f80780ee5",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 3,
+      "action_signature": "click_element:23",
+      "next_goal": "First, check the full list of reviews, then extract all reviews that mention complaints about customer service. First, we should navigate to the full reviews page, or extract the existing review content to look for relevant complaints.",
+      "parse_recovered": false,
+      "raw_sha256": "c3ca70c7d27fe80f1a4b0edeef141db578f465365c8bfc82fec0075af959a9a7",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 4,
+      "action_signature": "click_element:23",
+      "next_goal": "First, navigate to the full reviews page to see all reviews, then extract reviews that mention customer service complaints. The immediate next step is to click the [23]<a>12 Reviews</a> element to view all customer reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "b134b8bc811d0587a2afb7d5b1d1b7f9ce3e82be60e111c0c4e10b0846b1dbfa",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 5,
+      "action_signature": "click_element:23",
+      "next_goal": "First, view the full reviews section, then extract or check reviews for mentions of customer service complaints. We can start by navigating to the full reviews page via the [23]<a 12 Reviews/> element, or scroll to see more existing reviews on this page.",
+      "parse_recovered": false,
+      "raw_sha256": "80d8fade967c7c319a46fb360fa7f203b7163b05753e11c55c3827f5ac5a5db9",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 6,
+      "action_signature": "extract_content",
+      "next_goal": "First, view all available customer reviews to find mentions of complaints about customer service, starting by navigating to the full reviews page or extracting the current review content then checking additional pages.",
+      "parse_recovered": false,
+      "raw_sha256": "079b6afc3ab62f8451ec911a180c73b660dd6d70bc5305265abc64f2b0c62139",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 7,
+      "action_signature": "click_element:40",
+      "next_goal": "First, check the second page of reviews by clicking the 'Next' button to see more reviews, as the current page only shows a subset of the 12 total reviews. We should also look for any mentions of customer service in the existing reviews first, then expand to more reviews.",
+      "parse_recovered": false,
+      "raw_sha256": "e71d5bff2777674559c43b2288aef15edfa919b6361954bbadfa1ada5c8895bc",
+      "scientific_authority": false
+    },
+    {
+      "source_memory_task": "25",
+      "future_task": "26",
+      "future_step": "2",
+      "condition": "no_memory",
+      "rollout": 8,
+      "action_signature": "extract_content",
+      "next_goal": "First, view all available reviews to find those that mention customer service complaints. The current page shows some reviews, but we can navigate to page 2 using index [39] to see more reviews, or first extract the content of the current reviews to check for customer service mentions.",
+      "parse_recovered": false,
+      "raw_sha256": "275bc75fdb4c9af51f8151e4e144d168e61f07f7447786e25c68de2be78b3d6e",
+      "scientific_authority": false
+    }
+  ],
+  "provider_receipts": [
+    {
+      "stage": "future-22-success_label_memory-r1",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ac26f31305eb45c61a15ed2e621f83bbcd878636c7a5392c6b3ad29f65328dc4",
+      "raw_sha256": "113231f4e5490ef655a5d52eacd6fd4f4b2c3a9cd50bacac13f298933cb61f9d",
+      "request_fingerprint": "794930f3b0b715f62ffdae234f757874e7bdaa9a42a7601ed6d10279e2e920b8",
+      "usage": {
+        "input_tokens": 5061,
+        "output_tokens": 206,
+        "total_tokens": 5267,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-success_label_memory-r2",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ac26f31305eb45c61a15ed2e621f83bbcd878636c7a5392c6b3ad29f65328dc4",
+      "raw_sha256": "e675ac650a5d04294ed84fdc7c3c059d6ec2457ce352d35f4b83383efbf9c897",
+      "request_fingerprint": "7c8c10b03309be98c48308df6fbfe46975d3e62e4b93ad3e5bce5c868a30f727",
+      "usage": {
+        "input_tokens": 5061,
+        "output_tokens": 190,
+        "total_tokens": 5251,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-success_label_memory-r3",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ac26f31305eb45c61a15ed2e621f83bbcd878636c7a5392c6b3ad29f65328dc4",
+      "raw_sha256": "bfcd01d07edfa1ef33e21ee535b63b0667ce95d423938736522b801e15e27b9a",
+      "request_fingerprint": "997fe1cbe1532947a210e0dfbd68fb5bca6567c5cec6443049fb0f1615810857",
+      "usage": {
+        "input_tokens": 5061,
+        "output_tokens": 187,
+        "total_tokens": 5248,
+        "input_tokens_details": {
+          "cached_tokens": 4920
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-success_label_memory-r4",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ac26f31305eb45c61a15ed2e621f83bbcd878636c7a5392c6b3ad29f65328dc4",
+      "raw_sha256": "ba61607ea4c442b294b3d84ad1a3f19677e66b7b1bb1fb14bf6da3fe98ce180e",
+      "request_fingerprint": "ec8b4532de8f0208da4dc3a89f855f80ac2f7851dc651298f4d378dfbaf564d7",
+      "usage": {
+        "input_tokens": 5061,
+        "output_tokens": 212,
+        "total_tokens": 5273,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-success_label_memory-r5",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ac26f31305eb45c61a15ed2e621f83bbcd878636c7a5392c6b3ad29f65328dc4",
+      "raw_sha256": "88b74a1dc3d466a5607befde9e5fdfb1e86d92bef41b0d34deffa6da7414290f",
+      "request_fingerprint": "a1c9b31e8fd89023010c4489c96bc2658f7a1fefb27923a58892870ff32cfe5e",
+      "usage": {
+        "input_tokens": 5061,
+        "output_tokens": 169,
+        "total_tokens": 5230,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-success_label_memory-r6",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ac26f31305eb45c61a15ed2e621f83bbcd878636c7a5392c6b3ad29f65328dc4",
+      "raw_sha256": "3d4336f4362e31ecee2a37c8485f025a95c3e0d3a3abf71ff9e753463cbea629",
+      "request_fingerprint": "c718f5f1482f9b56fedca7b2ac64c9933c5a607532980ab490408ff265cddde9",
+      "usage": {
+        "input_tokens": 5061,
+        "output_tokens": 203,
+        "total_tokens": 5264,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-success_label_memory-r7",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ac26f31305eb45c61a15ed2e621f83bbcd878636c7a5392c6b3ad29f65328dc4",
+      "raw_sha256": "13eedd019d63bbbceb05f19d34c543a13ab6abf89f85bd03e087289982cdd28d",
+      "request_fingerprint": "b4f46766d7c37100703f985d4e83b506acc9ae8df0756d0f291a854656fc0292",
+      "usage": {
+        "input_tokens": 5061,
+        "output_tokens": 225,
+        "total_tokens": 5286,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-success_label_memory-r8",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ac26f31305eb45c61a15ed2e621f83bbcd878636c7a5392c6b3ad29f65328dc4",
+      "raw_sha256": "15e2be9c957bb5ef30f218cae7e2babf5c0adb2e37cf115ae9d03b7fac4caf51",
+      "request_fingerprint": "c3d3d4891275980d5c6691386f67ee31a82d840862ff52a490c4c5ff1e9133f5",
+      "usage": {
+        "input_tokens": 5061,
+        "output_tokens": 212,
+        "total_tokens": 5273,
+        "input_tokens_details": {
+          "cached_tokens": 4920
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-failure_label_memory-r1",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "05ce48d1aaf5e08b7a0712f54aa70ed4ddb8626c5a832f01fe9ce12c3a590ae4",
+      "raw_sha256": "7455c6b03cfa80cf6503b7e26927b85fb956007a8c0501cbb40e8b7d8cc6929f",
+      "request_fingerprint": "881d5d6ae911544d3d72dc247a09aef07b8255e409d6862a611bc71575b399e6",
+      "usage": {
+        "input_tokens": 5028,
+        "output_tokens": 141,
+        "total_tokens": 5169,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-failure_label_memory-r2",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "05ce48d1aaf5e08b7a0712f54aa70ed4ddb8626c5a832f01fe9ce12c3a590ae4",
+      "raw_sha256": "a1e8f084a6d1d72881b61fe6b3b3f092812885c7fa29f6a9ad1cd236f9692d44",
+      "request_fingerprint": "244c4463bf30753e7eead2ebb1a39d887b946e32876c5ea9ba0890be9a2a1929",
+      "usage": {
+        "input_tokens": 5028,
+        "output_tokens": 158,
+        "total_tokens": 5186,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-failure_label_memory-r3",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "05ce48d1aaf5e08b7a0712f54aa70ed4ddb8626c5a832f01fe9ce12c3a590ae4",
+      "raw_sha256": "7d14c76af0ba3401ad14eb9cff39420715168f64ebfd092630f367b89b9e245a",
+      "request_fingerprint": "ac902d05f67389ce514893c9213af6d05c641f8ae748d91e890e1c1c4a9db67f",
+      "usage": {
+        "input_tokens": 5028,
+        "output_tokens": 159,
+        "total_tokens": 5187,
+        "input_tokens_details": {
+          "cached_tokens": 1592
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-failure_label_memory-r4",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "05ce48d1aaf5e08b7a0712f54aa70ed4ddb8626c5a832f01fe9ce12c3a590ae4",
+      "raw_sha256": "0b7660fed1ba8ceeceeb3a08792784d499d04ec701931289f4a5ea2bb897b84f",
+      "request_fingerprint": "e87f096dac8354a1293bde9100fd6247b6e889e03790114f588ca4221f39d432",
+      "usage": {
+        "input_tokens": 5028,
+        "output_tokens": 153,
+        "total_tokens": 5181,
+        "input_tokens_details": {
+          "cached_tokens": 1592
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-failure_label_memory-r5",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "05ce48d1aaf5e08b7a0712f54aa70ed4ddb8626c5a832f01fe9ce12c3a590ae4",
+      "raw_sha256": "f9e9e8ca35a56a3a702fd81bb4cb9c8a9b23b1002455dd1c5c6ac96e2349e4b5",
+      "request_fingerprint": "2bd8fa17f6668278acdbf8a84fa23fa85be3fd9143836c0204e041882ca479a0",
+      "usage": {
+        "input_tokens": 5028,
+        "output_tokens": 157,
+        "total_tokens": 5185,
+        "input_tokens_details": {
+          "cached_tokens": 4920
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-failure_label_memory-r6",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "05ce48d1aaf5e08b7a0712f54aa70ed4ddb8626c5a832f01fe9ce12c3a590ae4",
+      "raw_sha256": "0e047ce18a50d99529d4d0713cd6e63fa5a5d4fbf2f96dee6235d0a29bf63e78",
+      "request_fingerprint": "94950c75d77cc0cd0122708348a1f5b7f5fbaf845f2887405af33527f1e2b2d5",
+      "usage": {
+        "input_tokens": 5028,
+        "output_tokens": 175,
+        "total_tokens": 5203,
+        "input_tokens_details": {
+          "cached_tokens": 4920
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-failure_label_memory-r7",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "05ce48d1aaf5e08b7a0712f54aa70ed4ddb8626c5a832f01fe9ce12c3a590ae4",
+      "raw_sha256": "d84fa0e2cb62d4cff7395c4a52c25acfae4249b92ecb18e7a1841a5ca7c6f8cd",
+      "request_fingerprint": "bdf6a7545a7c1add1fe4955ab635d05b4f4f4bd3c3b653708f8733000faea752",
+      "usage": {
+        "input_tokens": 5028,
+        "output_tokens": 166,
+        "total_tokens": 5194,
+        "input_tokens_details": {
+          "cached_tokens": 4920
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-failure_label_memory-r8",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "05ce48d1aaf5e08b7a0712f54aa70ed4ddb8626c5a832f01fe9ce12c3a590ae4",
+      "raw_sha256": "ec994e2446f46782fe9f34d78314b2e7d85b0c73b854a0325b462697c658dd93",
+      "request_fingerprint": "23c8b69529847e5d7971174ac9003cb44824efeffcbeedb9b0c97f740146fce5",
+      "usage": {
+        "input_tokens": 5028,
+        "output_tokens": 198,
+        "total_tokens": 5226,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-no_memory-r1",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "87febfd8d1076497519aed313181211fce681c5cb2585d54b94586eabbead4d0",
+      "raw_sha256": "5dd126cbb028c13fedc4e0300b9726cf1c62af418256ea89f31d9be9951b3755",
+      "request_fingerprint": "6f1b6a7c9214eb6a60005dce362ce3af645989deb74754e040f66c10ac809c27",
+      "usage": {
+        "input_tokens": 4794,
+        "output_tokens": 143,
+        "total_tokens": 4937,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-no_memory-r2",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "87febfd8d1076497519aed313181211fce681c5cb2585d54b94586eabbead4d0",
+      "raw_sha256": "7de772c4d16b389bd74992e5c898b72e2e5cdbbd27756e11592906740ddfb07b",
+      "request_fingerprint": "f55a620cb99cea35b01f5de833118ea574c9a8aa35ef1d7859811c28a1228972",
+      "usage": {
+        "input_tokens": 4794,
+        "output_tokens": 201,
+        "total_tokens": 4995,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-no_memory-r3",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "87febfd8d1076497519aed313181211fce681c5cb2585d54b94586eabbead4d0",
+      "raw_sha256": "a59bbf53ee17799905fcfc7f992a4f6a0ee2e9780f1fb272df8f0d6e15241394",
+      "request_fingerprint": "be9beeea2d918fe7fe15141addeb4ddeb1494bdd34dfc01d51207d4383be07a0",
+      "usage": {
+        "input_tokens": 4794,
+        "output_tokens": 155,
+        "total_tokens": 4949,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-no_memory-r4",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "87febfd8d1076497519aed313181211fce681c5cb2585d54b94586eabbead4d0",
+      "raw_sha256": "ceab8ab8351469ce6138c820c2a7791abd34220a48603f97e243e342c19489e1",
+      "request_fingerprint": "246a95c2adfc538f7ef02428876ec0e32ab99c77e424128d1a583661f9736ae9",
+      "usage": {
+        "input_tokens": 4794,
+        "output_tokens": 170,
+        "total_tokens": 4964,
+        "input_tokens_details": {
+          "cached_tokens": 1592
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-no_memory-r5",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "87febfd8d1076497519aed313181211fce681c5cb2585d54b94586eabbead4d0",
+      "raw_sha256": "b105dbf16bf7f5b75422f8fcc617c959632e3a43ecbf124e0a5a6b475f3703a2",
+      "request_fingerprint": "2a56927eea0d0a3706ca1be3bdbaa14798977b4c989f448b9311c2cf7f294fdc",
+      "usage": {
+        "input_tokens": 4794,
+        "output_tokens": 130,
+        "total_tokens": 4924,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-no_memory-r6",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "87febfd8d1076497519aed313181211fce681c5cb2585d54b94586eabbead4d0",
+      "raw_sha256": "24819233ae62ca776b5a950904d401e9453a4ca50df65d108529f8e14e8d9ef3",
+      "request_fingerprint": "dd767ffcd30820addbaf4bb8fb6d58690d1dfbaf5f97a0d7014e91b4ea3d5fb6",
+      "usage": {
+        "input_tokens": 4794,
+        "output_tokens": 139,
+        "total_tokens": 4933,
+        "input_tokens_details": {
+          "cached_tokens": 4664
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-no_memory-r7",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "87febfd8d1076497519aed313181211fce681c5cb2585d54b94586eabbead4d0",
+      "raw_sha256": "2dcef670243d888499c4b8d24deccf2e836bb9787bef3aaabee6171dfc5df8ba",
+      "request_fingerprint": "6f2e08d365ce30207ae9569426a935b5439b1af4e65d458c93f2b9514e6932be",
+      "usage": {
+        "input_tokens": 4794,
+        "output_tokens": 164,
+        "total_tokens": 4958,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-22-no_memory-r8",
+      "engine_id": "memory-21",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "87febfd8d1076497519aed313181211fce681c5cb2585d54b94586eabbead4d0",
+      "raw_sha256": "497602719307312871951b87c80e155c4a0f6ceaeb16a442482490f48bd4bfc1",
+      "request_fingerprint": "f80308c6e129fd4bcbf51ddbb0374a565d1a44021b87c8058f0e762ff0c1cf89",
+      "usage": {
+        "input_tokens": 4794,
+        "output_tokens": 173,
+        "total_tokens": 4967,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-success_label_memory-r1",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "e7dba162bfcd2fae4746def3c1eca7c28f2f119356c905a8349c966573cf85cc",
+      "raw_sha256": "2869d93d0d2ca684616f5f82d46b379ebf1723e5d326c225b137fa05ac9a41bb",
+      "request_fingerprint": "ad2d9ec65eea73d320c64a686783e8f48e62439b733246b944bf5d8364cd3595",
+      "usage": {
+        "input_tokens": 5298,
+        "output_tokens": 211,
+        "total_tokens": 5509,
+        "input_tokens_details": {
+          "cached_tokens": 1592
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-success_label_memory-r2",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "e7dba162bfcd2fae4746def3c1eca7c28f2f119356c905a8349c966573cf85cc",
+      "raw_sha256": "6a0e2e87bd9ff7421d3f902282a14dbb79315eb788a09f07c0e900c4e37ff939",
+      "request_fingerprint": "0c43af6063771935daaeba2db8e2b1e78f5472d3dddcb46227ab3be35b9f2df6",
+      "usage": {
+        "input_tokens": 5298,
+        "output_tokens": 165,
+        "total_tokens": 5463,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-success_label_memory-r3",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "e7dba162bfcd2fae4746def3c1eca7c28f2f119356c905a8349c966573cf85cc",
+      "raw_sha256": "04ccc9bdf61e96a86768785a3564845341f727d456d38df4acf60ae2d6fb929f",
+      "request_fingerprint": "4a67e6e96da63bd73cefc09a4c169a87d3b6a4b4db21cdf4364d89b7fcb9191b",
+      "usage": {
+        "input_tokens": 5298,
+        "output_tokens": 204,
+        "total_tokens": 5502,
+        "input_tokens_details": {
+          "cached_tokens": 5176
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-success_label_memory-r4",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "e7dba162bfcd2fae4746def3c1eca7c28f2f119356c905a8349c966573cf85cc",
+      "raw_sha256": "bcc2c7385ff8a34a225beba51b8679f9d2cef4fe5bbd07e369e04cc0f8f39432",
+      "request_fingerprint": "aa52c730dd0a7be233ef95e29a5514b8c50f0964447755f91e596004747d2c8e",
+      "usage": {
+        "input_tokens": 5298,
+        "output_tokens": 179,
+        "total_tokens": 5477,
+        "input_tokens_details": {
+          "cached_tokens": 5176
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-success_label_memory-r5",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "e7dba162bfcd2fae4746def3c1eca7c28f2f119356c905a8349c966573cf85cc",
+      "raw_sha256": "96668981da18ed43576e90c381b8b9ab21ef4e8947407d319a0bcd9a1995e242",
+      "request_fingerprint": "3f5b4de8ceee9e220463cfb97450e35c35ab2a5ddb82ddcddf33b80fa1bf5877",
+      "usage": {
+        "input_tokens": 5298,
+        "output_tokens": 174,
+        "total_tokens": 5472,
+        "input_tokens_details": {
+          "cached_tokens": 5176
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-success_label_memory-r6",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "e7dba162bfcd2fae4746def3c1eca7c28f2f119356c905a8349c966573cf85cc",
+      "raw_sha256": "726d9d6f8dbd1bdb32ae29c0f0c8fc7916485480ea13b818c723906450add008",
+      "request_fingerprint": "fea27019bc0dc890e24532a332706867e478dab58e9023240d2f78dc9537f643",
+      "usage": {
+        "input_tokens": 5298,
+        "output_tokens": 179,
+        "total_tokens": 5477,
+        "input_tokens_details": {
+          "cached_tokens": 5176
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-success_label_memory-r7",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "e7dba162bfcd2fae4746def3c1eca7c28f2f119356c905a8349c966573cf85cc",
+      "raw_sha256": "a0fb28e54aef5e2b39560e976e49879f60afa2fb34d4e89fa27c8582676ca124",
+      "request_fingerprint": "3abf218168b3c5dd812bbaebc1b887db615ce9d0e9b19e3b3e7163bf8d11d148",
+      "usage": {
+        "input_tokens": 5298,
+        "output_tokens": 189,
+        "total_tokens": 5487,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-success_label_memory-r8",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "e7dba162bfcd2fae4746def3c1eca7c28f2f119356c905a8349c966573cf85cc",
+      "raw_sha256": "3f7fcaf1182b4a5e1d3d67ce0c8dbb71cfe657467644f2ed256b15076d8d5fc2",
+      "request_fingerprint": "de42ce3aa94956d9f05f7ea2215d2c0c47cf247cf3e3e9f00143270acb8b4bbe",
+      "usage": {
+        "input_tokens": 5298,
+        "output_tokens": 165,
+        "total_tokens": 5463,
+        "input_tokens_details": {
+          "cached_tokens": 5176
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-failure_label_memory-r1",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "45c0b2e94a535fd30e9fef526b169268c90f565a39cca7c4895d31543cd79e80",
+      "raw_sha256": "5425cdc8ee0c8da76991c8c1de9d6bb2c514789cc2c97016d9ee45ffd5ec0f23",
+      "request_fingerprint": "5baa42a4a293f9e18fa0f19a9baefe17b62461013c3c987cc2b6eda737d734e2",
+      "usage": {
+        "input_tokens": 5313,
+        "output_tokens": 185,
+        "total_tokens": 5498,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-failure_label_memory-r2",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "45c0b2e94a535fd30e9fef526b169268c90f565a39cca7c4895d31543cd79e80",
+      "raw_sha256": "ab23b72136374350dc2d92947af4104ad956bd432cc129e6b7cc3fae6c8b959e",
+      "request_fingerprint": "e8a83de2757459ae71716f3611de7ba929f5ce543ddfe14ace047757859e59e2",
+      "usage": {
+        "input_tokens": 5313,
+        "output_tokens": 161,
+        "total_tokens": 5474,
+        "input_tokens_details": {
+          "cached_tokens": 1592
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-failure_label_memory-r3",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "45c0b2e94a535fd30e9fef526b169268c90f565a39cca7c4895d31543cd79e80",
+      "raw_sha256": "2631ade9157d2b1047f9f8a057e0a4355df2b098418d01a1bd9ed2d44fbd78fa",
+      "request_fingerprint": "dd9b3a0bdd1876ea97f8ce15a57e8faa0a5cddc9927d90f88a4913f77de1ec46",
+      "usage": {
+        "input_tokens": 5313,
+        "output_tokens": 139,
+        "total_tokens": 5452,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-failure_label_memory-r4",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "45c0b2e94a535fd30e9fef526b169268c90f565a39cca7c4895d31543cd79e80",
+      "raw_sha256": "720387f39ee2dc812ef50670fab68a5acfc7a150998fc087755f4cbd3587e40b",
+      "request_fingerprint": "8fa0bd0e770b9ec97b4a5c1744f7c805ae5ca60683e51e01cbeb6a2530964ca6",
+      "usage": {
+        "input_tokens": 5313,
+        "output_tokens": 151,
+        "total_tokens": 5464,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-failure_label_memory-r5",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "45c0b2e94a535fd30e9fef526b169268c90f565a39cca7c4895d31543cd79e80",
+      "raw_sha256": "0404641fefeffa0a55014bc3bd1a77bbaf188534364f399f2b5014d26b39ad88",
+      "request_fingerprint": "9a6f59138f663045fa1b50ed0ed86fdc04d5bd59b4972a9878f4a9a032e76f73",
+      "usage": {
+        "input_tokens": 5313,
+        "output_tokens": 161,
+        "total_tokens": 5474,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-failure_label_memory-r6",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "45c0b2e94a535fd30e9fef526b169268c90f565a39cca7c4895d31543cd79e80",
+      "raw_sha256": "bcb66076f331b866f48081385f9445a42a94a4abe44c87b482b7ca1ed6a523fb",
+      "request_fingerprint": "a683881abf1defcb56def5c7f9d91d865b17912706d8fdb06cdcf46a67f742ae",
+      "usage": {
+        "input_tokens": 5313,
+        "output_tokens": 237,
+        "total_tokens": 5550,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-failure_label_memory-r7",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "45c0b2e94a535fd30e9fef526b169268c90f565a39cca7c4895d31543cd79e80",
+      "raw_sha256": "90a6bb966b8cf3a10a3a8caaa75766a62a89d5f65c29f2268e48d32295457545",
+      "request_fingerprint": "f04fad746f23b774d2b3d61c52d0519535f81298c19a337cdd18008242cd7d3e",
+      "usage": {
+        "input_tokens": 5313,
+        "output_tokens": 183,
+        "total_tokens": 5496,
+        "input_tokens_details": {
+          "cached_tokens": 5176
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-failure_label_memory-r8",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "45c0b2e94a535fd30e9fef526b169268c90f565a39cca7c4895d31543cd79e80",
+      "raw_sha256": "bf1181a77e57d39be2af8dffe52679f6f561e271248a8bc618dd147fcb56b1e8",
+      "request_fingerprint": "3b69f828d7fdbaf355dbb345770076f02abf524643ee13672aa86a17d77ddb3b",
+      "usage": {
+        "input_tokens": 5313,
+        "output_tokens": 160,
+        "total_tokens": 5473,
+        "input_tokens_details": {
+          "cached_tokens": 5176
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-no_memory-r1",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ef07ae23cafaa01a75d6ba938897d0a4add6e27f3ac6c90a4bb01afa7a8a5d1e",
+      "raw_sha256": "0e2cc9aa41fa00f1d20259f15bebe3c9fb6f735de6fc31660f1adfd8a4b8f2d6",
+      "request_fingerprint": "ee4b5f636a565d78ead9d9f49f4f309e67fec3af87319df130d880c3f19ae4ef",
+      "usage": {
+        "input_tokens": 5035,
+        "output_tokens": 187,
+        "total_tokens": 5222,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-no_memory-r2",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ef07ae23cafaa01a75d6ba938897d0a4add6e27f3ac6c90a4bb01afa7a8a5d1e",
+      "raw_sha256": "3ed19e4d94c1cfa7de2bac3ec3034d8ccc74ddd131449aa53cb9de8391f92d4c",
+      "request_fingerprint": "a87a9a9653acefbe2bccd9c37e01856cbceb2de096c7a38b2ce93980e8e393cb",
+      "usage": {
+        "input_tokens": 5035,
+        "output_tokens": 150,
+        "total_tokens": 5185,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-no_memory-r3",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ef07ae23cafaa01a75d6ba938897d0a4add6e27f3ac6c90a4bb01afa7a8a5d1e",
+      "raw_sha256": "76fb6d177c41ea49aaedc502fb43d146e3709800b045862ad0b59d284b0bd700",
+      "request_fingerprint": "a94ec946f05c59f88c561de13bd1c3b838bf1c0d539026c7a80e05cb055bf169",
+      "usage": {
+        "input_tokens": 5035,
+        "output_tokens": 157,
+        "total_tokens": 5192,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-no_memory-r4",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ef07ae23cafaa01a75d6ba938897d0a4add6e27f3ac6c90a4bb01afa7a8a5d1e",
+      "raw_sha256": "b8db080eeb4f0c7edc9ab22774c8c902f50847095bfab3ba90e28f89ddbcf7ba",
+      "request_fingerprint": "1578e83c57265a7656f26e424de28922a9c13978236083f5d4fceb32ddf35cf8",
+      "usage": {
+        "input_tokens": 5035,
+        "output_tokens": 134,
+        "total_tokens": 5169,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-no_memory-r5",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ef07ae23cafaa01a75d6ba938897d0a4add6e27f3ac6c90a4bb01afa7a8a5d1e",
+      "raw_sha256": "514f22a607a1809c9bd0cefb3ae745cede1382692888d268cba6d3ef8426a714",
+      "request_fingerprint": "8f1d73aede6c0d67e74f627dc23506d24f1712522aa35c0aa18e152594b663e9",
+      "usage": {
+        "input_tokens": 5035,
+        "output_tokens": 140,
+        "total_tokens": 5175,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-no_memory-r6",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ef07ae23cafaa01a75d6ba938897d0a4add6e27f3ac6c90a4bb01afa7a8a5d1e",
+      "raw_sha256": "bba9449055925865e732da9fcb86e3df2328609e8b8ea1cb43811b8623dca048",
+      "request_fingerprint": "60a067f0a2939a98b6b9fbbc4221cf85a9868a553e83c6db4d921fbe6ee2874f",
+      "usage": {
+        "input_tokens": 5035,
+        "output_tokens": 155,
+        "total_tokens": 5190,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-no_memory-r7",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ef07ae23cafaa01a75d6ba938897d0a4add6e27f3ac6c90a4bb01afa7a8a5d1e",
+      "raw_sha256": "938638c605f2a63b9e1e3869a85fce924b822bd5ac75e3a71c5b57b699eca9fb",
+      "request_fingerprint": "a42753c3571083974a601b6abd7e57a65e71b4d6898e0b1fa2678bf6cf5f38f4",
+      "usage": {
+        "input_tokens": 5035,
+        "output_tokens": 168,
+        "total_tokens": 5203,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-23-no_memory-r8",
+      "engine_id": "memory-22",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "ef07ae23cafaa01a75d6ba938897d0a4add6e27f3ac6c90a4bb01afa7a8a5d1e",
+      "raw_sha256": "b7936f7fd8f0c51dc68398cc56532d8036c978807ec5e3e7a990dacb2fde1bd3",
+      "request_fingerprint": "a2175bb0f6ac2965f2705ed89878741e7e6d017dae60a7089970fc6e9d943f4d",
+      "usage": {
+        "input_tokens": 5035,
+        "output_tokens": 183,
+        "total_tokens": 5218,
+        "input_tokens_details": {
+          "cached_tokens": 4920
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-success_label_memory-r1",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "635d4afa1b1973c748a50ebc956e870f2704719d1fdb1d3620bbc8420f915dbc",
+      "raw_sha256": "09ca906094b26a18ffc746a00a577b6d39328fc3042f839336a4167ea8310883",
+      "request_fingerprint": "2d12321332b79e001e14542b837969e465b4d247f7af4d116145cd43c425fdee",
+      "usage": {
+        "input_tokens": 4690,
+        "output_tokens": 146,
+        "total_tokens": 4836,
+        "input_tokens_details": {
+          "cached_tokens": 1592
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-success_label_memory-r2",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "635d4afa1b1973c748a50ebc956e870f2704719d1fdb1d3620bbc8420f915dbc",
+      "raw_sha256": "656fef06829a137322d6d40cff606be5a6dbdf157fab5839b6d6bce16aa50453",
+      "request_fingerprint": "b6194fd4ae016de320b9203f3fada42768e4c3190eb53ac44fc011f0c4ecf993",
+      "usage": {
+        "input_tokens": 4690,
+        "output_tokens": 193,
+        "total_tokens": 4883,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-success_label_memory-r3",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "635d4afa1b1973c748a50ebc956e870f2704719d1fdb1d3620bbc8420f915dbc",
+      "raw_sha256": "451aae4964fb59f2db0d2c1d3e8306fe9a41c3a13af6e949fd858cb4b9c4a2e5",
+      "request_fingerprint": "eb8a8c0f75b997ce6421feedf5de247a34b75938c26916b752c2f2f8d6e56dda",
+      "usage": {
+        "input_tokens": 4690,
+        "output_tokens": 164,
+        "total_tokens": 4854,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-success_label_memory-r4",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "635d4afa1b1973c748a50ebc956e870f2704719d1fdb1d3620bbc8420f915dbc",
+      "raw_sha256": "5e598a0c504eff1421869e024ef729b310b991e326336b02050023b438df0aaf",
+      "request_fingerprint": "fe023720370969cc3a9de6c9d19726bc2b45c4e04ca53b3b18ba9e02d7cd191e",
+      "usage": {
+        "input_tokens": 4690,
+        "output_tokens": 170,
+        "total_tokens": 4860,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-success_label_memory-r5",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "635d4afa1b1973c748a50ebc956e870f2704719d1fdb1d3620bbc8420f915dbc",
+      "raw_sha256": "0937521983570a579db45398c9079f0a9116d0207b2854be2dd47454b9b6646b",
+      "request_fingerprint": "2acbaff6a1fda1a4b97eb276e5e6577c329859a1603ccf2b8a48e2b0aefc79c2",
+      "usage": {
+        "input_tokens": 4690,
+        "output_tokens": 184,
+        "total_tokens": 4874,
+        "input_tokens_details": {
+          "cached_tokens": 1592
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-success_label_memory-r6",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "635d4afa1b1973c748a50ebc956e870f2704719d1fdb1d3620bbc8420f915dbc",
+      "raw_sha256": "c635547300c69430ef49bc46274732f86c5f6a2adaea7be8f650262dfdc8cbfd",
+      "request_fingerprint": "431d87e4650f36b3a2f905436470c23a45d1406b9a5144d153ce61f98106a556",
+      "usage": {
+        "input_tokens": 4690,
+        "output_tokens": 163,
+        "total_tokens": 4853,
+        "input_tokens_details": {
+          "cached_tokens": 4664
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-success_label_memory-r7",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "635d4afa1b1973c748a50ebc956e870f2704719d1fdb1d3620bbc8420f915dbc",
+      "raw_sha256": "87e44846bcb197564287ed03acf601a624b2f0e38080d2853841bc62534544c9",
+      "request_fingerprint": "41be7da5fe09aeb336cac50594cf1ddda381b71541ceaf12eecdcd5373712dfc",
+      "usage": {
+        "input_tokens": 4690,
+        "output_tokens": 176,
+        "total_tokens": 4866,
+        "input_tokens_details": {
+          "cached_tokens": 4664
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-success_label_memory-r8",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "635d4afa1b1973c748a50ebc956e870f2704719d1fdb1d3620bbc8420f915dbc",
+      "raw_sha256": "6795ef52907612d859a0c2648a3468b9d30bbccdd78a163788d8f1978c154d58",
+      "request_fingerprint": "aaa19fbde740343830e87096608ca68285580f2727743c59f745ef394e21cb11",
+      "usage": {
+        "input_tokens": 4690,
+        "output_tokens": 184,
+        "total_tokens": 4874,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-failure_label_memory-r1",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "d6222ec5adb9c790e25769fff9acab4d82af59ccf9d29809fa0545fae30246a3",
+      "raw_sha256": "57b35d8388d36e06803d745ebae1d534614de237005f7c644b8f5a002bda1c3b",
+      "request_fingerprint": "0104ccbff049db6386d98709f6d8c4b87a1fbf3438b31923cc485d903a6d484f",
+      "usage": {
+        "input_tokens": 4713,
+        "output_tokens": 156,
+        "total_tokens": 4869,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-failure_label_memory-r2",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "d6222ec5adb9c790e25769fff9acab4d82af59ccf9d29809fa0545fae30246a3",
+      "raw_sha256": "f1a31faef814ef80201cecade11d3aa255f114a88f0a329fee360a9c1b9cecb0",
+      "request_fingerprint": "57f9c70980e9350a485094a012463ba2870961e42826c06d236110c990084c06",
+      "usage": {
+        "input_tokens": 4713,
+        "output_tokens": 167,
+        "total_tokens": 4880,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-failure_label_memory-r3",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "d6222ec5adb9c790e25769fff9acab4d82af59ccf9d29809fa0545fae30246a3",
+      "raw_sha256": "11b91fc8923e26682890181d8100cc11b3f0792d82dd80793e1434a7a77ff5fc",
+      "request_fingerprint": "9d62c99fb72655eb9dcee65fb6360d87b9151d3284589fca7f0b755b98dfe9e4",
+      "usage": {
+        "input_tokens": 4713,
+        "output_tokens": 173,
+        "total_tokens": 4886,
+        "input_tokens_details": {
+          "cached_tokens": 4664
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-failure_label_memory-r4",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "d6222ec5adb9c790e25769fff9acab4d82af59ccf9d29809fa0545fae30246a3",
+      "raw_sha256": "6ac468b01d0cee4a536d49a65976be026af6900de907f78f2d97e03fd25c6e3a",
+      "request_fingerprint": "fbe8e745e3efafa87d75dce5193d80ac2a084950e82f17f1f4ae6e12d23f7044",
+      "usage": {
+        "input_tokens": 4713,
+        "output_tokens": 161,
+        "total_tokens": 4874,
+        "input_tokens_details": {
+          "cached_tokens": 4664
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-failure_label_memory-r5",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "d6222ec5adb9c790e25769fff9acab4d82af59ccf9d29809fa0545fae30246a3",
+      "raw_sha256": "271c9fcb01ca6367e24911d4e215cbfc724610043cd9d4d59d08bd780e6679ed",
+      "request_fingerprint": "0379e3ee58a202fd8bcaf484b5f82e3638968ea8f30b95b3f41f3a08baa19936",
+      "usage": {
+        "input_tokens": 4713,
+        "output_tokens": 177,
+        "total_tokens": 4890,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-failure_label_memory-r6",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "d6222ec5adb9c790e25769fff9acab4d82af59ccf9d29809fa0545fae30246a3",
+      "raw_sha256": "7596f22825d2c765d2ff625c95f23c33cbfe45810877ce04ed761fda23a0e5ea",
+      "request_fingerprint": "2faa58ae36f8a7f87b73fa0c4591be6d65d7b6096595c2352c00873949f5afee",
+      "usage": {
+        "input_tokens": 4713,
+        "output_tokens": 162,
+        "total_tokens": 4875,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-failure_label_memory-r7",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "d6222ec5adb9c790e25769fff9acab4d82af59ccf9d29809fa0545fae30246a3",
+      "raw_sha256": "e0a0bc7e08b518357f3b37a26836fafa95eed4cd9219f96e00f134da0b9dd5a1",
+      "request_fingerprint": "5f2f87645f01eab0722a2ec5a3b42a2a10e8336effcf46bd3f7f2fa2e4b45b79",
+      "usage": {
+        "input_tokens": 4713,
+        "output_tokens": 147,
+        "total_tokens": 4860,
+        "input_tokens_details": {
+          "cached_tokens": 1592
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-failure_label_memory-r8",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "d6222ec5adb9c790e25769fff9acab4d82af59ccf9d29809fa0545fae30246a3",
+      "raw_sha256": "20e81877b13a5bfe036a9be5cdf2c1bd3bef1328e7af421021a4522c77c95b36",
+      "request_fingerprint": "ed629a8c1ddb075cb0ba414096ecaa51f159bf01da24a2d6fefe565ec190785e",
+      "usage": {
+        "input_tokens": 4713,
+        "output_tokens": 180,
+        "total_tokens": 4893,
+        "input_tokens_details": {
+          "cached_tokens": 4664
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-no_memory-r1",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "3dfe98879351cf1082562779c756cb586d9c4952214ed671e5a0fab015c7e185",
+      "raw_sha256": "ce4b53f2e9a57f19e03b8f3f6f72cf4be852028f8984f8efc65762bf5c3a24c2",
+      "request_fingerprint": "18181712825e8b8209457c79dfbad26cb3cfa7a7e00eef06b21d9cce8e358a76",
+      "usage": {
+        "input_tokens": 4446,
+        "output_tokens": 173,
+        "total_tokens": 4619,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-no_memory-r2",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "3dfe98879351cf1082562779c756cb586d9c4952214ed671e5a0fab015c7e185",
+      "raw_sha256": "b71667fab634995f4c56045599db70a36ea5278f09bb34501c755886cb2c1214",
+      "request_fingerprint": "3c4f0e752225a58f4504a17485303190ce774a55e395e2aaffd009d5c3ea960b",
+      "usage": {
+        "input_tokens": 4446,
+        "output_tokens": 178,
+        "total_tokens": 4624,
+        "input_tokens_details": {
+          "cached_tokens": 4408
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-no_memory-r3",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "3dfe98879351cf1082562779c756cb586d9c4952214ed671e5a0fab015c7e185",
+      "raw_sha256": "7c8a9a62bbb76a215e85a2df61b04ae75a2399d51d3a33d6502f29325cd2e9f9",
+      "request_fingerprint": "32b6a5b1fd81af67f17e6149761747e0079136fe50e82b159c9d69cfdb3f929d",
+      "usage": {
+        "input_tokens": 4446,
+        "output_tokens": 142,
+        "total_tokens": 4588,
+        "input_tokens_details": {
+          "cached_tokens": 4408
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-no_memory-r4",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "3dfe98879351cf1082562779c756cb586d9c4952214ed671e5a0fab015c7e185",
+      "raw_sha256": "a5b984c42375003ee01eec3a32ae304bbd18f229c21ee2544b1261c21c95ac6f",
+      "request_fingerprint": "ac657085db4f1cc3bd3435bc2c9708ba872091a8b6e7ddd11078f416a22d98b8",
+      "usage": {
+        "input_tokens": 4446,
+        "output_tokens": 189,
+        "total_tokens": 4635,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-no_memory-r5",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "3dfe98879351cf1082562779c756cb586d9c4952214ed671e5a0fab015c7e185",
+      "raw_sha256": "cc4625bc3ada7e9160d05a73f4f36b16648ef7263242ee302f797d385dd68ee7",
+      "request_fingerprint": "6c15011ce24f810d9ab7f356f7a4c10e39c841b831ded1fcebde10fa3d8259ac",
+      "usage": {
+        "input_tokens": 4446,
+        "output_tokens": 150,
+        "total_tokens": 4596,
+        "input_tokens_details": {
+          "cached_tokens": 4408
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-no_memory-r6",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "3dfe98879351cf1082562779c756cb586d9c4952214ed671e5a0fab015c7e185",
+      "raw_sha256": "41671a0a8fd9f15fdec26e75db88b1147dacc3d92ca4019831550d8def3a7542",
+      "request_fingerprint": "7addc1d1e1c4e9944c5dd3db63410914090758cd3a262fa47f1c96c92b429615",
+      "usage": {
+        "input_tokens": 4446,
+        "output_tokens": 195,
+        "total_tokens": 4641,
+        "input_tokens_details": {
+          "cached_tokens": 4408
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-no_memory-r7",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "3dfe98879351cf1082562779c756cb586d9c4952214ed671e5a0fab015c7e185",
+      "raw_sha256": "d18d12d358be9019321d7483438d3710f2c08f5d364bdd4e27ff22c34adc23f4",
+      "request_fingerprint": "00c9a29260b10286fb5bef1109371f3bfe52583bcdafc71d610c0ec5d2b52944",
+      "usage": {
+        "input_tokens": 4446,
+        "output_tokens": 135,
+        "total_tokens": 4581,
+        "input_tokens_details": {
+          "cached_tokens": 4408
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-24-no_memory-r8",
+      "engine_id": "memory-23",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "3dfe98879351cf1082562779c756cb586d9c4952214ed671e5a0fab015c7e185",
+      "raw_sha256": "75d328bebd5ba96bb297001c9003acd1dcb732b9353ad5d3c59a482081ab87fd",
+      "request_fingerprint": "39f1fab44db337661ba127aaca2826fa10ec4cd81e29d0831dbbe0d3e5455633",
+      "usage": {
+        "input_tokens": 4446,
+        "output_tokens": 148,
+        "total_tokens": 4594,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-success_label_memory-r1",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "2d025dd00042d097cf5f8177c63f1421d4fd86b0d7b989181910256b9c16edeb",
+      "raw_sha256": "236b3b4faf71a410272b5bf86aaadaca160b37a10a218ac92c814a07e9249632",
+      "request_fingerprint": "2239e45f22a2d5c909fe7c7e7fc4288c552738693a766aa8ae488ac6d6ee8d12",
+      "usage": {
+        "input_tokens": 5675,
+        "output_tokens": 193,
+        "total_tokens": 5868,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-success_label_memory-r2",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "2d025dd00042d097cf5f8177c63f1421d4fd86b0d7b989181910256b9c16edeb",
+      "raw_sha256": "76490e84b58a1ec865627a96e13ca688835f932fb9356f7b123db3500bf123b3",
+      "request_fingerprint": "b2988da2d5e2e7085dc459deb1c4f6ebc3f17bb35f05bab79d8991058300d5b0",
+      "usage": {
+        "input_tokens": 5675,
+        "output_tokens": 212,
+        "total_tokens": 5887,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-success_label_memory-r3",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "2d025dd00042d097cf5f8177c63f1421d4fd86b0d7b989181910256b9c16edeb",
+      "raw_sha256": "9e556ccc645b84cef89263e7303ff1233ca53b823e606ae96f8c743d509aca7d",
+      "request_fingerprint": "807ee6485cac475169c65260321c456f55c695bfd1b86cc45b309da91245591c",
+      "usage": {
+        "input_tokens": 5675,
+        "output_tokens": 136,
+        "total_tokens": 5811,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-success_label_memory-r4",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "2d025dd00042d097cf5f8177c63f1421d4fd86b0d7b989181910256b9c16edeb",
+      "raw_sha256": "52a79061a61ebed95b32dfd1ed16ea97503d8b4e5848ccd43183491cef8ccc3e",
+      "request_fingerprint": "f33eeac423e6c982c4aa36dd76014947805708ee2a173ad855508999e569498b",
+      "usage": {
+        "input_tokens": 5675,
+        "output_tokens": 167,
+        "total_tokens": 5842,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-success_label_memory-r5",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "2d025dd00042d097cf5f8177c63f1421d4fd86b0d7b989181910256b9c16edeb",
+      "raw_sha256": "7318207d0467f130695243afb7856b9183fbf4fedafab12f6aee61e49a5931ff",
+      "request_fingerprint": "25e0cb4eaff6c48432638e066f3481daf761dff419eb458c4b81813cdf55cf1c",
+      "usage": {
+        "input_tokens": 5675,
+        "output_tokens": 223,
+        "total_tokens": 5898,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-success_label_memory-r6",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "2d025dd00042d097cf5f8177c63f1421d4fd86b0d7b989181910256b9c16edeb",
+      "raw_sha256": "121b3822bf5c32d4c75684e6e3c48a809ce519b1dc5f5177bc3db3f5718a98d9",
+      "request_fingerprint": "1279e1e47bd51371c0fe2d73cc2719ab3f3e094dfb2833b32f7780eac75fa623",
+      "usage": {
+        "input_tokens": 5675,
+        "output_tokens": 123,
+        "total_tokens": 5798,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-success_label_memory-r7",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "2d025dd00042d097cf5f8177c63f1421d4fd86b0d7b989181910256b9c16edeb",
+      "raw_sha256": "13f0a50c0a42bc73b502c708f2aad93e39a22d669945abdbea30ac607717fde8",
+      "request_fingerprint": "b9f73f9e081ad85f0fab6b7c87583c9b854789c55bf369fe5e8e404b795b25a1",
+      "usage": {
+        "input_tokens": 5675,
+        "output_tokens": 175,
+        "total_tokens": 5850,
+        "input_tokens_details": {
+          "cached_tokens": 5432
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-success_label_memory-r8",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "2d025dd00042d097cf5f8177c63f1421d4fd86b0d7b989181910256b9c16edeb",
+      "raw_sha256": "ed1112dbe5548e0fbe66fba644926d9bfa10e8a19e44b4370cd5df928b552d8b",
+      "request_fingerprint": "914360474aeba9d95096634b9b6abc952f80801844c6784996649474aaf5f576",
+      "usage": {
+        "input_tokens": 5675,
+        "output_tokens": 170,
+        "total_tokens": 5845,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-failure_label_memory-r1",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "2003b53e7c5abbd3fe39202c22d55fdb14d862496d4d5e95c2bfecc6e36a8efd",
+      "raw_sha256": "e432bf016ffb25358a7a6be370a28bd30cf4a251f4b6b52d58501813ae1a8c86",
+      "request_fingerprint": "396e86b418dbc499d3e12a69143dfe3f267b75c087163a2598e9a202cf8c2d47",
+      "usage": {
+        "input_tokens": 5668,
+        "output_tokens": 160,
+        "total_tokens": 5828,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-failure_label_memory-r2",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "2003b53e7c5abbd3fe39202c22d55fdb14d862496d4d5e95c2bfecc6e36a8efd",
+      "raw_sha256": "71a5ebcd2e97d657a3cd121814cacce0a375ddc923570ccbd742a55a8b7f48c9",
+      "request_fingerprint": "40a8223b99710f07ea1719bdeeb1269c77ae619a205032f316e23ec08644aecc",
+      "usage": {
+        "input_tokens": 5668,
+        "output_tokens": 164,
+        "total_tokens": 5832,
+        "input_tokens_details": {
+          "cached_tokens": 5432
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-failure_label_memory-r3",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "2003b53e7c5abbd3fe39202c22d55fdb14d862496d4d5e95c2bfecc6e36a8efd",
+      "raw_sha256": "22dd2173eb90ea3b12f003ef112ebdd7a7dde031eca115c02ac15d275a74a3aa",
+      "request_fingerprint": "af76f097cfcd95868f6d4abff5f6cc0de2c80fd53dacb498742e31a585d53241",
+      "usage": {
+        "input_tokens": 5668,
+        "output_tokens": 163,
+        "total_tokens": 5831,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-failure_label_memory-r4",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "2003b53e7c5abbd3fe39202c22d55fdb14d862496d4d5e95c2bfecc6e36a8efd",
+      "raw_sha256": "4c3dc73be96bba1e59ffafa377710bd11e24a2e5f627672c6920df9b21e6b054",
+      "request_fingerprint": "fa742cdfb73d019c83f38782e2d100fbc11d9541eec7efe8afa5c9469f029834",
+      "usage": {
+        "input_tokens": 5668,
+        "output_tokens": 162,
+        "total_tokens": 5830,
+        "input_tokens_details": {
+          "cached_tokens": 5432
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-failure_label_memory-r5",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "2003b53e7c5abbd3fe39202c22d55fdb14d862496d4d5e95c2bfecc6e36a8efd",
+      "raw_sha256": "3c59f5db2bf16f3927403111440cc954454035116fa9de895e44b211e276408e",
+      "request_fingerprint": "1733069666ba2475ef1b5fc95b5eddca80c6170ccfd0476d98198345890550dd",
+      "usage": {
+        "input_tokens": 5668,
+        "output_tokens": 175,
+        "total_tokens": 5843,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-failure_label_memory-r6",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "2003b53e7c5abbd3fe39202c22d55fdb14d862496d4d5e95c2bfecc6e36a8efd",
+      "raw_sha256": "7f6e275c3733a771185c09d3a321f2cb609996a023563bd7ca79398887ee73aa",
+      "request_fingerprint": "2aaf3b58dceea97fd26d50c69a961c50299c2bd20ee8a1a2ecad698a3ed27367",
+      "usage": {
+        "input_tokens": 5668,
+        "output_tokens": 158,
+        "total_tokens": 5826,
+        "input_tokens_details": {
+          "cached_tokens": 5432
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-failure_label_memory-r7",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "2003b53e7c5abbd3fe39202c22d55fdb14d862496d4d5e95c2bfecc6e36a8efd",
+      "raw_sha256": "9b20ae5767598c08d5e59f5d4c70a653de64af52e90cd251234c67791e6c83dc",
+      "request_fingerprint": "9514caf1daf349c2f3fb6ad57bbb39513b69612266d6a6bf9ddb3e92743b9ce7",
+      "usage": {
+        "input_tokens": 5668,
+        "output_tokens": 158,
+        "total_tokens": 5826,
+        "input_tokens_details": {
+          "cached_tokens": 5432
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-failure_label_memory-r8",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "2003b53e7c5abbd3fe39202c22d55fdb14d862496d4d5e95c2bfecc6e36a8efd",
+      "raw_sha256": "bc25a97b5aacaf069d9c330c5631747d1df4e5c5fc406928909c358f231b9179",
+      "request_fingerprint": "4dda7a28aa52d5568240549b5a355b1e6cd84f79b3297cdaf164fcaee2c79d5f",
+      "usage": {
+        "input_tokens": 5668,
+        "output_tokens": 161,
+        "total_tokens": 5829,
+        "input_tokens_details": {
+          "cached_tokens": 5432
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-no_memory-r1",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "73b4d852689b19adc1002faff9069a4b40eb3f9ecfe298992d0867da6af15098",
+      "raw_sha256": "d14dc33f75c0256181da5ea6c13a65e0a15d1d92cc6b4a22319b8c31d5957f16",
+      "request_fingerprint": "382b406bc3bde3e743dea1b9ce1adf6ece211b04e6fd6cce217b8995b35bb663",
+      "usage": {
+        "input_tokens": 5412,
+        "output_tokens": 162,
+        "total_tokens": 5574,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-no_memory-r2",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "73b4d852689b19adc1002faff9069a4b40eb3f9ecfe298992d0867da6af15098",
+      "raw_sha256": "4977fc65f8ec4a3a35f26a34ac42daae703f963cfca9e11e1436444f80780ee5",
+      "request_fingerprint": "e305845e9a4cb93377c74a44ea821dd4849edd7d713a543f1afb4597a36c25b2",
+      "usage": {
+        "input_tokens": 5412,
+        "output_tokens": 160,
+        "total_tokens": 5572,
+        "input_tokens_details": {
+          "cached_tokens": 5176
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-no_memory-r3",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "73b4d852689b19adc1002faff9069a4b40eb3f9ecfe298992d0867da6af15098",
+      "raw_sha256": "c3ca70c7d27fe80f1a4b0edeef141db578f465365c8bfc82fec0075af959a9a7",
+      "request_fingerprint": "c01a61769ee41445f2a067115a25e97389399987e6bfa4d49e5a16945e24b9e7",
+      "usage": {
+        "input_tokens": 5412,
+        "output_tokens": 154,
+        "total_tokens": 5566,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-no_memory-r4",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "73b4d852689b19adc1002faff9069a4b40eb3f9ecfe298992d0867da6af15098",
+      "raw_sha256": "b134b8bc811d0587a2afb7d5b1d1b7f9ce3e82be60e111c0c4e10b0846b1dbfa",
+      "request_fingerprint": "faa2e836306bb87ce73e9b120b12c59970daf3ca8eedc83864e7cdbeb2126f69",
+      "usage": {
+        "input_tokens": 5412,
+        "output_tokens": 141,
+        "total_tokens": 5553,
+        "input_tokens_details": {
+          "cached_tokens": 1592
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-no_memory-r5",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "73b4d852689b19adc1002faff9069a4b40eb3f9ecfe298992d0867da6af15098",
+      "raw_sha256": "80d8fade967c7c319a46fb360fa7f203b7163b05753e11c55c3827f5ac5a5db9",
+      "request_fingerprint": "91aeede6d5704290212488614e2ec4f30e16e135a7104498067c3cbfba044fd4",
+      "usage": {
+        "input_tokens": 5412,
+        "output_tokens": 165,
+        "total_tokens": 5577,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-no_memory-r6",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "73b4d852689b19adc1002faff9069a4b40eb3f9ecfe298992d0867da6af15098",
+      "raw_sha256": "079b6afc3ab62f8451ec911a180c73b660dd6d70bc5305265abc64f2b0c62139",
+      "request_fingerprint": "2146c5b9b4230fb327fca9320c0285df44728aa09310062fb8f486dcae0747e9",
+      "usage": {
+        "input_tokens": 5412,
+        "output_tokens": 168,
+        "total_tokens": 5580,
+        "input_tokens_details": {
+          "cached_tokens": 5176
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-no_memory-r7",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "73b4d852689b19adc1002faff9069a4b40eb3f9ecfe298992d0867da6af15098",
+      "raw_sha256": "e71d5bff2777674559c43b2288aef15edfa919b6361954bbadfa1ada5c8895bc",
+      "request_fingerprint": "0ba3a1b99323d457fe98ff541ef3a15c675dc84b4ca7d248e85460bf316e0f1c",
+      "usage": {
+        "input_tokens": 5412,
+        "output_tokens": 187,
+        "total_tokens": 5599,
+        "input_tokens_details": {
+          "cached_tokens": 5176
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "future-26-no_memory-r8",
+      "engine_id": "memory-25",
+      "requested_model": "doubao-seed-2.0-mini",
+      "resolved_model": "doubao-seed-2-0-mini-260215",
+      "prompt_sha256": "73b4d852689b19adc1002faff9069a4b40eb3f9ecfe298992d0867da6af15098",
+      "raw_sha256": "275bc75fdb4c9af51f8151e4e144d168e61f07f7447786e25c68de2be78b3d6e",
+      "request_fingerprint": "f28a18d9fa84fabb449a576c41a18d037e76e98a1f6d00d422091b1e7bf1e246",
+      "usage": {
+        "input_tokens": 5412,
+        "output_tokens": 186,
+        "total_tokens": 5598,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    }
+  ],
+  "failures": [],
+  "experiment_debt": [
+    "execute paired policies through terminal environment outcomes",
+    "measure success variance across controlled reward-corruption rates"
+  ],
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
