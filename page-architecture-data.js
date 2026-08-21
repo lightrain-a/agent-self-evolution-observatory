@@ -68,10 +68,11 @@ window.PAGE_ARCHITECTURES = {
   },
   "research-map":{
     chapters:[
-      {id:"current-overview",title:{en:"I · Current A–G portfolio overview",zh:"第一章 · 当前 A–G 研究组合全景"},question:{en:"Where are the current ResearchItems, terminal decisions, retained assets, paper handoffs, and evidence objects concentrated?",zh:"当前 ResearchItem、终态裁决、沉淀资产、论文交接和证据对象主要分布在哪些 A–G 大类？"}},
-      {id:"current-coverage",title:{en:"II · What each A–G category means now",zh:"第二章 · A–G 每一类现在意味着什么"},question:{en:"For each category, what problem remains scientifically interesting, what has already been decided, and what survives after stopped or merged directions?",zh:"对每一类，哪些科学问题仍值得关注、哪些已经形成结论、停止或合并以后又留下了什么？"}},
-      {id:"coverage-gaps",title:{en:"III · Coverage density and gaps",zh:"第三章 · 当前覆盖密度与空白"},question:{en:"Which regions have been searched heavily and which regions have relatively few current research objects without turning object count into a priority score?",zh:"哪些区域已经被大量搜索、哪些区域当前研究对象较少，同时避免把对象数量误当成优先级评分？"}},
-      {id:"handoff",title:{en:"IV · From map to ResearchItem, Timeline, and Paper",zh:"第四章 · 从图谱进入 ResearchItem、时间轴与论文"},question:{en:"Where should a reader go for the authoritative current decision, chronological causal history, or submission-ready paper state?",zh:"要查看权威当前结论、按时间的因果历史或已进入投稿阶段的论文状态，分别应该去哪里？"}}
+      {id:"current-overview",title:{en:"I · A–G coordinate system and collection colors",zh:"第一章 · A–G 坐标系与集合颜色"},question:{en:"How are current ResearchItems organized so each collection keeps one stable color without conflating category with scientific status?",zh:"当前 ResearchItem 如何按 A–G 组织，并让每个集合固定一种颜色而不把类别颜色误当成科学状态？"}},
+      {id:"knowledge-graph",title:{en:"II · Canonical knowledge graph and public research status",zh:"第二章 · Canonical 知识图谱与外部研究现状"},question:{en:"Which Track, Idea, Claim, nearest-work, and Experiment nodes and edges already exist, and how far have representative external papers publicly progressed?",zh:"已有 Track、Idea、Claim、nearest-work、Experiment 等哪些真实节点与边，同时代表性外部论文公开研究已经推进到哪一步？"}},
+      {id:"current-coverage",title:{en:"III · What our A–G portfolio means now",zh:"第三章 · 我们的 A–G 组合现在做到哪里"},question:{en:"For each category, what has our own portfolio decided, what survives, and where has a ResearchItem handed off to PaperState?",zh:"对每一类，我们自己的研究组合已经形成什么结论、留下什么资产、哪些 ResearchItem 已经交接到 PaperState？"}},
+      {id:"coverage-gaps",title:{en:"IV · Internal coverage density and gaps",zh:"第四章 · 内部覆盖密度与空白"},question:{en:"Which regions have been searched heavily and which have relatively few internal research objects without turning paper or object counts into a priority score?",zh:"哪些区域已经被大量搜索、哪些区域内部研究对象较少，同时避免把论文数或对象数误当成优先级评分？"}},
+      {id:"handoff",title:{en:"V · From map to ResearchItem, Timeline, and Paper",zh:"第五章 · 从图谱进入 ResearchItem、时间轴与论文"},question:{en:"Where should a reader go for authoritative decisions, chronological causal history, or submission-ready paper state?",zh:"要查看权威当前结论、按时间的因果历史或已进入投稿阶段的论文状态，分别应该去哪里？"}}
     ]
   },
   "paper-ideas":{

@@ -188,6 +188,7 @@ def build() -> Path:
         OUTPUT / "research-map.html",
         OUTPUT / "research-map.css",
         OUTPUT / "research-map-view.js",
+        OUTPUT / "research-landscape-data.js",
         OUTPUT / "research-directions.html",
         OUTPUT / "research-timeline.css",
         OUTPUT / "research-timeline-view.js",
