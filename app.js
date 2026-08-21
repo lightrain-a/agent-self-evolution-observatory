@@ -1684,6 +1684,67 @@ function humanParentEvidenceDisposition(terminal, finalState = humanParentFinalS
   if (finalState === "p0-ready") return {tone:"hold",label:language === "zh" ? "等待门禁与人工执行授权" : "Waiting for gates and explicit human execution authority",detail:currentFact || terminalReason,code:decision};
   return {tone:"hold",label:language === "zh" ? "保留历史 P0；当前不授权重跑" : "Historical P0 preserved; rerun is not currently authorized",detail:currentFact || terminalReason,code:decision};
 }
+const IDEA_STOP_TAXONOMY = {
+  simple:{zh:"简单方法已经一样好",en:"A simpler method is already as good",tone:"simple"},
+  support:{zh:"当前数据或底座不支持验证",en:"The current data or substrate cannot support the test",tone:"support"},
+  identify:{zh:"实验区分不了机制",en:"The experiment cannot distinguish the mechanism",tone:"identify"},
+  collision:{zh:"已有工作基本解决",en:"Existing work already covers the contribution",tone:"collision"},
+  merge:{zh:"更适合作为组件",en:"More useful as a component",tone:"merge"},
+  principle:{zh:"核心假设被否定",en:"The core hypothesis was contradicted",tone:"principle"},
+};
+const PARENT_BRIEFING_ZH = {
+  "A-1":{wanted:"用更新后的早期行为变化，低成本发现哪些任务值得重点回归检查。",why:"更简单的目标任务族优先级在更低成本下找回了更多真实变化，复杂的早期分支审计没有带来额外收益。",learned:"早期行为信号可以用于安排审计顺序，但不足以成为一篇独立方法论文。"},
+  "A-2":{wanted:"让控制器根据当前证据，动态决定还要检查多深、何时停止。",why:"冻结测试上，固定检查一层与自适应策略找回了同样多的有效变化，而且成本更低。",learned:"当前场景不需要学习控制器；固定检查深度已经是更好的决策规则。"},
+  "A-3":{wanted:"用一小组预测性回归任务判断一次更新会不会伤害原有能力。",why:"当前更新底座几乎不能产生真正有效的候选更新，因此现在无法判断回归面板是否有用。停止的是当前实验实例，不是回归控制问题。",learned:"先证明底座能稳定产生有收益且有差异的更新，再评估高级回归门控。"},
+  "A-4":{wanted:"学习更新之间的冲突、先后顺序和局部修复规则。",why:"直接记录有序更新风险并做同预算局部修复，已经完全复现了类型化规则系统。",learned:"有序组合风险值得保留，但当前复杂规则注册表没有独立价值。"},
+  "A-5":{wanted:"压缩长期更新历史，同时保持准确回滚和顺序依赖。",why:"通用状态差分和定期检查点都能同样准确回滚，而且存储或回放成本更低。",learned:"历史压缩应作为版本管理基础设施，而不是 Agent 特有的新方法。"},
+  "B-1":{wanted:"从多条同结果轨迹中提取稳定、可复用的过程经验。",why:"真实实验只得到与简化方法并列的极小效应，独立机制没有留下足够空间。",learned:"保留效应验证思想，并入记忆准入与迁移审计。"},
+  "B-2":{wanted:"只保留那些删除后会真正改变结论的关键经验。",why:"现有数据里没有专门的“删除后结论改变”案例，远不足以训练或判断该选择器。",learned:"结论改变是合理的保留标准，但必须先建立足够的真实案例库。"},
+  "B-3":{wanted:"定位多条记忆共同被检索时，究竟是哪种组合造成干扰。",why:"当前底座缺少足够独立、未见过的共检索交互单元，无法公平判断方法。",learned:"先扩大真实共检索支持，再讨论复杂的干扰定位器。"},
+  "B-4":{wanted:"经验只有在未来任务上因果性地有帮助时才允许长期写入。",why:"该问题与通用回归门控使用同一决策信息，独立保留会重复 A-3。",learned:"把经验准入作为回归控制的一种应用，而不是单独立题。"},
+  "B-5":{wanted:"遇到反例后，只收缩经验的适用范围，而不重写整条经验。",why:"标准的紧凑前置条件／ILP 学习器在相同复杂度下已经达到相同结果。",learned:"单调适用范围可以作为实现约束，但不是独立机制贡献。"},
+  "B-6":{wanted:"根据未来真实复用效果，决定记忆何时复验、降权或删除。",why:"简单的近期性加使用频率策略在同审计预算下更好，没有给学习型风险模型留下收益。",learned:"当前应采用简单缓存与定期复验策略。"},
+  "B-7":{wanted:"给每条经验学习一个明确的适用边界。",why:"它与 B-5 的反例驱动适用范围收缩实质相同，继续独立推进会重复。",learned:"作为 B-5 的边界表示组件保留。"},
+  "C-1":{wanted:"防止同一来源不断自我复制标签，造成虚假的高置信度。",why:"简单的来源降权已经取得相同效果，没有给复杂的标签谱系图留下足够增益空间。",learned:"保留标签来源审计；默认先用简单来源权重。"},
+  "C-2":{wanted:"当评价器随系统一起变化时，识别并修复评分漂移。",why:"冻结锚点加简单残差校准已经等效，复杂的跨版本评价器修复没有额外收益。",learned:"跨版本评分矩阵适合做诊断，实际控制先用冻结锚点。"},
+  "C-3":{wanted:"检查奖励定义在版本变化后是否仍表达同一个目标。",why:"与 C-2 的评价器漂移问题重复，独立立题不会增加新的决策。",learned:"作为 C-2 的奖励不变性诊断与消融保留。"},
+  "C-4":{wanted:"尽早发现自纠正系统是否正在重复同一种失败模式。",why:"同信息的浅层规则已经达到当前数据上限，复杂检测器没有独立提升。",learned:"先把简单失败模式规则做成运行时监控。"},
+  "C-5":{wanted:"只有被干预验证过的纠正，才允许长期写入系统。",why:"A-3 式回归门控或相同特征的简单阈值已经达到同样决策效果。",learned:"把干预证据并入通用更新准入，不单独训练纠正门。"},
+  "C-6":{wanted:"把自纠正成功归因到真正起作用的动作，而不是整段轨迹。",why:"与已有自纠正和信用分配方向重叠，当前没有独立论文边界。",learned:"保留动作编译器作为 C 类方法资产。"},
+  "D-1":{wanted:"从失败中生成最小且最有学习价值的反例任务。",why:"使用同一验证器的直接交集过滤已经与逐例最小化达到相同效果。",learned:"保留可靠反例生成，但不把逐样本最小化当作独立贡献。"},
+  "D-2":{wanted:"沿着模型当前失败边界，持续生成下一批训练任务。",why:"直接预测候选任务的有效产出已经复现了版本化前沿选择器。",learned:"版本趋势适合做诊断；实际选课先看直接产出。"},
+  "D-3":{wanted:"避免自动课程随系统迭代偏离真正需要学习的能力。",why:"与 D-2 依赖同一尚不成熟的自动课程场景，单独推进没有额外对象。",learned:"作为 D-2 的课程漂移监控组件保留。"},
+  "E-1":{wanted:"预测并约束一次工作流修改在未见工作流上的真实效果。",why:"当前干预表里的编辑效果几乎没有可排序差异，无法判断任何排序器是否有效。",learned:"先收集有真实非并列编辑效果的配对干预，再评估工作流更新方法。"},
+  "E-2":{wanted:"定位工作流图中真正导致失败的分支，并编译局部修复。",why:"直接的工作流编辑基线已经在相同信息下达到相同效果。",learned:"失败子图和修复语法可并入通用工作流编辑器。"},
+  "F-1":{wanted:"只学习那些会改变后续决策的世界模型误差。",why:"直接比较动作是否改变，已经完全复现了价值感知误差门控。",learned:"动作分歧是更简单、可解释的学习优先级信号。"},
+  "F-2":{wanted:"从不可逆失败的反事实中学习未来动作的前置安全条件。",why:"同容量的直接安全屏障已经完全等效，没有留下独立编译机制增益。",learned:"前驱条件适合作为安全屏障的解释，不必独立训练。"},
+  "F-3":{wanted:"从成功恢复轨迹中提取可复用的最小恢复算子。",why:"直接的残余状态条件恢复策略已经达到相同结果。",learned:"保留恢复状态复现审计，执行层使用更简单的直接恢复策略。"},
+};
+function ideaStopReasonMeta(decision="", finalState="", failureLayer="") {
+  const raw=`${decision} ${failureLayer}`.toUpperCase();
+  let key="simple";
+  if(finalState==="merge"||/MERGE/.test(raw)) key="merge";
+  else if(/CURRENT_SUBSTRATE|SUPPORT_INSUFFICIENT|UPDATER_INCOMPETENT|RANKING_DEGENERATE|NO_R1|ABSENT/.test(raw)) key="support";
+  else if(/IDENTIFIABILITY|PROTOCOL|OPERATIONALIZATION/.test(raw)) key="identify";
+  else if(/COLLISION|REDUCTION|BLOCK/.test(raw)) key="collision";
+  else if(/CORE_PRINCIPLE|PRINCIPLE_STOP|DEAD_END|FALSIF/.test(raw)) key="principle";
+  return {key,...IDEA_STOP_TAXONOMY[key]};
+}
+function parentBriefingCopy(idea,current,terminal,currentStatus,disposition) {
+  const code=terminal?.code||idea.id;
+  const override=language==="zh"?(PARENT_BRIEFING_ZH[code]||{}):{};
+  const decision=String(currentParentDecisionRecord(terminal).decision||"");
+  const reason=ideaStopReasonMeta(decision,currentStatus,terminal?.failure_layer||"");
+  const merged=currentStatus==="merge";
+  return {
+    wanted:override.wanted||textOf(current.purpose||{}),
+    why:override.why||disposition.detail||textOf(terminal?.terminal_reason||{}),
+    learned:override.learned||(merged
+      ? (language==="zh"?"该方向的有效部分已经并入更大的研究方向，不再作为独立论文重复推进。":"Its useful parts survive inside a larger direction rather than as a duplicate standalone paper.")
+      : (language==="zh"?"当前证据帮助我们收窄了方法边界；后续只有新增证据满足重开条件才继续。":"The evidence narrows the method boundary; continuation requires new evidence that satisfies the reopen condition.")),
+    reason,
+  };
+}
 function humanReviewStatusLabel(status) {
   const terminalLabels = {
     p0:{zh:"已进入 P0",en:"Entered P0"},
@@ -2048,7 +2109,7 @@ function renderTerminalDecision(ideaId) {
   const disposition = humanParentEvidenceDisposition(terminal, finalState);
   const reason = disposition.detail || textOf(terminal.terminal_reason || {});
   const dispositionCode = disposition.code ? `<small>${esc(disposition.code)}</small>` : "";
-  return `<section class="terminal-decision terminal-${esc(finalState)}"><header><div><b>${mechanism}</b><p>${reason}</p></div><strong>${esc(humanParentFinalStatusLabel(finalState))}</strong></header><div class="terminal-evidence-disposition tone-${esc(disposition.tone)}"><div><b>${language === "zh" ? "最新证据处置" : "Latest evidence disposition"}</b><span>${esc(disposition.label)}</span></div>${dispositionCode}</div><div class="terminal-decision-grid">${mergeTarget}${gate ? `<span><b>${language === "zh" ? "Pre-P0 / 前置门" : "Pre-P0 gate"}</b>${gate}</span>` : ""}${baseline ? `<span><b>${language === "zh" ? "最强对照" : "Strongest baseline"}</b>${baseline}</span>` : ""}${minimum ? `<span><b>${language === "zh" ? "最小 P0" : "Minimum P0"}</b>${minimum}</span>` : ""}${stop ? `<span><b>${language === "zh" ? "精确终止条件" : "Exact stop"}</b>${stop}</span>` : ""}<span><b>${language === "zh" ? "什么情况下重开" : "Reopen only if"}</b>${esc(reopen)}</span></div>${children}</section>`;
+  return `<section class="terminal-decision terminal-${esc(finalState)}"><header><div><b>${mechanism}</b><p>${reason}</p></div><strong>${esc(humanParentFinalStatusLabel(finalState))}</strong></header><div class="terminal-evidence-disposition tone-${esc(disposition.tone)}"><div><b>${language === "zh" ? "最新证据处置" : "Latest evidence disposition"}</b><span>${esc(disposition.label)}</span></div>${dispositionCode}</div><details class="terminal-technical-audit"><summary>${language === "zh" ? "查看原始门禁、最强对照与精确终止条件" : "Inspect raw gates, strongest baseline, and exact stop"}<small>${language === "zh" ? "技术审计层" : "technical audit layer"}</small></summary><div class="terminal-decision-grid">${mergeTarget}${gate ? `<span><b>${language === "zh" ? "Pre-P0 / 前置门" : "Pre-P0 gate"}</b>${gate}</span>` : ""}${baseline ? `<span><b>${language === "zh" ? "最强对照" : "Strongest baseline"}</b>${baseline}</span>` : ""}${minimum ? `<span><b>${language === "zh" ? "最小 P0" : "Minimum P0"}</b>${minimum}</span>` : ""}${stop ? `<span><b>${language === "zh" ? "精确终止条件" : "Exact stop"}</b>${stop}</span>` : ""}<span><b>${language === "zh" ? "什么情况下重开" : "Reopen only if"}</b>${esc(reopen)}</span></div>${children}</details></section>`;
 }
 function renderHumanReviewedIdeaCard(idea, meta, index) {
   const overlay = (window.FINAL20_MERGE_OVERRIDES || {})[idea.id] || {};
@@ -2063,6 +2124,7 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
   const historicalStatus = terminal?.terminal_state || meta.status;
   const currentStatus = terminal ? humanParentFinalState(terminal) : meta.status;
   const disposition = humanParentEvidenceDisposition(terminal || {}, currentStatus);
+  const briefing = parentBriefingCopy(idea,current,terminal,currentStatus,disposition);
   const tone = humanReviewStatusTone(currentStatus);
   const code = terminal?.code || meta.code || idea.id;
   const revivedFromDrop = (terminal?.revival_history || []).some((row) => row.prior_terminal_state === "drop");
@@ -2081,28 +2143,32 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
   const finalRecommendation = String(finalRefinement.recommendation || "");
   const finalRecommendationDisplay = localizedRefinementRecommendation(finalRecommendation);
   const finalOfflineGate = textOf(finalRefinement.offline_pre_p0_gate || {});
+  const plainReopen = textOf(terminal?.reopen_condition || {}) || (currentStatus === "merge"
+    ? (language === "zh" ? "只有出现无法被当前父方向表达、且会改变独立论文结论的新机制证据时，才重新立为独立方向。" : "Reopen standalone only if new mechanism evidence cannot be expressed by the parent direction and changes the paper-level conclusion.")
+    : (language === "zh" ? "只有新增第一手证据在同信息、同预算和最强简单对照下推翻当前结论，才重新人工评审。" : "Reopen human review only if new primary evidence overturns the current result against the strongest same-information, matched-budget baseline."));
   const absorbed = [...new Set([...(terminal?.absorbed_children || []),...(overlay.absorbed_from || current.absorbed_from || [])])];
   const absorbedIdeas = absorbed.map(currentFinalIdeaById).filter(Boolean);
   const absorbedNote = absorbed.length ? `<div class="human-absorbed-methods"><b>${language === "zh" ? "已吸收终态方法资产" : "Absorbed FINAL method assets"}</b>${absorbed.map((id)=>`<span title="${esc(id)}">${esc(localizedPaperIdeaMethodAsset(id))}</span>`).join("")}</div>` : "";
   const freshCheck = current.fresh_reducibility_check || {};
   const freshSources = (freshCheck.sources || []).map((source) => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}</a>`).join("");
   const freshBlock = freshSources ? `<section class="human-fresh-collision"><h4 data-toc="false">${language === "zh" ? `最新可归约性审查 · ${esc(freshCheck.review_date || "")}` : `Fresh reducibility · ${esc(freshCheck.review_date || "")}`}</h4><p>${language === "zh" ? "以下是一手来源；上面的“最近工作与真正边界”已经按这些工作收窄，不把已有人做过的部分继续当贡献。" : "Primary sources below support the narrowed boundary above; already-covered mechanisms are not counted as the contribution."}</p><nav>${freshSources}</nav></section>` : "";
-  return `<details class="human-review-idea-card human-tone-${tone}" id="idea-${esc(code.toLowerCase())}" data-terminal-status="${esc(currentStatus)}" data-historical-status="${esc(historicalStatus)}" data-evidence-disposition="${esc(disposition.tone)}">
-    <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(current.title)}</b><small>${originalNumber ? `${language === "zh" ? "原讨论" : "Original"} Idea ${originalNumber} · ` : ""}${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><span class="human-status-badge human-status-${tone}">${esc(humanParentFinalStatusLabel(currentStatus))}</span><p>${esc(disposition.detail || iterationSummary || humanOpinion)}</p></div></summary>
+  return `<details class="human-review-idea-card human-tone-${tone}" id="idea-${esc(code.toLowerCase())}" data-terminal-status="${esc(currentStatus)}" data-historical-status="${esc(historicalStatus)}" data-evidence-disposition="${esc(disposition.tone)}" data-briefing-reason="${esc(briefing.reason.key)}">
+    <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(current.title)}</b><small>${originalNumber ? `${language === "zh" ? "原讨论" : "Original"} Idea ${originalNumber} · ` : ""}${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><div><span class="human-status-badge human-status-${tone}">${esc(humanParentFinalStatusLabel(currentStatus))}</span><span class="briefing-reason-pill tone-${esc(briefing.reason.tone)}">${esc(textOf(briefing.reason))}</span></div><p>${esc(briefing.why)}</p></div></summary>
     <div class="human-idea-body">
       <div class="canonical-lifecycle-strip"><span><b>${language === "zh" ? "当前最终状态" : "Current final state"}</b>${esc(humanParentFinalStatusLabel(currentStatus))}</span><span><b>${language === "zh" ? "历史里程碑" : "Historical milestone"}</b>${esc(lifecycleStage)}</span><span><b>${language === "zh" ? "最新证据处置" : "Latest evidence disposition"}</b>${esc(disposition.label)}</span><span><b>${language === "zh" ? "正式实验权限" : "Formal experiment authority"}</b>${experimentAuthority}</span></div>
-      <div class="human-review-history">
+      <section class="idea-briefing-summary tone-${esc(briefing.reason.tone)}"><header><b>${language === "zh" ? "给师兄的 30 秒结论" : "30-second briefing"}</b><span>${esc(textOf(briefing.reason))}</span></header><div><section><b>${language === "zh" ? "它原本想做什么" : "What it tried to do"}</b><p>${esc(briefing.wanted)}</p></section><section class="briefing-why"><b>${language === "zh" ? "为什么现在不继续" : "Why it is not continuing"}</b><p>${esc(briefing.why)}</p></section><section><b>${language === "zh" ? "这轮学到了什么" : "What we learned"}</b><p>${esc(briefing.learned)}</p></section><section><b>${language === "zh" ? "什么情况下重开" : "When it can reopen"}</b><p>${esc(plainReopen)}</p></section></div></section>
+      <details class="human-lineage-details"><summary>${language === "zh" ? "历史人工意见与方法迭代" : "Historical human feedback and method iteration"}<small>${language === "zh" ? "谱系记录，不代表当前权限" : "lineage, not current authority"}</small></summary><div class="human-review-history">
         <section class="human-opinion-box"><h4 data-toc="false">${language === "zh" ? `人工意见 · 2026-08-10（原讨论 Idea ${originalNumber || "?"}）` : `Human opinion · 2026-08-10 (original Idea ${originalNumber || "?"})`}</h4><p>${esc(humanOpinion || "—")}</p><small class="human-recommendation-label tone-${humanRecommendationTone(humanRecommendation)}">${esc(humanRecommendationLabel(humanRecommendation))}</small></section>
         ${iterationSummary ? `<section class="human-iteration-box"><h4 data-toc="false">${language === "zh" ? `本轮方法迭代 · ${esc(iteration.round || "2026-08-10")}` : `Current method iteration · ${esc(iteration.round || "2026-08-10")}`}</h4><p>${esc(iterationSummary)}</p>${iteration.verdict ? `<small>${language === "zh" ? "当前门禁" : "Current gate"}: ${esc(iteration.verdict)}</small>` : ""}${finalRecommendation ? `<div class="human-final-refinement"><b>${language === "zh" ? "最终分流" : "Final recommendation"}</b><span>${esc(finalRecommendationDisplay)}</span>${finalOfflineGate ? `<p>${language === "zh" ? "GPU 前先做：" : "Before GPU: "}${esc(finalOfflineGate)}</p>` : ""}</div>` : ""}</section>` : ""}
-      </div>
+      </div></details>
       ${renderTerminalDecision(idea.id)}
-      <div class="human-core-grid human-reading-grid">
+      <details class="human-complete-intro"><summary>${language === "zh" ? "完整 Idea 介绍" : "Complete idea introduction"}<small>${language === "zh" ? "问题、直觉、方法、例子与价值" : "problem, intuition, method, example, and value"}</small></summary><div class="human-core-grid human-reading-grid">
         <section><h4 data-toc="false">${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</h4><p>${textOf(current.purpose)}</p></section>
         <section><h4 data-toc="false">${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</h4><p>${esc(intuition)}</p></section>
         <section><h4 data-toc="false">${language === "zh" ? "具体准备怎么做" : "What would we actually do?"}</h4><p>${textOf(current.core_idea)}</p></section>
         <section><h4 data-toc="false">${language === "zh" ? "举个具体例子" : "Concrete example"}</h4><p>${esc(example || "—")}</p></section>
         <section><h4 data-toc="false">${language === "zh" ? "为什么值得试" : "Why might this work?"}</h4><p>${textOf(current.rationale || current.importance)}</p></section>
-      </div>
+      </div></details>
       ${absorbedNote}
       <details class="human-technical-details"><summary>${language === "zh" ? "方法细节与论文边界" : "Method details and paper boundary"}<small>${language === "zh" ? "需要写论文或审 novelty 时再展开" : "Open when checking implementation or novelty"}</small></summary><div class="human-evidence-grid">
         <section><h4 data-toc="false">${language === "zh" ? "方法步骤" : "Method steps"}</h4><p>${textOf(current.method_logic)}</p></section>
@@ -2193,6 +2259,15 @@ const SUPPLEMENTAL_TERMINAL_DISPLAY = {
     failureLayer:{zh:"证据支持／假设范围",en:"support / assumption scope"}
   }
 };
+const SUPPLEMENTAL_BRIEFING_ZH = {
+  "replicated-effect-memory-gate":{tone:"support",label:"当前数据或底座不支持验证",why:"记忆会稳定改变早期轨迹，但相同早期信号在不同后续上下文里可能变成帮助或伤害，因此现在学不出可靠的全局准入门。",learned:"只把早期分叉当作软审计优先级，不能用它硬性淘汰记忆。"},
+  "cross-task-effect-transport-certificate":{tone:"support",label:"当前数据或底座不支持验证",why:"可以复现的是早期轨迹分叉，而不是跨任务稳定的最终收益方向；当前证据不足以支持迁移证书。",learned:"跨任务效应必须在完整后续上下文中验证，不能只看局部状态签名。"},
+  "bounded-probe-api-transition-operator":{tone:"simple",label:"简单方法已经一样好",why:"确定性的 P/E/X 语义规则在读操作和有副作用操作上都达到满分，学习方法没有可提升空间。",learned:"保留类型化 API 语义与恢复测试，不再训练独立转移算子。"},
+  "interventional-permission-triage-under-ceiling":{tone:"simple",label:"简单方法已经一样好",why:"使用同一干预标签的简单单调布尔规则更少触发重授权，同时没有漏掉风险。",learned:"权限重授权优先使用可审计的简单规则。"},
+  "constraint-complete-typed-memory-order-logic":{tone:"simple",label:"简单方法已经一样好",why:"匹配的 n 元因子模型在准确率和编译成本上完全复现了符号顺序逻辑。",learned:"保留约束测试，不再主张独立符号表示优势。"},
+  "active-causal-minimal-rollback":{tone:"simple",label:"简单方法已经一样好",why:"标准二元组测试在相同信息和预算下取得完全相同结果，因此当前主动因果机制没有显示额外价值。",learned:"相对 ddmin 的收益来自稀疏组测试，不是新的因果学习机制。"},
+  "counterfactual-evolution-decision-controller":{tone:"simple",label:"简单方法已经一样好",why:"只用相同四个状态特征的浅层决策树，完全复现了学习控制器的四动作选择和零 regret。",learned:"反事实表有诊断价值，但执行策略可以并入简单规则。"},
+};
 function supplementalTerminalDisplay(idea) {
   const id=idea.idea_id||idea.id||"";
   const specific=SUPPLEMENTAL_TERMINAL_DISPLAY[id]||{};
@@ -2230,9 +2305,10 @@ function renderSupplementalIdeaCard(row) {
   const code = idea.code || (language === "zh" ? "新增候选" : "new candidate");
   const baseline = textOf(idea.strongest_baseline || richSource.strongest_baseline || {});
   const currentRole = currentFact || (source === "terminal-independent" ? (language === "zh" ? "人工终态曾将它保留为独立方法并进入 P0 lifecycle；这是历史 lineage，不代表当前可执行。2026-08-16 的执行结论以上方 unified current-status ledger / Experiment terminal ledger 为准。" : "The human-terminal ledger historically retained this as a standalone method and entered it into the P0 lifecycle. That is lineage, not current executability; use the 2026-08-16 unified current-status / experiment terminal ledger for the current decision.") : source === "final-merged" ? (language === "zh" ? "FINAL 去重后仍不能合理并入已有方向，因此暂时作为独立 Idea 保留，等下一轮人工讨论。" : "After FINAL deduplication this still does not merge cleanly into an existing direction, so it remains independent pending human review.") : (language === "zh" ? "这是新增候选，还没有完成当前轮人工讨论；先判断问题是否真实、方法是否有实质，再决定保留或合并。" : "This is a new candidate that has not completed human review; first test whether the problem is real and the method substantive, then keep or merge it."));
+  const briefing=language==="zh"?(SUPPLEMENTAL_BRIEFING_ZH[id]||{tone:"simple",label:"当前独立方法已收口",why:currentRole,learned:"保留有效的诊断、协议或工程资产。"}):{tone:"simple",label:"Standalone method is closed",why:currentRole,learned:"Useful diagnostics, protocol, or engineering assets are retained."};
   const terminalPanel=source === "terminal-independent" ? `<section class="supplemental-terminal-panel"><b>${language === "zh" ? "当前终态、停止原因与重开条件" : "Current terminal state, stop reason, and reopen condition"}</b><div><span><strong>${language === "zh" ? "当前状态" : "Current state"}</strong>${terminalDisplay.stopped ? (language === "zh" ? "已停止独立升级；历史 P0 仅作谱系记录" : "Standalone escalation stopped; historical P0 is lineage only") : humanReviewStatusLabel(idea.terminal_state || idea.status || "")}</span><span><strong>${language === "zh" ? "失败层" : "Failure layer"}</strong>${esc(textOf(terminalDisplay.failureLayer))}</span><span><strong>${language === "zh" ? "为什么停止" : "Why it stopped"}</strong>${esc(currentRole)}</span><span><strong>${language === "zh" ? "什么情况下重开" : "Reopen only if"}</strong>${esc(textOf(terminalDisplay.reopen))}</span></div>${terminalDisplay.decision ? `<small>${esc(terminalDisplay.decision)}</small>` : ""}</section>` : "";
   const experimentIdea={...idea,decisive_metric:idea.decisive_metric||terminalDisplay.metric,success_gate:idea.success_gate||terminalDisplay.reopen};
-  return `<details class="supplemental-idea-card" id="new-${esc(id)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><p>${esc(problem)}</p></summary><div class="supplemental-human-grid"><section><b>${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</b><p>${esc(problem)}</p></section><section><b>${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</b><p>${esc(intuition)}</p></section><section><b>${language === "zh" ? "具体准备怎么做" : "What would we actually do?"}</b><p>${esc(method || methodLogic)}</p></section><section><b>${language === "zh" ? "为什么值得试" : "Why might this work?"}</b><p>${esc(rationale || importance || problem)}</p></section>${terminalPanel}<details class="human-technical-details supplemental-technical-details"><summary>${language === "zh" ? "方法细节与论文边界" : "Method details and paper boundary"}<small>${language === "zh" ? "审方法或 novelty 时再展开" : "Open for method/novelty review"}</small></summary><div class="human-evidence-grid"><section><h4 data-toc="false">${language === "zh" ? "方法步骤" : "Method steps"}</h4><p>${esc(methodLogic)}</p></section><section><h4 data-toc="false">${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${esc(importance || rationale || problem)}</p></section><section><h4 data-toc="false">${language === "zh" ? "相比简单方法多了什么" : "What it adds"}</h4><p>${esc(advantage)}</p></section><section><h4 data-toc="false">${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${esc(collision)}</p></section><section><h4 data-toc="false">${language === "zh" ? "最强对照" : "Strongest baseline"}</h4><p>${baseline}</p></section><section><h4 data-toc="false">${language === "zh" ? "当前判断" : "Current role"}</h4><p>${esc(currentRole)}</p></section></div></details>${renderIdeaExperimentSection(experimentIdea,{status:source === "terminal-independent" ? (idea.terminal_state || idea.status || "new-review") : "new-review"},sourceIdeas)}</div></details>`;
+  return `<details class="supplemental-idea-card" id="new-${esc(id)}" data-briefing-reason="${esc(briefing.tone)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><div class="supplemental-summary-brief"><strong class="briefing-reason-pill tone-${esc(briefing.tone)}">${esc(briefing.label)}</strong><p>${esc(briefing.why)}</p></div></summary><div class="supplemental-human-grid"><section class="supplemental-briefing-section"><header><b>${language==="zh"?"给师兄的 30 秒结论":"30-second briefing"}</b><span>${esc(briefing.label)}</span></header><p><strong>${language==="zh"?"为什么现在不继续：":"Why it is not continuing: "}</strong>${esc(briefing.why)}</p><p><strong>${language==="zh"?"留下了什么：":"What survives: "}</strong>${esc(briefing.learned)}</p><p><strong>${language==="zh"?"重开条件：":"Reopen condition: "}</strong>${esc(textOf(terminalDisplay.reopen))}</p></section><details class="supplemental-complete-intro"><summary>${language==="zh"?"完整 Idea 介绍":"Complete idea introduction"}</summary><div class="supplemental-intro-grid"><section><b>${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</b><p>${esc(problem)}</p></section><section><b>${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</b><p>${esc(intuition)}</p></section><section><b>${language === "zh" ? "具体准备怎么做" : "What would we actually do?"}</b><p>${esc(method || methodLogic)}</p></section><section><b>${language === "zh" ? "为什么值得试" : "Why might this work?"}</b><p>${esc(rationale || importance || problem)}</p></section></div></details>${terminalPanel}<details class="human-technical-details supplemental-technical-details"><summary>${language === "zh" ? "方法细节与论文边界" : "Method details and paper boundary"}<small>${language === "zh" ? "审方法或 novelty 时再展开" : "Open for method/novelty review"}</small></summary><div class="human-evidence-grid"><section><h4 data-toc="false">${language === "zh" ? "方法步骤" : "Method steps"}</h4><p>${esc(methodLogic)}</p></section><section><h4 data-toc="false">${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${esc(importance || rationale || problem)}</p></section><section><h4 data-toc="false">${language === "zh" ? "相比简单方法多了什么" : "What it adds"}</h4><p>${esc(advantage)}</p></section><section><h4 data-toc="false">${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${esc(collision)}</p></section><section><h4 data-toc="false">${language === "zh" ? "最强对照" : "Strongest baseline"}</h4><p>${baseline}</p></section><section><h4 data-toc="false">${language === "zh" ? "当前判断" : "Current role"}</h4><p>${esc(currentRole)}</p></section></div></details>${renderIdeaExperimentSection(experimentIdea,{status:source === "terminal-independent" ? (idea.terminal_state || idea.status || "new-review") : "new-review"},sourceIdeas)}</div></details>`;
 }
 function renderNewIdeaCandidates() {
   const ledger = humanTerminalState();
@@ -2648,6 +2724,19 @@ const CANONICAL_PF_GROUPS = {
   G:[]
 };
 const CANONICAL_CONTEXT_GROUP_COUNTS = {A:0,B:2,C:0,D:0,E:4,F:0,G:0};
+const CATEGORY_BRIEFING_ZH = {
+  A:{focus:"研究一次更新能否安全提交，以及怎样用有限预算发现回退、冲突和回滚需求。",reason:"多数复杂控制器、规则注册表和历史压缩方法，被同信息的固定规则、直接风险表或通用版本工具追平。",survives:"保留底座资格检查、回归面板、同信息简化赛和低成本审计调度。"},
+  B:{focus:"研究哪些记忆与经验值得长期保存、迁移和复用。",reason:"一部分方向缺少足够真实交互样本，另一部分被简单缓存、前置条件或回归准入规则吸收。",survives:"保留效应验证、适用边界、软审计优先级和可逆压缩生命周期。"},
+  C:{focus:"研究评价器、自标注和自纠正信号如何避免在迭代中自我放大。",reason:"当前复杂谱系、评价器修复和纠正门控，大多被冻结锚点、来源降权或浅层规则复现。",survives:"保留标签来源、跨版本评分矩阵和独立真值作为系统审计。"},
+  D:{focus:"研究怎样从失败中生成真正带来新增学习信息的任务和课程。",reason:"逐例最小化、版本化前沿与漂移控制，没有超过直接过滤和产出预测；自动课程底座也尚不成熟。",survives:"保留可靠反例生成、版本趋势诊断和课程漂移监控。"},
+  E:{focus:"研究多节点工作流、API 与结构更新怎样被验证、归因和持续修改。",reason:"当前编辑干预表缺少有效差异，或复杂结构方法被直接编辑、确定性语义和简单权限规则追平。",survives:"保留配对编辑协议、工作流证据链、类型化接口资产与 STRI 投稿成果。"},
+  F:{focus:"研究世界模型和具身 Agent 应该学习哪些误差、不可逆风险与恢复经验。",reason:"价值门控、前置条件编译和恢复算子分别被动作分歧、直接屏障和直接恢复策略完全复现。",survives:"保留不可逆性解释、恢复复现审计与简单运行时安全策略。"},
+  G:{focus:"研究持久状态与经验继续演化后，静态安全检查能否预测未来首次违规。",reason:"安全问题仍成立，但当前没有足够合格、安全冻结的状态来做公平因果比较；其他表述与既有安全治理发生碰撞。",survives:"G-1 作为支持层停止可条件重开；其余风险轴并入安全审计、基线与治理清单。"},
+};
+function renderResearchBriefingGuide(inventory) {
+  const taxonomy=Object.values(IDEA_STOP_TAXONOMY).map(row=>`<article class="briefing-taxonomy-card tone-${esc(row.tone)}"><span></span><b>${esc(textOf(row))}</b><p>${language==="zh"?({simple:"问题可能真实，但复杂方法没有超过最强简单对照。",support:"现在还不能公平判断方法；需要先补数据、有效更新或合格底座。",identify:"实验结果无法说明收益是否来自声称的新机制。",collision:"问题存在，但已被最近工作或成熟理论基本覆盖。",merge:"有价值的部分保留为更大方向的组件、基线或审计项。",principle:"在有效实验下，关键预测被直接否定；除非出现推翻证据，否则不再重开。"}[row.tone]):({simple:"The idea may matter, but the complex method did not beat the strongest simple control.",support:"The method cannot yet be judged fairly; data or a qualified substrate is missing.",identify:"The experiment cannot attribute an effect to the claimed mechanism.",collision:"The problem is real, but prior work or mature theory already covers it.",merge:"Useful parts survive as a component, baseline, or audit item inside a larger direction.",principle:"A valid test contradicted the key prediction; reopening requires overturning evidence."}[row.tone])}</p></article>`).join("");
+  return `<section class="panel research-briefing-guide" id="briefing-guide"><div class="briefing-guide-head"><div><div class="eyebrow">${language==="zh"?"师兄汇报视图":"SENIOR-LABMATE BRIEFING"}</div><h2 data-toc="false">${language==="zh"?"先讲研究判断，再看实验日志":"Research judgments first; experiment logs second"}</h2><p>${language==="zh"?"默认视图把每个方向压缩成四个问题：想做什么、为什么现在不继续、学到了什么、什么情况下重开。原始状态码、门禁、数值、人工意见和实验协议都保留在卡片的技术审计层。":"The default view reduces every direction to four questions: what it tried, why it is not continuing, what was learned, and what would reopen it. Raw codes, gates, metrics, human feedback, and protocols remain in the technical audit layer."}</p></div><div class="briefing-mode-switch" role="group" aria-label="${language==="zh"?"阅读模式":"Reading mode"}"><button class="briefing-mode-btn active" data-briefing-mode="brief" aria-pressed="true">${language==="zh"?"汇报视图":"Briefing"}</button><button class="briefing-mode-btn" data-briefing-mode="audit" aria-pressed="false">${language==="zh"?"完整审计":"Full audit"}</button></div></div><div class="briefing-lessons"><article><b>${language==="zh"?"结论 1 · 复杂不等于新增价值":"Lesson 1 · Complexity is not added value"}</b><p>${language==="zh"?"多条路线不是“完全没用”，而是被使用相同信息的简单规则追平，因此不能继续主张独立机制贡献。":"Many routes were not useless; they were matched by simpler rules using the same information, eliminating the standalone mechanism claim."}</p></article><article><b>${language==="zh"?"结论 2 · 先验证底座，再验证高级方法":"Lesson 2 · Qualify the substrate first"}</b><p>${language==="zh"?"如果更新器几乎产不出有效更新，或数据没有足够差异，负结果不能判方法失败，只能停止当前实验实例。":"If an updater rarely produces effective changes or the data lack variation, a negative result stops the current instance rather than falsifying the method."}</p></article><article><b>${language==="zh"?"结论 3 · 历史阶段不是当前权限":"Lesson 3 · Historical stage is not current authority"}</b><p>${language==="zh"?"历史 P0、P0-ready、Paper Design 和 ADVANCE 都保留为谱系；当前真正可执行的正式实验仍是 0。":"Historical P0, P0-ready, Paper Design, and ADVANCE remain lineage; currently launchable formal experiments remain zero."}</p></article></div><h3 data-toc="false">${language==="zh"?"停止原因只看六类":"Six plain-language stop reasons"}</h3><div class="briefing-taxonomy-grid">${taxonomy}</div><small class="briefing-inventory-note">${language==="zh"?`以下仍完整覆盖 ${inventory.total} 个 A–G 去重研究对象；通俗分类不会改写任何原始科学裁决。`:`The ledger below still covers all ${inventory.total} deduplicated A–G objects; plain-language categories never overwrite the scientific adjudication.`}</small></section>`;
+}
 function canonicalGroupInventory(groupId,parents,independent,closedCounts={}) {
   const parent=parents.filter(row=>row.meta.group===groupId).length;
   const related=independent.filter(row=>(row.idea.group||supplementalGroupId(row.idea))===groupId).length+(CANONICAL_PF_GROUPS[groupId]||[]).length+(groupId==="G"?5:0);
@@ -2716,14 +2805,16 @@ function renderCanonicalIdeaGroup(group,parents,independent) {
   const counts=Object.fromEntries(["stop","merge"].map(status=>[status,rows.filter(row=>row.meta.status===status).length]));
   const inventory=canonicalGroupInventory(group.id,parents,independent,window.closedCandidateCategoryCounts?window.closedCandidateCategoryCounts():{});
   const terminalLine=inventory.parent?(language==="zh"?`父级方向当前终态：停止 ${counts.stop||0} · 合并 ${counts.merge||0}`:`Current parent states: stopped ${counts.stop||0} · merged ${counts.merge||0}`):(group.id==="G"?(language==="zh"?"G-1 支持层停止（可条件重开）· G-2—G-5 已关闭":"G-1 support stop (conditionally reopenable) · G-2—G-5 closed"):"");
-  return `<section class="canonical-idea-group" id="canonical-group-${esc(group.id.toLowerCase())}" data-canonical-group="${esc(group.id)}" data-category-total="${inventory.total}"><header class="canonical-group-header"><span>${esc(group.id)}</span><div><h2>${textOf(group.title)}</h2><p>${textOf(group.question)}</p><div class="canonical-group-counts"><b>${inventory.total} ${language==="zh"?"个去重研究对象":"deduplicated objects"}</b><small>${language==="zh"?`父级方向 ${inventory.parent} · 研究方向/方法 ${inventory.related} · 论文/证据 ${inventory.context} · 编号关闭研究方向 ${inventory.closed}`:`${inventory.parent} parents · ${inventory.related} directions/methods · ${inventory.context} paper/evidence · ${inventory.closed} numbered stopped ideas`}</small>${terminalLine?`<small>${terminalLine}</small>`:""}</div></div></header>${parentCards?`<div class="canonical-parent-list">${parentCards}</div>`:""}${context}${safety}${related}${closed}</section>`;
+  const insight=CATEGORY_BRIEFING_ZH[group.id]||{};
+  const categoryBriefing=language==="zh"?`<div class="canonical-category-briefing"><section><b>这类在研究什么</b><p>${esc(insight.focus||textOf(group.question))}</p></section><section><b>这一类为什么收口</b><p>${esc(insight.reason||"以每个编号卡片的当前终态为准。")}</p></section><section><b>留下了什么</b><p>${esc(insight.survives||"保留有效组件、审计规则与负证据。")}</p></section></div>`:`<div class="canonical-category-briefing"><section><b>Research focus</b><p>${textOf(group.question)}</p></section><section><b>Why this category converged</b><p>See each numbered card's current final state and plain-language stop reason.</p></section><section><b>What survives</b><p>Useful components, audit rules, and negative evidence remain preserved.</p></section></div>`;
+  return `<section class="canonical-idea-group" id="canonical-group-${esc(group.id.toLowerCase())}" data-canonical-group="${esc(group.id)}" data-category-total="${inventory.total}"><header class="canonical-group-header"><span>${esc(group.id)}</span><div><h2>${textOf(group.title)}</h2><p>${textOf(group.question)}</p><div class="canonical-group-counts"><b>${inventory.total} ${language==="zh"?"个去重研究对象":"deduplicated objects"}</b><small>${language==="zh"?`父级方向 ${inventory.parent} · 研究方向/方法 ${inventory.related} · 论文/证据 ${inventory.context} · 编号关闭研究方向 ${inventory.closed}`:`${inventory.parent} parents · ${inventory.related} directions/methods · ${inventory.context} paper/evidence · ${inventory.closed} numbered stopped ideas`}</small>${terminalLine?`<small>${terminalLine}</small>`:""}</div></div></header>${categoryBriefing}${parentCards?`<div class="canonical-parent-list">${parentCards}</div>`:""}${context}${safety}${related}${closed}</section>`;
 }
 function renderCanonicalIdeaLedger(groups=canonicalIdeaGroups(),parents=canonicalParentRows(),independent=canonicalIndependentRows(),inventory=canonicalInventorySummary(groups,parents,independent)) {
   const terminal=humanParentFinalSummary();
   const terminalSummary=`<div class="human-final-summary canonical-terminal-summary"><div><b>${terminal.stop||0}</b><span>${language==="zh"?"当前已停止":"currently stopped"}</span></div><div><b>${terminal.merge||0}</b><span>${language==="zh"?"当前已合并":"currently merged"}</span></div><div><b>0</b><span>${language==="zh"?"当前 P0-ready":"current P0-ready"}</span></div><div><b>0</b><span>${language==="zh"?"可启动正式实验":"launchable formal experiments"}</span></div><small>${language==="zh"?"这是 26 个父级研究方向的当前最终状态：20 个停止、6 个合并。历史上曾进入 P0、曾达到 P0-ready 或曾从 DROP 重开，只在各卡片的历史里程碑中保留。":"This is the current final split for the 26 parent ideas: 20 stopped and 6 merged. Historical P0, P0-ready, and revived-from-DROP milestones remain inside each card."}</small></div>`;
   const paperFirstSummary=window.renderPaperFirstIdeaIncubation?window.renderPaperFirstIdeaIncubation().split('<div class="paper-incubation-list">')[0]:"";
   const appendix=`<section class="panel canonical-audit-appendix"><h2 id="canonical-audit-appendix">${language==="zh"?"审计说明：怎样理解阶段、停止与重开":"Audit guide: how to read stage, stop, and reopen"}</h2><div class="canonical-audit-grid"><section><b>${language==="zh"?"阶段不等于权限":"Stage is not authority"}</b><p>${language==="zh"?"历史上进入 P0，只说明当时形成过可证伪合同；当前是否能运行，仍以正式实验权限为准。":"Historical P0 means a falsifiable contract once existed; current execution still requires formal authority."}</p></section><section><b>${language==="zh"?"失败必须分层":"Failures stay typed"}</b><p>${language==="zh"?"执行、协议、证据支持、方法实现和核心原理不会互相替代；只有核心原理级裁决才是科学死路。":"Execution, protocol, support, method-realization, and core-principle failures do not substitute for one another; only a core-principle ruling is a scientific dead end."}</p></section><section><b>${language==="zh"?"重开需要新证据":"Reopen requires new evidence"}</b><p>${language==="zh"?"换名字、换术语或重复同一实验不足以重开；必须满足卡片中写明的新增证据条件。":"Renaming or repeating the same test is insufficient; the card-specific new-evidence condition must be met."}</p></section></div>${paperFirstSummary}${renderHumanReviewMethodology()}</section>`;
-  return `${renderCanonicalCategoryIndex(groups,parents,independent,inventory)}${terminalSummary}${canonicalStatusControls(parents)}${groups.map(group=>renderCanonicalIdeaGroup(group,parents,independent)).join("")}${appendix}`;
+  return `${renderResearchBriefingGuide(inventory)}${renderCanonicalCategoryIndex(groups,parents,independent,inventory)}${terminalSummary}${canonicalStatusControls(parents)}${groups.map(group=>renderCanonicalIdeaGroup(group,parents,independent)).join("")}${appendix}`;
 }
 function initCanonicalIdeaFilters(){
   const buttons=[...document.querySelectorAll(".canonical-filter-btn")];
@@ -2733,6 +2824,19 @@ function initCanonicalIdeaFilters(){
     buttons.forEach(item=>{const active=item===button;item.classList.toggle("active",active);item.setAttribute("aria-pressed",active?"true":"false");});
     document.querySelectorAll(".canonical-parent-item").forEach(item=>{item.hidden=status!=="all"&&item.dataset.canonicalStatus!==status;});
   }));
+}
+function initIdeaBriefingMode(){
+  const buttons=[...document.querySelectorAll(".briefing-mode-btn")];
+  if(!buttons.length)return;
+  const setMode=(mode)=>{
+    document.documentElement.classList.toggle("idea-audit-mode",mode==="audit");
+    buttons.forEach(button=>{const active=button.dataset.briefingMode===mode;button.classList.toggle("active",active);button.setAttribute("aria-pressed",active?"true":"false");});
+    const cardSelector=".human-review-idea-card,.supplemental-idea-card,.paper-incubation-card,.closed-idea-card";
+    document.querySelectorAll(cardSelector).forEach(card=>{card.open=mode==="audit";});
+    document.querySelectorAll(".human-technical-details,.terminal-technical-audit,.human-lineage-details,.human-complete-intro").forEach(detail=>{detail.open=mode==="audit";});
+  };
+  buttons.forEach(button=>button.addEventListener("click",()=>setMode(button.dataset.briefingMode||"brief")));
+  setMode("brief");
 }
 function renderIdeaPortfolio(config) {
   const groups=canonicalIdeaGroups(), parents=canonicalParentRows(), independent=canonicalIndependentRows();
@@ -3417,7 +3521,7 @@ function renderPage() {
   else root.innerHTML = `${pageHeader(config)}${renderOverviewFigure(config)}${(config.sections || []).map(renderSection).join("")}`;
   document.querySelector(".language-toggle")?.replaceChildren(document.createTextNode(language === "en" ? "中文" : "English"));
   bindPageEvents();
-  if (pageId === "paper-ideas") initCanonicalIdeaFilters();
+  if (pageId === "paper-ideas") { initCanonicalIdeaFilters(); initIdeaBriefingMode(); }
   if (pageId === "bibliography") renderPaperList(document.getElementById("site-search")?.value || "");
   bindPaperCardEvents();
   hydrateCitations(root);

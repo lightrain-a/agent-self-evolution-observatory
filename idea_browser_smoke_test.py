@@ -298,6 +298,14 @@ def main() -> None:
           discussedGroups: document.querySelectorAll('.canonical-idea-group').length,
           categoryLinks: document.querySelectorAll('.canonical-category-nav a').length,
           objectHierarchyPanels: document.querySelectorAll('.current-object-hierarchy').length,
+          briefingHeroes: document.querySelectorAll('.ideas-briefing-hero').length,
+          briefingMetrics: document.querySelectorAll('.ideas-briefing-metrics > article').length,
+          briefingDecisions: document.querySelectorAll('.ideas-briefing-decisions > article').length,
+          briefingGuides: document.querySelectorAll('.research-briefing-guide').length,
+          briefingLessons: document.querySelectorAll('.briefing-lessons > article').length,
+          briefingTaxonomyCards: document.querySelectorAll('.briefing-taxonomy-card').length,
+          briefingModeButtons: document.querySelectorAll('.briefing-mode-btn').length,
+          categoryBriefings: document.querySelectorAll('.canonical-category-briefing').length,
           objectLevelCards: document.querySelectorAll('.research-object-levels > article').length,
           inventoryTotals: [...document.querySelectorAll('[data-research-inventory-total]')].map(x=>Number(x.dataset.researchInventoryTotal||0)),
           categoryRecordTotals: [...document.querySelectorAll('.canonical-category-nav a')].map(x=>Number(x.dataset.categoryTotal||0)),
@@ -326,6 +334,8 @@ def main() -> None:
           terminalSummary: window.HUMAN_TERMINAL_IDEA_STATE?.summary || {},
           absorbedChildCount: Object.keys(window.HUMAN_TERMINAL_IDEA_STATE?.absorbed_children || {}).length,
           feedbackSummaries: document.querySelectorAll('.human-review-idea-card .human-idea-summary p').length,
+          parentBriefingSummaries: document.querySelectorAll('.human-review-idea-card .idea-briefing-summary').length,
+          parentBriefingReasonPills: document.querySelectorAll('.human-review-idea-card .briefing-reason-pill').length,
           humanOpinionBoxes: document.querySelectorAll('.human-opinion-box').length,
           iterationBoxes: document.querySelectorAll('.human-iteration-box').length,
           finalRefinementBoxes: document.querySelectorAll('.human-final-refinement').length,
@@ -344,6 +354,7 @@ def main() -> None:
           categoryRelatedBanks: document.querySelectorAll('.canonical-related-bank:not(.categorized-context-bank)').length,
           openCategoryRelatedBanks: document.querySelectorAll('.canonical-related-bank:not(.categorized-context-bank)[open]').length,
           newCards: document.querySelectorAll('.supplemental-idea-card').length,
+          supplementalBriefingSummaries: document.querySelectorAll('.supplemental-briefing-section').length,
           standaloneCodes: [...document.querySelectorAll('.supplemental-idea-card summary>div>span')].map(x=>(x.textContent||'').trim()),
           openNewCards: document.querySelectorAll('.supplemental-idea-card[open]').length,
           supplementalBlankPrimaryFields: [...document.querySelectorAll('.supplemental-idea-card')].flatMap(card=>[...card.querySelectorAll('.supplemental-human-grid>section>p,.human-evidence-grid>section>p,.human-experiment-grid>section>p')].filter(node=>!String(node.textContent||'').trim()||['—','--','-'].includes(String(node.textContent||'').trim())).map(node=>(card.querySelector('summary>div>span')?.textContent||'').trim())),
@@ -353,6 +364,7 @@ def main() -> None:
           freshCollisionBlocks: document.querySelectorAll('.human-fresh-collision').length,
           freshCollisionLinks: document.querySelectorAll('.human-fresh-collision nav a').length,
           incubationCards: document.querySelectorAll('.paper-incubation-card').length,
+          incubationBriefingSummaries: document.querySelectorAll('.pf-briefing-summary').length,
           incubationAdvance: document.querySelectorAll('.paper-incubation-card.incubation-advance').length,
           incubationP0: document.querySelectorAll('.paper-incubation-card.incubation-p0').length,
           incubationRevise: document.querySelectorAll('.paper-incubation-card.incubation-revise').length,
@@ -386,6 +398,8 @@ def main() -> None:
           openClosedIdeaBanks: document.querySelectorAll('.canonical-closed-idea-bank[open]').length,
           closedIdeaBankLabels: [...document.querySelectorAll('.canonical-closed-idea-bank>summary b')].map(x=>(x.textContent||'').trim()),
           closedIdeaCards: document.querySelectorAll('.closed-idea-card').length,
+          closedIdeaBriefingSummaries: document.querySelectorAll('.closed-briefing-why').length,
+          safetyBriefingSummaries: document.querySelectorAll('.agent-safety-briefing').length,
           closedIdeaCodes: [...document.querySelectorAll('.closed-idea-card')].map(x=>x.dataset.closedCode||''),
           closedIdeaSources: [...document.querySelectorAll('.closed-idea-card')].map(x=>x.dataset.closedSource||''),
           allResearchObjectCodes: [
@@ -449,6 +463,9 @@ def main() -> None:
         require((ideas["terminalCounts"].get("stop"),ideas["terminalCounts"].get("merge")) == (20,6) and not any(ideas["terminalCounts"].get(k) for k in ("p0","p0-ready","drop")), f"current human terminal counts must be stop=20/merge=6: {ideas['terminalCounts']}")
         require(ideas["historicalCounts"].get("p0") == 20 and ideas["historicalCounts"].get("merge") == 6, f"historical P0 lifecycle must remain separately preserved: {ideas['historicalCounts']}")
         require(ideas["evidenceDispositionCounts"] == {"stop":16,"hold":4,"merge":6} and ideas["evidenceDispositionPanels"] == 26, f"latest evidence disposition is missing or collapsed into terminal state: {ideas['evidenceDispositionCounts']}/{ideas['evidenceDispositionPanels']}")
+        require((ideas["briefingHeroes"],ideas["briefingMetrics"],ideas["briefingDecisions"],ideas["briefingGuides"],ideas["briefingLessons"],ideas["briefingTaxonomyCards"],ideas["briefingModeButtons"],ideas["categoryBriefings"]) == (1,4,3,1,3,6,2,7), f"briefing-first overview/taxonomy/category summaries are incomplete: {ideas}")
+        require((ideas["parentBriefingSummaries"],ideas["parentBriefingReasonPills"],ideas["supplementalBriefingSummaries"],ideas["incubationBriefingSummaries"],ideas["closedIdeaBriefingSummaries"],ideas["safetyBriefingSummaries"]) == (26,26,7,9,38,1), f"plain-language idea summaries are incomplete: {ideas}")
+        require(all(marker in ideas["text"] for marker in ("当前更新底座几乎不能产生真正有效的候选更新","标准二元组测试在相同信息和预算下取得完全相同结果","简单的来源降权已经取得相同效果","保持当前能力不等于保留未来学习能力","属于支持不足，可重开，不是原理否定")), "representative A-3/A-6/C-1/PF-1/G-1 briefing copy is missing")
         require(ideas["lifecycleCells"] == 104 and ideas["explicitLegacyP0Badges"] == 0 and ideas["formalAuthorityZero"] == 26, f"lifecycle/current-decision/authority separation failed: {ideas['lifecycleCells']}/{ideas['explicitLegacyP0Badges']}/{ideas['formalAuthorityZero']}")
         expected_parent_states={"A-1":"stop","A-2":"stop","A-3":"stop","A-5":"stop","B-1":"merge","C-1":"stop","C-4":"stop","D-1":"stop","D-2":"stop","E-2":"stop","F-1":"stop","F-3":"stop"}
         require(all(ideas["parentStatusByCode"].get(code)==state for code,state in expected_parent_states.items()), f"representative parent terminal states are wrong: {ideas['parentStatusByCode']}")
@@ -465,6 +482,8 @@ def main() -> None:
         require(any('Original Idea 4' in label or '原讨论 Idea 4' in label or '原讨论 研究方向 4' in label for label in ideas["originalIdeaLabels"]), f"original discussion numbering is not visible: {ideas['originalIdeaLabels'][:5]}")
         require(ideas["concreteExamples"] == 26 and ideas["parentMergeRules"] >= 1, f"intuition/example or parent-merge UI gate is missing: {ideas['concreteExamples']}/{ideas['parentMergeRules']}")
         require(ideas["openDiscussedCards"] == 0 and ideas["openNewCards"] == 0, f"all idea cards must be collapsed by default, got {ideas['openDiscussedCards']}/{ideas['openNewCards']}")
+        briefing_mode = execute(session_id, """const audit=document.querySelector('.briefing-mode-btn[data-briefing-mode="audit"]'); const brief=document.querySelector('.briefing-mode-btn[data-briefing-mode="brief"]'); audit?.click(); const opened={parents:document.querySelectorAll('.human-review-idea-card[open]').length,supplemental:document.querySelectorAll('.supplemental-idea-card[open]').length,pf:document.querySelectorAll('.paper-incubation-card[open]').length,closed:document.querySelectorAll('.closed-idea-card[open]').length,auditClass:document.documentElement.classList.contains('idea-audit-mode')}; brief?.click(); return {...opened,resetParents:document.querySelectorAll('.human-review-idea-card[open]').length,resetAuditClass:document.documentElement.classList.contains('idea-audit-mode')};""")
+        require(briefing_mode == {"parents":26,"supplemental":7,"pf":9,"closed":38,"auditClass":True,"resetParents":0,"resetAuditClass":False}, f"briefing/full-audit switch is incomplete: {briefing_mode}")
         require(len(ideas["codes"]) == 26 and len(set(ideas["codes"])) == 26, f"group codes are missing or duplicated: {ideas['codes']}")
         require(all(code in ideas["codes"] for code in ("A-1","A-5","B-1","B-7","C-1","D-1","E-1","F-1","F-3")), f"expected stable group codes are missing: {ideas['codes']}")
         require(ideas["newGroups"] == ideas["openRelatedBanks"] == 11 and ideas["categoryRelatedBanks"] == ideas["openCategoryRelatedBanks"] == 9 and ideas["newCards"] == 7, f"all related-direction, context, and numbered-closure banks must be visible by default while preserving seven standalone methods: {ideas['newGroups']}/{ideas['openRelatedBanks']}/{ideas['categoryRelatedBanks']}/{ideas['openCategoryRelatedBanks']}/{ideas['newCards']}")
