@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from .api_memory_ablation import build_api_memory_ablation_plan
+from .api_memory_ablation import build_api_memory_ablation_plan, build_relevant_escape_ablation_plan
 from .api_memory_store import database_path
 from .api_research_memory import (
     _portfolio_digest,
@@ -437,6 +437,22 @@ class ApiResearchMemoryTest(unittest.TestCase):
         self.assertEqual(len({row["scientific_signature"] for row in selected}), 4)
         self.assertIn("escape-this-basin", _portfolio_digest(selected[0]))
         self.assertIn("transfer-structure-not-topic", _portfolio_digest(selected[2]))
+
+    def test_relevant_escape_plan_holds_selected_objects_and_characters_fixed(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            import_run(self.fixture(root), root=root / "persistent")
+            plan = build_relevant_escape_ablation_plan(
+                context={"topic":"candidate memory retrieval"},
+                run_id_prefix="escape-r1", stage="memory-escape-smoke",
+                max_items=1, max_item_chars=180, root=root / "persistent",
+            )
+            self.assertEqual(plan["status"], "RELEVANT_ESCAPE_ABLATION_READY")
+            self.assertTrue(all(plan["invariants"].values()))
+            self.assertEqual(plan["arms"]["relevant"]["selected_memory_ids"], plan["arms"]["relevant_escape"]["selected_memory_ids"])
+            self.assertEqual(plan["arms"]["relevant"]["summary"]["characters"], plan["arms"]["relevant_escape"]["summary"]["characters"])
+            self.assertEqual(len(plan["arms"]["relevant_escape"]["selected_memory_roles"]), 1)
+            self.assertFalse(plan["scientific_authority"])
 
     def test_ablation_plan_freezes_three_zero_authority_arms(self) -> None:
         with tempfile.TemporaryDirectory() as td:

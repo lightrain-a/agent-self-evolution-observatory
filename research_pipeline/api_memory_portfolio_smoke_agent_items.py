@@ -11,7 +11,7 @@ from .api_memory_search_smoke_staged import _client, _load, _lock, _write
 from .api_research_memory import record_parsed_api_output, record_provider_failure, record_raw_api_output
 from .ark_provider import extract_json_object
 
-ATTEMPT = 4
+DEFAULT_ATTEMPT = 1
 
 
 def _agent_tool() -> tuple[str, list[dict[str, Any]]]:
@@ -29,15 +29,15 @@ def _sum_usage(rows: list[dict[str, Any]]) -> dict[str, int]:
             for key in ("input_tokens", "output_tokens", "total_tokens")}
 
 
-def _one(*, root: Path, study: Path, item: dict[str, Any], prefix: str) -> dict[str, Any]:
+def _one(*, root: Path, study: Path, item: dict[str, Any], prefix: str, attempt: int) -> dict[str, Any]:
     blind_id = str(item["blind_id"])
-    output = study / f"review-agent-item-{blind_id}-a{ATTEMPT}.json"
+    output = study / f"review-agent-item-{blind_id}-a{attempt}.json"
     if output.is_file():
         existing = _load(output)
         if existing.get("status") == "AGENT_ITEM_COMPLETE": return existing
         raise RuntimeError(f"existing failed agent item requires new attempt: {output.name}")
-    run_id = f"{prefix}-agent-item-{blind_id}-a{ATTEMPT}"
-    lock = _lock(output,{"stage":"agent-item","blind_id":blind_id,"attempt":ATTEMPT,"run_id":run_id})
+    run_id = f"{prefix}-agent-item-{blind_id}-a{attempt}"
+    lock = _lock(output,{"stage":"agent-item","blind_id":blind_id,"attempt":attempt,"run_id":run_id})
     prep = _load(study / "review-prepared.json"); subset=dict(prep); subset["blinded"]=[item]
     prompt = agent_prompt(subset); function_name, tools = _agent_tool()
     run_root=root/"runs"/run_id; run_root.mkdir(parents=True,exist_ok=True)
@@ -91,12 +91,12 @@ def _one(*, root: Path, study: Path, item: dict[str, Any], prefix: str) -> dict[
         if output.exists(): lock.unlink(missing_ok=True)
 
 
-def run(*, root: Path, study: Path) -> dict[str, Any]:
-    aggregate=study/f"review-agent-result-r{ATTEMPT}.json"
+def run(*, root: Path, study: Path, attempt: int = DEFAULT_ATTEMPT) -> dict[str, Any]:
+    aggregate=study/f"review-agent-result-r{attempt}.json"
     if aggregate.exists(): raise RuntimeError(f"aggregate already exists: {aggregate.name}")
     prep=_load(study/"review-prepared.json"); prefix=str(_load(study/"state-prepared.json")["prefix"]); results=[]
     for item in prep["blinded"]:
-        row=_one(root=root,study=study,item=item,prefix=prefix)
+        row=_one(root=root,study=study,item=item,prefix=prefix,attempt=attempt)
         if row.get("status")!="AGENT_ITEM_COMPLETE":
             return {"schema_version":"2.3","status":"AGENT_ITEMIZED_REVIEW_INCOMPLETE","failed_blind_id":item["blind_id"],
                     "failure":row,"completed":len(results),"scientific_authority":False,"belief_authority":False}
@@ -104,7 +104,7 @@ def run(*, root: Path, study: Path) -> dict[str, Any]:
     resolved={r["resolved_model"] for r in results}
     if len(resolved)!=1: raise RuntimeError(f"agent reviewer resolved-model drift: {resolved}")
     reviews=[r["review"] for r in results]
-    out={"schema_version":"2.3","status":"AGENT_REVIEW_COMPLETE","stage":"agent","attempt":ATTEMPT,
+    out={"schema_version":"2.3","status":"AGENT_REVIEW_COMPLETE","stage":"agent","attempt":attempt,
          "transport":"ITEMIZED_FUNCTION_OR_JSON_18X1","requested_model":AGENT_REVIEWER_MODEL,
          "resolved_model":next(iter(resolved)),"usage":_sum_usage(results),
          "item_results":[{"blind_id":r["blind_id"],"run_id":r["run_id"],"raw_sha256":r["raw_sha256"],"transport":r["transport"],"usage":r["usage"]} for r in results],
@@ -113,8 +113,8 @@ def run(*, root: Path, study: Path) -> dict[str, Any]:
 
 
 def main()->None:
-    p=argparse.ArgumentParser();p.add_argument("--persistent-root",type=Path,required=True);p.add_argument("--study",type=Path,required=True)
-    a=p.parse_args();print(json.dumps(run(root=a.persistent_root,study=a.study),ensure_ascii=False,indent=2))
+    p=argparse.ArgumentParser();p.add_argument("--persistent-root",type=Path,required=True);p.add_argument("--study",type=Path,required=True);p.add_argument("--attempt",type=int,default=DEFAULT_ATTEMPT)
+    a=p.parse_args();print(json.dumps(run(root=a.persistent_root,study=a.study,attempt=a.attempt),ensure_ascii=False,indent=2))
 
 
 if __name__=="__main__":main()

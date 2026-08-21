@@ -56,7 +56,7 @@ API_MEMORY_PURPOSES = {
     "EXPERIMENT_DESIGN",
     "PAPER_META_REVIEW",
 }
-API_MEMORY_VARIANTS = {"portfolio", "relevant", "random", "none"}
+API_MEMORY_VARIANTS = {"portfolio", "relevant", "relevant_escape", "random", "none"}
 PORTFOLIO_ROLES = (
     "NEAREST_CLOSED_BASIN",
     "NEAREST_SURVIVING_CONTRACT",
@@ -325,6 +325,18 @@ def _portfolio_digest(row: dict[str, Any]) -> str:
     return f"[PORTFOLIO_ROLE={role};ACTION={instruction}] " + _memory_digest(row)
 
 
+def _relevant_escape_digest(row: dict[str, Any]) -> tuple[str, str]:
+    if _closed_basin(row):
+        role, action = "CLOSED_BASIN", "escape-not-rephrase-or-rescue"
+    elif _surviving_contract(row):
+        role, action = "SURVIVING_CONTRACT", "reuse-contract-quality-not-topic"
+    elif _unresolved_boundary(row):
+        role, action = "UNRESOLVED_BOUNDARY", "explore-only-if-scientifically-distinct"
+    else:
+        role, action = "CONTEXT_ONLY", "use-as-context-not-truth"
+    return f"[RELEVANT_ROLE={role};ACTION={action}] " + _memory_digest(row), role
+
+
 def _memory_digest(row: dict[str, Any]) -> str:
     payload = row.get("payload") if isinstance(row.get("payload"), dict) else {}
     body = _unwrap_object_payload(payload)
@@ -400,8 +412,8 @@ def compile_api_memory_query_pack(
     variant = str(variant or "relevant").strip().lower()
     if variant not in API_MEMORY_VARIANTS:
         raise ValueError(f"unsupported API research memory variant: {variant}")
-    if variant == "portfolio" and purpose != "IDEA_DISCOVERY":
-        raise ValueError("basin-aware portfolio memory is only valid for IDEA_DISCOVERY")
+    if variant in {"portfolio", "relevant_escape"} and purpose != "IDEA_DISCOVERY":
+        raise ValueError("basin-aware memory framing is only valid for IDEA_DISCOVERY")
     max_items = max(0, int(max_items))
     max_chars = max(0, int(max_chars))
     max_item_chars = max(0, int(max_item_chars))
@@ -494,7 +506,14 @@ def compile_api_memory_query_pack(
             signature = str(row.get("scientific_signature") or "")
             if signature and signature in seen_signatures:
                 continue
-            digest = _portfolio_digest(row) if variant == "portfolio" else str(row.get("digest") or "")
+            if variant == "portfolio":
+                digest = _portfolio_digest(row)
+            elif variant == "relevant_escape":
+                digest, escape_role = _relevant_escape_digest(row)
+                row = dict(row)
+                row["relevant_escape_role"] = escape_role
+            else:
+                digest = str(row.get("digest") or "")
             if max_item_chars > 0:
                 digest = digest[:max_item_chars]
             additional = len(digest) + (2 if selected else 0)
@@ -518,7 +537,7 @@ def compile_api_memory_query_pack(
         signatures = [str(row["scientific_signature"]) for row in selected]
         memory_ids = [f"api:{key[:16]}" for key in selected_keys]
         core = {
-            "schema_version": "2.3" if variant == "portfolio" else "2.2",
+            "schema_version": "2.4" if variant == "relevant_escape" else "2.3" if variant == "portfolio" else "2.2",
             "purpose": purpose,
             "stage": stage,
             "variant": variant,
@@ -546,6 +565,13 @@ def compile_api_memory_query_pack(
             ]
             core["policy"]["basin_aware_roles_are_search_control_not_scientific_labels"] = True
             core["policy"]["closed_basin_memory_is_for_escape_not_imitation"] = True
+        elif variant == "relevant_escape":
+            core["selected_memory_roles"] = [
+                {"memory_id": memory_id, "role": str(row.get("relevant_escape_role") or "CONTEXT_ONLY")}
+                for memory_id, row in zip(memory_ids, selected)
+            ]
+            core["policy"]["selected_objects_match_top_k_relevant_policy"] = True
+            core["policy"]["closed_basin_annotation_is_search_control_not_scientific_truth"] = True
         pack_sha = sha_json(core)
         query_id = ""
         if run_id and record_query:

@@ -249,6 +249,71 @@ def build_basin_aware_api_memory_ablation_plan(
     return plan
 
 
+def build_relevant_escape_ablation_plan(
+    *,
+    context: Any,
+    run_id_prefix: str,
+    stage: str,
+    max_items: int = 4,
+    max_item_chars: int = 600,
+    root: Path | None = None,
+) -> dict[str, Any]:
+    """Freeze identical Top-K objects with plain vs basin-escape framing."""
+    max_chars = max_items * max_item_chars + max(0, max_items - 1) * 2
+    packs = {
+        variant: compile_api_memory_query_pack(
+            purpose="IDEA_DISCOVERY", context=context,
+            run_id=f"{run_id_prefix}-{variant}", stage=stage, variant=variant,
+            max_items=max_items, max_chars=max_chars, max_item_chars=max_item_chars,
+            required=True, record_query=False, root=root,
+        )
+        for variant in ("relevant", "relevant_escape")
+    }
+    plain, escape = packs["relevant"], packs["relevant_escape"]
+    plan = {
+        "schema_version": "2.4",
+        "status": "RELEVANT_ESCAPE_ABLATION_READY",
+        "purpose": "IDEA_DISCOVERY",
+        "stage": stage,
+        "context_sha256": sha_json(context if context is not None else {}),
+        "budget": {"max_items": max_items, "max_item_chars": max_item_chars, "max_chars": max_chars},
+        "arms": {
+            variant: {
+                "run_id": f"{run_id_prefix}-{variant}",
+                "variant": variant,
+                "query_pack_sha256": pack.get("query_pack_sha256"),
+                "memory_instance_id": pack.get("memory_instance_id"),
+                "selected_memory_ids": pack.get("selected_memory_ids") or [],
+                "selected_scientific_signatures": pack.get("selected_scientific_signatures") or [],
+                "selected_memory_roles": pack.get("selected_memory_roles") or [],
+                "summary": pack.get("summary") or {},
+                "scientific_authority": False,
+            }
+            for variant, pack in packs.items()
+        },
+        "invariants": {
+            "same_memory_instance": plain.get("memory_instance_id") == escape.get("memory_instance_id"),
+            "same_selected_object_ids": plain.get("selected_object_keys") == escape.get("selected_object_keys"),
+            "same_scientific_signatures": plain.get("selected_scientific_signatures") == escape.get("selected_scientific_signatures"),
+            "same_memory_characters": int((plain.get("summary") or {}).get("characters") or 0) == int((escape.get("summary") or {}).get("characters") or 0),
+            "same_item_count": int((plain.get("summary") or {}).get("selected") or 0) == max_items == int((escape.get("summary") or {}).get("selected") or 0),
+            "escape_has_role_annotations": len(escape.get("selected_memory_roles") or []) == max_items,
+            "all_arms_zero_scientific_authority": all(pack.get("scientific_authority") is False for pack in packs.values()),
+            "scientific_thresholds_unchanged": True,
+        },
+        "comparison_semantics": {
+            "relevant_escape_vs_relevant": "SAME_TOP_K_OBJECTS_AND_CHARACTERS_ONLY_ROLE_FRAMING_DIFFERS",
+            "closed_basin_annotation_is_search_control_not_scientific_truth": True,
+        },
+        "scientific_authority": False,
+        "authority": {"problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+    }
+    plan["plan_sha256"] = sha_json({k:v for k,v in plan.items() if k != "plan_sha256"})
+    if not all(plan["invariants"].values()):
+        plan["status"] = "RELEVANT_ESCAPE_ABLATION_BLOCKED"
+    return plan
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Freeze an API research-memory A/B/C ablation plan")
     parser.add_argument("--purpose", default="IDEA_DISCOVERY")

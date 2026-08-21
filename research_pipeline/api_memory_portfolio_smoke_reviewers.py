@@ -31,7 +31,7 @@ HISTORY_PACK_START
 HISTORY_PACK_END
 BLINDED_IDEAS={_canonical(prep["blinded"])}
 
-Return JSON only: {{"reviews":[{{"blind_id":"B...","history_near_duplicate":false,"cheapest_falsifier_complete":true,"matched_history_object_id":"","reason":"<=35 words"}}, ... all 18 ...]}}'''
+Return JSON only with exactly {len(prep["blinded"])} reviews: {{"reviews":[{{"blind_id":"B...","history_near_duplicate":false,"cheapest_falsifier_complete":true,"matched_history_object_id":"","reason":"<=35 words"}}, ...]}}'''
 
 
 def agent_prompt(prep: dict[str, Any]) -> str:
@@ -44,7 +44,7 @@ Use exactly one verdict:
 Do NOT decide reduction risk. A phenomenon may be agent-specific and still reducible by a baseline.
 
 BLINDED_IDEAS={_canonical(prep["blinded"])}
-Return JSON only: {{"reviews":[{{"blind_id":"B...","agent_specificity":"AGENT_SPECIFIC|GENERIC_OR_MODEL_LEVEL|UNCERTAIN","reason":"<=40 words"}}, ... all 18 ...]}}'''
+Return JSON only with exactly {len(prep["blinded"])} reviews: {{"reviews":[{{"blind_id":"B...","agent_specificity":"AGENT_SPECIFIC|GENERIC_OR_MODEL_LEVEL|UNCERTAIN","reason":"<=40 words"}}, ...]}}'''
 
 
 def reduction_prompt(prep: dict[str, Any]) -> str:
@@ -57,7 +57,7 @@ Use exactly one verdict:
 A generic possible explanation is NOT enough for EXACT_REDUCTION. Do NOT judge whether the object is agent-specific or novel.
 
 BLINDED_IDEAS={_canonical(prep["blinded"])}
-Return JSON only: {{"reviews":[{{"blind_id":"B...","reduction_verdict":"EXACT_REDUCTION|RESIDUAL_PLAUSIBLE|UNCERTAIN","same_information_match":true,"reason":"<=45 words"}}, ... all 18 ...]}}'''
+Return JSON only with exactly {len(prep["blinded"])} reviews: {{"reviews":[{{"blind_id":"B...","reduction_verdict":"EXACT_REDUCTION|RESIDUAL_PLAUSIBLE|UNCERTAIN","same_information_match":true,"reason":"<=45 words"}}, ...]}}'''
 
 
 def run_stage(
@@ -139,8 +139,8 @@ def run_stage(
             root=root,
         )
         reviews = extract_json_object(raw).get("reviews")
-        if not isinstance(reviews, list) or len(reviews) != 18:
-            raise ValueError(f"{name} reviewer must return 18 reviews")
+        if not isinstance(reviews, list) or len(reviews) != len(expected_ids):
+            raise ValueError(f"{name} reviewer must return {len(expected_ids)} reviews")
         observed = {str(row.get("blind_id") or "") for row in reviews if isinstance(row, dict)}
         if observed != expected_ids:
             raise ValueError(f"{name} reviewer blind ids mismatch")
