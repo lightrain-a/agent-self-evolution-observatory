@@ -15,7 +15,7 @@ import re
 import sqlite3
 import subprocess
 from collections import Counter
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
@@ -1090,6 +1090,282 @@ def build(db_path: Path) -> dict[str, Any]:
     }
 
 
+def _localized(value: Any, lang: str = "zh") -> str:
+    if isinstance(value, dict):
+        return str(value.get(lang) or value.get("en") or value.get("zh") or "").strip()
+    return str(value or "").strip()
+
+
+def _compact_public(value: Any, limit: int = 220) -> str:
+    text = re.sub(r"\s+", " ", _localized(value, "zh")).strip()
+    if len(text) <= limit:
+        return text
+    return text[: max(0, limit - 1)].rstrip() + "…"
+
+
+def _dashboard_href(code: str = "", paper_id: str = "") -> str:
+    if paper_id:
+        return f"research-timeline.html?paper={paper_id}"
+    if code:
+        return f"research-timeline.html?research={code}"
+    return "research-timeline.html"
+
+
+def build_dashboard(timeline: dict[str, Any]) -> dict[str, Any]:
+    """Compile a tiny read-only human dashboard from canonical public projections.
+
+    This is presentation-only. It does not create a new research state machine:
+    ResearchItem, PaperRegistry, and Research Timeline remain the authorities.
+    """
+    research = load(GEN / "research-items.json")
+    registry = load(GEN / "paper-registry.json")
+    research_items = [row for row in research.get("research_items", []) if isinstance(row, dict)]
+    papers = [row for row in registry.get("papers", []) if isinstance(row, dict)]
+    papers_by_source = {str(row.get("source_research_item")): row for row in papers if row.get("source_research_item")}
+    state_counts = Counter(str(row.get("scientific_state") or "UNKNOWN") for row in research_items)
+
+    attention = [row for row in research_items if row.get("scientific_state") in {"PAPER_READY", "HOLD"}]
+    category_order = {key: index for index, key in enumerate("ABCDEFG")}
+
+    def attention_rank(row: dict[str, Any]) -> tuple[Any, ...]:
+        state = str(row.get("scientific_state") or "")
+        has_paper = bool(row.get("paper_transition") or papers_by_source.get(str(row.get("code") or "")))
+        return (
+            0 if state == "PAPER_READY" else 1 if has_paper else 2,
+            category_order.get(str(row.get("category") or ""), 99),
+            str(row.get("code") or ""),
+        )
+
+    attention.sort(key=attention_rank)
+    briefing_zh = {
+        "E-7": "3/3 条窄主张已有对应证据；科研对象已交给论文流程，现在只做定向修稿与投稿门禁，不再自动开新实验。",
+        "G-1": "长期安全问题仍开放，但当前 backbone/runtime 不能稳定提供足够的“当前安全”冻结状态，因果比较暂时没有合格样本。",
+        "A-3": "当前 updater/substrate 几乎产不出有效候选更新；先换一个能稳定产生真实更新的底座，再评价回归面板。",
+        "B-2": "现有记忆数据没有足够“删掉一条记忆会改变最终结论”的案例；先补专门的 deletion-sensitivity 数据。",
+        "B-3": "严格 fresh contract 下独立可执行的共检索组合还不够；先换到能提供足够新场景的数据环境。",
+        "E-1": "当前 paired-edit 表里不同编辑大多效果打平，排序器没有可靠可学信号；先重建真正有差异的干预表。",
+    }
+    briefing_en = {
+        "E-7": "All 3/3 narrow claims are evidence-backed. The research object is now in the paper workflow, so the current job is manuscript repair and submission gating rather than new experiments.",
+        "G-1": "The longitudinal-safety question remains open, but the current backbone/runtime cannot reliably supply enough currently-safe frozen states for a fair causal comparison.",
+        "A-3": "The current updater/substrate rarely produces effective candidate updates. Qualify a genuinely effective update surface before evaluating the regression panel.",
+        "B-2": "The current memory table lacks enough cases where deleting one memory changes the final conclusion. A dedicated deletion-sensitivity dataset is needed first.",
+        "B-3": "The strict fresh contract still lacks enough independent executable co-retrieval combinations. A new substrate with sufficient unseen scenarios is needed first.",
+        "E-1": "Edit effects in the current paired table are mostly tied, leaving too little ranking signal. Rebuild the intervention table before training a ranker.",
+    }
+    next_step_zh = {
+        "E-7": "完成 STRI Targeted Repair → Claim Audit → PDF QA → Prebuttal → Submission Ready。",
+        "G-1": "换用全新预注册 backbone/runtime，先获得足够多通过同一安全资格测试的冻结状态，再碰 held-out future。",
+        "A-3": "先找到通过 updater competence 的新 update substrate/action stream，再冻结新的 candidate × validation。",
+        "B-2": "独立收集至少 30 个可重复的 conclusion-changing deletion cases，再重开选择器实验。",
+        "B-3": "准备至少 6 个独立、未见的 fresh pair-target unit，再重开共检索交互测试。",
+        "E-1": "先构造有真实非并列 edit effect 的新 paired intervention table，再训练或比较 ranker。",
+    }
+    next_step_en = {
+        "E-7": "Complete STRI Targeted Repair → Claim Audit → PDF QA → Prebuttal → Submission Ready.",
+        "G-1": "Use a fresh preregistered backbone/runtime, obtain enough states that pass the same current-safety qualification, then consider held-out future probes.",
+        "A-3": "Qualify a new update substrate/action stream for updater competence, then freeze a new candidate × validation contract.",
+        "B-2": "Collect at least 30 reproducible conclusion-changing deletion cases before reopening the selector experiment.",
+        "B-3": "Prepare at least six independent unseen fresh pair-target units before reopening the co-retrieval interaction test.",
+        "E-1": "Build a new paired intervention table with genuinely non-tied edit effects before training or comparing the ranker.",
+    }
+    attention_rows = []
+    for row in attention:
+        code = str(row.get("code") or "")
+        paper = papers_by_source.get(code) or {}
+        paper_stage = str(paper.get("paper_stage") or paper.get("current_state") or "")
+        row_briefing_zh = briefing_zh.get(code, _compact_public(row.get("decision_reason"), 180))
+        row_briefing_en = briefing_en.get(code, _compact_public(row.get("decision_reason"), 180))
+        row_next_zh = next_step_zh.get(code, _compact_public(row.get("reopen_condition"), 180))
+        row_next_en = next_step_en.get(code, _compact_public(row.get("reopen_condition"), 180))
+        if code == "E-7" and paper_stage == "SUBMISSION_READY" and paper.get("submission_ready") is True:
+            row_briefing_zh = "3/3 条窄主张已有对应证据，Story Search、双 Mock PC、Claim Audit、Manuscript CI、PDF QA 与 Prebuttal 已闭环；STRI 已达到 canonical Submission Ready。"
+            row_briefing_en = "All 3/3 narrow claims are evidence-backed and Story Search, both Mock PC modes, Claim Audit, Manuscript CI, PDF QA, and Prebuttal are closed; STRI is canonically Submission Ready."
+            row_next_zh = "论文侧硬门已经闭环；下一步由人工完成作者责任确认、OpenReview 账号/元数据核验与真实提交。系统 submission authority 仍为 0。"
+            row_next_en = "The paper-side hard gates are closed. Next comes human author responsibility/signoff, OpenReview account/metadata verification, and real submission; system submission authority remains zero."
+        attention_rows.append({
+            "code": code,
+            "category": str(row.get("category") or ""),
+            "title": row.get("title") or {},
+            "scientific_state": str(row.get("scientific_state") or ""),
+            "decision_code": str(row.get("decision_code") or ""),
+            "briefing_zh": row_briefing_zh,
+            "briefing_en": row_briefing_en,
+            "next_step_zh": row_next_zh,
+            "next_step_en": row_next_en,
+            "current_reason_zh": _compact_public(row.get("decision_reason"), 230),
+            "reopen_condition_zh": _compact_public(row.get("reopen_condition"), 210),
+            "paper_id": str(paper.get("paper_id") or ""),
+            "paper_stage": paper_stage,
+            "paper_scientific_status": str(paper.get("scientific_status") or ""),
+            "submission_ready": bool(paper.get("submission_ready")) if paper else False,
+            "portfolio_href": f"paper-ideas.html?research={code}" if code else "paper-ideas.html",
+            "timeline_href": _dashboard_href(code=code),
+            "paper_href": f"selected-paper.html?paper={paper.get('paper_id')}" if paper.get("paper_id") else "",
+        })
+
+    paper_rows = []
+    for row in papers:
+        source = str(row.get("source_research_item") or "")
+        paper_rows.append({
+            "paper_id": str(row.get("paper_id") or ""),
+            "source_research_item": source,
+            "title": str(row.get("title") or row.get("paper_id") or ""),
+            "paper_stage": str(row.get("paper_stage") or row.get("current_state") or ""),
+            "scientific_status": str(row.get("scientific_status") or ""),
+            "submission_ready": bool(row.get("submission_ready")),
+            "next_action": _compact_public(row.get("next_action"), 240),
+            "paper_href": f"selected-paper.html?paper={row.get('paper_id')}",
+            "timeline_href": _dashboard_href(paper_id=str(row.get("paper_id") or "")),
+        })
+
+    events = [row for row in timeline.get("events", []) if isinstance(row, dict) and row.get("occurred_at")]
+    local_dates = [china_date(str(row.get("occurred_at"))) for row in events]
+    local_dates = [value for value in local_dates if value]
+    latest_date = max(local_dates, default="")
+    week_start = ""
+    week_events: list[dict[str, Any]] = []
+    if latest_date:
+        latest_dt = datetime.strptime(latest_date, "%Y-%m-%d").date()
+        start_dt = latest_dt - timedelta(days=latest_dt.weekday())
+        week_start = start_dt.isoformat()
+        week_events = [
+            row for row in events
+            if week_start <= china_date(str(row.get("occurred_at"))) <= latest_date
+        ]
+
+    week_classes = Counter(str(row.get("event_class") or "system") for row in week_events)
+    week_days = {china_date(str(row.get("occurred_at"))) for row in week_events}
+    attention_codes = {row["code"] for row in attention_rows if row.get("code")}
+    attention_activity: Counter[str] = Counter()
+    for event in week_events:
+        refs = event.get("canonical_refs") or {}
+        for ref in refs.get("research_items", []) or []:
+            code = str(ref.get("code") or "") if isinstance(ref, dict) else ""
+            if code in attention_codes:
+                attention_activity[code] += 1
+
+    def event_title(event: dict[str, Any]) -> str:
+        return str(event.get("title_zh") or event.get("title") or "").strip()
+
+    def highlight_score(event: dict[str, Any]) -> tuple[int, str]:
+        cls = str(event.get("event_class") or "system")
+        score = {"scientific": 70, "paper": 62, "closure": 54, "experiment": 45, "idea": 38}.get(cls, 0)
+        if event.get("importance") == "key":
+            score += 35
+        refs = event.get("canonical_refs") or {}
+        if any(str(ref.get("code") or "") in attention_codes for ref in refs.get("research_items", []) or [] if isinstance(ref, dict)):
+            score += 30
+        if refs.get("papers"):
+            score += 20
+        if event.get("origin") == "git_relevant_history":
+            score -= 8
+        return score, str(event.get("occurred_at") or "")
+
+    highlight_candidates = []
+    for event in week_events:
+        if event.get("event_class") == "system":
+            continue
+        title = event_title(event)
+        if not title or title.startswith(("论文推进记录 ·", "实验与验证记录 ·", "Idea / 问题发现记录 ·")):
+            continue
+        highlight_candidates.append(event)
+    highlight_candidates.sort(key=highlight_score, reverse=True)
+    highlights, seen_titles, seen_targets = [], set(), set()
+
+    def append_highlight(event: dict[str, Any]) -> bool:
+        normalized = re.sub(r"[^\w\u4e00-\u9fff]+", "", event_title(event).lower())
+        if not normalized or normalized in seen_titles:
+            return False
+        refs = event.get("canonical_refs") or {}
+        ref_codes = [str(ref.get("code")) for ref in refs.get("research_items", []) or [] if isinstance(ref, dict) and ref.get("code")]
+        paper_ids = [str(ref.get("paper_id")) for ref in refs.get("papers", []) or [] if isinstance(ref, dict) and ref.get("paper_id")]
+        seen_titles.add(normalized)
+        highlights.append({
+            "date": china_date(str(event.get("occurred_at"))),
+            "event_class": str(event.get("event_class") or ""),
+            "title_zh": event_title(event),
+            "title_en": str(event.get("title") or event.get("title_zh") or "").strip(),
+            "research_items": ref_codes,
+            "papers": paper_ids,
+            "href": _dashboard_href(code=(ref_codes[0] if ref_codes else ""), paper_id=(paper_ids[0] if paper_ids else "")),
+        })
+        return True
+
+    # First pass deliberately diversifies the weekly narrative across canonical
+    # research objects. A busy paper line should not hide other scientific
+    # closures or decisions from the human-facing weekly summary.
+    for event in highlight_candidates:
+        refs = event.get("canonical_refs") or {}
+        ref_codes = [str(ref.get("code")) for ref in refs.get("research_items", []) or [] if isinstance(ref, dict) and ref.get("code")]
+        paper_ids = [str(ref.get("paper_id")) for ref in refs.get("papers", []) or [] if isinstance(ref, dict) and ref.get("paper_id")]
+        preferred_code = next((code for code in ref_codes if code in attention_codes), ref_codes[0] if ref_codes else "")
+        target = (f"ri:{preferred_code}" if preferred_code else f"paper:{paper_ids[0]}" if paper_ids else f"class:{event.get('event_class')}")
+        if target in seen_targets:
+            continue
+        if append_highlight(event):
+            seen_targets.add(target)
+        if len(highlights) >= 5:
+            break
+    for event in highlight_candidates:
+        if len(highlights) >= 5:
+            break
+        append_highlight(event)
+
+    research_summary = research.get("summary") or {}
+    dashboard = {
+        "schema_version": "1.0",
+        "as_of_date": latest_date or str(research.get("generated_at") or "")[:10],
+        "projection_policy": {
+            "read_only": True,
+            "scientific_authority": False,
+            "experiment_authority": False,
+            "submission_authority": False,
+            "sources": ["ResearchItemState", "PaperRegistry", "ResearchTimeline"],
+            "dashboard_never_overrides_source_ledgers": True,
+        },
+        "summary": {
+            "portfolio_objects": int(research_summary.get("portfolio_objects") or 0),
+            "research_items": int(research_summary.get("research_items") or 0),
+            "current_attention": len(attention_rows),
+            "paper_ready": int(state_counts.get("PAPER_READY", 0)),
+            "holds": int(state_counts.get("HOLD", 0)),
+            "launchable_formal_experiments": int(research_summary.get("current_formal_experiment_authority") or 0),
+            "papers": len(paper_rows),
+            "submission_ready": sum(bool(row.get("submission_ready")) for row in paper_rows),
+        },
+        "attention": attention_rows,
+        "papers": paper_rows,
+        "week": {
+            "start_date": week_start,
+            "end_date": latest_date,
+            "research_days": len(week_days),
+            "events": len(week_events),
+            "substantive_events": sum(count for cls, count in week_classes.items() if cls != "system"),
+            "key_changes": sum(row.get("importance") == "key" and row.get("event_class") != "system" for row in week_events),
+            "class_counts": dict(sorted(week_classes.items())),
+            "attention_activity": dict(sorted(attention_activity.items())),
+            "highlights": highlights,
+            "timeline_href": "research-timeline.html",
+        },
+    }
+    return dashboard
+
+
+def validate_dashboard(payload: dict[str, Any]) -> None:
+    policy = payload.get("projection_policy") or {}
+    assert policy.get("read_only") is True
+    assert policy.get("scientific_authority") is False
+    assert policy.get("experiment_authority") is False
+    assert policy.get("submission_authority") is False
+    attention = payload.get("attention") or []
+    codes = [row.get("code") for row in attention]
+    assert len(codes) == len(set(codes))
+    assert all(row.get("scientific_state") in {"PAPER_READY", "HOLD"} for row in attention)
+    assert payload.get("summary", {}).get("current_attention") == len(attention)
+    assert payload.get("summary", {}).get("papers") == len(payload.get("papers") or [])
+
+
 def validate(payload: dict[str, Any]) -> None:
     assert payload["projection_policy"]["projection_has_scientific_authority"] is False
     research = load(GEN / "research-items.json")
@@ -1120,8 +1396,13 @@ def main() -> None:
     json_path, js_path = GEN/"research-timeline.json", GEN/"research-timeline.js"
     json_path.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     js_path.write_text("window.RESEARCH_TIMELINE = "+json.dumps(payload,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
+    dashboard = build_dashboard(payload)
+    validate_dashboard(dashboard)
+    (GEN/"research-dashboard.json").write_text(json.dumps(dashboard,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    (GEN/"research-dashboard.js").write_text("window.RESEARCH_DASHBOARD = "+json.dumps(dashboard,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
     s = payload["summary"]
-    print(f"research timeline: {s['events']} events / {s['key_events']} key / {s['days']} days")
+    ds = dashboard["summary"]
+    print(f"research timeline: {s['events']} events / {s['key_events']} key / {s['days']} days; dashboard attention={ds['current_attention']} papers={ds['papers']}")
 
 
 if __name__ == "__main__":

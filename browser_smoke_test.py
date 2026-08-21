@@ -163,7 +163,15 @@ def main() -> None:
               figure: !!document.querySelector('.overview-figure img'),
               distribution: document.querySelectorAll('.distribution-row').length,
               missing: document.querySelectorAll('.citation-missing').length,
-              corpus: Number(document.querySelector('.stat b')?.textContent || 0)
+              corpus: Number(document.querySelector('.stat b')?.textContent || 0),
+              researchConsole: document.querySelectorAll('.home-research-console').length,
+              consoleKpis: document.querySelectorAll('.home-console-kpis > span').length,
+              attentionCodes: [...document.querySelectorAll('.home-research-console [data-dashboard-research]')].map(x=>x.dataset.dashboardResearch||''),
+              holdRows: document.querySelectorAll('.home-attention-row').length,
+              primaryPaper: document.querySelector('.home-primary-paper')?.dataset?.dashboardResearch || '',
+              weekHighlights: document.querySelectorAll('.home-week-highlight').length,
+              dashboardSummary: window.RESEARCH_DASHBOARD?.summary || {},
+              consoleLinks: [...document.querySelectorAll('.home-research-console a')].map(x=>x.getAttribute('href')||'')
             };""",
         )
         require(home["nav"] == 12, f"expected 12 primary navigation targets across Start Here, Field Atlas, Current Research, and Literature, got {home['nav']}")
@@ -171,6 +179,9 @@ def main() -> None:
         require(not home["figure"] and home["distribution"] == 0, "home should route readers instead of duplicating the field-history figure or literature distribution")
         require(home["missing"] == 0, "home contains unresolved citations")
         require(home["corpus"] >= 100, "curated literature snapshot did not load")
+        require(home["researchConsole"] == 1 and home["consoleKpis"] == 4 and home["primaryPaper"] == "E-7" and home["holdRows"] == 5 and set(home["attentionCodes"]) == {"E-7","G-1","A-3","B-2","B-3","E-1"}, f"home current-research console must expose exactly the six actionable ResearchItems: {home}")
+        require(home["dashboardSummary"].get("current_attention") == 6 and home["dashboardSummary"].get("paper_ready") == 1 and home["dashboardSummary"].get("holds") == 5 and home["dashboardSummary"].get("launchable_formal_experiments") == 0 and home["dashboardSummary"].get("submission_ready") == 1, f"home dashboard summary must remain canonical, submission-ready, and zero-launch: {home['dashboardSummary']}")
+        require(home["weekHighlights"] >= 3 and "research-timeline.html?research=A-3" in home["consoleLinks"] and "selected-paper.html?paper=STRI" in home["consoleLinks"], f"home console must expose weekly provenance plus direct A-3/STRI navigation: {home}")
 
         navigate("/system-overview.html", 5)
         system_overview = execute(
@@ -505,12 +516,20 @@ def main() -> None:
           categories:document.querySelectorAll('.rpm-category').length,
           overviewCards:document.querySelectorAll('.rpm-overview-card').length,
           graphAppendix:document.querySelectorAll('.rpm-graph-schema').length,
+          controlBoard:document.querySelectorAll('.rpm-control-board').length,
+          controlCodes:[...document.querySelectorAll('.rpm-control-board [data-dashboard-research]')].map(x=>x.dataset.dashboardResearch||''),
+          controlRows:document.querySelectorAll('.rpm-control-row').length,
+          controlHighlights:document.querySelectorAll('.rpm-control-highlight').length,
+          controlLinks:[...document.querySelectorAll('.rpm-control-board a')].map(x=>x.getAttribute('href')||''),
+          dashboardSummary:window.RESEARCH_DASHBOARD?.summary||{},
           pageOverflow:document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
           text:document.body.textContent||''
         };""")
         require((research_map["chapters"],research_map["toc2"],research_map["bridgeLinks"],research_map["categories"],research_map["overviewCards"],research_map["graphAppendix"]) == (4,5,3,7,7,1), f"current research map hierarchy is incomplete: {research_map}")
+        require(research_map["controlBoard"] == 1 and research_map["controlRows"] == 5 and set(research_map["controlCodes"]) == {"E-7","G-1","A-3","B-2","B-3","E-1"} and research_map["controlHighlights"] >= 3, f"current research map must begin with the same six-object action queue as home: {research_map}")
+        require(research_map["dashboardSummary"].get("launchable_formal_experiments") == 0 and "research-timeline.html?research=A-3" in research_map["controlLinks"] and "selected-paper.html?paper=STRI" in research_map["controlLinks"], f"research-map control board must preserve zero experiment authority and direct provenance links: {research_map}")
         require(not research_map["pageOverflow"], "current research map causes page-level horizontal overflow")
-        require("领域全景" in research_map["text"] and "研究组合：完整证据" in research_map["text"] and "A–G 快速总览" in research_map["text"] and "完整知识图谱技术结构" in research_map["text"], "current research map reading chain is incomplete")
+        require("现在真正需要盯住的只有 6 个对象" in research_map["text"] and "正式实验权限=0" in research_map["text"] and "领域全景" in research_map["text"] and "研究组合：完整证据" in research_map["text"] and "A–G 快速总览" in research_map["text"] and "完整知识图谱技术结构" in research_map["text"], "current research map reading chain/control-board summary is incomplete")
 
         navigate("/paper-ideas.html", 7)
         ensure_language("zh")
@@ -591,7 +610,7 @@ def main() -> None:
           acceptanceStages: document.querySelectorAll('.paper-acceptance-stage').length,
           submissionDownloads: [...document.querySelectorAll('#selected-stri-current .current-status-downloads a')].map(a=>a.getAttribute('href')||''),
           title: document.title,
-          text: document.body.textContent || ''
+          text: document.querySelector('.layout')?.textContent || ''
         };""")
         require(selected["chapters"] == 5 and selected["currentSTRI"] == 1 and selected["archive"] == 1 and not selected["archiveOpen"] and selected["acceptancePanels"] == 1 and selected["acceptanceStages"] == 12, f"Papers must render the two-paper registry, one current STRI detail, the 12-stage canonical acceptance workflow, and the collapsed historical archive: {selected}")
         require(selected["paperRegistrySummary"].get("papers") == 2 and selected["paperRegistrySummary"].get("submission_ready") == 1 and selected["paperRegistrySummary"].get("scientific_holds") == 1 and selected["paperRegistryPanel"] == 1 and selected["paperRegistryCards"] == 2 and set(selected["paperRegistryIds"]) == {"STRI","AGENT-SAFETY-R9"} and selected["paperRegistryStages"] == {"STRI":"SUBMISSION_READY","AGENT-SAFETY-R9":"PAPER_EVIDENCE"}, f"PaperRegistry summary/UI is missing or stale: {selected}")
@@ -612,7 +631,7 @@ def main() -> None:
         missing_selected_markers = [marker for marker in selected_markers if marker not in selected["text"]]
         require(not missing_selected_markers, f"selected-paper Chinese-first current-paper UI is incomplete; missing={missing_selected_markers}")
         require(set(selected["submissionDownloads"]) == {"downloads/STRI-ICLR2027-submission-ready-20260821.pdf","downloads/STRI-ICLR2027-submission-ready-20260821.tex","downloads/STRI-ICLR2027-submission-ready-20260821-source.zip"}, f"selected-paper submission-ready downloads are stale: {selected['submissionDownloads']}")
-        require("Paper Acceptance Ledger 的 scientific / experiment / GPU / submission 自动权限全部为 0" in selected["text"] and "论文侧闭环已经完成" in selected["text"] and "只有收到外部人工 submission authority 后" in selected["text"] and "Human authors review and accept responsibility" not in selected["text"], "PaperRegistry must show the submission-ready human-authority boundary without leaking the stale raw legacy handoff")
+        require("Paper Acceptance Ledger 的 scientific / experiment / GPU / submission 自动权限全部为 0" in selected["text"] and "论文侧闭环已经完成" in selected["text"] and "真正提交仍需要外部人工投稿权限" in selected["text"] and "Human authors review and accept responsibility" not in selected["text"], "PaperRegistry must show the submission-ready human-authority boundary without leaking the stale raw legacy handoff")
 
         navigate("/experiments.html", 4)
         ensure_language("zh")

@@ -69,7 +69,7 @@ REQUIRED_STATIC = [
     "generated/idea-discovery-v3.json", "generated/idea-discovery-v3.js", "generated/idea-discovery-v3-external-reviews.json",
     "generated/idea-discovery-v31.json", "generated/idea-discovery-v31.js", "generated/idea-discovery-v31-external-reviews.json",
     "content-system-overview.js", "system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-reader.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js", "system-overview.css", "system-overview-v2.css",
-    "research-timeline.html", "research-timeline-view.js", "research-timeline.css", "generated/research-timeline.js", "generated/research-timeline.json",
+    "research-timeline.html", "research-timeline-view.js", "research-timeline.css", "generated/research-timeline.js", "generated/research-timeline.json", "generated/research-dashboard.js", "generated/research-dashboard.json",
     "research-map.html", "research-map-view.js", "research-map.css", "research-landscape-data.js",
     "idea-lab.css",
     "current-research-status-view.js", "generated/current-research-status.json", "generated/current-research-status.js",
@@ -96,6 +96,7 @@ def main() -> None:
     research_timeline = json.loads((ROOT / "generated" / "research-timeline.json").read_text(encoding="utf-8"))
     research_items = json.loads((ROOT / "generated" / "research-items.json").read_text(encoding="utf-8"))
     paper_registry = json.loads((ROOT / "generated" / "paper-registry.json").read_text(encoding="utf-8"))
+    research_dashboard = json.loads((ROOT / "generated" / "research-dashboard.json").read_text(encoding="utf-8"))
     ri_summary = research_items.get("summary") or {}
     if (int(ri_summary.get("research_items") or 0), int(ri_summary.get("experiment_records") or 0), int(ri_summary.get("portfolio_experiment_contexts") or 0), int(ri_summary.get("evidence_contexts") or 0), int(ri_summary.get("portfolio_objects") or 0)) != (86, 30, 3, 2, 91):
         fail(f"canonical ResearchItem projection counts drifted: {ri_summary}")
@@ -148,6 +149,25 @@ def main() -> None:
             bound_papers.add(ref.get("paper_id"))
     if not {"A-3", "E-7", "G-1"}.issubset(bound_codes) or bound_papers != {"STRI", "AGENT-SAFETY-R9"}:
         fail(f"timeline must bind representative ResearchItems and both papers: research={sorted(bound_codes)} papers={sorted(bound_papers)}")
+    dashboard_policy = research_dashboard.get("projection_policy") or {}
+    dashboard_summary = research_dashboard.get("summary") or {}
+    dashboard_attention = research_dashboard.get("attention") or []
+    dashboard_by_code = {row.get("code"): row for row in dashboard_attention}
+    if research_dashboard.get("schema_version") != "1.0" or dashboard_policy.get("read_only") is not True or any(dashboard_policy.get(key) is not False for key in ("scientific_authority", "experiment_authority", "submission_authority")) or dashboard_policy.get("dashboard_never_overrides_source_ledgers") is not True:
+        fail(f"research dashboard must remain a read-only zero-authority presentation projection: {dashboard_policy}")
+    expected_dashboard_summary = {"portfolio_objects":91,"research_items":86,"current_attention":6,"paper_ready":1,"holds":5,"launchable_formal_experiments":0,"papers":2,"submission_ready":1}
+    if any(int(dashboard_summary.get(key) or 0) != value for key, value in expected_dashboard_summary.items()):
+        fail(f"research dashboard canonical summary drifted: {dashboard_summary}")
+    expected_attention = {"E-7","G-1","A-3","B-2","B-3","E-1"}
+    if set(dashboard_by_code) != expected_attention or dashboard_by_code.get("E-7",{}).get("scientific_state") != "PAPER_READY" or any(dashboard_by_code.get(code,{}).get("scientific_state") != "HOLD" for code in expected_attention-{"E-7"}):
+        fail(f"research dashboard current-attention set is incomplete or misclassified: {dashboard_by_code}")
+    if (dashboard_by_code.get("E-7") or {}).get("paper_id") != "STRI" or (dashboard_by_code.get("E-7") or {}).get("paper_stage") != "SUBMISSION_READY" or (dashboard_by_code.get("E-7") or {}).get("submission_ready") is not True or (dashboard_by_code.get("G-1") or {}).get("paper_id") != "AGENT-SAFETY-R9" or (dashboard_by_code.get("G-1") or {}).get("paper_stage") != "PAPER_EVIDENCE":
+        fail(f"research dashboard must preserve ResearchItem→PaperState handoffs: {dashboard_by_code}")
+    if any(not row.get("portfolio_href") or not row.get("timeline_href") or not row.get("briefing_zh") or not row.get("next_step_zh") for row in dashboard_attention):
+        fail("every dashboard attention row needs a human briefing, explicit next step, ResearchItem link, and timeline link")
+    dashboard_week = research_dashboard.get("week") or {}
+    if not dashboard_week.get("start_date") or not dashboard_week.get("end_date") or int(dashboard_week.get("research_days") or 0) < 1 or int(dashboard_week.get("substantive_events") or 0) < 1 or len(dashboard_week.get("highlights") or []) < 3:
+        fail(f"research dashboard weekly summary is incomplete: {dashboard_week}")
     embedded_memory = research_system.get("research_memory_wiki") or {}
     if research_memory.get("wiki_sha256") != embedded_memory.get("wiki_sha256") or (research_memory.get("summary") or {}) != (embedded_memory.get("summary") or {}) or (research_memory.get("lint") or {}) != (embedded_memory.get("lint") or {}):
         fail("research memory wiki is stale versus embedded research-system state")
@@ -237,9 +257,12 @@ def main() -> None:
     idea_scripts = canonical_scripts.get("paper-ideas.html", [])
     if not all(name in idea_scripts for name in ("generated/research-items.js", "generated/paper-registry.js")) or idea_scripts.index("generated/research-items.js") > idea_scripts.index("app.js") or idea_scripts.index("generated/paper-registry.js") > idea_scripts.index("app.js"):
         fail("paper-ideas must load canonical ResearchItem/PaperRegistry state before app.js")
+    home_scripts = canonical_scripts.get("index.html", [])
+    if "generated/research-dashboard.js" not in home_scripts or home_scripts.index("generated/research-dashboard.js") > home_scripts.index("app.js"):
+        fail("home must load the lightweight read-only research dashboard before app.js")
     map_scripts = canonical_scripts.get("research-map.html", [])
-    if not all(name in map_scripts for name in ("generated/research-items.js", "generated/paper-registry.js", "research-map-view.js")) or map_scripts.index("generated/research-items.js") > map_scripts.index("app.js") or map_scripts.index("generated/paper-registry.js") > map_scripts.index("app.js") or map_scripts.index("research-map-view.js") > map_scripts.index("app.js"):
-        fail("research-map must load canonical ResearchItem/PaperRegistry state and its renderer before app.js")
+    if not all(name in map_scripts for name in ("generated/research-items.js", "generated/paper-registry.js", "generated/research-dashboard.js", "research-map-view.js")) or map_scripts.index("generated/research-items.js") > map_scripts.index("app.js") or map_scripts.index("generated/paper-registry.js") > map_scripts.index("app.js") or map_scripts.index("generated/research-dashboard.js") > map_scripts.index("research-map-view.js") or map_scripts.index("research-map-view.js") > map_scripts.index("app.js"):
+        fail("research-map must load canonical ResearchItem/PaperRegistry/dashboard state and its renderer before app.js")
     map_view_source = (ROOT / "research-map-view.js").read_text(encoding="utf-8")
     if "RESEARCH_ITEM_STATE" not in map_view_source or "[\"A\",\"B\",\"C\",\"D\",\"E\",\"F\",\"G\"]" not in map_view_source:
         fail("research-map must render the complete A-G map from canonical ResearchItem state with an explicit completeness guard")
