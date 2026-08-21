@@ -3,13 +3,15 @@
 \usepackage{iclr2027_conference,times}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
 \usepackage{amsmath,amssymb}
 \usepackage{microtype}
 \usepackage{xcolor}
 \usepackage{url}
 \usepackage{hyperref}
 
-\title{After a Static Safety Pass: First-Violation Events in a Persistent Web-Agent Evaluation}
+\title{After a Static Safety Pass: A First-Violation Case Study in a Persistent Web Agent}
 
 \author{Anonymous authors\\
 Paper under double-blind review}
@@ -19,7 +21,7 @@ Paper under double-blind review}
 \maketitle
 
 \begin{abstract}
-Safety evaluations of language-model agents commonly test the agent as it exists at evaluation time. Persistent agents complicate this interpretation: workflow memory and experience continue to change after a current-state test. We ask a narrow question in one frozen web-agent evaluation: does passing a current safety panel guarantee the absence of future violations as persistent state evolves over a held-out task schedule? We evaluate four Agent Workflow Memory states of a Qwen3-8B browser agent. All 12 current-state qualification episodes were classified as non-violations. We then completed 36 future episodes, following three common branches for three steps per state. Eleven future episodes were classified as violations, and a first violation occurred in 8 of 12 branches and 3 of 4 states. Six of the eight first events appeared at step 2, demonstrating that one additional test step would have missed most observed event branches. These results falsify the static-pass implication within this operationalization: a clean current panel was not a temporal certificate for the evaluated future. The design jointly changes persistent state and task schedule, so it does not identify an update-only causal effect. Our results motivate first-violation event-time evaluation as a necessary complement to current-state safety testing for persistent agents.
+Static safety panels evaluate an agent as it exists at one time. Persistent agents complicate the meaning of a pass because workflow memory and experience continue to change. We ask a narrow question in one frozen web-agent case study: did passing a current panel guarantee the absence of future violations over a declared persistent-update and held-out-task trajectory? We evaluate four Agent Workflow Memory states of a Qwen3-8B browser agent. All 12 current qualification episodes were classified as non-violations. Across 36 future episodes---three common branches, three steps per state---11 episodes were classified as violations, and a first violation occurred in 8 of 12 branches and 3 of 4 states. Cumulative branch detection was 1/12 after step 1, 7/12 after step 2, and 8/12 after step 3. Thus the clean current panel was not a temporal certificate for this evaluated future. The design jointly changes persistent state and task schedule, so it does not identify an update-only causal effect. The case study shows how branch-level first-event reporting makes evaluation horizon, delayed violations, and censoring explicit without turning a finite panel into a population-hazard claim.
 \end{abstract}
 
 \section{Introduction}
@@ -28,16 +30,18 @@ Safety evaluation is usually a snapshot. A model or agent is presented with a se
 
 The scientific question in this paper is deliberately narrower than whether self-evolution is generally unsafe. We ask whether a current static safety pass is sufficient to guarantee future non-violation in a fixed, persistent web-agent evaluation. The distinction is temporal. A current panel measures behavior at time $t=0$; deployment-relevant behavior may occur after a sequence of state updates and new tasks. A valid current observation need not be a certificate over that sequence.
 
-We study this question using Agent Workflow Memory (AWM) \citep{wang2025awm}, a Qwen3-8B browser agent, BrowserART tasks \citep{kumar2025browserart} executed through BrowserGym \citep{drouin2024browsergym}, and HarmBench-Llama-2-13b-cls \citep{mazeika2024harmbench} as the frozen behavioral evaluator. Four persistent states first face a three-probe current-state qualification panel. The same states then enter three common future branches, each lasting three episodes. We record the first step at which the evaluator identifies a violation.
+Longitudinal safety is not an empty comparison class. Most directly, \citet{altawaha2026remembering} evaluate memory-equipped agents across time using fixed trigger probes, memory snapshots, and a no-memory counterfactual. That design provides stronger causal leverage over memory effects than ours. Our narrower target is an action-taking web-agent trajectory: after a state passes a current BrowserART panel, what first-violation evidence appears as the same persistent agent executes a held-out schedule? The value of this case study is therefore not priority over longitudinal memory safety, but an exact branch-level account of the gap between a current observation and a declared future guarantee.
+
+We instantiate the question with Agent Workflow Memory (AWM) \citep{wang2025awm}, a Qwen3-8B browser agent, BrowserART tasks \citep{kumar2025browserart} executed through BrowserGym \citep{drouin2024browsergym}, and HarmBench-Llama-2-13b-cls \citep{mazeika2024harmbench} as the frozen behavioral evaluator. Four persistent states first face a three-probe current-state qualification panel. The same states then enter three common future branches, each lasting three episodes. We record the first step at which the evaluator identifies a violation.
 
 The observed contrast is sharp. The current panel contained 0 violations in 12 episodes. The future panel contained 11 violations in 36 episodes; 8 of 12 branches experienced at least one violation, across 3 of 4 states. First events were distributed across the three-step horizon rather than concentrated only in the first future episode.
 
 This paper makes three contributions:
 
 \begin{itemize}
-    \item We formulate a bounded test of the \emph{static-pass implication}: whether a current non-violation panel guarantees non-violation across a specified future trajectory.
-    \item We operationalize future safety with branch-level first-violation event time, retaining both the occurrence and timing of failures instead of collapsing the trajectory to another snapshot.
-    \item We provide complete evidence from a frozen 48-episode evaluation: 12 current qualification episodes and 36 future episodes, with no reruns or outcome-driven state selection.
+    \item We separate three claims that are often conflated: a current-panel observation, a certificate over a declared future trajectory, and a causal effect of persistent updating.
+    \item We use branch-level first-violation time to retain occurrence, delay, evaluation depth, and horizon censoring instead of collapsing a trajectory to another snapshot.
+    \item We provide complete evidence for a frozen 48-episode case study: 12 current qualification episodes and 36 future episodes, with exact state localization and no reruns or outcome-driven state selection.
 \end{itemize}
 
 Our conclusion is correspondingly bounded. The experiment shows that the static-pass implication fails for this evaluated system and joint update-plus-schedule trajectory. It does not establish that persistent updating alone caused the violations, that every static safety evaluation is ineffective, or that the observed event fraction estimates a broader population quantity.
@@ -62,18 +66,54 @@ Our experiment tests Equation~\ref{eq:implication} for one frozen operationaliza
 \begin{equation}
     T_b = \min\{t\in\{1,2,3\}:Y(q_{b,t},s_{b,t})=1\}.
 \end{equation}
-If no violation occurs, $T_b$ is right-censored after step 3. We report event counts and times descriptively. With only 12 deliberately constructed branches, we do not fit a population hazard model or assume that episodes within a state are independent.
+If no violation occurs, $T_b$ is right-censored after step 3. We also report cumulative detection depth,
+\begin{equation}
+  D(h)=\sum_b \mathbb{I}[T_b\leq h], \qquad h\in\{1,2,3\},
+\end{equation}
+which asks how many observed event branches would be visible under a shorter evaluation horizon. We report these counts descriptively. With only 12 deliberately constructed branches, we do not fit a population hazard model or assume that episodes within a state are independent.
+
+The causal question is different from the predictive implication. Let $C_H^{\mathrm{upd}}$ and $C_H^{\mathrm{no\text{-}upd}}$ denote branch event indicators under the same held-out schedule with updates enabled or disabled. An update-only causal claim requires their controlled contrast. The present experiment observes only $C_H^{\mathrm{upd}}$; the no-update arm is a saved reopen condition, not an outcome.
 
 This event-time view adds information that another aggregate accuracy or refusal score would discard. A branch that is clean at step 1 but fails at step 2 has passed a one-step check, yet it has not remained safe over the declared horizon. Conversely, a branch censored after step 3 is evidence only for the evaluated horizon, not an indefinite guarantee.
 
-\section{Evaluation design}
+\section{Branch-based evaluation protocol}
 \label{sec:design}
+
+Figure~\ref{fig:protocol} separates the current qualification observation from the future trajectory used to test the guarantee. Qualification is evaluated once at $s_0$. Each future branch begins from its designated qualified state, executes a common three-step schedule, and preserves the protocol's normal state update after each episode. The analysis consumes the resulting frozen receipt; it does not select states, branches, or horizons after observing outcomes.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/evaluation_protocol.pdf}
+\caption{Evaluation object. The current panel establishes an observation at $s_0$; the branch rollout tests whether that observation serves as a certificate over a declared future. The missing no-update path is shown as a causal identification requirement, not as executed evidence.}
+\label{fig:protocol}
+\end{figure}
 
 \subsection{Frozen agent and evaluation stack}
 
 The persistent substrate is AWM workflow memory and history \citep{wang2025awm}. The agent backbone is Qwen3-8B. Tasks come from BrowserART, a benchmark designed to expose safety failures in browser agents \citep{kumar2025browserart}, and run in BrowserGym \citep{drouin2024browsergym}. Outputs are adjudicated with HarmBench-Llama-2-13b-cls \citep{mazeika2024harmbench}. This evaluator is an operational benchmark instrument, not a noiseless ground-truth oracle.
 
-The runtime, evaluator, thresholds, and guard behavior were frozen before future execution. The protocol allowed no reruns and capped model calls. All planned qualification and future episodes completed under that protocol.
+The runtime, evaluator, thresholds, and guard behavior were frozen before future execution. The protocol allowed no reruns and capped model calls. All planned qualification and future episodes completed under that protocol. Table~\ref{tab:setup} records the scientific objects relevant to interpretation.
+
+\begin{table}[t]
+\centering
+\caption{Frozen case-study setup. Counts are protocol objects, not sampled population sizes.}
+\label{tab:setup}
+\small
+\begin{tabular}{p{0.27\linewidth}p{0.64\linewidth}}
+\toprule
+Component & Frozen value \\
+\midrule
+Agent & Qwen3-8B with Agent Workflow Memory \\
+Environment/tasks & BrowserGym execution of BrowserART task instances \\
+Persistent states & Four selected states in map and reddit strata \\
+Current panel & Three qualification probes per state; 12 episodes total \\
+Future panel & Three common branches $\times$ three steps per state; 36 episodes total \\
+Outcome instrument & HarmBench-Llama-2-13b-cls binary label \\
+Primary object & Branch first-violation occurrence and step by horizon $H=3$ \\
+Protocol constraints & Fixed runtime, guard, threshold, states, schedule, horizon, and call cap; no reruns \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{States, strata, and branches}
 
@@ -123,7 +163,35 @@ No. Eleven of 36 future episodes were classified as violations. At branch level,
 
 A rule that treats \emph{passed all current probes} as a prediction of no violation anywhere in the specified three-step future would therefore be wrong for 8 of the 12 branches in this finite evaluation. This is a descriptive error count, not a generalization estimate.
 
-\subsection{RQ3: When and where did first violations appear?}
+\subsection{RQ3: How much did evaluation depth reveal?}
+
+Figure~\ref{fig:depth} reconstructs the result under three prospective stopping depths using the same frozen trajectories. After one future step, 1 of 12 branches had an observed event. Extending to step 2 raised cumulative detection to 7 of 12; step 3 raised it to 8 of 12. Thus a one-step future check would have detected only one of the eight event branches ultimately observed at the declared horizon. This is a horizon analysis, not a comparison among independently executed policies.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/temporal_depth_and_state_profile.pdf}
+\caption{Two descriptive views of the frozen result. Left: cumulative branches with a first violation by evaluation depth. Right: episode violations and event branches by state. Fractions describe this finite evaluation only.}
+\label{fig:depth}
+\end{figure}
+
+\begin{table}[t]
+\centering
+\caption{What different evaluation depths support in the frozen branch set.}
+\label{tab:lenses}
+\small
+\begin{tabular}{lcl}
+\toprule
+Evaluation lens & Event branches visible & Permitted interpretation \\
+\midrule
+Current snapshot & 0/12 current episodes & Observation at qualification only \\
+One future step & 1/12 branches & One immediate future event detected \\
+Two future steps & 7/12 branches & Six delayed events added at step 2 \\
+Three-step horizon & 8/12 branches & Static pass fails as this horizon's certificate \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{RQ4: When and where did first violations appear?}
 
 Figure~\ref{fig:eventtime} shows the branch-level event times. One branch first violated at step 1, six at step 2, and one at step 3. Four branches were censored after step 3. Thus seven of eight event branches would not have been identified by examining only the first future step, and one would additionally have escaped a two-step horizon.
 
@@ -136,20 +204,44 @@ Figure~\ref{fig:eventtime} shows the branch-level event times. One branch first 
 
 The state-by-branch pattern is heterogeneous. Within the map stratum, \texttt{map-P2-A} had events in two branches while \texttt{map-V4-C1} had none. Within the reddit stratum, both states had events in all three branches, although their episode-level violation totals differed. These paired patterns show that neither task stratum nor branch position alone provides a complete descriptive account. The evaluation is too small and deliberately structured to establish state identity as a predictor.
 
-\subsection{RQ4: What does the evidence identify?}
+\subsection{RQ5: What does the evidence identify?}
 
 The completed evaluation identifies failure of the static-pass implication under the \emph{joint} future intervention actually run: held-out tasks arrive while persistent updates remain enabled. It does not separately identify the contribution of state updating from the contribution of the held-out schedule.
 
 The missing causal contrast is exact: replay the same held-out schedule with persistent updating disabled while retaining the frozen runtime and evaluator. That same-schedule/no-update control has been specified as a reopen condition, but it has not been executed and is not counted as evidence here. Consequently, \emph{persistent updates caused the future violations} is not a supported result of the present paper.
 
-\section{Related work}
+\section{Relation to existing safety protocols}
 \label{sec:related}
 
-Persistent memory and experience can improve agent performance by reusing workflows across tasks. AWM makes this mechanism explicit by inducing and retrieving workflow memories for agents \citep{wang2025awm}. BrowserGym provides a common environment for evaluating browser agents \citep{drouin2024browsergym}, while BrowserART demonstrates that language-model alignment does not automatically transfer to browser-agent behavior \citep{kumar2025browserart}. HarmBench standardizes automated measurement of harmful model behavior \citep{mazeika2024harmbench}. We combine these components to study a temporal interpretation problem rather than to propose another memory method or browser benchmark.
+\paragraph{Static and multi-step agent benchmarks.}
+AgentHarm measures harmfulness across agent tasks \citep{andriushchenko2024agentharm}; BrowserART and SafeArena expose safety failures in web-agent interaction \citep{kumar2025browserart,tur2025safearena}; AgentHazard extends harmful-behavior evaluation for computer-use agents \citep{feng2026agenthazard}. These benchmarks are essential behavioral tests. Our question concerns an additional axis: whether a pass observed before persistent state and task history continue to evolve can be read as a certificate over a specified later trajectory.
 
-Recent work has begun to characterize risks specific to agents that learn from experience or reuse persistent skills. Zhao et al.\ analyze experience-driven self-evolution \citep{zhao2026safety}, Mao et al.\ study unsafe skill misevolution \citep{mao2026practice}, Yan et al.\ expose harmful composition of individually benign experiences \citep{yan2026selfevolving}, Chen et al.\ study trajectory poisoning during skill formation \citep{chen2026agentsafety}, and Dong et al.\ attribute failures to reusable agent skills \citep{dong2026evolution}. Our contribution is narrower and complementary. We do not characterize the full risk taxonomy or attribute a mechanism. We isolate a claim that evaluators often implicitly need---that a current pass remains informative as a persistent agent proceeds---and test its guarantee form with branch-level first-event evidence.
+\paragraph{Persistent memory and self-evolution.}
+AWM induces and retrieves reusable workflows \citep{wang2025awm}. Recent safety work studies experience-driven self-evolution \citep{zhao2026safety}, unsafe skill misevolution \citep{mao2026practice}, harmful experience composition \citep{yan2026selfevolving}, trajectory poisoning \citep{chen2026agentsafety}, and skill-induced failures \citep{dong2026evolution}. Broader treatments organize threats and amplification in self-evolving systems \citep{lin2026safety}, while temporal-intervention evaluation asks how agent behavior changes with user history \citep{qian2026temporal}.
 
-First-event and time-to-event analysis are standard tools for representing delayed outcomes and censoring \citep{kaplan1958nonparametric}. We borrow the event-time representation but deliberately avoid survival-model inference: the small, paired branch set supports a transparent finite description, not a calibrated deployment hazard.
+The closest empirical comparison is \citet{altawaha2026remembering}, who directly study longitudinal risk in memory-equipped agents using fixed trigger probes, read-only memory snapshots, several scenarios and memory architectures, and a NullMemory counterfactual. Their design is broader and better identified for memory causality. Table~\ref{tab:closest} makes the distinction explicit: our evidence contributes an action-taking BrowserART/AWM case study with branch first-event timing; it does not supersede their memory-effect evidence.
+
+\begin{table*}[t]
+\centering
+\caption{Closest protocol comparison. An executed control means a counterfactual that isolates memory or updating, not a proposed design.}
+\label{tab:closest}
+\small
+\resizebox{\textwidth}{!}{
+\begin{tabular}{lllllll}
+\toprule
+Work & Agent setting & Persistent state & Time/task sequence & Executed memory control & First-event report & Primary object \\
+\midrule
+AgentHarm & Tool agent & No & Multi-step task & No & No & Harmful task completion \\
+BrowserART & Browser agent & No update target & Interactive task & No & No & Browser-agent alignment failure \\
+SafeArena & Browser agent & No update target & Interactive task & No & No & Safe web-agent behavior \\
+Al-Tawaha et al. & Memory-equipped agents & Yes & Longitudinal trigger probes & Yes, NullMemory & No & Memory-associated longitudinal risk \\
+Ours & AWM browser agent & Yes & Held-out 3-step branches & No & Yes & Static-pass implication in one case study \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+\paragraph{Event-time representation.}
+First-event and time-to-event analysis are standard tools for delayed outcomes and censoring \citep{kaplan1958nonparametric}. We use that representation to expose evaluation depth and branch censoring. The small paired branch set supports finite event counts rather than survival-model inference or a calibrated deployment hazard.
 
 \section{Discussion and limitations}
 \label{sec:discussion}
@@ -186,7 +278,7 @@ In a frozen persistent web-agent evaluation, four states passed all 12 current s
 
 Table~\ref{tab:claims} states the paper's evidence boundary in paper-facing language.
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Supported claim, excluded interpretations, and decisive limitation.}
 \label{tab:claims}
@@ -207,11 +299,43 @@ Persistent update and held-out schedule co-vary. The causal question reopens onl
 \end{tabular}
 \end{table}
 
+\section{Complete branch event-time table}
+\label{app:events}
+
+Table~\ref{tab:events} is the complete branch-level first-event record underlying Figures~\ref{fig:depth} and~\ref{fig:eventtime}. Branch labels index the three common within-stratum schedules. A censored entry means that all three evaluated steps were non-events.
+
+\begin{table}[ht]
+\centering
+\caption{First-violation step for all 12 branches.}
+\label{tab:events}
+\small
+\begin{tabular}{lcccc}
+\toprule
+State & Stratum & Branch 1 & Branch 2 & Branch 3 \\
+\midrule
+\texttt{map-P2-A} & map & censored & 2 & 2 \\
+\texttt{map-V4-C1} & map & censored & censored & censored \\
+\texttt{reddit-A} & reddit & 3 & 2 & 1 \\
+\texttt{reddit-B} & reddit & 2 & 2 & 2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{Protocol and reproducibility notes}
 \label{app:protocol}
 
 The evaluation record preserves exact model, task, environment, evaluator, state, and schedule identities; protocol-validity checks; episode-level outputs; and a machine-readable evidence receipt. The main text omits internal execution identifiers because they verify exact run identity rather than support the scientific claim directly.
 
-The protocol fixed the runtime, guard behavior, evaluator threshold, selected states, branch schedule, horizon, and call caps before future execution. It prohibited reruns and outcome-driven selection. All 12 qualification episodes and all 36 future episodes completed. Earlier infrastructure and model-support failures were classified separately from scientific outcomes and do not enter the result counts.
+The protocol fixed the runtime, guard behavior, evaluator threshold, selected states, branch schedule, horizon, and call caps before future execution. It prohibited reruns and outcome-driven selection. All 12 qualification episodes and all 36 future episodes completed. The run reserved 144 agent-model calls and 36 classifier evaluations for the future panel, within the 256-call maximum. No held-out outcome was used for support selection.
+
+\section{Failure semantics}
+\label{app:failures}
+
+Failures are classified as runtime, protocol, support, operationalization, method, or principle failures before they affect a scientific conclusion. One control-plane HTTP 504 occurred after the remote execution had completed; journal recovery confirmed completion and no episode was rerun. It is therefore a runtime event, not a behavioral failure. There were no protocol-inconclusive future episodes and no protocol or support failure in the adjudicated panel. HarmBench's non-oracle status is an operationalization limitation. The absence of a same-schedule/no-update outcome is a method-identification limitation. Neither is rewritten as a negative behavioral result.
+
+\section{Recorded reopen condition}
+\label{app:reopen}
+
+The unresolved causal question has one saved condition: \emph{separate persistent update effect from held-out schedule effect}. The corresponding design holds the held-out task schedule, runtime, evaluator, threshold, guard, selected states, horizon, and call policy fixed while disabling persistent updates. This condition is design-only: it has not been executed, produces no paper result, and cannot be used to select a favorable outcome. Until its gates are separately satisfied, claim R9-C3 remains on method-identification hold.
 
 \end{document}

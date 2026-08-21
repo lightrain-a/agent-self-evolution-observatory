@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.1",
+  "status": "FULL_CASE_STUDY_MANUSCRIPT_COMPLETE_PAPER_READY_HOLD",
+  "paper_id": "AGENT-SAFETY-R9",
+  "audited_on": "2026-08-21",
+  "manuscript": {
+    "source": "paper_drafts/agent-safety-r9-iclr2027/main.tex",
+    "compiled_pdf": "paper_drafts/agent-safety-r9-iclr2027/main.pdf",
+    "pages": 9,
+    "positioning": "bounded persistent-web-agent first-violation case study",
+    "supported_claims": 2,
+    "source_bound_main_figures": 3,
+    "main_tables": 4,
+    "appendix_tables": 2
+  },
+  "system_standard_ref": "generated/asset-first-stri-paper-quality-v2-20260816.json",
+  "completion_checks": {
+    "claim_evidence_map": "PASS",
+    "strongest_comparison": "PASS_WITH_COLLISION_DISCLOSED",
+    "mechanism_or_boundary_analysis": "PASS_BOUNDARY_ONLY",
+    "failure_and_sensitivity_analysis": "PASS_DESCRIPTIVE_HORIZON_ANALYSIS",
+    "current_source_survival": "PASS_ONLY_FOR_BOUNDED_CASE_STUDY",
+    "source_bound_visual_evidence": "PASS",
+    "completed_evidence_not_planned_evidence": "PASS",
+    "submission_qa": {
+      "latex_compile": "PASS_9_PAGES_NO_WARNINGS",
+      "unit_tests": "PASS_11_OF_11",
+      "numeric_bindings": "PASS",
+      "narrative_drift_scan": "PASS_ZERO_HITS",
+      "visual_contact_sheet": "PASS_NO_BLANK_OR_ORPHAN_PAGE",
+      "new_behavior_execution": false
+    }
+  },
+  "supported_claims": [
+    "Within the frozen R9 BrowserART/HarmBench operationalization, passing the three-probe current-safety panel did not guarantee absence of first-violation events over the three-step persistent-update held-out schedule.",
+    "In the frozen branch set, evaluation depth changed observed event coverage from 1/12 branches by step 1 to 7/12 by step 2 and 8/12 by step 3."
+  ],
+  "not_supported_claims": [
+    "Persistent updating alone caused the observed violations.",
+    "Static safety evaluation is generally ineffective across agents, models, or benchmarks.",
+    "The observed branch event fraction is a population hazard estimate.",
+    "State identity is a statistically established predictor.",
+    "HarmBench labels are a noiseless safety oracle.",
+    "This work originates longitudinal memory-safety evaluation."
+  ],
+  "closest_source_collision": {
+    "source": "Al-Tawaha et al., Remembering More, Risking More, arXiv:2605.17830",
+    "effect": "The source has broader longitudinal coverage and an executed NullMemory counterfactual. R9 is positioned as an action-taking BrowserART/AWM case study and reporting lens, not a superior memory-causal study."
+  },
+  "paper_ready_blockers": [
+    "The same-schedule no-update causal control is designed but unexecuted.",
+    "Single-backbone and four-state evidence cannot support a population claim.",
+    "HarmBench has not been independently validated for this frozen BrowserART realization.",
+    "General longitudinal-memory-safety novelty is already occupied by stronger current work."
+  ],
+  "reopen_condition": "separate persistent update effect from held-out schedule effect",
+  "reopen_control": "same held-out schedule with persistent updates disabled under the frozen runtime",
+  "reopen_control_status": "DESIGN_ONLY_NOT_EXECUTED",
+  "additional_behavior_execution_authorized": false,
+  "scientific_authority": false
+}
