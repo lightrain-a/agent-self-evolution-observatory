@@ -81319,7 +81319,7 @@
           "automatic_submission_authority": 0,
           "registered_papers": 2,
           "scientific_holds": 1,
-          "submission_ready_papers": 0,
+          "submission_ready_papers": 1,
           "invalid_ledgers": 0
         }
       },
@@ -81330,10 +81330,10 @@
           "papers": 2,
           "invalid_ledgers": 0,
           "scientific_holds": 1,
-          "submission_ready": 0,
+          "submission_ready": 1,
           "by_state": {
             "PAPER_EVIDENCE": 1,
-            "TARGETED_REPAIR": 1
+            "SUBMISSION_READY": 1
           }
         }
       }
@@ -84680,7 +84680,7 @@
       "automatic_submission_authority": 0,
       "registered_papers": 2,
       "scientific_holds": 1,
-      "submission_ready_papers": 0,
+      "submission_ready_papers": 1,
       "invalid_ledgers": 0
     },
     "scientific_authority": false,
@@ -84697,10 +84697,10 @@
         "papers": 2,
         "invalid_ledgers": 0,
         "scientific_holds": 1,
-        "submission_ready": 0,
+        "submission_ready": 1,
         "by_state": {
           "PAPER_EVIDENCE": 1,
-          "TARGETED_REPAIR": 1
+          "SUBMISSION_READY": 1
         }
       },
       "entries": [
@@ -84790,7 +84790,7 @@
           "central_question": "Should semantically equivalent skill-package representations change a self-evolution control surface?",
           "contract_sha256": "30ba1a82ae4547d8e3385f514352da55415b31dcf83b8dabab1f756af34309ad",
           "scientific_status": "READY",
-          "current_state": "TARGETED_REPAIR",
+          "current_state": "SUBMISSION_READY",
           "supported_claims": 3,
           "unsupported_claims": 3,
           "limitations": [
@@ -84800,15 +84800,15 @@
           ],
           "reopen_conditions": [],
           "summary": {
-            "events": 8,
-            "allowed_transitions": 4,
+            "events": 16,
+            "allowed_transitions": 8,
             "blocked_transitions": 0,
             "story_search_receipts": 1,
             "mock_reviews": 2,
-            "claim_audit_receipts": 0,
-            "manuscript_ci_receipts": 0,
-            "prebuttal_receipts": 0,
-            "submission_readiness_receipts": 0
+            "claim_audit_receipts": 1,
+            "manuscript_ci_receipts": 1,
+            "prebuttal_receipts": 1,
+            "submission_readiness_receipts": 1
           },
           "latest_story_search": {
             "pass": true,
@@ -84832,30 +84832,30 @@
             }
           },
           "latest_claim_audit": {
-            "pass": false,
-            "claim_audit_sha256": "",
+            "pass": true,
+            "claim_audit_sha256": "bb9e0397f72e31bddfb36948d83af5c33a09e142d71e5932b72005c011ee430f",
             "blockers": []
           },
           "latest_manuscript_ci": {
-            "pass": false,
-            "required": 0,
-            "passed": 0,
+            "pass": true,
+            "required": 9,
+            "passed": 9,
             "missing": [],
             "failed": []
           },
           "latest_prebuttal": {
-            "pass": false,
-            "decision_critical": 0,
+            "pass": true,
+            "decision_critical": 10,
             "blockers": []
           },
           "latest_submission_readiness": {
-            "submission_ready": false,
-            "receipt_sha256": "",
+            "submission_ready": true,
+            "receipt_sha256": "a1320fe924ef06a5f4d34a53f8fe4d5c50242fcc032c50fe15dcc0745f24da5a",
             "blockers": []
           },
           "latest_transition": {
-            "from": "MOCK_PC",
-            "to": "TARGETED_REPAIR",
+            "from": "PREBUTTAL",
+            "to": "SUBMISSION_READY",
             "allowed": true,
             "blockers": []
           },

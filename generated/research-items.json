@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-21T13:27:57+00:00",
-  "source_revision": "8dc36eb228469cebe6c86a9a0ce2ac2081086d95",
+  "generated_at": "2026-08-21T16:05:35+00:00",
+  "source_revision": "7ac24ad9e73f41fa09760cb5b4875d67a4c95cd1",
   "policy": {
     "research_item_is_primary_scientific_entity": true,
     "experiment_is_evidence_event_not_parallel_current_state": true,
@@ -3964,7 +3964,7 @@
       "paper_transition": {
         "paper_id": "STRI",
         "acceptance_paper_id": "STRI-ICLR2027",
-        "status": "TARGETED_REPAIR",
+        "status": "SUBMISSION_READY",
         "scientific_status": "READY"
       },
       "provenance_refs": [

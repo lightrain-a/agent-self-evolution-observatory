@@ -114,11 +114,11 @@ def main() -> None:
     papers_by_id = {row.get("paper_id"): row for row in papers}
     stri_registry = papers_by_id.get("STRI") or {}
     safety_registry = papers_by_id.get("AGENT-SAFETY-R9") or {}
-    if len(papers) != 2 or stri_registry.get("source_research_item") != "E-7" or stri_registry.get("paper_stage") != "TARGETED_REPAIR" or stri_registry.get("submission_ready") is not False:
-        fail(f"PaperRegistry must bind STRI to E-7 at TARGETED_REPAIR and keep it not submission-ready: {papers}")
+    if len(papers) != 2 or stri_registry.get("source_research_item") != "E-7" or stri_registry.get("paper_stage") != "SUBMISSION_READY" or stri_registry.get("submission_ready") is not True:
+        fail(f"PaperRegistry must bind STRI to E-7 at SUBMISSION_READY and mark it submission-ready: {papers}")
     if safety_registry.get("source_research_item") != "G-1" or safety_registry.get("paper_stage") != "PAPER_EVIDENCE" or safety_registry.get("scientific_status") != "CAUSAL_HOLD" or safety_registry.get("submission_ready") is not False:
         fail(f"PaperRegistry must retain Agent Safety at G-1 / PAPER_EVIDENCE / CAUSAL_HOLD: {safety_registry}")
-    if (paper_registry.get("summary") or {}).get("submission_ready") != 0 or (paper_registry.get("summary") or {}).get("scientific_holds") != 1:
+    if (paper_registry.get("summary") or {}).get("submission_ready") != 1 or (paper_registry.get("summary") or {}).get("scientific_holds") != 1:
         fail(f"PaperRegistry submission/hold summary is stale: {paper_registry.get('summary')}")
     timeline_summary = research_timeline.get("summary") or {}
     timeline_policy = research_timeline.get("projection_policy") or {}

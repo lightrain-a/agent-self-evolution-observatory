@@ -42,12 +42,13 @@ class ResearchItemStateTest(unittest.TestCase):
         e7 = self.by_code["E-7"]
         self.assertEqual(e7["scientific_state"], "PAPER_READY")
         self.assertEqual(e7["paper_transition"]["paper_id"], "STRI")
-        self.assertEqual(e7["paper_transition"]["status"], "TARGETED_REPAIR")
+        self.assertEqual(e7["paper_transition"]["status"], "SUBMISSION_READY")
         papers = {row["paper_id"]: row for row in self.registry["papers"]}
         paper = papers["STRI"]
         self.assertEqual(paper["source_research_item"], "E-7")
-        self.assertEqual(paper["paper_stage"], "TARGETED_REPAIR")
-        self.assertFalse(paper["submission_ready"])
+        self.assertEqual(paper["paper_stage"], "SUBMISSION_READY")
+        self.assertTrue(paper["submission_ready"])
+        self.assertEqual(self.registry["summary"]["submission_ready"], 1)
         self.assertEqual((paper["claims_supported"], paper["claims_total"], paper["paper_quality_evidence_debt"]), (3, 3, 0))
         safety = papers["AGENT-SAFETY-R9"]
         self.assertEqual((safety["source_research_item"], safety["paper_stage"], safety["scientific_status"]), ("G-1", "PAPER_EVIDENCE", "CAUSAL_HOLD"))

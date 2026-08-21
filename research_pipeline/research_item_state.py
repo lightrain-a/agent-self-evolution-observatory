@@ -452,7 +452,7 @@ def validate_research_item_state(state):
     by_code = {r.get("code"):r for r in items}
     for code in ("A-3","B-2","B-3","E-1"):
         if by_code.get(code,{}).get("scientific_state") != "HOLD": errors.append(f"{code} must be HOLD, not scientific failure")
-    if by_code.get("E-7",{}).get("scientific_state") != "PAPER_READY" or (by_code.get("E-7",{}).get("paper_transition") or {}).get("paper_id") != "STRI" or (by_code.get("E-7",{}).get("paper_transition") or {}).get("status") != "TARGETED_REPAIR": errors.append("E-7 must remain PAPER_READY scientifically and bind to STRI/TARGETED_REPAIR in Paper Acceptance")
+    if by_code.get("E-7",{}).get("scientific_state") != "PAPER_READY" or (by_code.get("E-7",{}).get("paper_transition") or {}).get("paper_id") != "STRI" or (by_code.get("E-7",{}).get("paper_transition") or {}).get("status") != "SUBMISSION_READY": errors.append("E-7 must remain PAPER_READY scientifically and bind to STRI/SUBMISSION_READY in Paper Acceptance")
     if by_code.get("G-1",{}).get("scientific_state") != "HOLD" or by_code.get("G-1",{}).get("principle_dead_end_certified"): errors.append("G-1 must remain reopenable HOLD")
     if (by_code.get("G-1",{}).get("paper_transition") or {}).get("status") != "PAPER_EVIDENCE" or (by_code.get("G-1",{}).get("paper_transition") or {}).get("blocked") is not True: errors.append("G-1 PaperState link must remain PAPER_EVIDENCE and blocked by CAUSAL_HOLD")
     if any(bool((r.get("execution_authority") or {}).get("gpu")) for r in items): errors.append("ResearchItem projection cannot expose current GPU authority")
@@ -473,9 +473,9 @@ def validate_paper_registry(registry, research_state):
     if paper.get("source_research_item") != "E-7" or paper.get("acceptance_paper_id") != "STRI-ICLR2027": errors.append("STRI must bind E-7 to the STRI-ICLR2027 acceptance ledger")
     if (int(paper.get("claims_supported") or 0), int(paper.get("claims_total") or 0)) != (3,3): errors.append("STRI frozen supported claims must remain 3/3")
     if int(paper.get("paper_quality_evidence_debt") or 0) != 0: errors.append("legacy STRI evidence checklist must remain zero-debt")
-    if paper.get("paper_stage") != "TARGETED_REPAIR" or paper.get("submission_ready") is not False: errors.append(f"STRI must follow latest acceptance state TARGETED_REPAIR with submission_ready=false, got {paper.get('paper_stage')}/{paper.get('submission_ready')}")
+    if paper.get("paper_stage") != "SUBMISSION_READY" or paper.get("submission_ready") is not True: errors.append(f"STRI must follow latest acceptance state SUBMISSION_READY with submission_ready=true, got {paper.get('paper_stage')}/{paper.get('submission_ready')}")
     if safety.get("source_research_item") != "G-1" or safety.get("paper_stage") != "PAPER_EVIDENCE" or safety.get("scientific_status") != "CAUSAL_HOLD" or safety.get("submission_ready") is not False: errors.append("Agent Safety PaperState must remain G-1 / PAPER_EVIDENCE / CAUSAL_HOLD / not submission-ready")
-    if int((registry.get("summary") or {}).get("submission_ready") or 0) != 0 or int((registry.get("summary") or {}).get("scientific_holds") or 0) != 1: errors.append("PaperRegistry summary must report zero submission-ready papers and one scientific hold")
+    if int((registry.get("summary") or {}).get("submission_ready") or 0) != 1 or int((registry.get("summary") or {}).get("scientific_holds") or 0) != 1: errors.append("PaperRegistry summary must report one submission-ready paper and one scientific hold")
     research_codes = {r.get("code") for r in research_state.get("research_items") or []}
     if any(row.get("source_research_item") not in research_codes for row in papers): errors.append("PaperState source ResearchItem is missing")
     if any(bool((row.get("acceptance_authority") or {}).get(key)) for row in papers for key in ("scientific","experiment","gpu","submission")): errors.append("PaperRegistry must preserve zero automatic authority from acceptance ledgers")
