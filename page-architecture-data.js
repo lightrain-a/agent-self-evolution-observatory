@@ -68,11 +68,10 @@ window.PAGE_ARCHITECTURES = {
   },
   "research-map":{
     chapters:[
-      {id:"current-overview",title:{en:"I · A–G coordinate system and collection colors",zh:"第一章 · A–G 坐标系与集合颜色"},question:{en:"How are current ResearchItems organized so each collection keeps one stable color without conflating category with scientific status?",zh:"当前 ResearchItem 如何按 A–G 组织，并让每个集合固定一种颜色而不把类别颜色误当成科学状态？"}},
-      {id:"knowledge-graph",title:{en:"II · Canonical knowledge graph and public research status",zh:"第二章 · Canonical 知识图谱与外部研究现状"},question:{en:"Which Track, Idea, Claim, nearest-work, and Experiment nodes and edges already exist, and how far have representative external papers publicly progressed?",zh:"已有 Track、Idea、Claim、nearest-work、Experiment 等哪些真实节点与边，同时代表性外部论文公开研究已经推进到哪一步？"}},
-      {id:"current-coverage",title:{en:"III · What our A–G portfolio means now",zh:"第三章 · 我们的 A–G 组合现在做到哪里"},question:{en:"For each category, what has our own portfolio decided, what survives, and where has a ResearchItem handed off to PaperState?",zh:"对每一类，我们自己的研究组合已经形成什么结论、留下什么资产、哪些 ResearchItem 已经交接到 PaperState？"}},
-      {id:"coverage-gaps",title:{en:"IV · Internal coverage density and gaps",zh:"第四章 · 内部覆盖密度与空白"},question:{en:"Which regions have been searched heavily and which have relatively few internal research objects without turning paper or object counts into a priority score?",zh:"哪些区域已经被大量搜索、哪些区域内部研究对象较少，同时避免把论文数或对象数误当成优先级评分？"}},
-      {id:"handoff",title:{en:"V · From map to ResearchItem, Timeline, and Paper",zh:"第五章 · 从图谱进入 ResearchItem、时间轴与论文"},question:{en:"Where should a reader go for authoritative decisions, chronological causal history, or submission-ready paper state?",zh:"要查看权威当前结论、按时间的因果历史或已进入投稿阶段的论文状态，分别应该去哪里？"}}
+      {id:"layering",title:{en:"I · Field history, graph, and authoritative ResearchItems",zh:"第一章 · 领域历史、当前知识图谱与权威 ResearchItem"},question:{en:"Which page owns field history, which layer visualizes relationships, and where do authoritative scientific decisions live?",zh:"领域历史由哪里维护、关系图谱负责什么、真正有权威的科学结论又在哪里？"}},
+      {id:"coverage-gaps",title:{en:"II · Internal coverage density and gaps",zh:"第二章 · 哪里搜索得多，哪里当前覆盖得少"},question:{en:"Which regions have been searched heavily and which have relatively few internal research objects without turning paper or object counts into a priority score?",zh:"哪些区域已经被大量搜索、哪些区域内部研究对象较少，同时避免把论文数或对象数误当成优先级评分？"}},
+      {id:"integrated-map",title:{en:"III · Our portfolio, research lineage, and external papers together",zh:"第三章 · 我们的当前状态、研究链与外部论文同图比较"},question:{en:"For each A–G collection, what is our current state, which canonical graph nodes and edges explain the lineage, and how far have neighboring external papers progressed?",zh:"对每个 A–G 集合，我们当前做到哪里、哪些 canonical 节点和边解释了研究链、相邻外部论文又推进到了哪一步？"}},
+      {id:"handoff",title:{en:"IV · From the map to authoritative detail",zh:"第四章 · 从图谱进入权威细节"},question:{en:"Where should a reader go for the full ResearchItem decision, chronological causal history, or submission-ready PaperState?",zh:"需要完整 ResearchItem 裁决、按时间的因果历史或投稿级 PaperState 时，应该进入哪个页面？"}}
     ]
   },
   "paper-ideas":{
