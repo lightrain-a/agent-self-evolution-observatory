@@ -1,8 +1,8 @@
 window.PAGE_ARCHITECTURES = {
   home:{
     chapters:[
-      {id:"understand-field",title:{en:"Understand the field",zh:"理解领域"},question:{en:"What counts as self-evolution, what can change, and where does the field come from?",zh:"什么算自进化、哪些对象可以变化，以及这个领域从哪里发展而来？"},links:["foundations.html","mechanisms.html","domains.html","evaluation.html"]},
-      {id:"select-research",title:{en:"Choose the next research problem",zh:"选择下一轮研究问题"},question:{en:"How do we turn new paper evidence into candidate problems, reject ideas already explained by prior work or simpler theory, and decide which surviving problem is worth a small decisive experiment?",zh:"怎样把最新论文证据变成候选问题、淘汰已经被已有工作或更简单理论解释的 Idea，并决定哪个真正剩下的问题值得做一次小规模决定性实验？"},links:["system-overview.html","research-directions.html","paper-ideas.html"]},
+      {id:"understand-field",title:{en:"Understand the field",zh:"理解领域"},question:{en:"What counts as self-evolution, what can change, where does the field come from, and which structural research problems have emerged?",zh:"什么算自进化、哪些对象可以变化、这个领域从哪里发展而来，以及已经形成了哪些结构性研究问题？"},links:["foundations.html","mechanisms.html","domains.html","evaluation.html","research-directions.html"]},
+      {id:"select-research",title:{en:"Choose the next research problem",zh:"选择下一轮研究问题"},question:{en:"How do we turn new paper evidence into candidate problems, reject ideas already explained by prior work or simpler theory, and decide which surviving problem is worth a small decisive experiment?",zh:"怎样把最新论文证据变成候选问题、淘汰已经被已有工作或更简单理论解释的 Idea，并决定哪个真正剩下的问题值得做一次小规模决定性实验？"},links:["system-overview.html","research-map.html","paper-ideas.html","research-timeline.html"]},
 
       {id:"execute-audit",title:{en:"Run, inspect, and submit",zh:"运行、核查与投稿"},question:{en:"Which experiments are still allowed to run, what exact evidence supports the current STRI submission, and how can old projects be inspected without mistaking their archived plans for today's work?",zh:"哪些实验现在仍允许运行、STRI 当前投稿具体由哪些证据支持，以及怎样查看旧项目而不把它们已经归档的计划误当成今天的待办？"},links:["experiments.html","selected-paper.html","bibliography.html"]}
     ]
@@ -54,11 +54,18 @@ window.PAGE_ARCHITECTURES = {
   },
   "research-directions":{
     chapters:[
-      {id:"orientation",title:{en:"I · Orientation: four lifecycle questions",zh:"第一章 · 入门：四个生命周期问题"},question:{en:"How do the ten directions fit into one evolution lifecycle?",zh:"十个方向如何放进同一条自进化生命周期？"}},
-      {id:"landscape",title:{en:"II · What is a long-term direction versus a paper we can write now?",zh:"第二章 · 长期方向和现在能写的论文有什么区别？"},question:{en:"Which questions are broad long-term research areas, which one is the paper we are currently preparing, and which older ideas are retained only to explain past decisions?",zh:"哪些只是长期研究方向、哪一个是我们现在正在准备的论文、哪些旧 Idea 只为了说明过去为什么做过或停止过？"}},
-
-      {id:"direction-clusters",title:{en:"III · Ten directions grouped by four big questions",zh:"第三章 · 按四个大问题组织十个方向"},question:{en:"What does each direction study, and how is it different from its neighbors?",zh:"每个方向研究什么，又与相邻方向有何区别？"}},
-      {id:"long-term-agenda",title:{en:"IV · Long-term research agenda",zh:"第四章 · 长期研究议程"},question:{en:"Which dependencies and staged priorities turn the direction map into a research program?",zh:"哪些依赖关系和阶段优先级能把方向地图转化为研究计划？"},sourceIds:["research-agenda"]}
+      {id:"orientation",title:{en:"I · How the historical field taxonomy was formed",zh:"第一章 · 历史领域分类怎样形成"},question:{en:"How did the ten D1–D10 directions decompose the agent self-evolution lifecycle, and what field questions were they trying to make explicit?",zh:"D1–D10 十个历史方向怎样拆解 Agent 自进化生命周期，它们分别把哪些领域问题显式化？"}},
+      {id:"landscape",title:{en:"II · Historical D1–D10 and current A–G",zh:"第二章 · 历史 D1–D10 与当前 A–G 的关系"},question:{en:"How did the historical taxonomy and former idea lineage migrate into the A–G coordinate system used by today's ResearchItems?",zh:"历史方向分类与旧 Idea 谱系怎样迁移到今天 ResearchItem 使用的 A–G 坐标系？"}},
+      {id:"direction-clusters",title:{en:"III · Ten historical directions, boundaries, and literature",zh:"第三章 · 十个历史方向、科学边界与代表文献"},question:{en:"What did each direction study, how did it differ from neighboring questions, and which papers grounded the boundary?",zh:"每个历史方向研究什么、与相邻问题有何区别、哪些代表论文支撑了它的边界？"}},
+      {id:"long-term-agenda",title:{en:"IV · Former agenda and still-open field questions",zh:"第四章 · 历史长期议程与仍开放的领域问题"},question:{en:"Which older program-level questions remain useful as field knowledge even though today's work is scheduled by ResearchItems rather than a static agenda?",zh:"哪些过去的项目级长期问题仍值得作为领域知识保留，即使今天的研究调度已经由 ResearchItem 而不是静态议程决定？"},sourceIds:["research-agenda"]}
+    ]
+  },
+  "research-map":{
+    chapters:[
+      {id:"current-overview",title:{en:"I · Current A–G portfolio overview",zh:"第一章 · 当前 A–G 研究组合全景"},question:{en:"Where are the current ResearchItems, terminal decisions, retained assets, paper handoffs, and evidence objects concentrated?",zh:"当前 ResearchItem、终态裁决、沉淀资产、论文交接和证据对象主要分布在哪些 A–G 大类？"}},
+      {id:"current-coverage",title:{en:"II · What each A–G category means now",zh:"第二章 · A–G 每一类现在意味着什么"},question:{en:"For each category, what problem remains scientifically interesting, what has already been decided, and what survives after stopped or merged directions?",zh:"对每一类，哪些科学问题仍值得关注、哪些已经形成结论、停止或合并以后又留下了什么？"}},
+      {id:"coverage-gaps",title:{en:"III · Coverage density and gaps",zh:"第三章 · 当前覆盖密度与空白"},question:{en:"Which regions have been searched heavily and which regions have relatively few current research objects without turning object count into a priority score?",zh:"哪些区域已经被大量搜索、哪些区域当前研究对象较少，同时避免把对象数量误当成优先级评分？"}},
+      {id:"handoff",title:{en:"IV · From map to ResearchItem, Timeline, and Paper",zh:"第四章 · 从图谱进入 ResearchItem、时间轴与论文"},question:{en:"Where should a reader go for the authoritative current decision, chronological causal history, or submission-ready paper state?",zh:"要查看权威当前结论、按时间的因果历史或已进入投稿阶段的论文状态，分别应该去哪里？"}}
     ]
   },
   "paper-ideas":{

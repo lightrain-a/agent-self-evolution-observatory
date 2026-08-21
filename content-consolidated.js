@@ -69,8 +69,8 @@
 
   if (sources["research-directions"]) {
     pages["research-directions"] = Object.assign({}, sources["research-directions"], {
-      title:{en:"Research directions and long-term agenda",zh:"研究方向地图与长期议程"},
-      lead:{en:"The page groups the field into ten long-term research questions. For each direction it shows the motivating failure, representative papers, what a new paper would still need to prove, and whether that direction is part of our current research program or only a longer-term option.",zh:"本页把领域整理为十个长期研究问题。每个方向都会写清楚它由什么具体失败推动、有哪些代表论文、新论文还必须证明什么，以及它属于当前研究计划还是仅作为长期备选。"},
+      title:{en:"Field problems and historical research directions",zh:"领域研究问题与历史方向"},
+      lead:{en:"This field-atlas page preserves ten historical research-direction coordinates, their motivating failures, representative papers, scientific boundaries, and former idea lineage. It explains how the field and our research vocabulary evolved; it no longer acts as the current project roadmap.",zh:"这是领域图谱中的历史知识页：保留十个历史研究方向坐标、驱动它们的具体失败、代表论文、科学边界与旧 Idea 谱系，用来解释领域问题和我们研究语言怎样形成；它不再承担当前研究排期。"},
       groupsAfter:[group("research-agenda")]
     });
   }

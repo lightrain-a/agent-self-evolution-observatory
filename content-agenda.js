@@ -1,6 +1,6 @@
 Object.assign(window.PAGE_CONTENT,{"research-agenda":{
-  eyebrow:{en:"Resources · Long-term Agenda",zh:"资源 · 长期议程"},
-  title:{en:"A long-term research agenda for trustworthy agent self-evolution",zh:"可信 Agent 自进化的长期研究议程"},
+  eyebrow:{en:"Field History · Former Long-term Agenda",zh:"领域研究史 · 历史长期议程"},
+  title:{en:"Historical long-term agenda and still-open field questions",zh:"历史长期议程与仍开放的领域问题"},
   lead:{en:"This agenda asks what must be solved before an agent can safely keep changing itself after deployment. The concrete questions are: which part should be updated after a failure, how to verify that the proposed lesson is actually correct, how to stop one useful update from breaking another capability later, and how to measure whether repeated updates still help after many versions.",zh:"这份长期议程讨论 Agent 部署后反复修改自己时必须解决的具体问题：一次失败后到底该改记忆、技能、工作流还是模型参数；怎样确认写进去的经验真的正确；怎样防止一次局部有益更新以后破坏其他能力；以及经过很多版本后，如何确认总体仍在变好而不是积累隐性回退。"},
   callout:{en:"For a near-term paper, do not try to solve the whole agenda. Pick one measurable failure, state exactly which persistent state changes, compare against a simpler update using the same information and budget, and test whether the benefit remains on later tasks. Visual, web, and embodied settings are useful only when they provide the controlled evidence needed for that specific question.",zh:"做近期论文时不要一次解决整张议程。先选一个能真实测到的失败，明确到底改变哪一类持久状态，用相同信息和预算与更简单更新方法比较，再检查收益在后续任务上是否仍然存在。视觉、网页和具身场景只有在能为这个具体问题提供受控证据时才值得加入。"},
   sections:[

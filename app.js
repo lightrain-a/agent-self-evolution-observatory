@@ -30,8 +30,10 @@ const pageId = document.body.dataset.page || "home";
 const NAVIGATION_TYPE = performance.getEntriesByType?.("navigation")?.[0]?.type || "navigate";
 if (pageId === "paper-ideas" && "scrollRestoration" in history) history.scrollRestoration = "manual";
 const initialQuery = new URLSearchParams(location.search);
-let language = pageId === "research-timeline"
-  ? (localStorage.getItem("research-timeline-language") || "zh")
+const SCOPED_LANGUAGE_KEYS = {"research-timeline":"research-timeline-language","research-map":"research-map-language","research-directions":"research-directions-language"};
+const scopedLanguageKey = SCOPED_LANGUAGE_KEYS[pageId] || "";
+let language = scopedLanguageKey
+  ? (localStorage.getItem(scopedLanguageKey) || "zh")
   : (localStorage.getItem("agent-evolution-language") || "en");
 let catalog = [];
 let activeFilter = initialQuery.get("method") || "all";
@@ -762,7 +764,11 @@ function syncShellLanguage() {
       ? (language === "zh" ? "7 个阅读章节 · 统一 11 阶段生命周期 · 6 个职责层 · P0 七阶段验证子状态机" : "7 reader chapters · canonical 11-stage lifecycle · 6 responsibility layers · P0 7-stage validation sub-machine")
       : pageId === "research-timeline"
         ? (language === "zh" ? "完整研究历史只读投影 · 北京时间 UTC+8 · 时间轴不新增科研权限" : "Read-only full research history · Asia/Shanghai UTC+8 · no new scientific authority")
-        : (language === "zh" ? "实时科研状态 · 文献、实验与论文证据持续更新" : "Live research state · literature, experiments, and paper evidence update continuously");
+        : pageId === "research-map"
+          ? (language === "zh" ? "A–G 当前研究组合 · 只读映射 · 权威结论仍在 ResearchItem" : "Current A–G portfolio · read-only map · authoritative decisions stay on ResearchItems")
+          : pageId === "research-directions"
+            ? (language === "zh" ? "领域知识资产 · D1–D10 历史方向 · 代表论文 · 与当前 A–G 的迁移关系" : "Field knowledge · historical D1–D10 · literature · migration to current A–G")
+            : (language === "zh" ? "实时科研状态 · 文献、实验与论文证据持续更新" : "Live research state · literature, experiments, and paper evidence update continuously");
   }
   renderNavigation();
   renderFooter();
@@ -771,7 +777,7 @@ function setLanguage(next) {
   const oldHeight = Math.max(document.documentElement.scrollHeight, 1);
   const ratio = window.scrollY / oldHeight;
   language = next;
-  localStorage.setItem(pageId === "research-timeline" ? "research-timeline-language" : "agent-evolution-language", language);
+  localStorage.setItem(scopedLanguageKey || "agent-evolution-language", language);
   syncShellLanguage();
   renderPage();
   requestAnimationFrame(() => window.scrollTo(0, ratio * document.documentElement.scrollHeight));
@@ -1391,6 +1397,21 @@ function renderDirectionCard(direction) {
   const detail = directionGuide(direction.id);
   return `<article class="direction-card" style="--direction-color:${esc(direction.color || "#5b5bd6")}"><div class="direction-card-head"><span class="direction-code">${esc(direction.code)}</span><span class="direction-count">${directionIdeas.length} ${language === "zh" ? "个历史 Idea" : "historical ideas"}</span></div><h4 id="${esc(direction.id)}">${textOf(direction.title)}</h4><p class="direction-question">${textOf(direction.question)}</p><div class="direction-plain"><b>${language === "zh" ? "通俗理解" : "In plain language"}</b><span>${textOf(detail.plain)}</span></div><div class="direction-explanation-grid"><div><b>${language === "zh" ? "主要研究对象" : "Main object"}</b><p>${textOf(detail.object)}</p></div><div><b>${language === "zh" ? "典型例子" : "Typical example"}</b><p>${textOf(detail.example)}</p></div><div><b>${language === "zh" ? "与邻近方向的区别" : "Difference from neighbors"}</b><p>${textOf(detail.distinction)}</p></div><div><b>${language === "zh" ? "科学边界" : "Scientific boundary"}</b><p>${textOf(direction.boundary)}</p></div></div>${renderDirectionLiterature(direction)}<div class="idea-chip-list" aria-label="historical idea lineage">${directionIdeas.map((idea) => `<span class="idea-chip" title="${language === "zh" ? "历史候选谱系，不代表当前合同" : "Historical candidate lineage; not a current contract"}"><span>#${idea.rank}</span>${esc(idea.name)}</span>`).join("")}</div></article>`;
 }
+function renderHistoricalDirectionMigration() {
+  const rows = [
+    ["D1",language==="zh"?"经验获取、准入与适用范围":"Experience acquisition, admission, and scope","A + B",language==="zh"?"准入/回归进入 A；经验价值、适用边界进入 B。":"Admission/regression moves to A; experience value and applicability move to B."],
+    ["D2",language==="zh"?"记忆表示、修复与巩固":"Memory representation, repair, and consolidation","B",language==="zh"?"成为当前“记忆、经验与持久知识”的主体。":"Becomes the core of current memory/experience research."],
+    ["D3",language==="zh"?"技能、工具与权限生命周期":"Skill, tool, and permission lifecycle","E + G",language==="zh"?"技能/工具结构演化进入 E；权限与风险部分进入 G。":"Skill/tool structural evolution moves to E; permission/risk aspects move to G."],
+    ["D4",language==="zh"?"更新路由、语义契约与组合":"Update routing, contracts, and composition","A + E",language==="zh"?"更新冲突和回归控制进入 A；工作流/结构契约进入 E。":"Update interaction/regression moves to A; workflow and structural contracts move to E."],
+    ["D5",language==="zh"?"具身、探索与世界适应":"Embodiment, exploration, and world adaptation","F",language==="zh"?"直接沉淀为世界模型与具身适应。":"Maps directly into world-model and embodied adaptation."],
+    ["D6",language==="zh"?"负向进化评测与基准科学":"Negative evolution evaluation and benchmark science","C + G",language==="zh"?"评价器偏差进入 C；长期负向安全结果进入 G。":"Evaluator bias moves to C; longitudinal safety failures move to G."],
+    ["D7",language==="zh"?"安全、溯源与风险传播":"Security, provenance, and risk propagation","A + G",language==="zh"?"更新链审计成为 A 的系统规则；未来风险主线进入 G。":"Update-chain auditing feeds A; future-risk science moves to G."],
+    ["D8",language==="zh"?"成本、监督与元控制":"Cost, oversight, and meta-control","A + G",language==="zh"?"更新预算/停止规则进入 A；安全监督与权限升级进入 G。":"Update budgets/stopping move to A; safety oversight and escalation move to G."],
+    ["D9",language==="zh"?"目标、个性化与内生反馈":"Goals, personalization, and performative feedback","B + C · sparse",language==="zh"?"个性化记忆进入 B、反馈漂移进入 C；当前组合对目标演化覆盖仍较少。":"Personalized memory maps to B and feedback drift to C; goal evolution remains thinly covered."],
+    ["D10",language==="zh"?"跨 Agent 迁移与复数谱系":"Cross-agent transfer and plural lineages","A + B · sparse",language==="zh"?"迁移可靠性进入 A/B；当前没有独立主线持续推进。":"Transfer reliability maps to A/B; no standalone current line is advancing."],
+  ];
+  return `<section class="panel historical-taxonomy-migration"><div class="idea-panel-heading"><div><div class="eyebrow">${language==="zh"?"历史分类迁移":"TAXONOMY MIGRATION"}</div><h2 id="historical-to-current-taxonomy">${language==="zh"?"旧 D1–D10 没有废弃：它们被重新编译进当前 A–G":"D1–D10 was not discarded; it was recompiled into current A–G"}</h2><p class="section-intro">${language==="zh"?"这是多对多迁移，不是简单改名。历史方向解释领域问题如何形成；当前 A–G 按我们真正维护的 ResearchItem 边界重新组织。":"This is a many-to-many migration, not a rename. Historical directions explain how the field questions formed; current A–G follows the ResearchItem boundaries we actually maintain."}</p></div><a class="link-btn" href="research-map.html">${language==="zh"?"打开当前研究组合图谱 →":"Open Current Research Map →"}</a></div><div class="history-table-scroll"><table class="matrix"><thead><tr><th>${language==="zh"?"历史方向":"Historical"}</th><th>${language==="zh"?"原问题":"Former problem"}</th><th>${language==="zh"?"当前 A–G 落点":"Current A–G"}</th><th>${language==="zh"?"迁移说明":"Migration"}</th></tr></thead><tbody>${rows.map(row=>`<tr><th>${esc(row[0])}</th><td>${esc(row[1])}</td><td><strong>${esc(row[2])}</strong></td><td>${esc(row[3])}</td></tr>`).join("")}</tbody></table></div></section>`;
+}
 function renderDirectionMap(config) {
   const directions = portfolioDirections();
   const ideas = portfolioIdeas();
@@ -1399,11 +1420,11 @@ function renderDirectionMap(config) {
   const macroCards = (guide.macroGroups || []).map((group) => `<article class="direction-macro-card"><span>${esc(group.code)}</span><h4>${textOf(group.title)}</h4><p>${textOf(group.plain)}</p><div>${(group.directionIds || []).map((id) => { const direction = directionById(id); return direction ? `<a href="#${esc(id)}">${esc(direction.code)} · ${textOf(direction.title)}</a>` : ""; }).join("")}</div></article>`).join("");
   const exampleRows = directions.map((direction) => { const detail = directionGuide(direction.id); return `<tr><th>${esc(direction.code)}</th><td><a href="#${esc(direction.id)}"><strong>${textOf(direction.title)}</strong></a><span>${textOf(detail.plain)}</span></td><td>${textOf(detail.example)}</td></tr>`; }).join("");
   const orientation = `<section class="panel direction-primer"><h3 id="four-big-questions">${language === "zh" ? "四个大问题" : "Four big questions"}</h3><p class="section-intro">${language === "zh" ? "十个方向不是十种互相竞争的方法，而是自进化生命周期中四类大问题的进一步拆分。" : "The ten directions are not ten competing methods. They decompose four large questions across the evolution lifecycle."}</p><div class="direction-macro-grid">${macroCards}</div></section><section class="panel direction-running-example"><h3 id="running-example">${textOf(guide.runningExample?.title)}</h3><p class="section-intro">${textOf(guide.runningExample?.intro)}</p><div class="history-table-scroll"><table class="matrix"><thead><tr><th>ID</th><th>${language === "zh" ? "这个方向在研究什么" : "What the direction studies"}</th><th>${language === "zh" ? "在这个案例中会问什么" : "Question in this example"}</th></tr></thead><tbody>${exampleRows}</tbody></table></div></section>${(config.sections || []).map((section, index) => renderSectionForPage(section, index, pageId, "direction-foundation-section", 3)).join("")}`;
-  const stats = `<div class="grid direction-stats"><div class="stat"><b>${directions.length}</b><span>${language === "zh" ? "个研究方向" : "research directions"}</span></div><div class="stat"><b>${ideas.length}</b><span>${language === "zh" ? "个历史 Idea formulation" : "historical idea formulations"}</span></div><div class="stat"><b>${portfolioTracks().length}</b><span>${language === "zh" ? "类历史论文赛道" : "historical paper tracks"}</span></div></div>`;
-  const landscape = `${renderOverviewFigure(config, language === "zh" ? "Agent 自进化研究方向与历史 Idea 谱系图" : "Agent self-evolution direction and historical idea-lineage map")}${stats}`;
+  const stats = `<div class="grid direction-stats"><div class="stat"><b>${directions.length}</b><span>${language === "zh" ? "个历史方向坐标" : "historical direction coordinates"}</span></div><div class="stat"><b>${ideas.length}</b><span>${language === "zh" ? "个历史 Idea formulation" : "historical idea formulations"}</span></div><div class="stat"><b>${portfolioTracks().length}</b><span>${language === "zh" ? "类历史论文赛道" : "historical paper tracks"}</span></div></div>`;
+  const landscape = `${renderHistoricalDirectionMigration()}${renderOverviewFigure(config, language === "zh" ? "Agent 自进化研究方向与历史 Idea 谱系图" : "Agent self-evolution direction and historical idea-lineage map")}${stats}`;
   const clusters = (guide.macroGroups || []).map((group, index) => { const groupDirections = (group.directionIds || []).map(directionById).filter(Boolean); return `<section class="direction-cluster"><header><span>${esc(group.code)}</span><div><h3 id="direction-cluster-${esc(group.id)}">${textOf(group.title)}</h3><p>${textOf(group.plain)}</p></div></header><div class="direction-grid">${groupDirections.map(renderDirectionCard).join("")}</div></section>`; }).join("");
   const agendaGroups = config.groupsAfter || [];
-  const agenda = `${renderGroupNav(agendaGroups)}${renderMergedGroups(agendaGroups)}`;
+  const agenda = `<details class="panel historical-agenda-fold"><summary><div><b>${language==="zh"?"历史长期议程与仍开放的领域问题":"Former long-term agenda and still-open field questions"}</b><span>${language==="zh"?"保留旧页面梳理作为领域知识；当前研究调度不再由这份静态议程决定。":"Preserved as field knowledge; current research scheduling no longer follows this static agenda."}</span></div><strong>${language==="zh"?"历史资产":"HISTORY"}</strong></summary><div>${renderGroupNav(agendaGroups)}${renderMergedGroups(agendaGroups)}</div></details>`;
   return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("research-directions"))}${renderCustomChapter(chapters[0],0,orientation)}${renderCustomChapter(chapters[1],1,landscape)}${renderCustomChapter(chapters[2],2,clusters)}${renderCustomChapter(chapters[3],3,agenda)}`;
 }
 function ideaExplanation(name) { return (window.IDEA_EXPLANATIONS || {})[name] || {}; }
@@ -3559,6 +3580,7 @@ function renderPage() {
   else if (pageId === "selected-paper") root.innerHTML = window.renderSelectedPaperWorkspace ? window.renderSelectedPaperWorkspace(config) : renderMergedHub(config);
   else if (config.renderMode === "merged-hub") root.innerHTML = renderMergedHub(config);
   else if (pageId === "research-directions") root.innerHTML = renderDirectionMap(config);
+  else if (pageId === "research-map") root.innerHTML = window.renderCurrentResearchMap ? window.renderCurrentResearchMap(config) : `${pageHeader(config)}<div class="empty">Current research map unavailable.</div>`;
   else if (pageId === "paper-ideas") root.innerHTML = renderIdeaPortfolio(config);
   else if (pageId === "experiments") root.innerHTML = renderExperimentDashboard(config);
   else if (pageId === "direction-board") root.innerHTML = renderIdeaRanking(config);
