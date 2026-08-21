@@ -19,7 +19,7 @@ window.IDEA_PIPELINE_META = {
   funnel:[
     {key:"formulations",count:69,label:{en:"Candidate formulations",zh:"候选表述"},desc:{en:"High-recall formulations before collision and identifiability checks.",zh:"在文献碰撞与可识别性检查前保留高召回候选。"}},
     {key:"retained",count:34,label:{en:"Structurally complete ideas",zh:"结构完整 Idea"},desc:{en:"Every idea has a problem, mechanism, rationale, experiment, and Stop rule.",zh:"每个 Idea 都具备问题、机制、依据、实验与停止条件。"}},
-    {key:"shortlist",count:12,label:{en:"Advisor shortlist",zh:"导师短名单"},desc:{en:"Candidates displayed first for expert judgment; this is not automatic acceptance.",zh:"优先交给师兄和老师判断，并不代表自动通过。"}},
+    {key:"shortlist",count:12,label:{en:"Advisor shortlist",zh:"导师短名单"},desc:{en:"Candidates displayed first for expert judgment; this is not automatic acceptance.",zh:"优先进入人工判断，并不代表自动通过。"}},
     {key:"selected",count:1,label:{en:"Selected for falsification",zh:"已进入证伪实验"},desc:{en:"The current project has a bounded pilot and explicit claim boundary.",zh:"当前项目已具有有界 Pilot 与明确主张边界。"}}
   ],
   stages:{

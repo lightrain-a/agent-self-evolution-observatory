@@ -145,7 +145,7 @@ def build_advisor_selection() -> dict[str, Any]:
         "clusters": sorted({x["cluster"] for x in rows}),
         "meta_review_status": meta.get("status", {"reviewed": len(meta.get("ideas", [])), "complete": len(meta.get("ideas", [])) == portfolio["count"]}),
         "portfolio_comment": "The comparative meta-review ranks all 22 discussion-ready ideas and suggests eight first reads to reduce review effort. These eight are not a shortlist that removes the other fourteen; all 22 remain formal candidates for senior/teacher discussion.",
-        "portfolio_comment_zh": "相对元审查对全部 22 个正式讨论 Idea 做排序，并建议 8 个优先阅读方向以降低浏览成本。这 8 个不是替代其余 14 个的 shortlist；22 个方向都会完整交给师兄/老师讨论。",
+        "portfolio_comment_zh": "相对元审查对全部 22 个正式讨论 Idea 做排序，并建议 8 个优先阅读方向以降低浏览成本。这 8 个不是替代其余 14 个的 shortlist；22 个方向都会完整进入人工讨论。",
     }
 
 

@@ -469,7 +469,7 @@ def main() -> None:
           paperRegistry: window.PAPER_REGISTRY || {},
           absorbedChildCount: Object.keys(window.HUMAN_TERMINAL_IDEA_STATE?.absorbed_children || {}).length,
           feedbackSummaries: document.querySelectorAll('.human-review-idea-card .human-idea-summary p').length,
-          parentBriefingSummaries: document.querySelectorAll('.human-review-idea-card .idea-briefing-summary').length,
+          parentBriefingSummaries: document.querySelectorAll('.human-review-idea-card .one-minute-briefing').length,
           parentBriefingReasonPills: document.querySelectorAll('.human-review-idea-card .briefing-reason-pill').length,
           parentConcreteComparisons: document.querySelectorAll('.human-review-idea-card .concrete-method-comparison.comparison-parent').length,
           supplementalConcreteComparisons: document.querySelectorAll('.supplemental-idea-card .concrete-method-comparison.comparison-supplemental').length,
@@ -495,7 +495,7 @@ def main() -> None:
           categoryRelatedBanks: document.querySelectorAll('.canonical-related-bank:not(.categorized-context-bank)').length,
           openCategoryRelatedBanks: document.querySelectorAll('.canonical-related-bank:not(.categorized-context-bank)[open]').length,
           newCards: document.querySelectorAll('.supplemental-idea-card').length,
-          supplementalBriefingSummaries: document.querySelectorAll('.supplemental-briefing-section').length,
+          supplementalBriefingSummaries: document.querySelectorAll('.supplemental-idea-card .one-minute-briefing').length,
           standaloneCodes: [...document.querySelectorAll('.supplemental-idea-card summary>div>span')].map(x=>(x.textContent||'').trim()),
           openNewCards: document.querySelectorAll('.supplemental-idea-card[open]').length,
           supplementalBlankPrimaryFields: [...document.querySelectorAll('.supplemental-idea-card')].flatMap(card=>[...card.querySelectorAll('.supplemental-human-grid>section>p,.human-evidence-grid>section>p,.human-experiment-grid>section>p')].filter(node=>!String(node.textContent||'').trim()||['—','--','-'].includes(String(node.textContent||'').trim())).map(node=>(card.querySelector('summary>div>span')?.textContent||'').trim())),
@@ -505,7 +505,7 @@ def main() -> None:
           freshCollisionBlocks: document.querySelectorAll('.human-fresh-collision').length,
           freshCollisionLinks: document.querySelectorAll('.human-fresh-collision nav a').length,
           incubationCards: document.querySelectorAll('.paper-incubation-card').length,
-          incubationBriefingSummaries: document.querySelectorAll('.pf-briefing-summary').length,
+          incubationBriefingSummaries: document.querySelectorAll('.paper-incubation-card .one-minute-briefing').length,
           incubationAdvance: document.querySelectorAll('.paper-incubation-card.incubation-advance').length,
           incubationP0: document.querySelectorAll('.paper-incubation-card.incubation-p0').length,
           incubationRevise: document.querySelectorAll('.paper-incubation-card.incubation-revise').length,
@@ -539,8 +539,10 @@ def main() -> None:
           openClosedIdeaBanks: document.querySelectorAll('.canonical-closed-idea-bank[open]').length,
           closedIdeaBankLabels: [...document.querySelectorAll('.canonical-closed-idea-bank>summary b')].map(x=>(x.textContent||'').trim()),
           closedIdeaCards: document.querySelectorAll('.closed-idea-card').length,
-          closedIdeaBriefingSummaries: document.querySelectorAll('.closed-briefing-why').length,
-          safetyBriefingSummaries: document.querySelectorAll('.agent-safety-briefing').length,
+          closedIdeaBriefingSummaries: document.querySelectorAll('.closed-idea-card .one-minute-briefing').length,
+          safetyBriefingSummaries: document.querySelectorAll('#agent-safety-program .agent-safety-briefing').length,
+          oneMinuteBriefingLabels: [...document.querySelectorAll('.one-minute-briefing>header>b,.agent-safety-briefing>header>b')].map(x=>(x.textContent||'').trim()),
+          staleThirtySecondCopy: /给师兄的 30 秒结论|30 秒说明|30-second briefing/.test(document.body.textContent||''),
           closedIdeaCodes: [...document.querySelectorAll('.closed-idea-card')].map(x=>x.dataset.closedCode||''),
           closedIdeaSources: [...document.querySelectorAll('.closed-idea-card')].map(x=>x.dataset.closedSource||''),
           allResearchObjectCodes: [
@@ -556,7 +558,7 @@ def main() -> None:
           closedIdeaBlankPrimaryFields: [...document.querySelectorAll('.closed-idea-card')].flatMap(card=>[...card.querySelectorAll('.closed-idea-body section>p')].filter(node=>!String(node.textContent||'').trim()||['—','--','-'].includes(String(node.textContent||'').trim())).map(node=>card.dataset.closedCode||'')),
           closedAuditRows: document.querySelectorAll('.current-closed-basin-audit tbody tr').length,
           closedAuditReasonsAllZh: [...document.querySelectorAll('.closed-idea-stop p')].every(node => /[\u3400-\u9fff]/.test(node.textContent || '')),
-          closedAuditReopensAllZh: [...document.querySelectorAll('.closed-idea-reopen p')].every(node => /[\u3400-\u9fff]/.test(node.textContent || '')),
+          closedAuditReopensAllZh: [...document.querySelectorAll('.closed-one-minute-briefing>div>p:last-child')].every(node => /[\u3400-\u9fff]/.test(node.textContent || '')),
           statusOuterTracks: getComputedStyle(document.querySelector('.project-status-strip.current')).gridTemplateColumns.trim().split(/\\s+/).length,
           statusCopyTracks: getComputedStyle(document.querySelector('.project-status-copy')).gridTemplateColumns.trim().split(/\\s+/).length,
           statusMetricTracks: getComputedStyle(document.querySelector('.project-status-metrics')).gridTemplateColumns.trim().split(/\\s+/).length,
@@ -613,10 +615,11 @@ def main() -> None:
         require(ideas["historicalCounts"].get("p0") == 20 and ideas["historicalCounts"].get("merge") == 6, f"historical P0 lifecycle must remain separately preserved: {ideas['historicalCounts']}")
         require(ideas["evidenceDispositionCounts"] == {"stop":16,"hold":4,"merge":6} and ideas["evidenceDispositionPanels"] == 26, f"latest evidence disposition is missing or collapsed into terminal state: {ideas['evidenceDispositionCounts']}/{ideas['evidenceDispositionPanels']}")
         require((ideas["briefingHeroes"],ideas["briefingMetrics"],ideas["briefingDecisions"],ideas["briefingGuides"],ideas["briefingLessons"],ideas["briefingTaxonomyCards"],ideas["briefingModeButtons"],ideas["categoryBriefings"]) == (1,4,3,1,3,6,2,7), f"briefing-first overview/taxonomy/category summaries are incomplete: {ideas}")
-        require((ideas["parentBriefingSummaries"],ideas["parentBriefingReasonPills"],ideas["supplementalBriefingSummaries"],ideas["incubationBriefingSummaries"],ideas["closedIdeaBriefingSummaries"],ideas["safetyBriefingSummaries"]) == (26,26,7,9,38,1), f"plain-language idea summaries are incomplete: {ideas}")
+        require((ideas["parentBriefingSummaries"],ideas["parentBriefingReasonPills"],ideas["supplementalBriefingSummaries"],ideas["incubationBriefingSummaries"],ideas["closedIdeaBriefingSummaries"],ideas["safetyBriefingSummaries"]) == (26,26,7,9,38,1), f"one-minute idea summaries are incomplete: {ideas}")
+        require(len(ideas["oneMinuteBriefingLabels"]) == 81 and all(label == "【1min结论】" for label in ideas["oneMinuteBriefingLabels"]) and not ideas["staleThirtySecondCopy"], f"all idea-card briefings must use the unified one-minute label with no stale 30-second copy: {ideas['oneMinuteBriefingLabels'][:10]} / stale={ideas['staleThirtySecondCopy']}")
         require((ideas["parentConcreteComparisons"],ideas["supplementalConcreteComparisons"],ideas["pfConcreteComparisons"],ideas["concreteComparisonTables"]) == (17,5,2,24) and ideas["concreteComparisonRows"] >= 50 and ideas["concreteComparisonComplete"] is True, f"concrete method/baseline/result comparisons are incomplete: {ideas['parentConcreteComparisons']}/{ideas['supplementalConcreteComparisons']}/{ideas['pfConcreteComparisons']}/{ideas['concreteComparisonTables']}/{ideas['concreteComparisonRows']}/{ideas['concreteComparisonComplete']}")
         require(all(marker in ideas["text"] for marker in ("目标任务族更容易受更新影响","简单方法 +20 个百分点","少 35 个（47.9%）","简单规则少 16","简单方法 +16.67 个百分点","简单方法 +66.67 个百分点","复杂方法未运行","二元稀疏组测试","简单规则少 24 次（45.3%）","无数值差值；方法预演阶段已停止")), "representative concrete baseline designs or exact deltas are missing")
-        require(all(marker in ideas["text"] for marker in ("当前更新底座几乎不能产生真正有效的候选更新","标准二元组测试在相同信息和预算下取得完全相同结果","简单的来源降权已经取得相同效果","保持当前能力不等于保留未来学习能力","属于支持不足，可重开，不是原理否定")), "representative A-3/A-6/C-1/PF-1/G-1 briefing copy is missing")
+        require(all(marker in ideas["text"] for marker in ("当前更新底座几乎不能产生真正有效的候选更新","标准二元组测试在相同信息和预算下取得完全相同结果","简单的来源降权已经取得相同效果","保持当前能力不等于保留未来学习能力","这停止的是当前实验实现，不是否定科学问题本身")), "representative A-3/A-6/C-1/PF-1/G-1 one-minute briefing copy is missing")
         require(ideas["lifecycleCells"] == 104 and ideas["explicitLegacyP0Badges"] == 0 and ideas["formalAuthorityZero"] == 26, f"lifecycle/current-decision/authority separation failed: {ideas['lifecycleCells']}/{ideas['explicitLegacyP0Badges']}/{ideas['formalAuthorityZero']}")
         expected_parent_states={"A-1":"stop","A-2":"stop","A-3":"hold","A-5":"stop","B-1":"merge","B-2":"hold","B-3":"hold","C-1":"stop","C-4":"stop","D-1":"stop","D-2":"stop","E-1":"hold","E-2":"stop","F-1":"stop","F-3":"stop"}
         require(all(ideas["parentStatusByCode"].get(code)==state for code,state in expected_parent_states.items()), f"representative parent terminal states are wrong: {ideas['parentStatusByCode']}")
@@ -719,7 +722,7 @@ def main() -> None:
             "仅诊断（DIAGNOSTIC ONLY）",
             "停止 PF-1 独立论文",
             "通过正式问题检查的新研究问题",
-            "当前科研进展 · 给师兄的结论版",
+            "当前科研进展 · 1min 结论版",
             "终态子账本",
             "A–G",
             "局部反例记忆修复",
