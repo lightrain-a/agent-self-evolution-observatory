@@ -101,6 +101,7 @@ from .search_funnel_telemetry import build_search_funnel_telemetry
 from .premium_model_policy import policy_summary as premium_model_policy_summary
 from .public_state_redaction import redact_private_paths
 from .research_system_replay import build_research_system_replay
+from .relation_scan_boundary_manifest import load_relation_scan_boundary_manifest
 from .review_repair import build_repair_queue
 from .scientific_meta_trace import build_scientific_meta_trace
 from .scientific_research_graph import build_scientific_research_graph
@@ -425,7 +426,12 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_sp15_support = build_sp15_identifiability_support()
     paper_first_paper_design_backlog = load_paper_design_backlog()
     paper_first_global_relation_recall = load_global_relation_recall_state()
-    paper_first_global_relation_freshness = relation_recall_freshness(paper_first_problem_generator, paper_first_global_relation_recall)
+    relation_scan_boundary_manifest = load_relation_scan_boundary_manifest()
+    paper_first_global_relation_freshness = relation_recall_freshness(
+        paper_first_problem_generator,
+        paper_first_global_relation_recall,
+        relation_scan_boundary_manifest,
+    )
     paper_first_global_relation_delta_private = load_private_relation_delta_preflight(storage=storage)
     paper_first_global_relation_delta_preflight = public_relation_delta_preflight_summary(paper_first_global_relation_delta_private)
     paper_first_global_relation_scan_admission = public_global_relation_scan_admission_summary(build_global_relation_scan_admission(primary_state=paper_first_primary_evidence,generator_state=paper_first_problem_generator,queue_state=paper_first_problem_gate_queue,relation_state=paper_first_global_relation_recall,delta_state=paper_first_global_relation_delta_private))
@@ -1061,6 +1067,15 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_sp15_identifiability_support":paper_first_sp15_support,
         "paper_first_paper_design_backlog":paper_first_paper_design_backlog,
         "paper_first_global_relation_recall":paper_first_global_relation_recall,
+        "relation_scan_boundary_manifest":{
+            "schema_version":relation_scan_boundary_manifest.get("schema_version"),
+            "status":relation_scan_boundary_manifest.get("status"),
+            "policy":relation_scan_boundary_manifest.get("policy") or {},
+            "scan_binding":relation_scan_boundary_manifest.get("scan_binding") or {},
+            "manifest_content_sha256":relation_scan_boundary_manifest.get("manifest_content_sha256") or "",
+            "scientific_authority":False,
+            "authority":relation_scan_boundary_manifest.get("authority") or {},
+        },
         "paper_first_global_relation_freshness":paper_first_global_relation_freshness,
         "paper_first_global_relation_delta_preflight":paper_first_global_relation_delta_preflight,
         "paper_first_global_relation_scan_admission":paper_first_global_relation_scan_admission,
@@ -1928,9 +1943,13 @@ def validate_state(state: dict[str, Any]) -> list[str]:
                     last_scan=relation.get("last_completed_scan") or {}
                     if last_scan.get("mode")!="delta_only_new_endpoint" or int(last_scan.get("required_new_endpoint_count") or 0)!=count or not str(last_scan.get("prior_scan_run_id") or ""):
                         errors.append("completed delta-only relation scan must preserve prior-scan provenance and endpoint count")
+    relation_boundary=state.get("relation_scan_boundary_manifest") or {};boundary_binding=relation_boundary.get("scan_binding") or {};boundary_authority=relation_boundary.get("authority") or {}
+    if relation_boundary.get("status")=="RELATION_SCAN_BOUNDARY_RECOVERED":
+        if relation_boundary.get("scientific_authority") is not False or any(boundary_authority.get(key) is not False for key in boundary_authority) or len(str(relation_boundary.get("manifest_content_sha256") or ""))!=64:
+            errors.append("recovered relation-scan boundary manifest must remain content-addressed and zero authority")
     relation_freshness=state.get("paper_first_global_relation_freshness") or {};fresh_policy=relation_freshness.get("policy") or {};fresh_summary=relation_freshness.get("summary") or {}
     if relation_freshness:
-        if relation_freshness.get("scientific_authority") is not False or fresh_policy.get("deterministic_digest_comparison_only") is not True or fresh_policy.get("stale_scan_is_historical_not_current_negative_evidence") is not True or fresh_policy.get("stale_scan_cannot_reopen_focused_generator") is not True or fresh_policy.get("model_scan_deferred_is_not_relation_exhaustion") is not True or fresh_policy.get("portable_review_receipts_are_scheduler_metadata_only") is not True or fresh_policy.get("scheduler_topology_only_drift_does_not_require_model_rescan") is not True or fresh_policy.get("source_set_change_or_unreconstructable_boundary_remains_stale") is not True:
+        if relation_freshness.get("scientific_authority") is not False or fresh_policy.get("deterministic_digest_comparison_only") is not True or fresh_policy.get("stale_scan_is_historical_not_current_negative_evidence") is not True or fresh_policy.get("stale_scan_cannot_reopen_focused_generator") is not True or fresh_policy.get("model_scan_deferred_is_not_relation_exhaustion") is not True or fresh_policy.get("portable_review_receipts_are_scheduler_metadata_only") is not True or fresh_policy.get("scheduler_topology_only_drift_does_not_require_model_rescan") is not True or fresh_policy.get("source_set_change_or_unreconstructable_boundary_remains_stale") is not True or ("archived_boundary_recovery_used" in fresh_summary and fresh_policy.get("content_addressed_archived_boundary_may_recover_scheduler_provenance_only") is not True):
             errors.append("Global Relation Recall freshness must remain deterministic zero-authority compute control and ignore scheduler-only topology drift")
         if bool(fresh_summary.get("universe_stale")) and (fresh_summary.get("current_not_reduced_unknown") is not True or fresh_summary.get("focused_problem_generator_reopen_allowed") is not False):
             errors.append("stale Global Relation Recall cannot support a current negative or focused-generator reopen")
@@ -1944,9 +1963,20 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         if fresh_summary.get("scheduler_topology_only_drift") is True:
             if relation_freshness.get("status")!="CURRENT_RELATION_UNIVERSE" or fresh_summary.get("raw_topology_digest_changed") is not True or fresh_summary.get("source_boundary_reconstructable") is not True or fresh_summary.get("universe_stale") is not False or fresh_summary.get("current_not_reduced_unknown") is not False or fresh_summary.get("model_scan_deferred") is not False or not str(relation_freshness.get("current_source_universe_digest") or "") or relation_freshness.get("current_source_universe_digest")!=relation_freshness.get("last_scanned_source_universe_digest"):
                 errors.append("scheduler-only relation topology drift must remain current and zero-provider")
-        expected_freshness=relation_recall_freshness(state.get("paper_first_problem_generator") or {}, relation)
+        expected_boundary = (
+            load_relation_scan_boundary_manifest()
+            if relation_boundary.get("status")=="RELATION_SCAN_BOUNDARY_RECOVERED"
+            else {}
+        )
+        expected_freshness=relation_recall_freshness(
+            state.get("paper_first_problem_generator") or {},
+            relation,
+            expected_boundary,
+        )
         expected_summary=expected_freshness.get("summary") or {}
         freshness_summary_keys=("current_reviewed_sources","last_scanned_sources","current_possible_pairs","current_coobserved_pairs","current_pair_coverage_fraction","last_pair_coverage_fraction","current_relation_blind_spot","raw_topology_digest_changed","source_boundary_reconstructable","scheduler_topology_only_drift","universe_stale","current_not_reduced_unknown","model_scan_deferred","focused_problem_generator_reopen_allowed")
+        if "archived_boundary_recovery_used" in fresh_summary:
+            freshness_summary_keys=(*freshness_summary_keys,"archived_boundary_recovery_used")
         freshness_matches=(
             relation_freshness.get("status")==expected_freshness.get("status")
             and str(relation_freshness.get("current_relation_universe_digest") or "")==str(expected_freshness.get("current_relation_universe_digest") or "")
@@ -1957,6 +1987,14 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         )
         if not freshness_matches:
             errors.append("Global Relation Recall freshness must match embedded Generator and Relation state")
+        if fresh_summary.get("archived_boundary_recovery_used") is True:
+            last_scan=relation.get("last_completed_scan") or {}
+            if (
+                relation_boundary.get("status")!="RELATION_SCAN_BOUNDARY_RECOVERED"
+                or boundary_binding.get("scan_run_id")!=last_scan.get("run_id")
+                or boundary_binding.get("relation_universe_digest")!=last_scan.get("relation_universe_digest")
+            ):
+                errors.append("archived relation boundary recovery requires a valid manifest bound to the historical scan")
     relation_delta=state.get("paper_first_global_relation_delta_preflight") or {};delta_policy=relation_delta.get("policy") or {};delta_summary=relation_delta.get("summary") or {};delta_status=str(relation_delta.get("status") or "NOT_RUN")
     if relation_delta and delta_status!="NOT_RUN":
         if relation_delta.get("scientific_authority") is not False or delta_policy.get("deterministic_typed_evidence_delta_only") is not True or delta_policy.get("pair_slots_are_not_lane_valid_pairs") is not True or delta_policy.get("cannot_reopen_generator") is not True or delta_policy.get("cannot_authorize_relation_model_scan") is not True or delta_policy.get("cannot_authorize_problem_gate") is not True:

@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
 from .paper_first_relation_coverage import relation_universe_digest
 from .paper_first_relation_delta_preflight import build_relation_delta_preflight, public_relation_delta_preflight_summary
+from .relation_scan_boundary_manifest import build_relation_scan_boundary_manifest
 
 
 class RelationDeltaPreflightTest(unittest.TestCase):
@@ -57,6 +61,53 @@ class RelationDeltaPreflightTest(unittest.TestCase):
         rows=[self.row("arXiv:1"),self.row("arXiv:2")]
         state=build_relation_delta_preflight(generator_state=self.generator(old),relation_state=relation,cache_records=rows)
         self.assertEqual(state["status"],"HOLD_SCAN_BOUNDARY_NOT_RECONSTRUCTABLE")
+        self.assertFalse(state["summary"]["model_scan_authorized"])
+
+    def test_content_addressed_archive_recovers_replayed_receipt_boundary(self) -> None:
+        archived = [
+            self.receipt("20260813T100000Z", ["arXiv:1", "arXiv:2"]),
+            self.receipt("20260813T110000Z", ["arXiv:2", "arXiv:3"]),
+        ]
+        relation = {
+            "last_completed_scan": {
+                "run_id": "20260813T235959Z",
+                "relation_universe_digest": relation_universe_digest(archived),
+                "relation_coverage": {
+                    "reviewed_receipt_sources": 3,
+                    "coobserved_source_pairs": 2,
+                },
+            },
+            "raw_artifacts": {"relation": {"sha256": "a" * 64}},
+        }
+        replayed = [
+            self.receipt("20260813T100000Z", ["arXiv:1", "arXiv:2"]),
+            self.receipt("20260814T010000Z-replay", ["arXiv:2", "arXiv:3"]),
+            self.receipt("20260814T020000Z", ["arXiv:3", "arXiv:4"]),
+        ]
+        rows = [self.row(f"arXiv:{index}", empirical=True) for index in range(1, 5)]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            generator_path = root / "generator.json"
+            relation_path = root / "relation.json"
+            generator_path.write_text(
+                json.dumps(self.generator(archived)),
+                encoding="utf-8",
+            )
+            relation_path.write_text(json.dumps(relation), encoding="utf-8")
+            manifest = build_relation_scan_boundary_manifest(
+                archived_generator_path=generator_path,
+                relation_path=relation_path,
+            )
+        state = build_relation_delta_preflight(
+            generator_state=self.generator(replayed),
+            relation_state=relation,
+            cache_records=rows,
+            boundary_manifest=manifest,
+        )
+        self.assertEqual(state["status"], "RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE")
+        self.assertEqual(state["boundary_source"], "CONTENT_ADDRESSED_ARCHIVED_RECEIPTS")
+        self.assertEqual(state["summary"]["old_reviewed_sources"], 3)
+        self.assertEqual(state["summary"]["new_reviewed_sources"], 1)
         self.assertFalse(state["summary"]["model_scan_authorized"])
 
     def test_missing_current_cache_holds_preflight_instead_of_treating_missing_as_no_evidence(self) -> None:

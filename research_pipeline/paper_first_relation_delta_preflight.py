@@ -10,6 +10,10 @@ from .paper_first_global_relation_recall import load_global_relation_recall_stat
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_relation_coverage import portable_review_receipts, relation_universe_digest
 from .paper_first_scientific_object_ontology import reviewed_primary_cache_records
+from .relation_scan_boundary_manifest import (
+    boundary_receipts,
+    load_relation_scan_boundary_manifest,
+)
 
 
 def _refs(receipts: list[dict[str, Any]]) -> set[str]:
@@ -38,6 +42,7 @@ def build_relation_delta_preflight(
     generator_state: dict[str, Any] | None = None,
     relation_state: dict[str, Any] | None = None,
     cache_records: list[dict[str, Any]] | None = None,
+    boundary_manifest: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Deterministically characterize evidence added since the last relation scan.
 
@@ -68,6 +73,7 @@ def build_relation_delta_preflight(
             "cannot_reopen_generator":True,
             "cannot_authorize_relation_model_scan":True,
             "cannot_authorize_problem_gate":True,
+            "content_addressed_archived_boundary_recovers_scheduler_provenance_only":True,
         },
         "scientific_authority":False,
     }
@@ -75,12 +81,25 @@ def build_relation_delta_preflight(
         base.update({"status":"NO_COMPLETED_RELATION_SCAN","summary":{"current_receipt_runs":len(receipts),"new_reviewed_sources":0,"model_scan_authorized":False,"focused_generator_reopen_authorized":False}})
         return base
     old_receipts=[row for row in receipts if str(row.get("run_id") or "")<=cutoff]
-    new_receipts=[row for row in receipts if str(row.get("run_id") or "")>cutoff]
+    cutoff_new_receipts=[row for row in receipts if str(row.get("run_id") or "")>cutoff]
     reconstructed_digest=relation_universe_digest(old_receipts)
+    boundary_source="RUN_ID_CUTOFF"
     if reconstructed_digest!=last_digest:
-        base.update({"status":"HOLD_SCAN_BOUNDARY_NOT_RECONSTRUCTABLE","summary":{"current_receipt_runs":len(receipts),"old_receipt_runs":len(old_receipts),"new_receipt_runs":len(new_receipts),"new_reviewed_sources":0,"model_scan_authorized":False,"focused_generator_reopen_authorized":False},"last_scanned_relation_universe_digest":last_digest,"reconstructed_last_relation_universe_digest":reconstructed_digest,"current_relation_universe_digest":current_digest})
-        return base
+        manifest = (
+            boundary_manifest
+            if boundary_manifest is not None
+            else load_relation_scan_boundary_manifest()
+        )
+        archived_receipts = boundary_receipts(manifest, relation)
+        if archived_receipts:
+            old_receipts=archived_receipts
+            reconstructed_digest=relation_universe_digest(old_receipts)
+            boundary_source="CONTENT_ADDRESSED_ARCHIVED_RECEIPTS"
+        else:
+            base.update({"status":"HOLD_SCAN_BOUNDARY_NOT_RECONSTRUCTABLE","boundary_source":"UNRESOLVED","summary":{"current_receipt_runs":len(receipts),"old_receipt_runs":len(old_receipts),"new_receipt_runs":len(cutoff_new_receipts),"new_reviewed_sources":0,"model_scan_authorized":False,"focused_generator_reopen_authorized":False},"last_scanned_relation_universe_digest":last_digest,"reconstructed_last_relation_universe_digest":reconstructed_digest,"current_relation_universe_digest":current_digest})
+            return base
     old_refs=_refs(old_receipts);current_refs=_refs(receipts);new_refs=current_refs-old_refs
+    new_receipts=[row for row in receipts if set(row.get("source_refs") or []) & new_refs]
     rows=cache_records if cache_records is not None else reviewed_primary_cache_records(storage,reviewed_refs=current_refs)
     registry={str(row.get("ref") or ""):row for row in rows if str(row.get("ref") or "") in current_refs}
     missing=current_refs-set(registry)
@@ -127,6 +146,7 @@ def build_relation_delta_preflight(
             "unexplained_boundary":"NEW_BOUNDARY_EVIDENCE_PRESENT_LANE_VALIDITY_UNKNOWN" if new_sets["boundary"] else "NO_NEW_BOUNDARY_EVIDENCE",
             "contradiction":"NEW_EMPIRICAL_EVIDENCE_PRESENT_LANE_VALIDITY_UNKNOWN" if new_sets["empirical"] else "NO_NEW_EMPIRICAL_EVIDENCE",
         },
+        "boundary_source":boundary_source,
         "last_scanned_relation_universe_digest":last_digest,
         "reconstructed_last_relation_universe_digest":reconstructed_digest,
         "current_relation_universe_digest":current_digest,
@@ -161,6 +181,7 @@ def public_relation_delta_preflight_summary(state:dict[str,Any])->dict[str,Any]:
     allowed_interpretation={"assumption_break","convergent_failure","unexplained_boundary","contradiction"}
     return {
         "schema_version":"1.0","status":str(state.get("status") or "NOT_RUN"),
+        "boundary_source":str(state.get("boundary_source") or ""),
         "policy":{"scientific_authority":False,"deterministic_typed_evidence_delta_only":True,"pair_slots_are_not_lane_valid_pairs":True,"cannot_reopen_generator":True,"cannot_authorize_relation_model_scan":True,"cannot_authorize_problem_gate":True},
         "summary":{key:summary[key] for key in allowed_summary if key in summary},
         "pair_slots":{key:int(slots.get(key) or 0) for key in allowed_slots if key in slots},
