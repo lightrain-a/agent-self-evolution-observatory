@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-08-21 · Discovery-engine paper-yield benchmark
+
+- Added a zero-authority benchmark that runs seven distinct idea-birth engines on the same frozen primary-evidence and Research Memory snapshot, with identical candidate budgets, provenance checks, same-information baseline requirements, cheapest-falsifier fields, and a shared independent first-pass review rubric.
+- Materialized a 21-candidate comparison (3 per engine) with seven generator calls and three independent reviewer calls. The first reviewer returned 21/21 structural passes; this was explicitly treated as a reviewer-calibration failure rather than paper readiness.
+- Added a stricter hard-gate adjudication that rejects correlation-to-causality jumps, information-asymmetric baselines, generic temporal-grounding/continual-learning/domain-adaptation relabelings, and hyperparameter/regime tuning. Final calibrated state is 0 SURVIVE, 9 near-paper HOLD, and 12 REDUCE across 9 semantic basins.
+- Longitudinal/path-dependence discovery (D5) ranks first with 3/3 near-paper HOLDs and median strict score 73; empirical anomaly/failure mining (D2) ranks second with 2/3 near-paper HOLDs. Cross-domain mechanism transfer (D7) is last in this batch because all three proposals reduce to mature CL/DA accounts.
+- Added a shadow adaptive policy: D5/D2 receive most future birth budget; D4/D3/D6 become mandatory baseline-attack → structural-variable → executable-falsifier transformers; D1 becomes event-triggered; D7 retains only a small diversity reserve. Canonical automatic reweighting remains blocked until an independent replication reproduces the yield ordering.
+- All benchmark, adjudication, and policy artifacts explicitly retain zero Problem Gate / Paper Design / Method / Experiment / P0 / GPU authority.
+
 ## 2026-08-17 · Site-wide Chinese-first frontend pass
 
 - Fixed language switching at the shared shell level: brand, sidebar navigation, search placeholder, sidebar note, footer, and the global current-research strip now rerender with the selected language instead of leaving an English shell around Chinese page content.

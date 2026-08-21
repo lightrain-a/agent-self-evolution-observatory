@@ -1,0 +1,198 @@
+{
+  "schema_version": "1.0",
+  "policy_id": "adaptive-discovery-paper-yield-v1",
+  "status": "SHADOW_POLICY_RECOMMENDED",
+  "evidence_basis": {
+    "benchmark": "generated/discovery-engine-paper-yield-benchmark.json",
+    "hard_gate_adjudication": "generated/discovery-engine-paper-yield-adjudication.json",
+    "minimum_replication_before_canonical_auto_reweight": 2,
+    "current_replications": 1
+  },
+  "birth_engines": [
+    {
+      "engine_id": "D5",
+      "role": "PRIMARY_BIRTH",
+      "budget_share": 0.45,
+      "reason": "Highest near-paper yield; 3/3 candidates survive simple reduction as HOLDs centered on longitudinal/path-dependent residuals."
+    },
+    {
+      "engine_id": "D2",
+      "role": "PRIMARY_BIRTH",
+      "budget_share": 0.35,
+      "reason": "Evidence-grounded anomaly/failure mining yields 2/3 near-paper HOLDs and naturally starts from measurable phenomena."
+    },
+    {
+      "engine_id": "D1",
+      "role": "EVENT_TRIGGERED_BIRTH",
+      "budget_share": 0.1,
+      "reason": "Useful when fresh primary evidence or an explicit closure reopen condition appears; otherwise prone to generic retrieval/threshold formulations."
+    },
+    {
+      "engine_id": "D7",
+      "role": "DIVERSITY_EXPLORATION",
+      "budget_share": 0.05,
+      "reason": "Keep a small exploration reserve, but current 3/3 candidates reduced to mature continual-learning/domain-adaptation accounts."
+    },
+    {
+      "engine_id": "D4",
+      "role": "RESERVE_BIRTH",
+      "budget_share": 0.05,
+      "reason": "Independent birth often creates easy-to-run but information-asymmetric/correlation-to-causality claims; retain only as reserve generation."
+    }
+  ],
+  "mandatory_transformers": [
+    {
+      "order": 1,
+      "engine_id": "D4",
+      "role": "STRONGEST_BASELINE_ATTACK",
+      "instruction": "For every D5/D2 birth, construct the strongest same-information baseline and attempt to absorb the claimed residual. If it absorbs the residual, REDUCE before further work."
+    },
+    {
+      "order": 2,
+      "engine_id": "D3",
+      "role": "STRUCTURAL_VARIABLE_REPAIR",
+      "instruction": "For survivors, name the minimal Agent-specific structural variable that changes an ex-ante prediction. Do not accept a tunable threshold, ordinary context feature, or state variable already available to the baseline."
+    },
+    {
+      "order": 3,
+      "engine_id": "D6",
+      "role": "EXECUTABLE_FALSIFIER_COMPILER",
+      "instruction": "Compile the surviving question into a bounded executable counterexample/falsifier space. Do not turn parameter search itself into the paper contribution."
+    }
+  ],
+  "gating": {
+    "support_feasibility_required_before_counting_paper_convertible_yield": true,
+    "first_party_code_data_or_equivalent_existing_substrate_required_for_immediate_falsifier": true,
+    "missing_release_is_support_hold_not_scientific_failure": true,
+    "path_dependence_requires_matched_final_observable_state_or_explicit_causal_write_state": true,
+    "same_information_baseline_required": true,
+    "correlation_to_causality_forbidden_without_intervention": true,
+    "hyperparameter_or_regime_tuning_reduced_before_paper_design": true,
+    "generic_temporal_grounding_continual_learning_domain_adaptation_reduced_unless_agent_specific_residual": true,
+    "zero_candidate_round_is_valid": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_paper_design_authority": false,
+    "automatic_method_experiment_p0_gpu_authority": false
+  },
+  "next_replication": {
+    "recommended": true,
+    "compare_only_top_birth_engines": [
+      "D5",
+      "D2"
+    ],
+    "candidate_budget_each": 6,
+    "use_different_generator_family": true,
+    "reuse_same_hard_gates": true,
+    "promote_policy_only_if_rank_order_or_combined_yield_is_replicated": true
+  },
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  },
+  "generated_at": "2026-08-21T08:53:53Z",
+  "observed_ranking": [
+    {
+      "engine_id": "D5",
+      "engine_name": "longitudinal_path_dependence",
+      "generated": 3,
+      "survive": 0,
+      "hold_near_paper": 3,
+      "reduce": 0,
+      "fractional_near_paper_yield": 2.25,
+      "median_strict_score": 73.0,
+      "best_strict_score": 76,
+      "scientific_authority": false,
+      "rank": 1
+    },
+    {
+      "engine_id": "D2",
+      "engine_name": "empirical_anomaly_failure_mining",
+      "generated": 3,
+      "survive": 0,
+      "hold_near_paper": 2,
+      "reduce": 1,
+      "fractional_near_paper_yield": 0.5833,
+      "median_strict_score": 59.0,
+      "best_strict_score": 67,
+      "scientific_authority": false,
+      "rank": 2
+    },
+    {
+      "engine_id": "D4",
+      "engine_name": "strongest_baseline_counterexample",
+      "generated": 3,
+      "survive": 0,
+      "hold_near_paper": 1,
+      "reduce": 2,
+      "fractional_near_paper_yield": 0.3333,
+      "median_strict_score": 46.0,
+      "best_strict_score": 63,
+      "scientific_authority": false,
+      "rank": 3
+    },
+    {
+      "engine_id": "D1",
+      "engine_name": "literature_closure_contradiction",
+      "generated": 3,
+      "survive": 0,
+      "hold_near_paper": 1,
+      "reduce": 2,
+      "fractional_near_paper_yield": 0.3333,
+      "median_strict_score": 31.0,
+      "best_strict_score": 65,
+      "scientific_authority": false,
+      "rank": 4
+    },
+    {
+      "engine_id": "D6",
+      "engine_name": "executable_symbolic_search",
+      "generated": 3,
+      "survive": 0,
+      "hold_near_paper": 1,
+      "reduce": 2,
+      "fractional_near_paper_yield": 0.25,
+      "median_strict_score": 37.0,
+      "best_strict_score": 68,
+      "scientific_authority": false,
+      "rank": 5
+    },
+    {
+      "engine_id": "D3",
+      "engine_name": "structural_variable_hypothesis",
+      "generated": 3,
+      "survive": 0,
+      "hold_near_paper": 1,
+      "reduce": 2,
+      "fractional_near_paper_yield": 0.25,
+      "median_strict_score": 35.0,
+      "best_strict_score": 69,
+      "scientific_authority": false,
+      "rank": 6
+    },
+    {
+      "engine_id": "D7",
+      "engine_name": "cross_domain_mechanism_transfer",
+      "generated": 3,
+      "survive": 0,
+      "hold_near_paper": 0,
+      "reduce": 3,
+      "fractional_near_paper_yield": 0.0,
+      "median_strict_score": 33.0,
+      "best_strict_score": 41,
+      "scientific_authority": false,
+      "rank": 7
+    }
+  ],
+  "observed_summary": {
+    "candidates": 21,
+    "survive": 0,
+    "hold_near_paper": 9,
+    "reduce": 12,
+    "semantic_basins": 9
+  }
+}

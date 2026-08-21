@@ -1,0 +1,2068 @@
+{
+  "schema_version": "1.0",
+  "benchmark_id": "discovery-engine-paper-yield-v1",
+  "generated_at": "2026-08-21T08:34:08Z",
+  "status": "COMPLETE",
+  "policy": {
+    "same_frozen_evidence_snapshot_for_all_engines": true,
+    "same_candidate_budget_per_engine": true,
+    "same_generator_model_for_all_engines": true,
+    "same_independent_review_rubric_for_all_engines": true,
+    "review_is_advisory_not_novelty_authority": true,
+    "paper_design_ready_is_benchmark_readiness_not_canonical_authority": true,
+    "benchmark_authorizes_nothing": true
+  },
+  "source_snapshot": {
+    "primary_pool_sha256": "df7b06292638b534322cec6d7eaa63c87a5584badf2114d96e0db91d1b8f964b",
+    "research_memory_wiki_sha256": "3531943234ba708716a43625709adf01fd57f346e22a7a1b83dace2b96815f29",
+    "primary_records_supplied": 16,
+    "memory_entries_supplied": 23
+  },
+  "models": {
+    "generator_requested": "deepseek-v4-flash",
+    "reviewer_requested": "doubao-seed-2.0-mini"
+  },
+  "summary": {
+    "engines": 7,
+    "requested_candidates": 21,
+    "generated_candidates": 21,
+    "pre_f0_ready": 21,
+    "paper_design_ready": 21,
+    "generator_calls": 7,
+    "reviewer_calls": 3
+  },
+  "engine_ranking": [
+    {
+      "engine_id": "D4",
+      "engine_name": "strongest_baseline_counterexample",
+      "requested": 3,
+      "generated": 3,
+      "schema_complete": 3,
+      "provenance_valid": 3,
+      "pre_f0_ready": 3,
+      "paper_design_ready": 3,
+      "median_paper_conversion_score": 98.0,
+      "best_paper_conversion_score": 98.0,
+      "median_distance_to_paper": 0.0,
+      "median_estimated_experiments_to_paper": 1.0,
+      "median_effort_level": 1.0,
+      "main_blockers": {},
+      "scientific_authority": false,
+      "rank": 1
+    },
+    {
+      "engine_id": "D2",
+      "engine_name": "empirical_anomaly_failure_mining",
+      "requested": 3,
+      "generated": 3,
+      "schema_complete": 3,
+      "provenance_valid": 3,
+      "pre_f0_ready": 3,
+      "paper_design_ready": 3,
+      "median_paper_conversion_score": 94.0,
+      "best_paper_conversion_score": 94.0,
+      "median_distance_to_paper": 0.0,
+      "median_estimated_experiments_to_paper": 2.0,
+      "median_effort_level": 1.0,
+      "main_blockers": {},
+      "scientific_authority": false,
+      "rank": 2
+    },
+    {
+      "engine_id": "D1",
+      "engine_name": "literature_closure_contradiction",
+      "requested": 3,
+      "generated": 3,
+      "schema_complete": 3,
+      "provenance_valid": 3,
+      "pre_f0_ready": 3,
+      "paper_design_ready": 3,
+      "median_paper_conversion_score": 93.0,
+      "best_paper_conversion_score": 93.0,
+      "median_distance_to_paper": 0.0,
+      "median_estimated_experiments_to_paper": 2.0,
+      "median_effort_level": 2.0,
+      "main_blockers": {},
+      "scientific_authority": false,
+      "rank": 3
+    },
+    {
+      "engine_id": "D6",
+      "engine_name": "executable_symbolic_search",
+      "requested": 3,
+      "generated": 3,
+      "schema_complete": 3,
+      "provenance_valid": 3,
+      "pre_f0_ready": 3,
+      "paper_design_ready": 3,
+      "median_paper_conversion_score": 93.0,
+      "best_paper_conversion_score": 93.0,
+      "median_distance_to_paper": 0.0,
+      "median_estimated_experiments_to_paper": 2.0,
+      "median_effort_level": 2.0,
+      "main_blockers": {},
+      "scientific_authority": false,
+      "rank": 4
+    },
+    {
+      "engine_id": "D3",
+      "engine_name": "structural_variable_hypothesis",
+      "requested": 3,
+      "generated": 3,
+      "schema_complete": 3,
+      "provenance_valid": 3,
+      "pre_f0_ready": 3,
+      "paper_design_ready": 3,
+      "median_paper_conversion_score": 90.0,
+      "best_paper_conversion_score": 93.0,
+      "median_distance_to_paper": 0.0,
+      "median_estimated_experiments_to_paper": 2.0,
+      "median_effort_level": 2.0,
+      "main_blockers": {},
+      "scientific_authority": false,
+      "rank": 5
+    },
+    {
+      "engine_id": "D5",
+      "engine_name": "longitudinal_path_dependence",
+      "requested": 3,
+      "generated": 3,
+      "schema_complete": 3,
+      "provenance_valid": 3,
+      "pre_f0_ready": 3,
+      "paper_design_ready": 3,
+      "median_paper_conversion_score": 90.0,
+      "best_paper_conversion_score": 93.0,
+      "median_distance_to_paper": 0.0,
+      "median_estimated_experiments_to_paper": 2.0,
+      "median_effort_level": 2.0,
+      "main_blockers": {},
+      "scientific_authority": false,
+      "rank": 6
+    },
+    {
+      "engine_id": "D7",
+      "engine_name": "cross_domain_mechanism_transfer",
+      "requested": 3,
+      "generated": 3,
+      "schema_complete": 3,
+      "provenance_valid": 3,
+      "pre_f0_ready": 3,
+      "paper_design_ready": 3,
+      "median_paper_conversion_score": 85.0,
+      "best_paper_conversion_score": 85.0,
+      "median_distance_to_paper": 0.0,
+      "median_estimated_experiments_to_paper": 3.0,
+      "median_effort_level": 3.0,
+      "main_blockers": {},
+      "scientific_authority": false,
+      "rank": 7
+    }
+  ],
+  "top_candidates": [
+    {
+      "candidate_id": "D4-C01",
+      "engine_id": "D4",
+      "title": "Failure-derived memory retrieval predicts persistent failure beyond static skill utility",
+      "pre_f0_ready": true,
+      "paper_design_ready": true,
+      "paper_conversion_score": 98.0,
+      "distance_to_paper": 0,
+      "missing_milestones": [],
+      "hard_blocker": "",
+      "minimum_next_evidence": "Stratify persistent failures by retrieval source and static utility"
+    },
+    {
+      "candidate_id": "D4-C02",
+      "engine_id": "D4",
+      "title": "Trust-channel memory inflation predicts error beyond retrieval-channel amplification",
+      "pre_f0_ready": true,
+      "paper_design_ready": true,
+      "paper_conversion_score": 98.0,
+      "distance_to_paper": 0,
+      "missing_milestones": [],
+      "hard_blocker": "",
+      "minimum_next_evidence": "Isolate trust annotation effect on error rate"
+    },
+    {
+      "candidate_id": "D4-C03",
+      "engine_id": "D4",
+      "title": "Skill pruning threshold non-monotonicity: optimal pruning depends on task distribution",
+      "pre_f0_ready": true,
+      "paper_design_ready": true,
+      "paper_conversion_score": 98.0,
+      "distance_to_paper": 0,
+      "missing_milestones": [],
+      "hard_blocker": "",
+      "minimum_next_evidence": "Compute optimal pruning thresholds per benchmark"
+    },
+    {
+      "candidate_id": "D2-C01",
+      "engine_id": "D2",
+      "title": "Failure-derived memory retrieval as a causal driver of persistent agent failure",
+      "pre_f0_ready": true,
+      "paper_design_ready": true,
+      "paper_conversion_score": 94.0,
+      "distance_to_paper": 0,
+      "missing_milestones": [],
+      "hard_blocker": "",
+      "minimum_next_evidence": "Swap failure-derived memories for success-derived on matched tasks"
+    },
+    {
+      "candidate_id": "D2-C03",
+      "engine_id": "D2",
+      "title": "Temporal grounding failure in agentic time series analysis: a capability gap independent of model scale",
+      "pre_f0_ready": true,
+      "paper_design_ready": true,
+      "paper_conversion_score": 94.0,
+      "distance_to_paper": 0,
+      "missing_milestones": [],
+      "hard_blocker": "",
+      "minimum_next_evidence": "Add temporal validation module to frontier agents on TimeSage-EV"
+    },
+    {
+      "candidate_id": "D1-C01",
+      "engine_id": "D1",
+      "title": "Failure-derived memory retrieval is a sufficient cause of persistent failure in self-evolving agents",
+      "pre_f0_ready": true,
+      "paper_design_ready": true,
+      "paper_conversion_score": 93.0,
+      "distance_to_paper": 0,
+      "missing_milestones": [],
+      "hard_blocker": "",
+      "minimum_next_evidence": "Run controlled retrieval swap experiment per falsifier plan"
+    },
+    {
+      "candidate_id": "D1-C02",
+      "engine_id": "D1",
+      "title": "Skill memory pruning threshold interacts with task difficulty to cause performance degradation",
+      "pre_f0_ready": true,
+      "paper_design_ready": true,
+      "paper_conversion_score": 93.0,
+      "distance_to_paper": 0,
+      "missing_milestones": [],
+      "hard_blocker": "",
+      "minimum_next_evidence": "Run adaptive vs fixed threshold ablation on easy/hard task tiers"
+    },
+    {
+      "candidate_id": "D1-C03",
+      "engine_id": "D1",
+      "title": "Temporal grounding failures in time-series agents are due to lack of explicit date-awareness in memory retrieval",
+      "pre_f0_ready": true,
+      "paper_design_ready": true,
+      "paper_conversion_score": 93.0,
+      "distance_to_paper": 0,
+      "missing_milestones": [],
+      "hard_blocker": "",
+      "minimum_next_evidence": "Deploy timestamp-aware retrieval module on TimeSage-EV tasks"
+    },
+    {
+      "candidate_id": "D3-C01",
+      "engine_id": "D3",
+      "title": "Pruning-threshold-induced retrieval-surface bifurcation in self-evolving skill memory",
+      "pre_f0_ready": true,
+      "paper_design_ready": true,
+      "paper_conversion_score": 93.0,
+      "distance_to_paper": 0,
+      "missing_milestones": [],
+      "hard_blocker": "",
+      "minimum_next_evidence": "Run τ_prune ablations and compare pruned skill sets/retrieval success"
+    },
+    {
+      "candidate_id": "D5-C03",
+      "engine_id": "D5",
+      "title": "Infrastructure Failure Memory as a Persistent Behavioral Suppressant",
+      "pre_f0_ready": true,
+      "paper_design_ready": true,
+      "paper_conversion_score": 93.0,
+      "distance_to_paper": 0,
+      "missing_milestones": [],
+      "hard_blocker": "",
+      "minimum_next_evidence": "Run the two memory condition comparison"
+    }
+  ],
+  "candidates": [
+    {
+      "title": "Failure-derived memory retrieval is a sufficient cause of persistent failure in self-evolving agents",
+      "birth_evidence_refs": [
+        "arXiv:2608.17684"
+      ],
+      "memory_refs": [
+        "MEM-OPEN-29a589216cf210fa68"
+      ],
+      "scientific_question": "Is retrieving a failure-derived memory sufficient to cause persistent failure, or is it merely correlated with task difficulty?",
+      "observed_trigger": "In arXiv:2608.17684, all persistent-failure cases followed retrieval of a failure-derived memory, and failure-derived retrievals had 0.647 accuracy vs 0.931 for success-derived.",
+      "structural_variable": "Whether the retrieved memory was derived from a failure or success episode, holding the task and retrieval context fixed.",
+      "strongest_same_information_baseline": "A baseline that retrieves success-derived memories for the same tasks, with identical retrieval mechanism and context.",
+      "baseline_counterexample": "If the baseline also exhibits persistent failures on the same tasks despite success-derived retrieval, then failure-derived retrieval is not sufficient.",
+      "cheapest_falsifier": {
+        "setup": "Use the same agent and tasks from arXiv:2608.17684, but replace failure-derived memories with success-derived ones for the same query states.",
+        "intervention_or_comparison": "Compare persistent-failure rates between failure-derived and success-derived retrieval conditions on matched tasks.",
+        "metric": "Persistent-failure rate (proportion of tasks where the agent fails repeatedly despite retries).",
+        "stop_if": "Persistent-failure rate is not significantly higher in the failure-derived condition.",
+        "estimated_effort": "1-2 weeks"
+      },
+      "closest_known_explanation": "Failure-derived memories may encode incorrect procedures that are confidently retrieved, but task difficulty could confound the correlation.",
+      "residual_after_reduction": "If the baseline also fails, the residual is that failure-derived retrieval is not causal, only predictive of hard tasks.",
+      "paper_level_claim": "Failure-derived memory retrieval is a causal driver of persistent failure in self-evolving agents.",
+      "paperability_axis": "P",
+      "executable_now": true,
+      "candidate_id": "D1-C01",
+      "engine_id": "D1",
+      "engine_name": "literature_closure_contradiction",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Baseline predicts success-derived retrieval avoids persistent failure",
+        "minimum_next_evidence": "Run controlled retrieval swap experiment per falsifier plan",
+        "evidence_readiness": 4,
+        "falsifier_executability": 5,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 2,
+        "estimated_effort_level": 2,
+        "advisory_summary": "Solid causal test plan, grounded in valid arXiv source, ready for targeted experiments"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 93.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Skill memory pruning threshold interacts with task difficulty to cause performance degradation",
+      "birth_evidence_refs": [
+        "arXiv:2608.16114"
+      ],
+      "memory_refs": [
+        "MEM-OPEN-8b30172b29af989aba"
+      ],
+      "scientific_question": "Does the optimal pruning threshold depend on task difficulty, such that a fixed threshold harms performance on hard tasks?",
+      "observed_trigger": "arXiv:2608.16114 shows that disabling pruning (ρ=0) degrades retrieval quality, while aggressive pruning (ρ=0.4) removes useful skills, indicating a threshold trade-off.",
+      "structural_variable": "Task difficulty level (easy vs hard) interacting with pruning threshold ρ.",
+      "strongest_same_information_baseline": "A baseline that uses a fixed pruning threshold (e.g., ρ=0.2) across all tasks, as in HyperSkill.",
+      "baseline_counterexample": "If the baseline with fixed ρ=0.2 performs as well as an adaptive threshold on hard tasks, then the interaction is not significant.",
+      "cheapest_falsifier": {
+        "setup": "Run HyperSkill on a benchmark with separate easy and hard task subsets, varying ρ from 0 to 0.4.",
+        "intervention_or_comparison": "Compare success rates across ρ values within each difficulty tier.",
+        "metric": "Success rate per difficulty tier.",
+        "stop_if": "The optimal ρ is the same for easy and hard tiers.",
+        "estimated_effort": "2-3 weeks"
+      },
+      "closest_known_explanation": "Pruning removes low-utility skills, but hard tasks may require rare or low-utility skills that are prematurely pruned.",
+      "residual_after_reduction": "If the interaction is absent, the residual is that pruning effects are uniform across difficulty, simplifying memory management.",
+      "paper_level_claim": "Skill memory pruning thresholds must be adapted to task difficulty to avoid performance loss on hard tasks.",
+      "paperability_axis": "M",
+      "executable_now": true,
+      "candidate_id": "D1-C02",
+      "engine_id": "D1",
+      "engine_name": "literature_closure_contradiction",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Fixed pruning threshold performs uniformly across task difficulty",
+        "minimum_next_evidence": "Run adaptive vs fixed threshold ablation on easy/hard task tiers",
+        "evidence_readiness": 4,
+        "falsifier_executability": 5,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 2,
+        "estimated_effort_level": 2,
+        "advisory_summary": "Well-specified interaction test, uses valid prior work, low execution barrier"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 93.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Temporal grounding failures in time-series agents are due to lack of explicit date-awareness in memory retrieval",
+      "birth_evidence_refs": [
+        "arXiv:2608.14270"
+      ],
+      "memory_refs": [
+        "MEM-HOLD-1aa172ec2500132831"
+      ],
+      "scientific_question": "Do agents fail temporal grounding because their memory retrieval ignores the temporal context of the query, or because of insufficient reasoning capability?",
+      "observed_trigger": "TimeSage-EV shows agents compute over time series but struggle with temporal grounding, e.g., over-committing to a single commodity in WASDE scenario.",
+      "structural_variable": "Whether the memory retrieval mechanism incorporates the query's timestamp as a retrieval key.",
+      "strongest_same_information_baseline": "A baseline that uses the same agent but with memory retrieval that ignores timestamps (e.g., pure semantic similarity).",
+      "baseline_counterexample": "If the baseline with timestamp-aware retrieval still fails temporal grounding, then the issue is not retrieval but reasoning.",
+      "cheapest_falsifier": {
+        "setup": "Use TimeSage-EV tasks and the TimeSage-1.0 agent, but modify memory retrieval to include timestamp as a hard filter.",
+        "intervention_or_comparison": "Compare temporal grounding accuracy between timestamp-aware and timestamp-agnostic retrieval.",
+        "metric": "Temporal grounding accuracy (e.g., correct date identification in outputs).",
+        "stop_if": "No significant improvement with timestamp-aware retrieval.",
+        "estimated_effort": "1-2 weeks"
+      },
+      "closest_known_explanation": "Agents may retrieve skills or memories that are temporally outdated, leading to incorrect forward-looking analysis.",
+      "residual_after_reduction": "If timestamp-aware retrieval does not help, the residual is that temporal grounding requires better reasoning, not just memory access.",
+      "paper_level_claim": "Temporal grounding failures in time-series agents are caused by memory retrieval ignoring temporal context.",
+      "paperability_axis": "P",
+      "executable_now": true,
+      "candidate_id": "D1-C03",
+      "engine_id": "D1",
+      "engine_name": "literature_closure_contradiction",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Timestamp-agnostic retrieval matches temporal grounding performance",
+        "minimum_next_evidence": "Deploy timestamp-aware retrieval module on TimeSage-EV tasks",
+        "evidence_readiness": 4,
+        "falsifier_executability": 5,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 2,
+        "estimated_effort_level": 2,
+        "advisory_summary": "Clear causal test for memory-based temporal grounding failure"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 93.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Failure-derived memory retrieval as a causal driver of persistent agent failure",
+      "birth_evidence_refs": [
+        "arXiv:2608.17684"
+      ],
+      "memory_refs": [
+        "MEM-FAIL-1f7691f41a1dcfa103"
+      ],
+      "scientific_question": "Does retrieving failure-derived memories causally increase persistent failure rates in self-evolving agents, beyond mere correlation with task difficulty?",
+      "observed_trigger": "In benign endpoint cases, failure-derived retrievals (n=34) achieve 0.647 accuracy with all 10 persistent-failure cases, versus 0.931 for success-derived retrievals.",
+      "structural_variable": "Memory source type (failure-derived vs success-derived) at retrieval time",
+      "strongest_same_information_baseline": "Same agent with success-derived memory retrievals only, matched on task difficulty and retrieval position",
+      "baseline_counterexample": "If success-derived retrievals on equally difficult tasks also produce persistent failures, then memory source is not causal.",
+      "cheapest_falsifier": {
+        "setup": "Use the same agent and benchmark as arXiv:2608.17684, but replace failure-derived memories with success-derived ones for the same tasks.",
+        "intervention_or_comparison": "Compare persistent failure rates between failure-derived and success-derived retrieval conditions, controlling for task difficulty.",
+        "metric": "Persistent failure rate (proportion of tasks that fail repeatedly across attempts)",
+        "stop_if": "Persistent failure rate is not significantly higher in the failure-derived condition.",
+        "estimated_effort": "Low (requires access to the agent and benchmark; no new training needed)"
+      },
+      "closest_known_explanation": "Failure-derived memories may encode incorrect or overly specific strategies that are retrieved inappropriately, leading to repeated failures.",
+      "residual_after_reduction": "If causal, the mechanism (e.g., content vs retrieval bias) remains unexplained.",
+      "paper_level_claim": "Failure-derived memory retrieval causally increases persistent failure in self-evolving agents.",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D2-C01",
+      "engine_id": "D2",
+      "engine_name": "empirical_anomaly_failure_mining",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Success-derived retrieval on matched tasks shows no persistent failure",
+        "minimum_next_evidence": "Swap failure-derived memories for success-derived on matched tasks",
+        "evidence_readiness": 4,
+        "falsifier_executability": 5,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 2,
+        "estimated_effort_level": 1,
+        "advisory_summary": "Low-effort causal replication/extension of arXiv:2608.17684"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 94.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Underspecification in agent memory as a driver of variance and order-dependent performance drops",
+      "birth_evidence_refs": [
+        "arXiv:2608.18066"
+      ],
+      "memory_refs": [
+        "MEM-HOLD-452d1a58eea1476812"
+      ],
+      "scientific_question": "Does memory underspecification (missing task-specific constraints) causally amplify performance variance and order-dependent drops in self-improving agents?",
+      "observed_trigger": "In GitLab subset of WebArena, best-worst run gap reaches 4.4% with std 1.98%; shuffled task orders cause unexpected performance drops, attributed to underspecification.",
+      "structural_variable": "Degree of memory specification (e.g., presence of task-specific constraints)",
+      "strongest_same_information_baseline": "Same agent with fully specified memories (including all relevant constraints) under identical task orders",
+      "baseline_counterexample": "If fully specified memories still show similar variance and order effects, underspecification is not the cause.",
+      "cheapest_falsifier": {
+        "setup": "Use the same agent and WebArena GitLab tasks, but augment memories with explicit task-specific constraints (e.g., required steps, forbidden actions).",
+        "intervention_or_comparison": "Compare variance and order-dependent performance between underspecified and fully specified memory conditions.",
+        "metric": "Performance variance across runs and performance drop under shuffled task orders",
+        "stop_if": "Variance and order effects are not significantly reduced with fully specified memories.",
+        "estimated_effort": "Medium (requires modifying memory construction and running multiple trials)"
+      },
+      "closest_known_explanation": "Underspecified memories may lead to ambiguous retrieval and application, causing inconsistent behavior across runs and sensitivity to task order.",
+      "residual_after_reduction": "If causal, the specific types of underspecification that matter remain to be characterized.",
+      "paper_level_claim": "Memory underspecification causally amplifies variance and order-dependent failures in self-improving agents.",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D2-C02",
+      "engine_id": "D2",
+      "engine_name": "empirical_anomaly_failure_mining",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Fully specified memories eliminate variance/order effects",
+        "minimum_next_evidence": "Augment WebArena memories with task constraints and run trials",
+        "evidence_readiness": 4,
+        "falsifier_executability": 5,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 3,
+        "estimated_effort_level": 3,
+        "advisory_summary": "Well-framed test for memory underspecification as performance driver"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 91.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Temporal grounding failure in agentic time series analysis: a capability gap independent of model scale",
+      "birth_evidence_refs": [
+        "arXiv:2608.14270"
+      ],
+      "memory_refs": [],
+      "scientific_question": "Do frontier LLM agents exhibit a systematic inability to temporally ground their analyses (e.g., using correct time periods, avoiding anachronistic data) that is independent of model scale and cost?",
+      "observed_trigger": "Frontier agents show significant performance gaps in temporal validity and exogenous context use; high-cost models like Sonnet-4.6 fail to lead in accuracy.",
+      "structural_variable": "Temporal grounding requirement (e.g., need to use data from specific time windows vs. static analysis)",
+      "strongest_same_information_baseline": "Same agent with explicit temporal grounding prompts or external temporal validation tools",
+      "baseline_counterexample": "If adding temporal grounding support eliminates the gap, the failure is not inherent but due to missing support.",
+      "cheapest_falsifier": {
+        "setup": "Use the TimeSage-EV benchmark with a frontier agent (e.g., GPT-5.4) and add a simple temporal grounding module (e.g., date-aware retrieval or validation).",
+        "intervention_or_comparison": "Compare accuracy on tasks requiring temporal grounding with and without the module.",
+        "metric": "Accuracy on temporal validity and exogenous context use subtasks",
+        "stop_if": "Accuracy does not improve with the module, or the gap persists across model scales.",
+        "estimated_effort": "Low (requires benchmark access and a simple module)"
+      },
+      "closest_known_explanation": "Agents may lack explicit temporal reasoning mechanisms, relying on pattern matching that fails when temporal context is crucial.",
+      "residual_after_reduction": "If the gap persists, the underlying cognitive limitation remains unexplained.",
+      "paper_level_claim": "Frontier LLM agents have a systematic temporal grounding deficit in time series analysis, independent of model scale.",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D2-C03",
+      "engine_id": "D2",
+      "engine_name": "empirical_anomaly_failure_mining",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Temporal grounding module eliminates scale-independent accuracy gap",
+        "minimum_next_evidence": "Add temporal validation module to frontier agents on TimeSage-EV",
+        "evidence_readiness": 4,
+        "falsifier_executability": 5,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 2,
+        "estimated_effort_level": 1,
+        "advisory_summary": "Tests scale independence of temporal grounding deficit clearly"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 94.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Pruning-threshold-induced retrieval-surface bifurcation in self-evolving skill memory",
+      "birth_evidence_refs": [
+        "arXiv:2608.16114"
+      ],
+      "memory_refs": [],
+      "scientific_question": "Does the pruning threshold τ_prune in HyperSkill change the ex-ante prediction of which skills survive and are retrieved, beyond the same memory-update history and retrieval budget?",
+      "observed_trigger": "HyperSkill's ablation shows both ρ=0 and ρ=0.4 degrade retrieval quality, implying a non-monotonic threshold effect on the skill memory surface.",
+      "structural_variable": "Pruning threshold τ_prune (0 vs 0.2 vs 0.4) as a structural variable of the write/retrieval surface, controlling which low-utility entries are removed before retrieval.",
+      "strongest_same_information_baseline": "HyperSkill with τ_prune=0.2 (default) receiving the same episode history, retrieval queries, and memory-update budget.",
+      "baseline_counterexample": "With τ_prune=0.4, the baseline predicts removal of a specific low-retrieval-count skill; the structural variable predicts that skill remains because its utility is above the threshold, changing the next retrieval outcome.",
+      "cheapest_falsifier": {
+        "setup": "Use HyperSkill's released code and xBench episodes; run with τ_prune=0.2 and 0.4.",
+        "intervention_or_comparison": "Compare the set of pruned skills and subsequent retrieval success on a fixed held-out task set.",
+        "metric": "Difference in pruned-skill sets and retrieval success rate.",
+        "stop_if": "Pruned-skill sets are identical or retrieval success does not differ beyond noise.",
+        "estimated_effort": "1 GPU-week"
+      },
+      "closest_known_explanation": "Ablation results show both extremes degrade performance, but no causal mechanism links threshold to specific retrieval-surface changes.",
+      "residual_after_reduction": "The threshold's effect on which skills are pruned is a deterministic function of utility; the residual is whether this structural change alters retrieval outcomes beyond the baseline's own threshold choice.",
+      "paper_level_claim": "Pruning threshold is a structural variable that changes ex-ante retrieval predictions in self-evolving skill memory.",
+      "paperability_axis": "P",
+      "executable_now": true,
+      "candidate_id": "D3-C01",
+      "engine_id": "D3",
+      "engine_name": "structural_variable_hypothesis",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Default pruning threshold matches ex-ante retrieval predictions",
+        "minimum_next_evidence": "Run τ_prune ablations and compare pruned skill sets/retrieval success",
+        "evidence_readiness": 4,
+        "falsifier_executability": 5,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 2,
+        "estimated_effort_level": 2,
+        "advisory_summary": "Precise structural variable test for pruning threshold effects on memory retrieval"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 93.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Task-order-induced memory-construction variance in self-improving agents",
+      "birth_evidence_refs": [
+        "arXiv:2608.18066"
+      ],
+      "memory_refs": [],
+      "scientific_question": "Does the order of task presentation change the ex-ante prediction of which memories are constructed and their later utility, beyond the same task set and total update budget?",
+      "observed_trigger": "Shuffled task orders cause unexpected performance drops and amplified variance in WebArena, with underspecification identified as a potential cause.",
+      "structural_variable": "Task order (sequential vs shuffled) as a structural variable of update timing, affecting which memories are formed and stored at each step.",
+      "strongest_same_information_baseline": "RBank with the same task set, same total episodes, and same memory-update budget but in a fixed sequential order.",
+      "baseline_counterexample": "The baseline predicts the same final memory library regardless of order; the structural variable predicts that a specific memory (e.g., a GitLab-specific skill) is constructed only in the shuffled order, changing later retrieval and success.",
+      "cheapest_falsifier": {
+        "setup": "Use the released WebArena GitLab subset and RBank memory method.",
+        "intervention_or_comparison": "Run the agent with sequential vs shuffled task orders, holding all else fixed.",
+        "metric": "Difference in constructed memory content and task success rate.",
+        "stop_if": "Memory libraries are identical or success rates do not differ beyond run variance.",
+        "estimated_effort": "2 GPU-weeks"
+      },
+      "closest_known_explanation": "The paper attributes variance to underspecification but does not isolate order as a causal structural variable.",
+      "residual_after_reduction": "Order effects could be explained by stochasticity in memory construction; the residual is whether order deterministically changes memory content beyond random variation.",
+      "paper_level_claim": "Task order is a structural variable that changes ex-ante memory-construction predictions in self-improving agents.",
+      "paperability_axis": "P",
+      "executable_now": true,
+      "candidate_id": "D3-C02",
+      "engine_id": "D3",
+      "engine_name": "structural_variable_hypothesis",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Stochastic memory construction",
+        "minimum_next_evidence": "Confirm deterministic order-driven memory content shifts",
+        "evidence_readiness": 4,
+        "falsifier_executability": 4,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 2,
+        "estimated_effort_level": 2,
+        "advisory_summary": "Solid structural test of task order on memory construction in WebArena"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 90.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Skill-retrieval-context mismatch as a structural variable in cross-agent skill transfer",
+      "birth_evidence_refs": [
+        "arXiv:2608.14036"
+      ],
+      "memory_refs": [
+        "MEM-HOLD-452d1a58eea1476812"
+      ],
+      "scientific_question": "Does the context in which a skill is retrieved (e.g., task type, tool-use interface) change the ex-ante prediction of skill success, beyond the same skill library and retrieval mechanism?",
+      "observed_trigger": "Skills fail when retrieved incorrectly or invoked in the wrong context, even when the same skill works in other contexts.",
+      "structural_variable": "Retrieval context (e.g., task domain, tool interface) as a structural variable of the retrieval surface, determining whether a skill is applicable.",
+      "strongest_same_information_baseline": "A skill library with a fixed retrieval mechanism that ignores context, receiving the same skill set and task queries.",
+      "baseline_counterexample": "The baseline predicts a skill will succeed in all contexts; the structural variable predicts failure in a specific context (e.g., infrastructure failure) due to mismatch, changing the next action.",
+      "cheapest_falsifier": {
+        "setup": "Use the Codex-sourced skills and evaluate in Gemini CLI on tasks with varying contexts.",
+        "intervention_or_comparison": "Compare skill success when retrieval is context-aware vs context-agnostic, holding the skill library fixed.",
+        "metric": "Skill success rate per context.",
+        "stop_if": "No context-dependent success difference is observed.",
+        "estimated_effort": "1 GPU-week"
+      },
+      "closest_known_explanation": "The paper notes skills fail when retrieved incorrectly, but does not formalize context as a structural variable.",
+      "residual_after_reduction": "Context effects could be reduced to skill content; the residual is whether retrieval context independently changes predictions beyond skill semantics.",
+      "paper_level_claim": "Retrieval context is a structural variable that changes ex-ante skill-success predictions in cross-agent transfer.",
+      "paperability_axis": "P",
+      "executable_now": true,
+      "candidate_id": "D3-C03",
+      "engine_id": "D3",
+      "engine_name": "structural_variable_hypothesis",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Skill content semantics",
+        "minimum_next_evidence": "Validate context mismatch as independent causal factor",
+        "evidence_readiness": 4,
+        "falsifier_executability": 4,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 2,
+        "estimated_effort_level": 2,
+        "advisory_summary": "Well-defined test of retrieval context as structural variable for skill transfer"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 90.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Failure-derived memory retrieval predicts persistent failure beyond static skill utility",
+      "birth_evidence_refs": [
+        "arXiv:2608.17684"
+      ],
+      "memory_refs": [
+        "MEM-REPE-5a5845fc268f5a9ad9"
+      ],
+      "scientific_question": "Does failure-derived memory retrieval cause persistent failure independently of the static utility of the retrieved skill?",
+      "observed_trigger": "In arXiv:2608.17684, failure-derived retrievals (n=34) achieve 0.647 accuracy with all 10 persistent-failure cases, while success-derived retrievals (n=101) achieve 0.931 with none.",
+      "structural_variable": "Retrieval source (failure-derived vs success-derived) at the time of memory retrieval.",
+      "strongest_same_information_baseline": "A baseline that conditions on the static utility of the retrieved memory (e.g., high vs low utility) but ignores retrieval source.",
+      "baseline_counterexample": "If the baseline predicts persistent failure solely from low static utility, the observed data show failure-derived retrievals with moderate utility still produce all persistent failures, contradicting the baseline.",
+      "cheapest_falsifier": {
+        "setup": "Re-analyze the existing rollout logs from arXiv:2608.17684, stratifying persistent failures by both retrieval source and static utility score.",
+        "intervention_or_comparison": "Compare persistent-failure rates between failure-derived and success-derived retrievals within the same static-utility bin.",
+        "metric": "Difference in persistent-failure rate (or odds ratio) between retrieval sources, controlling for static utility.",
+        "stop_if": "The difference is not statistically significant or is explained by static utility.",
+        "estimated_effort": "1 day"
+      },
+      "closest_known_explanation": "Static utility of the retrieved memory determines failure, as suggested by higher utility in repaired families.",
+      "residual_after_reduction": "If the difference persists after controlling for static utility, retrieval source is an independent causal factor.",
+      "paper_level_claim": "Failure-derived memory retrieval is a causal driver of persistent failure in self-evolving agents, independent of static skill utility.",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D4-C01",
+      "engine_id": "D4",
+      "engine_name": "strongest_baseline_counterexample",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Static skill utility",
+        "minimum_next_evidence": "Stratify persistent failures by retrieval source and static utility",
+        "evidence_readiness": 5,
+        "falsifier_executability": 5,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 1,
+        "estimated_effort_level": 1,
+        "advisory_summary": "Low-effort re-analysis of existing logs to confirm retrieval source independence"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 98.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Trust-channel memory inflation predicts error beyond retrieval-channel amplification",
+      "birth_evidence_refs": [
+        "arXiv:2608.00017"
+      ],
+      "memory_refs": [],
+      "scientific_question": "Does score-conditioned trust inflation of wrong memories cause behavioral error independently of retrieval-score amplification?",
+      "observed_trigger": "In arXiv:2608.00017, the deployed agent retrieves by similarity alone (A_ret=1) yet shows error rising with trusted-but-wrong fraction, implying trust channel matters.",
+      "structural_variable": "Trust annotation (binary self-grade) shown to the agent, independent of retrieval ranking.",
+      "strongest_same_information_baseline": "A baseline that uses the same retrieval ranking but ignores the trust annotation (i.e., treats all retrieved memories equally).",
+      "baseline_counterexample": "If the baseline predicts error solely from retrieval-score amplification, the observed error increase with trusted-but-wrong fraction contradicts it, as retrieval ranking is unchanged.",
+      "cheapest_falsifier": {
+        "setup": "Re-analyze BIRD experiment logs, comparing error rates between trials where trust annotation is present vs absent, holding retrieval ranking fixed.",
+        "intervention_or_comparison": "Compare error rates with and without showing the stored self-grade to the agent, using identical retrieval sets.",
+        "metric": "Difference in error rate (or trusted-but-wrong fraction effect) between conditions.",
+        "stop_if": "No significant difference or effect is explained by retrieval ranking.",
+        "estimated_effort": "2 days"
+      },
+      "closest_known_explanation": "Retrieval-score amplification (A_ret) is the sole driver of memory inflation.",
+      "residual_after_reduction": "If trust annotation independently increases error, the trust channel is a distinct causal mechanism.",
+      "paper_level_claim": "Score-conditioned trust annotations causally amplify memory errors beyond retrieval-score effects in self-improving agents.",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D4-C02",
+      "engine_id": "D4",
+      "engine_name": "strongest_baseline_counterexample",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Retrieval-score amplification",
+        "minimum_next_evidence": "Isolate trust annotation effect on error rate",
+        "evidence_readiness": 5,
+        "falsifier_executability": 5,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 1,
+        "estimated_effort_level": 1,
+        "advisory_summary": "Re-analyze BIRD logs to separate trust and retrieval score effects"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 98.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Skill pruning threshold non-monotonicity: optimal pruning depends on task distribution",
+      "birth_evidence_refs": [
+        "arXiv:2608.16114"
+      ],
+      "memory_refs": [],
+      "scientific_question": "Does the optimal skill-pruning threshold vary systematically with task difficulty distribution, explaining why fixed thresholds fail?",
+      "observed_trigger": "In arXiv:2608.16114, disabling pruning (ρ=0) degrades retrieval, while aggressive pruning (ρ=0.4) removes useful skills, indicating a non-monotonic effect.",
+      "structural_variable": "Task difficulty distribution (e.g., proportion of hard tasks) in the evaluation set.",
+      "strongest_same_information_baseline": "A baseline that uses a fixed pruning threshold (e.g., ρ=0.2) regardless of task distribution.",
+      "baseline_counterexample": "If the baseline predicts optimal ρ is constant, the observed non-monotonicity across different task distributions (xBench vs GAIA) contradicts it.",
+      "cheapest_falsifier": {
+        "setup": "Re-analyze HyperSkill results across benchmarks, computing optimal ρ for each benchmark separately.",
+        "intervention_or_comparison": "Compare performance (SR) under optimal ρ per benchmark vs fixed ρ=0.2.",
+        "metric": "Difference in SR between adaptive and fixed pruning thresholds.",
+        "stop_if": "No significant difference or optimal ρ is constant across benchmarks.",
+        "estimated_effort": "1 day"
+      },
+      "closest_known_explanation": "A single fixed pruning threshold is universally optimal.",
+      "residual_after_reduction": "If optimal ρ varies, task distribution is a moderating variable for pruning decisions.",
+      "paper_level_claim": "Skill-memory pruning thresholds must adapt to task difficulty distribution to maximize success rate.",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D4-C03",
+      "engine_id": "D4",
+      "engine_name": "strongest_baseline_counterexample",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Universal fixed pruning threshold",
+        "minimum_next_evidence": "Compute optimal pruning thresholds per benchmark",
+        "evidence_readiness": 5,
+        "falsifier_executability": 5,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 1,
+        "estimated_effort_level": 1,
+        "advisory_summary": "Re-analyze HyperSkill results to confirm task distribution-dependent optimal thresholds"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 98.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Order-Dependent Memory Corruption in Self-Improving Agents",
+      "birth_evidence_refs": [
+        "arXiv:2608.18066"
+      ],
+      "memory_refs": [],
+      "scientific_question": "Does the order of task presentation during memory construction causally determine later performance variance beyond the content of the memories themselves?",
+      "observed_trigger": "Shuffled task orders cause unexpected performance drops and amplified variance (up to 4.4% gap) in GitLab WebArena, while identical runs show high variance.",
+      "structural_variable": "The sequential order in which experiences are accumulated into the persistent memory bank.",
+      "strongest_same_information_baseline": "An agent that receives the same set of memories but in a fixed canonical order (e.g., sorted by task ID) with identical memory content and retrieval mechanism.",
+      "baseline_counterexample": "If the canonical-order baseline exhibits the same variance and performance drops as shuffled orders, then order is not causal; the effect is due to memory content or stochasticity.",
+      "cheapest_falsifier": {
+        "setup": "Use the same agent and memory bank from the paper, but present memories in a fixed canonical order across multiple runs.",
+        "intervention_or_comparison": "Compare performance variance and mean success rate between canonical-order and shuffled-order runs.",
+        "metric": "Variance and mean success rate on GitLab WebArena.",
+        "stop_if": "Variance and mean are statistically indistinguishable between orders.",
+        "estimated_effort": "Low (requires access to the agent and benchmark; re-run with different orderings)."
+      },
+      "closest_known_explanation": "Underspecification in memory construction, as noted in the paper, could cause sensitivity to order if the agent overfits to spurious correlations in the sequence.",
+      "residual_after_reduction": "If order matters even with identical content and retrieval, it suggests a path-dependent memory formation process not captured by content-based models.",
+      "paper_level_claim": "Task order during memory construction is a causal factor in self-improving agent performance variance.",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D5-C01",
+      "engine_id": "D5",
+      "engine_name": "longitudinal_path_dependence",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Memory content/stochasticity",
+        "minimum_next_evidence": "Test order effect with identical memory content across runs",
+        "evidence_readiness": 4,
+        "falsifier_executability": 4,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 2,
+        "estimated_effort_level": 2,
+        "advisory_summary": "Causal test of task order on performance variance via canonical memory ordering"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 90.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Skill Memory Pruning Threshold as a Hysteresis Switch",
+      "birth_evidence_refs": [
+        "arXiv:2608.16114"
+      ],
+      "memory_refs": [],
+      "scientific_question": "Does the pruning threshold in skill memory create a hysteresis effect where past accumulation of low-utility skills irreversibly degrades future retrieval quality?",
+      "observed_trigger": "Disabling pruning (ρ=0) lets low-utility entries accumulate and degrades retrieval quality; overly aggressive pruning (ρ=0.4) removes still-useful skills.",
+      "structural_variable": "The pruning threshold ρ and the historical accumulation of low-utility skills before pruning is applied.",
+      "strongest_same_information_baseline": "A memory system that applies the same pruning threshold but starts with a pre-filtered memory bank containing only high-utility skills (no accumulation history).",
+      "baseline_counterexample": "If the pre-filtered baseline performs identically to the accumulated-then-pruned system, then the history of accumulation has no lasting effect beyond the final memory content.",
+      "cheapest_falsifier": {
+        "setup": "Run HyperSkill with ρ=0 for N episodes to accumulate low-utility skills, then enable pruning at ρ=0.2. Compare to a run that starts with ρ=0.2 from the beginning.",
+        "intervention_or_comparison": "Compare final success rates and retrieval quality between the two runs.",
+        "metric": "Success rate on xBench and retrieval precision.",
+        "stop_if": "No significant difference in success rate or retrieval quality.",
+        "estimated_effort": "Medium (requires running HyperSkill with different pruning schedules)."
+      },
+      "closest_known_explanation": "The paper's observation that pruning threshold affects performance is consistent with a simple trade-off, but hysteresis would require that the path to the threshold matters.",
+      "residual_after_reduction": "If the accumulated history degrades performance even after pruning to the same final memory content, it indicates an irreversible path dependence in memory state.",
+      "paper_level_claim": "Skill memory pruning exhibits hysteresis: the historical accumulation of low-utility skills has a lasting negative effect even after pruning.",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D5-C02",
+      "engine_id": "D5",
+      "engine_name": "longitudinal_path_dependence",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Simple pruning trade-off",
+        "minimum_next_evidence": "Compare runs with vs without prior low-utility skill accumulation",
+        "evidence_readiness": 4,
+        "falsifier_executability": 4,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 2,
+        "estimated_effort_level": 2,
+        "advisory_summary": "HyperSkill run test to confirm hysteresis in pruning threshold effects"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 90.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Infrastructure Failure Memory as a Persistent Behavioral Suppressant",
+      "birth_evidence_refs": [
+        "arXiv:2608.14036"
+      ],
+      "memory_refs": [
+        "MEM-HOLD-452d1a58eea1476812"
+      ],
+      "scientific_question": "Does storing a memory of an infrastructure failure cause a persistent reduction in future attempts to use that infrastructure, even after the failure is resolved?",
+      "observed_trigger": "Workflow memory and skills reduce infrastructure_failure rates from 5.3% to 1.7% and 0.2%, respectively, suggesting learned avoidance.",
+      "structural_variable": "The presence of a memory entry recording a past infrastructure failure, and its persistence over time.",
+      "strongest_same_information_baseline": "An agent that receives the same memory content but with the failure entry marked as 'resolved' or 'transient' (e.g., timestamped and deprioritized).",
+      "baseline_counterexample": "If the resolved-memory baseline shows the same reduction in infrastructure attempts, then the effect is due to the memory's content, not its historical failure status.",
+      "cheapest_falsifier": {
+        "setup": "In the same transfer setting, provide the agent with a memory that says 'infrastructure failure occurred but was resolved' versus one that says 'infrastructure failure occurred' without resolution.",
+        "intervention_or_comparison": "Measure the rate of infrastructure usage in subsequent tasks.",
+        "metric": "Frequency of infrastructure-related actions.",
+        "stop_if": "No difference in usage rates between resolved and unresolved memory conditions.",
+        "estimated_effort": "Low (requires modifying memory content in the existing evaluation framework)."
+      },
+      "closest_known_explanation": "The paper attributes the reduction to skills acting as procedural anchors, but this could be a form of learned helplessness or overgeneralization from a single failure.",
+      "residual_after_reduction": "If the resolved-memory baseline still suppresses usage, it suggests that the mere historical fact of a failure, not its current relevance, drives behavior.",
+      "paper_level_claim": "Persistent memory of infrastructure failure causes long-lasting behavioral suppression beyond the failure's actual resolution.",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D5-C03",
+      "engine_id": "D5",
+      "engine_name": "longitudinal_path_dependence",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Resolved memory baseline controls for memory content",
+        "minimum_next_evidence": "Run the two memory condition comparison",
+        "evidence_readiness": 4,
+        "falsifier_executability": 5,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 2,
+        "estimated_effort_level": 2,
+        "advisory_summary": "Low-effort, well-specified test of failure memory suppression"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 93.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Memory-Update Scheduling Under Fixed Total Token Budget: Does Update Order Determine Downstream Task Accuracy?",
+      "birth_evidence_refs": [
+        "arXiv:2608.14621"
+      ],
+      "memory_refs": [
+        "MEM-OPEN-29a589216cf210fa68"
+      ],
+      "scientific_question": "Given a fixed total token budget for memory updates, does the order in which memory entries are updated (e.g., recency vs. importance vs. random) causally affect downstream task accuracy, beyond the content of updates?",
+      "observed_trigger": "AutoMem shows memory effectiveness depends on interaction among task distribution, backbone, and module composition; removing memory updates increases forgetting, but update order is not isolated.",
+      "structural_variable": "Update order policy (recency-first, importance-first, random) under fixed total token budget.",
+      "strongest_same_information_baseline": "Random update order with same token budget and same memory content.",
+      "baseline_counterexample": "If random order achieves equal or better accuracy than any structured order, then update order is not causal.",
+      "cheapest_falsifier": {
+        "setup": "Use AutoMem's framework on GAIA with fixed token budget; vary only update order.",
+        "intervention_or_comparison": "Compare recency-first vs. importance-first vs. random order.",
+        "metric": "Final accuracy on GAIA held-out set.",
+        "stop_if": "Random order matches or exceeds best structured order.",
+        "estimated_effort": "Low: reuse existing code, run 3 configurations."
+      },
+      "closest_known_explanation": "Memory effectiveness depends on task distribution and module composition, but order effects are unexplored.",
+      "residual_after_reduction": "If order matters, the residual is the mechanism (e.g., recency bias) not reducible to content.",
+      "paper_level_claim": "Update order is a causal factor in memory-augmented agent performance under fixed budget.",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D6-C01",
+      "engine_id": "D6",
+      "engine_name": "executable_symbolic_search",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Random update order baseline isolates order effect",
+        "minimum_next_evidence": "Run 3 update order configurations on GAIA",
+        "evidence_readiness": 4,
+        "falsifier_executability": 5,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 2,
+        "estimated_effort_level": 2,
+        "advisory_summary": "Reuses existing code, minimal overhead for causal order test"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 93.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Verification-Aware Termination Threshold: Does Early Stopping on Baseline-Relative Gain Trade Off Semantic Validity?",
+      "birth_evidence_refs": [
+        "arXiv:2606.27243"
+      ],
+      "memory_refs": [
+        "MEM-OPEN-8b30172b29af989aba"
+      ],
+      "scientific_question": "In verification-aware agent harnesses, does lowering the termination threshold τ (baseline-relative gain) increase the rate of semantically invalid candidates, controlling for total search budget?",
+      "observed_trigger": "NOVA terminates when gain reaches τ=0.15 pp; ablation shows failures shift upstream (semantic failures rise), suggesting threshold may trade off validity.",
+      "structural_variable": "Termination threshold τ (e.g., 0.15 vs. 0.05 vs. 0.25).",
+      "strongest_same_information_baseline": "Same harness with τ=0.15 (original) and same budget.",
+      "baseline_counterexample": "If lowering τ does not increase semantic failure rate (SFR_sem) beyond noise, threshold is not causal.",
+      "cheapest_falsifier": {
+        "setup": "Run NOVA on L2 benchmark with varying τ, same budget and verification pipeline.",
+        "intervention_or_comparison": "Compare SFR_sem across τ values.",
+        "metric": "SFR_sem (semantic failure rate).",
+        "stop_if": "SFR_sem does not monotonically increase as τ decreases.",
+        "estimated_effort": "Medium: requires running NOVA multiple times."
+      },
+      "closest_known_explanation": "NOVA's verification reduces failures, but threshold effect on semantic validity is unknown.",
+      "residual_after_reduction": "If threshold matters, residual is the optimal trade-off curve, not reducible to budget.",
+      "paper_level_claim": "Termination threshold is a causal lever for semantic validity in verification-aware search.",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D6-C02",
+      "engine_id": "D6",
+      "engine_name": "executable_symbolic_search",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Original τ=0.15 baseline controls for setup",
+        "minimum_next_evidence": "Run NOVA across 3 τ values on L2 benchmark",
+        "evidence_readiness": 4,
+        "falsifier_executability": 4,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 3,
+        "estimated_effort_level": 3,
+        "advisory_summary": "Medium effort, clear validity tradeoff test"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 88.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Skill Transfer Under Fixed Execution Budget: Does Workflow Memory Outperform Skills When Infrastructure Failures Are Rare?",
+      "birth_evidence_refs": [
+        "arXiv:2608.14036"
+      ],
+      "memory_refs": [
+        "MEM-HOLD-1aa172ec2500132831"
+      ],
+      "scientific_question": "When infrastructure failures are rare (e.g., <2% of executions), does workflow memory still reduce execution-layer failures compared to skills, under a fixed total execution budget?",
+      "observed_trigger": "Skills reduce infrastructure failures from 5.3% to 0.2%, but workflow memory also reduces to 1.7%; rare-failure regime is untested.",
+      "structural_variable": "Base rate of infrastructure failures in the task distribution (rare vs. common).",
+      "strongest_same_information_baseline": "Skills with same execution budget and same trajectory history.",
+      "baseline_counterexample": "If workflow memory does not outperform skills when infrastructure failures are rare, then skill advantage is frequency-dependent.",
+      "cheapest_falsifier": {
+        "setup": "Use Codex trajectories, filter to tasks with low infrastructure failure rate, evaluate in Gemini CLI.",
+        "intervention_or_comparison": "Compare workflow memory vs. skills on rare-failure subset.",
+        "metric": "Execution-layer failure rate.",
+        "stop_if": "Workflow memory failure rate ≥ skills failure rate.",
+        "estimated_effort": "Low: reuse existing evaluation pipeline."
+      },
+      "closest_known_explanation": "Skills act as procedural anchors, but their advantage may diminish when failures are rare.",
+      "residual_after_reduction": "If frequency matters, residual is the threshold frequency where skills become beneficial.",
+      "paper_level_claim": "Skill advantage over workflow memory is contingent on failure frequency.",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D6-C03",
+      "engine_id": "D6",
+      "engine_name": "executable_symbolic_search",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Skills baseline controls for execution setup",
+        "minimum_next_evidence": "Evaluate on rare-failure Codex trajectory subset",
+        "evidence_readiness": 4,
+        "falsifier_executability": 5,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 2,
+        "estimated_effort_level": 2,
+        "advisory_summary": "Reuses existing pipeline, tests failure frequency dependency"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 93.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Skill-memory pruning as a continual-learning stability-plasticity tradeoff",
+      "birth_evidence_refs": [
+        "arXiv:2608.16114",
+        "arXiv:2608.19013"
+      ],
+      "memory_refs": [],
+      "scientific_question": "Does the optimal pruning threshold in self-evolving skill memory vary predictably with task-similarity and memory-update frequency, as continual-learning theory predicts?",
+      "observed_trigger": "HyperSkill's pruning threshold τ=0.2 is fixed; overly aggressive pruning removes useful skills, while no pruning degrades retrieval.",
+      "structural_variable": "Task-similarity between consecutive episodes (e.g., embedding cosine similarity of task instructions).",
+      "strongest_same_information_baseline": "HyperSkill with fixed τ=0.2, receiving identical episode history and retrieval counts.",
+      "baseline_counterexample": "A run with high task-similarity where fixed τ=0.2 underperforms a lower τ, contradicting the claim that a single threshold is optimal.",
+      "cheapest_falsifier": {
+        "setup": "Use HyperSkill on xBench with GPT-4o; vary task order to create high vs low similarity blocks.",
+        "intervention_or_comparison": "Compare fixed τ=0.2 vs adaptive τ (lower for high similarity) on held-out tasks.",
+        "metric": "Success rate (SR) on held-out tasks.",
+        "stop_if": "Adaptive τ does not outperform fixed τ by >2% in high-similarity blocks.",
+        "estimated_effort": "2 GPU-weeks"
+      },
+      "closest_known_explanation": "Continual learning theory: plasticity-stability tradeoff; higher similarity allows more retention, so less pruning needed.",
+      "residual_after_reduction": "The residual is the specific mapping from similarity to optimal τ, not captured by generic CL baselines.",
+      "paper_level_claim": "Adaptive pruning based on task similarity improves self-evolving agent performance.",
+      "paperability_axis": "M",
+      "executable_now": true,
+      "candidate_id": "D7-C01",
+      "engine_id": "D7",
+      "engine_name": "cross_domain_mechanism_transfer",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Fixed τ baseline controls for pruning setup",
+        "minimum_next_evidence": "Run adaptive vs fixed τ on high/low similarity task blocks",
+        "evidence_readiness": 3,
+        "falsifier_executability": 4,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 3,
+        "estimated_effort_level": 4,
+        "advisory_summary": "GPU-week scale test, ties pruning to task similarity"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 84.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Memory-update frequency as a forgetting-control mechanism in self-evolving agents",
+      "birth_evidence_refs": [
+        "arXiv:2608.19013",
+        "arXiv:2608.18066"
+      ],
+      "memory_refs": [],
+      "scientific_question": "Does the frequency of memory updates (anchors added/removed) causally affect forgetting in self-evolving agents, independent of memory content?",
+      "observed_trigger": "HCL ablation shows removing memory updates increases forgetting to 0.83; HyperSkill triggers maintenance every 0.1N episodes.",
+      "structural_variable": "Memory-update interval (episodes between memory modifications).",
+      "strongest_same_information_baseline": "Same agent with fixed update interval (e.g., every 0.1N episodes) and identical memory content.",
+      "baseline_counterexample": "A run with more frequent updates but same content shows higher forgetting, contradicting the assumption that more updates always help.",
+      "cheapest_falsifier": {
+        "setup": "Use HCL framework on a continual learning benchmark; vary update interval while keeping memory content identical.",
+        "intervention_or_comparison": "Compare forgetting (backward transfer) across intervals (e.g., 0.05N vs 0.2N).",
+        "metric": "Forgetting (increase in error on previous tasks).",
+        "stop_if": "Forgetting does not monotonically decrease with update frequency.",
+        "estimated_effort": "1 GPU-week"
+      },
+      "closest_known_explanation": "Continual learning: more frequent updates allow faster adaptation but may increase catastrophic forgetting if not balanced.",
+      "residual_after_reduction": "The residual is the optimal update interval as a function of task distribution, not explained by generic CL.",
+      "paper_level_claim": "Memory-update frequency is a causal control variable for forgetting in self-evolving agents.",
+      "paperability_axis": "M",
+      "executable_now": true,
+      "candidate_id": "D7-C02",
+      "engine_id": "D7",
+      "engine_name": "cross_domain_mechanism_transfer",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Fixed update interval baseline isolates frequency effect",
+        "minimum_next_evidence": "Run HCL across varying update intervals on CL benchmark",
+        "evidence_readiness": 3,
+        "falsifier_executability": 4,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 3,
+        "estimated_effort_level": 3,
+        "advisory_summary": "GPU-week test of update frequency and forgetting"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 85.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    },
+    {
+      "title": "Skill-transfer failure as a distribution-shift detection problem",
+      "birth_evidence_refs": [
+        "arXiv:2608.14036",
+        "arXiv:2608.18066"
+      ],
+      "memory_refs": [
+        "MEM-HOLD-452d1a58eea1476812"
+      ],
+      "scientific_question": "Can a skill's failure to transfer across agents be predicted by a measurable distribution shift in tool-use patterns, before execution?",
+      "observed_trigger": "Skills fail when invoked in wrong context or with different tool interfaces; infrastructure failures drop with skills.",
+      "structural_variable": "Tool-use distribution shift (e.g., KL divergence between source and target tool-call sequences).",
+      "strongest_same_information_baseline": "A baseline that uses the same skill but with a fixed retrieval policy, receiving identical tool-use history.",
+      "baseline_counterexample": "A skill with high distribution shift but successful transfer, contradicting the prediction that shift predicts failure.",
+      "cheapest_falsifier": {
+        "setup": "Use Codex-sourced skills evaluated in Gemini CLI; compute tool-use distribution shift for each skill.",
+        "intervention_or_comparison": "Compare success rates of skills with high vs low shift, controlling for task difficulty.",
+        "metric": "Success rate on target tasks.",
+        "stop_if": "No significant negative correlation between shift and success rate.",
+        "estimated_effort": "1 GPU-week"
+      },
+      "closest_known_explanation": "Domain adaptation theory: performance degrades with distribution shift; skills are procedural anchors sensitive to interface changes.",
+      "residual_after_reduction": "The residual is the specific threshold of shift beyond which skills fail, not captured by generic DA bounds.",
+      "paper_level_claim": "Tool-use distribution shift is a pre-execution predictor of skill-transfer failure.",
+      "paperability_axis": "M",
+      "executable_now": true,
+      "candidate_id": "D7-C03",
+      "engine_id": "D7",
+      "engine_name": "cross_domain_mechanism_transfer",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "review": {
+        "gate_verdicts": {
+          "G0": "PASS",
+          "G1": "PASS",
+          "G2": "PASS",
+          "G3": "PASS",
+          "G4": "PASS",
+          "G5": "PASS",
+          "G6": "PASS",
+          "G7": "PASS",
+          "G8": "PASS"
+        },
+        "hard_blocker": "",
+        "strongest_reduction": "Fixed retrieval baseline controls for skill usage",
+        "minimum_next_evidence": "Correlate tool shift with transfer success across tasks",
+        "evidence_readiness": 3,
+        "falsifier_executability": 4,
+        "claim_specificity": 4,
+        "estimated_experiments_to_paper": 3,
+        "estimated_effort_level": 3,
+        "advisory_summary": "Tests distribution shift as transfer failure predictor"
+      },
+      "benchmark_outcome": {
+        "pre_f0_ready": true,
+        "paper_design_ready": true,
+        "paper_conversion_score": 85.0,
+        "distance_to_paper": 0,
+        "missing_milestones": []
+      }
+    }
+  ],
+  "provider_receipts": {
+    "generation": [
+      {
+        "engine_id": "D1",
+        "requested_model": "deepseek-v4-flash",
+        "resolved_model": "deepseek-v4-flash-ga-260731",
+        "prompt_sha256": "c4cb21519e11dcd936366b13d575f23e882cf12860133532b259ab0a643f8f5e",
+        "raw_sha256": "0303ef54be915ccb1998f435a7b32108af77ad1f19b16aa3968e9f6d582e2792",
+        "generated": 3,
+        "context_primary_refs": [
+          "arXiv:2608.14036",
+          "arXiv:2608.17684",
+          "arXiv:2608.18066",
+          "arXiv:2608.16114",
+          "arXiv:2608.14270",
+          "arXiv:2606.31763",
+          "arXiv:2608.00017",
+          "arXiv:2608.19013"
+        ],
+        "context_memory_ids": [
+          "MEM-HOLD-1aa172ec2500132831",
+          "MEM-HOLD-2fc3f1e767a7e59794",
+          "MEM-HOLD-3d2ca52b06eb1115f3",
+          "MEM-HOLD-452d1a58eea1476812",
+          "MEM-HOLD-6943f59b78a8450b69",
+          "MEM-HOLD-b24664e75edd646776",
+          "MEM-OPEN-29a589216cf210fa68",
+          "MEM-OPEN-8b30172b29af989aba",
+          "MEM-SCIE-63da8f6c3c1c818d32",
+          "MEM-SCIE-77c61f9dd2885367c0"
+        ],
+        "usage": {
+          "input_tokens": 5348,
+          "output_tokens": 1393,
+          "total_tokens": 6741,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "scientific_authority": false
+      },
+      {
+        "engine_id": "D2",
+        "requested_model": "deepseek-v4-flash",
+        "resolved_model": "deepseek-v4-flash-ga-260731",
+        "prompt_sha256": "318c1f629343f5921f46ccda558d56e1a278c9df5781197246fbb49e0f3e003e",
+        "raw_sha256": "94c0e04e46bfcca713f50bb4336c4dd9ff367b64d8e465d28956c7ae5fc4f0b8",
+        "generated": 3,
+        "context_primary_refs": [
+          "arXiv:2608.17684",
+          "arXiv:2608.18066",
+          "arXiv:2608.14270",
+          "arXiv:2608.14036",
+          "arXiv:2606.31763",
+          "arXiv:2608.00017",
+          "arXiv:2606.28279",
+          "arXiv:2608.19013"
+        ],
+        "context_memory_ids": [
+          "MEM-FAIL-1f7691f41a1dcfa103",
+          "MEM-FAIL-bc94aa353b90c69c53",
+          "MEM-FAIL-d2bcf0c820af363095",
+          "MEM-HOLD-1aa172ec2500132831",
+          "MEM-HOLD-2fc3f1e767a7e59794",
+          "MEM-HOLD-3d2ca52b06eb1115f3",
+          "MEM-HOLD-452d1a58eea1476812",
+          "MEM-HOLD-6943f59b78a8450b69",
+          "MEM-HOLD-b24664e75edd646776",
+          "MEM-OPEN-29a589216cf210fa68"
+        ],
+        "usage": {
+          "input_tokens": 4770,
+          "output_tokens": 1397,
+          "total_tokens": 6167,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "scientific_authority": false
+      },
+      {
+        "engine_id": "D3",
+        "requested_model": "deepseek-v4-flash",
+        "resolved_model": "deepseek-v4-flash-ga-260731",
+        "prompt_sha256": "015fb30e4f92518217f35eb324e41ca78c8b0cd9c262d5e240e0d67d9f1813f0",
+        "raw_sha256": "22b10bb3e6ddfb95f8fe1403990fa68f06a06470ade03959f196b7827ba10ee9",
+        "generated": 3,
+        "context_primary_refs": [
+          "arXiv:2608.16114",
+          "arXiv:2606.31763",
+          "arXiv:2608.18066",
+          "arXiv:2608.16590",
+          "arXiv:2608.15763",
+          "arXiv:2608.14270",
+          "arXiv:2608.14036",
+          "arXiv:2606.28971"
+        ],
+        "context_memory_ids": [
+          "MEM-HOLD-1aa172ec2500132831",
+          "MEM-HOLD-2fc3f1e767a7e59794",
+          "MEM-HOLD-3d2ca52b06eb1115f3",
+          "MEM-HOLD-452d1a58eea1476812",
+          "MEM-HOLD-6943f59b78a8450b69",
+          "MEM-HOLD-b24664e75edd646776",
+          "MEM-OPEN-29a589216cf210fa68",
+          "MEM-OPEN-8b30172b29af989aba",
+          "MEM-SCIE-63da8f6c3c1c818d32",
+          "MEM-SCIE-77c61f9dd2885367c0"
+        ],
+        "usage": {
+          "input_tokens": 5075,
+          "output_tokens": 1469,
+          "total_tokens": 6544,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "scientific_authority": false
+      },
+      {
+        "engine_id": "D4",
+        "requested_model": "deepseek-v4-flash",
+        "resolved_model": "deepseek-v4-flash-ga-260731",
+        "prompt_sha256": "f7743031af4aaabb1904ed486ddf283edd2181913985a2a5bce9b65626038c84",
+        "raw_sha256": "78a0972ba58ed6d3674e27bcaf47a52466f6157f3a8341eb237ed7b7b8fc56d3",
+        "generated": 3,
+        "context_primary_refs": [
+          "arXiv:2608.17684",
+          "arXiv:2608.00017",
+          "arXiv:2608.16114",
+          "arXiv:2608.14270",
+          "arXiv:2608.14036",
+          "arXiv:2606.31763",
+          "arXiv:2606.28279",
+          "arXiv:2608.19013"
+        ],
+        "context_memory_ids": [
+          "MEM-HOLD-1aa172ec2500132831",
+          "MEM-HOLD-2fc3f1e767a7e59794",
+          "MEM-HOLD-3d2ca52b06eb1115f3",
+          "MEM-HOLD-452d1a58eea1476812",
+          "MEM-HOLD-6943f59b78a8450b69",
+          "MEM-HOLD-b24664e75edd646776",
+          "MEM-REPE-5a5845fc268f5a9ad9",
+          "MEM-SCIE-63da8f6c3c1c818d32",
+          "MEM-SCIE-77c61f9dd2885367c0",
+          "MEM-SEAR-16b145b18dd60e1811"
+        ],
+        "usage": {
+          "input_tokens": 5674,
+          "output_tokens": 1368,
+          "total_tokens": 7042,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "scientific_authority": false
+      },
+      {
+        "engine_id": "D5",
+        "requested_model": "deepseek-v4-flash",
+        "resolved_model": "deepseek-v4-flash-ga-260731",
+        "prompt_sha256": "99b7ad01234f602cf7d340e1b229a81d6bd361aa0b303b727fb7fe941c922b87",
+        "raw_sha256": "c08be3a180ad0687f321d43ff491799fd24e6ab359891f9b879710c2c8f5e634",
+        "generated": 3,
+        "context_primary_refs": [
+          "arXiv:2608.18066",
+          "arXiv:2608.16114",
+          "arXiv:2608.16590",
+          "arXiv:2608.14270",
+          "arXiv:2606.31763",
+          "arXiv:2606.28971",
+          "arXiv:2608.19013",
+          "arXiv:2608.14036"
+        ],
+        "context_memory_ids": [
+          "MEM-HOLD-1aa172ec2500132831",
+          "MEM-HOLD-2fc3f1e767a7e59794",
+          "MEM-HOLD-3d2ca52b06eb1115f3",
+          "MEM-HOLD-452d1a58eea1476812",
+          "MEM-HOLD-6943f59b78a8450b69",
+          "MEM-HOLD-b24664e75edd646776",
+          "MEM-OPEN-29a589216cf210fa68",
+          "MEM-OPEN-8b30172b29af989aba",
+          "MEM-SEAR-16b145b18dd60e1811",
+          "MEM-SEAR-1ba2b6e8d305dafaad"
+        ],
+        "usage": {
+          "input_tokens": 5068,
+          "output_tokens": 1481,
+          "total_tokens": 6549,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "scientific_authority": false
+      },
+      {
+        "engine_id": "D6",
+        "requested_model": "deepseek-v4-flash",
+        "resolved_model": "deepseek-v4-flash-ga-260731",
+        "prompt_sha256": "79a5f820cd81873b9acef7b318438fdfd3a6cb45c89000ef0113abb8c523e60e",
+        "raw_sha256": "07e96ded4c987a27f86c5f75f2229b576de09eb882a30bcd66c54affe192c98a",
+        "generated": 3,
+        "context_primary_refs": [
+          "arXiv:2606.27243",
+          "arXiv:2608.14621",
+          "arXiv:2606.28279",
+          "arXiv:2608.19013",
+          "arXiv:2608.16590",
+          "arXiv:2608.15763",
+          "arXiv:2608.14036",
+          "arXiv:2606.28971"
+        ],
+        "context_memory_ids": [
+          "MEM-HOLD-1aa172ec2500132831",
+          "MEM-HOLD-2fc3f1e767a7e59794",
+          "MEM-HOLD-3d2ca52b06eb1115f3",
+          "MEM-HOLD-452d1a58eea1476812",
+          "MEM-HOLD-6943f59b78a8450b69",
+          "MEM-HOLD-b24664e75edd646776",
+          "MEM-OPEN-29a589216cf210fa68",
+          "MEM-OPEN-8b30172b29af989aba",
+          "MEM-SCIE-63da8f6c3c1c818d32",
+          "MEM-SCIE-77c61f9dd2885367c0"
+        ],
+        "usage": {
+          "input_tokens": 4991,
+          "output_tokens": 1323,
+          "total_tokens": 6314,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "scientific_authority": false
+      },
+      {
+        "engine_id": "D7",
+        "requested_model": "deepseek-v4-flash",
+        "resolved_model": "deepseek-v4-flash-ga-260731",
+        "prompt_sha256": "5e0ff054d217e6d21de998f3d867cd54a30e9dbea63ebbf99bc3966407d660a9",
+        "raw_sha256": "43c3cdbe1467c93c7a537065b66b0250903739e973cdbf8374360b1bd9830f1c",
+        "generated": 3,
+        "context_primary_refs": [
+          "arXiv:2608.16114",
+          "arXiv:2608.19013",
+          "arXiv:2608.18066",
+          "arXiv:2608.16590",
+          "arXiv:2608.14270",
+          "arXiv:2608.14036",
+          "arXiv:2606.31763",
+          "arXiv:2606.28971"
+        ],
+        "context_memory_ids": [
+          "MEM-HOLD-1aa172ec2500132831",
+          "MEM-HOLD-2fc3f1e767a7e59794",
+          "MEM-HOLD-3d2ca52b06eb1115f3",
+          "MEM-HOLD-452d1a58eea1476812",
+          "MEM-HOLD-6943f59b78a8450b69",
+          "MEM-HOLD-b24664e75edd646776",
+          "MEM-OPEN-29a589216cf210fa68",
+          "MEM-OPEN-8b30172b29af989aba",
+          "MEM-SCIE-63da8f6c3c1c818d32",
+          "MEM-SCIE-77c61f9dd2885367c0"
+        ],
+        "usage": {
+          "input_tokens": 5035,
+          "output_tokens": 1320,
+          "total_tokens": 6355,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "scientific_authority": false
+      }
+    ],
+    "review": [
+      {
+        "batch": 1,
+        "requested_model": "doubao-seed-2.0-mini",
+        "resolved_model": "doubao-seed-2-0-mini-260215",
+        "prompt_sha256": "5e233b5b34baf3739b438b345628cced3f919180dbae7e0a76edb501de400d95",
+        "raw_sha256": "34aa0fdf1185d2af95520e375aee2700d97c006a95df32f21b132da0ea267ba5",
+        "reviewed": 7,
+        "usage": {
+          "input_tokens": 4700,
+          "output_tokens": 1433,
+          "total_tokens": 6133,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "scientific_authority": false
+      },
+      {
+        "batch": 2,
+        "requested_model": "doubao-seed-2.0-mini",
+        "resolved_model": "doubao-seed-2-0-mini-260215",
+        "prompt_sha256": "33348e0a09b2e305dea4df27e97b9b083aa621a9135ba2fe7884e42745438690",
+        "raw_sha256": "237e3ce0fa38391ef8a9a363e14efb8542f8622cb00a9dec9317fb731a7fd66e",
+        "reviewed": 7,
+        "usage": {
+          "input_tokens": 4638,
+          "output_tokens": 1372,
+          "total_tokens": 6010,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "scientific_authority": false
+      },
+      {
+        "batch": 3,
+        "requested_model": "doubao-seed-2.0-mini",
+        "resolved_model": "doubao-seed-2-0-mini-260215",
+        "prompt_sha256": "deba6545fd409950b6d0db5e5510a6e8bd07468fdfb0b7ec58d16bca5d25cf83",
+        "raw_sha256": "8432d599f0004eb06ef0fc3fa45e6eb7e2438a099c2773998b23e6b7e52d20a9",
+        "reviewed": 7,
+        "usage": {
+          "input_tokens": 4523,
+          "output_tokens": 1383,
+          "total_tokens": 5906,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "scientific_authority": false
+      }
+    ]
+  },
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
