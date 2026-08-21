@@ -141,12 +141,21 @@ def _all_difficulty_complete(run_root: Path) -> bool:
     return True
 
 
+def _skill_receipt_path(run_root: Path,bundle_id: str) -> Path:
+    repaired_v4=run_root/"skill-compilation-v4"/f"{bundle_id}.json"
+    if repaired_v4.is_file(): return repaired_v4
+    return run_root/"skill-compilation"/f"{bundle_id}.json"
+
+
 def pending_calibration(run_root: Path) -> dict[str,list[str]]:
     diff=[]
     for row in difficulty_calibration_pairs():
         path=_difficulty_receipt_path(run_root,row["pair_id"])
         if not path.is_file() or load_json(path).get("status")!="DIFFICULTY_COMPLETE": diff.append(row["pair_id"])
-    skills=[row["bundle_id"] for row in skill_calibration_bundles() if not (run_root/"skill-compilation"/f"{row['bundle_id']}.json").is_file()]
+    skills=[]
+    for row in skill_calibration_bundles():
+        path=_skill_receipt_path(run_root,row["bundle_id"])
+        if not path.is_file() or load_json(path).get("status")!="SKILL_COMPILATION_COMPLETE": skills.append(row["bundle_id"])
     return {"difficulty":diff,"skills":skills}
 
 
@@ -178,7 +187,7 @@ def freeze_calibration(run_root: Path) -> dict[str,Any]:
             diff.append(receipt)
         skills=[]
         for row in skill_calibration_bundles():
-            p=run_root/"skill-compilation"/f"{row['bundle_id']}.json"
+            p=_skill_receipt_path(run_root,row["bundle_id"])
             if not p.is_file(): raise RuntimeError(f"missing skill receipt:{row['bundle_id']}")
             value=load_json(p)
             if value.get("status")!="SKILL_COMPILATION_COMPLETE": raise RuntimeError(f"skill calibration failed:{row['bundle_id']}")
