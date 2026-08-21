@@ -306,9 +306,10 @@
     const thread = dayHeadline(ordered), workload = workloadSummary(ordered,3);
     return `<tr class="rt-day-row" id="timeline-${esc(date)}" data-rt-day-toggle="${esc(date)}" tabindex="0" aria-expanded="false"><td class="rt-table-date"><div class="rt-table-date-inner"><button type="button" class="rt-day-toggle" aria-label="${pick("展开当天详情","Open day details")}">＋</button><div><b>${esc(weekDayLabel(date))}</b><small>${esc(date)}</small></div></div></td><td class="rt-num rt-activity-count"><b>${ordered.length}</b><span>${pick("条","events")}</span></td><td class="rt-num"><b>${keyChanges}</b></td><td class="rt-num"><b>${gitChanges}</b></td><td class="rt-num"><b>${artifactChanges}</b></td><td class="rt-num"><b>${researchLines}</b></td><td class="rt-table-thread"><p>${esc(thread)}</p>${workload?`<div class="rt-table-workload">${esc(workload)}</div>`:""}${workloadBar(ordered,pick("当日工作量构成","Daily workload composition"))}</td></tr><tr class="rt-day-detail-row" data-rt-day-detail="${esc(date)}" hidden><td colspan="7"><div class="rt-day-expanded"><div class="rt-order-note">${pick("以下严格按时间从早到晚排列，不按研究问题 / 实验 / 论文等类别重新分组，便于追踪“什么先发生 → 为什么后来改变研究或系统”。","Events below are strictly chronological rather than grouped by type.")}</div><div class="rt-day-events" data-rt-day-events="${esc(date)}" data-rendered="0"><span class="rt-lazy-placeholder">${pick("展开后加载当天详细事件…","Detailed events load on expansion…")}</span></div></div></td></tr>`;
   };
-  const monthTable = (month,dates,groups) => {
+  const monthTable = (month,dates,groups,weekSummaries) => {
     const total = dates.reduce((n,date)=>n+(groups[date]?.length||0),0);
-    return `<section class="rt-month" data-rt-month="${esc(month)}"><header class="rt-month-header"><div><h2>${esc(monthLabel(month))}</h2><span>${esc(month)}</span></div><div><b>${dates.length}</b><span>${pick("个研究日","research days")}</span><b>${total}</b><span>${pick("条活动","activities")}</span></div></header><div class="rt-month-table-wrap"><table class="rt-month-table"><thead><tr><th>${pick("日期","Date")}</th><th>${pick("活动","Activity")}</th><th>${pick("关键变化","Key")}</th><th>${pick("代码 / 系统","Code / system")}</th><th>${pick("科研记录","Research")}</th><th>${pick("研究对象","Objects")}</th><th>${pick("主要脉络 / 工作量","Main thread / workload")}</th></tr></thead><tbody>${dates.map(date=>dayRows(date,groups[date])).join("")}</tbody></table></div></section>`;
+    const rows = dates.map(date=>`${dayRows(date,groups[date])}${weekSummaries.get(date)||""}`).join("");
+    return `<section class="rt-month" data-rt-month="${esc(month)}"><header class="rt-month-header"><div><h2>${esc(monthLabel(month))}</h2><span>${esc(month)}</span></div><div><b>${dates.length}</b><span>${pick("个研究日","research days")}</span><b>${total}</b><span>${pick("条活动","activities")}</span></div></header><div class="rt-month-table-wrap"><table class="rt-month-table"><thead><tr><th>${pick("日期","Date")}</th><th>${pick("活动","Activity")}</th><th>${pick("关键变化","Key")}</th><th>${pick("代码 / 系统","Code / system")}</th><th>${pick("科研记录","Research")}</th><th>${pick("研究对象","Objects")}</th><th>${pick("主要脉络 / 工作量","Main thread / workload")}</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
   };
 
   const stats = (events) => {
@@ -339,31 +340,33 @@
   const categoryOptions = () => ["A","B","C","D","E","F","G"].map(code=>`<option value="${code}" ${state.category===code?"selected":""}>${code}</option>`).join("");
   const controls = () => `<section class="rt-controls" aria-label="${pick("时间轴筛选","Timeline filters")}"><div class="rt-control-group"><b>${pick("层级","Level")}</b><div class="rt-segment"><button type="button" data-rt-importance="all" class="${state.importance==="all"?"active":""}">${pick("全部","All")}</button><button type="button" data-rt-importance="key" class="${state.importance==="key"?"active":""}">${pick("关键","Key")}</button></div></div><div class="rt-control-group"><b>${pick("顺序","Order")}</b><div class="rt-segment"><button type="button" data-rt-order="asc" class="${state.order==="asc"?"active":""}">${pick("因果顺序","Old → new")}</button><button type="button" data-rt-order="desc" class="${state.order==="desc"?"active":""}">${pick("最新优先","New → old")}</button></div></div><div class="rt-control-group"><b>${pick("范围","Range")}</b><div class="rt-segment">${[["all",pick("全部","All")],["30",pick("30 天","30D")],["7",pick("7 天","7D")],["3",pick("3 天","3D")]].map(([v,l])=>`<button type="button" data-rt-range="${v}" class="${state.range===v?"active":""}">${l}</button>`).join("")}</div></div><label class="rt-select"><span>${pick("A–G 大类","A–G category")}</span><select id="timeline-category"><option value="all">${pick("全部大类","All categories")}</option>${categoryOptions()}</select></label><label class="rt-select rt-select-wide"><span>${pick("ResearchItem / Paper","ResearchItem / Paper")}</span><select id="timeline-research"><option value="all">${pick("全部研究对象","All research")}</option>${researchOptions()}</select></label><label class="rt-select"><span>${pick("类型","Type")}</span><select id="timeline-type"><option value="all">${pick("全部类型","All types")}</option>${Object.keys(classes).map(k=>`<option value="${k}" ${state.type===k?"selected":""}>${esc(labelClass(k))}</option>`).join("")}</select></label></section>`;
 
+  const weeklySummaryRows = (events) => {
+    const result = new Map();
+    if (!events.length) return result;
+    const weeks = new Map();
+    events.forEach(e=>{
+      const date = chinaDateKey(e.occurred_at), info = researchWeekInfo(date);
+      const entry = weeks.get(info.number) || {number:info.number,events:[],dates:new Set()};
+      entry.events.push(e); entry.dates.add(date); weeks.set(info.number,entry);
+    });
+    weeks.forEach(week=>{
+      const dates=[...week.dates].sort(), rows=sortDayEvents(week.events), keyChanges=rows.filter(e=>e.importance === "key").length;
+      const start=dates[0], end=dates[dates.length-1], range=start===end?shortDateLabel(start):`${shortDateLabel(start)}–${shortDateLabel(end)}`;
+      const highlights=headlineItems(rows,4), summary=highlights.length?highlights.join("；"):pick("本周以系统维护与追溯工作为主。","Primarily system and provenance work this week.");
+      const workload=workloadSummary(rows,4);
+      const boundaryDate = state.order === "asc" ? dates[dates.length-1] : dates[0];
+      result.set(boundaryDate,`<tr class="rt-week-summary-row" data-rt-week-summary="${week.number}"><td colspan="7"><div class="rt-week-inline"><header><div><b>${pick(`第${week.number}周总结`,`Week ${week.number} summary`)}</b><span>${esc(range)}</span></div><div><strong>${rows.length}</strong><span>${pick("条活动","events")}</span><strong>${dates.length}</strong><span>${pick("个研究日","research days")}</span><em>${pick(`${keyChanges} 个关键变化`,`${keyChanges} key changes`)}</em></div></header><p>${esc(summary)}</p><div class="rt-week-inline-workload"><span>${esc(workload)}</span>${workloadBar(rows,pick("本周工作量构成","Weekly workload composition"))}</div></div></td></tr>`);
+    });
+    return result;
+  };
+
   const feed = (events) => {
     const groups = grouped(events);
     const dates = Object.keys(groups).sort((a,b)=>state.order === "asc" ? a.localeCompare(b) : b.localeCompare(a));
     if (!dates.length) return `<div class="empty">${pick("没有符合当前筛选条件的时间事件。","No timeline events match the current filters.")}</div>`;
     const months = [...new Set(dates.map(date=>date.slice(0,7)))];
-    return months.map(month=>monthTable(month,dates.filter(date=>date.startsWith(`${month}-`)),groups)).join("");
-  };
-
-  const weeklySummary = (events) => {
-    if (!events.length) return "";
-    const weeks = new Map();
-    sortDayEvents(events).forEach(e=>{
-      const date = chinaDateKey(e.occurred_at), info = researchWeekInfo(date);
-      const entry = weeks.get(info.number) || {number:info.number,events:[],dates:new Set()};
-      entry.events.push(e); entry.dates.add(date); weeks.set(info.number,entry);
-    });
-    const orderedWeeks = [...weeks.values()].sort((a,b)=>state.order === "asc" ? a.number-b.number : b.number-a.number);
-    const cards = orderedWeeks.map(week=>{
-      const dates=[...week.dates].sort(), rows=sortDayEvents(week.events), keyChanges=rows.filter(e=>e.importance === "key").length;
-      const start=dates[0], end=dates[dates.length-1], range=start===end?shortDateLabel(start):`${shortDateLabel(start)}–${shortDateLabel(end)}`;
-      const highlights=headlineItems(rows,4), summary=highlights.length?highlights.join("；"):pick("本周以系统维护与追溯工作为主。","Primarily system and provenance work this week.");
-      const workload=workloadSummary(rows,4);
-      return `<article class="rt-week-card" data-rt-week="${week.number}"><header><div><b>${pick(`第${week.number}周`,`Week ${week.number}`)}</b><span>${esc(range)}</span></div><div><strong>${rows.length}</strong><span>${pick("条活动","events")}</span><strong>${dates.length}</strong><span>${pick("个研究日","research days")}</span></div></header><p><b>${pick("一周总结","Weekly summary")}</b>${esc(summary)}</p><div class="rt-week-bottom"><span>${esc(workload)}</span><em>${pick(`${keyChanges} 个关键变化`,`${keyChanges} key changes`)}</em></div>${workloadBar(rows,pick("本周工作量构成","Weekly workload composition"))}</article>`;
-    }).join("");
-    return `<section class="rt-weekly"><div class="rt-weekly-heading"><b>${pick("一周总结","Weekly summaries")}</b><span>${pick("把每日事件压缩成周级进展，先看这一周推进了什么，再下钻到具体日期。","Compress daily events into weekly progress before drilling into individual days.")}</span></div><div class="rt-week-grid">${cards}</div></section>`;
+    const weekSummaries = weeklySummaryRows(events);
+    return months.map(month=>monthTable(month,dates.filter(date=>date.startsWith(`${month}-`)),groups,weekSummaries)).join("");
   };
 
   const activityHeatmap = (events) => {
@@ -396,16 +399,15 @@
 
   window.renderResearchTimeline = function(){
     const events=visible();
-    return `<div id="research-timeline-summary">${compactHeader(events)}</div><div id="research-timeline-heatmap">${activityHeatmap(events)}</div><div id="research-timeline-controls">${controls()}</div><div id="research-timeline-weekly">${weeklySummary(events)}</div><div id="research-timeline-feed" class="rt-feed">${feed(events)}</div><section class="rt-policy-note"><b>${pick("读取规则","Reading rule")}</b><span>${pick("① 月历和月表都按两个月一行排列，默认最新月份、最新日期在前；② 月历用于定位工作量高峰，筛选栏位于月历下方；③ 一周总结先概括这一周推进了什么，再下钻到每日记录；④ 点开当天后，事件严格按时间从早到晚排列；⑤ 无法可靠回填具体时刻的记录仍标记为日期精度，系统工程与追溯记录不会因此获得科研权限。","Calendars and month tables are arranged two per row, newest-first by default. Filters sit below the calendars; weekly summaries capture progress before daily drill-down, while expanded events remain chronological and date-only precision stays explicit.")}</span></section>`;
+    return `<div id="research-timeline-summary">${compactHeader(events)}</div><div id="research-timeline-heatmap">${activityHeatmap(events)}</div><div id="research-timeline-controls">${controls()}</div><div id="research-timeline-feed" class="rt-feed">${feed(events)}</div><section class="rt-policy-note"><b>${pick("读取规则","Reading rule")}</b><span>${pick("① 月历仍按两个月一行，用于快速定位工作量高峰；② 月度明细表改为单列，8 月完整展示后再接 7 月；③ 每周每日记录结束后，在进入上一周前插入周总结；④ 点开当天后，事件严格按时间从早到晚排列；⑤ 无法可靠回填具体时刻的记录仍标记为日期精度，系统工程与追溯记录不会因此获得科研权限。","Calendars remain paired for workload scanning, while monthly detail tables are single-column and newest-first. A weekly summary is inserted at each week boundary before the previous week begins; expanded events remain chronological and date-only precision stays explicit.")}</span></section>`;
   };
 
   const rerender = () => {
-    const summary=document.getElementById("research-timeline-summary"), c=document.getElementById("research-timeline-controls"), h=document.getElementById("research-timeline-heatmap"), w=document.getElementById("research-timeline-weekly"), f=document.getElementById("research-timeline-feed");
+    const summary=document.getElementById("research-timeline-summary"), c=document.getElementById("research-timeline-controls"), h=document.getElementById("research-timeline-heatmap"), f=document.getElementById("research-timeline-feed");
     const events=visible();
     if(summary) summary.innerHTML=compactHeader(events);
     if(c) c.innerHTML=controls();
     if(h) h.innerHTML=activityHeatmap(events);
-    if(w) w.innerHTML=weeklySummary(events);
     if(f) f.innerHTML=feed(events);
     const counter=document.getElementById("result-count");
     if(counter) counter.textContent=pick(`${events.length} 条事件`,`${events.length} events`);
