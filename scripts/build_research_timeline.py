@@ -41,6 +41,16 @@ NON_PUBLIC_SOURCE_PREFIXES = (
     "ark-", "r31-", "r32-final-ideas", "r32-targeted-recheck",
     "final-method-refinement-", "asset-first-stri-",
 )
+AGGREGATE_BINDING_SOURCES = {
+    "generated/current-research-status.json",
+    "generated/research-system-state.json",
+    "generated/research-items.json",
+    "generated/paper-registry.json",
+    "generated/human-terminal-idea-state.json",
+    "generated/p0-admission-state.json",
+    "generated/p0-revived-batch-f0.json",
+    "generated/paper-first-idea-incubation.json",
+}
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -821,6 +831,209 @@ def dated_artifact_count() -> int:
     return total
 
 
+def _alias_key(value: Any) -> str:
+    return re.sub(r"\s+", " ", str(value or "").strip()).casefold()
+
+
+def _canonical_binding_index() -> dict[str, Any]:
+    research = load(GEN / "research-items.json")
+    registry = load(GEN / "paper-registry.json")
+    items = research.get("research_items", []) if isinstance(research, dict) else []
+    experiments = research.get("experiment_records", []) if isinstance(research, dict) else []
+    papers = registry.get("papers", []) if isinstance(registry, dict) else []
+
+    item_by_code = {str(row.get("code")): row for row in items if row.get("code")}
+    exp_by_id = {str(row.get("experiment_id")): row for row in experiments if row.get("experiment_id")}
+    paper_by_id = {str(row.get("paper_id")): row for row in papers if row.get("paper_id")}
+    item_aliases: dict[str, set[str]] = {}
+    exp_aliases: dict[str, set[str]] = {}
+    paper_aliases: dict[str, set[str]] = {}
+    source_items: dict[str, set[str]] = {}
+    source_experiments: dict[str, set[str]] = {}
+    source_papers: dict[str, set[str]] = {}
+
+    def add(mapping: dict[str, set[str]], alias: Any, value: str) -> None:
+        key = _alias_key(alias)
+        if key:
+            mapping.setdefault(key, set()).add(value)
+
+    def add_source(mapping: dict[str, set[str]], path_value: Any, value: str) -> None:
+        path = str(path_value or "").strip()
+        if path:
+            mapping.setdefault(path, set()).add(value)
+
+    for row in items:
+        code = str(row.get("code") or "")
+        if not code:
+            continue
+        add(item_aliases, code, code)
+        add(item_aliases, row.get("id"), code)
+        title = row.get("title") or {}
+        if isinstance(title, dict):
+            add(item_aliases, title.get("en"), code)
+            add(item_aliases, title.get("zh"), code)
+        for ref in row.get("provenance_refs") or []:
+            if isinstance(ref, dict):
+                add_source(source_items, ref.get("path"), code)
+
+    for row in experiments:
+        eid = str(row.get("experiment_id") or "")
+        if not eid:
+            continue
+        add(exp_aliases, eid, eid)
+        add(exp_aliases, row.get("portfolio_code"), eid)
+        for ref in row.get("provenance_refs") or []:
+            if isinstance(ref, dict):
+                add_source(source_experiments, ref.get("path"), eid)
+        for artifact in row.get("artifacts") or []:
+            add_source(source_experiments, artifact, eid)
+
+    for row in papers:
+        pid = str(row.get("paper_id") or "")
+        if not pid:
+            continue
+        add(paper_aliases, pid, pid)
+        add(paper_aliases, row.get("acceptance_paper_id"), pid)
+        add(paper_aliases, row.get("title"), pid)
+        for ref in row.get("provenance_refs") or []:
+            if isinstance(ref, dict):
+                add_source(source_papers, ref.get("path"), pid)
+
+    return {
+        "item_by_code": item_by_code,
+        "exp_by_id": exp_by_id,
+        "paper_by_id": paper_by_id,
+        "item_aliases": item_aliases,
+        "exp_aliases": exp_aliases,
+        "paper_aliases": paper_aliases,
+        "source_items": source_items,
+        "source_experiments": source_experiments,
+        "source_papers": source_papers,
+    }
+
+
+def bind_canonical_refs(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    index = _canonical_binding_index()
+    item_by_code = index["item_by_code"]
+    exp_by_id = index["exp_by_id"]
+    paper_by_id = index["paper_by_id"]
+    code_re = re.compile(r"(?<![A-Z0-9])([A-G]-\d+)(?![A-Z0-9])", re.I)
+
+    def exact(mapping: dict[str, set[str]], value: Any) -> set[str]:
+        return set(mapping.get(_alias_key(value), set()))
+
+    for row in items:
+        research_codes: set[str] = set()
+        experiment_ids: set[str] = set()
+        paper_ids: set[str] = set()
+        identity_text = " | ".join(str(row.get(key) or "") for key in ("research_id", "title", "title_zh"))
+        research_codes.update(code.upper() for code in code_re.findall(identity_text) if code.upper() in item_by_code)
+        research_codes.update(exact(index["item_aliases"], row.get("research_id")))
+        experiment_ids.update(exact(index["exp_aliases"], row.get("research_id")))
+        paper_ids.update(exact(index["paper_aliases"], row.get("research_id")))
+
+        for alias, values in index["item_aliases"].items():
+            if len(alias) >= 8 and alias in _alias_key(identity_text):
+                research_codes.update(values)
+        for alias, values in index["exp_aliases"].items():
+            if len(alias) >= 7 and alias in _alias_key(identity_text):
+                experiment_ids.update(values)
+        for alias, values in index["paper_aliases"].items():
+            if len(alias) >= 6 and alias in _alias_key(identity_text):
+                paper_ids.update(values)
+
+        for source in row.get("sources") or []:
+            if not isinstance(source, dict) or source.get("public") is False:
+                continue
+            path = str(source.get("path") or "")
+            if path in AGGREGATE_BINDING_SOURCES:
+                continue
+            item_hits = index["source_items"].get(path, set())
+            exp_hits = index["source_experiments"].get(path, set())
+            paper_hits = index["source_papers"].get(path, set())
+            if len(item_hits) == 1:
+                research_codes.update(item_hits)
+            if len(exp_hits) == 1:
+                experiment_ids.update(exp_hits)
+            if len(paper_hits) == 1:
+                paper_ids.update(paper_hits)
+
+        # Curated named research lines use stable public aliases even when the
+        # underlying historical artifacts predate ResearchItemState.
+        if re.search(r"\bSTRI\b", identity_text, re.I):
+            if "E-7" in item_by_code:
+                research_codes.add("E-7")
+            if "STRI" in paper_by_id:
+                paper_ids.add("STRI")
+        if re.search(r"AGENT[- ]?SAFETY|first[- ]violation hazard", identity_text, re.I):
+            if "G-1" in item_by_code:
+                research_codes.add("G-1")
+            if "AGENT-SAFETY-R9" in paper_by_id:
+                paper_ids.add("AGENT-SAFETY-R9")
+
+        for eid in list(experiment_ids):
+            parent = str((exp_by_id.get(eid) or {}).get("research_item_code") or "")
+            if parent in item_by_code:
+                research_codes.add(parent)
+        for pid in list(paper_ids):
+            parent = str((paper_by_id.get(pid) or {}).get("source_research_item") or "")
+            if parent in item_by_code:
+                research_codes.add(parent)
+
+        research_refs = []
+        for code in sorted(research_codes):
+            item = item_by_code.get(code) or {}
+            title = item.get("title") or {}
+            research_refs.append({
+                "code": code,
+                "id": item.get("id") or code,
+                "category": item.get("category") or code.split("-", 1)[0],
+                "title_zh": title.get("zh") if isinstance(title, dict) else "",
+                "title_en": title.get("en") if isinstance(title, dict) else "",
+                "scientific_state": item.get("scientific_state") or "",
+            })
+        experiment_refs = []
+        for eid in sorted(experiment_ids):
+            exp = exp_by_id.get(eid) or {}
+            experiment_refs.append({
+                "experiment_id": eid,
+                "research_item_code": exp.get("research_item_code") or "",
+                "portfolio_code": exp.get("portfolio_code") or "",
+                "status": (exp.get("result") or {}).get("status") or "",
+            })
+        paper_refs = []
+        for pid in sorted(paper_ids):
+            paper = paper_by_id.get(pid) or {}
+            paper_refs.append({
+                "paper_id": pid,
+                "source_research_item": paper.get("source_research_item") or "",
+                "paper_stage": paper.get("paper_stage") or paper.get("current_state") or "",
+                "scientific_status": paper.get("scientific_status") or "",
+                "submission_ready": bool(paper.get("submission_ready")),
+            })
+        row["canonical_refs"] = {
+            "research_items": research_refs,
+            "experiments": experiment_refs,
+            "papers": paper_refs,
+            "categories": sorted({ref["category"] for ref in research_refs if ref.get("category")}),
+        }
+        links = row.setdefault("links", [])
+        existing = {(str(link.get("label")), str(link.get("href"))) for link in links if isinstance(link, dict)}
+        for ref in research_refs:
+            href = f"paper-ideas.html?research={ref['code']}#canonical-group-{ref['category'].lower()}"
+            key = (f"ResearchItem {ref['code']}", href)
+            if key not in existing:
+                links.append({"label": key[0], "href": href})
+                existing.add(key)
+        for ref in paper_refs:
+            href = f"selected-paper.html?paper={ref['paper_id']}"
+            key = (f"Paper {ref['paper_id']}", href)
+            if key not in existing:
+                links.append({"label": key[0], "href": href})
+                existing.add(key)
+    return items
+
+
 def dedupe(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     seen, out = set(), []
     for item in items:
@@ -839,11 +1052,11 @@ def build(db_path: Path) -> dict[str, Any]:
         runtime_source = "preserved_committed_snapshot" if runtime else "unavailable"
     else:
         runtime_source = "live_read_only_db"
-    items = dedupe(git_relevant_history_events() + generic_artifact_events() + stri_events() + principle_events() + p0_events() + current_status_events() + runtime)
+    items = bind_canonical_refs(dedupe(git_relevant_history_events() + generic_artifact_events() + stri_events() + principle_events() + p0_events() + current_status_events() + runtime))
     classes = Counter(x["event_class"] for x in items)
     dates = Counter(china_date(x["occurred_at"]) for x in items)
     return {
-        "schema_version":"1.0",
+        "schema_version":"1.1",
         "generated_at":max((x["occurred_at"] for x in items), default=""),
         "projection_policy":{
             "read_only":True,
@@ -855,6 +1068,7 @@ def build(db_path: Path) -> dict[str, Any]:
             "execution_or_provenance_failure_is_not_scientific_failure":True,
             "collapsed_summary_never_replaces_source_artifact":True,
             "before_state_is_omitted_when_not_explicitly_recorded":True,
+            "canonical_entity_bindings_are_read_only":True,
         },
         "summary":{
             "events":len(items),
@@ -863,6 +1077,11 @@ def build(db_path: Path) -> dict[str, Any]:
             "runtime_memory_events":sum(x.get("origin") == "research_memory_db" or x.get("research_id") == "Research Memory" for x in items),
             "key_events":sum(x["importance"]=="key" for x in items),
             "authority_bearing_scoped_events":sum(bool(x["authority"]["scientific"]) for x in items),
+            "canonical_research_bound_events":sum(bool((x.get("canonical_refs") or {}).get("research_items")) for x in items),
+            "canonical_experiment_bound_events":sum(bool((x.get("canonical_refs") or {}).get("experiments")) for x in items),
+            "canonical_paper_bound_events":sum(bool((x.get("canonical_refs") or {}).get("papers")) for x in items),
+            "canonical_research_items_with_events":len({ref.get("code") for x in items for ref in (x.get("canonical_refs") or {}).get("research_items",[]) if ref.get("code")}),
+            "canonical_papers_with_events":len({ref.get("paper_id") for x in items for ref in (x.get("canonical_refs") or {}).get("papers",[]) if ref.get("paper_id")}),
             "days":len(dates),
             "class_counts":dict(sorted(classes.items())),
             "date_counts":dict(sorted(dates.items(), reverse=True)),
@@ -873,12 +1092,21 @@ def build(db_path: Path) -> dict[str, Any]:
 
 def validate(payload: dict[str, Any]) -> None:
     assert payload["projection_policy"]["projection_has_scientific_authority"] is False
+    research = load(GEN / "research-items.json")
+    registry = load(GEN / "paper-registry.json")
+    valid_codes = {str(row.get("code")) for row in research.get("research_items",[]) if row.get("code")}
+    valid_experiments = {str(row.get("experiment_id")) for row in research.get("experiment_records",[]) if row.get("experiment_id")}
+    valid_papers = {str(row.get("paper_id")) for row in registry.get("papers",[]) if row.get("paper_id")}
     seen = set()
     for item in payload["events"]:
         assert item["event_id"] not in seen
         seen.add(item["event_id"])
         assert item["event_class"] in {"idea","experiment","scientific","paper","closure","blocker","system"}
         assert item["authority"]["projection_can_change_state"] is False
+        refs = item.get("canonical_refs") or {}
+        assert all(ref.get("code") in valid_codes for ref in refs.get("research_items",[]))
+        assert all(ref.get("experiment_id") in valid_experiments for ref in refs.get("experiments",[]))
+        assert all(ref.get("paper_id") in valid_papers for ref in refs.get("papers",[]))
         if item["research_id"] == "Research Memory":
             assert item["event_class"] == "system" and item["authority"]["scientific"] is False
 

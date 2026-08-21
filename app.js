@@ -750,7 +750,7 @@ function syncShellLanguage() {
   if (brandSpan) brandSpan.textContent = language === "zh" ? "科研观测站" : "Research Observatory";
   const searchInput = document.getElementById("site-search");
   if (searchInput) searchInput.placeholder = pageId === "research-timeline"
-    ? (language === "zh" ? "搜索时间轴、Idea、实验、论文或状态…" : "Search timeline, ideas, experiments, papers, or states…")
+    ? (language === "zh" ? "搜索时间轴、研究问题、实验、论文或状态…" : "Search timeline, research questions, experiments, papers, or states…")
     : (language === "zh" ? "搜索研究站内容…" : "Search the observatory…");
   const resultCount = document.getElementById("result-count");
   if (resultCount && pageId === "paper-ideas") resultCount.textContent = language === "zh" ? "当前研究方向账本" : "Current idea ledger";
@@ -763,7 +763,7 @@ function syncShellLanguage() {
     sidebarNote.textContent = pageId === "system-overview"
       ? (language === "zh" ? "10 个阅读章节 · 统一 21 阶段科研到投稿生命周期 · 6 个职责层 · P0 七阶段验证子状态机" : "10 reader chapters · canonical 21-stage research-to-submission lifecycle · 6 responsibility layers · P0 7-stage validation sub-machine")
       : pageId === "research-timeline"
-        ? (language === "zh" ? "完整研究历史只读投影 · 北京时间 UTC+8 · 时间轴不新增科研权限" : "Read-only full research history · Asia/Shanghai UTC+8 · no new scientific authority")
+        ? (language === "zh" ? "完整研究历史只读投影 · 时间轴不新增科研权限" : "Read-only full research history · no new scientific authority")
         : pageId === "research-map"
           ? (language === "zh" ? "A–G 当前研究组合 · 只读映射 · 权威结论仍在 ResearchItem" : "Current A–G portfolio · read-only map · authoritative decisions stay on ResearchItems")
           : pageId === "research-directions"
@@ -1485,6 +1485,35 @@ function ideaAnchor(name) { return `idea-${slugify(name)}`; }
 function directionGuideData() { return window.DIRECTION_GUIDE || { macroGroups:[], directions:{} }; }
 function directionGuide(id) { return directionGuideData().directions?.[id] || {}; }
 function directionLiterature(id) { return (window.DIRECTION_LITERATURE || {})[id] || []; }
+const HISTORICAL_TO_CURRENT_CATEGORIES = {
+  D1:["A","B","D"], D2:["B"], D3:["E","G"], D4:["A","E"], D5:["F"],
+  D6:["C","G"], D7:["A","G"], D8:["A","D","G"], D9:["B","C","D"], D10:["A","B"]
+};
+const HISTORICAL_DIRECTION_ANCHORS = {
+  D1:"experience-admission",D2:"memory-lifecycle",D3:"skill-tool-lifecycle",D4:"system-composition",D5:"embodied-world",
+  D6:"negative-evaluation",D7:"security-provenance",D8:"governance-control",D9:"adaptive-objectives",D10:"collective-evolution"
+};
+function canonicalResearchState(){ return window.RESEARCH_ITEM_STATE || {research_items:[],summary:{},categories:[]}; }
+function directionByCode(code){ return portfolioDirections().find(direction=>String(direction.code||"").toUpperCase()===String(code||"").toUpperCase()); }
+function currentCategoriesForDirection(direction){ return HISTORICAL_TO_CURRENT_CATEGORIES[String(direction?.code||"").toUpperCase()] || []; }
+function historicalDirectionsForCategory(category){ return Object.entries(HISTORICAL_TO_CURRENT_CATEGORIES).filter(([,categories])=>categories.includes(category)).map(([code])=>code); }
+function canonicalCategorySnapshot(category){
+  const state=canonicalResearchState(), items=(state.research_items||[]).filter(row=>row.category===category), summary=state.summary?.by_category?.[category]||{};
+  const counts=items.reduce((acc,row)=>(acc[row.scientific_state]=(acc[row.scientific_state]||0)+1,acc),{});
+  return {items,total:Number(summary.portfolio_total||items.length),counts};
+}
+function renderDirectionCurrentBridge(direction){
+  const categories=currentCategoriesForDirection(direction);
+  if(!categories.length)return "";
+  const cards=categories.map(category=>{const snap=canonicalCategorySnapshot(category);const active=snap.items.filter(row=>["HOLD","PAPER_READY"].includes(row.scientific_state)).slice(0,4);const labels=active.map(row=>`${row.code} · ${row.scientific_state}`).join(" · ") || (language==="zh"?"当前无 HOLD / PAPER_READY 主线":"no current HOLD / PAPER_READY line");return `<a class="direction-current-category" href="research-map.html#research-map-${category.toLowerCase()}"><span>${category}</span><div><b>${language==="zh"?`当前 ${category} 类 · ${snap.total} 个对象`:`Current ${category} · ${snap.total} objects`}</b><small>${esc(labels)}</small></div></a>`;}).join("");
+  return `<section class="direction-current-bridge"><header><b>${language==="zh"?"今天落到哪些 canonical ResearchItem":"Current canonical ResearchItem landing"}</b><a href="paper-ideas.html">${language==="zh"?"打开 Research Portfolio →":"Open Research Portfolio →"}</a></header><div>${cards}</div></section>`;
+}
+function renderResearchItemFieldLineage(code){
+  const category=String(code||"").split("-",1)[0], historical=historicalDirectionsForCategory(category);
+  if(!category||!historical.length)return "";
+  const historyLinks=historical.map(dcode=>{const direction=directionByCode(dcode),anchor=direction?.id||HISTORICAL_DIRECTION_ANCHORS[dcode];return anchor?`<a href="research-directions.html#${esc(anchor)}">${esc(dcode)}</a>`:`<span>${esc(dcode)}</span>`;}).join("");
+  return `<nav class="research-item-field-lineage" aria-label="${language==="zh"?"ResearchItem 领域与时间线导航":"ResearchItem field and timeline navigation"}"><span><b>${language==="zh"?"领域谱系":"Field lineage"}</b>${historyLinks}</span><a href="research-map.html#research-map-${category.toLowerCase()}">${language==="zh"?`${category} 类全景`:`${category} landscape`}</a><a href="research-timeline.html?research=${encodeURIComponent(code)}">${language==="zh"?"完整时间线 →":"Full timeline →"}</a></nav>`;
+}
 function directionPaperHref(title) { const slug = slugify(title); return `bibliography.html?paper=${encodeURIComponent(slug)}#ref-${slug}`; }
 function renderDirectionLiterature(direction) {
   const papers = directionLiterature(direction.id);
@@ -1495,22 +1524,23 @@ function renderDirectionLiterature(direction) {
 function renderDirectionCard(direction) {
   const directionIdeas = direction.ideaIds.map(ideaByName).filter(Boolean).sort((a, b) => a.rank - b.rank);
   const detail = directionGuide(direction.id);
-  return `<article class="direction-card" style="--direction-color:${esc(direction.color || "#5b5bd6")}"><div class="direction-card-head"><span class="direction-code">${esc(direction.code)}</span><span class="direction-count">${directionIdeas.length} ${language === "zh" ? "个历史 Idea" : "historical ideas"}</span></div><h4 id="${esc(direction.id)}">${textOf(direction.title)}</h4><p class="direction-question">${textOf(direction.question)}</p><div class="direction-plain"><b>${language === "zh" ? "通俗理解" : "In plain language"}</b><span>${textOf(detail.plain)}</span></div><div class="direction-explanation-grid"><div><b>${language === "zh" ? "主要研究对象" : "Main object"}</b><p>${textOf(detail.object)}</p></div><div><b>${language === "zh" ? "典型例子" : "Typical example"}</b><p>${textOf(detail.example)}</p></div><div><b>${language === "zh" ? "与邻近方向的区别" : "Difference from neighbors"}</b><p>${textOf(detail.distinction)}</p></div><div><b>${language === "zh" ? "科学边界" : "Scientific boundary"}</b><p>${textOf(direction.boundary)}</p></div></div>${renderDirectionLiterature(direction)}<div class="idea-chip-list" aria-label="historical idea lineage">${directionIdeas.map((idea) => `<span class="idea-chip" title="${language === "zh" ? "历史候选谱系，不代表当前合同" : "Historical candidate lineage; not a current contract"}"><span>#${idea.rank}</span>${esc(idea.name)}</span>`).join("")}</div></article>`;
+  return `<article class="direction-card" style="--direction-color:${esc(direction.color || "#5b5bd6")}"><div class="direction-card-head"><span class="direction-code">${esc(direction.code)}</span><span class="direction-count">${directionIdeas.length} ${language === "zh" ? "个历史 Idea" : "historical ideas"}</span></div><h4 id="${esc(direction.id)}">${textOf(direction.title)}</h4><p class="direction-question">${textOf(direction.question)}</p><div class="direction-plain"><b>${language === "zh" ? "通俗理解" : "In plain language"}</b><span>${textOf(detail.plain)}</span></div><div class="direction-explanation-grid"><div><b>${language === "zh" ? "主要研究对象" : "Main object"}</b><p>${textOf(detail.object)}</p></div><div><b>${language === "zh" ? "典型例子" : "Typical example"}</b><p>${textOf(detail.example)}</p></div><div><b>${language === "zh" ? "与邻近方向的区别" : "Difference from neighbors"}</b><p>${textOf(detail.distinction)}</p></div><div><b>${language === "zh" ? "科学边界" : "Scientific boundary"}</b><p>${textOf(direction.boundary)}</p></div></div>${renderDirectionCurrentBridge(direction)}${renderDirectionLiterature(direction)}<div class="idea-chip-list" aria-label="historical idea lineage">${directionIdeas.map((idea) => `<span class="idea-chip" title="${language === "zh" ? "历史候选谱系，不代表当前合同" : "Historical candidate lineage; not a current contract"}"><span>#${idea.rank}</span>${esc(idea.name)}</span>`).join("")}</div></article>`;
 }
 function renderHistoricalDirectionMigration() {
   const rows = [
-    ["D1",language==="zh"?"经验获取、准入与适用范围":"Experience acquisition, admission, and scope","A + B",language==="zh"?"准入/回归进入 A；经验价值、适用边界进入 B。":"Admission/regression moves to A; experience value and applicability move to B."],
+    ["D1",language==="zh"?"经验获取、准入与适用范围":"Experience acquisition, admission, and scope","A + B + D",language==="zh"?"准入/回归进入 A；经验价值、适用边界进入 B；把失败/边界经验转成下一批训练任务的部分进入 D。":"Admission/regression moves to A; experience value and applicability move to B; turning failure/boundary experience into later training tasks contributes to D."],
     ["D2",language==="zh"?"记忆表示、修复与巩固":"Memory representation, repair, and consolidation","B",language==="zh"?"成为当前“记忆、经验与持久知识”的主体。":"Becomes the core of current memory/experience research."],
     ["D3",language==="zh"?"技能、工具与权限生命周期":"Skill, tool, and permission lifecycle","E + G",language==="zh"?"技能/工具结构演化进入 E；权限与风险部分进入 G。":"Skill/tool structural evolution moves to E; permission/risk aspects move to G."],
     ["D4",language==="zh"?"更新路由、语义契约与组合":"Update routing, contracts, and composition","A + E",language==="zh"?"更新冲突和回归控制进入 A；工作流/结构契约进入 E。":"Update interaction/regression moves to A; workflow and structural contracts move to E."],
     ["D5",language==="zh"?"具身、探索与世界适应":"Embodiment, exploration, and world adaptation","F",language==="zh"?"直接沉淀为世界模型与具身适应。":"Maps directly into world-model and embodied adaptation."],
     ["D6",language==="zh"?"负向进化评测与基准科学":"Negative evolution evaluation and benchmark science","C + G",language==="zh"?"评价器偏差进入 C；长期负向安全结果进入 G。":"Evaluator bias moves to C; longitudinal safety failures move to G."],
     ["D7",language==="zh"?"安全、溯源与风险传播":"Security, provenance, and risk propagation","A + G",language==="zh"?"更新链审计成为 A 的系统规则；未来风险主线进入 G。":"Update-chain auditing feeds A; future-risk science moves to G."],
-    ["D8",language==="zh"?"成本、监督与元控制":"Cost, oversight, and meta-control","A + G",language==="zh"?"更新预算/停止规则进入 A；安全监督与权限升级进入 G。":"Update budgets/stopping move to A; safety oversight and escalation move to G."],
-    ["D9",language==="zh"?"目标、个性化与内生反馈":"Goals, personalization, and performative feedback","B + C · sparse",language==="zh"?"个性化记忆进入 B、反馈漂移进入 C；当前组合对目标演化覆盖仍较少。":"Personalized memory maps to B and feedback drift to C; goal evolution remains thinly covered."],
+    ["D8",language==="zh"?"成本、监督与元控制":"Cost, oversight, and meta-control","A + D + G",language==="zh"?"更新预算/停止规则进入 A；课程选择和难度调度的元控制进入 D；安全监督与权限升级进入 G。":"Update budgets/stopping move to A; curriculum selection and difficulty scheduling contribute to D; safety oversight and escalation move to G."],
+    ["D9",language==="zh"?"目标、个性化与内生反馈":"Goals, personalization, and performative feedback","B + C + D · sparse",language==="zh"?"个性化记忆进入 B、反馈漂移进入 C；目标条件下的任务生成与课程漂移进入 D，但当前覆盖仍较少。":"Personalized memory maps to B, feedback drift to C, and goal-conditioned task generation/curriculum drift contributes to D, where current coverage remains thin."],
     ["D10",language==="zh"?"跨 Agent 迁移与复数谱系":"Cross-agent transfer and plural lineages","A + B · sparse",language==="zh"?"迁移可靠性进入 A/B；当前没有独立主线持续推进。":"Transfer reliability maps to A/B; no standalone current line is advancing."],
   ];
-  return `<section class="panel historical-taxonomy-migration"><div class="idea-panel-heading"><div><div class="eyebrow">${language==="zh"?"历史分类迁移":"TAXONOMY MIGRATION"}</div><h2 id="historical-to-current-taxonomy">${language==="zh"?"旧 D1–D10 没有废弃：它们被重新编译进当前 A–G":"D1–D10 was not discarded; it was recompiled into current A–G"}</h2><p class="section-intro">${language==="zh"?"这是多对多迁移，不是简单改名。历史方向解释领域问题如何形成；当前 A–G 按我们真正维护的 ResearchItem 边界重新组织。":"This is a many-to-many migration, not a rename. Historical directions explain how the field questions formed; current A–G follows the ResearchItem boundaries we actually maintain."}</p></div><a class="link-btn" href="research-map.html">${language==="zh"?"打开当前研究组合图谱 →":"Open Current Research Map →"}</a></div><div class="history-table-scroll"><table class="matrix"><thead><tr><th>${language==="zh"?"历史方向":"Historical"}</th><th>${language==="zh"?"原问题":"Former problem"}</th><th>${language==="zh"?"当前 A–G 落点":"Current A–G"}</th><th>${language==="zh"?"迁移说明":"Migration"}</th></tr></thead><tbody>${rows.map(row=>`<tr><th>${esc(row[0])}</th><td>${esc(row[1])}</td><td><strong>${esc(row[2])}</strong></td><td>${esc(row[3])}</td></tr>`).join("")}</tbody></table></div></section>`;
+  const currentCell = (rawCategories) => String(rawCategories).replace(/ · sparse/g,"").split("+").map(x=>x.trim()).filter(x=>/^[A-G]$/.test(x)).map(category=>{const snap=canonicalCategorySnapshot(category);return `<a class="taxonomy-current-link" href="paper-ideas.html#canonical-group-${category.toLowerCase()}"><b>${category}</b><span>${snap.total} ${language==="zh"?"个对象":"objects"}</span></a>`;}).join("");
+  return `<section class="panel historical-taxonomy-migration"><div class="idea-panel-heading"><div><div class="eyebrow">${language==="zh"?"历史分类迁移":"TAXONOMY MIGRATION"}</div><h2 id="historical-to-current-taxonomy">${language==="zh"?"旧 D1–D10 没有废弃：它们被重新编译进当前 A–G":"D1–D10 was not discarded; it was recompiled into current A–G"}</h2><p class="section-intro">${language==="zh"?"这是多对多迁移，不是简单改名。现在表里的 A–G 不是静态文字，而是直接读取 canonical ResearchItemState 的对象数，并可跳到对应 Research Portfolio。":"This is a many-to-many migration, not a rename. The A–G cells now read canonical ResearchItemState counts and link directly to the corresponding Research Portfolio category."}</p></div><a class="link-btn" href="research-map.html">${language==="zh"?"打开当前研究组合图谱 →":"Open Current Research Map →"}</a></div><div class="history-table-scroll"><table class="matrix"><thead><tr><th>${language==="zh"?"历史方向":"Historical"}</th><th>${language==="zh"?"原问题":"Former problem"}</th><th>${language==="zh"?"当前 canonical 落点":"Current canonical landing"}</th><th>${language==="zh"?"迁移说明":"Migration"}</th></tr></thead><tbody>${rows.map(row=>`<tr><th><a href="#${esc(directionByCode(row[0])?.id||"")}">${esc(row[0])}</a></th><td>${esc(row[1])}</td><td><div class="taxonomy-current-links">${currentCell(row[2])}</div></td><td>${esc(row[3])}</td></tr>`).join("")}</tbody></table></div></section>`;
 }
 function renderDirectionMap(config) {
   const directions = portfolioDirections();
@@ -2321,6 +2351,7 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
     <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(current.title)}</b><small>${originalNumber ? `${language === "zh" ? "原讨论" : "Original"} Idea ${originalNumber} · ` : ""}${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><div><span class="human-status-badge human-status-${tone}">${esc(humanParentFinalStatusLabel(currentStatus))}</span><span class="briefing-reason-pill tone-${esc(briefing.reason.tone)}">${esc(textOf(briefing.reason))}</span></div><p>${esc(briefing.why)}</p></div></summary>
     <div class="human-idea-body">
       <div class="canonical-lifecycle-strip"><span><b>${language === "zh" ? "当前最终状态" : "Current final state"}</b>${esc(humanParentFinalStatusLabel(currentStatus))}</span><span><b>${language === "zh" ? "历史里程碑" : "Historical milestone"}</b>${esc(lifecycleStage)}</span><span><b>${language === "zh" ? "最新证据处置" : "Latest evidence disposition"}</b>${esc(disposition.label)}</span><span><b>${language === "zh" ? "正式实验权限" : "Formal experiment authority"}</b>${experimentAuthority}</span></div>
+      ${renderResearchItemFieldLineage(code)}
       <section class="idea-briefing-summary tone-${esc(briefing.reason.tone)}"><header><b>${language === "zh" ? "给师兄的 30 秒结论" : "30-second briefing"}</b><span>${esc(textOf(briefing.reason))}</span></header><div><section><b>${language === "zh" ? "它原本想做什么" : "What it tried to do"}</b><p>${esc(briefing.wanted)}</p></section><section class="briefing-why"><b>${language === "zh" ? "为什么现在不继续" : "Why it is not continuing"}</b><p>${esc(briefing.why)}</p></section><section><b>${language === "zh" ? "这轮学到了什么" : "What we learned"}</b><p>${esc(briefing.learned)}</p></section><section><b>${language === "zh" ? "什么情况下重开" : "When it can reopen"}</b><p>${esc(plainReopen)}</p></section></div></section>
       ${evidenceTrack}
       ${renderConcreteMethodComparison(PARENT_SIMPLE_COMPARISONS_ZH[code],"parent")}
@@ -2482,7 +2513,7 @@ function renderSupplementalIdeaCard(row) {
   const briefing=language==="zh"?(SUPPLEMENTAL_BRIEFING_ZH[id]||{tone:"simple",label:"当前独立方法已收口",why:currentRole,learned:"保留有效的诊断、协议或工程资产。"}):{tone:"simple",label:"Standalone method is closed",why:currentRole,learned:"Useful diagnostics, protocol, or engineering assets are retained."};
   const terminalPanel=source === "terminal-independent" ? `<section class="supplemental-terminal-panel"><b>${language === "zh" ? "当前终态、停止原因与重开条件" : "Current terminal state, stop reason, and reopen condition"}</b><div><span><strong>${language === "zh" ? "当前状态" : "Current state"}</strong>${terminalDisplay.stopped ? (language === "zh" ? "已停止独立升级；历史 P0 仅作谱系记录" : "Standalone escalation stopped; historical P0 is lineage only") : humanReviewStatusLabel(idea.terminal_state || idea.status || "")}</span><span><strong>${language === "zh" ? "失败层" : "Failure layer"}</strong>${esc(textOf(terminalDisplay.failureLayer))}</span><span><strong>${language === "zh" ? "为什么停止" : "Why it stopped"}</strong>${esc(currentRole)}</span><span><strong>${language === "zh" ? "什么情况下重开" : "Reopen only if"}</strong>${esc(textOf(terminalDisplay.reopen))}</span></div>${terminalDisplay.decision ? `<small>${esc(terminalDisplay.decision)}</small>` : ""}</section>` : "";
   const experimentIdea={...idea,decisive_metric:idea.decisive_metric||terminalDisplay.metric,success_gate:idea.success_gate||terminalDisplay.reopen};
-  return `<details class="supplemental-idea-card" id="new-${esc(id)}" data-briefing-reason="${esc(briefing.tone)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><div class="supplemental-summary-brief"><strong class="briefing-reason-pill tone-${esc(briefing.tone)}">${esc(briefing.label)}</strong><p>${esc(briefing.why)}</p></div></summary><div class="supplemental-human-grid"><section class="supplemental-briefing-section"><header><b>${language==="zh"?"给师兄的 30 秒结论":"30-second briefing"}</b><span>${esc(briefing.label)}</span></header><p><strong>${language==="zh"?"为什么现在不继续：":"Why it is not continuing: "}</strong>${esc(briefing.why)}</p><p><strong>${language==="zh"?"留下了什么：":"What survives: "}</strong>${esc(briefing.learned)}</p><p><strong>${language==="zh"?"重开条件：":"Reopen condition: "}</strong>${esc(textOf(terminalDisplay.reopen))}</p></section>${renderConcreteMethodComparison(SUPPLEMENTAL_SIMPLE_COMPARISONS_ZH[id],"supplemental")}<details class="supplemental-complete-intro"><summary>${language==="zh"?"完整 Idea 介绍":"Complete idea introduction"}</summary><div class="supplemental-intro-grid"><section><b>${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</b><p>${esc(problem)}</p></section><section><b>${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</b><p>${esc(intuition)}</p></section><section><b>${language === "zh" ? "具体准备怎么做" : "What would we actually do?"}</b><p>${esc(method || methodLogic)}</p></section><section><b>${language === "zh" ? "为什么值得试" : "Why might this work?"}</b><p>${esc(rationale || importance || problem)}</p></section></div></details>${terminalPanel}<details class="human-technical-details supplemental-technical-details"><summary>${language === "zh" ? "方法细节与论文边界" : "Method details and paper boundary"}<small>${language === "zh" ? "审方法或 novelty 时再展开" : "Open for method/novelty review"}</small></summary><div class="human-evidence-grid"><section><h4 data-toc="false">${language === "zh" ? "方法步骤" : "Method steps"}</h4><p>${esc(methodLogic)}</p></section><section><h4 data-toc="false">${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${esc(importance || rationale || problem)}</p></section><section><h4 data-toc="false">${language === "zh" ? "相比简单方法多了什么" : "What it adds"}</h4><p>${esc(advantage)}</p></section><section><h4 data-toc="false">${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${esc(collision)}</p></section><section><h4 data-toc="false">${language === "zh" ? "最强对照" : "Strongest baseline"}</h4><p>${baseline}</p></section><section><h4 data-toc="false">${language === "zh" ? "当前判断" : "Current role"}</h4><p>${esc(currentRole)}</p></section></div></details>${renderIdeaExperimentSection(experimentIdea,{status:source === "terminal-independent" ? (idea.terminal_state || idea.status || "new-review") : "new-review"},sourceIdeas)}</div></details>`;
+  return `<details class="supplemental-idea-card" id="new-${esc(id)}" data-research-code="${esc(code)}" data-briefing-reason="${esc(briefing.tone)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><div class="supplemental-summary-brief"><strong class="briefing-reason-pill tone-${esc(briefing.tone)}">${esc(briefing.label)}</strong><p>${esc(briefing.why)}</p></div></summary><div class="supplemental-human-grid"><section class="supplemental-briefing-section"><header><b>${language==="zh"?"给师兄的 30 秒结论":"30-second briefing"}</b><span>${esc(briefing.label)}</span></header><p><strong>${language==="zh"?"为什么现在不继续：":"Why it is not continuing: "}</strong>${esc(briefing.why)}</p><p><strong>${language==="zh"?"留下了什么：":"What survives: "}</strong>${esc(briefing.learned)}</p><p><strong>${language==="zh"?"重开条件：":"Reopen condition: "}</strong>${esc(textOf(terminalDisplay.reopen))}</p></section>${renderConcreteMethodComparison(SUPPLEMENTAL_SIMPLE_COMPARISONS_ZH[id],"supplemental")}<details class="supplemental-complete-intro"><summary>${language==="zh"?"完整 Idea 介绍":"Complete idea introduction"}</summary><div class="supplemental-intro-grid"><section><b>${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</b><p>${esc(problem)}</p></section><section><b>${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</b><p>${esc(intuition)}</p></section><section><b>${language === "zh" ? "具体准备怎么做" : "What would we actually do?"}</b><p>${esc(method || methodLogic)}</p></section><section><b>${language === "zh" ? "为什么值得试" : "Why might this work?"}</b><p>${esc(rationale || importance || problem)}</p></section></div></details>${terminalPanel}<details class="human-technical-details supplemental-technical-details"><summary>${language === "zh" ? "方法细节与论文边界" : "Method details and paper boundary"}<small>${language === "zh" ? "审方法或 novelty 时再展开" : "Open for method/novelty review"}</small></summary><div class="human-evidence-grid"><section><h4 data-toc="false">${language === "zh" ? "方法步骤" : "Method steps"}</h4><p>${esc(methodLogic)}</p></section><section><h4 data-toc="false">${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${esc(importance || rationale || problem)}</p></section><section><h4 data-toc="false">${language === "zh" ? "相比简单方法多了什么" : "What it adds"}</h4><p>${esc(advantage)}</p></section><section><h4 data-toc="false">${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${esc(collision)}</p></section><section><h4 data-toc="false">${language === "zh" ? "最强对照" : "Strongest baseline"}</h4><p>${baseline}</p></section><section><h4 data-toc="false">${language === "zh" ? "当前判断" : "Current role"}</h4><p>${esc(currentRole)}</p></section></div></details>${renderIdeaExperimentSection(experimentIdea,{status:source === "terminal-independent" ? (idea.terminal_state || idea.status || "new-review") : "new-review"},sourceIdeas)}</div></details>`;
 }
 function renderNewIdeaCandidates() {
   const ledger = humanTerminalState();
@@ -3710,7 +3741,7 @@ function renderPage() {
   document.querySelector(".language-toggle")?.replaceChildren(document.createTextNode(language === "en" ? "中文" : "English"));
   bindPageEvents();
   if (pageId === "research-timeline") window.bindResearchTimelineEvents?.();
-  if (pageId === "paper-ideas") { initCanonicalIdeaFilters(); initIdeaBriefingMode(); }
+  if (pageId === "paper-ideas") { initCanonicalIdeaFilters(); initIdeaBriefingMode(); focusResearchItemFromUrl(); }
   if (pageId === "bibliography") renderPaperList(document.getElementById("site-search")?.value || "");
   bindPaperCardEvents();
   hydrateCitations(root);
@@ -3718,6 +3749,26 @@ function renderPage() {
   localizeRenderedChinese(root);
   buildToc();
   requestAnimationFrame(() => applyReadabilityFloor());
+}
+
+function focusResearchItemFromUrl() {
+  if (pageId !== "paper-ideas") return;
+  const code = new URLSearchParams(window.location.search || "").get("research");
+  if (!code) return;
+  const normalized = String(code).trim().toUpperCase();
+  const candidates = [
+    document.getElementById(`idea-${normalized.toLowerCase()}`),
+    ...[...document.querySelectorAll("[data-research-code],[data-pf-code],[data-closed-code]")].filter(node => String(node.dataset.researchCode || node.dataset.pfCode || node.dataset.closedCode || "").toUpperCase() === normalized)
+  ].filter(Boolean);
+  const target = candidates[0];
+  if (!target) return;
+  let node = target;
+  while (node) {
+    if (node.tagName === "DETAILS") node.open = true;
+    node = node.parentElement;
+  }
+  target.classList.add("research-item-url-focus");
+  requestAnimationFrame(() => target.scrollIntoView({behavior:"smooth",block:"center"}));
 }
 
 function bindSearch() {

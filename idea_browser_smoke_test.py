@@ -59,7 +59,7 @@ def main() -> None:
     if not firefox or not geckodriver:
         raise SystemExit("SKIP: Firefox/geckodriver unavailable")
     driver_command = [geckodriver, "--port", str(WEBDRIVER_PORT)]
-    capabilities = {"capabilities": {"alwaysMatch": {"acceptInsecureCerts": True, "moz:firefoxOptions": {"binary": firefox, "args": ["-headless"]}}}}
+    capabilities = {"capabilities": {"alwaysMatch": {"acceptInsecureCerts": True, "pageLoadStrategy": "none", "moz:firefoxOptions": {"binary": firefox, "args": ["-headless"]}}}}
     httpd = subprocess.Popen([sys.executable, "-m", "http.server", str(HTTP_PORT), "--bind", "127.0.0.1"], cwd=ROOT, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     driver = subprocess.Popen(driver_command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     session_id = ""
@@ -89,6 +89,13 @@ def main() -> None:
                     pass
                 time.sleep(interval)
             return False
+
+        def ensure_language(target: str) -> None:
+            desired = "zh-CN" if target == "zh" else "en"
+            current = execute(session_id, "return document.documentElement.lang || ''")
+            if current != desired:
+                execute(session_id, "document.querySelector('.language-toggle')?.click();")
+                require(wait_for(f"return document.documentElement.lang === '{desired}';", timeout=8), f"language did not switch to {target}")
 
         navigate("/system-overview.html", wait=1)
         require(wait_for("return (document.body.textContent||'').includes('SATURATION / DEAD-END MEMORY') && (document.body.textContent||'').includes('PAPER-FIRST');"), "research-system dynamic sections did not become ready")
@@ -149,11 +156,11 @@ def main() -> None:
           agentSafetySplit: window.AGENT_SAFETY_PROGRAM_STATE?.canonical_protocol?.execution_invariants?.probe_split || {},
           text: document.body.textContent || ''
         };""")
-        require(system["chapters"] == 10 and system["readerChapters"] == 10 and system["readerPhases"] == 9 and system["deepDives"] == 4 and system["authorityCards"] == 3, f"research-system 21-stage reading framework is incomplete: chapters={system['chapters']} roadmap={system['readerChapters']} phases={system['readerPhases']} deep={system['deepDives']} authority={system['authorityCards']}")
+        require(system["chapters"] == 10 and system["readerChapters"] == 0 and system["readerPhases"] == 9 and system["deepDives"] == 4 and system["authorityCards"] == 3, f"research-system 21-stage chapter framework is incomplete or the retired duplicate roadmap leaked back in: chapters={system['chapters']} roadmap={system['readerChapters']} phases={system['readerPhases']} deep={system['deepDives']} authority={system['authorityCards']}")
         require(system["agentSafetySummary"] == 1 and system["agentSafetyStage"] == "CURRENT_SAFETY_SUPPORT_STOP" and system["agentSafetyRuntimeStatus"] == "READY_RUNTIME_MODEL_ASSETS_PINNED" and system["agentSafetyBoundedEvidence"] is False and system["agentSafetyQualification"] is False and system["agentSafetyOverallExecution"] is False and system["agentSafetyQualificationStatus"] == "STOP_SUPPORT_ZERO_CURRENTLY_SAFE_FROZEN_STATES" and system["agentSafetyQualifiedStates"] == 0 and system["agentSafetyPrincipleDeadEnd"] is False and system["agentSafetyHeldoutFuture"] is False and system["agentSafetyP0"] is False and system["agentSafetyGpu"] is False, f"research-system Agent Safety support-stop state drift: {system['agentSafetySummary']}/{system['agentSafetyStage']}/{system['agentSafetyRuntimeStatus']}/{system['agentSafetyBoundedEvidence']}/{system['agentSafetyQualification']}/{system['agentSafetyOverallExecution']}/{system['agentSafetyQualificationStatus']}/{system['agentSafetyQualifiedStates']}/{system['agentSafetyPrincipleDeadEnd']}")
         sab=system["agentSafetyBudget"]; sas=system["agentSafetySplit"]
         require((sab.get("states"),sab.get("history_strata"),sas.get("qualification_count"),sas.get("heldout_count"),sab.get("total_model_evaluations_upper_bound"),sab.get("contract_max_model_calls")) == (4,2,3,8,240,256) and sas.get("disjoint") is True, f"research-system Agent Safety canonical harness-v2 drift: {sab}/{sas}")
-        require(system["agentSafetyMetadata"] == "VERIFIED" and system["agentSafetyMetadataTransport"] == "GITHUB_ACTIONS_LITERAL_HF_CAPTURE" and system["agentSafetyReceiptClass"] == "NON_AUTHORITATIVE_CACHE_CONTENT_CHECK" and "240/256" in system["text"] and "SUPPORT STOP" in system["text"].upper() and "0/4" in system["text"], f"research-system Agent Safety provenance/support-stop display drift: {system['agentSafetyMetadata']}/{system['agentSafetyMetadataTransport']}/{system['agentSafetyReceiptClass']}")
+        require(system["agentSafetyMetadata"] == "VERIFIED" and system["agentSafetyMetadataTransport"] == "GITHUB_ACTIONS_LITERAL_HF_CAPTURE" and system["agentSafetyReceiptClass"] == "NON_AUTHORITATIVE_CACHE_CONTENT_CHECK" and "SUPPORT STOP" in system["text"].upper() and ("当前实验实现不能支持公平因果比较" in system["text"] or "does not satisfy the prerequisite of reliably producing currently safe states" in system["text"]), f"research-system Agent Safety provenance/support-stop reader boundary drift: {system['agentSafetyMetadata']}/{system['agentSafetyMetadataTransport']}/{system['agentSafetyReceiptClass']}")
         require(system["responsibilityLayers"] == 6 and system["temporalStages"] == 21 and system["componentLayerHeaders"] == 6 and system["aiCheckpoints"] == 5, f"research-system architecture/AI clinic is incomplete: layers={system['responsibilityLayers']} stages={system['temporalStages']} component-groups={system['componentLayerHeaders']} ai={system['aiCheckpoints']}")
         require((system["architectureSummary"].get("temporal_stages"),system["architectureSummary"].get("reader_chapters"),system["architectureSummary"].get("reader_stage_coverage"),system["architectureSummary"].get("reader_stage_missing"),system["architectureSummary"].get("reader_stage_duplicates"),system["architectureSummary"].get("reader_stage_extra"),system["architectureSummary"].get("functional_layers"),system["architectureSummary"].get("assigned_components"),system["architectureSummary"].get("unassigned_components"),system["architectureSummary"].get("cross_cutting_controls"),system["architectureSummary"].get("orphan_cross_cutting_controls")) == (21,10,21,0,0,0,6,32,0,3,0), f"backend architecture manifest is stale in browser state: {system['architectureSummary']}")
         require(system["methodologyControls"] == 3 and "Are candidate problems too similar?" in system["text"] and "Can another person rerun the key result from scratch?" in system["text"], f"cross-cutting methodology controls are missing: {system['methodologyControls']}")
@@ -264,6 +271,14 @@ def main() -> None:
         request("POST", f"/session/{session_id}/window/rect", {"width": 1440, "height": 1000})
         time.sleep(1)
 
+        # System Overview is intentionally a very heavy 21-stage audit surface.
+        # Start a fresh browser session before the Timeline/Portfolio suite so
+        # the second half measures those pages rather than retained system-page
+        # DOM/JS pressure inside a single long-lived Firefox content process.
+        request("DELETE", f"/session/{session_id}")
+        session_id = request("POST", "/session", capabilities)["value"]["sessionId"]
+        request("POST", f"/session/{session_id}/window/rect", {"width": 1440, "height": 1000})
+
         navigate("/research-timeline.html", 3)
         timeline = execute(session_id, """return {
           title: document.querySelector('h1')?.textContent?.trim() || '',
@@ -310,7 +325,7 @@ def main() -> None:
         };""")
         require(timeline["title"] == "研究时间轴", f"timeline must default to its Chinese page title: {timeline}")
         require(timeline["monthTables"] == timeline["heatMonths"] == timeline["sourceMonths"] and timeline["monthTables"] >= 2 and timeline["firstHeatMonth"] >= timeline["lastHeatMonth"] and timeline["dayGroups"] >= 20 and timeline["openDays"] == 0, f"timeline must render one workload calendar and one collapsed table per month: {timeline}")
-        require(timeline["eventRows"] == timeline["visibleCount"] == int(timeline["summary"].get("events") or 0) and timeline["eventRows"] >= 756, f"timeline rendered event count must match the generated full projection: {timeline}")
+        require(timeline["eventRows"] == 0 and timeline["visibleCount"] == int(timeline["summary"].get("events") or 0) and timeline["visibleCount"] >= 756, f"timeline must account for the full projection while lazily avoiding hundreds of collapsed event cards at first paint: {timeline}")
         require(timeline["timezone"] == "Asia/Shanghai" and timeline["descActive"] and timeline["firstHeatMonth"] == "2026-08" and timeline["lastHeatMonth"] == "2026-07" and timeline["firstMonth"] == "2026-08" and timeline["lastMonth"] == "2026-07" and timeline["firstDay"] >= timeline["lastDay"] and "月历和月表" in timeline["zhText"] and "本页只是只读历史投影" in timeline["zhText"], f"timeline paired-month/newest-first/internal-timezone/authority boundary is incomplete: {timeline}")
         require(timeline["legendItems"] == 7 and timeline["legendBackgrounds"] == 7 and "linear-gradient" in timeline["heroAccent"], f"timeline compact header must reuse all seven semantic colors in its legend and accent: {timeline}")
         require(timeline["oldTopLayers"] == 0 and len(set(timeline["heatPairTop"])) == 1 and len(set(timeline["tablePairTop"])) == 1 and timeline["controlsTop"] >= timeline["heatBottom"] and timeline["controlsHeight"] <= 64, f"timeline must use one compact header, paired months, and one-line filters below calendars: {timeline}")
@@ -323,8 +338,8 @@ def main() -> None:
         require(timeline["ideaLegend"] == "研究方向 / 问题发现" and "研究问题" in timeline["searchPlaceholder"] and "Research Memory" not in timeline["latestWeekSummary"], f"timeline Chinese UI should prefer Chinese terminology while preserving technical identifiers only when necessary: {timeline}")
         execute(session_id, "document.querySelector('.rt-day-row')?.click();")
         time.sleep(0.3)
-        timeline_expand = execute(session_id, """const row=document.querySelector('.rt-day-row'); const detail=row?.nextElementSibling; return {expanded:row?.getAttribute('aria-expanded')||'',detailVisible:detail?.hidden===false,toggle:row?.querySelector('.rt-day-toggle')?.textContent||''};""")
-        require(timeline_expand == {"expanded": "true", "detailVisible": True, "toggle": "−"}, f"timeline day row must expand its chronological detail row: {timeline_expand}")
+        timeline_expand = execute(session_id, """const row=document.querySelector('.rt-day-row'); const detail=row?.nextElementSibling; return {expanded:row?.getAttribute('aria-expanded')||'',detailVisible:detail?.hidden===false,toggle:row?.querySelector('.rt-day-toggle')?.textContent||'',loaded:detail?.querySelectorAll('.rt-event').length||0,rendered:detail?.querySelector('.rt-day-events')?.dataset?.rendered||''};""")
+        require(timeline_expand["expanded"] == "true" and timeline_expand["detailVisible"] is True and timeline_expand["toggle"] == "−" and timeline_expand["loaded"] > 0 and timeline_expand["rendered"] == "1", f"timeline day row must lazily render and expand its chronological detail row: {timeline_expand}")
         request("POST", f"/session/{session_id}/window/rect", {"width": 390, "height": 844})
         time.sleep(0.5)
         timeline_mobile = execute(session_id, """const wrap=document.querySelector('.rt-month-table-wrap'); return {inner:window.innerWidth,scroll:document.documentElement.scrollWidth,wrapClient:wrap?.clientWidth||0,wrapScroll:wrap?.scrollWidth||0};""")
@@ -332,7 +347,43 @@ def main() -> None:
         request("POST", f"/session/{session_id}/window/rect", {"width": 1440, "height": 1000})
         time.sleep(0.5)
 
+        navigate("/research-timeline.html?research=A-3", 2)
+        execute(session_id, "document.querySelector('.rt-day-row')?.click();")
+        time.sleep(0.2)
+        a3_timeline = execute(session_id, """return {
+          selected: document.querySelector('#timeline-research')?.value || '',
+          events: [...document.querySelectorAll('.rt-event')].map(x=>x.dataset.canonicalResearch||''),
+          chips: [...document.querySelectorAll('.rt-canonical-research b')].map(x=>x.textContent.trim()),
+          url: location.search,
+          visible: Number(document.querySelector('.rt-hero-kpis span:first-child b')?.textContent || 0)
+        };""")
+        require(a3_timeline["selected"] == "ri:A-3" and a3_timeline["visible"] >= 1 and a3_timeline["events"] and all("A-3" in value.split() for value in a3_timeline["events"]) and "A-3" in a3_timeline["chips"] and "research=A-3" in a3_timeline["url"], f"timeline must provide a shareable canonical A-3 provenance view: {a3_timeline}")
+        navigate("/research-timeline.html?paper=STRI", 2)
+        execute(session_id, "document.querySelector('.rt-day-row')?.click();")
+        time.sleep(0.2)
+        stri_timeline = execute(session_id, """return {
+          selected: document.querySelector('#timeline-research')?.value || '',
+          events: [...document.querySelectorAll('.rt-event')].map(x=>x.dataset.canonicalPaper||''),
+          paperChips: [...document.querySelectorAll('.rt-canonical-paper b')].map(x=>x.textContent.trim()),
+          visible: Number(document.querySelector('.rt-hero-kpis span:first-child b')?.textContent || 0)
+        };""")
+        require(stri_timeline["selected"] == "paper:STRI" and stri_timeline["visible"] >= 1 and stri_timeline["events"] and all("STRI" in value.split() for value in stri_timeline["events"]) and "STRI" in stri_timeline["paperChips"], f"timeline must provide a canonical STRI PaperState provenance view: {stri_timeline}")
+
+        navigate("/research-directions.html", 4)
+        directions_bridge = execute(session_id, """return {
+          directions: document.querySelectorAll('.direction-card').length,
+          bridges: document.querySelectorAll('.direction-current-bridge').length,
+          currentLinks: document.querySelectorAll('.direction-current-category').length,
+          migrationLinks: document.querySelectorAll('.taxonomy-current-link').length,
+          canonicalSummary: window.RESEARCH_ITEM_STATE?.summary || {},
+          bridgeText: document.querySelector('.historical-taxonomy-migration')?.textContent || '',
+          hrefs: [...document.querySelectorAll('.taxonomy-current-link')].map(x=>x.getAttribute('href')||'')
+        };""")
+        require(directions_bridge["directions"] == directions_bridge["bridges"] == 10 and directions_bridge["currentLinks"] == directions_bridge["migrationLinks"] == 21, f"all D1-D10 directions must expose the many-to-many canonical A-G bridge, including the reconstructed D curriculum lineage: {directions_bridge}")
+        require((directions_bridge["canonicalSummary"].get("portfolio_objects"), (directions_bridge["canonicalSummary"].get("by_category") or {}).get("A",{}).get("portfolio_total"), (directions_bridge["canonicalSummary"].get("by_category") or {}).get("B",{}).get("portfolio_total")) == (91,12,20) and "12 个对象" in directions_bridge["bridgeText"] and "20 个对象" in directions_bridge["bridgeText"] and any("canonical-group-a" in href for href in directions_bridge["hrefs"]), f"Field Atlas must read current counts from canonical ResearchItemState rather than static labels: {directions_bridge}")
+
         navigate("/paper-ideas.html", 6)
+        ensure_language("zh")
         ideas = execute(session_id, """return {
           chapters: document.querySelectorAll('.page-chapter').length,
           toc2: document.querySelectorAll('.toc-level-2').length,
@@ -388,6 +439,8 @@ def main() -> None:
           paperHandoffCodes: [...document.querySelectorAll('.paper-handoff-research-item,.paper-handoff-evidence-step')].map(x=>x.dataset.researchCode||''),
           researchCategoryLanes: document.querySelectorAll('.research-category-lane').length,
           researchItemEvidenceTracks: document.querySelectorAll('.human-review-idea-card .research-item-evidence-track').length,
+          researchItemFieldLineages: document.querySelectorAll('.human-review-idea-card .research-item-field-lineage').length,
+          researchItemTimelineLinks: [...document.querySelectorAll('.human-review-idea-card .research-item-field-lineage a')].filter(x=>(x.getAttribute('href')||'').startsWith('research-timeline.html?research=')).length,
           pfCodes: [...document.querySelectorAll('.paper-incubation-card')].map(x=>x.dataset.pfCode||''),
           safetyCodes: [...document.querySelectorAll('[data-safety-code]')].map(x=>x.dataset.safetyCode||''),
           parentItems: document.querySelectorAll('.canonical-parent-item').length,
@@ -490,7 +543,7 @@ def main() -> None:
             ...[...document.querySelectorAll('.supplemental-idea-card summary>div>span')].map(x=>(x.textContent||'').trim()),
             ...[...document.querySelectorAll('.paper-incubation-card')].map(x=>x.dataset.pfCode||''),
             ...[...document.querySelectorAll('.categorized-context-card header>div>span:first-child')].map(x=>(x.textContent||'').trim()),
-            ...[...document.querySelectorAll('[data-research-code]')].map(x=>x.dataset.researchCode||''),
+            ...[...document.querySelectorAll('.paper-handoff-research-item[data-research-code],.paper-handoff-evidence-step[data-research-code]')].map(x=>x.dataset.researchCode||''),
             ...[...document.querySelectorAll('[data-safety-code]')].map(x=>x.dataset.safetyCode||''),
             ...[...document.querySelectorAll('.closed-idea-card')].map(x=>x.dataset.closedCode||''),
           ],
@@ -547,7 +600,7 @@ def main() -> None:
         require(registry_summary.get("papers") == 2 and registry_summary.get("submission_ready") == 0 and registry_summary.get("scientific_holds") == 1 and registry_papers.get("STRI",{}).get("source_research_item") == "E-7" and registry_papers.get("STRI",{}).get("paper_stage") == "TARGETED_REPAIR" and registry_papers.get("STRI",{}).get("submission_ready") is False and registry_papers.get("AGENT-SAFETY-R9",{}).get("source_research_item") == "G-1" and registry_papers.get("AGENT-SAFETY-R9",{}).get("paper_stage") == "PAPER_EVIDENCE" and registry_papers.get("AGENT-SAFETY-R9",{}).get("scientific_status") == "CAUSAL_HOLD", f"Research Portfolio must load the two canonical PaperStates and preserve their Paper Acceptance boundaries: {ideas['paperRegistry']}")
         require(ideas["categorizedContextBanks"] == ideas["openCategorizedContextBanks"] == 1 and ideas["categorizedContextCards"] == 2 and set(ideas["categorizedContextIds"]) == {"MEM-HISTORY","SP-15"}, f"B-category evidence context must stay complete without splitting the STRI paper chain into peer cards: {ideas['categorizedContextBanks']}/{ideas['openCategorizedContextBanks']}/{ideas['categorizedContextCards']}/{ideas['categorizedContextIds']}")
         require(set(ideas["categorizedContextCodes"]) == {"B-12","B-13"} and ideas["paperHandoffs"] == 1 and ideas["paperHandoffEvidence"] == 3 and set(ideas["paperHandoffCodes"]) == {"E-7","E-7a","E-7b","E-7c"}, f"E-7 must render as one ResearchItem→PaperState handoff with three nested evidence records: {ideas['categorizedContextCodes']}/{ideas['paperHandoffs']}/{ideas['paperHandoffEvidence']}/{ideas['paperHandoffCodes']}")
-        require(ideas["researchCategoryLanes"] == 21 and ideas["researchItemEvidenceTracks"] == 26, f"seven A-G categories must each expose current/concluded/assets lanes and every parent ResearchItem must expose one integrated evidence trail: {ideas['researchCategoryLanes']}/{ideas['researchItemEvidenceTracks']}")
+        require(ideas["researchCategoryLanes"] == 21 and ideas["researchItemEvidenceTracks"] == 26 and ideas["researchItemFieldLineages"] == 26 and ideas["researchItemTimelineLinks"] == 26, f"seven A-G categories must expose three lanes, while every parent ResearchItem exposes one evidence trail and one field/timeline lineage bridge: {ideas['researchCategoryLanes']}/{ideas['researchItemEvidenceTracks']}/{ideas['researchItemFieldLineages']}/{ideas['researchItemTimelineLinks']}")
         require(set(ideas["pfCodes"]) == {"A-8","A-9","A-10","A-11","A-12","B-11","C-7","E-5","E-6"}, f"former PF directions are not distributed into A/B/C/E categories without colliding with parent codes: {ideas['pfCodes']}")
         require(set(ideas["safetyCodes"]) == {"G-1","G-2","G-3","G-4","G-5"}, f"safety directions are not normalized to G-1..G-5: {ideas['safetyCodes']}")
         require((ideas["readyCards"], ideas["pausedCards"], ideas["mergedCards"], ideas["droppedCards"]) == (0, 4, 6, 16), f"canonical parent tone counts must be HOLD=4/MERGED=6/STOP=16: {ideas['readyCards']}/{ideas['pausedCards']}/{ideas['mergedCards']}/{ideas['droppedCards']}")
@@ -721,6 +774,11 @@ def main() -> None:
         require(mobile["cardWidth"] <= mobile["innerWidth"], f"idea card exceeds the mobile viewport: {mobile}")
         request("POST", f"/session/{session_id}/window/rect", {"width": 1440, "height": 1000})
         time.sleep(1)
+
+        navigate("/paper-ideas.html?research=A-3", 3)
+        ensure_language("zh")
+        a3_focus = execute(session_id, """const card=document.getElementById('idea-a-3'); return {exists:!!card,open:card?.open===true,focused:card?.classList.contains('research-item-url-focus')===true,fieldLinks:card?.querySelectorAll('.research-item-field-lineage a').length||0,timelineHref:[...card?.querySelectorAll('.research-item-field-lineage a')||[]].map(x=>x.getAttribute('href')||'').find(x=>x.includes('research-timeline.html?research=A-3'))||'',text:card?.querySelector('.research-item-field-lineage')?.textContent||''};""")
+        require(a3_focus["exists"] and a3_focus["open"] and a3_focus["focused"] and a3_focus["fieldLinks"] >= 3 and a3_focus["timelineHref"].endswith("research-timeline.html?research=A-3") and "D1" in a3_focus["text"] and "D4" in a3_focus["text"], f"Research Portfolio deep link must focus A-3 and expose its historical-field/current-map/timeline bridge: {a3_focus}")
 
         navigate("/experiments.html", 6)
         experiments = execute(session_id, """return {

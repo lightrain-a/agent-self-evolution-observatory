@@ -15,8 +15,12 @@
   };
 
   const CHINA_TZ = "Asia/Shanghai";
-  const state = {importance:"all",type:"all",range:"all",research:"all",query:"",order:"desc"};
+  const state = {importance:"all",type:"all",range:"all",research:"all",category:"all",query:"",order:"desc"};
   const dataset = () => window.RESEARCH_TIMELINE || {events:[],summary:{}};
+  const initialParams = new URLSearchParams(window.location.search || "");
+  if (initialParams.get("research")) state.research=`ri:${initialParams.get("research")}`;
+  else if (initialParams.get("paper")) state.research=`paper:${initialParams.get("paper")}`;
+  if (/^[A-G]$/i.test(initialParams.get("category")||"")) state.category=initialParams.get("category").toUpperCase();
   const pick = (zh,en) => language === "zh" ? zh : en;
   const raw = (v) => String(v ?? "");
   const zhPhraseMap = {
@@ -93,7 +97,11 @@
     const key = raw(iso);
     if (chinaDateCache.has(key)) return chinaDateCache.get(key);
     const d = new Date(iso);
-    if (Number.isNaN(d.getTime())) return key.slice(0,10) || "unknown";
+    if (Number.isNaN(d.getTime())) {
+      const fallback = key.slice(0,10) || "unknown";
+      chinaDateCache.set(key,fallback);
+      return fallback;
+    }
     const parts = chinaDateFormatter.formatToParts(d);
     const map = Object.fromEntries(parts.map(p=>[p.type,p.value]));
     const value = `${map.year}-${map.month}-${map.day}`;
@@ -119,15 +127,20 @@
     const weekday = (new Date(first).getUTCDay()+6)%7;
     return (cachedResearchWeekAnchorMs = first - weekday * 86400000);
   };
+  const researchWeekInfoCache=new Map();
   const researchWeekInfo = (date) => {
-    const [year,month,day] = raw(date).split("-").map(Number);
-    if (!year || !month || !day) return {number:1,weekday:0,monday:date};
+    const cacheKey=raw(date);
+    if(researchWeekInfoCache.has(cacheKey)) return researchWeekInfoCache.get(cacheKey);
+    const [year,month,day] = cacheKey.split("-").map(Number);
+    if (!year || !month || !day) { const fallback={number:1,weekday:0,monday:date}; researchWeekInfoCache.set(cacheKey,fallback); return fallback; }
     const target = Date.UTC(year,month-1,day);
     const weekday = (new Date(target).getUTCDay()+6)%7;
     const mondayMs = target - weekday * 86400000;
     const anchor = researchWeekAnchorMs();
     const number = Math.max(1,anchor ? Math.floor((mondayMs-anchor)/(7*86400000))+1 : 1);
-    return {number,weekday,monday:new Date(mondayMs).toISOString().slice(0,10)};
+    const value={number,weekday,monday:new Date(mondayMs).toISOString().slice(0,10)};
+    researchWeekInfoCache.set(cacheKey,value);
+    return value;
   };
   const weekDayLabel = (date) => {
     const info = researchWeekInfo(date);
@@ -165,7 +178,18 @@
   };
 
   const latestMs = () => Math.max(0,...dataset().events.map(e => Date.parse(e.occurred_at)||0));
-  const searchable = (e) => [e.research_id,e.research_label_zh,e.title,e.title_zh,e.state_before,e.state_after,localText(e.summary),localText(e.why),localText(e.limitation),e.next_action,e.next_action_zh,e.reopen_condition,e.reopen_condition_zh].join(" ").toLowerCase();
+  const refs = (e) => e.canonical_refs || {research_items:[],experiments:[],papers:[],categories:[]};
+  const researchCodes = (e) => (refs(e).research_items||[]).map(row=>row.code).filter(Boolean);
+  const paperCodes = (e) => (refs(e).papers||[]).map(row=>row.paper_id).filter(Boolean);
+  const categoryCodes = (e) => (refs(e).categories||[]).filter(Boolean);
+  const canonicalChips = (e) => {
+    const r=refs(e), chunks=[];
+    (r.research_items||[]).forEach(row=>chunks.push(`<a class="rt-canonical-chip rt-canonical-research" href="paper-ideas.html?research=${encodeURIComponent(row.code)}#canonical-group-${esc(String(row.category||"").toLowerCase())}"><b>${esc(row.code)}</b><span>${esc(language==="zh"?(row.title_zh||row.title_en||row.id):(row.title_en||row.title_zh||row.id))}</span></a>`));
+    (r.experiments||[]).forEach(row=>chunks.push(`<a class="rt-canonical-chip rt-canonical-experiment" href="experiments.html"><b>${esc(row.portfolio_code||row.experiment_id)}</b><span>${pick("实验记录","Experiment record")}</span></a>`));
+    (r.papers||[]).forEach(row=>chunks.push(`<a class="rt-canonical-chip rt-canonical-paper" href="selected-paper.html?paper=${encodeURIComponent(row.paper_id)}"><b>${esc(row.paper_id)}</b><span>${esc(row.paper_stage||pick("论文","Paper"))}</span></a>`));
+    return chunks.length?`<div class="rt-canonical-refs"><span>${pick("Canonical 绑定","Canonical bindings")}</span>${chunks.join("")}</div>`:"";
+  };
+  const searchable = (e) => [e.research_id,e.research_label_zh,e.title,e.title_zh,e.state_before,e.state_after,localText(e.summary),localText(e.why),localText(e.limitation),e.next_action,e.next_action_zh,e.reopen_condition,e.reopen_condition_zh,researchCodes(e).join(" "),paperCodes(e).join(" "),categoryCodes(e).join(" ")].join(" ").toLowerCase();
   const visible = () => {
     const latest = latestMs();
     const days = state.range === "all" ? Infinity : Number(state.range || 7);
@@ -174,7 +198,12 @@
     return dataset().events.filter(e => {
       if (state.importance === "key" && e.importance !== "key") return false;
       if (state.type !== "all" && e.event_class !== state.type) return false;
-      if (state.research !== "all" && e.research_id !== state.research) return false;
+      if (state.category !== "all" && !categoryCodes(e).includes(state.category)) return false;
+      if (state.research !== "all") {
+        if (state.research.startsWith("ri:") && !researchCodes(e).includes(state.research.slice(3))) return false;
+        else if (state.research.startsWith("paper:") && !paperCodes(e).includes(state.research.slice(6))) return false;
+        else if (!state.research.startsWith("ri:") && !state.research.startsWith("paper:") && e.research_id !== state.research) return false;
+      }
       if ((Date.parse(e.occurred_at)||0) < floor) return false;
       if (q && !searchable(e).includes(q)) return false;
       return true;
@@ -210,7 +239,7 @@
     const summary = localText(e.summary);
     const why = localText(e.why);
     const limitation = localText(e.limitation);
-    return `<details class="rt-event" data-event-id="${esc(e.event_id)}" data-class="${esc(e.event_class)}"><summary><time>${esc(fmtTime(e))}</time><span class="rt-dot" aria-hidden="true"></span><div class="rt-summary-main"><div class="rt-summary-meta">${classBadge(e)}<span>${esc(localResearch(e))}</span>${e.importance === "key" ? `<em>${pick("关键","KEY")}</em>`:""}</div><strong>${esc(localTitle(e))}</strong><p>${esc(summary)}</p></div><div class="rt-state"><span>${pick("当前状态","STATE")}</span><b>${esc(statusDisplay(e.state_after || "RECORDED"))}</b>${language === "zh" ? `<small>${esc(e.state_after || "RECORDED")}</small>` : ""}</div></summary><div class="rt-expanded">${before}${detailBlock("发生了什么","What changed",summary,"change")}${detailBlock("为什么这样裁决","Decision basis",why)}${detailBlock("边界 / 不能扩大到什么","Boundary / unsupported scope",limitation,"boundary")}${detailBlock("下一步","Next action",localNext(e),"next")}${detailBlock("什么情况下重开","Reopen only if",localReopen(e),"reopen")}${evidence(e.evidence)}<div class="rt-authority-row">${authorityBadge(e)}<span>${esc(localAuthorityScope(e) || pick("只读历史投影","read-only projection"))}</span></div>${sourceLinks(e)}</div></details>`;
+    return `<details class="rt-event" data-event-id="${esc(e.event_id)}" data-class="${esc(e.event_class)}" data-canonical-research="${esc(researchCodes(e).join(" "))}" data-canonical-paper="${esc(paperCodes(e).join(" "))}"><summary><time>${esc(fmtTime(e))}</time><span class="rt-dot" aria-hidden="true"></span><div class="rt-summary-main"><div class="rt-summary-meta">${classBadge(e)}<span>${esc(localResearch(e))}</span>${e.importance === "key" ? `<em>${pick("关键","KEY")}</em>`:""}</div><strong>${esc(localTitle(e))}</strong><p>${esc(summary)}</p></div><div class="rt-state"><span>${pick("当前状态","STATE")}</span><b>${esc(statusDisplay(e.state_after || "RECORDED"))}</b>${language === "zh" ? `<small>${esc(e.state_after || "RECORDED")}</small>` : ""}</div></summary><div class="rt-expanded">${canonicalChips(e)}${before}${detailBlock("发生了什么","What changed",summary,"change")}${detailBlock("为什么这样裁决","Decision basis",why)}${detailBlock("边界 / 不能扩大到什么","Boundary / unsupported scope",limitation,"boundary")}${detailBlock("下一步","Next action",localNext(e),"next")}${detailBlock("什么情况下重开","Reopen only if",localReopen(e),"reopen")}${evidence(e.evidence)}<div class="rt-authority-row">${authorityBadge(e)}<span>${esc(localAuthorityScope(e) || pick("只读历史投影","read-only projection"))}</span></div>${sourceLinks(e)}</div></details>`;
   };
 
   const sortDayEvents = (events) => [...events].sort((a,b) => {
@@ -274,11 +303,8 @@
     const researchLines = new Set(ordered.map(e=>e.research_id).filter(Boolean)).size;
     const gitChanges = ordered.filter(e=>e.origin === "git_relevant_history").length;
     const artifactChanges = ordered.filter(e=>String(e.origin||"").startsWith("artifact")).length;
-    const dateOnly = ordered.filter(e=>e.time_precision === "date");
-    const exact = ordered.filter(e=>e.time_precision !== "date");
-    const dateOnlyBlock = dateOnly.length ? `<div class="rt-date-only-note">${pick(`另有 ${dateOnly.length} 条记录只有日期精度，无法可靠判断当天先后，因此放在精确时间事件之后。`,`Another ${dateOnly.length} records have date-only precision and are shown after exact-time events.`)}</div>${dateOnly.map(eventRow).join("")}` : "";
     const thread = dayHeadline(ordered), workload = workloadSummary(ordered,3);
-    return `<tr class="rt-day-row" id="timeline-${esc(date)}" data-rt-day-toggle="${esc(date)}" tabindex="0" aria-expanded="false"><td class="rt-table-date"><div class="rt-table-date-inner"><button type="button" class="rt-day-toggle" aria-label="${pick("展开当天详情","Open day details")}">＋</button><div><b>${esc(weekDayLabel(date))}</b><small>${esc(date)}</small></div></div></td><td class="rt-num rt-activity-count"><b>${ordered.length}</b><span>${pick("条","events")}</span></td><td class="rt-num"><b>${keyChanges}</b></td><td class="rt-num"><b>${gitChanges}</b></td><td class="rt-num"><b>${artifactChanges}</b></td><td class="rt-num"><b>${researchLines}</b></td><td class="rt-table-thread"><p>${esc(thread)}</p>${workload?`<div class="rt-table-workload">${esc(workload)}</div>`:""}${workloadBar(ordered,pick("当日工作量构成","Daily workload composition"))}</td></tr><tr class="rt-day-detail-row" data-rt-day-detail="${esc(date)}" hidden><td colspan="7"><div class="rt-day-expanded"><div class="rt-order-note">${pick("以下严格按时间从早到晚排列，不按研究问题 / 实验 / 论文等类别重新分组，便于追踪“什么先发生 → 为什么后来改变研究或系统”。","Events below are strictly chronological rather than grouped by type.")}</div><div class="rt-day-events">${exact.map(eventRow).join("")}${dateOnlyBlock}</div></div></td></tr>`;
+    return `<tr class="rt-day-row" id="timeline-${esc(date)}" data-rt-day-toggle="${esc(date)}" tabindex="0" aria-expanded="false"><td class="rt-table-date"><div class="rt-table-date-inner"><button type="button" class="rt-day-toggle" aria-label="${pick("展开当天详情","Open day details")}">＋</button><div><b>${esc(weekDayLabel(date))}</b><small>${esc(date)}</small></div></div></td><td class="rt-num rt-activity-count"><b>${ordered.length}</b><span>${pick("条","events")}</span></td><td class="rt-num"><b>${keyChanges}</b></td><td class="rt-num"><b>${gitChanges}</b></td><td class="rt-num"><b>${artifactChanges}</b></td><td class="rt-num"><b>${researchLines}</b></td><td class="rt-table-thread"><p>${esc(thread)}</p>${workload?`<div class="rt-table-workload">${esc(workload)}</div>`:""}${workloadBar(ordered,pick("当日工作量构成","Daily workload composition"))}</td></tr><tr class="rt-day-detail-row" data-rt-day-detail="${esc(date)}" hidden><td colspan="7"><div class="rt-day-expanded"><div class="rt-order-note">${pick("以下严格按时间从早到晚排列，不按研究问题 / 实验 / 论文等类别重新分组，便于追踪“什么先发生 → 为什么后来改变研究或系统”。","Events below are strictly chronological rather than grouped by type.")}</div><div class="rt-day-events" data-rt-day-events="${esc(date)}" data-rendered="0"><span class="rt-lazy-placeholder">${pick("展开后加载当天详细事件…","Detailed events load on expansion…")}</span></div></div></td></tr>`;
   };
   const monthTable = (month,dates,groups) => {
     const total = dates.reduce((n,date)=>n+(groups[date]?.length||0),0);
@@ -294,12 +320,24 @@
     return `<div class="rt-stats"><article><b>${events.length}</b><span>${pick("当前展示事件","visible events")}</span></article><article><b>${days}</b><span>${pick("有记录的研究日","recorded research days")}</span></article><article><b>${ideas}</b><span>${pick("研究方向 / 问题发现","idea / problem events")}</span></article><article><b>${experiments}</b><span>${pick("实验 / 验证","experiment events")}</span></article><article><b>${advances}</b><span>${pick("科学结论 / 论文推进","scientific / paper advances")}</span></article><article><b>${stops}</b><span>${pick("停止 / 暂缓","closures / holds")}</span></article></div>`;
   };
 
-  const researchOptions = () => [...new Set(dataset().events.map(e=>e.research_id).filter(Boolean))].sort((a,b)=>a.localeCompare(b)).map(r=>{
+  const canonicalResearchOptions = () => {
+    const seen=new Map();
+    dataset().events.forEach(e=>(refs(e).research_items||[]).forEach(row=>{if(row.code&&!seen.has(row.code))seen.set(row.code,row);}));
+    return [...seen.values()].sort((a,b)=>a.code.localeCompare(b.code,undefined,{numeric:true})).map(row=>`<option value="ri:${esc(row.code)}" ${state.research===`ri:${row.code}`?"selected":""}>${esc(row.code)} · ${esc(language==="zh"?(row.title_zh||row.title_en||row.id):(row.title_en||row.title_zh||row.id))}</option>`).join("");
+  };
+  const canonicalPaperOptions = () => {
+    const seen=new Map();
+    dataset().events.forEach(e=>(refs(e).papers||[]).forEach(row=>{if(row.paper_id&&!seen.has(row.paper_id))seen.set(row.paper_id,row);}));
+    return [...seen.values()].sort((a,b)=>a.paper_id.localeCompare(b.paper_id)).map(row=>`<option value="paper:${esc(row.paper_id)}" ${state.research===`paper:${row.paper_id}`?"selected":""}>${esc(row.paper_id)} · ${esc(row.paper_stage||"")}</option>`).join("");
+  };
+  const legacyResearchOptions = () => [...new Set(dataset().events.filter(e=>!(refs(e).research_items||[]).length&&!(refs(e).papers||[]).length).map(e=>e.research_id).filter(Boolean))].sort((a,b)=>a.localeCompare(b)).map(r=>{
     const sample = dataset().events.find(e=>e.research_id===r);
     const label = language === "zh" ? raw(sample?.research_label_zh || r) : r;
     return `<option value="${esc(r)}" ${state.research===r?"selected":""}>${esc(label)}</option>`;
   }).join("");
-  const controls = () => `<section class="rt-controls" aria-label="${pick("时间轴筛选","Timeline filters")}"><div class="rt-control-group"><b>${pick("层级","Level")}</b><div class="rt-segment"><button type="button" data-rt-importance="all" class="${state.importance==="all"?"active":""}">${pick("全部","All")}</button><button type="button" data-rt-importance="key" class="${state.importance==="key"?"active":""}">${pick("关键","Key")}</button></div></div><div class="rt-control-group"><b>${pick("顺序","Order")}</b><div class="rt-segment"><button type="button" data-rt-order="asc" class="${state.order==="asc"?"active":""}">${pick("因果顺序","Old → new")}</button><button type="button" data-rt-order="desc" class="${state.order==="desc"?"active":""}">${pick("最新优先","New → old")}</button></div></div><div class="rt-control-group"><b>${pick("范围","Range")}</b><div class="rt-segment">${[["all",pick("全部","All")],["30",pick("30 天","30D")],["7",pick("7 天","7D")],["3",pick("3 天","3D")]].map(([v,l])=>`<button type="button" data-rt-range="${v}" class="${state.range===v?"active":""}">${l}</button>`).join("")}</div></div><label class="rt-select"><span>${pick("研究对象","Research")}</span><select id="timeline-research"><option value="all">${pick("全部研究对象","All research")}</option>${researchOptions()}</select></label><label class="rt-select"><span>${pick("类型","Type")}</span><select id="timeline-type"><option value="all">${pick("全部类型","All types")}</option>${Object.keys(classes).map(k=>`<option value="${k}" ${state.type===k?"selected":""}>${esc(labelClass(k))}</option>`).join("")}</select></label></section>`;
+  const researchOptions = () => `<optgroup label="${pick("Canonical ResearchItem","Canonical ResearchItems")}">${canonicalResearchOptions()}</optgroup><optgroup label="${pick("PaperState","PaperStates")}">${canonicalPaperOptions()}</optgroup><optgroup label="${pick("系统 / 历史流","System / legacy streams")}">${legacyResearchOptions()}</optgroup>`;
+  const categoryOptions = () => ["A","B","C","D","E","F","G"].map(code=>`<option value="${code}" ${state.category===code?"selected":""}>${code}</option>`).join("");
+  const controls = () => `<section class="rt-controls" aria-label="${pick("时间轴筛选","Timeline filters")}"><div class="rt-control-group"><b>${pick("层级","Level")}</b><div class="rt-segment"><button type="button" data-rt-importance="all" class="${state.importance==="all"?"active":""}">${pick("全部","All")}</button><button type="button" data-rt-importance="key" class="${state.importance==="key"?"active":""}">${pick("关键","Key")}</button></div></div><div class="rt-control-group"><b>${pick("顺序","Order")}</b><div class="rt-segment"><button type="button" data-rt-order="asc" class="${state.order==="asc"?"active":""}">${pick("因果顺序","Old → new")}</button><button type="button" data-rt-order="desc" class="${state.order==="desc"?"active":""}">${pick("最新优先","New → old")}</button></div></div><div class="rt-control-group"><b>${pick("范围","Range")}</b><div class="rt-segment">${[["all",pick("全部","All")],["30",pick("30 天","30D")],["7",pick("7 天","7D")],["3",pick("3 天","3D")]].map(([v,l])=>`<button type="button" data-rt-range="${v}" class="${state.range===v?"active":""}">${l}</button>`).join("")}</div></div><label class="rt-select"><span>${pick("A–G 大类","A–G category")}</span><select id="timeline-category"><option value="all">${pick("全部大类","All categories")}</option>${categoryOptions()}</select></label><label class="rt-select rt-select-wide"><span>${pick("ResearchItem / Paper","ResearchItem / Paper")}</span><select id="timeline-research"><option value="all">${pick("全部研究对象","All research")}</option>${researchOptions()}</select></label><label class="rt-select"><span>${pick("类型","Type")}</span><select id="timeline-type"><option value="all">${pick("全部类型","All types")}</option>${Object.keys(classes).map(k=>`<option value="${k}" ${state.type===k?"selected":""}>${esc(labelClass(k))}</option>`).join("")}</select></label></section>`;
 
   const feed = (events) => {
     const groups = grouped(events);
@@ -373,15 +411,33 @@
     if(counter) counter.textContent=pick(`${events.length} 条事件`,`${events.length} events`);
     bindControls();
   };
+  const renderDayEvents = (date,detail) => {
+    const holder=detail?.querySelector(`[data-rt-day-events="${date}"]`);
+    if(!holder || holder.dataset.rendered === "1") return;
+    const ordered=sortDayEvents(visible().filter(e=>chinaDateKey(e.occurred_at)===date));
+    const dateOnly=ordered.filter(e=>e.time_precision === "date"), exact=ordered.filter(e=>e.time_precision !== "date");
+    const dateOnlyBlock=dateOnly.length?`<div class="rt-date-only-note">${pick(`另有 ${dateOnly.length} 条记录只有日期精度，无法可靠判断当天先后，因此放在精确时间事件之后。`,`Another ${dateOnly.length} records have date-only precision and are shown after exact-time events.`)}</div>${dateOnly.map(eventRow).join("")}`:"";
+    holder.innerHTML=`${exact.map(eventRow).join("")}${dateOnlyBlock}`;
+    holder.dataset.rendered="1";
+  };
   const toggleDay = (date,forceOpen) => {
     const row=document.getElementById(`timeline-${date}`), detail=document.querySelector(`[data-rt-day-detail="${date}"]`);
     if(!row || !detail) return;
     const shouldOpen = forceOpen === undefined ? detail.hidden : Boolean(forceOpen);
+    if(shouldOpen) renderDayEvents(date,detail);
     detail.hidden=!shouldOpen;
     row.classList.toggle("is-open",shouldOpen);
     row.setAttribute("aria-expanded",shouldOpen ? "true" : "false");
     const toggle=row.querySelector(".rt-day-toggle");
     if(toggle) toggle.textContent=shouldOpen ? "−" : "＋";
+  };
+  const syncUrl = () => {
+    const url=new URL(window.location.href);
+    url.searchParams.delete("research"); url.searchParams.delete("paper"); url.searchParams.delete("category");
+    if(state.research.startsWith("ri:")) url.searchParams.set("research",state.research.slice(3));
+    else if(state.research.startsWith("paper:")) url.searchParams.set("paper",state.research.slice(6));
+    if(state.category!=="all") url.searchParams.set("category",state.category);
+    window.history.replaceState(null,"",`${url.pathname}${url.search}${url.hash}`);
   };
   const bindControls = () => {
     document.querySelectorAll("[data-rt-importance]").forEach(btn=>btn.addEventListener("click",()=>{state.importance=btn.dataset.rtImportance;rerender();}));
@@ -393,7 +449,8 @@
     });
     document.querySelectorAll("[data-rt-day]").forEach(btn=>btn.addEventListener("click",()=>{const date=btn.dataset.rtDay; toggleDay(date,true); const day=document.getElementById(`timeline-${date}`); if(day) day.scrollIntoView({behavior:"smooth",block:"center"});}));
     document.getElementById("timeline-type")?.addEventListener("change",e=>{state.type=e.target.value;rerender();});
-    document.getElementById("timeline-research")?.addEventListener("change",e=>{state.research=e.target.value;rerender();});
+    document.getElementById("timeline-category")?.addEventListener("change",e=>{state.category=e.target.value;syncUrl();rerender();});
+    document.getElementById("timeline-research")?.addEventListener("change",e=>{state.research=e.target.value;syncUrl();rerender();});
   };
   window.bindResearchTimelineEvents = function(){bindControls();};
   window.applyResearchTimelineFilters = function(query){state.query=raw(query);rerender();};

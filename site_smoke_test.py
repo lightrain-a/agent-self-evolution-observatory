@@ -125,8 +125,29 @@ def main() -> None:
     timeline_events = research_timeline.get("events") or []
     if int(timeline_summary.get("events") or 0) != len(timeline_events) or len(timeline_events) < 756 or int(timeline_summary.get("days") or 0) < 20:
         fail("research timeline must preserve the full generated history rather than a truncated recent subset")
-    if timeline_policy.get("read_only") is not True or timeline_policy.get("display_timezone") != "Asia/Shanghai":
-        fail("research timeline must remain a read-only China-time projection")
+    if timeline_policy.get("read_only") is not True or timeline_policy.get("display_timezone") != "Asia/Shanghai" or timeline_policy.get("canonical_entity_bindings_are_read_only") is not True:
+        fail("research timeline must remain a read-only China-time projection with read-only canonical entity bindings")
+    if research_timeline.get("schema_version") != "1.1" or int(timeline_summary.get("canonical_research_bound_events") or 0) <= 0 or int(timeline_summary.get("canonical_experiment_bound_events") or 0) <= 0 or int(timeline_summary.get("canonical_paper_bound_events") or 0) <= 0 or int(timeline_summary.get("canonical_research_items_with_events") or 0) <= 0 or int(timeline_summary.get("canonical_papers_with_events") or 0) != 2:
+        fail(f"research timeline canonical provenance binding summary is incomplete: {timeline_summary}")
+    valid_ri_codes = set(ri_by_code)
+    valid_experiment_ids = {row.get("experiment_id") for row in research_items.get("experiment_records") or []}
+    valid_paper_ids = set(papers_by_id)
+    bound_codes, bound_papers = set(), set()
+    for event in timeline_events:
+        refs = event.get("canonical_refs") or {}
+        for ref in refs.get("research_items") or []:
+            if ref.get("code") not in valid_ri_codes:
+                fail(f"timeline event references missing ResearchItem: {ref}")
+            bound_codes.add(ref.get("code"))
+        for ref in refs.get("experiments") or []:
+            if ref.get("experiment_id") not in valid_experiment_ids:
+                fail(f"timeline event references missing ExperimentRecord: {ref}")
+        for ref in refs.get("papers") or []:
+            if ref.get("paper_id") not in valid_paper_ids:
+                fail(f"timeline event references missing PaperState: {ref}")
+            bound_papers.add(ref.get("paper_id"))
+    if not {"A-3", "E-7", "G-1"}.issubset(bound_codes) or bound_papers != {"STRI", "AGENT-SAFETY-R9"}:
+        fail(f"timeline must bind representative ResearchItems and both papers: research={sorted(bound_codes)} papers={sorted(bound_papers)}")
     embedded_memory = research_system.get("research_memory_wiki") or {}
     if research_memory.get("wiki_sha256") != embedded_memory.get("wiki_sha256") or (research_memory.get("summary") or {}) != (embedded_memory.get("summary") or {}) or (research_memory.get("lint") or {}) != (embedded_memory.get("lint") or {}):
         fail("research memory wiki is stale versus embedded research-system state")
@@ -222,6 +243,9 @@ def main() -> None:
     map_view_source = (ROOT / "research-map-view.js").read_text(encoding="utf-8")
     if "RESEARCH_ITEM_STATE" not in map_view_source or "[\"A\",\"B\",\"C\",\"D\",\"E\",\"F\",\"G\"]" not in map_view_source:
         fail("research-map must render the complete A-G map from canonical ResearchItem state with an explicit completeness guard")
+    directions_scripts = canonical_scripts.get("research-directions.html", [])
+    if "generated/research-items.js" not in directions_scripts or directions_scripts.index("generated/research-items.js") > directions_scripts.index("app.js"):
+        fail("research-directions must load canonical ResearchItem state before app.js for the D1-D10 ↔ A-G crosswalk")
     selected_scripts_list = canonical_scripts.get("selected-paper.html", [])
     if not all(name in selected_scripts_list for name in ("generated/research-items.js", "generated/paper-registry.js")) or selected_scripts_list.index("generated/research-items.js") > selected_scripts_list.index("app.js") or selected_scripts_list.index("generated/paper-registry.js") > selected_scripts_list.index("app.js"):
         fail("selected-paper must load canonical ResearchItem/PaperRegistry state before app.js")
