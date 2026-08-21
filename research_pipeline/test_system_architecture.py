@@ -16,14 +16,15 @@ from .system_architecture import (
 class SystemArchitectureTest(unittest.TestCase):
     def test_temporal_flow_is_single_ordered_paper_first_lifecycle(self) -> None:
         keys = [row["key"] for row in TEMPORAL_FLOW]
-        self.assertEqual(len(keys), 11)
+        self.assertEqual(len(keys), 21)
         self.assertEqual(keys[:5], ["scope", "evidence", "novelty", "method", "experiment-blueprint"])
-        self.assertEqual(keys[5:9], ["economy-compile", "local-validation", "method-freeze", "full-experiment"])
-        self.assertEqual(keys[-2:], ["paper-evidence", "learn"])
-        self.assertEqual([row["index"] for row in TEMPORAL_FLOW], list(range(1, 12)))
+        self.assertEqual(keys[5:10], ["economy-compile", "local-validation", "method-freeze", "full-experiment", "paper-evidence"])
+        self.assertEqual(keys[10:20], ["paper-design", "manuscript", "mock-pc", "targeted-repair", "claim-audit", "pdf-qa", "prebuttal", "submission-ready", "submitted", "rebuttal"])
+        self.assertEqual(keys[-1], "learn")
+        self.assertEqual([row["index"] for row in TEMPORAL_FLOW], list(range(1, 22)))
 
     def test_reading_groups_cover_the_temporal_flow_without_creating_new_gates(self) -> None:
-        self.assertEqual(len(READING_GROUPS), 7)
+        self.assertEqual(len(READING_GROUPS), 10)
         self.assertEqual(READING_GROUPS[0]["key"], "overview")
         self.assertTrue(READING_GROUPS[0]["orientation_only"])
         grouped = [stage for row in READING_GROUPS[1:] for stage in row["stage_keys"]]
@@ -41,7 +42,7 @@ class SystemArchitectureTest(unittest.TestCase):
 
     def test_all_declared_component_bindings_are_unique(self) -> None:
         component_keys = [binding[0] for binding in COMPONENT_BINDINGS.values()]
-        self.assertEqual(len(COMPONENT_BINDINGS), 31)
+        self.assertEqual(len(COMPONENT_BINDINGS), 32)
         self.assertEqual(len(component_keys), len(set(component_keys)))
 
     def test_unknown_component_is_visible_not_silently_assigned(self) -> None:
@@ -58,8 +59,8 @@ class SystemArchitectureTest(unittest.TestCase):
             {"component":{"en":"Literature retrieval + Evidence Integrity layer"},"status":"running"},
         ])
         architecture = build_system_architecture(items, build_methodology_controls_state())
-        self.assertEqual(architecture["summary"]["reader_chapters"], 7)
-        self.assertEqual(architecture["summary"]["reader_stage_coverage"], 11)
+        self.assertEqual(architecture["summary"]["reader_chapters"], 10)
+        self.assertEqual(architecture["summary"]["reader_stage_coverage"], 21)
         self.assertEqual(architecture["summary"]["reader_stage_missing"], 0)
         self.assertEqual(architecture["summary"]["reader_stage_duplicates"], 0)
         self.assertEqual(architecture["summary"]["reader_stage_extra"], 0)

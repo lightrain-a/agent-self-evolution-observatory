@@ -14,18 +14,28 @@ TEMPORAL_FLOW: tuple[dict[str, Any], ...] = (
     {"key":"method-freeze","index":8,"label":{"en":"Method freeze","zh":"方法冻结"},"output":"method-and-blueprint-hash"},
     {"key":"full-experiment","index":9,"label":{"en":"Full experiment","zh":"全量实验"},"output":"full-evidence-package"},
     {"key":"paper-evidence","index":10,"label":{"en":"Paper evidence closure","zh":"论文证据闭环"},"output":"chain-of-evidence"},
-    {"key":"learn","index":11,"label":{"en":"System learning","zh":"系统学习"},"output":"rules-tests-failure-assets"},
+    {"key":"paper-design","index":11,"label":{"en":"Paper contract and story search","zh":"论文合同与故事线搜索"},"output":"paper-contract-and-story-candidates"},
+    {"key":"manuscript","index":12,"label":{"en":"Manuscript construction","zh":"论文成稿"},"output":"evidence-bound-manuscript"},
+    {"key":"mock-pc","index":13,"label":{"en":"Blind + artifact-aware Mock PC","zh":"盲审 + 工件审查 Mock PC"},"output":"decision-critical-review"},
+    {"key":"targeted-repair","index":14,"label":{"en":"Review-to-action targeted repair","zh":"审稿意见到定向修复"},"output":"decision-critical-repair-plan"},
+    {"key":"claim-audit","index":15,"label":{"en":"Manuscript claim audit","zh":"成稿主张审计"},"output":"sentence-to-evidence-audit"},
+    {"key":"pdf-qa","index":16,"label":{"en":"Rendered PDF and Manuscript CI","zh":"渲染 PDF 与 Manuscript CI"},"output":"manuscript-ci-receipt"},
+    {"key":"prebuttal","index":17,"label":{"en":"Decision-critical prebuttal","zh":"决策关键预答辩"},"output":"top-reject-reasons-and-responses"},
+    {"key":"submission-ready","index":18,"label":{"en":"Submission readiness gate","zh":"投稿就绪门"},"output":"submission-readiness-receipt"},
+    {"key":"submitted","index":19,"label":{"en":"Submitted artifact freeze","zh":"已投稿工件冻结"},"output":"submitted-artifact-receipt"},
+    {"key":"rebuttal","index":20,"label":{"en":"Rebuttal and decision closure","zh":"答辩与审稿决策闭环"},"output":"review-and-decision-evidence"},
+    {"key":"learn","index":21,"label":{"en":"System learning","zh":"系统学习"},"output":"rules-tests-failure-assets-review-calibration"},
 )
 
 
 # Reader groups are a presentation index over the canonical temporal flow, not new gates.
 # They make the public system overview readable without changing scientific authority or
-# duplicating the underlying 11-stage state machine.
+# duplicating the underlying 21-stage state machine.
 READING_GROUPS: tuple[dict[str, Any], ...] = (
     {
         "key":"overview","index":1,"stage_keys":[],"orientation_only":True,
         "label":{"en":"Start here: one flow, three views","zh":"从这里开始：一条主流程，三个视角"},
-        "question":{"en":"How should the lifecycle, responsibility layers, and authority boundaries be read together?","zh":"11 步生命周期、六个职责层和权限边界应该如何一起理解？"},
+        "question":{"en":"How should the lifecycle, responsibility layers, and authority boundaries be read together?","zh":"21 步科研到投稿生命周期、六个职责层和权限边界应该如何一起理解？"},
         "output":"shared mental model",
     },
     {
@@ -35,8 +45,8 @@ READING_GROUPS: tuple[dict[str, Any], ...] = (
         "output":"problem-gate candidate or typed stop/hold",
     },
     {
-        "key":"paper-design","index":3,"stage_keys":["novelty","method","experiment-blueprint"],
-        "label":{"en":"Design the paper before implementation","zh":"实现前先把论文设计完整"},
+        "key":"scientific-design","index":3,"stage_keys":["novelty","method","experiment-blueprint"],
+        "label":{"en":"Design the contribution before implementation","zh":"实现前先把科学贡献设计完整"},
         "question":{"en":"What is novel, what mechanism carries it, and what evidence package would make the paper convincing?","zh":"Novelty 是什么、由什么机制承载、最终需要什么证据包才能把论文讲完整？"},
         "output":"novelty + principle + method + claim/evidence blueprint",
     },
@@ -54,12 +64,30 @@ READING_GROUPS: tuple[dict[str, Any], ...] = (
     },
     {
         "key":"paper-evidence","index":6,"stage_keys":["paper-evidence"],
-        "label":{"en":"Close paper evidence and release","zh":"论文证据闭环与发布"},
+        "label":{"en":"Close paper evidence","zh":"论文证据闭环"},
         "question":{"en":"Do claims, baselines, ablations, analyses, figures, code, and reproducibility artifacts resolve to the exact frozen evidence?","zh":"主张、Baseline、消融、分析、图表、代码和复现工件是否都绑定到同一份冻结证据？"},
-        "output":"content-addressed paper-ready package",
+        "output":"content-addressed paper-ready evidence package",
     },
     {
-        "key":"system-learning","index":7,"stage_keys":["learn"],
+        "key":"paper-construction","index":7,"stage_keys":["paper-design","manuscript"],
+        "label":{"en":"Search the story, then construct the manuscript","zh":"先竞争故事线，再形成论文成稿"},
+        "question":{"en":"Which claim-preserving story best exposes the contribution, and is the manuscript bound to that winning contract?","zh":"哪条不扩张主张的故事线最能呈现贡献，成稿是否严格绑定这一获胜合同？"},
+        "output":"Story Search winner + evidence-bound manuscript",
+    },
+    {
+        "key":"review-repair","index":8,"stage_keys":["mock-pc","targeted-repair","claim-audit","pdf-qa"],
+        "label":{"en":"Review, repair, audit, and render","zh":"模拟审稿、定向修复、主张审计与 PDF 质检"},
+        "question":{"en":"What would cause rejection, which objections can be repaired without new science, and does every surviving claim remain evidence-bound in the rendered artifact?","zh":"哪些问题最可能导致拒稿、哪些可以在不新增科学主张的前提下修复，以及最终 PDF 中每条主张是否仍有证据绑定？"},
+        "output":"dual-mode Mock PC + targeted repair + Claim Audit + PDF QA",
+    },
+    {
+        "key":"submission-closure","index":9,"stage_keys":["prebuttal","submission-ready","submitted","rebuttal"],
+        "label":{"en":"Close submission and reviewer decisions","zh":"完成预答辩、投稿与审稿决策闭环"},
+        "question":{"en":"Are decision-critical objections pre-answered, all submission gates satisfied, and external human submission authority explicit?","zh":"决策关键质疑是否已预先回答、投稿门是否全部通过，以及人工投稿权限是否明确？"},
+        "output":"Prebuttal + submission readiness + submission/rebuttal receipts",
+    },
+    {
+        "key":"system-learning","index":10,"stage_keys":["learn"],
         "label":{"en":"Turn outcomes into system memory","zh":"把结果沉淀成系统记忆"},
         "question":{"en":"Which lessons become reusable rules, dead-end memory, replay cases, and future search constraints?","zh":"哪些经验应该变成可复用规则、dead-end 记忆、回放 case 和下一轮搜索约束？"},
         "output":"meta-trace + failure assets + replay-tested rules",
@@ -101,8 +129,8 @@ FUNCTIONAL_LAYERS: tuple[dict[str, Any], ...] = (
     {
         "key":"memory-publication","index":6,
         "label":{"en":"Scientific memory, system learning, and publication","zh":"科研记忆、系统学习与发布"},
-        "mandate":{"en":"Preserve decisions and dead ends without rewriting history, evaluate the research system itself, and close publishable claims against real artifacts.","zh":"在不改写科研历史的前提下沉淀决策与死路，评测科研系统本身，并让论文主张逐条回到真实工件。"},
-        "primary_outputs":["Decision Ledger","Scientific Meta-Trace","Failure Assets","replay benchmark","public snapshot","Chain-of-Evidence"],
+        "mandate":{"en":"Preserve decisions and dead ends without rewriting history, evaluate the research system itself, close publishable claims against real artifacts, and carry evidence-closed work through reviewer-aware submission closure without weakening scientific authority.","zh":"在不改写科研历史的前提下沉淀决策与死路，评测科研系统本身，让论文主张逐条回到真实工件，并在不放宽科学权限的前提下把证据闭环工作推进到面向审稿决策的投稿闭环。"},
+        "primary_outputs":["Decision Ledger","Scientific Meta-Trace","Failure Assets","replay benchmark","public snapshot","Chain-of-Evidence","Paper Contract","Mock PC","Manuscript CI","Prebuttal","submission/rebuttal receipts"],
     },
 )
 
@@ -132,6 +160,7 @@ COMPONENT_BINDINGS: dict[str, tuple[str, str]] = {
     "Information-gain experiment portfolio scheduler": ("experiment-value-scheduler", "experiment-design"),
     "Protocol-validity auditor + research-system replay benchmark": ("protocol-and-replay", "experiment-design"),
     "Continuous external research-system learning": ("external-system-learning", "memory-publication"),
+    "Paper acceptance closure and manuscript integrity": ("paper-acceptance-closure", "memory-publication"),
     "Five-gate P0 Economy layer": ("p0-economy", "experiment-design"),
     "Five-checkpoint AI consultation clinic": ("ai-consultation-clinic", "paper-design"),
     "Automatic consultation trigger queue": ("ai-consultation-automation", "runtime-authority"),
@@ -203,7 +232,7 @@ def build_system_architecture(components: list[dict[str, Any]], methodology_cont
         })
     return {
         "schema_version":"1.1",
-        "model":"one temporal lifecycle + seven reader groups + six functional responsibility layers",
+        "model":"one temporal lifecycle + ten reader groups + six functional responsibility layers",
         "temporal_flow":[dict(row) for row in TEMPORAL_FLOW],
         "reading_groups":[dict(row) for row in READING_GROUPS],
         "stage_group_map":stage_group_map,
@@ -241,5 +270,7 @@ def build_system_architecture(components: list[dict[str, Any]], methodology_cont
             "Search effort and scientific assurance are orthogonal: more firepower never relaxes evidence or authority gates.",
             "The P0 seven-stage state machine is nested inside scientific validation; it is not a second paper lifecycle.",
             "Cross-cutting methodology controls attach to an existing owner component and never create an implicit seventh functional layer.",
+            "Paper optimization begins only after Paper Evidence closure; it may change framing and presentation but cannot expand the frozen scientific claim.",
+            "Submission readiness is a fail-closed paper gate and never implies scientific, experiment, GPU, or submission authority.",
         ],
     }

@@ -40,6 +40,10 @@ POLICY={
  "execution_completeness_cannot_set_scientific_pass":True,
  "scientific_status_requires_independent_stage_authority":True,
  "executor_may_report_artifact_completion_but_cannot_acquit_quality":True,
+ "paper_acceptance_begins_only_after_paper_evidence_closure":True,
+ "paper_optimization_cannot_expand_scientific_claims":True,
+ "causal_or_evidence_hold_blocks_post_evidence_paper_advancement":True,
+ "submission_readiness_never_grants_submission_authority":True,
 }
 PASS_TOKENS={"pass","support-pass","support_qualification_pass","consensus_support_pass","consensus_full_pass","method-pass","qualified"}
 PREDECESSOR_EVIDENCE={"substrate":"problem_evidence","f0-identifiability":"substrate_evidence","p0-support":"f0_evidence","p0-method":"support_evidence","p1-replication":"method_evidence","paper-experiment":"p1_evidence"}
@@ -112,7 +116,7 @@ def evaluate_stage_contract(idea_id:str,config:dict[str,Any],root:Path)->dict[st
  return {"schema_version":"2.0","idea_id":idea_id,"stage":stage,"stage_index":STAGES.index(stage),"predecessor_authorization":predecessor,"support_authorization":support,"repair_budget":budget,"execution_authorized":not blockers,"blockers":blockers,"policy":POLICY}
 
 def build_governance_state()->dict[str,Any]:
- return {"schema_version":"2.4","generated_at":_now(),"policy":POLICY,"stop_classes":STOP_CLASSES,"paper_first_macro_stages":[str(row["key"]) for row in TEMPORAL_FLOW],"stages":[{"index":i,"key":k} for i,k in enumerate(STAGES)],"predecessor_evidence":PREDECESSOR_EVIDENCE,"failure_classes":{k:{"belief_authority":v[0],"next_action":v[1],"persistent_dead_end_authority":v[2]} for k,v in FAILURES.items()},"stage_scope_note":"The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle. Every STOP must be typed as REALIZATION_STOP, SUPPORT_STOP, PROTOCOL_STOP, or PRINCIPLE_STOP; only PRINCIPLE_STOP may enter persistent dead-end memory, and only after a scope-matched positive counter-explanation or exact same-information reduction."}
+ return {"schema_version":"2.4","generated_at":_now(),"policy":POLICY,"stop_classes":STOP_CLASSES,"paper_first_macro_stages":[str(row["key"]) for row in TEMPORAL_FLOW],"stages":[{"index":i,"key":k} for i,k in enumerate(STAGES)],"predecessor_evidence":PREDECESSOR_EVIDENCE,"failure_classes":{k:{"belief_authority":v[0],"next_action":v[1],"persistent_dead_end_authority":v[2]} for k,v in FAILURES.items()},"stage_scope_note":f"The seven scientific stages are the experiment-evidence state machine nested inside the {len(TEMPORAL_FLOW)}-stage paper-first lifecycle; they do not replace the paper lifecycle. Every STOP must be typed as REALIZATION_STOP, SUPPORT_STOP, PROTOCOL_STOP, or PRINCIPLE_STOP; only PRINCIPLE_STOP may enter persistent dead-end memory, and only after a scope-matched positive counter-explanation or exact same-information reduction. Post-evidence Paper Acceptance cannot weaken scientific authority or bypass causal/evidence holds."}
 
 def write_governance_state(json_path:Path,js_path:Path)->dict[str,Any]:
  row=build_governance_state(); _atomic(json_path,row); js_path.parent.mkdir(parents=True,exist_ok=True)
