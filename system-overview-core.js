@@ -13,8 +13,8 @@
     return `<section class="system-hero system-section">
       <div class="system-hero-copy"><span class="system-kicker">${pick("PAPER-FIRST 科研操作系统","PAPER-FIRST RESEARCH OS")}</span><h3>${pick("整套系统只围绕一个问题推进：现在有没有一篇值得写、而且能用实验说清楚的论文？","The whole system advances one question: do we have a paper worth writing, with a claim that experiments can actually establish?")}</h3><p>${pick("实际顺序是：先从论文和已有实验找到一个具体问题，确认它没有被已有工作或简单解释覆盖；再写清论文贡献、方法和最强基线；然后只跑最便宜的决定性实验；证据稳定后才扩量。AI 评审、GPU 调度、失败诊断和历史记忆都只是这条主流程的辅助工具。","The actual order is: find a concrete problem from papers or prior experiments; verify that prior work or a simpler explanation does not already cover it; write down the paper claim, method, and strongest baseline; run only the cheapest decisive test; and scale only after the evidence is stable. AI review, GPU scheduling, failure diagnosis, and research memory are supporting tools for this one flow.")}</p></div>
       <div class="system-stat-grid system-hero-stats">
-        ${stat(get(architecture.reader_chapters,7),"个阅读章节","reader chapters")}
-        ${stat(get(architecture.temporal_stages,11),"个机器时间阶段","machine temporal stages")}
+        ${stat(get(architecture.reader_chapters,10),"个阅读章节","reader chapters")}
+        ${stat(get(architecture.temporal_stages,21),"个机器时间阶段","machine temporal stages")}
         ${stat(get(architecture.functional_layers,6),"个后端职责层","backend responsibility layers")}
         ${stat(get(architecture.assigned_components,running),"个已归责组件","assigned components",get(architecture.unassigned_components,0)?"warn":"good")}
         ${stat(get(architecture.cross_cutting_controls,3),"个横向方法学控制","cross-cutting controls")}

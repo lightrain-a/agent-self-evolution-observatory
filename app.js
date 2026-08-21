@@ -761,7 +761,7 @@ function syncShellLanguage() {
   const sidebarNote = document.querySelector(".sidebar-note");
   if (sidebarNote) {
     sidebarNote.textContent = pageId === "system-overview"
-      ? (language === "zh" ? "7 个阅读章节 · 统一 11 阶段生命周期 · 6 个职责层 · P0 七阶段验证子状态机" : "7 reader chapters · canonical 11-stage lifecycle · 6 responsibility layers · P0 7-stage validation sub-machine")
+      ? (language === "zh" ? "10 个阅读章节 · 统一 21 阶段科研到投稿生命周期 · 6 个职责层 · P0 七阶段验证子状态机" : "10 reader chapters · canonical 21-stage research-to-submission lifecycle · 6 responsibility layers · P0 7-stage validation sub-machine")
       : pageId === "research-timeline"
         ? (language === "zh" ? "完整研究历史只读投影 · 北京时间 UTC+8 · 时间轴不新增科研权限" : "Read-only full research history · Asia/Shanghai UTC+8 · no new scientific authority")
         : pageId === "research-map"
