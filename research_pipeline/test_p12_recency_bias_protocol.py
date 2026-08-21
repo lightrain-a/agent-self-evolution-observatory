@@ -8,6 +8,9 @@ from pathlib import Path
 from .p12_recency_bias_execute import freeze_calibration, pending_calibration
 from .p12_recency_bias_harness import difficulty_calibration_pairs, skill_calibration_bundles
 from .p12_recency_bias_protocol import (
+    REPAIRED_AUTHORIZATION_FILENAME,
+    REVOKED_AUTHORIZATION_V2_FILENAME,
+    authorization_ok,
     parse_difficulty_answers,
     parse_single_integer,
     parse_skills,
@@ -43,6 +46,14 @@ class P12RecencyBiasProtocolTest(unittest.TestCase):
             (root/"difficulty-repair-v2").mkdir()
             (root/"difficulty-repair-v2"/f"{pair['pair_id']}.json").write_text(json.dumps({"status":"DIFFICULTY_COMPLETE","pair_id":pair["pair_id"]}))
             self.assertNotIn(pair["pair_id"],pending_calibration(root)["difficulty"])
+
+    def test_v2_revocation_blocks_stale_repaired_authorization(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            (root/REPAIRED_AUTHORIZATION_FILENAME).write_text(json.dumps({"entries":[]}))
+            (root/REVOKED_AUTHORIZATION_V2_FILENAME).write_text(json.dumps({"status":"EVIDENCE_HARNESS_IMPLEMENTATION_PENDING"}))
+            with self.assertRaisesRegex(RuntimeError,"v2 authorization was revoked"):
+                authorization_ok(root)
 
     def test_freeze_calibration_passes_only_with_matched_below_ceiling_difficulty(self):
         with tempfile.TemporaryDirectory() as td:

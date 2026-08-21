@@ -40,6 +40,9 @@ AUTHORIZATION_FILENAME = "authorization-plan.json"
 REVOKED_AUTHORIZATION_FILENAME = "authorization-revoked-plan-v1.json"
 REPAIRED_AUTHORIZATION_FILENAME = "authorization-repaired-plan-v2.json"
 REPAIRED_IMPLEMENTATION_MANIFEST_FILENAME = "harness-implementation-manifest-v2.json"
+REVOKED_AUTHORIZATION_V2_FILENAME = "authorization-revoked-plan-v2.json"
+REPAIRED_AUTHORIZATION_V3_FILENAME = "authorization-repaired-plan-v3.json"
+REPAIRED_IMPLEMENTATION_MANIFEST_V3_FILENAME = "harness-implementation-manifest-v3.json"
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -173,12 +176,18 @@ def authorize_implementation(*,run_root: Path,persistent_root: Path,evidence_pla
 
 
 def authorization_ok(run_root: Path) -> tuple[dict[str,Any],dict[str,Any]]:
-    repaired=run_root/REPAIRED_AUTHORIZATION_FILENAME
-    revoked=run_root/REVOKED_AUTHORIZATION_FILENAME
-    if repaired.is_file():
-        plan=load_json(repaired);manifest=load_json(run_root/REPAIRED_IMPLEMENTATION_MANIFEST_FILENAME)
+    repaired_v3=run_root/REPAIRED_AUTHORIZATION_V3_FILENAME
+    revoked_v2=run_root/REVOKED_AUTHORIZATION_V2_FILENAME
+    repaired_v2=run_root/REPAIRED_AUTHORIZATION_FILENAME
+    revoked_v1=run_root/REVOKED_AUTHORIZATION_FILENAME
+    if repaired_v3.is_file():
+        plan=load_json(repaired_v3);manifest=load_json(run_root/REPAIRED_IMPLEMENTATION_MANIFEST_V3_FILENAME)
+    elif revoked_v2.is_file():
+        raise RuntimeError("P12 v2 authorization was revoked; v3 repaired authorization is required")
+    elif repaired_v2.is_file():
+        plan=load_json(repaired_v2);manifest=load_json(run_root/REPAIRED_IMPLEMENTATION_MANIFEST_FILENAME)
     else:
-        if revoked.is_file(): raise RuntimeError("P12 v1 authorization was revoked; repaired authorization is required")
+        if revoked_v1.is_file(): raise RuntimeError("P12 v1 authorization was revoked; repaired authorization is required")
         plan=load_json(run_root/AUTHORIZATION_FILENAME);manifest=load_json(run_root/IMPLEMENTATION_MANIFEST_FILENAME)
     row=next((x for x in plan.get("entries") or [] if x.get("candidate_id")==CANDIDATE_ID),None)
     if not row or row.get("status")!="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION" or row.get("execution_authorized") is not True: raise RuntimeError("P12 bounded evidence not authorized")

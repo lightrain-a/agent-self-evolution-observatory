@@ -127,8 +127,10 @@ def execute_skill_bundle(*,run_root: Path,persistent_root: Path,bundle_id: str) 
 
 
 def _difficulty_receipt_path(run_root: Path,pair_id: str) -> Path:
-    repaired=run_root/"difficulty-repair-v2"/f"{pair_id}.json"
-    if repaired.is_file(): return repaired
+    repaired_v3=run_root/"difficulty-repair-v3"/f"{pair_id}.json"
+    if repaired_v3.is_file(): return repaired_v3
+    repaired_v2=run_root/"difficulty-repair-v2"/f"{pair_id}.json"
+    if repaired_v2.is_file(): return repaired_v2
     return run_root/"difficulty"/f"{pair_id}.json"
 
 
