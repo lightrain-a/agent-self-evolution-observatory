@@ -20,6 +20,34 @@ AGENT_REVIEWER_MODEL = "doubao-seed-2.1-turbo"
 REDUCTION_REVIEWER_MODEL = "minimax-m3"
 
 
+def _parse_review_payload(raw: str, *, run_root: Path, name: str, raw_sha256: str) -> tuple[dict[str, Any], dict[str, Any] | None]:
+    try:
+        return extract_json_object(raw), None
+    except Exception as first_error:
+        stripped = str(raw or "").strip()
+        if not stripped.endswith('\"]}'):
+            raise
+        repaired = (stripped[:-2] + '}]}').strip()
+        try:
+            payload = extract_json_object(repaired)
+        except Exception:
+            raise first_error
+        receipt = {
+            "schema_version":"1.0",
+            "status":"PARSE_REPAIRED_PUNCTUATION_ONLY_ZERO_AUTHORITY",
+            "stage":f"memory-portfolio-{name}-review",
+            "raw_sha256":raw_sha256,
+            "repaired_sha256":_sha_text(repaired),
+            "repair_type":"TRAILING_REVIEW_OBJECT_CLOSE_ONLY",
+            "inserted_text":"}",
+            "string_content_mutation_allowed":False,
+            "scientific_authority":False,
+            "belief_authority":False,
+        }
+        _write(run_root/f"repair-{name}-review-{raw_sha256[:12]}.json",receipt)
+        return payload, receipt
+
+
 def hard_prompt(prep: dict[str, Any]) -> str:
     return f'''You are the HARD search-control reviewer. Judge ONLY history near-duplication and bounded falsifier completeness. Do not judge agent-specificity or same-information reduction.
 
@@ -138,7 +166,8 @@ def run_stage(
             prompt_sha256=psha,
             root=root,
         )
-        reviews = extract_json_object(raw).get("reviews")
+        parsed_payload, parse_repair = _parse_review_payload(raw, run_root=run_root, name=name, raw_sha256=archived["raw_sha256"])
+        reviews = parsed_payload.get("reviews")
         if not isinstance(reviews, list) or len(reviews) != len(expected_ids):
             raise ValueError(f"{name} reviewer must return {len(expected_ids)} reviews")
         observed = {str(row.get("blind_id") or "") for row in reviews if isinstance(row, dict)}
@@ -149,6 +178,7 @@ def run_stage(
             "study":"API_MEMORY_PORTFOLIO_SMOKE",
             "review_stage":name,
             "usage":_usage(response),
+            "parse_repair":parse_repair or {},
             "reviews":reviews,
             "scientific_authority":False,
             "belief_authority":False,
@@ -181,6 +211,7 @@ def run_stage(
             "prompt_sha256":psha,
             "resolved_model":str(response.get("resolved_model") or ""),
             "usage":_usage(response),
+            "parse_repair":parse_repair or {},
             "reviews":reviews,
             "scientific_authority":False,
             "belief_authority":False,
