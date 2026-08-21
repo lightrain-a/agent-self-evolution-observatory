@@ -60,14 +60,33 @@
       "existing_evidence": [
         "The fragility study reports substantial multi-run variance and explicitly treats proxy LLM reward as a noisy confound, using ground-truth reward in its main memory construction experiments.",
         "Released ReasoningBank code maps score=1 to a success-reflection prompt and score=0 to a failure-reflection prompt, so one reward bit changes the memory-construction objective for the same trajectory.",
+        "The paired F0 intervention holds each released trajectory fixed and changes only the reward-conditioned reflection mode; all 4 complete pairs change normalized memory content and title sets, with mean token-set Jaccard distance 0.734789.",
         "Memory Reward Inflation independently shows that proxy reward errors can accumulate through memory reuse."
       ],
       "experiment_debt": [
-        "paired identical-trajectory success/failure memory F0",
         "matched future-task memory injection",
         "downstream action and success variance under fixed benchmark state"
       ],
+      "support_debt": [
+        "Two requested F0 failure-label responses remain provider-incomplete after GET-only recovery and are excluded from scientific counts."
+      ],
       "f0_contract": "generated/d2-proxy-reward-memory-f0-contract.json",
+      "f0_result": {
+        "artifact": "generated/d2-proxy-reward-memory-f0.json",
+        "falsifier_result": "SURVIVES_F0",
+        "complete_pairs": 4,
+        "content_change_rate": 1.0,
+        "title_set_change_rate": 1.0,
+        "mean_token_jaccard_distance": 0.734789
+      },
+      "f1_support_state": {
+        "artifact": "generated/d2-proxy-reward-memory-f1.json",
+        "status": "SUPPORT_INCOMPLETE_NO_SCIENTIFIC_AUTHORITY",
+        "complete_policy_calls": 0,
+        "aligned_success_failure_rollouts": 0,
+        "falsifier_evaluable": false,
+        "claim_update": "NONE"
+      },
       "manuscript_dir": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027",
       "limitations_source": "sections/06_limitations_conclusion.tex",
       "scientific_authority": false,

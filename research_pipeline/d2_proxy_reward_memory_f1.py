@@ -58,6 +58,15 @@ def _mode(signatures: list[str]) -> str:
     return sorted([k for k, v in counts.items() if v == best])[0]
 
 
+def _falsifier_result(*, paired_complete: int, paired_divergent: int, required_aligned: int) -> str:
+    """Fail closed when provider/parse support is insufficient to evaluate the frozen falsifier."""
+    if paired_divergent > 0:
+        return "SURVIVES_F1"
+    if required_aligned > 0 and paired_complete == required_aligned:
+        return "FALSIFIED_F1"
+    return "SUPPORT_INCOMPLETE_NO_SCIENTIFIC_AUTHORITY"
+
+
 def _request_fingerprint(*, experiment_id: str, stage: str, engine_id: str, prompt_sha: str, model: str, tokens: int, temp: float) -> str:
     material = {
         "transaction_id": experiment_id,
@@ -152,7 +161,9 @@ def run(contract: dict[str, Any], *, output: Path, private_root: Path) -> dict[s
     paired_complete = 0
     paired_divergent = 0
     modal_diff = 0
+    modal_comparable = 0
     shifted_from_no_memory = 0
+    no_memory_comparable = 0
     for mapping in contract["paired_interventions"]:
         future_id = str(mapping["future_task"])
         groups = {cond: [r["action_signature"] for r in rows if r["future_task"] == future_id and r["condition"] == cond] for cond in contract["conditions"]}
@@ -163,23 +174,38 @@ def run(contract: dict[str, Any], *, output: Path, private_root: Path) -> dict[s
         paired_complete += aligned
         paired_divergent += divergent
         smode = _mode(success); fmode = _mode(failure); nmode = _mode(groups["no_memory"])
-        if smode and fmode and smode != fmode:
-            modal_diff += 1
-        if nmode and ((smode and smode != nmode) or (fmode and fmode != nmode)):
-            shifted_from_no_memory += 1
+        if smode and fmode:
+            modal_comparable += 1
+            if smode != fmode:
+                modal_diff += 1
+        if nmode and (smode or fmode):
+            no_memory_comparable += 1
+            if (smode and smode != nmode) or (fmode and fmode != nmode):
+                shifted_from_no_memory += 1
         by_task.append({"future_task": future_id, "source_memory_task": str(mapping["source_memory_task"]), "signatures": groups, "modal_signatures": {"success_label_memory": smode, "failure_label_memory": fmode, "no_memory": nmode}, "entropy_bits": {k: round(_entropy(v), 6) for k, v in groups.items()}, "aligned_pair_count": aligned, "aligned_divergent_count": divergent, "scientific_authority": False})
 
     n_tasks = len(contract["paired_interventions"])
+    rollouts_per_condition = int(contract["rollouts_per_condition"])
+    required_aligned = n_tasks * rollouts_per_condition
+    falsifier_result = _falsifier_result(
+        paired_complete=paired_complete,
+        paired_divergent=paired_divergent,
+        required_aligned=required_aligned,
+    )
     summary = {
-        "requested_policy_calls": n_tasks * len(contract["conditions"]) * int(contract["rollouts_per_condition"]),
+        "requested_policy_calls": n_tasks * len(contract["conditions"]) * rollouts_per_condition,
         "complete_policy_calls": len(rows),
         "provider_or_parse_failures": len(failures),
         "aligned_success_failure_rollouts": paired_complete,
+        "required_aligned_success_failure_rollouts": required_aligned,
+        "falsifier_evaluable": paired_complete == required_aligned,
         "paired_action_signature_divergence_rate": round(paired_divergent / paired_complete, 6) if paired_complete else None,
-        "modal_action_signature_difference_rate": round(modal_diff / n_tasks, 6) if n_tasks else None,
-        "memory_condition_shift_from_no_memory": round(shifted_from_no_memory / n_tasks, 6) if n_tasks else None,
+        "modal_action_signature_comparable_tasks": modal_comparable,
+        "modal_action_signature_difference_rate": round(modal_diff / modal_comparable, 6) if modal_comparable else None,
+        "no_memory_comparable_tasks": no_memory_comparable,
+        "memory_condition_shift_from_no_memory": round(shifted_from_no_memory / no_memory_comparable, 6) if no_memory_comparable else None,
     }
-    report = {"schema_version": "1.0", "experiment_id": contract["experiment_id"], "status": "F1_COMPLETE" if len(rows) == summary["requested_policy_calls"] else "F1_SUPPORT_INCOMPLETE", "contract_sha256": _jsha(contract), "hypothesis": contract["hypothesis"], "summary": summary, "falsifier_result": "SURVIVES_F1" if paired_divergent > 0 else "FALSIFIED_OR_INCOMPLETE", "task_results": by_task, "rollouts": rows, "provider_receipts": receipts, "failures": failures, "experiment_debt": contract["experiment_debt_after_f1"], "scientific_authority": False, "authority": {"problem_gate": False, "paper_design": False, "method": False, "experiment": False, "p0": False, "gpu": False}}
+    report = {"schema_version": "1.0", "experiment_id": contract["experiment_id"], "status": "F1_COMPLETE" if len(rows) == summary["requested_policy_calls"] else "F1_SUPPORT_INCOMPLETE", "contract_sha256": _jsha(contract), "hypothesis": contract["hypothesis"], "summary": summary, "falsifier_result": falsifier_result, "task_results": by_task, "rollouts": rows, "provider_receipts": receipts, "failures": failures, "experiment_debt": contract["experiment_debt_after_f1"], "scientific_authority": False, "authority": {"problem_gate": False, "paper_design": False, "method": False, "experiment": False, "p0": False, "gpu": False}}
     _write_json(output, report)
     return report
 

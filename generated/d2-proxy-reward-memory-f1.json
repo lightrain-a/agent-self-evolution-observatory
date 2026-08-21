@@ -9,11 +9,15 @@
     "complete_policy_calls": 0,
     "provider_or_parse_failures": 36,
     "aligned_success_failure_rollouts": 0,
+    "required_aligned_success_failure_rollouts": 12,
+    "falsifier_evaluable": false,
     "paired_action_signature_divergence_rate": null,
-    "modal_action_signature_difference_rate": 0.0,
-    "memory_condition_shift_from_no_memory": 0.0
+    "modal_action_signature_comparable_tasks": 0,
+    "modal_action_signature_difference_rate": null,
+    "no_memory_comparable_tasks": 0,
+    "memory_condition_shift_from_no_memory": null
   },
-  "falsifier_result": "FALSIFIED_OR_INCOMPLETE",
+  "falsifier_result": "SUPPORT_INCOMPLETE_NO_SCIENTIFIC_AUTHORITY",
   "task_results": [
     {
       "future_task": "22",
