@@ -264,11 +264,11 @@ def stri_events() -> list[dict[str, Any]]:
             title_zh = "STRI 达到 ICLR 正式投稿包就绪状态"
         out.append(event(occurred_at=artifact_ts(d,path), event_class=cls, importance="key", research_id=rid,
             title=d.get("title") or fallback_title, state_before=before, state_after=str(decision), summary_en=en, summary_zh=zh,
-            why_en=why, why_zh=("展开查看结构化 artifact 中的原始机制解释与审计证据。" if why else ""),
-            limitation_en=limit, limitation_zh="该事件只在 artifact 明确写出的 claim boundary 内成立；不会由时间轴自动扩大。",
+            why_en=why, why_zh=("展开查看结构化科研记录中的原始机制解释与审计证据。" if why else ""),
+            limitation_en=limit, limitation_zh="该事件只在原始记录明确写出的主张边界内成立；不会由时间轴自动扩大。",
             next_action=d.get("next_action", ""), next_action_zh="按当前冻结范围继续论文提交与人工确认；除非出现独立的新证据，否则不扩大主张或重新追实验分数。",
             evidence=ev, scientific=scientific, authority_scope=scope,
-            authority_scope_zh="只沿用该 artifact 已明确授权的窄范围；时间轴本身不新增科研权限。",
+            authority_scope_zh="只沿用原始记录已明确授权的窄范围；时间轴本身不新增科研权限。",
             title_zh=title_zh, research_label_zh=research_label_zh, time_precision=artifact_precision(d,path),
             source=path, links=[{"label":"paper","href":"selected-paper.html"},{"label":"experiments","href":"experiments.html"}]))
     return out
@@ -305,11 +305,11 @@ def principle_events() -> list[dict[str, Any]]:
             state_after=str(state), summary_en=safe or f"Scoped principle readjudication closed this formulation at {layer}.",
             summary_zh=f"该候选完成 scoped principle readjudication，并在 {layer} 层形成关闭结论。展开可查看原始 reduction、边界与重开条件。",
             why_en=reason, why_zh="该关闭来自已有证据下的 same-information / scope-matched reduction 或明确结构性裁决；不是把运行失败自动解释成科学失败。",
-            limitation_en=d.get("dead_end_scope", ""), limitation_zh="关闭只作用于 artifact 明确写出的 scoped formulation，不自动外推到整个方向或 benchmark。",
+            limitation_en=d.get("dead_end_scope", ""), limitation_zh="关闭只作用于原始记录明确写出的具体候选表述，不自动外推到整个方向或基准。",
             reopen=reopen, reopen_zh="仅在原裁决登记的重开条件被真实新证据满足时重开；不能通过换术语、调阈值或重复同类负实验重开。",
             evidence=[{"label":"evidence","value":x} for x in refs[:6]] + [{"label":"experiment run","value":d.get("experiment_run_for_this_readjudication")},{"label":"closure layer","value":layer}],
             scientific=scientific, authority_scope=auth_scope or ("scoped principle adjudication" if scientific else "readjudication projection only"),
-            authority_scope_zh="只对该 artifact 明确界定的 scoped formulation 生效；不自动关闭整个研究领域。",
+            authority_scope_zh="只对原始记录明确界定的具体候选表述生效；不自动关闭整个研究领域。",
             source=path, links=[{"label":"research","href":"paper-ideas.html"}]))
     return out
 
@@ -337,11 +337,11 @@ def p0_events() -> list[dict[str, Any]]:
             occurred_at=artifact_ts(d,path), time_precision=artifact_precision(d,path), event_class=cls, importance="detail", research_id=str(rid),
             research_label_zh=str(rid), title=d.get("title") or d.get("scientific_role") or str(rid), title_zh=f"P0 实验裁决 · {rid}", state_after=decision,
             summary_en=d.get("interpretation") or d.get("scientific_interpretation") or next_action or decision,
-            summary_zh=f"该 P0 artifact 记录了明确决策：{decision}。展开查看原始指标、下一步和 authority 边界。",
-            why_en=d.get("reason") or d.get("diagnosis") or "", why_zh="该事件直接来自已有 P0 artifact；时间轴只做投影，不重新裁决。",
+            summary_zh=f"该 P0 记录给出了明确决策：{decision}。展开查看原始指标、下一步和权限边界。",
+            why_en=d.get("reason") or d.get("diagnosis") or "", why_zh="该事件直接来自已有 P0 结构化记录；时间轴只做投影，不重新裁决。",
             next_action=next_action, next_action_zh=generic_next_zh(decision), evidence=metrics(d.get("metrics") or d.get("summary") or {}), scientific=scientific,
             authority_scope="existing P0 decision artifact" if scientific else "P0/system projection; no new authority",
-            authority_scope_zh="沿用原 P0 artifact 的已有裁决范围；时间轴不会重新授权实验或 GPU。",
+            authority_scope_zh="沿用原 P0 记录的已有裁决范围；时间轴不会重新授权实验或 GPU。",
             source=path, links=[{"label":"experiments","href":"experiments.html"}]))
     return out
 
@@ -363,7 +363,7 @@ def current_status_events() -> list[dict[str, Any]]:
             limitation_en="Current-status is a derived projection and cannot itself expand claims.", limitation_zh="current-status 是派生投影，只汇总已有证据，不能自行扩大 claim。",
             next_action=p.get("next_action", ""), evidence=[{"label":"claims","value":f"{p.get('claims_supported',0)}/{p.get('claims_total',0)}"},{"label":"QA","value":f"{p.get('qa_passed',0)}/{p.get('qa_total',0)}"},{"label":"evidence debt","value":p.get("paper_quality_evidence_debt",0)},{"label":"human signoff pending","value":p.get("human_signoff_pending")}],
             next_action_zh="完成作者责任确认、作者列表与 OpenReview 提交；不因页面状态自动扩大 N1–N3 主张。",
-            scientific=False, authority_scope="current-status projection; source claims retain their own authority", authority_scope_zh="当前状态汇总只读投影；科研权限仍由各原始证据与裁决 artifact 决定。", source=path,
+            scientific=False, authority_scope="current-status projection; source claims retain their own authority", authority_scope_zh="当前状态汇总是只读投影；科研权限仍由各原始证据与裁决记录决定。", source=path,
             links=[{"label":"paper","href":"selected-paper.html"}], hint="paper-status"))
     out.append(event(
         occurred_at=when, time_precision=artifact_precision(d,path), event_class="idea", importance="key", research_id="Idea Search", research_label_zh="Idea 自动发现漏斗", title="Canonical double-funnel discovery snapshot", title_zh="Canonical 双漏斗 Idea 发现状态快照",
@@ -371,10 +371,10 @@ def current_status_events() -> list[dict[str, Any]]:
         summary_en=f"Last canonical receipt: {f.get('last_completed_raw_seeds',0)} raw seeds, {f.get('last_completed_reviewer_attacks',0)} reviewer attacks, {f.get('last_completed_repair_children',0)} repair children, {f.get('pre_f0_queued',0)} Pre-F0 candidates; final Problem-Gate passes={f.get('final_problem_gate_pass',0)}.",
         summary_zh=f"最近 canonical receipt：{f.get('last_completed_raw_seeds',0)} 个 raw seed、{f.get('last_completed_reviewer_attacks',0)} 次 reviewer attack、{f.get('last_completed_repair_children',0)} 个 repair child、{f.get('pre_f0_queued',0)} 个 Pre-F0 候选；正式 Problem-Gate pass={f.get('final_problem_gate_pass',0)}。",
         why_en="Pre-F0 is evidence acquisition, not paper/method/experiment/P0/GPU authority.", why_zh="Pre-F0 只是证据获取阶段，不等于 Paper/Method/Experiment/P0/GPU 授权。",
-        limitation_en="The discovery funnel explicitly carries zero scientific authority.", limitation_zh="该 discovery funnel 明确是 zero scientific authority；候选数量不能当成科研结论。",
+        limitation_en="The discovery funnel explicitly carries zero scientific authority.", limitation_zh="该 Idea 发现漏斗明确没有科研权限；候选数量不能当成科研结论。",
         evidence=[{"label":"raw seeds","value":f.get("last_completed_raw_seeds",0)},{"label":"Pre-F0 queued","value":f.get("pre_f0_queued",0)},{"label":"support ready","value":f.get("pre_f0_support_ready",0)},{"label":"support holds","value":f.get("pre_f0_support_holds",0)},{"label":"formal launchable","value":h.get("launchable_formal_experiments",0)}],
         next_action_zh="继续按 raw seed → 去重 → reviewer attack/repair → pre-F0 → exact reduction → Problem Gate 推进；未通过正式 Problem Gate 的候选不进入方法或实验。",
-        scientific=False, authority_scope="zero-authority discovery/search control", authority_scope_zh="Idea 搜索与 pre-F0 为零科学权限阶段；候选数量和 reviewer 输出不能直接授权实验。", source=path,
+        scientific=False, authority_scope="zero-authority discovery/search control", authority_scope_zh="Idea 搜索与 pre-F0 都是零科研权限阶段；候选数量和评审器输出不能直接授权实验。", source=path,
         links=[{"label":"research","href":"paper-ideas.html"},{"label":"system","href":"system-overview.html"}], hint="discovery-status"))
     return out
 
@@ -481,13 +481,13 @@ def generic_artifact_events() -> list[dict[str, Any]]:
             summary_en=summary_source or f"Structured artifact recorded: {path.name}.",
             summary_zh=summary_zh,
             why_en=summary_source,
-            why_zh="该条目直接来自现有结构化科研 artifact；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。",
+            why_zh="该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。" ,
             limitation_en="This full-history projection does not create scientific authority beyond the source artifact.",
-            limitation_zh="这是完整历史投影，不会因为被加入时间轴而增加 scientific authority，也不会把工程/运行失败自动改写成科学失败。",
+            limitation_zh="这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。",
             next_action=original_next,
             next_action_zh=generic_next_zh(state),
             reopen=original_reopen,
-            reopen_zh="若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。" if not original_reopen else "按原 artifact 中登记的重开条件执行；时间轴不自行放宽条件。",
+            reopen_zh="若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。" if not original_reopen else "按原始记录中登记的重开条件执行；时间轴不自行放宽条件。",
             evidence=evidence,
             scientific=False,
             authority_scope="full-history artifact projection only",
@@ -517,7 +517,30 @@ def git_title_zh(message: str) -> str:
     return f"系统建设里程碑：{message}"
 
 
+def git_is_shallow() -> bool:
+    if os.getenv("RESEARCH_TIMELINE_FORCE_SHALLOW", "").strip() == "1":
+        return True
+    try:
+        completed = subprocess.run(
+            ["git", "rev-parse", "--is-shallow-repository"],
+            cwd=ROOT, text=True, capture_output=True, timeout=10, check=False,
+        )
+    except OSError:
+        return True
+    return completed.returncode != 0 or completed.stdout.strip().lower() == "true"
+
+
+def preserved_origin_events(origin: str) -> list[dict[str, Any]]:
+    previous = load(GEN / "research-timeline.json")
+    rows = previous.get("events") if isinstance(previous, dict) else []
+    if not isinstance(rows, list):
+        return []
+    return [row for row in rows if isinstance(row, dict) and row.get("origin") == origin]
+
+
 def early_git_milestones() -> list[dict[str, Any]]:
+    if git_is_shallow():
+        return preserved_origin_events("git_early_history")
     try:
         completed = subprocess.run(
             ["git", "log", "--reverse", "--until=2026-08-05T23:59:59+08:00", "--format=%H%x09%cI%x09%s"],
@@ -542,7 +565,7 @@ def early_git_milestones() -> list[dict[str, Any]]:
             summary_en=f"Early project milestone commit {commit[:8]}: {message}",
             summary_zh=f"项目早期建设里程碑，提交 {commit[:8]}：{title_zh}。",
             why_en="Included to cover the project history before structured generated artifacts became available.",
-            why_zh="结构化科研 artifact 从 8 月初才逐步稳定，因此用 Git 提交补齐系统创建到结构化记录出现之前的历史。",
+            why_zh="结构化科研记录从 8 月初才逐步稳定，因此用 Git 提交补齐系统创建到结构化记录出现之前的历史。",
             limitation_en="Engineering/history milestone only; no scientific authority.",
             limitation_zh="仅用于补齐系统建设历史，不代表科学结论或实验授权。",
             evidence=[{"label":"提交", "value":commit[:12]}], scientific=False,
@@ -553,6 +576,8 @@ def early_git_milestones() -> list[dict[str, Any]]:
 
 
 def git_daily_activity_events() -> list[dict[str, Any]]:
+    if git_is_shallow():
+        return preserved_origin_events("git_daily_summary")
     try:
         completed = subprocess.run(
             ["git", "log", "--since=2026-08-06T00:00:00+08:00", "--format=%H%x09%cI%x09%s"],
@@ -580,9 +605,9 @@ def git_daily_activity_events() -> list[dict[str, Any]]:
             title=f"Daily repository activity summary · {day}", title_zh=f"{day} 系统活动汇总 · {len(rows)} 次提交",
             state_after="DAILY_ACTIVITY_RECORDED",
             summary_en=f"{len(rows)} repository commits were recorded on {day}. Representative changes: {'; '.join(samples)}",
-            summary_zh=f"北京时间 {day} 共记录 {len(rows)} 次仓库提交。该日即使没有单独生成结构化科研 artifact，也保留一条系统活动摘要，避免完整时间轴出现人为断档。",
+            summary_zh=f"北京时间 {day} 共记录 {len(rows)} 次仓库提交。该日即使没有单独生成结构化科研记录，也保留一条系统活动摘要，避免完整时间轴出现人为断档。",
             why_en="Daily engineering summary fills dates where research/system work happened but no standalone generated artifact carries that date.",
-            why_zh="用于补齐“当天确实有研究系统工作，但没有独立结构化 artifact”的日期；它只说明系统活动，不代表新的科研结论。",
+            why_zh="用于补齐“当天确实有研究系统工作，但没有独立结构化科研记录”的日期；它只说明系统活动，不代表新的科研结论。",
             limitation_en="Engineering activity only; commit count is not scientific progress authority.",
             limitation_zh="仅为系统 / 工程活动摘要，提交次数不能解释为科研质量或科学结论。",
             evidence=[{"label":"提交次数", "value":len(rows)},{"label":"最新提交", "value":latest[0][:12]},{"label":"代表变更", "value":"；".join(samples)}],
@@ -612,17 +637,17 @@ def memory_events(db_path: Path) -> list[dict[str, Any]] | None:
             ev = [{"label":"API calls","value":run["call_count"]},{"label":"research objects","value":run["object_count"]},{"label":"lineage edges","value":edges},{"label":"preflight-ready objects","value":ready},{"label":"recorded call failures","value":failures}]
             ev += [{"label":f"disposition · {name}","value":count} for name,count in dispositions.most_common(4)]
             out.append(event(
-                occurred_at=ts(run["imported_at"]), time_precision="exact", event_class="system", importance="key", research_id="Research Memory", research_label_zh="科研记忆 / provenance",
+                occurred_at=ts(run["imported_at"]), time_precision="exact", event_class="system", importance="key", research_id="Research Memory", research_label_zh="科研记忆 / 追溯",
                 title="Append-only research run imported into Research Memory", title_zh="新的科研运行记录写入 Research Memory", state_after=run["status"],
                 summary_en=f"Run {rid}: {run['call_count']} API calls, {run['object_count']} research objects, {edges} lineage edges, {ready} preflight-ready objects.",
                 summary_zh=f"run {rid} 已写入 Research Memory：{run['call_count']} 次 API call、{run['object_count']} 个 research object、{edges} 条 lineage，以及 {ready} 个 preflight-ready object。",
                 why_en="This is provenance/search progress only. The memory schema fixes scientific_authority=0 and belief_authority=0 for imported API/research-memory rows.",
-                why_zh="该事件只表示 provenance / 搜索系统进度。数据库对这些 API 与 Research Memory 记录硬性约束 scientific_authority=0、belief_authority=0。",
+                why_zh="该事件只表示追溯与搜索系统进度。数据库对这些 API 与 Research Memory 记录硬性约束科研权限=0、信念更新权限=0。",
                 limitation_en="Preflight readiness is not a Problem-Gate pass and cannot authorize experiments or update scientific belief by itself.",
                 limitation_zh="preflight readiness 不等于 Problem-Gate pass，也不能单独授权实验或改变 scientific belief。",
                 next_action="Use preflight contracts only after normal governance and scientific authorization checks succeed.",
                 next_action_zh="只有通过正常 governance 与科研授权后，preflight contract 才能继续进入后续实验流程。",
-                evidence=ev, scientific=False, authority_scope="runtime/provenance memory only; schema-enforced zero scientific and belief authority", authority_scope_zh="仅为 runtime / provenance 科研记忆；数据库层强制 scientific_authority=0、belief_authority=0。",
+                evidence=ev, scientific=False, authority_scope="runtime/provenance memory only; schema-enforced zero scientific and belief authority", authority_scope_zh="仅为运行时 / 追溯科研记忆；数据库层强制科研权限=0、信念更新权限=0。",
                 links=[{"label":"system","href":"system-overview.html"},{"label":"research","href":"paper-ideas.html"}], hint=rid, origin="research_memory_db"))
     except sqlite3.Error:
         return None

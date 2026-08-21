@@ -120,7 +120,7 @@
 
   const classBadge = (e) => `<span class="rt-badge rt-${esc(classes[e.event_class]?.tone || "system")}">${esc(labelClass(e.event_class))}</span>`;
   const authorityBadge = (e) => e.authority?.scientific
-    ? `<span class="rt-authority scoped">${pick("原 artifact 已有窄范围科研权限","Source has scoped scientific authority")}</span>`
+    ? `<span class="rt-authority scoped">${pick("原始记录已有窄范围科研权限","Source has scoped scientific authority")}</span>`
     : `<span class="rt-authority zero">${pick("本事件不新增科研权限","No new scientific authority")}</span>`;
   const evidence = (items=[]) => items.length ? `<div class="rt-evidence">${items.map(item=>`<div><b>${esc(language === "zh" ? metricLabelZh(item.label) : item.label)}</b><span>${esc(item.value)}</span></div>`).join("")}</div>` : "";
   const detailBlock = (labelZh,labelEn,value,cls="") => value ? `<section class="rt-detail-block ${cls}"><b>${pick(labelZh,labelEn)}</b><p>${esc(value)}</p></section>` : "";
@@ -176,7 +176,7 @@
 
   const overview = () => {
     const s = dataset().summary || {};
-    return `<section class="rt-overview"><div><b>${pick("完整历史 · 默认全部展示 · 北京时间 UTC+8","Full history · all events by default · Asia/Shanghai UTC+8")}</b><p>${pick(`当前投影共 ${s.events||0} 条事件，覆盖 ${s.days||0} 个有记录的研究日；其中 Research Memory 运行记录 ${s.runtime_memory_events||0} 条。历史从 Observatory 早期系统建设开始，并继续覆盖结构化 Idea、实验、论文、关闭与治理 artifact。每条记录默认折叠，避免完整历史一次展开造成阅读负担。`,`The projection contains ${s.events||0} events across ${s.days||0} recorded research days, including ${s.runtime_memory_events||0} Research Memory runtime events. It begins with early Observatory development and continues through structured idea, experiment, paper, closure, and governance artifacts.`)}</p></div><div class="rt-overview-timezone"><strong>${pick("北京时间","China Standard Time")}</strong><span>Asia/Shanghai · UTC+8</span></div><div class="rt-legend">${Object.keys(classes).map(k=>`<span class="rt-legend-item"><i class="rt-${classes[k].tone}"></i>${esc(labelClass(k))}</span>`).join("")}</div></section>`;
+    return `<section class="rt-overview"><div><b>${pick("完整历史 · 默认全部展示 · 北京时间 UTC+8","Full history · all events by default · Asia/Shanghai UTC+8")}</b><p>${pick(`当前投影共 ${s.events||0} 条事件，覆盖 ${s.days||0} 个有记录的研究日；其中 Research Memory 运行记录 ${s.runtime_memory_events||0} 条。历史从 Observatory 早期系统建设开始，并继续覆盖结构化 Idea、实验、论文、关闭与治理记录。每条记录默认折叠，避免完整历史一次展开造成阅读负担。`,`The projection contains ${s.events||0} events across ${s.days||0} recorded research days, including ${s.runtime_memory_events||0} Research Memory runtime events. It begins with early Observatory development and continues through structured idea, experiment, paper, closure, and governance artifacts.`)}</p></div><div class="rt-overview-timezone"><strong>${pick("北京时间","China Standard Time")}</strong><span>Asia/Shanghai · UTC+8</span></div><div class="rt-legend">${Object.keys(classes).map(k=>`<span class="rt-legend-item"><i class="rt-${classes[k].tone}"></i>${esc(labelClass(k))}</span>`).join("")}</div></section>`;
   };
 
   window.renderResearchTimeline = function(config){
