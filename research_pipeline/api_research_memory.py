@@ -46,7 +46,14 @@ POLICY: dict[str, Any] = {
     "canonical_run_memory_missing_fails_closed": True,
     "query_only_development_corrections_are_append_only_invalidations_not_deletes": True,
     "successful_parse_is_persisted_immediately_before_completed_run_import": True,
+    "idea_discovery_default_variant_is_top_k_relevant": True,
+    "basin_aware_portfolio_is_experimental_not_default": True,
+    "relevant_escape_framing_is_experimental_not_default": True,
+    "closed_basin_role_is_audit_metadata_only_by_default": True,
 }
+
+IDEA_DISCOVERY_DEFAULT_VARIANT = "relevant"
+IDEA_DISCOVERY_EXPERIMENTAL_VARIANTS = ("portfolio", "relevant_neutral", "relevant_escape")
 
 IDENTITY_SIGNATURE_VERSION = "api-scientific-object-v1"
 API_MEMORY_PURPOSES = {

@@ -62,10 +62,27 @@ import is per-object idempotent so interruption-time writeback and later full
 import can safely converge instead of conflicting.
 
 Supported query purposes are `IDEA_DISCOVERY`, `FORMULATION`,
-`SEMANTIC_REVIEW`, `EXPERIMENT_DESIGN`, and `PAPER_META_REVIEW`. Retrieval has
-three experimental variants: `relevant`, `random`, and `none`. Set
-`RESEARCH_API_MEMORY_VARIANT` to choose the arm. `random` is deterministic for a
-fixed context hash, while all variants share the same item and character caps.
+`SEMANTIC_REVIEW`, `EXPERIMENT_DESIGN`, and `PAPER_META_REVIEW`. The production
+default remains `relevant` (Top-K relevance). `random` and `none` are evaluation
+controls. `portfolio`, `relevant_neutral`, and `relevant_escape` are explicit
+IDEA_DISCOVERY-only experimental variants and are never selected by the default
+path.
+
+The default is evidence-driven rather than assumed. Three matched Research
+Memory 2.3 replicates (four memories / 2406 memory characters per arm) produced
+criterion-panel clear counts of 10/18 for the four-role basin-aware portfolio,
+16/18 for Top-K relevant, and 14/18 for random. The portfolio result was also
+substantially less stable across replicates (6/6, 1/6, 3/6) than Top-K relevant
+(5/6, 6/6, 5/6). This is a search-policy evaluation only, not scientific or
+publication-success evidence.
+
+A subsequent framing-only 2.4 test kept the exact same Top-K object IDs,
+scientific signatures, per-item framing-prefix length, visible source bytes, and
+total 2406 memory characters fixed. Across two corrected replicates, neutral
+framing and explicit `CLOSED_BASIN: escape-not-rephrase` framing both cleared
+11/12 candidates. Therefore always-on escape framing is not enabled. Closed-basin
+classification remains audit/search-control metadata that can be used in future
+controlled experiments without changing scientific thresholds.
 
 A canonical stage run fails closed if its canonical API memory database is
 missing. Noncanonical scratch/test runs do not attach to canonical API memory by

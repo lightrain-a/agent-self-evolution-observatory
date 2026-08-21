@@ -479,6 +479,9 @@ class ApiResearchMemoryTest(unittest.TestCase):
             state = build_api_research_memory_state(root=root / "persistent")
             self.assertEqual(state["summary"]["runs"], 1)
             self.assertEqual(state["summary"]["memory_queries"], 0)
+            self.assertTrue(state["policy"]["idea_discovery_default_variant_is_top_k_relevant"])
+            self.assertTrue(state["policy"]["basin_aware_portfolio_is_experimental_not_default"])
+            self.assertTrue(state["policy"]["relevant_escape_framing_is_experimental_not_default"])
 
 
 if __name__ == "__main__":
