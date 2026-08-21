@@ -918,6 +918,42 @@ def record_parsed_api_output(
     }
 
 
+def record_archived_api_parse_failure(
+    *,
+    run_root: Path,
+    stage: str,
+    raw_sha256: str,
+    error: str,
+    requested_model: str = "",
+    resolved_model: str = "",
+    storage: StorageSettings | None = None,
+    root: Path | None = None,
+) -> dict[str, Any]:
+    """Close an archived provider call as a zero-authority parse/protocol failure."""
+    if not should_auto_record(run_root) and root is None:
+        return {"status":"SKIPPED_NONCANONICAL_RUN_ROOT","scientific_authority":False}
+    raw_sha=str(raw_sha256 or "").strip().lower()
+    if not re.fullmatch(r"[0-9a-f]{64}",raw_sha): raise ValueError("parse failure requires a 64-hex raw SHA")
+    run_id=Path(run_root).name; db=database_path(storage,root=root)
+    error_text=str(error or "")[:1800]; error_fp=hashlib.sha256(error_text.encode()).hexdigest()
+    with connect(db) as connection:
+        if connection.execute("SELECT sha256 FROM artifacts WHERE sha256=?",(raw_sha,)).fetchone() is None:
+            raise RuntimeError(f"parse failure raw artifact missing: {raw_sha}")
+        call_id=upsert_call(connection,run_id=run_id,raw_sha256=raw_sha,structured_sha256=None,row={
+            "stage":stage_from_name(stage),"role":stage,"requested_model":requested_model,"resolved_model":resolved_model,
+            "outcome_status":"PARSE_ERROR_ZERO_AUTHORITY","parse_status":"PARSE_ERROR","provider_calls_executed":1,
+            "failure_class":"protocol","metadata":{"parse_error_fingerprint":error_fp,"parse_error":error_text},
+        },event_type="PARSE_FAILURE")
+        connection.execute("""
+            UPDATE runs SET
+              artifact_count=(SELECT COUNT(DISTINCT sha256) FROM run_artifacts WHERE run_id=?),
+              call_count=(SELECT COUNT(*) FROM api_calls WHERE run_id=?),
+              object_count=(SELECT COUNT(*) FROM research_objects WHERE run_id=?)
+            WHERE run_id=?
+        """,(run_id,run_id,run_id,run_id))
+    return {"status":"PARSE_FAILURE_RECORDED","run_id":run_id,"call_id":call_id,"raw_sha256":raw_sha,"error_fingerprint":error_fp,"scientific_authority":False,"belief_authority":False}
+
+
 def record_provider_failure(
     *,
     run_root: Path,

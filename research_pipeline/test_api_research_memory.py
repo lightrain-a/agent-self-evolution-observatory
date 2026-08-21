@@ -18,6 +18,7 @@ from .api_research_memory import (
     invalidate_query_only_memory_run,
     lint_api_research_memory,
     record_api_memory_consumption,
+    record_archived_api_parse_failure,
     record_parsed_api_output,
     record_provider_failure,
     record_raw_api_output,
@@ -198,6 +199,17 @@ class ApiResearchMemoryTest(unittest.TestCase):
             self.assertEqual(state["summary"]["artifacts"], 1)
             self.assertEqual(state["summary"]["fully_replay_addressed_calls"], 1)
             self.assertFalse(state["scientific_authority"])
+
+    def test_archived_parse_failure_closes_pending_call_without_new_provider_output(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);run=root/"scratch"/"parse-fail-r1";raw=run/"raw"/"review.txt";raw.parent.mkdir(parents=True);raw.write_text('{"reviews":[',encoding="utf-8")
+            archived=record_raw_api_output(run_root=run,stage="review-p1",raw_path=raw,requested_model="reviewer",resolved_model="reviewer-v1",root=root/"persistent")
+            receipt=record_archived_api_parse_failure(run_root=run,stage="review-p1",raw_sha256=archived["raw_sha256"],error="JSONDecodeError: truncated",requested_model="reviewer",resolved_model="reviewer-v1",root=root/"persistent")
+            self.assertEqual(receipt["status"],"PARSE_FAILURE_RECORDED")
+            with sqlite3.connect(database_path(root=root/"persistent")) as db:
+                row=db.execute("SELECT outcome_status,parse_status,failure_class,provider_calls_executed FROM api_calls").fetchone()
+            self.assertEqual(row,("PARSE_ERROR_ZERO_AUTHORITY","PARSE_ERROR","protocol",1))
+            self.assertEqual(lint_api_research_memory(root=root/"persistent")["status"],"PASS")
 
     def test_provider_failure_refreshes_run_projection_counts(self) -> None:
         with tempfile.TemporaryDirectory() as td:
