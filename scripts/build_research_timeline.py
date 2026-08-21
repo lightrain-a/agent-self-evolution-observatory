@@ -76,21 +76,89 @@ def ts(value: Any = None, path: Path | None = None) -> str:
     return ""
 
 
-def artifact_ts(data: dict[str, Any], path: Path) -> str:
+_GIT_PATH_DATE_TIMES: dict[tuple[str, str], str] | None = None
+_PREVIOUS_EXACT_BY_SHA: dict[str, str] | None = None
+
+
+def _native_artifact_time(data: dict[str, Any], path: Path) -> tuple[str, str]:
     for key in ("generated_at", "adjudication_date", "decision_date", "completed_at", "created_at", "updated_at"):
-        value = ts(data.get(key), path)
-        if value:
-            return value
-    return ts(path=path)
-
-
-def artifact_precision(data: dict[str, Any], path: Path) -> str:
-    for key in ("generated_at", "completed_at", "created_at", "updated_at", "decision_date", "adjudication_date"):
         raw = data.get(key)
         if not isinstance(raw, str) or not raw.strip():
             continue
-        return "exact" if "T" in raw or re.search(r"\d{2}:\d{2}", raw) else "date"
-    return "date" if DATE_RE.search(path.name) else "exact"
+        return ts(raw, path), ("exact" if "T" in raw or re.search(r"\d{2}:\d{2}", raw) else "date")
+    return ts(path=path), ("date" if DATE_RE.search(path.name) else "exact")
+
+
+def _previous_exact_by_sha() -> dict[str, str]:
+    global _PREVIOUS_EXACT_BY_SHA
+    if _PREVIOUS_EXACT_BY_SHA is not None:
+        return _PREVIOUS_EXACT_BY_SHA
+    result: dict[str, str] = {}
+    previous = load(GEN / "research-timeline.json")
+    for row in previous.get("events", []) if isinstance(previous, dict) else []:
+        if not isinstance(row, dict) or row.get("time_precision") != "exact":
+            continue
+        for source in row.get("sources", []) or []:
+            digest = source.get("sha256") if isinstance(source, dict) else None
+            if digest and row.get("occurred_at"):
+                result[str(digest)] = str(row["occurred_at"])
+    _PREVIOUS_EXACT_BY_SHA = result
+    return result
+
+
+def _git_path_date_times() -> dict[tuple[str, str], str]:
+    global _GIT_PATH_DATE_TIMES
+    if _GIT_PATH_DATE_TIMES is not None:
+        return _GIT_PATH_DATE_TIMES
+    result: dict[tuple[str, str], str] = {}
+    if git_is_shallow():
+        _GIT_PATH_DATE_TIMES = result
+        return result
+    try:
+        completed = subprocess.run(
+            ["git", "log", "--format=@@%cI", "--name-only", "--", "generated"],
+            cwd=ROOT, text=True, capture_output=True, timeout=30, check=False,
+        )
+    except OSError:
+        _GIT_PATH_DATE_TIMES = result
+        return result
+    current_iso = ""
+    current_day = ""
+    for line in completed.stdout.splitlines():
+        if line.startswith("@@"):
+            current_iso = ts(line[2:])
+            current_day = china_date(current_iso) if current_iso else ""
+            continue
+        rel = line.strip()
+        if not rel.startswith("generated/") or not current_iso or not current_day:
+            continue
+        result.setdefault((rel, current_day), current_iso)
+    _GIT_PATH_DATE_TIMES = result
+    return result
+
+
+def _backfilled_artifact_time(data: dict[str, Any], path: Path) -> tuple[str, str]:
+    native_time, precision = _native_artifact_time(data, path)
+    if precision != "date" or not native_time:
+        return native_time, precision
+    # A committed exact timestamp for the same immutable source hash is the safest
+    # fallback on shallow CI checkouts where full Git history is unavailable.
+    prior = _previous_exact_by_sha().get(sha(path))
+    if prior and china_date(prior) == china_date(native_time):
+        return prior, "exact"
+    rel = path.relative_to(ROOT).as_posix()
+    git_time = _git_path_date_times().get((rel, china_date(native_time)))
+    if git_time:
+        return git_time, "exact"
+    return native_time, "date"
+
+
+def artifact_ts(data: dict[str, Any], path: Path) -> str:
+    return _backfilled_artifact_time(data, path)[0]
+
+
+def artifact_precision(data: dict[str, Any], path: Path) -> str:
+    return _backfilled_artifact_time(data, path)[1]
 
 
 def china_date(iso: str) -> str:
@@ -575,6 +643,76 @@ def early_git_milestones() -> list[dict[str, Any]]:
     return out
 
 
+GIT_RELEVANT_RE = re.compile(
+    r"system|backend|frontend|memory|governance|aris|page|timeline|workflow|pipeline|publication|automation|deploy|operator|control|state|website|idea|discovery|problem|candidate|portfolio|funnel|paper|submission|manuscript|experiment|\bp0\b|\bf0\b|evidence|review|audit|closure|stop",
+    re.I,
+)
+
+
+def git_commit_class(message: str) -> str:
+    m = message.lower()
+    # Code/control-plane changes stay visible as system updates even when the page
+    # being changed is about ideas or papers; this makes idea -> system-change
+    # sequences legible in the chronological view.
+    if re.search(r"system|backend|frontend|memory|governance|aris|page|timeline|workflow|pipeline|publication|automation|deploy|operator|control|state|website", m):
+        return "system"
+    if re.search(r"closure|readjudicat|dead.?end|stop|terminat", m):
+        return "closure"
+    if re.search(r"idea|discovery|problem|candidate|portfolio|funnel", m):
+        return "idea"
+    if re.search(r"experiment|\bp0\b|\bf0\b|evidence|result|benchmark|run", m):
+        return "experiment"
+    if re.search(r"paper|submission|manuscript|iclr|review", m):
+        return "paper"
+    return "system"
+
+
+def git_relevant_history_events() -> list[dict[str, Any]]:
+    if git_is_shallow():
+        return preserved_origin_events("git_relevant_history")
+    try:
+        completed = subprocess.run(
+            ["git", "log", "--reverse", "--since=2026-07-28T00:00:00+08:00", "--format=%H%x09%cI%x09%s"],
+            cwd=ROOT, text=True, capture_output=True, timeout=30, check=False,
+        )
+    except OSError:
+        return []
+    if completed.returncode != 0:
+        return []
+    out: list[dict[str, Any]] = []
+    for line in completed.stdout.splitlines():
+        parts = line.split("\t", 2)
+        if len(parts) != 3:
+            continue
+        commit, when, message = parts
+        if not GIT_RELEVANT_RE.search(message):
+            continue
+        cls = git_commit_class(message)
+        kind = {
+            "idea":"Idea / 研究问题",
+            "experiment":"实验 / 证据",
+            "paper":"论文 / 评审",
+            "closure":"关闭 / 裁决",
+            "system":"系统 / 流程更新",
+        }.get(cls, "系统更新")
+        title_zh = git_title_zh(message) if cls == "system" else f"{kind}相关提交：{message}"
+        out.append(event(
+            occurred_at=ts(when), time_precision="exact", event_class=cls, importance="detail",
+            research_id="Git research history", research_label_zh="代码 / 系统工作记录",
+            title=message, title_zh=title_zh, state_after="COMMIT_RECORDED",
+            summary_en=f"Repository commit {commit[:8]} recorded: {message}",
+            summary_zh=f"北京时间记录到一次与{kind}有关的真实仓库提交 {commit[:8]}：{message}。它用于把科研对象的变化和随后发生的系统实现更新放在同一时间线上。",
+            why_en="Included as a concrete implementation/history event so research ideas and subsequent system changes can be read in temporal order.",
+            why_zh="该提交作为真实实现时间点进入时间轴，用来帮助判断某个 Idea、证据或裁决之后，系统为何发生了相应改动。",
+            limitation_en="A repository commit is engineering evidence, not scientific authority.",
+            limitation_zh="Git 提交只能证明工程 / 系统工作发生过，不能单独证明科研主张成立。",
+            evidence=[{"label":"提交", "value":commit[:12]},{"label":"原始提交说明", "value":message}],
+            scientific=False, authority_scope="repository history only", authority_scope_zh="代码与系统历史记录，无科研权限。",
+            hint=f"git-relevant:{commit}", origin="git_relevant_history",
+        ))
+    return out
+
+
 def git_daily_activity_events() -> list[dict[str, Any]]:
     if git_is_shallow():
         return preserved_origin_events("git_daily_summary")
@@ -701,7 +839,7 @@ def build(db_path: Path) -> dict[str, Any]:
         runtime_source = "preserved_committed_snapshot" if runtime else "unavailable"
     else:
         runtime_source = "live_read_only_db"
-    items = dedupe(early_git_milestones() + git_daily_activity_events() + generic_artifact_events() + stri_events() + principle_events() + p0_events() + current_status_events() + runtime)
+    items = dedupe(git_relevant_history_events() + generic_artifact_events() + stri_events() + principle_events() + p0_events() + current_status_events() + runtime)
     classes = Counter(x["event_class"] for x in items)
     dates = Counter(china_date(x["occurred_at"]) for x in items)
     return {
