@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-21T16:06:19+00:00",
+  "generated_at": "2026-08-21T17:29:47+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -56,7 +56,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:06:19+00:00",
+    "generated_at": "2026-08-21T17:29:47+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -3507,14 +3507,77 @@
         "scientific_authority": false
       },
       {
+        "source_candidate_id": "SHADOW-P12-C01",
+        "basin": "evidence-exact-reduction-14a0a05bd4420788",
+        "search_primitive": "",
+        "title": "Temporal Recency Bias in Skill Libraries: Task-Phase-Dependent Harm to Forward-Looking Analysis in Frozen-Executor Agents",
+        "avoid": [
+          "paraphrase-only revival of the claim that recency weighting selectively harms forward-looking tasks without a new held-out same-information residual",
+          "changing backward/forward task difficulty, skill-library composition, retrieval information, executor, or evaluation task semantics and treating the resulting difference as a reopening of the frozen P12 object",
+          "retuning the phase-interaction or Brier thresholds after observing outcomes, or weakening the additive same-information baseline to manufacture a recency-specific residual"
+        ],
+        "strongest_reduction": "A retrieval-quality + task-difficulty + skill-compatibility baseline that receives the same relevance scores, task difficulty metrics, and skill origin-task metadata, and predicts harm as a function of these variables without a recency × task-phase interaction term.",
+        "current_source_refs": [
+          "arXiv:2608.05810",
+          "arXiv:2608.14270",
+          "research-data://runs/p12-recency-harness-5e48dea-r1/evidence-manifest-v5.json#sha256=1689f4d9de2fa7fb92db3cefc4e81f1df17cf500437ecfc20398e97305fb430f"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.05810",
+          "arXiv:2608.14270",
+          "research-data://runs/p12-recency-harness-5e48dea-r1/evidence-manifest-v5.json#sha256=1689f4d9de2fa7fb92db3cefc4e81f1df17cf500437ecfc20398e97305fb430f"
+        ],
+        "problem_text": "In a frozen-executor agent with a self-evolved skill library and recency-biased retrieval, forward-looking prediction tasks will show a larger performance degradation as the library grows and recency bias increases, compared to backward-looking summarization tasks of matched difficulty. This differential harm will persist after controlling for retrieval quality (relevance scores), task difficulty (no-skill baseline accuracy), and skill-task compatibility (origin-task distribution).",
+        "reason": "96/96 valid frozen evaluation units; difficulty gate PASS (backward=0.50, forward=0.25, gap=0.25); heldout direct phase×recency harm interaction=0.000 (stage4=0.000, stage8=0.000); additive same-information baseline heldout Brier=0.134204, interaction model=0.134577, improvement=-0.000374; 2 prior valid evaluation receipts reused + 94 v5 receipts; 108 scientific provider calls total within frozen 192-call cap.",
+        "reopen_only_if": "Reopen this exact P12 recency-bias search basin only if a new preregistered, protocol-valid same-information study preserves matched backward/forward difficulty, the frozen skill/retrieval information boundary available to the additive baseline, task semantics, executor, and predeclared analysis thresholds, yet demonstrates a held-out phase×recency harm residual beyond that baseline: under the current contract, heldout direct interaction >=0.25, heldout Brier improvement >=0.02, and stage8 interaction >= stage4, or a stronger preregistered residual criterion fixed before outcomes. Changing task family, skill library, baseline information, evaluator, threshold, or merely renaming recency interference does not reopen this closure.",
+        "search_closure_certified": true,
+        "dead_end_certified": false,
+        "closure_layer": "method_realization",
+        "failure_layer": "method_realization",
+        "memory_class": "METHOD_REALIZATION_STOP",
+        "principle_update_allowed": false,
+        "broader_core_principle_falsified": false,
+        "source_stop_class": "EXACT_REDUCTION_SUPPORTED",
+        "failure_layer_reason": "A protocol-valid bounded falsifier found no residual for the frozen mechanism beyond the preregistered same-information reduction. This closes the exact paper-problem realization, not the broader principle.",
+        "failure_layer_review_basis": "canonical-bounded-evidence-exact-reduction",
+        "experiment_run_for_this_readjudication": true,
+        "experiment_alone_authorizes_closure": false,
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "A retrieval-quality + task-difficulty + skill-compatibility baseline that receives the same relevance scores, task difficulty metrics, and skill origin-task metadata, and predicts harm as a function of these variables without a recency × task-phase interaction term.",
+          "opposite_prediction": "Under the same task, executor, skill content, compatibility/relevance information, and budget, the frozen order-only intervention does not add a reproducible success or independently audited uptake residual.",
+          "opposite_principle": "The frozen same-information baseline is sufficient for this bounded realization; presentation order alone has no supported residual here.",
+          "opposite_search_seed": "Search only for a genuinely different same-information observable or substrate where order alone creates a preregistered residual; do not revive this basin by changing composition or wording.",
+          "scope": "candidate=SHADOW-P12-C01; contract=216f48652df9c08727a030730aafbf0564c485cf7a3fc2a694ba6c2d53d7a1bb; exact bounded evidence realization",
+          "same_information_or_scope_matched": true,
+          "evidence_refs": [
+            "arXiv:2608.05810",
+            "arXiv:2608.14270",
+            "research-data://runs/p12-recency-harness-5e48dea-r1/evidence-manifest-v5.json#sha256=1689f4d9de2fa7fb92db3cefc4e81f1df17cf500437ecfc20398e97305fb430f"
+          ],
+          "alternative_explanations_ruled_out": [
+            "provider/runtime failure",
+            "missing executable truth",
+            "invalid unit accounting",
+            "mere wording change"
+          ],
+          "positive_support": true,
+          "same_information_reduction_verified": true,
+          "reopen_condition": "Reopen this exact P12 recency-bias search basin only if a new preregistered, protocol-valid same-information study preserves matched backward/forward difficulty, the frozen skill/retrieval information boundary available to the additive baseline, task semantics, executor, and predeclared analysis thresholds, yet demonstrates a held-out phase×recency harm residual beyond that baseline: under the current contract, heldout direct interaction >=0.25, heldout Brier improvement >=0.02, and stage8 interaction >= stage4, or a stronger preregistered residual criterion fixed before outcomes. Changing task family, skill library, baseline information, evaluator, threshold, or merely renaming recency interference does not reopen this closure."
+        },
+        "source_evidence_manifest_sha256": "1689f4d9de2fa7fb92db3cefc4e81f1df17cf500437ecfc20398e97305fb430f",
+        "source_closure_artifact": "generated/p12-evidence-reduction-search-closure-20260822.json",
+        "scientific_authority": false
+      },
+      {
         "source_candidate_id": "SHADOW-P15-C01",
         "basin": "evidence-exact-reduction-ac3f9b7b13f507c0",
         "search_primitive": "",
         "title": "Retrieval-Induced Context Contamination: Why Skill-Library Retrieval Order Systematically Modulates Compositional Interference in Self-Evolving Agents",
         "avoid": [
           "paraphrase-only revival of the exact reduced problem: For a fixed set of skills with controlled static compatibility, retrieval relevance, and conflict relations, changing the order in which skills are retrieved and presented to the agent will systematically change compositional task success. Specifically, skills retrieved earlier will have a disproportionate influence on the agent's subsequent behavior, and this influence will be measurable as context contamination (e.g., earlier skills prime the agent to interpret later skills in a specific way, or consume context budget that would otherwise be available for later skills).",
-          "renaming retrieval/context interference without a new same-information residual",
-          "changing skill composition, content, executor, task family, or budget and claiming that this reopens the frozen order-only realization"
+          "renaming the recorded same-information reduction without a new held-out residual",
+          "changing the frozen scientific object, task semantics, information boundary, executor, or decision threshold and claiming that this reopens the reduced realization"
         ],
         "strongest_reduction": "Negative transfer / task-skill compatibility with the same skill content, task requirements, and executor, but without access to retrieval order information.",
         "current_source_refs": [
@@ -3570,14 +3633,14 @@
         "scientific_authority": false
       }
     ],
-    "closed_basin_count": 42,
+    "closed_basin_count": 43,
     "closure_layer_counts": {
       "problem_novelty": 4,
       "execution": 0,
       "experiment_identifiability": 2,
       "optimization": 0,
       "operationalization": 3,
-      "method_realization": 29,
+      "method_realization": 30,
       "assumption_scope": 2,
       "core_principle": 2
     },
@@ -3586,7 +3649,7 @@
       "experiment_identifiability": 2,
       "optimization": 0,
       "operationalization": 3,
-      "method_realization": 29,
+      "method_realization": 30,
       "assumption_scope": 2,
       "core_principle": 2
     },
@@ -3595,7 +3658,7 @@
     "experiment_identifiability_stop_count": 2,
     "optimization_stop_count": 0,
     "operationalization_stop_count": 3,
-    "method_realization_stop_count": 29,
+    "method_realization_stop_count": 30,
     "assumption_scope_stop_count": 2,
     "core_principle_stop_count": 2,
     "broader_core_principle_falsification_count": 0,
@@ -3778,7 +3841,7 @@
     "near_miss_base_preflight_count": 4,
     "near_miss_terminal_support_hold_count": 3,
     "search_control_only": true,
-    "closed_object_count": 42
+    "closed_object_count": 43
   },
   "shadow_dead_end_memory": {
     "memory_id": "shadow-paper-design-core-principle-dead-end-memory-20260818-v1",
@@ -3983,7 +4046,7 @@
     "stop_standalone": 1,
     "support_inventory_required": 1,
     "shadow_dead_end_objects": 2,
-    "shadow_closed_basins": 42,
+    "shadow_closed_basins": 43,
     "principle_readjudication_dead_ends": 2,
     "principle_readjudication_closed_basins": 37,
     "problem_novelty_stops": 4,
@@ -3991,7 +4054,7 @@
     "experiment_identifiability_stops": 2,
     "optimization_stops": 0,
     "operationalization_stops": 3,
-    "method_realization_stops": 29,
+    "method_realization_stops": 30,
     "assumption_scope_stops": 2,
     "core_principle_stops": 2,
     "broader_core_principle_falsifications": 0,

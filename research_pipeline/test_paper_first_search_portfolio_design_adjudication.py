@@ -176,14 +176,14 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
 
     def test_current_closed_basins_are_typed_by_actual_failure_layer(self) -> None:
         memory = self.state["shadow_search_memory"]
-        self.assertEqual(memory["closed_basin_count"], 42)
+        self.assertEqual(memory["closed_basin_count"], 43)
         self.assertEqual(memory["closure_layer_counts"], {
             "problem_novelty": 4,
             "execution": 0,
             "experiment_identifiability": 2,
             "optimization": 0,
             "operationalization": 3,
-            "method_realization": 29,
+            "method_realization": 30,
             "assumption_scope": 2,
             "core_principle": 2,
         })
@@ -192,7 +192,7 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
             "experiment_identifiability": 2,
             "optimization": 0,
             "operationalization": 3,
-            "method_realization": 29,
+            "method_realization": 30,
             "assumption_scope": 2,
             "core_principle": 2,
         })
@@ -202,6 +202,13 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertEqual(memory["core_principle_dead_end_count"], 2)
         self.assertEqual(len(memory["hold_objects"]), 9)
         self.assertTrue(all(row.get("dead_end_certified") is False for row in memory["hold_objects"]))
+        p12 = next(row for row in memory["closed_objects"] if row.get("source_candidate_id") == "SHADOW-P12-C01")
+        self.assertEqual(p12["failure_layer"], "method_realization")
+        self.assertEqual(p12["memory_class"], "METHOD_REALIZATION_STOP")
+        self.assertFalse(p12["dead_end_certified"])
+        self.assertFalse(p12["principle_update_allowed"])
+        self.assertIn("phase×recency", p12["reopen_only_if"])
+        self.assertTrue(any("phase-interaction" in value for value in p12["avoid"]))
         pace = next(row for row in memory["closed_objects"] if row.get("source_candidate_id") == "PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY")
         self.assertEqual(pace["failure_layer"], "core_principle")
         self.assertEqual(pace["memory_class"], "CORE_PRINCIPLE_STOP")

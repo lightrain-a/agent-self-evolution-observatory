@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-21T16:08:39+00:00",
+  "generated_at": "2026-08-21T17:32:09+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -316,9 +316,9 @@
     "principle_falsifications": 0,
     "protocol_validity_pass": 4,
     "meta_trace_unresolved": 2,
-    "scientific_research_graph_nodes": 844,
-    "scientific_research_graph_edges": 873,
-    "research_memory_entries": 63,
+    "scientific_research_graph_nodes": 847,
+    "scientific_research_graph_edges": 875,
+    "research_memory_entries": 64,
     "research_memory_lint_warnings": 12,
     "failure_assets": 6,
     "value_scheduler_candidates": 6,
@@ -11144,7 +11144,7 @@
   },
   "lineage": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "summary": {
       "nodes": 278,
       "edges": 258,
@@ -11174,7 +11174,7 @@
           "zh": "受约束持续进化",
           "en": "Constrained continual evolution"
         },
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "track-root:credit",
@@ -11184,7 +11184,7 @@
           "zh": "失败归因与经验准入",
           "en": "Failure credit and experience admission"
         },
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "track-root:memory",
@@ -11194,7 +11194,7 @@
           "zh": "记忆与技能巩固",
           "en": "Memory and skill consolidation"
         },
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "track-root:correction",
@@ -11204,7 +11204,7 @@
           "zh": "自纠正与策略内化",
           "en": "Self-correction and policy internalization"
         },
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "track-root:curriculum",
@@ -11214,7 +11214,7 @@
           "zh": "课程与任务进化",
           "en": "Curriculum and task evolution"
         },
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "track-root:workflow",
@@ -11224,7 +11224,7 @@
           "zh": "工作流与更新表面搜索",
           "en": "Workflow and update-surface search"
         },
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "track-root:evaluator",
@@ -11234,7 +11234,7 @@
           "zh": "奖励与评价器进化",
           "en": "Reward and evaluator evolution"
         },
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "track-root:world",
@@ -11244,7 +11244,7 @@
           "zh": "世界模型与具身持续适应",
           "en": "World models and embodied adaptation"
         },
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "regression-gated-self-evolution",
@@ -11266,7 +11266,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:regression-gated-self-evolution:1",
@@ -11374,7 +11374,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:contradiction-preserving-consolidation:1",
@@ -11482,7 +11482,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:compositional-update-compatibility:1",
@@ -11590,7 +11590,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:update-trust-region:1",
@@ -11698,7 +11698,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:retrieval-interference-auditor:1",
@@ -11806,7 +11806,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:irreversible-action-counterfactuals:1",
@@ -11913,7 +11913,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:self-label-confidence-flow:1",
@@ -12021,7 +12021,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:evaluator-coadaptation-guard:1",
@@ -12129,7 +12129,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:recovery-conditioned-experience:1",
@@ -12237,7 +12237,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:counterexample-generating-curriculum:1",
@@ -12346,7 +12346,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:workflow-generalization-certificate:1",
@@ -12454,7 +12454,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:budgeted-evolution-controller:1",
@@ -12562,7 +12562,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:lineage-aware-rollback:1",
@@ -12670,7 +12670,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:failure-frontier-curriculum:1",
@@ -12778,7 +12778,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:causally-verified-experience-admission:1",
@@ -12886,7 +12886,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:reward-invariance-audit:1",
@@ -12994,7 +12994,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:local-counterexample-memory-repair:1",
@@ -13102,7 +13102,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:self-correction-collapse-detector:1",
@@ -13210,7 +13210,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:intervention-validated-self-correction:1",
@@ -13318,7 +13318,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:workflow-branch-credit:1",
@@ -13426,7 +13426,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:world-model-error-gated-learning:1",
@@ -13534,7 +13534,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:memory-half-life:1",
@@ -13642,7 +13642,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:correction-policy-credit:1",
@@ -13750,7 +13750,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:curriculum-drift-controller:1",
@@ -13859,7 +13859,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:outcome-equivalent-trajectory-contrast:1",
@@ -13967,7 +13967,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "review:applicability-bounded-lessons:1",
@@ -14077,7 +14077,7 @@
         "blocking_reasons": [
           "Module-level intervention labels may require expensive environment-specific instrumentation."
         ],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "programmatic-review:failure-localization-before-reflection:1",
@@ -14178,7 +14178,7 @@
         "blocking_reasons": [
           "Cross-family disagreement may reflect formatting and style rather than distinct error mechanisms."
         ],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "programmatic-review:heterogeneous-critic-disagreement:1",
@@ -14279,7 +14279,7 @@
         "blocking_reasons": [
           "Oracle labels require executing all update surfaces, making supervision close to exhaustive search."
         ],
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "programmatic-review:update-surface-router:1",
@@ -14363,84 +14363,84 @@
         "kind": "early-rejected",
         "title": "更大模型做更多反思",
         "reason": "只增加推理计算，不能证明持久学习。",
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "early-rejected:268",
         "kind": "early-rejected",
         "title": "全参数训练 70B 自进化 Agent",
         "reason": "超出低资源约束且机制难归因。",
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "early-rejected:269",
         "kind": "early-rejected",
         "title": "只在自生成任务上提升",
         "reason": "缺少圈外泛化。",
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "early-rejected:270",
         "kind": "early-rejected",
         "title": "仅商业 API 闭环",
         "reason": "不可复现且依赖供应商快照。",
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "early-rejected:271",
         "kind": "early-rejected",
         "title": "固定多轮 Self-Refine",
         "reason": "属于更多采样，不是进化机制。",
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "early-rejected:272",
         "kind": "early-rejected",
         "title": "同模型 Actor 与 Judge 自我确认",
         "reason": "反馈完整性无法独立验证。",
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "early-rejected:273",
         "kind": "early-rejected",
         "title": "只报告最佳 checkpoint",
         "reason": "掩盖多轮回退与坍塌。",
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "early-rejected:274",
         "kind": "early-rejected",
         "title": "从头训练世界模型和策略",
         "reason": "资源高且无法分离贡献。",
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "early-rejected:275",
         "kind": "early-rejected",
         "title": "单一视觉 benchmark 技巧",
         "reason": "保留为 CVPR 后续，不作为 ICLR 主候选。",
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "early-rejected:276",
         "kind": "early-rejected",
         "title": "只做平均准确率的记忆消融",
         "reason": "无法识别有害条目和负迁移。",
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "early-rejected:277",
         "kind": "early-rejected",
         "title": "无隔离划分的在线适应",
         "reason": "无法排除测试泄漏。",
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       },
       {
         "id": "early-rejected:278",
         "kind": "early-rejected",
         "title": "泛化 Agent 自进化综述",
         "reason": "不是方法或可证伪 benchmark 贡献。",
-        "created_at": "2026-08-21T16:08:34+00:00"
+        "created_at": "2026-08-21T17:32:04+00:00"
       }
     ],
     "edges": [
@@ -16211,7 +16211,7 @@
   },
   "pre_gpu_candidate_gates": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "policy": {
       "gate_order": [
         "offline",
@@ -17058,7 +17058,7 @@
     "cards": [
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-21T16:08:35+00:00",
+        "compiled_at": "2026-08-21T17:32:04+00:00",
         "idea_id": "update-trust-region",
         "phase": "P0-screening",
         "expected_runtime": {
@@ -17859,7 +17859,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-21T16:08:35+00:00",
+        "compiled_at": "2026-08-21T17:32:04+00:00",
         "idea_id": "update-trust-region",
         "phase": "P0",
         "expected_runtime": {
@@ -18668,7 +18668,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-21T16:08:35+00:00",
+        "compiled_at": "2026-08-21T17:32:04+00:00",
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0-screening",
         "expected_runtime": {
@@ -19486,7 +19486,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-21T16:08:35+00:00",
+        "compiled_at": "2026-08-21T17:32:04+00:00",
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0",
         "expected_runtime": {
@@ -20552,7 +20552,7 @@
   },
   "paper_first_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "review_id": "paper-first-pf1-pf2-pf4-pf6-design-20260812",
     "target_venue": "ICLR",
     "policy": {
@@ -20830,7 +20830,7 @@
   },
   "paper_first_pf1_problem_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "incubation_id": "PF-1",
     "paper_id": "evolvability-debt-under-persistent-agent-updates",
     "prior_design_verdict": "REVISE_PAPER_PROBLEM",
@@ -20968,7 +20968,7 @@
   },
   "paper_first_pf2_method_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "paper_id": "repair-surface-identifiability-under-persistent-agent-updates",
     "incubation_id": "PF-2",
     "reviewed_method": "Repair-Surface Identification Certificate",
@@ -21039,7 +21039,7 @@
   },
   "paper_first_pf357_problem_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "review_id": "paper-first-pf357-final-20260813",
     "policy": {
       "domain_transfer_is_not_novelty": true,
@@ -21184,7 +21184,7 @@
   },
   "paper_first_fresh_saturation": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "review_id": "fresh-problem-saturation-20260813-r2",
     "policy": {
       "schema_version": "1.1",
@@ -30908,7 +30908,7 @@
   },
   "paper_first_search_portfolio_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
     "target_venue": "ICLR",
     "component_owner": "paper-design-contract",
@@ -30964,7 +30964,7 @@
     },
     "shadow_near_miss_preflight": {
       "schema_version": "1.0",
-      "generated_at": "2026-08-21T16:08:35+00:00",
+      "generated_at": "2026-08-21T17:32:04+00:00",
       "audit_id": "shadow-r2-near-miss-preflight-20260814",
       "policy": {
         "shadow_search_control_only": true,
@@ -34415,14 +34415,77 @@
           "scientific_authority": false
         },
         {
+          "source_candidate_id": "SHADOW-P12-C01",
+          "basin": "evidence-exact-reduction-14a0a05bd4420788",
+          "search_primitive": "",
+          "title": "Temporal Recency Bias in Skill Libraries: Task-Phase-Dependent Harm to Forward-Looking Analysis in Frozen-Executor Agents",
+          "avoid": [
+            "paraphrase-only revival of the claim that recency weighting selectively harms forward-looking tasks without a new held-out same-information residual",
+            "changing backward/forward task difficulty, skill-library composition, retrieval information, executor, or evaluation task semantics and treating the resulting difference as a reopening of the frozen P12 object",
+            "retuning the phase-interaction or Brier thresholds after observing outcomes, or weakening the additive same-information baseline to manufacture a recency-specific residual"
+          ],
+          "strongest_reduction": "A retrieval-quality + task-difficulty + skill-compatibility baseline that receives the same relevance scores, task difficulty metrics, and skill origin-task metadata, and predicts harm as a function of these variables without a recency × task-phase interaction term.",
+          "current_source_refs": [
+            "arXiv:2608.05810",
+            "arXiv:2608.14270",
+            "research-data://runs/p12-recency-harness-5e48dea-r1/evidence-manifest-v5.json#sha256=1689f4d9de2fa7fb92db3cefc4e81f1df17cf500437ecfc20398e97305fb430f"
+          ],
+          "evidence_basis": [
+            "arXiv:2608.05810",
+            "arXiv:2608.14270",
+            "research-data://runs/p12-recency-harness-5e48dea-r1/evidence-manifest-v5.json#sha256=1689f4d9de2fa7fb92db3cefc4e81f1df17cf500437ecfc20398e97305fb430f"
+          ],
+          "problem_text": "In a frozen-executor agent with a self-evolved skill library and recency-biased retrieval, forward-looking prediction tasks will show a larger performance degradation as the library grows and recency bias increases, compared to backward-looking summarization tasks of matched difficulty. This differential harm will persist after controlling for retrieval quality (relevance scores), task difficulty (no-skill baseline accuracy), and skill-task compatibility (origin-task distribution).",
+          "reason": "96/96 valid frozen evaluation units; difficulty gate PASS (backward=0.50, forward=0.25, gap=0.25); heldout direct phase×recency harm interaction=0.000 (stage4=0.000, stage8=0.000); additive same-information baseline heldout Brier=0.134204, interaction model=0.134577, improvement=-0.000374; 2 prior valid evaluation receipts reused + 94 v5 receipts; 108 scientific provider calls total within frozen 192-call cap.",
+          "reopen_only_if": "Reopen this exact P12 recency-bias search basin only if a new preregistered, protocol-valid same-information study preserves matched backward/forward difficulty, the frozen skill/retrieval information boundary available to the additive baseline, task semantics, executor, and predeclared analysis thresholds, yet demonstrates a held-out phase×recency harm residual beyond that baseline: under the current contract, heldout direct interaction >=0.25, heldout Brier improvement >=0.02, and stage8 interaction >= stage4, or a stronger preregistered residual criterion fixed before outcomes. Changing task family, skill library, baseline information, evaluator, threshold, or merely renaming recency interference does not reopen this closure.",
+          "search_closure_certified": true,
+          "dead_end_certified": false,
+          "closure_layer": "method_realization",
+          "failure_layer": "method_realization",
+          "memory_class": "METHOD_REALIZATION_STOP",
+          "principle_update_allowed": false,
+          "broader_core_principle_falsified": false,
+          "source_stop_class": "EXACT_REDUCTION_SUPPORTED",
+          "failure_layer_reason": "A protocol-valid bounded falsifier found no residual for the frozen mechanism beyond the preregistered same-information reduction. This closes the exact paper-problem realization, not the broader principle.",
+          "failure_layer_review_basis": "canonical-bounded-evidence-exact-reduction",
+          "experiment_run_for_this_readjudication": true,
+          "experiment_alone_authorizes_closure": false,
+          "counter_explanation": {
+            "type": "SAME_INFORMATION_REDUCTION",
+            "statement": "A retrieval-quality + task-difficulty + skill-compatibility baseline that receives the same relevance scores, task difficulty metrics, and skill origin-task metadata, and predicts harm as a function of these variables without a recency × task-phase interaction term.",
+            "opposite_prediction": "Under the same task, executor, skill content, compatibility/relevance information, and budget, the frozen order-only intervention does not add a reproducible success or independently audited uptake residual.",
+            "opposite_principle": "The frozen same-information baseline is sufficient for this bounded realization; presentation order alone has no supported residual here.",
+            "opposite_search_seed": "Search only for a genuinely different same-information observable or substrate where order alone creates a preregistered residual; do not revive this basin by changing composition or wording.",
+            "scope": "candidate=SHADOW-P12-C01; contract=216f48652df9c08727a030730aafbf0564c485cf7a3fc2a694ba6c2d53d7a1bb; exact bounded evidence realization",
+            "same_information_or_scope_matched": true,
+            "evidence_refs": [
+              "arXiv:2608.05810",
+              "arXiv:2608.14270",
+              "research-data://runs/p12-recency-harness-5e48dea-r1/evidence-manifest-v5.json#sha256=1689f4d9de2fa7fb92db3cefc4e81f1df17cf500437ecfc20398e97305fb430f"
+            ],
+            "alternative_explanations_ruled_out": [
+              "provider/runtime failure",
+              "missing executable truth",
+              "invalid unit accounting",
+              "mere wording change"
+            ],
+            "positive_support": true,
+            "same_information_reduction_verified": true,
+            "reopen_condition": "Reopen this exact P12 recency-bias search basin only if a new preregistered, protocol-valid same-information study preserves matched backward/forward difficulty, the frozen skill/retrieval information boundary available to the additive baseline, task semantics, executor, and predeclared analysis thresholds, yet demonstrates a held-out phase×recency harm residual beyond that baseline: under the current contract, heldout direct interaction >=0.25, heldout Brier improvement >=0.02, and stage8 interaction >= stage4, or a stronger preregistered residual criterion fixed before outcomes. Changing task family, skill library, baseline information, evaluator, threshold, or merely renaming recency interference does not reopen this closure."
+          },
+          "source_evidence_manifest_sha256": "1689f4d9de2fa7fb92db3cefc4e81f1df17cf500437ecfc20398e97305fb430f",
+          "source_closure_artifact": "generated/p12-evidence-reduction-search-closure-20260822.json",
+          "scientific_authority": false
+        },
+        {
           "source_candidate_id": "SHADOW-P15-C01",
           "basin": "evidence-exact-reduction-ac3f9b7b13f507c0",
           "search_primitive": "",
           "title": "Retrieval-Induced Context Contamination: Why Skill-Library Retrieval Order Systematically Modulates Compositional Interference in Self-Evolving Agents",
           "avoid": [
             "paraphrase-only revival of the exact reduced problem: For a fixed set of skills with controlled static compatibility, retrieval relevance, and conflict relations, changing the order in which skills are retrieved and presented to the agent will systematically change compositional task success. Specifically, skills retrieved earlier will have a disproportionate influence on the agent's subsequent behavior, and this influence will be measurable as context contamination (e.g., earlier skills prime the agent to interpret later skills in a specific way, or consume context budget that would otherwise be available for later skills).",
-            "renaming retrieval/context interference without a new same-information residual",
-            "changing skill composition, content, executor, task family, or budget and claiming that this reopens the frozen order-only realization"
+            "renaming the recorded same-information reduction without a new held-out residual",
+            "changing the frozen scientific object, task semantics, information boundary, executor, or decision threshold and claiming that this reopens the reduced realization"
           ],
           "strongest_reduction": "Negative transfer / task-skill compatibility with the same skill content, task requirements, and executor, but without access to retrieval order information.",
           "current_source_refs": [
@@ -34478,14 +34541,14 @@
           "scientific_authority": false
         }
       ],
-      "closed_basin_count": 42,
+      "closed_basin_count": 43,
       "closure_layer_counts": {
         "problem_novelty": 4,
         "execution": 0,
         "experiment_identifiability": 2,
         "optimization": 0,
         "operationalization": 3,
-        "method_realization": 29,
+        "method_realization": 30,
         "assumption_scope": 2,
         "core_principle": 2
       },
@@ -34494,7 +34557,7 @@
         "experiment_identifiability": 2,
         "optimization": 0,
         "operationalization": 3,
-        "method_realization": 29,
+        "method_realization": 30,
         "assumption_scope": 2,
         "core_principle": 2
       },
@@ -34503,7 +34566,7 @@
       "experiment_identifiability_stop_count": 2,
       "optimization_stop_count": 0,
       "operationalization_stop_count": 3,
-      "method_realization_stop_count": 29,
+      "method_realization_stop_count": 30,
       "assumption_scope_stop_count": 2,
       "core_principle_stop_count": 2,
       "broader_core_principle_falsification_count": 0,
@@ -34686,7 +34749,7 @@
       "near_miss_base_preflight_count": 4,
       "near_miss_terminal_support_hold_count": 3,
       "search_control_only": true,
-      "closed_object_count": 42
+      "closed_object_count": 43
     },
     "shadow_dead_end_memory": {
       "memory_id": "shadow-paper-design-core-principle-dead-end-memory-20260818-v1",
@@ -34891,7 +34954,7 @@
       "stop_standalone": 1,
       "support_inventory_required": 1,
       "shadow_dead_end_objects": 2,
-      "shadow_closed_basins": 42,
+      "shadow_closed_basins": 43,
       "principle_readjudication_dead_ends": 2,
       "principle_readjudication_closed_basins": 37,
       "problem_novelty_stops": 4,
@@ -34899,7 +34962,7 @@
       "experiment_identifiability_stops": 2,
       "optimization_stops": 0,
       "operationalization_stops": 3,
-      "method_realization_stops": 29,
+      "method_realization_stops": 30,
       "assumption_scope_stops": 2,
       "core_principle_stops": 2,
       "broader_core_principle_falsifications": 0,
@@ -35181,7 +35244,7 @@
   },
   "paper_first_discovery_frontier": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "status": "LIVE_SOURCE_DISCOVERY_PENDING",
     "policy": {
       "scientific_authority": false,
@@ -35273,7 +35336,7 @@
   },
   "paper_first_fresh_phenomenon_portfolio": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "status": "NO_ACTIVE_F0",
     "policy": {
       "portfolio_is_outside_canonical_problem_queue": true,
@@ -35847,7 +35910,7 @@
       },
       "dead_end_memory": {
         "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-        "sha256": "21987d262a0df52c06b27223ccab9f74a70289eb4e2dbccc7be21cc2f9d88966"
+        "sha256": "b440951fb31b1d14ce9ee519e247c119fbde17c8849ffde931334b435311ff71"
       },
       "defense_principle_reduction": {
         "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
@@ -36259,7 +36322,7 @@
   },
   "paper_first_sp15_identifiability_support": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "support_id": "sp15-query-only-identifiability-support-20260814",
     "paper_problem_id": "SP-15",
     "revised_claim": "Under fixed query-only inference and a fixed skill library, a minimally sufficient skill set may be observationally non-identifiable when multiple task semantics compatible with the same available query require incompatible sufficient sets.",
@@ -36999,19 +37062,19 @@
       "same_relation_universe_lane_review_retry_exhaustion_blocks_repeat_scan": true
     },
     "summary": {
+      "last_scanned_sources": 233,
       "new_empirical_sources": 0,
+      "automatic_model_scan_authorized": false,
+      "relation_lane_review_retry_exhausted": false,
+      "new_failure_sources": 0,
       "new_assumption_sources": 0,
+      "manual_scan_eligible": false,
+      "failed": 7,
       "new_boundary_sources": 0,
       "current_reviewed_sources": 250,
-      "last_scanned_sources": 233,
-      "checks": 16,
-      "passed": 9,
-      "new_failure_sources": 0,
-      "failed": 7,
-      "relation_lane_review_retry_exhausted": false,
-      "manual_scan_eligible": false,
       "new_reviewed_sources": 0,
-      "automatic_model_scan_authorized": false
+      "checks": 16,
+      "passed": 9
     },
     "failed_check_count": 7,
     "freshness_status": "STALE_RELATION_UNIVERSE",
@@ -37504,7 +37567,7 @@
   },
   "paper_first_post_c2": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "paper_id": "trajectory-mediated-memory-effect-transport",
     "decision": "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM",
     "reason": "All ten strict C2 units are execution-valid and the full pre-divergence policy decision context is reproducible, yet only 2/10 controlled action contrasts are nonzero and the preregistered same-memory cross-context sign reversal is absent. The earliest-divergent-action controlled-mediator mechanism is therefore unsupported by its local falsifier.",
@@ -37618,7 +37681,7 @@
   },
   "paper_first_premature_method_diagnostics": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "run_root": "private-data://external/paper-first-p0-method-20260812",
     "authority": {
       "authority_type": "premature-paper-first-method-diagnostic-only",
@@ -37786,7 +37849,7 @@
   },
   "pilot_registry": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "result_dir": "private-data://external/results",
     "approval_dir": "private-data://external/approvals",
     "result_schema": {
@@ -38037,7 +38100,7 @@
         "pre_experiment_gate_status": "blocked",
         "pre_experiment_card": {
           "schema_version": "2.2",
-          "compiled_at": "2026-08-21T16:08:35+00:00",
+          "compiled_at": "2026-08-21T17:32:04+00:00",
           "idea_id": "update-trust-region",
           "phase": "P0",
           "expected_runtime": {
@@ -39192,7 +39255,7 @@
         "pre_experiment_gate_status": "blocked",
         "pre_experiment_card": {
           "schema_version": "2.2",
-          "compiled_at": "2026-08-21T16:08:35+00:00",
+          "compiled_at": "2026-08-21T17:32:04+00:00",
           "idea_id": "budgeted-evolution-controller",
           "phase": "P0",
           "expected_runtime": {
@@ -43641,8 +43704,8 @@
       "scientific_authority": false
     },
     "summary": {
-      "nodes": 844,
-      "edges": 873,
+      "nodes": 847,
+      "edges": 875,
       "node_kinds": {
         "candidate_problem": 14,
         "claim": 94,
@@ -43653,16 +43716,16 @@
         "experiment": 78,
         "failure_asset": 7,
         "hold": 10,
-        "idea": 114,
+        "idea": 115,
         "model": 6,
         "paper": 278,
         "paper_alias": 64,
         "phenomenon": 7,
         "problem_contract": 5,
-        "reopen_condition": 52,
+        "reopen_condition": 53,
         "scientific_closure": 2,
         "scientific_identity": 4,
-        "search_closure": 40,
+        "search_closure": 41,
         "success": 3,
         "track": 8
       },
@@ -43684,9 +43747,9 @@
         "principle_for": 2,
         "proposes_unadjudicated_claim": 4,
         "records_success_for": 3,
-        "reopens_if": 52,
+        "reopens_if": 53,
         "scientific_closure_for": 2,
-        "search_control_for": 49,
+        "search_control_for": 50,
         "semantic-evidence": 172,
         "states-problem": 29,
         "supports_claim": 14,
@@ -43697,9 +43760,9 @@
       },
       "base_nodes": 500,
       "base_edges": 612,
-      "overlay_nodes": 344,
-      "new_overlay_nodes": 344,
-      "overlay_edges": 261,
+      "overlay_nodes": 347,
+      "new_overlay_nodes": 347,
+      "overlay_edges": 263,
       "candidate_nodes": 14,
       "api_memory_candidate_nodes": 4,
       "phenomenon_nodes": 7,
@@ -43711,8 +43774,8 @@
       "failure_asset_nodes": 7,
       "success_nodes": 3,
       "scientific_closure_nodes": 2,
-      "search_closure_nodes": 40,
-      "reopen_condition_nodes": 52,
+      "search_closure_nodes": 41,
+      "reopen_condition_nodes": 53,
       "principle_closure_edges": 0,
       "exact_scope_propagation_edges": 0,
       "claim_conflicts": 0,
@@ -44239,6 +44302,20 @@
         "affected_layer": "method_realization",
         "principle_dead_end_certified": false,
         "reopen_condition_id": "reopen:MEM-SEAR-1f73ec187b29d80d4b",
+        "source": "research_memory_wiki",
+        "scientific_authority": false
+      },
+      {
+        "id": "closure:MEM-SEAR-221b6a968561f72c7f",
+        "kind": "search_closure",
+        "label": "Temporal Recency Bias in Skill Libraries: Task-Phase-Dependent Harm to Forward-Looking Analysis in Frozen-Executor Agents",
+        "scientific_object": "SHADOW-P12-C01",
+        "mechanism": "",
+        "claim_type": "",
+        "scope": "candidate=SHADOW-P12-C01; contract=216f48652df9c08727a030730aafbf0564c485cf7a3fc2a694ba6c2d53d7a1bb; exact bounded evidence realization",
+        "affected_layer": "method_realization",
+        "principle_dead_end_certified": false,
+        "reopen_condition_id": "reopen:MEM-SEAR-221b6a968561f72c7f",
         "source": "research_memory_wiki",
         "scientific_authority": false
       },
@@ -46779,6 +46856,13 @@
         "scientific_authority": false
       },
       {
+        "id": "idea:SHADOW-P12-C01",
+        "kind": "idea",
+        "label": "SHADOW-P12-C01",
+        "source": "research_memory_wiki",
+        "scientific_authority": false
+      },
+      {
         "id": "idea:SHADOW-P12-C02",
         "kind": "idea",
         "label": "SHADOW-P12-C02",
@@ -47256,6 +47340,13 @@
         "id": "reopen:MEM-SEAR-1f73ec187b29d80d4b",
         "kind": "reopen_condition",
         "label": "Reopen only if a preregistered matched experiment holds the execution agent, attack/benign task mix, security and utility evaluators, pre-update performance, feedback information, update budget, and objective weights/information fixed, while a self-evolution-specific structural variable yields a different ex-ante security-utility outcome that the strongest same-information Pareto/constrained-optimization, calibration, and overblocking baselines cannot express. A different evolution backbone, another extreme UA value, or a new scalarization is insufficient.",
+        "source": "research_memory_wiki",
+        "scientific_authority": false
+      },
+      {
+        "id": "reopen:MEM-SEAR-221b6a968561f72c7f",
+        "kind": "reopen_condition",
+        "label": "Reopen this exact P12 recency-bias search basin only if a new preregistered, protocol-valid same-information study preserves matched backward/forward difficulty, the frozen skill/retrieval information boundary available to the additive baseline, task semantics, executor, and predeclared analysis thresholds, yet demonstrates a held-out phase×recency harm residual beyond that baseline: under the current contract, heldout direct interaction >=0.25, heldout Brier improvement >=0.02, and stage8 interaction >= stage4, or a stronger preregistered residual criterion fixed before outcomes. Changing task family, skill library, baseline information, evaluator, threshold, or merely renaming recency interference does not reopen this closure.",
         "source": "research_memory_wiki",
         "scientific_authority": false
       },
@@ -48715,6 +48806,18 @@
         "scientific_authority": false
       },
       {
+        "source": "closure:MEM-SEAR-221b6a968561f72c7f",
+        "target": "reopen:MEM-SEAR-221b6a968561f72c7f",
+        "relation": "reopens_if",
+        "scientific_authority": false
+      },
+      {
+        "source": "closure:MEM-SEAR-221b6a968561f72c7f",
+        "target": "idea:SHADOW-P12-C01",
+        "relation": "search_control_for",
+        "scientific_authority": false
+      },
+      {
         "source": "closure:MEM-SEAR-2a5a804540732de3fd",
         "target": "reopen:MEM-SEAR-2a5a804540732de3fd",
         "relation": "reopens_if",
@@ -49222,28 +49325,28 @@
       "closed_basin_role_is_audit_metadata_only_by_default": true
     },
     "summary": {
-      "runs": 197,
-      "raw_runs": 208,
+      "runs": 315,
+      "raw_runs": 326,
       "invalidated_runs": 11,
-      "calls": 282,
-      "artifacts": 558,
-      "artifact_bytes": 4619453,
-      "research_objects": 96,
+      "calls": 400,
+      "artifacts": 790,
+      "artifact_bytes": 4842326,
+      "research_objects": 99,
       "lineage_edges": 55,
-      "scientific_identities": 96,
+      "scientific_identities": 99,
       "memory_queries": 28,
       "raw_memory_queries": 45,
       "memory_consumptions": 26,
       "raw_memory_consumptions": 40,
       "execution_failures": 24,
       "preflight_candidates": 4,
-      "raw_replayable_calls": 275,
-      "fully_replay_addressed_calls": 228,
+      "raw_replayable_calls": 393,
+      "fully_replay_addressed_calls": 346,
       "historical_fingerprint_gaps": 47
     },
     "recent_runs": [
       {
-        "run_id": "p15-order-v2-5efd7cbb3c-t5-single-3",
+        "run_id": "p12-recency-65212b1a36-unit-e-quadratic-2-b-l4-u",
         "status": "INCREMENTAL_RAW_ARCHIVE",
         "calls": 1,
         "objects": 0,
@@ -49251,7 +49354,7 @@
         "scientific_authority": false
       },
       {
-        "run_id": "p15-order-v2-5efd7cbb3c-t5-single-2",
+        "run_id": "p12-recency-65212b1a36-unit-e-linear-2-f-l8-u",
         "status": "INCREMENTAL_RAW_ARCHIVE",
         "calls": 1,
         "objects": 0,
@@ -49259,7 +49362,7 @@
         "scientific_authority": false
       },
       {
-        "run_id": "p15-order-v2-5efd7cbb3c-t5-single-1",
+        "run_id": "p12-recency-65212b1a36-unit-e-cyclic3-3-f-l4-u",
         "status": "INCREMENTAL_RAW_ARCHIVE",
         "calls": 1,
         "objects": 0,
@@ -49267,7 +49370,7 @@
         "scientific_authority": false
       },
       {
-        "run_id": "p15-order-v2-5efd7cbb3c-t5-no-skill",
+        "run_id": "p12-recency-65212b1a36-unit-e-linear-1-f-l4-r",
         "status": "INCREMENTAL_RAW_ARCHIVE",
         "calls": 1,
         "objects": 0,
@@ -49275,7 +49378,7 @@
         "scientific_authority": false
       },
       {
-        "run_id": "p15-order-v2-5efd7cbb3c-t5-perm-6",
+        "run_id": "p12-recency-65212b1a36-unit-e-quadratic-1-f-l4-r",
         "status": "INCREMENTAL_RAW_ARCHIVE",
         "calls": 1,
         "objects": 0,
@@ -49283,7 +49386,7 @@
         "scientific_authority": false
       },
       {
-        "run_id": "p15-order-v2-5efd7cbb3c-t5-perm-5",
+        "run_id": "p12-recency-65212b1a36-unit-e-alternating2-3-f-l8-u",
         "status": "INCREMENTAL_RAW_ARCHIVE",
         "calls": 1,
         "objects": 0,
@@ -49291,7 +49394,7 @@
         "scientific_authority": false
       },
       {
-        "run_id": "p15-order-v2-5efd7cbb3c-t5-perm-4",
+        "run_id": "p12-recency-65212b1a36-unit-e-linear-1-b-l4-u",
         "status": "INCREMENTAL_RAW_ARCHIVE",
         "calls": 1,
         "objects": 0,
@@ -49299,7 +49402,7 @@
         "scientific_authority": false
       },
       {
-        "run_id": "p15-order-v2-5efd7cbb3c-t5-perm-3",
+        "run_id": "p12-recency-65212b1a36-unit-e-quadratic-1-b-l4-r",
         "status": "INCREMENTAL_RAW_ARCHIVE",
         "calls": 1,
         "objects": 0,
@@ -49420,7 +49523,7 @@
   },
   "research_memory_wiki": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:39+00:00",
+    "generated_at": "2026-08-21T17:32:09+00:00",
     "status": "MEMORY_COMPILED",
     "policy": {
       "schema_version": "1.0",
@@ -49439,7 +49542,7 @@
       "idea_search_and_experiment_design_use_distinct_memory_priorities": true
     },
     "source_manifest": {
-      "search_memory_closed_objects": 42,
+      "search_memory_closed_objects": 43,
       "search_memory_hold_objects": 9,
       "failure_assets": 6,
       "candidate_portfolio_visible": 3,
@@ -49447,18 +49550,18 @@
       "generator_blocked_attempts": 13
     },
     "summary": {
-      "entries": 63,
-      "search_closures": 40,
+      "entries": 64,
+      "search_closures": 41,
       "scientific_closures": 2,
       "holds": 9,
       "failure_assets": 6,
       "success_assets": 3,
       "open_questions": 2,
       "repeated_review_blocks": 1,
-      "prompt_eligible": 63,
+      "prompt_eligible": 64,
       "transient": 0,
       "recurring_systemic": 2,
-      "scientific": 61
+      "scientific": 62
     },
     "entries": [
       {
@@ -50036,6 +50139,32 @@
         "reusable_precheck": "",
         "source_refs": [
           "arXiv:2608.12977"
+        ],
+        "source_artifact": "shadow_search_memory",
+        "reuse_effectiveness": {},
+        "scientific_authority": false
+      },
+      {
+        "memory_id": "MEM-SEAR-221b6a968561f72c7f",
+        "kind": "SEARCH_CLOSURE",
+        "title": "Temporal Recency Bias in Skill Libraries: Task-Phase-Dependent Harm to Forward-Looking Analysis in Frozen-Executor Agents",
+        "summary": "A retrieval-quality + task-difficulty + skill-compatibility baseline that receives the same relevance scores, task difficulty metrics, and skill origin-task metadata, and predicts harm as a function of these variables without a recency × task-phase interaction term.",
+        "candidate_id": "SHADOW-P12-C01",
+        "scope": "candidate=SHADOW-P12-C01; contract=216f48652df9c08727a030730aafbf0564c485cf7a3fc2a694ba6c2d53d7a1bb; exact bounded evidence realization",
+        "affected_layer": "method_realization",
+        "memory_class": "METHOD_REALIZATION_STOP",
+        "durability_class": "scientific",
+        "prompt_eligible": true,
+        "search_closure_certified": true,
+        "scientific_dead_end_certified": false,
+        "principle_update_allowed": false,
+        "reopen_condition": "Reopen this exact P12 recency-bias search basin only if a new preregistered, protocol-valid same-information study preserves matched backward/forward difficulty, the frozen skill/retrieval information boundary available to the additive baseline, task semantics, executor, and predeclared analysis thresholds, yet demonstrates a held-out phase×recency harm residual beyond that baseline: under the current contract, heldout direct interaction >=0.25, heldout Brier improvement >=0.02, and stage8 interaction >= stage4, or a stronger preregistered residual criterion fixed before outcomes. Changing task family, skill library, baseline information, evaluator, threshold, or merely renaming recency interference does not reopen this closure.",
+        "opposite_search_seed": "Search only for a genuinely different same-information observable or substrate where order alone creates a preregistered residual; do not revive this basin by changing composition or wording.",
+        "reusable_precheck": "",
+        "source_refs": [
+          "arXiv:2608.05810",
+          "arXiv:2608.14270",
+          "research-data://runs/p12-recency-harness-5e48dea-r1/evidence-manifest-v5.json#sha256=1689f4d9de2fa7fb92db3cefc4e81f1df17cf500437ecfc20398e97305fb430f"
         ],
         "source_artifact": "shadow_search_memory",
         "reuse_effectiveness": {},
@@ -51046,7 +51175,7 @@
       "p0": false,
       "gpu": false
     },
-    "wiki_sha256": "3c4d990d0dcfe6865f7273d126d20b1236f6d7bea04a9bf1adbe1401b7941a03",
+    "wiki_sha256": "7babb4537584df1a3979f23076f1672b62ee5a8c55c2d8e5d87706bde9135a47",
     "lint": {
       "schema_version": "1.0",
       "status": "PASS",
@@ -52606,7 +52735,7 @@
   "human_terminal_ideas": {
     "schema_version": "1.0",
     "decision_date": "2026-08-11",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "source_of_truth_priority": [
       "explicit-user-update",
       "latest-human-review",
@@ -54574,7 +54703,7 @@
   },
   "research_governance_v2": {
     "schema_version": "2.4",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "policy": {
       "schema_version": "2.3",
       "paper_novelty_precedes_method_design": true,
@@ -57636,7 +57765,7 @@
   },
   "paper_first_p0_f0": {
     "schema_version": "1.3",
-    "generated_at": "2026-08-21T16:08:35+00:00",
+    "generated_at": "2026-08-21T17:32:04+00:00",
     "run_root": "private-data://external/paper-first-p0-20260812",
     "authority": {
       "promotion_authorized": false,
@@ -58280,7 +58409,7 @@
   },
   "idea_discovery_v3": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:39+00:00",
+    "generated_at": "2026-08-21T17:32:09+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -61236,7 +61365,7 @@
   },
   "idea_discovery_v31": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:39+00:00",
+    "generated_at": "2026-08-21T17:32:09+00:00",
     "round": "v3.1",
     "status": "external-reviewed",
     "policy": {
@@ -61949,7 +62078,7 @@
   },
   "idea_discovery_v4": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:39+00:00",
+    "generated_at": "2026-08-21T17:32:09+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -71624,7 +71753,7 @@
   },
   "idea_discovery_v5": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:39+00:00",
+    "generated_at": "2026-08-21T17:32:09+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -81617,7 +81746,7 @@
   },
   "idea_discovery_v51": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:39+00:00",
+    "generated_at": "2026-08-21T17:32:09+00:00",
     "target_venue": "ICLR",
     "policy": {
       "generated_only_from_review_vectors": true,
@@ -83309,7 +83438,7 @@
   },
   "idea_discovery_v52": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:39+00:00",
+    "generated_at": "2026-08-21T17:32:09+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v51_revise": true,
@@ -84287,7 +84416,7 @@
   },
   "idea_discovery_v53": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-21T16:08:39+00:00",
+    "generated_at": "2026-08-21T17:32:09+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v52_revise_with_single_surviving_boundary": true,
@@ -84626,7 +84755,7 @@
   },
   "discussion_portfolio": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-21T16:08:39+00:00",
+    "generated_at": "2026-08-21T17:32:09+00:00",
     "target": 20,
     "count": 27,
     "remaining": 0,
@@ -87236,8 +87365,8 @@
       },
       "status": "running",
       "evidence": {
-        "en": "844 graph nodes / 873 edges; memory wiki 63 entries / 6 failure / 3 success / lint warnings 12",
-        "zh": "研究图谱 844 个节点 / 873 条边；Memory Wiki 63 条 / 失败 6 / 成功 3 / lint warning 12"
+        "en": "847 graph nodes / 875 edges; memory wiki 64 entries / 6 failure / 3 success / lint warnings 12",
+        "zh": "研究图谱 847 个节点 / 875 条边；Memory Wiki 64 条 / 失败 6 / 成功 3 / lint warning 12"
       },
       "key": "scientific-research-graph",
       "primary_layer": "memory-publication"
@@ -88510,19 +88639,19 @@
         "detail": {
           "status": "HOLD_MANUAL_RELATION_SCAN",
           "summary": {
+            "last_scanned_sources": 233,
             "new_empirical_sources": 0,
+            "automatic_model_scan_authorized": false,
+            "relation_lane_review_retry_exhausted": false,
+            "new_failure_sources": 0,
             "new_assumption_sources": 0,
+            "manual_scan_eligible": false,
+            "failed": 7,
             "new_boundary_sources": 0,
             "current_reviewed_sources": 250,
-            "last_scanned_sources": 233,
-            "checks": 16,
-            "passed": 9,
-            "new_failure_sources": 0,
-            "failed": 7,
-            "relation_lane_review_retry_exhausted": false,
-            "manual_scan_eligible": false,
             "new_reviewed_sources": 0,
-            "automatic_model_scan_authorized": false
+            "checks": 16,
+            "passed": 9
           }
         }
       },
@@ -88703,7 +88832,7 @@
           "stop_standalone": 1,
           "support_inventory_required": 1,
           "shadow_dead_end_objects": 2,
-          "shadow_closed_basins": 42,
+          "shadow_closed_basins": 43,
           "principle_readjudication_dead_ends": 2,
           "principle_readjudication_closed_basins": 37,
           "problem_novelty_stops": 4,
@@ -88711,7 +88840,7 @@
           "experiment_identifiability_stops": 2,
           "optimization_stops": 0,
           "operationalization_stops": 3,
-          "method_realization_stops": 29,
+          "method_realization_stops": 30,
           "assumption_scope_stops": 2,
           "core_principle_stops": 2,
           "broader_core_principle_falsifications": 0,
@@ -89081,18 +89210,18 @@
         "pass": true,
         "detail": {
           "summary": {
-            "entries": 63,
-            "search_closures": 40,
+            "entries": 64,
+            "search_closures": 41,
             "scientific_closures": 2,
             "holds": 9,
             "failure_assets": 6,
             "success_assets": 3,
             "open_questions": 2,
             "repeated_review_blocks": 1,
-            "prompt_eligible": 63,
+            "prompt_eligible": 64,
             "transient": 0,
             "recurring_systemic": 2,
-            "scientific": 61
+            "scientific": 62
           },
           "lint": {
             "errors": 0,
@@ -89107,8 +89236,8 @@
         "pass": true,
         "detail": {
           "summary": {
-            "nodes": 844,
-            "edges": 873,
+            "nodes": 847,
+            "edges": 875,
             "node_kinds": {
               "candidate_problem": 14,
               "claim": 94,
@@ -89119,16 +89248,16 @@
               "experiment": 78,
               "failure_asset": 7,
               "hold": 10,
-              "idea": 114,
+              "idea": 115,
               "model": 6,
               "paper": 278,
               "paper_alias": 64,
               "phenomenon": 7,
               "problem_contract": 5,
-              "reopen_condition": 52,
+              "reopen_condition": 53,
               "scientific_closure": 2,
               "scientific_identity": 4,
-              "search_closure": 40,
+              "search_closure": 41,
               "success": 3,
               "track": 8
             },
@@ -89150,9 +89279,9 @@
               "principle_for": 2,
               "proposes_unadjudicated_claim": 4,
               "records_success_for": 3,
-              "reopens_if": 52,
+              "reopens_if": 53,
               "scientific_closure_for": 2,
-              "search_control_for": 49,
+              "search_control_for": 50,
               "semantic-evidence": 172,
               "states-problem": 29,
               "supports_claim": 14,
@@ -89163,9 +89292,9 @@
             },
             "base_nodes": 500,
             "base_edges": 612,
-            "overlay_nodes": 344,
-            "new_overlay_nodes": 344,
-            "overlay_edges": 261,
+            "overlay_nodes": 347,
+            "new_overlay_nodes": 347,
+            "overlay_edges": 263,
             "candidate_nodes": 14,
             "api_memory_candidate_nodes": 4,
             "phenomenon_nodes": 7,
@@ -89177,8 +89306,8 @@
             "failure_asset_nodes": 7,
             "success_nodes": 3,
             "scientific_closure_nodes": 2,
-            "search_closure_nodes": 40,
-            "reopen_condition_nodes": 52,
+            "search_closure_nodes": 41,
+            "reopen_condition_nodes": 53,
             "principle_closure_edges": 0,
             "exact_scope_propagation_edges": 0,
             "claim_conflicts": 0,
@@ -89293,8 +89422,8 @@
             "visible_candidates": 3
           },
           "graph": {
-            "nodes": 844,
-            "edges": 873,
+            "nodes": 847,
+            "edges": 875,
             "node_kinds": {
               "candidate_problem": 14,
               "claim": 94,
@@ -89305,16 +89434,16 @@
               "experiment": 78,
               "failure_asset": 7,
               "hold": 10,
-              "idea": 114,
+              "idea": 115,
               "model": 6,
               "paper": 278,
               "paper_alias": 64,
               "phenomenon": 7,
               "problem_contract": 5,
-              "reopen_condition": 52,
+              "reopen_condition": 53,
               "scientific_closure": 2,
               "scientific_identity": 4,
-              "search_closure": 40,
+              "search_closure": 41,
               "success": 3,
               "track": 8
             },
@@ -89336,9 +89465,9 @@
               "principle_for": 2,
               "proposes_unadjudicated_claim": 4,
               "records_success_for": 3,
-              "reopens_if": 52,
+              "reopens_if": 53,
               "scientific_closure_for": 2,
-              "search_control_for": 49,
+              "search_control_for": 50,
               "semantic-evidence": 172,
               "states-problem": 29,
               "supports_claim": 14,
@@ -89349,9 +89478,9 @@
             },
             "base_nodes": 500,
             "base_edges": 612,
-            "overlay_nodes": 344,
-            "new_overlay_nodes": 344,
-            "overlay_edges": 261,
+            "overlay_nodes": 347,
+            "new_overlay_nodes": 347,
+            "overlay_edges": 263,
             "candidate_nodes": 14,
             "api_memory_candidate_nodes": 4,
             "phenomenon_nodes": 7,
@@ -89363,8 +89492,8 @@
             "failure_asset_nodes": 7,
             "success_nodes": 3,
             "scientific_closure_nodes": 2,
-            "search_closure_nodes": 40,
-            "reopen_condition_nodes": 52,
+            "search_closure_nodes": 41,
+            "reopen_condition_nodes": 53,
             "principle_closure_edges": 0,
             "exact_scope_propagation_edges": 0,
             "claim_conflicts": 0,
@@ -89549,7 +89678,7 @@
         "pass": true,
         "detail": {
           "schema_version": "2.4",
-          "generated_at": "2026-08-21T16:08:35+00:00",
+          "generated_at": "2026-08-21T17:32:04+00:00",
           "policy": {
             "schema_version": "2.3",
             "paper_novelty_precedes_method_design": true,

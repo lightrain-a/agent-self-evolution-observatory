@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "status": "EVIDENCE_REDUCTION_SEARCH_CLOSURE_READY",
+  "source_candidate_id": "SHADOW-P12-C01",
+  "title": "Temporal Recency Bias in Skill Libraries: Task-Phase-Dependent Harm to Forward-Looking Analysis in Frozen-Executor Agents",
+  "contract_sha256": "216f48652df9c08727a030730aafbf0564c485cf7a3fc2a694ba6c2d53d7a1bb",
+  "evidence_manifest_sha256": "1689f4d9de2fa7fb92db3cefc4e81f1df17cf500437ecfc20398e97305fb430f",
+  "evidence_manifest_uri": "research-data://runs/p12-recency-harness-5e48dea-r1/evidence-manifest-v5.json",
+  "evidence_outcome": "REDUCTION_SUPPORTED",
+  "qualified_units": 96,
+  "metric_summary": "96/96 valid frozen evaluation units; difficulty gate PASS (backward=0.50, forward=0.25, gap=0.25); heldout direct phase×recency harm interaction=0.000 (stage4=0.000, stage8=0.000); additive same-information baseline heldout Brier=0.134204, interaction model=0.134577, improvement=-0.000374; 2 prior valid evaluation receipts reused + 94 v5 receipts; 108 scientific provider calls total within frozen 192-call cap.",
+  "problem_text": "In a frozen-executor agent with a self-evolved skill library and recency-biased retrieval, forward-looking prediction tasks will show a larger performance degradation as the library grows and recency bias increases, compared to backward-looking summarization tasks of matched difficulty. This differential harm will persist after controlling for retrieval quality (relevance scores), task difficulty (no-skill baseline accuracy), and skill-task compatibility (origin-task distribution).",
+  "strongest_reduction": "A retrieval-quality + task-difficulty + skill-compatibility baseline that receives the same relevance scores, task difficulty metrics, and skill origin-task metadata, and predicts harm as a function of these variables without a recency × task-phase interaction term.",
+  "source_refs": [
+    "arXiv:2608.05810",
+    "arXiv:2608.14270"
+  ],
+  "search_closure_avoid": [
+    "paraphrase-only revival of the claim that recency weighting selectively harms forward-looking tasks without a new held-out same-information residual",
+    "changing backward/forward task difficulty, skill-library composition, retrieval information, executor, or evaluation task semantics and treating the resulting difference as a reopening of the frozen P12 object",
+    "retuning the phase-interaction or Brier thresholds after observing outcomes, or weakening the additive same-information baseline to manufacture a recency-specific residual"
+  ],
+  "reopen_condition": "Reopen this exact P12 recency-bias search basin only if a new preregistered, protocol-valid same-information study preserves matched backward/forward difficulty, the frozen skill/retrieval information boundary available to the additive baseline, task semantics, executor, and predeclared analysis thresholds, yet demonstrates a held-out phase×recency harm residual beyond that baseline: under the current contract, heldout direct interaction >=0.25, heldout Brier improvement >=0.02, and stage8 interaction >= stage4, or a stronger preregistered residual criterion fixed before outcomes. Changing task family, skill library, baseline information, evaluator, threshold, or merely renaming recency interference does not reopen this closure.",
+  "scientific_authority": false,
+  "belief_authority": false,
+  "source_evidence_manifest_file_sha256": "0b277d3eb4f7e8d0011cedc379e57d59516e6adadc8df0ef8488e294ebc4be3a"
+}

@@ -666,16 +666,19 @@ def _evidence_reduction_search_closure_rows(paths: list[Path] | None = None) -> 
             continue
         signature = hashlib.sha256(json.dumps({"candidate_id":cid,"contract_sha256":contract,"evidence_manifest_sha256":manifest},sort_keys=True,separators=(",",":")).encode()).hexdigest()[:16]
         evidence_refs = [*refs, f"{uri}#sha256={manifest}"]
+        avoid=[" ".join(str(value).split())[:900] for value in payload.get("search_closure_avoid") or [] if " ".join(str(value).split())]
+        if not avoid:
+            avoid=[
+                f"paraphrase-only revival of the exact reduced problem: {prediction[:700]}",
+                "renaming the recorded same-information reduction without a new held-out residual",
+                "changing the frozen scientific object, task semantics, information boundary, executor, or decision threshold and claiming that this reopens the reduced realization",
+            ]
         rows.append({
             "source_candidate_id": cid,
             "basin": f"evidence-exact-reduction-{signature}",
             "search_primitive": "",
             "title": " ".join(str(payload.get("title") or cid).split())[:420],
-            "avoid": [
-                f"paraphrase-only revival of the exact reduced problem: {prediction[:700]}",
-                "renaming retrieval/context interference without a new same-information residual",
-                "changing skill composition, content, executor, task family, or budget and claiming that this reopens the frozen order-only realization",
-            ],
+            "avoid": avoid,
             "strongest_reduction": baseline,
             "current_source_refs": evidence_refs,
             "evidence_basis": evidence_refs,

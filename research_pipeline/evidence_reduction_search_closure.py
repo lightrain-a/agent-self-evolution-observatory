@@ -36,12 +36,21 @@ def build_evidence_reduction_search_closure(*,evidence_plan: dict[str,Any],candi
     design=row.get("design") or {};prediction=str(row.get("frozen_exact_prediction") or design.get("frozen_exact_prediction") or "").strip();baseline=str(row.get("frozen_same_information_baseline") or design.get("frozen_same_information_baseline") or "").strip();metric=str(receipt.get("metric_summary") or "").strip()
     if not prediction or not baseline or not metric: raise ValueError("closure requires frozen prediction/baseline and metric summary")
     source_refs=sorted({str(ref) for ref in row.get("source_refs") or [] if str(ref)})
-    reopen=("Reopen this exact search basin only if a new preregistered, protocol-valid same-information study changes only the presentation/retrieval order of the same fixed skill set and demonstrates a directionally consistent success or independently audited uptake residual on held-out tasks that the frozen static compatibility/negative-transfer baseline cannot express. Changing skill composition, skill content, task set, executor, budget, or merely renaming context interference does not reopen this closure.")
+    avoid=[" ".join(str(value).split())[:900] for value in evidence_manifest.get("search_closure_avoid") or [] if " ".join(str(value).split())]
+    if not avoid:
+        avoid=[
+            f"paraphrase-only revival of the exact reduced problem: {prediction[:700]}",
+            "renaming the recorded same-information reduction without a new held-out residual",
+            "changing the frozen scientific object, task semantics, information boundary, executor, or decision threshold and claiming that this reopens the reduced realization",
+        ]
+    reopen=str(evidence_manifest.get("reopen_condition") or "").strip()
+    if not reopen:
+        reopen=("Reopen this exact search basin only with a new preregistered, protocol-valid study of the same frozen scientific object that preserves the same-information comparison boundary and demonstrates a held-out residual that the recorded strongest reduction cannot express. Changing the object, task semantics, information available to the baseline, evaluation threshold, executor, or merely renaming the mechanism does not reopen this closure.")
     return {
         "schema_version":"1.0","status":STATUS,"source_candidate_id":candidate_id,"title":str(row.get("title") or candidate_id),
         "contract_sha256":contract,"evidence_manifest_sha256":manifest_sha,"evidence_manifest_uri":evidence_manifest_uri,
         "evidence_outcome":"REDUCTION_SUPPORTED","qualified_units":int(receipt.get("qualified_units") or 0),"metric_summary":metric,
-        "problem_text":prediction,"strongest_reduction":baseline,"source_refs":source_refs,"reopen_condition":reopen,
+        "problem_text":prediction,"strongest_reduction":baseline,"source_refs":source_refs,"search_closure_avoid":avoid,"reopen_condition":reopen,
         "scientific_authority":False,"belief_authority":False,
     }
 

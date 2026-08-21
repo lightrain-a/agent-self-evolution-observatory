@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-21T16:07:01+00:00",
+  "generated_at": "2026-08-21T17:32:09+00:00",
   "status": "MEMORY_COMPILED",
   "policy": {
     "schema_version": "1.0",
@@ -19,7 +19,7 @@
     "idea_search_and_experiment_design_use_distinct_memory_priorities": true
   },
   "source_manifest": {
-    "search_memory_closed_objects": 42,
+    "search_memory_closed_objects": 43,
     "search_memory_hold_objects": 9,
     "failure_assets": 6,
     "candidate_portfolio_visible": 3,
@@ -27,18 +27,18 @@
     "generator_blocked_attempts": 13
   },
   "summary": {
-    "entries": 63,
-    "search_closures": 40,
+    "entries": 64,
+    "search_closures": 41,
     "scientific_closures": 2,
     "holds": 9,
     "failure_assets": 6,
     "success_assets": 3,
     "open_questions": 2,
     "repeated_review_blocks": 1,
-    "prompt_eligible": 63,
+    "prompt_eligible": 64,
     "transient": 0,
     "recurring_systemic": 2,
-    "scientific": 61
+    "scientific": 62
   },
   "entries": [
     {
@@ -616,6 +616,32 @@
       "reusable_precheck": "",
       "source_refs": [
         "arXiv:2608.12977"
+      ],
+      "source_artifact": "shadow_search_memory",
+      "reuse_effectiveness": {},
+      "scientific_authority": false
+    },
+    {
+      "memory_id": "MEM-SEAR-221b6a968561f72c7f",
+      "kind": "SEARCH_CLOSURE",
+      "title": "Temporal Recency Bias in Skill Libraries: Task-Phase-Dependent Harm to Forward-Looking Analysis in Frozen-Executor Agents",
+      "summary": "A retrieval-quality + task-difficulty + skill-compatibility baseline that receives the same relevance scores, task difficulty metrics, and skill origin-task metadata, and predicts harm as a function of these variables without a recency × task-phase interaction term.",
+      "candidate_id": "SHADOW-P12-C01",
+      "scope": "candidate=SHADOW-P12-C01; contract=216f48652df9c08727a030730aafbf0564c485cf7a3fc2a694ba6c2d53d7a1bb; exact bounded evidence realization",
+      "affected_layer": "method_realization",
+      "memory_class": "METHOD_REALIZATION_STOP",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": true,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "Reopen this exact P12 recency-bias search basin only if a new preregistered, protocol-valid same-information study preserves matched backward/forward difficulty, the frozen skill/retrieval information boundary available to the additive baseline, task semantics, executor, and predeclared analysis thresholds, yet demonstrates a held-out phase×recency harm residual beyond that baseline: under the current contract, heldout direct interaction >=0.25, heldout Brier improvement >=0.02, and stage8 interaction >= stage4, or a stronger preregistered residual criterion fixed before outcomes. Changing task family, skill library, baseline information, evaluator, threshold, or merely renaming recency interference does not reopen this closure.",
+      "opposite_search_seed": "Search only for a genuinely different same-information observable or substrate where order alone creates a preregistered residual; do not revive this basin by changing composition or wording.",
+      "reusable_precheck": "",
+      "source_refs": [
+        "arXiv:2608.05810",
+        "arXiv:2608.14270",
+        "research-data://runs/p12-recency-harness-5e48dea-r1/evidence-manifest-v5.json#sha256=1689f4d9de2fa7fb92db3cefc4e81f1df17cf500437ecfc20398e97305fb430f"
       ],
       "source_artifact": "shadow_search_memory",
       "reuse_effectiveness": {},
@@ -1626,7 +1652,7 @@
     "p0": false,
     "gpu": false
   },
-  "wiki_sha256": "3c4d990d0dcfe6865f7273d126d20b1236f6d7bea04a9bf1adbe1401b7941a03",
+  "wiki_sha256": "7babb4537584df1a3979f23076f1672b62ee5a8c55c2d8e5d87706bde9135a47",
   "lint": {
     "schema_version": "1.0",
     "status": "PASS",
