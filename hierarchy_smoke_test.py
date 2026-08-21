@@ -31,7 +31,7 @@ EXPECTATIONS = {
     "evaluation": (3, 4, 5, 0),
     "system-overview": (10, 11, 17, 0),
     "research-timeline": (0, 0, 0, 0),
-    "research-map": (4, 5, 0, 0),
+    "research-map": (4, 5, 8, 0),
     "research-directions": (4, 6, 8, 0),
     "paper-ideas": (0, 2, 9, 0),
     "experiments": (3, 4, 3, 0),
@@ -179,6 +179,14 @@ def main() -> None:
                 raise AssertionError(f"{page}: expected chapters/toc={expected}, got {actual}")
             if page not in {"paper-ideas", "selected-paper", "research-timeline", "research-map"} and 'id="page-framework"' not in dom:
                 raise AssertionError(f"{page}: page framework overview is missing")
+            if page == "research-map":
+                expected_toc = [f"#research-map-{letter}-heading" for letter in "abcdefg"] + ["#formal-publication-lineage-heading"]
+                actual_toc = execute(session_id, "return [...document.querySelectorAll('#page-toc .toc-level-3 > a')].map(a=>a.getAttribute('href')); ")
+                if actual_toc != expected_toc:
+                    raise AssertionError(f"research-map: expected A-G then formal-publication secondary TOC, got {actual_toc}")
+                body_order = execute(session_id, "return ['a','b','c','d','e','f','g'].map(x=>document.getElementById('research-map-'+x)?.getBoundingClientRect().top + window.scrollY).concat(document.getElementById('formal-publication-lineage')?.getBoundingClientRect().top + window.scrollY); ")
+                if any(body_order[index] >= body_order[index + 1] for index in range(len(body_order) - 1)):
+                    raise AssertionError(f"research-map: body order must be A-G first and formal-publication lineage last, got {body_order}")
             group_headers = re.findall(r'<header class="merged-group-header".*?</header>', dom, re.DOTALL)
             if any(re.search(r'<h2(?:\s|>)', header) for header in group_headers):
                 raise AssertionError(f"{page}: merged group is still rendered as H2")

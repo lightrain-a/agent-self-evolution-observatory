@@ -3511,7 +3511,7 @@ function buildToc() {
   headings.forEach((heading) => {
     const level = Number(heading.tagName.slice(1));
     while (stack.length > 1 && stack[stack.length - 1].level >= level) stack.pop();
-    const node = {level, id:heading.id, label:heading.textContent.trim(), children:[]};
+    const node = {level, id:heading.id, label:(heading.dataset.tocLabel || heading.textContent).trim(), children:[]};
     stack[stack.length - 1].children.push(node);
     stack.push(node);
   });
