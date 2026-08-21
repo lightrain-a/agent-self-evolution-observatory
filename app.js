@@ -2565,6 +2565,20 @@ const CANONICAL_PF_GROUPS = {
   F:[],
   G:[]
 };
+const CANONICAL_CONTEXT_GROUP_COUNTS = {A:0,B:2,C:0,D:0,E:4,F:0,G:0};
+function canonicalGroupInventory(groupId,parents,independent,closedCounts={}) {
+  const parent=parents.filter(row=>row.meta.group===groupId).length;
+  const related=independent.filter(row=>(row.idea.group||supplementalGroupId(row.idea))===groupId).length+(CANONICAL_PF_GROUPS[groupId]||[]).length+(groupId==="G"?5:0);
+  const context=CANONICAL_CONTEXT_GROUP_COUNTS[groupId]||0;
+  const closed=closedCounts[groupId]||0;
+  return {parent,related,context,closed,total:parent+related+context+closed};
+}
+function canonicalInventorySummary(groups,parents,independent) {
+  const closedCounts=window.closedCandidateCategoryCounts?window.closedCandidateCategoryCounts():{};
+  const byGroup=Object.fromEntries(groups.map(group=>[group.id,canonicalGroupInventory(group.id,parents,independent,closedCounts)]));
+  const sum=key=>Object.values(byGroup).reduce((n,row)=>n+(row[key]||0),0);
+  return {parent:sum("parent"),related:sum("related"),context:sum("context"),closed:sum("closed"),total:sum("total"),byGroup};
+}
 function canonicalIdeaGroups() {
   const base=(humanReviewData().groups||[]).map(group=>({...group}));
   return [...base,{id:"G",title:{zh:"Agent 自进化安全与未来风险",en:"Safety and future risk in agent self-evolution"},question:{zh:"当前静态安全检查能否预测持久状态与经验继续演化后的未来首次违规风险？",en:"Can current static safety evaluation predict future first-violation risk after persistent state and experience continue to evolve?"}}];
@@ -2586,18 +2600,16 @@ function canonicalParentRows() {
 }
 function canonicalStatusControls(rows=[]) {
   const statuses=["p0","p0-ready","merge","drop"];
-  return `<div class="canonical-filter-bar"><div><b>${language==="zh"?"按人工冻结终态筛选 26 个父 Idea":"Filter the 26 parent ideas by frozen human terminal state"}</b><span>${language==="zh"?"研究大类是主结构；历史 P0、人工终态、最新证据处置和执行权限分别记账。":"Research category is primary; historical P0, human terminal state, latest evidence disposition, and execution authority are tracked separately."}</span></div><div class="canonical-filter-actions">${["all",...statuses].map((status,index)=>{
+  return `<div class="canonical-filter-bar"><div><b>${language==="zh"?"只筛选 26 个父 Idea 的人工冻结终态":"Filter only the 26 parent ideas by frozen human terminal state"}</b><span>${language==="zh"?"该筛选不会隐藏其他研究方向、方法、论文证据或关闭候选；研究大类仍是全页主结构。":"This filter does not hide related directions, methods, paper evidence, or closed candidates; scientific category remains the page-wide structure."}</span></div><div class="canonical-filter-actions">${["all",...statuses].map((status,index)=>{
     const count=status==="all"?rows.length:rows.filter(row=>row.meta.status===status).length;
     const label=status==="all"?(language==="zh"?"全部父 Idea":"All parent ideas"):humanParentFinalStatusLabel(status);
     return `<button class="canonical-filter-btn${index===0?" active":""}" data-canonical-status="${esc(status)}" aria-pressed="${index===0?"true":"false"}">${esc(label)} <b>${count}</b></button>`;
   }).join("")}</div></div>`;
 }
-function renderCanonicalCategoryIndex(groups,parents,independent) {
-  const closedCounts=window.closedCandidateCategoryCounts?window.closedCandidateCategoryCounts():{};
-  return `<section class="panel canonical-category-index"><div class="idea-panel-heading"><div><div class="eyebrow">${language==="zh"?"研究大类导航":"RESEARCH CATEGORY INDEX"}</div><h2 id="canonical-category-index">${language==="zh"?"先按科学问题分大类，再在一张卡里看完一个 Idea":"Classify by scientific problem first, then read each idea in one complete card"}</h2><p class="section-intro">${language==="zh"?"26 个经人工审查的父 Idea 是唯一一级对象；所有关联研究方向、独立方法、论文证据和关闭候选都统一使用 A–G 分类编号，并归回相应大类，但不会冒充新的一级父 Idea。":"The 26 human-reviewed parents are the only first-level objects. All related directions, standalone methods, paper evidence, and closed candidates use the A–G taxonomy and return to their scientific categories without becoming duplicate parents."}</p></div><strong>${parents.length}<span>${language==="zh"?"个一级父 Idea":"first-level parents"}</span></strong></div><nav class="canonical-category-nav" aria-label="${language==="zh"?"研究大类":"Research categories"}">${groups.map(group=>{
-    const p=parents.filter(row=>row.meta.group===group.id).length;
-    const related=independent.filter(row=>(row.idea.group||supplementalGroupId(row.idea))===group.id).length+(CANONICAL_PF_GROUPS[group.id]||[]).length+(group.id==="G"?5:0);
-    return `<a href="#canonical-group-${esc(group.id.toLowerCase())}"><span>${esc(group.id)}</span><div><b>${textOf(group.title)}</b><small>${p} ${language==="zh"?"个父 Idea":"parents"} · ${related} ${language==="zh"?"个关联提案/方法":"related proposals/methods"} · ${closedCounts[group.id]||0} ${language==="zh"?"个关闭候选":"closed"}</small></div></a>`;
+function renderCanonicalCategoryIndex(groups,parents,independent,inventory=canonicalInventorySummary(groups,parents,independent)) {
+  return `<section class="panel canonical-category-index" data-research-inventory-total="${inventory.total}"><div class="idea-panel-heading"><div><div class="eyebrow">${language==="zh"?"全部研究对象 · A–G 分类导航":"ALL RESEARCH OBJECTS · A–G INDEX"}</div><h2 id="canonical-category-index">${language==="zh"?"页面呈现全部研究对象；26 个父 Idea 只是其中一个终态子账本":"The page shows every research object; the 26 parent ideas are one terminal-state sub-ledger"}</h2><p class="section-intro">${language==="zh"?`当前按 A–G 展示 ${inventory.total} 条分类记录：${inventory.parent} 个父 Idea、${inventory.related} 条关联研究方向/方法、${inventory.closed} 条关闭候选裁决，以及 ${inventory.context} 条论文/证据/实验记录。所有对象都在所属大类中直接呈现；不同对象类型分别记账，关闭裁决可能与某条研究方向交叉引用，因此“分类记录数”不冒充去重后的 Idea 数。`:`The A–G ledger shows ${inventory.total} categorized records: ${inventory.parent} parent ideas, ${inventory.related} related directions/methods, ${inventory.closed} closed-candidate decisions, and ${inventory.context} paper/evidence/experiment records. Every object is shown in its category; record types remain separate, and a closure may cross-reference a direction, so this is not presented as a deduplicated idea count.`}</p></div><strong>${inventory.total}<span>${language==="zh"?"条分类记录":"categorized records"}</span></strong></div><nav class="canonical-category-nav" aria-label="${language==="zh"?"研究大类":"Research categories"}">${groups.map(group=>{
+    const row=inventory.byGroup[group.id]||{parent:0,related:0,context:0,closed:0,total:0};
+    return `<a href="#canonical-group-${esc(group.id.toLowerCase())}" data-category-total="${row.total}"><span>${esc(group.id)}</span><div><b>${textOf(group.title)}</b><small>${language==="zh"?`合计 ${row.total} 条 · 父 Idea ${row.parent} · 研究方向/方法 ${row.related} · 论文/证据 ${row.context} · 关闭裁决 ${row.closed}`:`${row.total} total · ${row.parent} parents · ${row.related} directions/methods · ${row.context} paper/evidence · ${row.closed} closures`}</small></div></a>`;
   }).join("")}</nav></section>`;
 }
 function renderCanonicalRelatedBank(group,independent) {
@@ -2606,7 +2618,7 @@ function renderCanonicalRelatedBank(group,independent) {
   const pfCards=pfIds.length&&window.renderPaperFirstIdeaCards?window.renderPaperFirstIdeaCards(pfIds):"";
   const methodCards=methods.map(renderSupplementalIdeaCard).join("");
   if(!methodCards&&!pfCards)return "";
-  return `<details class="canonical-related-bank"><summary><div><b>${language==="zh"?"关联研究方向与方法资产":"Related research directions and method assets"}</b><span>${language==="zh"?"归入本类的研究方向、独立方法和衍生资产统一使用本类字母编号；它们是关联对象，不重复计入 26 个父 Idea。":"Related directions, standalone methods, and derived assets use their category letter; they are related objects and are not recounted among the 26 parents."}</span></div><strong>${methods.length+pfIds.length}</strong></summary><div class="canonical-related-body">${methodCards?`<section class="canonical-related-section"><h3 data-toc="false">${language==="zh"?"独立方法／衍生方法资产":"Standalone / derived method assets"}</h3><div class="supplemental-list">${methodCards}</div></section>`:""}${pfCards?`<section class="canonical-related-section"><h3 data-toc="false">${language==="zh"?"归入本类的研究方向与终态裁决":"Category-aligned directions and terminal decisions"}</h3><div class="paper-incubation-list">${pfCards}</div></section>`:""}</div></details>`;
+  return `<details class="canonical-related-bank" open><summary><div><b>${language==="zh"?"关联研究方向与方法资产":"Related research directions and method assets"}</b><span>${language==="zh"?"归入本类的研究方向、独立方法和衍生资产统一使用本类字母编号；它们是关联对象，不重复计入 26 个父 Idea。":"Related directions, standalone methods, and derived assets use their category letter; they are related objects and are not recounted among the 26 parents."}</span></div><strong>${methods.length+pfIds.length}</strong></summary><div class="canonical-related-body">${methodCards?`<section class="canonical-related-section"><h3 data-toc="false">${language==="zh"?"独立方法／衍生方法资产":"Standalone / derived method assets"}</h3><div class="supplemental-list">${methodCards}</div></section>`:""}${pfCards?`<section class="canonical-related-section"><h3 data-toc="false">${language==="zh"?"归入本类的研究方向与终态裁决":"Category-aligned directions and terminal decisions"}</h3><div class="paper-incubation-list">${pfCards}</div></section>`:""}</div></details>`;
 }
 function renderCanonicalIdeaGroup(group,parents,independent) {
   const rows=parents.filter(row=>row.meta.group===group.id).sort((a,b)=>{
@@ -2619,15 +2631,16 @@ function renderCanonicalIdeaGroup(group,parents,independent) {
   const related=renderCanonicalRelatedBank(group,independent);
   const closed=window.renderClosedCandidateArchive?window.renderClosedCandidateArchive(group.id):"";
   const counts=Object.fromEntries(["p0","p0-ready","merge","drop"].map(status=>[status,rows.filter(row=>row.meta.status===status).length]));
-  return `<section class="canonical-idea-group" id="canonical-group-${esc(group.id.toLowerCase())}" data-canonical-group="${esc(group.id)}"><header class="canonical-group-header"><span>${esc(group.id)}</span><div><h2>${textOf(group.title)}</h2><p>${textOf(group.question)}</p><div class="canonical-group-counts">${rows.length?`<b>${rows.length} ${language==="zh"?"个父 Idea":"parents"}</b><small>P0 ${counts.p0||0} · P0-ready ${counts["p0-ready"]||0} · ${language==="zh"?"并入":"merge"} ${counts.merge||0} · ${language==="zh"?"停止":"stop"} ${counts.drop||0}</small>`:group.id==="G"?`<b>5 ${language==="zh"?"个 G 类安全方向":"G-category safety directions"}</b><small>${language==="zh"?"G-1 当前研究主线 · G-2—G-5 已关闭候选":"G-1 current program · G-2—G-5 closed candidates"}</small>`:`<b>${language==="zh"?"当前系统主线":"Current system program"}</b>`}</div></div></header>${parentCards?`<div class="canonical-parent-list">${parentCards}</div>`:""}${context}${safety}${related}${closed}</section>`;
+  const inventory=canonicalGroupInventory(group.id,parents,independent,window.closedCandidateCategoryCounts?window.closedCandidateCategoryCounts():{});
+  const terminalLine=inventory.parent?(language==="zh"?`父 Idea 终态：P0 ${counts.p0||0} · P0-ready ${counts["p0-ready"]||0} · 并入 ${counts.merge||0} · 停止 ${counts.drop||0}`:`Parent terminal states: P0 ${counts.p0||0} · P0-ready ${counts["p0-ready"]||0} · merge ${counts.merge||0} · stop ${counts.drop||0}`):(group.id==="G"?(language==="zh"?"G-1 当前研究主线 · G-2—G-5 已关闭方向":"G-1 current program · G-2—G-5 closed directions"):"");
+  return `<section class="canonical-idea-group" id="canonical-group-${esc(group.id.toLowerCase())}" data-canonical-group="${esc(group.id)}" data-category-total="${inventory.total}"><header class="canonical-group-header"><span>${esc(group.id)}</span><div><h2>${textOf(group.title)}</h2><p>${textOf(group.question)}</p><div class="canonical-group-counts"><b>${inventory.total} ${language==="zh"?"条分类记录":"categorized records"}</b><small>${language==="zh"?`父 Idea ${inventory.parent} · 研究方向/方法 ${inventory.related} · 论文/证据 ${inventory.context} · 关闭裁决 ${inventory.closed}`:`${inventory.parent} parents · ${inventory.related} directions/methods · ${inventory.context} paper/evidence · ${inventory.closed} closures`}</small>${terminalLine?`<small>${terminalLine}</small>`:""}</div></div></header>${parentCards?`<div class="canonical-parent-list">${parentCards}</div>`:""}${context}${safety}${related}${closed}</section>`;
 }
-function renderCanonicalIdeaLedger() {
-  const groups=canonicalIdeaGroups(), parents=canonicalParentRows(), independent=canonicalIndependentRows();
+function renderCanonicalIdeaLedger(groups=canonicalIdeaGroups(),parents=canonicalParentRows(),independent=canonicalIndependentRows(),inventory=canonicalInventorySummary(groups,parents,independent)) {
   const terminal=humanParentFinalSummary();
   const terminalSummary=`<div class="human-final-summary canonical-terminal-summary"><div><b>${terminal.p0||0}</b><span>${language==="zh"?"P0 历史终态":"P0 historical terminal"}</span></div><div><b>${terminal.p0_ready||0}</b><span>${language==="zh"?"P0-ready · 未授权":"P0-ready · not authorized"}</span></div><div><b>${terminal.merge||0}</b><span>${language==="zh"?"已并入":"merged"}</span></div><div><b>${terminal.drop||0}</b><span>${language==="zh"?"已停止":"stopped"}</span></div><small>${language==="zh"?"这里显示人工冻结终态 2 / 11 / 6 / 7；历史 P0 进入记录、最新实验处置和当前执行权限分别保留，互不覆盖。":"This shows the frozen human terminal split 2 / 11 / 6 / 7. Historical P0 entry, latest evidence disposition, and current execution authority remain separate."}</small></div>`;
   const paperFirstSummary=window.renderPaperFirstIdeaIncubation?window.renderPaperFirstIdeaIncubation().split('<div class="paper-incubation-list">')[0]:"";
   const appendix=`<section class="panel canonical-audit-appendix"><h2 id="canonical-audit-appendix">${language==="zh"?"审计说明：怎样理解阶段、停止与重开":"Audit guide: how to read stage, stop, and reopen"}</h2><div class="canonical-audit-grid"><section><b>${language==="zh"?"阶段不等于权限":"Stage is not authority"}</b><p>${language==="zh"?"历史上进入 P0，只说明当时形成过可证伪合同；当前是否能运行，仍以正式实验权限为准。":"Historical P0 means a falsifiable contract once existed; current execution still requires formal authority."}</p></section><section><b>${language==="zh"?"失败必须分层":"Failures stay typed"}</b><p>${language==="zh"?"执行、协议、证据支持、方法实现和核心原理不会互相替代；只有核心原理级裁决才是科学死路。":"Execution, protocol, support, method-realization, and core-principle failures do not substitute for one another; only a core-principle ruling is a scientific dead end."}</p></section><section><b>${language==="zh"?"重开需要新证据":"Reopen requires new evidence"}</b><p>${language==="zh"?"换名字、换术语或重复同一实验不足以重开；必须满足卡片中写明的新增证据条件。":"Renaming or repeating the same test is insufficient; the card-specific new-evidence condition must be met."}</p></section></div>${paperFirstSummary}${renderHumanReviewMethodology()}</section>`;
-  return `${renderCanonicalCategoryIndex(groups,parents,independent)}${terminalSummary}${canonicalStatusControls(parents)}${groups.map(group=>renderCanonicalIdeaGroup(group,parents,independent)).join("")}${appendix}`;
+  return `${renderCanonicalCategoryIndex(groups,parents,independent,inventory)}${terminalSummary}${canonicalStatusControls(parents)}${groups.map(group=>renderCanonicalIdeaGroup(group,parents,independent)).join("")}${appendix}`;
 }
 function initCanonicalIdeaFilters(){
   const buttons=[...document.querySelectorAll(".canonical-filter-btn")];
@@ -2639,8 +2652,10 @@ function initCanonicalIdeaFilters(){
   }));
 }
 function renderIdeaPortfolio(config) {
-  const current=window.renderCurrentResearchPortfolio?window.renderCurrentResearchPortfolio({includeClosed:false,ideasPage:true}):"";
-  return `${pageHeader(config)}${current}${renderCanonicalIdeaLedger()}`;
+  const groups=canonicalIdeaGroups(), parents=canonicalParentRows(), independent=canonicalIndependentRows();
+  const inventory=canonicalInventorySummary(groups,parents,independent);
+  const current=window.renderCurrentResearchPortfolio?window.renderCurrentResearchPortfolio({includeClosed:false,ideasPage:true,inventory}):"";
+  return `${pageHeader(config)}${current}${renderCanonicalIdeaLedger(groups,parents,independent,inventory)}`;
 }
 function renderIdeaRanking(config) {
   return `${pageHeader(config)}${(config.sections || []).map(renderSection).join("")}${renderIdeaRankingPanels()}`;

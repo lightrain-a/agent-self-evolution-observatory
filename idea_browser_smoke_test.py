@@ -299,8 +299,11 @@ def main() -> None:
           categoryLinks: document.querySelectorAll('.canonical-category-nav a').length,
           objectHierarchyPanels: document.querySelectorAll('.current-object-hierarchy').length,
           objectLevelCards: document.querySelectorAll('.research-object-levels > article').length,
+          inventoryTotals: [...document.querySelectorAll('[data-research-inventory-total]')].map(x=>Number(x.dataset.researchInventoryTotal||0)),
+          categoryRecordTotals: [...document.querySelectorAll('.canonical-category-nav a')].map(x=>Number(x.dataset.categoryTotal||0)),
           legacyMixedStatusRows: document.querySelectorAll('.current-object-hierarchy .current-research-table tbody tr').length,
           categorizedContextBanks: document.querySelectorAll('.categorized-context-bank').length,
+          openCategorizedContextBanks: document.querySelectorAll('.categorized-context-bank[open]').length,
           categorizedContextCards: document.querySelectorAll('.categorized-context-card').length,
           categorizedContextIds: [...document.querySelectorAll('.categorized-context-card')].map(x=>x.dataset.researchObject||''),
           categorizedContextCodes: [...document.querySelectorAll('.categorized-context-card header > div > span:first-child')].map(x=>(x.textContent||'').trim()),
@@ -337,6 +340,9 @@ def main() -> None:
           openDiscussedCards: document.querySelectorAll('.human-review-idea-card[open]').length,
           codes: [...document.querySelectorAll('.human-idea-code')].map(x=>(x.textContent||'').trim()),
           newGroups: document.querySelectorAll('.canonical-related-bank').length,
+          openRelatedBanks: document.querySelectorAll('.canonical-related-bank[open]').length,
+          categoryRelatedBanks: document.querySelectorAll('.canonical-related-bank:not(.categorized-context-bank)').length,
+          openCategoryRelatedBanks: document.querySelectorAll('.canonical-related-bank:not(.categorized-context-bank)[open]').length,
           newCards: document.querySelectorAll('.supplemental-idea-card').length,
           standaloneCodes: [...document.querySelectorAll('.supplemental-idea-card summary>div>span')].map(x=>(x.textContent||'').trim()),
           openNewCards: document.querySelectorAll('.supplemental-idea-card[open]').length,
@@ -371,6 +377,8 @@ def main() -> None:
           shadowDesignPolicy: window.PAPER_FIRST_SEARCH_PORTFOLIO_DESIGN_ADJUDICATION?.policy || {},
           currentShadowSearch: window.CURRENT_RESEARCH_STATUS?.shadow_search || {},
           closedAuditPanels: document.querySelectorAll('.current-closed-basin-audit').length,
+          canonicalClosedArchives: document.querySelectorAll('.canonical-closed-archive').length,
+          openCanonicalClosedArchives: document.querySelectorAll('.canonical-closed-archive[open]').length,
           closedAuditRows: document.querySelectorAll('.current-closed-basin-audit tbody tr').length,
           closedAuditReasonsAllZh: [...document.querySelectorAll('.current-closed-basin-audit tbody tr td:nth-child(3)')].every(node => /[\u3400-\u9fff]/.test(node.textContent || '')),
           closedAuditReopensAllZh: [...document.querySelectorAll('.current-closed-basin-audit tbody tr td:nth-child(5)')].every(node => /[\u3400-\u9fff]/.test(node.textContent || '')),
@@ -412,8 +420,9 @@ def main() -> None:
         require(ideas["p0Policy"].get("pre_p0_identifiability_required") is True and ideas["p0Policy"].get("automatic_p0_to_p1_forbidden") is True and ideas["p0Policy"].get("p0_pass_requires_human_approval") is True, f"P0 human/Pre-P0 approval policy is missing: {ideas['p0Policy']}")
         require(ideas["toc2"] >= 2 and ideas["toc3"] >= 7 and ideas["toc4"] == 0, f"paper-ideas category-first TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
         require((ideas["discussedGroups"],ideas["categoryLinks"],ideas["parentItems"],ideas["lifecycleStrips"],ideas["discussedCards"]) == (7,7,26,26,26), f"category-first ledger must expose seven groups and 26 complete parent cards: {ideas['discussedGroups']}/{ideas['categoryLinks']}/{ideas['parentItems']}/{ideas['lifecycleStrips']}/{ideas['discussedCards']}")
-        require((ideas["objectHierarchyPanels"],ideas["objectLevelCards"],ideas["legacyMixedStatusRows"]) == (1,3,0), f"paper-ideas must separate parent ideas from paper/evidence/experiment objects and remove the old mixed ledger: {ideas['objectHierarchyPanels']}/{ideas['objectLevelCards']}/{ideas['legacyMixedStatusRows']}")
-        require(ideas["categorizedContextBanks"] == 2 and ideas["categorizedContextCards"] == 6 and set(ideas["categorizedContextIds"]) == {"STRI","STRI-AUTOSKILL-P19","STRI-P0A","STRI-P0E","MEM-HISTORY","SP-15"}, f"categorized paper/evidence/archive context is incomplete: {ideas['categorizedContextBanks']}/{ideas['categorizedContextCards']}/{ideas['categorizedContextIds']}")
+        require((ideas["objectHierarchyPanels"],ideas["objectLevelCards"],ideas["legacyMixedStatusRows"]) == (1,4,0), f"paper-ideas must expose parent, related-direction, closure, and evidence ledgers separately and remove the old mixed table: {ideas['objectHierarchyPanels']}/{ideas['objectLevelCards']}/{ideas['legacyMixedStatusRows']}")
+        require(ideas["inventoryTotals"] == [94,94] and ideas["categoryRecordTotals"] == [12,20,10,3,28,6,15] and sum(ideas["categoryRecordTotals"]) == 94, f"full A-G research inventory must expose 94 categorized records: {ideas['inventoryTotals']}/{ideas['categoryRecordTotals']}")
+        require(ideas["categorizedContextBanks"] == ideas["openCategorizedContextBanks"] == 2 and ideas["categorizedContextCards"] == 6 and set(ideas["categorizedContextIds"]) == {"STRI","STRI-AUTOSKILL-P19","STRI-P0A","STRI-P0E","MEM-HISTORY","SP-15"}, f"categorized paper/evidence/archive context must be complete and expanded: {ideas['categorizedContextBanks']}/{ideas['openCategorizedContextBanks']}/{ideas['categorizedContextCards']}/{ideas['categorizedContextIds']}")
         require(set(ideas["categorizedContextCodes"]) == {"E-7","E-7a","E-7b","E-7c","B-12","B-13"}, f"categorized context objects are not normalized to A-G taxonomy: {ideas['categorizedContextCodes']}")
         require(set(ideas["pfCodes"]) == {"A-8","A-9","A-10","A-11","A-12","B-11","C-6","E-5","E-6"}, f"former PF directions are not distributed into A/B/C/E categories: {ideas['pfCodes']}")
         require(set(ideas["safetyCodes"]) == {"G-1","G-2","G-3","G-4","G-5"}, f"safety directions are not normalized to G-1..G-5: {ideas['safetyCodes']}")
@@ -439,7 +448,7 @@ def main() -> None:
         require(ideas["openDiscussedCards"] == 0 and ideas["openNewCards"] == 0, f"all idea cards must be collapsed by default, got {ideas['openDiscussedCards']}/{ideas['openNewCards']}")
         require(len(ideas["codes"]) == 26 and len(set(ideas["codes"])) == 26, f"group codes are missing or duplicated: {ideas['codes']}")
         require(all(code in ideas["codes"] for code in ("A-1","A-5","B-1","B-7","C-1","D-1","E-1","F-1","F-3")), f"expected stable group codes are missing: {ideas['codes']}")
-        require(ideas["newGroups"] >= 1 and ideas["newCards"] == 7, f"the seven standalone methods must be nested in category-related banks, not rendered as first-level ideas: {ideas['newGroups']}/{ideas['newCards']}")
+        require(ideas["newGroups"] == ideas["openRelatedBanks"] == 6 and ideas["categoryRelatedBanks"] == ideas["openCategoryRelatedBanks"] == 4 and ideas["newCards"] == 7, f"all related-direction/context banks must be visible by default while preserving seven standalone methods: {ideas['newGroups']}/{ideas['openRelatedBanks']}/{ideas['categoryRelatedBanks']}/{ideas['openCategoryRelatedBanks']}/{ideas['newCards']}")
         require(set(ideas["standaloneCodes"]) == {"A-6","A-7","B-8","B-9","B-10","E-3","E-4"}, f"standalone methods must have stable scientific-group codes: {ideas['standaloneCodes']}")
         require((ideas["newFinal"], ideas["newInspired"]) == (0, 0), f"legacy supplemental candidates must not remain active: {ideas['newFinal']}/{ideas['newInspired']}")
         require(ideas["mergedMethods"] >= 8, f"merged FINAL method provenance is not visible on discussed ideas: {ideas['mergedMethods']}")
@@ -463,7 +472,7 @@ def main() -> None:
         require(int(sds.get("near_miss_preflight_dead_ends") or 0) == int(sds.get("near_miss_current_primary_stops") or 0)+int(sds.get("near_miss_mature_theory_stops") or 0) and int(sds.get("near_miss_holds") or 0) == int(sds.get("near_miss_support_holds") or 0)+int(sds.get("near_miss_terminal_support_holds") or 0) and int(sds.get("shadow_closed_basins") or 0) == int(sds.get("problem_novelty_stops") or 0)+scientific_layer_total and int(sds.get("shadow_dead_end_objects") or 0) == int(sds.get("core_principle_dead_ends") or 0) == int(sds.get("core_principle_stops") or 0) and int(sds.get("broader_core_principle_falsifications") or 0) == 0, f"near-miss/canonical-failure-layer/search-closure/dead-end/HOLD accounting is inconsistent: {sds}")
         closed_rows=(ideas["currentShadowSearch"].get("closed_rows") or [])
         expected_closed=int(sds.get("shadow_closed_basins") or 0)
-        require(1 <= ideas["closedAuditPanels"] <= 7 and ideas["closedAuditRows"] == expected_closed and len(closed_rows) == expected_closed, f"category-grouped closed-basin audit is incomplete: panels={ideas['closedAuditPanels']} rows={ideas['closedAuditRows']} state={len(closed_rows)} expected={expected_closed}")
+        require(1 <= ideas["closedAuditPanels"] <= 7 and ideas["canonicalClosedArchives"] == ideas["openCanonicalClosedArchives"] == 5 and ideas["closedAuditRows"] == expected_closed and len(closed_rows) == expected_closed, f"category-grouped closed-basin audit must be complete and expanded: panels={ideas['closedAuditPanels']} open={ideas['openCanonicalClosedArchives']}/{ideas['canonicalClosedArchives']} rows={ideas['closedAuditRows']} state={len(closed_rows)} expected={expected_closed}")
         require(ideas["closedAuditReasonsAllZh"] and ideas["closedAuditReopensAllZh"], "all 41 closed-candidate stop reasons and reopen conditions must render in Chinese")
         require((ideas["statusOuterTracks"],ideas["statusCopyTracks"],ideas["statusMetricTracks"],ideas["statusMetricCount"]) == (1,2,5,10), f"current research status must render as title/message row plus full-width five-column metrics row: {ideas['statusOuterTracks']}/{ideas['statusCopyTracks']}/{ideas['statusMetricTracks']}/{ideas['statusMetricCount']}")
         pa01_closed=next((row for row in closed_rows if row.get("candidate_id")=="PA-01-EVIDENCE-ECHO"),{})
@@ -515,8 +524,8 @@ def main() -> None:
             "仅诊断（DIAGNOSTIC ONLY）",
             "停止 PF-1 独立论文",
             "通过正式问题检查的新研究问题",
-            "先分清对象层级",
-            "终态主体",
+            "先看全量研究对象",
+            "终态子账本",
             "A–G",
             "局部反例记忆修复",
         )
