@@ -30,7 +30,7 @@ const pageId = document.body.dataset.page || "home";
 const NAVIGATION_TYPE = performance.getEntriesByType?.("navigation")?.[0]?.type || "navigate";
 if (pageId === "paper-ideas" && "scrollRestoration" in history) history.scrollRestoration = "manual";
 const initialQuery = new URLSearchParams(location.search);
-let language = localStorage.getItem("agent-evolution-language") || "en";
+let language = localStorage.getItem("agent-evolution-language") || (pageId === "research-timeline" ? "zh" : "en");
 let catalog = [];
 let activeFilter = initialQuery.get("method") || "all";
 let activeYear = initialQuery.get("year") || "all";
