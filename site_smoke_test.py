@@ -347,7 +347,7 @@ def main() -> None:
     concrete_markers = (
         "PARENT_SIMPLE_COMPARISONS_ZH", "SUPPLEMENTAL_SIMPLE_COMPARISONS_ZH",
         "我们的方法怎么做", "简单方法怎么做", "怎么保证比较公平", "效果差多少",
-        "简单方法 +20 个百分点", "少 35 cells（47.9%）", "简单规则少 16",
+        "简单方法 +20 个百分点", "少 35 个（47.9%）", "简单规则少 16", "二元稀疏组测试",
         "简单方法 +66.67 个百分点", "简单规则少 24 次（45.3%）",
     )
     if not all(marker in idea_app_text for marker in concrete_markers):
