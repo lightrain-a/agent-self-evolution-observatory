@@ -162,6 +162,32 @@ class ResearchMemoryGraphV2Test(unittest.TestCase):
         self.assertFalse(proposed["canonical_claim_ledger_entry"])
         self.assertFalse(proposed["trace_complete"])
 
+    def test_api_memory_candidate_is_provenance_only_and_blocked(self):
+        graph = _graph(api_research_memory={
+            "scientific_authority": False,
+            "graph_projection": {
+                "scientific_authority": False,
+                "candidates": [{
+                    "candidate_id": "API-C1",
+                    "title": "API candidate",
+                    "status": "READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT",
+                    "scientific_object": "memory-retrieval",
+                    "problem_contract": "bounded preflight only",
+                    "provenance": {"provenance_status": "API_RESEARCH_MEMORY_BOUND"},
+                    "scientific_authority": False,
+                }],
+            },
+        })
+        self.assertEqual(graph["lint"]["status"], "PASS")
+        candidate = next(
+            row for row in graph["overlay_nodes"]
+            if row["id"] == "candidate:API-C1"
+        )
+        self.assertEqual(candidate["source"], "api_research_memory")
+        self.assertTrue(candidate["downstream_authorization_blocked"])
+        self.assertFalse(candidate["scientific_authority"])
+        self.assertEqual(graph["summary"]["api_memory_candidate_nodes"], 1)
+
     def test_closure_propagates_only_on_exact_three_key_scope(self):
         graph = _graph()
         propagation = [edge for edge in graph["overlay_edges"] if edge["relation"] == "propagates_closure"]

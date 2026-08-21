@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from .candidate_identity import validate_candidate_identity
+from .api_research_memory import build_api_research_memory_state
 from .config import PROJECT_ROOT, StorageSettings, resolve_experiment_data_root
 from .asset_first_stri_public_status import build_asset_first_stri_public_status, validate_asset_first_stri_public_status
 from .asset_first_stri_paper_quality import write_asset_first_stri_paper_quality
@@ -570,6 +571,7 @@ def build_research_system_state() -> dict[str, Any]:
         generator_state=paper_first_problem_generator,
         claim_ledger=claim_ledger,
     )
+    api_research_memory = build_api_research_memory_state(storage=storage)
     scientific_research_graph = build_scientific_research_graph(
         evidence_graph=evidence_graph,
         candidate_portfolio=research_candidate_portfolio,
@@ -581,6 +583,7 @@ def build_research_system_state() -> dict[str, Any]:
         experiment_iteration=experiment_iteration,
         governance_layer=aris_governance_layer,
         incubation_portfolio=paper_first_fresh_phenomenon_portfolio,
+        api_research_memory=api_research_memory,
     )
     experiment_value_scheduler = build_experiment_value_scheduler(experiment_iteration, scientific_meta_trace)
     research_system_replay = build_research_system_replay(pre_experiment_compiler)
@@ -1089,6 +1092,7 @@ def build_research_system_state() -> dict[str, Any]:
         "principle_layer":principle_layer,
         "scientific_meta_trace":scientific_meta_trace,
         "scientific_research_graph":scientific_research_graph,
+        "api_research_memory":api_research_memory,
         "research_memory_wiki":research_memory_wiki,
         "failure_asset_library":failure_asset_library,
         "experiment_value_scheduler":experiment_value_scheduler,
@@ -2068,6 +2072,8 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if memory_wiki.get("status")!="MEMORY_COMPILED" or memory_wiki.get("scientific_authority") is not False or int((memory_lint.get("summary") or {}).get("errors") or 0)!=0: errors.append("research memory wiki must compile with zero lint errors and zero scientific authority")
     if memory_policy.get("wiki_is_compiled_from_canonical_artifacts_not_a_second_source_of_truth") is not True or memory_policy.get("transient_operational_noise_is_not_prompt_eligible") is not True or memory_policy.get("query_pack_never_relaxes_downstream_gates") is not True: errors.append("research memory wiki must remain a derived zero-authority query-pack layer")
     if int(memory_summary.get("search_closures") or 0)+int(memory_summary.get("scientific_closures") or 0)!=len((((state.get("paper_first_search_portfolio_design_adjudication") or {}).get("shadow_search_memory") or {}).get("closed_objects") or [])): errors.append("research memory closure accounting must match canonical shadow search memory")
+    api_memory=state.get("api_research_memory") or {};api_memory_policy=api_memory.get("policy") or {};api_memory_summary=api_memory.get("summary") or {}
+    if api_memory.get("status")=="API_RESEARCH_MEMORY_READY" and (api_memory.get("scientific_authority") is not False or api_memory_policy.get("append_only_event_log") is not True or api_memory_policy.get("raw_output_archived_before_parse") is not True or api_memory_policy.get("api_output_cannot_authorize_problem_gate_paper_method_experiment_p0_or_gpu") is not True): errors.append("API research memory must remain append-only, archive-before-parse, and zero scientific authority")
     if not state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"]: errors.append("experiment value scheduler must remain advisory")
     if state["research_system_replay"]["summary"].get("failed") != 0: errors.append("research-system replay benchmark has failing epistemic cases")
     if not state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"]: errors.append("external system designs require a local gap test before adoption")
@@ -2075,6 +2081,7 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     portfolio = state.get("research_candidate_portfolio") or {}; portfolio_summary = portfolio.get("summary") or {}; portfolio_policy = portfolio.get("policy") or {}
     funnel = state.get("search_funnel_telemetry") or {}; funnel_policy = funnel.get("policy") or {}
     research_graph = state.get("scientific_research_graph") or {}; research_graph_policy = research_graph.get("policy") or {}; research_graph_summary = research_graph.get("summary") or {}
+    if api_memory.get("status")=="API_RESEARCH_MEMORY_READY" and int(research_graph_summary.get("api_memory_candidate_nodes") or 0)!=int(api_memory_summary.get("preflight_candidates") or 0): errors.append("API research memory preflight projection must bind every candidate without promotion")
     if harness.get("status") != "PASS_HARNESS_ASSURANCE" or int(harness_summary.get("failed") or 0) != 0 or int(harness_summary.get("passed") or 0) != int(harness_summary.get("checks") or 0): errors.append("research harness assurance must pass every fan-out/jury/executor/claim/telemetry invariant")
     if portfolio.get("scientific_authority") is not False or portfolio_policy.get("portfolio_cannot_promote_candidate_stage") is not True or portfolio_policy.get("soft_capacity_targets_do_not_relax_scientific_thresholds") is not True or int(portfolio_summary.get("visible_candidates") or 0) != len(portfolio.get("rows") or []) or int(portfolio_summary.get("automatic_promotions") or 0) != 0: errors.append("persistent candidate portfolio must remain zero-authority capacity/persistence control")
     if funnel.get("scientific_authority") is not False or funnel_policy.get("typed_reduction_or_support_holds_must_not_be_reported_as_idea_generation_failure") is not True or funnel_policy.get("telemetry_cannot_authorize_provider_calls_problem_gate_method_experiment_p0_or_gpu") is not True: errors.append("search-funnel telemetry must remain zero-authority and preserve typed bottleneck semantics")

@@ -37,6 +37,8 @@ POLICY: dict[str, Any] = {
     "incubation_portfolio_is_zero_authority_search_memory": True,
     "incubation_claims_are_proposals_not_canonical_claim_ledger_entries": True,
     "incubation_support_hold_blocks_method_experiment_and_paper_authority": True,
+    "api_research_memory_is_provenance_not_scientific_truth": True,
+    "api_memory_candidates_remain_downstream_authorization_blocked": True,
 }
 
 
@@ -196,6 +198,7 @@ def build_scientific_research_graph(
     experiment_iteration: dict[str, Any] | None = None,
     governance_layer: dict[str, Any] | None = None,
     incubation_portfolio: dict[str, Any] | None = None,
+    api_research_memory: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Compile a typed, read-only overlay over canonical scientific artifacts."""
     research_memory_wiki = research_memory_wiki or {}
@@ -203,6 +206,7 @@ def build_scientific_research_graph(
     experiment_iteration = experiment_iteration or {}
     governance_layer = governance_layer or {}
     incubation_portfolio = incubation_portfolio or {}
+    api_research_memory = api_research_memory or {}
     failure_governance = {
         (_text(row.get("idea_id")), _text(row.get("signature"))): row
         for row in governance_layer.get("failure_authority_records") or []
@@ -259,6 +263,10 @@ def build_scientific_research_graph(
         (row, "fresh_phenomenon_portfolio")
         for row in incubation_portfolio.get("candidates") or []
         if isinstance(row, dict)
+    ] + [
+        (row, "api_research_memory")
+        for row in (api_research_memory.get("graph_projection") or {}).get("candidates") or []
+        if isinstance(row, dict)
     ]
     for row, row_source in candidate_rows:
         cid = _text(row.get("candidate_id"))
@@ -275,7 +283,7 @@ def build_scientific_research_graph(
             "provenance_status": _text(lineage_record.get("provenance_status"))
             or _text((row.get("provenance") or {}).get("provenance_status")),
             "downstream_authorization_blocked": lineage_record.get("downstream_authorization_blocked") is True
-            or row_source == "fresh_phenomenon_portfolio",
+            or row_source in {"fresh_phenomenon_portfolio", "api_research_memory"},
             "source": row_source,
         })
         idea_id = ensure_idea(cid, row_source)
@@ -648,6 +656,10 @@ def build_scientific_research_graph(
             "new_overlay_nodes": len({node_id for node_id in overlay_nodes if node_id not in base_ids}),
             "overlay_edges": len(overlay_edges),
             "candidate_nodes": overlay_kinds.get("candidate_problem", 0),
+            "api_memory_candidate_nodes": sum(
+                row.get("kind") == "candidate_problem" and row.get("source") == "api_research_memory"
+                for row in overlay_nodes.values()
+            ),
             "phenomenon_nodes": overlay_kinds.get("phenomenon", 0),
             "problem_contract_nodes": overlay_kinds.get("problem_contract", 0),
             "claim_nodes": unified_kinds.get("claim", 0),

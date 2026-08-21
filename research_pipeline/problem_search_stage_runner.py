@@ -6,6 +6,7 @@ from pathlib import Path
 
 from .ark_provider import extract_json_object
 from .config import PROJECT_ROOT
+from .api_research_memory import record_provider_failure, record_raw_api_output
 from .dead_end_failure_layers import normalize_closed_row
 from .paper_first_problem_discovery_contract import SEARCH_PORTFOLIO_PRIMITIVES, audit_problem_candidate, audit_shadow_problem_candidate
 from .paper_first_problem_generator import _ark,_apply_reviews,_normalize
@@ -110,8 +111,11 @@ def _review_generator_receipts(run_root:Path,selected:list[dict],control_sha:str
     return receipts,"|".join(resolved_models)
 
 
-def _archive_raw_before_parse(run_root:Path,stem:str,raw:str,resolved_model:str)->tuple[str,Path]:
-    sha=hashlib.sha256(raw.encode()).hexdigest();raw_root=run_root/"raw";raw_root.mkdir(parents=True,exist_ok=True);path=raw_root/f"{stem}-{sha[:12]}.txt";path.write_text(raw,encoding="utf-8");return sha,path
+def _archive_raw_before_parse(run_root:Path,stem:str,raw:str,resolved_model:str,provider_response:dict|None=None,requested_model:str="")->tuple[str,Path]:
+    sha=hashlib.sha256(raw.encode()).hexdigest();raw_root=run_root/"raw";raw_root.mkdir(parents=True,exist_ok=True);path=raw_root/f"{stem}-{sha[:12]}.txt";path.write_text(raw,encoding="utf-8")
+    attempts=[row for row in (provider_response or {}).get("transport_attempts") or [] if isinstance(row,dict)];attempt=attempts[-1] if attempts else {}
+    record_raw_api_output(run_root=run_root,stage=stem,raw_path=path,resolved_model=resolved_model,requested_model=str(requested_model or attempt.get("requested_model") or ""),request_fingerprint=str(attempt.get("request_fingerprint") or ""),prompt_sha256=str(attempt.get("prompt_sha256") or ""))
+    return sha,path
 
 
 def _repair_truncated_optional_notes(raw:str,scientific_fields:tuple[str,...])->tuple[dict|None,str,int]:
@@ -148,8 +152,8 @@ def _repair_truncated_expansion_notes(raw:str)->tuple[dict|None,str,int]:
     return _repair_truncated_optional_notes(raw,("seeds",))
 
 
-def _parse_archived_json(run_root:Path,stem:str,raw:str,resolved_model:str)->tuple[dict,str]:
-    sha,_=_archive_raw_before_parse(run_root,stem,raw,resolved_model)
+def _parse_archived_json(run_root:Path,stem:str,raw:str,resolved_model:str,provider_response:dict|None=None,requested_model:str="")->tuple[dict,str]:
+    sha,_=_archive_raw_before_parse(run_root,stem,raw,resolved_model,provider_response,requested_model)
     try:return extract_json_object(raw),sha
     except Exception as error:
         repair=None;scientific_fields=[]
@@ -189,8 +193,8 @@ def _repair_array_delimiter_colons(raw:str)->tuple[str,int]:
     return ''.join(chars),repairs
 
 
-def _parse_archived_evidence_design_json(run_root:Path,stem:str,raw:str,resolved_model:str)->tuple[dict,str]:
-    sha,_=_archive_raw_before_parse(run_root,stem,raw,resolved_model)
+def _parse_archived_evidence_design_json(run_root:Path,stem:str,raw:str,resolved_model:str,provider_response:dict|None=None,requested_model:str="")->tuple[dict,str]:
+    sha,_=_archive_raw_before_parse(run_root,stem,raw,resolved_model,provider_response,requested_model)
     try:return extract_json_object(raw),sha
     except Exception as first_error:
         repaired,count=_repair_array_delimiter_colons(raw)
@@ -214,6 +218,7 @@ def _ark_with_provider_receipt(*,run_root:Path,stem:str,requested_model:str,cont
         payload={"schema_version":"1.0","generated_at":datetime.now(timezone.utc).replace(microsecond=0).isoformat(),"stage":stem,"status":"PROVIDER_TIMEOUT_ZERO_AUTHORITY" if timeout else "PROVIDER_ERROR_ZERO_AUTHORITY","requested_model":requested_model,"complete_response_received":False,"raw_sha256":"","error_fingerprint":fingerprint,"error":message,"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
         if isinstance(context,dict):payload.update({k:v for k,v in context.items() if k in {"lane","part","generation","branch_ids","candidate_ids","requested","requested_children","control_snapshot_sha256"}})
         run_root.mkdir(parents=True,exist_ok=True);(run_root/f"error-{stem}-provider-{fingerprint[:12]}.json").write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+        record_provider_failure(run_root=run_root,stage=stem,payload=payload)
         raise
 
 def _provider_success_metadata(*,run_root:Path,stem:str,response:dict)->dict:
@@ -400,7 +405,7 @@ def _compile_expansion_raw(*,pool:Path|None,run_root:Path,lane:str,count:int,par
     lane=lane.strip().upper()
     if lane not in SEARCH_PORTFOLIO_PRIMITIVES:raise ValueError(f"unknown search primitive {lane}")
     memory=_shadow_search_memory(memory_path);effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};fresh_target=_fresh_phenomenon_target(records,part,dead_end_memory=memory) if lane=="UNEXPLAINED_BOUNDARY" else {};fresh_target_id=str(fresh_target.get("phenomenon_id") or "")
-    parsed,raw_sha=_parse_archived_json(run_root,f"expand-{lane}-p{part}",raw,resolved_model)
+    parsed,raw_sha=_parse_archived_json(run_root,f"expand-{lane}-p{part}",raw,resolved_model,provider_response={"transport_attempts":list((provider_metadata or {}).get("transport_attempts") or [])},requested_model=requested_model)
     pool_sha=str(payload.get("frozen_pool_sha256") or "").strip();seeds=[];search_closure_blocks=[]
     for i,item in enumerate(parsed.get("seeds") or [],1):
         if not isinstance(item,dict):continue
@@ -487,7 +492,7 @@ def evolve(*,pool:Path|None,run_root:Path,generation:int,part:int,batch_size:int
     else:raise ValueError("generation must be 1 or 2")
     start=(part-1)*batch_size;batch=parents[start:start+batch_size]
     if not batch:raise ValueError(f"empty evolution batch generation={generation} part={part}")
-    temperature=.60 if generation==1 else .35;prompt=_evolution_prompt(batch,generation)+" SHADOW SEARCH-CLOSURE MEMORY (search control only; never scientific authority)="+json.dumps(memory,ensure_ascii=False,separators=(",",":"));res=_ark_with_provider_receipt(run_root=run_root,stem=f"evolve-g{generation}-p{part}",requested_model=model,context={"generation":generation,"part":part,"requested_children":len(batch),"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=temperature);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"evolve-g{generation}-p{part}",raw,resolved);pmap={p["seed_id"]:p for p in batch};children=[];search_closure_blocks=[]
+    temperature=.60 if generation==1 else .35;prompt=_evolution_prompt(batch,generation)+" SHADOW SEARCH-CLOSURE MEMORY (search control only; never scientific authority)="+json.dumps(memory,ensure_ascii=False,separators=(",",":"));res=_ark_with_provider_receipt(run_root=run_root,stem=f"evolve-g{generation}-p{part}",requested_model=model,context={"generation":generation,"part":part,"requested_children":len(batch),"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=temperature);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"evolve-g{generation}-p{part}",raw,resolved,provider_response=res,requested_model=model);pmap={p["seed_id"]:p for p in batch};children=[];search_closure_blocks=[]
     for i,item in enumerate(payload.get("children") or [],1):
         if not isinstance(item,dict):continue
         parent=pmap.get(str(item.get("parent_id") or ""))
@@ -538,7 +543,7 @@ def formulate(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,budget:in
     pool=_require_resolved_pool(run_root,pool);memory_path=_resolve_run_memory(run_root,memory_path);control_sha=_assert_run_control(run_root,pool,memory_path)
     pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];memory=_shadow_search_memory(memory_path);effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();branches=formulation_pool(run_root,budget,control_sha);start=(part-1)*batch_size;batch=branches[start:start+batch_size]
     if not batch:raise ValueError(f"empty formulation batch part={part}")
-    prompt=_formulation_prompt(batch,registry,memory);res=_ark_with_provider_receipt(run_root=run_root,stem=f"formulate-p{part}",requested_model=model,context={"part":part,"branch_ids":[b["seed_id"] for b in batch],"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5600,temperature=.15);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);provider_metadata=_provider_success_metadata(run_root=run_root,stem=f"formulate-p{part}",response=res);payload,raw_sha=_parse_archived_json(run_root,f"formulate-p{part}",raw,resolved);live=[x for x in (payload.get("candidates") or []) if isinstance(x,dict)];dead=[x for x in (payload.get("rejected") or []) if isinstance(x,dict)]
+    prompt=_formulation_prompt(batch,registry,memory);res=_ark_with_provider_receipt(run_root=run_root,stem=f"formulate-p{part}",requested_model=model,context={"part":part,"branch_ids":[b["seed_id"] for b in batch],"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5600,temperature=.15);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);provider_metadata=_provider_success_metadata(run_root=run_root,stem=f"formulate-p{part}",response=res);payload,raw_sha=_parse_archived_json(run_root,f"formulate-p{part}",raw,resolved,provider_response=res,requested_model=model);live=[x for x in (payload.get("candidates") or []) if isinstance(x,dict)];dead=[x for x in (payload.get("rejected") or []) if isinstance(x,dict)]
     # Preserve branch provenance and typed evidence deterministically. The model
     # may sharpen claims but cannot silently change the source refs or lane. A
     # deterministic precheck then separates machine-ready problems from exact-
@@ -642,7 +647,7 @@ def evidence_design(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,mod
     if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
     memory_pack=_evidence_memory_pack(plan);prompt,candidate_ids=evidence_design_prompt(plan,part=part,batch_size=batch_size,research_memory_query_pack=memory_pack)
     res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-design-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha,"research_memory_query_pack_sha256":memory_pack.get("query_pack_sha256"),"research_memory_selected_ids":memory_pack.get("selected_memory_ids") or []},prompt=prompt,max_output_tokens=5200,temperature=0.0)
-    raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_evidence_design_json(run_root,f"evidence-design-p{part}",raw,resolved)
+    raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_evidence_design_json(run_root,f"evidence-design-p{part}",raw,resolved,provider_response=res,requested_model=model)
     state=compile_evidence_designs(plan,payload,part=part,design_model=resolved);state["control_snapshot_sha256"]=control_sha;_record_memory_receipt(state,stage="evidence-design",part=part,pack=memory_pack);plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":candidate_ids,"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"research_memory_query_pack_sha256":memory_pack.get("query_pack_sha256"),"research_memory_selected_ids":memory_pack.get("selected_memory_ids") or [],"designs":payload.get("designs") or [],"plan_summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
     (run_root/f"evidence-design-p{part}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
@@ -654,7 +659,7 @@ def evidence_operationalization_recompile(*,run_root:Path,part:int,batch_size:in
     control_sha=_assert_run_control(run_root);plan_path=run_root/EVIDENCE_PLAN_FILENAME;plan=json.loads(plan_path.read_text(encoding="utf-8"))
     if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
     memory_pack=_evidence_memory_pack(plan);prompt,candidate_ids=operationalization_recompile_prompt(plan,part=part,batch_size=batch_size,research_memory_query_pack=memory_pack);res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-recompile-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha,"research_memory_query_pack_sha256":memory_pack.get("query_pack_sha256"),"research_memory_selected_ids":memory_pack.get("selected_memory_ids") or []},prompt=prompt,max_output_tokens=5600,temperature=0.0)
-    raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_evidence_design_json(run_root,f"evidence-recompile-p{part}",raw,resolved);state=compile_operationalization_recompiles(plan,payload,part=part,recompiler_model=resolved);state["control_snapshot_sha256"]=control_sha;_record_memory_receipt(state,stage="evidence-recompile",part=part,pack=memory_pack);plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_evidence_design_json(run_root,f"evidence-recompile-p{part}",raw,resolved,provider_response=res,requested_model=model);state=compile_operationalization_recompiles(plan,payload,part=part,recompiler_model=resolved);state["control_snapshot_sha256"]=control_sha;_record_memory_receipt(state,stage="evidence-recompile",part=part,pack=memory_pack);plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":candidate_ids,"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"research_memory_query_pack_sha256":memory_pack.get("query_pack_sha256"),"research_memory_selected_ids":memory_pack.get("selected_memory_ids") or [],"recompiles":payload.get("recompiles") or [],"plan_summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
     (run_root/f"evidence-recompile-p{part}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return {"part":part,"candidate_ids":candidate_ids,"resolved_model":resolved,"raw_sha256":sha,"summary":state.get("summary") or {},"scientific_authority":False}
 
@@ -664,7 +669,7 @@ def evidence_contract_review(*,run_root:Path,part:int,batch_size:int=2,model:str
     control_sha=_assert_run_control(run_root);plan_path=run_root/EVIDENCE_PLAN_FILENAME;plan=json.loads(plan_path.read_text(encoding="utf-8"))
     if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
     prompt,candidate_ids=evidence_review_prompt(plan,part=part,batch_size=batch_size);res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-review-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=4200,temperature=0.0)
-    raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_evidence_design_json(run_root,f"evidence-review-p{part}",raw,resolved);state=compile_evidence_reviews(plan,payload,part=part,reviewer_model=resolved);state["control_snapshot_sha256"]=control_sha;plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_evidence_design_json(run_root,f"evidence-review-p{part}",raw,resolved,provider_response=res,requested_model=model);state=compile_evidence_reviews(plan,payload,part=part,reviewer_model=resolved);state["control_snapshot_sha256"]=control_sha;plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":candidate_ids,"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"reviews":payload.get("reviews") or [],"plan_summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
     (run_root/f"evidence-review-p{part}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return {"part":part,"candidate_ids":candidate_ids,"resolved_model":resolved,"raw_sha256":sha,"summary":state.get("summary") or {},"scientific_authority":False}
 
@@ -707,7 +712,7 @@ def review(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,model:str=PR
     audit_path=run_root/"machine-audit.json";audit=json.loads(audit_path.read_text(encoding="utf-8"));_require_artifact_control(audit,control_sha,audit_path,"1.3-shadow");rows=audit.get("reviewable") or [];start=(part-1)*batch_size;selected=rows[start:start+batch_size]
     if not selected:raise ValueError(f"empty review batch part={part}")
     generator_receipts,generator_resolved=_review_generator_receipts(run_root,selected,control_sha)
-    candidates=[dict(row["candidate"]) for row in selected];prompt=reviewer_prompt(candidates,registry,shadow_mode=True);res=_ark_with_provider_receipt(run_root=run_root,stem=f"review-p{part}",requested_model=model,context={"part":part,"candidate_ids":[c["candidate_id"] for c in candidates],"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=0.0);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_json(run_root,f"review-p{part}",raw,resolved)
+    candidates=[dict(row["candidate"]) for row in selected];prompt=reviewer_prompt(candidates,registry,shadow_mode=True);res=_ark_with_provider_receipt(run_root=run_root,stem=f"review-p{part}",requested_model=model,context={"part":part,"candidate_ids":[c["candidate_id"] for c in candidates],"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=0.0);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_json(run_root,f"review-p{part}",raw,resolved,provider_response=res,requested_model=model)
     _apply_reviews(candidates,payload,model,resolved,generator_resolved,sha,registry)
     out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":[c["candidate_id"] for c in candidates],"requested_model":model,"resolved_model":resolved,"generator_resolved_model":generator_resolved,"generator_receipts":generator_receipts,"raw_sha256":sha,"raw_archived_before_parse":True,"candidates":candidates,"scientific_authority":False}
     (run_root/f"review-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
