@@ -9,6 +9,7 @@ from .paper_first_evidence_acquisition import (
     compile_evidence_reviews,
     compile_harness_implementation_receipts,
     compile_harness_runtime_invalidations,
+    compile_harness_runtime_repair_receipts,
     compile_operationalization_recompiles,
     compile_substrate_preflight,
     evidence_design_prompt,
@@ -134,6 +135,31 @@ class EvidenceAcquisitionTest(unittest.TestCase):
         self.assertFalse(row["execution_authorized"])
         self.assertEqual(row["harness_runtime_invalidation"]["remaining_model_call_budget"],256)
         self.assertEqual(validate_evidence_plan(invalid),[])
+
+    def test_runtime_held_harness_can_reopen_only_with_bound_protocol_repair(self):
+        plan=build_provisional_evidence_plan(machine(1));entry=plan["entries"][0]
+        state=clear_review(compile_evidence_designs(plan,{"designs":[design_for(entry)]}));row=state["entries"][0]
+        preflight={"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"disposition":"MINIMAL_HARNESS_IMPLEMENTATION_READY","reason":"bounded adapter is implementable","inventory_summary":"pinned substrate is available","harness_plan_sha256":"e"*64,"implementation_scope":"implement frozen adapter only","budget_feasible":True}]}
+        pending=compile_substrate_preflight(state,preflight);row=pending["entries"][0]
+        passed=compile_harness_implementation_receipts(pending,{"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"harness_manifest_sha256":"a"*64,"implementation_summary":"initial harness probe passed","sandboxed":True,"probe_passed":True,"budget_feasible":True}]});row=passed["entries"][0]
+        invalid=compile_harness_runtime_invalidations(passed,{"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"harness_manifest_sha256":"a"*64,"failure_manifest_sha256":"b"*64,"failure_class":"protocol","reason":"function transport failed before scientific outcome","reopen_condition":"archive full response and add protocol-only fallback","provider_calls_charged":10,"remaining_model_call_budget":150}]});row=invalid["entries"][0]
+        repair={"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"failure_manifest_sha256":"b"*64,"replaces_harness_manifest_sha256":"a"*64,"replacement_harness_plan_sha256":"c"*64,"harness_manifest_sha256":"d"*64,"implementation_summary":"v2 archives full response and adds preregistered protocol fallback","sandboxed":True,"probe_passed":True,"budget_feasible":True,"scientific_object_unchanged":True,"protocol_only_change":True,"replacement_provider_call_cap":100}]}
+        reopened=compile_harness_runtime_repair_receipts(invalid,repair);row=reopened["entries"][0]
+        self.assertEqual(row["status"],"READY_FOR_BOUNDED_EVIDENCE_ACQUISITION");self.assertTrue(row["execution_authorized"])
+        self.assertEqual(row["prior_harness_implementation"]["harness_manifest_sha256"],"a"*64)
+        self.assertEqual(row["harness_implementation"]["harness_manifest_sha256"],"d"*64)
+        self.assertEqual(row["harness_runtime_repair"]["provider_calls_already_charged"],10)
+        self.assertEqual(row["harness_runtime_repair"]["replacement_provider_call_cap"],100)
+        self.assertEqual(validate_evidence_plan(reopened),[])
+
+    def test_runtime_repair_rejects_budget_larger_than_remaining(self):
+        plan=build_provisional_evidence_plan(machine(1));entry=plan["entries"][0]
+        state=clear_review(compile_evidence_designs(plan,{"designs":[design_for(entry)]}));row=state["entries"][0]
+        pending=compile_substrate_preflight(state,{"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"disposition":"MINIMAL_HARNESS_IMPLEMENTATION_READY","reason":"adapter","inventory_summary":"inventory","harness_plan_sha256":"e"*64,"implementation_scope":"scope","budget_feasible":True}]});row=pending["entries"][0]
+        passed=compile_harness_implementation_receipts(pending,{"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"harness_manifest_sha256":"a"*64,"implementation_summary":"initial","sandboxed":True,"probe_passed":True,"budget_feasible":True}]});row=passed["entries"][0]
+        invalid=compile_harness_runtime_invalidations(passed,{"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"harness_manifest_sha256":"a"*64,"failure_manifest_sha256":"b"*64,"failure_class":"protocol","reason":"failure","reopen_condition":"repair","provider_calls_charged":250,"remaining_model_call_budget":6}]});row=invalid["entries"][0]
+        with self.assertRaisesRegex(ValueError,"runtime repair budget invalid"):
+            compile_harness_runtime_repair_receipts(invalid,{"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"failure_manifest_sha256":"b"*64,"replaces_harness_manifest_sha256":"a"*64,"replacement_harness_plan_sha256":"c"*64,"harness_manifest_sha256":"d"*64,"implementation_summary":"repair","sandboxed":True,"probe_passed":True,"budget_feasible":True,"scientific_object_unchanged":True,"protocol_only_change":True,"replacement_provider_call_cap":7}]})
 
     def test_harness_runtime_support_failure_is_reopenable_zero_authority_hold(self):
         plan=build_provisional_evidence_plan(machine(1));entry=plan["entries"][0]

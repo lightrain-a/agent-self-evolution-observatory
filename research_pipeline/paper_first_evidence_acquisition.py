@@ -386,6 +386,30 @@ def compile_harness_runtime_invalidations(plan:dict,receipt_payload:dict)->dict:
  result=dict(plan);result.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"scientific_authority":False,"authority":dict(AUTHORITY)});result["status"]=_plan_status(entries);return result
 
 
+def compile_harness_runtime_repair_receipts(plan:dict,receipt_payload:dict)->dict:
+ entries=[dict(r) for r in plan.get("entries") or [] if isinstance(r,dict)];by={str(r.get("candidate_id") or ""):r for r in entries};seen=set()
+ for rec in [x for x in receipt_payload.get("receipts") or [] if isinstance(x,dict)]:
+  cid=str(rec.get("candidate_id") or "").strip()
+  if not cid or cid in seen:raise ValueError("harness runtime repair ids must be nonempty and unique")
+  seen.add(cid);e=by.get(cid)
+  if not e or e.get("status")!="HOLD_HARNESS_RUNTIME_SUPPORT" or e.get("execution_authorized") is not False:raise ValueError(f"no runtime-held harness to repair:{cid}")
+  if str(rec.get("contract_sha256") or "")!=str(e.get("contract_sha256") or ""):raise ValueError(f"runtime repair contract digest mismatch:{cid}")
+  invalid=e.get("harness_runtime_invalidation") or {};failure_manifest=str(invalid.get("failure_manifest_sha256") or "")
+  if str(rec.get("failure_manifest_sha256") or "")!=failure_manifest:raise ValueError(f"runtime repair failure-manifest mismatch:{cid}")
+  previous=(e.get("harness_implementation") or {}).get("harness_manifest_sha256")
+  if str(rec.get("replaces_harness_manifest_sha256") or "")!=str(previous or ""):raise ValueError(f"runtime repair previous-manifest mismatch:{cid}")
+  new_plan=str(rec.get("replacement_harness_plan_sha256") or "").strip().lower();new_manifest=str(rec.get("harness_manifest_sha256") or "").strip().lower();summary=_b(rec.get("implementation_summary"),2600)
+  if not re.fullmatch(r"[0-9a-f]{64}",new_plan) or not re.fullmatch(r"[0-9a-f]{64}",new_manifest) or not summary:raise ValueError(f"runtime repair manifest/plan incomplete:{cid}")
+  if rec.get("sandboxed") is not True or rec.get("probe_passed") is not True or rec.get("budget_feasible") is not True or rec.get("scientific_object_unchanged") is not True or rec.get("protocol_only_change") is not True:raise ValueError(f"runtime repair invariants not satisfied:{cid}")
+  prior_charged=invalid.get("provider_calls_charged");remaining=invalid.get("remaining_model_call_budget");retry_cap=rec.get("replacement_provider_call_cap")
+  if not isinstance(prior_charged,int) or prior_charged<0 or not isinstance(remaining,int) or remaining<0 or not isinstance(retry_cap,int) or retry_cap<=0 or retry_cap>remaining:raise ValueError(f"runtime repair budget invalid:{cid}")
+  e["prior_harness_implementation"]=dict(e.get("harness_implementation") or {})
+  e["harness_implementation"]={"implementation_status":"PASS","harness_manifest_sha256":new_manifest,"implementation_summary":summary,"sandboxed":True,"probe_passed":True,"budget_feasible":True,"scientific_authority":False}
+  e["harness_runtime_repair"]={"failure_manifest_sha256":failure_manifest,"replacement_harness_plan_sha256":new_plan,"replaces_harness_manifest_sha256":str(previous or ""),"replacement_harness_manifest_sha256":new_manifest,"provider_calls_already_charged":prior_charged,"remaining_model_call_budget_before_repair":remaining,"replacement_provider_call_cap":retry_cap,"scientific_object_unchanged":True,"protocol_only_change":True,"belief_authority":False,"scientific_authority":False}
+  e["execution_authorized"]=True;e["status"]="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION";e["authority"]={**dict(AUTHORITY),"bounded_evidence_acquisition":True}
+ result=dict(plan);result.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"scientific_authority":False,"authority":dict(AUTHORITY)});result["status"]=_plan_status(entries);return result
+
+
 def write_compiled_evidence_designs(*,run_root:Path,payload:dict,part:int=1,design_model:str="")->dict:
  path=run_root/PLAN_FILENAME;state=compile_evidence_designs(json.loads(path.read_text(encoding="utf-8")),payload,part=part,design_model=design_model);path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return state
 
