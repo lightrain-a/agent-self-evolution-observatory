@@ -1,0 +1,171 @@
+{
+  "schema_version": "1.0",
+  "status": "HIGH_PRECISION_SENTINEL_REPLICATION_COMPLETE",
+  "scientific_authority": false,
+  "sentinels": [
+    {
+      "task_id": 96,
+      "domain": "shopping",
+      "dynamic_object": "latest order",
+      "gold": "last order canceled / never arrives",
+      "ordinal": {
+        "pass": 6,
+        "total": 6,
+        "pass_rate": 1.0,
+        "exposed": 0,
+        "wilson95": [
+          0.609666,
+          1.0
+        ]
+      },
+      "shuffle1": {
+        "pass": 0,
+        "total": 6,
+        "pass_rate": 0.0,
+        "exposed": 6,
+        "wilson95": [
+          0.0,
+          0.390334
+        ],
+        "paired_ordinal_pass_to_shuffle_fail": 6,
+        "paired_ordinal_fail_to_shuffle_pass": 0,
+        "paired_sign_test": {
+          "one_sided_p": 0.015625,
+          "two_sided_p": 0.03125
+        }
+      },
+      "shuffle2": {
+        "pass": 0,
+        "total": 6,
+        "pass_rate": 0.0,
+        "exposed": 5,
+        "wilson95": [
+          0.0,
+          0.390334
+        ],
+        "paired_ordinal_pass_to_shuffle_fail": 6,
+        "paired_ordinal_fail_to_shuffle_pass": 0,
+        "paired_sign_test": {
+          "one_sided_p": 0.015625,
+          "two_sided_p": 0.03125
+        }
+      }
+    },
+    {
+      "task_id": 189,
+      "domain": "shopping",
+      "dynamic_object": "latest pending order",
+      "gold": "total = 754.99",
+      "ordinal": {
+        "pass": 6,
+        "total": 6,
+        "pass_rate": 1.0,
+        "exposed": 0,
+        "wilson95": [
+          0.609666,
+          1.0
+        ]
+      },
+      "shuffle1": {
+        "pass": 0,
+        "total": 6,
+        "pass_rate": 0.0,
+        "exposed": 6,
+        "wilson95": [
+          0.0,
+          0.390334
+        ],
+        "paired_ordinal_pass_to_shuffle_fail": 6,
+        "paired_ordinal_fail_to_shuffle_pass": 0,
+        "paired_sign_test": {
+          "one_sided_p": 0.015625,
+          "two_sided_p": 0.03125
+        }
+      },
+      "shuffle2": {
+        "pass": 0,
+        "total": 6,
+        "pass_rate": 0.0,
+        "exposed": 6,
+        "wilson95": [
+          0.0,
+          0.390334
+        ],
+        "paired_ordinal_pass_to_shuffle_fail": 6,
+        "paired_ordinal_fail_to_shuffle_pass": 0,
+        "paired_sign_test": {
+          "one_sided_p": 0.015625,
+          "two_sided_p": 0.03125
+        }
+      }
+    },
+    {
+      "task_id": 198,
+      "domain": "shopping_admin",
+      "dynamic_object": "most recent canceled order",
+      "gold": "customer = Lily Potter",
+      "ordinal": {
+        "pass": 6,
+        "total": 6,
+        "pass_rate": 1.0,
+        "exposed": 0,
+        "wilson95": [
+          0.609666,
+          1.0
+        ]
+      },
+      "shuffle1": {
+        "pass": 0,
+        "total": 6,
+        "pass_rate": 0.0,
+        "exposed": 6,
+        "wilson95": [
+          0.0,
+          0.390334
+        ],
+        "paired_ordinal_pass_to_shuffle_fail": 6,
+        "paired_ordinal_fail_to_shuffle_pass": 0,
+        "paired_sign_test": {
+          "one_sided_p": 0.015625,
+          "two_sided_p": 0.03125
+        }
+      },
+      "shuffle2": {
+        "pass": 0,
+        "total": 6,
+        "pass_rate": 0.0,
+        "exposed": 6,
+        "wilson95": [
+          0.0,
+          0.390334
+        ],
+        "paired_ordinal_pass_to_shuffle_fail": 6,
+        "paired_ordinal_fail_to_shuffle_pass": 0,
+        "paired_sign_test": {
+          "one_sided_p": 0.015625,
+          "two_sided_p": 0.03125
+        }
+      }
+    }
+  ],
+  "summary": {
+    "sentinel_tasks": 3,
+    "ordinal_memory_pass": 18,
+    "ordinal_memory_total": 18,
+    "ordinal_memory_pass_rate": 1.0,
+    "shuffled_memory_pass": 0,
+    "shuffled_memory_total": 36,
+    "shuffled_memory_pass_rate": 0.0,
+    "ordinal_to_shuffle_risk_difference": -1.0,
+    "all_three_sentinels_replicate_across_both_memory_methods_and_three_runs": true
+  },
+  "interpretation": "These sentinels are predefined dynamic-reference tasks whose fixed answers depend on latest/most-recent mutable backend objects. Every AWM/RBank ordinal replicate passes, while every corresponding shuffled replicate fails. This panel establishes stable order sensitivity on ground-truth-unstable tasks; it does not by itself attribute all benchmark-wide order degradation to environment carryover.",
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

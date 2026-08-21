@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-08-21 · Assertive manuscript policy and D5 paper closure
+
+- Added a manuscript assertion policy to Research OS. Unrefuted hypotheses remain active in the manuscript; missing evidence creates explicit experiment debt instead of automatic claim narrowing. Scientific evidence state remains separate from manuscript stance, so genuine counterevidence still closes a claim.
+- Added manuscript lint rules requiring one centralized Limitations section and rejecting distributed caveat language, `not ... but` / `rather than` contrast constructions, and long serial-enumeration sentences.
+- Rewrote the D5 environment-state contamination paper under the new policy. The ICLR manuscript now states the strongest evidence-compatible causal story in the main text, centralizes all missing-control and generalization debt in one Limitations section, and preserves the residual order effect as an explicit result.
+- D5 manuscript QA now binds the assertion policy to the frozen Claim Ledger. C6 is represented as `ACTIVE_UNREFUTED_HYPOTHESIS` with experiment debt for shuffled no-memory and per-task-restored reruns. The rebuilt anonymous ICLR PDF remains 9 pages and passes all 32 evidence/style/format checks.
+
 ## 2026-08-21 · Discovery-engine paper-yield benchmark
 
 - Added a zero-authority benchmark that runs seven distinct idea-birth engines on the same frozen primary-evidence and Research Memory snapshot, with identical candidate budgets, provenance checks, same-information baseline requirements, cheapest-falsifier fields, and a shared independent first-pass review rubric.

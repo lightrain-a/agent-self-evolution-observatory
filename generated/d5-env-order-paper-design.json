@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "D5-C01-ENV-ORDER-CONTAMINATION",
+  "target_venue": "ICLR 2027",
+  "working_title": "Is the Agent Fragile, or the Benchmark Stateful? Auditing Task-Order Effects in Self-Improving Web Agents",
+  "paper_type": "measurement_and_evaluation_audit",
+  "problem_statement": "Task-order stress tests for self-improving agents jointly perturb the agent's learning history and the persistent environment history of a stateful benchmark. In WebArena, earlier benchmark tasks can mutate the service state that defines later task truth, so a shuffled run can be scored against reference text tied to an earlier backend state.",
+  "closest_work": [
+    {"id": "arXiv:2608.18066", "role": "direct_target", "difference": "Reports AWM/ReasoningBank task-order fragility and attributes part of it to memory underspecification; does not separate memory-order effects from persistent WebArena environment carryover."},
+    {"id": "arXiv:2607.20531", "role": "closest_general_principle", "difference": "DynamicMCPBench argues that fixed ground truth is fragile on live stateful servers and uses effect-based scoring; it does not audit published self-improvement order experiments or quantify environment-order confounding in WebArena."},
+    {"id": "arXiv:2604.23781", "role": "stateful_benchmark_design", "difference": "ClawMark deliberately models evolving service state with deterministic post-state checkers; our work diagnoses unintended cross-task state carryover in an existing self-improvement stress test."},
+    {"id": "arXiv:2307.13854", "role": "benchmark_source", "difference": "WebArena provides executable stateful websites and task evaluators; our contribution is a longitudinal cross-task contamination audit under shuffled evaluation streams."}
+  ],
+  "novelty_claim": "We introduce the first source-grounded causal and retrospective audit, under the current literature search, showing how a published self-improving-agent task-order stress test couples memory evolution to benchmark environment evolution and quantifying the resulting change in the reported order gap.",
+  "novelty_hypothesis_status": "ACTIVE_UNREFUTED",
+  "contributions": [
+    "A causal decomposition of task-order stress testing into agent-memory history and persistent-environment history, with a machine-readable task interference audit.",
+    "A direct released-trajectory certificate: a scorer-failed task can still mutate the backend, after which a later task correctly reads current state but fails against stale fixed ground truth.",
+    "A replicated high-precision sentinel panel across AWM and ReasoningBank: three dynamic-reference tasks pass 18/18 ordinal evaluations and 0/36 shuffled evaluations.",
+    "A conservative full WebArena retrospective over 84 run-domain cells: 887 lower-bound exposed sensitive-reader units in memory shuffles, including 424 failures; state-sensitive-task exclusion reduces AWM's observed shuffle gap by 34.6-44.5% and ReasoningBank's by 14.9-17.5%, while a substantial residual remains.",
+    "A state-isolated order-stress protocol recommendation: separate agent-history randomization from environment-history randomization using per-task environment restoration or state-conditioned/effect-based evaluators, and include a shuffled no-memory control."
+  ],
+  "strongest_alternative_explanations": [
+    {"name": "memory_only_fragility", "status": "PARTIALLY_SUPPORTED", "test": "Remove state-sensitive readers and measure residual shuffle gap.", "result": "Residual remains: AWM 2.46/3.36 pp; RBank 6.48/6.11 pp."},
+    {"name": "generic_run_variance", "status": "RULED_OUT_FOR_SENTINELS", "test": "Three runs x two methods x two shuffle seeds on predefined dynamic-reference tasks.", "result": "All ordinal method-run units pass while all shuffled counterparts fail for each of three sentinels."},
+    {"name": "agent_misread_current_state", "status": "RULED_OUT_FOR_DIRECT_WITNESS", "test": "Match writer and reader released logs by item identity/order total/current status.", "result": "Task 509 produces the Cole Haan order; task 96 later reads the matching order as Pending but is scored against the old canceled-order gold."},
+    {"name": "environment_contamination_explains_everything", "status": "NOT_SUPPORTED", "test": "State-sensitive exclusion and future shuffled no-memory/per-task-reset control.", "result": "Large residual remains; shuffled no-memory/per-task-reset control is not yet executed."}
+  ],
+  "claim_experiment_matrix": [
+    {"claim_id": "C1", "claim": "Order permutation changes persistent benchmark environment history in addition to memory history.", "evidence": ["source execution code audit", "d5-order-environment-interference-audit"], "status": "SUPPORTED"},
+    {"claim_id": "C2", "claim": "Released shuffled trajectories contain direct ground-truth invalidation caused by earlier state-changing tasks.", "evidence": ["d5-order-ground-truth-invalidation"], "status": "SUPPORTED"},
+    {"claim_id": "C3", "claim": "Dynamic-reference failures replicate across memory methods, runs, and shuffle seeds.", "evidence": ["d5-order-sentinel-panel"], "status": "SUPPORTED"},
+    {"claim_id": "C4", "claim": "State-sensitive tasks account for a material fraction of the measured order gap, with the largest reduction observed for AWM. Residual order sensitivity remains after the exclusion.", "evidence": ["d5-order-contamination-retrospective"], "status": "SUPPORTED_ACTIVE"},
+    {"claim_id": "C5", "claim": "Environment carryover fully explains the original paper's task-order fragility.", "evidence": [], "status": "REFUTED_BY_RESIDUAL"},
+    {"claim_id": "C6", "claim": "A state-isolated order-stress protocol with a matched shuffled no-memory control separates memory-history sensitivity from environment-history sensitivity under the same execution stack.", "evidence": [], "status": "ACTIVE_UNREFUTED", "experiment_debt": ["matched shuffled no-memory rerun", "per-task restored environment rerun"]}
+  ],
+  "baselines": [
+    {"id": "B0", "role": "original_control", "description": "Released AWM/ReasoningBank ordinal runs."},
+    {"id": "B1", "role": "original_treatment", "description": "Released AWM/ReasoningBank shuffle1 and shuffle2 runs."},
+    {"id": "B2", "role": "same-data_sensitivity_control", "description": "Recompute order gap after excluding preregistered state-sensitive dynamic-reference readers."},
+    {"id": "B3", "role": "decisive_missing_control", "description": "No-memory agent under the same shuffle seeds and stateful execution protocol; not present in released experiments and not executable on current infrastructure without a local WebArena image."},
+    {"id": "B4", "role": "ideal_protocol_control", "description": "Per-task restored environment with identical order permutations; future validation, not needed for the narrow retrospective claim."}
+  ],
+  "main_visuals": [
+    {"id": "F1", "question": "Why is task order confounded?", "content": "Causal diagram: order -> memory history and order -> environment history -> score."},
+    {"id": "F2", "question": "Is there a direct observed failure?", "content": "Timeline of task 509 backend write -> task 96 current-state read -> stale-gold failure."},
+    {"id": "F3", "question": "Does it replicate?", "content": "Three sentinel tasks: ordinal 18/18 PASS versus shuffled 0/36 PASS across AWM/RBank."},
+    {"id": "F4", "question": "How much does it matter to aggregate conclusions?", "content": "Raw shuffle gap versus gap after state-sensitive-reader exclusion for AWM and ReasoningBank."}
+  ],
+  "limitation_section_contract": {
+    "single_section_required": true,
+    "source": "paper_drafts/d5-env-order-iclr2027/sections/06_limitations_conclusion.tex",
+    "distributed_limitation_language_forbidden": true
+  },
+  "experiment_debt": [
+    "matched shuffled no-memory rerun",
+    "per-task restored environment rerun",
+    "multi-benchmark replication"
+  ],
+  "paper_design_decision": "ADVANCE_TO_FULL_MANUSCRIPT_ACTIVE_CLAIM",
+  "scientific_authority": false,
+  "authority": {"canonical_problem_gate": false, "method": false, "new_experiment": false, "p0": false, "gpu": false}
+}

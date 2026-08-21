@@ -1,0 +1,532 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-21T10:07:25Z",
+  "status": "OBSERVED_GROUND_TRUTH_INVALIDATION_CERTIFIED",
+  "scientific_authority": false,
+  "candidate_lineage": {
+    "parent_candidate": "D5-C01",
+    "derivation_type": "child_of_falsifier_observation",
+    "child_candidate": "D5-C01-ENV-ORDER-CONTAMINATION"
+  },
+  "claim_boundary": {
+    "supported": "At least one released shuffled WebArena run contains a successful persistent environment write that changes the object denoted by a later task's fixed ground-truth answer, causing a correct read of current environment state to be scored as failure.",
+    "not_yet_supported": "Environment carryover explains the full aggregate task-order degradation reported for AWM or ReasoningBank.",
+    "decisive_missing_control": "No-memory baseline under the identical shuffle seeds 42 and 99 with the same stateful WebArena execution protocol."
+  },
+  "task96_gold": "The last order was canceled. It will never arrive.",
+  "task96_panel": [
+    {
+      "method": "wa_awm",
+      "order": "ordinal",
+      "run": "run1",
+      "task_id": 96,
+      "verdict": "PASS",
+      "score": 1.0,
+      "order_number": "",
+      "status": "Canceled",
+      "grand_total": "",
+      "item_excerpt": "",
+      "source_sha256": "98230ae4ec37e17be0160c9c565e0049cfd6b87faf2acdf9a24346ef640603b8"
+    },
+    {
+      "method": "wa_awm",
+      "order": "ordinal",
+      "run": "run2",
+      "task_id": 96,
+      "verdict": "PASS",
+      "score": 1.0,
+      "order_number": "",
+      "status": "Canceled",
+      "grand_total": "",
+      "item_excerpt": "",
+      "source_sha256": "825a948f94c0255fa4eed06635a2aa7e489078b25a1f0bce1648c05fba2cb5e8"
+    },
+    {
+      "method": "wa_awm",
+      "order": "ordinal",
+      "run": "run3",
+      "task_id": 96,
+      "verdict": "PASS",
+      "score": 1.0,
+      "order_number": "",
+      "status": "Canceled",
+      "grand_total": "365.42",
+      "item_excerpt": "",
+      "source_sha256": "41e58056e506ce1957dacffff396329418891a64fb4d63fe0092d2ac9ae3bac0"
+    },
+    {
+      "method": "wa_awm",
+      "order": "shuffle1",
+      "run": "run1",
+      "task_id": 96,
+      "verdict": "FAIL",
+      "score": 0.0,
+      "order_number": "000000197",
+      "status": "Pending",
+      "grand_total": "469.00",
+      "item_excerpt": "Cole Haan Men's Lionel Dress Chukka Boot (Size 8.5) — Qty 1 — $464.00",
+      "source_sha256": "0d8f663acf60fa4549156df8fc0b1ffe131b5fa16f62f8c5839cd9c73ae767a2"
+    },
+    {
+      "method": "wa_awm",
+      "order": "shuffle1",
+      "run": "run2",
+      "task_id": 96,
+      "verdict": "FAIL",
+      "score": 0.0,
+      "order_number": "",
+      "status": "Pending",
+      "grand_total": "469.00.",
+      "item_excerpt": "",
+      "source_sha256": "5634ceb3681c48196ba4fd332c4cd9f5649e950ea81050b09a14057cbc3a1949"
+    },
+    {
+      "method": "wa_awm",
+      "order": "shuffle1",
+      "run": "run3",
+      "task_id": 96,
+      "verdict": "FAIL",
+      "score": 0.0,
+      "order_number": "",
+      "status": "Pending",
+      "grand_total": "469.00",
+      "item_excerpt": "",
+      "source_sha256": "4b8927853172b1177a2b3d704294d891a57c5c84feb611761b7778ec9557b140"
+    },
+    {
+      "method": "wa_awm",
+      "order": "shuffle2",
+      "run": "run1",
+      "task_id": 96,
+      "verdict": "FAIL",
+      "score": 0.0,
+      "order_number": "000000198",
+      "status": "Pending",
+      "grand_total": "255.80",
+      "item_excerpt": "",
+      "source_sha256": "3cd77ef3462755ed604155b3c9cd9c593125aa0bae9811d78a982571998d9112"
+    },
+    {
+      "method": "wa_awm",
+      "order": "shuffle2",
+      "run": "run2",
+      "task_id": 96,
+      "verdict": "FAIL",
+      "score": 0.0,
+      "order_number": "000000198",
+      "status": "Pending",
+      "grand_total": "382.41",
+      "item_excerpt": "",
+      "source_sha256": "f28b2b56db2d38b072e41cd7999eb593669f74b268b5687d33d271b634ecbcad"
+    },
+    {
+      "method": "wa_awm",
+      "order": "shuffle2",
+      "run": "run3",
+      "task_id": 96,
+      "verdict": "FAIL",
+      "score": 0.0,
+      "order_number": "",
+      "status": "Pending",
+      "grand_total": "365.42",
+      "item_excerpt": "",
+      "source_sha256": "4027f3d9316ff7e9bcc94c12bc74b5f0d2f9f14db9d5a03129a1652601b63b1b"
+    },
+    {
+      "method": "wa_rbank",
+      "order": "ordinal",
+      "run": "run1",
+      "task_id": 96,
+      "verdict": "PASS",
+      "score": 1.0,
+      "order_number": "",
+      "status": "Canceled",
+      "grand_total": "365.42",
+      "item_excerpt": "",
+      "source_sha256": "f05b9546123b79d57689923ee7d98098760f05f5acc5c3e6d7ecd0551acd7e21"
+    },
+    {
+      "method": "wa_rbank",
+      "order": "ordinal",
+      "run": "run2",
+      "task_id": 96,
+      "verdict": "PASS",
+      "score": 1.0,
+      "order_number": "",
+      "status": "Canceled",
+      "grand_total": "365.42",
+      "item_excerpt": "",
+      "source_sha256": "d9ea6a5e0c821f259e88af9a4b730b52a93ae54e1d6a9965508b787678626ad7"
+    },
+    {
+      "method": "wa_rbank",
+      "order": "ordinal",
+      "run": "run3",
+      "task_id": 96,
+      "verdict": "PASS",
+      "score": 1.0,
+      "order_number": "",
+      "status": "",
+      "grand_total": "365.42.",
+      "item_excerpt": "",
+      "source_sha256": "f709a776c1e1287c76e2cbd680a28a1f9daf64ff8fcf35ba808d1530e9c306b9"
+    },
+    {
+      "method": "wa_rbank",
+      "order": "shuffle1",
+      "run": "run1",
+      "task_id": 96,
+      "verdict": "FAIL",
+      "score": 0.0,
+      "order_number": "",
+      "status": "Pending",
+      "grand_total": "",
+      "item_excerpt": "",
+      "source_sha256": "0d3c446e577ac5daec87be05dd8237c1ba917a98a149e4f049d8838aac4c0367"
+    },
+    {
+      "method": "wa_rbank",
+      "order": "shuffle1",
+      "run": "run2",
+      "task_id": 96,
+      "verdict": "FAIL",
+      "score": 0.0,
+      "order_number": "000000196",
+      "status": "Pending",
+      "grand_total": "",
+      "item_excerpt": "",
+      "source_sha256": "1b16356851c8def888780ff09ac6ce7874f15104ffc00f8e0ded1d488b37bdb7"
+    },
+    {
+      "method": "wa_rbank",
+      "order": "shuffle1",
+      "run": "run3",
+      "task_id": 96,
+      "verdict": "FAIL",
+      "score": 0.0,
+      "order_number": "000000197",
+      "status": "Pending",
+      "grand_total": "1,113.00",
+      "item_excerpt": "",
+      "source_sha256": "df98d67450c82980b5e80896ca616c098f202466e3011554e4bdf8fe597a638f"
+    },
+    {
+      "method": "wa_rbank",
+      "order": "shuffle2",
+      "run": "run1",
+      "task_id": 96,
+      "verdict": "FAIL",
+      "score": 0.0,
+      "order_number": "000000196",
+      "status": "Pending",
+      "grand_total": "",
+      "item_excerpt": "",
+      "source_sha256": "51b4abf47a964f35af3f08492af202240ce04d0228e7ffd313fdea699f381094"
+    },
+    {
+      "method": "wa_rbank",
+      "order": "shuffle2",
+      "run": "run2",
+      "task_id": 96,
+      "verdict": "FAIL",
+      "score": 0.0,
+      "order_number": "000000198",
+      "status": "Pending",
+      "grand_total": "",
+      "item_excerpt": "",
+      "source_sha256": "a52db0f1b15a1dd813d4d0579258e4b0b35a777c20b7fb7ca780e818e7f867fb"
+    },
+    {
+      "method": "wa_rbank",
+      "order": "shuffle2",
+      "run": "run3",
+      "task_id": 96,
+      "verdict": "FAIL",
+      "score": 0.0,
+      "order_number": "000000199",
+      "status": "Pending",
+      "grand_total": "",
+      "item_excerpt": "",
+      "source_sha256": "bf72ce75703e82fc44e7c5248fd8ccdaae4959192ca154b66ef717e5d1e21bab"
+    },
+    {
+      "method": "wa_baseline",
+      "order": "ordinal",
+      "run": "run1",
+      "task_id": 96,
+      "verdict": "PASS",
+      "score": 1.0,
+      "order_number": "000000170",
+      "status": "Canceled",
+      "grand_total": "365.42",
+      "item_excerpt": "",
+      "source_sha256": "19ddd7e5a3d5673251f0409a99808088ab0b219e5a87770e72d4f5553d64c190"
+    },
+    {
+      "method": "wa_baseline",
+      "order": "ordinal",
+      "run": "run2",
+      "task_id": 96,
+      "verdict": "PASS",
+      "score": 1.0,
+      "order_number": "",
+      "status": "Canceled",
+      "grand_total": "",
+      "item_excerpt": "",
+      "source_sha256": "cd0029bc101a826a5ed72e0af78b90f7410acf4db2283701b7c633cb6564e15c"
+    },
+    {
+      "method": "wa_baseline",
+      "order": "ordinal",
+      "run": "run3",
+      "task_id": 96,
+      "verdict": "PASS",
+      "score": 1.0,
+      "order_number": "",
+      "status": "Canceled",
+      "grand_total": "365.42.",
+      "item_excerpt": "",
+      "source_sha256": "d0dbc75c03808b952afd2842f726b2d4464ddf36e2108c4ff0b8c788c62bb339"
+    }
+  ],
+  "summary": {
+    "ordinal_memory_task96_pass": 6,
+    "ordinal_memory_task96_total": 6,
+    "shuffled_memory_task96_pass": 0,
+    "shuffled_memory_task96_total": 12,
+    "baseline_ordinal_task96_pass": 3,
+    "baseline_ordinal_task96_total": 3,
+    "direct_writer_reader_chain_certified": true
+  },
+  "direct_chain": {
+    "writer": {
+      "source_path": "wa_awm_shuffle1/shopping_run1/logs/509.log",
+      "task_id": 509,
+      "benchmark_verdict": "FAIL",
+      "benchmark_score": 0.0,
+      "checkout_success_observed": true,
+      "order_total": "469.00",
+      "item_excerpt": "Cole Haan Men's Lionel Dress Chukka Boot"
+    },
+    "reader": {
+      "source_path": "wa_awm_shuffle1/shopping_run1/logs/96.log",
+      "task_id": 96,
+      "benchmark_verdict": "FAIL",
+      "benchmark_score": 0.0,
+      "observed_latest_order": "000000197",
+      "observed_status": "Pending",
+      "observed_total": "469.00",
+      "observed_item_excerpt": "Cole Haan Men's Lionel Dress Chukka Boot (Size 8.5) — Qty 1 — $464.00"
+    },
+    "ordering": {
+      "ordinal": {
+        "task509_position": 142,
+        "task96_position": 11,
+        "task509_precedes_task96": false
+      },
+      "shuffle1": {
+        "task509_position": 132,
+        "task96_position": 142,
+        "task509_precedes_task96": true
+      },
+      "shuffle2": {
+        "task509_position": 149,
+        "task96_position": 117,
+        "task509_precedes_task96": false
+      }
+    },
+    "same_order_total": true,
+    "same_item_identity": true,
+    "interpretation": "Task 509 reaches checkout success and mutates the shopping backend even though its benchmark verdict is FAIL. Task 96 later queries the latest order and reads the matching newly-created Cole Haan order as Pending, while its static gold remains the pre-run canceled order."
+  },
+  "source_receipts": [
+    {
+      "path": "wa_awm_ordinal/shopping_run1/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_awm_ordinal/shopping_run1/logs/96.log",
+      "sha256": "98230ae4ec37e17be0160c9c565e0049cfd6b87faf2acdf9a24346ef640603b8",
+      "bytes": 10997,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_awm_ordinal/shopping_run2/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_awm_ordinal/shopping_run2/logs/96.log",
+      "sha256": "825a948f94c0255fa4eed06635a2aa7e489078b25a1f0bce1648c05fba2cb5e8",
+      "bytes": 9821,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_awm_ordinal/shopping_run3/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_awm_ordinal/shopping_run3/logs/96.log",
+      "sha256": "41e58056e506ce1957dacffff396329418891a64fb4d63fe0092d2ac9ae3bac0",
+      "bytes": 10530,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_awm_shuffle1/shopping_run1/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_awm_shuffle1/shopping_run1/logs/96.log",
+      "sha256": "0d8f663acf60fa4549156df8fc0b1ffe131b5fa16f62f8c5839cd9c73ae767a2",
+      "bytes": 7928,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_awm_shuffle1/shopping_run2/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_awm_shuffle1/shopping_run2/logs/96.log",
+      "sha256": "5634ceb3681c48196ba4fd332c4cd9f5649e950ea81050b09a14057cbc3a1949",
+      "bytes": 7397,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_awm_shuffle1/shopping_run3/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_awm_shuffle1/shopping_run3/logs/96.log",
+      "sha256": "4b8927853172b1177a2b3d704294d891a57c5c84feb611761b7778ec9557b140",
+      "bytes": 7200,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_awm_shuffle2/shopping_run1/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_awm_shuffle2/shopping_run1/logs/96.log",
+      "sha256": "3cd77ef3462755ed604155b3c9cd9c593125aa0bae9811d78a982571998d9112",
+      "bytes": 7008,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_awm_shuffle2/shopping_run2/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_awm_shuffle2/shopping_run2/logs/96.log",
+      "sha256": "f28b2b56db2d38b072e41cd7999eb593669f74b268b5687d33d271b634ecbcad",
+      "bytes": 11205,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_awm_shuffle2/shopping_run3/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_awm_shuffle2/shopping_run3/logs/96.log",
+      "sha256": "4027f3d9316ff7e9bcc94c12bc74b5f0d2f9f14db9d5a03129a1652601b63b1b",
+      "bytes": 7318,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_rbank_ordinal/shopping_run1/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_rbank_ordinal/shopping_run1/logs/96.log",
+      "sha256": "f05b9546123b79d57689923ee7d98098760f05f5acc5c3e6d7ecd0551acd7e21",
+      "bytes": 9090,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_rbank_ordinal/shopping_run2/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_rbank_ordinal/shopping_run2/logs/96.log",
+      "sha256": "d9ea6a5e0c821f259e88af9a4b730b52a93ae54e1d6a9965508b787678626ad7",
+      "bytes": 9330,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_rbank_ordinal/shopping_run3/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_rbank_ordinal/shopping_run3/logs/96.log",
+      "sha256": "f709a776c1e1287c76e2cbd680a28a1f9daf64ff8fcf35ba808d1530e9c306b9",
+      "bytes": 8641,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_rbank_shuffle1/shopping_run1/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_rbank_shuffle1/shopping_run1/logs/96.log",
+      "sha256": "0d3c446e577ac5daec87be05dd8237c1ba917a98a149e4f049d8838aac4c0367",
+      "bytes": 8981,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_rbank_shuffle1/shopping_run2/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_rbank_shuffle1/shopping_run2/logs/96.log",
+      "sha256": "1b16356851c8def888780ff09ac6ce7874f15104ffc00f8e0ded1d488b37bdb7",
+      "bytes": 9828,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_rbank_shuffle1/shopping_run3/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_rbank_shuffle1/shopping_run3/logs/96.log",
+      "sha256": "df98d67450c82980b5e80896ca616c098f202466e3011554e4bdf8fe597a638f",
+      "bytes": 10960,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_rbank_shuffle2/shopping_run1/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_rbank_shuffle2/shopping_run1/logs/96.log",
+      "sha256": "51b4abf47a964f35af3f08492af202240ce04d0228e7ffd313fdea699f381094",
+      "bytes": 9326,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_rbank_shuffle2/shopping_run2/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_rbank_shuffle2/shopping_run2/logs/96.log",
+      "sha256": "a52db0f1b15a1dd813d4d0579258e4b0b35a777c20b7fb7ca780e818e7f867fb",
+      "bytes": 13402,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_rbank_shuffle2/shopping_run3/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_rbank_shuffle2/shopping_run3/logs/96.log",
+      "sha256": "bf72ce75703e82fc44e7c5248fd8ccdaae4959192ca154b66ef717e5d1e21bab",
+      "bytes": 11626,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_baseline/shopping_run1/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_baseline/shopping_run1/logs/96.log",
+      "sha256": "19ddd7e5a3d5673251f0409a99808088ab0b219e5a87770e72d4f5553d64c190",
+      "bytes": 5597,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_baseline/shopping_run2/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_baseline/shopping_run2/logs/96.log",
+      "sha256": "cd0029bc101a826a5ed72e0af78b90f7410acf4db2283701b7c633cb6564e15c",
+      "bytes": 6508,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_baseline/shopping_run3/logs/96.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_baseline/shopping_run3/logs/96.log",
+      "sha256": "d0dbc75c03808b952afd2842f726b2d4464ddf36e2108c4ff0b8c788c62bb339",
+      "bytes": 7036,
+      "acquisition": "cache",
+      "scientific_authority": false
+    },
+    {
+      "path": "wa_awm_shuffle1/shopping_run1/logs/509.log",
+      "url": "https://hf-mirror.com/datasets/Salesforce/self-improve-fragility/resolve/main/metadata/wa_awm_shuffle1/shopping_run1/logs/509.log",
+      "sha256": "e0b6f5d221c3f8672167fc107379fa68f876531932cf8313899c5592711f67de",
+      "bytes": 36584,
+      "acquisition": "cache",
+      "scientific_authority": false
+    }
+  ],
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  },
+  "raw_config_receipt": {
+    "path": "generated/research-data/paper-yield-d5-c01/self-improve-fragility/webarena/src/walt/benchmarks/wa/test_configs/test.raw.json",
+    "sha256": "d25e83078ec728adc82bd43871338a24a3907e101b5a5fdb1ae81bb7f72f36a6"
+  }
+}

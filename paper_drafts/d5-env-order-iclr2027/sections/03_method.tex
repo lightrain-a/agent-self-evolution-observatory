@@ -1,0 +1,21 @@
+\section{Audit Methodology}
+\label{sec:method}
+
+\subsection{Audited system and released evidence}
+We audit the WebArena portion of \citet{ye2026fragility}. The release evaluates online AWM and ReasoningBank on six WebArena domains. Each method is tested on the ordinal stream and on two shuffled streams with seeds 42 and 99. Three independent runs are released for each condition. Execution is sequential within a domain. The website-reset script runs before the domain-level stream, while the per-task reset reconstructs the browser context without restoring the website backend.
+
+All quantitative analyses use released benchmark configurations and released trajectory metadata. We organize the audit into three evidence levels.
+
+\paragraph{Protocol audit.} We inspect the execution path to determine when the service state is restored. We also inspect WebArena task definitions to identify persistent writers and tasks whose truth depends on mutable relational state.
+
+\paragraph{Direct witness.} We require a released trajectory in which an upstream state mutation can be linked to the current state observed by a downstream task. We then compare that observed state with the fixed evaluator used by the release.
+
+\paragraph{Exposure retrospective.} We define high-confidence writer families and state-sensitive reader families in the four mutable single-site domains. A reader is marked exposed when an earlier benchmark-successful task writes the same preregistered state channel. This rule is fixed before joining with downstream outcomes.
+
+\subsection{Dynamic-reference sentinels}
+We preregister three tasks whose truth is defined by mutable recency. Shopping task 96 asks for the status of the latest order; its fixed reference describes a canceled order. Shopping task 189 asks for the total of the latest pending order; its fixed reference is \$754.99. Shopping Admin task 198 asks for the customer on the most recent canceled order; its fixed reference is Lily Potter. Selection uses task semantics before model outcomes are inspected. We compare each task across AWM and ReasoningBank. Every comparison uses the same three runs under the ordinal stream and both shuffle seeds.
+
+\subsection{Aggregate sensitivity analysis}
+The static audit identifies 112 high-confidence state-sensitive readers among the 812 WebArena tasks and 244 persistent mutators. Reconstructing the tested streams yields 1,236 direct writer--reader pairs. Of these pairs, 1,005 change exposure ordering across the evaluated streams. We join the frozen task semantics to the released $\{\texttt{task\_id},\texttt{is\_successful}\}$ columns of each trajectory parquet.
+
+We measure the published order contrast twice. The first estimate uses every released task. The second removes the preregistered state-sensitive readers from every order before recomputing success. The change between these two estimates quantifies how strongly mutable-reference tasks support the measured order gap.

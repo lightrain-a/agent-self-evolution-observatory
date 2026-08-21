@@ -1,0 +1,23 @@
+\section{A State-Isolated Order-Stress Protocol}
+\label{sec:protocol}
+Longitudinal self-improvement evaluation should intervene on one persistent history at a time. We therefore define a state-isolated order-stress protocol around the causal graph in Figure~\ref{fig:causal}.
+
+\paragraph{Treat order as the learning-history intervention.} The ordinal stream and each shuffled stream define the experience history presented to the agent. Corresponding task evaluations use the same preregistered service state so that the manipulated variable remains the agent's history.
+
+\paragraph{Restore environment state per task.} Each task starts from a content-addressed service snapshot. Task-specific service instances provide an equivalent implementation. This blocks the $\pi\rightarrow E\rightarrow Y$ path while preserving $\pi\rightarrow M\rightarrow Y$.
+
+\paragraph{Use current-state scoring for intentionally live worlds.} A live benchmark can derive truth from the service state reached at execution time. Effect-based evaluators provide the same property by checking the requested state transition. DynamicMCPBench implements effect checkpoints for stateful servers \citep{kaminski2026dynamicmcpbench}. ClawMark uses deterministic post-state checks in evolving sandbox services \citep{meng2026clawmark}. Under this design, a phrase such as ``latest order'' is resolved against the current order relation.
+
+\paragraph{Shuffle the no-memory control.} A complete order-stress experiment evaluates the same agent scaffold without persistent memory under every tested order. Define
+\begin{align}
+\Delta_{\mathrm{mem}} &= S_{\mathrm{mem,ord}}-S_{\mathrm{mem,shuf}},\\
+\Delta_{\mathrm{base}} &= S_{\mathrm{base,ord}}-S_{\mathrm{base,shuf}}.
+\end{align}
+The difference $\Delta_{\mathrm{mem}}-\Delta_{\mathrm{base}}$ estimates the incremental order sensitivity introduced by persistent self-improvement under the matched execution scaffold.
+
+\paragraph{Report state-sensitive strata.} Benchmark authors should preregister tasks whose targets are defined by mutable relational state. Reporting this stratum separately makes movement in the measurement object visible inside the final order-stress result.
+
+\section{Related Work}
+\paragraph{Self-improving agent memory.} AWM learns reusable workflows from prior trajectories and supports online memory induction \citep{wang2024awm}. ReasoningBank stores distilled reasoning strategies from accumulated experience and uses memory-aware test-time scaling \citep{ouyang2026reasoningbank}. The fragility study we audit advances this line by explicitly testing run-to-run variance and task order \citep{ye2026fragility}. Our audit identifies the benchmark-state path activated by the same order intervention.
+
+\paragraph{Stateful agent benchmarks.} WebArena provides realistic functional web applications with programmatic task evaluators \citep{zhou2024webarena}. DynamicMCPBench makes service evolution a first-class evaluation variable and motivates effect-based scoring on live servers \citep{kaminski2026dynamicmcpbench}. ClawMark evaluates long-running agents in evolving sandbox services through deterministic checks over post-execution state \citep{meng2026clawmark}. Our work links state-aware truth to longitudinal self-improvement evaluation by showing that task-order interventions also transform benchmark history.

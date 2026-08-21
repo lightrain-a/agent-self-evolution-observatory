@@ -1,0 +1,257 @@
+{
+  "schema_version": "1.1",
+  "status": "PASS",
+  "summary": {
+    "checks": 32,
+    "passed": 32,
+    "pages": 9,
+    "pdf_sha256": "18194dca7d9ae9b818406b12e0982e6b1c3b434af5637da761db95d519eecbba",
+    "pdf_bytes": 210484
+  },
+  "checks": [
+    {
+      "check": "compiled PDF exists",
+      "pass": true
+    },
+    {
+      "check": "PDF page count <= 9",
+      "pass": true
+    },
+    {
+      "check": "sentinel ordinal = 18/18",
+      "pass": true
+    },
+    {
+      "check": "sentinel shuffled = 0/36",
+      "pass": true
+    },
+    {
+      "check": "direct invalidation certificate is certified",
+      "pass": true
+    },
+    {
+      "check": "direct writer-reader chain certified",
+      "pass": true
+    },
+    {
+      "check": "retrospective exposed units = 887",
+      "pass": true
+    },
+    {
+      "check": "retrospective exposed failures = 424",
+      "pass": true
+    },
+    {
+      "check": "('wa_awm', 'shuffle1') gap-reduction fraction matches",
+      "pass": true
+    },
+    {
+      "check": "('wa_awm', 'shuffle2') gap-reduction fraction matches",
+      "pass": true
+    },
+    {
+      "check": "('wa_rbank', 'shuffle1') gap-reduction fraction matches",
+      "pass": true
+    },
+    {
+      "check": "('wa_rbank', 'shuffle2') gap-reduction fraction matches",
+      "pass": true
+    },
+    {
+      "check": "headline token 18/18 appears in manuscript",
+      "pass": true
+    },
+    {
+      "check": "headline token 0/36 appears in manuscript",
+      "pass": true
+    },
+    {
+      "check": "headline token 887 appears in manuscript",
+      "pass": true
+    },
+    {
+      "check": "headline token 424 appears in manuscript",
+      "pass": true
+    },
+    {
+      "check": "headline token 44.5 appears in manuscript",
+      "pass": true
+    },
+    {
+      "check": "headline token 34.6 appears in manuscript",
+      "pass": true
+    },
+    {
+      "check": "headline token 14.9 appears in manuscript",
+      "pass": true
+    },
+    {
+      "check": "headline token 17.5 appears in manuscript",
+      "pass": true
+    },
+    {
+      "check": "claim ledger explicitly rejects full-explanation claim",
+      "pass": true
+    },
+    {
+      "check": "claim ledger verdicts frozen",
+      "pass": true
+    },
+    {
+      "check": "C6 evidence state remains separate from manuscript stance",
+      "pass": true
+    },
+    {
+      "check": "unrefuted C6 does not trigger claim narrowing",
+      "pass": true
+    },
+    {
+      "check": "paper assertion/style policy passes",
+      "pass": true
+    },
+    {
+      "check": "no undefined citations",
+      "pass": true
+    },
+    {
+      "check": "no undefined references",
+      "pass": true
+    },
+    {
+      "check": "no overfull boxes",
+      "pass": true
+    },
+    {
+      "check": "ICLR anonymous author placeholder present",
+      "pass": true
+    },
+    {
+      "check": "no author email leaked",
+      "pass": true
+    },
+    {
+      "check": "no internal path host or project identity leaked",
+      "pass": true
+    },
+    {
+      "check": "paper title present",
+      "pass": true
+    }
+  ],
+  "style_audit": {
+    "schema_version": "1.0",
+    "policy": {
+      "schema_version": "1.0",
+      "draft_before_evidence_completion": true,
+      "unrefuted_hypothesis_stays_active": true,
+      "missing_evidence_creates_experiment_debt": true,
+      "missing_evidence_does_not_trigger_claim_narrowing": true,
+      "maximally_assertive_evidence_compatible_wording": true,
+      "scientific_evidence_state_is_separate_from_manuscript_stance": true,
+      "refutation_requires_scientific_counterevidence": true,
+      "refutation_authorities": [
+        "direct_counterevidence",
+        "same_information_reduction",
+        "scope_matched_principle_counter_explanation"
+      ],
+      "single_limitations_section_required": true,
+      "distributed_limitation_language_forbidden": true,
+      "not_but_contrast_forbidden": true,
+      "rather_than_contrast_forbidden": true,
+      "serial_enumeration_sentence_forbidden": true
+    },
+    "limitations_source": "sections/06_limitations_conclusion.tex",
+    "sources_audited": 9,
+    "passed": true,
+    "violations": []
+  },
+  "manuscript_files": [
+    {
+      "path": "paper_drafts/d5-env-order-iclr2027/main.tex",
+      "sha256": "da7b4bfceeea7f94e7aea115645bc53619e3d6c346951a6bcadf284e30922881"
+    },
+    {
+      "path": "paper_drafts/d5-env-order-iclr2027/references.bib",
+      "sha256": "119d6d2576e40e18d68328e96a3eff15d930d199f443899104240ac4a825dfcf"
+    },
+    {
+      "path": "paper_drafts/d5-env-order-iclr2027/sections/00_abstract.tex",
+      "sha256": "537d9c9c942b54a8f6e2d6cf2a23793af2648c02f05f8c37891a16eb8381f418"
+    },
+    {
+      "path": "paper_drafts/d5-env-order-iclr2027/sections/01_intro.tex",
+      "sha256": "5a6fda995aefa768d5a431b417228ecc927faf24ae859f89f352009834d7dd22"
+    },
+    {
+      "path": "paper_drafts/d5-env-order-iclr2027/sections/02_formulation.tex",
+      "sha256": "506a32290573d54fd577d4022be205c7bddd91b99248c762af1d2d5326cc3a40"
+    },
+    {
+      "path": "paper_drafts/d5-env-order-iclr2027/sections/03_method.tex",
+      "sha256": "efc46fdec4dd42dbf54150e1cbf908d4aa154939ee52f53f620b5e0f5c8c6d80"
+    },
+    {
+      "path": "paper_drafts/d5-env-order-iclr2027/sections/04_results.tex",
+      "sha256": "95b04e914054c853b519e45bbf4500a9715f4bd7aa5476f316e98781ddc7c227"
+    },
+    {
+      "path": "paper_drafts/d5-env-order-iclr2027/sections/05_protocol_related.tex",
+      "sha256": "e33ef181346ff29eb8dfabff3e2bc979550866447d37fe0293b6b94f6afc5a4f"
+    },
+    {
+      "path": "paper_drafts/d5-env-order-iclr2027/sections/06_limitations_conclusion.tex",
+      "sha256": "f6c900b2c223144f00da53fcdec7f781244bb6a89e8cad6d46f6abfb76214472"
+    },
+    {
+      "path": "paper_drafts/d5-env-order-iclr2027/sections/07_appendix.tex",
+      "sha256": "05cc719273b5cf0b1ae641d6633ad0c307dffda8ff9da4f790016b360b0b4d6f"
+    },
+    {
+      "path": "paper_drafts/d5-env-order-iclr2027/figures/fig1_causal_decomposition.pdf",
+      "sha256": "589354b97d80552109c573d89e7edb1bea7f234a7ca041dd39822fb73e9651ee"
+    },
+    {
+      "path": "paper_drafts/d5-env-order-iclr2027/figures/fig2_direct_witness.pdf",
+      "sha256": "2397f1291d52fb4873e9689a04dd55d119ab75fa0c2fbc3fc2f03487c125c8b0"
+    },
+    {
+      "path": "paper_drafts/d5-env-order-iclr2027/figures/fig3_sentinel_replication.pdf",
+      "sha256": "19c1c5e9ffc16495afbddb0605dea72ebe3e2ea8cca6b13f37396add8e3f7757"
+    },
+    {
+      "path": "paper_drafts/d5-env-order-iclr2027/figures/fig4_gap_sensitivity.pdf",
+      "sha256": "dba55fd34b279732569b224158cfaccb91510daf98e860e8a903ef8c7dce8bf3"
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "generated/d5-order-sentinel-panel.json",
+      "sha256": "b85aa69930d931191871160b2caf7c79d92bc9e6af81b5646179b067f386a09d"
+    },
+    {
+      "path": "generated/d5-order-contamination-retrospective.json",
+      "sha256": "1d0b70d7e3f352c4981f853a88ffb9d33f36697eb3865662f115fe8ed223676a"
+    },
+    {
+      "path": "generated/d5-order-ground-truth-invalidation.json",
+      "sha256": "2bdd6ce0ee55504183f69ffa0f98bd716f07b695f6a81eb844dea23f7d7004a4"
+    },
+    {
+      "path": "generated/d5-env-order-claim-ledger.json",
+      "sha256": "18e41c39e89ea30c347cc47fda4bda5d3f9ec21166dd2ab9467b84d7d62ce974"
+    },
+    {
+      "path": "generated/d5-order-environment-interference-audit.json",
+      "sha256": "9b8a6e42c5ec6b8f9d7234278cc892b02536354ab76fecf6fe4e5b710f2a566e"
+    },
+    {
+      "path": "generated/d5-env-order-child-birth-receipt.json",
+      "sha256": "e39880740b3debbfb5ee9ff4286775feeb4afed9ed3297a4a81b6a5b45ddbca5"
+    },
+    {
+      "path": "generated/d5-env-order-paper-design.json",
+      "sha256": "310fcefbb1b40fc8e6e3914536cdc978cc2b97dbde8d3bf07a31605657918006"
+    }
+  ],
+  "scientific_authority": false
+}

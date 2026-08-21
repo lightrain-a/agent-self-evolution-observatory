@@ -35,5 +35,8 @@ class GovernanceProtocolTest(unittest.TestCase):
   self.assertTrue(STOP_CLASSES["PRINCIPLE_STOP"]["persistent_dead_end_authority"])
   self.assertTrue(state["policy"]["stop_class_required_for_any_stop"])
   self.assertTrue(state["policy"]["only_principle_stop_may_enter_persistent_dead_end_memory"])
+  self.assertTrue(state["policy"]["unrefuted_hypothesis_stays_active_in_manuscript"])
+  self.assertTrue(state["policy"]["missing_evidence_creates_experiment_debt_not_claim_narrowing"])
+  self.assertTrue(state["paper_assertion_policy"]["single_limitations_section_required"])
 
 if __name__=='__main__': unittest.main()

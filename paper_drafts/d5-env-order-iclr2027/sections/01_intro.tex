@@ -1,0 +1,21 @@
+\section{Introduction}
+Memory-based agents improve over task streams by storing reusable experience. Agent Workflow Memory (AWM) induces workflows from previous trajectories \citep{wang2024awm}. ReasoningBank distills reasoning memories from accumulated experience \citep{ouyang2026reasoningbank}. A recent reliability study by \citet{ye2026fragility} tests whether these gains survive changes in task order. Its WebArena experiments compare the default ordinal stream with two random permutations and report substantial degradation under shuffling. The result provides important evidence that self-improvement depends on history.
+
+A clean task-order experiment requires the permutation to act on the learning history under a stable evaluation problem. WebArena introduces a second persistent history because its websites are functional stateful services \citep{zhou2024webarena}. A successful purchase creates a new order. A cancellation changes the canceled-order set. When tasks share the backend within a run, shuffling changes which service mutations occur before each query. The evaluator can then score a current-state answer against reference text derived from an earlier service state.
+
+This paper identifies the hidden intervention inside self-improving WebArena order tests. Task order jointly perturbs the agent's persistent memory and the benchmark's persistent environment. The measured order gap therefore contains a memory-history component together with an environment-history component. We reconstruct both paths from the released execution code and verify the mechanism in released trajectories. The resulting audit turns a qualitative confound into a measurable source of score change.
+
+The direct witness is decisive. In a released AWM shuffle run, task 509 reaches checkout and creates a new Cole Haan order even though the benchmark scorer assigns zero. Task 96 later opens the current latest order and reads that new object correctly. Its evaluator still expects the earlier canceled order, so the task fails. This same mechanism replicates on three preregistered dynamic-reference sentinels. Across AWM and ReasoningBank, all 18 ordinal method--run units pass. Across the two shuffled streams, all 36 corresponding units fail.
+
+The effect also changes aggregate conclusions. Our released-trajectory retrospective identifies 887 lower-bound state-exposed reader units in shuffled memory runs; 424 fail. Removing preregistered state-sensitive readers reduces AWM's measured shuffle gap by 34.6--44.5\%. The corresponding reduction for ReasoningBank is 14.9--17.5\%. A residual gap remains after this exclusion, which separates the environment-sensitive component from the remaining order sensitivity.
+
+Recent benchmark work already recognizes the broader challenge of stateful truth. DynamicMCPBench uses effect-based scoring on live stateful servers \citep{kaminski2026dynamicmcpbench}. ClawMark evaluates evolving service state with deterministic post-state checkers \citep{meng2026clawmark}. We introduce a source-grounded causal audit of task-order evaluation in self-improving agents and quantify how persistent benchmark state enters the published measurement. This connection exposes a new requirement for longitudinal agent evaluation: the benchmark's history must become an explicit experimental variable whenever the agent's history is manipulated.
+
+\paragraph{Contributions.}
+\begin{itemize}
+    \item We formalize task-order evaluation on a stateful benchmark as a joint intervention on memory history and environment history.
+    \item We produce a content-addressed released-trajectory witness that links an upstream backend mutation to a downstream stale-ground-truth failure.
+    \item We establish a replicated sentinel panel with 18/18 ordinal passes and 0/36 shuffled passes across AWM and ReasoningBank.
+    \item We quantify the aggregate measurement effect through a released-trajectory retrospective and a state-sensitivity exclusion analysis.
+    \item We introduce a state-isolated order-stress protocol for clean longitudinal evaluation of self-improving agents.
+\end{itemize}

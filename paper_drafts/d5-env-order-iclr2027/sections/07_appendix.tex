@@ -1,0 +1,29 @@
+\section{Evidence and Reproduction Details}
+\subsection{Frozen evidence artifacts}
+The audit is generated from four machine-readable artifact classes. The task-interference audit covers all 812 official WebArena task configurations. The direct ground-truth invalidation certificate binds the writer--reader witness to released logs. The sentinel panel stores every method--run outcome for the three dynamic-reference tasks. The released-trajectory retrospective stores the 84 run-domain cells used for aggregate analysis. Raw author logs and trajectory metadata are cached by content digest outside the manuscript source tree. Headline numbers are compiled from these artifacts.
+
+\subsection{Sentinel definitions}
+Task 96 asks for the status of the latest Shopping order. Task 189 asks for the total of the latest pending Shopping order. Task 198 asks for the customer associated with the most recent canceled Shopping Admin order. Each target is defined by a mutable relation. The criterion is frozen from task semantics before downstream outcomes are joined.
+
+\subsection{Exposure rule}
+A reader is marked exposed when its semantics depends on a preregistered mutable state channel. An earlier task in the tested stream must write the same channel. That writer must receive benchmark success. This rule produces the exposure counts used in Table~\ref{tab:exposure}.
+
+\subsection{Claim ledger}
+The manuscript is bound to a frozen claim ledger. C1 records the joint memory-history and environment-history intervention. C2 records the released writer--reader invalidation witness. C3 records the replicated sentinel effect. C4 records the aggregate state-sensitivity result. C5 records the residual order sensitivity that remains after the state-sensitive exclusion. Every headline statement in the main paper maps to one of these evidence-bound claims.
+
+\subsection{Full sensitivity contrasts}
+\begin{table}[h]
+\centering
+\caption{Raw and state-sensitive-excluded ordinal-to-shuffle success gaps. Values are percentage points. ``Removed'' is the reduction fraction of the raw gap.}
+\small
+\begin{tabular}{llrrr}
+\toprule
+Method & Shuffle & Raw gap & Excluded gap & Raw gap removed \\
+\midrule
+AWM & seed 42 & 4.44 & 2.46 & 44.5\% \\
+AWM & seed 99 & 5.13 & 3.36 & 34.6\% \\
+ReasoningBank & seed 42 & 7.61 & 6.48 & 14.9\% \\
+ReasoningBank & seed 99 & 7.40 & 6.11 & 17.5\% \\
+\bottomrule
+\end{tabular}
+\end{table}

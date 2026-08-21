@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "D5-C01-ENV-ORDER-CONTAMINATION",
+  "title": "When Task Order Changes, What Is Actually Evolving? Environment-State Contamination in Self-Improving Web-Agent Evaluation",
+  "birth_engine": "D5_LONGITUDINAL_PATH_DEPENDENCE",
+  "parent_candidate": "D5-C01",
+  "derivation_type": "child_of_falsifier_observation",
+  "birth_timestamp": "2026-08-21T18:35:00+08:00",
+  "scientific_object": "task-order stress tests for memory-based self-improving agents on stateful web benchmarks",
+  "problem": "Randomizing task order in a stateful web benchmark changes both the history written into agent memory and the persistent website state. Fixed reference answers can therefore become stale after earlier tasks mutate the backend, so an observed order-performance gap can conflate self-improvement fragility with benchmark-state carryover.",
+  "source_evidence": [
+    "arXiv:2608.18066",
+    "generated/d5-order-ground-truth-invalidation.json",
+    "generated/d5-order-sentinel-panel.json",
+    "generated/d5-order-contamination-retrospective.json",
+    "generated/d5-order-environment-interference-audit.json"
+  ],
+  "birth_observation": "The cheapest falsifier for D5-C01 found that WebArena website state persists across tasks. In the released AWM shuffle1 trajectory, task 509 reaches checkout success and changes the latest order even though the benchmark scorer marks the task FAIL; task 96 later reads that new Pending order correctly but is scored FAIL against a fixed pre-run gold answer.",
+  "strongest_same_information_explanation": "The original task-order degradation is entirely due to self-improving memory construction/underspecification; benchmark environment state does not materially affect the measured gap.",
+  "falsifiable_residual": "Dynamic-reference tasks that are clean in ordinal order should systematically fail when shuffled after state-mutating tasks, and excluding state-sensitive readers should reduce the observed shuffle gap while leaving a residual if genuine memory-order fragility also exists.",
+  "paper_level_claim": "Task-order stress tests on stateful web benchmarks can conflate agent-memory evolution with environment-state carryover. In the released AWM/ReasoningBank WebArena experiments, this carryover provably invalidates fixed ground truth on repeated dynamic-reference tasks and accounts for a measurable part—but not all—of the reported order sensitivity.",
+  "reopen_or_stop_rule": "STOP the environment-contamination contribution if released trajectories do not contain a direct write-to-stale-reader chain, if predefined dynamic sentinels do not replicate across methods/runs/orders, or if state-sensitive-task exclusion leaves the observed order gap unchanged. Do not broaden to 'all task-order fragility is contamination' without a shuffled no-memory or per-task-reset control.",
+  "scientific_authority": false,
+  "authority": {"problem_gate": false, "paper_design": false, "method": false, "experiment": false, "p0": false, "gpu": false}
+}

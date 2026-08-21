@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "D5-C01-ENV-ORDER-CONTAMINATION",
+  "status": "CLAIM_LEDGER_ASSERTIVE_MANUSCRIPT_POLICY_APPLIED",
+  "manuscript_policy": {
+    "unrefuted_hypothesis_stays_active": true,
+    "missing_evidence_creates_experiment_debt": true,
+    "missing_evidence_does_not_trigger_claim_narrowing": true,
+    "limitations_are_centralized": true
+  },
+  "claims": [
+    {
+      "claim_id": "C1",
+      "verdict": "SUPPORTED",
+      "allowed_text": "In the audited WebArena execution protocol, task-order permutation changes persistent website state as well as the sequence seen by the self-improving memory system.",
+      "evidence_ids": ["E-CODE-ORDER", "E-CODE-RESET", "E-INTERFERENCE"],
+      "not_allowed": "Every task permutation necessarily changes benchmark state or invalidates its evaluator."
+    },
+    {
+      "claim_id": "C2",
+      "verdict": "SUPPORTED",
+      "allowed_text": "The released AWM shuffle trajectory contains a direct write-to-reader chain in which a prior task successfully mutates the shopping backend despite a FAIL benchmark verdict, and a later task correctly reads the new current state but is scored against stale fixed ground truth.",
+      "evidence_ids": ["E-DIRECT-509-96", "E-TASK96-PANEL"],
+      "not_allowed": "All scorer failures in the release are caused by stale ground truth."
+    },
+    {
+      "claim_id": "C3",
+      "verdict": "SUPPORTED",
+      "allowed_text": "For three predefined dynamic-reference tasks, AWM and ReasoningBank pass all 18 ordinal method-run evaluations and fail all 36 corresponding shuffled evaluations across two shuffle seeds.",
+      "evidence_ids": ["E-SENTINEL-PANEL"],
+      "not_allowed": "The 100-point sentinel risk difference applies to all WebArena tasks."
+    },
+    {
+      "claim_id": "C4",
+      "verdict": "SUPPORTED_ACTIVE",
+      "allowed_text": "The released-trajectory retrospective identifies 887 lower-bound state-exposed sensitive-reader units in memory-method shuffles, of which 424 fail. Excluding preregistered state-sensitive readers reduces AWM's observed shuffle gap by 34.6-44.5% and ReasoningBank's by 14.9-17.5%. The remaining gap is residual order sensitivity after the environment-sensitive stratum is removed.",
+      "evidence_ids": ["E-RETROSPECTIVE", "E-GAP-EXCLUSION"],
+      "not_allowed": "Those percentages are the causal fraction of the original paper's degradation explained by environment contamination."
+    },
+    {
+      "claim_id": "C5",
+      "verdict": "REFUTED",
+      "allowed_text": "Environment carryover does not explain the full task-order effect: a sizeable residual remains after state-sensitive-reader exclusion.",
+      "evidence_ids": ["E-GAP-EXCLUSION"],
+      "not_allowed": "The original self-improvement fragility result is an artifact."
+    },
+    {
+      "claim_id": "C6",
+      "verdict": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "evidence_state": "INCONCLUSIVE",
+      "manuscript_stance": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "allowed_text": "A state-isolated order-stress protocol with a matched shuffled no-memory control separates memory-history sensitivity from environment-history sensitivity under the same execution stack.",
+      "evidence_ids": ["E-PROTOCOL-INVENTORY"],
+      "experiment_debt": ["matched shuffled no-memory rerun", "per-task restored environment rerun"],
+      "claim_narrowing_required": false,
+      "not_allowed": "A no-memory shuffled agent has already been observed to show the same degradation."
+    }
+  ],
+  "evidence_registry": [
+    {"evidence_id": "E-CODE-ORDER", "artifact": "self-improve-fragility/webarena/experiment_configs/wa/wa_reasoningbank/generate_configs.py", "finding": "ordinal, seed42 and seed99 task-order configurations with sequential execution"},
+    {"evidence_id": "E-CODE-RESET", "artifact": "self-improve-fragility/webarena/scripts/wa/reproduce.sh + WA.py", "finding": "website servers reset before a domain run, while per-task reset reconstructs browser context without restoring backend state"},
+    {"evidence_id": "E-INTERFERENCE", "artifact": "generated/d5-order-environment-interference-audit.json", "finding": "812-task conservative cross-task state-interference audit"},
+    {"evidence_id": "E-DIRECT-509-96", "artifact": "generated/d5-order-ground-truth-invalidation.json", "finding": "released AWM shuffle1 run1 direct writer-reader stale-gold chain"},
+    {"evidence_id": "E-TASK96-PANEL", "artifact": "generated/d5-order-ground-truth-invalidation.json", "finding": "task96 ordinal memory 6/6 PASS, shuffled memory 0/12 PASS, baseline ordinal 3/3 PASS"},
+    {"evidence_id": "E-SENTINEL-PANEL", "artifact": "generated/d5-order-sentinel-panel.json", "finding": "three dynamic-reference sentinels: ordinal 18/18 PASS, shuffled 0/36 PASS"},
+    {"evidence_id": "E-RETROSPECTIVE", "artifact": "generated/d5-order-contamination-retrospective.json", "finding": "84 run-domain cells; 887 lower-bound exposed reader units and 424 failures in memory-method shuffles"},
+    {"evidence_id": "E-GAP-EXCLUSION", "artifact": "generated/d5-order-contamination-retrospective.json", "finding": "state-sensitive-reader exclusion reduces AWM gap by 34.6-44.5% and RBank gap by 14.9-17.5%, leaving residual"},
+    {"evidence_id": "E-PROTOCOL-INVENTORY", "artifact": "generated/d5-env-order-paper-design.json", "finding": "released no-memory baseline is ordinal only; shuffled no-memory/per-task reset remains missing"}
+  ],
+  "scientific_authority": false,
+  "authority": {"paper_text_constraint": true, "new_scientific_authority": false, "experiment": false, "p0": false, "gpu": false}
+}
