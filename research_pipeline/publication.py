@@ -14,6 +14,10 @@ from .config import PROJECT_ROOT, StorageSettings
 DAILY_ARTIFACTS = (
     "generated/research-timeline.json",
     "generated/research-timeline.js",
+    "generated/research-items.json",
+    "generated/research-items.js",
+    "generated/paper-registry.json",
+    "generated/paper-registry.js",
     "generated/ai-consultation-clinic.json",
     "generated/ai-consultation-clinic.js",
     "generated/ai-consultation-automation.json",
@@ -167,6 +171,7 @@ WEEKLY_ARTIFACTS = DAILY_ARTIFACTS + (
 )
 VOLATILE_KEYS = {
     "created_at", "generated_at", "retrieved_at", "started_at", "completed_at", "updated_at",
+    "source_revision",
 }
 PUBLICATION_OK_STATES = frozenset({"published", "unchanged", "deferred", "recovered"})
 
@@ -227,7 +232,7 @@ def _normalized_text_digest(relative: str, text: str) -> str:
             break
     if parsed_payloads:
         return _normalized_payload_digest(parsed_payloads)
-    fallback = re.sub(r'"(?:generated_at|retrieved_at|started_at|completed_at|updated_at)":"[^"]*"', '"volatile":""', text)
+    fallback = re.sub(r'"(?:generated_at|retrieved_at|started_at|completed_at|updated_at|source_revision)":"[^"]*"', '"volatile":""', text)
     fallback = re.sub(r'"cache_dir":"[^"]*"', '"cache_dir":"<cache>"', fallback)
     return hashlib.sha256(fallback.encode("utf-8")).hexdigest()
 

@@ -1308,14 +1308,16 @@ function updateCounter(extra = "") {
 }
 
 function projectStatusState(){ return window.CURRENT_RESEARCH_STATUS || {}; }
+function canonicalPaperRegistry(){ return window.PAPER_REGISTRY || {}; }
+function canonicalSTRIPaper(){ return (canonicalPaperRegistry().papers||[]).find(row=>row.paper_id==="STRI") || projectStatusState().leading_paper_track || {}; }
 function renderProjectStatusStrip(){
-  const state=projectStatusState(), h=state.headline||{}, asOf=state.as_of_date||"";
+  const state=projectStatusState(), h=state.headline||{}, asOf=state.as_of_date||"", paper=canonicalSTRIPaper(), paperSummary=canonicalPaperRegistry().summary||{};
   if(!Object.keys(h).length) return "";
   if(pageId==="research-map") return "";
   if(pageId==="research-directions") {
     const labels=language==="zh"
-      ? [["论文就绪",h.paper_ready||0],["正式新问题",h.canonical_live_ideas||0],["可启动实验",h.launchable_formal_experiments||0]]
-      : [["paper-ready",h.paper_ready||0],["formal new ideas",h.canonical_live_ideas||0],["launchable experiments",h.launchable_formal_experiments||0]];
+      ? [["可提交论文",paperSummary.submission_ready??h.paper_ready??0],["正式新问题",h.canonical_live_ideas||0],["可启动实验",h.launchable_formal_experiments||0]]
+      : [["submission-ready",paperSummary.submission_ready??h.paper_ready??0],["formal new ideas",h.canonical_live_ideas||0],["launchable experiments",h.launchable_formal_experiments||0]];
     return `<section class="field-current-status-strip" aria-label="${language==="zh"?"当前科研状态":"Current research state"}"><b>${language==="zh"?`当前科研状态${asOf?` · ${asOf}`:""}`:`Current research state${asOf?` · ${asOf}`:""}`}</b><div class="field-current-status-metrics">${labels.map(([label,value])=>`<span><strong>${value}</strong>${label}</span>`).join("")}</div><a href="research-map.html">${language==="zh"?"查看当前研究组合图谱 →":"Open current research map →"}</a></section>`;
   }
   if(pageId==="system-overview") {
@@ -1333,16 +1335,16 @@ function renderProjectStatusStrip(){
   }
   const selectedPaper=pageId==="selected-paper";
   const acceptance=window.RESEARCH_SYSTEM_STATE?.paper_acceptance||{}, acceptanceIndex=acceptance.ledger_index||{}, acceptanceEntry=(acceptanceIndex.entries||[]).find(row=>row.paper_id==="STRI-ICLR2027")||{}, acceptanceSummary=acceptance.summary||acceptanceIndex.summary||{};
-  const acceptanceState=acceptanceEntry.current_state||"PAPER_EVIDENCE", story=acceptanceEntry.latest_story_search||{}, mockModes=acceptanceEntry.mock_pc_modes||{}, claimAudit=acceptanceEntry.latest_claim_audit||{};
+  const acceptanceState=paper.paper_stage||paper.current_state||acceptanceEntry.current_state||"PAPER_EVIDENCE", story=paper.latest_story_search||acceptanceEntry.latest_story_search||{}, mockModes=paper.mock_pc_modes||acceptanceEntry.mock_pc_modes||{}, claimAudit=paper.latest_claim_audit||acceptanceEntry.latest_claim_audit||{};
   const completedMockModes=[mockModes.BLIND_MANUSCRIPT,mockModes.ARTIFACT_AWARE].filter(Boolean).length;
   const message=selectedPaper
-    ? (language==="zh"?`当前选中论文是 STRI：科学证据合同已经冻结，旧 Paper Quality / PDF / supplement 工件也可继续复用；但 canonical Paper Ledger 当前=${acceptanceState}。Story Search winner=${story.selected_story_id||"--"}，Blind + Artifact-aware Mock PC=${completedMockModes}/2，Claim Audit=${claimAudit.pass?"PASS":"尚未 PASS"}。因此现在先做定向文稿修复与主张审计，不再把“只剩人工签字”当作当前真值。`:`The current selected paper is STRI: the scientific evidence contract is frozen and earlier Paper Quality / PDF / supplement artifacts remain reusable, but the canonical Paper Ledger is currently ${acceptanceState}. Story Search winner=${story.selected_story_id||"--"}; Blind + Artifact-aware Mock PC=${completedMockModes}/2; Claim Audit=${claimAudit.pass?"PASS":"not yet PASS"}. The current work is targeted manuscript repair and claim audit, not merely human signoff.`)
-    : (language==="zh"?`截至 ${asOf||"当前"}：STRI 科学证据已闭环，但投稿接受流程由 canonical Paper Ledger 单独管理，当前=${acceptanceState}；还缺的论文证据项=${h.paper_quality_evidence_debt||0}；通过正式问题检查、可以继续进入方法设计的新研究问题=${h.canonical_live_ideas||0}；现在允许正式启动的实验=${h.launchable_formal_experiments||0}。另有 ${h.fresh_active_f0||0} 个新现象正在做最小验证，${h.fresh_support_holds||0} 个因为缺关键证据暂缓。以前的记忆效应只保留为历史观察；已关闭的精确候选表述=${h.shadow_closed_basins||h.shadow_dead_ends||0}，其中真正关闭到核心原理层=${h.shadow_core_principle_stops||0}、整个基准或现象也被判定不成立=${h.shadow_broader_core_principle_falsifications||0}，等待具体证据=${h.shadow_holds||0}。`:`As of ${asOf||"now"}: STRI's scientific evidence is closed, while the canonical Paper Ledger separately governs the acceptance workflow and is currently ${acceptanceState}; unfinished paper-evidence items=${h.paper_quality_evidence_debt||0}; new ideas past the formal problem check=${h.canonical_live_ideas||0}; formal experiments allowed to launch now=${h.launchable_formal_experiments||0}. ${h.fresh_active_f0||0} fresh phenomena are in minimal validation and ${h.fresh_support_holds||0} are waiting for specific evidence. The earlier memory effect is historical only; closed exact candidate formulations=${h.shadow_closed_basins||h.shadow_dead_ends||0}, scientific closures at the core-principle layer=${h.shadow_core_principle_stops||0}, whole benchmark/phenomenon falsifications=${h.shadow_broader_core_principle_falsifications||0}, waiting for evidence=${h.shadow_holds||0}.`);
+    ? (language==="zh"?`当前选中论文是 STRI：冻结的 3 条核心主张已有对应证据，旧 Paper Quality / PDF / supplement 工件可继续复用；canonical Paper Acceptance 当前=${acceptanceState}，Story Search winner=${story.selected_story_id||"--"}，Blind + Artifact-aware Mock PC=${completedMockModes}/2，Claim Audit=${claimAudit.pass?"PASS":"尚未 PASS"}，Submission Ready=${paper.submission_ready?"YES":"NO"}。现在先做定向修复与主张审计，不再把“只剩人工签字”当作当前真值。`:`The selected paper is STRI: its three frozen claims have evidence and earlier Paper Quality / PDF / supplement artifacts remain reusable; canonical Paper Acceptance=${acceptanceState}, Story Search winner=${story.selected_story_id||"--"}, Blind + Artifact-aware Mock PC=${completedMockModes}/2, Claim Audit=${claimAudit.pass?"PASS":"not yet PASS"}, Submission Ready=${paper.submission_ready?"YES":"NO"}. Current work is targeted repair and claim audit, not merely human signoff.`)
+    : (language==="zh"?`截至 ${asOf||"当前"}：STRI 的科研证据已进入论文流程，当前 Paper Acceptance 阶段=${acceptanceState}，真正可提交论文=${paperSummary.submission_ready??0}；还缺的旧版论文证据项=${h.paper_quality_evidence_debt||0}。通过正式问题检查、可以继续进入方法设计的新研究问题=${h.canonical_live_ideas||0}；现在允许正式启动的实验=${h.launchable_formal_experiments||0}。以前的记忆效应只保留为历史观察；已关闭的精确候选表述=${h.shadow_closed_basins||h.shadow_dead_ends||0}，其中真正关闭到核心原理层=${h.shadow_core_principle_stops||0}、整个基准或现象也被判定不成立=${h.shadow_broader_core_principle_falsifications||0}，等待具体证据=${h.shadow_holds||0}。`:`As of ${asOf||"now"}: STRI has entered the paper workflow; canonical Paper Acceptance=${acceptanceState}, truly submission-ready papers=${paperSummary.submission_ready??0}, legacy paper-evidence debt=${h.paper_quality_evidence_debt||0}. New ideas past the formal problem check=${h.canonical_live_ideas||0}; formal experiments launchable now=${h.launchable_formal_experiments||0}. The earlier memory effect is historical only; closed exact formulations=${h.shadow_closed_basins||h.shadow_dead_ends||0}, core-principle closures=${h.shadow_core_principle_stops||0}, whole benchmark/phenomenon falsifications=${h.shadow_broader_core_principle_falsifications||0}, waiting for evidence=${h.shadow_holds||0}.`);
   const statusLabels = selectedPaper
-    ? (language === "zh" ? [["Canonical PaperState",acceptanceState],["Story Search winner",story.selected_story_id||"--"],["Mock PC 完成模式",`${completedMockModes}/2`],["Claim Audit",claimAudit.pass?"PASS":"PENDING"],["Paper Ledger",`${acceptanceSummary.registered_papers??acceptanceIndex.summary?.papers??0} 篇`],["Invalid Ledger",acceptanceSummary.invalid_ledgers??acceptanceIndex.summary?.invalid_ledgers??0]] : [["Canonical PaperState",acceptanceState],["Story Search winner",story.selected_story_id||"--"],["Mock PC modes",`${completedMockModes}/2`],["Claim Audit",claimAudit.pass?"PASS":"PENDING"],["Paper Ledgers",acceptanceSummary.registered_papers??acceptanceIndex.summary?.papers??0],["Invalid ledgers",acceptanceSummary.invalid_ledgers??acceptanceIndex.summary?.invalid_ledgers??0]])
+    ? (language === "zh" ? [["Canonical PaperState",acceptanceState],["Story Search winner",story.selected_story_id||"--"],["Mock PC 完成模式",`${completedMockModes}/2`],["Claim Audit",claimAudit.pass?"PASS":"PENDING"],["PaperRegistry",`${paperSummary.papers??0} 篇`],["真正 Submission Ready",paperSummary.submission_ready??0]] : [["Canonical PaperState",acceptanceState],["Story Search winner",story.selected_story_id||"--"],["Mock PC modes",`${completedMockModes}/2`],["Claim Audit",claimAudit.pass?"PASS":"PENDING"],["PaperRegistry",paperSummary.papers??0],["Truly submission-ready",paperSummary.submission_ready??0]])
     : (language === "zh"
-    ? [["科学证据闭环论文",h.paper_ready||0],["还缺的论文证据",h.paper_quality_evidence_debt||0],["通过正式问题检查的新研究问题",h.canonical_live_ideas||0],["正在做最小验证的新现象",h.fresh_active_f0||0],["因缺证据暂缓的新现象",h.fresh_support_holds||0],["现在允许启动的正式实验",h.launchable_formal_experiments||0],["已关闭的精确候选表述",h.shadow_closed_basins||h.shadow_dead_ends||0],["真正关闭到核心原理层",h.shadow_core_principle_stops||0],["整个基准或现象也被判定不成立",h.shadow_broader_core_principle_falsifications||0],["等待具体证据的暂定候选",h.shadow_holds||0]]
-    : [["papers with closed scientific evidence",h.paper_ready||0],["unfinished paper evidence",h.paper_quality_evidence_debt||0],["new ideas past formal problem check",h.canonical_live_ideas||0],["fresh phenomena in minimal validation",h.fresh_active_f0||0],["fresh phenomena waiting for evidence",h.fresh_support_holds||0],["formal experiments launchable now",h.launchable_formal_experiments||0],["closed exact candidate formulations",h.shadow_closed_basins||h.shadow_dead_ends||0],["core-principle scientific closures",h.shadow_core_principle_stops||0],["whole benchmark/phenomenon falsifications",h.shadow_broader_core_principle_falsifications||0],["tentative candidates waiting for evidence",h.shadow_holds||0]]);
+      ? [["真正投稿就绪论文",paperSummary.submission_ready??h.paper_ready??0],["还缺的旧版论文证据",h.paper_quality_evidence_debt||0],["通过正式问题检查的新研究问题",h.canonical_live_ideas||0],["正在做最小验证的新现象",h.fresh_active_f0||0],["因缺证据暂缓的新现象",h.fresh_support_holds||0],["现在允许启动的正式实验",h.launchable_formal_experiments||0],["已关闭的精确候选表述",h.shadow_closed_basins||h.shadow_dead_ends||0],["真正关闭到核心原理层",h.shadow_core_principle_stops||0],["整个基准或现象也被判定不成立",h.shadow_broader_core_principle_falsifications||0],["等待具体证据的暂定候选",h.shadow_holds||0]]
+      : [["truly submission-ready papers",paperSummary.submission_ready??h.paper_ready??0],["unfinished legacy paper evidence",h.paper_quality_evidence_debt||0],["new ideas past formal problem check",h.canonical_live_ideas||0],["fresh phenomena in minimal validation",h.fresh_active_f0||0],["fresh phenomena waiting for evidence",h.fresh_support_holds||0],["formal experiments launchable now",h.launchable_formal_experiments||0],["closed exact candidate formulations",h.shadow_closed_basins||h.shadow_dead_ends||0],["core-principle scientific closures",h.shadow_core_principle_stops||0],["whole benchmark/phenomenon falsifications",h.shadow_broader_core_principle_falsifications||0],["tentative candidates waiting for evidence",h.shadow_holds||0]]);
   return `<section class="project-status-strip current"><div class="project-status-copy"><b>${selectedPaper?(language==="zh"?"当前选中论文 · STRI":"Current selected paper · STRI"):(language==="zh"?`当前科研状态${asOf?` · ${asOf}`:""}`:`Current research state${asOf?` · ${asOf}`:""}`)}</b><span>${message}</span></div><dl class="project-status-metrics">${statusLabels.map(([label,value])=>`<div><dt>${label}</dt><dd>${value}</dd></div>`).join("")}</dl></section>`;
 }
 function pageHeader(config) {
@@ -1692,8 +1694,15 @@ function currentParentDecisionRecord(terminal) {
     detail: revived.gpu0?.evidence || revived.next_action || terminal.current_fact || terminal.terminal_reason || {},
   };
 }
+function canonicalResearchItemByCode(code) {
+  return (window.RESEARCH_ITEM_STATE?.research_items || []).find((row) => row.code === code) || null;
+}
 function humanParentFinalState(terminal) {
   if (!terminal) return "";
+  const canonical = canonicalResearchItemByCode(terminal.code);
+  if (canonical?.scientific_state === "HOLD") return "hold";
+  if (canonical?.scientific_state === "MERGED") return "merge";
+  if (canonical?.scientific_state === "STOPPED") return "stop";
   if (terminal.terminal_state === "merge") return "merge";
   if (String(currentParentDecisionRecord(terminal).decision || "").startsWith("STOP_")) return "stop";
   return terminal.terminal_state || "";
@@ -1702,6 +1711,7 @@ function humanParentFinalStatusLabel(status) {
   const labels = {
     p0:{zh:"历史：曾进入 P0",en:"Historical: entered P0"},
     "p0-ready":{zh:"历史：曾达到 P0-ready",en:"Historical: reached P0-ready"},
+    hold:{zh:"暂缓 · 等待新证据",en:"HOLD · waiting for new evidence"},
     merge:{zh:"已合并",en:"Merged"},
     drop:{zh:"历史：曾停止",en:"Historical: previously stopped"},
     stop:{zh:"当前已停止",en:"Currently stopped"},
@@ -1714,6 +1724,7 @@ function humanParentFinalSummary() {
     human_parents: states.length,
     p0: states.filter(state => state === "p0").length,
     p0_ready: states.filter(state => state === "p0-ready").length,
+    hold: states.filter(state => state === "hold").length,
     merge: states.filter(state => state === "merge").length,
     drop: states.filter(state => state === "drop").length,
     stop: states.filter(state => state === "stop").length,
@@ -1838,6 +1849,7 @@ function humanReviewStatusLabel(status) {
 }
 function humanReviewStatusTone(status) {
   if (status === "p0" || status === "p0-ready") return "ready";
+  if (status === "hold") return "paused";
   if (status === "stop") return "dropped";
   if (status === "merge") return "merged";
   if (status === "drop") return "dropped";
@@ -2273,7 +2285,7 @@ function renderDiscussedIdeaBank() {
   const bank = iclrIdeaBank();
   const review = humanReviewData();
   const byId = new Map((bank.passed_ideas || []).map((idea) => [idea.id, idea]));
-  const statuses = ["stop","merge"];
+  const statuses = ["hold","stop","merge"];
   const all = Object.entries(review.ideas || {}).map(([id,meta]) => {
     const terminal = terminalParentState(id);
     return {id,meta:{...meta,status:terminal ? humanParentFinalState(terminal) : meta.status,code:terminal?.code || meta.code,group:terminal?.group || meta.group},idea:byId.get(id)};
@@ -2291,7 +2303,7 @@ function renderDiscussedIdeaBank() {
   const terminalLedger = humanTerminalState();
   const canonicalDate = terminalLedger.decision_date || canonicalHumanReviewData().review_date || review.review_date || "2026-08-11";
   const terminalSummary = humanParentFinalSummary();
-  const finalSummary = `<div class="human-final-summary terminal-summary"><div><b>${terminalSummary.stop || 0}</b><span>${language === "zh" ? "当前已停止" : "currently stopped"}</span></div><div><b>${terminalSummary.merge || 0}</b><span>${language === "zh" ? "当前已合并" : "currently merged"}</span></div><div><b>0</b><span>${language === "zh" ? "当前 P0-ready" : "current P0-ready"}</span></div><div><b>0</b><span>${language === "zh" ? "可启动正式实验" : "launchable formal experiments"}</span></div><small>${language === "zh" ? `当前最终状态 · ${canonicalDate}：停止 20 / 合并 6；历史 P0、P0-ready 与 DROP 只作里程碑。` : `Current final state · ${canonicalDate}: 20 stopped / 6 merged; historical P0, P0-ready, and DROP remain milestones only.`}</small></div>`;
+  const finalSummary = `<div class="human-final-summary terminal-summary"><div><b>${terminalSummary.hold || 0}</b><span>${language === "zh" ? "当前暂缓" : "currently on hold"}</span></div><div><b>${terminalSummary.stop || 0}</b><span>${language === "zh" ? "当前已停止" : "currently stopped"}</span></div><div><b>${terminalSummary.merge || 0}</b><span>${language === "zh" ? "当前已合并" : "currently merged"}</span></div><div><b>0</b><span>${language === "zh" ? "可启动正式实验" : "launchable formal experiments"}</span></div><small>${language === "zh" ? `当前科学状态 · ${canonicalDate}：HOLD 4 / STOP 16 / MERGED 6；历史 P0、P0-ready 与 DROP 只作里程碑。` : `Current scientific state · ${canonicalDate}: 4 HOLD / 16 STOPPED / 6 MERGED; historical P0, P0-ready, and DROP remain milestones only.`}</small></div>`;
   return `<section class="panel human-review-overview"><div class="idea-panel-heading"><div><b class="human-overview-kicker">${language === "zh" ? `H1 · ${esc(canonicalDate)} · 历史谱系` : `H1 · ${esc(canonicalDate)} · HISTORICAL LINEAGE`}</b><p class="section-intro">${language === "zh" ? "这一章保留人工冻结终态，同时单独呈现历史 P0 生命周期、最新实验处置与当前执行权限；三者不能互相覆盖。" : "This chapter preserves the frozen human terminal state while separating historical P0 lifecycle, latest evidence disposition, and current execution authority."}</p></div><strong>${all.length} ${language === "zh" ? "个历史父方向" : "historical parents"}</strong></div><div class="human-review-stats">${statuses.map((status) => `<div class="human-stat human-stat-${humanReviewStatusTone(status)}"><b>${counts[status] || 0}</b><span>${esc(humanParentFinalStatusLabel(status))}</span></div>`).join("")}</div>${finalSummary}</section>${renderHumanReviewMethodology()}${groups}`;
 }
 function supplementalGroupId(idea) {
@@ -2832,6 +2844,18 @@ function renderResearchBriefingGuide(inventory) {
   return `<section class="panel research-briefing-guide" id="briefing-guide"><div class="briefing-guide-head"><div><div class="eyebrow">${language==="zh"?"师兄汇报视图":"SENIOR-LABMATE BRIEFING"}</div><h2 data-toc="false">${language==="zh"?"先讲研究判断，再看实验日志":"Research judgments first; experiment logs second"}</h2><p>${language==="zh"?"默认视图把每个方向压缩成四个问题：想做什么、为什么现在不继续、学到了什么、什么情况下重开。原始状态码、门禁、数值、人工意见和实验协议都保留在卡片的技术审计层。":"The default view reduces every direction to four questions: what it tried, why it is not continuing, what was learned, and what would reopen it. Raw codes, gates, metrics, human feedback, and protocols remain in the technical audit layer."}</p></div><div class="briefing-mode-switch" role="group" aria-label="${language==="zh"?"阅读模式":"Reading mode"}"><button class="briefing-mode-btn active" data-briefing-mode="brief" aria-pressed="true">${language==="zh"?"汇报视图":"Briefing"}</button><button class="briefing-mode-btn" data-briefing-mode="audit" aria-pressed="false">${language==="zh"?"完整审计":"Full audit"}</button></div></div><div class="briefing-lessons"><article><b>${language==="zh"?"结论 1 · 复杂不等于新增价值":"Lesson 1 · Complexity is not added value"}</b><p>${language==="zh"?"多条路线不是“完全没用”，而是被使用相同信息的简单规则追平，因此不能继续主张独立机制贡献。":"Many routes were not useless; they were matched by simpler rules using the same information, eliminating the standalone mechanism claim."}</p></article><article><b>${language==="zh"?"结论 2 · 先验证底座，再验证高级方法":"Lesson 2 · Qualify the substrate first"}</b><p>${language==="zh"?"如果更新器几乎产不出有效更新，或数据没有足够差异，负结果不能判方法失败，只能停止当前实验实例。":"If an updater rarely produces effective changes or the data lack variation, a negative result stops the current instance rather than falsifying the method."}</p></article><article><b>${language==="zh"?"结论 3 · 历史阶段不是当前权限":"Lesson 3 · Historical stage is not current authority"}</b><p>${language==="zh"?"历史 P0、P0-ready、Paper Design 和 ADVANCE 都保留为谱系；当前真正可执行的正式实验仍是 0。":"Historical P0, P0-ready, Paper Design, and ADVANCE remain lineage; currently launchable formal experiments remain zero."}</p></article></div><h3 data-toc="false">${language==="zh"?"停止原因只看六类":"Six plain-language stop reasons"}</h3><div class="briefing-taxonomy-grid">${taxonomy}</div><small class="briefing-inventory-note">${language==="zh"?`以下仍完整覆盖 ${inventory.total} 个 A–G 去重研究对象；通俗分类不会改写任何原始科学裁决。`:`The ledger below still covers all ${inventory.total} deduplicated A–G objects; plain-language categories never overwrite the scientific adjudication.`}</small></section>`;
 }
 function canonicalGroupInventory(groupId,parents,independent,closedCounts={}) {
+  const projection=window.RESEARCH_ITEM_STATE;
+  if(projection?.research_items?.length){
+    const items=projection.research_items.filter(row=>row.category===groupId);
+    const parent=items.filter(row=>row.source_kind==="parent").length;
+    const related=items.filter(row=>["independent_method","paper_first","safety"].includes(row.source_kind)).length;
+    const closed=items.filter(row=>row.source_kind==="shadow_closed").length;
+    const context=items.filter(row=>row.source_kind==="paper_source").length
+      +(projection.experiment_records||[]).filter(row=>row.portfolio_context&&String(row.portfolio_code||"").startsWith(`${groupId}-`)).length
+      +(projection.evidence_contexts||[]).filter(row=>row.portfolio_context&&row.category===groupId).length;
+    const canonicalTotal=Number(projection.summary?.by_category?.[groupId]?.portfolio_total||0);
+    return {parent,related,context,closed,total:canonicalTotal||parent+related+context+closed};
+  }
   const parent=parents.filter(row=>row.meta.group===groupId).length;
   const related=independent.filter(row=>(row.idea.group||supplementalGroupId(row.idea))===groupId).length+(CANONICAL_PF_GROUPS[groupId]||[]).length+(groupId==="G"?5:0);
   const context=CANONICAL_CONTEXT_GROUP_COUNTS[groupId]||0;
@@ -2843,7 +2867,8 @@ function canonicalInventorySummary(groups,parents,independent) {
   const closureSummary=window.closedCandidateRecordSummary?window.closedCandidateRecordSummary():{records:0,merged:0,standalone:0};
   const byGroup=Object.fromEntries(groups.map(group=>[group.id,canonicalGroupInventory(group.id,parents,independent,closedCounts)]));
   const sum=key=>Object.values(byGroup).reduce((n,row)=>n+(row[key]||0),0);
-  return {parent:sum("parent"),related:sum("related"),context:sum("context"),closed:sum("closed"),total:sum("total"),closureRecords:closureSummary.records||0,mergedClosures:closureSummary.merged||0,byGroup};
+  const canonical=window.RESEARCH_ITEM_STATE?.summary||{};
+  return {parent:sum("parent"),related:sum("related"),context:sum("context"),closed:sum("closed"),total:Number(canonical.portfolio_objects||sum("total")),closureRecords:closureSummary.records||0,mergedClosures:closureSummary.merged||0,byGroup};
 }
 function canonicalIdeaGroups() {
   const base=(humanReviewData().groups||[]).map(group=>({...group}));
@@ -2865,7 +2890,7 @@ function canonicalParentRows() {
   }).filter(row=>row.idea);
 }
 function canonicalStatusControls(rows=[]) {
-  const statuses=["stop","merge"];
+  const statuses=["hold","stop","merge"];
   return `<div class="canonical-filter-bar"><div><b>${language==="zh"?"筛选 26 个父级研究方向的当前最终状态":"Filter the 26 parent ideas by current final state"}</b><span>${language==="zh"?"P0、P0-ready 与历史 DROP 只作为卡片内的历史里程碑，不再充当当前状态；该筛选不会隐藏其他研究对象。":"P0, P0-ready, and historical DROP remain milestones inside cards rather than current states; this filter does not hide other research objects."}</span></div><div class="canonical-filter-actions">${["all",...statuses].map((status,index)=>{
     const count=status==="all"?rows.length:rows.filter(row=>row.meta.status===status).length;
     const label=status==="all"?(language==="zh"?"全部父级研究方向":"All parent ideas"):humanParentFinalStatusLabel(status);
@@ -2888,19 +2913,19 @@ function renderCanonicalRelatedBank(group,independent) {
 }
 function renderCanonicalIdeaGroup(group,parents,independent) {
   const rows=parents.filter(row=>row.meta.group===group.id).sort((a,b)=>String(a.meta.code).localeCompare(String(b.meta.code),undefined,{numeric:true}));
-  const stopRows=rows.filter(row=>row.meta.status==="stop"), mergeRows=rows.filter(row=>row.meta.status==="merge");
+  const holdRows=rows.filter(row=>row.meta.status==="hold"), stopRows=rows.filter(row=>row.meta.status==="stop"), mergeRows=rows.filter(row=>row.meta.status==="merge");
   const renderParents=(items)=>items.map((row,index)=>`<div class="canonical-parent-item" data-canonical-status="${esc(row.meta.status)}" data-canonical-group="${esc(group.id)}">${renderHumanReviewedIdeaCard(row.idea,row.meta,index)}</div>`).join("");
-  const stopCards=renderParents(stopRows), mergeCards=renderParents(mergeRows);
+  const holdCards=renderParents(holdRows), stopCards=renderParents(stopRows), mergeCards=renderParents(mergeRows);
   const context=window.renderCategorizedResearchContext?window.renderCategorizedResearchContext(group.id):"";
   const safety=group.id==="G"&&window.renderAgentSafetyProgram?window.renderAgentSafetyProgram():"";
   const related=renderCanonicalRelatedBank(group,independent);
   const closed=window.renderClosedCandidateIdeas?window.renderClosedCandidateIdeas(group.id):"";
-  const counts={stop:stopRows.length,merge:mergeRows.length};
+  const counts={hold:holdRows.length,stop:stopRows.length,merge:mergeRows.length};
   const inventory=canonicalGroupInventory(group.id,parents,independent,window.closedCandidateCategoryCounts?window.closedCandidateCategoryCounts():{});
-  const terminalLine=inventory.parent?(language==="zh"?`父级方向当前终态：停止 ${counts.stop||0} · 合并 ${counts.merge||0}`:`Current parent states: stopped ${counts.stop||0} · merged ${counts.merge||0}`):(group.id==="G"?(language==="zh"?"G-1 支持层停止（可条件重开）· G-2—G-5 已关闭":"G-1 support stop (conditionally reopenable) · G-2—G-5 closed"):"");
+  const terminalLine=inventory.parent?(language==="zh"?`父级方向当前科学状态：暂缓 ${counts.hold||0} · 停止 ${counts.stop||0} · 合并 ${counts.merge||0}`:`Current parent scientific states: hold ${counts.hold||0} · stopped ${counts.stop||0} · merged ${counts.merge||0}`):(group.id==="G"?(language==="zh"?"G-1 支持层暂缓（可条件重开）· G-2—G-5 已关闭":"G-1 support HOLD (conditionally reopenable) · G-2—G-5 closed"):"");
   const insight=CATEGORY_BRIEFING_ZH[group.id]||{};
   const categoryBriefing=language==="zh"?`<div class="canonical-category-briefing"><section><b>这类在研究什么</b><p>${esc(insight.focus||textOf(group.question))}</p></section><section><b>这一类目前的总体结论</b><p>${esc(insight.reason||"以每个编号卡片的当前终态为准。")}</p></section><section><b>留下了什么</b><p>${esc(insight.survives||"保留有效组件、审计规则与负证据。")}</p></section></div>`:`<div class="canonical-category-briefing"><section><b>Research focus</b><p>${textOf(group.question)}</p></section><section><b>Current category conclusion</b><p>See each ResearchItem's current scientific decision and decisive evidence.</p></section><section><b>What survives</b><p>Useful components, audit rules, and negative evidence remain preserved.</p></section></div>`;
-  const currentBody=`${context}${safety}` || `<div class="research-category-empty">${language==="zh"?"当前没有正在推进或等待决定性证据的 ResearchItem；如有新证据，按各卡片重开条件重新进入。":"No ResearchItem is currently advancing or awaiting decisive evidence; new evidence must satisfy the item-specific reopen condition."}</div>`;
+  const currentBody=`${holdCards?`<div class="canonical-parent-list">${holdCards}</div>`:""}${context}${safety}` || `<div class="research-category-empty">${language==="zh"?"当前没有正在推进或等待决定性证据的 ResearchItem；如有新证据，按各卡片重开条件重新进入。":"No ResearchItem is currently advancing or awaiting decisive evidence; new evidence must satisfy the item-specific reopen condition."}</div>`;
   const concludedBody=`${stopCards?`<div class="canonical-parent-list">${stopCards}</div>`:""}${closed}` || `<div class="research-category-empty">${language==="zh"?"本类暂无已形成明确终态的 ResearchItem。":"No ResearchItem in this category has a clear terminal decision yet."}</div>`;
   const assetBody=`${mergeCards?`<div class="canonical-parent-list">${mergeCards}</div>`:""}${related}` || `<div class="research-category-empty">${language==="zh"?"本类暂无已合并或沉淀的方法资产。":"No merged or retained method asset in this category."}</div>`;
   const lane=(kind,titleZh,titleEn,noteZh,noteEn,body)=>`<section class="research-category-lane lane-${kind}"><header><div><span>${kind==="current"?"01":kind==="concluded"?"02":"03"}</span><div><h3 data-toc="false">${language==="zh"?titleZh:titleEn}</h3><p>${language==="zh"?noteZh:noteEn}</p></div></div></header><div class="research-category-lane-body">${body}</div></section>`;
@@ -2908,7 +2933,7 @@ function renderCanonicalIdeaGroup(group,parents,independent) {
 }
 function renderCanonicalIdeaLedger(groups=canonicalIdeaGroups(),parents=canonicalParentRows(),independent=canonicalIndependentRows(),inventory=canonicalInventorySummary(groups,parents,independent)) {
   const terminal=humanParentFinalSummary();
-  const terminalSummary=`<div class="human-final-summary canonical-terminal-summary"><div><b>${terminal.stop||0}</b><span>${language==="zh"?"当前已停止":"currently stopped"}</span></div><div><b>${terminal.merge||0}</b><span>${language==="zh"?"当前已合并":"currently merged"}</span></div><div><b>0</b><span>${language==="zh"?"当前 P0-ready":"current P0-ready"}</span></div><div><b>0</b><span>${language==="zh"?"可启动正式实验":"launchable formal experiments"}</span></div><small>${language==="zh"?"这是 26 个父级研究方向的当前最终状态：20 个停止、6 个合并。历史上曾进入 P0、曾达到 P0-ready 或曾从 DROP 重开，只在各卡片的历史里程碑中保留。":"This is the current final split for the 26 parent ideas: 20 stopped and 6 merged. Historical P0, P0-ready, and revived-from-DROP milestones remain inside each card."}</small></div>`;
+  const terminalSummary=`<div class="human-final-summary canonical-terminal-summary"><div><b>${terminal.hold||0}</b><span>${language==="zh"?"当前暂缓":"currently on hold"}</span></div><div><b>${terminal.stop||0}</b><span>${language==="zh"?"当前已停止":"currently stopped"}</span></div><div><b>${terminal.merge||0}</b><span>${language==="zh"?"当前已合并":"currently merged"}</span></div><div><b>0</b><span>${language==="zh"?"可启动正式实验":"launchable formal experiments"}</span></div><small>${language==="zh"?"这是 26 个父级 ResearchItem 的当前科学状态：4 个 HOLD、16 个 STOP、6 个 MERGED。历史 P0、P0-ready 与 DROP 只作为里程碑，不再覆盖当前科学结论。":"Current scientific state for the 26 parent ResearchItems: 4 HOLD, 16 STOPPED, and 6 MERGED. Historical P0, P0-ready, and DROP remain milestones only."}</small></div>`;
   const paperFirstSummary=window.renderPaperFirstIdeaIncubation?window.renderPaperFirstIdeaIncubation().split('<div class="paper-incubation-list">')[0]:"";
   const appendix=`<section class="panel canonical-audit-appendix"><h2 id="canonical-audit-appendix">${language==="zh"?"审计说明：怎样理解阶段、停止与重开":"Audit guide: how to read stage, stop, and reopen"}</h2><div class="canonical-audit-grid"><section><b>${language==="zh"?"阶段不等于权限":"Stage is not authority"}</b><p>${language==="zh"?"历史上进入 P0，只说明当时形成过可证伪合同；当前是否能运行，仍以正式实验权限为准。":"Historical P0 means a falsifiable contract once existed; current execution still requires formal authority."}</p></section><section><b>${language==="zh"?"失败必须分层":"Failures stay typed"}</b><p>${language==="zh"?"执行、协议、证据支持、方法实现和核心原理不会互相替代；只有核心原理级裁决才是科学死路。":"Execution, protocol, support, method-realization, and core-principle failures do not substitute for one another; only a core-principle ruling is a scientific dead end."}</p></section><section><b>${language==="zh"?"重开需要新证据":"Reopen requires new evidence"}</b><p>${language==="zh"?"换名字、换术语或重复同一实验不足以重开；必须满足卡片中写明的新增证据条件。":"Renaming or repeating the same test is insufficient; the card-specific new-evidence condition must be met."}</p></section></div>${paperFirstSummary}${renderHumanReviewMethodology()}</section>`;
   return `${renderResearchBriefingGuide(inventory)}${renderCanonicalCategoryIndex(groups,parents,independent,inventory)}${terminalSummary}${canonicalStatusControls(parents)}${groups.map(group=>renderCanonicalIdeaGroup(group,parents,independent)).join("")}${appendix}`;
@@ -2982,8 +3007,8 @@ function renderHome(config) {
   const figure = renderOverviewFigure(config, language === "zh" ? "Agent 自进化知识地图" : "Agent self-evolution knowledge map");
   const sortedSurfaces = Object.entries(counts).sort((a, b) => b[1] - a[1]);
   const maxSurface = Math.max(1, ...sortedSurfaces.map(([, count]) => count));
-  const homeStatus = projectStatusState().headline || {};
-  const stats = `<div class="grid"><div class="stat"><b>${catalog.length || DATA.length}</b><span>${language === "zh" ? "篇去重后的研究条目" : "deduplicated research records"}</span></div><div class="stat"><b>${portfolioDirections().length || 10}</b><span>${language === "zh" ? "个研究方向" : "research directions"}</span></div><div class="stat"><b>${homeStatus.paper_ready ?? 0}</b><span>${language === "zh" ? "篇当前论文就绪" : "current paper-ready paper"}</span></div><div class="stat"><b>${homeStatus.canonical_live_ideas ?? 0}</b><span>${language === "zh" ? "个正式活跃 Idea" : "canonical live ideas"}</span></div></div>`;
+  const homeStatus = projectStatusState().headline || {}, homePaperSummary=canonicalPaperRegistry().summary||{};
+  const stats = `<div class="grid"><div class="stat"><b>${catalog.length || DATA.length}</b><span>${language === "zh" ? "篇去重后的研究条目" : "deduplicated research records"}</span></div><div class="stat"><b>${portfolioDirections().length || 10}</b><span>${language === "zh" ? "个研究方向" : "research directions"}</span></div><div class="stat"><b>${homePaperSummary.submission_ready ?? 0}</b><span>${language === "zh" ? "篇真正投稿就绪" : "truly submission-ready papers"}</span></div><div class="stat"><b>${homeStatus.canonical_live_ideas ?? 0}</b><span>${language === "zh" ? "个正式活跃 Idea" : "canonical live ideas"}</span></div></div>`;
   const distribution = `<section class="panel"><h3 id="live-landscape">${language === "zh" ? "动态研究分布" : "Live research landscape"}</h3><p class="section-intro">${language === "zh" ? "根据当前合并文献库自动统计；自动分类用于导航，核心专题仍经过人工核验。" : "Computed from the current merged corpus. Automatic categories support navigation; core topic synthesis remains manually reviewed."}</p><div class="distribution-list">${sortedSurfaces.map(([surface, count]) => `<a class="distribution-row" href="bibliography.html?method=${encodeURIComponent(surface)}#searchable-corpus"><span>${esc(localizedUpdateTarget(surface))}</span><i><b style="width:${Math.max(4, count / maxSurface * 100)}%"></b></i><strong>${count}</strong></a>`).join("")}</div></section>`;
   const understand = `${figure}${stats}<div class="framework-grid">${cardsFor(chapters[0])}</div>${distribution}${(config.sections || []).slice(0,2).map((section,index) => renderSectionForPage(section,index,pageId,"home-topic-section",3)).join("")}`;
   const select = `<div class="framework-grid">${cardsFor(chapters[1])}</div>`;

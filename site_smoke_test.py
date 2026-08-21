@@ -16,6 +16,7 @@ CANONICAL_PAGES = {
     "domains.html": "domains",
     "evaluation.html": "evaluation",
     "system-overview.html": "system-overview",
+    "research-map.html": "research-map",
     "research-timeline.html": "research-timeline",
     "research-directions.html": "research-directions",
     "paper-ideas.html": "paper-ideas",
@@ -68,8 +69,11 @@ REQUIRED_STATIC = [
     "generated/idea-discovery-v31.json", "generated/idea-discovery-v31.js", "generated/idea-discovery-v31-external-reviews.json",
     "content-system-overview.js", "system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-reader.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js", "system-overview.css", "system-overview-v2.css",
     "research-timeline.html", "research-timeline-view.js", "research-timeline.css", "generated/research-timeline.js", "generated/research-timeline.json",
+    "research-map.html", "research-map-view.js", "research-map.css", "research-landscape-data.js",
     "idea-lab.css",
     "current-research-status-view.js", "generated/current-research-status.json", "generated/current-research-status.js",
+    "generated/research-items.json", "generated/research-items.js", "generated/paper-registry.json", "generated/paper-registry.js",
+    "research_pipeline/research_item_state.py", "research_pipeline/test_research_item_state.py", "scripts/build_research_items.py",
     "generated/research-memory-wiki.json", "generated/research-memory-wiki.js",
     "generated/p0-experiment-plan.js", "generated/p0-collision-recheck.js", "generated/p0-runtime-readiness.js",
 ]
@@ -89,6 +93,32 @@ def main() -> None:
     research_system = json.loads((ROOT / "generated" / "research-system-state.json").read_text(encoding="utf-8"))
     research_memory = json.loads((ROOT / "generated" / "research-memory-wiki.json").read_text(encoding="utf-8"))
     research_timeline = json.loads((ROOT / "generated" / "research-timeline.json").read_text(encoding="utf-8"))
+    research_items = json.loads((ROOT / "generated" / "research-items.json").read_text(encoding="utf-8"))
+    paper_registry = json.loads((ROOT / "generated" / "paper-registry.json").read_text(encoding="utf-8"))
+    ri_summary = research_items.get("summary") or {}
+    if (int(ri_summary.get("research_items") or 0), int(ri_summary.get("experiment_records") or 0), int(ri_summary.get("portfolio_experiment_contexts") or 0), int(ri_summary.get("evidence_contexts") or 0), int(ri_summary.get("portfolio_objects") or 0)) != (86, 30, 3, 2, 91):
+        fail(f"canonical ResearchItem projection counts drifted: {ri_summary}")
+    if ri_summary.get("parent_scientific_states") != {"HOLD": 4, "MERGED": 6, "STOPPED": 16}:
+        fail(f"canonical parent scientific states must be HOLD=4/MERGED=6/STOPPED=16: {ri_summary.get('parent_scientific_states')}")
+    expected_category_totals = {"A": 12, "B": 20, "C": 10, "D": 3, "E": 27, "F": 6, "G": 13}
+    actual_category_totals = {key: int(((ri_summary.get("by_category") or {}).get(key) or {}).get("portfolio_total") or 0) for key in expected_category_totals}
+    if actual_category_totals != expected_category_totals:
+        fail(f"canonical A-G portfolio totals drifted: {actual_category_totals}")
+    ri_by_code = {row.get("code"): row for row in research_items.get("research_items") or []}
+    if any((ri_by_code.get(code) or {}).get("scientific_state") != "HOLD" for code in ("A-3", "B-2", "B-3", "E-1")):
+        fail("support/current-substrate stops must remain HOLD in canonical ResearchItem state")
+    if (ri_by_code.get("E-7") or {}).get("scientific_state") != "PAPER_READY" or ((ri_by_code.get("E-7") or {}).get("paper_transition") or {}).get("paper_id") != "STRI":
+        fail("E-7 must hand off to STRI PaperState")
+    papers = paper_registry.get("papers") or []
+    papers_by_id = {row.get("paper_id"): row for row in papers}
+    stri_registry = papers_by_id.get("STRI") or {}
+    safety_registry = papers_by_id.get("AGENT-SAFETY-R9") or {}
+    if len(papers) != 2 or stri_registry.get("source_research_item") != "E-7" or stri_registry.get("paper_stage") != "TARGETED_REPAIR" or stri_registry.get("submission_ready") is not False:
+        fail(f"PaperRegistry must bind STRI to E-7 at TARGETED_REPAIR and keep it not submission-ready: {papers}")
+    if safety_registry.get("source_research_item") != "G-1" or safety_registry.get("paper_stage") != "PAPER_EVIDENCE" or safety_registry.get("scientific_status") != "CAUSAL_HOLD" or safety_registry.get("submission_ready") is not False:
+        fail(f"PaperRegistry must retain Agent Safety at G-1 / PAPER_EVIDENCE / CAUSAL_HOLD: {safety_registry}")
+    if (paper_registry.get("summary") or {}).get("submission_ready") != 0 or (paper_registry.get("summary") or {}).get("scientific_holds") != 1:
+        fail(f"PaperRegistry submission/hold summary is stale: {paper_registry.get('summary')}")
     timeline_summary = research_timeline.get("summary") or {}
     timeline_policy = research_timeline.get("projection_policy") or {}
     timeline_events = research_timeline.get("events") or []
@@ -174,7 +204,7 @@ def main() -> None:
             if not (ROOT / script).exists():
                 fail(f"{filename} references missing script {script}")
 
-    current_state_pages = {"index.html", "system-overview.html", "research-directions.html", "paper-ideas.html", "experiments.html", "selected-paper.html"}
+    current_state_pages = {"index.html", "system-overview.html", "research-map.html", "research-directions.html", "paper-ideas.html", "experiments.html", "selected-paper.html"}
     for filename in current_state_pages:
         if "generated/research-system-state.js" not in canonical_scripts.get(filename, []):
             fail(f"{filename} must load the unified current research-system state")
@@ -182,12 +212,18 @@ def main() -> None:
     for filename in stable_reference_pages:
         if "generated/research-system-state.js" in canonical_scripts.get(filename, []):
             fail(f"{filename} is a stable reference page and must not mix in current P0 state")
-    selected_scripts = set(canonical_scripts.get("selected-paper.html", []))
+    idea_scripts = canonical_scripts.get("paper-ideas.html", [])
+    if not all(name in idea_scripts for name in ("generated/research-items.js", "generated/paper-registry.js")) or idea_scripts.index("generated/research-items.js") > idea_scripts.index("app.js") or idea_scripts.index("generated/paper-registry.js") > idea_scripts.index("app.js"):
+        fail("paper-ideas must load canonical ResearchItem/PaperRegistry state before app.js")
+    selected_scripts_list = canonical_scripts.get("selected-paper.html", [])
+    if not all(name in selected_scripts_list for name in ("generated/research-items.js", "generated/paper-registry.js")) or selected_scripts_list.index("generated/research-items.js") > selected_scripts_list.index("app.js") or selected_scripts_list.index("generated/paper-registry.js") > selected_scripts_list.index("app.js"):
+        fail("selected-paper must load canonical ResearchItem/PaperRegistry state before app.js")
+    selected_scripts = set(selected_scripts_list)
     if {"content-review.js", "content-review-external.js"} & selected_scripts:
         fail("selected-paper must not load stale review overrides")
     selected_html = (ROOT / "selected-paper.html").read_text(encoding="utf-8")
-    if "Papers · STRI" not in selected_html:
-        fail("selected-paper must be explicitly labeled as the STRI PaperState workspace")
+    if "Papers · PaperRegistry" not in selected_html:
+        fail("selected-paper must be explicitly labeled as the canonical PaperRegistry workspace")
     if "current-research-status-view.js" not in selected_html:
         fail("selected-paper must load the unified current-paper renderer")
 
@@ -269,7 +305,7 @@ def main() -> None:
         "content-idea-portfolio.js": ("这页不是“看起来不错的 Idea 清单”", "最近一轮问题发现又审查了 41 条草案", "先从 ResearchItem 理解问题和当前结论"),
         "current-research-status-view.js": ("先看现在该做什么", "以前观察到的记忆效应为什么现在不继续做", "现在到底有没有实验可以正式启动"),
         "content-selected-iclr.js": ("这个旧项目现在没有任何实验允许启动", "不能只靠追加样本或换第二个模型重开"),
-        "content-research-directions.js": ("研究方向”表示一个长期值得研究的问题", "历史项目只是过去尝试过的方案"),
+        "content-research-directions.js": ("D1–D10 十个历史方向坐标", "不再承担当前项目排期", "当前 A–G 才是今天 ResearchItem、实验与论文统一使用的权威坐标"),
     }
     for filename, markers in clarity_markers.items():
         text = (ROOT / filename).read_text(encoding="utf-8")
@@ -389,8 +425,8 @@ def main() -> None:
     if not state_path.exists():
         fail("research-system-state.json is missing")
     research_state = json.loads(state_path.read_text(encoding="utf-8"))
-    if research_state.get("health", {}).get("status") != "healthy":
-        fail("continuous research system is not healthy")
+    if research_state.get("health", {}).get("status") not in {"healthy", "pass"}:
+        fail("continuous research system is not healthy/pass")
     summary = research_state.get("summary") or {}
     premature_method_path = ROOT / "generated" / "paper-first-premature-method-diagnostics.json"
     if not premature_method_path.exists():

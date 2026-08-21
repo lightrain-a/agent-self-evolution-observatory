@@ -122,6 +122,15 @@ def build() -> Path:
         cwd=ROOT,
         check=True,
     )
+    # Project the many append-only research artifacts into one read-only
+    # ResearchItem/PaperState model before the frontend is copied. This layer
+    # has no scientific or execution authority; it only resolves current-state
+    # presentation and cross-entity references.
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "build_research_items.py")],
+        cwd=ROOT,
+        check=True,
+    )
     # Rebuild the read-only timeline after current-state projection. On GitHub
     # runners the server-side Research Memory DB is absent, so the timeline
     # builder preserves the last committed zero-authority runtime snapshot.
@@ -254,6 +263,10 @@ def build() -> Path:
         OUTPUT / "generated" / "research-system-state.js",
         OUTPUT / "generated" / "current-research-status.js",
         OUTPUT / "generated" / "current-research-status.json",
+        OUTPUT / "generated" / "research-items.js",
+        OUTPUT / "generated" / "research-items.json",
+        OUTPUT / "generated" / "paper-registry.js",
+        OUTPUT / "generated" / "paper-registry.json",
         OUTPUT / "generated" / "paper-first-p0-f0-state.js",
         OUTPUT / "generated" / "paper-first-p0-f0-state.json",
         OUTPUT / "generated" / "paper-first-premature-method-diagnostics.js",

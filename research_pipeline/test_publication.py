@@ -17,6 +17,7 @@ class PublicationTest(unittest.TestCase):
     def test_volatile_metadata_is_removed_from_digest_input(self) -> None:
         payload = {
             "generated_at": "now",
+            "source_revision": "deadbeef",
             "summary": {"papers": 281},
             "automation": {
                 "daily": {"schedule": "02:15"},
@@ -28,9 +29,18 @@ class PublicationTest(unittest.TestCase):
         }
         normalized = _normalize(payload, root=True)
         self.assertNotIn("generated_at", normalized)
+        self.assertNotIn("source_revision", normalized)
         self.assertNotIn("latest_report", normalized["automation"])
         self.assertEqual(normalized["pilot_registry"]["phases"][0]["result"]["metrics"]["gain"], 1)
         self.assertNotIn("completed_at", normalized["pilot_registry"]["phases"][0]["result"])
+
+    def test_research_item_digest_ignores_source_revision(self) -> None:
+        left = '{"generated_at":"a","source_revision":"111111","summary":{"portfolio_objects":91}}'
+        right = '{"generated_at":"b","source_revision":"222222","summary":{"portfolio_objects":91}}'
+        self.assertEqual(
+            _normalized_text_digest("generated/research-items.json", left),
+            _normalized_text_digest("generated/research-items.json", right),
+        )
 
     def test_generated_js_digest_ignores_volatile_cycle_metadata(self) -> None:
         left = 'window.RESEARCH_SYSTEM_STATE = {"generated_at":"a","automation":{"daily":{"schedule":"02:15"},"latest_report":{"status":"pass","completed_at":"a"}},"lineage":{"nodes":[{"created_at":"a","id":"idea-a"}]},"pilot_registry":{"phases":[{"metrics":{"gain":1}}]}};\n'
@@ -51,6 +61,10 @@ class PublicationTest(unittest.TestCase):
             (
                 "generated/research-timeline.json",
                 "generated/research-timeline.js",
+                "generated/research-items.json",
+                "generated/research-items.js",
+                "generated/paper-registry.json",
+                "generated/paper-registry.js",
                 "generated/ai-consultation-clinic.json",
                 "generated/ai-consultation-clinic.js",
                 "generated/ai-consultation-automation.json",
@@ -175,6 +189,8 @@ class PublicationTest(unittest.TestCase):
         self.assertIn("generated/s2-literature.js", WEEKLY_ARTIFACTS)
         self.assertIn("generated/iclr-low-resource-ideas.json", WEEKLY_ARTIFACTS)
         self.assertIn("generated/paper-first-paper-design-backlog.json", DAILY_ARTIFACTS)
+        for artifact in ("generated/research-items.json", "generated/research-items.js", "generated/paper-registry.json", "generated/paper-registry.js"):
+            self.assertIn(artifact, DAILY_ARTIFACTS)
         for artifact in (
             "generated/paper-first-problem-search-portfolio-state.json",
             "generated/paper-first-problem-search-portfolio-state.js",

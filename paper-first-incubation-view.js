@@ -103,6 +103,7 @@
   const nearestLinks=(rows)=> (rows||[]).map(row=>{const ref=String(row.ref||""); const arxiv=ref.match(/arXiv:(\d+\.\d+)/i); const href=arxiv?`https://arxiv.org/abs/${arxiv[1]}`:"#"; return `<a href="${esc(href)}" target="_blank" rel="noopener"><b>${esc(row.title||ref)}</b><span>${esc(ref)}</span></a>`}).join("");
   const card=(row)=>{
     const canonical=canonicalPF(row.id);
+    const canonicalState=(window.RESEARCH_ITEM_STATE?.research_items||[]).find(item=>item.code===canonical.code)||{};
     const v=verdictMeta(row.verdict), promotion=promotionFor(row), promoted=!!promotion, design=designFor(row.id);
     const ideaId=promotion?.[0]||row.p0_idea_id||"", meta=promotion?.[1]||{}; const f0=f0For(ideaId);
     const badge=promoted?`${meta.code||row.p0_code||"P0"} · P0 ${f0?.decision||"F0_PENDING"}`:v.label;
@@ -117,10 +118,10 @@
     const pf2Method=row.id==="PF-2"?pf2MethodState():{};
     const pf357=pf357For(row.id)||{};
     const prematureMethod=prematureMethodFor(row.id)||{};
-    const latestDecision=pf1Problem.decision||pf2Method.decision||pf357.decision||design?.verdict||row.verdict||"";
-    const mergedCurrent=latestDecision==="MERGE_AS_CROSS_CUTTING_INVARIANT"||/STOP_PF(3|5|7)_STANDALONE_MERGE_/.test(latestDecision);
-    const blockedCurrent=/BLOCK/.test(latestDecision);
-    const stoppedCurrent=!mergedCurrent&&(/STOP|TERMINATED/.test(latestDecision)||blockedCurrent);
+    const latestDecision=canonicalState.decision_code||pf1Problem.decision||pf2Method.decision||pf357.decision||design?.verdict||row.verdict||"";
+    const mergedCurrent=canonicalState.scientific_state?canonicalState.scientific_state==="MERGED":latestDecision==="MERGE_AS_CROSS_CUTTING_INVARIANT"||/STOP_PF(3|5|7)_STANDALONE_MERGE_/.test(latestDecision);
+    const blockedCurrent=!canonicalState.scientific_state&&/BLOCK/.test(latestDecision);
+    const stoppedCurrent=canonicalState.scientific_state?canonicalState.scientific_state==="STOPPED":!mergedCurrent&&(/STOP|TERMINATED/.test(latestDecision)||blockedCurrent);
     const currentLabel=mergedCurrent
       ? pick(`当前已合并（${latestDecision}）`,`CURRENTLY MERGED (${latestDecision})`)
       : blockedCurrent ? pick(`当前已阻断（${latestDecision}）`,`CURRENTLY BLOCKED (${latestDecision})`)

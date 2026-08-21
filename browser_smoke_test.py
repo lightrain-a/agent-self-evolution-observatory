@@ -145,6 +145,13 @@ def main() -> None:
                 time.sleep(interval)
             return False
 
+        def ensure_language(target: str) -> None:
+            toggle = str(execute(session_id, "return document.querySelector('.language-toggle')?.textContent||'';") or "")
+            should_click = (target == "zh" and "中文" in toggle) or (target == "en" and "English" in toggle)
+            if should_click:
+                execute(session_id, "document.querySelector('.language-toggle')?.click();")
+                time.sleep(0.7)
+
         navigate("/index.html", 2)
         require(wait_until("return Number(document.querySelector('.stat b')?.textContent || 0) >= 100 && document.querySelectorAll('.citation-missing').length === 0;"), "curated catalog did not finish loading on home")
         home = execute(
@@ -157,7 +164,7 @@ def main() -> None:
               corpus: Number(document.querySelector('.stat b')?.textContent || 0)
             };""",
         )
-        require(home["nav"] == 11, f"expected 11 primary navigation targets including the Research Timeline, with experiments retained only as a deep-audit route, got {home['nav']}")
+        require(home["nav"] == 12, f"expected 12 primary navigation targets including the Current Research Map and Research Timeline, with experiments retained only as a deep-audit route, got {home['nav']}")
         require(home["figure"], "knowledge-map figure is missing")
         require(home["distribution"] >= 6, "live update-surface distribution is missing")
         require(home["missing"] == 0, "home contains unresolved citations")
@@ -426,9 +433,10 @@ def main() -> None:
             if page == "/evaluation.html":
                 require(result["resources"] == 2, "evaluation live resource indexes are incomplete")
             if page == "/selected-paper.html":
-                require("CURRENT SELECTED PAPER" in result["text"] and "Former Regression-Gated Self-Evolution workspace" in result["text"] and "No experiment from this old project is currently allowed to launch" in result["text"], "current STRI workspace or plain-language historical STOP archive is missing")
+                require("PAPER OUTPUT LEDGER" in result["text"] and "TARGETED_REPAIR" in result["text"] and "AGENT-SAFETY-R9" in result["text"] and "Former Regression-Gated Self-Evolution workspace" in result["text"] and "No experiment from this old project is currently allowed to launch" in result["text"], "canonical PaperRegistry or plain-language historical STOP archive is missing")
 
         navigate("/research-directions.html", 7)
+        ensure_language("en")
         direction_map = execute(
             session_id,
             """return {
@@ -457,16 +465,16 @@ def main() -> None:
         require(direction_map["evidenceCitations"] == 30 and direction_map["evidenceMethods"] == 30 and direction_map["evidenceFits"] == 30, "direction literature cards are incomplete")
         require(direction_map["missing"] == 0, "direction literature contains unresolved citations")
         require(direction_map["src"].endswith("agent-self-evolution-directions-en.svg"), "English direction figure is not active")
-        execute(session_id, "document.querySelector('.language-toggle')?.click();")
-        time.sleep(1)
+        ensure_language("zh")
         zh_state = execute(session_id, "return {src:document.querySelector('.overview-figure img')?.getAttribute('src')||'', text:document.querySelector('.direction-literature')?.textContent||''};")
         require(zh_state["src"].endswith("agent-self-evolution-directions-zh.svg"), "Chinese direction figure did not switch")
         require("代表论文" in zh_state["text"] and "方向关联" in zh_state["text"], "Chinese direction literature did not switch")
-        shell_zh = execute(session_id, """return {brand:[document.querySelector('.brand strong')?.textContent||'',document.querySelector('.brand span')?.textContent||''],nav:[...document.querySelectorAll('.nav-level1 span:first-child,.nav-level2')].map(x=>x.textContent.trim()),placeholder:document.querySelector('#site-search')?.getAttribute('placeholder')||'',status:document.querySelector('.project-status-strip')?.textContent||''};""")
+        shell_zh = execute(session_id, """return {brand:[document.querySelector('.brand strong')?.textContent||'',document.querySelector('.brand span')?.textContent||''],nav:[...document.querySelectorAll('.nav-level1 span:first-child,.nav-level2')].map(x=>x.textContent.trim()),placeholder:document.querySelector('#site-search')?.getAttribute('placeholder')||'',status:document.querySelector('.field-current-status-strip,.project-status-strip')?.textContent||''};""")
         require(shell_zh["brand"] == ["Agent 自进化","科研观测站"] and "开始阅读" in shell_zh["nav"] and "领域图谱" in shell_zh["nav"] and "研究规划" in shell_zh["nav"] and "文献" in shell_zh["nav"] and "Start Here" not in shell_zh["nav"] and shell_zh["placeholder"] == "搜索研究站内容…", f"shared shell did not fully switch to Chinese: {shell_zh}")
-        require(all(marker in shell_zh["status"] for marker in ("科学证据闭环论文","还缺的论文证据","通过正式问题检查的新研究问题","因缺证据暂缓的新现象","已关闭的精确候选表述","真正关闭到核心原理层","整个基准或现象也被判定不成立")), f"shared current-status strip is not plain-language Chinese: {shell_zh['status']}")
+        require(all(marker in shell_zh["status"] for marker in ("当前科研状态","可提交论文","正式新问题","可启动实验")), f"field-atlas current-status strip is not plain-language Chinese: {shell_zh['status']}")
 
         navigate("/paper-ideas.html", 7)
+        ensure_language("zh")
         idea_portfolio = execute(
             session_id,
             """return {
@@ -490,6 +498,9 @@ def main() -> None:
               legacyCurrentRows: document.querySelectorAll('#current-research-portfolio .current-research-table tbody tr').length,
               leadingPaperTracks: document.querySelectorAll('#current-research-portfolio .current-paper-track-card').length,
               currentStatus: window.CURRENT_RESEARCH_STATUS?.headline || {},
+              canonicalResearchSummary: window.RESEARCH_ITEM_STATE?.summary || {},
+              canonicalResearchItems: Object.fromEntries((window.RESEARCH_ITEM_STATE?.research_items || []).map(x=>[x.code,x.scientific_state])),
+              paperRegistry: window.PAPER_REGISTRY || {},
               striP0E: window.CURRENT_RESEARCH_STATUS?.stri_dynamic_evidence?.skillrl_p0e || {},
               legacyFinalPass: Number(window.RESEARCH_SYSTEM_STATE?.summary?.final_pass || 0),
               experimentStops: Number(window.RESEARCH_SYSTEM_STATE?.p0_decision_ledger?.summary?.experiment_stopped || 0),
@@ -504,24 +515,36 @@ def main() -> None:
         require(idea_portfolio["terminalGroups"] == 0 and idea_portfolio["terminalStats"] == 0, f"legacy terminal-status grouping must not compete with the A-G ResearchItem lanes: {idea_portfolio['terminalGroups']}/{idea_portfolio['terminalStats']}")
         require(idea_portfolio["legacyPreGpuBoards"] == 0 and idea_portfolio["legacyP0Entry"] == 0, "legacy Pre-GPU/P0-entry boards leaked back into canonical Paper Ideas")
         require(idea_portfolio["currentLedger"] == 1 and idea_portfolio["currentInventoryTotal"] == 91 and idea_portfolio["legacyCurrentRows"] == 0 and idea_portfolio["leadingPaperTracks"] == 1, f"complete ResearchItem accounting or PaperState handoff is incomplete, or the legacy current-status row table leaked back in: {idea_portfolio}")
+        crs=idea_portfolio["canonicalResearchSummary"]
+        require((crs.get("research_items"),crs.get("experiment_records"),crs.get("portfolio_experiment_contexts"),crs.get("evidence_contexts"),crs.get("portfolio_objects")) == (86,30,3,2,91) and crs.get("parent_scientific_states") == {"HOLD":4,"MERGED":6,"STOPPED":16}, f"canonical ResearchItem projection is missing or inconsistent: {crs}")
+        require(all(idea_portfolio["canonicalResearchItems"].get(code)=="HOLD" for code in ("A-3","B-2","B-3","E-1")) and idea_portfolio["canonicalResearchItems"].get("E-7")=="PAPER_READY" and idea_portfolio["canonicalResearchItems"].get("G-1")=="HOLD", f"canonical ResearchItem state authority drifted: {idea_portfolio['canonicalResearchItems']}")
+        registry_summary=idea_portfolio["paperRegistry"].get("summary") or {}
+        registry_papers={row.get("paper_id"):row for row in (idea_portfolio["paperRegistry"].get("papers") or [])}
+        require(registry_summary.get("papers") == 2 and registry_summary.get("submission_ready") == 0 and registry_summary.get("scientific_holds") == 1 and registry_papers.get("STRI",{}).get("source_research_item") == "E-7" and registry_papers.get("STRI",{}).get("paper_stage") == "TARGETED_REPAIR" and registry_papers.get("AGENT-SAFETY-R9",{}).get("source_research_item") == "G-1" and registry_papers.get("AGENT-SAFETY-R9",{}).get("scientific_status") == "CAUSAL_HOLD", f"Research Portfolio must load both canonical PaperStates: {idea_portfolio['paperRegistry']}")
         p0e=idea_portfolio["striP0E"]
         require(p0e.get("status") == "STOP_FIXED_POLICY_DYNAMIC_BRIDGE" and p0e.get("principle_disposition") == "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED" and p0e.get("persistent_principle_dead_end_certified") is False and p0e.get("stage2_locked") is True and p0e.get("new_gpu_authorized") is False, f"qualified STRI P0-E machine boundary is stale: {p0e}")
-        require("E-7c" in idea_portfolio["text"] and "这条额外路线已经停止继续扩实验" in idea_portfolio["text"] and "新 GPU=未授权" in idea_portfolio["text"], "STRI P0-E must stay visible as nested E-7c evidence rather than a peer Idea")
+        require("E-7c" in idea_portfolio["text"] and idea_portfolio["paperHandoffEvidence"] == 3 and p0e.get("stage2_locked") is True and p0e.get("new_gpu_authorized") is False, "STRI P0-E must stay a nested zero-authority E-7c evidence record rather than a peer Idea")
         cs=idea_portfolio["currentStatus"]
         require((cs.get("paper_ready"),cs.get("paper_quality_hold"),cs.get("paper_quality_evidence_debt"),cs.get("canonical_live_ideas"),cs.get("launchable_formal_experiments"),cs.get("legacy_p0_lifecycle")) == (1,0,0,0,0,27) and cs.get("shadow_qualification_ready") == expected_headline.get("shadow_qualification_ready") and int(cs.get("shadow_dead_ends") or 0) >= 0 and int(cs.get("shadow_holds") or 0) >= 0, f"current status invariants are wrong: rendered={cs} expected={expected_headline}")
         require(idea_portfolio["legacyFinalPass"] == 20 and idea_portfolio["experimentStops"] >= 16, f"historical lineage state is unexpectedly missing: {idea_portfolio}")
         require("Historical ICLR Paper Workspace" not in idea_portfolio["text"] and "Selected ICLR Paper Workspace" not in idea_portfolio["text"], "historical paper workspace content leaked into Paper Ideas")
         require((("当前科研状态" in idea_portfolio["text"] and "以前的记忆效应只保留为历史观察" in idea_portfolio["text"]) or ("Current research state" in idea_portfolio["text"] and "The earlier memory effect is historical only" in idea_portfolio["text"])) and "20 个当前 FINAL-PASS" not in idea_portfolio["text"], "Paper Ideas current-state explanation is incomplete or stale FINAL-PASS framing leaked into the current view")
-        require(all(marker in idea_portfolio["text"] for marker in ("科学证据闭环论文","还缺的论文证据","通过正式问题检查的新研究问题","正在做最小验证的新现象","因缺证据暂缓的新现象","现在允许启动的正式实验")), "Paper Ideas briefing-first current-status labels are incomplete")
+        require(all(marker in idea_portfolio["text"] for marker in ("真正投稿就绪论文","还缺的旧版论文证据","通过正式问题检查的新研究问题","正在做最小验证的新现象","因缺证据暂缓的新现象","现在允许启动的正式实验","TARGETED_REPAIR")), "Research Portfolio briefing-first canonical status labels are incomplete")
 
         navigate("/selected-paper.html", 4)
+        ensure_language("zh")
         selected = execute(session_id, """return {
           chapters: document.querySelectorAll('.page-chapter').length,
           currentSTRI: document.querySelectorAll('#selected-stri-current').length,
           archive: document.querySelectorAll('#historical-paper-archive').length,
           archiveOpen: document.querySelector('#historical-paper-archive')?.open === true,
           currentStatus: window.CURRENT_RESEARCH_STATUS?.headline || {},
-          currentPaper: window.CURRENT_RESEARCH_STATUS?.leading_paper_track || {},
+          currentPaper: (window.PAPER_REGISTRY?.papers || []).find(x=>x.paper_id==='STRI') || {},
+          paperRegistrySummary: window.PAPER_REGISTRY?.summary || {},
+          paperRegistryPanel: document.querySelectorAll('#paper-registry-overview').length,
+          paperRegistryCards: document.querySelectorAll('.paper-registry-card').length,
+          paperRegistryIds: [...document.querySelectorAll('.paper-registry-card')].map(x=>x.dataset.paperId||''),
+          paperRegistryStages: Object.fromEntries([...document.querySelectorAll('.paper-registry-card')].map(x=>[x.dataset.paperId||'',x.dataset.paperStage||''])),
           currentDynamic: window.CURRENT_RESEARCH_STATUS?.stri_dynamic_evidence || {},
           paperAcceptance: (window.RESEARCH_SYSTEM_STATE?.paper_acceptance?.ledger_index?.entries || []).find(row=>row.paper_id==='STRI-ICLR2027') || {},
           paperAcceptanceSummary: window.RESEARCH_SYSTEM_STATE?.paper_acceptance?.summary || {},
@@ -530,9 +553,10 @@ def main() -> None:
           title: document.title,
           text: document.body.textContent || ''
         };""")
-        require(selected["chapters"] == 5 and selected["currentSTRI"] == 1 and selected["archive"] == 1 and not selected["archiveOpen"] and selected["acceptancePanels"] == 1 and selected["acceptanceStages"] == 12, f"Papers must render one current STRI PaperState with the 12-stage canonical acceptance workflow while keeping the four former-project chapters inside one collapsed historical archive: {selected}")
-        require(selected["currentPaper"].get("paper_id") == "STRI" and selected["currentPaper"].get("paper_quality_v2_passed") is True and selected["currentPaper"].get("paper_quality_content_addressed_completion") is True and selected["currentPaper"].get("paper_quality_content_addressed_files") == 29 and selected["currentPaper"].get("paper_quality_evidence_debt") == 0 and (selected["currentPaper"].get("qa_passed"),selected["currentPaper"].get("qa_total")) == (60,60) and (selected["currentPaper"].get("official_qa_passed"),selected["currentPaper"].get("official_qa_total")) == (60,60) and selected["currentPaper"].get("paper_quality_schema_version") == "2.1" and selected["currentPaper"].get("paper_quality_main_visualizations") == 4 and selected["currentPaper"].get("paper_visual_figure_qa") == "PASS" and selected["currentPaper"].get("supplement_unit_tests") == "29/29 PASS" and selected["currentPaper"].get("official_source_conflict") is False and selected["currentPaper"].get("deadline_status") == "AUTHOR_SUBMISSION_SOURCES_ALIGNED" and selected["currentPaper"].get("operational_safe_abstract_deadline_aoe") == "2026-09-18" and selected["currentPaper"].get("operational_safe_full_paper_deadline_aoe") == "2026-09-25" and selected["currentPaper"].get("recorded_author_guide_abstract_deadline_aoe") == "2026-09-18" and selected["currentPaper"].get("recorded_author_guide_full_paper_deadline_aoe") == "2026-09-25" and selected["currentPaper"].get("author_membership_freezes_at_abstract_deadline") is True and selected["currentPaper"].get("title_freezes_at_full_paper_deadline") is True and selected["currentStatus"].get("paper_ready") == 1, f"selected-paper current STRI projection is stale: {selected}")
-        acceptance = selected["paperAcceptance"]
+        require(selected["chapters"] == 5 and selected["currentSTRI"] == 1 and selected["archive"] == 1 and not selected["archiveOpen"] and selected["acceptancePanels"] == 1 and selected["acceptanceStages"] == 12, f"Papers must render the two-paper registry, one current STRI detail, the 12-stage canonical acceptance workflow, and the collapsed historical archive: {selected}")
+        require(selected["paperRegistrySummary"].get("papers") == 2 and selected["paperRegistrySummary"].get("submission_ready") == 0 and selected["paperRegistrySummary"].get("scientific_holds") == 1 and selected["paperRegistryPanel"] == 1 and selected["paperRegistryCards"] == 2 and set(selected["paperRegistryIds"]) == {"STRI","AGENT-SAFETY-R9"} and selected["paperRegistryStages"] == {"STRI":"TARGETED_REPAIR","AGENT-SAFETY-R9":"PAPER_EVIDENCE"}, f"PaperRegistry summary/UI is missing or stale: {selected}")
+        require(selected["currentPaper"].get("paper_id") == "STRI" and selected["currentPaper"].get("source_research_item") == "E-7" and selected["currentPaper"].get("paper_stage") == "TARGETED_REPAIR" and selected["currentPaper"].get("scientific_status") == "READY" and selected["currentPaper"].get("submission_ready") is False and selected["currentPaper"].get("paper_quality_v2_passed") is True and selected["currentPaper"].get("paper_quality_content_addressed_completion") is True and selected["currentPaper"].get("paper_quality_content_addressed_files") == 29 and selected["currentPaper"].get("paper_quality_evidence_debt") == 0 and (selected["currentPaper"].get("qa_passed"),selected["currentPaper"].get("qa_total")) == (60,60) and (selected["currentPaper"].get("official_qa_passed"),selected["currentPaper"].get("official_qa_total")) == (60,60) and selected["currentPaper"].get("paper_quality_schema_version") == "2.1" and selected["currentPaper"].get("paper_quality_main_visualizations") == 4 and selected["currentPaper"].get("paper_visual_figure_qa") == "PASS" and selected["currentPaper"].get("supplement_unit_tests") == "29/29 PASS" and selected["currentPaper"].get("official_source_conflict") is False and selected["currentPaper"].get("deadline_status") == "AUTHOR_SUBMISSION_SOURCES_ALIGNED" and (selected["currentPaper"].get("latest_story_search") or {}).get("pass") is True and bool((selected["currentPaper"].get("mock_pc_modes") or {}).get("BLIND_MANUSCRIPT")) and bool((selected["currentPaper"].get("mock_pc_modes") or {}).get("ARTIFACT_AWARE")) and (selected["currentPaper"].get("latest_transition") or {}).get("to") == "TARGETED_REPAIR" and (selected["currentPaper"].get("authority") or {}).get("submission") is False and selected["currentStatus"].get("paper_ready") == 1, f"selected-paper current STRI projection is stale: {selected}")
+        acceptance=selected["paperAcceptance"]
         require(acceptance.get("current_state") == "TARGETED_REPAIR" and acceptance.get("scientific_status") == "READY" and (acceptance.get("latest_story_search") or {}).get("pass") is True and (acceptance.get("latest_story_search") or {}).get("selected_story_id") == "S1-INVARIANCE-BOUNDARY" and all((acceptance.get("mock_pc_modes") or {}).get(mode) for mode in ("BLIND_MANUSCRIPT","ARTIFACT_AWARE")) and (acceptance.get("latest_claim_audit") or {}).get("pass") is False and acceptance.get("authority") == {"scientific":False,"experiment":False,"gpu":False,"submission":False} and selected["paperAcceptanceSummary"].get("invalid_ledgers") == 0 and selected["paperAcceptanceSummary"].get("scientific_holds") == 1, f"canonical STRI Paper Acceptance projection is stale or unsafe: {selected}")
         p0e = selected["currentDynamic"].get("skillrl_p0e") or {}
         require(p0e.get("status") == "STOP_FIXED_POLICY_DYNAMIC_BRIDGE" and p0e.get("persistent_principle_dead_end_certified") is False and p0e.get("principle_disposition") == "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED" and p0e.get("stage2_locked") is True and p0e.get("new_gpu_authorized") is False and (p0e.get("calibration") or {}).get("calibration_pristine_success") == 18 and (p0e.get("calibration") or {}).get("paired_units") == 24, f"selected-paper P0-E boundary is stale: {selected}")
@@ -542,14 +566,15 @@ def main() -> None:
         mgroups = mediator.get("groups") or {}
         review = selected["currentPaper"].get("post_isolation_review") or {}
         require(autoskill.get("status") == "GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION" and groups.get("A_original",{}).get("destructive_signature_positive") == 6 and groups.get("B_split4",{}).get("destructive_signature_positive") == 0 and groups.get("C_id_placebo",{}).get("destructive_signature_positive") == 3 and groups.get("D_quotient_control",{}).get("destructive_signature_positive") == 3 and abs(float(autoskill.get("fisher_exact_p") or 1.0) - 0.0010822510822510823) < 1e-12 and autoskill.get("judge_calls") == 0 and autoskill.get("fresh_container_per_run") is True and mediator.get("status") == "GO_MEDIATOR_ISOLATION_P19" and mgroups.get("E_post_addback",{}).get("positive") == 3 and mgroups.get("F_cleanup_control",{}).get("positive") == 0 and (mediator.get("statistics") or {}).get("exact_fraction") == "1/20" and (mediator.get("measurement_repair") or {}).get("stage3_replay_agreement") == "18/18" and review.get("deepseek_pre_score") == 4 and review.get("deepseek_post_score") == 6 and review.get("decision") == "FREEZE_NARROW_SUBMISSION_NO_FURTHER_EXPERIMENT_SCORE_CHASING", f"selected-paper AutoSkill P19 dynamic/mediator/review evidence is stale: {selected}")
-        require("Self-Evolution Should Not Depend on How Skills Are Split" in selected["title"] and ("当前选中论文" in selected["text"] or "CURRENT SELECTED PAPER" in selected["text"]) and "2026-09-18" in selected["text"] and "2026-09-25" in selected["text"] and ("Official author-facing ICLR pages are aligned" in selected["text"] or "面向作者的 ICLR 官方页面已一致" in selected["text"]) and ("Former Regression-Gated Self-Evolution workspace" in selected["text"] or "旧 Regression-Gated Self-Evolution 工作区" in selected["text"]), f"selected-paper current/historical hierarchy or deadline handoff is wrong: {selected}")
+        require("PaperRegistry" in selected["title"] and "PaperRegistry" in selected["text"] and "TARGETED_REPAIR" in selected["text"] and "AGENT-SAFETY-R9" in selected["text"] and "CAUSAL_HOLD" in selected["text"] and "2026-09-18" in selected["text"] and "2026-09-25" in selected["text"] and ("Former Regression-Gated Self-Evolution workspace" in selected["text"] or "旧 Regression-Gated Self-Evolution 工作区" in selected["text"]), f"selected-paper PaperRegistry/current/historical hierarchy is wrong: {selected}")
         require("only permits a new shadow qualification" not in selected["text"] and "Historical ICLR Paper Workspace" not in selected["title"] and "[object Object]" not in selected["text"], f"selected-paper leaked stale shadow, nested-boundary rendering, or historical-primary framing: {selected}")
-        selected_markers = ("CANONICAL PAPER LEDGER · 投稿闭环真值","定向修复","S1-INVARIANCE-BOUNDARY","Blind Manuscript","Artifact-aware","Claim Audit","PDF QA 仍被硬锁","0 AUTO AUTHORITY","科学主张","N1 · AutoSkill P19 动态机制证据","6/6","0/6","post-checkout 加回=3/3","匹配清理对照=0/3","精确 p=1/20","Stage-3 复放=18/18","独立审稿后决策","4/10","6/10","哪些动态实验进入了主张，哪些没有","论文证据是否齐全且能追到固定文件","ICLR 投稿包","可视化证据","已有投稿工件 · 不是当前终态","已发布控制平面上的表示敏感性","是否声称求解算法本身是新贡献")
+        selected_markers = ("PaperRegistry · 论文输出总账","2 篇论文已经进入 PaperState","真正 Submission Ready=0","科学主张","N1 · AutoSkill P19 动态机制证据","6/6","0/6","post-checkout 加回=3/3","匹配清理对照=0/3","精确 p=1/20","Stage-3 复放=18/18","独立审稿后决策","4/10","6/10","哪些动态实验进入了主张，哪些没有","论文证据是否齐全且能追到固定文件","ICLR 投稿包","可视化证据","Paper Acceptance 当前阶段","Story Search=PASS","先完成 Targeted Repair，再进入 Claim Audit","已发布控制平面上的表示敏感性","是否声称求解算法本身是新贡献")
         missing_selected_markers = [marker for marker in selected_markers if marker not in selected["text"]]
         require(not missing_selected_markers, f"selected-paper Chinese-first current-paper UI is incomplete; missing={missing_selected_markers}")
-        require("先按双 Mock PC 意见做定向修复" in selected["text"] and "不再把“只剩人工签字”当作当前真值" in selected["text"], "Selected Paper did not replace the stale human-signoff terminal framing with the canonical acceptance workflow")
+        require("Paper Acceptance Ledger 的 scientific / experiment / GPU / submission 自动权限全部为 0" in selected["text"] and "Human authors review and accept responsibility" not in selected["text"], "PaperRegistry must show the fail-closed authority boundary without leaking the stale raw legacy handoff")
 
         navigate("/experiments.html", 4)
+        ensure_language("zh")
         experiments_zh = execute(session_id, "return document.body.textContent || ''")
         experiment_markers = ("先看当前实验结论","N1 动态机制证据：表示→检索→被挤出的技能→执行行为","6/6","0/6","post-checkout 加回=3/3","匹配清理对照=0/3","精确 Fisher=1/20","Stage-3 复放=18/18","额外检查 A：提案器是否具备继续实验的基本能力","额外检查 E：更完整策略是否真的会改变最终结果","以前的记忆效应 · 为什么不继续","0 个正式实验可启动")
         missing_experiment_markers = [marker for marker in experiment_markers if marker not in experiments_zh]

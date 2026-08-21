@@ -63,6 +63,10 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             self.assertLess(names.index("paper-first-relation-cache-maintenance"), names.index("human-terminal-idea-state"))
             self.assertLess(names.index("research-system-pre-ai"), names.index("ai-consultation-automation"))
             self.assertLess(names.index("ai-consultation-automation"), names.index("research-system-state"))
+            self.assertIn("research-item-state", names)
+            self.assertIn("research-timeline-projection", names)
+            self.assertLess(names.index("research-system-state"), names.index("research-item-state"))
+            self.assertLess(names.index("research-item-state"), names.index("research-timeline-projection"))
             self.assertEqual(report["ai_consultation_limit"], 1)
             self.assertTrue(report["ai_consultations"])
 
