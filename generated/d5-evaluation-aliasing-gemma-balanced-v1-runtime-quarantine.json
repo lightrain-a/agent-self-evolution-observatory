@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "D5-EVALUATION-ALIASING-GEMMA-BALANCED-V1-RUNTIME-QUARANTINE",
+  "status": "QUARANTINED_RUNTIME_PROVENANCE_FAILURE_NO_SCIENTIFIC_AUTHORITY",
+  "experiment_id": "D5-EVALUATION-ALIASING-GEMMA-BALANCED-v1",
+  "frozen_contract": "generated/d5-evaluation-aliasing-gemma-balanced-v1-contract.json",
+  "frozen_contract_material_sha256": "a549c99b2e67c1060b76987583c107f8eafdefeb02b81be396488fde52c611b3",
+  "freeze_commit": "d7fe842",
+  "stage_b_opened": false,
+  "private_run_audit": {
+    "stage_a_raw_sha256": "8a9a814721a0039e57b69a6f7562aec1f899a9417e11eb0b7d12ea43877618be",
+    "stage_a_analysis_sha256": "9f2ab9bcc40e5dae97226e1926782469a21f14d4c5e452f972653cdd7e5a9bf1",
+    "stage_a_manifest_sha256": "8df01cb5bc63d06707d3068cf958c541b3b00aaff34ecd12a12b55f6cb9f8706",
+    "stage_a_progress_sha256": "e62d31a6eeb46422ecffde08ceb244dce7fed08959ae98bbfae5ebcd4fa5b2d3",
+    "raw_rows": 37,
+    "unique_grid_cells": 36,
+    "duplicate_cells": 1,
+    "duplicate_cell": {
+      "memory_id": "se-m-pick_heat_then_place_in_recep-3",
+      "task_relpath": "json_2.1.1/valid_unseen/pick_cool_then_place_in_recep-Mug-None-Cabinet-10/trial_T20190909_121559_082363/game.tw-pddl",
+      "arm": "retrieved"
+    }
+  },
+  "runtime_failures": [
+    {
+      "class": "PROVENANCE_RUNTIME_CONCURRENCY",
+      "finding": "The append-only raw file contains 37 rows for 36 unique frozen cells, proving that one cell was executed/written twice. The v1 runner had no cross-process transaction lock."
+    },
+    {
+      "class": "PROTOCOL_SUPPORT_NONDETERMINISM",
+      "finding": "On the third common task all no-memory arms succeeded, but one produced a 9-step action trace while the other three produced the same 10-step trace. Temperature zero alone therefore did not satisfy the preregistered exact no-memory action-replay control."
+    }
+  ],
+  "invalid_scientific_interpretations": [
+    "Do not treat the v1 Stage-A no-memory reproducibility failure as scientific evidence against evaluation aliasing.",
+    "Do not use any v1 Stage-A score or partial alias class as paper evidence.",
+    "Do not open the v1 sealed Stage B.",
+    "Do not rerun v1 on the same Stage-A task identities after runtime repair."
+  ],
+  "repair_requirements": [
+    "Use an exclusive transaction lock for every scientific run directory.",
+    "Freeze a request seed in addition to temperature zero.",
+    "Qualify deterministic no-memory success and action replay on already exposed support-only tasks before freezing a replacement panel.",
+    "Select a replacement current/future panel that excludes every task executed by v1."
+  ],
+  "scientific_authority": false,
+  "paper_design_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

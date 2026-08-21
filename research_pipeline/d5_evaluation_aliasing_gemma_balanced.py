@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import fcntl
 import hashlib
 import json
 import os
@@ -15,7 +16,8 @@ from .p0_alfworld_adapter import ALFWorldGameRunner, load_config
 from .p0_mem_xfer_support_enriched import _token_matched_placebo
 from .vllm_alfworld_policy import VLLMAdmissiblePolicy
 
-EXPERIMENT_ID = "D5-EVALUATION-ALIASING-GEMMA-BALANCED-v1"
+EXPERIMENT_ID = "D5-EVALUATION-ALIASING-GEMMA-BALANCED-v2"
+REQUEST_SEED = 20260822
 DEFAULT_BASE_URL = "http://127.0.0.1:18002"
 FAMILIES = (
     "pick_and_place_simple",
@@ -80,6 +82,11 @@ def compile_contract(*, source_memories_path: Path, historical_runs_root: Path, 
 
     supersession = Path("generated/d5-evaluation-aliasing-qwen-v2-supersession.json")
     problem_gate = Path("generated/d5-evaluation-aliasing-problem-gate.json")
+    v1_quarantine = Path("generated/d5-evaluation-aliasing-gemma-balanced-v1-runtime-quarantine.json")
+    seeded_smoke = Path("generated/d5-evaluation-aliasing-seeded-runtime-smoke.json")
+    smoke = json.loads(seeded_smoke.read_text(encoding="utf-8"))
+    if smoke.get("status") != "PASS_DETERMINISTIC_SUPPORT" or smoke.get("request_seed") != REQUEST_SEED:
+        raise ValueError("seeded deterministic support smoke has not passed for the frozen request seed")
     service = _public_service(_service_identity(service_base_url, model_receipt_path))
     material = {
         "schema_version": "1.0",
@@ -125,7 +132,9 @@ def compile_contract(*, source_memories_path: Path, historical_runs_root: Path, 
             "alfworld_config": str(alfworld_config),
             "alfworld_config_sha256": _sha_file(alfworld_config),
             "policy_mode": "react-family", "max_steps": MAX_STEPS, "max_history": 6,
-            "decoding": "vLLM chat temperature=0",
+            "decoding": "vLLM chat temperature=0 with frozen request seed",
+            "request_seed": REQUEST_SEED,
+            "exclusive_transaction_lock_required": True,
             "placebo": "token-matched independently per memory; absolute token-count gap <=1",
             "outcome_truth": "ALFWorld environment won/success; no LLM judge",
         },
@@ -136,6 +145,8 @@ def compile_contract(*, source_memories_path: Path, historical_runs_root: Path, 
             "model_receipt_sha256": _sha_file(model_receipt_path),
             "qwen_v2_supersession": str(supersession), "qwen_v2_supersession_sha256": _sha_file(supersession),
             "problem_gate": str(problem_gate), "problem_gate_sha256": _sha_file(problem_gate),
+            "balanced_v1_runtime_quarantine": str(v1_quarantine), "balanced_v1_runtime_quarantine_sha256": _sha_file(v1_quarantine),
+            "seeded_runtime_smoke": str(seeded_smoke), "seeded_runtime_smoke_sha256": _sha_file(seeded_smoke),
         },
         "anti_outcome_shopping": [
             "Run all four metadata-selected memories on every Stage-A task.",
@@ -259,7 +270,7 @@ def run_stage(*, stage: str, contract_path: Path, source_memories_path: Path, al
     if any(key not in expected for key in done):raise RuntimeError("existing row outside frozen grid")
     os.environ["ALFWORLD_DATA"]=str(alfworld_root)
     runner=ALFWorldGameRunner(load_config(alfworld_config))
-    policy=VLLMAdmissiblePolicy(base_url=service_base_url,model=MODEL_ID,policy_mode="react-family")
+    policy=VLLMAdmissiblePolicy(base_url=service_base_url,model=MODEL_ID,policy_mode="react-family",seed=int(contract["runtime"]["request_seed"]))
     placebo={};placebo_audit={}
     for mid in memory_ids:
         text=str(all_memories[mid]["text"]);fake,mt,pt=_token_matched_placebo(policy,text)
@@ -300,7 +311,12 @@ def main()->None:
         contract=compile_contract(source_memories_path=args.source_memories,historical_runs_root=args.historical_runs_root,alfworld_root=args.alfworld_root,alfworld_config=args.config,service_base_url=args.service_base_url,model_receipt_path=args.model_receipt);args.contract.parent.mkdir(parents=True,exist_ok=True);args.contract.write_text(json.dumps(contract,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");print(json.dumps({"status":"FROZEN","contract_sha256":contract["contract_sha256"],"memory_pool":contract["memory_pool"],"stage_a":contract["stage_a"],"stage_b":contract["stage_b"]},ensure_ascii=False,indent=2));return
     if args.output_dir is None:parser.error("--output-dir required")
     if args.phase in {"run-a","run-b"}:
-        result=run_stage(stage="A" if args.phase=="run-a" else "B",contract_path=args.contract,source_memories_path=args.source_memories,alfworld_root=args.alfworld_root,alfworld_config=args.config,model_receipt_path=args.model_receipt,service_base_url=args.service_base_url,output_dir=args.output_dir,max_new_rows=max(0,args.max_new_rows))
+        args.output_dir.mkdir(parents=True,exist_ok=True)
+        with (args.output_dir/"transaction.lock").open("a+",encoding="utf-8") as lock:
+            try:fcntl.flock(lock.fileno(),fcntl.LOCK_EX|fcntl.LOCK_NB)
+            except BlockingIOError:
+                print(json.dumps({"status":"TRANSACTION_ALREADY_RUNNING","experiment_id":EXPERIMENT_ID},ensure_ascii=False));return
+            result=run_stage(stage="A" if args.phase=="run-a" else "B",contract_path=args.contract,source_memories_path=args.source_memories,alfworld_root=args.alfworld_root,alfworld_config=args.config,model_receipt_path=args.model_receipt,service_base_url=args.service_base_url,output_dir=args.output_dir,max_new_rows=max(0,args.max_new_rows))
     else:
         contract=json.loads(args.contract.read_text(encoding="utf-8"));stage="A" if args.phase=="analyze-a" else "B";rows=_read_jsonl(args.output_dir/f"stage-{stage.lower()}-raw.jsonl")
         result=analyze_stage_a(rows,contract) if stage=="A" else analyze_stage_b(rows,contract,json.loads((args.output_dir/"stage-a-analysis.json").read_text(encoding="utf-8")))

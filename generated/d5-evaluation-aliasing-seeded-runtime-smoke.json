@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0",
+  "smoke_id": "D5-EVALUATION-ALIASING-SEEDED-RUNTIME-SMOKE",
+  "status": "PASS_DETERMINISTIC_SUPPORT",
+  "purpose": "Support-only deterministic replay check on an already-exposed task; carries zero scientific evidence for evaluation aliasing.",
+  "task_relpath": "json_2.1.1/valid_unseen/pick_cool_then_place_in_recep-Mug-None-Cabinet-10/trial_T20190909_121559_082363/game.tw-pddl",
+  "task_was_already_exposed_before_smoke": true,
+  "request_seed": 20260822,
+  "temperature": 0,
+  "replicates": [
+    {
+      "replicate": 1,
+      "success": 1,
+      "steps": 10,
+      "actions_sha256": "5ed78c0bf1cbb07ea4483079d0fedd3017747a87565e7ce966324839f25c37d9",
+      "actions": [
+        "go to countertop 1",
+        "take mug 3 from countertop 1",
+        "go to fridge 1",
+        "open fridge 1",
+        "cool mug 3 with fridge 1",
+        "go to cabinet 1",
+        "go to cabinet 2",
+        "open cabinet 2",
+        "examine mug 3",
+        "move mug 3 to cabinet 2"
+      ]
+    },
+    {
+      "replicate": 2,
+      "success": 1,
+      "steps": 10,
+      "actions_sha256": "5ed78c0bf1cbb07ea4483079d0fedd3017747a87565e7ce966324839f25c37d9",
+      "actions": [
+        "go to countertop 1",
+        "take mug 3 from countertop 1",
+        "go to fridge 1",
+        "open fridge 1",
+        "cool mug 3 with fridge 1",
+        "go to cabinet 1",
+        "go to cabinet 2",
+        "open cabinet 2",
+        "examine mug 3",
+        "move mug 3 to cabinet 2"
+      ]
+    },
+    {
+      "replicate": 3,
+      "success": 1,
+      "steps": 10,
+      "actions_sha256": "5ed78c0bf1cbb07ea4483079d0fedd3017747a87565e7ce966324839f25c37d9",
+      "actions": [
+        "go to countertop 1",
+        "take mug 3 from countertop 1",
+        "go to fridge 1",
+        "open fridge 1",
+        "cool mug 3 with fridge 1",
+        "go to cabinet 1",
+        "go to cabinet 2",
+        "open cabinet 2",
+        "examine mug 3",
+        "move mug 3 to cabinet 2"
+      ]
+    },
+    {
+      "replicate": 4,
+      "success": 1,
+      "steps": 10,
+      "actions_sha256": "5ed78c0bf1cbb07ea4483079d0fedd3017747a87565e7ce966324839f25c37d9",
+      "actions": [
+        "go to countertop 1",
+        "take mug 3 from countertop 1",
+        "go to fridge 1",
+        "open fridge 1",
+        "cool mug 3 with fridge 1",
+        "go to cabinet 1",
+        "go to cabinet 2",
+        "open cabinet 2",
+        "examine mug 3",
+        "move mug 3 to cabinet 2"
+      ]
+    }
+  ],
+  "exact_success_and_action_replay_4_of_4": true,
+  "model": {
+    "model_id": "google/gemma-4-26B-A4B-it",
+    "exact_revision": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+    "formal_asset_receipt_sha256": "d70ef10d064f27e33deabdb29ca833a558457b5884519dbd41988bf0b1a4b54c"
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

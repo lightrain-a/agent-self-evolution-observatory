@@ -48,8 +48,11 @@ class D5EvaluationAliasingGemmaBalancedTest(unittest.TestCase):
                 })
         return rows
 
-    def test_frozen_contract_uses_balanced_metadata_pool_and_excludes_old_gemma_task(self) -> None:
-        c = json.loads(Path('generated/d5-evaluation-aliasing-gemma-balanced-v1-contract.json').read_text(encoding='utf-8'))
+    def test_frozen_v2_contract_uses_balanced_pool_seed_and_fresh_replacement_panel(self) -> None:
+        c = json.loads(Path('generated/d5-evaluation-aliasing-gemma-balanced-v2-contract.json').read_text(encoding='utf-8'))
+        self.assertEqual(c['experiment_id'], 'D5-EVALUATION-ALIASING-GEMMA-BALANCED-v2')
+        self.assertEqual(c['runtime']['request_seed'], 20260822)
+        self.assertTrue(c['runtime']['exclusive_transaction_lock_required'])
         self.assertEqual(len(c['memory_pool']['memory_ids']), 4)
         self.assertEqual({row['source_family'] for row in c['memory_pool']['memories']}, {
             'pick_and_place_simple', 'pick_clean_then_place_in_recep',
@@ -57,7 +60,12 @@ class D5EvaluationAliasingGemmaBalancedTest(unittest.TestCase):
         })
         self.assertTrue(all(row['candidate_role'] == 'heldout_candidate' for row in c['memory_pool']['memories']))
         all_tasks = [row['task_relpath'] for stage in ('stage_a', 'stage_b') for row in c[stage]['tasks']]
-        self.assertFalse(any('pick_clean_then_place_in_recep-Cloth-None-Cabinet-424' in task for task in all_tasks))
+        for exposed_name in (
+            'pick_and_place_simple-Pencil-None-Shelf-308',
+            'pick_clean_then_place_in_recep-Cloth-None-CounterTop-424',
+            'pick_cool_then_place_in_recep-Mug-None-Cabinet-10',
+        ):
+            self.assertFalse(any(exposed_name in task for task in all_tasks))
 
     def test_partial_singletons_are_monotone_stop(self) -> None:
         c = self._contract()

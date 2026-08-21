@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "preflight_id": "D5-EVALUATION-ALIASING-GEMMA-BALANCED-V2-PREFLIGHT",
+  "status": "READY_FOR_STAGE_A",
+  "contract_material_sha256": "0c955da5b6c7817918317a730fdb40d0a514d121fcdf7c98e4547a31461b31d0",
+  "contract_file_sha256": "534ed86ffd06a055b2a2737b7d8ebfc9f9bc91bfecd2121c8460c8e9df9c130f",
+  "gates": {
+    "contract_verified": true,
+    "service_model_verified": true,
+    "source_memories_verified": true,
+    "runtime_seed": 20260822,
+    "exclusive_transaction_lock_required": true,
+    "seeded_runtime_smoke_status": "PASS_DETERMINISTIC_SUPPORT",
+    "stage_a_tasks": 4,
+    "sealed_stage_b_tasks": 4,
+    "execution_exposed_frozen_tasks": [],
+    "private_output_root_empty_before_stage_a": true,
+    "stage_b_sealed_before_stage_a_outcomes": true,
+    "balanced_memory_pool_size": 4
+  },
+  "execution_plan": {
+    "stage_a_max_episodes": 48,
+    "stage_a_chunk_episodes": 12,
+    "monotone_early_stop_enabled": true,
+    "stage_b_locked": true
+  },
+  "scientific_authority": false,
+  "paper_design_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

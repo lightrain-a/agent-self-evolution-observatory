@@ -1,0 +1,177 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "D5-EVALUATION-ALIASING-GEMMA-BALANCED-v2",
+  "status": "FROZEN_BEFORE_STAGE_A_OUTCOMES",
+  "idea_id": "D5-EVALUATION-ALIASING",
+  "scientific_question": "Does a finite current evaluation partition distinct persistent memories into an alias class whose members later have different controlled transfer effects?",
+  "claim_boundary": "Tests evaluation-induced aliasing after one common current panel; ordinary cross-task transfer heterogeneity is not evidence unless memories first share an exact current signature.",
+  "memory_pool": {
+    "selection_rule": "Every historical memory with candidate_role=heldout_candidate: one from each of four frozen source families; metadata only, before common-panel outcomes.",
+    "memory_ids": [
+      "se-m-pick_and_place_simple-3",
+      "se-m-pick_clean_then_place_in_recep-3",
+      "se-m-pick_cool_then_place_in_recep-3",
+      "se-m-pick_heat_then_place_in_recep-3"
+    ],
+    "memories": [
+      {
+        "memory_id": "se-m-pick_and_place_simple-3",
+        "source_family": "pick_and_place_simple",
+        "candidate_index": 3,
+        "candidate_role": "heldout_candidate",
+        "source_task_relpath": "json_2.1.1/valid_unseen/pick_and_place_simple-Mug-None-Desk-308/trial_T20190909_203041_433487/game.tw-pddl",
+        "memory_text_sha256": "9c3b69af9351e39a150bbda8f32b5251c866b8a56cf9123a9cfa4e49ba85b9fc"
+      },
+      {
+        "memory_id": "se-m-pick_clean_then_place_in_recep-3",
+        "source_family": "pick_clean_then_place_in_recep",
+        "candidate_index": 3,
+        "candidate_role": "heldout_candidate",
+        "source_task_relpath": "json_2.1.1/valid_unseen/pick_clean_then_place_in_recep-SoapBar-None-Cabinet-424/trial_T20190908_214946_567644/game.tw-pddl",
+        "memory_text_sha256": "530623072ebfbc37f2ea500988d7c6fceb2c7f224c1df13483228daf45bde77c"
+      },
+      {
+        "memory_id": "se-m-pick_cool_then_place_in_recep-3",
+        "source_family": "pick_cool_then_place_in_recep",
+        "candidate_index": 3,
+        "candidate_role": "heldout_candidate",
+        "source_task_relpath": "json_2.1.1/valid_unseen/pick_cool_then_place_in_recep-Mug-None-CoffeeMachine-10/trial_T20190907_183853_958104/game.tw-pddl",
+        "memory_text_sha256": "0eb206dfef45da8bbabc3b8d9f53639ae7dc298b64a6626eebdd736e8543d526"
+      },
+      {
+        "memory_id": "se-m-pick_heat_then_place_in_recep-3",
+        "source_family": "pick_heat_then_place_in_recep",
+        "candidate_index": 3,
+        "candidate_role": "heldout_candidate",
+        "source_task_relpath": "json_2.1.1/valid_unseen/pick_heat_then_place_in_recep-Apple-None-GarbageCan-10/trial_T20190908_145143_820541/game.tw-pddl",
+        "memory_text_sha256": "0c4a03d35e184a5fa9664f5bf40a544e33d9bb1511dc185b4f3eb85ccf591f15"
+      }
+    ]
+  },
+  "stage_a": {
+    "name": "FRESH_COMMON_PANEL_ALIAS_DISCOVERY",
+    "tasks": [
+      {
+        "target_family": "pick_and_place_simple",
+        "task_relpath": "json_2.1.1/valid_unseen/pick_and_place_simple-PepperShaker-None-Drawer-10/trial_T20190918_154424_844749/game.tw-pddl"
+      },
+      {
+        "target_family": "pick_clean_then_place_in_recep",
+        "task_relpath": "json_2.1.1/valid_unseen/pick_clean_then_place_in_recep-Egg-None-Microwave-10/trial_T20190909_120554_888709/game.tw-pddl"
+      },
+      {
+        "target_family": "pick_cool_then_place_in_recep",
+        "task_relpath": "json_2.1.1/valid_unseen/pick_cool_then_place_in_recep-Pan-None-CounterTop-10/trial_T20190908_114622_738670/game.tw-pddl"
+      },
+      {
+        "target_family": "pick_heat_then_place_in_recep",
+        "task_relpath": "json_2.1.1/valid_unseen/pick_heat_then_place_in_recep-Apple-None-Fridge-10/trial_T20190906_182353_418140/game.tw-pddl"
+      }
+    ],
+    "arms": [
+      "no-memory",
+      "placebo",
+      "retrieved"
+    ],
+    "episodes": 48,
+    "signature": "ordered per-task (retrieved_success, placebo_success, no_memory_success)",
+    "alias_definition": "Two memories alias iff their complete Stage-A score signatures are exactly equal.",
+    "qualification": "At least one alias class size>=2; per-task no-memory success+actions reproduce; alias signature is not complete all-zero or all-one.",
+    "monotone_early_stop": "After each full task partial-signature classes only split. If every class is singleton, stop immediately."
+  },
+  "stage_b": {
+    "name": "SEALED_FUTURE_ALIAS_DIVERGENCE",
+    "tasks": [
+      {
+        "target_family": "pick_and_place_simple",
+        "task_relpath": "json_2.1.1/valid_unseen/pick_and_place_simple-Vase-None-Safe-219/trial_T20190908_205221_748352/game.tw-pddl"
+      },
+      {
+        "target_family": "pick_clean_then_place_in_recep",
+        "task_relpath": "json_2.1.1/valid_unseen/pick_clean_then_place_in_recep-Knife-None-CounterTop-10/trial_T20190909_110347_624008/game.tw-pddl"
+      },
+      {
+        "target_family": "pick_cool_then_place_in_recep",
+        "task_relpath": "json_2.1.1/valid_unseen/pick_cool_then_place_in_recep-Pan-None-CounterTop-10/trial_T20190908_114656_768805/game.tw-pddl"
+      },
+      {
+        "target_family": "pick_heat_then_place_in_recep",
+        "task_relpath": "json_2.1.1/valid_unseen/pick_heat_then_place_in_recep-Apple-None-Fridge-10/trial_T20190906_182435_622538/game.tw-pddl"
+      }
+    ],
+    "arms": [
+      "no-memory",
+      "placebo",
+      "retrieved"
+    ],
+    "sealed_before_stage_a_outcomes": true,
+    "run_only_for_members_of_qualified_alias_classes": true,
+    "controlled_delta": "retrieved_success - placebo_success",
+    "go_rule": "At least one qualified alias class diverges on >=2 sealed tasks spanning >=2 target families, with reproducible no-memory success+actions.",
+    "f0_go_means": "PROSPECTIVE_CONFIRMATION_ONLY"
+  },
+  "task_selection": {
+    "rule": "Per family use lexicographically first two identities absent from every execution-bearing historical run; first Stage A, second sealed Stage B.",
+    "outcome_independent": true,
+    "historical_exposed_task_count": 90,
+    "historical_exposure_sha256": "7f3f6dfebf02e6825215fdbc12645c9cc749f722efc448cac1293d77c9c66cd5",
+    "fresh_counts_before_selection": {
+      "pick_and_place_simple": 2,
+      "pick_clean_then_place_in_recep": 9,
+      "pick_cool_then_place_in_recep": 2,
+      "pick_heat_then_place_in_recep": 11
+    }
+  },
+  "runtime": {
+    "alfworld_asset": "ALFWorld json_2.1.1 valid_unseen",
+    "alfworld_config": "research_pipeline/p0_alfworld_config.yaml",
+    "alfworld_config_sha256": "8d426273308fa7f043739df3074cf773fe1dc48920d38298f53246a189847e20",
+    "policy_mode": "react-family",
+    "max_steps": 50,
+    "max_history": 6,
+    "decoding": "vLLM chat temperature=0 with frozen request seed",
+    "request_seed": 20260822,
+    "exclusive_transaction_lock_required": true,
+    "placebo": "token-matched independently per memory; absolute token-count gap <=1",
+    "outcome_truth": "ALFWorld environment won/success; no LLM judge"
+  },
+  "service_model": {
+    "model_id": "google/gemma-4-26B-A4B-it",
+    "max_model_len": 262144,
+    "exact_revision": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+    "formal_asset_receipt_sha256": "d70ef10d064f27e33deabdb29ca833a558457b5884519dbd41988bf0b1a4b54c",
+    "official_source_manifest_sha256": "039ea1e26e19a5d6095f61a301e655bd55b6c03338a8a9110dc2338b06868cd3",
+    "verified_weight_digests": {
+      "model-00001-of-00002.safetensors": "1127684971bbca40465435a5cad69d67ad603bf5e61c6dfd5561fae4a3bcfdb3",
+      "model-00002-of-00002.safetensors": "aab47033e1e8a492ef8e581efae1cf36478d0433567e7729b3c1728bc8970db7"
+    }
+  },
+  "source_artifacts": {
+    "source_memories_asset": "p0-mem-xfer-support-enriched-qwen-v1/source-memories.jsonl",
+    "source_memories_sha256": "badf536cc4051cc29341e3c0a3a5c90b8c5c75b5a091d879aee5e22feb17c53f",
+    "model_receipt_sha256": "d70ef10d064f27e33deabdb29ca833a558457b5884519dbd41988bf0b1a4b54c",
+    "qwen_v2_supersession": "generated/d5-evaluation-aliasing-qwen-v2-supersession.json",
+    "qwen_v2_supersession_sha256": "a6f527ee0bece6101777d000edc94e0f1cb352856eb94767d9e35b6a1e3385c5",
+    "problem_gate": "generated/d5-evaluation-aliasing-problem-gate.json",
+    "problem_gate_sha256": "6831b2dc07493b34d169353ddd33d46ffba98f85b4e43645682a8b142b77692f",
+    "balanced_v1_runtime_quarantine": "generated/d5-evaluation-aliasing-gemma-balanced-v1-runtime-quarantine.json",
+    "balanced_v1_runtime_quarantine_sha256": "47e458a420521b37de55b82c2045e82257c231245229f9a0aae7238130a41ebc",
+    "seeded_runtime_smoke": "generated/d5-evaluation-aliasing-seeded-runtime-smoke.json",
+    "seeded_runtime_smoke_sha256": "b3ac979d796966eaf70e44be3ba68622c2448cf91398c238c9db7f40f72ee3fa"
+  },
+  "anti_outcome_shopping": [
+    "Run all four metadata-selected memories on every Stage-A task.",
+    "Do not alter Stage-B task identities after any Stage-A outcome.",
+    "Open every qualified alias class, not only a favorable-looking class.",
+    "If no qualified alias remains, stop; do not search replacements on the exposed panel."
+  ],
+  "authority": {
+    "scientific": false,
+    "paper_design": false,
+    "experiment": false,
+    "gpu": false
+  },
+  "contract_sha256": "0c955da5b6c7817918317a730fdb40d0a514d121fcdf7c98e4547a31461b31d0",
+  "created_at": "2026-08-21T17:41:27Z",
+  "scientific_authority": false
+}

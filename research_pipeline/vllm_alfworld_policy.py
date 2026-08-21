@@ -42,6 +42,7 @@ class VLLMAdmissiblePolicy:
         max_history: int = 6,
         policy_mode: str = "react-family",
         timeout_seconds: float = 60.0,
+        seed: int | None = None,
     ) -> None:
         if policy_mode not in {"direct", "react-lite", "react-family"}:
             raise ValueError(f"unsupported policy_mode: {policy_mode}")
@@ -50,6 +51,7 @@ class VLLMAdmissiblePolicy:
         self.max_history = int(max_history)
         self.policy_mode = policy_mode
         self.timeout_seconds = float(timeout_seconds)
+        self.seed = int(seed) if seed is not None else None
         self.session = requests.Session()
         self.tokenizer = _RemoteTokenizerFacade(self)
         self._input_tokens = 0
@@ -119,15 +121,15 @@ class VLLMAdmissiblePolicy:
             f"Recent history:\n{history_text or '(none)'}\n\nCurrent observation:\n{observation}\n\n"
             f"Admissible commands:\n{numbered}\n\nChoose the next action."
         )
-        payload = self._post(
-            "/v1/chat/completions",
-            {
-                "model": self.model,
-                "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
-                "temperature": 0,
-                "max_tokens": 72 if self.policy_mode in {"react-lite", "react-family"} else 24,
-            },
-        )
+        request = {
+            "model": self.model,
+            "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
+            "temperature": 0,
+            "max_tokens": 72 if self.policy_mode in {"react-lite", "react-family"} else 24,
+        }
+        if self.seed is not None:
+            request["seed"] = self.seed
+        payload = self._post("/v1/chat/completions", request)
         choices = payload.get("choices") or []
         if not choices or not isinstance(choices[0], dict):
             raise RuntimeError("vLLM returned no completion choice")

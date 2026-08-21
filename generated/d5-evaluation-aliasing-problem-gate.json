@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "idea_id": "D5-EVALUATION-ALIASING",
   "title": "Evaluation Aliasing in Persistent Agent Memory",
-  "status": "PROMISING_F0_REQUIRED_HOLD_COMPUTE",
+  "status": "PROMISING_F0_READY_RUNTIME_REPAIRED",
   "scientific_question": "Can distinct persistent memories be exactly indistinguishable on the same non-degenerate current evaluation panel yet induce different controlled effects on a sealed future panel?",
   "problem_statement": "Memory-based self-evolving agents are often judged by a finite current task panel or scalar utility summary. If that evaluation maps behaviorally distinct persistent memory states to the same observed signature, a system can incorrectly treat those states as equivalent even though they make different future predictions or decisions. The paper-level object is the evaluation-induced aliasing relation, not hidden history after complete state equality.",
   "closest_work": [
@@ -65,13 +65,13 @@
     }
   ],
   "frozen_f0": {
-    "primary_contract": "generated/d5-evaluation-aliasing-gemma-balanced-v1-contract.json",
+    "primary_contract": "generated/d5-evaluation-aliasing-gemma-balanced-v2-contract.json",
     "superseded_qwen_contract": "generated/d5-evaluation-aliasing-qwen-v2-contract.json",
     "stage_a": "Balanced metadata-selected memory pool: one heldout-candidate memory from each of four source families. All four run on the same four fresh current tasks. Stage A discovers exact score-signature alias classes and rejects complete floor/ceiling aliases.",
     "stage_b": "Four disjoint future tasks are sealed before Stage A outcomes. Only members of every qualified alias class may enter Stage B.",
     "go_condition": "At least one non-degenerate Stage-A alias class has controlled-effect divergence on at least two sealed future tasks across at least two families, with reproducible no-memory controls.",
     "stop_condition": "Stop immediately if no partial alias class can remain, if no-memory is nonreproducible, or if full aliases are only floor/ceiling. If Stage B misses the cross-family divergence gate, stop this Gemma realization.",
-    "current_execution_state": "READY_FOR_STAGE_A_AFTER_PREFLIGHT"
+    "current_execution_state": "READY_FOR_STAGE_A_AFTER_RUNTIME_REPAIR_AND_V2_PREFLIGHT"
   },
   "paper_admission_rule": {
     "f0_go_is_sufficient_for": "PROSPECTIVE_CONFIRMATION_ONLY",

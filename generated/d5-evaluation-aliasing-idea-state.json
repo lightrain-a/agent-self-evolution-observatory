@@ -30,15 +30,19 @@
     "gemma_trio_qualification_stop": "generated/d5-evaluation-aliasing-gemma-v1-stop.json",
     "qwen_v2_frozen_contract": "generated/d5-evaluation-aliasing-qwen-v2-contract.json",
     "qwen_v2_preflight": "generated/d5-evaluation-aliasing-qwen-v2-preflight.json",
-    "qwen_v2_supersession": "generated/d5-evaluation-aliasing-qwen-v2-supersession.json"
+    "qwen_v2_supersession": "generated/d5-evaluation-aliasing-qwen-v2-supersession.json",
+    "balanced_gemma_v1_runtime_quarantine": "generated/d5-evaluation-aliasing-gemma-balanced-v1-runtime-quarantine.json",
+    "seeded_runtime_smoke": "generated/d5-evaluation-aliasing-seeded-runtime-smoke.json"
   },
   "current_f0": {
-    "contract": "generated/d5-evaluation-aliasing-gemma-balanced-v1-contract.json",
-    "preflight": "generated/d5-evaluation-aliasing-gemma-balanced-v1-preflight.json",
-    "status": "READY_FOR_STAGE_A",
+    "contract": "generated/d5-evaluation-aliasing-gemma-balanced-v2-contract.json",
+    "preflight": "generated/d5-evaluation-aliasing-gemma-balanced-v2-preflight.json",
+    "status": "READY_FOR_STAGE_A_RUNTIME_REPAIRED",
     "memory_pool": "four heldout-candidate memories, exactly one from each frozen source family",
     "stage_a_max_episodes": 48,
     "stage_a_early_stop": true,
+    "runtime_request_seed": 20260822,
+    "exclusive_transaction_lock": true,
     "stage_b_sealed": true,
     "stage_b_open_condition": "At least one size>=2 non-degenerate exact Stage-A alias class with reproducible no-memory controls."
   },
