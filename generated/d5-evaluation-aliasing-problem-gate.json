@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "idea_id": "D5-EVALUATION-ALIASING",
   "title": "Evaluation Aliasing in Persistent Agent Memory",
-  "status": "PROMISING_F0_READY_RUNTIME_REPAIRED",
+  "status": "F0_STOP_NO_PAPER_ADMISSION",
   "scientific_question": "Can distinct persistent memories be exactly indistinguishable on the same non-degenerate current evaluation panel yet induce different controlled effects on a sealed future panel?",
   "problem_statement": "Memory-based self-evolving agents are often judged by a finite current task panel or scalar utility summary. If that evaluation maps behaviorally distinct persistent memory states to the same observed signature, a system can incorrectly treat those states as equivalent even though they make different future predictions or decisions. The paper-level object is the evaluation-induced aliasing relation, not hidden history after complete state equality.",
   "closest_work": [
@@ -71,7 +71,15 @@
     "stage_b": "For every eligible current-panel family, a disjoint second fresh task is sealed before Stage A outcomes. Only members of every qualified alias class may enter Stage B.",
     "go_condition": "At least one non-degenerate Stage-A alias class has controlled-effect divergence on at least two sealed future tasks across at least two families, with reproducible no-memory controls.",
     "stop_condition": "Stop immediately if no partial alias class can remain, if no-memory is nonreproducible, or if full aliases are only floor/ceiling. If Stage B misses the cross-family divergence gate, stop this Gemma realization.",
-    "current_execution_state": "READY_FOR_STAGE_A_AFTER_CONTENT_ADDRESSED_RUNTIME_REPAIR_AND_V3_PREFLIGHT"
+    "current_execution_state": "CLEAN_GEMMA_V3_STOP_NO_ALIAS_CLASS",
+    "result": "generated/d5-evaluation-aliasing-gemma-balanced-v3-f0.json"
+  },
+  "f0_adjudication": {
+    "result": "generated/d5-evaluation-aliasing-gemma-balanced-v3-f0.json",
+    "decision": "STOP_GEMMA_BALANCED_REALIZATION",
+    "reason": "The first clean common current task produced four singleton score signatures with reproducible no-memory controls. Because additional signature dimensions can only split classes, no Stage-A alias can reappear in this frozen realization.",
+    "stage_b_opened": false,
+    "paper_admission": "NOT_AUTHORIZED"
   },
   "paper_admission_rule": {
     "f0_go_is_sufficient_for": "PROSPECTIVE_CONFIRMATION_ONLY",

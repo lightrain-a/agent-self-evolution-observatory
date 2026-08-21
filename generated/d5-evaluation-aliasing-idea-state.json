@@ -3,7 +3,7 @@
   "idea_id": "D5-C03-EVALUATION-ALIASING",
   "basin_id": "D5-EVALUATION-ALIASING",
   "title": "Evaluation Aliasing in Persistent Agent Memory",
-  "status": "F0_READY_STAGE_A",
+  "status": "F0_STOP_CURRENT_GEMMA_REALIZATION_NO_ALIAS",
   "relationship_to_existing_d5": {
     "existing_paper_basin": "D5-ENV-ORDER-CONTAMINATION",
     "relationship": "SEPARATE_BASIN",
@@ -39,7 +39,8 @@
   "current_f0": {
     "contract": "generated/d5-evaluation-aliasing-gemma-balanced-v3-contract.json",
     "preflight": "generated/d5-evaluation-aliasing-gemma-balanced-v3-preflight.json",
-    "status": "READY_FOR_STAGE_A_CONTENT_ADDRESSED_RUNTIME",
+    "status": "CLEAN_STOP_NO_CURRENT_ALIAS_CLASS",
+    "result": "generated/d5-evaluation-aliasing-gemma-balanced-v3-f0.json",
     "memory_pool": "four heldout-candidate memories, exactly one from each frozen source family",
     "stage_a_max_episodes": 48,
     "stage_a_early_stop": true,
@@ -47,7 +48,11 @@
     "content_addressed_identical_prompt_cache": true,
     "exclusive_transaction_lock": true,
     "stage_b_sealed": true,
-    "stage_b_open_condition": "At least one size>=2 non-degenerate exact Stage-A alias class with reproducible no-memory controls."
+    "stage_b_open_condition": "At least one size>=2 non-degenerate exact Stage-A alias class with reproducible no-memory controls.",
+    "stage_b_opened": false,
+    "observed_stage_a_rows": 12,
+    "observed_partial_alias_class_sizes": [1, 1, 1, 1],
+    "remaining_stage_a_rows_not_required": 48
   },
   "transitions": {
     "stage_a_no_alias_or_repro_failure": "STOP_CURRENT_GEMMA_REALIZATION",
@@ -57,6 +62,7 @@
     "prospective_confirmation_go": "PAPER_DESIGN_ELIGIBLE",
     "prospective_confirmation_missing_or_fail": "NO_PAPERSTATE"
   },
+  "reopen_condition": "Only reopen with a newly justified, independently frozen substrate or memory population and a completely fresh current/future panel. Do not search replacement memories against the exposed Gemma-v3 current task.",
   "anti_outcome_shopping": [
     "Do not replace memories after Stage-A outcomes.",
     "Do not replace Stage-B tasks after Stage-A outcomes.",

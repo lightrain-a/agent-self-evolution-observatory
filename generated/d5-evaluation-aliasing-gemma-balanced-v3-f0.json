@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "D5-EVALUATION-ALIASING-GEMMA-BALANCED-V3-F0",
+  "experiment_id": "D5-EVALUATION-ALIASING-GEMMA-BALANCED-v3",
+  "status": "F0_CLEAN_STOP_NO_CURRENT_ALIAS_CLASS",
+  "contract": "generated/d5-evaluation-aliasing-gemma-balanced-v3-contract.json",
+  "contract_material_sha256": "f25a73cdc719df9fd0c1dc96493ca54de2f94209683f18dceab56b573ec98fd9",
+  "freeze_commit": "732dc01",
+  "runtime": {
+    "request_seed": 20260822,
+    "content_addressed_identical_prompt_cache": true,
+    "exclusive_transaction_lock": true,
+    "no_memory_reproducible": true,
+    "duplicate_cells": 0
+  },
+  "stage_a": {
+    "planned_max_rows": 60,
+    "completed_rows": 12,
+    "unique_grid_cells": 12,
+    "completed_current_tasks": 1,
+    "remaining_rows_not_required": 48,
+    "early_stop_rule": "Partial score-signature classes only split when new current-task dimensions are appended. Once every class is a singleton, no later Stage-A task can recreate an alias.",
+    "current_task": "json_2.1.1/valid_unseen/look_at_obj_in_light-AlarmClock-None-DeskLamp-308/trial_T20190908_222951_616606/game.tw-pddl",
+    "score_signatures": {
+      "se-m-pick_and_place_simple-3": [1, 1, 1],
+      "se-m-pick_clean_then_place_in_recep-3": [1, 0, 1],
+      "se-m-pick_cool_then_place_in_recep-3": [0, 0, 1],
+      "se-m-pick_heat_then_place_in_recep-3": [0, 1, 1]
+    },
+    "alias_class_sizes": [1, 1, 1, 1],
+    "decision": "STOP_GEMMA_BALANCED_REALIZATION"
+  },
+  "controls": {
+    "token_matched_placebo_gaps": {
+      "se-m-pick_and_place_simple-3": 0,
+      "se-m-pick_clean_then_place_in_recep-3": 0,
+      "se-m-pick_cool_then_place_in_recep-3": 0,
+      "se-m-pick_heat_then_place_in_recep-3": 0
+    },
+    "no_memory_success_and_action_replay_exact": true
+  },
+  "private_provenance": {
+    "stage_a_raw_sha256": "53e330d1c252384e3acc051ad2f44323e31d943df363a8483c8d2cc92f86c7ba",
+    "stage_a_analysis_sha256": "e0e875bfffc598d0b5c809796695c6c73a69217e9cbb96153e2b9b6ff6a8b852",
+    "stage_a_manifest_sha256": "c3ad79e582b6138c5a0bf1fbbf2d715931ec52a6bdaf4882c061e976d03860c7",
+    "stage_a_progress_sha256": "fc23a0e67ec1d1e80aa3aedf3601e9780ff35807c710044c6c5bbb29831a62e7"
+  },
+  "stage_b": {
+    "opened": false,
+    "future_outcomes_observed": 0
+  },
+  "scientific_interpretation": "This clean frozen Gemma realization does not instantiate the prerequisite current-evaluation alias class. It therefore cannot test sealed future divergence. The result stops this realization without supporting the paper-level evaluation-aliasing hypothesis. It does not prove that no alias can exist in other independently frozen memory populations or substrates.",
+  "anti_outcome_shopping_action": "Do not replace the four memories on the exposed v3 current panel and do not open v3 Stage B. The D5 evaluation-aliasing idea remains without paper admission evidence.",
+  "paper_admission": "NOT_AUTHORIZED",
+  "current_realization_decision_authority": true,
+  "scientific_authority": false,
+  "paper_design_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}
