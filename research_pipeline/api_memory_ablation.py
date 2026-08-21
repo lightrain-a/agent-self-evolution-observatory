@@ -139,6 +139,116 @@ def build_api_memory_ablation_plan(
     return plan
 
 
+def build_basin_aware_api_memory_ablation_plan(
+    *,
+    context: Any,
+    run_id_prefix: str,
+    stage: str,
+    max_items: int = 4,
+    max_chars: int = 8000,
+    max_item_chars: int = 600,
+    root: Path | None = None,
+) -> dict[str, Any]:
+    """Freeze portfolio/relevant/random arms for Research Memory 2.3.
+
+    Portfolio is the treatment. Relevant reproduces the previous Top-K policy;
+    random is a matched-context control. No arm can grant scientific authority.
+    """
+    portfolio = compile_api_memory_query_pack(
+        purpose="IDEA_DISCOVERY",
+        context=context,
+        run_id=f"{run_id_prefix}-portfolio",
+        stage=stage,
+        variant="portfolio",
+        max_items=max_items,
+        max_chars=max_chars,
+        max_item_chars=max_item_chars,
+        required=True,
+        record_query=False,
+        root=root,
+    )
+    realized = int((portfolio.get("summary") or {}).get("selected") or 0)
+    relevant = compile_api_memory_query_pack(
+        purpose="IDEA_DISCOVERY",
+        context=context,
+        run_id=f"{run_id_prefix}-relevant",
+        stage=stage,
+        variant="relevant",
+        max_items=realized,
+        max_chars=max_chars,
+        max_item_chars=max_item_chars,
+        required=True,
+        record_query=False,
+        root=root,
+    )
+    random = compile_api_memory_query_pack(
+        purpose="IDEA_DISCOVERY",
+        context=context,
+        run_id=f"{run_id_prefix}-random",
+        stage=stage,
+        variant="random",
+        max_items=realized,
+        max_chars=max_chars,
+        max_item_chars=max_item_chars,
+        required=True,
+        record_query=False,
+        root=root,
+    )
+    packs = {"portfolio": portfolio, "relevant": relevant, "random": random}
+    roles = [str(row.get("role") or "") for row in portfolio.get("selected_memory_roles") or []]
+    instances = {str(pack.get("memory_instance_id") or "") for pack in packs.values()}
+    available = {int((pack.get("summary") or {}).get("available") or 0) for pack in packs.values()}
+    counts = {int((pack.get("summary") or {}).get("selected") or 0) for pack in packs.values()}
+    characters = {int((pack.get("summary") or {}).get("characters") or 0) for pack in packs.values()}
+    plan = {
+        "schema_version": "2.3",
+        "status": "BASIN_AWARE_API_MEMORY_ABLATION_READY",
+        "purpose": "IDEA_DISCOVERY",
+        "stage": stage,
+        "context_sha256": sha_json(context if context is not None else {}),
+        "budget": {"max_items": int(max_items), "max_chars": int(max_chars), "max_item_chars": int(max_item_chars), "matched_realized_items": realized},
+        "arms": {
+            variant: {
+                "run_id": f"{run_id_prefix}-{variant}",
+                "env": {"RESEARCH_API_MEMORY_VARIANT": variant},
+                "query_pack_sha256": pack.get("query_pack_sha256"),
+                "memory_instance_id": pack.get("memory_instance_id"),
+                "selected_memory_ids": pack.get("selected_memory_ids") or [],
+                "selected_scientific_signatures": pack.get("selected_scientific_signatures") or [],
+                "selected_memory_roles": pack.get("selected_memory_roles") or [],
+                "summary": pack.get("summary") or {},
+                "scientific_authority": False,
+            }
+            for variant, pack in packs.items()
+        },
+        "comparison_semantics": {
+            "portfolio_vs_relevant": "PRIMARY_TEST_OF_BASIN_AWARE_COMPOSITION_VS_TOP_K_RELEVANCE_WITH_MATCHED_ITEM_COUNT_AND_SHARED_CHAR_CAP",
+            "portfolio_vs_random": "MATCHED_CONTEXT_UTILITY_CONTROL",
+            "reviewer_subjective_criteria_require_separate_adjudication": True,
+        },
+        "invariants": {
+            "same_memory_instance": len(instances) == 1,
+            "same_available_memory_pool": len(available) == 1,
+            "same_realized_item_count": len(counts) == 1 and realized > 0,
+            "same_realized_memory_characters": len(characters) == 1,
+            "portfolio_has_all_four_primary_roles": all(role in roles for role in (
+                "NEAREST_CLOSED_BASIN",
+                "NEAREST_SURVIVING_CONTRACT",
+                "DISTANT_REUSABLE_CONTRACT",
+                "UNRESOLVED_BOUNDARY",
+            )),
+            "all_arms_zero_scientific_authority": all(pack.get("scientific_authority") is False for pack in packs.values()),
+            "scientific_thresholds_unchanged": True,
+        },
+        "scientific_authority": False,
+        "authority": {"problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+    }
+    plan["plan_sha256"] = sha_json({key: value for key, value in plan.items() if key != "plan_sha256"})
+    if not all(plan["invariants"].values()):
+        plan["status"] = "BASIN_AWARE_API_MEMORY_ABLATION_BLOCKED"
+    return plan
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Freeze an API research-memory A/B/C ablation plan")
     parser.add_argument("--purpose", default="IDEA_DISCOVERY")

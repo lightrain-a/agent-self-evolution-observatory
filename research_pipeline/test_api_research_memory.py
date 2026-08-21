@@ -11,12 +11,15 @@ from pathlib import Path
 from .api_memory_ablation import build_api_memory_ablation_plan
 from .api_memory_store import database_path
 from .api_research_memory import (
+    _portfolio_digest,
+    _portfolio_order,
     build_api_research_memory_state,
     compile_api_memory_query_pack,
     invalidate_query_only_memory_run,
     lint_api_research_memory,
     record_api_memory_consumption,
     record_parsed_api_output,
+    record_provider_failure,
     record_raw_api_output,
 )
 from .api_research_memory_import import import_run, object_rows
@@ -195,6 +198,16 @@ class ApiResearchMemoryTest(unittest.TestCase):
             self.assertEqual(state["summary"]["artifacts"], 1)
             self.assertEqual(state["summary"]["fully_replay_addressed_calls"], 1)
             self.assertFalse(state["scientific_authority"])
+
+    def test_provider_failure_refreshes_run_projection_counts(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); run=root/"scratch"/"failed-r1"; run.mkdir(parents=True)
+            record_provider_failure(run_root=run,stage="expand-p1",payload={"status":"PROVIDER_TIMEOUT_ZERO_AUTHORITY","requested_model":"model","error_fingerprint":"a"*64,"prompt_sha256":"b"*64},root=root/"persistent")
+            with sqlite3.connect(database_path(root=root/"persistent")) as db:
+                projected=db.execute("SELECT call_count,artifact_count,object_count FROM runs WHERE run_id='failed-r1'").fetchone()
+                actual=db.execute("SELECT COUNT(*) FROM api_calls WHERE run_id='failed-r1'").fetchone()[0]
+            self.assertEqual(projected,(1,0,0)); self.assertEqual(actual,1)
+            self.assertEqual(lint_api_research_memory(root=root/"persistent")["status"],"PASS")
 
     def test_successful_parse_is_persisted_immediately_with_zero_authority_object(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -405,6 +418,24 @@ class ApiResearchMemoryTest(unittest.TestCase):
                     required=True,
                     root=root,
                 )
+
+    def test_basin_aware_portfolio_has_distinct_search_control_roles(self) -> None:
+        rows = [
+            {"object_key":"k1","scientific_signature":"s1","object_type":"candidate","disposition":"REDUCTION_PENDING","lexical":0.9,"score":12.0,"digest":"closed"},
+            {"object_key":"k2","scientific_signature":"s2","object_type":"evidence_contract","disposition":"READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT","lexical":0.8,"score":11.0,"digest":"survivor-near"},
+            {"object_key":"k3","scientific_signature":"s3","object_type":"preflight_contract","disposition":"READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT","lexical":0.1,"score":5.0,"digest":"survivor-distant"},
+            {"object_key":"k4","scientific_signature":"s4","object_type":"problem_seed","disposition":"SEMANTIC_UNIQUE","lexical":0.7,"score":9.0,"digest":"boundary"},
+        ]
+        selected = _portfolio_order(rows, context_sha256="a" * 64, max_items=4)
+        self.assertEqual([row["portfolio_role"] for row in selected], [
+            "NEAREST_CLOSED_BASIN",
+            "NEAREST_SURVIVING_CONTRACT",
+            "DISTANT_REUSABLE_CONTRACT",
+            "UNRESOLVED_BOUNDARY",
+        ])
+        self.assertEqual(len({row["scientific_signature"] for row in selected}), 4)
+        self.assertIn("escape-this-basin", _portfolio_digest(selected[0]))
+        self.assertIn("transfer-structure-not-topic", _portfolio_digest(selected[2]))
 
     def test_ablation_plan_freezes_three_zero_authority_arms(self) -> None:
         with tempfile.TemporaryDirectory() as td:

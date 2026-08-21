@@ -56,7 +56,13 @@ API_MEMORY_PURPOSES = {
     "EXPERIMENT_DESIGN",
     "PAPER_META_REVIEW",
 }
-API_MEMORY_VARIANTS = {"relevant", "random", "none"}
+API_MEMORY_VARIANTS = {"portfolio", "relevant", "random", "none"}
+PORTFOLIO_ROLES = (
+    "NEAREST_CLOSED_BASIN",
+    "NEAREST_SURVIVING_CONTRACT",
+    "DISTANT_REUSABLE_CONTRACT",
+    "UNRESOLVED_BOUNDARY",
+)
 
 _PURPOSE_TYPE_PRIOR: dict[str, dict[str, float]] = {
     "IDEA_DISCOVERY": {
@@ -221,6 +227,104 @@ def _token_set(value: Any) -> set[str]:
     }
 
 
+def _closed_basin(row: dict[str, Any]) -> bool:
+    disposition = str(row.get("disposition") or "").upper()
+    return any(token in disposition for token in ("REDUCTION", "REJECT", "BLOCK", "HOLD", "REVISE"))
+
+
+def _surviving_contract(row: dict[str, Any]) -> bool:
+    disposition = str(row.get("disposition") or "").upper()
+    object_type = str(row.get("object_type") or "")
+    return (
+        object_type in {"candidate", "candidate_review", "evidence_contract", "preflight_contract", "evidence_review"}
+        and any(token in disposition for token in ("READY", "CLEAR", "MACHINE_READY", "REVIEWED"))
+        and "TRANSPORT_EQUIVALENCE" not in disposition
+        and "RUNTIME_EQUIVALENCE" not in disposition
+    )
+
+
+def _unresolved_boundary(row: dict[str, Any]) -> bool:
+    disposition = str(row.get("disposition") or "").upper()
+    object_type = str(row.get("object_type") or "")
+    return object_type in {"problem_seed", "evolved_branch"} or disposition in {"SEMANTIC_UNIQUE", "GENERATED"}
+
+
+def _portfolio_order(rows: list[dict[str, Any]], *, context_sha256: str, max_items: int) -> list[dict[str, Any]]:
+    """Build a deterministic basin-aware search portfolio with zero authority.
+
+    Roles are search-control views over existing objects. They do not declare a
+    scientific failure, success, closure, or novelty verdict.
+    """
+    chosen: list[dict[str, Any]] = []
+    seen_signatures: set[str] = set()
+    seen_keys: set[str] = set()
+
+    def take(role: str, candidates: list[dict[str, Any]], *, distant: bool = False) -> None:
+        if len(chosen) >= max_items:
+            return
+        ordered = sorted(
+            candidates,
+            key=lambda row: (
+                float(row.get("lexical") or 0.0) if distant else -float(row.get("lexical") or 0.0),
+                -float(row.get("score") or 0.0),
+                str(row.get("object_key") or ""),
+            ),
+        )
+        for row in ordered:
+            key = str(row.get("object_key") or "")
+            signature = str(row.get("scientific_signature") or "")
+            if key in seen_keys or (signature and signature in seen_signatures):
+                continue
+            copy = dict(row)
+            copy["portfolio_role"] = role
+            chosen.append(copy)
+            seen_keys.add(key)
+            if signature:
+                seen_signatures.add(signature)
+            return
+
+    take("NEAREST_CLOSED_BASIN", [row for row in rows if _closed_basin(row)])
+    take("NEAREST_SURVIVING_CONTRACT", [row for row in rows if _surviving_contract(row)])
+    take("DISTANT_REUSABLE_CONTRACT", [row for row in rows if _surviving_contract(row)], distant=True)
+    take("UNRESOLVED_BOUNDARY", [row for row in rows if _unresolved_boundary(row)])
+
+    # If one role is unavailable, fill deterministically without collapsing back
+    # to Top-K relevance. This preserves portfolio width while keeping exact
+    # scientific identities unique.
+    fill = sorted(
+        rows,
+        key=lambda row: hashlib.sha256(
+            f"portfolio-fill:{context_sha256}:{row.get('object_key','')}".encode("utf-8")
+        ).hexdigest(),
+    )
+    for row in fill:
+        if len(chosen) >= max_items:
+            break
+        key = str(row.get("object_key") or "")
+        signature = str(row.get("scientific_signature") or "")
+        if key in seen_keys or (signature and signature in seen_signatures):
+            continue
+        copy = dict(row)
+        copy["portfolio_role"] = "DIVERSITY_FILL"
+        chosen.append(copy)
+        seen_keys.add(key)
+        if signature:
+            seen_signatures.add(signature)
+    return chosen
+
+
+def _portfolio_digest(row: dict[str, Any]) -> str:
+    role = str(row.get("portfolio_role") or "DIVERSITY_FILL")
+    instruction = {
+        "NEAREST_CLOSED_BASIN": "escape-this-basin; do-not-rephrase-or-rescue-it",
+        "NEAREST_SURVIVING_CONTRACT": "reuse-contract-quality-not-scientific-object",
+        "DISTANT_REUSABLE_CONTRACT": "transfer-structure-not-topic",
+        "UNRESOLVED_BOUNDARY": "use-as-open-boundary-not-truth",
+        "DIVERSITY_FILL": "exploration-context-only",
+    }.get(role, "exploration-context-only")
+    return f"[PORTFOLIO_ROLE={role};ACTION={instruction}] " + _memory_digest(row)
+
+
 def _memory_digest(row: dict[str, Any]) -> str:
     payload = row.get("payload") if isinstance(row.get("payload"), dict) else {}
     body = _unwrap_object_payload(payload)
@@ -283,6 +387,7 @@ def compile_api_memory_query_pack(
     variant: str = "relevant",
     max_items: int = 16,
     max_chars: int = 6000,
+    max_item_chars: int = 0,
     required: bool = False,
     record_query: bool = True,
     enabled: bool = True,
@@ -295,8 +400,11 @@ def compile_api_memory_query_pack(
     variant = str(variant or "relevant").strip().lower()
     if variant not in API_MEMORY_VARIANTS:
         raise ValueError(f"unsupported API research memory variant: {variant}")
+    if variant == "portfolio" and purpose != "IDEA_DISCOVERY":
+        raise ValueError("basin-aware portfolio memory is only valid for IDEA_DISCOVERY")
     max_items = max(0, int(max_items))
     max_chars = max(0, int(max_chars))
+    max_item_chars = max(0, int(max_item_chars))
     context_sha = sha_json(context if context is not None else {})
     if not enabled:
         return _empty_query_pack(
@@ -355,6 +463,7 @@ def compile_api_memory_query_pack(
             if "REDUCTION" in disposition or "REJECT" in disposition or "BLOCK" in disposition:
                 disposition_prior += 0.5
             row["digest"] = digest
+            row["lexical"] = lexical
             row["score"] = round(
                 lexical * 12.0
                 + float(priors.get(str(row.get("object_type") or ""), 0.0))
@@ -364,6 +473,8 @@ def compile_api_memory_query_pack(
             rows.append(row)
         if variant == "none":
             ordered: list[dict[str, Any]] = []
+        elif variant == "portfolio":
+            ordered = _portfolio_order(rows, context_sha256=context_sha, max_items=max_items)
         elif variant == "random":
             ordered = sorted(
                 rows,
@@ -383,7 +494,9 @@ def compile_api_memory_query_pack(
             signature = str(row.get("scientific_signature") or "")
             if signature and signature in seen_signatures:
                 continue
-            digest = str(row.get("digest") or "")
+            digest = _portfolio_digest(row) if variant == "portfolio" else str(row.get("digest") or "")
+            if max_item_chars > 0:
+                digest = digest[:max_item_chars]
             additional = len(digest) + (2 if selected else 0)
             if selected and characters + additional > max_chars:
                 continue
@@ -405,7 +518,7 @@ def compile_api_memory_query_pack(
         signatures = [str(row["scientific_signature"]) for row in selected]
         memory_ids = [f"api:{key[:16]}" for key in selected_keys]
         core = {
-            "schema_version": "2.2",
+            "schema_version": "2.3" if variant == "portfolio" else "2.2",
             "purpose": purpose,
             "stage": stage,
             "variant": variant,
@@ -424,6 +537,15 @@ def compile_api_memory_query_pack(
             },
             "scientific_authority": False,
         }
+        if max_item_chars > 0:
+            core["max_item_chars"] = max_item_chars
+        if variant == "portfolio":
+            core["selected_memory_roles"] = [
+                {"memory_id": memory_id, "role": str(row.get("portfolio_role") or "DIVERSITY_FILL")}
+                for memory_id, row in zip(memory_ids, selected)
+            ]
+            core["policy"]["basin_aware_roles_are_search_control_not_scientific_labels"] = True
+            core["policy"]["closed_basin_memory_is_for_escape_not_imitation"] = True
         pack_sha = sha_json(core)
         query_id = ""
         if run_id and record_query:
@@ -782,6 +904,16 @@ def record_provider_failure(
             },
             event_type="PROVIDER_FAILURE",
         )
+        connection.execute(
+            """
+            UPDATE runs SET
+              artifact_count=(SELECT COUNT(DISTINCT sha256) FROM run_artifacts WHERE run_id=?),
+              call_count=(SELECT COUNT(*) FROM api_calls WHERE run_id=?),
+              object_count=(SELECT COUNT(*) FROM research_objects WHERE run_id=?)
+            WHERE run_id=?
+            """,
+            (run_id, run_id, run_id, run_id),
+        )
     return {
         "status": "PROVIDER_FAILURE_ARCHIVED",
         "run_id": run_id,
@@ -1044,6 +1176,26 @@ def lint_api_research_memory(
             )
             if identity_gap:
                 errors.append({"code": "scientific-identity-index-gap", "rows": identity_gap})
+            count_drift = [
+                dict(row)
+                for row in connection.execute(
+                    """
+                    SELECT r.run_id,r.call_count,
+                           (SELECT COUNT(*) FROM api_calls c WHERE c.run_id=r.run_id) AS actual_calls,
+                           r.artifact_count,
+                           (SELECT COUNT(DISTINCT ra.sha256) FROM run_artifacts ra WHERE ra.run_id=r.run_id) AS actual_artifacts,
+                           r.object_count,
+                           (SELECT COUNT(*) FROM research_objects o WHERE o.run_id=r.run_id) AS actual_objects
+                    FROM runs r
+                    WHERE r.call_count != (SELECT COUNT(*) FROM api_calls c WHERE c.run_id=r.run_id)
+                       OR r.artifact_count != (SELECT COUNT(DISTINCT ra.sha256) FROM run_artifacts ra WHERE ra.run_id=r.run_id)
+                       OR r.object_count != (SELECT COUNT(*) FROM research_objects o WHERE o.run_id=r.run_id)
+                    ORDER BY r.run_id
+                    """
+                )
+            ]
+            if count_drift:
+                errors.append({"code":"run-projection-count-drift","rows":count_drift})
     return {
         "schema_version": SCHEMA_VERSION,
         "status": "PASS" if not errors else "FAIL",
