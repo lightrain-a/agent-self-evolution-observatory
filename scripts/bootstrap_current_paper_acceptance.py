@@ -101,9 +101,14 @@ def bootstrap(root: Path, main_tex: Path, body_tex: Path, claim_table: Path) -> 
     if stri_row.get("current_state") == PaperState.PAPER_EVIDENCE.value:
         advance_paper_ledger(root, stri, PaperState.PAPER_DESIGN, actor="paper-acceptance-migration")
 
-    initialize_paper_ledger(root, safety, actor="paper-acceptance-migration")
     safety_row = load_paper_ledger(root, safety.paper_id)
-    if not _has_transition(safety_row, PaperState.PAPER_DESIGN, "causal-hold"):
+    if not safety_row:
+        initialize_paper_ledger(root, safety, actor="paper-acceptance-migration")
+        safety_row = load_paper_ledger(root, safety.paper_id)
+    # Existing ledgers may have closed their original evidence hold through an
+    # append-only paper-contract-revised event. Never reinitialize such a ledger
+    # against the historical CAUSAL_HOLD digest.
+    if safety_row.get("scientific_status") == ScientificPaperStatus.CAUSAL_HOLD.value and not _has_transition(safety_row, PaperState.PAPER_DESIGN, "causal-hold"):
         advance_paper_ledger(root, safety, PaperState.PAPER_DESIGN, actor="paper-acceptance-migration")
 
     return build_paper_ledger_index(root)

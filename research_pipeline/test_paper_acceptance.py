@@ -38,6 +38,7 @@ from .paper_acceptance_ledger import (
     record_story_search,
     record_prebuttal,
     record_submission_readiness,
+    revise_paper_contract,
     validate_paper_ledger,
 )
 
@@ -210,6 +211,60 @@ class PaperAcceptanceTest(unittest.TestCase):
             self.assertEqual(result["ledger"]["current_state"], PaperState.PAPER_EVIDENCE.value)
             self.assertEqual(result["ledger"]["summary"]["blocked_transitions"], 1)
             self.assertEqual(validate_paper_ledger(result["ledger"]), [])
+
+    def test_scientific_evidence_closure_can_append_ready_contract_revision(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            held = self.safety_contract()
+            initialize_paper_ledger(root, held)
+            blocked = advance_paper_ledger(root, held, PaperState.PAPER_DESIGN)
+            self.assertFalse(blocked["receipt"]["allowed"])
+            revised = PaperContract(
+                paper_id=held.paper_id,
+                title=held.title,
+                central_question=held.central_question,
+                supported_claims={
+                    **dict(held.supported_claims),
+                    "C2": "The same held-out schedule produced more branch first-violation events after persistent update than under the base-workflow no-update control in the frozen paired design.",
+                },
+                unsupported_claims=dict(held.unsupported_claims),
+                limitations=("The controlled contrast remains a finite frozen-design result, not a population effect estimate.",),
+                evidence_refs=(*held.evidence_refs, "agent-safety:r23-no-update-control"),
+                scientific_status=ScientificPaperStatus.READY,
+            )
+            row = revise_paper_contract(
+                root,
+                revised,
+                closure_evidence_refs=("agent-safety:r23-no-update-control",),
+                reason="The preregistered same-schedule no-update control closed the recorded causal hold for the frozen finite design.",
+            )
+            self.assertEqual(row["scientific_status"], ScientificPaperStatus.READY.value)
+            self.assertEqual(row["summary"]["contract_revisions"], 1)
+            self.assertEqual(validate_paper_ledger(row), [])
+            advanced = advance_paper_ledger(root, revised, PaperState.PAPER_DESIGN)
+            self.assertTrue(advanced["receipt"]["allowed"])
+            self.assertEqual(validate_paper_ledger(advanced["ledger"]), [])
+
+    def test_scientific_contract_revision_cannot_drop_previous_claim_or_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            held = self.safety_contract()
+            initialize_paper_ledger(root, held)
+            invalid = PaperContract(
+                paper_id=held.paper_id,
+                title=held.title,
+                central_question=held.central_question,
+                supported_claims={"C2": "A different claim."},
+                evidence_refs=("agent-safety:r23-no-update-control",),
+                scientific_status=ScientificPaperStatus.READY,
+            )
+            with self.assertRaises(RuntimeError):
+                revise_paper_contract(
+                    root,
+                    invalid,
+                    closure_evidence_refs=("agent-safety:r23-no-update-control",),
+                    reason="invalid revision",
+                )
 
     def test_ledger_requires_three_new_hard_gate_receipts(self) -> None:
         with tempfile.TemporaryDirectory() as td:

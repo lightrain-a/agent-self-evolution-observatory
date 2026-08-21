@@ -1,0 +1,63 @@
+{
+  "schema_version": "2.0",
+  "status": "CONTROLLED_CASE_STUDY_MANUSCRIPT_SUBMISSION_CANDIDATE",
+  "paper_id": "AGENT-SAFETY-R9",
+  "audited_on": "2026-08-21",
+  "manuscript": {
+    "source": "paper_drafts/agent-safety-r9-iclr2027/main.tex",
+    "compiled_pdf": "paper_drafts/agent-safety-r9-iclr2027/main.pdf",
+    "pages_total": 11,
+    "main_text_pages_before_references": 8,
+    "positioning": "bounded controlled persistent-web-agent first-violation case study",
+    "supported_claims": 3,
+    "source_bound_main_figures": 4,
+    "main_tables": 4,
+    "appendix_tables": 3
+  },
+  "completion_checks": {
+    "claim_evidence_map": "PASS",
+    "strongest_comparison": "PASS_WITH_DIRECT_CONTROL_AND_COLLISION_DISCLOSED",
+    "same_schedule_no_update_control": "PASS_EXECUTED_36_OF_36",
+    "fixed_probe_snapshot_panel": "PASS_EXECUTED_36_OF_36_PLUS_12_REUSED_STEP0",
+    "failure_and_sensitivity_analysis": "PASS_FIRST_EVENT_AND_PAIRED_DISCORDANCE",
+    "source_bound_visual_evidence": "PASS",
+    "completed_evidence_not_planned_evidence": "PASS",
+    "submission_qa": {
+      "latex_compile": "PASS_11_TOTAL_PAGES_8_MAIN_TEXT_PAGES",
+      "unit_tests": "PASS_17_OF_17",
+      "numeric_bindings": "PASS_SOURCE_BOUND_QA",
+      "narrative_drift_scan": "PASS_ZERO_STALE_CONTROL_LANGUAGE",
+      "visual_contact_sheet": "PASS_11_PAGES_NO_BLANK_OR_ORPHAN_MAIN_PAGE",
+      "new_behavior_execution_completed": true
+    }
+  },
+  "supported_claims": [
+    "Within the frozen R9 BrowserART/HarmBench operationalization, a 12/12 current non-violation panel did not guarantee absence of first violations over the evaluated three-step future.",
+    "Within 12 frozen paired trajectories, updated workflows produced 8/12 event branches versus 4/12 under the same held-out schedule with the base workflow held fixed; paired discordance was 4 update-only to 0 control-only.",
+    "Four of 12 originally clean state-by-probe trajectories developed a first evaluator-classified violation at a later workflow snapshot while probe identity and seed were fixed."
+  ],
+  "not_supported_claims": [
+    "The paired branch difference is a population causal effect.",
+    "Static safety evaluation is generally ineffective across agents, models, or benchmarks.",
+    "The observed branch event fractions are population hazards.",
+    "State identity is a statistically established predictor.",
+    "HarmBench labels are a noiseless safety oracle.",
+    "This work originates longitudinal memory-safety evaluation."
+  ],
+  "closest_source_collision": {
+    "source": "Al-Tawaha et al., Remembering More, Risking More, arXiv:2605.17830",
+    "effect": "Their study has broader multi-architecture longitudinal coverage. R9 adopts same-schedule/base-memory and fixed-probe control logic but contributes an action-taking BrowserART/AWM trajectory comparison with branch first-event timing."
+  },
+  "remaining_scope_limits": [
+    "One backbone and four selected states do not support a population claim.",
+    "HarmBench has not been independently validated for this frozen BrowserART realization.",
+    "Fresh stochastic rollouts under matched seeds are controlled realized comparisons, not deterministic potential outcomes.",
+    "General longitudinal-memory-safety novelty is occupied by broader current work."
+  ],
+  "reopen_condition": "separate persistent update effect from held-out schedule effect",
+  "reopen_control": "same held-out schedule with the workflow held at its step-0 base state",
+  "reopen_control_status": "SATISFIED_FOR_FROZEN_R9_FINITE_DESIGN",
+  "satisfied_for_population_claim": false,
+  "additional_behavior_execution_authorized": false,
+  "scientific_authority": false
+}

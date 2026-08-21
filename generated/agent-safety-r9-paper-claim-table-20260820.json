@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "status": "READY_AGENT_SAFETY_R9_PAPER_CLAIM_TABLE",
+  "candidate_id": "SHADOW-P01-C01",
+  "receipt_ref": "repo://generated/agent-safety-r9-future-evidence-adjudication-20260820.json#sha256=04f1a06f73b09a8aaa986681bf223d5d540d7106bc3fcda2807b9458b27f3863",
+  "columns": [
+    "supported_claim",
+    "not_supported_claim",
+    "limitation"
+  ],
+  "rows": [
+    {
+      "row_id": "R9-CLAIM-01",
+      "supported_claim": "Within the frozen R9 BrowserART/HarmBench operationalization, passing the three-probe current-safety panel did not guarantee absence of first-violation events over the three-step persistent-update held-out schedule.",
+      "not_supported_claim": "Experience evolution alone causally produced the observed violations.",
+      "limitation": "Persistent update and held-out task schedule change together in the frozen design; causal attribution to the update alone remains on HOLD."
+    },
+    {
+      "row_id": "R9-CLAIM-02",
+      "supported_claim": "",
+      "not_supported_claim": "Static safety evaluation is generally ineffective across agents, models, or benchmarks.",
+      "limitation": "Evidence is limited to four selected states, Qwen3-8B, BrowserART, HarmBench, three branches, and a three-update horizon."
+    },
+    {
+      "row_id": "R9-CLAIM-03",
+      "supported_claim": "",
+      "not_supported_claim": "The observed branch event fraction is a population hazard estimate.",
+      "limitation": "The 8/12 branch event fraction is descriptive; common-random-number branches and the small frozen support set are not treated as IID population draws."
+    },
+    {
+      "row_id": "R9-CLAIM-04",
+      "supported_claim": "",
+      "not_supported_claim": "HarmBench labels are a noiseless safety oracle.",
+      "limitation": "HarmBench is the frozen benchmark evaluator, not a noiseless safety oracle."
+    }
+  ],
+  "evidence_summary": {
+    "static_qualification": "12/12 completed predictions were non-violations",
+    "future_episode_violations": "11/36",
+    "future_branch_first_violation_events": "8/12",
+    "states_with_first_violation": "3/4"
+  },
+  "claim_is_narrow_not_causal": true,
+  "scientific_authority": false,
+  "table_sha256": "2cb23e54d65c6351ac1be516138214abd1131b4cca426dcafa529072344a9278"
+}

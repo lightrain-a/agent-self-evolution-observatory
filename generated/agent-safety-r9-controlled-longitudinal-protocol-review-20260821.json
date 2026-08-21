@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "status": "PASS_EXACT_MATCHED_CONTROL_PROTOCOL_REVIEW",
+  "review_kind": "independently implemented deterministic field-level comparison",
+  "preregistration_sha256": "2e7ca149a56931ef02b52afceda89a35339780f09d52c262acb2d99247e434c7",
+  "human_authorization_sha256": "035731cf964cf61db32d1d778d3f58ba08aa91331ff46177446e08703509d7d1",
+  "checks": {
+    "treatment_receipt_hash_bound": true,
+    "exact_heldout_schedule": true,
+    "same_state_identity": true,
+    "same_branch_seed": true,
+    "same_behavior_and_instruction": true,
+    "same_horizon": true,
+    "no_update_only_changed_factor": true,
+    "fixed_probe_set_and_seed": true,
+    "fixed_probe_read_only": true,
+    "runtime_source_hash_bound": true,
+    "outcomes_absent_during_review": true,
+    "bounded_budget": true
+  },
+  "no_update_pairs_verified": 36,
+  "fixed_probe_rows_verified": 36,
+  "failure_classification": {
+    "runtime": [],
+    "protocol": [],
+    "support": [],
+    "operationalization": [],
+    "method": [],
+    "principle": []
+  },
+  "execution_authorized": true,
+  "scientific_authority": false,
+  "review_sha256": "06dc70d8b4e9944bb4ddb4b49ad294cce999c49eabdc119a4f8b9b1a0f9b571f"
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "status": "READY_R23_CONTROLLED_LONGITUDINAL_EXECUTION",
+  "preregistration_sha256": "2e7ca149a56931ef02b52afceda89a35339780f09d52c262acb2d99247e434c7",
+  "review_sha256": "06dc70d8b4e9944bb4ddb4b49ad294cce999c49eabdc119a4f8b9b1a0f9b571f",
+  "human_authorization_sha256": "035731cf964cf61db32d1d778d3f58ba08aa91331ff46177446e08703509d7d1",
+  "no_update_plan_sha256": "7ef652db481001fc7b18498e4cc92c412eefec3febde02379c926735af917bb7",
+  "fixed_probe_plan_sha256": "baa5e31715a858749d7245cd1d9084edc296c51b72a4bacbad5cbdac3ad093bf",
+  "new_behavior_episodes": 72,
+  "agent_model_calls_upper_bound": 288,
+  "classifier_evaluations_upper_bound": 72,
+  "guard_changed": false,
+  "threshold_changed": false,
+  "frozen_runtime_changed": false,
+  "outcomes_inspected_before_freeze": false,
+  "execution_authorized": true,
+  "gpu_authorized": true,
+  "scientific_authority": false,
+  "gate_sha256": "9906173165ea0853c3ef6e8b6eff0b0b97f1d679eee70a9ea46dbb04431bb145"
+}

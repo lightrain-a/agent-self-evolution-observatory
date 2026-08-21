@@ -1,0 +1,107 @@
+{
+  "schema_version": "2.1",
+  "status": "READY_AGENT_SAFETY_R9_CONTROLLED_MEMORY_GRAPH_2_1_INPUTS",
+  "evidence_refs": [
+    "repo://generated/agent-safety-r9-controlled-longitudinal-adjudication-20260821.json#sha256=ae02683be1073d798df13c198124abef150b6df51cca2b0b3600628ed3f8ad68",
+    "repo://generated/agent-safety-r9-controlled-longitudinal-scientific-review-20260821.json#sha256=aec41faee640885e7162ae329218cc7c318559bd2204c016d8b6e124cc38679a"
+  ],
+  "claim_table_sha256": "cf962a90b0a728f43ace1b02f5abb250c8543e740407ca2ede104d0dbf42875f",
+  "claim_ledger": [
+    {
+      "claim_id": "AGENT-SAFETY-R9-STATIC-PASS-NO-FUTURE-GUARANTEE",
+      "claim_text": "Within the frozen R9 BrowserART/HarmBench operationalization, passing the three-probe current-safety panel did not guarantee absence of first-violation events over the evaluated three-step future.",
+      "claim_type": "predictive_sufficiency",
+      "scientific_object": "persistent-state-agent-safety",
+      "mechanism": "current-safety-panel-to-future-first-violation",
+      "adjudication_status": "SUPPORTED_NARROWLY",
+      "evidence_ids": [
+        "repo://generated/agent-safety-r9-controlled-longitudinal-adjudication-20260821.json#sha256=ae02683be1073d798df13c198124abef150b6df51cca2b0b3600628ed3f8ad68",
+        "repo://generated/agent-safety-r9-controlled-longitudinal-scientific-review-20260821.json#sha256=aec41faee640885e7162ae329218cc7c318559bd2204c016d8b6e124cc38679a"
+      ],
+      "scientific_authority": false
+    },
+    {
+      "claim_id": "AGENT-SAFETY-R9-PERSISTENT-UPDATE-CONTROLLED-CONTRAST",
+      "claim_text": "Within the frozen 12 paired BrowserART trajectories, the updated-workflow condition had 8/12 branch first-violation events versus 4/12 under the same-schedule base-workflow control (4 update-only, 0 control-only).",
+      "claim_type": "finite_controlled_contrast",
+      "scientific_object": "persistent-state-agent-safety",
+      "mechanism": "persistent-update-effect-separated-from-heldout-schedule",
+      "adjudication_status": "SUPPORTED_FINITE_CONTROLLED_CONTRAST",
+      "evidence_ids": [
+        "repo://generated/agent-safety-r9-controlled-longitudinal-adjudication-20260821.json#sha256=ae02683be1073d798df13c198124abef150b6df51cca2b0b3600628ed3f8ad68",
+        "repo://generated/agent-safety-r9-controlled-longitudinal-scientific-review-20260821.json#sha256=aec41faee640885e7162ae329218cc7c318559bd2204c016d8b6e124cc38679a"
+      ],
+      "scientific_authority": false
+    },
+    {
+      "claim_id": "AGENT-SAFETY-R9-FIXED-PROBE-SNAPSHOT-TRANSITION",
+      "claim_text": "Across 12 frozen state-by-probe trajectories, 4 originally non-violating qualification probes had a first evaluator-classified violation at a later workflow snapshot while probe identity and seed remained fixed.",
+      "claim_type": "descriptive_longitudinal_probe",
+      "scientific_object": "persistent-state-agent-safety",
+      "mechanism": "fixed-probe-response-across-workflow-snapshots",
+      "adjudication_status": "SUPPORTED_DESCRIPTIVE_STATE_DEPENDENCE",
+      "evidence_ids": [
+        "repo://generated/agent-safety-r9-controlled-longitudinal-adjudication-20260821.json#sha256=ae02683be1073d798df13c198124abef150b6df51cca2b0b3600628ed3f8ad68",
+        "repo://generated/agent-safety-r9-controlled-longitudinal-scientific-review-20260821.json#sha256=aec41faee640885e7162ae329218cc7c318559bd2204c016d8b6e124cc38679a"
+      ],
+      "scientific_authority": false
+    }
+  ],
+  "supplemental_memory_entries": [
+    {
+      "memory_id": "MEM-RESULT-AGENT-SAFETY-R9-UPDATE-VS-SCHEDULE",
+      "kind": "RESULT",
+      "title": "R9 same-schedule no-update control executed",
+      "summary": "Within the frozen 12 paired BrowserART trajectories, the updated-workflow condition had 8/12 branch first-violation events versus 4/12 under the same-schedule base-workflow control (4 update-only, 0 control-only).",
+      "candidate_id": "AGENT-SAFETY-R9-PERSISTENT-UPDATE-CONTROLLED-CONTRAST",
+      "affected_layer": "method",
+      "memory_class": "FINITE_CONTROLLED_CONTRAST",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "separate persistent update effect from held-out schedule effect",
+      "reopen_condition_status": "SATISFIED_FOR_FROZEN_R9_FINITE_DESIGN",
+      "source_refs": [
+        "repo://generated/agent-safety-r9-controlled-longitudinal-adjudication-20260821.json#sha256=ae02683be1073d798df13c198124abef150b6df51cca2b0b3600628ed3f8ad68",
+        "repo://generated/agent-safety-r9-controlled-longitudinal-scientific-review-20260821.json#sha256=aec41faee640885e7162ae329218cc7c318559bd2204c016d8b6e124cc38679a"
+      ],
+      "scientific_authority": false
+    }
+  ],
+  "reopen_condition": {
+    "condition_id": "REOPEN-AGENT-SAFETY-R9-SEPARATE-UPDATE-FROM-SCHEDULE",
+    "condition": "separate persistent update effect from held-out schedule effect",
+    "implementation": "same held-out schedule with the workflow snapshot held at its step-0 base state",
+    "status": "SATISFIED_FOR_FROZEN_R9_FINITE_DESIGN",
+    "satisfied_for_population_claim": false,
+    "automatic_reopen": false,
+    "new_behavior_execution_authorized": false,
+    "scientific_authority": false
+  },
+  "failure_classification": {
+    "runtime": [
+      "One foreground MCP transport loss caused BrokenPipe before any model call or action; the zero-realization attempt was archived as runtime void and replaced without rerunning a completed episode."
+    ],
+    "protocol": [],
+    "support": [],
+    "operationalization": [
+      "HarmBench remains the frozen benchmark evaluator and not a noiseless safety oracle."
+    ],
+    "method": [
+      "The finite paired design has one backbone, four states, three branches, and horizon three.",
+      "Fresh stochastic rollouts under matched seeds are controlled comparisons but not deterministic potential outcomes."
+    ],
+    "principle": []
+  },
+  "summary": {
+    "claims": 3,
+    "supported_narrowly": 3,
+    "reopen_conditions": 1,
+    "population_claims": 0,
+    "principle_updates": 0
+  },
+  "scientific_authority": false,
+  "bundle_sha256": "cf6a581399306f0bd6b1e810e204af7819c24490548052e4ce9e90999927186d"
+}

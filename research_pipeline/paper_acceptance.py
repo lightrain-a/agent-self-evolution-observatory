@@ -90,7 +90,8 @@ POLICY: dict[str, Any] = {
     "submission_ready_requires_prebuttal_and_manuscript_ci": True,
     "paper_ledger_is_append_only_event_projection": True,
     "blocked_transitions_are_recorded": True,
-    "ledger_contract_digest_is_immutable": True,
+    "ledger_contract_digest_is_immutable_between_scientific_revisions": True,
+    "scientific_contract_revision_requires_evidence_closure_at_paper_evidence": True,
     "submitted_state_requires_external_human_submission_authority": True,
 }
 

@@ -51,6 +51,7 @@ def _refresh(row: dict[str, Any]) -> None:
         "manuscript_ci_receipts": sum(event.get("event_type") == "manuscript-ci" for event in events),
         "prebuttal_receipts": sum(event.get("event_type") == "prebuttal" for event in events),
         "submission_readiness_receipts": sum(event.get("event_type") == "submission-readiness" for event in events),
+        "contract_revisions": sum(event.get("event_type") == "paper-contract-revised" for event in events),
     }
 
 
@@ -88,6 +89,83 @@ def initialize_paper_ledger(root: Path, contract: PaperContract, actor: str = "s
                 raise RuntimeError(f"paper contract digest mismatch for {contract.paper_id}")
             return row
         row = _new(contract, actor)
+        _atomic(path, row)
+        return row
+
+
+def revise_paper_contract(
+    root: Path,
+    revised_contract: PaperContract,
+    *,
+    closure_evidence_refs: Sequence[str],
+    reason: str,
+    actor: str = "scientific-evidence-closure",
+) -> dict[str, Any]:
+    """Append a scientific contract revision after a PAPER_EVIDENCE hold is closed.
+
+    This is intentionally narrower than arbitrary paper-contract mutation: it is only
+    legal before any post-evidence paper transition, must move a held scientific
+    status to READY, must preserve every previously supported claim verbatim, and
+    must retain all prior evidence references while binding new closure evidence.
+    """
+    path, lock = _paths(root, revised_contract.paper_id)
+    with lock.open("a+", encoding="utf-8") as handle:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+        if not path.exists():
+            raise RuntimeError(f"paper ledger missing for {revised_contract.paper_id}")
+        row = json.loads(path.read_text(encoding="utf-8"))
+        if str(row.get("current_state") or "") != PaperState.PAPER_EVIDENCE.value:
+            raise RuntimeError("scientific contract revision is only allowed at PAPER_EVIDENCE")
+        previous = row.get("contract") or {}
+        previous_digest = str(row.get("contract_sha256") or "")
+        if _digest(previous) != previous_digest:
+            raise RuntimeError("existing paper contract payload/digest mismatch")
+        previous_status = str(previous.get("scientific_status") or "")
+        if previous_status not in {"CAUSAL_HOLD", "EVIDENCE_GAP"}:
+            raise RuntimeError("scientific contract revision requires a closable evidence hold")
+        revised_payload = paper_contract_payload(revised_contract)
+        revised_digest = paper_contract_digest(revised_contract)
+        if revised_contract.scientific_status.value != "READY" or not revised_contract.post_evidence_ready:
+            raise RuntimeError("revised scientific contract must be post-evidence READY")
+        if str(previous.get("paper_id") or "") != revised_contract.paper_id:
+            raise RuntimeError("paper id cannot change during scientific contract revision")
+        previous_claims = dict(previous.get("supported_claims") or {})
+        revised_claims = dict(revised_payload.get("supported_claims") or {})
+        if any(revised_claims.get(key) != value for key, value in previous_claims.items()):
+            raise RuntimeError("previously supported claims must be preserved verbatim")
+        previous_refs = set(previous.get("evidence_refs") or [])
+        revised_refs = set(revised_payload.get("evidence_refs") or [])
+        closure_refs = tuple(dict.fromkeys(str(ref) for ref in closure_evidence_refs if str(ref)))
+        if not closure_refs:
+            raise RuntimeError("scientific contract revision requires closure evidence references")
+        if not previous_refs.issubset(revised_refs):
+            raise RuntimeError("revised contract must retain all prior evidence references")
+        if not set(closure_refs).issubset(revised_refs):
+            raise RuntimeError("closure evidence references must be bound into revised contract")
+        if not str(reason).strip():
+            raise RuntimeError("scientific contract revision requires a reason")
+        event = {
+            "event_type": "paper-contract-revised",
+            "actor": actor,
+            "recorded_at": _now(),
+            "previous_contract_sha256": previous_digest,
+            "previous_contract": previous,
+            "new_contract_sha256": revised_digest,
+            "new_contract": revised_payload,
+            "closure_evidence_refs": list(closure_refs),
+            "reason": str(reason).strip(),
+            "scientific_authority": False,
+            "experiment_authority": False,
+            "gpu_authority": False,
+            "submission_authority": False,
+        }
+        event["event_id"] = _digest([revised_contract.paper_id, previous_digest, revised_digest, len(row.get("events") or []), event])[:24]
+        row.setdefault("events", []).append(event)
+        row["contract_sha256"] = revised_digest
+        row["contract"] = revised_payload
+        row["scientific_status"] = revised_contract.scientific_status.value
+        row["updated_at"] = event["recorded_at"]
+        _refresh(row)
         _atomic(path, row)
         return row
 
@@ -305,23 +383,90 @@ def validate_paper_ledger(row: Mapping[str, Any]) -> list[str]:
     except ValueError:
         errors.append("unknown current paper state")
         current_state = PaperState.PAPER_EVIDENCE
-    contract_sha256 = str(row.get("contract_sha256") or "")
-    contract = row.get("contract") or {}
-    if str(row.get("scientific_status") or "") != str(contract.get("scientific_status") or ""):
-        errors.append("paper scientific status diverges from frozen contract")
+
+    final_contract_sha256 = str(row.get("contract_sha256") or "")
+    final_contract = row.get("contract") or {}
+    if not isinstance(final_contract, dict) or _digest(final_contract) != final_contract_sha256:
+        errors.append("current paper contract payload/digest mismatch")
+    if str(row.get("scientific_status") or "") != str(final_contract.get("scientific_status") or ""):
+        errors.append("paper scientific status diverges from current contract")
+
+    events = list(row.get("events") or [])
+    contract_by_digest: dict[str, dict[str, Any]] = {}
+    if isinstance(final_contract, dict) and final_contract_sha256:
+        contract_by_digest[final_contract_sha256] = dict(final_contract)
+    for event in events:
+        if not isinstance(event, dict) or event.get("event_type") != "paper-contract-revised":
+            continue
+        previous = event.get("previous_contract") or {}
+        revised = event.get("new_contract") or {}
+        previous_digest = str(event.get("previous_contract_sha256") or "")
+        revised_digest = str(event.get("new_contract_sha256") or "")
+        if not isinstance(previous, dict) or _digest(previous) != previous_digest:
+            errors.append("paper contract revision previous payload/digest mismatch")
+        else:
+            contract_by_digest[previous_digest] = dict(previous)
+        if not isinstance(revised, dict) or _digest(revised) != revised_digest:
+            errors.append("paper contract revision new payload/digest mismatch")
+        else:
+            contract_by_digest[revised_digest] = dict(revised)
+
+    registration = next((event for event in events if isinstance(event, dict) and event.get("event_type") == "paper-contract-registered"), {})
+    simulated_contract_sha256 = str(registration.get("contract_sha256") or final_contract_sha256)
+    simulated_contract = contract_by_digest.get(simulated_contract_sha256)
+    if simulated_contract is None:
+        errors.append("initial paper contract snapshot unavailable for replay")
+        simulated_contract = dict(final_contract) if isinstance(final_contract, dict) else {}
     simulated_state = PaperState.PAPER_EVIDENCE
-    simulated_row: dict[str, Any] = {"contract_sha256": contract_sha256, "events": []}
-    for event in row.get("events") or []:
+    simulated_row: dict[str, Any] = {"contract_sha256": simulated_contract_sha256, "events": []}
+
+    for event in events:
         if not isinstance(event, dict):
             errors.append("paper event must be an object")
             continue
         if any(event.get(key) is True for key in ("scientific_authority", "experiment_authority", "gpu_authority", "submission_authority")):
             errors.append("paper event leaked authority")
         event_type = str(event.get("event_type") or "")
+
+        if event_type == "paper-contract-revised":
+            previous = event.get("previous_contract") or {}
+            revised = event.get("new_contract") or {}
+            previous_digest = str(event.get("previous_contract_sha256") or "")
+            revised_digest = str(event.get("new_contract_sha256") or "")
+            closure_refs = tuple(str(ref) for ref in (event.get("closure_evidence_refs") or []) if str(ref))
+            if simulated_state != PaperState.PAPER_EVIDENCE:
+                errors.append("paper contract revision occurred after PAPER_EVIDENCE")
+            if previous_digest != simulated_contract_sha256:
+                errors.append("paper contract revision previous digest does not match replay contract")
+            if not isinstance(previous, dict) or previous != simulated_contract:
+                errors.append("paper contract revision previous snapshot does not match replay contract")
+            if str(previous.get("scientific_status") or "") not in {"CAUSAL_HOLD", "EVIDENCE_GAP"}:
+                errors.append("paper contract revision did not close an evidence hold")
+            if not isinstance(revised, dict) or str(revised.get("scientific_status") or "") != "READY":
+                errors.append("paper contract revision did not produce READY status")
+            if str(previous.get("paper_id") or "") != str(revised.get("paper_id") or ""):
+                errors.append("paper contract revision changed paper id")
+            previous_claims = dict(previous.get("supported_claims") or {})
+            revised_claims = dict(revised.get("supported_claims") or {}) if isinstance(revised, dict) else {}
+            if any(revised_claims.get(key) != value for key, value in previous_claims.items()):
+                errors.append("paper contract revision changed a previously supported claim")
+            previous_refs = set(previous.get("evidence_refs") or [])
+            revised_refs = set(revised.get("evidence_refs") or []) if isinstance(revised, dict) else set()
+            if not previous_refs.issubset(revised_refs):
+                errors.append("paper contract revision dropped prior evidence")
+            if not closure_refs or not set(closure_refs).issubset(revised_refs):
+                errors.append("paper contract revision closure evidence is missing or unbound")
+            if not str(event.get("reason") or "").strip():
+                errors.append("paper contract revision reason missing")
+            simulated_contract_sha256 = revised_digest
+            simulated_contract = dict(revised) if isinstance(revised, dict) else {}
+            simulated_row["contract_sha256"] = simulated_contract_sha256
+
         if event_type in {"story-search", "mock-pc-review", "claim-audit"}:
             receipt = event.get("receipt") or {}
-            if not isinstance(receipt, dict) or str(receipt.get("contract_sha256") or "") != contract_sha256 or not _receipt_hash_valid(receipt):
+            if not isinstance(receipt, dict) or str(receipt.get("contract_sha256") or "") != simulated_contract_sha256 or not _receipt_hash_valid(receipt):
                 errors.append(f"invalid-content-addressed-receipt:{event_type}")
+
         if event_type == "paper-transition":
             try:
                 target = PaperState(str(event.get("to") or ""))
@@ -337,11 +482,11 @@ def validate_paper_ledger(row: Mapping[str, Any]) -> list[str]:
             if target_index != current_index + 1:
                 structural_blockers.append("transition-must-advance-exactly-one-paper-state")
             if target != PaperState.PAPER_EVIDENCE:
-                if str(contract.get("scientific_status") or "") != "READY":
+                if str(simulated_contract.get("scientific_status") or "") != "READY":
                     structural_blockers.append("paper-contract-not-ready")
-                if not (contract.get("supported_claims") or {}):
+                if not (simulated_contract.get("supported_claims") or {}):
                     structural_blockers.append("no-supported-claim")
-                if not (contract.get("evidence_refs") or []):
+                if not (simulated_contract.get("evidence_refs") or []):
                     structural_blockers.append("no-evidence-reference")
             gate_blockers, expected_gate_receipts = _transition_gate(simulated_row, simulated_state, target)
             structural_blockers.extend(gate_blockers)
@@ -363,6 +508,11 @@ def validate_paper_ledger(row: Mapping[str, Any]) -> list[str]:
             if event.get("allowed") is True:
                 simulated_state = target
         simulated_row["events"].append(event)
+
+    if simulated_contract_sha256 != final_contract_sha256:
+        errors.append("current paper contract digest does not match replayed contract revisions")
+    if simulated_contract != final_contract:
+        errors.append("current paper contract does not match replayed contract revisions")
     if simulated_state != current_state:
         errors.append("current paper state does not match replayed allowed transitions")
     if len(PAPER_ACCEPTANCE_FLOW) != 12:

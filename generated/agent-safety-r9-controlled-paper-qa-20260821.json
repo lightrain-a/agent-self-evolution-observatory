@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "status": "PASS_R23_CONTROLLED_PAPER_QA",
+  "numeric_bindings": {
+    "updated_branch_events": 8,
+    "control_branch_events": 4,
+    "paired_discordance": {
+      "treatment_only": 4,
+      "control_only": 0,
+      "both_event": 4,
+      "neither_event": 4
+    },
+    "updated_violation_episodes": 11,
+    "control_violation_episodes": 7,
+    "fixed_probe_event_trajectories": 4,
+    "fixed_probe_violations_by_exposure_step": {
+      "0": 0,
+      "1": 1,
+      "2": 1,
+      "3": 2
+    }
+  },
+  "narrative_drift_hits": [],
+  "pdf_pages": 11,
+  "main_text_pages_before_references": 8,
+  "unit_tests": "PASS_17_OF_17",
+  "claim_table_sha256": "cf962a90b0a728f43ace1b02f5abb250c8543e740407ca2ede104d0dbf42875f",
+  "memory_graph_sha256": "cf6a581399306f0bd6b1e810e204af7819c24490548052e4ce9e90999927186d",
+  "additional_behavior_execution_authorized": false,
+  "scientific_authority": false,
+  "qa_sha256": "7bbc6f465bda65025b824d3789f1998c859a038ddb98fb39d1f20cd627651db8"
+}

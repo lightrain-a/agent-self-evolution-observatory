@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0",
+  "status": "READY_AGENT_SAFETY_R9_MEMORY_GRAPH_2_1_INPUTS",
+  "receipt_ref": "repo://generated/agent-safety-r9-future-evidence-adjudication-20260820.json#sha256=04f1a06f73b09a8aaa986681bf223d5d540d7106bc3fcda2807b9458b27f3863",
+  "claim_table_sha256": "2cb23e54d65c6351ac1be516138214abd1131b4cca426dcafa529072344a9278",
+  "claim_ledger": [
+    {
+      "claim_id": "AGENT-SAFETY-R9-STATIC-PASS-NO-FUTURE-GUARANTEE",
+      "claim_text": "Within the frozen R9 BrowserART/HarmBench operationalization, passing the three-probe current-safety panel did not guarantee absence of first-violation events over the three-step persistent-update held-out schedule.",
+      "claim_type": "predictive_sufficiency",
+      "scientific_object": "persistent-state-agent-safety",
+      "mechanism": "current-safety-panel-to-future-first-violation",
+      "scope": {
+        "runtime": "R9 SecureClaw / Qwen3-8B",
+        "benchmark": "BrowserART",
+        "evaluator": "HarmBench",
+        "states": 4,
+        "branches": 12,
+        "horizon": 3
+      },
+      "adjudication_status": "SUPPORTED_NARROWLY",
+      "trace_complete": true,
+      "evidence_ids": [
+        "repo://generated/agent-safety-r9-future-evidence-adjudication-20260820.json#sha256=04f1a06f73b09a8aaa986681bf223d5d540d7106bc3fcda2807b9458b27f3863"
+      ],
+      "paper_claim_table_sha256": "2cb23e54d65c6351ac1be516138214abd1131b4cca426dcafa529072344a9278",
+      "scientific_authority": false
+    },
+    {
+      "claim_id": "AGENT-SAFETY-R9-PERSISTENT-UPDATE-CAUSAL-ATTRIBUTION",
+      "claim_text": "Persistent update alone causally produced the observed future violations.",
+      "claim_type": "causal_attribution",
+      "scientific_object": "persistent-state-agent-safety",
+      "mechanism": "persistent-update-effect",
+      "scope": {
+        "runtime": "R9 SecureClaw / Qwen3-8B",
+        "heldout_schedule_varies_with_update": true
+      },
+      "adjudication_status": "HOLD_METHOD_IDENTIFICATION",
+      "trace_complete": true,
+      "evidence_ids": [
+        "repo://generated/agent-safety-r9-future-evidence-adjudication-20260820.json#sha256=04f1a06f73b09a8aaa986681bf223d5d540d7106bc3fcda2807b9458b27f3863"
+      ],
+      "scientific_authority": false
+    }
+  ],
+  "supplemental_memory_entries": [
+    {
+      "memory_id": "MEM-HOLD-AGENT-SAFETY-R9-UPDATE-VS-SCHEDULE",
+      "kind": "HOLD",
+      "title": "R9 persistent-update causal attribution remains unidentified",
+      "summary": "The completed R9 run supports failure of a deterministic static-pass guarantee, but does not isolate persistent update from held-out schedule change.",
+      "candidate_id": "AGENT-SAFETY-R9-PERSISTENT-UPDATE-CAUSAL-ATTRIBUTION",
+      "scope": {
+        "scientific_object": "persistent-state-agent-safety",
+        "mechanism": "persistent-update-effect",
+        "claim_type": "causal_attribution"
+      },
+      "scientific_object": "persistent-state-agent-safety",
+      "mechanism": "persistent-update-effect",
+      "claim_type": "causal_attribution",
+      "affected_layer": "method",
+      "memory_class": "METHOD_IDENTIFICATION_HOLD",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "Separate persistent update effect from held-out schedule effect with a pre-registered same-held-out-schedule no-update control under the frozen runtime.",
+      "opposite_search_seed": "",
+      "reusable_precheck": "Do not interpret future hazards as update-caused unless update and held-out schedule effects are separately identified under a pre-registered comparison.",
+      "source_refs": [
+        "repo://generated/agent-safety-r9-future-evidence-adjudication-20260820.json#sha256=04f1a06f73b09a8aaa986681bf223d5d540d7106bc3fcda2807b9458b27f3863"
+      ],
+      "source_artifact": "agent-safety-r9-future-evidence-adjudication",
+      "reuse_effectiveness": {},
+      "scientific_authority": false
+    }
+  ],
+  "reopen_condition": {
+    "condition_id": "REOPEN-AGENT-SAFETY-R9-SEPARATE-UPDATE-FROM-SCHEDULE",
+    "claim_id": "AGENT-SAFETY-R9-PERSISTENT-UPDATE-CAUSAL-ATTRIBUTION",
+    "affected_layer": "method",
+    "condition": "Separate persistent update effect from held-out schedule effect with a pre-registered same-held-out-schedule no-update control under the frozen runtime.",
+    "automatic_reopen": false,
+    "new_behavior_execution_authorized": false,
+    "scientific_authority": false
+  },
+  "summary": {
+    "claims": 2,
+    "supported_narrowly": 1,
+    "method_holds": 1,
+    "reopen_conditions": 1,
+    "scientific_closures": 0,
+    "principle_updates": 0
+  },
+  "scientific_authority": false,
+  "bundle_sha256": "2ffb2a27e1a13fa5bcc4be7f9e043f1515baf67eaaaf9bdd486d3c52ebfbe7da"
+}
