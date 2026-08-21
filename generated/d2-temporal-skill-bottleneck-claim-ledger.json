@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "title": "Temporal Skills Are a Causal Bottleneck in Evolving Time-Series Agents",
+  "status": "ASSERTIVE_MANUSCRIPT_WITH_EXPERIMENT_DEBT",
+  "manuscript_policy": {
+    "unrefuted_hypothesis_stays_active": true,
+    "missing_evidence_creates_experiment_debt": true,
+    "claim_narrowing_required_for_missing_evidence": false,
+    "single_limitations_section_required": true
+  },
+  "claims": [
+    {
+      "claim_id": "C1",
+      "claim": "TimeSage-EV reports recurring temporal-validity failures and recurring exogenous-context failures across evolving release periods.",
+      "verdict": "SUPPORTED",
+      "evidence_refs": ["arXiv:2608.14270"],
+      "retain_in_manuscript": true
+    },
+    {
+      "claim_id": "C2",
+      "claim": "The TimeSage-1.0 skill-library condition improves aggregate benchmark performance and reduces token cost to 0.82x the reference condition.",
+      "verdict": "SUPPORTED",
+      "evidence_refs": ["arXiv:2608.14270"],
+      "retain_in_manuscript": true
+    },
+    {
+      "claim_id": "C3",
+      "claim": "Targeted temporal and exogenous-context skills causally repair their matched recurring failure families beyond generic reusable skill assistance.",
+      "verdict": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "evidence_state": "TARGETED_INTERVENTION_PENDING",
+      "closure_authority": "",
+      "retain_in_manuscript": true,
+      "claim_narrowing_required": false,
+      "experiment_debt": [
+        "targeted temporal cutoff skill intervention",
+        "release-alignment skill intervention",
+        "exogenous-grounding skill intervention",
+        "matched generic-skill control",
+        "same-endpoint no-skill control"
+      ]
+    },
+    {
+      "claim_id": "C4",
+      "claim": "A recurring failure can identify a missing reusable procedure that should become explicit agent state for future periods.",
+      "verdict": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "evidence_state": "MECHANISM_TRANSFER_PENDING",
+      "closure_authority": "",
+      "retain_in_manuscript": true,
+      "claim_narrowing_required": false,
+      "experiment_debt": ["cross-period transfer test", "cross-domain compatible-scenario transfer test"]
+    }
+  ],
+  "support_state": {
+    "code_repo_commit": "e0ce94e498b133195b274efa682097444dfd7d64",
+    "dataset_repo_commit": "ea07f80bc6813a2970062b8a1164fe530a07be20",
+    "public_evaluated_snapshot_available": false,
+    "support_failure_has_scientific_authority": false
+  },
+  "scientific_authority": false
+}

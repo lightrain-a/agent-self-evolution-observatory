@@ -1,0 +1,21 @@
+\section{Causal Provenance Intervention}
+\label{sec:intervention}
+The decisive experiment edits the retrieved memory while leaving the future task unchanged. We call this the matched provenance swap.
+
+\subsection{Pair construction}
+For each future task that retrieves a failure-derived memory, we identify a successful trajectory from the same task family. The two trajectories are converted into memories using the same writer model. Each memory is then compressed to a matched procedural core. A verifier checks whether the pair exposes the same actionable information to the future agent. The pair enters the experiment when the procedural content is matched and the provenance differs.
+
+The intervention produces two conditions. The first condition injects the failure-derived memory. The second condition injects the success-derived counterpart. The agent receives the same future query under both conditions. Model sampling is frozen. Tool state is frozen. The benchmark environment starts from the same snapshot.
+
+\subsection{Reverse swap}
+A complementary cohort begins with future tasks that normally retrieve success-derived memory. The intervention replaces that memory with a matched failure-derived counterpart. This direction tests whether failure provenance can introduce persistence into tasks that previously had access to successful guidance. The forward swap measures recovery from a failure-derived state. The reverse swap measures degradation after the state is introduced.
+
+\subsection{Outcome measures}
+The primary endpoint is task success on the matched future query. A secondary endpoint measures action divergence before terminal feedback. We record the first decision point at which the two provenance conditions choose different tool actions or different subgoals. This localizes the mechanism before outcome differences accumulate over a long trajectory.
+
+A provenance effect is supported when matched failure-derived memory produces lower future success or earlier error-consistent action divergence. The effect should replicate across task families. We also report pair-level heterogeneity because some failed trajectories may generate unusually strong corrective memories.
+
+\subsection{Memory governance implication}
+A positive effect changes how self-evolving memory should be represented. Memory retrieval should preserve provenance as structured metadata. The agent can then condition trust on the demonstrated process behind the memory. A failure-derived item can remain useful while receiving a different reuse policy from a memory backed by successful execution.
+
+This design is compatible with ReasoningBank because the acquisition mode is already explicit during memory writing \citep{ouyang2026reasoningbank}. It also transfers to workflow memory systems that store experience-derived procedures \citep{wang2024awm}. The intervention operates at the memory boundary, so it does not require parameter updates or changes to the base model.

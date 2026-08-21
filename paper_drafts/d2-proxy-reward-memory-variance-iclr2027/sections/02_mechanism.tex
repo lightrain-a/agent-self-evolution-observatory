@@ -1,0 +1,38 @@
+\section{Reward Error as a Memory-Write Intervention}
+\label{sec:mechanism}
+Let an episode produce task $x$ with trajectory $\tau$. The evaluator label is $r\in\{0,1\}$. A reward-conditioned memory writer constructs
+\begin{equation}
+M = G(\tau,r).
+\end{equation}
+The released ReasoningBank code instantiates this dependence directly. It maps score one to a success writer. Score zero selects a failure writer. The success prompt asks for the reason the trajectory succeeded. The failure prompt asks for the reason it failed and requests a corrective strategy.
+
+This branch occurs before the memory is persisted. The reward label therefore changes agent state even when the trajectory is unchanged. Future retrieval uses the historical task description as the retrieval key. The reward label does not modify that key. It changes the memory content returned after retrieval. This structure isolates a clean causal channel from reward to future context.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/fig1_reward_write_channel.pdf}
+\caption{Reward-conditioned memory writing. A perturbation of the terminal reward bit changes the reflection objective for an identical trajectory. The resulting memory becomes persistent state and can affect future behavior.}
+\label{fig:write}
+\end{figure}
+
+For a future task $x'$, let $A$ denote the action trajectory under retrieved memory $M$. Future behavior follows
+\begin{equation}
+A = H(x',M,S),
+\end{equation}
+where $S$ contains the remaining fixed agent state. A proxy reward error $\epsilon$ changes $r$ and induces a memory perturbation
+\begin{equation}
+\delta_M(\tau)=G(\tau,r\oplus\epsilon)-G(\tau,r).
+\end{equation}
+The first causal question is whether $\delta_M$ is nonzero under a fixed trajectory. The second question is whether this persistent perturbation changes future action distributions.
+
+\subsection{Variance amplification}
+Suppose repeated self-improvement runs experience small reward errors at different episodes. Each error can write a different memory. Later retrieval exposes future tasks to different persistent contexts. The resulting action distribution acquires an additional variance component from memory state:
+\begin{equation}
+\mathrm{Var}(Y)=
+\mathbb{E}_{M}[\mathrm{Var}(Y\mid M)]
++\mathrm{Var}_{M}(\mathbb{E}[Y\mid M]).
+\label{eq:variance}
+\end{equation}
+The second term is the memory-state variance induced by the learning process. Reward-conditioned memory writing gives proxy reward noise a direct route into this term.
+
+This mechanism is especially important for external-memory agents because the state update happens immediately. The system does not need parameter training for reward noise to persist. One mislabeled episode can alter future context as soon as the new memory is retrieved.

@@ -1,0 +1,15 @@
+\section{Limitations}
+The TimeSage paper declares a public dataset and code release. The current first-party GitHub repository contains a placeholder README, while the public Hugging Face repository currently exposes only repository metadata. The frozen May 2026 evaluated snapshot is therefore unavailable from these public release points at the time of this audit. Targeted reruns remain support debt until the evaluated snapshot or equivalent first-party artifacts are available.
+
+The source paper reports aggregate gains from reusable skills and a 0.82$\times$ token-cost ratio. It does not report the targeted intervention proposed here. The mechanism-specific causal effect therefore remains experiment debt even though the aggregate skill benefit is already observed.
+
+Failure-family labels must be frozen before intervention outcomes are inspected. Temporal-validity cases require evidence-cutoff errors that can be checked against the benchmark timestamp contract. Exogenous-context cases require a source-grounded attribution target. This annotation pass remains experiment debt for the frozen snapshot.
+
+A targeted skill can change more than one internal reasoning step. The matched generic-skill control reduces this concern by providing comparable reusable tooling. A stronger control can also match code length and tool-call count. This control refinement remains experiment debt.
+
+The paper focuses on reusable procedural state. Some recurring failures can arise from model capability limits even when the correct procedure is available. The targeted-skill effect therefore estimates the subset of failures that are repairable through explicit reusable procedures.
+
+\section{Conclusion}
+TimeSage-EV exposes recurring temporal failures in an evolving analytical setting. Its self-evolving harness shows that reusable skills improve aggregate performance and reduce token cost. These observations support a stronger causal hypothesis: a substantial class of recurring failures is produced by missing reusable temporal procedures.
+
+We formulate a targeted skill intervention that keeps the future endpoint fixed and compares a mechanism-specific skill against a matched generic helper. The design applies cleanly to cutoff enforcement, release alignment and exogenous grounding through separate skill contracts. This turns failure analysis into a direct self-evolution mechanism. A recurring failure identifies a candidate procedure, and the future period tests whether adding that procedure repairs the agent state.

@@ -1,0 +1,183 @@
+{
+  "schema_version": "1.0",
+  "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+  "status": "PRIMARY_SOURCE_CLOSURE_AUDIT_COMPLETE",
+  "audit_policy": {
+    "source_fulltext_required_for_same_information_reduction": true,
+    "llm_triage_has_scientific_authority": false,
+    "missing_experiment_is_scientific_stop": false,
+    "unrefuted_hypothesis_stays_active": true,
+    "scientific_stop_authorities": [
+      "direct_counterevidence",
+      "same_information_reduction",
+      "scope_matched_principle_counter_explanation"
+    ]
+  },
+  "primary_sources": {
+    "arXiv:2608.18066": {
+      "title": "On the Fragility of Self-Improving Agents: Variance, Task Order, and Underspecification",
+      "publication_date": "2026-08-18",
+      "fulltext_sha256": "12c8bc7ab1f80a19fc296c67748814390c474469b482854923a3768591723650"
+    },
+    "arXiv:2608.14036": {
+      "title": "Demystifying Agent Skills: Why They Work-Until They Don't",
+      "publication_date": "2026-08-14",
+      "fulltext_sha256": "e963536344b67399b064ca9c53f952f177a783cc1c1c3ccf41bc1d39a45b945f"
+    },
+    "arXiv:2608.19013": {
+      "title": "Harness Continual Learning: Continual Adaptation Beyond Model Parameters",
+      "publication_date": "2026-08-19",
+      "fulltext_sha256": "9c77e8e9678a0507784547ed84e2d5f44940ad86390a5d9ac46d483b0bd6c35e"
+    },
+    "arXiv:2608.16114": {
+      "title": "HyperSkill: Self-Evolving LLM Agents via Hypergraph-Structured Skill Memory",
+      "publication_date": "2026-08-17",
+      "fulltext_sha256": "9f6f3b4be31d4f962767c099d5a6354ad7c8ea5b6dccc1b247bdc740d9a67a14"
+    },
+    "arXiv:2608.17684": {
+      "title": "Auditing Self-Evolution in Financial Agents: Capability Gains, Security Drift, and Execution-Interface Mismatch",
+      "publication_date": "2026-08-18",
+      "fulltext_sha256": "2d24607853cec7142861ffd0b601bc100a9e1d20b38a1640fe8c839299370b5f"
+    },
+    "arXiv:2608.00017": {
+      "title": "Memory Reward Inflation in Self-Improving LLM Agents",
+      "publication_date": "2026-06-29",
+      "fulltext_sha256": "996091e95242e88f48d7cb6f54e2b4c76013935705b84ffc051cd768a11c9770"
+    },
+    "arXiv:2608.14270": {
+      "title": "TimeSage-EV: A Live Benchmark for Agentic Time Series Analysis in Evolving Environments",
+      "publication_date": "2026-08-14",
+      "fulltext_sha256": "dfd1f750757e3f8523ba8afbb82962bd17101cfd8a45055865f9e49f30fce2e1"
+    }
+  },
+  "candidate_audits": [
+    {
+      "candidate_id": "D5-C01",
+      "disposition": "DUPLICATE_BASIN",
+      "duplicate_of_basin": "D5-ENV-ORDER-CONTAMINATION",
+      "evidence_refs": ["arXiv:2608.18066", "generated/d5-env-order-claim-ledger.json"],
+      "reason": "The source paper already establishes task-order sensitivity. The valid causal extension exposed by the cheapest falsifier is the environment-history confound already materialized as the completed D5 audit paper.",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D5-C02",
+      "disposition": "SCIENTIFIC_STOP",
+      "closure_authority": "same_information_reduction",
+      "evidence_refs": ["arXiv:2608.14036"],
+      "reason": "The primary source already performs cross-framework skill transfer from Codex trajectories to Gemini CLI and reports failure under incompatible contexts, which absorbs the candidate's paper-level claim.",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D5-C03",
+      "disposition": "SCIENTIFIC_STOP",
+      "closure_authority": "same_information_reduction",
+      "evidence_refs": ["arXiv:2608.19013"],
+      "reason": "The primary source directly ablates memory updates and reports increased forgetting, absorbing the candidate claim that evolving memory reduces continual forgetting.",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D5-C04",
+      "disposition": "DUPLICATE_BASIN",
+      "duplicate_of_basin": "D5-ENV-ORDER-CONTAMINATION",
+      "evidence_refs": ["arXiv:2608.18066", "generated/d5-env-order-claim-ledger.json"],
+      "reason": "This candidate is a second formulation of the same task-order scientific basin as D5-C01 and routes through the same completed environment-history audit paper.",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D5-C05",
+      "disposition": "SCIENTIFIC_STOP",
+      "closure_authority": "same_information_reduction",
+      "evidence_refs": ["arXiv:2608.16114"],
+      "reason": "HyperSkill already ablates pruning and reports accumulation of low-utility entries with degraded retrieval, which directly absorbs the proposed cumulative-memory degradation claim.",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D5-C06",
+      "disposition": "SCIENTIFIC_STOP",
+      "closure_authority": "same_information_reduction",
+      "evidence_refs": ["arXiv:2608.19013"],
+      "reason": "This formulation repeats the memory-update forgetting result already measured by the primary source and adds no independent residual after same-information reduction.",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D2-C01",
+      "disposition": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "basin_id": "D2-FAILURE-MEMORY-PROVENANCE",
+      "evidence_refs": ["arXiv:2608.17684", "arXiv:2608.00017"],
+      "source_state": "The financial-agent audit reports a strong descriptive association between failure-derived retrieval and persistent W->W failures, while explicitly identifying task-difficulty confounding. Transition arithmetic does not establish failure provenance as the main source of C->W regressions. No matched provenance intervention is reported.",
+      "closure_authority": "",
+      "experiment_debt": [
+        "matched-query matched-semantic-memory provenance swap",
+        "failure-derived to success-derived replacement",
+        "reverse success-derived to failure-derived replacement"
+      ],
+      "paper_level_hypothesis": "Failure-derived memory provenance causally sustains persistent error beyond task difficulty and semantic memory content.",
+      "claim_narrowing_required": false,
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D2-C02",
+      "disposition": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "basin_id": "D2-PROXY-REWARD-MEMORY-VARIANCE",
+      "evidence_refs": ["arXiv:2608.18066"],
+      "source_state": "The source identifies proxy LLM reward as noisy and avoids that confound by using ground-truth reward. It does not intervene on reward noise during memory construction, so the proposed reward-noise-to-memory-variance mechanism remains unrefuted.",
+      "closure_authority": "",
+      "experiment_debt": [
+        "same trajectories with ground-truth reward memory construction",
+        "same trajectories with controlled proxy reward noise",
+        "downstream run-variance comparison under fixed model and order"
+      ],
+      "paper_level_hypothesis": "Proxy reward error is written into self-improving memory and amplifies downstream run variance.",
+      "claim_narrowing_required": false,
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D2-C03",
+      "disposition": "SCIENTIFIC_STOP",
+      "closure_authority": "same_information_reduction",
+      "evidence_refs": ["arXiv:2608.14270"],
+      "reason": "TimeSage-EV directly reports recurring temporal-validity and exogenous-context failures across difficulty tiers, which absorbs the descriptive recurring-failure claim.",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D2-C04",
+      "disposition": "DUPLICATE_BASIN",
+      "duplicate_of_basin": "D2-FAILURE-MEMORY-PROVENANCE",
+      "evidence_refs": ["D2-C01"],
+      "reason": "This candidate requires the same provenance intervention and supports the same paper-level causal claim as D2-C01.",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D2-C05",
+      "disposition": "DUPLICATE_BASIN",
+      "duplicate_of_basin": "D2-PROXY-REWARD-MEMORY-VARIANCE",
+      "evidence_refs": ["D2-C02"],
+      "reason": "This candidate is the same proxy-reward-to-memory-variance causal basin as D2-C02.",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D2-C06",
+      "disposition": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "basin_id": "D2-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "evidence_refs": ["arXiv:2608.14270"],
+      "source_state": "TimeSage-EV reports temporal grounding failures and overall gains from reusable skill memory. It does not perform a targeted temporal/exogenous skill intervention against matched generic skills on the same endpoints.",
+      "closure_authority": "",
+      "experiment_debt": [
+        "targeted temporal/exogenous skill injection",
+        "matched generic-skill control",
+        "same-endpoint no-skill control"
+      ],
+      "paper_level_hypothesis": "Targeted temporal and exogenous-context skills causally remove persistent temporal grounding failures beyond generic skill retrieval.",
+      "claim_narrowing_required": false,
+      "scientific_authority": false
+    }
+  ],
+  "summary": {
+    "candidates": 12,
+    "scientific_stops": 5,
+    "duplicate_basins": 4,
+    "active_unrefuted_hypotheses": 3,
+    "complete_papers_from_this_replication_at_audit_time": 0
+  },
+  "authority": {"problem_gate": false, "paper_design": false, "method": false, "experiment": false, "p0": false, "gpu": false}
+}

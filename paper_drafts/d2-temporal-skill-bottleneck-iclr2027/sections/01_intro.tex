@@ -1,0 +1,16 @@
+\section{Introduction}
+Evolving time-series analysis requires an agent to revisit the same scenario as new releases arrive. The evidence cutoff changes every period. Historical documents remain useful, yet later information must stay hidden. TimeSage-EV formalizes this setting across 60 institutional scenarios and 1,485 scenario-period questions \citep{yao2026timesage}.
+
+The benchmark reveals recurring failures that have a procedural character. Agents misuse temporal cutoffs. They struggle to align releases with the correct period. They also miss relevant exogenous context when numerical changes need documentary explanation. These errors recur across release periods even though the required procedure is reusable.
+
+TimeSage-1.0 provides evidence that reusable procedures matter. It augments the aligned baseline harness with a self-evolving skill library. A saved skill becomes callable from the next period. The source paper reports higher overall performance with reusable skills. The largest gains appear on medium and hard scenarios. Skill-enabled evaluation also reduces token cost to 0.82$\times$ the reference condition \citep{yao2026timesage}.
+
+Aggregate skill gains leave the mechanism unresolved. A generic skill library can help through many routes. It can reduce repeated coding effort. It can also stabilize formatting. Our target is narrower and more causal: recurring temporal failures arise because the agent lacks a reusable procedure that encodes the required temporal operation.
+
+This hypothesis yields a direct intervention. Identify an endpoint that exhibits a temporal or exogenous-context failure. Construct a targeted skill that implements the missing procedure. Re-evaluate the same endpoint with the same evidence. Compare against a generic reusable skill that carries similar implementation complexity without encoding the target mechanism. A no-skill condition anchors the baseline.
+
+The TimeSage harness makes this intervention unusually clean. Its Appendix defines an \texttt{induct\_skill} interface for saving a reusable Python function. It also defines \texttt{retrieve\_skill} for inspecting saved code. Accepted skills become live tools only in the next period. This chronological rule lets us inject a procedure before a future endpoint without changing the current-period answer.
+
+We develop this design for three recurring mechanism families. One family enforces the information cutoff. Another aligns release dates to analytical periods. The third integrates exogenous events into evidence-grounded reasoning. The paper asks whether targeted procedures causally remove their matched failure modes.
+
+The contribution is a mechanism-specific evaluation of self-evolving skills. TimeSage-EV establishes that reusable skills help in aggregate. We turn the skill library into a causal intervention surface and define matched controls that distinguish targeted mechanism repair from generic assistance. This approach supports a stronger claim about self-evolution: a recurring failure can reveal a missing reusable procedure that should become explicit agent state.

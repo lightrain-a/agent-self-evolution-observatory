@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "status": "FROZEN_QA_CONTRACTS",
+  "completion_definition": "A paper counts as COMPLETE_PAPER when the anonymous manuscript is fully drafted, compiles under the target template, passes manuscript policy lint, binds every main claim to a Claim Ledger, records unresolved evidence as experiment debt, and passes artifact consistency checks. Evidence debt remains separate from manuscript completion.",
+  "papers": [
+    {
+      "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+      "paper_dir": "paper_drafts/d2-failure-memory-provenance-iclr2027",
+      "claim_ledger": "generated/d2-failure-memory-provenance-claim-ledger.json",
+      "output": "generated/d2-failure-memory-provenance-paper-qa.json",
+      "title_fragments": ["failure memories are not neutral", "causal provenance effects"],
+      "required_pdf_fragments": ["0.931", "101 cases", "0.647", "34 cases", "persistent failures"],
+      "max_pages": 9,
+      "artifact_checks": [
+        {"path": "generated/discovery-engine-terminal-replication-source-audit-20260821.json", "key": "summary.active_unrefuted_hypotheses", "equals": 3}
+      ]
+    },
+    {
+      "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+      "paper_dir": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027",
+      "claim_ledger": "generated/d2-proxy-reward-memory-variance-claim-ledger.json",
+      "output": "generated/d2-proxy-reward-memory-variance-paper-qa.json",
+      "title_fragments": ["noisy rewards write noisy memories", "reward error as a variance amplifier"],
+      "required_pdf_fragments": ["0.735", "0.691", "0.770", "every complete pair"],
+      "max_pages": 9,
+      "artifact_checks": [
+        {"path": "generated/d2-proxy-reward-memory-f0.json", "key": "summary.paired_trajectories_complete", "equals": 4},
+        {"path": "generated/d2-proxy-reward-memory-f0.json", "key": "summary.paired_exact_content_change_rate", "equals": 1.0},
+        {"path": "generated/d2-proxy-reward-memory-f0.json", "key": "summary.mean_token_jaccard_distance", "equals": 0.734789},
+        {"path": "generated/d2-proxy-reward-memory-f0.json", "key": "falsifier_result", "equals": "SURVIVES_F0"}
+      ]
+    },
+    {
+      "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "paper_dir": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027",
+      "claim_ledger": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+      "output": "generated/d2-temporal-skill-bottleneck-paper-qa.json",
+      "title_fragments": ["temporal skills are a causal bottleneck", "evolving time-series agents"],
+      "required_pdf_fragments": ["60 institutional scenarios", "1,485", "0.82", "targeted skill intervention"],
+      "max_pages": 9,
+      "artifact_checks": [
+        {"path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json", "key": "support_state.public_evaluated_snapshot_available", "equals": false}
+      ]
+    }
+  ],
+  "scientific_authority": false
+}

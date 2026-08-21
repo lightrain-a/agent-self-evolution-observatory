@@ -1,0 +1,28 @@
+\section{F0 Reproduction Details}
+\subsection{Released trajectory sample}
+The F0 sample uses six task IDs from the released AWM shuffle-seed-42 Shopping parquet: 21 through 25, plus 47. The deterministic sampler selects the lowest task IDs with parseable trajectory records within each original-outcome stratum. Original failures are 21 through 22 plus 24. Original successes are 23 plus 25 and 47.
+
+\subsection{Memory construction intervention}
+Each released trajectory is summarized into an action trace. The same trace is inserted into two prompts. One prompt contains the released ReasoningBank success-reflection system instruction. The paired prompt contains the released failure-reflection system instruction. The task prompt stays fixed. The writer model stays fixed. Temperature stays at zero. The raw provider output is archived before metric computation.
+
+\subsection{Pair-level F0 results}
+\begin{table}[h]
+\centering
+\caption{Complete paired interventions.}
+\small
+\begin{tabular}{lccc}
+\toprule
+Task & Original outcome & Content changed & Token distance \\
+\midrule
+21 & failure & yes & 0.691489 \\
+22 & failure & yes & 0.708108 \\
+23 & success & yes & 0.769953 \\
+25 & success & yes & 0.769608 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The extracted memory-item title set changes for every complete pair. The mean token-set Jaccard distance is 0.734789. Provider failures for task 24 and task 47 are stored as support failures with zero scientific authority.
+
+\subsection{Downstream experiment contract}
+Future-task experiments reuse paired memory outputs from F0. The future query remains fixed across the pair. The benchmark service state is restored from the same snapshot. The model configuration is held constant. Repeated rollouts record terminal success and the first action-divergence step.

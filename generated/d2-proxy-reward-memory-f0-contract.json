@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "D2-PROXY-REWARD-MEMORY-F0",
+  "status": "FROZEN_BEFORE_PROVIDER_CALLS",
+  "candidate_id": "D2-C02",
+  "paper_basin": "D2-PROXY-REWARD-MEMORY-VARIANCE",
+  "hypothesis": "A reward-label error changes the memory written from an otherwise identical agent trajectory, creating a direct channel from proxy reward noise into future memory-conditioned behavior.",
+  "frozen_source": {
+    "trajectory_parquet": "generated/research-data/paper-yield-d5-c01/parquet-cache/wa_awm_shuffle1-shopping_run1.parquet",
+    "trajectory_source": "Salesforce/self-improve-fragility released trajectory parquet",
+    "reasoningbank_success_prompt": "generated/research-data/paper-yield-d5-c01/self-improve-fragility/webarena/src/walt/browser_use/custom/prompts/reasoningbank_pass.md",
+    "reasoningbank_failure_prompt": "generated/research-data/paper-yield-d5-c01/self-improve-fragility/webarena/src/walt/browser_use/custom/prompts/reasoningbank_fail.md"
+  },
+  "sampling": {
+    "paired_trajectories": 6,
+    "original_success": 3,
+    "original_failure": 3,
+    "selection_rule": "lowest task IDs with complete trajectory_json within each original-outcome stratum after deterministic parsing",
+    "outcome_strata_used_only_for_balance": true
+  },
+  "intervention": {
+    "fixed": ["task prompt", "released action trajectory", "memory-generator model", "temperature", "output schema"],
+    "changed": "memory-construction reward label through the exact released ReasoningBank success versus failure system prompt"
+  },
+  "model": {
+    "requested": "deepseek-v4-flash",
+    "temperature": 0.0,
+    "max_output_tokens": 2200,
+    "provider_retries": 0,
+    "store": true
+  },
+  "primary_metrics": {
+    "paired_exact_content_change_rate": "fraction of trajectories whose success-label and failure-label memories differ after whitespace normalization",
+    "paired_token_jaccard_distance": "1 - token-set Jaccard similarity between paired memories",
+    "paired_title_set_change_rate": "fraction of pairs with different extracted memory-item title sets"
+  },
+  "falsifier": {
+    "stop_current_mechanism_if": "paired exact content change rate is zero, or all six paired outputs are semantically identical under manual audit despite prompt-label changes"
+  },
+  "experiment_debt_after_f0": [
+    "inject paired memories into matched future tasks",
+    "measure downstream action and success variance under fixed benchmark state"
+  ],
+  "scientific_authority": false,
+  "authority": {"problem_gate": false, "paper_design": false, "method": false, "experiment": false, "p0": false, "gpu": false}
+}

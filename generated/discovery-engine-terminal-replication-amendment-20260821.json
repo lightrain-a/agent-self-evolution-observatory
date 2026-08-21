@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "amendment_id": "terminal-paper-yield-replication-20260821-provider-fallback-1",
+  "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+  "status": "FROZEN_OPERATIONAL_AMENDMENT",
+  "original_contract_sha256": "cfccdcfee757c378b39e8f4606131ced120aeda7fe95ff289704afa133cb98d5",
+  "trigger": {
+    "class": "PROVIDER_SUPPORT_FAILURE",
+    "orphan_request_fingerprint": "93e8f3e7a9a837bdca4fbd434f3bd632fb730dd8b3dbf290cb36a9b61be4b6d3",
+    "requested_model": "kimi-k3",
+    "raw_output_available": false,
+    "provider_response_id_available": false,
+    "scientific_authority": false
+  },
+  "operational_change": {
+    "generator_requested": "glm-5.3",
+    "reason": "Kimi K3 produced no auditable output or provider response receipt before the connection-level orphan was terminated.",
+    "different_from_first_round_deepseek_family": true,
+    "candidate_budget_unchanged": true,
+    "frozen_evidence_unchanged": true,
+    "terminal_scoring_policy_unchanged": true,
+    "scientific_gates_unchanged": true,
+    "automatic_replay_of_orphaned_kimi_request": false
+  },
+  "strict_transport": {
+    "provider_post_retries": 0,
+    "single_post_per_request_fingerprint": true,
+    "provider_failure_has_scientific_authority": false
+  },
+  "authority": {"problem_gate": false, "paper_design": false, "method": false, "experiment": false, "p0": false, "gpu": false}
+}

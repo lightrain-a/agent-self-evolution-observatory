@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0",
+  "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+  "status": "THREE_ACTIVE_PAPERSTATES_CREATED",
+  "manuscript_policy": {
+    "draft_before_evidence_completion": true,
+    "unrefuted_hypothesis_stays_active": true,
+    "missing_evidence_creates_experiment_debt": true,
+    "missing_evidence_does_not_trigger_claim_narrowing": true,
+    "single_limitations_section_required": true,
+    "distributed_limitation_language_forbidden": true,
+    "not_but_contrast_forbidden": true,
+    "rather_than_contrast_forbidden": true,
+    "serial_enumeration_sentence_forbidden": true
+  },
+  "papers": [
+    {
+      "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+      "parent_candidates": [
+        "D2-C01",
+        "D2-C04"
+      ],
+      "basin_id": "D2-FAILURE-MEMORY-PROVENANCE",
+      "title": "Failure Memories Are Not Neutral: Causal Provenance Effects in Self-Evolving Agents",
+      "status": "MANUSCRIPT_COMPLETE_EXPERIMENT_DEBT",
+      "main_claim": "Failure-derived memory provenance is a causal state variable in self-evolving agents: holding task difficulty and semantic guidance fixed, guidance produced from failed trajectories sustains future error more strongly than matched guidance produced from successful trajectories.",
+      "evidence_state": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "existing_evidence": [
+        "The financial-agent audit reports failure-derived ReasoningBank retrieval accuracy 0.647 over 34 retrievals versus 0.931 over 101 success-derived retrievals.",
+        "All ten reported ReasoningBank W->W persistent failures fall in the failure-derived retrieval stratum.",
+        "ReasoningBank explicitly constructs success-derived and failure-derived memories with different reflection modes, making provenance an upstream intervention on memory content.",
+        "Memory Reward Inflation supplies an independent mechanism by which erroneous or overvalued memories can persist through future reuse."
+      ],
+      "experiment_debt": [
+        "matched-query matched-semantic-memory provenance swap",
+        "failure-derived to success-derived replacement",
+        "reverse success-derived to failure-derived replacement"
+      ],
+      "manuscript_dir": "paper_drafts/d2-failure-memory-provenance-iclr2027",
+      "limitations_source": "sections/06_limitations_conclusion.tex",
+      "scientific_authority": false,
+      "paper_qa_artifact": "generated/d2-failure-memory-provenance-paper-qa.json",
+      "paper_qa_pass": true,
+      "pdf_sha256": "58a47fa761a1e8dd4adc6137e413255b2c8a372bd11cd20e71db7cca0884bdb7",
+      "pdf_pages": 7,
+      "manuscript_complete": true,
+      "evidence_complete": false
+    },
+    {
+      "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+      "parent_candidates": [
+        "D2-C02",
+        "D2-C05"
+      ],
+      "basin_id": "D2-PROXY-REWARD-MEMORY-VARIANCE",
+      "title": "Noisy Rewards Write Noisy Memories: Reward Error as a Variance Amplifier in Self-Improving Agents",
+      "status": "MANUSCRIPT_COMPLETE_EXPERIMENT_DEBT",
+      "main_claim": "Proxy reward noise becomes persistent state when reward-conditioned memory construction rewrites the interpretation of an identical trajectory, and this state perturbation amplifies downstream run variance under memory reuse.",
+      "evidence_state": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "existing_evidence": [
+        "The fragility study reports substantial multi-run variance and explicitly treats proxy LLM reward as a noisy confound, using ground-truth reward in its main memory construction experiments.",
+        "Released ReasoningBank code maps score=1 to a success-reflection prompt and score=0 to a failure-reflection prompt, so one reward bit changes the memory-construction objective for the same trajectory.",
+        "Memory Reward Inflation independently shows that proxy reward errors can accumulate through memory reuse."
+      ],
+      "experiment_debt": [
+        "paired identical-trajectory success/failure memory F0",
+        "matched future-task memory injection",
+        "downstream action and success variance under fixed benchmark state"
+      ],
+      "f0_contract": "generated/d2-proxy-reward-memory-f0-contract.json",
+      "manuscript_dir": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027",
+      "limitations_source": "sections/06_limitations_conclusion.tex",
+      "scientific_authority": false,
+      "paper_qa_artifact": "generated/d2-proxy-reward-memory-variance-paper-qa.json",
+      "paper_qa_pass": true,
+      "pdf_sha256": "39d0f2182d26f37fcad3fa20afea3fa1324b6b2683506a60da745e88ab290457",
+      "pdf_pages": 7,
+      "manuscript_complete": true,
+      "evidence_complete": false
+    },
+    {
+      "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "parent_candidates": [
+        "D2-C06"
+      ],
+      "basin_id": "D2-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "title": "Temporal Skills Are a Causal Bottleneck in Evolving Time-Series Agents",
+      "status": "MANUSCRIPT_COMPLETE_EXPERIMENT_DEBT",
+      "main_claim": "Reusable temporal and exogenous-context procedures are the causal bottleneck behind a large class of recurring TimeSage-EV failures, and targeted skill injection removes these failures beyond generic skill retrieval.",
+      "evidence_state": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "existing_evidence": [
+        "TimeSage-EV reports recurring temporal-validity and exogenous-context failures across model tiers.",
+        "TimeSage-1.0 adds a reusable skill library while keeping the baseline harness aligned, and the skill-memory condition improves aggregate benchmark performance.",
+        "The released paper Appendix defines explicit induct_skill and retrieve_skill interfaces, giving a concrete intervention surface for targeted temporal procedures."
+      ],
+      "support_state": "DATASET_AND_CODE_RELEASE_DECLARED_BUT_PUBLIC_REPOSITORIES_CURRENTLY_INCOMPLETE",
+      "experiment_debt": [
+        "targeted temporal/exogenous skill injection",
+        "matched generic-skill control",
+        "same-endpoint no-skill control",
+        "frozen TimeSage-EV evaluated snapshot retrieval"
+      ],
+      "manuscript_dir": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027",
+      "limitations_source": "sections/06_limitations_conclusion.tex",
+      "scientific_authority": false,
+      "paper_qa_artifact": "generated/d2-temporal-skill-bottleneck-paper-qa.json",
+      "paper_qa_pass": true,
+      "pdf_sha256": "7df2a16754b329a2713219797f487b33a485e9b0b7195a9bb6a58453546c082f",
+      "pdf_pages": 6,
+      "manuscript_complete": true,
+      "evidence_complete": false
+    }
+  ],
+  "scientific_authority": false
+}

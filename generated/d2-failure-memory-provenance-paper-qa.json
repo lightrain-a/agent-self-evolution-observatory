@@ -1,0 +1,224 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "status": "PASS",
+  "paper_dir": "paper_drafts/d2-failure-memory-provenance-iclr2027",
+  "summary": {
+    "checks": 23,
+    "passed": 23,
+    "pages": 7,
+    "pdf_sha256": "58a47fa761a1e8dd4adc6137e413255b2c8a372bd11cd20e71db7cca0884bdb7",
+    "pdf_bytes": 148181,
+    "active_unrefuted_claims": [
+      "C4",
+      "C5"
+    ]
+  },
+  "checks": [
+    {
+      "name": "page_limit",
+      "pass": true,
+      "detail": 7
+    },
+    {
+      "name": "anonymous_placeholder",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_author_email",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_internal_identity",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_undefined_citations",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_undefined_references",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_overfull",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "manuscript_policy",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "title:failure memories are not neutral",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "title:causal provenance effects",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.931",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:101 cases",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.647",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:34 cases",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:persistent failures",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_retain:C4",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_no_auto_narrow:C4",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_no_closure:C4",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_retain:C5",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_no_auto_narrow:C5",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_no_closure:C5",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "claim_ledger_has_claims",
+      "pass": true,
+      "detail": 5
+    },
+    {
+      "name": "artifact:summary.active_unrefuted_hypotheses",
+      "pass": true,
+      "detail": {
+        "actual": 3,
+        "expected": 3
+      }
+    }
+  ],
+  "style_audit": {
+    "schema_version": "1.0",
+    "policy": {
+      "schema_version": "1.0",
+      "draft_before_evidence_completion": true,
+      "unrefuted_hypothesis_stays_active": true,
+      "missing_evidence_creates_experiment_debt": true,
+      "missing_evidence_does_not_trigger_claim_narrowing": true,
+      "maximally_assertive_evidence_compatible_wording": true,
+      "scientific_evidence_state_is_separate_from_manuscript_stance": true,
+      "manuscript_completion_is_separate_from_evidence_completion": true,
+      "complete_paper_may_retain_experiment_debt": true,
+      "complete_paper_requires_claim_ledger": true,
+      "complete_paper_requires_manuscript_qa": true,
+      "refutation_requires_scientific_counterevidence": true,
+      "refutation_authorities": [
+        "direct_counterevidence",
+        "same_information_reduction",
+        "scope_matched_principle_counter_explanation"
+      ],
+      "single_limitations_section_required": true,
+      "distributed_limitation_language_forbidden": true,
+      "not_but_contrast_forbidden": true,
+      "rather_than_contrast_forbidden": true,
+      "serial_enumeration_sentence_forbidden": true
+    },
+    "limitations_source": "sections/06_limitations_conclusion.tex",
+    "sources_audited": 9,
+    "passed": true,
+    "violations": []
+  },
+  "artifact_checks": [
+    {
+      "path": "generated/discovery-engine-terminal-replication-source-audit-20260821.json",
+      "key": "summary.active_unrefuted_hypotheses",
+      "actual": 3,
+      "expected": 3,
+      "pass": true
+    }
+  ],
+  "manuscript_files": [
+    {
+      "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/main.tex",
+      "sha256": "2cde267a64d71a0bb3f9093124de5a44972406da6024ae5d0bd77a886182045e"
+    },
+    {
+      "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/00_abstract.tex",
+      "sha256": "bc0a8715a61434a17df7f892eaea68499a11fd1cfe0d442ed62c87c660c58219"
+    },
+    {
+      "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/01_intro.tex",
+      "sha256": "282c3ddea7453694abdc12d3c6f2cde011719c38acd0cc32a608bb156f6cebc4"
+    },
+    {
+      "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/02_formulation.tex",
+      "sha256": "1d72e851b429ce5870a6e601d363cb0ed50857afa1d3f28d8fc314f5c185492e"
+    },
+    {
+      "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/03_evidence.tex",
+      "sha256": "5912093488d7f932bff9e93fa6c8db5e6a7d7669d7c4841d23aed2715c2a750b"
+    },
+    {
+      "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/04_intervention.tex",
+      "sha256": "5ed35559c0630c3d49f3a41ece4b382bed726b6e7383a8eb2b0b95291d253e4f"
+    },
+    {
+      "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/05_related.tex",
+      "sha256": "78c589391ee4266345f1d873f3a1d90818fb98fb70c4af8c44d4a7f1e2dcfa2c"
+    },
+    {
+      "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/06_limitations_conclusion.tex",
+      "sha256": "9e9ff8bbe2cd989f5725998df73aada03caa7b58c126296a1d5abd221bfd16e8"
+    },
+    {
+      "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/07_appendix.tex",
+      "sha256": "fa35243d4848397204ebb0bea81ebd3c4128ec5de7cecd2916cd941b4c59b2ca"
+    },
+    {
+      "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/references.bib",
+      "sha256": "d081b995811ea0beac3bb9179fdca000e1bc9c495e2775cc901bc22902f0d30a"
+    }
+  ],
+  "claim_ledger": {
+    "path": "generated/d2-failure-memory-provenance-claim-ledger.json",
+    "sha256": "48e5963f5bd061bbe63876e86e0b60a3b22c5d6e3f2336e767e24d2511ec84f5"
+  },
+  "scientific_authority": false
+}

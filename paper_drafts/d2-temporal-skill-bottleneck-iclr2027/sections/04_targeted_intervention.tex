@@ -1,0 +1,26 @@
+\section{Targeted Skill Intervention}
+\label{sec:intervention}
+The decisive experiment starts from endpoints with a documented recurring failure family. Each endpoint is replayed from the same frozen evidence package under three skill conditions.
+
+The targeted condition injects a skill whose procedure matches the observed failure mechanism. The generic condition injects a reusable helper with similar code length and similar tool complexity. The baseline condition uses the same harness without the targeted procedure. Model configuration remains fixed across the three conditions. The evaluated period also remains fixed.
+
+\subsection{Endpoint matching}
+A temporal-cutoff endpoint is paired with a skill that filters evidence by cutoff time. A release-alignment endpoint receives a date-to-period procedure. An exogenous-grounding endpoint receives a procedure that retrieves prior documentary evidence tied to the numerical change. Endpoint selection is frozen from source failure annotations before outcomes are inspected.
+
+\subsection{Primary outcome}
+The primary metric is correction of the matched failure. A temporal-validity error is corrected when the final answer uses only admissible evidence. A release-alignment error is corrected when the answer references the correct period. An exogenous-context error is corrected when the attribution is supported by cutoff-valid documentary evidence.
+
+The targeted-skill effect is
+\begin{equation}
+\Delta_{\mathrm{target}}=
+S_{\mathrm{target}}-S_{\mathrm{generic}},
+\end{equation}
+where $S$ is success on the matched failure criterion. The generic control absorbs the benefit of receiving a reusable helper. A positive effect identifies the mechanism-specific contribution.
+
+\subsection{Transfer test}
+A reusable procedure should generalize beyond the endpoint that motivated it. Each targeted skill is therefore evaluated on later periods from the same scenario and on compatible scenarios from another domain. The skill is accepted as a reusable mechanism when it improves matched failures without inserting scenario-specific facts.
+
+\subsection{Chronological deployment}
+The intervention respects the TimeSage chronological contract. A skill enters the library before the evaluated future period. It cannot modify the acquisition-period answer. This preserves the direction of self-evolution and prevents current-answer leakage.
+
+The experiment turns a recurring error into a falsifiable memory hypothesis. If a targeted skill fails to outperform the generic control, the missing-procedure explanation loses support for that failure family. If the effect transfers to later periods, the skill becomes direct evidence that the recurring failure was caused by a missing reusable operation.

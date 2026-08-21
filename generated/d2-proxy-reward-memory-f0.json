@@ -1,0 +1,475 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "D2-PROXY-REWARD-MEMORY-F0",
+  "status": "F0_SUPPORT_INCOMPLETE",
+  "contract_sha256": "9d76d7009d5ebb0dd0d44588401fab54e3e36478695ef36fd57da961b57ee02e",
+  "hypothesis": "A reward-label error changes the memory written from an otherwise identical agent trajectory, creating a direct channel from proxy reward noise into future memory-conditioned behavior.",
+  "sample": [
+    {
+      "task_id": "21",
+      "original_is_successful": false,
+      "task_prompt": "List out reviewers, if exist, who mention about ear cups being small"
+    },
+    {
+      "task_id": "22",
+      "original_is_successful": false,
+      "task_prompt": "List out reviewers, if exist, who mention about under water photo"
+    },
+    {
+      "task_id": "23",
+      "original_is_successful": true,
+      "task_prompt": "List out reviewers, if exist, who mention about good fingerprint resistant"
+    },
+    {
+      "task_id": "24",
+      "original_is_successful": false,
+      "task_prompt": "List out reviewers, if exist, who mention about price being unfair"
+    },
+    {
+      "task_id": "25",
+      "original_is_successful": true,
+      "task_prompt": "List out reviewers, if exist, who mention about average print quality"
+    },
+    {
+      "task_id": "47",
+      "original_is_successful": true,
+      "task_prompt": "Today is 6/12/2023. Tell me how many fulfilled orders I have over the past month, and the total amount of money I spent."
+    }
+  ],
+  "summary": {
+    "paired_trajectories_requested": 6,
+    "paired_trajectories_complete": 4,
+    "paired_exact_content_change_rate": 1.0,
+    "paired_title_set_change_rate": 1.0,
+    "mean_token_jaccard_distance": 0.734789,
+    "min_token_jaccard_distance": 0.691489,
+    "max_token_jaccard_distance": 0.769953,
+    "provider_failures": 2
+  },
+  "falsifier_result": "SURVIVES_F0",
+  "pairs": [
+    {
+      "task_id": "21",
+      "task_prompt": "List out reviewers, if exist, who mention about ear cups being small",
+      "original_is_successful": false,
+      "trajectory_summary_sha256": "0697e64ba5a6c805cf0ce929ac1d947d2e884b75073c73ec63ec30f26156acab",
+      "success_memory_sha256": "68fac0d365166e8c2a39a5ce9c1bc46cadcd22851429b412a584e01a9230340a",
+      "failure_memory_sha256": "c9a4793d394b9786db75483231ddc90c1fd5306608c8c8f8bb15e1d2b7c5019d",
+      "exact_content_changed": true,
+      "token_jaccard_distance": 0.691489,
+      "success_titles": [
+        "Open the reviews section before extracting review content",
+        "Use keyword-rich extraction goals with pagination fallback",
+        "Collect reviewer identity and exact quote for each match"
+      ],
+      "failure_titles": [
+        "Always paginate through all review pages before concluding",
+        "Verify extracted text is complete and clean before finalizing",
+        "Use broad paraphrases to identify relevant mentions"
+      ],
+      "title_set_changed": true,
+      "scientific_authority": false
+    },
+    {
+      "task_id": "22",
+      "task_prompt": "List out reviewers, if exist, who mention about under water photo",
+      "original_is_successful": false,
+      "trajectory_summary_sha256": "ce3161ff3c47c24a5f96b109162935aa3d8126c47559aca38c6cd3c77c121446",
+      "success_memory_sha256": "9df109c17c0d79dccf41a5ee85fa34017aa7985b546da3a8a51e697a400dc1e0",
+      "failure_memory_sha256": "8cdb1c706bf3ffc6fd66ea23d361b1e10b7538bd92e651c9cf81f17aaf426c48",
+      "exact_content_changed": true,
+      "token_jaccard_distance": 0.708108,
+      "success_titles": [
+        "Open the relevant section before scanning content",
+        "Use extraction with explicit search terms and pagination instructions",
+        "Report absence of matches only after checking all pages"
+      ],
+      "failure_titles": [
+        "Always extract content after navigating to a new page",
+        "Continue pagination until no next-page control remains",
+        "Treat incomplete extraction results as unresolved"
+      ],
+      "title_set_changed": true,
+      "scientific_authority": false
+    },
+    {
+      "task_id": "23",
+      "task_prompt": "List out reviewers, if exist, who mention about good fingerprint resistant",
+      "original_is_successful": true,
+      "trajectory_summary_sha256": "4471ab8874a465680a66b48fe06b09633785d46fb549195b04d75e1d58646d23",
+      "success_memory_sha256": "8c036eb3cae7324531fcd39e14772e748119983e1acdde25beb5b8c97d7f05f1",
+      "failure_memory_sha256": "db744e634aa974903c8a4be97e4e66fa357d302be5603337a6ad7fe5c50f2557",
+      "exact_content_changed": true,
+      "token_jaccard_distance": 0.769953,
+      "success_titles": [
+        "Inspect all paginated content before concluding absence",
+        "Track pagination state using visible content and controls",
+        "Record direct quotes as evidence for qualitative criteria"
+      ],
+      "failure_titles": [
+        "Track pagination state to avoid redundant page revisits",
+        "Search all pages before concluding absence",
+        "Use synonymous terms when scanning for product attributes"
+      ],
+      "title_set_changed": true,
+      "scientific_authority": false
+    },
+    {
+      "task_id": "24",
+      "task_prompt": "List out reviewers, if exist, who mention about price being unfair",
+      "original_is_successful": false,
+      "trajectory_summary_sha256": "3bc0e666a0b1e3d7d52857b25a14b1d3d4fc95c5f0ed51d23b47f1c7ad2ef4c5",
+      "success_memory_sha256": "0298e765dd0add3b22d3c81e535837c338cd04c32648de5c5d4abe8c56b4b313",
+      "failure_memory_sha256": null,
+      "exact_content_changed": false,
+      "token_jaccard_distance": null,
+      "success_titles": [
+        "Open the relevant content section before scanning",
+        "Scan for explicit and implicit indicators of the target criterion",
+        "Report absence of findings with supporting evidence"
+      ],
+      "failure_titles": [],
+      "title_set_changed": false,
+      "scientific_authority": false
+    },
+    {
+      "task_id": "25",
+      "task_prompt": "List out reviewers, if exist, who mention about average print quality",
+      "original_is_successful": true,
+      "trajectory_summary_sha256": "9355929e90fb70ba7b554630fa21b93dfcc0117586a73cae1020782ace41444a",
+      "success_memory_sha256": "59e85dbe9802cd79ba7e403318af854ac389a07bb3fadd2f895d265651ef5430",
+      "failure_memory_sha256": "0d8c7f3d3a9e49c08353d8dd842c58916fb45fb3c260b5252a8544d6b71d8dc5",
+      "exact_content_changed": true,
+      "token_jaccard_distance": 0.769608,
+      "success_titles": [
+        "Open the reviews section before extracting review content",
+        "Specify the target criterion and synonyms in the extraction goal",
+        "Report only true matches and note unsearched content"
+      ],
+      "failure_titles": [
+        "Complete pagination before declaring task done",
+        "Apply strict semantic criteria for matching reviews",
+        "Verify extracted snippets against the user's intent"
+      ],
+      "title_set_changed": true,
+      "scientific_authority": false
+    },
+    {
+      "task_id": "47",
+      "task_prompt": "Today is 6/12/2023. Tell me how many fulfilled orders I have over the past month, and the total amount of money I spent.",
+      "original_is_successful": true,
+      "trajectory_summary_sha256": "4f1e82a731409bd3be5ec940881b2b0e3585da9f4b72ce375379ab48599682c4",
+      "success_memory_sha256": "cac46901be3e7d39f763d00cbf83d292ef9122bd287472b97ec0aa65c349ec04",
+      "failure_memory_sha256": null,
+      "exact_content_changed": false,
+      "token_jaccard_distance": null,
+      "success_titles": [
+        "Define the date range explicitly before extracting order data",
+        "Filter fulfilled orders by status keywords and exclude non-fulfilled statuses",
+        "Increase page size before extracting to ensure all orders are considered"
+      ],
+      "failure_titles": [],
+      "title_set_changed": false,
+      "scientific_authority": false
+    }
+  ],
+  "provider_receipts": [
+    {
+      "stage": "memory-success",
+      "engine_id": "task-21",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "6ec4d34147b3ddf4580c5192ec4f80d339d51ca58557ce5f237d8491c79c96b2",
+      "raw_sha256": "68fac0d365166e8c2a39a5ce9c1bc46cadcd22851429b412a584e01a9230340a",
+      "request_fingerprint": "ca3614972a20f93f13deabef975eee62eef2769afc4e6fdaec8414ba601fdccf",
+      "usage": {
+        "input_tokens": 1197,
+        "output_tokens": 979,
+        "total_tokens": 2176,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 705
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure",
+      "engine_id": "task-21",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "1312964744dc3c2a6ea9a16deee5022673392e1da974b5cf0bfe2d5dfd2f606f",
+      "raw_sha256": "c9a4793d394b9786db75483231ddc90c1fd5306608c8c8f8bb15e1d2b7c5019d",
+      "request_fingerprint": "b027f9f2cfc9c997108b7096ea881190424d69c0edbc8af40802477ed1255d27",
+      "usage": {
+        "input_tokens": 1215,
+        "output_tokens": 1113,
+        "total_tokens": 2328,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 876
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success",
+      "engine_id": "task-22",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "8cad157f32d511b6121eb0d4e66d18ec18a1b2b77a04ea1567365cfed2412df3",
+      "raw_sha256": "9df109c17c0d79dccf41a5ee85fa34017aa7985b546da3a8a51e697a400dc1e0",
+      "request_fingerprint": "bb8e2895f2c68d639d4dc308d97c6e680d620a01ed3af0a3361f72ce6355c1ff",
+      "usage": {
+        "input_tokens": 1220,
+        "output_tokens": 581,
+        "total_tokens": 1801,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 313
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure",
+      "engine_id": "task-22",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "b5d9fb84b96462befb34b3b57ba398327d4c78983792932eaeba82fca695ecf2",
+      "raw_sha256": "8cdb1c706bf3ffc6fd66ea23d361b1e10b7538bd92e651c9cf81f17aaf426c48",
+      "request_fingerprint": "4ccc5d59f0870d9e70dc086b2aed1c4ec89a25c8724c2ddc647f150ec089c548",
+      "usage": {
+        "input_tokens": 1238,
+        "output_tokens": 1296,
+        "total_tokens": 2534,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 1013
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success",
+      "engine_id": "task-23",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "adf5ec2803c8c2a8fc884cbc26edc5dc0080f537685bff9b0480013016cf4b56",
+      "raw_sha256": "8c036eb3cae7324531fcd39e14772e748119983e1acdde25beb5b8c97d7f05f1",
+      "request_fingerprint": "ece3de748d5e8eb2a36bd749c2408ed47ce0da71446167ec7876bd3738c42554",
+      "usage": {
+        "input_tokens": 1045,
+        "output_tokens": 787,
+        "total_tokens": 1832,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 537
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure",
+      "engine_id": "task-23",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "8c902878e6f071f97d81aa0d1c631b91eff38e76ff8d1e4ade181edb65db9773",
+      "raw_sha256": "db744e634aa974903c8a4be97e4e66fa357d302be5603337a6ad7fe5c50f2557",
+      "request_fingerprint": "91021574bf1d16f07f757203dd2a4af5ac964e38dc98ecbf5af511b4b4e46e5f",
+      "usage": {
+        "input_tokens": 1063,
+        "output_tokens": 852,
+        "total_tokens": 1915,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 580
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success",
+      "engine_id": "task-24",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "abf2e5f6ae5348f9931bd2962a58c4b12febd91bcd65ba5a528a75a4416bed06",
+      "raw_sha256": "0298e765dd0add3b22d3c81e535837c338cd04c32648de5c5d4abe8c56b4b313",
+      "request_fingerprint": "c484821a456b71eaebe3995e9259441156ebee8aa6b45465434ef4c521a8577a",
+      "usage": {
+        "input_tokens": 652,
+        "output_tokens": 486,
+        "total_tokens": 1138,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 229
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure",
+      "engine_id": "task-24",
+      "requested_model": "deepseek-v4-flash",
+      "prompt_sha256": "63641f1ffb74a85c201b162b3a8cb456b4285ba5e4dcf7eb4814d62ca012f25b",
+      "request_fingerprint": "bde2f55a828aab59e61b5a2dedbc2ebecec279f62c4c0201d7f59f152f9fe44f",
+      "status": "PROVIDER_FAILURE",
+      "error_type": "ArkResponseStateError",
+      "error_detail_sha256": "72af0353615e6a556f3b2c547f9fec0b4ad63223c89c063ee550e796d1e0ffed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success",
+      "engine_id": "task-25",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "8fd61829c784090b74e58b64dcd57d7221d8cf8a9e345947d7ca2d92a5dbaf5d",
+      "raw_sha256": "59e85dbe9802cd79ba7e403318af854ac389a07bb3fadd2f895d265651ef5430",
+      "request_fingerprint": "719c24db1ba973b470cf99abd037e928d0d97a06a3f8b560ff7f40e1ce4b8dbe",
+      "usage": {
+        "input_tokens": 1150,
+        "output_tokens": 625,
+        "total_tokens": 1775,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 358
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure",
+      "engine_id": "task-25",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "4e7af40aa0a102d8093a40d34f5b50e3a43e20c2bc59895456c62cfd04036460",
+      "raw_sha256": "0d8c7f3d3a9e49c08353d8dd842c58916fb45fb3c260b5252a8544d6b71d8dc5",
+      "request_fingerprint": "64ab4bbbc49e827f2c60877a6ecd011bc5589119898fd859a73fb2870df8af1c",
+      "usage": {
+        "input_tokens": 1168,
+        "output_tokens": 777,
+        "total_tokens": 1945,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-success",
+      "engine_id": "task-47",
+      "requested_model": "deepseek-v4-flash",
+      "resolved_model": "deepseek-v4-flash-ga-260731",
+      "prompt_sha256": "af93d5c5bcd130792c140912be9578f855065dadbb6b1ab2817d7f6a5eab6ddc",
+      "raw_sha256": "cac46901be3e7d39f763d00cbf83d292ef9122bd287472b97ec0aa65c349ec04",
+      "request_fingerprint": "8c859656b734d3b3428d8838e349fa3744515f3d2ef4533e565b1312fc50ab93",
+      "usage": {
+        "input_tokens": 1183,
+        "output_tokens": 617,
+        "total_tokens": 1800,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 329
+        }
+      },
+      "status": "completed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "stage": "memory-failure",
+      "engine_id": "task-47",
+      "requested_model": "deepseek-v4-flash",
+      "prompt_sha256": "8266b90aa11422a00dcc4524a8732f81317d258d8b10f9cae00aa7da49a24693",
+      "request_fingerprint": "ba841fcd4e02eb196a7082f788020c3df0e7869e36e0ad20a8f9fbe836c6a0e7",
+      "status": "PROVIDER_FAILURE",
+      "error_type": "ArkResponseStateError",
+      "error_detail_sha256": "5d119851dc888798a814b1e031fd309b67ff7cbe7974072b4613bd8f2f58ca9c",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    }
+  ],
+  "failures": [
+    {
+      "task_id": "24",
+      "label": "failure",
+      "stage": "memory-failure",
+      "engine_id": "task-24",
+      "requested_model": "deepseek-v4-flash",
+      "prompt_sha256": "63641f1ffb74a85c201b162b3a8cb456b4285ba5e4dcf7eb4814d62ca012f25b",
+      "request_fingerprint": "bde2f55a828aab59e61b5a2dedbc2ebecec279f62c4c0201d7f59f152f9fe44f",
+      "status": "PROVIDER_FAILURE",
+      "error_type": "ArkResponseStateError",
+      "error_detail_sha256": "72af0353615e6a556f3b2c547f9fec0b4ad63223c89c063ee550e796d1e0ffed",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    },
+    {
+      "task_id": "47",
+      "label": "failure",
+      "stage": "memory-failure",
+      "engine_id": "task-47",
+      "requested_model": "deepseek-v4-flash",
+      "prompt_sha256": "8266b90aa11422a00dcc4524a8732f81317d258d8b10f9cae00aa7da49a24693",
+      "request_fingerprint": "ba841fcd4e02eb196a7082f788020c3df0e7869e36e0ad20a8f9fbe836c6a0e7",
+      "status": "PROVIDER_FAILURE",
+      "error_type": "ArkResponseStateError",
+      "error_detail_sha256": "5d119851dc888798a814b1e031fd309b67ff7cbe7974072b4613bd8f2f58ca9c",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    }
+  ],
+  "experiment_debt": [
+    "inject paired memories into matched future tasks",
+    "measure downstream action and success variance under fixed benchmark state"
+  ],
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

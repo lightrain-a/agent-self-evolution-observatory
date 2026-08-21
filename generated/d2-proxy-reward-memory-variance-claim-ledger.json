@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "title": "Noisy Rewards Write Noisy Memories: Reward Error as a Variance Amplifier in Self-Improving Agents",
+  "status": "ASSERTIVE_MANUSCRIPT_WITH_F0_SUPPORT",
+  "manuscript_policy": {
+    "unrefuted_hypothesis_stays_active": true,
+    "missing_evidence_creates_experiment_debt": true,
+    "claim_narrowing_required_for_missing_evidence": false,
+    "single_limitations_section_required": true
+  },
+  "claims": [
+    {
+      "claim_id": "C1",
+      "claim": "The released ReasoningBank implementation routes score one to a success-reflection writer and score zero to a failure-reflection writer for persistent memory construction.",
+      "verdict": "SUPPORTED",
+      "evidence_refs": ["Salesforce/self-improve-fragility released ReasoningBank memory code"],
+      "retain_in_manuscript": true
+    },
+    {
+      "claim_id": "C2",
+      "claim": "Under an identical released trajectory, flipping the reward-conditioned memory-writing mode changes persistent memory content in every complete F0 pair.",
+      "verdict": "SUPPORTED",
+      "evidence_refs": ["generated/d2-proxy-reward-memory-f0.json"],
+      "support": {"complete_pairs": 4, "changed_pairs": 4, "change_rate": 1.0},
+      "retain_in_manuscript": true
+    },
+    {
+      "claim_id": "C3",
+      "claim": "The four complete paired memories have mean token-set Jaccard distance 0.734789, with observed range 0.691489 to 0.769953.",
+      "verdict": "SUPPORTED",
+      "evidence_refs": ["generated/d2-proxy-reward-memory-f0.json"],
+      "retain_in_manuscript": true
+    },
+    {
+      "claim_id": "C4",
+      "claim": "Reward-induced memory perturbations amplify downstream action variance and success variance when the memories are reused on matched future tasks.",
+      "verdict": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "evidence_state": "DOWNSTREAM_INJECTION_PENDING",
+      "closure_authority": "",
+      "retain_in_manuscript": true,
+      "claim_narrowing_required": false,
+      "experiment_debt": [
+        "matched future-task paired memory injection",
+        "fixed-state repeated rollout variance measurement",
+        "controlled reward-corruption-rate experiment"
+      ]
+    },
+    {
+      "claim_id": "C5",
+      "claim": "Reward reliability is a state-consistency requirement for agents that write persistent memory from terminal outcomes.",
+      "verdict": "SUPPORTED_ACTIVE",
+      "evidence_refs": ["generated/d2-proxy-reward-memory-f0.json", "arXiv:2608.00017"],
+      "retain_in_manuscript": true
+    }
+  ],
+  "scientific_authority": false
+}

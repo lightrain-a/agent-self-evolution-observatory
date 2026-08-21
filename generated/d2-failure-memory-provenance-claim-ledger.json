@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "title": "Failure Memories Are Not Neutral: Causal Provenance Effects in Self-Evolving Agents",
+  "status": "ASSERTIVE_MANUSCRIPT_WITH_EXPERIMENT_DEBT",
+  "manuscript_policy": {
+    "unrefuted_hypothesis_stays_active": true,
+    "missing_evidence_creates_experiment_debt": true,
+    "claim_narrowing_required_for_missing_evidence": false,
+    "single_limitations_section_required": true
+  },
+  "claims": [
+    {
+      "claim_id": "C1",
+      "claim": "Success-derived ReasoningBank retrievals achieve 0.931 accuracy over 101 cases while failure-derived retrievals achieve 0.647 over 34 cases in the released financial-agent audit.",
+      "verdict": "SUPPORTED",
+      "evidence_refs": ["arXiv:2608.17684"],
+      "retain_in_manuscript": true
+    },
+    {
+      "claim_id": "C2",
+      "claim": "All ten reported ReasoningBank W->W persistent failures lie in the failure-derived retrieval stratum.",
+      "verdict": "SUPPORTED",
+      "evidence_refs": ["arXiv:2608.17684"],
+      "retain_in_manuscript": true
+    },
+    {
+      "claim_id": "C3",
+      "claim": "ReasoningBank writes successful and failed trajectories through outcome-conditioned reflection modes, making trajectory provenance an upstream intervention on persistent memory content.",
+      "verdict": "SUPPORTED_ACTIVE",
+      "evidence_refs": ["arXiv:2608.17684", "ReasoningBank implementation contract"],
+      "retain_in_manuscript": true
+    },
+    {
+      "claim_id": "C4",
+      "claim": "Failure-derived memory provenance causally sustains future error beyond task difficulty and matched semantic guidance.",
+      "verdict": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "evidence_state": "CAUSAL_SWAP_PENDING",
+      "closure_authority": "",
+      "retain_in_manuscript": true,
+      "claim_narrowing_required": false,
+      "experiment_debt": [
+        "matched-query matched-semantic provenance swap",
+        "failure-derived to success-derived replacement",
+        "reverse success-derived to failure-derived replacement"
+      ]
+    },
+    {
+      "claim_id": "C5",
+      "claim": "Memory provenance should be retained as structured evidence for future memory trust and reuse decisions.",
+      "verdict": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "evidence_state": "DESIGN_IMPLICATION_SUPPORTED_BY_C1_TO_C4",
+      "closure_authority": "",
+      "retain_in_manuscript": true,
+      "claim_narrowing_required": false
+    }
+  ],
+  "scientific_authority": false
+}

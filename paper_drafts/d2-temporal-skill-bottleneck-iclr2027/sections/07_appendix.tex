@@ -1,0 +1,15 @@
+\section{Targeted Skill Contracts}
+\subsection{Temporal cutoff contract}
+Input: target period and candidate evidence timestamps. Output: the subset that is admissible before the benchmark cutoff. The function also returns the cutoff timestamp used for filtering. The skill contains no scenario answer.
+
+\subsection{Release alignment contract}
+Input: publication date and source reporting metadata. Output: the benchmark period represented by the release. The procedure validates the selected time-series row against the normalized period key.
+
+\subsection{Exogenous grounding contract}
+Input: target period and numerical change description. Output: cutoff-valid documentary evidence spans that can support attribution. The procedure returns evidence identifiers and short excerpts for later reasoning.
+
+\subsection{Matched generic controls}
+Each targeted skill is paired with a generic helper that has comparable implementation complexity. The generic helper performs a useful operation that does not encode the target failure mechanism. This comparison estimates mechanism-specific benefit beyond the effect of receiving an additional callable tool.
+
+\subsection{Frozen support state}
+The first-party TimeSage-EV GitHub repository was frozen locally at commit \texttt{e0ce94e498b1}. It currently contains the release README. The first-party dataset repository was frozen at commit \texttt{ea07f80bc681}. The evaluated dataset files are absent from the current public tree. Full commit hashes are recorded in the PaperState artifact.

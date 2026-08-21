@@ -1,0 +1,15 @@
+\section{Limitations}
+The F0 intervention requests six paired memories. Four pairs return complete outputs in both reward conditions. Two failure-label provider responses terminate as incomplete before assistant text is produced. Their provider response identifiers are archived and GET-only recovery confirms that no text is available. These two cases remain support debt. They do not change the observed 4/4 content-divergence result among complete pairs.
+
+F0 establishes the reward-to-memory write channel. It does not yet measure the full reward-to-future-outcome effect. Matched future-task injection and run-level corruption experiments remain experiment debt. The manuscript therefore treats downstream variance amplification as an active causal hypothesis grounded by the observed write-channel mechanism.
+
+The paired intervention uses DeepSeek-V4-Flash as the memory writer. The released ReasoningBank implementation can use other writer models. Replication across memory-writer families remains experiment debt for a model-independent effect-size claim.
+
+The released trajectories used for F0 come from one WebArena Shopping run. They include both original-success and original-failure episodes, which supports the mechanism across outcome strata. Broader task-family replication remains experiment debt.
+
+Token-set Jaccard distance measures content divergence at a coarse lexical level. Title-set changes supply an additional structural measure. A semantic representation analysis can further quantify whether reward labels move memories toward distinct strategy clusters.
+
+\section{Conclusion}
+Reward-conditioned memory writing creates a direct path from evaluator error to persistent agent state. In the released ReasoningBank implementation, one reward bit selects a different reflection objective for the same trajectory. Our paired F0 intervention observes memory-content changes in every complete pair and measures mean token-set Jaccard distance of 0.735.
+
+This mechanism explains how reward noise can survive beyond one episode without parameter training. A corrupted reward can change the memory that future tasks retrieve. Repeated memory reuse can then turn a local evaluation error into run-level behavioral variance. The resulting design principle is simple: reward reliability must be treated as state reliability whenever an agent writes persistent memory from outcomes.

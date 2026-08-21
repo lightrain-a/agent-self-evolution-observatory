@@ -1,0 +1,248 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "status": "PASS",
+  "paper_dir": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027",
+  "summary": {
+    "checks": 22,
+    "passed": 22,
+    "pages": 7,
+    "pdf_sha256": "39d0f2182d26f37fcad3fa20afea3fa1324b6b2683506a60da745e88ab290457",
+    "pdf_bytes": 147537,
+    "active_unrefuted_claims": [
+      "C4"
+    ]
+  },
+  "checks": [
+    {
+      "name": "page_limit",
+      "pass": true,
+      "detail": 7
+    },
+    {
+      "name": "anonymous_placeholder",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_author_email",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_internal_identity",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_undefined_citations",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_undefined_references",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_overfull",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "manuscript_policy",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "title:noisy rewards write noisy memories",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "title:reward error as a variance amplifier",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.735",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.691",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.770",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:every complete pair",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_retain:C4",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_no_auto_narrow:C4",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_no_closure:C4",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "claim_ledger_has_claims",
+      "pass": true,
+      "detail": 5
+    },
+    {
+      "name": "artifact:summary.paired_trajectories_complete",
+      "pass": true,
+      "detail": {
+        "actual": 4,
+        "expected": 4
+      }
+    },
+    {
+      "name": "artifact:summary.paired_exact_content_change_rate",
+      "pass": true,
+      "detail": {
+        "actual": 1.0,
+        "expected": 1.0
+      }
+    },
+    {
+      "name": "artifact:summary.mean_token_jaccard_distance",
+      "pass": true,
+      "detail": {
+        "actual": 0.734789,
+        "expected": 0.734789
+      }
+    },
+    {
+      "name": "artifact:falsifier_result",
+      "pass": true,
+      "detail": {
+        "actual": "SURVIVES_F0",
+        "expected": "SURVIVES_F0"
+      }
+    }
+  ],
+  "style_audit": {
+    "schema_version": "1.0",
+    "policy": {
+      "schema_version": "1.0",
+      "draft_before_evidence_completion": true,
+      "unrefuted_hypothesis_stays_active": true,
+      "missing_evidence_creates_experiment_debt": true,
+      "missing_evidence_does_not_trigger_claim_narrowing": true,
+      "maximally_assertive_evidence_compatible_wording": true,
+      "scientific_evidence_state_is_separate_from_manuscript_stance": true,
+      "manuscript_completion_is_separate_from_evidence_completion": true,
+      "complete_paper_may_retain_experiment_debt": true,
+      "complete_paper_requires_claim_ledger": true,
+      "complete_paper_requires_manuscript_qa": true,
+      "refutation_requires_scientific_counterevidence": true,
+      "refutation_authorities": [
+        "direct_counterevidence",
+        "same_information_reduction",
+        "scope_matched_principle_counter_explanation"
+      ],
+      "single_limitations_section_required": true,
+      "distributed_limitation_language_forbidden": true,
+      "not_but_contrast_forbidden": true,
+      "rather_than_contrast_forbidden": true,
+      "serial_enumeration_sentence_forbidden": true
+    },
+    "limitations_source": "sections/06_limitations_conclusion.tex",
+    "sources_audited": 9,
+    "passed": true,
+    "violations": []
+  },
+  "artifact_checks": [
+    {
+      "path": "generated/d2-proxy-reward-memory-f0.json",
+      "key": "summary.paired_trajectories_complete",
+      "actual": 4,
+      "expected": 4,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-proxy-reward-memory-f0.json",
+      "key": "summary.paired_exact_content_change_rate",
+      "actual": 1.0,
+      "expected": 1.0,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-proxy-reward-memory-f0.json",
+      "key": "summary.mean_token_jaccard_distance",
+      "actual": 0.734789,
+      "expected": 0.734789,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-proxy-reward-memory-f0.json",
+      "key": "falsifier_result",
+      "actual": "SURVIVES_F0",
+      "expected": "SURVIVES_F0",
+      "pass": true
+    }
+  ],
+  "manuscript_files": [
+    {
+      "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/main.tex",
+      "sha256": "fd28390dc1308309b3e0091015ba672f32fc07cdc639d23827fabdaeabd066b6"
+    },
+    {
+      "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/sections/00_abstract.tex",
+      "sha256": "41f4f5b6bfafa8a214264e4fc0dc8b852741d0480390a7798a544e91b26de943"
+    },
+    {
+      "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/sections/01_intro.tex",
+      "sha256": "c4584fbdcc8e077ac3477f6f730bffce562529683b9c66e16732d7bd10f4f9b2"
+    },
+    {
+      "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/sections/02_mechanism.tex",
+      "sha256": "936bfe59ec3945f8cd71e06428a98cf4db41259d35474b263cf65dd46f97ae1b"
+    },
+    {
+      "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/sections/03_f0.tex",
+      "sha256": "b0a1af619d2b7687bafc2548d20c08effd1e3c40ac7d57b9819fe5b7e50f0170"
+    },
+    {
+      "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/sections/04_variance_protocol.tex",
+      "sha256": "76ff6eeecea9c7de7e6ab4e4507fb0048a6e9a87e11fadab7345b01b85c830cb"
+    },
+    {
+      "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/sections/05_related.tex",
+      "sha256": "1822d4f609ce8df0f4e7834bb138f9773908149d2bbd168742ed1932b6469d8c"
+    },
+    {
+      "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/sections/06_limitations_conclusion.tex",
+      "sha256": "c301847b2fac7a42d18ee91ff0b3d4eb7549feb53b17aee238a88366c4c143b2"
+    },
+    {
+      "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/sections/07_appendix.tex",
+      "sha256": "1d634dd6a9b40d870b70a7cebf53962600255c3ffdc4d2699126da258c80ef40"
+    },
+    {
+      "path": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/references.bib",
+      "sha256": "83b0fc31fb09329f28679f04021fef138263848d549af42a828c43d92c0e9e86"
+    }
+  ],
+  "claim_ledger": {
+    "path": "generated/d2-proxy-reward-memory-variance-claim-ledger.json",
+    "sha256": "bdf8eb46bbf708cbdcfe72f69d98a3b6a501618409b543c2b44bc085646040d9"
+  },
+  "scientific_authority": false
+}

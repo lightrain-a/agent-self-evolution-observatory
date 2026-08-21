@@ -13,6 +13,10 @@ PAPER_ASSERTION_POLICY: dict[str, Any] = {
     "missing_evidence_does_not_trigger_claim_narrowing": True,
     "maximally_assertive_evidence_compatible_wording": True,
     "scientific_evidence_state_is_separate_from_manuscript_stance": True,
+    "manuscript_completion_is_separate_from_evidence_completion": True,
+    "complete_paper_may_retain_experiment_debt": True,
+    "complete_paper_requires_claim_ledger": True,
+    "complete_paper_requires_manuscript_qa": True,
     "refutation_requires_scientific_counterevidence": True,
     "refutation_authorities": [
         "direct_counterevidence",

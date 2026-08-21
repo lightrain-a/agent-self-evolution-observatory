@@ -1,0 +1,219 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "status": "PASS",
+  "paper_dir": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027",
+  "summary": {
+    "checks": 22,
+    "passed": 22,
+    "pages": 6,
+    "pdf_sha256": "7df2a16754b329a2713219797f487b33a485e9b0b7195a9bb6a58453546c082f",
+    "pdf_bytes": 153098,
+    "active_unrefuted_claims": [
+      "C3",
+      "C4"
+    ]
+  },
+  "checks": [
+    {
+      "name": "page_limit",
+      "pass": true,
+      "detail": 6
+    },
+    {
+      "name": "anonymous_placeholder",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_author_email",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_internal_identity",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_undefined_citations",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_undefined_references",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_overfull",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "manuscript_policy",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "title:temporal skills are a causal bottleneck",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "title:evolving time-series agents",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:60 institutional scenarios",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:1,485",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.82",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:targeted skill intervention",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_retain:C3",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_no_auto_narrow:C3",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_no_closure:C3",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_retain:C4",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_no_auto_narrow:C4",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_no_closure:C4",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "claim_ledger_has_claims",
+      "pass": true,
+      "detail": 4
+    },
+    {
+      "name": "artifact:support_state.public_evaluated_snapshot_available",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    }
+  ],
+  "style_audit": {
+    "schema_version": "1.0",
+    "policy": {
+      "schema_version": "1.0",
+      "draft_before_evidence_completion": true,
+      "unrefuted_hypothesis_stays_active": true,
+      "missing_evidence_creates_experiment_debt": true,
+      "missing_evidence_does_not_trigger_claim_narrowing": true,
+      "maximally_assertive_evidence_compatible_wording": true,
+      "scientific_evidence_state_is_separate_from_manuscript_stance": true,
+      "manuscript_completion_is_separate_from_evidence_completion": true,
+      "complete_paper_may_retain_experiment_debt": true,
+      "complete_paper_requires_claim_ledger": true,
+      "complete_paper_requires_manuscript_qa": true,
+      "refutation_requires_scientific_counterevidence": true,
+      "refutation_authorities": [
+        "direct_counterevidence",
+        "same_information_reduction",
+        "scope_matched_principle_counter_explanation"
+      ],
+      "single_limitations_section_required": true,
+      "distributed_limitation_language_forbidden": true,
+      "not_but_contrast_forbidden": true,
+      "rather_than_contrast_forbidden": true,
+      "serial_enumeration_sentence_forbidden": true
+    },
+    "limitations_source": "sections/06_limitations_conclusion.tex",
+    "sources_audited": 9,
+    "passed": true,
+    "violations": []
+  },
+  "artifact_checks": [
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+      "key": "support_state.public_evaluated_snapshot_available",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    }
+  ],
+  "manuscript_files": [
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/main.tex",
+      "sha256": "6d1854027a7ee13de905760388d6f163f0cd00d83ab9cc1a859608fc90b9af4f"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/00_abstract.tex",
+      "sha256": "df11543807827123f63e6b242e567583dbd8413d1fcdb4aaddfc602e0ce2bc09"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/01_intro.tex",
+      "sha256": "df13b825afc1478763d6c195da729974e4c442e2e58b7e6d1313343a166214db"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/02_failure_mechanism.tex",
+      "sha256": "a7906296f930950e5363ee3129bcef0f74196369aa56c225672812072076e56b"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/03_source_evidence.tex",
+      "sha256": "897eb94741dc2bae84c44458dec5bc6333a1952664c01a7d322b9407461f0a60"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/04_targeted_intervention.tex",
+      "sha256": "94f1ef54f80fa7a48b45337f77f1153ed3c001991374afad13832935413c187d"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/05_related.tex",
+      "sha256": "46842fac9e046cd933706c3ede4436c683d58d4c8272f240de79009253e8aeb2"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/06_limitations_conclusion.tex",
+      "sha256": "8e8d6f45b70dbcef2caad6020b97dee41a7b75cd67404d6c327c26ab775b8dc1"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/07_appendix.tex",
+      "sha256": "3dcedf7f7b22a8a657f0a21ed532f2dbc089bd2cecee13e425ad0ee0bab6d4f1"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/references.bib",
+      "sha256": "51f6bdcef4728acee54b059744a80a7b8e4853f1c6749c4721059c37976c03a8"
+    }
+  ],
+  "claim_ledger": {
+    "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+    "sha256": "29cb75ec002f8aa8432d5a38b838d7d79fad78bfb3b65b2073fa34b6c83cf494"
+  },
+  "scientific_authority": false
+}

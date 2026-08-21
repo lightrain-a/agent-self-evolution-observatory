@@ -1,0 +1,26 @@
+\section{Downstream Variance Protocol}
+\label{sec:variance}
+F0 establishes that the reward bit changes persistent memory. The paper's second experiment measures how that state perturbation changes future behavior.
+
+\subsection{Matched future-task injection}
+Each complete F0 pair defines two memory conditions for the same historical task. We identify future tasks whose retrieval key matches that task family. The future query is fixed across conditions. The browser state starts from the same snapshot. The agent model uses the same decoding configuration. One condition receives the success-label memory. The paired condition receives the failure-label memory.
+
+For each future task, repeated rollouts estimate two quantities. The first quantity is terminal success probability. The second quantity is early action divergence. We define the first-divergence step as the earliest decision at which the two memory conditions select different actions under matched observations.
+
+The causal contrast for future success is
+\begin{equation}
+\Delta_Y(x')=
+\mathbb{E}[Y\mid do(M=M_F),x']-
+\mathbb{E}[Y\mid do(M=M_S),x'].
+\end{equation}
+Here $M_F$ is the memory written under the failure label and $M_S$ is the paired success-label memory from the identical source trajectory. A negative value means the failure-label interpretation reduces future success.
+
+\subsection{Run-level variance}
+We then construct memory banks under controlled reward corruption rates. The clean condition uses ground-truth reward. Corrupted conditions flip a frozen subset of episode labels before memory writing. Every run sees the same task order and the same environment reset schedule. The corruption mask is the only learning-signal intervention.
+
+For each corruption level, we measure the dispersion of downstream success across repeated self-improvement runs. Equation~\ref{eq:variance} predicts that reward corruption increases the between-memory component when reward-induced memory differences affect future decisions. We also measure memory-bank divergence by comparing retrieved memory content for the same future query.
+
+\subsection{Mechanism prediction}
+The mechanism makes a directional prediction. Greater reward corruption should increase memory-state diversity. Future trajectories should diverge earlier when they retrieve reward-sensitive memories. Run-level success variance should rise when those divergences affect task completion.
+
+This protocol connects the local write-channel result to the global variance phenomenon reported in self-improvement experiments \citep{ye2026fragility}. It also separates reward noise from benchmark order effects because the task order remains fixed during this intervention.

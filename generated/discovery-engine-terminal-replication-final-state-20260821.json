@@ -1,0 +1,222 @@
+{
+  "schema_version": "1.0",
+  "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+  "status": "TERMINAL_COMPLETE",
+  "policy": {
+    "unrefuted_hypothesis_is_not_terminal_stop": true,
+    "missing_evidence_is_experiment_debt": true,
+    "winner_requires_all_candidates_terminal": true,
+    "duplicate_basin_counts_zero_unique_papers": true
+  },
+  "engine_state": [
+    {
+      "engine_id": "D5",
+      "candidates": 6,
+      "complete_unique_papers": 0,
+      "scientific_stops": 4,
+      "duplicate_basins": 2,
+      "active_unrefuted": 0,
+      "terminal_resolved": 6,
+      "scientific_authority": false
+    },
+    {
+      "engine_id": "D2",
+      "candidates": 6,
+      "complete_unique_papers": 3,
+      "scientific_stops": 1,
+      "duplicate_basins": 2,
+      "active_unrefuted": 0,
+      "terminal_resolved": 6,
+      "scientific_authority": false
+    }
+  ],
+  "winner": "D2",
+  "winner_declared": true,
+  "candidate_adjudications": [
+    {
+      "candidate_id": "D5-C01",
+      "terminal_state": "DUPLICATE_BASIN",
+      "duplicate_of_basin": "D5-ENV-ORDER-CONTAMINATION",
+      "unique_paper_credit": false,
+      "closure_authority": "",
+      "evidence_refs": [
+        "arXiv:2608.18066",
+        "generated/d5-env-order-claim-ledger.json"
+      ],
+      "retain_in_manuscript": false,
+      "engine_id": "D5",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D5-C02",
+      "terminal_state": "SCIENTIFIC_STOP",
+      "unique_paper_credit": false,
+      "closure_authority": "same_information_reduction",
+      "evidence_refs": [
+        "arXiv:2608.14036"
+      ],
+      "retain_in_manuscript": false,
+      "engine_id": "D5",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D5-C03",
+      "terminal_state": "SCIENTIFIC_STOP",
+      "unique_paper_credit": false,
+      "closure_authority": "same_information_reduction",
+      "evidence_refs": [
+        "arXiv:2608.19013"
+      ],
+      "retain_in_manuscript": false,
+      "engine_id": "D5",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D5-C04",
+      "terminal_state": "DUPLICATE_BASIN",
+      "duplicate_of_basin": "D5-ENV-ORDER-CONTAMINATION",
+      "unique_paper_credit": false,
+      "closure_authority": "",
+      "evidence_refs": [
+        "arXiv:2608.18066",
+        "generated/d5-env-order-claim-ledger.json"
+      ],
+      "retain_in_manuscript": false,
+      "engine_id": "D5",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D5-C05",
+      "terminal_state": "SCIENTIFIC_STOP",
+      "unique_paper_credit": false,
+      "closure_authority": "same_information_reduction",
+      "evidence_refs": [
+        "arXiv:2608.16114"
+      ],
+      "retain_in_manuscript": false,
+      "engine_id": "D5",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D5-C06",
+      "terminal_state": "SCIENTIFIC_STOP",
+      "unique_paper_credit": false,
+      "closure_authority": "same_information_reduction",
+      "evidence_refs": [
+        "arXiv:2608.19013"
+      ],
+      "retain_in_manuscript": false,
+      "engine_id": "D5",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D2-C01",
+      "terminal_state": "COMPLETE_PAPER",
+      "unique_paper_credit": true,
+      "closure_authority": "",
+      "evidence_refs": [
+        "arXiv:2608.17684",
+        "arXiv:2608.00017"
+      ],
+      "retain_in_manuscript": true,
+      "claim_narrowing_required": false,
+      "experiment_debt": [
+        "matched-query matched-semantic-memory provenance swap",
+        "failure-derived to success-derived replacement",
+        "reverse success-derived to failure-derived replacement"
+      ],
+      "manuscript_artifact": "paper_drafts/d2-failure-memory-provenance-iclr2027/main.pdf",
+      "paper_qa_pass": true,
+      "paper_qa_artifact": "generated/d2-failure-memory-provenance-paper-qa.json",
+      "paper_qa_sha256": "58a47fa761a1e8dd4adc6137e413255b2c8a372bd11cd20e71db7cca0884bdb7",
+      "evidence_state": "ACTIVE_UNREFUTED_WITH_EXPERIMENT_DEBT",
+      "engine_id": "D2",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D2-C02",
+      "terminal_state": "COMPLETE_PAPER",
+      "unique_paper_credit": true,
+      "closure_authority": "",
+      "evidence_refs": [
+        "arXiv:2608.18066"
+      ],
+      "retain_in_manuscript": true,
+      "claim_narrowing_required": false,
+      "experiment_debt": [
+        "ground-truth reward memory construction",
+        "controlled noisy proxy reward memory construction",
+        "downstream variance comparison with fixed model and order"
+      ],
+      "manuscript_artifact": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/main.pdf",
+      "paper_qa_pass": true,
+      "paper_qa_artifact": "generated/d2-proxy-reward-memory-variance-paper-qa.json",
+      "paper_qa_sha256": "39d0f2182d26f37fcad3fa20afea3fa1324b6b2683506a60da745e88ab290457",
+      "evidence_state": "ACTIVE_UNREFUTED_WITH_EXPERIMENT_DEBT",
+      "engine_id": "D2",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D2-C03",
+      "terminal_state": "SCIENTIFIC_STOP",
+      "unique_paper_credit": false,
+      "closure_authority": "same_information_reduction",
+      "evidence_refs": [
+        "arXiv:2608.14270"
+      ],
+      "retain_in_manuscript": false,
+      "engine_id": "D2",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D2-C04",
+      "terminal_state": "DUPLICATE_BASIN",
+      "duplicate_of_basin": "D2-FAILURE-MEMORY-PROVENANCE",
+      "unique_paper_credit": false,
+      "closure_authority": "",
+      "evidence_refs": [
+        "D2-C01"
+      ],
+      "retain_in_manuscript": false,
+      "engine_id": "D2",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D2-C05",
+      "terminal_state": "DUPLICATE_BASIN",
+      "duplicate_of_basin": "D2-PROXY-REWARD-MEMORY-VARIANCE",
+      "unique_paper_credit": false,
+      "closure_authority": "",
+      "evidence_refs": [
+        "D2-C02"
+      ],
+      "retain_in_manuscript": false,
+      "engine_id": "D2",
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "D2-C06",
+      "terminal_state": "COMPLETE_PAPER",
+      "unique_paper_credit": true,
+      "closure_authority": "",
+      "evidence_refs": [
+        "arXiv:2608.14270"
+      ],
+      "retain_in_manuscript": true,
+      "claim_narrowing_required": false,
+      "experiment_debt": [
+        "targeted temporal/exogenous skill injection",
+        "matched generic-skill control",
+        "same-endpoint no-skill control"
+      ],
+      "manuscript_artifact": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/main.pdf",
+      "paper_qa_pass": true,
+      "paper_qa_artifact": "generated/d2-temporal-skill-bottleneck-paper-qa.json",
+      "paper_qa_sha256": "7df2a16754b329a2713219797f487b33a485e9b0b7195a9bb6a58453546c082f",
+      "evidence_state": "ACTIVE_UNREFUTED_WITH_EXPERIMENT_DEBT",
+      "engine_id": "D2",
+      "scientific_authority": false
+    }
+  ],
+  "scientific_authority": false
+}

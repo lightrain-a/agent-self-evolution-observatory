@@ -1,0 +1,136 @@
+{
+  "schema_version": "1.0",
+  "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+  "generated_at": "2026-08-21T11:55:55Z",
+  "status": "GENERATION_AND_ADVERSARIAL_TRIAGE_COMPLETE",
+  "contract_sha256": "cfccdcfee757c378b39e8f4606131ced120aeda7fe95ff289704afa133cb98d5",
+  "operational_amendment_sha256": "83c932b32aa3b24e02d24547a0dee3347a770b07b91186fa023d51f931b7ba54",
+  "frozen_inputs": {
+    "primary_pool_path": "/home/wyt/code/agent-self-evolution-observatory/generated/research-data/paper-first-problem-discovery/primary-evidence-pool.json",
+    "primary_pool_sha256": "df7b06292638b534322cec6d7eaa63c87a5584badf2114d96e0db91d1b8f964b",
+    "research_memory_path": "generated/research-memory-wiki.json",
+    "research_memory_wiki_sha256": "3531943234ba708716a43625709adf01fd57f346e22a7a1b83dace2b96815f29"
+  },
+  "models": {
+    "generator_requested": "glm-5.3",
+    "original_generator_requested": "kimi-k3",
+    "reviewer_requested": "deepseek-v4-pro",
+    "generation_resolved_models": [],
+    "triage_resolved_models": []
+  },
+  "policy": {
+    "terminal_outcomes_only_for_engine_comparison": true,
+    "early_reviewer_score_is_terminal_metric": false,
+    "winner_declared": false,
+    "reviewer_is_adversarial_zero_authority": true,
+    "operational_fallback_has_scientific_authority": false,
+    "unrefuted_hypothesis_stays_active": true,
+    "missing_evidence_creates_experiment_debt": true
+  },
+  "summary": {
+    "engines": 2,
+    "requested_candidates": 12,
+    "generated_candidates": 0,
+    "deterministic_unique_candidates": 0,
+    "exact_duplicate_candidates": 0,
+    "generation_provider_calls": 0,
+    "triage_provider_calls": 0,
+    "provider_or_parse_failures": 2,
+    "terminal_outcomes_resolved": 0
+  },
+  "engine_state": [
+    {
+      "engine_id": "D5",
+      "generated": 0,
+      "deterministic_unique": 0,
+      "provenance_valid": 0,
+      "schema_complete": 0,
+      "terminal_complete_papers": 0,
+      "terminal_scientific_stops": 0,
+      "active_unrefuted": 0,
+      "pending_terminal_adjudication": 0,
+      "winner_declared": false,
+      "scientific_authority": false
+    },
+    {
+      "engine_id": "D2",
+      "generated": 0,
+      "deterministic_unique": 0,
+      "provenance_valid": 0,
+      "schema_complete": 0,
+      "terminal_complete_papers": 0,
+      "terminal_scientific_stops": 0,
+      "active_unrefuted": 0,
+      "pending_terminal_adjudication": 0,
+      "winner_declared": false,
+      "scientific_authority": false
+    }
+  ],
+  "exact_duplicate_receipts": [],
+  "candidates": [],
+  "provider_receipts": {
+    "generation": [
+      {
+        "stage": "generation",
+        "engine_id": "D5",
+        "requested_model": "glm-5.3",
+        "prompt_sha256": "e71dae71415e2954a637c483db080f3f3f56114cf4946dddf930063e84171d72",
+        "request_fingerprint": "3862b96f55373fe62c260208a7da7b7af39458ace38215831ba95ac123ee0469",
+        "status": "PROVIDER_FAILURE",
+        "error_type": "RuntimeError",
+        "error_detail_sha256": "a6e892e629b5aaecaaa3aee695ce482eaa1ad3a9b82945b09e1e8847b6f6b775",
+        "provider_response_id_archived_privately": false,
+        "scientific_authority": false
+      },
+      {
+        "stage": "generation",
+        "engine_id": "D2",
+        "requested_model": "glm-5.3",
+        "prompt_sha256": "7c68692414672520f068faf5420a060ff848596c0547dbf58cea80f3f97314e4",
+        "request_fingerprint": "382ce9e04698eee29cdb535983104f75cd25ab1bd082d69d0ed05a8b6e917cbe",
+        "status": "PROVIDER_FAILURE",
+        "error_type": "RuntimeError",
+        "error_detail_sha256": "a6e892e629b5aaecaaa3aee695ce482eaa1ad3a9b82945b09e1e8847b6f6b775",
+        "provider_response_id_archived_privately": false,
+        "scientific_authority": false
+      }
+    ],
+    "adversarial_triage": []
+  },
+  "failures": [
+    {
+      "stage": "generation",
+      "engine_id": "D5",
+      "requested_model": "glm-5.3",
+      "prompt_sha256": "e71dae71415e2954a637c483db080f3f3f56114cf4946dddf930063e84171d72",
+      "request_fingerprint": "3862b96f55373fe62c260208a7da7b7af39458ace38215831ba95ac123ee0469",
+      "status": "PROVIDER_FAILURE",
+      "error_type": "RuntimeError",
+      "error_detail_sha256": "a6e892e629b5aaecaaa3aee695ce482eaa1ad3a9b82945b09e1e8847b6f6b775",
+      "provider_response_id_archived_privately": false,
+      "scientific_authority": false
+    },
+    {
+      "stage": "generation",
+      "engine_id": "D2",
+      "requested_model": "glm-5.3",
+      "prompt_sha256": "7c68692414672520f068faf5420a060ff848596c0547dbf58cea80f3f97314e4",
+      "request_fingerprint": "382ce9e04698eee29cdb535983104f75cd25ab1bd082d69d0ed05a8b6e917cbe",
+      "status": "PROVIDER_FAILURE",
+      "error_type": "RuntimeError",
+      "error_detail_sha256": "a6e892e629b5aaecaaa3aee695ce482eaa1ad3a9b82945b09e1e8847b6f6b775",
+      "provider_response_id_archived_privately": false,
+      "scientific_authority": false
+    }
+  ],
+  "private_raw_root": "/home/wyt/code/agent-self-evolution-observatory-discovery-benchmark-20260821/generated/research-data/discovery-engine-terminal-replication-20260821",
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": "2.5",
-  "generated_at": "2026-08-21T11:30:53+00:00",
+  "generated_at": "2026-08-21T12:45:52+00:00",
   "policy": {
     "schema_version": "2.4",
     "paper_novelty_precedes_method_design": true,
@@ -43,6 +43,10 @@
     "missing_evidence_does_not_trigger_claim_narrowing": true,
     "maximally_assertive_evidence_compatible_wording": true,
     "scientific_evidence_state_is_separate_from_manuscript_stance": true,
+    "manuscript_completion_is_separate_from_evidence_completion": true,
+    "complete_paper_may_retain_experiment_debt": true,
+    "complete_paper_requires_claim_ledger": true,
+    "complete_paper_requires_manuscript_qa": true,
     "refutation_requires_scientific_counterevidence": true,
     "refutation_authorities": [
       "direct_counterevidence",

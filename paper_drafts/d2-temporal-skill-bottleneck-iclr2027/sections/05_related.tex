@@ -1,0 +1,6 @@
+\section{Related Work}
+\paragraph{Evolving time-series agents.} TimeSage-EV introduces recurring period-level evaluation with strict temporal cutoffs and traceable source evidence \citep{yao2026timesage}. Its TimeSage-1.0 harness adds a self-evolving skill library and demonstrates aggregate gains from reusable procedures. Our work moves from the aggregate ablation to mechanism-specific causal intervention.
+
+\paragraph{Experience-derived agent memory.} Agent Workflow Memory induces reusable procedures from prior trajectories \citep{wang2024awm}. ReasoningBank stores reusable reasoning memories derived from experience \citep{ouyang2026reasoningbank}. These systems show that structured experience can improve later tasks. The targeted-skill protocol studies which specific missing procedure explains a recurring failure.
+
+\paragraph{Skill libraries as intervention surfaces.} A skill library exposes a modular state boundary. One procedure can be added while the rest of the agent remains fixed. This supports causal tests that are harder to perform with a single undifferentiated conversation memory. TimeSage's chronological skill registration further protects the direction of the intervention because a new skill affects only later periods.

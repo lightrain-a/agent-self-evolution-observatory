@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-08-21 · Terminal paper-yield replication and three D2 papers
+
+- Completed the frozen D5-vs-D2 terminal paper-yield replication with six candidates per engine on the same evidence snapshot. Kimi K3 and GLM-5.3 transport failures were archived with zero scientific authority; the successful generation fallback used Doubao Seed 2.0 Mini in two three-candidate shards per engine.
+- D5 resolved to four same-information scientific stops and two duplicate basins of the completed environment-history audit paper. D2 resolved to one same-information stop, two duplicate basins, and three active paper basins.
+- Completed anonymous ICLR manuscripts for failure-memory provenance, proxy-reward memory variance, and temporal-skill causality. The PDFs are 7, 7, and 6 pages and pass the common assertion/style/artifact QA contracts.
+- Ran a paired proxy-reward F0 over released trajectories. Four complete pairs all changed written ReasoningBank memory; mean token-set Jaccard distance is 0.734789. Two provider-incomplete pairs remain support debt with archived response receipts and zero scientific authority.
+- Added two-campaign adaptive policy v2. D2 receives 45% primary-birth budget and D5 receives 40%. D4, D3, and D6 remain the mandatory baseline/structure/falsifier transformers. Manuscript yield controls discovery allocation while evidence maturity controls experiment scheduling.
+- PaperState now separates manuscript completion from evidence completion. A QA-complete manuscript may retain explicit experiment debt while unrefuted claims remain active.
+
 ## 2026-08-21 · Assertive manuscript policy and D5 paper closure
 
 - Added a manuscript assertion policy to Research OS. Unrefuted hypotheses remain active in the manuscript; missing evidence creates explicit experiment debt instead of automatic claim narrowing. Scientific evidence state remains separate from manuscript stance, so genuine counterevidence still closes a claim.

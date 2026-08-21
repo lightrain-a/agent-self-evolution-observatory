@@ -2,10 +2,16 @@ from __future__ import annotations
 
 import unittest
 
-from .paper_assertion_policy import audit_manuscript_sources, experiment_debt_for_claim, resolve_manuscript_stance
+from .paper_assertion_policy import PAPER_ASSERTION_POLICY, audit_manuscript_sources, experiment_debt_for_claim, resolve_manuscript_stance
 
 
 class PaperAssertionPolicyTest(unittest.TestCase):
+    def test_manuscript_completion_is_independent_of_evidence_completion(self) -> None:
+        self.assertTrue(PAPER_ASSERTION_POLICY["manuscript_completion_is_separate_from_evidence_completion"])
+        self.assertTrue(PAPER_ASSERTION_POLICY["complete_paper_may_retain_experiment_debt"])
+        self.assertTrue(PAPER_ASSERTION_POLICY["complete_paper_requires_claim_ledger"])
+        self.assertTrue(PAPER_ASSERTION_POLICY["complete_paper_requires_manuscript_qa"])
+
     def test_unrefuted_hypothesis_remains_active(self) -> None:
         self.assertEqual(resolve_manuscript_stance("INCONCLUSIVE"), "ACTIVE_UNREFUTED_HYPOTHESIS")
         row = experiment_debt_for_claim("C6", "INCONCLUSIVE", ["shuffled no-memory control"])

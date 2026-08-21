@@ -1,0 +1,1092 @@
+{
+  "schema_version": "1.0",
+  "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+  "generated_at": "2026-08-21T12:05:32Z",
+  "status": "GENERATION_AND_ADVERSARIAL_TRIAGE_COMPLETE",
+  "contract_sha256": "cfccdcfee757c378b39e8f4606131ced120aeda7fe95ff289704afa133cb98d5",
+  "operational_amendment_sha256": "2a8bc9df875b90d6f43c9a756b81a81d4620561f48b9c5c1daf45eb03c5ab1fc",
+  "frozen_inputs": {
+    "primary_pool_path": "/home/wyt/code/agent-self-evolution-observatory/generated/research-data/paper-first-problem-discovery/primary-evidence-pool.json",
+    "primary_pool_sha256": "df7b06292638b534322cec6d7eaa63c87a5584badf2114d96e0db91d1b8f964b",
+    "research_memory_path": "generated/research-memory-wiki.json",
+    "research_memory_wiki_sha256": "3531943234ba708716a43625709adf01fd57f346e22a7a1b83dace2b96815f29"
+  },
+  "models": {
+    "generator_requested": "doubao-seed-2.0-mini",
+    "original_generator_requested": "kimi-k3",
+    "reviewer_requested": "deepseek-v4-pro",
+    "generation_resolved_models": [
+      "doubao-seed-2-0-mini-260215"
+    ],
+    "triage_resolved_models": [
+      "deepseek-v4-pro-260425"
+    ]
+  },
+  "execution_shape": {
+    "generation_shards_per_engine": 2,
+    "candidates_per_generation_shard": 3,
+    "triage_shards_per_engine": 2,
+    "candidates_per_triage_shard": 3
+  },
+  "policy": {
+    "terminal_outcomes_only_for_engine_comparison": true,
+    "early_reviewer_score_is_terminal_metric": false,
+    "winner_declared": false,
+    "reviewer_is_adversarial_zero_authority": true,
+    "operational_fallback_has_scientific_authority": false,
+    "unrefuted_hypothesis_stays_active": true,
+    "missing_evidence_creates_experiment_debt": true
+  },
+  "summary": {
+    "engines": 2,
+    "requested_candidates": 12,
+    "generated_candidates": 12,
+    "deterministic_unique_candidates": 12,
+    "exact_duplicate_candidates": 0,
+    "generation_provider_calls": 4,
+    "triage_provider_calls": 3,
+    "provider_or_parse_failures": 1,
+    "terminal_outcomes_resolved": 0
+  },
+  "engine_state": [
+    {
+      "engine_id": "D5",
+      "generated": 6,
+      "deterministic_unique": 6,
+      "provenance_valid": 6,
+      "schema_complete": 6,
+      "terminal_complete_papers": 0,
+      "terminal_scientific_stops": 0,
+      "active_unrefuted": 0,
+      "pending_terminal_adjudication": 6,
+      "winner_declared": false,
+      "scientific_authority": false
+    },
+    {
+      "engine_id": "D2",
+      "generated": 6,
+      "deterministic_unique": 6,
+      "provenance_valid": 6,
+      "schema_complete": 6,
+      "terminal_complete_papers": 0,
+      "terminal_scientific_stops": 0,
+      "active_unrefuted": 0,
+      "pending_terminal_adjudication": 6,
+      "winner_declared": false,
+      "scientific_authority": false
+    }
+  ],
+  "exact_duplicate_receipts": [],
+  "candidates": [
+    {
+      "title": "Task Order Dependence of Self-Improving Agent Variance",
+      "birth_evidence_refs": [
+        "arXiv:2608.18066"
+      ],
+      "memory_refs": [
+        "MEM-SEAR-1ba2b6e8d305dafaad"
+      ],
+      "scientific_question": "Does task order drive self-improving agent performance variance?",
+      "observed_trigger": "Shuffled task orders create 4.4% performance gap in WebArena GitLab",
+      "structural_variable": "Task execution order sequence",
+      "strongest_same_information_baseline": "Fixed-order RBank memory agent",
+      "baseline_counterexample": "Shuffled runs have 1.98% std dev vs fixed-order",
+      "cheapest_falsifier": {
+        "setup": "WebArena GitLab subset",
+        "intervention_or_comparison": "Fixed vs shuffled task orders",
+        "metric": "Performance gap, std dev",
+        "stop_if": "Gap >1% or std dev >1.5%",
+        "estimated_effort": "Low"
+      },
+      "closest_known_explanation": "Memory underspecification across task orders",
+      "residual_after_reduction": "Unmodeled order-induced memory variance",
+      "paper_level_claim": "Task order is a critical history-dependent performance factor",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D5-C01",
+      "engine_id": "D5",
+      "engine_name": "longitudinal_path_dependence",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "birth_receipt": {
+        "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+        "contract_sha256": "cfccdcfee757c378b39e8f4606131ced120aeda7fe95ff289704afa133cb98d5",
+        "operational_amendment_sha256": "2a8bc9df875b90d6f43c9a756b81a81d4620561f48b9c5c1daf45eb03c5ab1fc",
+        "generation_shard": 1,
+        "generation_raw_sha256": "267248d436cea5634f1bd7c97f79cd6083d95af7418f19f7e164895728567263",
+        "generation_prompt_sha256": "854693721215d4b45b31665704f381ed1f0a773aa4851844d726c81f0da4d312",
+        "generator_requested_model": "doubao-seed-2.0-mini",
+        "generator_resolved_model": "doubao-seed-2-0-mini-260215",
+        "derivation_type": "independent_generation",
+        "scientific_authority": false
+      },
+      "deterministic_candidate_fingerprint": "5d510f76cdcd7c92553af2db919f720e6778d08af4f889d71c8832483f1d7f74",
+      "exact_duplicate_of": "",
+      "adversarial_triage": {
+        "candidate_id": "D5-C01",
+        "advisory_route": "UNAVAILABLE",
+        "scientific_authority": false
+      },
+      "terminal_state": "PENDING_CHEAPEST_FALSIFIER",
+      "manuscript_stance_if_unrefuted": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "experiment_debt": []
+    },
+    {
+      "title": "Context-Dependent Skill Transfer Failure",
+      "birth_evidence_refs": [
+        "arXiv:2608.14036"
+      ],
+      "memory_refs": [
+        "MEM-HOLD-1aa172ec2500132831"
+      ],
+      "scientific_question": "Do transferred agent skills fail due to context mismatch?",
+      "observed_trigger": "Skills perform well in Codex but poorly in Gemini CLI",
+      "structural_variable": "Target environment context",
+      "strongest_same_information_baseline": "Raw execution without skill memory",
+      "baseline_counterexample": "Infrastructure failure rate drops only in source setting",
+      "cheapest_falsifier": {
+        "setup": "Codex→Gemini CLI transfer",
+        "intervention_or_comparison": "Test same skills across environments",
+        "metric": "Skill success rate gap",
+        "stop_if": "Gap >3%",
+        "estimated_effort": "Low"
+      },
+      "closest_known_explanation": "Rigid skill use in wrong context",
+      "residual_after_reduction": "Unmodeled context-specific skill validity",
+      "paper_level_claim": "Transferred skills fail due to context history mismatch",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D5-C02",
+      "engine_id": "D5",
+      "engine_name": "longitudinal_path_dependence",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "birth_receipt": {
+        "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+        "contract_sha256": "cfccdcfee757c378b39e8f4606131ced120aeda7fe95ff289704afa133cb98d5",
+        "operational_amendment_sha256": "2a8bc9df875b90d6f43c9a756b81a81d4620561f48b9c5c1daf45eb03c5ab1fc",
+        "generation_shard": 1,
+        "generation_raw_sha256": "267248d436cea5634f1bd7c97f79cd6083d95af7418f19f7e164895728567263",
+        "generation_prompt_sha256": "854693721215d4b45b31665704f381ed1f0a773aa4851844d726c81f0da4d312",
+        "generator_requested_model": "doubao-seed-2.0-mini",
+        "generator_resolved_model": "doubao-seed-2-0-mini-260215",
+        "derivation_type": "independent_generation",
+        "scientific_authority": false
+      },
+      "deterministic_candidate_fingerprint": "39cf78e5f5121623a67636312243db311b6be4b395fbad7a027e805932283166",
+      "exact_duplicate_of": "",
+      "adversarial_triage": {
+        "candidate_id": "D5-C02",
+        "advisory_route": "UNAVAILABLE",
+        "scientific_authority": false
+      },
+      "terminal_state": "PENDING_CHEAPEST_FALSIFIER",
+      "manuscript_stance_if_unrefuted": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "experiment_debt": []
+    },
+    {
+      "title": "Adaptive Memory Reduces Continual Forgetting",
+      "birth_evidence_refs": [
+        "arXiv:2608.19013"
+      ],
+      "memory_refs": [
+        "MEM-OPEN-29a589216cf210fa68"
+      ],
+      "scientific_question": "Does evolving memory reduce continual forgetting?",
+      "observed_trigger": "Removing memory updates increases forgetting to 0.83",
+      "structural_variable": "Adaptive memory update component",
+      "strongest_same_information_baseline": "Agent without memory updates",
+      "baseline_counterexample": "Full HCL has 63.41% final accuracy vs baseline",
+      "cheapest_falsifier": {
+        "setup": "Continual task sequence",
+        "intervention_or_comparison": "Enable/disable memory updates",
+        "metric": "Forgetting rate, final accuracy",
+        "stop_if": "Forgetting gap >0.5",
+        "estimated_effort": "Low"
+      },
+      "closest_known_explanation": "Memory retains successful experience anchors",
+      "residual_after_reduction": "Unmodeled anchor selection bias",
+      "paper_level_claim": "Adaptive memory cuts continual forgetting",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D5-C03",
+      "engine_id": "D5",
+      "engine_name": "longitudinal_path_dependence",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "birth_receipt": {
+        "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+        "contract_sha256": "cfccdcfee757c378b39e8f4606131ced120aeda7fe95ff289704afa133cb98d5",
+        "operational_amendment_sha256": "2a8bc9df875b90d6f43c9a756b81a81d4620561f48b9c5c1daf45eb03c5ab1fc",
+        "generation_shard": 1,
+        "generation_raw_sha256": "267248d436cea5634f1bd7c97f79cd6083d95af7418f19f7e164895728567263",
+        "generation_prompt_sha256": "854693721215d4b45b31665704f381ed1f0a773aa4851844d726c81f0da4d312",
+        "generator_requested_model": "doubao-seed-2.0-mini",
+        "generator_resolved_model": "doubao-seed-2-0-mini-260215",
+        "derivation_type": "independent_generation",
+        "scientific_authority": false
+      },
+      "deterministic_candidate_fingerprint": "6f59c773cd11c9f3e048992e6bb5e97fce8b53cb261d59b5eccf8bd659c205f6",
+      "exact_duplicate_of": "",
+      "adversarial_triage": {
+        "candidate_id": "D5-C03",
+        "advisory_route": "UNAVAILABLE",
+        "scientific_authority": false
+      },
+      "terminal_state": "PENDING_CHEAPEST_FALSIFIER",
+      "manuscript_stance_if_unrefuted": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "experiment_debt": []
+    },
+    {
+      "title": "Task Order Drives Self-Improving Agent Performance Variance",
+      "birth_evidence_refs": [
+        "arXiv:2608.18066"
+      ],
+      "memory_refs": [
+        "MEM-HOLD-1aa172ec2500132831"
+      ],
+      "scientific_question": "Does task execution order alter self-improving agent performance variance?",
+      "observed_trigger": "Shuffled task orders create 4.4% best-worst performance gap in WebArena GitLab subset",
+      "structural_variable": "Task execution sequence history",
+      "strongest_same_information_baseline": "Fixed-order task execution with matched RBank memory",
+      "baseline_counterexample": "Shuffled runs have 1.98% std dev vs fixed-order lower variance",
+      "cheapest_falsifier": {
+        "setup": "WebArena GitLab subset, RBank memory",
+        "intervention_or_comparison": "Fixed vs shuffled task order",
+        "metric": "Performance std dev/best-worst gap",
+        "stop_if": "Gap exceeds 2%",
+        "estimated_effort": "Low, reuse existing run logs"
+      },
+      "closest_known_explanation": "Memory underspecification from shuffled task sequences",
+      "residual_after_reduction": "Unaccounted variance from order-induced memory issues",
+      "paper_level_claim": "Task order is a critical source of performance variance in self-improving agents",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D5-C04",
+      "engine_id": "D5",
+      "engine_name": "longitudinal_path_dependence",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "birth_receipt": {
+        "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+        "contract_sha256": "cfccdcfee757c378b39e8f4606131ced120aeda7fe95ff289704afa133cb98d5",
+        "operational_amendment_sha256": "2a8bc9df875b90d6f43c9a756b81a81d4620561f48b9c5c1daf45eb03c5ab1fc",
+        "generation_shard": 2,
+        "generation_raw_sha256": "ae5df545ce8907f5c644469002192dd882795475b2f443060ba16b773cd9d2ae",
+        "generation_prompt_sha256": "bb98619c5abb37d5f36ccb8f45b438082856dea5d245856552044102907f976d",
+        "generator_requested_model": "doubao-seed-2.0-mini",
+        "generator_resolved_model": "doubao-seed-2-0-mini-260215",
+        "derivation_type": "independent_generation",
+        "scientific_authority": false
+      },
+      "deterministic_candidate_fingerprint": "025b3b3f78a39220cab9283d155bbb166f1db9c63e0f2cb32817cdfea08c6e0c",
+      "exact_duplicate_of": "",
+      "adversarial_triage": {
+        "candidate_id": "D5-C04",
+        "provisional_basin_signature": "Task ordering effects on self-improving agent performance variance.",
+        "strongest_same_information_attack": "Shuffled vs fixed order variance may be due to insufficient runs; no confidence intervals for 4.4% gap.",
+        "possible_direct_counterevidence": "No direct counterevidence; fixed-order lower variance could be sampling artifact.",
+        "cheapest_decisive_falsifier": "WebArena GitLab subset, fixed vs shuffled order, performance std dev; stop if gap >2%.",
+        "support_blocker": "Missing significance test; no control for memory contamination from previous runs.",
+        "duplicate_or_collision_target": "None among candidates; may overlap with curriculum learning basin.",
+        "what_must_be_true_for_paper": "Task order is sole cause of performance variance, not agent stochasticity.",
+        "advisory_route": "FALSIFIER_NOW",
+        "triage_raw_sha256": "c31e74119d04646849698041afe3773fd7decbe4663505ae627038b7b8183258",
+        "scientific_authority": false
+      },
+      "terminal_state": "PENDING_CHEAPEST_FALSIFIER",
+      "manuscript_stance_if_unrefuted": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "experiment_debt": []
+    },
+    {
+      "title": "Cumulative Skill Memory Accumulation Degrades Agent Performance",
+      "birth_evidence_refs": [
+        "arXiv:2608.16114"
+      ],
+      "memory_refs": [
+        "MEM-SEAR-1ba2b6e8d305dafaad"
+      ],
+      "scientific_question": "Does unpruned skill memory accumulation harm retrieval quality?",
+      "observed_trigger": "Disabling pruning (ρ=0) lets low-utility skills accumulate, reducing SR",
+      "structural_variable": "Cumulative skill memory entries over episodes",
+      "strongest_same_information_baseline": "HyperSkill with optimal pruning (τ=0.2)",
+      "baseline_counterexample": "ρ=0 runs have lower SR than optimally pruned settings",
+      "cheapest_falsifier": {
+        "setup": "xBench with HyperSkill setup",
+        "intervention_or_comparison": "ρ=0 vs ρ=0.4 vs optimal τ=0.2",
+        "metric": "Task success rate",
+        "stop_if": "SR gap >3%",
+        "estimated_effort": "Low, reuse ablation logs"
+      },
+      "closest_known_explanation": "Low-utility skill clutter reduces retrieval precision",
+      "residual_after_reduction": "Unquantified impact of pruning threshold on memory utility",
+      "paper_level_claim": "Skill memory pruning avoids degradation from accumulation",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D5-C05",
+      "engine_id": "D5",
+      "engine_name": "longitudinal_path_dependence",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "birth_receipt": {
+        "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+        "contract_sha256": "cfccdcfee757c378b39e8f4606131ced120aeda7fe95ff289704afa133cb98d5",
+        "operational_amendment_sha256": "2a8bc9df875b90d6f43c9a756b81a81d4620561f48b9c5c1daf45eb03c5ab1fc",
+        "generation_shard": 2,
+        "generation_raw_sha256": "ae5df545ce8907f5c644469002192dd882795475b2f443060ba16b773cd9d2ae",
+        "generation_prompt_sha256": "bb98619c5abb37d5f36ccb8f45b438082856dea5d245856552044102907f976d",
+        "generator_requested_model": "doubao-seed-2.0-mini",
+        "generator_resolved_model": "doubao-seed-2-0-mini-260215",
+        "derivation_type": "independent_generation",
+        "scientific_authority": false
+      },
+      "deterministic_candidate_fingerprint": "29fa993982d4c8e0e7f899a77e9497e56f957e8e59d078839f0f76eab7854f20",
+      "exact_duplicate_of": "",
+      "adversarial_triage": {
+        "candidate_id": "D5-C05",
+        "provisional_basin_signature": "Skill memory pruning and retrieval quality in agents.",
+        "strongest_same_information_attack": "SR drop without pruning could be due to retrieval noise; optimal pruning already known.",
+        "possible_direct_counterevidence": "No direct counterevidence; pruning thresholds are well-studied.",
+        "cheapest_decisive_falsifier": "xBench, ρ=0 vs ρ=0.4 vs τ=0.2, measure SR; stop if gap >3%.",
+        "support_blocker": "No ablation across multiple pruning thresholds; effect may not be from accumulation.",
+        "duplicate_or_collision_target": "None among candidates; may overlap with MEM-SEAR basin.",
+        "what_must_be_true_for_paper": "Low-utility skills degrade retrieval, not just increase retrieval time.",
+        "advisory_route": "FALSIFIER_NOW",
+        "triage_raw_sha256": "c31e74119d04646849698041afe3773fd7decbe4663505ae627038b7b8183258",
+        "scientific_authority": false
+      },
+      "terminal_state": "PENDING_CHEAPEST_FALSIFIER",
+      "manuscript_stance_if_unrefuted": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "experiment_debt": []
+    },
+    {
+      "title": "Evolving Memory Reduces Task Forgetting in Continual Learning Agents",
+      "birth_evidence_refs": [
+        "arXiv:2608.19013"
+      ],
+      "memory_refs": [
+        "MEM-OPEN-29a589216cf210fa68"
+      ],
+      "scientific_question": "Does persistent memory evolution reduce task forgetting?",
+      "observed_trigger": "Removing memory updates increases forgetting to 0.83",
+      "structural_variable": "Cumulative memory update history",
+      "strongest_same_information_baseline": "HCL without memory update component",
+      "baseline_counterexample": "Full HCL has higher final performance and lower forgetting",
+      "cheapest_falsifier": {
+        "setup": "HCL continual task setup",
+        "intervention_or_comparison": "Enable vs disable memory updates",
+        "metric": "Forgetting rate, final task accuracy",
+        "stop_if": "Forgetting >0.7",
+        "estimated_effort": "Low, reuse ablation data"
+      },
+      "closest_known_explanation": "Anchored memory retains successful/failed case histories",
+      "residual_after_reduction": "Unmodeled retention benefits of anchor-based memory",
+      "paper_level_claim": "Memory evolution reduces forgetting in continual learning",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D5-C06",
+      "engine_id": "D5",
+      "engine_name": "longitudinal_path_dependence",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "birth_receipt": {
+        "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+        "contract_sha256": "cfccdcfee757c378b39e8f4606131ced120aeda7fe95ff289704afa133cb98d5",
+        "operational_amendment_sha256": "2a8bc9df875b90d6f43c9a756b81a81d4620561f48b9c5c1daf45eb03c5ab1fc",
+        "generation_shard": 2,
+        "generation_raw_sha256": "ae5df545ce8907f5c644469002192dd882795475b2f443060ba16b773cd9d2ae",
+        "generation_prompt_sha256": "bb98619c5abb37d5f36ccb8f45b438082856dea5d245856552044102907f976d",
+        "generator_requested_model": "doubao-seed-2.0-mini",
+        "generator_resolved_model": "doubao-seed-2-0-mini-260215",
+        "derivation_type": "independent_generation",
+        "scientific_authority": false
+      },
+      "deterministic_candidate_fingerprint": "7496ad0518cf17ee699078ea72f6a33707a90b1fca9209659faf7f57a4aecb26",
+      "exact_duplicate_of": "",
+      "adversarial_triage": {
+        "candidate_id": "D5-C06",
+        "provisional_basin_signature": "Memory evolution in continual learning for reduced forgetting.",
+        "strongest_same_information_attack": "Forgetting reduction may be from replay of memory, not evolution; no fixed replay baseline.",
+        "possible_direct_counterevidence": "Standard replay methods without memory updates achieve low forgetting; HCL may not be superior.",
+        "cheapest_decisive_falsifier": "HCL setup, enable vs disable memory updates, measure forgetting; stop if >0.7.",
+        "support_blocker": "No comparison to simple replay baselines; forgetting rate 0.83 might be an upper bound.",
+        "duplicate_or_collision_target": "Overlap with MEM-OPEN-29a589216cf210fa68 and continual learning basins.",
+        "what_must_be_true_for_paper": "Memory updates capture unique failure cases beyond replay, reducing forgetting.",
+        "advisory_route": "ATTACK_NOW",
+        "triage_raw_sha256": "c31e74119d04646849698041afe3773fd7decbe4663505ae627038b7b8183258",
+        "scientific_authority": false
+      },
+      "terminal_state": "PENDING_CHEAPEST_FALSIFIER",
+      "manuscript_stance_if_unrefuted": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "experiment_debt": []
+    },
+    {
+      "title": "Failure-derived memory drives persistent self-evolving agent failures",
+      "birth_evidence_refs": [
+        "arXiv:2608.17684",
+        "arXiv:2608.00017"
+      ],
+      "memory_refs": [
+        "MEM-HOLD-452d1a58eea1476812",
+        "MEM-OPEN-29a589216cf210fa68"
+      ],
+      "scientific_question": "Do failure-derived memory retrievals cause persistent agent failures via reward inflation?",
+      "observed_trigger": "All 10 persistent failures linked to failure-derived memory retrievals (0.647 ASR)",
+      "structural_variable": "Memory retrieval source (failure vs success-derived)",
+      "strongest_same_information_baseline": "Success-derived retrievals (0.931 ASR, no persistent failures)",
+      "baseline_counterexample": "Failure-derived retrievals have far lower ASR and all persistent failures",
+      "cheapest_falsifier": {
+        "setup": "Reuse existing ReasoningBank rollout data",
+        "intervention_or_comparison": "Swap failure/success memory labels",
+        "metric": "ASR and persistent failure count",
+        "stop_if": "ASR gap closes significantly",
+        "estimated_effort": "Low, <10 person-hours"
+      },
+      "closest_known_explanation": "Memory reward inflation from stored self-grade annotations",
+      "residual_after_reduction": "Why only failure-derived retrievals trigger all persistent failures",
+      "paper_level_claim": "Failure-derived memory retrievals are a causal driver of persistent agent failures",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D2-C01",
+      "engine_id": "D2",
+      "engine_name": "empirical_anomaly_failure_mining",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "birth_receipt": {
+        "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+        "contract_sha256": "cfccdcfee757c378b39e8f4606131ced120aeda7fe95ff289704afa133cb98d5",
+        "operational_amendment_sha256": "2a8bc9df875b90d6f43c9a756b81a81d4620561f48b9c5c1daf45eb03c5ab1fc",
+        "generation_shard": 1,
+        "generation_raw_sha256": "ad8abdb9a5a18cd5d1fb9dcd410d76b500999ccf008132120a3027bdfb374104",
+        "generation_prompt_sha256": "3790a1d5329c04970898b1e451468c327ee5ea826210b29452056b573269fe92",
+        "generator_requested_model": "doubao-seed-2.0-mini",
+        "generator_resolved_model": "doubao-seed-2-0-mini-260215",
+        "derivation_type": "independent_generation",
+        "scientific_authority": false
+      },
+      "deterministic_candidate_fingerprint": "37881c7b9c0cd3683b27260cf7d8d7cfd0010f55f3319394a475d5641e7d4ed5",
+      "exact_duplicate_of": "",
+      "adversarial_triage": {
+        "candidate_id": "D2-C01",
+        "provisional_basin_signature": "Memory-driven failure persistence in self-evolving agents.",
+        "strongest_same_information_attack": "Failure-derived retrievals may involve harder tasks, causing lower ASR and persistent failures, not memory source.",
+        "possible_direct_counterevidence": "If task difficulty matched, failure-derived retrievals might show ASR similar to success-derived.",
+        "cheapest_decisive_falsifier": "Swap failure/success memory labels; if ASR gap closes, memory source isn't causal.",
+        "support_blocker": "Label-swapping experiment not done; causal direction unconfirmed.",
+        "duplicate_or_collision_target": "None",
+        "what_must_be_true_for_paper": "Failure-derived memory retrievals, not task difficulty, cause lower ASR and persistent failures.",
+        "advisory_route": "FALSIFIER_NOW",
+        "triage_raw_sha256": "d21d5c7f08481c0a42a8ce9805746f5fcc29b2ef0bd4deb50dc4c90bcd52f03e",
+        "scientific_authority": false
+      },
+      "terminal_state": "PENDING_CHEAPEST_FALSIFIER",
+      "manuscript_stance_if_unrefuted": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "experiment_debt": []
+    },
+    {
+      "title": "Underspecified memory causes amplified run variance in self-improving agents",
+      "birth_evidence_refs": [
+        "arXiv:2608.18066"
+      ],
+      "memory_refs": [
+        "MEM-HOLD-452d1a58eea1476812"
+      ],
+      "scientific_question": "Does underspecified memory explain amplified run variance with shuffled tasks?",
+      "observed_trigger": "4.4% best/worst gap, 1.98% std dev in GitLab WebArena subset",
+      "structural_variable": "Memory reward source (ground-truth vs proxy)",
+      "strongest_same_information_baseline": "Runs using ground-truth reward for memory construction",
+      "baseline_counterexample": "Proxy reward runs have higher run variance",
+      "cheapest_falsifier": {
+        "setup": "Reuse existing GitLab WebArena runs",
+        "intervention_or_comparison": "Add proxy reward noise to memory",
+        "metric": "Run performance variance",
+        "stop_if": "Variance decreases by >1%",
+        "estimated_effort": "Low, <8 person-hours"
+      },
+      "closest_known_explanation": "Manual inspection linked underspecification to variance",
+      "residual_after_reduction": "Why shuffled task orders amplify this variance specifically",
+      "paper_level_claim": "Underspecified memory from proxy rewards causes run variance",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D2-C02",
+      "engine_id": "D2",
+      "engine_name": "empirical_anomaly_failure_mining",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "birth_receipt": {
+        "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+        "contract_sha256": "cfccdcfee757c378b39e8f4606131ced120aeda7fe95ff289704afa133cb98d5",
+        "operational_amendment_sha256": "2a8bc9df875b90d6f43c9a756b81a81d4620561f48b9c5c1daf45eb03c5ab1fc",
+        "generation_shard": 1,
+        "generation_raw_sha256": "ad8abdb9a5a18cd5d1fb9dcd410d76b500999ccf008132120a3027bdfb374104",
+        "generation_prompt_sha256": "3790a1d5329c04970898b1e451468c327ee5ea826210b29452056b573269fe92",
+        "generator_requested_model": "doubao-seed-2.0-mini",
+        "generator_resolved_model": "doubao-seed-2-0-mini-260215",
+        "derivation_type": "independent_generation",
+        "scientific_authority": false
+      },
+      "deterministic_candidate_fingerprint": "f16be8340ba0ac976254b90920ee9938e3ca0d11a4163f6e82c881aa21a14cde",
+      "exact_duplicate_of": "",
+      "adversarial_triage": {
+        "candidate_id": "D2-C02",
+        "provisional_basin_signature": "Memory underspecification and run variance in self-improving agents.",
+        "strongest_same_information_attack": "Proxy reward noise directly causes variance, not memory underspecification. Shuffled tasks amplify noise, not memory effects.",
+        "possible_direct_counterevidence": "If ground-truth memory runs also show high variance under shuffled tasks, proxy reward is not the cause.",
+        "cheapest_decisive_falsifier": "Add proxy reward noise to ground-truth memory; if run variance doesn't match proxy memory runs, claim is false.",
+        "support_blocker": "No experiment isolating memory underspecification from proxy noise; causal link unconfirmed.",
+        "duplicate_or_collision_target": "None",
+        "what_must_be_true_for_paper": "Proxy reward noise causes memory underspecification, which then causes run variance, not other factors.",
+        "advisory_route": "FALSIFIER_NOW",
+        "triage_raw_sha256": "d21d5c7f08481c0a42a8ce9805746f5fcc29b2ef0bd4deb50dc4c90bcd52f03e",
+        "scientific_authority": false
+      },
+      "terminal_state": "PENDING_CHEAPEST_FALSIFIER",
+      "manuscript_stance_if_unrefuted": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "experiment_debt": []
+    },
+    {
+      "title": "Recurring temporal grounding failures across agent tiers in time series tasks",
+      "birth_evidence_refs": [
+        "arXiv:2608.14270"
+      ],
+      "memory_refs": [
+        "MEM-HOLD-452d1a58eea1476812"
+      ],
+      "scientific_question": "Why do agents fail consistently at temporal grounding in evolving time series?",
+      "observed_trigger": "Recurring temporal validity, exogenous context failures across model tiers",
+      "structural_variable": "Agent temporal grounding capability",
+      "strongest_same_information_baseline": "GPT-5.4/Qwen-3.5-397B (top overall but still has gaps)",
+      "baseline_counterexample": "All models score <90% on hard time series tasks",
+      "cheapest_falsifier": {
+        "setup": "Reuse WASDE Crop Balance scenario runs",
+        "intervention_or_comparison": "Add explicit temporal grounding prompts",
+        "metric": "Temporal validity score",
+        "stop_if": "Scores improve by >5%",
+        "estimated_effort": "Low, <5 person-hours"
+      },
+      "closest_known_explanation": "Capability gap in forward-looking temporal analysis",
+      "residual_after_reduction": "Why high-cost Sonnet-4.6 does not lead in accuracy",
+      "paper_level_claim": "Temporal grounding failures recur across agent tiers in evolving time series",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D2-C03",
+      "engine_id": "D2",
+      "engine_name": "empirical_anomaly_failure_mining",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "birth_receipt": {
+        "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+        "contract_sha256": "cfccdcfee757c378b39e8f4606131ced120aeda7fe95ff289704afa133cb98d5",
+        "operational_amendment_sha256": "2a8bc9df875b90d6f43c9a756b81a81d4620561f48b9c5c1daf45eb03c5ab1fc",
+        "generation_shard": 1,
+        "generation_raw_sha256": "ad8abdb9a5a18cd5d1fb9dcd410d76b500999ccf008132120a3027bdfb374104",
+        "generation_prompt_sha256": "3790a1d5329c04970898b1e451468c327ee5ea826210b29452056b573269fe92",
+        "generator_requested_model": "doubao-seed-2.0-mini",
+        "generator_resolved_model": "doubao-seed-2-0-mini-260215",
+        "derivation_type": "independent_generation",
+        "scientific_authority": false
+      },
+      "deterministic_candidate_fingerprint": "2c9bd833bbad2f77066714054426b78979145b48876c911586d9edea3b0a2432",
+      "exact_duplicate_of": "",
+      "adversarial_triage": {
+        "candidate_id": "D2-C03",
+        "provisional_basin_signature": "Temporal grounding failures in agent-based time series tasks.",
+        "strongest_same_information_attack": "Temporal grounding failures stem from missing exogenous context, not agent capability. Models lack data, not reasoning.",
+        "possible_direct_counterevidence": "If explicit temporal prompts fail to improve accuracy, temporal grounding is not the root cause.",
+        "cheapest_decisive_falsifier": "Add explicit temporal grounding prompts; if scores don't improve >5%, temporal grounding is not the failure cause.",
+        "support_blocker": "No direct manipulation of temporal grounding; correlation may not be causation.",
+        "duplicate_or_collision_target": "None",
+        "what_must_be_true_for_paper": "Temporal grounding is the specific missing ability, not other factors like data access or integration.",
+        "advisory_route": "FALSIFIER_NOW",
+        "triage_raw_sha256": "d21d5c7f08481c0a42a8ce9805746f5fcc29b2ef0bd4deb50dc4c90bcd52f03e",
+        "scientific_authority": false
+      },
+      "terminal_state": "PENDING_CHEAPEST_FALSIFIER",
+      "manuscript_stance_if_unrefuted": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "experiment_debt": []
+    },
+    {
+      "title": "Failure-derived memory retrievals cause persistent agent failures",
+      "birth_evidence_refs": [
+        "arXiv:2608.17684",
+        "arXiv:2608.00017"
+      ],
+      "memory_refs": [
+        "MEM-HOLD-1aa172ec2500132831"
+      ],
+      "scientific_question": "Do failure-derived memory retrievals directly cause persistent agent skill failures?",
+      "observed_trigger": "34 failure retrievals had 0.647 accuracy +10 persistent failures, vs 0.931 for success retrievals",
+      "structural_variable": "Type of memory retrieved (failure vs success-derived)",
+      "strongest_same_information_baseline": "Success-derived memory retrieval (0.931 accuracy, no failures)",
+      "baseline_counterexample": "Failure-derived retrievals produce 0.647 accuracy +10 persistent failures",
+      "cheapest_falsifier": {
+        "setup": "Use existing ReasoningBank rollout dataset",
+        "intervention_or_comparison": "Swap failure/success retrieval labels",
+        "metric": "Accuracy and failure count",
+        "stop_if": "Group gaps close",
+        "estimated_effort": "Low, <10 compute hours"
+      },
+      "closest_known_explanation": "Memory reward inflation or underspecified content",
+      "residual_after_reduction": "Why failure-specific retrievals uniquely drive persistent failures?",
+      "paper_level_claim": "Failure-derived memory retrievals causal for persistent self-evolving agent failures",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D2-C04",
+      "engine_id": "D2",
+      "engine_name": "empirical_anomaly_failure_mining",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "birth_receipt": {
+        "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+        "contract_sha256": "cfccdcfee757c378b39e8f4606131ced120aeda7fe95ff289704afa133cb98d5",
+        "operational_amendment_sha256": "2a8bc9df875b90d6f43c9a756b81a81d4620561f48b9c5c1daf45eb03c5ab1fc",
+        "generation_shard": 2,
+        "generation_raw_sha256": "3ce86599d5c5225b2bec1b03cf4da317d37edcfb9ebcfd97c8d0d44e7bae7544",
+        "generation_prompt_sha256": "b3ae4bd9aaf7165b4a3b3bc4799940228ed8369249b5e681733e7f15065e048a",
+        "generator_requested_model": "doubao-seed-2.0-mini",
+        "generator_resolved_model": "doubao-seed-2-0-mini-260215",
+        "derivation_type": "independent_generation",
+        "scientific_authority": false
+      },
+      "deterministic_candidate_fingerprint": "e7872357664f68ab76d21e8048123b940fa14caade0ef6e33f44b054b8445038",
+      "exact_duplicate_of": "",
+      "adversarial_triage": {
+        "candidate_id": "D2-C04",
+        "provisional_basin_signature": "Failure-derived memory retrieval causes persistent agent skill failures.",
+        "strongest_same_information_attack": "Success-derived retrieval already reaches 0.931 accuracy, zero failures; effect may be due to content quality, not retrieval type.",
+        "possible_direct_counterevidence": "None; no direct counterevidence in provided refs.",
+        "cheapest_decisive_falsifier": "Swap failure/success retrieval labels; if group gaps close, causality is refuted. Low effort, <10h.",
+        "support_blocker": "No mechanism for why failure retrievals uniquely cause persistent failures, not just lower accuracy.",
+        "duplicate_or_collision_target": "None.",
+        "what_must_be_true_for_paper": "Failure-derived retrievals must contain unique failure-causing information beyond content quality or reward.",
+        "advisory_route": "FALSIFIER_NOW",
+        "triage_raw_sha256": "ff63ed18d651ee7aeeaec5c55347385c7c50b591991b82b6097287a17181ace7",
+        "scientific_authority": false
+      },
+      "terminal_state": "PENDING_CHEAPEST_FALSIFIER",
+      "manuscript_stance_if_unrefuted": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "experiment_debt": []
+    },
+    {
+      "title": "Noisy proxy rewards increase self-improving agent run variance",
+      "birth_evidence_refs": [
+        "arXiv:2608.18066"
+      ],
+      "memory_refs": [
+        "MEM-HOLD-452d1a58eea1476812"
+      ],
+      "scientific_question": "Does noisy proxy reward memory cause run-to-run variance?",
+      "observed_trigger": "4.4% best/worst gap, 1.98% std dev in GitLab WebArena subset",
+      "structural_variable": "Memory reward signal type (ground-truth vs proxy)",
+      "strongest_same_information_baseline": "Ground-truth reward memory runs",
+      "baseline_counterexample": "Proxy reward use correlates with higher run variance",
+      "cheapest_falsifier": {
+        "setup": "Reuse GitLab subset experiment setup",
+        "intervention_or_comparison": "Remove proxy reward noise",
+        "metric": "Run performance variance",
+        "stop_if": "Variance drops >50%",
+        "estimated_effort": "Low, <5 compute hours"
+      },
+      "closest_known_explanation": "Underspecified memory from noisy proxy signals",
+      "residual_after_reduction": "Why task order shuffling amplifies this variance?",
+      "paper_level_claim": "Noisy proxy reward memory increases self-improving agent run variance",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D2-C05",
+      "engine_id": "D2",
+      "engine_name": "empirical_anomaly_failure_mining",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "birth_receipt": {
+        "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+        "contract_sha256": "cfccdcfee757c378b39e8f4606131ced120aeda7fe95ff289704afa133cb98d5",
+        "operational_amendment_sha256": "2a8bc9df875b90d6f43c9a756b81a81d4620561f48b9c5c1daf45eb03c5ab1fc",
+        "generation_shard": 2,
+        "generation_raw_sha256": "3ce86599d5c5225b2bec1b03cf4da317d37edcfb9ebcfd97c8d0d44e7bae7544",
+        "generation_prompt_sha256": "b3ae4bd9aaf7165b4a3b3bc4799940228ed8369249b5e681733e7f15065e048a",
+        "generator_requested_model": "doubao-seed-2.0-mini",
+        "generator_resolved_model": "doubao-seed-2-0-mini-260215",
+        "derivation_type": "independent_generation",
+        "scientific_authority": false
+      },
+      "deterministic_candidate_fingerprint": "019f53e9dc864827a001a58cb290640a1aad04e7f3e3aafb79bb10d41ce5ac60",
+      "exact_duplicate_of": "",
+      "adversarial_triage": {
+        "candidate_id": "D2-C05",
+        "provisional_basin_signature": "Noisy proxy reward signals increase run-to-run variance in self-improving agents.",
+        "strongest_same_information_attack": "Ground-truth reward runs already show lower variance; proxy noise may be confounded with other run differences.",
+        "possible_direct_counterevidence": "None.",
+        "cheapest_decisive_falsifier": "Remove proxy reward noise in GitLab subset; if variance drops >50%, noise is causal. Low effort.",
+        "support_blocker": "Unclear if task order shuffling rather than proxy noise drives variance amplification.",
+        "duplicate_or_collision_target": "None.",
+        "what_must_be_true_for_paper": "Proxy reward noise must be the primary driver of increased variance, independent of other run factors.",
+        "advisory_route": "FALSIFIER_NOW",
+        "triage_raw_sha256": "ff63ed18d651ee7aeeaec5c55347385c7c50b591991b82b6097287a17181ace7",
+        "scientific_authority": false
+      },
+      "terminal_state": "PENDING_CHEAPEST_FALSIFIER",
+      "manuscript_stance_if_unrefuted": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "experiment_debt": []
+    },
+    {
+      "title": "Missing temporal skills cause time series agent failures",
+      "birth_evidence_refs": [
+        "arXiv:2608.14270"
+      ],
+      "memory_refs": [
+        "MEM-OPEN-29a589216cf210fa68"
+      ],
+      "scientific_question": "Do missing temporal/exogenous context skills cause recurring failures?",
+      "observed_trigger": "Agents over-commit to single commodity, high-cost models underperform on hard tasks",
+      "structural_variable": "Presence of temporal/exogenous context skills",
+      "strongest_same_information_baseline": "GPT-5.4/Qwen-3.5-397B (strongest on easy tasks)",
+      "baseline_counterexample": "Hard tier tasks show wider model performance gaps",
+      "cheapest_falsifier": {
+        "setup": "Add temporal skills to TimeSage-1.0",
+        "intervention_or_comparison": "Deploy on WASDE/BTS scenarios",
+        "metric": "Temporal validity score",
+        "stop_if": "Over-commitment rate drops",
+        "estimated_effort": "Medium, <20 compute hours"
+      },
+      "closest_known_explanation": "Lack of specialized analytical skills for temporal tasks",
+      "residual_after_reduction": "Why high-cost models still fail at these tasks?",
+      "paper_level_claim": "Missing temporal/exogenous skills cause time series agent failures",
+      "paperability_axis": "E",
+      "executable_now": true,
+      "candidate_id": "D2-C06",
+      "engine_id": "D2",
+      "engine_name": "empirical_anomaly_failure_mining",
+      "scientific_authority": false,
+      "deterministic_audit": {
+        "missing_required_fields": [],
+        "invalid_primary_refs": [],
+        "invalid_memory_refs": [],
+        "has_grounded_primary_ref": true,
+        "falsifier_complete": true,
+        "schema_complete": true,
+        "provenance_valid": true
+      },
+      "birth_receipt": {
+        "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+        "contract_sha256": "cfccdcfee757c378b39e8f4606131ced120aeda7fe95ff289704afa133cb98d5",
+        "operational_amendment_sha256": "2a8bc9df875b90d6f43c9a756b81a81d4620561f48b9c5c1daf45eb03c5ab1fc",
+        "generation_shard": 2,
+        "generation_raw_sha256": "3ce86599d5c5225b2bec1b03cf4da317d37edcfb9ebcfd97c8d0d44e7bae7544",
+        "generation_prompt_sha256": "b3ae4bd9aaf7165b4a3b3bc4799940228ed8369249b5e681733e7f15065e048a",
+        "generator_requested_model": "doubao-seed-2.0-mini",
+        "generator_resolved_model": "doubao-seed-2-0-mini-260215",
+        "derivation_type": "independent_generation",
+        "scientific_authority": false
+      },
+      "deterministic_candidate_fingerprint": "39e5ce28739ea53d0e3d215c097043c4d0c4358712e6fd484dcd15556f13efd7",
+      "exact_duplicate_of": "",
+      "adversarial_triage": {
+        "candidate_id": "D2-C06",
+        "provisional_basin_signature": "Missing temporal/exogenous skills cause time series agent failures.",
+        "strongest_same_information_attack": "Strong models on easy tasks lack temporal skills but still fail on hard tasks; task complexity alone may explain gap.",
+        "possible_direct_counterevidence": "None.",
+        "cheapest_decisive_falsifier": "Add temporal skills to TimeSage-1.0; if over-commitment drops, skills are causal. Medium effort.",
+        "support_blocker": "High-cost models failing on hard tasks may be due to insufficient domain adaptation, not just missing temporal skills.",
+        "duplicate_or_collision_target": "None.",
+        "what_must_be_true_for_paper": "Temporal/exogenous skills are necessary and sufficient to reduce over-commitment and failures on hard tasks.",
+        "advisory_route": "FALSIFIER_NOW",
+        "triage_raw_sha256": "ff63ed18d651ee7aeeaec5c55347385c7c50b591991b82b6097287a17181ace7",
+        "scientific_authority": false
+      },
+      "terminal_state": "PENDING_CHEAPEST_FALSIFIER",
+      "manuscript_stance_if_unrefuted": "ACTIVE_UNREFUTED_HYPOTHESIS",
+      "experiment_debt": []
+    }
+  ],
+  "provider_receipts": {
+    "generation": [
+      {
+        "stage": "generation-shard-1",
+        "engine_id": "D5",
+        "requested_model": "doubao-seed-2.0-mini",
+        "resolved_model": "doubao-seed-2-0-mini-260215",
+        "prompt_sha256": "854693721215d4b45b31665704f381ed1f0a773aa4851844d726c81f0da4d312",
+        "raw_sha256": "267248d436cea5634f1bd7c97f79cd6083d95af7418f19f7e164895728567263",
+        "request_fingerprint": "9062a989b1b955312554a8bf8643082ef5f4ec88c5ec5364031d6229b7961503",
+        "usage": {
+          "input_tokens": 5421,
+          "output_tokens": 3575,
+          "total_tokens": 8996,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 2590
+          }
+        },
+        "status": "completed",
+        "provider_response_id_archived_privately": true,
+        "scientific_authority": false
+      },
+      {
+        "stage": "generation-shard-2",
+        "engine_id": "D5",
+        "requested_model": "doubao-seed-2.0-mini",
+        "resolved_model": "doubao-seed-2-0-mini-260215",
+        "prompt_sha256": "bb98619c5abb37d5f36ccb8f45b438082856dea5d245856552044102907f976d",
+        "raw_sha256": "ae5df545ce8907f5c644469002192dd882795475b2f443060ba16b773cd9d2ae",
+        "request_fingerprint": "f6c035bd4fc39c5f0a3b9d1126b8821d876f756a40f1a3e249c6df144d2d18b0",
+        "usage": {
+          "input_tokens": 5421,
+          "output_tokens": 3955,
+          "total_tokens": 9376,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 2886
+          }
+        },
+        "status": "completed",
+        "provider_response_id_archived_privately": true,
+        "scientific_authority": false
+      },
+      {
+        "stage": "generation-shard-1",
+        "engine_id": "D2",
+        "requested_model": "doubao-seed-2.0-mini",
+        "resolved_model": "doubao-seed-2-0-mini-260215",
+        "prompt_sha256": "3790a1d5329c04970898b1e451468c327ee5ea826210b29452056b573269fe92",
+        "raw_sha256": "ad8abdb9a5a18cd5d1fb9dcd410d76b500999ccf008132120a3027bdfb374104",
+        "request_fingerprint": "1a2e8971854740fe46c9bce279d1a0a814b54ebc03b84962d4891759a8496fcf",
+        "usage": {
+          "input_tokens": 5143,
+          "output_tokens": 3956,
+          "total_tokens": 9099,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 2811
+          }
+        },
+        "status": "completed",
+        "provider_response_id_archived_privately": true,
+        "scientific_authority": false
+      },
+      {
+        "stage": "generation-shard-2",
+        "engine_id": "D2",
+        "requested_model": "doubao-seed-2.0-mini",
+        "resolved_model": "doubao-seed-2-0-mini-260215",
+        "prompt_sha256": "b3ae4bd9aaf7165b4a3b3bc4799940228ed8369249b5e681733e7f15065e048a",
+        "raw_sha256": "3ce86599d5c5225b2bec1b03cf4da317d37edcfb9ebcfd97c8d0d44e7bae7544",
+        "request_fingerprint": "fe945bed22aa8440195fe802ee27becbbbfa245296231d348f5287d443edd291",
+        "usage": {
+          "input_tokens": 5143,
+          "output_tokens": 3965,
+          "total_tokens": 9108,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 2991
+          }
+        },
+        "status": "completed",
+        "provider_response_id_archived_privately": true,
+        "scientific_authority": false
+      }
+    ],
+    "adversarial_triage": [
+      {
+        "stage": "adversarial-triage-shard-1",
+        "engine_id": "D5",
+        "requested_model": "deepseek-v4-pro",
+        "prompt_sha256": "32be91bdc81c93d993ff173fdcc0055b8cc46f89d9a0a99133a648dbfb90793a",
+        "request_fingerprint": "698851a35f6ffa7859c635a00f264cd25a8968bdb0ff2a4b5ef814f404f0efd5",
+        "status": "PROVIDER_FAILURE",
+        "error_type": "ArkResponseStateError",
+        "error_detail_sha256": "d5f574ba32a26374d9e36c0ca8a987fd7999271c7889d804936375a2c9894488",
+        "provider_response_id_archived_privately": true,
+        "scientific_authority": false
+      },
+      {
+        "stage": "adversarial-triage-shard-2",
+        "engine_id": "D5",
+        "requested_model": "deepseek-v4-pro",
+        "resolved_model": "deepseek-v4-pro-260425",
+        "prompt_sha256": "e640a844a73e82de9316545f710ab49dd656e5fa13423321ae8d52a104e37bbf",
+        "raw_sha256": "c31e74119d04646849698041afe3773fd7decbe4663505ae627038b7b8183258",
+        "request_fingerprint": "855d472c891793f62a5c450782d06b2b0d2f83c883dff368a715cac568e852d2",
+        "usage": {
+          "input_tokens": 1662,
+          "output_tokens": 3454,
+          "total_tokens": 5116,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 2797
+          }
+        },
+        "status": "completed",
+        "provider_response_id_archived_privately": true,
+        "scientific_authority": false
+      },
+      {
+        "stage": "adversarial-triage-shard-1",
+        "engine_id": "D2",
+        "requested_model": "deepseek-v4-pro",
+        "resolved_model": "deepseek-v4-pro-260425",
+        "prompt_sha256": "8448497064c0254a2bac10e557d59e56623ec850b8563d53a48955d9381a5802",
+        "raw_sha256": "d21d5c7f08481c0a42a8ce9805746f5fcc29b2ef0bd4deb50dc4c90bcd52f03e",
+        "request_fingerprint": "494e7bb076c66921cf1259824d73f49889d7327647a6fb4fdc2fae4802e16d04",
+        "usage": {
+          "input_tokens": 1713,
+          "output_tokens": 4201,
+          "total_tokens": 5914,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 3552
+          }
+        },
+        "status": "completed",
+        "provider_response_id_archived_privately": true,
+        "scientific_authority": false
+      },
+      {
+        "stage": "adversarial-triage-shard-2",
+        "engine_id": "D2",
+        "requested_model": "deepseek-v4-pro",
+        "resolved_model": "deepseek-v4-pro-260425",
+        "prompt_sha256": "d8d64f508917758c7bc8f857acf1f456bf6714a5cd748134c52f54e812665711",
+        "raw_sha256": "ff63ed18d651ee7aeeaec5c55347385c7c50b591991b82b6097287a17181ace7",
+        "request_fingerprint": "d1a79f2347fdf684811df175675ed57ba350f7a34c15ccdd50263a6c0203c1ce",
+        "usage": {
+          "input_tokens": 1682,
+          "output_tokens": 3017,
+          "total_tokens": 4699,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 2382
+          }
+        },
+        "status": "completed",
+        "provider_response_id_archived_privately": true,
+        "scientific_authority": false
+      }
+    ]
+  },
+  "failures": [
+    {
+      "stage": "adversarial-triage-shard-1",
+      "engine_id": "D5",
+      "requested_model": "deepseek-v4-pro",
+      "prompt_sha256": "32be91bdc81c93d993ff173fdcc0055b8cc46f89d9a0a99133a648dbfb90793a",
+      "request_fingerprint": "698851a35f6ffa7859c635a00f264cd25a8968bdb0ff2a4b5ef814f404f0efd5",
+      "status": "PROVIDER_FAILURE",
+      "error_type": "ArkResponseStateError",
+      "error_detail_sha256": "d5f574ba32a26374d9e36c0ca8a987fd7999271c7889d804936375a2c9894488",
+      "provider_response_id_archived_privately": true,
+      "scientific_authority": false
+    }
+  ],
+  "private_raw_root": "/home/wyt/code/agent-self-evolution-observatory-discovery-benchmark-20260821/generated/research-data/discovery-engine-terminal-replication-20260821",
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "amendment_id": "terminal-paper-yield-replication-20260821-provider-fallback-2",
+  "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+  "status": "FROZEN_OPERATIONAL_AMENDMENT",
+  "original_contract_sha256": "cfccdcfee757c378b39e8f4606131ced120aeda7fe95ff289704afa133cb98d5",
+  "supersedes_amendment_sha256": "83c932b32aa3b24e02d24547a0dee3347a770b07b91186fa023d51f931b7ba54",
+  "prior_attempt_sha256": "ad09147d4a1b36d7feef56ba5155de73316f48cff2dce3c1bc275f780fcbe8e6",
+  "trigger": {
+    "class": "PROVIDER_SUPPORT_FAILURE",
+    "prior_generator_requested": "glm-5.3",
+    "prior_generated_candidates": 0,
+    "prior_raw_outputs": 0,
+    "same_error_detail_hash_for_both_engines": true,
+    "scientific_authority": false
+  },
+  "operational_change": {
+    "generator_requested": "doubao-seed-2.0-mini",
+    "different_from_first_round_deepseek_family": true,
+    "generation_shards_per_engine": 2,
+    "candidates_per_generation_shard": 3,
+    "generator_max_output_tokens": 5600,
+    "triage_shards_per_engine": 2,
+    "candidates_per_triage_shard": 3,
+    "reviewer_max_output_tokens": 4600,
+    "candidate_budget_unchanged": true,
+    "frozen_evidence_unchanged": true,
+    "terminal_scoring_policy_unchanged": true,
+    "scientific_gates_unchanged": true,
+    "previous_failed_provider_outputs_are_not_used_as_candidates": true
+  },
+  "strict_transport": {
+    "provider_post_retries": 0,
+    "single_post_per_request_fingerprint": true,
+    "provider_failure_has_scientific_authority": false
+  },
+  "authority": {"problem_gate": false, "paper_design": false, "method": false, "experiment": false, "p0": false, "gpu": false}
+}

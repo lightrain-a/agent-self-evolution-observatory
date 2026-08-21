@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "transaction_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+  "status": "FROZEN_BEFORE_PROVIDER_CALLS",
+  "purpose": "Replicate discovery-engine terminal paper yield using a different generator family and terminal scientific outcomes rather than early reviewer scores.",
+  "frozen_inputs": {
+    "primary_pool_path": "/home/wyt/code/agent-self-evolution-observatory/generated/research-data/paper-first-problem-discovery/primary-evidence-pool.json",
+    "primary_pool_sha256": "df7b06292638b534322cec6d7eaa63c87a5584badf2114d96e0db91d1b8f964b",
+    "research_memory_path": "generated/research-memory-wiki.json",
+    "research_memory_wiki_sha256": "3531943234ba708716a43625709adf01fd57f346e22a7a1b83dace2b96815f29"
+  },
+  "engines": [
+    {
+      "engine_id": "D5",
+      "engine_name": "longitudinal_path_dependence",
+      "candidate_budget": 6
+    },
+    {
+      "engine_id": "D2",
+      "engine_name": "empirical_anomaly_failure_mining",
+      "candidate_budget": 6
+    }
+  ],
+  "models": {
+    "generator_requested": "kimi-k3",
+    "generator_family_requirement": "different from first-round DeepSeek generator family",
+    "reviewer_requested": "deepseek-v4-pro",
+    "reviewer_role": "adversarial triage and falsifier design only",
+    "reviewer_scientific_authority": false
+  },
+  "provider_policy": {
+    "store_provider_response": true,
+    "raw_output_archived_before_parse": true,
+    "content_addressed_raw_output_required": true,
+    "prompt_sha256_required": true,
+    "request_fingerprint_required": true,
+    "resolved_model_required": true,
+    "usage_receipt_required": true,
+    "private_provider_response_id_may_be_archived": true,
+    "provider_failure_has_scientific_authority": false,
+    "automatic_retry_may_not_change_scientific_rules": true
+  },
+  "terminal_scoring_policy": {
+    "early_reviewer_score_is_terminal_metric": false,
+    "winner_may_be_declared_before_terminal_outcomes": false,
+    "unique_complete_paper": "counts as one terminal paper",
+    "duplicate_paper_basin": "counts once at basin level and never as a second unique paper",
+    "scientific_refutation_or_same_information_reduction": "terminal scientific stop",
+    "support_or_runtime_failure": "experiment debt or support hold; never scientific stop",
+    "unrefuted_hypothesis_with_missing_evidence": "ACTIVE_UNREFUTED_HYPOTHESIS plus experiment debt; retain in manuscript pipeline",
+    "missing_evidence_auto_narrows_claim": false
+  },
+  "manuscript_policy": {
+    "draft_before_evidence_completion": true,
+    "unrefuted_hypothesis_stays_active": true,
+    "missing_evidence_creates_experiment_debt": true,
+    "single_limitations_section_required": true,
+    "distributed_limitation_language_forbidden": true,
+    "not_but_contrast_forbidden": true,
+    "serial_enumeration_sentence_forbidden": true
+  },
+  "pipeline": [
+    "generation",
+    "deterministic provenance validation",
+    "semantic basin deduplication",
+    "adversarial triage",
+    "strongest same-information baseline attack",
+    "cheapest falsifier",
+    "terminal scientific adjudication",
+    "paper design",
+    "manuscript",
+    "paper QA"
+  ],
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

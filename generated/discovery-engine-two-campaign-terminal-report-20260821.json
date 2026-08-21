@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "status": "TWO_CAMPAIGN_TERMINAL_PAPER_YIELD_COMPLETE",
+  "evaluation_policy": {
+    "terminal_manuscript_outcomes_only": true,
+    "unrefuted_hypothesis_stays_active": true,
+    "missing_evidence_creates_experiment_debt": true,
+    "manuscript_completion_is_separate_from_evidence_maturity": true,
+    "duplicate_scientific_basin_counts_once_globally": true,
+    "early_reviewer_score_has_terminal_authority": false
+  },
+  "campaigns": [
+    {
+      "campaign_id": "paper-yield-benchmark-round-1",
+      "generator_family": "DeepSeek",
+      "engine_scope": "D1-D7",
+      "terminal_reanalysis_under_current_manuscript_policy": {
+        "D5": {
+          "unique_complete_paper_basins": 1,
+          "paper_basins": ["D5-ENV-ORDER-CONTAMINATION"]
+        },
+        "D2": {
+          "unique_complete_paper_basins": 1,
+          "paper_basins": ["D2-FAILURE-MEMORY-PROVENANCE"],
+          "note": "The original STOP was caused by missing causal evidence under the earlier manuscript policy. The current policy reclassifies the unrefuted causal basin as active. Its manuscript is completed in campaign 2 and therefore receives one global basin credit only."
+        }
+      }
+    },
+    {
+      "campaign_id": "terminal-paper-yield-replication-20260821-d5-vs-d2",
+      "generator_family": "Doubao Seed 2.0 Mini after zero-authority Kimi/GLM transport failures",
+      "candidates_each": 6,
+      "terminal_state_artifact": "generated/discovery-engine-terminal-replication-final-state-20260821.json",
+      "D5": {
+        "new_unique_complete_papers": 0,
+        "scientific_stops": 4,
+        "duplicate_basins": 2
+      },
+      "D2": {
+        "new_unique_complete_papers": 3,
+        "scientific_stops": 1,
+        "duplicate_basins": 2,
+        "paper_basins": [
+          "D2-FAILURE-MEMORY-PROVENANCE",
+          "D2-PROXY-REWARD-MEMORY-VARIANCE",
+          "D2-TEMPORAL-SKILL-CAUSAL-BOTTLENECK"
+        ]
+      },
+      "winner": "D2"
+    }
+  ],
+  "global_unique_paper_basins": {
+    "D5": [
+      {
+        "basin_id": "D5-ENV-ORDER-CONTAMINATION",
+        "manuscript": "paper_drafts/d5-env-order-iclr2027/main.pdf",
+        "evidence_maturity": "DIRECT_RELEASED_WITNESS_PLUS_FULL_RETROSPECTIVE"
+      }
+    ],
+    "D2": [
+      {
+        "basin_id": "D2-FAILURE-MEMORY-PROVENANCE",
+        "manuscript": "paper_drafts/d2-failure-memory-provenance-iclr2027/main.pdf",
+        "evidence_maturity": "SOURCE_GROUNDED_ACTIVE_CAUSAL_SWAP_DEBT"
+      },
+      {
+        "basin_id": "D2-PROXY-REWARD-MEMORY-VARIANCE",
+        "manuscript": "paper_drafts/d2-proxy-reward-memory-variance-iclr2027/main.pdf",
+        "evidence_maturity": "DIRECT_F0_WRITE_CHANNEL_SUPPORTED_DOWNSTREAM_VARIANCE_DEBT"
+      },
+      {
+        "basin_id": "D2-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+        "manuscript": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/main.pdf",
+        "evidence_maturity": "SOURCE_GROUNDED_TARGETED_INTERVENTION_SUPPORT_DEBT"
+      }
+    ]
+  },
+  "global_terminal_manuscript_yield": {
+    "D2": 3,
+    "D5": 1,
+    "ranking": ["D2", "D5"]
+  },
+  "interpretation": "Across two campaigns under the current assertive manuscript policy, D2 produces more distinct paper basins while D5 produces the most evidence-mature completed audit paper. Both engines remain primary birth engines. Manuscript yield controls discovery allocation; evidence maturity controls experiment scheduling.",
+  "scientific_authority": false
+}

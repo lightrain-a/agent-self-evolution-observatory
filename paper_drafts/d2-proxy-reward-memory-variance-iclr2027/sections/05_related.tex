@@ -1,0 +1,8 @@
+\section{Related Work}
+\paragraph{Self-improving memory.} ReasoningBank converts trajectories into persistent reasoning memories and reuses them on future tasks \citep{ouyang2026reasoningbank}. Agent Workflow Memory learns reusable procedures from interaction histories \citep{wang2024awm}. These systems demonstrate that external memory can produce strong test-time improvement. Our analysis focuses on the learning signal that decides how an episode is represented inside that state.
+
+\paragraph{Fragility across self-improvement runs.} The recent fragility study measures substantial run variance under online memory construction \citep{ye2026fragility}. Its design uses ground-truth reward to remove evaluator noise from the main analysis. We study the excluded causal channel directly and show that the reward label changes persistent memory under a fixed trajectory.
+
+\paragraph{Reward inflation in memory systems.} Memory Reward Inflation shows that imperfect proxy reward can inflate the effective value of stored memories and propagate through later retrieval \citep{asadolahi2026inflation}. Our F0 identifies an earlier point in the same learning loop. Reward error can change the content being stored before subsequent memory selection or utility amplification occurs.
+
+\paragraph{Relation to label noise.} Supervised learning studies label noise as corruption of a training target. External-memory self-improvement exposes a different update path. A single terminal label can choose a different natural-language reflection objective and immediately write a new persistent context. The state perturbation becomes available to the next task without gradient training.
