@@ -91,6 +91,7 @@ from .principle_adjudication import build_principle_layer_state
 from .research_capability_registry import build_research_capability_registry
 from .research_candidate_portfolio import build_research_candidate_portfolio
 from .research_governance_layer import build_aris_governance_layer
+from .round3_provenance_manifest import load_round3_provenance_manifest
 from .research_harness_assurance import build_research_harness_assurance
 from .research_integration_lint import build_research_integration_lint
 from .research_harness_meta_optimization import build_research_harness_meta_optimization
@@ -410,6 +411,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_scientific_object_candidate_evidence = public_scientific_object_candidate_evidence_summary(load_scientific_object_candidate_evidence_ledger(storage=storage))
     paper_first_problem_discovery_contract = build_problem_discovery_contract_state()
     paper_first_problem_generator = load_problem_generator_state()
+    round3_provenance_manifest = load_round3_provenance_manifest()
     paper_first_pre_f0_queue = load_pre_f0_queue()
     paper_first_pre_f0_problem_falsifier_preflight = load_pre_f0_problem_falsifier_preflight()
     paper_first_problem_memory = ((paper_first_problem_generator.get("saturation_memory") or {}).get("blocked_problem_memory") or {})
@@ -536,6 +538,7 @@ def build_research_system_state() -> dict[str, Any]:
         problem_gate_state=paper_first_problem_gate_queue,
         candidate_portfolio=research_candidate_portfolio,
         repair_budget_root=experiment_data_root / "governance" / "repair-budget",
+        provenance_manifest=round3_provenance_manifest,
     )
     research_harness_assurance = build_research_harness_assurance(
         discovery_contract_state=paper_first_problem_discovery_contract,
@@ -1043,6 +1046,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_scientific_object_candidate_evidence":paper_first_scientific_object_candidate_evidence,
         "paper_first_problem_discovery_contract":paper_first_problem_discovery_contract,
         "paper_first_problem_generator":paper_first_problem_generator,
+        "round3_provenance_manifest":round3_provenance_manifest,
         "paper_first_pre_f0_queue":paper_first_pre_f0_queue,
         "paper_first_pre_f0_problem_falsifier_preflight":paper_first_pre_f0_problem_falsifier_preflight,
         "paper_first_problem_gate_queue":paper_first_problem_gate_queue,
@@ -2044,6 +2048,23 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if int(aris_summary.get("transitions") or 0) != 7 or int(aris_summary.get("experiment_authorizations") or 0) != int((state.get("pilot_registry",{}).get("summary") or {}).get("phases") or 0): errors.append("ARIS Governance Layer transition/experiment authorization accounting mismatch")
     if (aris_governance.get("repair_budget") or {}).get("review_required") is True: errors.append("ARIS repair budget violations require review before further launch")
     if (aris_governance.get("authority") or {}).get("claim_mutation") is not False or (aris_governance.get("authority") or {}).get("experiment") is not False: errors.append("ARIS Governance Layer cannot mutate claims or authorize experiments")
+    round3_provenance = state.get("round3_provenance_manifest") or {}
+    if round3_provenance.get("status") == "ROUND3_PROVENANCE_COMPLETE":
+        round3_coverage = round3_provenance.get("coverage") or {}
+        round3_authority = round3_provenance.get("authority") or {}
+        governance_provenance = aris_governance.get("round3_provenance_manifest") or {}
+        if (
+            round3_provenance.get("scientific_authority") is not False
+            or round3_coverage.get("record_level_lineage_complete") is not True
+            or any(round3_authority.get(key) is not False for key in ("claim_mutation", "scientific_closure", "problem_gate", "method", "experiment", "p0", "gpu"))
+        ):
+            errors.append("Round-3 provenance manifest must remain complete and zero scientific authority")
+        if (
+            governance_provenance.get("status") != "ROUND3_PROVENANCE_COMPLETE"
+            or governance_provenance.get("manifest_content_sha256") != round3_provenance.get("manifest_content_sha256")
+            or int(aris_summary.get("candidate_stage_lineage_gaps") or 0) != 0
+        ):
+            errors.append("ARIS Governance Layer must bind the complete Round-3 provenance manifest without lineage gaps")
     errors.extend(_mem_xfer_semantic_errors(state["mem_xfer_workflow"]))
     if not state["mem_xfer_workflow"].get("allowed_statuses"): errors.append("mem-xfer workflow must publish typed allowed statuses")
     if not state["mem_xfer_workflow"].get("dependencies"): errors.append("mem-xfer workflow must publish stage dependencies")

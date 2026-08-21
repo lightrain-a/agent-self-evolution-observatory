@@ -16,6 +16,10 @@ from .research_governance_layer import (
     repair_history_records,
     scientific_transitions,
 )
+from .round3_provenance_manifest import AUTHORITY as ROUND3_AUTHORITY
+from .round3_provenance_manifest import POLICY as ROUND3_POLICY
+from .round3_provenance_manifest import SCHEMA_VERSION as ROUND3_SCHEMA_VERSION
+from .round3_provenance_manifest import _sha as round3_sha
 from .scientific_research_graph import build_scientific_research_graph
 
 
@@ -300,6 +304,76 @@ class ArisGovernanceLayerTest(unittest.TestCase):
         self.assertEqual(by_stage["pre-f0-route"]["eliminated_count"], 0)
         self.assertEqual(by_stage["pre-f0-route"]["unresolved_lineage_count"], 1)
         self.assertTrue(by_stage["pre-f0-route"]["record_level_elimination_reasons_complete"])
+
+    def test_complete_round3_manifest_replaces_aggregate_lineage_gap_with_typed_dispositions(self) -> None:
+        manifest = {
+            "schema_version": ROUND3_SCHEMA_VERSION,
+            "generated_at": "2026-08-21T00:00:00+00:00",
+            "status": "ROUND3_PROVENANCE_COMPLETE",
+            "policy": dict(ROUND3_POLICY),
+            "transaction": {"status": "COMMITTED"},
+            "coverage": {"record_level_lineage_complete": True},
+            "summary": {
+                "requested_generation_slots": 120,
+                "valid_raw_seeds": 90,
+                "raw_seed_dispositions": 90,
+                "semantic_unique_kept": 36,
+                "dedup_dropped": 54,
+                "branch_nodes": 92,
+                "formulation_inputs": 24,
+                "recovered_candidates": 6,
+                "model_rejected_zero_authority": 12,
+                "inputs_without_complete_output_object": 6,
+                "pre_f0_routes": 3,
+                "machine_blocked_routes": 3,
+            },
+            "generation_slots": [],
+            "raw_seed_dispositions": [],
+            "branch_nodes": [],
+            "formulation_inputs": [],
+            "candidate_routes": [],
+            "scientific_authority": False,
+            "authority": dict(ROUND3_AUTHORITY),
+        }
+        manifest["manifest_content_sha256"] = round3_sha(
+            {
+                key: value
+                for key, value in manifest.items()
+                if key not in {"generated_at", "manifest_content_sha256"}
+            }
+        )
+        receipts = candidate_stage_receipts(
+            generator_state={"run_id": "run", "pre_f0_candidates": [{}, {}, {}]},
+            candidate_portfolio={"summary": {"visible_candidates": 3}},
+            problem_gate_state={"summary": {"passed_problem_gate": 0}},
+            provenance_manifest=manifest,
+        )
+        by_stage = {row["stage"]: row for row in receipts}
+        self.assertEqual(by_stage["generation-target"]["unrealized_target"], 30)
+        self.assertEqual(by_stage["semantic-uniqueness"]["eliminated_count"], 54)
+        self.assertTrue(by_stage["semantic-uniqueness"]["record_level_elimination_reasons_complete"])
+        self.assertEqual(by_stage["branch-dag"]["input_count"], 92)
+        self.assertEqual(by_stage["formulation"]["search_disposition_count"], 18)
+        self.assertEqual(by_stage["machine-route"]["held_count"], 3)
+        self.assertTrue(all(row["unresolved_lineage_count"] == 0 for row in receipts))
+        self.assertTrue(all(row["scientific_authority"] is False for row in receipts))
+        self.assertTrue(
+            all(
+                row["input_count"]
+                == sum(
+                    row[key]
+                    for key in (
+                        "output_count",
+                        "held_count",
+                        "eliminated_count",
+                        "search_disposition_count",
+                        "unrealized_target",
+                        "unresolved_lineage_count",
+                    )
+                )
+                for row in receipts
+            )
+        )
 
     def test_memory_graph_binds_governance_without_new_truth_nodes(self) -> None:
         pilot_registry = {

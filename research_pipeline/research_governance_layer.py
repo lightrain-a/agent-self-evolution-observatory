@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from .governance_protocol import FAILURES, PREDECESSOR_EVIDENCE, STAGES
+from .round3_provenance_manifest import validate_round3_provenance_manifest
 
 
 SCHEMA_VERSION = "1.0"
@@ -556,6 +557,7 @@ def candidate_stage_receipts(
     generator_state: dict[str, Any],
     candidate_portfolio: dict[str, Any],
     problem_gate_state: dict[str, Any],
+    provenance_manifest: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     search = generator_state.get("search_portfolio") or {}
     config = search.get("config") or {}
@@ -563,52 +565,46 @@ def candidate_stage_receipts(
     requested = int(config.get("requested_raw_seeds") or 0)
     raw = int(summary.get("raw_seeds") or 0)
     unique = int(summary.get("semantic_unique") or summary.get("semantic_unique_seeds") or 0)
-    pre_f0 = int(
-        summary.get("recovered_pre_f0_eligible")
-        or summary.get("pre_f0_eligible")
-        or len(generator_state.get("pre_f0_candidates") or [])
-    )
+    pre_f0 = int(summary.get("recovered_pre_f0_eligible") or summary.get("pre_f0_eligible") or len(generator_state.get("pre_f0_candidates") or []))
     visible = int((candidate_portfolio.get("summary") or {}).get("visible_candidates") or 0)
     passed = int((problem_gate_state.get("summary") or {}).get("passed_problem_gate") or 0)
-    held_at_problem_gate = max(0, visible - passed)
     run_id = _text(generator_state.get("run_id"))
-    rows = [
-        ("generation-target", requested, raw, 0, 0, "requested target versus observed raw seeds"),
-        ("semantic-uniqueness", raw, unique, 0, 0, "raw seeds to semantic-unique candidates"),
-        # Evolution and repair expand the branch count between these endpoints. The
-        # aggregate 36 -> 3 projection is therefore not a conservative elimination
-        # funnel; until the branch DAG manifest is loaded, the remainder is unresolved.
-        ("pre-f0-route", unique, pre_f0, 0, max(0, unique - pre_f0), "semantic-unique roots through a branching evolution/repair/formulation DAG to Pre-F0"),
-        ("portfolio-visibility", pre_f0, visible, 0, 0, "pre-F0 candidates visible in portfolio"),
-        ("problem-gate", visible, passed, held_at_problem_gate, 0, "visible candidates to Problem Gate PASS or HOLD"),
-    ]
-    receipts: list[dict[str, Any]] = []
-    for stage, input_count, output_count, held_count, unresolved_lineage_count, note in rows:
-        eliminated_count = (
-            max(0, input_count - output_count - held_count - unresolved_lineage_count)
-            if stage != "generation-target"
-            else 0
-        )
+    manifest = provenance_manifest or {}
+    manifest_complete = bool(
+        manifest
+        and not validate_round3_provenance_manifest(manifest)
+    )
+    if manifest_complete:
+        ms = manifest.get("summary") or {}
+        rows = [
+            ("generation-target", int(ms.get("requested_generation_slots") or 0), int(ms.get("valid_raw_seeds") or 0), 0, 0, 0, False, "requested slots to valid raw seeds"),
+            ("semantic-uniqueness", int(ms.get("raw_seed_dispositions") or 0), int(ms.get("semantic_unique_kept") or 0), 0, int(ms.get("dedup_dropped") or 0), 0, True, "record-level dedup with representative bindings"),
+            ("branch-dag", int(ms.get("branch_nodes") or 0), int(ms.get("branch_nodes") or 0), 0, 0, 0, True, "content-addressed unique/evolution/repair parentage"),
+            ("formulation", int(ms.get("formulation_inputs") or 0), int(ms.get("recovered_candidates") or 0), 0, 0, int(ms.get("model_rejected_zero_authority") or 0)+int(ms.get("inputs_without_complete_output_object") or 0), True, "formulation inputs to recovered candidates or zero-authority search dispositions"),
+            ("machine-route", int(ms.get("recovered_candidates") or 0), int(ms.get("pre_f0_routes") or 0), int(ms.get("machine_blocked_routes") or 0), 0, 0, True, "recovered candidates to Pre-F0 or machine block"),
+            ("portfolio-visibility", pre_f0, visible, 0, 0, 0, True, "Pre-F0 candidates visible in portfolio"),
+            ("problem-gate", visible, passed, max(0, visible-passed), 0, 0, True, "visible candidates to Problem Gate PASS or HOLD"),
+        ]
+    else:
+        rows = [
+            ("generation-target", requested, raw, 0, 0, 0, False, "requested target versus observed raw seeds"),
+            ("semantic-uniqueness", raw, unique, 0, max(0, raw-unique), 0, False, "raw seeds to semantic-unique candidates"),
+            ("pre-f0-route", unique, pre_f0, 0, 0, max(0, unique-pre_f0), False, "branching evolution/repair/formulation DAG to Pre-F0"),
+            ("portfolio-visibility", pre_f0, visible, 0, 0, 0, True, "Pre-F0 candidates visible in portfolio"),
+            ("problem-gate", visible, passed, max(0,visible-passed), 0, 0, True, "visible candidates to Problem Gate PASS or HOLD"),
+        ]
+    receipts=[]
+    for stage,input_count,output_count,held_count,eliminated_count,search_disposition_count,record_complete,note in rows:
+        unrealized=max(0,input_count-output_count) if stage=="generation-target" else 0
         receipts.append({
-            "stage_receipt_id": _record_id(
-                "candidate-stage", run_id, stage, input_count, output_count
-            ),
-            "stage": stage,
-            "input_count": input_count,
-            "output_count": output_count,
-            "held_count": held_count,
-            "eliminated_count": eliminated_count,
-            "unrealized_target": (
-                max(0, input_count - output_count) if stage == "generation-target" else 0
-            ),
-            "unresolved_lineage_count": unresolved_lineage_count,
-            "record_level_elimination_reasons_complete": eliminated_count == 0,
-            "record_level_disposition_reasons_complete": stage in {
-                "portfolio-visibility", "problem-gate"
-            },
-            "note": note,
-            "source_run_id": run_id,
-            "scientific_authority": False,
+            "stage_receipt_id":_record_id("candidate-stage",run_id,stage,input_count,output_count),
+            "stage":stage,"input_count":input_count,"output_count":output_count,"held_count":held_count,
+            "eliminated_count":eliminated_count,"search_disposition_count":search_disposition_count,
+            "unrealized_target":unrealized,"unresolved_lineage_count":0 if manifest_complete else (max(0,unique-pre_f0) if stage=="pre-f0-route" else 0),
+            "record_level_elimination_reasons_complete":bool(record_complete or eliminated_count==0),
+            "record_level_disposition_reasons_complete":bool(record_complete),
+            "provenance_manifest_sha256":str(manifest.get("manifest_content_sha256") or "") if manifest_complete else "",
+            "note":note,"source_run_id":run_id,"scientific_authority":False,
         })
     return receipts
 
@@ -657,7 +653,7 @@ def lint_governance_layer(layer: dict[str, Any]) -> dict[str, Any]:
     for row in layer.get("candidate_stage_receipts") or []:
         input_count = int(row.get("input_count") or 0)
         accounted = sum(int(row.get(key) or 0) for key in (
-            "output_count", "held_count", "eliminated_count", "unrealized_target", "unresolved_lineage_count"
+            "output_count", "held_count", "eliminated_count", "search_disposition_count", "unrealized_target", "unresolved_lineage_count"
         ))
         if accounted != input_count:
             errors.append({
@@ -704,6 +700,7 @@ def build_aris_governance_layer(
     problem_gate_state: dict[str, Any],
     candidate_portfolio: dict[str, Any],
     repair_budget_root: Path | None = None,
+    provenance_manifest: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     transitions = scientific_transitions()
     failures = [
@@ -721,7 +718,7 @@ def build_aris_governance_layer(
         candidate_portfolio=candidate_portfolio,
     )
     stage_receipts = candidate_stage_receipts(
-        generator_state, candidate_portfolio, problem_gate_state
+        generator_state, candidate_portfolio, problem_gate_state, provenance_manifest
     )
     layer = {
         "schema_version": SCHEMA_VERSION,
@@ -742,6 +739,13 @@ def build_aris_governance_layer(
         "repair_budget": repair_budget,
         "candidate_lineage": lineage,
         "candidate_stage_receipts": stage_receipts,
+        "round3_provenance_manifest": {
+            "status": str((provenance_manifest or {}).get("status") or "ROUND3_PROVENANCE_MISSING"),
+            "manifest_content_sha256": str((provenance_manifest or {}).get("manifest_content_sha256") or ""),
+            "summary": dict((provenance_manifest or {}).get("summary") or {}),
+            "record_level_lineage_complete": ((provenance_manifest or {}).get("coverage") or {}).get("record_level_lineage_complete") is True,
+            "scientific_authority": False,
+        },
         "memory_graph_integration": {
             "memory_graph_schema": "2.1",
             "failure_binding_key": "failure_record_id",
