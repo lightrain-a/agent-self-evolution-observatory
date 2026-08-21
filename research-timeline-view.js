@@ -4,8 +4,8 @@
     eyebrow:{en:"Research history",zh:"科研进展历史"},
     title:{en:"Research Timeline",zh:"研究时间轴"},
     lead:{
-      en:"A workload-first chronology of the complete Observatory research history. Each day is collapsed by default; open a day to read its events strictly from earlier to later in China Standard Time (Asia/Shanghai, UTC+8).",
-      zh:"按北京时间（Asia/Shanghai，UTC+8）回看 Observatory 从建立至今的完整研究历史。每天默认折叠，先看当天工作量、关键变化与主要脉络；点开后严格按时间从早到晚阅读当天发生的 Idea、实验、论文、系统更新与关闭过程。"
+      en:"A workload-first chronology of the complete Observatory research history. Recorded days are newest-first by default; each day is collapsed, and opening it shows that day’s events from earlier to later in China Standard Time (Asia/Shanghai, UTC+8).",
+      zh:"按北京时间（Asia/Shanghai，UTC+8）回看 Observatory 从建立至今的完整研究历史。日期默认从新到旧，最近的研究日放在最前；每天默认折叠，点开后仍严格按时间从早到晚阅读当天发生的 Idea、实验、论文、系统更新与关闭过程。"
     },
     callout:{
       en:"This page is a read-only projection, not a scientific decision-maker. Runtime/API/provenance activity with zero authority remains system activity and cannot become a scientific result merely by appearing here.",
@@ -15,7 +15,7 @@
   };
 
   const CHINA_TZ = "Asia/Shanghai";
-  const state = {importance:"all",type:"all",range:"all",research:"all",query:"",order:"asc"};
+  const state = {importance:"all",type:"all",range:"all",research:"all",query:"",order:"desc"};
   const dataset = () => window.RESEARCH_TIMELINE || {events:[],summary:{}};
   const pick = (zh,en) => language === "zh" ? zh : en;
   const raw = (v) => String(v ?? "");
@@ -216,7 +216,7 @@
 
   window.renderResearchTimeline = function(config){
     const events=visible();
-    return `${pageHeader(config)}${overview()}<div id="research-timeline-controls">${controls()}</div><div id="research-timeline-stats">${stats(events)}</div><div id="research-timeline-heatmap">${activityHeatmap(events)}</div><div id="research-timeline-feed" class="rt-feed">${feed(events)}</div><section class="rt-policy-note"><b>${pick("读取规则","Reading rule")}</b><span>${pick("① 每天默认折叠，只先看工作量、关键变化和主要脉络；② 点开当天后，事件严格按北京时间从早到晚排列，不按类别重组；③ 多数历史“日期记录”已用同日 Git 真实记录时间回填，无法可靠回填的仍明确标记为日期精度；④ 系统工程与追溯记录不会因此获得科研权限。","Each day is collapsed by default. Expanded events are strictly chronological. Date-only records are backfilled only when a reliable same-day Git timestamp exists.")}</span></section>`;
+    return `${pageHeader(config)}${overview()}<div id="research-timeline-controls">${controls()}</div><div id="research-timeline-stats">${stats(events)}</div><div id="research-timeline-heatmap">${activityHeatmap(events)}</div><div id="research-timeline-feed" class="rt-feed">${feed(events)}</div><section class="rt-policy-note"><b>${pick("读取规则","Reading rule")}</b><span>${pick("① 日期默认从新到旧，最近研究日置顶；② 每天默认折叠，只先看工作量、关键变化和主要脉络；③ 点开当天后，事件严格按北京时间从早到晚排列，不按类别重组；④ 多数历史“日期记录”已用同日 Git 真实记录时间回填，无法可靠回填的仍明确标记为日期精度；⑤ 系统工程与追溯记录不会因此获得科研权限。","Each day is collapsed by default. Expanded events are strictly chronological. Date-only records are backfilled only when a reliable same-day Git timestamp exists.")}</span></section>`;
   };
 
   const rerender = () => {

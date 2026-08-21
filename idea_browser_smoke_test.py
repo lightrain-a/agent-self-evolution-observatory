@@ -273,13 +273,15 @@ def main() -> None:
           visibleCount: Number(document.querySelector('.rt-stats article:first-child b')?.textContent || 0),
           summary: window.RESEARCH_TIMELINE?.summary || {},
           timezone: window.RESEARCH_TIMELINE?.projection_policy?.display_timezone || '',
-          ascActive: document.querySelector('[data-rt-order="asc"]')?.classList.contains('active') === true,
+          descActive: document.querySelector('[data-rt-order="desc"]')?.classList.contains('active') === true,
+          firstDay: document.querySelector('.rt-day')?.id?.replace('timeline-', '') || '',
+          lastDay: [...document.querySelectorAll('.rt-day')].at(-1)?.id?.replace('timeline-', '') || '',
           zhText: document.body.textContent || ''
         };""")
         require(timeline["title"] == "研究时间轴", f"timeline must default to its Chinese page title: {timeline}")
         require(timeline["dayGroups"] >= 20 and timeline["openDays"] == 0, f"timeline must expose the full dated history while keeping days collapsed by default: {timeline}")
         require(timeline["eventRows"] == timeline["visibleCount"] == int(timeline["summary"].get("events") or 0) and timeline["eventRows"] >= 756, f"timeline rendered event count must match the generated full projection: {timeline}")
-        require(timeline["timezone"] == "Asia/Shanghai" and timeline["ascActive"] and "北京时间" in timeline["zhText"] and "本页只是只读历史投影" in timeline["zhText"], f"timeline timezone/order/authority boundary is incomplete: {timeline}")
+        require(timeline["timezone"] == "Asia/Shanghai" and timeline["descActive"] and timeline["firstDay"] >= timeline["lastDay"] and "北京时间" in timeline["zhText"] and "本页只是只读历史投影" in timeline["zhText"], f"timeline timezone/newest-first order/authority boundary is incomplete: {timeline}")
 
         navigate("/paper-ideas.html", 6)
         ideas = execute(session_id, """return {
