@@ -336,6 +336,12 @@ def main() -> None:
           feedbackSummaries: document.querySelectorAll('.human-review-idea-card .human-idea-summary p').length,
           parentBriefingSummaries: document.querySelectorAll('.human-review-idea-card .idea-briefing-summary').length,
           parentBriefingReasonPills: document.querySelectorAll('.human-review-idea-card .briefing-reason-pill').length,
+          parentConcreteComparisons: document.querySelectorAll('.human-review-idea-card .concrete-method-comparison.comparison-parent').length,
+          supplementalConcreteComparisons: document.querySelectorAll('.supplemental-idea-card .concrete-method-comparison.comparison-supplemental').length,
+          pfConcreteComparisons: document.querySelectorAll('.paper-incubation-card .concrete-method-comparison.comparison-pf').length,
+          concreteComparisonTables: document.querySelectorAll('.concrete-method-comparison table').length,
+          concreteComparisonRows: document.querySelectorAll('.concrete-method-comparison tbody tr').length,
+          concreteComparisonComplete: [...document.querySelectorAll('.concrete-method-comparison')].every(panel=>['我们的方法怎么做','简单方法怎么做','怎么保证比较公平','效果差多少','为什么这个结果足以停止'].every(marker=>(panel.textContent||'').includes(marker))),
           humanOpinionBoxes: document.querySelectorAll('.human-opinion-box').length,
           iterationBoxes: document.querySelectorAll('.human-iteration-box').length,
           finalRefinementBoxes: document.querySelectorAll('.human-final-refinement').length,
@@ -465,6 +471,8 @@ def main() -> None:
         require(ideas["evidenceDispositionCounts"] == {"stop":16,"hold":4,"merge":6} and ideas["evidenceDispositionPanels"] == 26, f"latest evidence disposition is missing or collapsed into terminal state: {ideas['evidenceDispositionCounts']}/{ideas['evidenceDispositionPanels']}")
         require((ideas["briefingHeroes"],ideas["briefingMetrics"],ideas["briefingDecisions"],ideas["briefingGuides"],ideas["briefingLessons"],ideas["briefingTaxonomyCards"],ideas["briefingModeButtons"],ideas["categoryBriefings"]) == (1,4,3,1,3,6,2,7), f"briefing-first overview/taxonomy/category summaries are incomplete: {ideas}")
         require((ideas["parentBriefingSummaries"],ideas["parentBriefingReasonPills"],ideas["supplementalBriefingSummaries"],ideas["incubationBriefingSummaries"],ideas["closedIdeaBriefingSummaries"],ideas["safetyBriefingSummaries"]) == (26,26,7,9,38,1), f"plain-language idea summaries are incomplete: {ideas}")
+        require((ideas["parentConcreteComparisons"],ideas["supplementalConcreteComparisons"],ideas["pfConcreteComparisons"],ideas["concreteComparisonTables"]) == (17,5,2,24) and ideas["concreteComparisonRows"] >= 50 and ideas["concreteComparisonComplete"] is True, f"concrete method/baseline/result comparisons are incomplete: {ideas['parentConcreteComparisons']}/{ideas['supplementalConcreteComparisons']}/{ideas['pfConcreteComparisons']}/{ideas['concreteComparisonTables']}/{ideas['concreteComparisonRows']}/{ideas['concreteComparisonComplete']}")
+        require(all(marker in ideas["text"] for marker in ("目标任务族更容易受更新影响","简单方法 +20 个百分点","少 35 cells（47.9%）","简单规则少 16","简单方法 +16.67 个百分点","简单方法 +66.67 个百分点","复杂方法未运行","简单规则少 24 次（45.3%）","无数值差值；方法预演阶段已停止")), "representative concrete baseline designs or exact deltas are missing")
         require(all(marker in ideas["text"] for marker in ("当前更新底座几乎不能产生真正有效的候选更新","标准二元组测试在相同信息和预算下取得完全相同结果","简单的来源降权已经取得相同效果","保持当前能力不等于保留未来学习能力","属于支持不足，可重开，不是原理否定")), "representative A-3/A-6/C-1/PF-1/G-1 briefing copy is missing")
         require(ideas["lifecycleCells"] == 104 and ideas["explicitLegacyP0Badges"] == 0 and ideas["formalAuthorityZero"] == 26, f"lifecycle/current-decision/authority separation failed: {ideas['lifecycleCells']}/{ideas['explicitLegacyP0Badges']}/{ideas['formalAuthorityZero']}")
         expected_parent_states={"A-1":"stop","A-2":"stop","A-3":"stop","A-5":"stop","B-1":"merge","C-1":"stop","C-4":"stop","D-1":"stop","D-2":"stop","E-2":"stop","F-1":"stop","F-3":"stop"}

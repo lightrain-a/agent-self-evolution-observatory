@@ -341,6 +341,21 @@ def main() -> None:
     ]
     if any(position < 0 for position in system_script_order) or system_script_order != sorted(system_script_order):
         fail("paper ideas page must load the human-review idea data and current supplemental candidates before app.js")
+    idea_app_text = (ROOT / "app.js").read_text(encoding="utf-8")
+    pf_view_text = (ROOT / "paper-first-incubation-view.js").read_text(encoding="utf-8")
+    idea_css_text = (ROOT / "idea-lab.css").read_text(encoding="utf-8")
+    concrete_markers = (
+        "PARENT_SIMPLE_COMPARISONS_ZH", "SUPPLEMENTAL_SIMPLE_COMPARISONS_ZH",
+        "我们的方法怎么做", "简单方法怎么做", "怎么保证比较公平", "效果差多少",
+        "简单方法 +20 个百分点", "少 35 cells（47.9%）", "简单规则少 16",
+        "简单方法 +66.67 个百分点", "简单规则少 24 次（45.3%）",
+    )
+    if not all(marker in idea_app_text for marker in concrete_markers):
+        fail("paper ideas must retain concrete method/baseline designs, matched comparison, and exact deltas")
+    if not all(marker in pf_view_text for marker in ("pfSimpleComparisonsZh", "无数值差值；方法预演阶段已停止", "数学上相同", "renderPFComparison")):
+        fail("PF design-equivalence closures must explicitly distinguish unrun experiments from numeric ties")
+    if ".concrete-method-comparison" not in idea_css_text or ".comparison-table-wrap" not in idea_css_text:
+        fail("concrete method comparison UI styles are missing")
     for filename in ("paper-ideas.html", "system-overview.html"):
         page = (ROOT / filename).read_text(encoding="utf-8")
         if "emerging-niche-policy" in page or "emerging-niche-view" in page or "Emerging-Niche Score" in page:
