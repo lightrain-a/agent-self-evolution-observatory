@@ -4,8 +4,8 @@
     eyebrow:{en:"Research history",zh:"科研进展历史"},
     title:{en:"Research Timeline",zh:"研究时间轴"},
     lead:{
-      en:"A workload-first chronology of the complete Observatory research history. Recorded days are newest-first by default; each day is collapsed, and opening it shows that day’s events from earlier to later in China Standard Time (Asia/Shanghai, UTC+8).",
-      zh:"按北京时间（Asia/Shanghai，UTC+8）回看 Observatory 从建立至今的完整研究历史。日期默认从新到旧，最近的研究日放在最前；每天默认折叠，点开后仍严格按时间从早到晚阅读当天发生的 Idea、实验、论文、系统更新与关闭过程。"
+      en:"A workload-first chronology of the complete Observatory research history. Each month is shown as its own table, with the newest month and newest day first by default. Open any day row to inspect that day’s events from earlier to later in China Standard Time (Asia/Shanghai, UTC+8).",
+      zh:"按北京时间（Asia/Shanghai，UTC+8）回看 Observatory 从建立至今的完整研究历史。每个月单独一张表，默认最新月份、最新日期在前；每个研究日先压缩成一行，点开后再严格按时间从早到晚阅读当天发生的 Idea、实验、论文、系统更新与关闭过程。"
     },
     callout:{
       en:"This page is a read-only projection, not a scientific decision-maker. Runtime/API/provenance activity with zero authority remains system activity and cannot become a scientific result merely by appearing here.",
@@ -162,7 +162,12 @@
     const counts = dayCounts(events), total = Math.max(events.length,1);
     return `<div class="rt-workload-bar" aria-label="${pick("当日工作量构成","Daily workload composition")}">${Object.keys(classes).filter(k=>counts[k]).map(k=>`<i class="rt-work-${classes[k].tone}" style="width:${(counts[k]/total*100).toFixed(2)}%" title="${esc(labelClass(k))} ${counts[k]}"></i>`).join("")}</div>`;
   };
-  const daySection = (date,events) => {
+  const monthLabel = (month) => {
+    const d = new Date(`${month}-15T12:00:00+08:00`);
+    if (Number.isNaN(d.getTime())) return month;
+    return new Intl.DateTimeFormat(language === "zh" ? "zh-CN" : "en-US", {year:"numeric",month:"long",timeZone:CHINA_TZ}).format(d);
+  };
+  const dayRows = (date,events) => {
     const ordered = sortDayEvents(events), counts = dayCounts(ordered);
     const tags = Object.entries(counts).map(([k,v])=>`<span>${esc(labelClass(k))} ${v}</span>`).join("");
     const keyChanges = ordered.filter(e=>e.importance === "key").length;
@@ -172,7 +177,12 @@
     const dateOnly = ordered.filter(e=>e.time_precision === "date");
     const exact = ordered.filter(e=>e.time_precision !== "date");
     const dateOnlyBlock = dateOnly.length ? `<div class="rt-date-only-note">${pick(`另有 ${dateOnly.length} 条记录只有日期精度，无法可靠判断当天先后，因此放在精确时间事件之后。`,`Another ${dateOnly.length} records have date-only precision and are shown after exact-time events.`)}</div>${dateOnly.map(eventRow).join("")}` : "";
-    return `<details class="rt-day" id="timeline-${esc(date)}"><summary class="rt-day-summary"><div class="rt-day-date"><b>${esc(fmtDate(`${date}T12:00:00+08:00`))}</b><small>${esc(date)} · ${pick("北京时间","China Standard Time")}</small></div><div class="rt-day-volume"><strong>${ordered.length}</strong><span>${pick("条活动","activities")}</span></div><div class="rt-day-kpis"><span><b>${keyChanges}</b>${pick("关键变化","key changes")}</span><span><b>${gitChanges}</b>${pick("代码 / 系统提交","code / system commits")}</span><span><b>${artifactChanges}</b>${pick("科研记录","research artifacts")}</span><span><b>${researchLines}</b>${pick("研究对象","research objects")}</span></div><div class="rt-day-tags">${tags}</div>${workloadBar(ordered)}<p class="rt-day-headline"><b>${pick("主要脉络","Main thread")}</b>${esc(dayHeadline(ordered))}</p></summary><div class="rt-day-expanded"><div class="rt-order-note">${pick("以下严格按北京时间从早到晚排列，不按 Idea / 实验 / 论文等类别重新分组，便于追踪“什么先发生 → 为什么后来改变研究或系统”。","Events below are strictly chronological rather than grouped by type.")}</div><div class="rt-day-events">${exact.map(eventRow).join("")}${dateOnlyBlock}</div></div></details>`;
+    const thread = dayHeadline(ordered);
+    return `<tr class="rt-day-row" id="timeline-${esc(date)}" data-rt-day-toggle="${esc(date)}" tabindex="0" aria-expanded="false"><td class="rt-table-date"><div class="rt-table-date-inner"><button type="button" class="rt-day-toggle" aria-label="${pick("展开当天详情","Open day details")}">＋</button><div><b>${esc(fmtDate(`${date}T12:00:00+08:00`))}</b><small>${esc(date)}</small></div></div></td><td class="rt-num rt-activity-count"><b>${ordered.length}</b><span>${pick("条","events")}</span></td><td class="rt-num"><b>${keyChanges}</b></td><td class="rt-num"><b>${gitChanges}</b></td><td class="rt-num"><b>${artifactChanges}</b></td><td class="rt-num"><b>${researchLines}</b></td><td class="rt-table-thread"><p>${esc(thread)}</p><div class="rt-day-tags">${tags}</div>${workloadBar(ordered)}</td></tr><tr class="rt-day-detail-row" data-rt-day-detail="${esc(date)}" hidden><td colspan="7"><div class="rt-day-expanded"><div class="rt-order-note">${pick("以下严格按北京时间从早到晚排列，不按 Idea / 实验 / 论文等类别重新分组，便于追踪“什么先发生 → 为什么后来改变研究或系统”。","Events below are strictly chronological rather than grouped by type.")}</div><div class="rt-day-events">${exact.map(eventRow).join("")}${dateOnlyBlock}</div></div></td></tr>`;
+  };
+  const monthTable = (month,dates,groups) => {
+    const total = dates.reduce((n,date)=>n+(groups[date]?.length||0),0);
+    return `<section class="rt-month" data-rt-month="${esc(month)}"><header class="rt-month-header"><div><h2>${esc(monthLabel(month))}</h2><span>${esc(month)} · ${pick("北京时间","China Standard Time")}</span></div><div><b>${dates.length}</b><span>${pick("个研究日","research days")}</span><b>${total}</b><span>${pick("条活动","activities")}</span></div></header><div class="rt-month-table-wrap"><table class="rt-month-table"><thead><tr><th>${pick("日期","Date")}</th><th>${pick("活动","Activity")}</th><th>${pick("关键变化","Key")}</th><th>${pick("代码 / 系统","Code / system")}</th><th>${pick("科研记录","Research")}</th><th>${pick("研究对象","Objects")}</th><th>${pick("主要脉络 / 工作量","Main thread / workload")}</th></tr></thead><tbody>${dates.map(date=>dayRows(date,groups[date])).join("")}</tbody></table></div></section>`;
   };
 
   const stats = (events) => {
@@ -195,7 +205,8 @@
     const groups = grouped(events);
     const dates = Object.keys(groups).sort((a,b)=>state.order === "asc" ? a.localeCompare(b) : b.localeCompare(a));
     if (!dates.length) return `<div class="empty">${pick("没有符合当前筛选条件的时间事件。","No timeline events match the current filters.")}</div>`;
-    return dates.map(date=>daySection(date,groups[date])).join("");
+    const months = [...new Set(dates.map(date=>date.slice(0,7)))];
+    return months.map(month=>monthTable(month,dates.filter(date=>date.startsWith(`${month}-`)),groups)).join("");
   };
 
   const activityHeatmap = (events) => {
@@ -211,12 +222,12 @@
 
   const overview = () => {
     const s = dataset().summary || {};
-    return `<section class="rt-overview"><div><b>${pick("完整历史 · 默认全部展示 · 北京时间 UTC+8","Full history · all events by default · Asia/Shanghai UTC+8")}</b><p>${pick(`当前投影共 ${s.events||0} 条事件，覆盖 ${s.days||0} 个有记录的研究日；其中 Research Memory 运行记录 ${s.runtime_memory_events||0} 条。历史从 Observatory 早期系统建设开始，并继续覆盖结构化 Idea、实验、论文、关闭与治理记录。每条记录默认折叠，避免完整历史一次展开造成阅读负担。`,`The projection contains ${s.events||0} events across ${s.days||0} recorded research days, including ${s.runtime_memory_events||0} Research Memory runtime events. It begins with early Observatory development and continues through structured idea, experiment, paper, closure, and governance artifacts.`)}</p></div><div class="rt-overview-timezone"><strong>${pick("北京时间","China Standard Time")}</strong><span>Asia/Shanghai · UTC+8</span></div><div class="rt-legend">${Object.keys(classes).map(k=>`<span class="rt-legend-item"><i class="rt-${classes[k].tone}"></i>${esc(labelClass(k))}</span>`).join("")}</div></section>`;
+    return `<section class="rt-overview"><div><b>${pick("完整历史 · 按月分表 · 北京时间 UTC+8","Full history · one table per month · Asia/Shanghai UTC+8")}</b><p>${pick(`当前投影共 ${s.events||0} 条事件，覆盖 ${s.days||0} 个有记录的研究日；其中 Research Memory 运行记录 ${s.runtime_memory_events||0} 条。历史按月份拆成独立表格，每个研究日先压缩成一行，便于先比较工作量与关键变化，再按需展开具体事件。`,`The projection contains ${s.events||0} events across ${s.days||0} recorded research days, including ${s.runtime_memory_events||0} Research Memory runtime events. History is split into one table per month, with each research day compressed into one row before its detailed events are opened on demand.`)}</p></div><div class="rt-overview-timezone"><strong>${pick("北京时间","China Standard Time")}</strong><span>Asia/Shanghai · UTC+8</span></div><div class="rt-legend">${Object.keys(classes).map(k=>`<span class="rt-legend-item"><i class="rt-${classes[k].tone}"></i>${esc(labelClass(k))}</span>`).join("")}</div></section>`;
   };
 
   window.renderResearchTimeline = function(config){
     const events=visible();
-    return `${pageHeader(config)}${overview()}<div id="research-timeline-controls">${controls()}</div><div id="research-timeline-stats">${stats(events)}</div><div id="research-timeline-heatmap">${activityHeatmap(events)}</div><div id="research-timeline-feed" class="rt-feed">${feed(events)}</div><section class="rt-policy-note"><b>${pick("读取规则","Reading rule")}</b><span>${pick("① 日期默认从新到旧，最近研究日置顶；② 每天默认折叠，只先看工作量、关键变化和主要脉络；③ 点开当天后，事件严格按北京时间从早到晚排列，不按类别重组；④ 多数历史“日期记录”已用同日 Git 真实记录时间回填，无法可靠回填的仍明确标记为日期精度；⑤ 系统工程与追溯记录不会因此获得科研权限。","Each day is collapsed by default. Expanded events are strictly chronological. Date-only records are backfilled only when a reliable same-day Git timestamp exists.")}</span></section>`;
+    return `${pageHeader(config)}${overview()}<div id="research-timeline-controls">${controls()}</div><div id="research-timeline-stats">${stats(events)}</div><div id="research-timeline-heatmap">${activityHeatmap(events)}</div><div id="research-timeline-feed" class="rt-feed">${feed(events)}</div><section class="rt-policy-note"><b>${pick("读取规则","Reading rule")}</b><span>${pick("① 每个月单独一张表，默认最新月份、最新日期置顶；② 每个研究日先压缩为一行，直接比较活动量、关键变化、系统提交、科研记录和研究对象；③ 点开当天整行后，事件严格按北京时间从早到晚排列，不按类别重组；④ 无法可靠回填具体时刻的记录仍明确标记为日期精度；⑤ 系统工程与追溯记录不会因此获得科研权限。","Each month is a separate table, newest-first by default. Each research day is compressed into one row and expands into strictly chronological events. Date-only records remain explicitly marked when exact time cannot be recovered.")}</span></section>`;
   };
 
   const rerender = () => {
@@ -230,11 +241,25 @@
     if(counter) counter.textContent=pick(`${events.length} 条事件 · 北京时间`,`${events.length} events · UTC+8`);
     bindControls();
   };
+  const toggleDay = (date,forceOpen) => {
+    const row=document.getElementById(`timeline-${date}`), detail=document.querySelector(`[data-rt-day-detail="${date}"]`);
+    if(!row || !detail) return;
+    const shouldOpen = forceOpen === undefined ? detail.hidden : Boolean(forceOpen);
+    detail.hidden=!shouldOpen;
+    row.classList.toggle("is-open",shouldOpen);
+    row.setAttribute("aria-expanded",shouldOpen ? "true" : "false");
+    const toggle=row.querySelector(".rt-day-toggle");
+    if(toggle) toggle.textContent=shouldOpen ? "−" : "＋";
+  };
   const bindControls = () => {
     document.querySelectorAll("[data-rt-importance]").forEach(btn=>btn.addEventListener("click",()=>{state.importance=btn.dataset.rtImportance;rerender();}));
     document.querySelectorAll("[data-rt-range]").forEach(btn=>btn.addEventListener("click",()=>{state.range=btn.dataset.rtRange;rerender();}));
     document.querySelectorAll("[data-rt-order]").forEach(btn=>btn.addEventListener("click",()=>{state.order=btn.dataset.rtOrder;rerender();}));
-    document.querySelectorAll("[data-rt-day]").forEach(btn=>btn.addEventListener("click",()=>{const day=document.getElementById(`timeline-${btn.dataset.rtDay}`); if(day){day.open=true; day.scrollIntoView({behavior:"smooth",block:"start"});}}));
+    document.querySelectorAll("[data-rt-day-toggle]").forEach(row=>{
+      row.addEventListener("click",()=>toggleDay(row.dataset.rtDayToggle));
+      row.addEventListener("keydown",e=>{if(e.key === "Enter" || e.key === " "){e.preventDefault();toggleDay(row.dataset.rtDayToggle);}});
+    });
+    document.querySelectorAll("[data-rt-day]").forEach(btn=>btn.addEventListener("click",()=>{const date=btn.dataset.rtDay; toggleDay(date,true); const day=document.getElementById(`timeline-${date}`); if(day) day.scrollIntoView({behavior:"smooth",block:"center"});}));
     document.getElementById("timeline-type")?.addEventListener("change",e=>{state.type=e.target.value;rerender();});
     document.getElementById("timeline-research")?.addEventListener("change",e=>{state.research=e.target.value;rerender();});
   };

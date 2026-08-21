@@ -267,21 +267,35 @@ def main() -> None:
         navigate("/research-timeline.html", 3)
         timeline = execute(session_id, """return {
           title: document.querySelector('h1')?.textContent?.trim() || '',
-          dayGroups: document.querySelectorAll('.rt-day').length,
-          openDays: document.querySelectorAll('.rt-day[open]').length,
+          monthTables: document.querySelectorAll('.rt-month-table').length,
+          sourceMonths: new Set((window.RESEARCH_TIMELINE?.events || []).map(e => new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit'}).format(new Date(e.occurred_at)))).size,
+          dayGroups: document.querySelectorAll('.rt-day-row').length,
+          openDays: document.querySelectorAll('.rt-day-detail-row:not([hidden])').length,
           eventRows: document.querySelectorAll('.rt-event').length,
           visibleCount: Number(document.querySelector('.rt-stats article:first-child b')?.textContent || 0),
           summary: window.RESEARCH_TIMELINE?.summary || {},
           timezone: window.RESEARCH_TIMELINE?.projection_policy?.display_timezone || '',
           descActive: document.querySelector('[data-rt-order="desc"]')?.classList.contains('active') === true,
-          firstDay: document.querySelector('.rt-day')?.id?.replace('timeline-', '') || '',
-          lastDay: [...document.querySelectorAll('.rt-day')].at(-1)?.id?.replace('timeline-', '') || '',
+          firstMonth: document.querySelector('.rt-month')?.dataset?.rtMonth || '',
+          lastMonth: [...document.querySelectorAll('.rt-month')].at(-1)?.dataset?.rtMonth || '',
+          firstDay: document.querySelector('.rt-day-row')?.id?.replace('timeline-', '') || '',
+          lastDay: [...document.querySelectorAll('.rt-day-row')].at(-1)?.id?.replace('timeline-', '') || '',
           zhText: document.body.textContent || ''
         };""")
         require(timeline["title"] == "研究时间轴", f"timeline must default to its Chinese page title: {timeline}")
-        require(timeline["dayGroups"] >= 20 and timeline["openDays"] == 0, f"timeline must expose the full dated history while keeping days collapsed by default: {timeline}")
+        require(timeline["monthTables"] == timeline["sourceMonths"] and timeline["monthTables"] >= 2 and timeline["dayGroups"] >= 20 and timeline["openDays"] == 0, f"timeline must render one collapsed table per month with one row per research day: {timeline}")
         require(timeline["eventRows"] == timeline["visibleCount"] == int(timeline["summary"].get("events") or 0) and timeline["eventRows"] >= 756, f"timeline rendered event count must match the generated full projection: {timeline}")
-        require(timeline["timezone"] == "Asia/Shanghai" and timeline["descActive"] and timeline["firstDay"] >= timeline["lastDay"] and "北京时间" in timeline["zhText"] and "本页只是只读历史投影" in timeline["zhText"], f"timeline timezone/newest-first order/authority boundary is incomplete: {timeline}")
+        require(timeline["timezone"] == "Asia/Shanghai" and timeline["descActive"] and timeline["firstMonth"] >= timeline["lastMonth"] and timeline["firstDay"] >= timeline["lastDay"] and "按月分表" in timeline["zhText"] and "北京时间" in timeline["zhText"] and "本页只是只读历史投影" in timeline["zhText"], f"timeline monthly-table/newest-first/timezone/authority boundary is incomplete: {timeline}")
+        execute(session_id, "document.querySelector('.rt-day-row')?.click();")
+        time.sleep(0.3)
+        timeline_expand = execute(session_id, """const row=document.querySelector('.rt-day-row'); const detail=row?.nextElementSibling; return {expanded:row?.getAttribute('aria-expanded')||'',detailVisible:detail?.hidden===false,toggle:row?.querySelector('.rt-day-toggle')?.textContent||''};""")
+        require(timeline_expand == {"expanded": "true", "detailVisible": True, "toggle": "−"}, f"timeline day row must expand its chronological detail row: {timeline_expand}")
+        request("POST", f"/session/{session_id}/window/rect", {"width": 390, "height": 844})
+        time.sleep(0.5)
+        timeline_mobile = execute(session_id, """const wrap=document.querySelector('.rt-month-table-wrap'); return {inner:window.innerWidth,scroll:document.documentElement.scrollWidth,wrapClient:wrap?.clientWidth||0,wrapScroll:wrap?.scrollWidth||0};""")
+        require(timeline_mobile["scroll"] <= timeline_mobile["inner"] + 2 and timeline_mobile["wrapScroll"] > timeline_mobile["wrapClient"], f"timeline monthly tables must scroll internally without page-level mobile overflow: {timeline_mobile}")
+        request("POST", f"/session/{session_id}/window/rect", {"width": 1440, "height": 1000})
+        time.sleep(0.5)
 
         navigate("/paper-ideas.html", 6)
         ideas = execute(session_id, """return {
