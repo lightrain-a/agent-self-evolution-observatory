@@ -16,10 +16,10 @@ from .p0_alfworld_adapter import ALFWorldGameRunner, load_config
 from .p0_mem_xfer_support_enriched import _token_matched_placebo
 from .vllm_alfworld_policy import VLLMAdmissiblePolicy
 
-EXPERIMENT_ID = "D5-EVALUATION-ALIASING-GEMMA-BALANCED-v2"
+EXPERIMENT_ID = "D5-EVALUATION-ALIASING-GEMMA-BALANCED-v3"
 REQUEST_SEED = 20260822
 DEFAULT_BASE_URL = "http://127.0.0.1:18002"
-FAMILIES = (
+MEMORY_SOURCE_FAMILIES = (
     "pick_and_place_simple",
     "pick_clean_then_place_in_recep",
     "pick_cool_then_place_in_recep",
@@ -47,26 +47,30 @@ def compile_contract(*, source_memories_path: Path, historical_runs_root: Path, 
     by_family: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in heldout:
         by_family[str(row.get("source_family") or "")].append(row)
-    if tuple(sorted(by_family)) != tuple(sorted(FAMILIES)) or any(len(by_family[f]) != 1 for f in FAMILIES):
+    if tuple(sorted(by_family)) != tuple(sorted(MEMORY_SOURCE_FAMILIES)) or any(len(by_family[f]) != 1 for f in MEMORY_SOURCE_FAMILIES):
         raise ValueError("need exactly one heldout_candidate memory from every source family")
-    pool = [by_family[f][0] for f in FAMILIES]
+    pool = [by_family[f][0] for f in MEMORY_SOURCE_FAMILIES]
     memory_ids = [str(row["memory_id"]) for row in pool]
 
     exposed = historical_task_exposure(historical_runs_root)
     excluded = set(exposed)
     excluded.update(_task_rel_id(row.get("source_task_id") or "") for row in memories)
     task_root = alfworld_root / "json_2.1.1" / "valid_unseen"
-    stage_a, stage_b, fresh_counts = [], [], {}
-    for family in FAMILIES:
-        candidates = sorted(
-            _task_rel_id(path) for path in task_root.glob(f"{family}-*/**/game.tw-pddl")
-            if _task_rel_id(path) not in excluded
-        )
-        fresh_counts[family] = len(candidates)
-        if len(candidates) < 2:
-            raise ValueError(f"insufficient fresh tasks for {family}: {len(candidates)}")
-        stage_a.append({"target_family": family, "task_relpath": candidates[0]})
-        stage_b.append({"target_family": family, "task_relpath": candidates[1]})
+    fresh_by_family: dict[str, list[str]] = defaultdict(list)
+    for path in task_root.glob("*/*/game.tw-pddl"):
+        rel = _task_rel_id(path)
+        if rel in excluded:
+            continue
+        family = path.parent.parent.name.split("-", 1)[0]
+        fresh_by_family[family].append(rel)
+    for values in fresh_by_family.values():
+        values.sort()
+    eligible_families = sorted(family for family, values in fresh_by_family.items() if len(values) >= 2)
+    if len(eligible_families) < 4:
+        raise ValueError(f"need at least four fresh target families with two tasks each, found {eligible_families}")
+    fresh_counts = {family: len(fresh_by_family[family]) for family in sorted(fresh_by_family)}
+    stage_a = [{"target_family": family, "task_relpath": fresh_by_family[family][0]} for family in eligible_families]
+    stage_b = [{"target_family": family, "task_relpath": fresh_by_family[family][1]} for family in eligible_families]
 
     frozen = []
     for row in pool:
@@ -83,10 +87,12 @@ def compile_contract(*, source_memories_path: Path, historical_runs_root: Path, 
     supersession = Path("generated/d5-evaluation-aliasing-qwen-v2-supersession.json")
     problem_gate = Path("generated/d5-evaluation-aliasing-problem-gate.json")
     v1_quarantine = Path("generated/d5-evaluation-aliasing-gemma-balanced-v1-runtime-quarantine.json")
+    v2_quarantine = Path("generated/d5-evaluation-aliasing-gemma-balanced-v2-runtime-quarantine.json")
     seeded_smoke = Path("generated/d5-evaluation-aliasing-seeded-runtime-smoke.json")
-    smoke = json.loads(seeded_smoke.read_text(encoding="utf-8"))
-    if smoke.get("status") != "PASS_DETERMINISTIC_SUPPORT" or smoke.get("request_seed") != REQUEST_SEED:
-        raise ValueError("seeded deterministic support smoke has not passed for the frozen request seed")
+    cached_smoke = Path("generated/d5-evaluation-aliasing-cached-runtime-smoke.json")
+    smoke = json.loads(cached_smoke.read_text(encoding="utf-8"))
+    if smoke.get("status") != "PASS_DETERMINISTIC_SUPPORT" or smoke.get("request_seed") != REQUEST_SEED or smoke.get("exact_success_and_action_replay_4_of_4") is not True:
+        raise ValueError("content-addressed deterministic support smoke has not passed for the frozen request seed")
     service = _public_service(_service_identity(service_base_url, model_receipt_path))
     material = {
         "schema_version": "1.0",
@@ -121,7 +127,8 @@ def compile_contract(*, source_memories_path: Path, historical_runs_root: Path, 
             "f0_go_means": "PROSPECTIVE_CONFIRMATION_ONLY",
         },
         "task_selection": {
-            "rule": "Per family use lexicographically first two identities absent from every execution-bearing historical run; first Stage A, second sealed Stage B.",
+            "rule": "Use every ALFWorld valid-unseen task family with at least two identities absent from every execution-bearing historical run. Per eligible family, lexicographically first fresh task is Stage A and second is sealed Stage B.",
+            "eligible_target_families": eligible_families,
             "outcome_independent": True,
             "historical_exposed_task_count": len(exposed),
             "historical_exposure_sha256": _stable_hash(sorted(exposed)),
@@ -132,8 +139,10 @@ def compile_contract(*, source_memories_path: Path, historical_runs_root: Path, 
             "alfworld_config": str(alfworld_config),
             "alfworld_config_sha256": _sha_file(alfworld_config),
             "policy_mode": "react-family", "max_steps": MAX_STEPS, "max_history": 6,
-            "decoding": "vLLM chat temperature=0 with frozen request seed",
+            "decoding": "vLLM chat temperature=0 with frozen request seed and content-addressed identical-prompt response cache",
             "request_seed": REQUEST_SEED,
+            "cache_identical_prompts": True,
+            "cache_key": "SHA-256 of the full OpenAI-compatible chat request after seed insertion",
             "exclusive_transaction_lock_required": True,
             "placebo": "token-matched independently per memory; absolute token-count gap <=1",
             "outcome_truth": "ALFWorld environment won/success; no LLM judge",
@@ -146,7 +155,9 @@ def compile_contract(*, source_memories_path: Path, historical_runs_root: Path, 
             "qwen_v2_supersession": str(supersession), "qwen_v2_supersession_sha256": _sha_file(supersession),
             "problem_gate": str(problem_gate), "problem_gate_sha256": _sha_file(problem_gate),
             "balanced_v1_runtime_quarantine": str(v1_quarantine), "balanced_v1_runtime_quarantine_sha256": _sha_file(v1_quarantine),
+            "balanced_v2_runtime_quarantine": str(v2_quarantine), "balanced_v2_runtime_quarantine_sha256": _sha_file(v2_quarantine),
             "seeded_runtime_smoke": str(seeded_smoke), "seeded_runtime_smoke_sha256": _sha_file(seeded_smoke),
+            "cached_runtime_smoke": str(cached_smoke), "cached_runtime_smoke_sha256": _sha_file(cached_smoke),
         },
         "anti_outcome_shopping": [
             "Run all four metadata-selected memories on every Stage-A task.",
@@ -270,7 +281,7 @@ def run_stage(*, stage: str, contract_path: Path, source_memories_path: Path, al
     if any(key not in expected for key in done):raise RuntimeError("existing row outside frozen grid")
     os.environ["ALFWORLD_DATA"]=str(alfworld_root)
     runner=ALFWorldGameRunner(load_config(alfworld_config))
-    policy=VLLMAdmissiblePolicy(base_url=service_base_url,model=MODEL_ID,policy_mode="react-family",seed=int(contract["runtime"]["request_seed"]))
+    policy=VLLMAdmissiblePolicy(base_url=service_base_url,model=MODEL_ID,policy_mode="react-family",seed=int(contract["runtime"]["request_seed"]),cache_identical_prompts=bool(contract["runtime"]["cache_identical_prompts"]))
     placebo={};placebo_audit={}
     for mid in memory_ids:
         text=str(all_memories[mid]["text"]);fake,mt,pt=_token_matched_placebo(policy,text)

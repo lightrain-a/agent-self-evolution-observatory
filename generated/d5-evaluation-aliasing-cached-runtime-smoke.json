@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "smoke_id": "D5-EVALUATION-ALIASING-CONTENT-ADDRESSED-RUNTIME-SMOKE",
+  "status": "PASS_DETERMINISTIC_SUPPORT",
+  "purpose": "Support-only deterministic replay check on an already-exposed task. It tests the content-addressed policy-response cache and carries zero scientific evidence for evaluation aliasing.",
+  "task_relpath": "json_2.1.1/valid_unseen/pick_and_place_simple-PepperShaker-None-Drawer-10/trial_T20190918_154424_844749/game.tw-pddl",
+  "task_was_already_exposed_before_smoke": true,
+  "request_seed": 20260822,
+  "temperature": 0,
+  "cache_key_scope": "full OpenAI-compatible chat request, including model, system message, user message, temperature, max tokens, and request seed",
+  "replicates": 4,
+  "exact_success_and_action_replay_4_of_4": true,
+  "success": 1,
+  "steps": 5,
+  "actions_sha256": "6a18baeb64cb8198630a6c19873f7a4a2aaf944ce4c2e8d9a0949399e6ea4a8c",
+  "actions": [
+    "go to cabinet 1",
+    "take peppershaker 2 from cabinet 1",
+    "go to drawer 1",
+    "open drawer 1",
+    "move peppershaker 2 to drawer 1"
+  ],
+  "transport_usage": {
+    "generation_calls": 5,
+    "response_cache_hits": 15,
+    "response_cache_entries": 5
+  },
+  "interpretation": "The first trajectory populates one response per unique visited policy prompt. Subsequent identical prompts reuse the first response. A changed observation, action history, admissible-command list, memory condition, or other request field changes the request hash and therefore cannot hit the same cache entry.",
+  "model": {
+    "model_id": "google/gemma-4-26B-A4B-it",
+    "exact_revision": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52"
+  },
+  "scientific_authority": false,
+  "paper_design_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

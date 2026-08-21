@@ -14,6 +14,9 @@ class VLLMAlfworldPolicyTest(unittest.TestCase):
         policy.policy_mode = "direct"
         policy.timeout_seconds = 1.0
         policy.seed = seed
+        policy.cache_identical_prompts = False
+        policy._response_cache = {}
+        policy._cache_hits = 0
         policy._input_tokens = 0
         policy._output_tokens = 0
         policy._generation_calls = 0
@@ -42,6 +45,25 @@ class VLLMAlfworldPolicyTest(unittest.TestCase):
         policy, captured = self._policy_without_network(None)
         policy.choose("room", ["look"], [], "")
         self.assertNotIn("seed", captured[0]["payload"])
+
+    def test_identical_prompt_cache_reuses_first_response_without_second_provider_call(self) -> None:
+        policy, captured = self._policy_without_network(20260822)
+        policy.cache_identical_prompts = True
+        first = policy.choose("same room", ["look"], [], "")
+        second = policy.choose("same room", ["look"], [], "")
+        self.assertEqual(first, second)
+        self.assertEqual(len(captured), 1)
+        usage = policy.usage_snapshot()
+        self.assertEqual(usage["generation_calls"], 1)
+        self.assertEqual(usage["response_cache_hits"], 1)
+        self.assertEqual(usage["response_cache_entries"], 1)
+
+    def test_cache_key_changes_when_observation_changes(self) -> None:
+        policy, captured = self._policy_without_network(20260822)
+        policy.cache_identical_prompts = True
+        policy.choose("room A", ["look"], [], "")
+        policy.choose("room B", ["look"], [], "")
+        self.assertEqual(len(captured), 2)
 
 
 if __name__ == "__main__":

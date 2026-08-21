@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "D5-EVALUATION-ALIASING-GEMMA-BALANCED-V2-RUNTIME-QUARANTINE",
+  "status": "QUARANTINED_PROTOCOL_SUPPORT_FAILURE_NO_SCIENTIFIC_AUTHORITY",
+  "experiment_id": "D5-EVALUATION-ALIASING-GEMMA-BALANCED-v2",
+  "frozen_contract": "generated/d5-evaluation-aliasing-gemma-balanced-v2-contract.json",
+  "frozen_contract_material_sha256": "0c955da5b6c7817918317a730fdb40d0a514d121fcdf7c98e4547a31461b31d0",
+  "freeze_commit": "8c5b7b6",
+  "stage_b_opened": false,
+  "private_run_audit": {
+    "stage_a_raw_sha256": "9182b928addc18e7d7ba3dc71591555f4045a2b33b54ba92a7ceebe3dc467fc2",
+    "stage_a_analysis_sha256": "dd5d855738d3fc03e2cd4b2048b28803a632f74502dc712ff92331087e770571",
+    "stage_a_manifest_sha256": "d1bef9f3b2f28b0cfd75055aa9b72dea2bae502c0bb8b6f552d843315d74404f",
+    "stage_a_progress_sha256": "6464403a94a80e775451abde8546da2d0871c1d1ffea04e745accb35eee4011e",
+    "raw_rows": 12,
+    "unique_grid_cells": 12,
+    "duplicate_cells": 0
+  },
+  "runtime_result": {
+    "current_task": "json_2.1.1/valid_unseen/pick_and_place_simple-PepperShaker-None-Drawer-10/trial_T20190918_154424_844749/game.tw-pddl",
+    "all_four_no_memory_success": true,
+    "no_memory_action_trace_reproducible": false,
+    "observed_action_trace_shas": [
+      "7ee843321352afc90c62cd937818d8c17d5250de7c9766775da77a1b22d80469",
+      "6a18baeb64cb8198630a6c19873f7a4a2aaf944ce4c2e8d9a0949399e6ea4a8c"
+    ],
+    "trace_lengths": [8, 5, 5, 5]
+  },
+  "interpretation": "The exclusive transaction lock repaired the v1 duplicate-write failure, but temperature zero plus a fixed vLLM request seed did not guarantee exact policy trajectory replay on a new task. Because the v2 contract required exact no-memory action replay, this realization is a protocol/support stop. It has zero authority on the evaluation-aliasing hypothesis.",
+  "repair_direction": "Use a content-addressed response cache keyed by the full model request so identical policy prompts map to the same first observed model response. The cache does not hide environment drift: any change in observation, history, or admissible-command text changes the request hash and creates a cache miss.",
+  "future_reuse_prohibited": [
+    "Do not use the v2 Stage-A PepperShaker task in a repaired scientific panel.",
+    "Do not open the v2 sealed Stage B.",
+    "Do not reinterpret all-success terminal scores as proof that exact action replay is unnecessary inside the v2 contract."
+  ],
+  "scientific_authority": false,
+  "paper_design_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

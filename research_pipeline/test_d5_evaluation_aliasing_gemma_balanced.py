@@ -48,10 +48,11 @@ class D5EvaluationAliasingGemmaBalancedTest(unittest.TestCase):
                 })
         return rows
 
-    def test_frozen_v2_contract_uses_balanced_pool_seed_and_fresh_replacement_panel(self) -> None:
-        c = json.loads(Path('generated/d5-evaluation-aliasing-gemma-balanced-v2-contract.json').read_text(encoding='utf-8'))
-        self.assertEqual(c['experiment_id'], 'D5-EVALUATION-ALIASING-GEMMA-BALANCED-v2')
+    def test_frozen_v3_contract_uses_balanced_pool_cached_runtime_and_fresh_panel(self) -> None:
+        c = json.loads(Path('generated/d5-evaluation-aliasing-gemma-balanced-v3-contract.json').read_text(encoding='utf-8'))
+        self.assertEqual(c['experiment_id'], 'D5-EVALUATION-ALIASING-GEMMA-BALANCED-v3')
         self.assertEqual(c['runtime']['request_seed'], 20260822)
+        self.assertTrue(c['runtime']['cache_identical_prompts'])
         self.assertTrue(c['runtime']['exclusive_transaction_lock_required'])
         self.assertEqual(len(c['memory_pool']['memory_ids']), 4)
         self.assertEqual({row['source_family'] for row in c['memory_pool']['memories']}, {
@@ -59,11 +60,15 @@ class D5EvaluationAliasingGemmaBalancedTest(unittest.TestCase):
             'pick_cool_then_place_in_recep', 'pick_heat_then_place_in_recep',
         })
         self.assertTrue(all(row['candidate_role'] == 'heldout_candidate' for row in c['memory_pool']['memories']))
+        self.assertGreaterEqual(len(c['task_selection']['eligible_target_families']), 4)
+        self.assertEqual(len(c['stage_a']['tasks']), len(c['task_selection']['eligible_target_families']))
+        self.assertEqual(len(c['stage_b']['tasks']), len(c['task_selection']['eligible_target_families']))
         all_tasks = [row['task_relpath'] for stage in ('stage_a', 'stage_b') for row in c[stage]['tasks']]
         for exposed_name in (
             'pick_and_place_simple-Pencil-None-Shelf-308',
             'pick_clean_then_place_in_recep-Cloth-None-CounterTop-424',
             'pick_cool_then_place_in_recep-Mug-None-Cabinet-10',
+            'pick_and_place_simple-PepperShaker-None-Drawer-10',
         ):
             self.assertFalse(any(exposed_name in task for task in all_tasks))
 

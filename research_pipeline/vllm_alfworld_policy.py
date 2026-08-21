@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import hashlib
+import json
 from typing import Any
 
 import requests
@@ -43,6 +45,7 @@ class VLLMAdmissiblePolicy:
         policy_mode: str = "react-family",
         timeout_seconds: float = 60.0,
         seed: int | None = None,
+        cache_identical_prompts: bool = False,
     ) -> None:
         if policy_mode not in {"direct", "react-lite", "react-family"}:
             raise ValueError(f"unsupported policy_mode: {policy_mode}")
@@ -52,6 +55,9 @@ class VLLMAdmissiblePolicy:
         self.policy_mode = policy_mode
         self.timeout_seconds = float(timeout_seconds)
         self.seed = int(seed) if seed is not None else None
+        self.cache_identical_prompts = bool(cache_identical_prompts)
+        self._response_cache: dict[str, str] = {}
+        self._cache_hits = 0
         self.session = requests.Session()
         self.tokenizer = _RemoteTokenizerFacade(self)
         self._input_tokens = 0
@@ -77,6 +83,8 @@ class VLLMAdmissiblePolicy:
             "output_tokens": self._output_tokens,
             "tokens": self._input_tokens + self._output_tokens,
             "generation_calls": self._generation_calls,
+            "response_cache_hits": self._cache_hits,
+            "response_cache_entries": len(self._response_cache),
         }
 
     def token_count(self, text: str) -> int:
@@ -129,17 +137,24 @@ class VLLMAdmissiblePolicy:
         }
         if self.seed is not None:
             request["seed"] = self.seed
-        payload = self._post("/v1/chat/completions", request)
-        choices = payload.get("choices") or []
-        if not choices or not isinstance(choices[0], dict):
-            raise RuntimeError("vLLM returned no completion choice")
-        message = choices[0].get("message") or {}
-        raw = str(message.get("content") or "").strip()
-        if not raw:
-            raise RuntimeError("vLLM returned empty assistant content")
-        usage = payload.get("usage") or {}
-        self._input_tokens += int(usage.get("prompt_tokens") or 0)
-        self._output_tokens += int(usage.get("completion_tokens") or 0)
-        self._generation_calls += 1
+        cache_key = hashlib.sha256(json.dumps(request, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+        raw = self._response_cache.get(cache_key, "") if self.cache_identical_prompts else ""
+        if raw:
+            self._cache_hits += 1
+        else:
+            payload = self._post("/v1/chat/completions", request)
+            choices = payload.get("choices") or []
+            if not choices or not isinstance(choices[0], dict):
+                raise RuntimeError("vLLM returned no completion choice")
+            message = choices[0].get("message") or {}
+            raw = str(message.get("content") or "").strip()
+            if not raw:
+                raise RuntimeError("vLLM returned empty assistant content")
+            usage = payload.get("usage") or {}
+            self._input_tokens += int(usage.get("prompt_tokens") or 0)
+            self._output_tokens += int(usage.get("completion_tokens") or 0)
+            self._generation_calls += 1
+            if self.cache_identical_prompts:
+                self._response_cache[cache_key] = raw
         action, invalid = parse_admissible_choice(raw, commands)
         return action, invalid, raw

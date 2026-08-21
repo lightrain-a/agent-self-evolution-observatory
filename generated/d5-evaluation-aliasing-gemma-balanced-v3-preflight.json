@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "preflight_id": "D5-EVALUATION-ALIASING-GEMMA-BALANCED-V3-PREFLIGHT",
+  "status": "READY_FOR_STAGE_A",
+  "contract_material_sha256": "f25a73cdc719df9fd0c1dc96493ca54de2f94209683f18dceab56b573ec98fd9",
+  "contract_file_sha256": "4bc8dd0684b6a049c9ee4d5c125235cd0c47417334c629959a433ac8a78c4deb",
+  "gates": {
+    "contract_verified": true,
+    "service_model_verified": true,
+    "source_memories_verified": true,
+    "runtime_seed": 20260822,
+    "content_addressed_prompt_cache": true,
+    "cached_runtime_smoke_status": "PASS_DETERMINISTIC_SUPPORT",
+    "exclusive_transaction_lock_required": true,
+    "eligible_target_families": [
+      "look_at_obj_in_light",
+      "pick_clean_then_place_in_recep",
+      "pick_cool_then_place_in_recep",
+      "pick_heat_then_place_in_recep",
+      "pick_two_obj_and_place"
+    ],
+    "stage_a_tasks": 5,
+    "sealed_stage_b_tasks": 5,
+    "execution_exposed_frozen_tasks": [],
+    "private_output_root_empty_before_stage_a": true,
+    "stage_b_sealed_before_stage_a_outcomes": true,
+    "balanced_memory_pool_size": 4
+  },
+  "execution_plan": {
+    "stage_a_max_episodes": 60,
+    "stage_a_chunk_episodes": 12,
+    "monotone_early_stop_enabled": true,
+    "stage_b_locked": true
+  },
+  "scientific_authority": false,
+  "paper_design_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}
