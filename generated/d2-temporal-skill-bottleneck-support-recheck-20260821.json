@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "D2-C06-TIMESAGE-FIRST-PARTY-SUPPORT-RECHECK-20260821",
+  "generated_at": "2026-08-21T16:29:49+00:00",
+  "status": "LOCAL_FROZEN_RELEASE_STILL_LACKS_EVALUATED_SNAPSHOT_FRESH_REMOTE_RECHECK_UNAVAILABLE",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "local_first_party_clones": {
+    "code": {
+      "origin": "https://github.com/TimeSage-Series/TimeSage-EV.git",
+      "head": "41f5e7656cb811dc47b7fd7f1cd7931f0fa2db66",
+      "history_paths": [
+        "README.md"
+      ],
+      "readme_text": "<div align=\"center\">\n  <h3>\n    <b>TimeSage-EV</b><br>\n    <sub>A Live Benchmark for Agentic Time Series Analysis in Evolving Environments</sub>\n  </h3>\n</div>\n\n<div align=\"center\">\n\n![](https://img.shields.io/github/last-commit/TimeSage-Series/TimeSage-EV?color=green)\n![](https://img.shields.io/github/stars/TimeSage-Series/TimeSage-EV?color=yellow)\n![](https://img.shields.io/github/forks/TimeSage-Series/TimeSage-EV?color=lightblue)\n![](https://img.shields.io/badge/PRs-Welcome-green)\n\n</div>\n\nUpcoming..."
+    },
+    "dataset": {
+      "origin": "https://hf-mirror.com/datasets/TimeSage-Series/TimeSage-EV",
+      "head": "711f6443dc765b04980faf0a4145bef4261903e1",
+      "history_paths": [
+        ".gitattributes"
+      ]
+    }
+  },
+  "local_conclusion": {
+    "evaluated_snapshot_present": false,
+    "deleted_or_historical_snapshot_recoverable_from_local_git_objects": false,
+    "reason": "The code clone history contains only README.md and the dataset clone history contains only .gitattributes."
+  },
+  "fresh_remote_recheck": {
+    "status": "UNAVAILABLE_NETWORK_SUPPORT",
+    "github_git_or_api": "TLS/timeout failure during read-only recheck",
+    "huggingface_tree_api": "no parseable tree returned during read-only recheck",
+    "scientific_authority": false
+  },
+  "prior_claim_ledger_refs": {
+    "code_repo_commit": "e0ce94e498b133195b274efa682097444dfd7d64",
+    "dataset_repo_commit": "ea07f80bc6813a2970062b8a1164fe530a07be20",
+    "note": "These prior recorded hashes are retained for traceability; the actual local clone HEADs observed in this recheck are reported above."
+  },
+  "reopen_if": [
+    "A fresh first-party evaluated TimeSage-EV snapshot becomes retrievable and hashable.",
+    "Equivalent first-party artifacts expose frozen scenario inputs, outcomes, and skill interfaces required by the targeted intervention."
+  ],
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

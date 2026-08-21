@@ -35,12 +35,24 @@
       "claim_id": "C4",
       "claim": "Failure-derived memory provenance causally sustains future error beyond task difficulty and matched semantic guidance.",
       "verdict": "ACTIVE_UNREFUTED_HYPOTHESIS",
-      "evidence_state": "CAUSAL_SWAP_PENDING",
+      "evidence_state": "NATURAL_PROVENANCE_SWAP_SUPPORT_BLOCKED_EXPLICIT_CUE_BRIDGE_INCONCLUSIVE",
       "closure_authority": "",
       "retain_in_manuscript": true,
       "claim_narrowing_required": false,
+      "evidence_refs": [
+        "generated/d2-failure-memory-provenance-faithful-reconstruction-preflight.json",
+        "generated/d2-failure-memory-provenance-bridge.json"
+      ],
+      "support_state": {
+        "source_faithful_reconstruction": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS",
+        "explicit_provenance_cue_bridge": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+        "bridge_calls_complete": 144,
+        "bridge_mean_success_minus_failure_terminal_rate": 0.0,
+        "bridge_permutation_p_success_greater": 1.0,
+        "bridge_counterevidence_gate_pass": false
+      },
       "experiment_debt": [
-        "matched-query matched-semantic provenance swap",
+        "source-faithful matched-query matched-semantic natural provenance swap",
         "failure-derived to success-derived replacement",
         "reverse success-derived to failure-derived replacement"
       ]

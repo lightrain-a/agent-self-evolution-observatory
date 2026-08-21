@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "preflight_id": "D2-C01-QWEN37-EXACT-MODEL-PREFLIGHT",
+  "requested_model": "qwen3.7-flash-2026-07-15",
+  "provider_host": "ark.cn-beijing.volces.com",
+  "prompt_sha256": "c072824f1aefd4a6f913d5c608b0d26a69ad62632adacbffca9127a0cb5e79c6",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "status": "MODEL_UNAVAILABLE_OR_PROVIDER_REJECTED",
+  "error_type": "RuntimeError",
+  "error_detail_sha256": "8cfa1c66e0e47827c62b355acca91844bdd7f49fd70f649b2dacc0f855abc03f",
+  "provider_response_id_archived_privately": false,
+  "provider_response_id_sha256": ""
+}

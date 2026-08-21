@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "D2-C01-SOURCE-FAITHFUL-RECONSTRUCTION-PREFLIGHT",
+  "status": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS",
+  "target": "Faithful reconstruction of arXiv:2608.17684 ReasoningBank on AgentDojo Banking v1.2.2 before any matched provenance swap.",
+  "assets": {
+    "agentdojo": {
+      "origin": "https://github.com/ethz-spylab/agentdojo.git",
+      "package_tag": "v0.1.35",
+      "commit": "a75aba7631d3ca5fb7ab938965c97ead2f9ff84b",
+      "banking_v1_2_2_present": true
+    },
+    "reasoningbank": {
+      "origin": "https://github.com/google-research/reasoning-bank.git",
+      "commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+      "official_webarena_adapter_present": true,
+      "official_agentdojo_adapter_present": false
+    }
+  },
+  "source_contract": {
+    "benchmark": "AgentDojo Banking v1.2.2",
+    "executor_model": "qwen3.7-flash-2026-07-15",
+    "executor_temperature": 0.0,
+    "executor_thinking": "disabled",
+    "memory_writer_model_family": "same Qwen 3.7 Flash family",
+    "memory_writer_temperature": 1.0,
+    "retrieval_embedding": "qwen3.7-text-embedding",
+    "reasoningbank_top_k": 1,
+    "memory_items_per_trajectory_max": 3,
+    "independent_lineages": 3,
+    "acquisition_trajectories_per_lineage": 22
+  },
+  "provider_preflight": {
+    "schema_version": "1.0",
+    "preflight_id": "D2-C01-QWEN37-EXACT-MODEL-PREFLIGHT",
+    "requested_model": "qwen3.7-flash-2026-07-15",
+    "provider_host": "ark.cn-beijing.volces.com",
+    "prompt_sha256": "c072824f1aefd4a6f913d5c608b0d26a69ad62632adacbffca9127a0cb5e79c6",
+    "scientific_authority": false,
+    "experiment_authority": false,
+    "status": "MODEL_UNAVAILABLE_OR_PROVIDER_REJECTED",
+    "error_type": "RuntimeError",
+    "error_detail_sha256": "8cfa1c66e0e47827c62b355acca91844bdd7f49fd70f649b2dacc0f855abc03f",
+    "provider_response_id_archived_privately": false,
+    "provider_response_id_sha256": ""
+  },
+  "credential_inventory": {
+    "ark_credentials_present": true,
+    "ark_provider_host": "ark.cn-beijing.volces.com",
+    "dashscope_credential_present": false,
+    "qwen_credential_present": false
+  },
+  "blockers": [
+    "The current Ark route rejects the exact executor snapshot qwen3.7-flash-2026-07-15.",
+    "No DashScope/Qwen credential is present for qwen3.7-text-embedding, so source-faithful retrieval cannot be reproduced.",
+    "The official ReasoningBank repository provides WebArena/SWE-Bench adapters but no first-party AgentDojo bridge; the financial-paper bridge must be reconstructed and pass aggregate-fidelity gates.",
+    "The financial-audit authors state that code and audit artifacts will be released upon publication; no first-party per-query audit bundle is currently available in this workspace."
+  ],
+  "reopen_if": [
+    "Exact qwen3.7-flash-2026-07-15 and qwen3.7-text-embedding access becomes available under auditable credentials.",
+    "Or the financial-audit authors release per-query ReasoningBank artifacts sufficient for the matched provenance swap."
+  ],
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

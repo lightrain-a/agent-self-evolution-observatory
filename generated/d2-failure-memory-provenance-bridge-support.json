@@ -1,0 +1,201 @@
+{
+  "schema_version": "1.0",
+  "support_id": "D2-C01-EXPLICIT-PROVENANCE-CUE-BRIDGE-SUPPORT",
+  "status": "SUPPORT_QUALIFIED",
+  "scope": "Fresh fixed-evidence WebArena bridge; this is not a reconstruction of the financial AgentDojo audit.",
+  "selection_policy": {
+    "task_ids_frozen_before_bridge_provider_calls": [
+      "125",
+      "360",
+      "228",
+      "126",
+      "362",
+      "229"
+    ],
+    "fresh_to_c02_f0_f1_f2": true,
+    "read_only_only": true,
+    "deterministic_multi_reference_must_include_only": true,
+    "all_references_visible_in_released_evidence": true,
+    "three_templates_round_robin": true,
+    "historical_agent_outputs_and_memory_excluded": true
+  },
+  "guidance": "Use only observed task-relevant evidence. Check every constraint in the task before concluding. When the answer contains multiple required items or a range, verify every required component. Report only values supported by the observed evidence.",
+  "guidance_sha256": "e36b0d198c5e70da1e0cdb53581161bdc93c57e8fd3d627bdac71d52063c9c56",
+  "task_config_sha256": "d25e83078ec728adc82bd43871338a24a3907e101b5a5fdb1ae81bb7f72f36a6",
+  "evaluator_source_sha256": "f78eb61554c811f9411e7d72e0bdf2b5baa27379cbf632ade7fe49ce51a3f30d",
+  "tasks": [
+    {
+      "task_id": "125",
+      "task_prompt": "What is the price range of teeth grinding mouth guard in the One Stop Market?",
+      "intent_template_id": 159,
+      "source_parquet": "wa_awm_shuffle1-shopping_run1.parquet",
+      "source_parquet_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e",
+      "released_original_success": false,
+      "reference_answers": [
+        "1.46",
+        "85"
+      ],
+      "reference_visibility": [
+        {
+          "ref": "1.46",
+          "visible": true
+        },
+        {
+          "ref": "85",
+          "visible": true
+        }
+      ],
+      "evidence_sha256": "5d859aa78c507117c9d7536a29d6dabeef4f169aeb817ce94c34aafcaa28eebc",
+      "evidence_chars": 54324,
+      "qualified": true,
+      "blockers": []
+    },
+    {
+      "task_id": "360",
+      "task_prompt": "Show me the product names for order number 148.",
+      "intent_template_id": 206,
+      "source_parquet": "wa_awm_shuffle1-shopping_run1.parquet",
+      "source_parquet_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e",
+      "released_original_success": true,
+      "reference_answers": [
+        "Bornbridge Artificial Spiral Topiary Tree - Indoor / Outdoor Topiary Trees - Artificial Outdoor Plants (2 Pack, 4' Cypress)",
+        "Russound 5B45W 4\" Indoor Outdoor Speakers White"
+      ],
+      "reference_visibility": [
+        {
+          "ref": "Bornbridge Artificial Spiral Topiary Tree - Indoor / Outdoor Topiary Trees - Artificial Outdoor Plants (2 Pack, 4' Cypress)",
+          "visible": true
+        },
+        {
+          "ref": "Russound 5B45W 4\" Indoor Outdoor Speakers White",
+          "visible": true
+        }
+      ],
+      "evidence_sha256": "86963a5e899761f9072c24de9257e4a270072c4ec60572ce0f9cb75f59433267",
+      "evidence_chars": 82596,
+      "qualified": true,
+      "blockers": []
+    },
+    {
+      "task_id": "228",
+      "task_prompt": "What is the price range for products from sephora?",
+      "intent_template_id": 370,
+      "source_parquet": "wa_awm_shuffle1-shopping_run1.parquet",
+      "source_parquet_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e",
+      "released_original_success": true,
+      "reference_answers": [
+        "18.18",
+        "94.99"
+      ],
+      "reference_visibility": [
+        {
+          "ref": "18.18",
+          "visible": true
+        },
+        {
+          "ref": "94.99",
+          "visible": true
+        }
+      ],
+      "evidence_sha256": "ecf416b3abd2e4d48fe85a479af252fa9e064b5e94e219ee812e071284aaf31e",
+      "evidence_chars": 28934,
+      "qualified": true,
+      "blockers": []
+    },
+    {
+      "task_id": "126",
+      "task_prompt": "What is the price range of Canon photo printer in the One Stop Market?",
+      "intent_template_id": 159,
+      "source_parquet": "wa_awm_shuffle1-shopping_run1.parquet",
+      "source_parquet_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e",
+      "released_original_success": true,
+      "reference_answers": [
+        "2.56",
+        "649.99"
+      ],
+      "reference_visibility": [
+        {
+          "ref": "2.56",
+          "visible": true
+        },
+        {
+          "ref": "649.99",
+          "visible": true
+        }
+      ],
+      "evidence_sha256": "74136a60c7f267f4c4ba2653754027d31d6a79717481a4b1af7df91c0a830d4e",
+      "evidence_chars": 31050,
+      "qualified": true,
+      "blockers": []
+    },
+    {
+      "task_id": "362",
+      "task_prompt": "Show me the billing address for order number 00178.",
+      "intent_template_id": 206,
+      "source_parquet": "wa_awm_shuffle1-shopping_run1.parquet",
+      "source_parquet_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e",
+      "released_original_success": true,
+      "reference_answers": [
+        "101 S San Mateo Dr",
+        "San Mateo",
+        "California",
+        "94010",
+        "United States"
+      ],
+      "reference_visibility": [
+        {
+          "ref": "101 S San Mateo Dr",
+          "visible": true
+        },
+        {
+          "ref": "San Mateo",
+          "visible": true
+        },
+        {
+          "ref": "California",
+          "visible": true
+        },
+        {
+          "ref": "94010",
+          "visible": true
+        },
+        {
+          "ref": "United States",
+          "visible": true
+        }
+      ],
+      "evidence_sha256": "d8847b2cf703b50bc323d1f691707c49144bb412a2ef9f1156cfa3eeb9106d0e",
+      "evidence_chars": 50798,
+      "qualified": true,
+      "blockers": []
+    },
+    {
+      "task_id": "229",
+      "task_prompt": "What is the price range for products from ugreen?",
+      "intent_template_id": 370,
+      "source_parquet": "wa_awm_shuffle1-shopping_run1.parquet",
+      "source_parquet_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e",
+      "released_original_success": true,
+      "reference_answers": [
+        "6.99",
+        "38.99"
+      ],
+      "reference_visibility": [
+        {
+          "ref": "6.99",
+          "visible": true
+        },
+        {
+          "ref": "38.99",
+          "visible": true
+        }
+      ],
+      "evidence_sha256": "516ee01ea432d9d96f0e43a3e190a817e3f52703771423a1d805e8f286aaa992",
+      "evidence_chars": 41809,
+      "qualified": true,
+      "blockers": []
+    }
+  ],
+  "scientific_authority": false,
+  "experiment_authority": false
+}

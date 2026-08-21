@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "D2-C01-EXPLICIT-PROVENANCE-CUE-BRIDGE-F0",
+  "status": "PREFLIGHT_PASS",
+  "fixed_task": "125",
+  "condition": "SUCCESS",
+  "rollout": 1,
+  "answer_sha256": "90c6d54b4605f66aad308afa8c78ceec3d604471561edeff0a3d75ea2776209b",
+  "answer_preview": "$1.46 to $179.99",
+  "benchmark_score": 0.0,
+  "evaluator_checks": [
+    {
+      "ref": "1.46",
+      "score": 1.0
+    },
+    {
+      "ref": "85",
+      "score": 0.0
+    }
+  ],
+  "receipt": {
+    "stage": "task-125-success-r1",
+    "engine_id": "task-125",
+    "requested_model": "doubao-seed-2.0-mini",
+    "resolved_model": "doubao-seed-2-0-mini-260215",
+    "prompt_sha256": "ee94dcadd8b641474ccca4fb71e610c3d10b2cabbc440867382b7dd6c5823473",
+    "raw_sha256": "90c6d54b4605f66aad308afa8c78ceec3d604471561edeff0a3d75ea2776209b",
+    "request_fingerprint": "7754dafb0f098e7a8b0b64a5e0fdb935125c72737c83eb2e912a287f00552a9b",
+    "usage": {
+      "input_tokens": 17922,
+      "output_tokens": 13,
+      "total_tokens": 17935,
+      "input_tokens_details": {
+        "cached_tokens": 0
+      },
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "status": "completed",
+    "provider_response_id_archived_privately": true,
+    "scientific_authority": false
+  },
+  "scientific_authority": false,
+  "experiment_authority": false
+}

@@ -32,16 +32,30 @@
         "Memory Reward Inflation supplies an independent mechanism by which erroneous or overvalued memories can persist through future reuse."
       ],
       "experiment_debt": [
-        "matched-query matched-semantic-memory provenance swap",
+        "source-faithful matched-query matched-semantic-memory provenance swap",
         "failure-derived to success-derived replacement",
         "reverse success-derived to failure-derived replacement"
       ],
+      "support_debt": [
+        "The current Ark provider route rejects the exact qwen3.7-flash-2026-07-15 executor snapshot used by the source financial audit.",
+        "No DashScope/Qwen embedding credential is available for qwen3.7-text-embedding, so source-faithful ReasoningBank retrieval cannot currently be reconstructed.",
+        "The financial-audit authors have not yet released the per-query audit artifacts needed for a direct matched provenance swap."
+      ],
+      "targeted_repair_state": {
+        "faithful_reconstruction_preflight": "generated/d2-failure-memory-provenance-faithful-reconstruction-preflight.json",
+        "faithful_reconstruction_status": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS",
+        "explicit_provenance_bridge_artifact": "generated/d2-failure-memory-provenance-bridge.json",
+        "explicit_provenance_bridge_status": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+        "explicit_provenance_bridge_calls_complete": 144,
+        "explicit_provenance_bridge_mean_success_minus_failure_terminal_rate": 0.0,
+        "claim_update": "KEEP_C4_ACTIVE; DO_NOT_SPEND_MORE_ON_EXPLICIT_TAG_BRIDGE"
+      },
       "manuscript_dir": "paper_drafts/d2-failure-memory-provenance-iclr2027",
       "limitations_source": "sections/06_limitations_conclusion.tex",
       "scientific_authority": false,
       "paper_qa_artifact": "generated/d2-failure-memory-provenance-paper-qa.json",
       "paper_qa_pass": true,
-      "pdf_sha256": "58a47fa761a1e8dd4adc6137e413255b2c8a372bd11cd20e71db7cca0884bdb7",
+      "pdf_sha256": "681a608bd2c448233b3ad9f2b7c166fd3c97844fceab38af131bc9ec940ddd3e",
       "pdf_pages": 7,
       "manuscript_complete": true,
       "evidence_complete": false
@@ -135,7 +149,15 @@
         "TimeSage-1.0 adds a reusable skill library while keeping the baseline harness aligned, and the skill-memory condition improves aggregate benchmark performance.",
         "The released paper Appendix defines explicit induct_skill and retrieve_skill interfaces, giving a concrete intervention surface for targeted temporal procedures."
       ],
-      "support_state": "DATASET_AND_CODE_RELEASE_DECLARED_BUT_PUBLIC_REPOSITORIES_CURRENTLY_INCOMPLETE",
+      "support_state": {
+        "status": "LOCAL_FROZEN_RELEASE_STILL_LACKS_EVALUATED_SNAPSHOT_FRESH_REMOTE_RECHECK_UNAVAILABLE",
+        "artifact": "generated/d2-temporal-skill-bottleneck-support-recheck-20260821.json",
+        "local_code_clone_head": "41f5e7656cb811dc47b7fd7f1cd7931f0fa2db66",
+        "local_dataset_clone_head": "711f6443dc765b04980faf0a4145bef4261903e1",
+        "local_frozen_evaluated_snapshot_available": false,
+        "fresh_remote_recheck_status": "UNAVAILABLE_NETWORK_SUPPORT",
+        "scientific_authority": false
+      },
       "experiment_debt": [
         "targeted temporal/exogenous skill injection",
         "matched generic-skill control",

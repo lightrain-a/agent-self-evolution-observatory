@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "D2-C01-EXPLICIT-PROVENANCE-CUE-BRIDGE-F0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "status": "FROZEN_BEFORE_PROVIDER_CALLS",
+  "central_question": "When reusable guidance and released task evidence are held byte-identical, does an explicit success-versus-failure source-outcome provenance field change terminal benchmark correctness?",
+  "scope": "Cross-domain explicit-provenance bridge on fresh fixed-evidence WebArena tasks. It is not a source-faithful reconstruction of the financial AgentDojo audit and does not establish the effect of naturally generated failure-derived memories.",
+  "source_artifacts": {
+    "support": "generated/d2-failure-memory-provenance-bridge-support.json",
+    "support_sha256": "b7db0c347ad63fd7efc0cb76c26f4014303c0ccef62b2a3303b876c9089dfcb0"
+  },
+  "future_tasks": [
+    "125",
+    "360",
+    "228",
+    "126",
+    "362",
+    "229"
+  ],
+  "conditions": [
+    "SUCCESS",
+    "FAILURE",
+    "UNSPECIFIED"
+  ],
+  "rollouts_per_condition": 8,
+  "guidance_sha256": "e36b0d198c5e70da1e0cdb53581161bdc93c57e8fd3d627bdac71d52063c9c56",
+  "model": {
+    "requested": "doubao-seed-2.0-mini",
+    "temperature": 0.2,
+    "max_output_tokens": 900,
+    "thinking": "disabled",
+    "allow_thinking_compatibility_fallback": false,
+    "provider_retries": 0,
+    "store": true
+  },
+  "design": {
+    "future_tasks": 6,
+    "templates": 3,
+    "conditions": 3,
+    "rollouts_per_condition": 8,
+    "total_calls": 144,
+    "primary_comparison": [
+      "SUCCESS",
+      "FAILURE"
+    ],
+    "unspecified_is_secondary_same_information_baseline": true,
+    "no_task_selection_after_outcomes": true
+  },
+  "provenance_gate": {
+    "primary_statistic": "mean across six frozen tasks of terminal success-rate difference SUCCESS-provenance minus FAILURE-provenance",
+    "permutation_scheme": "Within each task, pool the 16 SUCCESS/FAILURE binary benchmark scores and randomly assign eight to each provenance label; average the signed rate difference across all six tasks.",
+    "permutation_repetitions": 100000,
+    "permutation_seed": 20260821,
+    "alpha": 0.05,
+    "min_directional_difference": 0.15,
+    "support_if": [
+      "mean SUCCESS-minus-FAILURE >= 0.15",
+      "one-sided permutation p_success_greater < 0.05"
+    ],
+    "counterevidence_if": [
+      "mean SUCCESS-minus-FAILURE <= -0.15",
+      "one-sided permutation p_failure_greater < 0.05"
+    ],
+    "otherwise": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+    "equivalence_margin_preregistered": false
+  },
+  "preflight": {
+    "fixed_task": "125",
+    "condition": "SUCCESS",
+    "rollout": 1,
+    "pass_if": [
+      "provider output text present",
+      "original deterministic must_include evaluator returns a valid binary score"
+    ],
+    "reuse_preflight_receipt_in_full_run": true
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

@@ -52,9 +52,14 @@
     }
   ],
   "support_state": {
-    "code_repo_commit": "e0ce94e498b133195b274efa682097444dfd7d64",
-    "dataset_repo_commit": "ea07f80bc6813a2970062b8a1164fe530a07be20",
+    "prior_recorded_code_repo_commit": "e0ce94e498b133195b274efa682097444dfd7d64",
+    "prior_recorded_dataset_repo_commit": "ea07f80bc6813a2970062b8a1164fe530a07be20",
+    "local_code_clone_head": "41f5e7656cb811dc47b7fd7f1cd7931f0fa2db66",
+    "local_dataset_clone_head": "711f6443dc765b04980faf0a4145bef4261903e1",
+    "local_frozen_evaluated_snapshot_available": false,
     "public_evaluated_snapshot_available": false,
+    "fresh_remote_recheck_status": "UNAVAILABLE_NETWORK_SUPPORT",
+    "support_recheck_artifact": "generated/d2-temporal-skill-bottleneck-support-recheck-20260821.json",
     "support_failure_has_scientific_authority": false
   },
   "scientific_authority": false

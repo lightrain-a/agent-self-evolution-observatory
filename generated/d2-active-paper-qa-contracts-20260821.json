@@ -9,10 +9,14 @@
       "claim_ledger": "generated/d2-failure-memory-provenance-claim-ledger.json",
       "output": "generated/d2-failure-memory-provenance-paper-qa.json",
       "title_fragments": ["failure memories are not neutral", "causal provenance effects"],
-      "required_pdf_fragments": ["0.931", "101 cases", "0.647", "34 cases", "persistent failures"],
+      "required_pdf_fragments": ["0.931", "101 cases", "0.647", "34 cases", "persistent failures", "144 requested calls", "0.000"],
       "max_pages": 9,
       "artifact_checks": [
-        {"path": "generated/discovery-engine-terminal-replication-source-audit-20260821.json", "key": "summary.active_unrefuted_hypotheses", "equals": 3}
+        {"path": "generated/discovery-engine-terminal-replication-source-audit-20260821.json", "key": "summary.active_unrefuted_hypotheses", "equals": 3},
+        {"path": "generated/d2-failure-memory-provenance-faithful-reconstruction-preflight.json", "key": "status", "equals": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS"},
+        {"path": "generated/d2-failure-memory-provenance-bridge.json", "key": "summary.complete_calls", "equals": 144},
+        {"path": "generated/d2-failure-memory-provenance-bridge.json", "key": "summary.mean_success_minus_failure_terminal_rate", "equals": 0.0},
+        {"path": "generated/d2-failure-memory-provenance-bridge.json", "key": "decision", "equals": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY"}
       ]
     },
     {
