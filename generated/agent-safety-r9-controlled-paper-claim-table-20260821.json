@@ -1,0 +1,67 @@
+{
+  "schema_version": "2.0",
+  "status": "READY_AGENT_SAFETY_R9_CONTROLLED_PAPER_CLAIM_TABLE",
+  "candidate_id": "SHADOW-P01-C01",
+  "evidence_refs": [
+    "repo://generated/agent-safety-r9-controlled-longitudinal-adjudication-20260821.json#sha256=ae02683be1073d798df13c198124abef150b6df51cca2b0b3600628ed3f8ad68",
+    "repo://generated/agent-safety-r9-controlled-longitudinal-scientific-review-20260821.json#sha256=aec41faee640885e7162ae329218cc7c318559bd2204c016d8b6e124cc38679a"
+  ],
+  "columns": [
+    "supported_claim",
+    "not_supported_claim",
+    "limitation"
+  ],
+  "rows": [
+    {
+      "row_id": "R9-CLAIM-01",
+      "supported_claim": "Within the frozen R9 BrowserART/HarmBench operationalization, passing the three-probe current-safety panel did not guarantee absence of first-violation events over the evaluated three-step future.",
+      "not_supported_claim": "Static safety evaluation is generally ineffective across agents, models, or benchmarks.",
+      "limitation": "The guarantee result is a finite logical counterexample in four selected states, not a population estimate."
+    },
+    {
+      "row_id": "R9-CLAIM-02",
+      "supported_claim": "Within the frozen 12 paired BrowserART trajectories, the updated-workflow condition had 8/12 branch first-violation events versus 4/12 under the same-schedule base-workflow control (4 update-only, 0 control-only).",
+      "not_supported_claim": "",
+      "limitation": "The same-schedule contrast separates workflow-update condition from schedule in this frozen 12-pair design, but one backbone and stochastic rollouts do not support a population causal effect."
+    },
+    {
+      "row_id": "R9-CLAIM-03",
+      "supported_claim": "Across 12 frozen state-by-probe trajectories, 4 originally non-violating qualification probes had a first evaluator-classified violation at a later workflow snapshot while probe identity and seed remained fixed.",
+      "not_supported_claim": "",
+      "limitation": "The read-only snapshot panel is descriptive, non-monotonic in two event trajectories, and limited to three probes, four states, and three exposure steps."
+    },
+    {
+      "row_id": "R9-CLAIM-04",
+      "supported_claim": "",
+      "not_supported_claim": "The observed event fractions are population hazards or prevalence estimates.",
+      "limitation": "Branches and probe trajectories are deliberately constructed paired units, not IID deployment samples."
+    },
+    {
+      "row_id": "R9-CLAIM-05",
+      "supported_claim": "",
+      "not_supported_claim": "HarmBench labels are a noiseless safety oracle.",
+      "limitation": "HarmBench remains the frozen operational evaluator and lacks independent validation for this BrowserART realization."
+    }
+  ],
+  "evidence_summary": {
+    "static_qualification": "12/12 completed predictions were non-violations",
+    "updated_future_branch_events": "8/12",
+    "no_update_future_branch_events": "4/12",
+    "paired_discordance": {
+      "treatment_only": 4,
+      "control_only": 0,
+      "both_event": 4,
+      "neither_event": 4
+    },
+    "fixed_probe_event_trajectories": "4/12",
+    "fixed_probe_violations_by_exposure_step": {
+      "0": 0,
+      "1": 1,
+      "2": 1,
+      "3": 2
+    }
+  },
+  "population_hazard_claim": false,
+  "scientific_authority": false,
+  "table_sha256": "cf962a90b0a728f43ace1b02f5abb250c8543e740407ca2ede104d0dbf42875f"
+}

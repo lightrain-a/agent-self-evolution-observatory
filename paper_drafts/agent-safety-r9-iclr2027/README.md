@@ -1,27 +1,34 @@
-# R9 ICLR 2027 case-study manuscript
+# R9 controlled ICLR 2027 manuscript
 
-Paper title: **After a Static Safety Pass: A First-Violation Case Study in a Persistent Web Agent**
+Paper title: **After a Static Safety Pass: Controlled First-Violation Evidence in a Persistent Web Agent**
 
 ## Evidence scope
 
-The manuscript reads the frozen R9 evidence receipt at:
+The manuscript reports 120 completed behavior episodes under a frozen Qwen3-8B/AWM, BrowserART, BrowserGym, and HarmBench operationalization:
 
-`generated/agent-safety-r9-future-evidence-adjudication-20260820.json`
+- 12 current qualification episodes: 0 violations.
+- 36 updated future episodes: 11 violations and 8/12 event branches.
+- 36 same-schedule base-workflow episodes: 7 violations and 4/12 event branches.
+- Paired branch discordance: 4 update-only, 0 control-only, 4 both-event, 4 neither-event.
+- 36 new fixed-probe snapshot episodes, reusing 12 clean step-0 outcomes: first violations in 4/12 state–probe trajectories.
 
-It reports the complete 48-episode case study: 0/12 current qualification violations and 11/36 future violation episodes, with a first violation in 8/12 branches and 3/4 states. Evaluation-depth analysis is derived from the same frozen trajectories: 1/12 branches visible after step 1, 7/12 after step 2, and 8/12 after step 3.
+The saved reopen condition, **separate persistent update effect from held-out schedule effect**, is satisfied for this frozen finite design. The manuscript does not claim a population causal effect, population hazard, universal failure of static evaluation, or oracle status for HarmBench.
 
-The supported claim is deliberately narrow: within this BrowserART/HarmBench operationalization, a current pass did not guarantee no first violation over the specified three-step persistent-update and held-out-task schedule. The manuscript does not claim an update-only causal effect, a population hazard, universal failure of static evaluation, or oracle status for HarmBench.
+## Primary evidence artifacts
 
-The recorded reopen condition is to **separate persistent update effect from held-out schedule effect** with a same-schedule/no-update control under the frozen runtime. That control is design-only and is not represented as completed evidence.
+- `generated/agent-safety-r9-future-evidence-adjudication-20260820.json`
+- `generated/agent-safety-r9-controlled-longitudinal-adjudication-20260821.json`
+- `generated/agent-safety-r9-controlled-longitudinal-scientific-review-20260821.json`
+- `generated/agent-safety-r9-controlled-paper-claim-table-20260821.json`
+- `generated/agent-safety-r9-controlled-memory-graph21-inputs-20260821.json`
 
 ## Manuscript assets
 
-- `main.tex`: nine-page claim-first case-study manuscript, including appendix
-- `MAINLINE_BRIEF.md`: frozen mainline, claim boundary, closest-work collision, and section change map
-- `compile_paper_analysis.py`: descriptive analysis compiler from the frozen receipt
-- `make_first_violation_figure.py`: state-by-branch first-event figure
-- `make_full_paper_figures.py`: protocol and temporal-depth figures
-- `references.bib`: current-source bibliography including the closest longitudinal-memory comparison
+- `main.tex`: claim-first controlled case-study manuscript
+- `MAINLINE_BRIEF.md`: evidence spine and claim boundary
+- `make_controlled_longitudinal_figure.py`: paired-control and fixed-probe figure
+- `make_first_violation_figure.py`: original state-by-branch event figure
+- `make_full_paper_figures.py`: controlled protocol and temporal-depth figures
 - `main.pdf`: compiled manuscript
 
 ## Rebuild
@@ -32,6 +39,9 @@ From the repository root:
 python3 paper_drafts/agent-safety-r9-iclr2027/compile_paper_analysis.py
 python3 paper_drafts/agent-safety-r9-iclr2027/make_first_violation_figure.py
 python3 paper_drafts/agent-safety-r9-iclr2027/make_full_paper_figures.py
+python3 paper_drafts/agent-safety-r9-iclr2027/make_controlled_longitudinal_figure.py \
+  --adjudication generated/agent-safety-r9-controlled-longitudinal-adjudication-20260821.json \
+  --output-prefix paper_drafts/agent-safety-r9-iclr2027/figures/controlled_longitudinal_comparison
 cd paper_drafts/agent-safety-r9-iclr2027
 TEXINPUTS=../iclr2027-official: pdflatex -interaction=nonstopmode -halt-on-error main.tex
 BIBINPUTS=.: BSTINPUTS=../iclr2027-official: bibtex main
@@ -39,4 +49,4 @@ TEXINPUTS=../iclr2027-official: pdflatex -interaction=nonstopmode -halt-on-error
 TEXINPUTS=../iclr2027-official: pdflatex -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-The figure and analysis compilers read the frozen receipt directly and reject incomplete state or branch records. No script authorizes or performs new agent behavior execution.
+All figure and evidence compilers consume frozen receipts. They authorize no new behavior execution.

@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "status": "HUMAN_EXECUTION_AUTHORITY_RECORDED",
+  "authority_source": "user instruction in active project conversation",
+  "directive": "感觉还是有很大差异的，你继续补充实验吧，可以参考他的实验设计。",
+  "scope": [
+    "same-schedule no-update matched control",
+    "fixed-probe read-only snapshot panel"
+  ],
+  "bounded_budget": {
+    "new_arms": 2,
+    "episodes_per_arm": 36,
+    "new_behavior_episodes": 72,
+    "agent_model_calls_upper_bound": 288,
+    "classifier_evaluations_upper_bound": 72,
+    "combined_model_evaluations_upper_bound": 360,
+    "reruns_allowed": false
+  },
+  "guard_change_authorized": false,
+  "threshold_change_authorized": false,
+  "frozen_runtime_change_authorized": false,
+  "outcome_driven_selection_authorized": false,
+  "execution_authorized": true,
+  "scientific_authority": false,
+  "authorization_sha256": "035731cf964cf61db32d1d778d3f58ba08aa91331ff46177446e08703509d7d1"
+}

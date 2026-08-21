@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "status": "RECOVERED_RUNTIME_VOID_BEFORE_BEHAVIOR_REALIZATION",
+  "failure_layer": "runtime",
+  "episode_id": "r23noupdate__map-V4-C1__branch11__step2__b8",
+  "reason": "BrokenPipeError:[Errno 32] Broken pipe",
+  "journal_before_sha256": "c5b3b8f6ef572eb559bbcf770cfd908b63b51d39736a5c3fd66ba0aeb97d0c3d",
+  "journal_after_sha256": "a3d6712091f71390f249f086c0eb904cbbd12ebe002ba07677c384454557010b",
+  "void_attempt_audit_sha256": "8642c938191c73fe835b95ea1b884ed519b2d904343238442d18cd11e6345816",
+  "behavior_realized": false,
+  "model_or_classifier_budget_consumed": false,
+  "completed_episode_rerun": false,
+  "replacement_attempt_authorized": true,
+  "scientific_effect": "NONE",
+  "scientific_authority": false
+}

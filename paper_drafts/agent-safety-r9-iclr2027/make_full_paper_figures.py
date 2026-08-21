@@ -48,31 +48,35 @@ def arrow(ax, start, end):
 
 
 def protocol_figure():
-    fig, ax = plt.subplots(figsize=(7.2, 3.6))
+    fig, ax = plt.subplots(figsize=(7.2, 4.0))
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.axis("off")
 
-    box(ax, (0.03, 0.58), 0.22, 0.28, "Current qualification", "4 persistent states\n3 safety probes each", "#EAF2FF")
-    box(ax, (0.30, 0.58), 0.18, 0.28, "Static pass", "0/12 violations\nall states retained", "#E8F7EF")
-    box(ax, (0.54, 0.58), 0.18, 0.28, "Branch", "3 common branches\nper state", "#FFF4E5")
-    box(ax, (0.77, 0.58), 0.20, 0.28, "Future trajectory", "3 sequential held-out\nepisodes with updates", "#FDECEC")
-    arrow(ax, (0.25, 0.72), (0.30, 0.72))
-    arrow(ax, (0.48, 0.72), (0.54, 0.72))
-    arrow(ax, (0.72, 0.72), (0.77, 0.72))
+    box(ax, (0.03, 0.64), 0.21, 0.24, "Current qualification", "4 states × 3 fixed probes\n0/12 violations", "#EAF2FF")
+    box(ax, (0.30, 0.64), 0.18, 0.24, "Frozen split", "same states, seeds,\nschedule, and runtime", "#E8F7EF")
+    arrow(ax, (0.24, 0.76), (0.30, 0.76))
 
-    box(ax, (0.18, 0.12), 0.25, 0.25, "Branch outcome", "first violation time T\nor censoring at step 3", "#F2F4F7")
-    box(ax, (0.57, 0.12), 0.25, 0.25, "Claim test", "Does current pass imply\nno event in this future?", "#F2F4F7")
-    arrow(ax, (0.87, 0.58), (0.43, 0.37))
-    arrow(ax, (0.43, 0.245), (0.57, 0.245))
+    box(ax, (0.56, 0.72), 0.19, 0.20, "Update", "workflow snapshot\nevolves by step", "#FDECEC")
+    box(ax, (0.56, 0.43), 0.19, 0.20, "No update", "step-0 workflow\nheld fixed", "#EAF2FF")
+    arrow(ax, (0.48, 0.76), (0.56, 0.82))
+    arrow(ax, (0.48, 0.72), (0.56, 0.53))
+
+    box(ax, (0.80, 0.57), 0.17, 0.24, "Paired outcome", "first violation time\nor censoring at step 3", "#FFF4E5")
+    arrow(ax, (0.75, 0.82), (0.80, 0.73))
+    arrow(ax, (0.75, 0.53), (0.80, 0.64))
+
+    box(ax, (0.17, 0.10), 0.29, 0.22, "Fixed-probe snapshots", "same 12 qualification probes\nat exposure steps 0, 1, 2, 3", "#F2F4F7")
+    box(ax, (0.57, 0.10), 0.27, 0.22, "Read-only probe outcome", "first exposure with violation;\nprobe output never writes back", "#F2F4F7")
+    arrow(ax, (0.46, 0.21), (0.57, 0.21))
     ax.text(
         0.5,
         0.02,
-        "The run tests a joint update-plus-schedule trajectory; it does not isolate an update-only effect.",
+        "The matched arm separates workflow-update condition from held-out schedule in this frozen finite design.",
         ha="center",
         va="bottom",
         fontsize=8.5,
-        color="#7A271A",
+        color="#344054",
     )
     fig.tight_layout()
     fig.savefig(OUT / "evaluation_protocol.pdf", bbox_inches="tight")
