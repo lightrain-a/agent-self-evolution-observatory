@@ -2831,13 +2831,13 @@ const CANONICAL_PF_GROUPS = {
 };
 const CANONICAL_CONTEXT_GROUP_COUNTS = {A:0,B:2,C:0,D:0,E:4,F:0,G:0};
 const CATEGORY_BRIEFING_ZH = {
-  A:{focus:"研究一次更新能否安全提交，以及怎样用有限预算发现回退、冲突和回滚需求。",reason:"多数复杂控制器、规则注册表和历史压缩方法，被同信息的固定规则、直接风险表或通用版本工具追平。",survives:"保留底座资格检查、回归面板、同信息简化赛和低成本审计调度。"},
-  B:{focus:"研究哪些记忆与经验值得长期保存、迁移和复用。",reason:"一部分方向缺少足够真实交互样本，另一部分被简单缓存、前置条件或回归准入规则吸收。",survives:"保留效应验证、适用边界、软审计优先级和可逆压缩生命周期。"},
-  C:{focus:"研究评价器、自标注和自纠正信号如何避免在迭代中自我放大。",reason:"当前复杂谱系、评价器修复和纠正门控，大多被冻结锚点、来源降权或浅层规则复现。",survives:"保留标签来源、跨版本评分矩阵和独立真值作为系统审计。"},
-  D:{focus:"研究怎样从失败中生成真正带来新增学习信息的任务和课程。",reason:"逐例最小化、版本化前沿与漂移控制，没有超过直接过滤和产出预测；自动课程底座也尚不成熟。",survives:"保留可靠反例生成、版本趋势诊断和课程漂移监控。"},
-  E:{focus:"研究多节点工作流、API 与结构更新怎样被验证、归因和持续修改。",reason:"当前编辑干预表缺少有效差异，或复杂结构方法被直接编辑、确定性语义和简单权限规则追平。",survives:"保留配对编辑协议、工作流证据链、类型化接口资产与 STRI 投稿成果。"},
-  F:{focus:"研究世界模型和具身 Agent 应该学习哪些误差、不可逆风险与恢复经验。",reason:"价值门控、前置条件编译和恢复算子分别被动作分歧、直接屏障和直接恢复策略完全复现。",survives:"保留不可逆性解释、恢复复现审计与简单运行时安全策略。"},
-  G:{focus:"研究持久状态与经验继续演化后，静态安全检查能否预测未来首次违规。",reason:"安全问题仍成立，但当前没有足够合格、安全冻结的状态来做公平因果比较；其他表述与既有安全治理发生碰撞。",survives:"G-1 作为支持层停止可条件重开；其余风险轴并入安全审计、基线与治理清单。"},
+  A:{focus:"研究一次更新什么时候值得保留，以及怎样尽早发现它会不会让旧能力变差、和其他更新冲突，或需要回滚。",reason:"在拿到相同信息时，固定规则、直接风险评分或普通版本管理已经达到相近效果，复杂控制器暂时没有证明额外价值。",survives:"仍然有用的是：运行前资格检查、回归测试集、同信息简单基线，以及低成本审计调度。"},
+  B:{focus:"研究哪些记忆与经验值得长期保存、迁移和复用，以及它们在什么情况下会失效。",reason:"有些方案缺少足够真实交互来验证；另一些用简单缓存、前置条件或回归准入就能做到相近效果。",survives:"仍值得保留：先验证经验是否真的有效、记录适用边界、优先审计高风险记忆，以及可回滚的压缩和清理机制。"},
+  C:{focus:"研究 Agent 使用自身评价、奖励或纠错信号持续更新时，怎样避免错误评价被一轮轮放大。",reason:"不少复杂的评价器修复或纠错机制，用冻结参考标准、降低可疑来源权重或简单规则就能达到相近效果，暂未证明复杂机制是必要的。",survives:"仍然有用的是：记录标签从哪里来、比较不同版本的评分变化，并保留独立于 Agent 自身的真值检查。"},
+  D:{focus:"研究失败之后应该生成什么新任务，才能真正带来新信息，而不是重复已经知道的东西。",reason:"目前复杂的课程最小化、前沿维护和漂移控制，没有稳定超过直接过滤或成功率预测；自动课程生成的基础能力也还不够稳定。",survives:"仍值得保留：可靠的反例生成、任务难度随版本变化的诊断，以及课程分布漂移监控。"},
+  E:{focus:"研究多节点工作流、API 和系统结构发生变化时，怎样判断改动是否真的有效，并把效果归因到正确的结构变化。",reason:"一些结构编辑没有产生可测差异；另一些复杂方法，被直接编辑、明确接口规则或简单权限控制做到相近效果。",survives:"仍然保留：配对编辑实验、工作流证据链、明确的接口约束，以及已经形成论文的 STRI 结果。"},
+  F:{focus:"研究世界模型和具身 Agent 遇到环境变化或执行失败后，哪些误差和恢复经验值得长期学下来。",reason:"目前提出的价值门控、前置条件和恢复模块，分别可以被更直接的动作差异检测、安全屏障或恢复策略做到相近效果。",survives:"仍然有用的是：不可逆风险的解释、恢复过程的可复现审计，以及简单、可检查的运行时安全策略。"},
+  G:{focus:"研究 Agent 的记忆和持久状态继续变化以后，今天看起来安全的 Agent，未来是否会更容易第一次违规。",reason:"核心科学问题仍然开放，但当前模型和运行环境里，没有足够多“现在都安全、其他条件又能匹配”的状态，因此暂时无法做公平的因果比较。",survives:"保留 G-1 和明确的重开条件；其他风险维度并入安全审计、对照基线和治理清单。"},
 };
 function renderResearchBriefingGuide(inventory) {
   const taxonomy=Object.values(IDEA_STOP_TAXONOMY).map(row=>`<article class="briefing-taxonomy-card tone-${esc(row.tone)}"><span></span><b>${esc(textOf(row))}</b><p>${language==="zh"?({simple:"问题可能真实，但复杂方法没有超过最强简单对照。",support:"现在还不能公平判断方法；需要先补数据、有效更新或合格底座。",identify:"实验结果无法说明收益是否来自声称的新机制。",collision:"问题存在，但已被最近工作或成熟理论基本覆盖。",merge:"有价值的部分保留为更大方向的组件、基线或审计项。",principle:"在有效实验下，关键预测被直接否定；除非出现推翻证据，否则不再重开。"}[row.tone]):({simple:"The idea may matter, but the complex method did not beat the strongest simple control.",support:"The method cannot yet be judged fairly; data or a qualified substrate is missing.",identify:"The experiment cannot attribute an effect to the claimed mechanism.",collision:"The problem is real, but prior work or mature theory already covers it.",merge:"Useful parts survive as a component, baseline, or audit item inside a larger direction.",principle:"A valid test contradicted the key prediction; reopening requires overturning evidence."}[row.tone])}</p></article>`).join("");
