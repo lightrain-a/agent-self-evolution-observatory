@@ -243,6 +243,9 @@ def main() -> None:
     map_view_source = (ROOT / "research-map-view.js").read_text(encoding="utf-8")
     if "RESEARCH_ITEM_STATE" not in map_view_source or "[\"A\",\"B\",\"C\",\"D\",\"E\",\"F\",\"G\"]" not in map_view_source:
         fail("research-map must render the complete A-G map from canonical ResearchItem state with an explicit completeness guard")
+    landscape_source = (ROOT / "research-landscape-data.js").read_text(encoding="utf-8")
+    if "formal_papers:" not in landscape_source or "formalPublicationTimeline" not in map_view_source or "formalPublishedPapers" not in map_view_source or "frontierPapersForGroup" not in map_view_source:
+        fail("research-map must prioritize formally published conference/journal literature and keep preprints as a separate frontier supplement")
     directions_scripts = canonical_scripts.get("research-directions.html", [])
     if "generated/research-items.js" not in directions_scripts or directions_scripts.index("generated/research-items.js") > directions_scripts.index("app.js"):
         fail("research-directions must load canonical ResearchItem state before app.js for the D1-D10 ↔ A-G crosswalk")

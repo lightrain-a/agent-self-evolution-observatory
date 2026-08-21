@@ -30,6 +30,91 @@
 
   const groupColor = id => landscape().colors?.[id] || DEFAULT_COLORS[id] || "#667085";
   const externalPapers = id => (landscape().papers || []).filter(row => row.group === id);
+  const normTitle = value => String(value||"").toLowerCase().replace(/[^a-z0-9]+/g,"");
+  const isFormalVenue = venue => Boolean(venue) && !/arxiv|openreview|workshop|poster/i.test(String(venue));
+  const FORMAL_TITLE_GROUPS = {
+    "STaR: Bootstrapping Reasoning With Reasoning":["D"],
+    "ReAct: Synergizing Reasoning and Acting in Language Models":["E"],
+    "Self-Instruct: Aligning Language Models with Self-Generated Instructions":["D"],
+    "Toolformer: Language Models Can Teach Themselves to Use Tools":["E"],
+    "Reflexion: Language Agents with Verbal Reinforcement Learning":["B","C"],
+    "Self-Refine: Iterative Refinement with Self-Feedback":["C"],
+    "Large Language Models as Optimizers":["A"],
+    "Retroformer: Retrospective Large Language Agents with Policy Gradient Optimization":["A"],
+    "Voyager: An Open-Ended Embodied Agent with Large Language Models":["E","F"],
+    "Self-Rewarding Language Models":["C"],
+    "Self-Evolving Visual Concept Library using Vision-Language Critics":["B"],
+    "VISCO: Benchmarking Fine-Grained Critique and Correction towards Self-Improvement in Visual Reasoning":["C"],
+    "Critic-V: VLM Critics Help Catch VLM Errors in Multimodal Reasoning":["C"],
+    "Can Large Vision-Language Models Correct Semantic Grounding Errors By Themselves?":["C"],
+    "Phoenix: A Motion-based Self-Reflection Framework for Fine-grained Robotic Action Correction":["C","F"],
+    "CLOVA: A Closed-Loop Visual Assistant with Tool Usage and Update":["E"],
+    "Self-Training Large Language Models for Improved Visual Program Synthesis with Visual Reinforcement":["D"],
+    "Visual Agentic AI for Spatial Reasoning with a Dynamic API":["E"],
+    "WebRL: Training LLM Web Agents via Self-Evolving Online Curriculum Reinforcement Learning":["D"],
+    "Automated Design of Agentic Systems":["E"],
+    "AFlow: Automating Agentic Workflow Generation":["E"],
+    "Multi-agent Architecture Search via Agentic Supernet":["E"],
+    "LensWalk: Agentic Video Understanding by Planning How You See in Videos":["F"],
+    "VisPlay: Self-Evolving Vision-Language Models":["D"],
+    "META: Meta Evolution of Tool Trajectory Adaptation for Long-Video Understanding":["E"],
+    "EvoGraph-R1: Self-Evolving Multimodal Knowledge Hypergraphs for Agentic Retrieval":["B"],
+    "JarvisEvo: Towards a Self-Evolving Photo Editing Agent with Synergistic Editor-Evaluator Optimization":["C"],
+    "OctoT2I: A Self-Evolving Agentic Text-to-Image Router":["E"],
+    "VISTA: A Test-Time Self-Improving Video Generation Agent":["C"],
+    "OVOD-Agent: A Markov-Bandit Framework for Proactive Visual Reasoning and Self-Evolving Detection":["C"],
+    "Learning to Adapt: Self-Improving Web Agent via Cognitive-Aware Exploration":["D"],
+    "History to Future: Evolving Agent with Experience and Thought for Zero-shot Vision-and-Language Navigation":["B","F"],
+    "Agentic Video Summarization via Self-Reflecting Multimodal Understanding":["C"],
+    "MIRA: Multimodal Iterative Reasoning Agent for Image Editing":["C"],
+    "ReFAct: Empowering Multimodal Web Agents with Visual and Context Focusing":["E"],
+    "Unified Multimodal Models as Auto-Encoders":["C"],
+    "SciEducator: Scientific Video Understanding and Educating via Deming-Cycle Multi-Agent System":["E"],
+    "OSPO: Object-Centric Self-Improving Preference Optimization for Text-to-Image Generation":["C"],
+    "Seeing is Improving: Visual Feedback for Iterative Text Layout Refinement":["C"],
+    "WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning":["B"],
+    "ViLoMem: Agentic Learner with Grow-and-Refine Multimodal Semantic Memory":["B"],
+    "PersonaVLM: Long-Term Personalized Multimodal LLMs":["B"],
+    "Explore with Long-term Memory: A Benchmark and Multimodal LLM-based Reinforcement Learning Framework for Embodied Exploration":["B","F"],
+    "R4: Retrieval-Augmented Reasoning for Vision-Language Models in 4D Spatio-Temporal Space":["B","F"],
+    "VideoARM: Agentic Reasoning over Hierarchical Memory for Long-Form Video Understanding":["B"]
+  };
+  const formalGroupsFor = row => {
+    if (Array.isArray(row.groups) && row.groups.length) return row.groups;
+    if (FORMAL_TITLE_GROUPS[row.title]) return FORMAL_TITLE_GROUPS[row.title];
+    const category=String(row.category||""), target=String(row.updateTarget||"");
+    if (/Safety/i.test(category)) return ["G"];
+    if (/Memory/i.test(category)||/Personalization/i.test(category)) return ["B"];
+    if (/Tool|Skill|Workflow/i.test(category)||/tool\/skill|workflow\/scaffold/i.test(target)) return ["E"];
+    if (/Embodied/i.test(category)) return ["F"];
+    if (/Related Self-Correction|Prompt Evolution/i.test(category)) return ["C"];
+    if (/GUI & Web/i.test(category)) return ["D"];
+    if (/Model Improvement/i.test(category)) return ["D"];
+    if (/Visual & Multimodal/i.test(category)) {
+      if (/memory/i.test(target)) return ["B"];
+      if (/tool|skill|workflow/i.test(target)) return ["E"];
+      if (/prompt|model parameters/i.test(target)) return ["C"];
+    }
+    return [];
+  };
+  const formalBaseRelevant = row => {
+    if (!isFormalVenue(row.venue) || Number(row.year||0)<2022) return false;
+    if (row.category==="Foundations") return false;
+    if (row.category==="Agent Foundations") return row.title==="ReAct: Synergizing Reasoning and Acting in Language Models";
+    return formalGroupsFor(row).length>0;
+  };
+  const formalPublishedPapers = () => {
+    const raw=[...(window.SUPPLEMENTAL_PAPERS||[]).filter(formalBaseRelevant),...(landscape().formal_papers||[])];
+    const seen=new Set(), rows=[];
+    raw.forEach(row=>{
+      const key=normTitle(row.title); if(!key||seen.has(key)) return; seen.add(key);
+      const groups=formalGroupsFor(row); if(!groups.length) return;
+      rows.push({...row,groups,short:row.short||row.title,advance_zh:row.advance_zh||row.summaryZh||row.summary||"",advance_en:row.advance_en||row.summary||row.summaryZh||""});
+    });
+    return rows.sort((a,b)=>Number(a.year)-Number(b.year)||String(a.venue).localeCompare(String(b.venue))||String(a.title).localeCompare(String(b.title)));
+  };
+  const formalPapersForGroup = id => formalPublishedPapers().filter(row=>(row.groups||[]).includes(id));
+  const frontierPapersForGroup = id => externalPapers(id).filter(row=>!/正式发表|Published/.test(String(row.status_zh||row.status_en||"")) && !formalPublishedPapers().some(formal=>normTitle(formal.title)===normTitle(row.title)));
   const compact = (value,max=170) => { const text=String(value||"").replace(/\s+/g," ").trim(); return text.length>max?`${text.slice(0,max-1)}…`:text; };
   const valueText = value => {
     if (!value) return "";
@@ -95,11 +180,19 @@
   };
 
   const topStats = groups => {
-    const s=researchItemsState().summary||{}, states=s.scientific_state_counts||{}, ps=paperRegistry().summary||{};
-    return `<section class="rpm-stats"><article><b>${groups.length}</b><span>${mapPick("研究大类","research categories")}</span></article><article><b>${s.portfolio_objects||0}</b><span>${mapPick("内部研究记录","internal research records")}</span></article><article><b>${states.HOLD||0}</b><span>${mapPick("仍等待条件的 ResearchItem","ResearchItems on hold")}</span></article><article><b>${(landscape().papers||[]).length}</b><span>${mapPick("代表性外部工作","representative external work")}</span></article><article class="rpm-paper-stat"><b>${states.PAPER_READY||0}</b><span>${mapPick("科学证据闭环的论文线","paper lines with closed scientific evidence")}</span></article><article><b>${ps.submission_ready||0}</b><span>${mapPick("真正可投稿","truly submission-ready")}</span></article></section>`;
+    const s=researchItemsState().summary||{}, states=s.scientific_state_counts||{}, ps=paperRegistry().summary||{}, formal=formalPublishedPapers();
+    const frontier=(landscape().papers||[]).filter(row=>!/正式发表|Published/.test(String(row.status_zh||row.status_en||"")));
+    return `<section class="rpm-stats"><article><b>${groups.length}</b><span>${mapPick("研究大类","research categories")}</span></article><article><b>${s.portfolio_objects||0}</b><span>${mapPick("内部研究记录","internal research records")}</span></article><article><b>${states.HOLD||0}</b><span>${mapPick("仍等待条件的 ResearchItem","ResearchItems on hold")}</span></article><article class="rpm-paper-stat"><b>${formal.length}</b><span>${mapPick("已收录正式发表论文","formally published papers")}</span></article><article><b>${frontier.length}</b><span>${mapPick("前沿预印本补充","frontier preprints")}</span></article><article><b>${ps.submission_ready||0}</b><span>${mapPick("我们真正可投稿","our truly submission-ready papers")}</span></article></section>`;
   };
 
-  const overviewIndex = groups => `<section class="panel rpm-overview" id="a-g-overview"><div class="rpm-section-head"><div><div class="eyebrow">${mapPick("A–G 快速总览","A–G AT A GLANCE")}</div><h2 data-toc="false">${mapPick("先用 30 秒看完七个方向，再决定往下读哪一类","Scan all seven areas in 30 seconds, then open the ones that matter")}</h2><p>${mapPick("每张卡只放三个东西：这个方向问什么、我们现在是什么状态、内部研究记录与代表性外部论文有多少。点击后跳到对应详细板块。","Each card shows only the question, our current state, and the size of internal/external coverage. Click to jump to the detailed section.")}</p></div></div><div class="rpm-overview-grid">${groups.map(group=>{const inv=groupInventory(group.id),papers=externalPapers(group.id),counts=groupStateCounts(group.id);return `<a href="#research-map-${esc(group.id.toLowerCase())}" class="rpm-overview-card" style="--group-color:${groupColor(group.id)}"><header><span>${esc(group.id)}</span><b>${textOf(group.title)}</b></header><p>${textOf(group.question)}</p><small>${counts.PAPER_READY?mapPick("已有论文成果","paper result"):counts.HOLD?mapPick(`${counts.HOLD} 个问题等待条件`,`${counts.HOLD} on hold`):mapPick("当前无独立推进方向","no standalone active line")}</small><footer><span>${inv.portfolio_total||0} ${mapPick("内部记录","internal")}</span><span>${papers.length} ${mapPick("代表论文","external papers")}</span></footer></a>`;}).join("")}</div></section>`;
+  const formalPaperRow = paper => `<a class="rpm-formal-paper-row" href="${esc(paper.url)}" target="_blank" rel="noopener"><span class="rpm-formal-venue"><b>${esc(paper.year)}</b>${esc(paper.venue)}</span><div><b>${esc(paper.short||paper.title)}</b><p>${esc(mapPick(paper.advance_zh,paper.advance_en)||paper.title)}</p></div><span class="rpm-formal-groups">${(paper.groups||[]).map(id=>`<i style="--group-color:${groupColor(id)}">${esc(id)}</i>`).join("")}</span></a>`;
+
+  const formalPublicationTimeline = () => {
+    const papers=formalPublishedPapers(), years=[...new Set(papers.map(row=>Number(row.year)))].sort((a,b)=>a-b), venues=[...new Set(papers.map(row=>String(row.venue)))];
+    return `<section class="panel rpm-formal-timeline" id="formal-publication-lineage"><div class="rpm-section-head"><div><div class="eyebrow">${mapPick("正式发表主线 · 非 arXiv","FORMALLY PUBLISHED LINEAGE · NON-ARXIV")}</div><h2 data-toc="false">${mapPick(`把 ${papers.length} 篇正式会议 / 期刊论文按年份排开，看这个领域怎样一步步形成`,`Follow ${papers.length} formally published conference/journal papers across time`)}</h2><p>${mapPick("这里优先收录已经进入正式会议或期刊 proceedings 的工作；同一论文如果同时有 arXiv，只保留正式版本。收录范围以本研究站的 Agent self-evolution / persistent adaptation 语料为边界，并补充近期漏收的 ICLR、ICML、ACL、EMNLP、NAACL、CVPR 等正式论文。","This section prioritizes formal conference/journal proceedings; when a paper also has an arXiv version, only the formal version is kept. Coverage follows this observatory's agent self-evolution/persistent-adaptation corpus plus recently verified formal publications.")}</p></div><div class="rpm-formal-summary"><span><b>${papers.length}</b>${mapPick("正式论文","formal papers")}</span><span><b>${venues.length}</b>${mapPick("venue / track","venues / tracks")}</span><span><b>${years.length}</b>${mapPick("发表年份","publication years")}</span></div></div><div class="rpm-formal-years">${years.map(year=>{const rows=papers.filter(row=>Number(row.year)===year);return `<details class="rpm-formal-year" open><summary><b>${year}</b><span>${rows.length} ${mapPick("篇正式论文","formal papers")}</span></summary><div class="rpm-formal-paper-list">${rows.map(formalPaperRow).join("")}</div></details>`;}).join("")}</div></section>`;
+  };
+
+  const overviewIndex = groups => `<section class="panel rpm-overview" id="a-g-overview"><div class="rpm-section-head"><div><div class="eyebrow">${mapPick("A–G 快速总览","A–G AT A GLANCE")}</div><h2 data-toc="false">${mapPick("先用 30 秒看完七个方向，再决定往下读哪一类","Scan all seven areas in 30 seconds, then open the ones that matter")}</h2><p>${mapPick("每张卡显示：这个方向问什么、我们现在是什么状态、正式发表论文有多少、前沿预印本有多少。","Each card shows the question, our current state, formally published literature, and frontier preprints.")}</p></div></div><div class="rpm-overview-grid">${groups.map(group=>{const inv=groupInventory(group.id),formal=formalPapersForGroup(group.id),frontier=frontierPapersForGroup(group.id),counts=groupStateCounts(group.id);return `<a href="#research-map-${esc(group.id.toLowerCase())}" class="rpm-overview-card" style="--group-color:${groupColor(group.id)}"><header><span>${esc(group.id)}</span><b>${textOf(group.title)}</b></header><p>${textOf(group.question)}</p><small>${counts.PAPER_READY?mapPick("已有论文成果","paper result"):counts.HOLD?mapPick(`${counts.HOLD} 个问题等待条件`,`${counts.HOLD} on hold`):mapPick("当前无独立推进方向","no standalone active line")}</small><footer><span>${inv.portfolio_total||0} ${mapPick("内部记录","internal")}</span><span>${formal.length} ${mapPick("正式论文","formal")}</span><span>${frontier.length} ${mapPick("预印本","preprints")}</span></footer></a>`;}).join("")}</div></section>`;
 
   const humanDecision = item => {
     const code=String(item.decision_code||""), layer=String(item.failure_layer||"");
@@ -129,6 +222,7 @@
   const itemCard = item => `<article class="rpm-item-card state-${String(item.scientific_state||"").toLowerCase()}"><header><span>${esc(item.code||item.id||"--")}</span><b>${esc(valueText(item.title)||item.id||"--")}</b><em>${esc(stateLabel(item.scientific_state))}</em></header><p>${esc(humanDecision(item))}</p>${humanNext(item)?`<small><b>${mapPick("下一步：","Next: ")}</b>${esc(humanNext(item))}</small>`:""}</article>`;
 
   const externalPaperCard = paper => `<a class="rpm-external-paper" href="${esc(paper.url)}" target="_blank" rel="noopener"><header><b>${esc(paper.short||paper.title)}</b><span>${esc(mapPick(paper.status_zh,paper.status_en))}</span></header><p><strong>${mapPick("它做到：","What it establishes: ")}</strong>${esc(mapPick(paper.advance_zh,paper.advance_en))}</p></a>`;
+  const formalPaperCard = paper => `<a class="rpm-formal-category-paper" href="${esc(paper.url)}" target="_blank" rel="noopener"><header><span>${esc(paper.year)} · ${esc(paper.venue)}</span><b>${esc(paper.short||paper.title)}</b></header><p><strong>${mapPick("推进到：","Advance: ")}</strong>${esc(mapPick(paper.advance_zh,paper.advance_en)||paper.title)}</p></a>`;
 
   const graphIndex = () => {
     const g=evidenceGraph();
@@ -165,10 +259,9 @@
   };
 
   const categorySection = group => {
-    const items=representativeItems(group.id), allItems=groupItems(group.id), inv=groupInventory(group.id), counts=groupStateCounts(group.id), papers=externalPapers(group.id), insight=CATEGORY_BRIEFING_ZH[group.id]||{};
-    const published=papers.filter(row=>/正式发表|Published/.test(row.status_zh||row.status_en||"")).length;
-    const externalSummary= papers.length ? mapPick(`${papers.length} 篇代表性工作，其中 ${published} 篇已正式发表；这里只作为相邻研究定位，不代表完整综述。`,`${papers.length} representative papers, ${published} formally published; this is a positioning sample, not an exhaustive review.`) : mapPick("当前还没有放入代表性外部工作；这不等于该方向没有相关文献。","No representative external paper is shown yet; this does not imply absence of related literature.");
-    return `<section class="rpm-category" id="research-map-${esc(group.id.toLowerCase())}" style="--group-color:${groupColor(group.id)}"><header class="rpm-category-header"><span>${esc(group.id)}</span><div><h2 data-toc="false">${textOf(group.title)}</h2><p>${textOf(group.question)}</p></div><div class="rpm-category-counts"><b>${inv.portfolio_total||0}</b><small>${mapPick("内部研究记录","internal records")}</small><b>${papers.length}</b><small>${mapPick("代表性外部论文","representative papers")}</small></div></header><div class="rpm-category-headline"><b>${mapPick("一句话结论","ONE-LINE TAKEAWAY")}</b><p>${esc(categoryHeadline(group.id))}</p></div><div class="rpm-category-columns"><section class="rpm-ours"><div class="rpm-column-title"><b>${mapPick("我们现在做到哪里","Where our work stands")}</b><span>${mapPick(`${counts.HOLD||0} 等待条件 · ${counts.PAPER_READY||0} 论文 · ${counts.MERGED||0} 合并 · ${counts.STOPPED||0} 停止`,`${counts.HOLD||0} hold · ${counts.PAPER_READY||0} paper · ${counts.MERGED||0} merged · ${counts.STOPPED||0} stopped`)}</span></div><div class="rpm-item-list">${items.map(itemCard).join("")}</div><div class="rpm-category-judgment"><div><b>${mapPick("为什么形成这个结论","Why this is the current conclusion")}</b><p>${esc(insight.reason||"具体以 ResearchItem 当前证据为准。")}</p></div><div><b>${mapPick("哪些东西仍值得留下","What remains useful")}</b><p>${esc(insight.survives||"保留仍有效的方法组件、基线和负证据。")}</p></div></div><a class="link-btn" href="paper-ideas.html#canonical-group-${esc(group.id.toLowerCase())}">${mapPick(`查看 ${group.id} 类全部 ${allItems.length} 个 ResearchItem →`,`Open all ${allItems.length} category ${group.id} ResearchItems →`)}</a></section><section class="rpm-outside"><div class="rpm-column-title"><b>${mapPick("别人已经做到哪里","Where neighboring work stands")}</b><span>${esc(externalSummary)}</span></div><div class="rpm-external-paper-list">${papers.map(externalPaperCard).join("") || `<div class="rpm-empty">${mapPick("暂无代表性论文卡片","No representative-paper card yet")}</div>`}</div></section></div><div class="rpm-lineage"><div class="rpm-column-title"><b>${mapPick("为什么会走到今天这个结论","Why the research path led here")}</b><span>${group.id==="G"?mapPick("用当前安全 ResearchItem 直接解释","explained directly from current safety ResearchItem"):mapPick("把旧知识图谱压成可读表格，不再画低密度节点串","the older graph is compressed into a readable table instead of low-density node chains")}</span></div>${lineageTable(group)}</div></section>`;
+    const items=representativeItems(group.id), allItems=groupItems(group.id), inv=groupInventory(group.id), counts=groupStateCounts(group.id), formal=formalPapersForGroup(group.id), frontier=frontierPapersForGroup(group.id), insight=CATEGORY_BRIEFING_ZH[group.id]||{};
+    const externalSummary=formal.length?mapPick(`已收录 ${formal.length} 篇正式发表论文；按年份全部列出。另有 ${frontier.length} 篇前沿预印本作为补充。`,`Includes ${formal.length} formally published papers, all listed by year, plus ${frontier.length} frontier preprints.`):mapPick(`当前正式发表语料中还没有归入本类的论文；另有 ${frontier.length} 篇前沿预印本。`,`No formal paper in the current corpus maps here yet; ${frontier.length} frontier preprints remain.`);
+    return `<section class="rpm-category" id="research-map-${esc(group.id.toLowerCase())}" style="--group-color:${groupColor(group.id)}"><header class="rpm-category-header"><span>${esc(group.id)}</span><div><h2 data-toc="false">${textOf(group.title)}</h2><p>${textOf(group.question)}</p></div><div class="rpm-category-counts"><b>${inv.portfolio_total||0}</b><small>${mapPick("内部研究记录","internal records")}</small><b>${formal.length}</b><small>${mapPick("正式发表论文","formal papers")}</small><b>${frontier.length}</b><small>${mapPick("前沿预印本","frontier preprints")}</small></div></header><div class="rpm-category-headline"><b>${mapPick("一句话结论","ONE-LINE TAKEAWAY")}</b><p>${esc(categoryHeadline(group.id))}</p></div><div class="rpm-category-columns"><section class="rpm-ours"><div class="rpm-column-title"><b>${mapPick("我们现在做到哪里","Where our work stands")}</b><span>${mapPick(`${counts.HOLD||0} 等待条件 · ${counts.PAPER_READY||0} 论文 · ${counts.MERGED||0} 合并 · ${counts.STOPPED||0} 停止`,`${counts.HOLD||0} hold · ${counts.PAPER_READY||0} paper · ${counts.MERGED||0} merged · ${counts.STOPPED||0} stopped`)}</span></div><div class="rpm-item-list">${items.map(itemCard).join("")}</div><div class="rpm-category-judgment"><div><b>${mapPick("为什么形成这个结论","Why this is the current conclusion")}</b><p>${esc(insight.reason||"具体以 ResearchItem 当前证据为准。")}</p></div><div><b>${mapPick("哪些东西仍值得留下","What remains useful")}</b><p>${esc(insight.survives||"保留仍有效的方法组件、基线和负证据。")}</p></div></div><a class="link-btn" href="paper-ideas.html#canonical-group-${esc(group.id.toLowerCase())}">${mapPick(`查看 ${group.id} 类全部 ${allItems.length} 个 ResearchItem →`,`Open all ${allItems.length} category ${group.id} ResearchItems →`)}</a></section><section class="rpm-outside"><div class="rpm-column-title"><b>${mapPick("别人已经做到哪里","Where neighboring work stands")}</b><span>${esc(externalSummary)}</span></div><div class="rpm-formal-category-list">${formal.map(formalPaperCard).join("") || `<div class="rpm-empty">${mapPick("暂无正式发表论文记录","No formal publication mapped yet")}</div>`}</div>${frontier.length?`<details class="rpm-frontier-preprints"><summary><b>${mapPick("前沿补充：arXiv / preprint","Frontier supplement: arXiv / preprint")}</b><span>${frontier.length} ${mapPick("篇","papers")}</span></summary><div class="rpm-external-paper-list">${frontier.map(externalPaperCard).join("")}</div></details>`:""}</section></div><div class="rpm-lineage"><div class="rpm-column-title"><b>${mapPick("为什么会走到今天这个结论","Why the research path led here")}</b><span>${group.id==="G"?mapPick("用当前安全 ResearchItem 直接解释","explained directly from current safety ResearchItem"):mapPick("把旧知识图谱压成可读表格，不再画低密度节点串","the older graph is compressed into a readable table instead of low-density node chains")}</span></div>${lineageTable(group)}</div></section>`;
   };
 
   const graphTechnicalAppendix = () => {
@@ -181,7 +274,7 @@
     const chapters=(window.PAGE_ARCHITECTURES?.["research-map"]?.chapters)||[];
     const layering=`${readingBridge()}${topStats(groups)}`;
     const coverage=coverageSummary(groups);
-    const integrated=`${overviewIndex(groups)}<section class="rpm-map-intro"><div><b>${mapPick("颜色只表示 A–G 研究大类","Color only identifies the A–G category")}</b><p>${mapPick("继续、停止、合并、等待条件和论文状态全部直接写成文字。页面的目标是让人读懂研究判断，而不是让人先学会图谱符号。","Continue/stop/merge/hold/paper states are written explicitly. The goal is to understand the research judgment without first learning graph notation.")}</p></div><a class="link-btn" href="research-directions.html">${mapPick("查看领域全景 →","Open field landscape →")}</a></section><section class="rpm-category-stack">${groups.map(categorySection).join("")}</section>`;
+    const integrated=`${formalPublicationTimeline()}${overviewIndex(groups)}<section class="rpm-map-intro"><div><b>${mapPick("颜色只表示 A–G 研究大类","Color only identifies the A–G category")}</b><p>${mapPick("正式发表论文优先完整展示；arXiv / preprint 只作为前沿补充。继续、停止、合并、等待条件和论文状态全部直接写成文字。","Formal publications are shown first and as completely as the current corpus allows; arXiv/preprints are frontier supplements. Research states are written explicitly in text.")}</p></div><a class="link-btn" href="research-directions.html">${mapPick("查看领域全景 →","Open field landscape →")}</a></section><section class="rpm-category-stack">${groups.map(categorySection).join("")}</section>`;
     return `${pageHeader(config)}${renderArchitectureOverview(window.PAGE_ARCHITECTURES?.["research-map"])}${renderCustomChapter(chapters[0],0,layering)}${renderCustomChapter(chapters[1],1,coverage)}${renderCustomChapter(chapters[2],2,integrated)}${renderCustomChapter(chapters[3],3,graphTechnicalAppendix())}`;
   };
 })();
