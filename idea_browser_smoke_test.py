@@ -382,6 +382,7 @@ def main() -> None:
           openCanonicalClosedArchives: document.querySelectorAll('.canonical-closed-archive[open]').length,
           closedIdeaBanks: document.querySelectorAll('.canonical-closed-idea-bank').length,
           openClosedIdeaBanks: document.querySelectorAll('.canonical-closed-idea-bank[open]').length,
+          closedIdeaBankLabels: [...document.querySelectorAll('.canonical-closed-idea-bank>summary b')].map(x=>(x.textContent||'').trim()),
           closedIdeaCards: document.querySelectorAll('.closed-idea-card').length,
           closedIdeaCodes: [...document.querySelectorAll('.closed-idea-card')].map(x=>x.dataset.closedCode||''),
           closedIdeaSources: [...document.querySelectorAll('.closed-idea-card')].map(x=>x.dataset.closedSource||''),
@@ -500,7 +501,8 @@ def main() -> None:
         pace_closed=next((row for row in closed_rows if row.get("candidate_id")=="PA-06-PACE-MECHANISM-REDESIGN-IDENTIFIABILITY"),{})
         require(pa01_closed.get("failure_layer")=="method_realization" and pa01_closed.get("experiment_run_for_this_readjudication") is True and pa01_closed.get("experiment_alone_authorizes_closure") is False, f"PA-01 must remain experiment-informed but method-realization scoped, not experiment-failed principle: {pa01_closed}")
         require(pace_closed.get("failure_layer")=="core_principle" and pace_closed.get("principle_update_allowed") is True and pace_closed.get("broader_core_principle_falsified") is False, f"PACE must be a scoped core-principle stop without benchmark-level falsification: {pace_closed}")
-        require(all(marker in ideas["text"] for marker in ("已停止的编号 Idea","负实验是否决定关闭","实验前问题/新颖性","实验可辨识性","方法实现/独立机制")), "numbered stopped-idea failure-layer explanations are not visible in the Chinese Paper Ideas view")
+        require(len(ideas["closedIdeaBankLabels"]) == 5 and all(label == "已停止的编号 Idea" for label in ideas["closedIdeaBankLabels"]), f"numbered stopped-idea bank labels are missing: {ideas['closedIdeaBankLabels']}")
+        require(all(marker in ideas["text"] for marker in ("负实验是否决定关闭","实验前问题/新颖性","实验可辨识性","方法实现/独立机制")), "numbered stopped-idea failure-layer explanations are not visible in the Chinese Paper Ideas view")
         require(ideas["shadowDesignPolicy"].get("source_is_shadow_search_portfolio") is True and ideas["shadowDesignPolicy"].get("shadow_queue_has_zero_paper_design_authority") is True and ideas["shadowDesignPolicy"].get("cannot_grant_or_revoke_live_paper_design_authority") is True, f"shadow Paper Design authority boundary is missing: {ideas['shadowDesignPolicy']}")
         require((ideas["shadowQueueSummary"].get("counterfactual_problem_gate_passed"),ideas["shadowQueueSummary"].get("live_paper_design_eligible")) == (2,0), f"shadow queue must expose 2 historical counterfactual passes and 0 live eligibility: {ideas['shadowQueueSummary']}")
         latest=ideas["shadowLatestSummary"]
