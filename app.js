@@ -1311,6 +1311,7 @@ function projectStatusState(){ return window.CURRENT_RESEARCH_STATUS || {}; }
 function renderProjectStatusStrip(){
   const state=projectStatusState(), h=state.headline||{}, asOf=state.as_of_date||"";
   if(!Object.keys(h).length) return "";
+  if(pageId==="research-map") return "";
   if(pageId==="research-directions") {
     const labels=language==="zh"
       ? [["论文就绪",h.paper_ready||0],["正式新问题",h.canonical_live_ideas||0],["可启动实验",h.launchable_formal_experiments||0]]
