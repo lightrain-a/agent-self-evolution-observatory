@@ -275,7 +275,7 @@ def main() -> None:
           dayGroups: document.querySelectorAll('.rt-day-row').length,
           openDays: document.querySelectorAll('.rt-day-detail-row:not([hidden])').length,
           eventRows: document.querySelectorAll('.rt-event').length,
-          visibleCount: Number(document.querySelector('.rt-stats article:first-child b')?.textContent || 0),
+          visibleCount: Number(document.querySelector('.rt-hero-kpis span:first-child b')?.textContent || 0),
           summary: window.RESEARCH_TIMELINE?.summary || {},
           timezone: window.RESEARCH_TIMELINE?.projection_policy?.display_timezone || '',
           descActive: document.querySelector('[data-rt-order="desc"]')?.classList.contains('active') === true,
@@ -285,17 +285,27 @@ def main() -> None:
           lastDay: [...document.querySelectorAll('.rt-day-row')].at(-1)?.id?.replace('timeline-', '') || '',
           legendItems: document.querySelectorAll('.rt-legend-item[data-rt-legend]').length,
           legendBackgrounds: new Set([...document.querySelectorAll('.rt-legend-item[data-rt-legend]')].map(x => getComputedStyle(x).backgroundColor)).size,
-          overviewAccent: getComputedStyle(document.querySelector('.rt-overview'),'::before').backgroundImage || '',
+          heroAccent: getComputedStyle(document.querySelector('.rt-hero'),'::before').backgroundImage || '',
+          oldTopLayers: document.querySelectorAll('.lead,.callout,.rt-overview,.rt-stats').length,
+          heatPairTop: [...document.querySelectorAll('.rt-heat-month')].slice(0,2).map(x=>Math.round(x.getBoundingClientRect().top)),
+          tablePairTop: [...document.querySelectorAll('.rt-month')].slice(0,2).map(x=>Math.round(x.getBoundingClientRect().top)),
+          heatBottom: Math.round(document.querySelector('#research-timeline-heatmap')?.getBoundingClientRect().bottom || 0),
+          controlsTop: Math.round(document.querySelector('#research-timeline-controls')?.getBoundingClientRect().top || 0),
+          controlsHeight: Math.round(document.querySelector('.rt-controls')?.getBoundingClientRect().height || 0),
           aug21WeekLabel: document.querySelector('#timeline-2026-08-21 .rt-table-date b')?.textContent?.trim() || '',
           aug21DateLabel: document.querySelector('#timeline-2026-08-21 .rt-table-date small')?.textContent?.trim() || '',
+          aug21Thread: document.querySelector('#timeline-2026-08-21 .rt-table-thread p')?.textContent?.trim() || '',
           zhText: document.body.textContent || ''
         };""")
         require(timeline["title"] == "研究时间轴", f"timeline must default to its Chinese page title: {timeline}")
         require(timeline["monthTables"] == timeline["heatMonths"] == timeline["sourceMonths"] and timeline["monthTables"] >= 2 and timeline["firstHeatMonth"] >= timeline["lastHeatMonth"] and timeline["dayGroups"] >= 20 and timeline["openDays"] == 0, f"timeline must render one workload calendar and one collapsed table per month: {timeline}")
         require(timeline["eventRows"] == timeline["visibleCount"] == int(timeline["summary"].get("events") or 0) and timeline["eventRows"] >= 756, f"timeline rendered event count must match the generated full projection: {timeline}")
-        require(timeline["timezone"] == "Asia/Shanghai" and timeline["descActive"] and timeline["firstMonth"] >= timeline["lastMonth"] and timeline["firstDay"] >= timeline["lastDay"] and "按月分表" in timeline["zhText"] and "北京时间" in timeline["zhText"] and "本页只是只读历史投影" in timeline["zhText"], f"timeline monthly-table/newest-first/timezone/authority boundary is incomplete: {timeline}")
-        require(timeline["legendItems"] == 7 and timeline["legendBackgrounds"] == 7 and "linear-gradient" in timeline["overviewAccent"], f"timeline overview must reuse all seven semantic colors in its legend and accent: {timeline}")
+        require(timeline["timezone"] == "Asia/Shanghai" and timeline["descActive"] and timeline["firstMonth"] >= timeline["lastMonth"] and timeline["firstDay"] >= timeline["lastDay"] and "月历和月表" in timeline["zhText"] and "北京时间" in timeline["zhText"] and "本页只是只读历史投影" in timeline["zhText"], f"timeline paired-month/newest-first/timezone/authority boundary is incomplete: {timeline}")
+        require(timeline["legendItems"] == 7 and timeline["legendBackgrounds"] == 7 and "linear-gradient" in timeline["heroAccent"], f"timeline compact header must reuse all seven semantic colors in its legend and accent: {timeline}")
+        require(timeline["oldTopLayers"] == 0 and len(set(timeline["heatPairTop"])) == 1 and len(set(timeline["tablePairTop"])) == 1 and timeline["controlsTop"] >= timeline["heatBottom"] and timeline["controlsHeight"] <= 64, f"timeline must use one compact header, paired months, and one-line filters below calendars: {timeline}")
         require(timeline["aug21WeekLabel"] == "第4周 · 周五" and timeline["aug21DateLabel"] == "2026-08-21", f"timeline date row must show monthly week/weekday above the ISO date: {timeline}")
+        aug21_parts = [part.strip() for part in timeline["aug21Thread"].split("→") if part.strip()]
+        require(len(aug21_parts) <= 3 and len(aug21_parts) == len(set(aug21_parts)), f"timeline main thread must deduplicate and diversify daily highlights: {timeline}")
         execute(session_id, "document.querySelector('.rt-day-row')?.click();")
         time.sleep(0.3)
         timeline_expand = execute(session_id, """const row=document.querySelector('.rt-day-row'); const detail=row?.nextElementSibling; return {expanded:row?.getAttribute('aria-expanded')||'',detailVisible:detail?.hidden===false,toggle:row?.querySelector('.rt-day-toggle')?.textContent||''};""")

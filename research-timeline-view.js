@@ -161,12 +161,38 @@
     return (Date.parse(a.occurred_at)||0) - (Date.parse(b.occurred_at)||0);
   });
   const dayCounts = (events) => events.reduce((m,e)=>(m[e.event_class]=(m[e.event_class]||0)+1,m),{});
+  const headlineTitle = (e) => {
+    let title = localTitle(e).trim();
+    if (language === "zh") title = title.replace(/^(系统建设里程碑|Idea \/ 研究问题相关提交|实验 \/ 证据相关提交|论文 \/ 评审相关提交|关闭 \/ 裁决相关提交|系统与治理记录|停止 \/ 关闭裁决)\s*[：:·]\s*/i, "");
+    return title;
+  };
+  const headlineKey = (title) => raw(title).toLowerCase().replace(/[\s·：:—–_\-]+/g," ").trim();
+  const headlineScore = (e) => {
+    const classScore = {scientific:90,paper:80,experiment:70,idea:65,closure:60,blocker:55,system:15}[e.event_class] || 0;
+    const importanceScore = e.importance === "key" ? 100 : 0;
+    const originScore = e.origin === "artifact" ? 40 : e.origin === "artifact_full_history" ? 25 : e.origin === "research_memory_db" ? 5 : 0;
+    const genericRuntime = /append-only research run imported|新的科研运行记录写入 research memory/i.test(`${e.title||""} ${e.title_zh||""}`) ? -140 : 0;
+    return classScore + importanceScore + originScore + genericRuntime;
+  };
   const dayHeadline = (events) => {
     const ordered = sortDayEvents(events);
-    const preferred = ordered.filter(e => e.importance === "key" && e.origin !== "git_daily_summary");
-    const pool = preferred.length ? preferred : ordered.filter(e => e.origin !== "git_daily_summary" && e.event_class !== "system");
-    const chosen = (pool.length ? pool : ordered).slice(0,3).map(e => localTitle(e)).filter(Boolean);
-    return chosen.length ? chosen.join(" → ") : pick("当日以系统维护与追溯工作为主。","Primarily system/provenance work.");
+    const source = ordered.filter(e => e.origin !== "git_daily_summary");
+    const pool = source.length ? source : ordered;
+    const unique = new Map();
+    pool.forEach((e,index) => {
+      const title = headlineTitle(e);
+      const key = headlineKey(title);
+      if (!key) return;
+      const candidate = {e,title,index,score:headlineScore(e)};
+      const existing = unique.get(key);
+      if (!existing || candidate.score > existing.score) unique.set(key,candidate);
+    });
+    const ranked = [...unique.values()].sort((a,b)=>b.score-a.score || a.index-b.index);
+    const selected = [], usedClasses = new Set();
+    ranked.forEach(item=>{ if (selected.length < 3 && !usedClasses.has(item.e.event_class)){ selected.push(item); usedClasses.add(item.e.event_class); } });
+    ranked.forEach(item=>{ if (selected.length < 3 && !selected.includes(item)) selected.push(item); });
+    selected.sort((a,b)=>a.index-b.index);
+    return selected.length ? selected.map(item=>item.title).join(" → ") : pick("当日以系统维护与追溯工作为主。","Primarily system/provenance work.");
   };
   const workloadBar = (events) => {
     const counts = dayCounts(events), total = Math.max(events.length,1);
@@ -209,7 +235,7 @@
     const label = language === "zh" ? raw(sample?.research_label_zh || r) : r;
     return `<option value="${esc(r)}" ${state.research===r?"selected":""}>${esc(label)}</option>`;
   }).join("");
-  const controls = () => `<section class="rt-controls" aria-label="${pick("时间轴筛选","Timeline filters")}"><div class="rt-control-group"><b>${pick("显示层级","Detail level")}</b><div class="rt-segment"><button type="button" data-rt-importance="all" class="${state.importance==="all"?"active":""}">${pick(`全部 ${dataset().events.length} 条`,`All ${dataset().events.length}`)}</button><button type="button" data-rt-importance="key" class="${state.importance==="key"?"active":""}">${pick("只看关键事件","Key events only")}</button></div></div><div class="rt-control-group"><b>${pick("时间顺序","Chronology")}</b><div class="rt-segment"><button type="button" data-rt-order="asc" class="${state.order==="asc"?"active":""}">${pick("从早到晚 · 看因果","Old → new")}</button><button type="button" data-rt-order="desc" class="${state.order==="desc"?"active":""}">${pick("从新到旧 · 看最近","New → old")}</button></div></div><div class="rt-control-group"><b>${pick("时间范围","Range")}</b><div class="rt-segment">${[["all",pick("全部历史","All history")],["30",pick("近 30 天","30D")],["7",pick("近 7 天","7D")],["3",pick("近 3 天","3D")]].map(([v,l])=>`<button type="button" data-rt-range="${v}" class="${state.range===v?"active":""}">${l}</button>`).join("")}</div></div><label class="rt-select"><span>${pick("研究对象","Research")}</span><select id="timeline-research"><option value="all">${pick("全部研究对象","All research")}</option>${researchOptions()}</select></label><label class="rt-select"><span>${pick("事件类型","Event type")}</span><select id="timeline-type"><option value="all">${pick("全部类型","All types")}</option>${Object.keys(classes).map(k=>`<option value="${k}" ${state.type===k?"selected":""}>${esc(labelClass(k))}</option>`).join("")}</select></label></section>`;
+  const controls = () => `<section class="rt-controls" aria-label="${pick("时间轴筛选","Timeline filters")}"><div class="rt-control-group"><b>${pick("层级","Level")}</b><div class="rt-segment"><button type="button" data-rt-importance="all" class="${state.importance==="all"?"active":""}">${pick("全部","All")}</button><button type="button" data-rt-importance="key" class="${state.importance==="key"?"active":""}">${pick("关键","Key")}</button></div></div><div class="rt-control-group"><b>${pick("顺序","Order")}</b><div class="rt-segment"><button type="button" data-rt-order="asc" class="${state.order==="asc"?"active":""}">${pick("因果顺序","Old → new")}</button><button type="button" data-rt-order="desc" class="${state.order==="desc"?"active":""}">${pick("最新优先","New → old")}</button></div></div><div class="rt-control-group"><b>${pick("范围","Range")}</b><div class="rt-segment">${[["all",pick("全部","All")],["30",pick("30 天","30D")],["7",pick("7 天","7D")],["3",pick("3 天","3D")]].map(([v,l])=>`<button type="button" data-rt-range="${v}" class="${state.range===v?"active":""}">${l}</button>`).join("")}</div></div><label class="rt-select"><span>${pick("研究对象","Research")}</span><select id="timeline-research"><option value="all">${pick("全部研究对象","All research")}</option>${researchOptions()}</select></label><label class="rt-select"><span>${pick("类型","Type")}</span><select id="timeline-type"><option value="all">${pick("全部类型","All types")}</option>${Object.keys(classes).map(k=>`<option value="${k}" ${state.type===k?"selected":""}>${esc(labelClass(k))}</option>`).join("")}</select></label></section>`;
 
   const feed = (events) => {
     const groups = grouped(events);
@@ -238,21 +264,25 @@
     return `<section class="rt-heatmap-panel"><div class="rt-heatmap-heading"><b>${pick("每日工作量概览","Daily workload overview")}</b><span>${pick("按月分开查看；颜色越深，当天记录的操作越多，点击日期可直接展开当天。","Split by month; darker cells mean more recorded activity, and clicking a date opens that day.")}</span></div><div class="rt-heat-months">${monthKeys.map(monthCalendar).join("")}</div></section>`;
   };
 
-  const overview = () => {
-    const s = dataset().summary || {};
-    return `<section class="rt-overview"><div><b>${pick("完整历史 · 按月分表 · 北京时间 UTC+8","Full history · one table per month · Asia/Shanghai UTC+8")}</b><p>${pick(`当前投影共 ${s.events||0} 条事件，覆盖 ${s.days||0} 个有记录的研究日；其中 Research Memory 运行记录 ${s.runtime_memory_events||0} 条。历史按月份拆成独立表格，每个研究日先压缩成一行，便于先比较工作量与关键变化，再按需展开具体事件。`,`The projection contains ${s.events||0} events across ${s.days||0} recorded research days, including ${s.runtime_memory_events||0} Research Memory runtime events. History is split into one table per month, with each research day compressed into one row before its detailed events are opened on demand.`)}</p></div><div class="rt-overview-timezone"><strong>${pick("北京时间","China Standard Time")}</strong><span>Asia/Shanghai · UTC+8</span></div><div class="rt-legend" aria-label="${pick("事件颜色图例","Event color legend")}">${Object.keys(classes).map(k=>`<span class="rt-legend-item rt-legend-${classes[k].tone}" data-rt-legend="${classes[k].tone}"><i></i>${esc(labelClass(k))}</span>`).join("")}</div></section>`;
+  const compactHeader = (events) => {
+    const days = new Set(events.map(e=>chinaDateKey(e.occurred_at))).size;
+    const ideas = events.filter(e=>e.event_class === "idea").length;
+    const experiments = events.filter(e=>e.event_class === "experiment").length;
+    const advances = events.filter(e=>e.event_class === "scientific" || e.event_class === "paper").length;
+    const stops = events.filter(e=>e.event_class === "closure" || e.event_class === "blocker").length;
+    return `<section class="rt-hero"><div class="rt-hero-main"><div class="rt-hero-title"><span>${pick("科研进展历史","Research history")}</span><h1>${pick("研究时间轴","Research Timeline")}</h1></div><p>${pick("按北京时间回看完整研究历史。月历先定位工作量变化，下面的月表再展开当天 Idea、实验、论文、裁决与系统更新；时间轴只读，不新增科研权限。","Review the complete research history in China Standard Time. Use monthly calendars to locate workload changes, then expand daily idea, experiment, paper, decision, and system events below. This timeline is read-only and adds no scientific authority.")}</p><div class="rt-hero-kpis"><span><b>${events.length}</b>${pick("活动","events")}</span><span><b>${days}</b>${pick("研究日","days")}</span><span><b>${ideas}</b>${pick("问题 / Idea","ideas")}</span><span><b>${experiments}</b>${pick("实验","experiments")}</span><span><b>${advances}</b>${pick("结论 / 论文","advances")}</span><span><b>${stops}</b>${pick("停止 / 暂缓","stops / holds")}</span></div></div><aside class="rt-hero-side"><div class="rt-hero-time"><b>${pick("北京时间","China Standard Time")}</b><span>Asia/Shanghai · UTC+8</span></div><div class="rt-legend" aria-label="${pick("事件颜色图例","Event color legend")}">${Object.keys(classes).map(k=>`<span class="rt-legend-item rt-legend-${classes[k].tone}" data-rt-legend="${classes[k].tone}"><i></i>${esc(labelClass(k))}</span>`).join("")}</div></aside><div class="rt-hero-boundary">${pick("本页只是只读历史投影；工程 / 运行 / 追溯记录不会因为进入时间轴而获得科研权限，工程失败也不会自动改写成科学失败。","Read-only history projection: engineering, runtime, and provenance records gain no scientific authority here, and engineering failures do not automatically become scientific failures.")}</div></section>`;
   };
 
-  window.renderResearchTimeline = function(config){
+  window.renderResearchTimeline = function(){
     const events=visible();
-    return `${pageHeader(config)}${overview()}<div id="research-timeline-controls">${controls()}</div><div id="research-timeline-stats">${stats(events)}</div><div id="research-timeline-heatmap">${activityHeatmap(events)}</div><div id="research-timeline-feed" class="rt-feed">${feed(events)}</div><section class="rt-policy-note"><b>${pick("读取规则","Reading rule")}</b><span>${pick("① 每个月单独一张表，默认最新月份、最新日期置顶；② 每个研究日先压缩为一行，直接比较活动量、关键变化、系统提交、科研记录和研究对象；③ 点开当天整行后，事件严格按北京时间从早到晚排列，不按类别重组；④ 无法可靠回填具体时刻的记录仍明确标记为日期精度；⑤ 系统工程与追溯记录不会因此获得科研权限。","Each month is a separate table, newest-first by default. Each research day is compressed into one row and expands into strictly chronological events. Date-only records remain explicitly marked when exact time cannot be recovered.")}</span></section>`;
+    return `<div id="research-timeline-summary">${compactHeader(events)}</div><div id="research-timeline-heatmap">${activityHeatmap(events)}</div><div id="research-timeline-controls">${controls()}</div><div id="research-timeline-feed" class="rt-feed">${feed(events)}</div><section class="rt-policy-note"><b>${pick("读取规则","Reading rule")}</b><span>${pick("① 月历和月表都按两个月一行排列，默认最新月份、最新日期在前；② 月历用于定位工作量高峰，筛选栏位于月历下方；③ 点开当天后，事件严格按北京时间从早到晚排列；④ 无法可靠回填具体时刻的记录仍标记为日期精度；⑤ 系统工程与追溯记录不会因此获得科研权限。","Calendars and month tables are arranged two per row, newest-first by default. Filters sit below the calendars; expanded events remain chronological and date-only precision remains explicit.")}</span></section>`;
   };
 
   const rerender = () => {
-    const c=document.getElementById("research-timeline-controls"), s=document.getElementById("research-timeline-stats"), h=document.getElementById("research-timeline-heatmap"), f=document.getElementById("research-timeline-feed");
+    const summary=document.getElementById("research-timeline-summary"), c=document.getElementById("research-timeline-controls"), h=document.getElementById("research-timeline-heatmap"), f=document.getElementById("research-timeline-feed");
     const events=visible();
+    if(summary) summary.innerHTML=compactHeader(events);
     if(c) c.innerHTML=controls();
-    if(s) s.innerHTML=stats(events);
     if(h) h.innerHTML=activityHeatmap(events);
     if(f) f.innerHTML=feed(events);
     const counter=document.getElementById("result-count");
