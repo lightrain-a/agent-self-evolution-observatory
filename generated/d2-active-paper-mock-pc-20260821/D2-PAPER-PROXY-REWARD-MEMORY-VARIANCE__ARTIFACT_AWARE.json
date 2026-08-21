@@ -1,0 +1,96 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "mode": "ARTIFACT_AWARE",
+  "requested_model": "kimi-k3",
+  "resolved_model": "kimi-k3",
+  "status": "completed",
+  "usage": {
+    "input_tokens": 31877,
+    "output_tokens": 1473,
+    "total_tokens": 33350,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "packet_sha256": "c8c04d4515aba4d8da77e0443998b519de846d07bb89ab057e3ed49fcdef63bf",
+  "review": {
+    "recommendation": "weak_reject",
+    "score_1_to_10": 4,
+    "confidence_1_to_5": 4,
+    "novelty_1_to_5": 3,
+    "significance_1_to_5": 3,
+    "technical_quality_1_to_5": 4,
+    "empirical_sufficiency_1_to_5": 2,
+    "clarity_1_to_5": 4,
+    "strengths": [
+      "Clean, well-isolated causal intervention on the write channel: holding the released trajectory byte-for-byte fixed while flipping only the reward-conditioned reflection mode is a crisp identification of reward label -> memory content, and the paired design with temperature-zero decoding plus archived raw receipts is methodologically careful.",
+      "The F0 result is real and survives its own falsifier: 4/4 complete pairs change normalized memory content and title sets, mean token Jaccard distance 0.735, and the effect appears in both original-success and original-failure strata, ruling out the trivial 'only failed trajectories diverge' explanation.",
+      "The paper correctly identifies a genuine gap: the fragility study (Ye et al.) uses ground-truth reward precisely to exclude the channel this paper audits, and Memory Reward Inflation studies a later stage (reuse/utility amplification), so the write-channel intervention is a distinct and complementary causal link.",
+      "Claim discipline is unusually good: the manuscript keeps the downstream variance claim (C4) explicitly labeled as an active hypothesis with named experiment debt, confines support failures to a single limitations section, and does not present proposed experiments as completed evidence."
+    ],
+    "weaknesses": [
+      "The paper's title, abstract, and framing promise a 'variance amplifier' connecting reward noise to downstream run variance, but the only completed evidence is the write-channel stage. The matched future-task injection, fixed-state rollout variance, and reward-corruption-rate experiments are all unexecuted; the F1 support artifact shows 0/36 complete policy calls and falsifier_evaluable=false. The central question's second clause ('does that perturbation reach later behavior?') is entirely unanswered.",
+      "The empirical base is very thin for an ICLR main-track claim: 4 complete pairs from a single WebArena Shopping run, one writer model (DeepSeek-V4-Flash), one task family, and a coarse lexical metric (token-set Jaccard). Title-set divergence is consistent with the mechanism but the qualitative examples (pagination emphasis vs. quote extraction) are suggestive, not quantified semantically.",
+      "The observed memory divergence is, to a substantial degree, mechanically implied by the intervention itself: the success and failure writers are different prompts asking different questions, so some content divergence is guaranteed by construction. The paper does not establish a baseline for how much divergence any prompt perturbation would induce, so the 0.735 Jaccard number lacks a control contrast (e.g., reward-irrelevant prompt paraphrase) to show the reward bit is special.",
+      "The variance-decomposition framing (Eq. 4) is asserted, not measured: no empirical estimate of Var_M(E[Y|M]) exists, so the 'amplifier' claim currently rests on plausibility and on two adjacent literatures rather than on any observed behavioral effect.",
+      "Generalization debt is stacked: writer-model independence, task-family breadth, and semantic (not lexical) divergence are all unaddressed, so even the supported write-channel claim is narrow in scope."
+    ],
+    "decision_critical_objections": [
+      {
+        "objection_id": "O1",
+        "category": "empirical_sufficiency",
+        "text": "The headline contribution (reward error as a downstream variance amplifier) has zero completed behavioral evidence. The central question explicitly asks whether the perturbation reaches later behavior; that half is entirely experiment debt. A mechanism-only write-channel result may be a workshop-grade finding, but the manuscript is positioned and titled as a variance/behavior paper, and that claim is decision-critical for acceptance at ICLR main track.",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "C4"
+        ]
+      },
+      {
+        "objection_id": "O2",
+        "category": "technical_quality",
+        "text": "No control establishes that reward-conditioned divergence exceeds generic prompt-perturbation divergence. Because the success and failure writers are different prompts by design, nonzero memory divergence is guaranteed; without a reward-irrelevant prompt-variant baseline, the paper cannot attribute the 0.735 Jaccard distance specifically to the reward signal rather than to any prompt change. This undercuts the causal interpretation of even the supported write-channel claim.",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "C2",
+          "C3"
+        ]
+      },
+      {
+        "objection_id": "O3",
+        "category": "empirical_sufficiency",
+        "text": "Sample scale is four complete pairs from one Shopping run with one writer model and a lexical-only metric. This is adequate to demonstrate existence of the channel but not to support effect-size, generality, or amplifier language used in the title and abstract.",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "C2",
+          "C3",
+          "C5"
+        ]
+      },
+      {
+        "objection_id": "O4",
+        "category": "scope",
+        "text": "Two of six requested pairs are provider-incomplete. Per the stated policy these carry zero scientific authority and are correctly excluded; this is support debt, not counterevidence, and is noted only to flag that the effective n is 4 of an intended 6.",
+        "decision_critical": false,
+        "evidence_state": "UNCERTAIN",
+        "claim_ids": [
+          "C2"
+        ]
+      }
+    ],
+    "strongest_reject_reason": "The paper's central and title-level claim -- that reward error amplifies downstream behavioral variance -- has no completed evidence: the future-task injection, rollout variance, and corruption-rate experiments are all unexecuted, and the F1 artifact shows zero evaluable rollouts. What is proven (a reward bit changes written memory on 4 pairs) is a real but narrow mechanism result that does not yet carry the variance-amplifier framing, and it additionally lacks a prompt-perturbation control needed to attribute the divergence to the reward signal specifically.",
+    "highest_value_next_action": "Execute the matched future-task paired memory-injection experiment under fixed benchmark state with repeated rollouts, and report terminal success probability and first-divergence step for success-label vs. failure-label memories; in parallel add a reward-irrelevant prompt-variant control arm to the F0 write-channel test so the 0.735 divergence can be attributed to the reward bit rather than to generic prompt change.",
+    "extra_experiment_needed_before_submission": true,
+    "submission_advice": "new_experiment"
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "provider_response_id_archived_privately": true,
+  "provider_response_id_sha256": "04b859810306cf71bb1938c151a06da95422ec5f3a4ba23ea101dfbf1149803a"
+}

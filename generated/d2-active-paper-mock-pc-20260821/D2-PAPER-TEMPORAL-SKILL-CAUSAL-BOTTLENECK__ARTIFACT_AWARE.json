@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "mode": "ARTIFACT_AWARE",
+  "requested_model": "kimi-k3",
+  "resolved_model": "kimi-k3",
+  "status": "completed",
+  "usage": {
+    "input_tokens": 8918,
+    "output_tokens": 1565,
+    "total_tokens": 10483,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "packet_sha256": "3b4f7e0cfe2843305b771caf1e66f35bd650226d66f41f9b51e0e99e62d2494d",
+  "review": {
+    "recommendation": "weak_reject",
+    "score_1_to_10": 4,
+    "confidence_1_to_5": 4,
+    "novelty_1_to_5": 3,
+    "significance_1_to_5": 3,
+    "technical_quality_1_to_5": 3,
+    "empirical_sufficiency_1_to_5": 1,
+    "clarity_1_to_5": 4,
+    "strengths": [
+      "The core question is well-posed and genuinely causal: does a targeted reusable procedure repair a matched recurring failure beyond generic skill assistance? The do(L = L ∪ {g_m}) vs do(L = L ∪ {g_c}) estimand with a matched generic control is the right design and is more rigorous than the aggregate ablations in the source benchmark.",
+      "The intervention surface is real and unusually clean: TimeSage's induct_skill/retrieve_skill contract with next-period activation gives a chronological barrier that prevents current-answer leakage, and the paper correctly exploits it.",
+      "The three skill contracts (cutoff enforcement, release-to-period alignment, exogenous grounding) are specified at the right granularity: reusable, scenario-answer-free, and consistent with the source harness's stated skill-granularity guidance.",
+      "The limitations section is honest about both the experiment debt and the support debt, and the frozen-failure-annotation requirement (labels frozen before outcomes are inspected) shows good experimental hygiene.",
+      "The paper does not overclaim in the unsupported directions (U1/U2 are correctly avoided in the ledger); the framing as a falsifiable memory hypothesis is methodologically sound."
+    ],
+    "weaknesses": [
+      "The central causal claim (C3) has zero executed evidence. Not a single targeted-skill intervention, generic-control comparison, or no-skill control has been run. Every quantitative number in the paper (0.82x token cost, aggregate gains, 60 scenarios / 1,485 questions) is imported from the source benchmark. The manuscript is a protocol plus a hypothesis, not an empirical result.",
+      "The decisive experiment is currently not executable: the evaluated May 2026 snapshot is absent from the public first-party repositories (placeholder README on GitHub, metadata-only on Hugging Face). While this support failure carries no scientific authority against the hypothesis, it is decision-critical for acceptance because the paper's only novel contribution is the intervention that cannot be run.",
+      "Novelty risk is high until the intervention exists. As written, the paper mostly converts a fresh benchmark observation (recurring temporal/exogenous failures + aggregate skill gains) into a mechanism-specific hypothesis. The conceptual move from aggregate ablation to matched-mechanism intervention is valuable but thin without any executed instance, and adjacent work (Agent Workflow Memory, ReasoningBank) already establishes that reusable procedures help; the differentiator is the causal specificity, which is exactly the part with no evidence.",
+      "The generic-skill control is under-specified at the level that matters. 'Comparable implementation complexity' and 'a useful operation that does not encode the target mechanism' leave the key confound — that any cutoff-aware helper, even a 'generic' one, partially encodes the mechanism — unresolved. The stronger control (matched code length and tool-call count) is explicitly deferred as experiment debt.",
+      "No power analysis, endpoint counts, or expected failure-family frequencies are given. With 1,485 scenario-period questions it is unclear how many endpoints carry a documented, frozen recurring-failure label per family, so the feasibility of detecting Delta_target is unknown.",
+      "C4 (recurring failure identifies a procedure that should become explicit agent state) rests entirely on cross-period and cross-domain transfer tests that are unrun; the cross-domain transfer claim is especially speculative given a single-benchmark, single-harness setup."
+    ],
+    "decision_critical_objections": [
+      {
+        "objection_id": "O1",
+        "category": "empirical_sufficiency",
+        "text": "The paper's sole novel contribution — the targeted temporal-skill causal intervention with matched generic and no-skill controls — has no executed results. All reported numbers are inherited from the source benchmark. An ICLR acceptance requires at least one executed instance of the proposed intervention on the three failure families; proposed experiments are not evidence.",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "C3"
+        ]
+      },
+      {
+        "objection_id": "O2",
+        "category": "reproducibility_feasibility",
+        "text": "The evaluated May 2026 snapshot is unavailable from the public first-party repositories, so the decisive experiment cannot currently be run or audited. This is support debt, not counterevidence, but it blocks the only experiment that could close C3 and is therefore decision-critical for acceptance timing.",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "C3"
+        ]
+      },
+      {
+        "objection_id": "O3",
+        "category": "novelty",
+        "text": "Absent the intervention, the manuscript is a hypothesis and protocol layered on a very recent benchmark. The conceptual contribution (skill library as a causal intervention surface with matched mechanism controls) is real but incremental over the source's aggregate ablation and existing experience-memory systems unless at least one mechanism-specific effect is demonstrated.",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "C3",
+          "C4"
+        ]
+      },
+      {
+        "objection_id": "O4",
+        "category": "experimental_design",
+        "text": "The matched generic-skill control is not specified tightly enough to isolate mechanism specificity; a generic helper can inadvertently encode part of the target mechanism, and the stronger matched-complexity control is deferred. Without a pre-registered control definition, a positive Delta_target would be hard to interpret even if the experiment ran.",
+        "decision_critical": false,
+        "evidence_state": "UNCERTAIN",
+        "claim_ids": [
+          "C3"
+        ]
+      },
+      {
+        "objection_id": "O5",
+        "category": "scope",
+        "text": "The transfer claim (C4) depends on cross-period and cross-domain generalization from a single benchmark and harness, with no executed transfer test; the cross-domain leg is speculative at present.",
+        "decision_critical": false,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "C4"
+        ]
+      }
+    ],
+    "strongest_reject_reason": "The paper proposes a genuinely well-designed causal intervention but executes none of it: every quantitative result is inherited from the source benchmark, the decisive targeted-skill experiment is unrun and currently un-runnable because the evaluated snapshot is not publicly available, and the contribution as submitted is a protocol plus an active hypothesis rather than an empirical finding.",
+    "highest_value_next_action": "Obtain the frozen TimeSage-EV evaluated snapshot (or equivalent first-party artifacts), freeze failure-family labels before inspecting outcomes, and run the three targeted-skill interventions against pre-registered matched generic and no-skill controls on the cutoff, release-alignment, and exogenous-grounding families; report Delta_target with endpoint counts per family.",
+    "extra_experiment_needed_before_submission": true,
+    "submission_advice": "new_experiment"
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "provider_response_id_archived_privately": true,
+  "provider_response_id_sha256": "cb2f1dc1f678bbecc14ac0857e0383f04e89743dbe0a8bfd8ab35442b2bc4e5f"
+}

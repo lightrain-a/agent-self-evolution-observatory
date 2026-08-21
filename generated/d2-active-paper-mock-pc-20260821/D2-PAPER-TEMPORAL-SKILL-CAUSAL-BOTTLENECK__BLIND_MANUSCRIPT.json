@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "mode": "BLIND_MANUSCRIPT",
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-260425",
+  "status": "completed",
+  "usage": {
+    "input_tokens": 5615,
+    "output_tokens": 914,
+    "total_tokens": 6529,
+    "input_tokens_details": {
+      "cached_tokens": 1024
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "packet_sha256": "d15da0473661ac8015022ab3a9bf3bc55e9a1bed00953f461b0ab357ad35636f",
+  "review": {
+    "recommendation": "weak_reject",
+    "score_1_to_10": 4,
+    "confidence_1_to_5": 4,
+    "novelty_1_to_5": 3,
+    "significance_1_to_5": 3,
+    "technical_quality_1_to_5": 2,
+    "empirical_sufficiency_1_to_5": 1,
+    "clarity_1_to_5": 3,
+    "strengths": [
+      "The causal framing of recurring agent failures as missing reusable procedures is conceptually clean and well-motivated.",
+      "The three-way experimental design (targeted skill, generic skill, no-skill baseline) provides a principled template for isolating mechanism-specific effects.",
+      "The paper correctly identifies an important open question: whether aggregate skill-library gains reflect mechanism repair or merely generic assistance."
+    ],
+    "weaknesses": [
+      "The paper contains zero experimental results. All claims about targeted skill interventions are proposed experiments, not completed evidence.",
+      "The manuscript admits that the evaluated dataset snapshot is unavailable from public repositories, and the intervention endpoints are not yet annotated. This is a fatal empirical gap for a paper claiming causal findings.",
+      "The generic-skill control design is underspecified: no concrete generic skills are described, and the claim that they 'match implementation complexity' is asserted without operationalization.",
+      "The paper leans heavily on the TimeSage-EV/TimeSage-1.0 source paper (Yao et al., 2026) for all empirical grounding, but that paper's aggregate results do not constitute evidence for the mechanism-specific causal hypothesis advanced here.",
+      "Section 4 describes a 'decisive experiment' but the manuscript contains no tables, figures of results, or quantitative comparisons across conditions."
+    ],
+    "decision_critical_objections": [
+      {
+        "objection_id": "O1",
+        "category": "empirical",
+        "text": "The manuscript presents zero experimental results for the proposed targeted skill intervention. All three conditions (targeted, generic, baseline) are described hypothetically. No failure correction rates, no Δtarget values, and no transfer results are reported. A paper centered on a causal experiment must contain the experiment.",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "claim_targeted_repair",
+          "claim_delta_positive",
+          "claim_transfer"
+        ]
+      },
+      {
+        "objection_id": "O2",
+        "category": "infrastructure",
+        "text": "The manuscript acknowledges that the frozen evaluated dataset snapshot is not publicly available. Without the snapshot, neither the authors nor reviewers can verify the failure annotations, endpoint selection, or outcome measurability. This makes the proposed experiment currently unexecutable and unverifiable.",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "claim_intervention_surface",
+          "claim_endpoint_matching"
+        ]
+      },
+      {
+        "objection_id": "O3",
+        "category": "methodology",
+        "text": "The generic-skill control is described only in abstract terms (similar code length, similar tool complexity). No concrete generic skills are specified, and no metric for 'comparable implementation complexity' is defined. Without this, the central causal contrast (targeted minus generic) is not operationalized.",
+        "decision_critical": true,
+        "evidence_state": "REQUIRES_NEW_CLAIM",
+        "claim_ids": [
+          "claim_delta_definition",
+          "claim_control_validity"
+        ]
+      }
+    ],
+    "strongest_reject_reason": "The manuscript proposes a causal experiment to distinguish mechanism-specific skill repair from generic assistance, but provides zero experimental results. The dataset is unavailable, endpoints are unannotated, and the generic control is not operationalized. This is a research proposal, not a completed empirical study.",
+    "highest_value_next_action": "Execute the three-condition intervention on the frozen TimeSage-EV snapshot, report matched-failure correction rates with statistical comparisons, and release the annotated endpoint set. Until then, the causal claims are entirely unsupported.",
+    "extra_experiment_needed_before_submission": true,
+    "submission_advice": "new_experiment"
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "provider_response_id_archived_privately": true,
+  "provider_response_id_sha256": "989d7f7e99fd386ed71b1cdab523341d57525467510cb347f099e157ec395e37"
+}

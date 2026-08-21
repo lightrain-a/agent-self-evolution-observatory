@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-21",
+  "purpose": "Current-source novelty context for D2 active-paper Mock PC. This artifact is advisory and has no scientific authority.",
+  "papers": {
+    "D2-PAPER-FAILURE-MEMORY-PROVENANCE": {
+      "sources": [
+        {
+          "id": "arXiv:2608.17684",
+          "title": "Auditing Self-Evolution in Financial Agents: Capability Gains, Security Drift, and Execution-Interface Mismatch",
+          "date": "2026-08-18",
+          "relationship": "Direct source audit for the provenance-conditioned ReasoningBank counts used by the manuscript. The D2 paper must contribute a new causal intervention or a materially new analysis beyond re-reporting this audit."
+        },
+        {
+          "id": "ICLR-2026-ReasoningBank",
+          "title": "ReasoningBank: Scaling Agent Self-Evolving with Reasoning Memory",
+          "date": "2026",
+          "relationship": "Defines the success/failure reflection mechanism that makes trajectory outcome provenance an upstream memory-writing variable."
+        }
+      ],
+      "novelty_risk": "HIGH_UNTIL_MATCHED_PROVENANCE_SWAP",
+      "reason": "The strongest current empirical numbers originate from a newly released external audit; the manuscript's causal matched-memory swap is still experiment debt."
+    },
+    "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE": {
+      "sources": [
+        {
+          "id": "arXiv:2608.00017",
+          "title": "Memory Reward Inflation in Self-Improving LLM Agents",
+          "date": "2026-06-29",
+          "relationship": "Closest current work on erroneous proxy rewards being amplified through persistent memory reuse. It studies scoring/reuse inflation; D2 directly intervenes on the reward-conditioned memory-writing objective for an identical trajectory."
+        },
+        {
+          "id": "ICLR-2026-ReasoningBank",
+          "title": "ReasoningBank: Scaling Agent Self-Evolving with Reasoning Memory",
+          "date": "2026",
+          "relationship": "Provides the released reward-conditioned success/failure reflection implementation audited by D2."
+        }
+      ],
+      "novelty_risk": "MEDIUM_AFTER_PROMPT_CONTROL",
+      "reason": "The 4/4 paired F0 establishes a distinct write-channel result. A disjoint eight-trajectory same-mode paraphrase control now shows between reward-mode memory divergence exceeding stronger prompt-wording perturbations (mean excess 0.104978; exact sign-flip p=0.0078125). Downstream terminal action/success variance remains experiment debt."
+    },
+    "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK": {
+      "sources": [
+        {
+          "id": "arXiv:2608.14270",
+          "title": "TimeSage-EV: A Live Benchmark for Agentic Time Series Analysis in Evolving Environments",
+          "date": "2026-08-14",
+          "relationship": "Direct source benchmark. It already reports recurring temporal/exogenous failures and aggregate benefit from TimeSage-1.0 reusable skills."
+        }
+      ],
+      "novelty_risk": "HIGH_UNTIL_TARGETED_SKILL_INTERVENTION",
+      "reason": "The current manuscript mostly turns a fresh benchmark observation into a mechanism-specific causal hypothesis; the targeted skill intervention is not yet executable because the evaluated snapshot is unavailable."
+    }
+  },
+  "scientific_authority": false,
+  "experiment_authority": false
+}

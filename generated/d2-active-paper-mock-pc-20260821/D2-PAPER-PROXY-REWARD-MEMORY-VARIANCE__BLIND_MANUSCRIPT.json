@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "mode": "BLIND_MANUSCRIPT",
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-260425",
+  "status": "completed",
+  "usage": {
+    "input_tokens": 5981,
+    "output_tokens": 1153,
+    "total_tokens": 7134,
+    "input_tokens_details": {
+      "cached_tokens": 5120
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "packet_sha256": "055f49f773d80818e2412c4228e40bf6ff3d35298180c8e4a909ba3dcc730fde",
+  "review": {
+    "recommendation": "reject",
+    "score_1_to_10": 3,
+    "confidence_1_to_5": 4,
+    "novelty_1_to_5": 2,
+    "significance_1_to_5": 2,
+    "technical_quality_1_to_5": 2,
+    "empirical_sufficiency_1_to_5": 1,
+    "clarity_1_to_5": 3,
+    "strengths": [
+      "The paper identifies a clean causal mechanism: reward bit → reflection prompt → memory content, which is a concrete and testable hypothesis.",
+      "The F0 paired-intervention design is simple and well-controlled: same trajectory, same writer model, only the reward-labeled prompt changes.",
+      "The observed 4/4 content divergence (mean Jaccard 0.735) is a positive signal that the mechanism is real in the tested implementation.",
+      "The paper connects two previously separate empirical phenomena (self-improvement run variance and memory reward inflation) into a unified causal story.",
+      "The downstream variance protocol is clearly specified and could be informative if executed."
+    ],
+    "weaknesses": [
+      "The paper presents only 4 complete data points (n=4 paired interventions). This is a micro-study, not a systematic empirical investigation. Generalizability is completely unknown.",
+      "The central claim requires stage-two evidence (memory divergence → behavioral/outcome divergence) that is entirely absent. The manuscript explicitly labels the downstream experiments as 'experiment debt.' Without this evidence, the paper demonstrates only that reward-conditioned prompts produce different text—a finding that borders on tautological given that success and failure prompts ask different questions.",
+      "The paper claims to study 'variance amplification' but provides zero variance measurements. Equation 4 is presented as a framework but never populated with data. The title's 'variance amplifier' claim is unsupported.",
+      "The link to the Ye et al. fragility study is asserted but never tested. The paper does not show that reward-label noise explains any fraction of the run variance reported in that work.",
+      "Provider failures on 2 of 6 trajectories (33% attrition) are dismissed as 'support debt' with zero scientific authority. This is a significant execution concern for a 6-sample study.",
+      "The paper treats the mechanism as established for self-improving agents broadly, but the evidence comes from one specific implementation (ReasoningBank), one writer model (DeepSeek-V4-Flash), one benchmark domain (WebArena Shopping), and one trajectory set. The gap between claim scope and evidence scope is very large."
+    ],
+    "decision_critical_objections": [
+      {
+        "objection_id": "O1",
+        "category": "missing evidence",
+        "text": "The paper's central causal claim is that reward-induced memory divergence causes downstream behavioral variance. The manuscript provides only the first link (reward → memory) and explicitly labels the second link (memory → behavior) as experiment debt. The paper is therefore an incomplete empirical argument. The F0 result alone is insufficient for acceptance: it demonstrates that different prompts produce different text, which is expected by construction. The claim that this constitutes a 'variance amplifier' is unsubstantiated.",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "reward-conditioned memory writing amplifies run variance",
+          "reward error becomes persistent state that changes future behavior"
+        ]
+      },
+      {
+        "objection_id": "O2",
+        "category": "insufficient scale",
+        "text": "The empirical evidence consists of 4 complete paired interventions from a single task family, a single writer model, and a single implementation. This is a pilot demonstration, not a conference-ready empirical contribution. The paper makes broad claims about self-improving agents but provides no evidence that the effect generalizes across domains, models, or implementations.",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "Reward-conditioned memory writing is a real state channel in self-improving agents"
+        ]
+      },
+      {
+        "objection_id": "O3",
+        "category": "overclaiming",
+        "text": "The title and abstract claim to study reward error as a 'variance amplifier.' No variance is measured. The paper provides Jaccard distances between memory texts but no behavioral or outcome variance estimates. The central quantitative claim is undelivered.",
+        "decision_critical": true,
+        "evidence_state": "FALSE_PREMISE_WITH_EVIDENCE",
+        "claim_ids": [
+          "Reward Error as a Variance Amplifier",
+          "Reward-conditioned memory writing gives proxy reward noise a direct route into variance"
+        ]
+      }
+    ],
+    "strongest_reject_reason": "The paper demonstrates only that different prompts produce different text—a finding that is expected by construction and does not constitute a scientific contribution. The central claim that this mechanism amplifies behavioral variance is entirely unsupported by evidence. The manuscript is a proposal with a 4-sample pilot, not a completed study.",
+    "highest_value_next_action": "Execute the downstream variance protocol (matched future-task injection) on at least 20+ complete pairs across multiple task families. Measure actual behavioral divergence and outcome variance. Until then, the paper cannot claim to study variance amplification.",
+    "extra_experiment_needed_before_submission": true,
+    "submission_advice": "new_experiment"
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "provider_response_id_archived_privately": true,
+  "provider_response_id_sha256": "dea420ff7db343c7db2b10322dd5f5f59763af916c0622126f8781d6f5050285"
+}

@@ -1,0 +1,96 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "mode": "ARTIFACT_AWARE",
+  "requested_model": "kimi-k3",
+  "resolved_model": "kimi-k3",
+  "status": "completed",
+  "usage": {
+    "input_tokens": 9674,
+    "output_tokens": 1599,
+    "total_tokens": 11273,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "packet_sha256": "719ac27f1b5a22471739864e8260f0ecbade939a0acd5bc825b078c47abaf889",
+  "review": {
+    "recommendation": "weak_reject",
+    "score_1_to_10": 4,
+    "confidence_1_to_5": 4,
+    "novelty_1_to_5": 3,
+    "significance_1_to_5": 4,
+    "technical_quality_1_to_5": 4,
+    "empirical_sufficiency_1_to_5": 2,
+    "clarity_1_to_5": 5,
+    "strengths": [
+      "The paper identifies a genuinely important and under-explored variable: memory provenance as a causal state variable in self-evolving agents, distinct from memory content. The distinction between 'what the memory says' and 'how the memory was learned' is conceptually crisp and practically relevant for memory governance.",
+      "The causal formulation is clean. Equation 3 defines a well-posed estimand (the effect of provenance under matched semantic guidance), and the matched provenance swap design with forward and reverse directions is the right identification strategy for isolating provenance from task difficulty.",
+      "The source-grounded reanalysis is honest and careful. The decomposition showing that the provenance signal concentrates on persistent W→W failures (10 of 12 failure-derived errors) rather than diffuse regression is a sharper interpretation than the raw accuracy gap, and the count reconstruction from rounded accuracies is transparent.",
+      "The paper is exceptionally well-organized and clearly written. The claim/evidence boundary is explicit, limitations are consolidated, and the distinction between supported claims (C1-C3) and active hypotheses (C4-C5) is maintained throughout.",
+      "The connection to Memory Reward Inflation provides an independent mechanism that is compatible with the provenance effect, strengthening the plausibility of the causal channel without overclaiming it."
+    ],
+    "weaknesses": [
+      "The central causal claim (C4) has no direct experimental evidence. The matched provenance swap — the paper's decisive experiment — is entirely experiment debt. The paper's title and framing promise causal evidence ('Causal Provenance Effects') but deliver only a causal design and an associational signal.",
+      "The empirical base is a single external audit (Li & Zhu, 2026) with small strata: 34 failure-derived retrievals and 10 W→W cases. The 28.4pp accuracy gap is large but the failure-derived stratum is small, and the paper's contribution beyond re-reporting this audit is primarily the causal design, not new empirical evidence.",
+      "The novelty risk is high. The strongest empirical numbers (C1, C2) originate from the newly released external audit. The paper's incremental contribution is the causal formulation and the swap design. Without the swap executed, the paper is a well-argued position piece with a reanalysis, not an empirical causal study.",
+      "Semantic matching for the provenance swap is a non-trivial design challenge that the paper acknowledges but cannot resolve without first-party artifacts. The information-equivalence audit is unspecified in operational detail, and verifier agreement is experiment debt.",
+      "The reverse swap is described but no power analysis, expected effect size, or sample size justification is provided. The failure-derived stratum of 34 cases may be too small for a well-powered matched-pair experiment even when artifacts become available.",
+      "The generalization claim is limited to a single financial AgentDojo setting with ReasoningBank. Cross-domain replication is acknowledged as debt, but the paper's framing ('Self-Evolving Agents' broadly) outruns the single-domain evidence base."
+    ],
+    "decision_critical_objections": [
+      {
+        "objection_id": "OBJ-1",
+        "category": "missing_decisive_evidence",
+        "text": "The paper's central causal claim (C4: failure-derived provenance causally sustains future error beyond task difficulty and matched guidance) rests entirely on an unexecuted experiment. The matched provenance swap is the paper's stated decisive test, and it is experiment debt. The existing evidence (C1, C2) is associational and the paper itself identifies task difficulty as a confound. Without the swap, the causal claim is an active unrefuted hypothesis, not a supported finding. For a paper whose title and framing center on 'Causal Provenance Effects,' the absence of the decisive causal experiment is decision-critical for acceptance at a top venue.",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "C4"
+        ]
+      },
+      {
+        "objection_id": "OBJ-2",
+        "category": "novelty_and_incremental_contribution",
+        "text": "The strongest empirical numbers (0.931 vs 0.647, 10/10 W→W in failure-derived stratum) are from a newly released external audit (Li & Zhu, 2026). The paper's incremental contribution is the causal formulation, the reanalysis decomposition, and the swap design. Without the executed swap, the paper risks being read as a well-designed proposal built on someone else's empirical signal. The novelty risk is explicitly flagged as HIGH_UNTIL_MATCHED_PROVENANCE_SWAP in the source scan, and that condition has not been met.",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "C4"
+        ]
+      },
+      {
+        "objection_id": "OBJ-3",
+        "category": "small_sample_robustness",
+        "text": "The failure-derived stratum has only 34 retrievals and 12 failures. The W→W count is 10. While the concentration is striking, the small stratum size means the associational signal is fragile to reclassification of a few cases. The paper's decomposition is arithmetically correct but the underlying counts are small, and the matched-pair experiment may face power constraints even when artifacts become available.",
+        "decision_critical": false,
+        "evidence_state": "EXISTING_EVIDENCE",
+        "claim_ids": [
+          "C1",
+          "C2"
+        ]
+      },
+      {
+        "objection_id": "OBJ-4",
+        "category": "design_operationalization",
+        "text": "The information-equivalence audit for matched provenance pairs is underspecified. The paper requires that pairs expose 'the same actionable information' and that a verifier find 'no extra task-solving fact,' but the operational criteria, verifier model, and agreement thresholds are not defined. This is a non-trivial design challenge because failure-derived and success-derived memories may differ in framing, specificity, or implicit process cues even when procedural content is matched.",
+        "decision_critical": false,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "C4"
+        ]
+      }
+    ],
+    "strongest_reject_reason": "The paper's central causal claim is supported only by an unexecuted experiment. The matched provenance swap — the paper's own decisive test — is experiment debt. The existing evidence is associational and drawn from a single external audit with small strata. The paper is a well-formulated causal design and honest reanalysis, but it does not yet deliver the causal evidence its title and framing promise.",
+    "highest_value_next_action": "Execute the matched provenance swap experiment (forward and reverse) on the audited ReasoningBank runs once first-party per-query memory artifacts are available, or on a faithful reconstruction that reproduces the published provenance counts. Report the causal effect size with confidence intervals and pair-level heterogeneity. This converts the paper from a design proposal into an empirical causal study.",
+    "extra_experiment_needed_before_submission": true,
+    "submission_advice": "new_experiment"
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "provider_response_id_archived_privately": true,
+  "provider_response_id_sha256": "8c10e2fe156dc12c0734ac1394f92619bcb6b3bc15514d95b20cfc0998f09e60"
+}

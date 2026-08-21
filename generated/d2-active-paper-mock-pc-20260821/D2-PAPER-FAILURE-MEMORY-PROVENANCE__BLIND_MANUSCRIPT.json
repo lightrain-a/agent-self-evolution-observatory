@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "mode": "BLIND_MANUSCRIPT",
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-260425",
+  "status": "completed",
+  "usage": {
+    "input_tokens": 6217,
+    "output_tokens": 1051,
+    "total_tokens": 7268,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "packet_sha256": "369d62d8a2346019e8b7c0cace518935d1d7044bfda037cf0a1e3c10306161d8",
+  "review": {
+    "recommendation": "reject",
+    "score_1_to_10": 3,
+    "confidence_1_to_5": 5,
+    "novelty_1_to_5": 3,
+    "significance_1_to_5": 3,
+    "technical_quality_1_to_5": 2,
+    "empirical_sufficiency_1_to_5": 1,
+    "clarity_1_to_5": 4,
+    "strengths": [
+      "The paper identifies a well-motivated causal question—whether failure provenance sustains error beyond task difficulty—and frames it in a clear, testable way.",
+      "The proposed experimental design (matched provenance swap) is elegant and directly addresses the main confound (task difficulty) through a within-query, same-information contrast.",
+      "The reanalysis of the Li & Zhu (2026) audit data usefully decomposes the provenance gap and highlights that persistent W→W failures concentrate in the failure-derived stratum.",
+      "The causal graph and formal estimand (Equation 3) are clearly stated and make the identification assumptions transparent."
+    ],
+    "weaknesses": [
+      "The central empirical claim is entirely unsupported by the paper's own evidence. The matched provenance swap experiment—the only design that can distinguish provenance from task difficulty—is described as 'experiment debt' and has not been run.",
+      "The paper contains no new experimental data. All quantitative claims derive from a reanalysis of previously published aggregate audit statistics, which the authors themselves acknowledge are confounded by task difficulty.",
+      "The paper makes strong causal claims ('failure-derived memory sustains future error') but provides only associative evidence from a descriptive audit. No intervention is performed.",
+      "The reconstructed integer counts from rounded accuracies, while arithmetically consistent, are not verified against the original per-query data and add no independent empirical weight.",
+      "The paper's contribution reduces to: (a) reinterpreting published audit results, (b) proposing a causal formalism, and (c) specifying an experiment to be done later. This is insufficient for an empirical ML conference paper.",
+      "Several important experimental details are deferred: pair construction, verifier agreement, semantic matching criteria, and reliability of the matching procedure. These are nontrivial and their absence makes the proposed experiment's feasibility uncertain."
+    ],
+    "decision_critical_objections": [
+      {
+        "objection_id": "O1",
+        "category": "Missing experiments",
+        "text": "The paper's sole causal claim—that failure provenance directly sustains future error under matched semantic guidance—depends entirely on the matched provenance swap experiment, which has not been performed. The authors describe this experiment as 'experiment debt' (Section 6). Without it, there is no evidence for the paper's central thesis beyond a confounded observational association.",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "claim_causal_provenance",
+          "claim_matched_swap"
+        ]
+      },
+      {
+        "objection_id": "O2",
+        "category": "Insufficient empirical contribution",
+        "text": "The paper provides no new experiments. The entire empirical content is a reanalysis of aggregate counts from a previously published audit. The integer-count reconstruction from rounded accuracies, while arithmetically correct, does not constitute new evidence. This falls below the empirical bar for ICLR.",
+        "decision_critical": true,
+        "evidence_state": "MISSING_DECISIVE_EVIDENCE",
+        "claim_ids": [
+          "claim_empirical_basis"
+        ]
+      }
+    ],
+    "strongest_reject_reason": "The paper's central causal claim is unsupported by any experimental evidence. The matched provenance swap—the only design that can test whether failure provenance causally sustains error—is explicitly described as experiment debt and has not been executed. The paper offers only a confounded observational reanalysis of published data.",
+    "highest_value_next_action": "Execute the matched provenance swap experiment described in Section 4 on at least the ReasoningBank financial-agent setting, report pair-level outcomes, and test whether the provenance effect persists after controlling for semantic guidance. Without this, the paper remains a hypothesis with a method proposal.",
+    "extra_experiment_needed_before_submission": true,
+    "submission_advice": "new_experiment"
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "provider_response_id_archived_privately": true,
+  "provider_response_id_sha256": "46e34f2956f65ea86da33d0f8ded5efd861c9d6e0a715391e38d466dfafcd2e2"
+}
