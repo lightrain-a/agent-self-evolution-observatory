@@ -182,6 +182,88 @@ class ArisGovernanceLayerTest(unittest.TestCase):
         )
         self.assertTrue(records[0]["lineage_complete"])
 
+    def test_recovered_pre_f0_lineage_uses_formulation_and_machine_route_receipts(self) -> None:
+        candidate = {
+            "candidate_id": "PORT-002",
+            "candidate_snapshot_sha256": "b" * 64,
+            "source_branch_id": "branch-r1",
+            "route_reason": "EXACT_REDUCTION_PENDING",
+            "reduction_blockers": ["unresolved-exact-reduction-test:1"],
+        }
+        generator = {
+            "run_id": "recovery-run",
+            "raw_artifacts": {"generator": {"sha256": "a" * 64}},
+            "pre_f0_candidates": [candidate],
+            "portfolio_ingestion_recovery": {
+                "source_transaction_id": "c" * 64,
+                "recovery_sha256": "d" * 64,
+                "recovered_candidates": 2,
+                "formulation_receipts": [
+                    {
+                        "role": "formulate-1",
+                        "complete_candidates": 1,
+                        "source_raw_sha256": "e" * 64,
+                        "request_fingerprint": "1" * 64,
+                    },
+                    {
+                        "role": "formulate-2",
+                        "complete_candidates": 1,
+                        "source_raw_sha256": "f" * 64,
+                        "request_fingerprint": "2" * 64,
+                    },
+                ],
+            },
+        }
+        records = candidate_lineage_records(
+            generator_state=generator,
+            pre_f0_state={"rows": [candidate]},
+            problem_gate_state={},
+            candidate_portfolio={"rows": [candidate]},
+        )
+        row = records[0]
+        self.assertTrue(row["lineage_complete"])
+        self.assertEqual(row["provenance_status"], "COMPLETE")
+        self.assertEqual(row["discovery_transaction_id"], "c" * 64)
+        self.assertEqual(row["formulation_origin_role"], "formulate-2")
+        self.assertEqual(row["formulation_raw_sha256"], "f" * 64)
+        self.assertFalse(row["review_receipt_complete"])
+        self.assertTrue(row["disposition_receipt_complete"])
+        self.assertEqual(row["disposition_receipt_kind"], "PRE_F0_MACHINE_ROUTE_ZERO_AUTHORITY")
+        self.assertFalse(row["pre_f0_route_has_scientific_authority"])
+        self.assertFalse(row["downstream_authorization_blocked"])
+
+    def test_recovered_pre_f0_lineage_fails_closed_on_malformed_origin_receipt(self) -> None:
+        candidate = {
+            "candidate_id": "PORT-001",
+            "candidate_snapshot_sha256": "b" * 64,
+            "source_branch_id": "branch-r1",
+            "route_reason": "EXACT_REDUCTION_PENDING",
+        }
+        generator = {
+            "run_id": "recovery-run",
+            "raw_artifacts": {"generator": {"sha256": "a" * 64}},
+            "pre_f0_candidates": [candidate],
+            "portfolio_ingestion_recovery": {
+                "source_transaction_id": "c" * 64,
+                "recovery_sha256": "d" * 64,
+                "recovered_candidates": 1,
+                "formulation_receipts": [{
+                    "role": "formulate-1",
+                    "complete_candidates": 1,
+                    "source_raw_sha256": "not-a-sha",
+                }],
+            },
+        }
+        row = candidate_lineage_records(
+            generator_state=generator,
+            pre_f0_state={"rows": [candidate]},
+            problem_gate_state={},
+            candidate_portfolio={"rows": [candidate]},
+        )[0]
+        self.assertFalse(row["lineage_complete"])
+        self.assertEqual(row["provenance_status"], "PROVENANCE_INCONCLUSIVE")
+        self.assertTrue(row["downstream_authorization_blocked"])
+
     def test_generation_target_and_problem_hold_are_not_fabricated_eliminations(self) -> None:
         receipts = candidate_stage_receipts(
             generator_state={
@@ -199,6 +281,24 @@ class ArisGovernanceLayerTest(unittest.TestCase):
         self.assertEqual(by_stage["generation-target"]["eliminated_count"], 0)
         self.assertEqual(by_stage["problem-gate"]["held_count"], 2)
         self.assertEqual(by_stage["problem-gate"]["eliminated_count"], 0)
+
+    def test_stage_receipts_expose_unreceipted_elimination_lineage(self) -> None:
+        receipts = candidate_stage_receipts(
+            generator_state={
+                "run_id": "run",
+                "search_portfolio": {
+                    "config": {"requested_raw_seeds": 4},
+                    "summary": {"raw_seeds": 4, "semantic_unique": 2, "pre_f0_eligible": 1},
+                },
+            },
+            candidate_portfolio={"summary": {"visible_candidates": 1}},
+            problem_gate_state={"summary": {"passed_problem_gate": 0}},
+        )
+        by_stage = {row["stage"]: row for row in receipts}
+        self.assertEqual(by_stage["semantic-uniqueness"]["eliminated_count"], 2)
+        self.assertFalse(by_stage["semantic-uniqueness"]["record_level_elimination_reasons_complete"])
+        self.assertEqual(by_stage["pre-f0-route"]["eliminated_count"], 1)
+        self.assertFalse(by_stage["pre-f0-route"]["record_level_elimination_reasons_complete"])
 
     def test_memory_graph_binds_governance_without_new_truth_nodes(self) -> None:
         pilot_registry = {

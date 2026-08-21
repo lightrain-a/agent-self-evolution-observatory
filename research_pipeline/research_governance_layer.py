@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -20,6 +21,9 @@ POLICY: dict[str, Any] = {
     "belief_authority_does_not_equal_automatic_claim_mutation": True,
     "experiment_authorization_is_fail_closed": True,
     "candidate_lineage_is_receipted_and_missing_provenance_is_a_hold": True,
+    "pre_f0_route_receipt_is_a_zero_authority_disposition_not_semantic_review": True,
+    "pre_f0_lineage_completion_cannot_clear_reduction_or_support_holds": True,
+    "aggregate_funnel_accounting_cannot_claim_record_level_elimination_lineage": True,
     "repair_proposals_do_not_consume_budget_until_recorded": True,
     "one_load_bearing_repair_per_child": True,
     "max_representation_or_objective_repairs_per_substrate": 2,
@@ -358,6 +362,80 @@ def _candidate_rows(*states: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
     return grouped
 
 
+def _recovered_formulation_origin_receipts(
+    generator_state: dict[str, Any],
+) -> dict[str, dict[str, str]]:
+    """Map recovered PORT ordinals to archived formulation bytes.
+
+    Archived ingestion assigns PORT ids in formulation-role order. Reconstructing that
+    deterministic ordinal map proves where a candidate formulation came from without
+    pretending that the formulation call performed semantic review.
+    """
+    recovery = generator_state.get("portfolio_ingestion_recovery") or {}
+    receipts = [
+        row for row in recovery.get("formulation_receipts") or []
+        if isinstance(row, dict)
+    ]
+    def role_index(row: dict[str, Any]) -> int:
+        match = re.fullmatch(r"formulate-(\d+)", _text(row.get("role")))
+        return int(match.group(1)) if match else 10**9
+    receipts.sort(key=role_index)
+    out: dict[str, dict[str, str]] = {}
+    ordinal = 0
+    for row in receipts:
+        count = int(row.get("complete_candidates") or 0)
+        raw_sha = _text(row.get("source_raw_sha256") or row.get("raw_sha256")).lower()
+        fingerprint = _text(row.get("request_fingerprint")).lower()
+        role = _text(row.get("role"))
+        if count <= 0:
+            continue
+        if (
+            not re.fullmatch(r"[0-9a-f]{64}", raw_sha)
+            or not re.fullmatch(r"[0-9a-f]{64}", fingerprint)
+            or not re.fullmatch(r"formulate-\d+", role)
+        ):
+            # Fail closed for the whole ordinal map: one malformed positive receipt
+            # makes every later PORT position ambiguous.
+            return {}
+        for _ in range(count):
+            ordinal += 1
+            out[f"PORT-{ordinal:03d}"] = {
+                "role": role,
+                "raw_sha256": raw_sha,
+                "request_fingerprint": fingerprint,
+            }
+    expected = int(recovery.get("recovered_candidates") or 0)
+    if expected and ordinal != expected:
+        return {}
+    return out
+
+
+def _pre_f0_route_receipt_sha256(
+    *,
+    candidate_id: str,
+    snapshot_sha256: str,
+    route_reason: str,
+    blockers: list[str],
+    formulation_raw_sha256: str,
+    recovery_sha256: str,
+) -> str:
+    if not all((candidate_id, snapshot_sha256, route_reason, formulation_raw_sha256, recovery_sha256)):
+        return ""
+    payload = {
+        "receipt_class": "PRE_F0_MACHINE_ROUTE_ZERO_AUTHORITY",
+        "candidate_id": candidate_id,
+        "candidate_snapshot_sha256": snapshot_sha256,
+        "route_reason": route_reason,
+        "reduction_blockers": sorted(set(blockers)),
+        "formulation_raw_sha256": formulation_raw_sha256,
+        "ingestion_recovery_sha256": recovery_sha256,
+        "scientific_authority": False,
+    }
+    return hashlib.sha256(
+        json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+
+
 def candidate_lineage_records(
     *,
     generator_state: dict[str, Any],
@@ -371,7 +449,23 @@ def candidate_lineage_records(
     generator_receipt = _text(
         ((generator_state.get("raw_artifacts") or {}).get("generator") or {}).get("sha256")
     )
-    transaction_id = _text(generator_state.get("discovery_transaction_id"))
+    recovery = generator_state.get("portfolio_ingestion_recovery") or {}
+    transaction_id = _text(
+        generator_state.get("discovery_transaction_id")
+        or recovery.get("source_transaction_id")
+    )
+    recovery_sha = _text(recovery.get("recovery_sha256")).lower()
+    formulation_origins = _recovered_formulation_origin_receipts(generator_state)
+    pre_f0_ids = {
+        _text(row.get("candidate_id"))
+        for state in (generator_state, pre_f0_state)
+        for row in (
+            (state.get("pre_f0_candidates") or [])
+            if state is generator_state
+            else (state.get("rows") or [])
+        )
+        if isinstance(row, dict)
+    }
     run_id = _text(generator_state.get("run_id"))
     records: list[dict[str, Any]] = []
     for candidate_id, versions in sorted(grouped.items()):
@@ -398,12 +492,28 @@ def candidate_lineage_records(
         parent_candidate = _text(merged.get("parent_candidate") or merged.get("source_branch_id"))
         generation_receipt_complete = bool(generator_receipt and run_id)
         review_receipt_complete = bool(review_receipts)
+        formulation_origin = formulation_origins.get(candidate_id) or {}
+        formulation_raw_sha = _text(formulation_origin.get("raw_sha256"))
+        pre_f0_route_receipt = ""
+        if candidate_id in pre_f0_ids:
+            pre_f0_route_receipt = _pre_f0_route_receipt_sha256(
+                candidate_id=candidate_id,
+                snapshot_sha256=snapshot_sha,
+                route_reason=route_reason,
+                blockers=list(dict.fromkeys(blockers)),
+                formulation_raw_sha256=formulation_raw_sha,
+                recovery_sha256=recovery_sha,
+            )
+        disposition_receipts = sorted(set(review_receipts + ([pre_f0_route_receipt] if pre_f0_route_receipt else [])))
+        disposition_receipt_complete = bool(disposition_receipts)
+        origin_receipt_complete = bool(formulation_raw_sha or generator_receipt)
         lineage_complete = bool(
             candidate_id
             and snapshot_sha
             and parent_candidate
             and generation_receipt_complete
-            and review_receipt_complete
+            and origin_receipt_complete
+            and disposition_receipt_complete
         )
         records.append({
             "lineage_id": _record_id("candidate-lineage", candidate_id, snapshot_sha, run_id),
@@ -413,13 +523,29 @@ def candidate_lineage_records(
             "source_run_id": run_id,
             "discovery_transaction_id": transaction_id,
             "generation_receipt_sha256": generator_receipt,
+            "formulation_origin_role": _text(formulation_origin.get("role")),
+            "formulation_raw_sha256": formulation_raw_sha,
+            "formulation_request_fingerprint": _text(formulation_origin.get("request_fingerprint")),
+            "ingestion_recovery_sha256": recovery_sha,
             "review_receipt_sha256": sorted(set(review_receipts)),
+            "pre_f0_route_receipt_sha256": pre_f0_route_receipt,
+            "disposition_receipt_sha256": disposition_receipts,
+            "disposition_receipt_kind": (
+                "SEMANTIC_REVIEW"
+                if review_receipts
+                else ("PRE_F0_MACHINE_ROUTE_ZERO_AUTHORITY" if pre_f0_route_receipt else "")
+            ),
             "elimination_reason": list(dict.fromkeys(blockers)),
             "portfolio_state": portfolio_state,
             "route_reason": route_reason,
+            "generation_receipt_complete": generation_receipt_complete,
+            "origin_receipt_complete": origin_receipt_complete,
+            "review_receipt_complete": review_receipt_complete,
+            "disposition_receipt_complete": disposition_receipt_complete,
             "lineage_complete": lineage_complete,
             "provenance_status": "COMPLETE" if lineage_complete else "PROVENANCE_INCONCLUSIVE",
             "downstream_authorization_blocked": not lineage_complete,
+            "pre_f0_route_has_scientific_authority": False,
             "belief_authority": False,
             "scientific_authority": False,
         })
@@ -536,6 +662,12 @@ def lint_governance_layer(layer: dict[str, Any]) -> dict[str, Any]:
                 "input_count": input_count,
                 "accounted": accounted,
             })
+        if int(row.get("eliminated_count") or 0) > 0 and row.get("record_level_elimination_reasons_complete") is not True:
+            warnings.append({
+                "code": "candidate-stage-record-level-elimination-lineage-incomplete",
+                "stage": row.get("stage"),
+                "eliminated_count": int(row.get("eliminated_count") or 0),
+            })
     repair_summary = layer.get("repair_budget") or {}
     for row in repair_summary.get("substrate_budget_violations") or []:
         errors.append({"code": "repair-budget-violation", **row})
@@ -636,6 +768,16 @@ def build_aris_governance_layer(
                 for row in lineage
             ),
             "candidate_stage_receipts": len(stage_receipts),
+            "candidate_stage_lineage_gaps": sum(
+                int(row.get("eliminated_count") or 0) > 0
+                and row.get("record_level_elimination_reasons_complete") is not True
+                for row in stage_receipts
+            ),
+            "candidate_stage_unreceipted_elimination_events": sum(
+                int(row.get("eliminated_count") or 0)
+                for row in stage_receipts
+                if row.get("record_level_elimination_reasons_complete") is not True
+            ),
         },
         "scientific_authority": False,
         "authority": {

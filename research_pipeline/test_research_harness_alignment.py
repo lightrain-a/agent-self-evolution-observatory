@@ -63,8 +63,13 @@ class ResearchHarnessAlignmentTest(unittest.TestCase):
     def test_funnel_does_not_call_pre_f0_support_hold_an_idea_generation_failure(self) -> None:
         portfolio = _portfolio()
         telemetry = _telemetry(portfolio)
-        self.assertEqual(telemetry["bottleneck"]["key"], "PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE")
-        self.assertIn("not an idea-generation failure", telemetry["bottleneck"]["explanation"])
+        self.assertEqual(telemetry["bottleneck"]["key"], "PRE_F0_SUPPORT_PROVENANCE")
+        self.assertIn("not an idea-generation or scientific failure", telemetry["bottleneck"]["explanation"])
+        adaptation = telemetry["search_adaptation"]
+        self.assertEqual(adaptation["status"], "PROPOSE_SUPPORT_AWARE_NEW_SEARCH_FRAME")
+        self.assertFalse(adaptation["provider_calls_authorized"])
+        self.assertIn("retain_current_candidates_as_support_holds", adaptation["allowed_effects"])
+        self.assertIn("convert_support_hold_to_scientific_failure", adaptation["forbidden_effects"])
         self.assertEqual(telemetry["loss_reason_counts"]["unresolved-exact-reduction-test"], 1)
         self.assertEqual(telemetry["loss_reason_counts"]["support-missing"], 1)
         self.assertFalse(telemetry["scientific_authority"])

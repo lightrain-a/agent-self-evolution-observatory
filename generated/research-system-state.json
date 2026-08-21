@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-20T14:27:35+00:00",
+  "generated_at": "2026-08-21T01:09:39+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -327,7 +327,7 @@
     "candidate_portfolio_visible": 3,
     "candidate_portfolio_active": 0,
     "candidate_portfolio_search_holds": 3,
-    "search_funnel_bottleneck": "PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE",
+    "search_funnel_bottleneck": "PRE_F0_SUPPORT_PROVENANCE",
     "research_harness_assurance_passed": 14,
     "research_harness_assurance_checks": 14,
     "research_integration_lint_failed": 0,
@@ -11144,7 +11144,7 @@
   },
   "lineage": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:31+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "summary": {
       "nodes": 278,
       "edges": 258,
@@ -11174,7 +11174,7 @@
           "zh": "受约束持续进化",
           "en": "Constrained continual evolution"
         },
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "track-root:credit",
@@ -11184,7 +11184,7 @@
           "zh": "失败归因与经验准入",
           "en": "Failure credit and experience admission"
         },
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "track-root:memory",
@@ -11194,7 +11194,7 @@
           "zh": "记忆与技能巩固",
           "en": "Memory and skill consolidation"
         },
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "track-root:correction",
@@ -11204,7 +11204,7 @@
           "zh": "自纠正与策略内化",
           "en": "Self-correction and policy internalization"
         },
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "track-root:curriculum",
@@ -11214,7 +11214,7 @@
           "zh": "课程与任务进化",
           "en": "Curriculum and task evolution"
         },
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "track-root:workflow",
@@ -11224,7 +11224,7 @@
           "zh": "工作流与更新表面搜索",
           "en": "Workflow and update-surface search"
         },
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "track-root:evaluator",
@@ -11234,7 +11234,7 @@
           "zh": "奖励与评价器进化",
           "en": "Reward and evaluator evolution"
         },
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "track-root:world",
@@ -11244,7 +11244,7 @@
           "zh": "世界模型与具身持续适应",
           "en": "World models and embodied adaptation"
         },
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "regression-gated-self-evolution",
@@ -11266,7 +11266,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:regression-gated-self-evolution:1",
@@ -11374,7 +11374,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:contradiction-preserving-consolidation:1",
@@ -11482,7 +11482,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:compositional-update-compatibility:1",
@@ -11590,7 +11590,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:update-trust-region:1",
@@ -11698,7 +11698,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:retrieval-interference-auditor:1",
@@ -11806,7 +11806,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:irreversible-action-counterfactuals:1",
@@ -11913,7 +11913,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:self-label-confidence-flow:1",
@@ -12021,7 +12021,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:evaluator-coadaptation-guard:1",
@@ -12129,7 +12129,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:recovery-conditioned-experience:1",
@@ -12237,7 +12237,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:counterexample-generating-curriculum:1",
@@ -12346,7 +12346,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:workflow-generalization-certificate:1",
@@ -12454,7 +12454,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:budgeted-evolution-controller:1",
@@ -12562,7 +12562,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:lineage-aware-rollback:1",
@@ -12670,7 +12670,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:failure-frontier-curriculum:1",
@@ -12778,7 +12778,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:causally-verified-experience-admission:1",
@@ -12886,7 +12886,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:reward-invariance-audit:1",
@@ -12994,7 +12994,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:local-counterexample-memory-repair:1",
@@ -13102,7 +13102,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:self-correction-collapse-detector:1",
@@ -13210,7 +13210,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:intervention-validated-self-correction:1",
@@ -13318,7 +13318,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:workflow-branch-credit:1",
@@ -13426,7 +13426,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:world-model-error-gated-learning:1",
@@ -13534,7 +13534,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:memory-half-life:1",
@@ -13642,7 +13642,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:correction-policy-credit:1",
@@ -13750,7 +13750,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:curriculum-drift-controller:1",
@@ -13859,7 +13859,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:outcome-equivalent-trajectory-contrast:1",
@@ -13967,7 +13967,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "review:applicability-bounded-lessons:1",
@@ -14077,7 +14077,7 @@
         "blocking_reasons": [
           "Module-level intervention labels may require expensive environment-specific instrumentation."
         ],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "programmatic-review:failure-localization-before-reflection:1",
@@ -14178,7 +14178,7 @@
         "blocking_reasons": [
           "Cross-family disagreement may reflect formatting and style rather than distinct error mechanisms."
         ],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "programmatic-review:heterogeneous-critic-disagreement:1",
@@ -14279,7 +14279,7 @@
         "blocking_reasons": [
           "Oracle labels require executing all update surfaces, making supervision close to exhaustive search."
         ],
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "programmatic-review:update-surface-router:1",
@@ -14363,84 +14363,84 @@
         "kind": "early-rejected",
         "title": "更大模型做更多反思",
         "reason": "只增加推理计算，不能证明持久学习。",
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "early-rejected:268",
         "kind": "early-rejected",
         "title": "全参数训练 70B 自进化 Agent",
         "reason": "超出低资源约束且机制难归因。",
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "early-rejected:269",
         "kind": "early-rejected",
         "title": "只在自生成任务上提升",
         "reason": "缺少圈外泛化。",
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "early-rejected:270",
         "kind": "early-rejected",
         "title": "仅商业 API 闭环",
         "reason": "不可复现且依赖供应商快照。",
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "early-rejected:271",
         "kind": "early-rejected",
         "title": "固定多轮 Self-Refine",
         "reason": "属于更多采样，不是进化机制。",
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "early-rejected:272",
         "kind": "early-rejected",
         "title": "同模型 Actor 与 Judge 自我确认",
         "reason": "反馈完整性无法独立验证。",
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "early-rejected:273",
         "kind": "early-rejected",
         "title": "只报告最佳 checkpoint",
         "reason": "掩盖多轮回退与坍塌。",
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "early-rejected:274",
         "kind": "early-rejected",
         "title": "从头训练世界模型和策略",
         "reason": "资源高且无法分离贡献。",
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "early-rejected:275",
         "kind": "early-rejected",
         "title": "单一视觉 benchmark 技巧",
         "reason": "保留为 CVPR 后续，不作为 ICLR 主候选。",
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "early-rejected:276",
         "kind": "early-rejected",
         "title": "只做平均准确率的记忆消融",
         "reason": "无法识别有害条目和负迁移。",
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "early-rejected:277",
         "kind": "early-rejected",
         "title": "无隔离划分的在线适应",
         "reason": "无法排除测试泄漏。",
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       },
       {
         "id": "early-rejected:278",
         "kind": "early-rejected",
         "title": "泛化 Agent 自进化综述",
         "reason": "不是方法或可证伪 benchmark 贡献。",
-        "created_at": "2026-08-20T14:27:31+00:00"
+        "created_at": "2026-08-21T01:09:35+00:00"
       }
     ],
     "edges": [
@@ -16211,7 +16211,7 @@
   },
   "pre_gpu_candidate_gates": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:32+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "policy": {
       "gate_order": [
         "offline",
@@ -17058,7 +17058,7 @@
     "cards": [
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-20T14:27:31+00:00",
+        "compiled_at": "2026-08-21T01:09:35+00:00",
         "idea_id": "update-trust-region",
         "phase": "P0-screening",
         "expected_runtime": {
@@ -17859,7 +17859,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-20T14:27:31+00:00",
+        "compiled_at": "2026-08-21T01:09:35+00:00",
         "idea_id": "update-trust-region",
         "phase": "P0",
         "expected_runtime": {
@@ -18668,7 +18668,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-20T14:27:31+00:00",
+        "compiled_at": "2026-08-21T01:09:35+00:00",
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0-screening",
         "expected_runtime": {
@@ -19486,7 +19486,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-20T14:27:31+00:00",
+        "compiled_at": "2026-08-21T01:09:35+00:00",
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0",
         "expected_runtime": {
@@ -20552,7 +20552,7 @@
   },
   "paper_first_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:31+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "review_id": "paper-first-pf1-pf2-pf4-pf6-design-20260812",
     "target_venue": "ICLR",
     "policy": {
@@ -20830,7 +20830,7 @@
   },
   "paper_first_pf1_problem_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:31+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "incubation_id": "PF-1",
     "paper_id": "evolvability-debt-under-persistent-agent-updates",
     "prior_design_verdict": "REVISE_PAPER_PROBLEM",
@@ -20968,7 +20968,7 @@
   },
   "paper_first_pf2_method_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:31+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "paper_id": "repair-surface-identifiability-under-persistent-agent-updates",
     "incubation_id": "PF-2",
     "reviewed_method": "Repair-Surface Identification Certificate",
@@ -21039,7 +21039,7 @@
   },
   "paper_first_pf357_problem_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:31+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "review_id": "paper-first-pf357-final-20260813",
     "policy": {
       "domain_transfer_is_not_novelty": true,
@@ -21184,7 +21184,7 @@
   },
   "paper_first_fresh_saturation": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:31+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "review_id": "fresh-problem-saturation-20260813-r2",
     "policy": {
       "schema_version": "1.1",
@@ -27415,7 +27415,7 @@
   },
   "paper_first_search_portfolio_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:31+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
     "target_venue": "ICLR",
     "component_owner": "paper-design-contract",
@@ -27471,7 +27471,7 @@
     },
     "shadow_near_miss_preflight": {
       "schema_version": "1.0",
-      "generated_at": "2026-08-20T14:27:31+00:00",
+      "generated_at": "2026-08-21T01:09:35+00:00",
       "audit_id": "shadow-r2-near-miss-preflight-20260814",
       "policy": {
         "shadow_search_control_only": true,
@@ -31625,7 +31625,7 @@
   },
   "paper_first_discovery_frontier": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:31+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "status": "LIVE_SOURCE_DISCOVERY_PENDING",
     "policy": {
       "scientific_authority": false,
@@ -31717,7 +31717,7 @@
   },
   "paper_first_fresh_phenomenon_portfolio": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:32+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "status": "NO_ACTIVE_F0",
     "policy": {
       "portfolio_is_outside_canonical_problem_queue": true,
@@ -32703,7 +32703,7 @@
   },
   "paper_first_sp15_identifiability_support": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:31+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "support_id": "sp15-query-only-identifiability-support-20260814",
     "paper_problem_id": "SP-15",
     "revised_claim": "Under fixed query-only inference and a fixed skill library, a minimally sufficient skill set may be observationally non-identifiable when multiple task semantics compatible with the same available query require incompatible sufficient sets.",
@@ -33406,19 +33406,19 @@
       "same_relation_universe_lane_review_retry_exhaustion_blocks_repeat_scan": true
     },
     "summary": {
-      "new_reviewed_sources": 0,
-      "current_reviewed_sources": 250,
-      "last_scanned_sources": 233,
+      "manual_scan_eligible": false,
       "passed": 9,
       "new_boundary_sources": 0,
+      "new_reviewed_sources": 0,
+      "failed": 7,
+      "automatic_model_scan_authorized": false,
       "new_empirical_sources": 0,
       "new_failure_sources": 0,
       "relation_lane_review_retry_exhausted": false,
-      "failed": 7,
-      "automatic_model_scan_authorized": false,
       "checks": 16,
-      "manual_scan_eligible": false,
-      "new_assumption_sources": 0
+      "new_assumption_sources": 0,
+      "current_reviewed_sources": 250,
+      "last_scanned_sources": 233
     },
     "failed_check_count": 7,
     "freshness_status": "STALE_RELATION_UNIVERSE",
@@ -33911,7 +33911,7 @@
   },
   "paper_first_post_c2": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:32+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "paper_id": "trajectory-mediated-memory-effect-transport",
     "decision": "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM",
     "reason": "All ten strict C2 units are execution-valid and the full pre-divergence policy decision context is reproducible, yet only 2/10 controlled action contrasts are nonzero and the preregistered same-memory cross-context sign reversal is absent. The earliest-divergent-action controlled-mediator mechanism is therefore unsupported by its local falsifier.",
@@ -34025,7 +34025,7 @@
   },
   "paper_first_premature_method_diagnostics": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:32+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "run_root": "private-data://external/paper-first-p0-method-20260812",
     "authority": {
       "authority_type": "premature-paper-first-method-diagnostic-only",
@@ -34193,7 +34193,7 @@
   },
   "pilot_registry": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:32+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "result_dir": "private-data://external/results",
     "approval_dir": "private-data://external/approvals",
     "result_schema": {
@@ -34444,7 +34444,7 @@
         "pre_experiment_gate_status": "blocked",
         "pre_experiment_card": {
           "schema_version": "2.2",
-          "compiled_at": "2026-08-20T14:27:31+00:00",
+          "compiled_at": "2026-08-21T01:09:35+00:00",
           "idea_id": "update-trust-region",
           "phase": "P0",
           "expected_runtime": {
@@ -35599,7 +35599,7 @@
         "pre_experiment_gate_status": "blocked",
         "pre_experiment_card": {
           "schema_version": "2.2",
-          "compiled_at": "2026-08-20T14:27:31+00:00",
+          "compiled_at": "2026-08-21T01:09:35+00:00",
           "idea_id": "budgeted-evolution-controller",
           "phase": "P0",
           "expected_runtime": {
@@ -40231,8 +40231,8 @@
         "portfolio_state": "SEARCH_HOLD",
         "lineage_id": "candidate-lineage:b0e64773e851414b7b7a",
         "parent_candidate": "UNEXPLAINED_BOUNDARY-P1-006-R1",
-        "provenance_status": "PROVENANCE_INCONCLUSIVE",
-        "downstream_authorization_blocked": true,
+        "provenance_status": "COMPLETE",
+        "downstream_authorization_blocked": false,
         "source": "research_candidate_portfolio",
         "scientific_authority": false
       },
@@ -40245,8 +40245,8 @@
         "portfolio_state": "SEARCH_HOLD",
         "lineage_id": "candidate-lineage:84dcc60e9394324dfec5",
         "parent_candidate": "UNEXPLAINED_BOUNDARY-P1-005-R1",
-        "provenance_status": "PROVENANCE_INCONCLUSIVE",
-        "downstream_authorization_blocked": true,
+        "provenance_status": "COMPLETE",
+        "downstream_authorization_blocked": false,
         "source": "research_candidate_portfolio",
         "scientific_authority": false
       },
@@ -40259,8 +40259,8 @@
         "portfolio_state": "SEARCH_HOLD",
         "lineage_id": "candidate-lineage:25e34bdcc045aa3b7127",
         "parent_candidate": "UNEXPLAINED_BOUNDARY-P1-005",
-        "provenance_status": "PROVENANCE_INCONCLUSIVE",
-        "downstream_authorization_blocked": true,
+        "provenance_status": "COMPLETE",
+        "downstream_authorization_blocked": false,
         "source": "research_candidate_portfolio",
         "scientific_authority": false
       },
@@ -45322,7 +45322,7 @@
   },
   "research_memory_wiki": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:35+00:00",
+    "generated_at": "2026-08-21T01:09:39+00:00",
     "status": "MEMORY_COMPILED",
     "policy": {
       "schema_version": "1.0",
@@ -47948,10 +47948,13 @@
       "portfolio_capacity_pressure_cannot_relax_gates": true,
       "zero_candidates_and_support_holds_are_distinct_bottlenecks": true,
       "typed_reduction_or_support_holds_must_not_be_reported_as_idea_generation_failure": true,
+      "support_availability_adapts_future_search_allocation_not_scientific_rank": true,
+      "support_hold_cannot_eliminate_or_scientifically_downgrade_a_candidate": true,
+      "new_provider_fanout_requires_a_new_receipted_source_or_operator_frame": true,
       "telemetry_cannot_authorize_provider_calls_problem_gate_method_experiment_p0_or_gpu": true
     },
     "summary": {
-      "bottleneck": "PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE",
+      "bottleneck": "PRE_F0_SUPPORT_PROVENANCE",
       "primary_verified": 32,
       "raw_seeds": 90,
       "pre_f0_queued": 3,
@@ -47981,9 +47984,31 @@
       "unresolved-exact-reduction-test": 6
     },
     "bottleneck": {
-      "key": "PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE",
-      "explanation": "Candidate problems exist, but exact-reduction/support evidence is not yet qualified; this is not an idea-generation failure.",
-      "next_action": "Resolve the cheapest discriminating reduction/support contracts for the retained Pre-F0 candidates, then rerun exact same-information reduction before Problem Gate.",
+      "key": "PRE_F0_SUPPORT_PROVENANCE",
+      "explanation": "Candidate problems exist, but every retained Pre-F0 falsifier lacks qualified first-party support. This is a support-provenance bottleneck, not an idea-generation or scientific failure.",
+      "next_action": "Preserve the held candidates and adapt the next receipted API search frame toward independently resolvable first-party evidence surfaces; do not rerun the same content-addressed pool/operator frame.",
+      "scientific_authority": false
+    },
+    "search_adaptation": {
+      "status": "PROPOSE_SUPPORT_AWARE_NEW_SEARCH_FRAME",
+      "trigger": {
+        "pre_f0_queued": 3,
+        "support_qualified": 0,
+        "support_holds": 3,
+        "all_retained_candidates_support_held": true
+      },
+      "allowed_effects": [
+        "allocate_future_generation_budget_toward_verified_first_party_asset_surfaces",
+        "retain_current_candidates_as_support_holds",
+        "require_new_source_set_or_discovery_operator_receipt_before_provider_fanout"
+      ],
+      "forbidden_effects": [
+        "scientifically_downgrade_held_candidate",
+        "convert_support_hold_to_scientific_failure",
+        "relax_exact_reduction_or_problem_gate",
+        "authorize_provider_calls"
+      ],
+      "provider_calls_authorized": false,
       "scientific_authority": false
     },
     "portfolio": {
@@ -48196,7 +48221,7 @@
       "repeated_cycle_failure_types": 0,
       "stale_count": 0,
       "integration_failures": 0,
-      "current_search_bottleneck": "PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE"
+      "current_search_bottleneck": "PRE_F0_SUPPORT_PROVENANCE"
     },
     "proposals": [],
     "scientific_authority": false,
@@ -48339,13 +48364,15 @@
             "experiment_authorization_holds": 78,
             "repair_records": 8,
             "candidate_lineage_records": 3,
-            "candidate_lineage_complete": 0,
-            "candidate_provenance_holds": 3,
-            "candidate_stage_receipts": 5
+            "candidate_lineage_complete": 3,
+            "candidate_provenance_holds": 0,
+            "candidate_stage_receipts": 5,
+            "candidate_stage_lineage_gaps": 2,
+            "candidate_stage_unreceipted_elimination_events": 87
           },
           "lint": {
             "errors": 0,
-            "warnings": 3
+            "warnings": 2
           }
         }
       },
@@ -48401,7 +48428,7 @@
         "key": "meta-telemetry-zero-authority",
         "pass": true,
         "evidence": {
-          "bottleneck": "PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE"
+          "bottleneck": "PRE_F0_SUPPORT_PROVENANCE"
         }
       },
       {
@@ -48430,7 +48457,7 @@
           "repeated_cycle_failure_types": 0,
           "stale_count": 0,
           "integration_failures": 0,
-          "current_search_bottleneck": "PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE"
+          "current_search_bottleneck": "PRE_F0_SUPPORT_PROVENANCE"
         }
       }
     ],
@@ -48454,7 +48481,7 @@
   "human_terminal_ideas": {
     "schema_version": "1.0",
     "decision_date": "2026-08-11",
-    "generated_at": "2026-08-20T14:27:32+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "source_of_truth_priority": [
       "explicit-user-update",
       "latest-human-review",
@@ -50422,7 +50449,7 @@
   },
   "research_governance_v2": {
     "schema_version": "2.4",
-    "generated_at": "2026-08-20T14:27:32+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "policy": {
       "schema_version": "2.3",
       "paper_novelty_precedes_method_design": true,
@@ -50605,6 +50632,9 @@
       "belief_authority_does_not_equal_automatic_claim_mutation": true,
       "experiment_authorization_is_fail_closed": true,
       "candidate_lineage_is_receipted_and_missing_provenance_is_a_hold": true,
+      "pre_f0_route_receipt_is_a_zero_authority_disposition_not_semantic_review": true,
+      "pre_f0_lineage_completion_cannot_clear_reduction_or_support_holds": true,
+      "aggregate_funnel_accounting_cannot_claim_record_level_elimination_lineage": true,
       "repair_proposals_do_not_consume_budget_until_recorded": true,
       "one_load_bearing_repair_per_child": true,
       "max_representation_or_objective_repairs_per_substrate": 2,
@@ -52939,9 +52969,18 @@
         "parent_candidate": "UNEXPLAINED_BOUNDARY-P1-006-R1",
         "candidate_snapshot_sha256": "6d22f8aae4c4130b41a5b14a2a9d961c695087fb45cb2581397b6c9ca676b447",
         "source_run_id": "20260820T142226Z-ingestion-replay",
-        "discovery_transaction_id": "",
+        "discovery_transaction_id": "ed883b998c767cc6f47f77986c007a76be23a089ac9e7e274c71069e4b669de3",
         "generation_receipt_sha256": "2d5acebb164408d9b65a3e6a94b8f2ab1abfd8c6b917f35c946d7e71781bb9f9",
+        "formulation_origin_role": "formulate-5",
+        "formulation_raw_sha256": "33edc00a0a52068decfa8396101821493c9522b7b2654717af56ff1faa85ab59",
+        "formulation_request_fingerprint": "20e0dff38e3bd2c32e84cff3d944fa9b710a04aabb29cf567f07ed11c1db6680",
+        "ingestion_recovery_sha256": "2d5acebb164408d9b65a3e6a94b8f2ab1abfd8c6b917f35c946d7e71781bb9f9",
         "review_receipt_sha256": [],
+        "pre_f0_route_receipt_sha256": "8ac8e2e5f3d9ea6ce02ecee233f87da6f77b36f09693394935046635c5169ab6",
+        "disposition_receipt_sha256": [
+          "8ac8e2e5f3d9ea6ce02ecee233f87da6f77b36f09693394935046635c5169ab6"
+        ],
+        "disposition_receipt_kind": "PRE_F0_MACHINE_ROUTE_ZERO_AUTHORITY",
         "elimination_reason": [
           "saturation-exact-reduction-pending:procedural-memory-nonmonotonicity",
           "unresolved-exact-reduction-test:1",
@@ -52949,9 +52988,14 @@
         ],
         "portfolio_state": "SEARCH_HOLD",
         "route_reason": "EXACT_REDUCTION_PENDING",
-        "lineage_complete": false,
-        "provenance_status": "PROVENANCE_INCONCLUSIVE",
-        "downstream_authorization_blocked": true,
+        "generation_receipt_complete": true,
+        "origin_receipt_complete": true,
+        "review_receipt_complete": false,
+        "disposition_receipt_complete": true,
+        "lineage_complete": true,
+        "provenance_status": "COMPLETE",
+        "downstream_authorization_blocked": false,
+        "pre_f0_route_has_scientific_authority": false,
         "belief_authority": false,
         "scientific_authority": false
       },
@@ -52961,9 +53005,18 @@
         "parent_candidate": "UNEXPLAINED_BOUNDARY-P1-005-R1",
         "candidate_snapshot_sha256": "2c43d3a2af96523948cab81d83e489de020e82116175ec9a3c71f2d3ed5f641d",
         "source_run_id": "20260820T142226Z-ingestion-replay",
-        "discovery_transaction_id": "",
+        "discovery_transaction_id": "ed883b998c767cc6f47f77986c007a76be23a089ac9e7e274c71069e4b669de3",
         "generation_receipt_sha256": "2d5acebb164408d9b65a3e6a94b8f2ab1abfd8c6b917f35c946d7e71781bb9f9",
+        "formulation_origin_role": "formulate-10",
+        "formulation_raw_sha256": "7a0db20650562556d6214327d57eb0e53e0a580f4f2897e5913c1db303e0d11e",
+        "formulation_request_fingerprint": "0b3ec6cb5bb55a0ac0032288bd8b0d2d46345a1ee2143c3d7fbe08d8978d1eb1",
+        "ingestion_recovery_sha256": "2d5acebb164408d9b65a3e6a94b8f2ab1abfd8c6b917f35c946d7e71781bb9f9",
         "review_receipt_sha256": [],
+        "pre_f0_route_receipt_sha256": "151132d6dc3ddba35e67607d9b90a59bb94bff85ca8879479e2f440a7b3e7edf",
+        "disposition_receipt_sha256": [
+          "151132d6dc3ddba35e67607d9b90a59bb94bff85ca8879479e2f440a7b3e7edf"
+        ],
+        "disposition_receipt_kind": "PRE_F0_MACHINE_ROUTE_ZERO_AUTHORITY",
         "elimination_reason": [
           "saturation-exact-reduction-pending:cross-layer-behavior-persistence",
           "saturation-exact-reduction-pending:procedural-memory-nonmonotonicity",
@@ -52973,9 +53026,14 @@
         ],
         "portfolio_state": "SEARCH_HOLD",
         "route_reason": "EXACT_REDUCTION_PENDING",
-        "lineage_complete": false,
-        "provenance_status": "PROVENANCE_INCONCLUSIVE",
-        "downstream_authorization_blocked": true,
+        "generation_receipt_complete": true,
+        "origin_receipt_complete": true,
+        "review_receipt_complete": false,
+        "disposition_receipt_complete": true,
+        "lineage_complete": true,
+        "provenance_status": "COMPLETE",
+        "downstream_authorization_blocked": false,
+        "pre_f0_route_has_scientific_authority": false,
         "belief_authority": false,
         "scientific_authority": false
       },
@@ -52985,9 +53043,18 @@
         "parent_candidate": "UNEXPLAINED_BOUNDARY-P1-005",
         "candidate_snapshot_sha256": "f58d45a4c280b17df06d70acf0845f8f1317078724b228ee5bbc460eafdc5071",
         "source_run_id": "20260820T142226Z-ingestion-replay",
-        "discovery_transaction_id": "",
+        "discovery_transaction_id": "ed883b998c767cc6f47f77986c007a76be23a089ac9e7e274c71069e4b669de3",
         "generation_receipt_sha256": "2d5acebb164408d9b65a3e6a94b8f2ab1abfd8c6b917f35c946d7e71781bb9f9",
+        "formulation_origin_role": "formulate-12",
+        "formulation_raw_sha256": "e140f35b12e5ee65adcb640b151f85c2c726d9a0d000b816367603615cacd7dc",
+        "formulation_request_fingerprint": "a0f2f9941d1e4f3f43826e1da81e904f783c68c49b26b9b9748df494f225158b",
+        "ingestion_recovery_sha256": "2d5acebb164408d9b65a3e6a94b8f2ab1abfd8c6b917f35c946d7e71781bb9f9",
         "review_receipt_sha256": [],
+        "pre_f0_route_receipt_sha256": "e6eb7fa9ebe8848749b93aa6274dfa0b896ad738a9c5ca6d011eb104c43e4556",
+        "disposition_receipt_sha256": [
+          "e6eb7fa9ebe8848749b93aa6274dfa0b896ad738a9c5ca6d011eb104c43e4556"
+        ],
+        "disposition_receipt_kind": "PRE_F0_MACHINE_ROUTE_ZERO_AUTHORITY",
         "elimination_reason": [
           "saturation-exact-reduction-pending:procedural-memory-nonmonotonicity",
           "unresolved-exact-reduction-test:1",
@@ -52997,9 +53064,14 @@
         ],
         "portfolio_state": "SEARCH_HOLD",
         "route_reason": "EXACT_REDUCTION_PENDING",
-        "lineage_complete": false,
-        "provenance_status": "PROVENANCE_INCONCLUSIVE",
-        "downstream_authorization_blocked": true,
+        "generation_receipt_complete": true,
+        "origin_receipt_complete": true,
+        "review_receipt_complete": false,
+        "disposition_receipt_complete": true,
+        "lineage_complete": true,
+        "provenance_status": "COMPLETE",
+        "downstream_authorization_blocked": false,
+        "pre_f0_route_has_scientific_authority": false,
         "belief_authority": false,
         "scientific_authority": false
       }
@@ -53094,9 +53166,11 @@
       "experiment_authorization_holds": 78,
       "repair_records": 8,
       "candidate_lineage_records": 3,
-      "candidate_lineage_complete": 0,
-      "candidate_provenance_holds": 3,
-      "candidate_stage_receipts": 5
+      "candidate_lineage_complete": 3,
+      "candidate_provenance_holds": 0,
+      "candidate_stage_receipts": 5,
+      "candidate_stage_lineage_gaps": 2,
+      "candidate_stage_unreceipted_elimination_events": 87
     },
     "scientific_authority": false,
     "authority": {
@@ -53114,21 +53188,19 @@
       "errors": [],
       "warnings": [
         {
-          "code": "candidate-lineage-provenance-inconclusive",
-          "candidate_id": "PORT-003"
+          "code": "candidate-stage-record-level-elimination-lineage-incomplete",
+          "stage": "semantic-uniqueness",
+          "eliminated_count": 54
         },
         {
-          "code": "candidate-lineage-provenance-inconclusive",
-          "candidate_id": "PORT-004"
-        },
-        {
-          "code": "candidate-lineage-provenance-inconclusive",
-          "candidate_id": "PORT-006"
+          "code": "candidate-stage-record-level-elimination-lineage-incomplete",
+          "stage": "pre-f0-route",
+          "eliminated_count": 33
         }
       ],
       "summary": {
         "errors": 0,
-        "warnings": 3
+        "warnings": 2
       },
       "scientific_authority": false
     }
@@ -53374,7 +53446,7 @@
   },
   "paper_first_p0_f0": {
     "schema_version": "1.3",
-    "generated_at": "2026-08-20T14:27:32+00:00",
+    "generated_at": "2026-08-21T01:09:35+00:00",
     "run_root": "private-data://external/paper-first-p0-20260812",
     "authority": {
       "promotion_authorized": false,
@@ -54018,7 +54090,7 @@
   },
   "idea_discovery_v3": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:35+00:00",
+    "generated_at": "2026-08-21T01:09:39+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -56974,7 +57046,7 @@
   },
   "idea_discovery_v31": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:35+00:00",
+    "generated_at": "2026-08-21T01:09:39+00:00",
     "round": "v3.1",
     "status": "external-reviewed",
     "policy": {
@@ -57687,7 +57759,7 @@
   },
   "idea_discovery_v4": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:35+00:00",
+    "generated_at": "2026-08-21T01:09:39+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -67362,7 +67434,7 @@
   },
   "idea_discovery_v5": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:35+00:00",
+    "generated_at": "2026-08-21T01:09:39+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -77355,7 +77427,7 @@
   },
   "idea_discovery_v51": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:35+00:00",
+    "generated_at": "2026-08-21T01:09:39+00:00",
     "target_venue": "ICLR",
     "policy": {
       "generated_only_from_review_vectors": true,
@@ -79047,7 +79119,7 @@
   },
   "idea_discovery_v52": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:35+00:00",
+    "generated_at": "2026-08-21T01:09:39+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v51_revise": true,
@@ -80025,7 +80097,7 @@
   },
   "idea_discovery_v53": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:35+00:00",
+    "generated_at": "2026-08-21T01:09:39+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v52_revise_with_single_surviving_boundary": true,
@@ -80364,7 +80436,7 @@
   },
   "discussion_portfolio": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-20T14:27:35+00:00",
+    "generated_at": "2026-08-21T01:09:39+00:00",
     "target": 20,
     "count": 27,
     "remaining": 0,
@@ -82862,8 +82934,8 @@
       },
       "status": "running",
       "evidence": {
-        "en": "current bottleneck=PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE; telemetry has zero scientific authority",
-        "zh": "当前瓶颈=PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE；遥测不拥有科学权限"
+        "en": "current bottleneck=PRE_F0_SUPPORT_PROVENANCE; telemetry has zero scientific authority",
+        "zh": "当前瓶颈=PRE_F0_SUPPORT_PROVENANCE；遥测不拥有科学权限"
       },
       "key": "search-funnel-telemetry",
       "primary_layer": "memory-publication"
@@ -83114,8 +83186,8 @@
       },
       "status": "running",
       "evidence": {
-        "en": "7 transitions / 6 failure authority records / 78 experiment holds / 3 provenance holds",
-        "zh": "7 条状态迁移 / 6 条失败权限记录 / 78 个实验授权 HOLD / 3 个谱系 HOLD"
+        "en": "7 transitions / 6 failure authority records / 78 experiment holds / 0 provenance holds",
+        "zh": "7 条状态迁移 / 6 条失败权限记录 / 78 个实验授权 HOLD / 0 个谱系 HOLD"
       },
       "key": "aris-governance-memory",
       "primary_layer": "runtime-authority"
@@ -84247,19 +84319,19 @@
         "detail": {
           "status": "HOLD_MANUAL_RELATION_SCAN",
           "summary": {
-            "new_reviewed_sources": 0,
-            "current_reviewed_sources": 250,
-            "last_scanned_sources": 233,
+            "manual_scan_eligible": false,
             "passed": 9,
             "new_boundary_sources": 0,
+            "new_reviewed_sources": 0,
+            "failed": 7,
+            "automatic_model_scan_authorized": false,
             "new_empirical_sources": 0,
             "new_failure_sources": 0,
             "relation_lane_review_retry_exhausted": false,
-            "failed": 7,
-            "automatic_model_scan_authorized": false,
             "checks": 16,
-            "manual_scan_eligible": false,
-            "new_assumption_sources": 0
+            "new_assumption_sources": 0,
+            "current_reviewed_sources": 250,
+            "last_scanned_sources": 233
           }
         }
       },
@@ -84982,13 +85054,15 @@
             "experiment_authorization_holds": 78,
             "repair_records": 8,
             "candidate_lineage_records": 3,
-            "candidate_lineage_complete": 0,
-            "candidate_provenance_holds": 3,
-            "candidate_stage_receipts": 5
+            "candidate_lineage_complete": 3,
+            "candidate_provenance_holds": 0,
+            "candidate_stage_receipts": 5,
+            "candidate_stage_lineage_gaps": 2,
+            "candidate_stage_unreceipted_elimination_events": 87
           },
           "lint": {
             "errors": 0,
-            "warnings": 3
+            "warnings": 2
           }
         }
       },
@@ -85015,7 +85089,7 @@
             "automatic_promotions": 0
           },
           "funnel": {
-            "bottleneck": "PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE",
+            "bottleneck": "PRE_F0_SUPPORT_PROVENANCE",
             "primary_verified": 32,
             "raw_seeds": 90,
             "pre_f0_queued": 3,
@@ -85277,7 +85351,7 @@
         "pass": true,
         "detail": {
           "schema_version": "2.4",
-          "generated_at": "2026-08-20T14:27:32+00:00",
+          "generated_at": "2026-08-21T01:09:35+00:00",
           "policy": {
             "schema_version": "2.3",
             "paper_novelty_precedes_method_design": true,

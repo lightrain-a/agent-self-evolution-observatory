@@ -13,6 +13,9 @@ POLICY: dict[str, Any] = {
     "portfolio_capacity_pressure_cannot_relax_gates": True,
     "zero_candidates_and_support_holds_are_distinct_bottlenecks": True,
     "typed_reduction_or_support_holds_must_not_be_reported_as_idea_generation_failure": True,
+    "support_availability_adapts_future_search_allocation_not_scientific_rank": True,
+    "support_hold_cannot_eliminate_or_scientifically_downgrade_a_candidate": True,
+    "new_provider_fanout_requires_a_new_receipted_source_or_operator_frame": True,
     "telemetry_cannot_authorize_provider_calls_problem_gate_method_experiment_p0_or_gpu": True,
 }
 
@@ -80,7 +83,16 @@ def build_search_funnel_telemetry(
     submitted = stage_counts["problem_gate_submitted"]
     passed = stage_counts["problem_gate_passed"]
 
-    if pre_f0_queued > 0 and support_ready == 0:
+    all_pre_f0_support_held = bool(
+        pre_f0_queued > 0
+        and support_ready == 0
+        and stage_counts["pre_f0_support_hold"] == pre_f0_queued
+    )
+    if all_pre_f0_support_held:
+        bottleneck = "PRE_F0_SUPPORT_PROVENANCE"
+        explanation = "Candidate problems exist, but every retained Pre-F0 falsifier lacks qualified first-party support. This is a support-provenance bottleneck, not an idea-generation or scientific failure."
+        next_action = "Preserve the held candidates and adapt the next receipted API search frame toward independently resolvable first-party evidence surfaces; do not rerun the same content-addressed pool/operator frame."
+    elif pre_f0_queued > 0 and support_ready == 0:
         bottleneck = "PRE_F0_REDUCTION_OR_SUPPORT_EVIDENCE"
         explanation = "Candidate problems exist, but exact-reduction/support evidence is not yet qualified; this is not an idea-generation failure."
         next_action = "Resolve the cheapest discriminating reduction/support contracts for the retained Pre-F0 candidates, then rerun exact same-information reduction before Problem Gate."
@@ -132,6 +144,36 @@ def build_search_funnel_telemetry(
             "key": bottleneck,
             "explanation": explanation,
             "next_action": next_action,
+            "scientific_authority": False,
+        },
+        "search_adaptation": {
+            "status": (
+                "PROPOSE_SUPPORT_AWARE_NEW_SEARCH_FRAME"
+                if all_pre_f0_support_held
+                else "NO_SUPPORT_SATURATION_PIVOT"
+            ),
+            "trigger": {
+                "pre_f0_queued": pre_f0_queued,
+                "support_qualified": support_ready,
+                "support_holds": stage_counts["pre_f0_support_hold"],
+                "all_retained_candidates_support_held": all_pre_f0_support_held,
+            },
+            "allowed_effects": (
+                [
+                    "allocate_future_generation_budget_toward_verified_first_party_asset_surfaces",
+                    "retain_current_candidates_as_support_holds",
+                    "require_new_source_set_or_discovery_operator_receipt_before_provider_fanout",
+                ]
+                if all_pre_f0_support_held
+                else []
+            ),
+            "forbidden_effects": [
+                "scientifically_downgrade_held_candidate",
+                "convert_support_hold_to_scientific_failure",
+                "relax_exact_reduction_or_problem_gate",
+                "authorize_provider_calls",
+            ],
+            "provider_calls_authorized": False,
             "scientific_authority": False,
         },
         "portfolio": {
