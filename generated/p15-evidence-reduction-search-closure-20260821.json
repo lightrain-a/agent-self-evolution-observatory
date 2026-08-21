@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "status": "EVIDENCE_REDUCTION_SEARCH_CLOSURE_READY",
+  "source_candidate_id": "SHADOW-P15-C01",
+  "title": "Retrieval-Induced Context Contamination: Why Skill-Library Retrieval Order Systematically Modulates Compositional Interference in Self-Evolving Agents",
+  "contract_sha256": "e41c05f823661dda273f63fbedf5ab01528c96c1512eff3d16a42a0e6beb80fa",
+  "evidence_manifest_sha256": "53858f972b9c049141ebd4bed0c4b8ab0dd2762b619aa7d0d18e004ba5c90160",
+  "evidence_manifest_uri": "research-data://runs/p15-order-effect-41d0b05-r1/evidence-manifest-v2.json",
+  "evidence_outcome": "REDUCTION_SUPPORTED",
+  "qualified_units": 50,
+  "metric_summary": "50/50 valid units; 5/5 tasks success-invariant across all six identical-skill permutations; 0/5 uptake-divergent tasks; no-skill and all single-skill controls succeeded; 53 scientific provider calls including 10 v1 calls and 43 v2 calls, within the frozen 160-call cap.",
+  "problem_text": "For a fixed set of skills with controlled static compatibility, retrieval relevance, and conflict relations, changing the order in which skills are retrieved and presented to the agent will systematically change compositional task success. Specifically, skills retrieved earlier will have a disproportionate influence on the agent's subsequent behavior, and this influence will be measurable as context contamination (e.g., earlier skills prime the agent to interpret later skills in a specific way, or consume context budget that would otherwise be available for later skills).",
+  "strongest_reduction": "Negative transfer / task-skill compatibility with the same skill content, task requirements, and executor, but without access to retrieval order information.",
+  "source_refs": [
+    "arXiv:2608.16114",
+    "arXiv:2608.16211"
+  ],
+  "reopen_condition": "Reopen this exact search basin only if a new preregistered, protocol-valid same-information study changes only the presentation/retrieval order of the same fixed skill set and demonstrates a directionally consistent success or independently audited uptake residual on held-out tasks that the frozen static compatibility/negative-transfer baseline cannot express. Changing skill composition, skill content, task set, executor, budget, or merely renaming context interference does not reopen this closure.",
+  "scientific_authority": false,
+  "belief_authority": false,
+  "source_evidence_manifest_file_sha256": "7cfc4b2229c2a162cc9e0a1b7455e8af080f1b81180830bd64e59bb2115f4b89"
+}

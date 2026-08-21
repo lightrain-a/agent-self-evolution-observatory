@@ -45,6 +45,8 @@ def _lane(status: str) -> str:
         return "CONTINUE_BOUNDED_EVIDENCE"
     if status == "READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT":
         return "CONTINUE_SUBSTRATE_PREFLIGHT"
+    if status == "NEEDS_MINIMAL_HARNESS_IMPLEMENTATION":
+        return "CONTINUE_HARNESS_IMPLEMENTATION"
     if status in {"NEEDS_BOUNDED_EVIDENCE_DESIGN", "DEFERRED_BY_ACTIVE_PORTFOLIO_BUDGET"}:
         return "NEXT_BOUNDED_EVIDENCE_DESIGN"
     if status == "WAIT_PRIMARY_ASSET_RELEASE":
@@ -136,9 +138,10 @@ def compile_actionability_overlay(
     actionable_lanes = {
         "CONTINUE_BOUNDED_EVIDENCE": 0,
         "CONTINUE_SUBSTRATE_PREFLIGHT": 1,
-        "CONTINUE_INDEPENDENT_REVIEW": 2,
-        "CONTINUE_PROTOCOL_REPAIR": 3,
-        "NEXT_BOUNDED_EVIDENCE_DESIGN": 4,
+        "CONTINUE_HARNESS_IMPLEMENTATION": 2,
+        "CONTINUE_INDEPENDENT_REVIEW": 3,
+        "CONTINUE_PROTOCOL_REPAIR": 4,
+        "NEXT_BOUNDED_EVIDENCE_DESIGN": 5,
     }
     action_queue = sorted(
         [row for row in rows if row["action_lane"] in actionable_lanes],

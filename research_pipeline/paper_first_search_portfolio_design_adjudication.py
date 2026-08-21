@@ -31,6 +31,7 @@ SHADOW_QUEUE_JSON = PROJECT_ROOT / "generated" / "paper-first-problem-search-por
 PRINCIPLE_READJUDICATION_GLOB = "*principle-readjudication-*.json"
 FRESH_PHENOMENON_SUPPORT_HOLD_GLOB = "*fresh-phenomenon-support-hold-*.json"
 CONTINUATION_HOLD_GLOB = "*continuation-hold-*.json"
+EVIDENCE_REDUCTION_SEARCH_CLOSURE_GLOB = "*evidence-reduction-search-closure-*.json"
 
 PRIMARY_SOURCES: dict[str, list[dict[str, str]]] = {
     "SP-09": [
@@ -637,7 +638,84 @@ def _fresh_phenomenon_support_hold_rows(paths: list[Path] | None = None) -> list
     return rows
 
 
-def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str, Any] | None = None, prior_hard_veto_rows: list[dict[str, Any]] | None = None, prior_semantic_rows: list[dict[str, Any]] | None = None, prior_near_miss_rows: list[dict[str, Any]] | None = None, extra_near_miss_rows: list[dict[str, Any]] | None = None, principle_readjudication_rows: list[dict[str, Any]] | None = None, fresh_phenomenon_support_hold_rows: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+def _evidence_reduction_search_closure_rows(paths: list[Path] | None = None) -> list[dict[str, Any]]:
+    """Load protocol-valid exact-reduction outcomes as scoped search closures.
+
+    These rows close only the frozen paper-problem realization.  They never
+    certify a core principle and cannot propagate beyond an exact object/scope
+    without satisfying their explicit reopen condition.
+    """
+    candidates = paths if paths is not None else sorted((PROJECT_ROOT / "generated").glob(EVIDENCE_REDUCTION_SEARCH_CLOSURE_GLOB))
+    rows: list[dict[str, Any]] = []
+    for path in candidates:
+        payload = _load_json(path)
+        if payload.get("status") != "EVIDENCE_REDUCTION_SEARCH_CLOSURE_READY" or payload.get("scientific_authority") is not False:
+            continue
+        cid = str(payload.get("source_candidate_id") or "").strip()
+        contract = str(payload.get("contract_sha256") or "").strip().lower()
+        manifest = str(payload.get("evidence_manifest_sha256") or "").strip().lower()
+        uri = str(payload.get("evidence_manifest_uri") or "").strip()
+        prediction = " ".join(str(payload.get("problem_text") or "").split())[:2400]
+        baseline = " ".join(str(payload.get("strongest_reduction") or "").split())[:1600]
+        metric = " ".join(str(payload.get("metric_summary") or "").split())[:1800]
+        reopen = " ".join(str(payload.get("reopen_condition") or "").split())[:1800]
+        refs = sorted({str(ref) for ref in payload.get("source_refs") or [] if str(ref)})
+        if not cid or not re.fullmatch(r"[0-9a-f]{64}", contract) or not re.fullmatch(r"[0-9a-f]{64}", manifest):
+            continue
+        if not uri.startswith("research-data://") or not prediction or not baseline or not metric or not reopen:
+            continue
+        signature = hashlib.sha256(json.dumps({"candidate_id":cid,"contract_sha256":contract,"evidence_manifest_sha256":manifest},sort_keys=True,separators=(",",":")).encode()).hexdigest()[:16]
+        evidence_refs = [*refs, f"{uri}#sha256={manifest}"]
+        rows.append({
+            "source_candidate_id": cid,
+            "basin": f"evidence-exact-reduction-{signature}",
+            "search_primitive": "",
+            "title": " ".join(str(payload.get("title") or cid).split())[:420],
+            "avoid": [
+                f"paraphrase-only revival of the exact reduced problem: {prediction[:700]}",
+                "renaming retrieval/context interference without a new same-information residual",
+                "changing skill composition, content, executor, task family, or budget and claiming that this reopens the frozen order-only realization",
+            ],
+            "strongest_reduction": baseline,
+            "current_source_refs": evidence_refs,
+            "evidence_basis": evidence_refs,
+            "problem_text": prediction,
+            "reason": metric,
+            "reopen_only_if": reopen,
+            "search_closure_certified": True,
+            "dead_end_certified": False,
+            "closure_layer": "method_realization",
+            "failure_layer": "method_realization",
+            "memory_class": MEMORY_CLASS_BY_CLOSURE_LAYER["method_realization"],
+            "principle_update_allowed": False,
+            "broader_core_principle_falsified": False,
+            "source_stop_class": "EXACT_REDUCTION_SUPPORTED",
+            "failure_layer_reason": "A protocol-valid bounded falsifier found no residual for the frozen mechanism beyond the preregistered same-information reduction. This closes the exact paper-problem realization, not the broader principle.",
+            "failure_layer_review_basis": "canonical-bounded-evidence-exact-reduction",
+            "experiment_run_for_this_readjudication": True,
+            "experiment_alone_authorizes_closure": False,
+            "counter_explanation": {
+                "type": "SAME_INFORMATION_REDUCTION",
+                "statement": baseline,
+                "opposite_prediction": "Under the same task, executor, skill content, compatibility/relevance information, and budget, the frozen order-only intervention does not add a reproducible success or independently audited uptake residual.",
+                "opposite_principle": "The frozen same-information baseline is sufficient for this bounded realization; presentation order alone has no supported residual here.",
+                "opposite_search_seed": "Search only for a genuinely different same-information observable or substrate where order alone creates a preregistered residual; do not revive this basin by changing composition or wording.",
+                "scope": f"candidate={cid}; contract={contract}; exact bounded evidence realization",
+                "same_information_or_scope_matched": True,
+                "evidence_refs": evidence_refs,
+                "alternative_explanations_ruled_out": ["provider/runtime failure", "missing executable truth", "invalid unit accounting", "mere wording change"],
+                "positive_support": True,
+                "same_information_reduction_verified": True,
+                "reopen_condition": reopen,
+            },
+            "source_evidence_manifest_sha256": manifest,
+            "source_closure_artifact": str(path.relative_to(PROJECT_ROOT)) if path.is_relative_to(PROJECT_ROOT) else str(path),
+            "scientific_authority": False,
+        })
+    return rows
+
+
+def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str, Any] | None = None, prior_hard_veto_rows: list[dict[str, Any]] | None = None, prior_semantic_rows: list[dict[str, Any]] | None = None, prior_near_miss_rows: list[dict[str, Any]] | None = None, extra_near_miss_rows: list[dict[str, Any]] | None = None, principle_readjudication_rows: list[dict[str, Any]] | None = None, fresh_phenomenon_support_hold_rows: list[dict[str, Any]] | None = None, evidence_reduction_rows: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     memory = json.loads(json.dumps(BASE_SHADOW_DEAD_END_MEMORY, ensure_ascii=False))
     latest = portfolio.get("latest_run") or {}
     inherited = _prior_current_source_hard_veto_rows() if prior_hard_veto_rows is None else [dict(row) for row in prior_hard_veto_rows if isinstance(row, dict)]
@@ -812,6 +890,14 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
         and str(row.get("source_candidate_id") or "") not in principle_closed_candidate_ids
     }
     memory["hold_objects"].extend(hold_by_basin[key] for key in sorted(hold_by_basin))
+
+    # Bounded evidence may close one exact paper-problem realization by proving
+    # the preregistered same-information reduction.  This is search-control
+    # memory, never a core-principle dead end.  The source artifact must already
+    # be a canonical STOP_EXACT_REDUCTION_SUPPORTED receipt compiled elsewhere.
+    reduction_rows = _evidence_reduction_search_closure_rows() if evidence_reduction_rows is None else [dict(row) for row in evidence_reduction_rows if isinstance(row, dict)]
+    reduction_by_basin = {str(row.get("basin") or ""): row for row in reduction_rows if str(row.get("basin") or "") and row.get("scientific_authority") is False}
+    memory["blocked_objects"].extend(reduction_by_basin[key] for key in sorted(reduction_by_basin))
 
     # Migrate legacy memory into the stricter epistemic split. Only rows with an
     # affirmative reduction/collision explanation remain persistent closed basins.

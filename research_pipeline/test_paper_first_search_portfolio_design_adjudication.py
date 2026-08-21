@@ -8,6 +8,7 @@ from pathlib import Path
 from .paper_first_search_portfolio_design_adjudication import (
     _continuation_hold_rows,
     _fresh_phenomenon_support_hold_rows,
+    _evidence_reduction_search_closure_rows,
     _principle_readjudication_rows,
     _shadow_dead_end_memory,
     _terminal_evidence_hold_rows,
@@ -22,6 +23,26 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.state = build_search_portfolio_design_adjudication()
+
+    def test_evidence_reduction_closure_is_scoped_search_control_not_principle_dead_end(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            path=Path(td)/"x-evidence-reduction-search-closure-test.json"
+            path.write_text(json.dumps({
+                "status":"EVIDENCE_REDUCTION_SEARCH_CLOSURE_READY","scientific_authority":False,
+                "source_candidate_id":"C-REDUCE","title":"order effect","contract_sha256":"a"*64,
+                "evidence_manifest_sha256":"b"*64,"evidence_manifest_uri":"research-data://runs/x/evidence.json",
+                "problem_text":"order alone changes success","strongest_reduction":"static compatibility explains the outcome",
+                "metric_summary":"50/50 valid and order invariant","reopen_condition":"new same-information order-only residual",
+                "source_refs":["arXiv:1"],
+            }),encoding="utf-8")
+            rows=_evidence_reduction_search_closure_rows([path])
+        self.assertEqual(len(rows),1);row=rows[0]
+        self.assertTrue(row["search_closure_certified"]);self.assertFalse(row["dead_end_certified"])
+        self.assertEqual(row["failure_layer"],"method_realization")
+        self.assertEqual(row["memory_class"],"METHOD_REALIZATION_STOP")
+        self.assertFalse(row["principle_update_allowed"]);self.assertFalse(row["scientific_authority"])
+        self.assertTrue(row["basin"].startswith("evidence-exact-reduction-"))
+        self.assertTrue((row.get("counter_explanation") or {}).get("same_information_reduction_verified"))
 
     def test_continuation_holds_preserve_failure_layer_without_dead_end_authority(self) -> None:
         root=Path(__file__).resolve().parents[1]/"generated"
@@ -155,14 +176,14 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
 
     def test_current_closed_basins_are_typed_by_actual_failure_layer(self) -> None:
         memory = self.state["shadow_search_memory"]
-        self.assertEqual(memory["closed_basin_count"], 41)
+        self.assertEqual(memory["closed_basin_count"], 42)
         self.assertEqual(memory["closure_layer_counts"], {
             "problem_novelty": 4,
             "execution": 0,
             "experiment_identifiability": 2,
             "optimization": 0,
             "operationalization": 3,
-            "method_realization": 28,
+            "method_realization": 29,
             "assumption_scope": 2,
             "core_principle": 2,
         })
@@ -171,7 +192,7 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
             "experiment_identifiability": 2,
             "optimization": 0,
             "operationalization": 3,
-            "method_realization": 28,
+            "method_realization": 29,
             "assumption_scope": 2,
             "core_principle": 2,
         })
@@ -200,6 +221,17 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertIn("framing", port010["counter_explanation"]["statement"].lower())
         sp09 = next(row for row in memory["closed_objects"] if row.get("source_candidate_id") == "SP-09")
         self.assertEqual(sp09["memory_class"], "PROBLEM_NOVELTY_STOP")
+
+    def test_p15_bounded_reduction_enters_search_memory_only(self) -> None:
+        memory=self.state["shadow_search_memory"];dead=self.state["shadow_dead_end_memory"]
+        hits=[row for row in memory.get("closed_objects") or [] if row.get("source_candidate_id")=="SHADOW-P15-C01"]
+        self.assertEqual(len(hits),1);row=hits[0]
+        self.assertEqual(row["failure_layer"],"method_realization")
+        self.assertEqual(row["memory_class"],"METHOD_REALIZATION_STOP")
+        self.assertTrue(row["search_closure_certified"]);self.assertFalse(row["dead_end_certified"])
+        self.assertFalse(row["principle_update_allowed"]);self.assertTrue(row.get("reopen_only_if"))
+        self.assertEqual(row.get("source_evidence_manifest_sha256"),"53858f972b9c049141ebd4bed0c4b8ab0dd2762b619aa7d0d18e004ba5c90160")
+        self.assertNotIn("SHADOW-P15-C01",{r.get("source_candidate_id") for r in dead.get("blocked_objects") or []})
 
     def test_shadow_counterfactual_pass_does_not_leak_downstream_authority(self) -> None:
         self.assertTrue(self.state["policy"]["source_is_shadow_search_portfolio"])

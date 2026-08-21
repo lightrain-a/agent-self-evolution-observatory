@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-20T14:27:31+00:00",
+  "generated_at": "2026-08-21T16:06:19+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -56,7 +56,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-20T14:27:31+00:00",
+    "generated_at": "2026-08-21T16:06:19+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -3505,16 +3505,79 @@
         },
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P15-C01",
+        "basin": "evidence-exact-reduction-ac3f9b7b13f507c0",
+        "search_primitive": "",
+        "title": "Retrieval-Induced Context Contamination: Why Skill-Library Retrieval Order Systematically Modulates Compositional Interference in Self-Evolving Agents",
+        "avoid": [
+          "paraphrase-only revival of the exact reduced problem: For a fixed set of skills with controlled static compatibility, retrieval relevance, and conflict relations, changing the order in which skills are retrieved and presented to the agent will systematically change compositional task success. Specifically, skills retrieved earlier will have a disproportionate influence on the agent's subsequent behavior, and this influence will be measurable as context contamination (e.g., earlier skills prime the agent to interpret later skills in a specific way, or consume context budget that would otherwise be available for later skills).",
+          "renaming retrieval/context interference without a new same-information residual",
+          "changing skill composition, content, executor, task family, or budget and claiming that this reopens the frozen order-only realization"
+        ],
+        "strongest_reduction": "Negative transfer / task-skill compatibility with the same skill content, task requirements, and executor, but without access to retrieval order information.",
+        "current_source_refs": [
+          "arXiv:2608.16114",
+          "arXiv:2608.16211",
+          "research-data://runs/p15-order-effect-41d0b05-r1/evidence-manifest-v2.json#sha256=53858f972b9c049141ebd4bed0c4b8ab0dd2762b619aa7d0d18e004ba5c90160"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.16114",
+          "arXiv:2608.16211",
+          "research-data://runs/p15-order-effect-41d0b05-r1/evidence-manifest-v2.json#sha256=53858f972b9c049141ebd4bed0c4b8ab0dd2762b619aa7d0d18e004ba5c90160"
+        ],
+        "problem_text": "For a fixed set of skills with controlled static compatibility, retrieval relevance, and conflict relations, changing the order in which skills are retrieved and presented to the agent will systematically change compositional task success. Specifically, skills retrieved earlier will have a disproportionate influence on the agent's subsequent behavior, and this influence will be measurable as context contamination (e.g., earlier skills prime the agent to interpret later skills in a specific way, or consume context budget that would otherwise be available for later skills).",
+        "reason": "50/50 valid units; 5/5 tasks success-invariant across all six identical-skill permutations; 0/5 uptake-divergent tasks; no-skill and all single-skill controls succeeded; 53 scientific provider calls including 10 v1 calls and 43 v2 calls, within the frozen 160-call cap.",
+        "reopen_only_if": "Reopen this exact search basin only if a new preregistered, protocol-valid same-information study changes only the presentation/retrieval order of the same fixed skill set and demonstrates a directionally consistent success or independently audited uptake residual on held-out tasks that the frozen static compatibility/negative-transfer baseline cannot express. Changing skill composition, skill content, task set, executor, budget, or merely renaming context interference does not reopen this closure.",
+        "search_closure_certified": true,
+        "dead_end_certified": false,
+        "closure_layer": "method_realization",
+        "failure_layer": "method_realization",
+        "memory_class": "METHOD_REALIZATION_STOP",
+        "principle_update_allowed": false,
+        "broader_core_principle_falsified": false,
+        "source_stop_class": "EXACT_REDUCTION_SUPPORTED",
+        "failure_layer_reason": "A protocol-valid bounded falsifier found no residual for the frozen mechanism beyond the preregistered same-information reduction. This closes the exact paper-problem realization, not the broader principle.",
+        "failure_layer_review_basis": "canonical-bounded-evidence-exact-reduction",
+        "experiment_run_for_this_readjudication": true,
+        "experiment_alone_authorizes_closure": false,
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "Negative transfer / task-skill compatibility with the same skill content, task requirements, and executor, but without access to retrieval order information.",
+          "opposite_prediction": "Under the same task, executor, skill content, compatibility/relevance information, and budget, the frozen order-only intervention does not add a reproducible success or independently audited uptake residual.",
+          "opposite_principle": "The frozen same-information baseline is sufficient for this bounded realization; presentation order alone has no supported residual here.",
+          "opposite_search_seed": "Search only for a genuinely different same-information observable or substrate where order alone creates a preregistered residual; do not revive this basin by changing composition or wording.",
+          "scope": "candidate=SHADOW-P15-C01; contract=e41c05f823661dda273f63fbedf5ab01528c96c1512eff3d16a42a0e6beb80fa; exact bounded evidence realization",
+          "same_information_or_scope_matched": true,
+          "evidence_refs": [
+            "arXiv:2608.16114",
+            "arXiv:2608.16211",
+            "research-data://runs/p15-order-effect-41d0b05-r1/evidence-manifest-v2.json#sha256=53858f972b9c049141ebd4bed0c4b8ab0dd2762b619aa7d0d18e004ba5c90160"
+          ],
+          "alternative_explanations_ruled_out": [
+            "provider/runtime failure",
+            "missing executable truth",
+            "invalid unit accounting",
+            "mere wording change"
+          ],
+          "positive_support": true,
+          "same_information_reduction_verified": true,
+          "reopen_condition": "Reopen this exact search basin only if a new preregistered, protocol-valid same-information study changes only the presentation/retrieval order of the same fixed skill set and demonstrates a directionally consistent success or independently audited uptake residual on held-out tasks that the frozen static compatibility/negative-transfer baseline cannot express. Changing skill composition, skill content, task set, executor, budget, or merely renaming context interference does not reopen this closure."
+        },
+        "source_evidence_manifest_sha256": "53858f972b9c049141ebd4bed0c4b8ab0dd2762b619aa7d0d18e004ba5c90160",
+        "source_closure_artifact": "generated/p15-evidence-reduction-search-closure-20260821.json",
+        "scientific_authority": false
       }
     ],
-    "closed_basin_count": 41,
+    "closed_basin_count": 42,
     "closure_layer_counts": {
       "problem_novelty": 4,
       "execution": 0,
       "experiment_identifiability": 2,
       "optimization": 0,
       "operationalization": 3,
-      "method_realization": 28,
+      "method_realization": 29,
       "assumption_scope": 2,
       "core_principle": 2
     },
@@ -3523,7 +3586,7 @@
       "experiment_identifiability": 2,
       "optimization": 0,
       "operationalization": 3,
-      "method_realization": 28,
+      "method_realization": 29,
       "assumption_scope": 2,
       "core_principle": 2
     },
@@ -3532,7 +3595,7 @@
     "experiment_identifiability_stop_count": 2,
     "optimization_stop_count": 0,
     "operationalization_stop_count": 3,
-    "method_realization_stop_count": 28,
+    "method_realization_stop_count": 29,
     "assumption_scope_stop_count": 2,
     "core_principle_stop_count": 2,
     "broader_core_principle_falsification_count": 0,
@@ -3715,7 +3778,7 @@
     "near_miss_base_preflight_count": 4,
     "near_miss_terminal_support_hold_count": 3,
     "search_control_only": true,
-    "closed_object_count": 41
+    "closed_object_count": 42
   },
   "shadow_dead_end_memory": {
     "memory_id": "shadow-paper-design-core-principle-dead-end-memory-20260818-v1",
@@ -3920,7 +3983,7 @@
     "stop_standalone": 1,
     "support_inventory_required": 1,
     "shadow_dead_end_objects": 2,
-    "shadow_closed_basins": 41,
+    "shadow_closed_basins": 42,
     "principle_readjudication_dead_ends": 2,
     "principle_readjudication_closed_basins": 37,
     "problem_novelty_stops": 4,
@@ -3928,7 +3991,7 @@
     "experiment_identifiability_stops": 2,
     "optimization_stops": 0,
     "operationalization_stops": 3,
-    "method_realization_stops": 28,
+    "method_realization_stops": 29,
     "assumption_scope_stops": 2,
     "core_principle_stops": 2,
     "broader_core_principle_falsifications": 0,

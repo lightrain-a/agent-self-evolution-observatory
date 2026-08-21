@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-20T14:27:35+00:00",
+  "generated_at": "2026-08-21T16:07:01+00:00",
   "status": "MEMORY_COMPILED",
   "policy": {
     "schema_version": "1.0",
@@ -19,7 +19,7 @@
     "idea_search_and_experiment_design_use_distinct_memory_priorities": true
   },
   "source_manifest": {
-    "search_memory_closed_objects": 41,
+    "search_memory_closed_objects": 42,
     "search_memory_hold_objects": 9,
     "failure_assets": 6,
     "candidate_portfolio_visible": 3,
@@ -27,18 +27,18 @@
     "generator_blocked_attempts": 13
   },
   "summary": {
-    "entries": 62,
-    "search_closures": 39,
+    "entries": 63,
+    "search_closures": 40,
     "scientific_closures": 2,
     "holds": 9,
     "failure_assets": 6,
     "success_assets": 3,
     "open_questions": 2,
     "repeated_review_blocks": 1,
-    "prompt_eligible": 62,
+    "prompt_eligible": 63,
     "transient": 0,
     "recurring_systemic": 2,
-    "scientific": 60
+    "scientific": 61
   },
   "entries": [
     {
@@ -1188,6 +1188,32 @@
       "scientific_authority": false
     },
     {
+      "memory_id": "MEM-SEAR-c9cd99cd54ef95f49a",
+      "kind": "SEARCH_CLOSURE",
+      "title": "Retrieval-Induced Context Contamination: Why Skill-Library Retrieval Order Systematically Modulates Compositional Interference in Self-Evolving Agents",
+      "summary": "Negative transfer / task-skill compatibility with the same skill content, task requirements, and executor, but without access to retrieval order information.",
+      "candidate_id": "SHADOW-P15-C01",
+      "scope": "candidate=SHADOW-P15-C01; contract=e41c05f823661dda273f63fbedf5ab01528c96c1512eff3d16a42a0e6beb80fa; exact bounded evidence realization",
+      "affected_layer": "method_realization",
+      "memory_class": "METHOD_REALIZATION_STOP",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": true,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "Reopen this exact search basin only if a new preregistered, protocol-valid same-information study changes only the presentation/retrieval order of the same fixed skill set and demonstrates a directionally consistent success or independently audited uptake residual on held-out tasks that the frozen static compatibility/negative-transfer baseline cannot express. Changing skill composition, skill content, task set, executor, budget, or merely renaming context interference does not reopen this closure.",
+      "opposite_search_seed": "Search only for a genuinely different same-information observable or substrate where order alone creates a preregistered residual; do not revive this basin by changing composition or wording.",
+      "reusable_precheck": "",
+      "source_refs": [
+        "arXiv:2608.16114",
+        "arXiv:2608.16211",
+        "research-data://runs/p15-order-effect-41d0b05-r1/evidence-manifest-v2.json#sha256=53858f972b9c049141ebd4bed0c4b8ab0dd2762b619aa7d0d18e004ba5c90160"
+      ],
+      "source_artifact": "shadow_search_memory",
+      "reuse_effectiveness": {},
+      "scientific_authority": false
+    },
+    {
       "memory_id": "MEM-SEAR-d12c6b33551e19336e",
       "kind": "SEARCH_CLOSURE",
       "title": "Formal memory coverage monotonicity and skill-induced execution harm live on different operational surfaces",
@@ -1600,7 +1626,7 @@
     "p0": false,
     "gpu": false
   },
-  "wiki_sha256": "cc27ee40f4cc634aad7974db478fd3ed7739e47b317c36b91930caf8779567bf",
+  "wiki_sha256": "3c4d990d0dcfe6865f7273d126d20b1236f6d7bea04a9bf1adbe1401b7941a03",
   "lint": {
     "schema_version": "1.0",
     "status": "PASS",

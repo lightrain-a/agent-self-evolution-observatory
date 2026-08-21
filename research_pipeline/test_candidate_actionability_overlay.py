@@ -49,6 +49,15 @@ class CandidateActionabilityOverlayTest(unittest.TestCase):
         self.assertEqual(row["action_lane"],"HOLD_RUNTIME_SUPPORT")
         self.assertEqual(out["recommended_next_attention"],["C2"])
 
+    def test_minimal_harness_implementation_is_actionable_before_new_design(self):
+        tournament,evidence=self.fixture()
+        evidence["entries"][0]["status"]="NEEDS_MINIMAL_HARNESS_IMPLEMENTATION"
+        evidence["entries"][1]["status"]="NEEDS_BOUNDED_EVIDENCE_DESIGN"
+        out=compile_actionability_overlay(tournament,evidence,next_slots=2)
+        row=next(x for x in out["rows"] if x["candidate_id"]=="C1")
+        self.assertEqual(row["action_lane"],"CONTINUE_HARNESS_IMPLEMENTATION")
+        self.assertEqual(out["recommended_next_attention"][:2],["C1","C2"])
+
     def test_candidate_sets_must_match(self):
         tournament,evidence=self.fixture()
         evidence["entries"].pop()
