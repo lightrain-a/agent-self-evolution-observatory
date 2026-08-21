@@ -1968,7 +1968,7 @@ function renderIdeaExperimentSection(idea, meta = {}, sourceIdeas = []) {
   const data = protocol.data_protocol || {};
   const externalPilot = [...(idea.external_reviews || [])].reverse().find((review) => review.decisive_pilot)?.decisive_pilot;
   const rawPilot = textOf(idea.decisive_pilot || rich.decisive_pilot || externalPilot || idea.pilot || {});
-  const rawMetric = textOf(idea.decisive_metric || rich.decisive_metric || protocol.main_table || {});
+  const rawMetric = textOf(idea.decisive_metric || rich.decisive_metric || protocol.main_table || idea.learning_signal || rich.learning_signal || {});
   const pilot = humanPilotSummary(idea, rawPilot);
   const metric = humanMetricSummary(idea, rawMetric);
   const originalEval = idea.original_task_evaluation || rich.original_task_evaluation || protocol.original_task_evaluation || {};
@@ -2028,10 +2028,13 @@ function renderTerminalDecision(ideaId) {
   const stop = zhOverride.stop || textOf(terminal.exact_stop || {});
   const children = absorbed.length ? `<div class="terminal-child-list"><b>${language === "zh" ? "已吸收子方法" : "Absorbed children"}</b>${absorbed.map((id) => `<span title="${esc(id)}">${esc(localizedPaperIdeaMethodAsset(id))}</span>`).join("")}</div>` : "";
   const finalState = humanParentFinalState(terminal);
+  const reopen = textOf(terminal.reopen_condition || {}) || (["drop","merge"].includes(finalState)
+    ? (language === "zh" ? "只有新的第一手或独立证据在信息、预算和最强同信息基线完全匹配后推翻当前终态边界，才重新人工评审；改名、换术语或重复同一实验不足以重开。" : "Reopen human review only if new primary or independent evidence overturns the current terminal boundary after fully matching information, budget, and the strongest same-information baseline; renaming or repeating the same test is insufficient.")
+    : (language === "zh" ? "若前置门或精确终止条件被新的可核验事实实质改变，需重新回到人工评审；历史阶段本身不自动授权继续。" : "Return to human review only if new verifiable facts materially change the pre-gate or exact-stop condition; historical stage alone grants no authority."));
   const disposition = humanParentEvidenceDisposition(terminal, finalState);
   const reason = disposition.detail || textOf(terminal.terminal_reason || {});
   const dispositionCode = disposition.code ? `<small>${esc(disposition.code)}</small>` : "";
-  return `<section class="terminal-decision terminal-${esc(finalState)}"><header><div><b>${mechanism}</b><p>${reason}</p></div><strong>${esc(humanParentFinalStatusLabel(finalState))}</strong></header><div class="terminal-evidence-disposition tone-${esc(disposition.tone)}"><div><b>${language === "zh" ? "最新证据处置" : "Latest evidence disposition"}</b><span>${esc(disposition.label)}</span></div>${dispositionCode}</div><div class="terminal-decision-grid">${mergeTarget}${gate ? `<span><b>${language === "zh" ? "Pre-P0 / 前置门" : "Pre-P0 gate"}</b>${gate}</span>` : ""}${baseline ? `<span><b>${language === "zh" ? "最强对照" : "Strongest baseline"}</b>${baseline}</span>` : ""}${minimum ? `<span><b>${language === "zh" ? "最小 P0" : "Minimum P0"}</b>${minimum}</span>` : ""}${stop ? `<span><b>${language === "zh" ? "精确终止条件" : "Exact stop"}</b>${stop}</span>` : ""}</div>${children}</section>`;
+  return `<section class="terminal-decision terminal-${esc(finalState)}"><header><div><b>${mechanism}</b><p>${reason}</p></div><strong>${esc(humanParentFinalStatusLabel(finalState))}</strong></header><div class="terminal-evidence-disposition tone-${esc(disposition.tone)}"><div><b>${language === "zh" ? "最新证据处置" : "Latest evidence disposition"}</b><span>${esc(disposition.label)}</span></div>${dispositionCode}</div><div class="terminal-decision-grid">${mergeTarget}${gate ? `<span><b>${language === "zh" ? "Pre-P0 / 前置门" : "Pre-P0 gate"}</b>${gate}</span>` : ""}${baseline ? `<span><b>${language === "zh" ? "最强对照" : "Strongest baseline"}</b>${baseline}</span>` : ""}${minimum ? `<span><b>${language === "zh" ? "最小 P0" : "Minimum P0"}</b>${minimum}</span>` : ""}${stop ? `<span><b>${language === "zh" ? "精确终止条件" : "Exact stop"}</b>${stop}</span>` : ""}<span><b>${language === "zh" ? "什么情况下重开" : "Reopen only if"}</b>${esc(reopen)}</span></div>${children}</section>`;
 }
 function renderHumanReviewedIdeaCard(idea, meta, index) {
   const overlay = (window.FINAL20_MERGE_OVERRIDES || {})[idea.id] || {};
@@ -2130,6 +2133,64 @@ function supplementalGroupId(idea) {
   if (/memory|skill|applicability|retrieval|consolidat|lesson/.test(key)) return "B";
   return "A";
 }
+const SUPPLEMENTAL_TERMINAL_DISPLAY = {
+  "active-causal-minimal-rollback":{
+    intuition:{zh:"一次回滚不应撤销所有最近更新；先用有界干预定位真正共同导致回退的最小更新集合，再只撤销该集合。",en:"A rollback should not erase every recent update: use bounded interventions to locate the smallest jointly failing set, then revert only that set."},
+    rationale:{zh:"如果能以更少测试定位最小故障集，就能避免误回滚无害更新；但必须证明收益不只是标准稀疏组测试。",en:"Finding the minimal fault set with fewer tests could preserve harmless updates, but the gain must exceed standard sparse group testing."},
+    methodLogic:{zh:"冻结 24 个含 4–8 个更新的稀疏故障案例与故障真值；执行成组启停干预，逐步缩小候选集并输出最小故障集合；按逐案例测试次数与定位正确率，对比非学习二元组测试、ddmin、逐个消融和最后更新回滚。",en:"Freeze 24 sparse-fault cases with 4–8 updates and known fault sets; run grouped enable/disable interventions, narrow the candidate set, and compare exact recovery and per-case test count with non-learned binary group testing, ddmin, one-at-a-time ablation, and last-update rollback."},
+    advantage:{zh:"原设想的附加价值是利用历史与因果信息减少定位测试；真实结果没有显示超出非学习二元组测试的独立优势。",en:"The proposed added value was fewer localization tests from history and causal information; the observed result shows no advantage beyond non-learned binary group testing."},
+    collision:{zh:"匹配实验已经划清边界：相对 ddmin 的节省属于标准稀疏组测试；主动学习或因果排序没有额外贡献。",en:"The matched experiment fixes the boundary: savings over ddmin come from standard sparse group testing, with no added contribution from active learning or causal ordering."},
+    metric:{zh:"精确最小故障集定位率、逐案例干预次数，以及相对匹配二元组测试的差值；当前结果为 24/24 对 24/24、均值 5.708 对 5.708、paired p=1.0。",en:"Exact minimal-fault-set recovery, per-case intervention count, and the delta versus matched binary group testing; observed: 24/24 versus 24/24, 5.708 versus 5.708 mean tests, paired p=1.0."},
+    reopen:{zh:"只有新的第一手证据表明，在信息、稀疏先验与预算和二元组测试完全匹配后，历史或因果排序仍显著减少测试次数，或提高交互故障定位率，才重新人工评审。",en:"Reopen human review only if new primary evidence shows that history or causal ordering still reduces tests or improves interaction-fault localization after matching information, sparse prior, and budget to binary group testing."},
+    failureLayer:{zh:"方法实现／独立机制",en:"method realization / standalone mechanism"}
+  },
+  "counterfactual-evolution-decision-controller":{
+    intuition:{zh:"只有在同一进化状态和同一候选序列上比较继续、提交、回滚和停止，四种动作的反事实价值才可公平学习。",en:"Continue, commit, rollback, and stop are comparable only when their counterfactual values are measured from the same evolution state and candidate sequence."},
+    rationale:{zh:"同状态四动作决策可以减少无效搜索和错误提交，但必须显示学习控制器比使用相同状态特征的浅规则更好。",en:"Same-state four-action decisions could reduce wasted search and bad commits, but a learned controller must outperform a shallow rule using the same state features."},
+    methodLogic:{zh:"构建同状态四动作离线反事实表；用 train/calibration 训练并冻结控制器；在 hidden table 上比较动作准确率与 regret，并让 depth-3 CART 使用完全相同的四个原始状态特征。",en:"Build a same-state four-action offline counterfactual table; train and freeze the controller on train/calibration; evaluate action accuracy and regret on the hidden table against a depth-3 CART using the identical four raw state features."},
+    advantage:{zh:"原设想是学习预算与回退约束下的四动作策略；真实结果被 13-node 的 depth-3 CART 完全复现。",en:"The proposal learned a four-action policy under budget and regression constraints; a 13-node depth-3 CART exactly reproduced the observed result."},
+    collision:{zh:"边界已收口为普通浅层决策规则：16/16、mean/worst regret=0，四动作分布也完全一致。",en:"The boundary collapses to a shallow decision rule: 16/16, zero mean/worst regret, and the identical four-action distribution."},
+    metric:{zh:"隐藏状态上的动作准确率、平均/最坏 regret 与四动作覆盖；当前两者均为 16/16、regret=0。",en:"Hidden-state action accuracy, mean/worst regret, and four-action coverage; both methods currently reach 16/16 with zero regret."},
+    reopen:{zh:"只有在同一状态特征、候选、标签与预算下，匹配浅规则不再复现控制器，并且差异在新的冻结任务流上稳定出现，才重开独立方法。",en:"Reopen only if a matched shallow rule no longer reproduces the controller under identical state features, candidates, labels, and budget, with a stable delta on a new frozen stream."},
+    failureLayer:{zh:"方法实现／独立机制",en:"method realization / standalone mechanism"}
+  },
+  "replicated-effect-memory-gate":{
+    intuition:{zh:"不要因一次成功就写入经验；只有帮助或伤害能在相似未来条件中复现时，才准入、隔离或删除。",en:"Do not admit a lesson after one success; admit, quarantine, or delete only when benefit or harm replicates in comparable future conditions."},
+    rationale:{zh:"门控可以减少少数任务上的强负迁移，但必须存在可在结果前定位的稳定适用性结构。",en:"Gating could reduce severe minority-task harm, but it requires stable applicability structure observable before outcomes."},
+    methodLogic:{zh:"执行 retrieved／token-matched placebo／无记忆的匹配重放，估计条目效应并冻结准入门；随后检查同卡复放的首分叉可复现性、状态签名定位能力与审计成本—召回曲线。",en:"Run matched retrieved, token-matched-placebo, and no-memory replays; estimate entry effects and freeze admission, then audit same-card first-divergence reproducibility, state-signature localization, and the cost–recall curve."},
+    advantage:{zh:"首分叉位置可复现，说明记忆确实稳定改变早期轨迹；但最终效应符号由下游上下文决定，candidate-global 门控假设过强。",en:"First divergence is reproducible, showing stable early branch steering, but downstream context determines the final effect sign, so candidate-global gating is too strong."},
+    collision:{zh:"只保留为 soft audit-priority signal，不能作为 hard gate：1-step 成本约 25% 仅覆盖 54.5% nonzero effects，达到 90.9% recall 时 5-step 成本约 90.1%。",en:"Retain only as a soft audit-priority signal, never a hard gate: a 1-step screen costs about 25% for 54.5% nonzero-effect recall, while 90.9% recall at 5 steps costs about 90.1%."},
+    metric:{zh:"未来帮助/伤害、首分叉复现率、状态签名定位与审计成本—召回；当前首分叉位置 11/11、动作对 10/11 复现，但 MI permutation p=0.216。",en:"Future benefit/harm, first-divergence reproducibility, state-signature localization, and audit cost–recall; current results reproduce positions 11/11 and action pairs 10/11, but MI permutation p=0.216."},
+    reopen:{zh:"只有新的独立样本显示结果前适用性结构能在同信息基线之外稳定预测效应符号，并能以实质更低成本安全门控，才重开。",en:"Reopen only if new independent samples show pre-outcome applicability structure that predicts effect sign beyond same-information baselines and enables materially cheaper safe gating."},
+    failureLayer:{zh:"证据支持／方法可学习性",en:"support / method learnability"}
+  },
+  "cross-task-effect-transport-certificate":{
+    intuition:{zh:"源任务上有效的经验不能自动迁移；必须先证明效应符号和幅度在未见任务族中可运输。",en:"Source-task efficacy does not imply transfer; effect sign and magnitude must be shown transportable to unseen task families."},
+    rationale:{zh:"迁移证书可以减少跨任务负迁移，但任务级效应假设必须在局部状态与下游上下文变化后仍成立。",en:"A transport certificate could reduce cross-task negative transfer, but task-level effect stability must survive local-state and downstream-context changes."},
+    methodLogic:{zh:"在三任务族上学习效应表示，留出一整个任务族；冻结证书后比较效应符号、幅度、覆盖与负迁移，并用同硬件首分叉复放检查可复现部分究竟是早期分支还是最终效应。",en:"Learn effect representations on three task families and hold out one family; freeze the certificate, compare sign, magnitude, coverage, and negative transfer, and use matched-hardware first-divergence replay to distinguish early branch steering from final effect."},
+    advantage:{zh:"可复现的是早期轨迹分支改变，而不是最终效应符号；完全相同的早期签名会在不同 target context 下翻转符号。",en:"What replicates is early trajectory-branch steering, not final effect sign; an identical early signature flips sign across target contexts."},
+    collision:{zh:"task-level transport 假设过强，strict-LOTO 只保留为归档次级诊断，不授权 clean R1、第二 backbone 或替代 Idea。",en:"The task-level transport assumption is too strong; strict LOTO remains an archived secondary diagnostic with no clean R1, second backbone, or replacement idea authorized."},
+    metric:{zh:"留出任务族的效应符号/幅度、有效覆盖、负迁移，以及首分叉的跨卡复现；当前证据不足以支持最终效应运输。",en:"Held-out-family effect sign/magnitude, valid coverage, negative transfer, and first-divergence replication; current evidence does not support final-effect transport."},
+    reopen:{zh:"只有新的一手或独立实验在相同结果前信息下识别出跨任务稳定的适用性变量，并在完整留出任务族中显著优于语义相似度与同信息运输基线，才重开。",en:"Reopen only if new primary or independent evidence identifies a cross-task-stable pre-outcome applicability variable that beats semantic similarity and same-information transport baselines on fully held-out families."},
+    failureLayer:{zh:"证据支持／假设范围",en:"support / assumption scope"}
+  }
+};
+function supplementalTerminalDisplay(idea) {
+  const id=idea.idea_id||idea.id||"";
+  const specific=SUPPLEMENTAL_TERMINAL_DISPLAY[id]||{};
+  const decision=String(idea.p0_decision||"");
+  const stopped=decision.startsWith("STOP_");
+  return {
+    ...specific,
+    stopped,
+    decision,
+    failureLayer:specific.failureLayer||{zh:"方法实现／独立机制",en:"method realization / standalone mechanism"},
+    reopen:specific.reopen||{
+      zh:"只有新的第一手或独立证据在信息、预算与最强简化基线完全匹配后仍留下稳定的独立增益，才重新人工评审；改名或重复同一实验不足以重开。",
+      en:"Reopen human review only if new primary or independent evidence leaves a stable standalone gain after fully matching information, budget, and the strongest simplification; renaming or repeating the same test is insufficient."
+    }
+  };
+}
 function renderSupplementalIdeaCard(row) {
   const idea = row.idea;
   const id = idea.idea_id || idea.id || "candidate";
@@ -2138,19 +2199,22 @@ function renderSupplementalIdeaCard(row) {
   const richSource = sourceIdeas[sourceIdeas.length - 1] || idea;
   const title = textOf(idea.title || {});
   const currentFact = textOf(idea.current_fact || {});
+  const terminalDisplay = supplementalTerminalDisplay(idea);
   const problem = textOf(idea.purpose || idea.problem || richSource.purpose || {}) || currentFact;
-  const method = textOf(idea.core_idea || richSource.core_idea || {});
-  const intuition = textOf(idea.core_intuition || richSource.core_intuition || {});
-  const rationale = textOf(idea.rationale || richSource.rationale || idea.hypothesis || {});
-  const methodLogic = textOf(idea.method_logic || richSource.method_logic || {});
+  const method = textOf(idea.core_idea || richSource.core_idea || idea.exact_mechanism || richSource.exact_mechanism || {});
+  const intuition = textOf(idea.core_intuition || richSource.core_intuition || terminalDisplay.intuition || idea.changed_assumption || richSource.changed_assumption || {});
+  const rationale = textOf(idea.rationale || richSource.rationale || terminalDisplay.rationale || idea.importance || richSource.importance || idea.hypothesis || {}) || problem;
+  const methodLogic = textOf(idea.method_logic || richSource.method_logic || terminalDisplay.methodLogic || idea.exact_mechanism || richSource.exact_mechanism || {}) || method;
   const importance = textOf(idea.importance || richSource.importance || {});
-  const advantage = textOf(idea.comparative_advantage || richSource.comparative_advantage || richSource.surviving_claim || idea.hypothesis || {});
-  const collision = textOf(idea.collision_boundary || richSource.collision_boundary || {});
-  const sourceLabel = source === "terminal-independent" ? `${language === "zh" ? "终态独立方法" : "Terminal standalone"} · ${humanReviewStatusLabel(idea.terminal_state || idea.status || "")}` : (source === "final-merged" ? (language === "zh" ? "FINAL20 合并审查后独立保留" : "Independent after FINAL20 merge audit") : `${language === "zh" ? "网络灵感" : "internet-inspired"} · ${String(idea.external_verdict || idea.final_status || "pending").toUpperCase()}`);
+  const advantage = textOf(idea.comparative_advantage || richSource.comparative_advantage || terminalDisplay.advantage || richSource.surviving_claim || idea.changed_assumption || richSource.changed_assumption || idea.hypothesis || {}) || method;
+  const collision = textOf(idea.collision_boundary || richSource.collision_boundary || terminalDisplay.collision || {} ) || (language === "zh" ? "当前边界由最强同信息基线和最新真实裁决共同限定。" : "The current boundary is fixed by the strongest same-information baseline and the latest real adjudication.");
+  const sourceLabel = source === "terminal-independent" ? `${language === "zh" ? "终态独立方法" : "Terminal standalone"} · ${humanReviewStatusLabel(idea.terminal_state || idea.status || "")}${terminalDisplay.stopped ? (language === "zh" ? " · 当前已停止" : " · currently stopped") : ""}` : (source === "final-merged" ? (language === "zh" ? "FINAL20 合并审查后独立保留" : "Independent after FINAL20 merge audit") : `${language === "zh" ? "网络灵感" : "internet-inspired"} · ${String(idea.external_verdict || idea.final_status || "pending").toUpperCase()}`);
   const code = idea.code || (language === "zh" ? "新增候选" : "new candidate");
   const baseline = textOf(idea.strongest_baseline || richSource.strongest_baseline || {});
   const currentRole = currentFact || (source === "terminal-independent" ? (language === "zh" ? "人工终态曾将它保留为独立方法并进入 P0 lifecycle；这是历史 lineage，不代表当前可执行。2026-08-16 的执行结论以上方 unified current-status ledger / Experiment terminal ledger 为准。" : "The human-terminal ledger historically retained this as a standalone method and entered it into the P0 lifecycle. That is lineage, not current executability; use the 2026-08-16 unified current-status / experiment terminal ledger for the current decision.") : source === "final-merged" ? (language === "zh" ? "FINAL 去重后仍不能合理并入已有方向，因此暂时作为独立 Idea 保留，等下一轮人工讨论。" : "After FINAL deduplication this still does not merge cleanly into an existing direction, so it remains independent pending human review.") : (language === "zh" ? "这是新增候选，还没有完成当前轮人工讨论；先判断问题是否真实、方法是否有实质，再决定保留或合并。" : "This is a new candidate that has not completed human review; first test whether the problem is real and the method substantive, then keep or merge it."));
-  return `<details class="supplemental-idea-card" id="new-${esc(id)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><p>${esc(problem)}</p></summary><div class="supplemental-human-grid"><section><b>${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</b><p>${esc(problem || "—")}</p></section><section><b>${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</b><p>${esc(intuition || "—")}</p></section><section><b>${language === "zh" ? "具体准备怎么做" : "What would we actually do?"}</b><p>${esc(method || textOf(idea.hypothesis || {}))}</p></section><section><b>${language === "zh" ? "为什么值得试" : "Why might this work?"}</b><p>${esc(rationale || importance || "—")}</p></section><details class="human-technical-details supplemental-technical-details"><summary>${language === "zh" ? "方法细节与论文边界" : "Method details and paper boundary"}<small>${language === "zh" ? "审方法或 novelty 时再展开" : "Open for method/novelty review"}</small></summary><div class="human-evidence-grid"><section><h4 data-toc="false">${language === "zh" ? "方法步骤" : "Method steps"}</h4><p>${esc(methodLogic || "—")}</p></section><section><h4 data-toc="false">${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${esc(importance || problem || "—")}</p></section><section><h4 data-toc="false">${language === "zh" ? "相比简单方法多了什么" : "What it adds"}</h4><p>${esc(advantage || "—")}</p></section><section><h4 data-toc="false">${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${esc(collision || "—")}</p></section><section><h4 data-toc="false">${language === "zh" ? "最强对照" : "Strongest baseline"}</h4><p>${baseline || "—"}</p></section><section><h4 data-toc="false">${language === "zh" ? "当前判断" : "Current role"}</h4><p>${esc(currentRole)}</p></section></div></details>${renderIdeaExperimentSection(idea,{status:source === "terminal-independent" ? (idea.terminal_state || idea.status || "new-review") : "new-review"},sourceIdeas)}</div></details>`;
+  const terminalPanel=source === "terminal-independent" ? `<section class="supplemental-terminal-panel"><b>${language === "zh" ? "当前终态、停止原因与重开条件" : "Current terminal state, stop reason, and reopen condition"}</b><div><span><strong>${language === "zh" ? "当前状态" : "Current state"}</strong>${terminalDisplay.stopped ? (language === "zh" ? "已停止独立升级；历史 P0 仅作谱系记录" : "Standalone escalation stopped; historical P0 is lineage only") : humanReviewStatusLabel(idea.terminal_state || idea.status || "")}</span><span><strong>${language === "zh" ? "失败层" : "Failure layer"}</strong>${esc(textOf(terminalDisplay.failureLayer))}</span><span><strong>${language === "zh" ? "为什么停止" : "Why it stopped"}</strong>${esc(currentRole)}</span><span><strong>${language === "zh" ? "什么情况下重开" : "Reopen only if"}</strong>${esc(textOf(terminalDisplay.reopen))}</span></div>${terminalDisplay.decision ? `<small>${esc(terminalDisplay.decision)}</small>` : ""}</section>` : "";
+  const experimentIdea={...idea,decisive_metric:idea.decisive_metric||terminalDisplay.metric,success_gate:idea.success_gate||terminalDisplay.reopen};
+  return `<details class="supplemental-idea-card" id="new-${esc(id)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><p>${esc(problem)}</p></summary><div class="supplemental-human-grid"><section><b>${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</b><p>${esc(problem)}</p></section><section><b>${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</b><p>${esc(intuition)}</p></section><section><b>${language === "zh" ? "具体准备怎么做" : "What would we actually do?"}</b><p>${esc(method || methodLogic)}</p></section><section><b>${language === "zh" ? "为什么值得试" : "Why might this work?"}</b><p>${esc(rationale || importance || problem)}</p></section>${terminalPanel}<details class="human-technical-details supplemental-technical-details"><summary>${language === "zh" ? "方法细节与论文边界" : "Method details and paper boundary"}<small>${language === "zh" ? "审方法或 novelty 时再展开" : "Open for method/novelty review"}</small></summary><div class="human-evidence-grid"><section><h4 data-toc="false">${language === "zh" ? "方法步骤" : "Method steps"}</h4><p>${esc(methodLogic)}</p></section><section><h4 data-toc="false">${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${esc(importance || rationale || problem)}</p></section><section><h4 data-toc="false">${language === "zh" ? "相比简单方法多了什么" : "What it adds"}</h4><p>${esc(advantage)}</p></section><section><h4 data-toc="false">${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${esc(collision)}</p></section><section><h4 data-toc="false">${language === "zh" ? "最强对照" : "Strongest baseline"}</h4><p>${baseline}</p></section><section><h4 data-toc="false">${language === "zh" ? "当前判断" : "Current role"}</h4><p>${esc(currentRole)}</p></section></div></details>${renderIdeaExperimentSection(experimentIdea,{status:source === "terminal-independent" ? (idea.terminal_state || idea.status || "new-review") : "new-review"},sourceIdeas)}</div></details>`;
 }
 function renderNewIdeaCandidates() {
   const ledger = humanTerminalState();
@@ -2575,9 +2639,10 @@ function canonicalGroupInventory(groupId,parents,independent,closedCounts={}) {
 }
 function canonicalInventorySummary(groups,parents,independent) {
   const closedCounts=window.closedCandidateCategoryCounts?window.closedCandidateCategoryCounts():{};
+  const closureSummary=window.closedCandidateRecordSummary?window.closedCandidateRecordSummary():{records:0,merged:0,standalone:0};
   const byGroup=Object.fromEntries(groups.map(group=>[group.id,canonicalGroupInventory(group.id,parents,independent,closedCounts)]));
   const sum=key=>Object.values(byGroup).reduce((n,row)=>n+(row[key]||0),0);
-  return {parent:sum("parent"),related:sum("related"),context:sum("context"),closed:sum("closed"),total:sum("total"),byGroup};
+  return {parent:sum("parent"),related:sum("related"),context:sum("context"),closed:sum("closed"),total:sum("total"),closureRecords:closureSummary.records||0,mergedClosures:closureSummary.merged||0,byGroup};
 }
 function canonicalIdeaGroups() {
   const base=(humanReviewData().groups||[]).map(group=>({...group}));
@@ -2607,9 +2672,9 @@ function canonicalStatusControls(rows=[]) {
   }).join("")}</div></div>`;
 }
 function renderCanonicalCategoryIndex(groups,parents,independent,inventory=canonicalInventorySummary(groups,parents,independent)) {
-  return `<section class="panel canonical-category-index" data-research-inventory-total="${inventory.total}"><div class="idea-panel-heading"><div><div class="eyebrow">${language==="zh"?"全部研究对象 · A–G 分类导航":"ALL RESEARCH OBJECTS · A–G INDEX"}</div><h2 id="canonical-category-index">${language==="zh"?"页面呈现全部研究对象；26 个父级研究方向只是其中一个终态子账本":"The page shows every research object; the 26 parent ideas are one terminal-state sub-ledger"}</h2><p class="section-intro">${language==="zh"?`当前按 A–G 展示 ${inventory.total} 条分类记录：${inventory.parent} 个父级研究方向、${inventory.related} 条关联研究方向/方法、${inventory.closed} 条关闭候选裁决，以及 ${inventory.context} 条论文/证据/实验记录。所有对象都在所属大类中直接呈现；不同对象类型分别记账，关闭裁决可能与某条研究方向交叉引用，因此“分类记录数”不冒充去重后的 Idea 数。`:`The A–G ledger shows ${inventory.total} categorized records: ${inventory.parent} parent ideas, ${inventory.related} related directions/methods, ${inventory.closed} closed-candidate decisions, and ${inventory.context} paper/evidence/experiment records. Every object is shown in its category; record types remain separate, and a closure may cross-reference a direction, so this is not presented as a deduplicated idea count.`}</p></div><strong>${inventory.total}<span>${language==="zh"?"条分类记录":"categorized records"}</span></strong></div><nav class="canonical-category-nav" aria-label="${language==="zh"?"研究大类":"Research categories"}">${groups.map(group=>{
+  return `<section class="panel canonical-category-index" data-research-inventory-total="${inventory.total}"><div class="idea-panel-heading"><div><div class="eyebrow">${language==="zh"?"全部研究对象 · A–G 分类导航":"ALL RESEARCH OBJECTS · A–G INDEX"}</div><h2 id="canonical-category-index">${language==="zh"?"页面呈现全部去重研究对象；关闭裁决也已并入编号 Idea":"The page shows every deduplicated research object, with closure decisions merged into numbered ideas"}</h2><p class="section-intro">${language==="zh"?`当前按 A–G 展示 ${inventory.total} 个去重研究对象：${inventory.parent} 个父级研究方向、${inventory.related} 条关联研究方向/方法、${inventory.closed} 个另行编号的关闭 Idea，以及 ${inventory.context} 条论文/证据/实验记录。原 ${inventory.closureRecords} 条关闭裁决中有 ${inventory.mergedClosures} 条已合并进既有正式 Idea，其余直接成为同类编号卡片，不再另设“关闭候选档案”表格。`:`The A–G ledger shows ${inventory.total} deduplicated research objects: ${inventory.parent} parent ideas, ${inventory.related} related directions/methods, ${inventory.closed} separately numbered stopped ideas, and ${inventory.context} paper/evidence/experiment records. Of ${inventory.closureRecords} closure decisions, ${inventory.mergedClosures} are merged into existing formal ideas; the rest are peer numbered cards rather than a separate archive table.`}</p></div><strong>${inventory.total}<span>${language==="zh"?"个去重研究对象":"deduplicated objects"}</span></strong></div><nav class="canonical-category-nav" aria-label="${language==="zh"?"研究大类":"Research categories"}">${groups.map(group=>{
     const row=inventory.byGroup[group.id]||{parent:0,related:0,context:0,closed:0,total:0};
-    return `<a href="#canonical-group-${esc(group.id.toLowerCase())}" data-category-total="${row.total}"><span>${esc(group.id)}</span><div><b>${textOf(group.title)}</b><small>${language==="zh"?`合计 ${row.total} 条 · 父级方向 ${row.parent} · 研究方向/方法 ${row.related} · 论文/证据 ${row.context} · 关闭裁决 ${row.closed}`:`${row.total} total · ${row.parent} parents · ${row.related} directions/methods · ${row.context} paper/evidence · ${row.closed} closures`}</small></div></a>`;
+    return `<a href="#canonical-group-${esc(group.id.toLowerCase())}" data-category-total="${row.total}"><span>${esc(group.id)}</span><div><b>${textOf(group.title)}</b><small>${language==="zh"?`合计 ${row.total} 个 · 父级方向 ${row.parent} · 研究方向/方法 ${row.related} · 论文/证据 ${row.context} · 编号关闭 Idea ${row.closed}`:`${row.total} total · ${row.parent} parents · ${row.related} directions/methods · ${row.context} paper/evidence · ${row.closed} numbered stopped ideas`}</small></div></a>`;
   }).join("")}</nav></section>`;
 }
 function renderCanonicalRelatedBank(group,independent) {
@@ -2629,11 +2694,11 @@ function renderCanonicalIdeaGroup(group,parents,independent) {
   const context=window.renderCategorizedResearchContext?window.renderCategorizedResearchContext(group.id):"";
   const safety=group.id==="G"&&window.renderAgentSafetyProgram?window.renderAgentSafetyProgram():"";
   const related=renderCanonicalRelatedBank(group,independent);
-  const closed=window.renderClosedCandidateArchive?window.renderClosedCandidateArchive(group.id):"";
+  const closed=window.renderClosedCandidateIdeas?window.renderClosedCandidateIdeas(group.id):"";
   const counts=Object.fromEntries(["p0","p0-ready","merge","drop"].map(status=>[status,rows.filter(row=>row.meta.status===status).length]));
   const inventory=canonicalGroupInventory(group.id,parents,independent,window.closedCandidateCategoryCounts?window.closedCandidateCategoryCounts():{});
   const terminalLine=inventory.parent?(language==="zh"?`父级方向终态：P0 ${counts.p0||0} · P0-ready ${counts["p0-ready"]||0} · 并入 ${counts.merge||0} · 停止 ${counts.drop||0}`:`Parent terminal states: P0 ${counts.p0||0} · P0-ready ${counts["p0-ready"]||0} · merge ${counts.merge||0} · stop ${counts.drop||0}`):(group.id==="G"?(language==="zh"?"G-1 当前研究主线 · G-2—G-5 已关闭方向":"G-1 current program · G-2—G-5 closed directions"):"");
-  return `<section class="canonical-idea-group" id="canonical-group-${esc(group.id.toLowerCase())}" data-canonical-group="${esc(group.id)}" data-category-total="${inventory.total}"><header class="canonical-group-header"><span>${esc(group.id)}</span><div><h2>${textOf(group.title)}</h2><p>${textOf(group.question)}</p><div class="canonical-group-counts"><b>${inventory.total} ${language==="zh"?"条分类记录":"categorized records"}</b><small>${language==="zh"?`父级方向 ${inventory.parent} · 研究方向/方法 ${inventory.related} · 论文/证据 ${inventory.context} · 关闭裁决 ${inventory.closed}`:`${inventory.parent} parents · ${inventory.related} directions/methods · ${inventory.context} paper/evidence · ${inventory.closed} closures`}</small>${terminalLine?`<small>${terminalLine}</small>`:""}</div></div></header>${parentCards?`<div class="canonical-parent-list">${parentCards}</div>`:""}${context}${safety}${related}${closed}</section>`;
+  return `<section class="canonical-idea-group" id="canonical-group-${esc(group.id.toLowerCase())}" data-canonical-group="${esc(group.id)}" data-category-total="${inventory.total}"><header class="canonical-group-header"><span>${esc(group.id)}</span><div><h2>${textOf(group.title)}</h2><p>${textOf(group.question)}</p><div class="canonical-group-counts"><b>${inventory.total} ${language==="zh"?"个去重研究对象":"deduplicated objects"}</b><small>${language==="zh"?`父级方向 ${inventory.parent} · 研究方向/方法 ${inventory.related} · 论文/证据 ${inventory.context} · 编号关闭 Idea ${inventory.closed}`:`${inventory.parent} parents · ${inventory.related} directions/methods · ${inventory.context} paper/evidence · ${inventory.closed} numbered stopped ideas`}</small>${terminalLine?`<small>${terminalLine}</small>`:""}</div></div></header>${parentCards?`<div class="canonical-parent-list">${parentCards}</div>`:""}${context}${safety}${related}${closed}</section>`;
 }
 function renderCanonicalIdeaLedger(groups=canonicalIdeaGroups(),parents=canonicalParentRows(),independent=canonicalIndependentRows(),inventory=canonicalInventorySummary(groups,parents,independent)) {
   const terminal=humanParentFinalSummary();

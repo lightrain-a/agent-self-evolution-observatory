@@ -41,6 +41,12 @@
     "AGENT-SAFETY-DUAL-LOOP-RHO-CRITICAL": "Do not treat writable-support Jaccard overlap as a free causal variable for a fixed pair of loops; fixing the loop-defining supports fixes the overlap.",
     "PORT-010": "Do not claim detector-general SkillX whitewashing beyond attack framing. Cross-framing failure already appears before extraction, while framing-matched competent learned detectors retain or improve binary detection after extraction."
   };
+  const closedReopenZh = {
+    "AUTO-1-RELEVANT-SKILL-MISEXECUTION":"只有在 provenance 审计的匹配单元中，oracle 加载同一候选技能，独立确认任务需求级兼容且不存在冲突/缺失指导，匹配 executor、预算、一般指令遵循难度和可见动作级采用后，仍有预注册程序结构变量预测同信息兼容性、负迁移、检索利用和指令遵循基线之外的功能失败时才重开。",
+    "P03-AUTOSKILL-CONTEXT-UPTAKE":"只有在 provenance 审计的匹配单元中固定冻结技能库、任务—工件兼容性和可见动作级采用，却仍出现不同的新会话伤害；或在没有对应工件采用时伤害仍持续，且同信息检索利用、指令遵循和任务条件效应异质性基线无法表达该残差时才重开。",
+    "AGENT-SAFETY-DUAL-LOOP-RHO-CRITICAL":"只有把对象重构为组合前、可显式干预的结构变量，同时固定组件更新算子、支持集身份、独立验证行为、信息和预算；或把可交换性/对称构造明确纳入新科学对象并独立验证 support identity 不影响结果时才重开。换一个重叠统计量、细化匹配、增加 seed、按结果选 mask 或仅做对称 toy 都不足以重开。",
+    "PORT-010":"只有 fresh、预注册且非调阈值或事后分组的证据才能重开：在新的 holdout 上，用攻击 framing 匹配的检测器训练/支持，至少两个独立且胜任的检测器族都出现统计支持、实践幅度足够大并超过匹配 framing-shift 对照的抽取特异二元检测下降；或新的结果前结构变量在同信息下强制预测该下降。"
+  };
 
   window.renderAgentSafetyProgram = function () {
     const s = state();
@@ -51,7 +57,7 @@
       : row.typing_status === "CANONICAL_TYPED_CLOSURE"
         ? pick(`${row.failure_layer || row.memory_class || "typed closure"} · 搜索闭包，不是原理死路`, `${row.failure_layer || row.memory_class || "typed closure"} · search closure, not scientific dead-end`)
         : pick("历史搜索闭包 · 尚未按当前 failure layer 重新类型化", "legacy search closure · not yet retyped under current failure layers");
-    const closed = (s.closed_basins || []).map(row => { const name=safetyName(row.candidate_id); return `<tr data-safety-code="${esc(name.code)}"><td><strong>${esc(`${name.code} · ${language === "zh" ? name.zh : name.en}`)}</strong><small>${pick("原始溯源标识", "legacy provenance id")}: ${esc(row.candidate_id || "--")}</small></td><td>${esc(closedType(row))}</td><td>${esc(language === "zh" ? (closedZh[row.candidate_id] || compact(row.reason, 330)) : (closedEn[row.candidate_id] || compact(row.reason, 330)))}</td><td>${esc(compact(row.reopen_only_if, 280))}</td></tr>`; }).join("");
+    const closed = (s.closed_basins || []).map(row => { const name=safetyName(row.candidate_id); const merged=["AUTO-1-RELEVANT-SKILL-MISEXECUTION","P03-AUTOSKILL-CONTEXT-UPTAKE","PORT-010"].includes(row.candidate_id); return `<tr data-safety-code="${esc(name.code)}"${merged?' data-closure-merged="true"':''}><td><strong>${esc(`${name.code} · ${language === "zh" ? name.zh : name.en}`)}</strong><small>${pick("原始溯源标识", "legacy provenance id")}: ${esc(row.candidate_id || "--")}${merged?pick(" · 已合并关闭裁决"," · closure decision merged"):""}</small></td><td>${esc(closedType(row))}</td><td>${esc(language === "zh" ? (closedZh[row.candidate_id] || compact(row.reason, 330)) : (closedEn[row.candidate_id] || compact(row.reason, 330)))}</td><td>${esc(language === "zh" ? (closedReopenZh[row.candidate_id] || compact(row.reopen_only_if, 280)) : compact(row.reopen_only_if, 280))}</td></tr>`; }).join("");
     const substrate = s.substrate || {}, contract = s.evidence_contract || {}, auth = s.authority || {};
     const runtime = s.runtime || {}, protocol = s.canonical_protocol || {}, invariants = protocol.execution_invariants || {};
     const budget = invariants.budget || {}, split = invariants.probe_split || {}, qualification = s.qualification || {}, supportRoot = s.support_root_diagnosis || {}, supportRealization = s.support_realization_adjudication || {}, recoveryPolicy = s.support_recovery_policy || {};

@@ -187,7 +187,7 @@
     const inventory = options.inventory || {parent:26,related:21,closed:Number(h.shadow_closed_basins||0),context:6,total:53+Number(h.shadow_closed_basins||0)};
     if (!Object.keys(h).length) return "";
     if (options.ideasPage) {
-      return `<section class="panel current-research-portfolio current-object-hierarchy" id="current-research-portfolio"><div class="idea-panel-heading"><div><div class="eyebrow">${pick("当前科研状态", "CURRENT RESEARCH STATE")} · ${esc(s.as_of_date || "")}</div><h2 data-toc="false">${pick(`先看全量研究对象：${inventory.parent} 个父级研究方向只是 ${inventory.total} 条分类记录中的一个终态子账本`, `See the complete research inventory: the ${inventory.parent} parent ideas are one terminal-state sub-ledger within ${inventory.total} categorized records`)}</h2><p class="section-intro">${pick(`页面当前完整呈现 ${inventory.total} 条 A–G 分类记录：${inventory.parent} 个父级研究方向、${inventory.related} 条关联研究方向/方法、${inventory.closed} 条关闭候选裁决和 ${inventory.context} 条论文/证据/实验记录。26 个父级研究方向的人工冻结终态仍为 P0 2 个、P0-ready 11 个、已并入 6 个、已停止 7 个，但它们不再代表整页 Idea 库。STRI、AutoSkill P19、P0-A/P0-E、记忆历史、G 类安全方向和所有关闭候选都在所属大类中直接展示。`, `The page now presents all ${inventory.total} A–G records: ${inventory.parent} parent ideas, ${inventory.related} related directions/methods, ${inventory.closed} closed-candidate decisions, and ${inventory.context} paper/evidence/experiment records. The parent terminal split remains 2 P0, 11 P0-ready, 6 merged, and 7 stopped, but those parents no longer stand in for the entire idea inventory. STRI, AutoSkill P19, P0-A/P0-E, memory history, G-category safety directions, and every closure are shown in their categories.`)}</p></div><strong data-research-inventory-total="${inventory.total}">${inventory.total}<span>${pick("条分类记录", "categorized records")}</span></strong></div><div class="research-object-levels"><article><b>${pick("父级研究方向终态账本", "Parent-idea terminal ledger")}</b><strong>${inventory.parent}</strong><p>${pick("参与 2 / 11 / 6 / 7 人工冻结终态统计与筛选。", "Counted and filtered in the 2 / 11 / 6 / 7 frozen terminal split.")}</p></article><article><b>${pick("关联研究方向／方法", "Related directions / methods")}</b><strong>${inventory.related}</strong><p>${pick("全部使用所属 A–G 大类编号，并在相应大类中默认展开。", "All use their A–G category code and are expanded in the relevant category.")}</p></article><article><b>${pick("关闭候选裁决", "Closed-candidate decisions")}</b><strong>${inventory.closed}</strong><p>${pick("逐条显示失败层、停止原因、证据性质和重开条件。", "Each shows failure layer, stop reason, evidence type, and reopen condition.")}</p></article><article><b>${pick("论文／证据／实验记录", "Paper / evidence / experiment records")}</b><strong>${inventory.context}</strong><p>${pick("解释研究方向的证据链，不与父级研究方向混计。", "Explain evidence chains without being mixed into the parent count.")}</p></article></div><article class="current-paper-track-card current-paper-object"><header><div><span>${pick("论文对象 · 不计入 26 个父级研究方向", "PAPER OBJECT · NOT COUNTED AMONG 26 PARENTS")}</span><h3>${esc(paper.title || "STRI")}</h3></div>${badge(paper.submission_status || paper.status, pick("论文就绪", "PAPER READY"))}</header><p>${pick(`STRI 的 3 条核心主张已支持 ${paper.claims_supported || 0}/${paper.claims_total || 0}，论文证据债=${paper.paper_quality_evidence_debt || 0}。它和 P19/P0-A/P0-E 的完整关系已放入 E 类“工作流与结构演化”，不再拆成四个疑似 Idea。`, `STRI supports ${paper.claims_supported || 0}/${paper.claims_total || 0} core claims with evidence debt=${paper.paper_quality_evidence_debt || 0}. Its relation to P19/P0-A/P0-E now appears under category E, rather than as four apparent ideas.`)}</p><small>${pick("下一步仍只有作者责任确认与 OpenReview 提交；不会自动授权新的方法、P0 或 GPU。", "The next step remains author sign-off and OpenReview submission; this grants no new method, P0, or GPU authority.")}</small></article></section>`;
+      return `<section class="panel current-research-portfolio current-object-hierarchy" id="current-research-portfolio"><div class="idea-panel-heading"><div><div class="eyebrow">${pick("当前科研状态", "CURRENT RESEARCH STATE")} · ${esc(s.as_of_date || "")}</div><h2 data-toc="false">${pick(`先看全量研究对象：${inventory.parent} 个父级研究方向只是 ${inventory.total} 个去重对象中的一个终态子账本`, `See the complete inventory: the ${inventory.parent} parent ideas are one terminal-state sub-ledger within ${inventory.total} deduplicated objects`)}</h2><p class="section-intro">${pick(`页面当前完整呈现 ${inventory.total} 个 A–G 去重研究对象：${inventory.parent} 个父级研究方向、${inventory.related} 条关联研究方向/方法、${inventory.closed} 个另行编号的关闭 Idea 和 ${inventory.context} 条论文/证据/实验记录。原 ${inventory.closureRecords || 0} 条关闭裁决中有 ${inventory.mergedClosures || 0} 条已合并进既有正式 Idea，其余均作为同构编号卡片放入所属大类，不再单列“关闭候选档案”。26 个父级研究方向的人工冻结终态仍为 P0 2 个、P0-ready 11 个、已并入 6 个、已停止 7 个。`, `The page presents ${inventory.total} deduplicated A–G objects: ${inventory.parent} parent ideas, ${inventory.related} related directions/methods, ${inventory.closed} separately numbered stopped ideas, and ${inventory.context} paper/evidence/experiment records. Of ${inventory.closureRecords || 0} closure decisions, ${inventory.mergedClosures || 0} are merged into existing formal ideas and the remainder are peer numbered cards rather than a separate archive. The parent terminal split remains 2 P0, 11 P0-ready, 6 merged, and 7 stopped.`)}</p></div><strong data-research-inventory-total="${inventory.total}">${inventory.total}<span>${pick("个去重研究对象", "deduplicated objects")}</span></strong></div><div class="research-object-levels"><article><b>${pick("父级研究方向终态账本", "Parent-idea terminal ledger")}</b><strong>${inventory.parent}</strong><p>${pick("参与 2 / 11 / 6 / 7 人工冻结终态统计与筛选。", "Counted and filtered in the 2 / 11 / 6 / 7 frozen terminal split.")}</p></article><article><b>${pick("关联研究方向／方法", "Related directions / methods")}</b><strong>${inventory.related}</strong><p>${pick("全部使用所属 A–G 大类编号，并在相应大类中默认展开。", "All use their A–G category code and are expanded in the relevant category.")}</p></article><article><b>${pick("已停止的编号 Idea", "Numbered stopped ideas")}</b><strong>${inventory.closed}</strong><p>${pick(`逐条显示失败层、停止原因、证据性质和重开条件；另有 ${inventory.mergedClosures || 0} 条裁决已并入既有正式 Idea。`, `Each shows failure layer, stop reason, evidence type, and reopen condition; ${inventory.mergedClosures || 0} decisions are merged into existing formal ideas.`)}</p></article><article><b>${pick("论文／证据／实验记录", "Paper / evidence / experiment records")}</b><strong>${inventory.context}</strong><p>${pick("解释研究方向的证据链，不与父级研究方向混计。", "Explain evidence chains without being mixed into the parent count.")}</p></article></div><article class="current-paper-track-card current-paper-object"><header><div><span>${pick("论文对象 · 不计入 26 个父级研究方向", "PAPER OBJECT · NOT COUNTED AMONG 26 PARENTS")}</span><h3>${esc(paper.title || "STRI")}</h3></div>${badge(paper.submission_status || paper.status, pick("论文就绪", "PAPER READY"))}</header><p>${pick(`STRI 的 3 条核心主张已支持 ${paper.claims_supported || 0}/${paper.claims_total || 0}，论文证据债=${paper.paper_quality_evidence_debt || 0}。它和 P19/P0-A/P0-E 的完整关系已放入 E 类“工作流与结构演化”，不再拆成四个疑似 Idea。`, `STRI supports ${paper.claims_supported || 0}/${paper.claims_total || 0} core claims with evidence debt=${paper.paper_quality_evidence_debt || 0}. Its relation to P19/P0-A/P0-E now appears under category E, rather than as four apparent ideas.`)}</p><small>${pick("下一步仍只有作者责任确认与 OpenReview 提交；不会自动授权新的方法、P0 或 GPU。", "The next step remains author sign-off and OpenReview submission; this grants no new method, P0, or GPU authority.")}</small></article></section>`;
     }
     const rows = currentRows(s).map(row => `<tr><td><strong>${esc(row.id)}</strong><small>${esc(row.scope)}</small></td><td>${badge(row.status)}</td><td><p>${esc(row.decision)}</p></td><td><p>${esc(row.authority)}</p></td></tr>`).join("");
     const pfSurvivesZh = {
@@ -259,6 +259,54 @@
     if (/memory|skill|retrieval|experience|evidence|note|consolidat|compression|context|knowledge/.test(haystack)) return "B";
     return "A";
   };
+  const mergedClosureTargets = {
+    "AUTO-1-RELEVANT-SKILL-MISEXECUTION":"G-2",
+    "P03-AUTOSKILL-CONTEXT-UPTAKE":"G-3",
+    "PORT-010":"G-5"
+  };
+  const closedIdeaTitleZh = {
+    "SP-09":"同信息上下文技能治理边界",
+    "SHADOW-P09-C01":"访问介导的技能技术债",
+    "SHADOW-P12-C02":"自生成测试的证据污染",
+    "SHADOW-P05-C01":"技能编辑后的诊断观测漂移",
+    "Evidence Echo does not survive a same-information redundant-context reduction":"证据回声与冗余上下文",
+    "MetaSkill ALFWorld +1.92 residual is already explained by the source's own component ablations":"MetaSkill ALFWorld 慢循环残差",
+    "Block7 rule persistence does not identify failed skill transfer when repair feasibility changes with geometry and coupled constraints":"EvoDRC Block7 规则持久性与修复可行性",
+    "LOPD latent-token and retrieval-count plateaus reduce to capacity saturation and marginal-information redundancy":"LOPD 潜变量与检索数量平台期",
+    "High topical relevance plus skill-induced implementation faults does not identify a new over-utilization primitive":"相关技能误执行与过度利用",
+    "Memory-monotonicity assumption break collapses under the source framework's own conflict limitation":"记忆单调性与冲突整合",
+    "Skill-SP bootstrap recovery currently changes generation responsibility, not an identified self-evolution reproduction threshold":"Skill-SP 自进化启动缺口",
+    "Selective fresh-session harm from one frozen skill library does not by itself identify a latent carryover-activation mechanism":"上下文条件化技能采用与新会话伤害",
+    "Relevance-conditioned evidence debt under selective evidence access":"选择性证据访问下的相关性证据债",
+    "Uniform-routing and frozen-skill drops do not identify a new co-evolution interaction":"Skill-SP 路由—技能共同演化",
+    "Surface-conditioned mechanism/program redesign identifiability reduces to generic feedback-guided program synthesis under the same information":"PACE 修复表面条件下的程序重设计可辨识性",
+    "The reported cross-level scaling reversal disappears under matched local baselines":"SHAPER 跨层扩展符号反转",
+    "SkillCoach distractor boundaries reduce to frozen selector capacity under candidate-space confusability":"SkillCoach 干扰项选择边界",
+    "Initial-skill harm followed by evolved-skill gains is corrective adaptation, not a new self-evolution primitive":"MindMemOS 初始技能伤害与纠正增益",
+    "Repeated accept/reject feedback from a fixed development split is adaptive validation, not a new self-evolution primitive":"AutoDesign 开发集反复反馈",
+    "HarnessBank arXiv:2607.13683v2, specifically the current standalone PA-03 inference from the GDPval aggregate train/test ranking reversal and the TB2 post-convergence phantom-progress ablation. This closure does not claim that all future harness-selection transport questions reduce to winner's curse.":"HarnessBank 选择排序反转",
+    "Executable treatment semantics/version as a standalone persistent-memory causal object":"持久记忆的可执行处理语义",
+    "DocAtlas image and tree ablation drops identify information availability and indexing value, not a new self-evolution mechanism":"DocAtlas 观察与索引消融",
+    "Local skill-validation ranking versus shifted deployment is a model-selection-under-distribution-shift object unless a skill-specific structural residual survives":"技能局部验证向偏移部署迁移",
+    "PosterBench calibration cannot drift through an optimization loop that does not consume PosterBench":"AutoDesign—PosterBench 优化器校准",
+    "Large skill-evolution and router ablation drops do not identify a co-evolution interaction":"ERSkill 技能演化—路由交互",
+    "Skill-extraction detector-general whitewashing does not survive attack-framing-matched detection control":"技能提取后的检测器稳健性",
+    "Actor-drift evaluator cliffs are not irreducible when the same-information stale-supervisor baseline observes the same current outputs and drift state":"Double Ratchet 评价器选择陡降",
+    "Cross-regime static-procedural sign contradiction collapses because the two papers intervene on different causal surfaces":"静态程序先验的跨场景符号矛盾",
+    "Frozen no-skill anchors make reciprocal metric-skill coevolution observationally indistinguishable from one-way metric-to-skill coupling":"Double Ratchet 指标—技能互惠共演化",
+    "Coverage-note starvation under selective evidence access in document agents":"文档 Agent 的覆盖笔记饥饿",
+    "Connectivity-admissible repair history is not a new persistent-credit primitive":"EvoDRC 可行性与持久信用",
+    "High-TRS spatial-memory failures do not establish a procedure-compatibility mechanism":"空间记忆与程序兼容性",
+    "SEED on-policy and hindsight-SFT ablation drops reduce to occupancy matching and cold-start capability":"SEED 在线策略与 hindsight-SFT 消融",
+    "Temporally distributed persistent-memory exposure as a standalone causal mechanism":"持久记忆的分布式时间暴露",
+    "Double Ratchet weak-metric robustness and locked-reference validity are already explained by richer feedback and the source paper's own validity distinction":"Double Ratchet 弱指标与锁定参考有效性",
+    "Formal memory coverage monotonicity and skill-induced execution harm live on different operational surfaces":"形式记忆覆盖与技能执行伤害",
+    "Reused Locked-Set Agreement Cannot Identify Metric Validity after Anchor-Guard Removal":"复用锁定集与指标有效性",
+    "Top-k retrieval degradation is a marginal-information trade-off, not a new self-evolution primitive":"GeoForge 检索冗余边界",
+    "ComfyClaw prompt-only repair gap reduces to richer workflow interventions plus localized verifier feedback":"ComfyClaw 仅提示词修复边界",
+    "Backbone-dependent overrestriction is a security-utility operating point, not a new self-evolution cliff":"HARD 防御演化的安全—效用崩塌",
+    "The reported ~20% MindMemOS dreaming compression is not an independently identified compression plateau":"MindMemOS dreaming 压缩平台期"
+  };
   const closedLayerLabel = (value) => ({
     problem_novelty:pick("实验前问题/新颖性", "upstream problem/novelty"),
     execution:pick("执行", "execution"),
@@ -278,16 +326,41 @@
       : pick("本次关闭依据是一手证据、结构事实或同信息归约，不是新跑一次负实验。", "Closure uses primary evidence, a structural witness, or a same-information reduction rather than a newly run negative experiment.");
     return `<tr data-closed-group="${esc(closedCategory(row))}"><td><strong>${esc(row.candidate_id || "--")}</strong><small>${esc(short(row.title,120))}</small></td><td><strong>${esc(closedLayerLabel(row.failure_layer || row.closure_layer))}</strong><small>${esc(row.memory_class || "--")}</small></td><td><p>${esc(short(stopReason,320))}</p></td><td><p>${esc(evidence)}</p></td><td><p>${esc(short(reopenCondition,300))}</p></td></tr>`;
   };
-  window.closedCandidateCategoryCounts = function () {
-    const rows = state().shadow_search?.closed_rows || [];
-    return rows.reduce((acc,row) => { const group=closedCategory(row); acc[group]=(acc[group]||0)+1; return acc; }, {});
+  const closedIdeaCodeStart = {A:13,B:14,C:8,D:4,E:8,F:4,G:6};
+  const closedIdeaRows = () => {
+    const counters={...closedIdeaCodeStart};
+    return (state().shadow_search?.closed_rows || []).map((row,index) => {
+      const mergeInto=mergedClosureTargets[row.candidate_id]||"";
+      const group=mergeInto?"G":closedCategory(row);
+      const code=mergeInto||`${group}-${counters[group]++}`;
+      return {...row,_record_index:index+1,_group:group,_code:code,_merge_into:mergeInto};
+    });
   };
-  window.renderClosedCandidateArchive = function (groupId) {
-    const shadow = state().shadow_search || {};
-    const rows = (shadow.closed_rows || []).filter(row => !groupId || groupId === "all" || closedCategory(row) === groupId);
-    if (!rows.length) return "";
-    const label = groupId && groupId !== "all" ? `${groupId} · ` : "";
-    return `<details class="current-terminal-details current-closed-basin-audit canonical-closed-archive" data-closed-category="${esc(groupId || "all")}" open><summary>${pick(`${label}关闭候选档案（${rows.length}）：失败层、停止原因与重开条件`, `${label}closed-candidate archive (${rows.length}): failure layer, stop reason, and reopen condition`)}</summary><div class="advisor-table-scroll"><table class="matrix current-research-table"><thead><tr><th>${pick("候选", "Candidate")}</th><th>${pick("真正停止层", "Actual stop layer")}</th><th>${pick("为什么停止", "Why it stopped")}</th><th>${pick("负实验是否决定关闭", "Did a negative experiment decide closure?")}</th><th>${pick("什么情况下重开", "Reopen only if")}</th></tr></thead><tbody>${rows.map(closedArchiveRow).join("")}</tbody></table></div></details>`;
+  window.closedCandidateRecordSummary = function () {
+    const rows=closedIdeaRows();
+    return {records:rows.length,merged:rows.filter(row=>row._merge_into).length,standalone:rows.filter(row=>!row._merge_into).length};
+  };
+  window.closedCandidateCategoryCounts = function () {
+    return closedIdeaRows().filter(row=>!row._merge_into).reduce((acc,row) => { acc[row._group]=(acc[row._group]||0)+1; return acc; }, {});
+  };
+  const closedIdeaCard = (row) => {
+    const zhRow=closedZh[row.title||row.candidate_id]||{};
+    const title=language==="zh"?(closedIdeaTitleZh[row.title]||closedIdeaTitleZh[row.candidate_id]||row.title||row.candidate_id):(row.title||row.candidate_id);
+    const stopReason=language==="zh"?(zhRow.reason||row.reason||row.strongest_reduction):(row.reason||row.strongest_reduction);
+    const reopenCondition=language==="zh"?(zhRow.reopen||row.reopen_only_if):row.reopen_only_if;
+    const layer=closedLayerLabel(row.failure_layer||row.closure_layer);
+    const evidence=row.experiment_run_for_this_readjudication
+      ? pick(`本次重审实际运行过实验；但实验结果本身${row.experiment_alone_authorizes_closure?"足以":"不足以"}单独授权关闭。`,`An experiment was run for this readjudication, but the result alone ${row.experiment_alone_authorizes_closure?"does":"does not"} authorize closure.`)
+      : pick("本次关闭依据是一手证据、结构事实或同信息归约，不是新跑一次负实验。","Closure uses primary evidence, a structural witness, or a same-information reduction rather than a newly run negative experiment.");
+    const reduction=row.strongest_reduction&&row.strongest_reduction!==row.reason?row.strongest_reduction:"";
+    return `<details class="closed-idea-card" data-closed-code="${esc(row._code)}" data-closed-source="${esc(row.candidate_id||"")}"><summary><div><span>${esc(row._code)}</span><b>${esc(title)}</b><small>${pick("原始溯源标识","legacy provenance id")}: ${esc(row.candidate_id||"--")}</small></div><em>${pick("已停止","STOPPED")}</em></summary><div class="closed-idea-body"><section class="closed-idea-wide"><b>${pick("这个 Idea 原本在问什么","What this idea originally asked")}</b><p>${esc(language==="zh"?`${title}。原始表述：${row.title||row.candidate_id}`:(row.title||row.candidate_id))}</p></section><section><b>${pick("当前阶段","Current stage")}</b><p>${pick("关闭，未授权方法、P0 或 GPU；关闭层级见右侧。","Closed, with no Method, P0, or GPU authority; see the typed layer alongside.")}</p></section><section><b>${pick("失败层","Failure layer")}</b><p><strong>${esc(layer)}</strong> · ${esc(row.memory_class||row.source_stop_class||"typed closure")}</p></section><section class="closed-idea-wide closed-idea-stop"><b>${pick("为什么停止","Why it stopped")}</b><p>${esc(stopReason)}</p></section>${reduction?`<section class="closed-idea-wide"><b>${pick("最强同信息归约","Strongest same-information reduction")}</b><p>${esc(reduction)}</p></section>`:""}<section><b>${pick("负实验是否决定关闭","Did a negative experiment decide closure?")}</b><p>${esc(evidence)}</p></section><section class="closed-idea-reopen"><b>${pick("什么情况下重开","Reopen only if")}</b><p>${esc(reopenCondition)}</p></section><section class="closed-idea-wide closed-idea-provenance"><b>${pick("一手裁决溯源","First-party adjudication provenance")}</b><p>${esc(row.source_readjudication_artifact||pick("历史终态账本记录","historical terminal-ledger record"))}</p></section></div></details>`;
+  };
+  window.renderClosedCandidateIdeas = function (groupId) {
+    const all=closedIdeaRows();
+    const rows=all.filter(row=>!row._merge_into&&(!groupId||groupId==="all"||row._group===groupId));
+    if(!rows.length)return "";
+    const summary=window.closedCandidateRecordSummary();
+    return `<details class="canonical-related-bank canonical-closed-idea-bank" data-closed-category="${esc(groupId||"all")}" open><summary><div><b>${pick("已停止的编号 Idea","Numbered stopped ideas")}</b><span>${pick(`关闭记录已经并入统一编号体系：全站 ${summary.records} 条裁决中，${summary.merged} 条合并进既有正式 Idea，${summary.standalone} 条成为同构编号卡片；本类显示 ${rows.length} 条。`,`Closure records now use the unified numbering system: ${summary.merged} of ${summary.records} decisions merge into existing formal ideas and ${summary.standalone} are rendered as peer numbered cards; this category shows ${rows.length}.`)}</span></div><strong>${rows.length}</strong></summary><div class="closed-idea-list">${rows.map(closedIdeaCard).join("")}</div></details>`;
   };
 
   window.renderCurrentExperimentStatus = function () {

@@ -9,7 +9,7 @@
     "PF-5":{code:"A-10",zh:"更新差异驱动的验证",en:"Update-Difference-Guided Verification"},
     "PF-6":{code:"A-11",zh:"自进化后的失败风险迁移",en:"Failure-Risk Transport under Self-Evolution"},
     "PF-7":{code:"A-12",zh:"更新影响范围的证据重验证",en:"Update-Impact-Aware Evidence Revalidation"},
-    "PF-8":{code:"C-6",zh:"自写验证器漂移",en:"Self-Authored Verifier Drift"},
+    "PF-8":{code:"C-7",zh:"自写验证器漂移",en:"Self-Authored Verifier Drift"},
     "PF-9":{code:"E-6",zh:"更新后的决策上下文有效性",en:"Post-Update Decision-Context Validity"}
   };
   const canonicalPF=(id)=>pfCanonicalNames[id]||{code:String(id||"PF"),zh:String(id||"PF"),en:String(id||"PF")};
