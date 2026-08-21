@@ -428,7 +428,7 @@ def main() -> None:
             "/mechanisms.html": {"groups": 5, "sections": 26},
             "/domains.html": {"groups": 3, "sections": 14},
             "/evaluation.html": {"groups": 3, "sections": 16},
-            "/selected-paper.html": {"groups": 4, "sections": 13},
+            "/selected-paper.html": {"groups": None, "sections": None},
         }
         for page, expected in expected_hubs.items():
             navigate(page, 7)
@@ -448,8 +448,10 @@ def main() -> None:
                 };""",
             )
             require(result["heading"], f"{page} has no heading")
-            require(result["groups"] == expected["groups"], f"{page} group count mismatch")
-            require(result["sections"] >= expected["sections"], f"{page} has too few sections")
+            if expected["groups"] is not None:
+                require(result["groups"] == expected["groups"], f"{page} group count mismatch")
+            if expected["sections"] is not None:
+                require(result["sections"] >= expected["sections"], f"{page} has too few sections")
             require(result["missing"] == 0, f"{page} contains unresolved citations")
             require(not result["pageOverflow"], f"{page} causes page-level horizontal overflow")
             if page in {"/mechanisms.html", "/domains.html", "/evaluation.html"}:
@@ -461,7 +463,7 @@ def main() -> None:
             if page == "/evaluation.html":
                 require(result["resources"] == 2, "evaluation live resource indexes are incomplete")
             if page == "/selected-paper.html":
-                require("PAPER OUTPUT LEDGER" in result["text"] and "SUBMISSION_READY" in result["text"] and "AGENT-SAFETY-R9" in result["text"] and "Former Regression-Gated Self-Evolution workspace" in result["text"] and "No experiment from this old project is currently allowed to launch" in result["text"], "canonical PaperRegistry or plain-language historical STOP archive is missing")
+                require("PaperRegistry" in result["text"] and "SUBMISSION_READY" in result["text"] and "AGENT-SAFETY-R9" in result["text"] and ("STRI" in result["text"]), "canonical two-paper PaperRegistry is missing")
 
         navigate("/research-directions.html", 7)
         ensure_language("en")
@@ -594,6 +596,9 @@ def main() -> None:
         selected = execute(session_id, """return {
           chapters: document.querySelectorAll('.page-chapter').length,
           currentSTRI: document.querySelectorAll('#selected-stri-current').length,
+          currentAgentSafety: document.querySelectorAll('#paper-agent-safety').length,
+          paperTocRoots: [...document.querySelectorAll('#page-toc .paper-toc-root > a')].map(a=>a.textContent.trim()),
+          paperTocChildCounts: [...document.querySelectorAll('#page-toc .paper-toc-root')].map(li=>li.querySelectorAll(':scope > ul > li').length),
           archive: document.querySelectorAll('#historical-paper-archive').length,
           archiveOpen: document.querySelector('#historical-paper-archive')?.open === true,
           currentStatus: window.CURRENT_RESEARCH_STATUS?.headline || {},
@@ -608,14 +613,15 @@ def main() -> None:
           paperAcceptance: (window.RESEARCH_SYSTEM_STATE?.paper_acceptance?.ledger_index?.entries || []).find(row=>row.paper_id==='STRI-ICLR2027') || {},
           agentSafetyAcceptance: (window.RESEARCH_SYSTEM_STATE?.paper_acceptance?.ledger_index?.entries || []).find(row=>row.paper_id==='AGENT-SAFETY-R9') || {},
           paperAcceptanceSummary: window.RESEARCH_SYSTEM_STATE?.paper_acceptance?.summary || {},
-          acceptancePanels: document.querySelectorAll('#paper-acceptance-workflow').length,
+          acceptancePanels: document.querySelectorAll('.paper-acceptance-workflow').length,
           acceptanceStages: document.querySelectorAll('.paper-acceptance-stage').length,
           submissionDownloads: [...document.querySelectorAll('#selected-stri-current .current-status-downloads a')].map(a=>a.getAttribute('href')||''),
           agentSafetyDownloads: [...document.querySelectorAll('.paper-registry-card[data-paper-id="AGENT-SAFETY-R9"] .current-status-downloads a')].map(a=>a.getAttribute('href')||''),
           title: document.title,
           text: document.querySelector('.layout')?.textContent || ''
         };""")
-        require(selected["chapters"] == 5 and selected["currentSTRI"] == 1 and selected["archive"] == 1 and not selected["archiveOpen"] and selected["acceptancePanels"] == 1 and selected["acceptanceStages"] == 12, f"Papers must render the two-paper registry, one current STRI detail, the 12-stage canonical acceptance workflow, and the collapsed historical archive: {selected}")
+        require(selected["currentSTRI"] == 1 and selected["currentAgentSafety"] == 1 and selected["archive"] == 1 and not selected["archiveOpen"] and selected["acceptancePanels"] == 2 and selected["acceptanceStages"] == 24, f"Papers must render two current paper details, two independent 12-stage canonical acceptance workflows, and the collapsed historical archive: {selected}")
+        require(len(selected["paperTocRoots"]) == 2 and "STRI" in selected["paperTocRoots"][0] and "Agent Safety R9" in selected["paperTocRoots"][1] and all(count >= 3 for count in selected["paperTocChildCounts"]), f"selected-paper left hierarchy must have exactly two first-level papers with their own second-level sections: {selected['paperTocRoots']}/{selected['paperTocChildCounts']}")
         require(selected["paperRegistrySummary"].get("papers") == 2 and selected["paperRegistrySummary"].get("submission_ready") == 2 and selected["paperRegistrySummary"].get("scientific_holds") == 0 and selected["paperRegistryPanel"] == 1 and selected["paperRegistryCards"] == 2 and set(selected["paperRegistryIds"]) == {"STRI","AGENT-SAFETY-R9"} and selected["paperRegistryStages"] == {"STRI":"SUBMISSION_READY","AGENT-SAFETY-R9":"SUBMISSION_READY"}, f"PaperRegistry summary/UI is missing or stale: {selected}")
         require(selected["currentPaper"].get("paper_id") == "STRI" and selected["currentPaper"].get("source_research_item") == "E-7" and selected["currentPaper"].get("paper_stage") == "SUBMISSION_READY" and selected["currentPaper"].get("scientific_status") == "READY" and selected["currentPaper"].get("submission_ready") is True and selected["currentPaper"].get("paper_quality_v2_passed") is True and selected["currentPaper"].get("paper_quality_content_addressed_completion") is True and selected["currentPaper"].get("paper_quality_content_addressed_files") == 29 and selected["currentPaper"].get("paper_quality_evidence_debt") == 0 and (selected["currentPaper"].get("qa_passed"),selected["currentPaper"].get("qa_total")) == (60,60) and (selected["currentPaper"].get("official_qa_passed"),selected["currentPaper"].get("official_qa_total")) == (60,60) and selected["currentPaper"].get("paper_quality_schema_version") == "2.1" and selected["currentPaper"].get("paper_quality_main_visualizations") == 4 and selected["currentPaper"].get("paper_visual_figure_qa") == "PASS" and selected["currentPaper"].get("supplement_unit_tests") == "29/29 PASS" and selected["currentPaper"].get("official_source_conflict") is False and selected["currentPaper"].get("deadline_status") == "AUTHOR_SUBMISSION_SOURCES_ALIGNED" and (selected["currentPaper"].get("latest_story_search") or {}).get("pass") is True and bool((selected["currentPaper"].get("mock_pc_modes") or {}).get("BLIND_MANUSCRIPT")) and bool((selected["currentPaper"].get("mock_pc_modes") or {}).get("ARTIFACT_AWARE")) and (selected["currentPaper"].get("latest_claim_audit") or {}).get("pass") is True and (selected["currentPaper"].get("latest_manuscript_ci") or {}).get("pass") is True and ((selected["currentPaper"].get("latest_manuscript_ci") or {}).get("passed"),(selected["currentPaper"].get("latest_manuscript_ci") or {}).get("required")) == (9,9) and (selected["currentPaper"].get("latest_prebuttal") or {}).get("pass") is True and (selected["currentPaper"].get("latest_prebuttal") or {}).get("decision_critical") == 10 and (selected["currentPaper"].get("latest_submission_readiness") or {}).get("submission_ready") is True and (selected["currentPaper"].get("latest_transition") or {}).get("from") == "PREBUTTAL" and (selected["currentPaper"].get("latest_transition") or {}).get("to") == "SUBMISSION_READY" and (selected["currentPaper"].get("authority") or {}).get("submission") is False and selected["currentStatus"].get("paper_ready") == 1, f"selected-paper current STRI projection is stale: {selected}")
         safety_paper=selected["agentSafetyPaper"]

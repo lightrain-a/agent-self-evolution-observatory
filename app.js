@@ -1359,7 +1359,10 @@ function renderProjectStatusStrip(){
     : (language === "zh"
       ? [["真正投稿就绪论文",paperSummary.submission_ready??h.paper_ready??0],["还缺的旧版论文证据",h.paper_quality_evidence_debt||0],["通过正式问题检查的新研究问题",h.canonical_live_ideas||0],["正在做最小验证的新现象",h.fresh_active_f0||0],["因缺证据暂缓的新现象",h.fresh_support_holds||0],["现在允许启动的正式实验",h.launchable_formal_experiments||0],["已关闭的精确候选表述",h.shadow_closed_basins||h.shadow_dead_ends||0],["真正关闭到核心原理层",h.shadow_core_principle_stops||0],["整个基准或现象也被判定不成立",h.shadow_broader_core_principle_falsifications||0],["等待具体证据的暂定候选",h.shadow_holds||0]]
       : [["truly submission-ready papers",paperSummary.submission_ready??h.paper_ready??0],["unfinished legacy paper evidence",h.paper_quality_evidence_debt||0],["new ideas past formal problem check",h.canonical_live_ideas||0],["fresh phenomena in minimal validation",h.fresh_active_f0||0],["fresh phenomena waiting for evidence",h.fresh_support_holds||0],["formal experiments launchable now",h.launchable_formal_experiments||0],["closed exact candidate formulations",h.shadow_closed_basins||h.shadow_dead_ends||0],["core-principle scientific closures",h.shadow_core_principle_stops||0],["whole benchmark/phenomenon falsifications",h.shadow_broader_core_principle_falsifications||0],["tentative candidates waiting for evidence",h.shadow_holds||0]]);
-  return `<section class="project-status-strip current"><div class="project-status-copy"><b>${selectedPaper?(language==="zh"?"当前选中论文 · STRI":"Current selected paper · STRI"):(language==="zh"?`当前科研状态${asOf?` · ${asOf}`:""}`:`Current research state${asOf?` · ${asOf}`:""}`)}</b><span>${message}</span></div><dl class="project-status-metrics">${statusLabels.map(([label,value])=>`<div><dt>${label}</dt><dd>${value}</dd></div>`).join("")}</dl></section>`;
+  const selectedSafetyPaper=(canonicalPaperRegistry().papers||[]).find(row=>row.paper_id==="AGENT-SAFETY-R9")||{};
+  const selectedMessage=selectedPaper?(language==="zh"?`PaperRegistry 当前有 2 篇正式论文：STRI 与 Agent Safety R9 都已达到 SUBMISSION_READY。左侧一级目录按论文拆分，每篇分别查看自己的证据、主张边界、Paper Acceptance、审稿/QA 与投稿工件；真实 SUBMITTED 仍需要人工 OpenReview 提交。`:`PaperRegistry currently has two formal papers: STRI and Agent Safety R9, both at SUBMISSION_READY. The left hierarchy is paper-first, with separate evidence, claim boundaries, Paper Acceptance, review/QA, and submission artifacts for each paper; real SUBMITTED still requires human OpenReview action.`):message;
+  const selectedStatusLabels=selectedPaper?(language==="zh"?[["STRI",paper.paper_stage||paper.current_state||"--"],["Agent Safety R9",selectedSafetyPaper.paper_stage||selectedSafetyPaper.current_state||"--"],["真正 Submission Ready",paperSummary.submission_ready??0],["Invalid Ledger",acceptanceSummary.invalid_ledgers??acceptanceIndex.summary?.invalid_ledgers??0]]:[["STRI",paper.paper_stage||paper.current_state||"--"],["Agent Safety R9",selectedSafetyPaper.paper_stage||selectedSafetyPaper.current_state||"--"],["Truly submission-ready",paperSummary.submission_ready??0],["Invalid ledgers",acceptanceSummary.invalid_ledgers??acceptanceIndex.summary?.invalid_ledgers??0]]):statusLabels;
+  return `<section class="project-status-strip current"><div class="project-status-copy"><b>${selectedPaper?(language==="zh"?"当前论文 · PaperRegistry":"Current papers · PaperRegistry"):(language==="zh"?`当前科研状态${asOf?` · ${asOf}`:""}`:`Current research state${asOf?` · ${asOf}`:""}`)}</b><span>${selectedMessage}</span></div><dl class="project-status-metrics">${selectedStatusLabels.map(([label,value])=>`<div><dt>${label}</dt><dd>${value}</dd></div>`).join("")}</dl></section>`;
 }
 function pageHeader(config) {
   return `<div class="eyebrow">${esc(textOf(config.eyebrow))}</div><h1>${textOf(config.title)}</h1><p class="lead">${textOf(config.lead)}</p>${config.callout ? `<div class="callout">${textOf(config.callout)}</div>` : ""}${renderProjectStatusStrip()}`;
@@ -3529,6 +3532,22 @@ function syncFilterUrl() {
 function buildToc() {
   const container = document.getElementById("page-toc");
   if (!container) return;
+  if (pageId === "selected-paper") {
+    const papers = [...document.querySelectorAll("#dynamic-page [data-paper-toc-root]")];
+    const rows = papers.map((paper,index) => {
+      const heading = paper.querySelector(":scope > .paper-detail-header h2") || paper.querySelector("h2");
+      if (!heading) return null;
+      const rootId = paper.id || heading.id || `paper-${index+1}`;
+      if (!paper.id && !heading.id) heading.id = rootId;
+      const children = [...paper.querySelectorAll("h3[data-paper-toc-child]")].map((child,childIndex) => {
+        if (!child.id) child.id = `${rootId}-section-${childIndex+1}`;
+        return {id:child.id,label:(child.dataset.tocLabel || child.textContent).trim()};
+      });
+      return {id:rootId,label:(heading.dataset.tocLabel || heading.textContent).trim(),children};
+    }).filter(Boolean);
+    container.innerHTML = rows.length ? `<div class="toc-title">${language === "zh" ? "论文目录" : "Papers"}</div><nav class="toc-tree paper-toc-tree" aria-label="${language === "zh" ? "论文页内目录" : "Paper page contents"}"><ul>${rows.map((row) => `<li class="toc-node toc-level-2 paper-toc-root"><a href="#${esc(row.id)}">${esc(row.label)}</a>${row.children.length ? `<ul>${row.children.map((child) => `<li class="toc-node toc-level-3"><a href="#${esc(child.id)}">${esc(child.label)}</a></li>`).join("")}</ul>` : ""}</li>`).join("")}</ul></nav>` : "";
+    return;
+  }
   const tocSelector = "#dynamic-page h2, #dynamic-page h3";
   const headings = [...document.querySelectorAll(tocSelector)].filter((heading) => heading.dataset.toc !== "false" && !heading.closest(".review-trace-fold,.review-archive-fold,.system-deep-dive") && (heading.id || heading.closest(".panel, .page-chapter, .merged-group, .direction-cluster, .idea-macro-cluster")));
   headings.forEach((heading, index) => { if (!heading.id) heading.id = `${slugify(heading.textContent)}-${index + 1}`; });
