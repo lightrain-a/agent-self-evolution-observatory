@@ -1383,12 +1383,12 @@ function pageArchitecture(page = pageId) {
 function renderArchitectureOverview(architecture = pageArchitecture()) {
   const chapters = architecture.chapters || [];
   if (!chapters.length) return "";
-  const compactThreeRows=pageId==="system-overview";
-  const intro=compactThreeRows
-    ? (language === "zh" ? "按编号从左到右、从上到下阅读。三行依次覆盖：整体流程与科学设计 → 验证、证据与成稿 → 审稿、投稿与系统学习；每章的详细问题在下方正文展开。" : "Read by number from left to right and top to bottom. The three rows cover overall workflow/scientific design, validation/evidence/manuscript, then review/submission/system learning; each chapter's full question is expanded below.")
+  const compactTwoRows=pageId==="system-overview";
+  const intro=compactTwoRows
+    ? (language === "zh" ? "按编号从左到右、从上到下阅读。第一行从研究问题走到小规模验证，第二行从证据冻结走到成稿、投稿与系统复盘；每章的详细问题在下方正文展开。" : "Read by number from left to right and top to bottom. The first row runs from research question to local validation; the second runs from evidence freeze through manuscript, submission, and system learning. Each chapter's full question is expanded below.")
     : (language === "zh" ? "先理解各章解决的主问题，再进入方法族、任务域或具体子问题。箭头表示推荐阅读顺序，不表示严格因果关系。" : "Start with the main question of each chapter, then move to method families, domains, or concrete subproblems. Arrows indicate the recommended reading order rather than strict causality.");
-  const separator=compactThreeRows?"":"<i>→</i>";
-  return `<section class="panel page-architecture${compactThreeRows?" page-architecture-three-rows":""}"><h2 id="page-framework">${language === "zh" ? "本页框架与阅读顺序" : "Page framework and reading order"}</h2><p class="section-intro">${intro}</p><div class="page-architecture-flow">${chapters.map((chapter, index) => {const rawTitle=textOf(chapter.title);const cardTitle=compactThreeRows&&chapter.navTitle?textOf(chapter.navTitle):(compactThreeRows?rawTitle.replace(language==="zh"?/^第[一二三四五六七八九十0-9]+章\s*[·：]\s*/:/^[IVX]+\s*·\s*/,""):rawTitle);return `<a class="page-architecture-card" href="#chapter-${esc(chapter.id)}"><span>${String(index + 1).padStart(2,"0")}</span><div><b>${cardTitle}</b>${compactThreeRows?"":`<small>${textOf(chapter.question)}</small>`}</div></a>`;}).join(separator)}</div></section>`;
+  const separator=compactTwoRows?"":"<i>→</i>";
+  return `<section class="panel page-architecture${compactTwoRows?" page-architecture-two-rows":""}"><h2 id="page-framework">${language === "zh" ? "本页框架与阅读顺序" : "Page framework and reading order"}</h2><p class="section-intro">${intro}</p><div class="page-architecture-flow">${chapters.map((chapter, index) => {const rawTitle=textOf(chapter.title);const cardTitle=compactTwoRows&&chapter.navTitle?textOf(chapter.navTitle):(compactTwoRows?rawTitle.replace(language==="zh"?/^第[一二三四五六七八九十0-9]+章\s*[·：]\s*/:/^[IVX]+\s*·\s*/,""):rawTitle);return `<a class="page-architecture-card" href="#chapter-${esc(chapter.id)}"><span>${String(index + 1).padStart(2,"0")}</span><div><b>${cardTitle}</b>${compactTwoRows?"":`<small>${textOf(chapter.question)}</small>`}</div></a>`;}).join(separator)}</div></section>`;
 }
 function renderPageChapter(chapter, chapterIndex, config) {
   const groups = chapter.groups || [];
