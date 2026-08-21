@@ -53,6 +53,14 @@ calls. The current consumers are `expand`, `evolve`, `formulate`, and semantic
 memory objects were actually consumed by the prompt. Replays do not inject new
 memory.
 
+Successful JSON parsing is also written back immediately: the parsed payload is
+content-addressed, the call moves from `parse_status=PENDING` to `PARSED`, and a
+`PARSE_COMPLETED` event is appended before any completed-run import. Validated
+callers may additionally persist typed zero-authority research objects at this
+boundary (for example, an independent evidence-review object). Completed-run
+import is per-object idempotent so interruption-time writeback and later full
+import can safely converge instead of conflicting.
+
 Supported query purposes are `IDEA_DISCOVERY`, `FORMULATION`,
 `SEMANTIC_REVIEW`, `EXPERIMENT_DESIGN`, and `PAPER_META_REVIEW`. Retrieval has
 three experimental variants: `relevant`, `random`, and `none`. Set

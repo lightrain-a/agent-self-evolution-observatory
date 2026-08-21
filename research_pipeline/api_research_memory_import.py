@@ -10,6 +10,7 @@ from .api_memory_store import (
     bind_run_artifact,
     connect,
     database_path,
+    insert_research_object,
     insert_run_stub,
     now_utc,
     safe_json,
@@ -317,74 +318,47 @@ def import_run(
                 event_type="RUN_IMPORT_ENRICHED",
             )
 
-        existing_objects = int(
-            connection.execute(
-                "SELECT COUNT(*) AS n FROM research_objects WHERE run_id=?",
-                (run_id,),
-            ).fetchone()["n"]
-        )
-        if existing_objects not in {0, len(objects)}:
-            raise RuntimeError(f"research object import conflict for {run_id}")
-        if existing_objects == 0:
-            for row in objects:
-                object_key = sha_json(
+        for row in objects:
+            insert_research_object(
+                connection,
+                run_id=run_id,
+                object_type=row["object_type"],
+                object_id=row["object_id"],
+                parent_object_id=row["parent_object_id"],
+                stage=row["stage"],
+                title=row["title"],
+                disposition=row["disposition"],
+                payload=row["payload"],
+            )
+            if row["parent_object_id"]:
+                relation = (
+                    "evolves_to"
+                    if row["object_type"] == "evolved_branch"
+                    else "formulates_as"
+                )
+                edge_id = sha_json(
                     {
                         "run_id": run_id,
-                        "object_type": row["object_type"],
-                        "object_id": row["object_id"],
-                        "stage": row["stage"],
+                        "source": row["parent_object_id"],
+                        "target": row["object_id"],
+                        "relation": relation,
                     }
                 )
                 connection.execute(
                     """
-                    INSERT INTO research_objects(
-                      object_key,run_id,object_type,object_id,parent_object_id,
-                      stage,title,disposition,payload_sha256,payload_json,
-                      scientific_authority
-                    ) VALUES(?,?,?,?,?,?,?,?,?,?,0)
+                    INSERT OR IGNORE INTO lineage_edges(
+                      edge_id,run_id,source_object_id,target_object_id,
+                      relation,scientific_authority
+                    ) VALUES(?,?,?,?,?,0)
                     """,
                     (
-                        object_key,
+                        edge_id,
                         run_id,
-                        row["object_type"],
-                        row["object_id"],
                         row["parent_object_id"],
-                        row["stage"],
-                        row["title"],
-                        row["disposition"],
-                        sha_json(row["payload"]),
-                        safe_json(row["payload"]),
+                        row["object_id"],
+                        relation,
                     ),
                 )
-                if row["parent_object_id"]:
-                    relation = (
-                        "evolves_to"
-                        if row["object_type"] == "evolved_branch"
-                        else "formulates_as"
-                    )
-                    edge_id = sha_json(
-                        {
-                            "run_id": run_id,
-                            "source": row["parent_object_id"],
-                            "target": row["object_id"],
-                            "relation": relation,
-                        }
-                    )
-                    connection.execute(
-                        """
-                        INSERT OR IGNORE INTO lineage_edges(
-                          edge_id,run_id,source_object_id,target_object_id,
-                          relation,scientific_authority
-                        ) VALUES(?,?,?,?,?,0)
-                        """,
-                        (
-                            edge_id,
-                            run_id,
-                            row["parent_object_id"],
-                            row["object_id"],
-                            relation,
-                        ),
-                    )
 
         terminal = load_json(run_root / "evidence-substrate-preflight-request.json")
         status = str(

@@ -16,9 +16,10 @@ from .api_research_memory import (
     invalidate_query_only_memory_run,
     lint_api_research_memory,
     record_api_memory_consumption,
+    record_parsed_api_output,
     record_raw_api_output,
 )
-from .api_research_memory_import import import_run
+from .api_research_memory_import import import_run, object_rows
 
 
 class ApiResearchMemoryTest(unittest.TestCase):
@@ -194,6 +195,81 @@ class ApiResearchMemoryTest(unittest.TestCase):
             self.assertEqual(state["summary"]["artifacts"], 1)
             self.assertEqual(state["summary"]["fully_replay_addressed_calls"], 1)
             self.assertFalse(state["scientific_authority"])
+
+    def test_successful_parse_is_persisted_immediately_with_zero_authority_object(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            run = root / "scratch" / "incremental-r1"
+            raw = run / "raw" / "review-p1.txt"
+            raw.parent.mkdir(parents=True)
+            raw.write_text('{"reviews":[{"candidate_id":"C1","verdict":"CLEAR"}]}', encoding="utf-8")
+            archived = record_raw_api_output(
+                run_root=run,
+                stage="evidence-review-p1",
+                raw_path=raw,
+                resolved_model="reviewer-v1",
+                requested_model="reviewer",
+                request_fingerprint="a" * 64,
+                prompt_sha256="b" * 64,
+                root=root / "persistent",
+            )
+            parsed = record_parsed_api_output(
+                run_root=run,
+                stage="evidence-review-p1",
+                raw_sha256=archived["raw_sha256"],
+                structured_payload={"reviews": [{"candidate_id": "C1", "verdict": "CLEAR"}]},
+                resolved_model="reviewer-v1",
+                requested_model="reviewer",
+                research_objects=[{
+                    "object_type": "evidence_review",
+                    "object_id": "C1::contract",
+                    "stage": "independent_evidence_review",
+                    "title": "candidate review",
+                    "disposition": "CLEAR",
+                    "payload": {"candidate_id": "C1", "frozen_exact_prediction": "p", "evidence_review": {"verdict": "CLEAR"}},
+                }],
+                root=root / "persistent",
+            )
+            self.assertEqual(parsed["status"], "PARSED_OUTPUT_PERSISTED")
+            state = build_api_research_memory_state(root=root / "persistent")
+            self.assertEqual(state["summary"]["calls"], 1)
+            self.assertEqual(state["summary"]["artifacts"], 1)
+            self.assertEqual(state["summary"]["research_objects"], 1)
+            self.assertEqual(state["summary"]["scientific_identities"], 1)
+            with sqlite3.connect(database_path(root=root / "persistent")) as db:
+                row = db.execute("SELECT outcome_status,parse_status,structured_sha256 FROM api_calls").fetchone()
+                roles = {value[0] for value in db.execute("SELECT role FROM run_artifacts")}
+            self.assertEqual(row[0:2], ("SUCCESS", "PARSED"))
+            self.assertEqual(len(row[2]), 64)
+            self.assertEqual(roles, {"raw_api_output", "parsed_api_output"})
+            self.assertEqual(lint_api_research_memory(root=root / "persistent")["status"], "PASS")
+
+    def test_completed_import_accepts_exact_incremental_object_writeback(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            run = self.fixture(root)
+            first = object_rows(run)[0]
+            raw_path = next((run / "raw").glob("*.txt"))
+            archived = record_raw_api_output(
+                run_root=run,
+                stage="incremental-object-probe",
+                raw_path=raw_path,
+                root=root / "persistent",
+            )
+            record_parsed_api_output(
+                run_root=run,
+                stage="incremental-object-probe",
+                raw_sha256=archived["raw_sha256"],
+                structured_payload={"probe": True},
+                research_objects=[first],
+                root=root / "persistent",
+            )
+            imported = import_run(run, root=root / "persistent")
+            self.assertEqual(imported["status"], "API_RESEARCH_RUN_IMPORTED")
+            state = build_api_research_memory_state(root=root / "persistent")
+            self.assertEqual(state["summary"]["research_objects"], len(object_rows(run)))
+            self.assertEqual(state["summary"]["scientific_identities"], len(object_rows(run)))
+            self.assertEqual(lint_api_research_memory(root=root / "persistent")["status"], "PASS")
 
     def test_cross_run_exact_contract_identity_is_stable(self) -> None:
         with tempfile.TemporaryDirectory() as td:

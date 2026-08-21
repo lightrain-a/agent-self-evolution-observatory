@@ -217,14 +217,14 @@ def connect(path: Path) -> sqlite3.Connection:
     return connection
 
 
-def store_artifact(
+def store_bytes_artifact(
     connection: sqlite3.Connection,
-    source: Path,
+    data: bytes,
     *,
+    media_type: str = "application/octet-stream",
     storage: StorageSettings | None = None,
     root: Path | None = None,
 ) -> tuple[str, int, str]:
-    data = source.read_bytes()
     digest = sha_bytes(data)
     base = artifact_root(storage, root=root)
     destination = base / digest[:2] / digest
@@ -239,7 +239,6 @@ def store_artifact(
             os.fsync(handle.fileno())
             temporary = Path(handle.name)
         os.replace(temporary, destination)
-    media_type = "application/json" if source.suffix.lower() == ".json" else "text/plain"
     relpath = str(destination.relative_to(base.parent.parent.parent))
     connection.execute(
         """
@@ -247,9 +246,26 @@ def store_artifact(
           sha256,size_bytes,media_type,storage_relpath,created_at,scientific_authority
         ) VALUES(?,?,?,?,?,0)
         """,
-        (digest, len(data), media_type, relpath, now_utc()),
+        (digest, len(data), str(media_type or "application/octet-stream"), relpath, now_utc()),
     )
     return digest, len(data), relpath
+
+
+def store_artifact(
+    connection: sqlite3.Connection,
+    source: Path,
+    *,
+    storage: StorageSettings | None = None,
+    root: Path | None = None,
+) -> tuple[str, int, str]:
+    media_type = "application/json" if source.suffix.lower() == ".json" else "text/plain"
+    return store_bytes_artifact(
+        connection,
+        source.read_bytes(),
+        media_type=media_type,
+        storage=storage,
+        root=root,
+    )
 
 
 def bind_run_artifact(
@@ -399,6 +415,58 @@ def upsert_call(
         },
     )
     return call_id
+
+
+def insert_research_object(
+    connection: sqlite3.Connection,
+    *,
+    run_id: str,
+    object_type: str,
+    object_id: str,
+    stage: str,
+    title: str,
+    disposition: str,
+    payload: dict[str, Any],
+    parent_object_id: str = "",
+) -> str:
+    object_key = sha_json(
+        {
+            "run_id": str(run_id),
+            "object_type": str(object_type),
+            "object_id": str(object_id),
+            "stage": str(stage),
+        }
+    )
+    payload_sha = sha_json(payload)
+    existing = connection.execute(
+        "SELECT payload_sha256,payload_json FROM research_objects WHERE object_key=?",
+        (object_key,),
+    ).fetchone()
+    if existing is not None:
+        if str(existing["payload_sha256"]) != payload_sha or json.loads(existing["payload_json"]) != payload:
+            raise RuntimeError(f"research object conflict: {run_id}:{object_type}:{object_id}:{stage}")
+        return object_key
+    connection.execute(
+        """
+        INSERT INTO research_objects(
+          object_key,run_id,object_type,object_id,parent_object_id,stage,title,
+          disposition,payload_sha256,payload_json,scientific_authority
+        ) VALUES(?,?,?,?,?,?,?,?,?,?,0)
+        """,
+        (
+            object_key,
+            str(run_id),
+            str(object_type),
+            str(object_id),
+            str(parent_object_id or ""),
+            str(stage),
+            str(title or object_id),
+            str(disposition or "RECORDED"),
+            payload_sha,
+            safe_json(payload),
+        ),
+    )
+    return object_key
 
 
 def memory_instance_id(connection: sqlite3.Connection) -> str:

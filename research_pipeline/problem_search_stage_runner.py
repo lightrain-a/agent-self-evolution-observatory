@@ -9,6 +9,7 @@ from .config import PROJECT_ROOT
 from .api_research_memory import (
     compile_api_memory_query_pack,
     record_api_memory_consumption,
+    record_parsed_api_output,
     record_provider_failure,
     record_raw_api_output,
     should_auto_record,
@@ -210,9 +211,21 @@ def _repair_truncated_expansion_notes(raw:str)->tuple[dict|None,str,int]:
     return _repair_truncated_optional_notes(raw,("seeds",))
 
 
+def _persist_parsed_payload(*,run_root:Path,stem:str,payload:dict,raw_sha256:str,resolved_model:str,requested_model:str)->tuple[dict,str]:
+    record_parsed_api_output(
+        run_root=run_root,
+        stage=stem,
+        raw_sha256=raw_sha256,
+        structured_payload=payload,
+        resolved_model=resolved_model,
+        requested_model=requested_model,
+    )
+    return payload,raw_sha256
+
+
 def _parse_archived_json(run_root:Path,stem:str,raw:str,resolved_model:str,provider_response:dict|None=None,requested_model:str="")->tuple[dict,str]:
     sha,_=_archive_raw_before_parse(run_root,stem,raw,resolved_model,provider_response,requested_model)
-    try:return extract_json_object(raw),sha
+    try:return _persist_parsed_payload(run_root=run_root,stem=stem,payload=extract_json_object(raw),raw_sha256=sha,resolved_model=resolved_model,requested_model=requested_model)
     except Exception as error:
         repair=None;scientific_fields=[]
         if stem.startswith("formulate-"):
@@ -223,7 +236,7 @@ def _parse_archived_json(run_root:Path,stem:str,raw:str,resolved_model:str,provi
             payload,repaired,discarded=repair
             if payload is not None:
                 repaired_sha=hashlib.sha256(repaired.encode()).hexdigest();receipt={"schema_version":"1.0","stage":stem,"status":"PARSE_REPAIRED_TRAILING_METADATA_ONLY_ZERO_AUTHORITY","resolved_model":resolved_model,"raw_sha256":sha,"repaired_sha256":repaired_sha,"repair_type":"TRUNCATED_OPTIONAL_TRAILING_NOTES","discarded_field":"notes","discarded_suffix_chars":discarded,"scientific_fields_preserved":scientific_fields,"scientific_array_bytes_mutated":False,"string_content_mutation_allowed":False,"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
-                (run_root/f"repair-{stem}-{sha[:12]}.json").write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return payload,sha
+                (run_root/f"repair-{stem}-{sha[:12]}.json").write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return _persist_parsed_payload(run_root=run_root,stem=stem,payload=payload,raw_sha256=sha,resolved_model=resolved_model,requested_model=requested_model)
         err={"schema_version":"1.0","stage":stem,"status":"PARSE_ERROR_ZERO_AUTHORITY","resolved_model":resolved_model,"raw_sha256":sha,"error":f"{type(error).__name__}:{str(error)[:1200]}","scientific_authority":False}
         (run_root/f"error-{stem}-{sha[:12]}.json").write_text(json.dumps(err,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raise
 
@@ -253,7 +266,7 @@ def _repair_array_delimiter_colons(raw:str)->tuple[str,int]:
 
 def _parse_archived_evidence_design_json(run_root:Path,stem:str,raw:str,resolved_model:str,provider_response:dict|None=None,requested_model:str="")->tuple[dict,str]:
     sha,_=_archive_raw_before_parse(run_root,stem,raw,resolved_model,provider_response,requested_model)
-    try:return extract_json_object(raw),sha
+    try:return _persist_parsed_payload(run_root=run_root,stem=stem,payload=extract_json_object(raw),raw_sha256=sha,resolved_model=resolved_model,requested_model=requested_model)
     except Exception as first_error:
         repaired,count=_repair_array_delimiter_colons(raw)
         if not (1<=count<=2):
@@ -264,7 +277,7 @@ def _parse_archived_evidence_design_json(run_root:Path,stem:str,raw:str,resolved
             err={"schema_version":"1.0","stage":stem,"status":"PARSE_REPAIR_FAILED_ZERO_AUTHORITY","resolved_model":resolved_model,"raw_sha256":sha,"repair_type":"ARRAY_CONTAINER_COLON_TO_COMMA","repair_count":count,"error":f"{type(repair_error).__name__}:{str(repair_error)[:1200]}","scientific_authority":False}
             (run_root/f"error-{stem}-{sha[:12]}.json").write_text(json.dumps(err,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raise
         repaired_sha=hashlib.sha256(repaired.encode()).hexdigest();receipt={"schema_version":"1.0","stage":stem,"status":"PARSE_REPAIRED_PUNCTUATION_ONLY_ZERO_AUTHORITY","resolved_model":resolved_model,"raw_sha256":sha,"repaired_sha256":repaired_sha,"repair_type":"ARRAY_CONTAINER_COLON_TO_COMMA","repair_count":count,"string_content_mutation_allowed":False,"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
-        (run_root/f"repair-{stem}-{sha[:12]}.json").write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return payload,sha
+        (run_root/f"repair-{stem}-{sha[:12]}.json").write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return _persist_parsed_payload(run_root=run_root,stem=stem,payload=payload,raw_sha256=sha,resolved_model=resolved_model,requested_model=requested_model)
 
 
 def _ark_with_provider_receipt(*,run_root:Path,stem:str,requested_model:str,context:dict|None=None,**kwargs)->dict:
@@ -738,6 +751,8 @@ def evidence_contract_review(*,run_root:Path,part:int,batch_size:int=2,model:str
     if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
     prompt,candidate_ids=evidence_review_prompt(plan,part=part,batch_size=batch_size);res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-review-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=4200,temperature=0.0)
     raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_evidence_design_json(run_root,f"evidence-review-p{part}",raw,resolved,provider_response=res,requested_model=model);state=compile_evidence_reviews(plan,payload,part=part,reviewer_model=resolved);state["control_snapshot_sha256"]=control_sha;plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    reviewed_entries=[entry for entry in state.get("entries") or [] if isinstance(entry,dict) and str(entry.get("candidate_id") or "") in set(candidate_ids)]
+    record_parsed_api_output(run_root=run_root,stage=f"evidence-review-p{part}",raw_sha256=sha,structured_payload=payload,requested_model=model,resolved_model=resolved,research_objects=[{"object_type":"evidence_review","object_id":f"{entry.get('candidate_id')}::{str(entry.get('contract_sha256') or '')[:16]}","stage":"independent_evidence_review","title":str(entry.get("title") or entry.get("candidate_id") or "evidence review"),"disposition":str((entry.get("evidence_review") or {}).get("verdict") or entry.get("status") or "REVIEWED"),"payload":{"candidate_id":entry.get("candidate_id"),"contract_sha256":entry.get("contract_sha256"),"frozen_irreducible_object":entry.get("frozen_irreducible_object"),"frozen_exact_prediction":entry.get("frozen_exact_prediction"),"frozen_same_information_baseline":entry.get("frozen_same_information_baseline"),"evidence_review":entry.get("evidence_review") or {},"status":entry.get("status"),"scientific_authority":False}} for entry in reviewed_entries])
     artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":candidate_ids,"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"reviews":payload.get("reviews") or [],"plan_summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
     (run_root/f"evidence-review-p{part}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return {"part":part,"candidate_ids":candidate_ids,"resolved_model":resolved,"raw_sha256":sha,"summary":state.get("summary") or {},"scientific_authority":False}
 

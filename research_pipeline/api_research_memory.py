@@ -15,6 +15,7 @@ from .api_memory_store import (
     database_path,
     insert_memory_consumption,
     insert_memory_query,
+    insert_research_object,
     insert_run_stub,
     invalidate_run,
     memory_instance_id,
@@ -22,6 +23,7 @@ from .api_memory_store import (
     sha_json,
     stage_from_name,
     store_artifact,
+    store_bytes_artifact,
     upsert_call,
     upsert_scientific_identity,
 )
@@ -43,6 +45,7 @@ POLICY: dict[str, Any] = {
     "cross_run_identity_is_deterministic_exact_contract_not_semantic_authority": True,
     "canonical_run_memory_missing_fails_closed": True,
     "query_only_development_corrections_are_append_only_invalidations_not_deletes": True,
+    "successful_parse_is_persisted_immediately_before_completed_run_import": True,
 }
 
 IDENTITY_SIGNATURE_VERSION = "api-scientific-object-v1"
@@ -61,6 +64,7 @@ _PURPOSE_TYPE_PRIOR: dict[str, dict[str, float]] = {
         "evolved_branch": 0.6,
         "candidate": 1.2,
         "candidate_review": 1.3,
+        "evidence_review": 1.3,
         "evidence_contract": 0.7,
         "preflight_contract": 0.9,
     },
@@ -69,23 +73,27 @@ _PURPOSE_TYPE_PRIOR: dict[str, dict[str, float]] = {
         "evolved_branch": 0.7,
         "candidate": 1.2,
         "candidate_review": 1.4,
+        "evidence_review": 1.4,
         "evidence_contract": 0.9,
         "preflight_contract": 1.0,
     },
     "SEMANTIC_REVIEW": {
         "candidate": 1.0,
         "candidate_review": 1.5,
+        "evidence_review": 1.5,
         "evidence_contract": 1.0,
         "preflight_contract": 1.0,
     },
     "EXPERIMENT_DESIGN": {
         "candidate": 0.7,
         "candidate_review": 1.0,
+        "evidence_review": 1.2,
         "evidence_contract": 1.5,
         "preflight_contract": 1.4,
     },
     "PAPER_META_REVIEW": {
         "candidate_review": 1.0,
+        "evidence_review": 1.5,
         "evidence_contract": 1.4,
         "preflight_contract": 1.5,
     },
@@ -594,6 +602,141 @@ def record_raw_api_output(
         "call_id": call_id,
         "raw_sha256": raw_sha,
         "scientific_authority": False,
+    }
+
+
+def record_parsed_api_output(
+    *,
+    run_root: Path,
+    stage: str,
+    raw_sha256: str,
+    structured_payload: dict[str, Any],
+    requested_model: str = "",
+    resolved_model: str = "",
+    research_objects: list[dict[str, Any]] | None = None,
+    storage: StorageSettings | None = None,
+    root: Path | None = None,
+) -> dict[str, Any]:
+    """Persist a successful parse immediately, before any completed-run import.
+
+    This closes the interruption gap between archive-before-parse and later run
+    import.  Optional ``research_objects`` must already be compiler/reviewer
+    validated; this function never promotes their scientific authority.
+    """
+    if not should_auto_record(run_root) and root is None:
+        return {"status": "SKIPPED_NONCANONICAL_RUN_ROOT", "scientific_authority": False}
+    raw_sha = str(raw_sha256 or "").strip().lower()
+    if not re.fullmatch(r"[0-9a-f]{64}", raw_sha):
+        raise ValueError("parsed API output requires a 64-hex raw SHA")
+    if not isinstance(structured_payload, dict):
+        raise TypeError("structured API payload must be an object")
+    run_id = Path(run_root).name
+    db = database_path(storage, root=root)
+    payload_bytes = json.dumps(
+        structured_payload,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    persisted_objects = 0
+    object_keys: list[str] = []
+    with connect(db) as connection:
+        insert_run_stub(connection, run_id, metadata={"incremental": True})
+        raw_artifact = connection.execute(
+            "SELECT sha256 FROM artifacts WHERE sha256=?", (raw_sha,)
+        ).fetchone()
+        if raw_artifact is None:
+            raise RuntimeError(f"parsed API output raw artifact missing: {raw_sha}")
+        structured_sha, size_bytes, relpath = store_bytes_artifact(
+            connection,
+            payload_bytes,
+            media_type="application/json",
+            storage=storage,
+            root=root,
+        )
+        bind_run_artifact(
+            connection,
+            run_id=run_id,
+            sha256=structured_sha,
+            role="parsed_api_output",
+        )
+        call_id = upsert_call(
+            connection,
+            run_id=run_id,
+            raw_sha256=raw_sha,
+            structured_sha256=structured_sha,
+            row={
+                "stage": stage_from_name(stage),
+                "role": stage,
+                "requested_model": requested_model,
+                "resolved_model": resolved_model,
+                "outcome_status": "SUCCESS",
+                "parse_status": "PARSED",
+                "failure_class": "",
+                "metadata": {
+                    "parsed_output_persisted_immediately": True,
+                    "parsed_artifact_storage_relpath": relpath,
+                    "parsed_size_bytes": size_bytes,
+                },
+            },
+            event_type="PARSE_COMPLETED",
+        )
+        for row in research_objects or []:
+            if not isinstance(row, dict):
+                raise TypeError("research object writeback rows must be objects")
+            payload = row.get("payload")
+            if not isinstance(payload, dict):
+                raise ValueError("research object writeback requires payload object")
+            object_type = str(row.get("object_type") or "").strip()
+            object_id = str(row.get("object_id") or "").strip()
+            object_stage = str(row.get("stage") or stage_from_name(stage)).strip()
+            if not object_type or not object_id or not object_stage:
+                raise ValueError("research object writeback requires type/id/stage")
+            object_key = insert_research_object(
+                connection,
+                run_id=run_id,
+                object_type=object_type,
+                object_id=object_id,
+                parent_object_id=str(row.get("parent_object_id") or ""),
+                stage=object_stage,
+                title=str(row.get("title") or object_id),
+                disposition=str(row.get("disposition") or "RECORDED"),
+                payload=payload,
+            )
+            signature, components = scientific_object_signature(
+                object_type=object_type,
+                title=str(row.get("title") or object_id),
+                payload=payload,
+            )
+            upsert_scientific_identity(
+                connection,
+                object_key=object_key,
+                scientific_signature=signature,
+                signature_version=IDENTITY_SIGNATURE_VERSION,
+                components=components,
+            )
+            object_keys.append(object_key)
+            persisted_objects += 1
+        connection.execute(
+            """
+            UPDATE runs SET
+              artifact_count=(SELECT COUNT(DISTINCT sha256) FROM run_artifacts WHERE run_id=?),
+              call_count=(SELECT COUNT(*) FROM api_calls WHERE run_id=?),
+              object_count=(SELECT COUNT(*) FROM research_objects WHERE run_id=?)
+            WHERE run_id=?
+            """,
+            (run_id, run_id, run_id, run_id),
+        )
+    return {
+        "status": "PARSED_OUTPUT_PERSISTED",
+        "run_id": run_id,
+        "call_id": call_id,
+        "raw_sha256": raw_sha,
+        "structured_sha256": structured_sha,
+        "research_objects_persisted": persisted_objects,
+        "research_object_keys": object_keys,
+        "scientific_authority": False,
+        "belief_authority": False,
     }
 
 
