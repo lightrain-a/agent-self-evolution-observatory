@@ -47,9 +47,15 @@ DEFAULT_SHADOW_SEARCH_MEMORY_PATH=PROJECT_ROOT/"generated"/"paper-first-search-p
 DEFAULT_SHADOW_DEAD_END_MEMORY_PATH=DEFAULT_SHADOW_SEARCH_MEMORY_PATH  # legacy import alias
 
 
-def _evidence_memory_pack(plan:dict)->dict:
-    rows=[r for r in plan.get("entries") or [] if isinstance(r,dict) and r.get("design_selected") is True]
-    context=[{k:r.get(k) for k in ("candidate_id","title","discovery_lane","source_refs","frozen_irreducible_object","frozen_exact_prediction","frozen_same_information_baseline","blockers")} for r in rows[:4]]
+def _evidence_memory_pack(plan:dict,*,candidate_ids:list[str]|None=None,statuses:set[str]|None=None,limit:int=4)->dict:
+    rows=[r for r in plan.get("entries") or [] if isinstance(r,dict)]
+    if candidate_ids:
+        by={str(r.get("candidate_id") or ""):r for r in rows};rows=[by[cid] for cid in candidate_ids if cid in by]
+    elif statuses:
+        rows=[r for r in rows if str(r.get("status") or "") in statuses]
+    else:
+        rows=[r for r in rows if r.get("design_selected") is True]
+    context=[{k:r.get(k) for k in ("candidate_id","title","discovery_lane","source_refs","frozen_irreducible_object","frozen_exact_prediction","frozen_same_information_baseline","blockers")} for r in rows[:max(1,int(limit))]]
     return compile_research_memory_query_pack(load_research_memory_wiki(),purpose="EXPERIMENT_DESIGN",context=context)
 
 
@@ -726,7 +732,9 @@ def evidence_design(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,mod
         plan=build_provisional_evidence_plan(machine,run_id=run_root.name);plan["control_snapshot_sha256"]=control_sha;plan_path.write_text(json.dumps(plan,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     plan=json.loads(plan_path.read_text(encoding="utf-8"))
     if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
-    memory_pack=_evidence_memory_pack(plan);prompt,candidate_ids=evidence_design_prompt(plan,part=part,batch_size=batch_size,research_memory_query_pack=memory_pack)
+    pending_ids=[str(r.get("candidate_id") or "") for r in plan.get("entries") or [] if isinstance(r,dict) and r.get("design_selected") is True and r.get("status") in {"NEEDS_BOUNDED_EVIDENCE_DESIGN","BRANCH_REPAIR_READY"}][:batch_size]
+    memory_pack=_evidence_memory_pack(plan,candidate_ids=pending_ids);prompt,candidate_ids=evidence_design_prompt(plan,part=part,batch_size=batch_size,research_memory_query_pack=memory_pack)
+    if candidate_ids!=pending_ids:raise ValueError("evidence-design memory target drift")
     res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-design-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha,"research_memory_query_pack_sha256":memory_pack.get("query_pack_sha256"),"research_memory_selected_ids":memory_pack.get("selected_memory_ids") or []},prompt=prompt,max_output_tokens=5200,temperature=0.0)
     raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_evidence_design_json(run_root,f"evidence-design-p{part}",raw,resolved,provider_response=res,requested_model=model)
     state=compile_evidence_designs(plan,payload,part=part,design_model=resolved);state["control_snapshot_sha256"]=control_sha;_record_memory_receipt(state,stage="evidence-design",part=part,pack=memory_pack);plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
@@ -739,7 +747,10 @@ def evidence_operationalization_recompile(*,run_root:Path,part:int,batch_size:in
     model=preferred_model("evidence_recompile",model)
     control_sha=_assert_run_control(run_root);plan_path=run_root/EVIDENCE_PLAN_FILENAME;plan=json.loads(plan_path.read_text(encoding="utf-8"))
     if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
-    memory_pack=_evidence_memory_pack(plan);prompt,candidate_ids=operationalization_recompile_prompt(plan,part=part,batch_size=batch_size,research_memory_query_pack=memory_pack);res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-recompile-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha,"research_memory_query_pack_sha256":memory_pack.get("query_pack_sha256"),"research_memory_selected_ids":memory_pack.get("selected_memory_ids") or []},prompt=prompt,max_output_tokens=5600,temperature=0.0)
+    pending_ids=[str(r.get("candidate_id") or "") for r in plan.get("entries") or [] if isinstance(r,dict) and r.get("status")=="NEEDS_OPERATIONALIZATION_RECOMPILE"][:batch_size]
+    memory_pack=_evidence_memory_pack(plan,candidate_ids=pending_ids);prompt,candidate_ids=operationalization_recompile_prompt(plan,part=part,batch_size=batch_size,research_memory_query_pack=memory_pack)
+    if candidate_ids!=pending_ids:raise ValueError("evidence-recompile memory target drift")
+    res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-recompile-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha,"research_memory_query_pack_sha256":memory_pack.get("query_pack_sha256"),"research_memory_selected_ids":memory_pack.get("selected_memory_ids") or []},prompt=prompt,max_output_tokens=5600,temperature=0.0)
     raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_evidence_design_json(run_root,f"evidence-recompile-p{part}",raw,resolved,provider_response=res,requested_model=model);state=compile_operationalization_recompiles(plan,payload,part=part,recompiler_model=resolved);state["control_snapshot_sha256"]=control_sha;_record_memory_receipt(state,stage="evidence-recompile",part=part,pack=memory_pack);plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":candidate_ids,"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"research_memory_query_pack_sha256":memory_pack.get("query_pack_sha256"),"research_memory_selected_ids":memory_pack.get("selected_memory_ids") or [],"recompiles":payload.get("recompiles") or [],"plan_summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
     (run_root/f"evidence-recompile-p{part}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return {"part":part,"candidate_ids":candidate_ids,"resolved_model":resolved,"raw_sha256":sha,"summary":state.get("summary") or {},"scientific_authority":False}

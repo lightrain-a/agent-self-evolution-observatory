@@ -56,6 +56,21 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
             with patch.object(runner, "DEFAULT_SHADOW_SEARCH_MEMORY_PATH", missing):
                 self.assertEqual(runner._shadow_dead_end_memory(None), {})
 
+    def test_evidence_memory_pack_targets_current_candidate_ids_not_stale_selected_holds(self) -> None:
+        plan={"entries":[
+            {"candidate_id":"OLD-HOLD","title":"old","design_selected":True,"status":"HOLD_EVIDENCE_REVIEW_BLOCKED"},
+            {"candidate_id":"NEW-A","title":"new a","design_selected":True,"status":"NEEDS_BOUNDED_EVIDENCE_DESIGN"},
+            {"candidate_id":"NEW-B","title":"new b","design_selected":True,"status":"NEEDS_BOUNDED_EVIDENCE_DESIGN"},
+        ]}
+        captured={}
+        def fake_compile(wiki,*,purpose,context):
+            captured["purpose"]=purpose;captured["context"]=context
+            return {"purpose":purpose,"query_pack_sha256":"a"*64,"selected_memory_ids":[],"summary":{"selected":0},"scientific_authority":False}
+        with patch.object(runner,"load_research_memory_wiki",return_value={}), patch.object(runner,"compile_research_memory_query_pack",side_effect=fake_compile):
+            runner._evidence_memory_pack(plan,candidate_ids=["NEW-B","NEW-A"])
+        self.assertEqual([row["candidate_id"] for row in captured["context"]],["NEW-B","NEW-A"])
+        self.assertEqual(captured["purpose"],"EXPERIMENT_DESIGN")
+
     def test_illegal_default_memory_authority_fails_closed(self) -> None:
         payload = self.memory()
         payload["shadow_dead_end_memory"]["scientific_authority"] = True
