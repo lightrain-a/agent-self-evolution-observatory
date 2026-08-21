@@ -366,6 +366,7 @@ def run_cycle(
             ),
         ))
         report["steps"].append(_step("research-system-state", write_research_system_state))
+        report["steps"].append(_step("research-timeline-projection", _run_research_timeline_projection))
         if web_review_limit > 0:
             if mode in {"weekly", "manual"}:
                 report["steps"].append(_advisory_step("external-research-system-learning-review", lambda: _run_external_system_learning_review(storage)))
@@ -408,6 +409,10 @@ def run_cycle(
         write_p0_offline_qualification_state()
         write_p0_admission_state()
         write_research_system_state()
+        timeline_publication = _step("research-timeline-projection-before-publish", _run_research_timeline_projection)
+        report["steps"].append(timeline_publication)
+        if timeline_publication["status"] != "pass":
+            report["status"] = "degraded"
         publication_started = time.time()
         try:
             publication_result = publish_generated_state(mode=mode)
@@ -491,6 +496,26 @@ def _safe_summary(result: Any) -> Any:
         if key in result:
             return result[key]
     return {key: result[key] for key in list(result)[:8]}
+
+
+def _run_research_timeline_projection() -> dict[str, Any]:
+    script = PROJECT_ROOT / "scripts" / "build_research_timeline.py"
+    completed = subprocess.run(
+        [sys.executable, str(script)],
+        cwd=PROJECT_ROOT,
+        text=True,
+        capture_output=True,
+        timeout=120,
+        check=False,
+    )
+    if completed.returncode != 0:
+        raise RuntimeError((completed.stderr or completed.stdout or "timeline build failed")[-2000:])
+    payload = json.loads((PROJECT_ROOT / "generated" / "research-timeline.json").read_text(encoding="utf-8"))
+    return {
+        "status": "PROJECTED_READ_ONLY",
+        "scientific_authority": False,
+        "summary": payload.get("summary", {}),
+    }
 
 
 def _sync_literature() -> dict[str, Any]:

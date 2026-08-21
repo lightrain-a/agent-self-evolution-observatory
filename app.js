@@ -3541,6 +3541,7 @@ function renderPage() {
   renderFooter();
   if (pageId === "home") root.innerHTML = renderHome(config);
   else if (pageId === "system-overview") root.innerHTML = window.renderSystemOverview ? window.renderSystemOverview(config) : renderMergedHub(config);
+  else if (pageId === "research-timeline") root.innerHTML = window.renderResearchTimeline ? window.renderResearchTimeline(config) : `${pageHeader(config)}<div class="empty">Research timeline unavailable.</div>`;
   else if (pageId === "selected-paper") root.innerHTML = window.renderSelectedPaperWorkspace ? window.renderSelectedPaperWorkspace(config) : renderMergedHub(config);
   else if (config.renderMode === "merged-hub") root.innerHTML = renderMergedHub(config);
   else if (pageId === "research-directions") root.innerHTML = renderDirectionMap(config);
@@ -3553,6 +3554,7 @@ function renderPage() {
   else root.innerHTML = `${pageHeader(config)}${renderOverviewFigure(config)}${(config.sections || []).map(renderSection).join("")}`;
   document.querySelector(".language-toggle")?.replaceChildren(document.createTextNode(language === "en" ? "中文" : "English"));
   bindPageEvents();
+  if (pageId === "research-timeline") window.bindResearchTimelineEvents?.();
   if (pageId === "paper-ideas") { initCanonicalIdeaFilters(); initIdeaBriefingMode(); }
   if (pageId === "bibliography") renderPaperList(document.getElementById("site-search")?.value || "");
   bindPaperCardEvents();
@@ -3569,6 +3571,7 @@ function bindSearch() {
   input.addEventListener("input", () => {
     const query = input.value.trim();
     if (pageId === "bibliography") { bibliographyLimit = 80; renderPaperList(query); }
+    else if (pageId === "research-timeline" && window.applyResearchTimelineFilters) window.applyResearchTimelineFilters(query);
     else renderGlobalSearch(query);
   });
 }

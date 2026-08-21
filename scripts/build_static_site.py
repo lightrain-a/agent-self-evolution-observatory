@@ -122,6 +122,14 @@ def build() -> Path:
         cwd=ROOT,
         check=True,
     )
+    # Rebuild the read-only timeline after current-state projection. On GitHub
+    # runners the server-side Research Memory DB is absent, so the timeline
+    # builder preserves the last committed zero-authority runtime snapshot.
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "build_research_timeline.py")],
+        cwd=ROOT,
+        check=True,
+    )
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     OUTPUT.mkdir(parents=True)
@@ -176,6 +184,11 @@ def build() -> Path:
     required = (
         OUTPUT / "index.html",
         OUTPUT / "paper-ideas.html",
+        OUTPUT / "research-timeline.html",
+        OUTPUT / "research-timeline.css",
+        OUTPUT / "research-timeline-view.js",
+        OUTPUT / "generated" / "research-timeline.js",
+        OUTPUT / "generated" / "research-timeline.json",
         OUTPUT / "paper-first-incubation-view.js",
         OUTPUT / "current-research-status-view.js",
         OUTPUT / "experiments.html",

@@ -10,6 +10,7 @@ window.NAV_GROUPS = [
   ]},
   { title:{en:"Research Planning",zh:"研究规划"}, open:true, pages:[
     ["system-overview.html",{en:"Research System",zh:"科研系统"}],
+    ["research-timeline.html",{en:"Research Timeline",zh:"研究时间轴"}],
     ["research-directions.html",{en:"Directions & Long-term Agenda",zh:"方向地图与长期议程"}],
     ["paper-ideas.html",{en:"ICLR-first Paper Idea Lab",zh:"ICLR 优先论文 Idea 实验室"}],
     ["experiments.html",{en:"Experiment Decisions & Evidence",zh:"实验决策与证据"}],

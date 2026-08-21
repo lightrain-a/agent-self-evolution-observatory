@@ -49,6 +49,8 @@ class PublicationTest(unittest.TestCase):
         self.assertEqual(
             DAILY_ARTIFACTS,
             (
+                "generated/research-timeline.json",
+                "generated/research-timeline.js",
                 "generated/ai-consultation-clinic.json",
                 "generated/ai-consultation-clinic.js",
                 "generated/ai-consultation-automation.json",

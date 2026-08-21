@@ -12,6 +12,8 @@ from typing import Any
 from .config import PROJECT_ROOT, StorageSettings
 
 DAILY_ARTIFACTS = (
+    "generated/research-timeline.json",
+    "generated/research-timeline.js",
     "generated/ai-consultation-clinic.json",
     "generated/ai-consultation-clinic.js",
     "generated/ai-consultation-automation.json",
