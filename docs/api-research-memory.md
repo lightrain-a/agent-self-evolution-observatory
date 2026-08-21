@@ -32,21 +32,62 @@ replace the Claim Ledger, scientific adjudication, or Research Memory Graph 2.1.
 
    `<persistent-root>/indexes/api-research-memory.sqlite3`
 
-   It tracks runs, artifacts, API calls, call events, research objects, and
-   lineage edges. Identical re-import is idempotent. A reused run ID with a
-   different manifest fails closed.
+   It tracks runs, artifacts, API calls, call events, research objects, lineage
+   edges, deterministic exact-contract scientific identities, memory queries,
+   and memory-consumption receipts. Identical re-import is idempotent. A reused
+   run ID with a different manifest fails closed.
 
 3. Research Memory Graph projection:
 
-   Only bounded preflight candidates are projected. Every projected row remains
-   `downstream_authorization_blocked=true` and
-   `scientific_authority=false`.
+   Only bounded preflight candidates are projected. API candidate IDs are
+   namespaced by source run so run-local ordinals cannot collide. Deterministic
+   exact-contract signatures are projected only as grouping nodes; they never
+   merge scientific authority. Every projected row remains
+   `downstream_authorization_blocked=true` and `scientific_authority=false`.
+
+## Research Memory 2.2 consumer loop
+
+Canonical search stages can retrieve prior API research objects before provider
+calls. The current consumers are `expand`, `evolve`, `formulate`, and semantic
+`review`. Each call freezes a content-addressed query pack and records which
+memory objects were actually consumed by the prompt. Replays do not inject new
+memory.
+
+Supported query purposes are `IDEA_DISCOVERY`, `FORMULATION`,
+`SEMANTIC_REVIEW`, `EXPERIMENT_DESIGN`, and `PAPER_META_REVIEW`. Retrieval has
+three experimental variants: `relevant`, `random`, and `none`. Set
+`RESEARCH_API_MEMORY_VARIANT` to choose the arm. `random` is deterministic for a
+fixed context hash, while all variants share the same item and character caps.
+
+A canonical stage run fails closed if its canonical API memory database is
+missing. Noncanonical scratch/test runs do not attach to canonical API memory by
+default; an explicit optional-memory switch is required even to read it. This
+prevents tests and local development from silently adding query/consumption
+bookkeeping to the durable history.
+
+If a development defect ever creates a query-only run stub in canonical memory,
+correction is append-only: `run_invalidations` hides the stub from active
+retrieval/state while retaining the original rows for audit. The maintenance
+path refuses to invalidate any run that has provider calls, research objects, or
+persisted artifacts.
+
+For A/B/C evaluation, `relevant` and `random` are the primary causal pair and
+are frozen to the same realized memory-item count under the same character cap.
+`none` is intentionally empty and measures total memory utility; it must not be
+reported as token-matched. Provider prompt-token counts are part of the required
+arm-level telemetry.
 
 ## Authority boundary
 
 The database cannot authorize Problem Gate, paper or method design, experiment
 execution, P0, GPU use, claim mutation, or scientific closure. Transport, parser,
 orchestration, and provenance failures have `belief_authority=false`.
+
+Substrate auditing also remains separate from scientific truth. A discovered
+execution-protocol contradiction may return exactly once through
+`PROTOCOL_REPAIR_REQUIRED` to bounded evidence design while compiler-owned
+prediction/baseline/falsifier fields stay frozen. It cannot be converted into a
+scientific negative or used to relax experiment budgets.
 
 ## Commands
 
@@ -55,6 +96,12 @@ python -m research_pipeline.api_research_memory_import import-run \
   --run-root generated/research-data/runs/<run-id>
 python -m research_pipeline.api_research_memory_import status
 python -m research_pipeline.api_research_memory_import lint
+
+python -m research_pipeline.api_memory_ablation \
+  --run-id-prefix memory-ablation-r1 \
+  --purpose IDEA_DISCOVERY \
+  --stage expand \
+  --context-json '{"topic":"persistent agent self-evolution"}'
 ```
 
 For canonical shadow runs, `problem_search_stage_runner` records raw provider

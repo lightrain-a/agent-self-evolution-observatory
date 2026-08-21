@@ -11,14 +11,14 @@ OVERLAY_NODE_KINDS = {
     "phenomenon", "problem_contract", "candidate_problem", "idea", "claim",
     "method", "experiment", "evidence_reference", "core_principle",
     "failure_asset", "success", "scientific_closure", "search_closure",
-    "hold", "reopen_condition",
+    "hold", "reopen_condition", "scientific_identity",
 }
 POLICY: dict[str, Any] = {
     "schema_version": SCHEMA_VERSION,
     "graph_is_a_derived_traceability_view_not_scientific_authority": True,
     "existing_evidence_graph_is_referenced_not_duplicated": True,
     "canonical_artifacts_remain_the_only_scientific_sources_of_truth": True,
-    "paper_phenomenon_problem_contract_idea_claim_method_experiment_failure_success_closure_and_reopen_are_distinct_node_kinds": True,
+    "paper_phenomenon_problem_contract_idea_claim_method_experiment_failure_success_closure_reopen_and_exact_identity_are_distinct_node_kinds": True,
     "experiment_failure_edge_cannot_close_core_principle": True,
     "execution_runtime_protocol_support_operationalization_and_method_failure_are_not_scientific_negatives": True,
     "only_certified_principle_dead_end_may_emit_principle_closure_edge": True,
@@ -39,6 +39,7 @@ POLICY: dict[str, Any] = {
     "incubation_support_hold_blocks_method_experiment_and_paper_authority": True,
     "api_research_memory_is_provenance_not_scientific_truth": True,
     "api_memory_candidates_remain_downstream_authorization_blocked": True,
+    "api_memory_exact_identity_groups_objects_but_never_merges_scientific_authority": True,
 }
 
 
@@ -286,6 +287,18 @@ def build_scientific_research_graph(
             or row_source in {"fresh_phenomenon_portfolio", "api_research_memory"},
             "source": row_source,
         })
+        identity_signature = _text(row.get("scientific_object_signature"))
+        if row_source == "api_research_memory" and identity_signature:
+            identity_id = add_node({
+                "id": f"scientific-identity:{identity_signature}",
+                "kind": "scientific_identity",
+                "label": identity_signature[:16],
+                "scientific_object_signature": identity_signature,
+                "identity_semantics": "DETERMINISTIC_EXACT_CONTRACT_ONLY",
+                "automatic_scientific_merge": False,
+                "source": row_source,
+            })
+            add_edge(candidate_id, identity_id, "has_exact_contract_identity")
         idea_id = ensure_idea(cid, row_source)
         add_edge(idea_id, candidate_id, "formulated_as")
         phenomenon = _first_text(row, "phenomenon", "phenomenon_text", "target_phenomenon")

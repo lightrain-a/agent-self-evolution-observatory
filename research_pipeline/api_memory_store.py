@@ -5,6 +5,7 @@ import json
 import os
 import sqlite3
 import tempfile
+import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -144,17 +145,69 @@ def connect(path: Path) -> sqlite3.Connection:
             relation TEXT NOT NULL,
             scientific_authority INTEGER NOT NULL DEFAULT 0 CHECK(scientific_authority = 0)
         );
+        CREATE TABLE IF NOT EXISTS scientific_identities (
+            object_key TEXT PRIMARY KEY REFERENCES research_objects(object_key),
+            scientific_signature TEXT NOT NULL,
+            signature_version TEXT NOT NULL,
+            components_json TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            scientific_authority INTEGER NOT NULL DEFAULT 0 CHECK(scientific_authority = 0),
+            belief_authority INTEGER NOT NULL DEFAULT 0 CHECK(belief_authority = 0)
+        );
+        CREATE TABLE IF NOT EXISTS run_invalidations (
+            run_id TEXT PRIMARY KEY REFERENCES runs(run_id),
+            reason TEXT NOT NULL,
+            invalidated_at TEXT NOT NULL,
+            scientific_authority INTEGER NOT NULL DEFAULT 0 CHECK(scientific_authority = 0),
+            belief_authority INTEGER NOT NULL DEFAULT 0 CHECK(belief_authority = 0)
+        );
+        CREATE TABLE IF NOT EXISTS memory_queries (
+            query_id TEXT PRIMARY KEY,
+            run_id TEXT NOT NULL REFERENCES runs(run_id),
+            purpose TEXT NOT NULL,
+            stage TEXT NOT NULL,
+            variant TEXT NOT NULL,
+            context_sha256 TEXT NOT NULL,
+            query_pack_sha256 TEXT NOT NULL,
+            selected_object_keys_json TEXT NOT NULL,
+            selected_signatures_json TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            scientific_authority INTEGER NOT NULL DEFAULT 0 CHECK(scientific_authority = 0),
+            belief_authority INTEGER NOT NULL DEFAULT 0 CHECK(belief_authority = 0)
+        );
+        CREATE TABLE IF NOT EXISTS memory_consumptions (
+            consumption_id TEXT PRIMARY KEY,
+            query_id TEXT NOT NULL REFERENCES memory_queries(query_id),
+            run_id TEXT NOT NULL REFERENCES runs(run_id),
+            stage TEXT NOT NULL,
+            raw_sha256 TEXT NOT NULL,
+            output_object_ids_json TEXT NOT NULL,
+            outcome_status TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            scientific_authority INTEGER NOT NULL DEFAULT 0 CHECK(scientific_authority = 0),
+            belief_authority INTEGER NOT NULL DEFAULT 0 CHECK(belief_authority = 0)
+        );
         CREATE INDEX IF NOT EXISTS idx_calls_run_stage ON api_calls(run_id, stage);
         CREATE INDEX IF NOT EXISTS idx_calls_request ON api_calls(request_fingerprint);
         CREATE INDEX IF NOT EXISTS idx_calls_raw ON api_calls(raw_sha256);
         CREATE INDEX IF NOT EXISTS idx_objects_run_stage ON research_objects(run_id, stage);
         CREATE INDEX IF NOT EXISTS idx_objects_identity ON research_objects(object_id);
         CREATE INDEX IF NOT EXISTS idx_edges_run_source ON lineage_edges(run_id, source_object_id);
+        CREATE INDEX IF NOT EXISTS idx_scientific_signature ON scientific_identities(scientific_signature);
+        CREATE INDEX IF NOT EXISTS idx_run_invalidations_time ON run_invalidations(invalidated_at);
+        CREATE INDEX IF NOT EXISTS idx_memory_queries_run_stage ON memory_queries(run_id, stage);
+        CREATE INDEX IF NOT EXISTS idx_memory_queries_pack ON memory_queries(query_pack_sha256);
+        CREATE INDEX IF NOT EXISTS idx_memory_consumptions_query ON memory_consumptions(query_id);
+        CREATE INDEX IF NOT EXISTS idx_memory_consumptions_run_stage ON memory_consumptions(run_id, stage);
         """
     )
     connection.execute(
         "INSERT OR IGNORE INTO schema_meta(key,value) VALUES('schema_version',?)",
         (SCHEMA_VERSION,),
+    )
+    connection.execute(
+        "INSERT OR IGNORE INTO schema_meta(key,value) VALUES('memory_instance_id',?)",
+        (f"api-memory-{uuid.uuid4().hex}",),
     )
     row = connection.execute(
         "SELECT value FROM schema_meta WHERE key='schema_version'"
@@ -346,6 +399,152 @@ def upsert_call(
         },
     )
     return call_id
+
+
+def memory_instance_id(connection: sqlite3.Connection) -> str:
+    row = connection.execute(
+        "SELECT value FROM schema_meta WHERE key='memory_instance_id'"
+    ).fetchone()
+    return str(row["value"] if row is not None else "")
+
+
+def invalidate_run(
+    connection: sqlite3.Connection,
+    *,
+    run_id: str,
+    reason: str,
+) -> None:
+    row = connection.execute("SELECT run_id FROM runs WHERE run_id=?", (run_id,)).fetchone()
+    if row is None:
+        raise ValueError(f"cannot invalidate unknown API memory run: {run_id}")
+    reason = str(reason or "").strip()
+    if not reason:
+        raise ValueError("API memory run invalidation requires a reason")
+    connection.execute(
+        """
+        INSERT OR IGNORE INTO run_invalidations(
+          run_id,reason,invalidated_at,scientific_authority,belief_authority
+        ) VALUES(?,?,?,0,0)
+        """,
+        (run_id, reason, now_utc()),
+    )
+
+
+def upsert_scientific_identity(
+    connection: sqlite3.Connection,
+    *,
+    object_key: str,
+    scientific_signature: str,
+    signature_version: str,
+    components: dict[str, Any],
+) -> None:
+    connection.execute(
+        """
+        INSERT INTO scientific_identities(
+          object_key,scientific_signature,signature_version,components_json,
+          created_at,scientific_authority,belief_authority
+        ) VALUES(?,?,?,?,?,0,0)
+        ON CONFLICT(object_key) DO UPDATE SET
+          scientific_signature=excluded.scientific_signature,
+          signature_version=excluded.signature_version,
+          components_json=excluded.components_json
+        """,
+        (
+            object_key,
+            scientific_signature,
+            signature_version,
+            safe_json(components),
+            now_utc(),
+        ),
+    )
+
+
+def insert_memory_query(
+    connection: sqlite3.Connection,
+    *,
+    run_id: str,
+    purpose: str,
+    stage: str,
+    variant: str,
+    context_sha256: str,
+    query_pack_sha256: str,
+    selected_object_keys: list[str],
+    selected_signatures: list[str],
+) -> str:
+    insert_run_stub(connection, run_id, metadata={"incremental": True, "memory_query": True})
+    query_id = sha_json(
+        {
+            "run_id": run_id,
+            "purpose": purpose,
+            "stage": stage,
+            "variant": variant,
+            "context_sha256": context_sha256,
+            "query_pack_sha256": query_pack_sha256,
+        }
+    )
+    connection.execute(
+        """
+        INSERT OR IGNORE INTO memory_queries(
+          query_id,run_id,purpose,stage,variant,context_sha256,query_pack_sha256,
+          selected_object_keys_json,selected_signatures_json,created_at,
+          scientific_authority,belief_authority
+        ) VALUES(?,?,?,?,?,?,?,?,?,?,0,0)
+        """,
+        (
+            query_id,
+            run_id,
+            purpose,
+            stage,
+            variant,
+            context_sha256,
+            query_pack_sha256,
+            safe_json(selected_object_keys),
+            safe_json(selected_signatures),
+            now_utc(),
+        ),
+    )
+    return query_id
+
+
+def insert_memory_consumption(
+    connection: sqlite3.Connection,
+    *,
+    query_id: str,
+    run_id: str,
+    stage: str,
+    raw_sha256: str,
+    output_object_ids: list[str],
+    outcome_status: str,
+) -> str:
+    consumption_id = sha_json(
+        {
+            "query_id": query_id,
+            "run_id": run_id,
+            "stage": stage,
+            "raw_sha256": raw_sha256,
+            "output_object_ids": sorted(str(value) for value in output_object_ids),
+            "outcome_status": outcome_status,
+        }
+    )
+    connection.execute(
+        """
+        INSERT OR IGNORE INTO memory_consumptions(
+          consumption_id,query_id,run_id,stage,raw_sha256,output_object_ids_json,
+          outcome_status,created_at,scientific_authority,belief_authority
+        ) VALUES(?,?,?,?,?,?,?,?,0,0)
+        """,
+        (
+            consumption_id,
+            query_id,
+            run_id,
+            stage,
+            raw_sha256,
+            safe_json(output_object_ids),
+            outcome_status,
+            now_utc(),
+        ),
+    )
+    return consumption_id
 
 
 def stage_from_name(name: str) -> str:

@@ -12,7 +12,7 @@ MODES={"PRIMARY_ASSET_REUSE","FIRST_PARTY_REPLAY","FIRST_PARTY_SANDBOX","FIRST_P
 SOURCE_MODES={"SOURCE_SPECIFIC_REQUIRED","REPRODUCIBLE_FIRST_PARTY"}
 ADAPTERS={"PRIMARY_ASSET_ONLY","SUBSTRATE_PREFLIGHT_REQUIRED"}
 OUTCOMES={"REDUCTION_SUPPORTED","RESIDUAL_SURVIVES","INCONCLUSIVE"}
-SUBSTRATE_DISPOSITIONS={"EXISTING_HARNESS_READY","MINIMAL_HARNESS_IMPLEMENTATION_READY","SOURCE_SPECIFIC_REQUIRED","SUBSTRATE_UNAVAILABLE","BUDGET_INFEASIBLE"}
+SUBSTRATE_DISPOSITIONS={"EXISTING_HARNESS_READY","MINIMAL_HARNESS_IMPLEMENTATION_READY","SOURCE_SPECIFIC_REQUIRED","SUBSTRATE_UNAVAILABLE","BUDGET_INFEASIBLE","PROTOCOL_REPAIR_REQUIRED"}
 AUTHORITY={"scientific_claim":False,"live_problem_gate":False,"paper_design":False,"method":False,"p0":False,"full_experiment":False}
 POLICY={
  "reduction_pending_is_provisional_not_failed":True,
@@ -332,6 +332,12 @@ def compile_substrate_preflight(plan:dict,receipt_payload:dict)->dict:
    sha=str(rec.get("harness_plan_sha256") or "").strip().lower();scope=_b(rec.get("implementation_scope"),2200)
    if not re.fullmatch(r"[0-9a-f]{64}",sha) or not scope or rec.get("budget_feasible") is not True:raise ValueError(f"minimal harness implementation requires bounded plan digest/scope/budget:{cid}")
    out.update({"harness_plan_sha256":sha,"implementation_scope":scope,"budget_feasible":True});e["status"]="NEEDS_MINIMAL_HARNESS_IMPLEMENTATION";e["authority"]={**dict(AUTHORITY),"bounded_harness_implementation":True}
+  elif disposition=="PROTOCOL_REPAIR_REQUIRED":
+   revision=_b(rec.get("required_revision"),1800)
+   if not revision:raise ValueError(f"protocol repair requires one bounded required_revision:{cid}")
+   count=int(e.get("design_revision_count") or 0)+1;e["design_revision_count"]=count;e["review_feedback"]=revision;e["execution_authorized"]=False;e["authority"]=dict(AUTHORITY)
+   if count<=1:e["status"]="NEEDS_BOUNDED_EVIDENCE_DESIGN"
+   else:e["status"]="HOLD_EVIDENCE_REVIEW_BLOCKED"
   elif disposition=="SOURCE_SPECIFIC_REQUIRED":
    e["status"]="WAIT_PRIMARY_ASSET_RELEASE";e["review_feedback"]=reason
   elif disposition=="BUDGET_INFEASIBLE":

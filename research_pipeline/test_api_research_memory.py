@@ -2,15 +2,20 @@ from __future__ import annotations
 
 import hashlib
 import json
+import shutil
 import sqlite3
 import tempfile
 import unittest
 from pathlib import Path
 
+from .api_memory_ablation import build_api_memory_ablation_plan
 from .api_memory_store import database_path
 from .api_research_memory import (
     build_api_research_memory_state,
+    compile_api_memory_query_pack,
+    invalidate_query_only_memory_run,
     lint_api_research_memory,
+    record_api_memory_consumption,
     record_raw_api_output,
 )
 from .api_research_memory_import import import_run
@@ -140,11 +145,10 @@ class ApiResearchMemoryTest(unittest.TestCase):
             self.assertEqual(state["summary"]["calls"], 2)
             self.assertEqual(state["summary"]["preflight_candidates"], 1)
             self.assertFalse(state["scientific_authority"])
-            self.assertTrue(
-                state["graph_projection"]["candidates"][0][
-                    "downstream_authorization_blocked"
-                ]
-            )
+            projected = state["graph_projection"]["candidates"][0]
+            self.assertTrue(projected["downstream_authorization_blocked"])
+            self.assertTrue(projected["candidate_id"].startswith("API::shadow-test-r1::"))
+            self.assertEqual(len(projected["scientific_object_signature"]), 64)
             self.assertEqual(
                 lint_api_research_memory(root=root / "persistent")["status"], "PASS"
             )
@@ -190,6 +194,165 @@ class ApiResearchMemoryTest(unittest.TestCase):
             self.assertEqual(state["summary"]["artifacts"], 1)
             self.assertEqual(state["summary"]["fully_replay_addressed_calls"], 1)
             self.assertFalse(state["scientific_authority"])
+
+    def test_cross_run_exact_contract_identity_is_stable(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            run_a = self.fixture(root)
+            import_run(run_a, root=root / "persistent")
+            run_b = root / "source" / "shadow-test-r2"
+            shutil.copytree(run_a, run_b)
+            manifest_path = run_b / "api-collision-execution-manifest.json"
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            manifest["run_id"] = "shadow-test-r2"
+            self.write_json(manifest_path, manifest)
+            import_run(run_b, root=root / "persistent")
+            state = build_api_research_memory_state(root=root / "persistent")
+            self.assertEqual(
+                state["summary"]["scientific_identities"],
+                state["summary"]["research_objects"],
+            )
+            with sqlite3.connect(database_path(root=root / "persistent")) as db:
+                signatures = db.execute(
+                    """
+                    SELECT i.scientific_signature
+                    FROM research_objects o
+                    JOIN scientific_identities i ON i.object_key=o.object_key
+                    WHERE o.object_type='candidate' AND o.object_id='C1'
+                    ORDER BY o.run_id
+                    """
+                ).fetchall()
+            self.assertEqual(len(signatures), 2)
+            self.assertEqual(signatures[0][0], signatures[1][0])
+
+    def test_retrieval_variants_and_consumption_are_zero_authority(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            run = self.fixture(root)
+            import_run(run, root=root / "persistent")
+            kwargs = {
+                "purpose": "FORMULATION",
+                "context": {
+                    "title": "candidate bounded substrate",
+                    "goal": "reproduce candidate with independent truth",
+                },
+                "run_id": "shadow-test-r2",
+                "stage": "formulate-p1",
+                "max_items": 4,
+                "max_chars": 2200,
+                "root": root / "persistent",
+            }
+            relevant = compile_api_memory_query_pack(variant="relevant", **kwargs)
+            random = compile_api_memory_query_pack(variant="random", **kwargs)
+            none = compile_api_memory_query_pack(variant="none", **kwargs)
+            self.assertEqual(relevant["status"], "API_MEMORY_QUERY_COMPILED")
+            self.assertGreater(relevant["summary"]["selected"], 0)
+            self.assertTrue(relevant["query_id"])
+            self.assertTrue(relevant["memory_instance_id"].startswith("api-memory-"))
+            self.assertEqual(
+                relevant["summary"]["available"], random["summary"]["available"]
+            )
+            self.assertEqual(none["summary"]["selected"], 0)
+            self.assertFalse(relevant["scientific_authority"])
+            receipt = record_api_memory_consumption(
+                run_id="shadow-test-r2",
+                stage="formulate-p1",
+                pack=relevant,
+                raw_sha256="a" * 64,
+                output_object_ids=["C2"],
+                outcome_status="FORMULATION_COMPILED",
+                root=root / "persistent",
+            )
+            self.assertEqual(receipt["status"], "API_MEMORY_CONSUMPTION_RECORDED")
+            state = build_api_research_memory_state(root=root / "persistent")
+            self.assertEqual(state["summary"]["memory_queries"], 3)
+            self.assertEqual(state["summary"]["memory_consumptions"], 1)
+            self.assertEqual(
+                lint_api_research_memory(root=root / "persistent")["status"], "PASS"
+            )
+
+    def test_disabled_noncanonical_query_never_touches_existing_memory(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            import_run(self.fixture(root), root=root / "persistent")
+            before = build_api_research_memory_state(root=root / "persistent")
+            pack = compile_api_memory_query_pack(
+                purpose="IDEA_DISCOVERY",
+                context={"lane": "CONTRADICTION"},
+                run_id="scratch-run",
+                stage="expand-CONTRADICTION-p1",
+                enabled=False,
+                root=root / "persistent",
+            )
+            after = build_api_research_memory_state(root=root / "persistent")
+            self.assertEqual(pack["status"], "API_MEMORY_DISABLED_NONCANONICAL")
+            self.assertEqual(pack["summary"]["selected"], 0)
+            self.assertEqual(before["summary"]["raw_runs"], after["summary"]["raw_runs"])
+            self.assertEqual(before["summary"]["raw_memory_queries"], after["summary"]["raw_memory_queries"])
+
+    def test_query_only_development_stub_is_invalidated_append_only(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            import_run(self.fixture(root), root=root / "persistent")
+            compile_api_memory_query_pack(
+                purpose="FORMULATION",
+                context={"candidate": "test"},
+                run_id="scratch-query-only",
+                stage="formulate-p1",
+                root=root / "persistent",
+            )
+            before = build_api_research_memory_state(root=root / "persistent")
+            self.assertEqual(before["summary"]["runs"], 2)
+            receipt = invalidate_query_only_memory_run(
+                run_id="scratch-query-only",
+                reason="development test contamination",
+                root=root / "persistent",
+            )
+            self.assertEqual(receipt["status"], "QUERY_ONLY_RUN_INVALIDATED")
+            after = build_api_research_memory_state(root=root / "persistent")
+            self.assertEqual(after["summary"]["runs"], 1)
+            self.assertEqual(after["summary"]["raw_runs"], 2)
+            self.assertEqual(after["summary"]["invalidated_runs"], 1)
+            self.assertEqual(after["summary"]["memory_queries"], 0)
+            self.assertEqual(after["summary"]["raw_memory_queries"], 1)
+            self.assertEqual(lint_api_research_memory(root=root / "persistent")["status"], "PASS")
+
+    def test_required_canonical_memory_missing_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / "missing"
+            with self.assertRaisesRegex(RuntimeError, "canonical API research memory missing"):
+                compile_api_memory_query_pack(
+                    purpose="IDEA_DISCOVERY",
+                    context={"lane": "CONTRADICTION"},
+                    run_id="shadow-test-r2",
+                    stage="expand-CONTRADICTION-p1",
+                    required=True,
+                    root=root,
+                )
+
+    def test_ablation_plan_freezes_three_zero_authority_arms(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            import_run(self.fixture(root), root=root / "persistent")
+            plan = build_api_memory_ablation_plan(
+                purpose="IDEA_DISCOVERY",
+                context={"topic": "candidate memory retrieval"},
+                run_id_prefix="ablation-r1",
+                stage="expand-CONTRADICTION-p1",
+                max_items=3,
+                max_chars=1600,
+                root=root / "persistent",
+            )
+            self.assertEqual(plan["status"], "API_MEMORY_ABLATION_READY")
+            self.assertEqual(set(plan["arms"]), {"relevant", "random", "none"})
+            self.assertTrue(all(plan["invariants"].values()))
+            self.assertEqual(plan["arms"]["none"]["summary"]["selected"], 0)
+            self.assertEqual(plan["arms"]["relevant"]["summary"]["selected"], plan["arms"]["random"]["summary"]["selected"])
+            self.assertIn("NOT_TOKEN_MATCHED", plan["comparison_semantics"]["relevant_vs_none"])
+            self.assertFalse(plan["scientific_authority"])
+            state = build_api_research_memory_state(root=root / "persistent")
+            self.assertEqual(state["summary"]["runs"], 1)
+            self.assertEqual(state["summary"]["memory_queries"], 0)
 
 
 if __name__ == "__main__":

@@ -120,6 +120,12 @@ class EvidenceAcquisitionTest(unittest.TestCase):
         self.assertEqual(held["entries"][0]["status"],"HOLD_EVIDENCE_REVIEW_BLOCKED")
         self.assertFalse(held["entries"][0]["execution_authorized"])
 
+    def test_substrate_protocol_defect_routes_back_to_one_bounded_design_repair(self):
+        plan=build_provisional_evidence_plan(machine(1));state=clear_review(compile_evidence_designs(plan,{"designs":[design_for(plan["entries"][0])]},design_model="designer"));row=state["entries"][0]
+        receipt={"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"disposition":"PROTOCOL_REPAIR_REQUIRED","reason":"asset audit exposed an executable-protocol contradiction without changing the frozen scientific object","inventory_summary":"public substrate exists, but the current baseline training/evaluation contract is internally inconsistent","required_revision":"freeze a disjoint calibration/evaluation split and register baseline predictions before evaluation outcomes are opened"}]}
+        repaired=compile_substrate_preflight(state,receipt);entry=repaired["entries"][0]
+        self.assertEqual(entry["status"],"NEEDS_BOUNDED_EVIDENCE_DESIGN");self.assertEqual(entry["design_revision_count"],1);self.assertFalse(entry["execution_authorized"]);self.assertEqual(entry["frozen_exact_prediction"],row["frozen_exact_prediction"]);self.assertEqual(entry["frozen_same_information_baseline"],row["frozen_same_information_baseline"]);self.assertEqual(validate_evidence_plan(repaired),[])
+
     def test_source_specific_claim_waits_for_primary_asset(self):
         plan=build_provisional_evidence_plan(machine(1))
         d=design_for(plan["entries"][0],source="SOURCE_SPECIFIC_REQUIRED",mode="PRIMARY_ASSET_REUSE",adapter="PRIMARY_ASSET_ONLY")

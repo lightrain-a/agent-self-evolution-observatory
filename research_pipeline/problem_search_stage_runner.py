@@ -6,7 +6,13 @@ from pathlib import Path
 
 from .ark_provider import extract_json_object
 from .config import PROJECT_ROOT
-from .api_research_memory import record_provider_failure, record_raw_api_output
+from .api_research_memory import (
+    compile_api_memory_query_pack,
+    record_api_memory_consumption,
+    record_provider_failure,
+    record_raw_api_output,
+    should_auto_record,
+)
 from .dead_end_failure_layers import normalize_closed_row
 from .paper_first_problem_discovery_contract import SEARCH_PORTFOLIO_PRIMITIVES, audit_problem_candidate, audit_shadow_problem_candidate
 from .paper_first_problem_generator import _ark,_apply_reviews,_normalize
@@ -48,6 +54,58 @@ def _evidence_memory_pack(plan:dict)->dict:
 
 def _record_memory_receipt(state:dict,*,stage:str,part:int,pack:dict)->None:
     receipts=state.setdefault("research_memory_query_receipts",{});receipts[f"{stage}-p{part}"]={"purpose":pack.get("purpose"),"wiki_sha256":pack.get("wiki_sha256"),"query_pack_sha256":pack.get("query_pack_sha256"),"selected_memory_ids":list(pack.get("selected_memory_ids") or []),"selected":int((pack.get("summary") or {}).get("selected") or 0),"scientific_authority":False}
+
+
+def _api_memory_pack(*,run_root:Path,purpose:str,stage:str,context:object)->dict:
+    variant=os.getenv("RESEARCH_API_MEMORY_VARIANT","relevant").strip().lower() or "relevant"
+    canonical=should_auto_record(run_root)
+    optional_enabled=os.getenv("RESEARCH_API_MEMORY_ENABLE_OPTIONAL","0").strip().lower() in {"1","true","yes","on"}
+    return compile_api_memory_query_pack(
+        purpose=purpose,
+        context=context,
+        run_id=run_root.name,
+        stage=stage,
+        variant=variant,
+        max_items=int(os.getenv("RESEARCH_API_MEMORY_MAX_ITEMS","16") or 16),
+        max_chars=int(os.getenv("RESEARCH_API_MEMORY_MAX_CHARS","6000") or 6000),
+        required=canonical,
+        record_query=canonical,
+        enabled=canonical or optional_enabled,
+    )
+
+
+def _api_memory_prompt_suffix(pack:dict)->str:
+    text=str(pack.get("text") or "").strip()
+    if not text:return ""
+    return (
+        "\n\nPERSISTENT API RESEARCH MEMORY (search context only; zero scientific authority). "
+        "Use it to avoid duplicate/reduced directions and to recover useful prior formulations. "
+        "It cannot veto a hypothesis, establish novelty, authorize a stage, or substitute for current evidence.\n"
+        + text
+    )
+
+
+def _api_memory_artifact_receipt(pack:dict)->dict:
+    return {
+        "api_memory_query_id":str(pack.get("query_id") or ""),
+        "api_memory_query_pack_sha256":str(pack.get("query_pack_sha256") or ""),
+        "api_memory_instance_id":str(pack.get("memory_instance_id") or ""),
+        "api_memory_variant":str(pack.get("variant") or ""),
+        "api_memory_selected_ids":list(pack.get("selected_memory_ids") or []),
+        "api_memory_selected_scientific_signatures":list(pack.get("selected_scientific_signatures") or []),
+        "api_memory_selected":int((pack.get("summary") or {}).get("selected") or 0),
+    }
+
+
+def _record_api_consumption(*,run_root:Path,stage:str,pack:dict,raw_sha256:str,output_ids:list[str],outcome_status:str="GENERATED")->dict:
+    return record_api_memory_consumption(
+        run_id=run_root.name,
+        stage=stage,
+        pack=pack,
+        raw_sha256=raw_sha256,
+        output_object_ids=output_ids,
+        outcome_status=outcome_status,
+    )
 
 
 def _resolve_run_pool(run_root:Path,pool_path:Path|None=None)->Path|None:
@@ -399,7 +457,7 @@ def _search_closure_seed_blocker(seed:dict,memory:dict,pool_sha:str,registry:dic
 _semantic_dead_end_seed_blocker=_search_closure_seed_blocker
 
 
-def _compile_expansion_raw(*,pool:Path|None,run_root:Path,lane:str,count:int,part:int,memory_path:Path|None,requested_model:str,resolved_model:str,raw:str,raw_replayed_without_provider:bool=False,raw_origin_control_snapshot_sha256:str="",control_sha_override:str="",provider_metadata:dict|None=None)->dict:
+def _compile_expansion_raw(*,pool:Path|None,run_root:Path,lane:str,count:int,part:int,memory_path:Path|None,requested_model:str,resolved_model:str,raw:str,raw_replayed_without_provider:bool=False,raw_origin_control_snapshot_sha256:str="",control_sha_override:str="",provider_metadata:dict|None=None,api_memory_pack:dict|None=None)->dict:
     pool=_require_resolved_pool(run_root,pool);memory_path=_resolve_run_memory(run_root,memory_path);control_sha=str(control_sha_override or "") or _assert_run_control(run_root,pool,memory_path)
     payload=json.loads(pool.read_text(encoding="utf-8"));records=payload.get("records") or []
     lane=lane.strip().upper()
@@ -420,17 +478,21 @@ def _compile_expansion_raw(*,pool:Path|None,run_root:Path,lane:str,count:int,par
     fresh_priors=_fresh_phenomenon_priors(records,dead_end_memory=memory);fresh_refs={str(row.get("ref") or "") for row in fresh_priors};fresh_ids={str(row.get("phenomenon_id") or "") for row in fresh_priors};fresh_target_ref=str(fresh_target.get("ref") or "");fresh_required=bool(lane=="UNEXPLAINED_BOUNDARY" and not inversion_asset_refs and not positive_asset_refs and fresh_target_ref and fresh_target_id and count>0);fresh_seed_count=sum(any(ref in fresh_refs for ref in _source_refs(seed)) for seed in seeds);fresh_target_source_satisfied=bool(seeds and fresh_target_ref in _source_refs(seeds[0]));fresh_target_phenomenon_satisfied=bool(seeds and _fresh_target_seed_match(seeds[0],fresh_target));fresh_target_satisfied=fresh_target_source_satisfied and fresh_target_phenomenon_satisfied
     if fresh_required and not fresh_target_satisfied:seeds=[]
     transport={"provider_calls_executed":0,"transport_fallback_used":False,"transport_attempts":[],"thinking_compatibility_fallback":False} if raw_replayed_without_provider else dict(provider_metadata or {"provider_calls_executed":1,"transport_fallback_used":False,"transport_attempts":[],"thinking_compatibility_fallback":False})
-    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":lane,"part":part,"requested":count,"requested_model":requested_model,"resolved_model":resolved_model,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"raw_replayed_without_provider":bool(raw_replayed_without_provider),"raw_origin_control_snapshot_sha256":str(raw_origin_control_snapshot_sha256 or ""),**transport,"shadow_search_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"valid_seeds":len(seeds),"inversion_asset_seed_count":inversion_asset_seed_count,"inversion_asset_requirement_satisfied":(not inversion_asset_refs or inversion_asset_seed_count>0),"positive_residual_seed_count":positive_residual_seed_count,"positive_residual_requirement_satisfied":(not positive_required or positive_residual_seed_count>0),"fresh_phenomenon_seed_count":fresh_seed_count,"fresh_phenomenon_requirement_satisfied":(not fresh_required or fresh_target_satisfied),"fresh_phenomenon_target_ref":fresh_target_ref,"fresh_phenomenon_target_id":fresh_target_id,"fresh_phenomenon_target_kind":str(fresh_target.get("phenomenon_kind") or ""),"fresh_phenomenon_target_text":str(fresh_target.get("phenomenon_text") or ""),"fresh_phenomenon_target_source_satisfied":fresh_target_source_satisfied,"fresh_phenomenon_target_exact_satisfied":fresh_target_phenomenon_satisfied,"fresh_phenomenon_refs":sorted(fresh_refs),"fresh_phenomenon_ids":sorted(fresh_ids),"search_closure_blocks":search_closure_blocks,"search_closure_block_count":len(search_closure_blocks),"seeds":seeds,"scientific_authority":False}
+    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":lane,"part":part,"requested":count,"requested_model":requested_model,"resolved_model":resolved_model,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"raw_replayed_without_provider":bool(raw_replayed_without_provider),"raw_origin_control_snapshot_sha256":str(raw_origin_control_snapshot_sha256 or ""),**transport,**_api_memory_artifact_receipt(api_memory_pack or {}),"shadow_search_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"valid_seeds":len(seeds),"inversion_asset_seed_count":inversion_asset_seed_count,"inversion_asset_requirement_satisfied":(not inversion_asset_refs or inversion_asset_seed_count>0),"positive_residual_seed_count":positive_residual_seed_count,"positive_residual_requirement_satisfied":(not positive_required or positive_residual_seed_count>0),"fresh_phenomenon_seed_count":fresh_seed_count,"fresh_phenomenon_requirement_satisfied":(not fresh_required or fresh_target_satisfied),"fresh_phenomenon_target_ref":fresh_target_ref,"fresh_phenomenon_target_id":fresh_target_id,"fresh_phenomenon_target_kind":str(fresh_target.get("phenomenon_kind") or ""),"fresh_phenomenon_target_text":str(fresh_target.get("phenomenon_text") or ""),"fresh_phenomenon_target_source_satisfied":fresh_target_source_satisfied,"fresh_phenomenon_target_exact_satisfied":fresh_target_phenomenon_satisfied,"fresh_phenomenon_refs":sorted(fresh_refs),"fresh_phenomenon_ids":sorted(fresh_ids),"search_closure_blocks":search_closure_blocks,"search_closure_block_count":len(search_closure_blocks),"seeds":seeds,"scientific_authority":False}
     run_root.mkdir(parents=True,exist_ok=True);(run_root/f"expand-{lane}-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    if api_memory_pack:
+        _record_api_consumption(run_root=run_root,stage=f"expand-{lane}-p{part}",pack=api_memory_pack,raw_sha256=raw_sha,output_ids=[str(row.get("seed_id") or "") for row in seeds],outcome_status="EXPANSION_COMPILED")
     return {k:out[k] for k in ("lane","part","requested","resolved_model","raw_sha256","valid_seeds")}
 
 
 def expand(*,pool:Path|None,run_root:Path,lane:str,count:int=6,model:str=PREMIUM_AUTO,part:int=1,memory_path:Path|None=None) -> dict:
     model=preferred_model("portfolio_expand",model)
     pool=_require_resolved_pool(run_root,pool);memory_path=_resolve_run_memory(run_root,memory_path);control_sha=_assert_run_control(run_root,pool,memory_path)
-    payload=json.loads(pool.read_text(encoding="utf-8"));records=payload.get("records") or [];memory=_shadow_search_memory(memory_path);lane=lane.strip().upper();fresh_target=_fresh_phenomenon_target(records,part,dead_end_memory=memory) if lane=="UNEXPLAINED_BOUNDARY" else {};fresh_target_id=str(fresh_target.get("phenomenon_id") or "");prompt=_expansion_prompt(lane,records,count,memory,fresh_target_ref=str(fresh_target.get("ref") or ""),fresh_target_phenomenon_id=fresh_target_id)
-    res=_ark_with_provider_receipt(run_root=run_root,stem=f"expand-{lane}-p{part}",requested_model=model,context={"lane":lane,"part":part,"requested":count,"fresh_target_ref":str(fresh_target.get("ref") or ""),"fresh_target_phenomenon_id":fresh_target_id,"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=.85);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);provider_metadata=_provider_success_metadata(run_root=run_root,stem=f"expand-{lane}-p{part}",response=res)
-    return _compile_expansion_raw(pool=pool,run_root=run_root,lane=lane,count=count,part=part,memory_path=memory_path,requested_model=model,resolved_model=resolved,raw=raw,control_sha_override=control_sha,provider_metadata=provider_metadata)
+    payload=json.loads(pool.read_text(encoding="utf-8"));records=payload.get("records") or [];memory=_shadow_search_memory(memory_path);lane=lane.strip().upper();fresh_target=_fresh_phenomenon_target(records,part,dead_end_memory=memory) if lane=="UNEXPLAINED_BOUNDARY" else {};fresh_target_id=str(fresh_target.get("phenomenon_id") or "")
+    api_pack=_api_memory_pack(run_root=run_root,purpose="IDEA_DISCOVERY",stage=f"expand-{lane}-p{part}",context={"lane":lane,"requested":count,"fresh_target":fresh_target,"primary_source_refs":[str(row.get("ref") or "") for row in records if isinstance(row,dict) and row.get("ref")]})
+    prompt=_expansion_prompt(lane,records,count,memory,fresh_target_ref=str(fresh_target.get("ref") or ""),fresh_target_phenomenon_id=fresh_target_id)+_api_memory_prompt_suffix(api_pack)
+    res=_ark_with_provider_receipt(run_root=run_root,stem=f"expand-{lane}-p{part}",requested_model=model,context={"lane":lane,"part":part,"requested":count,"fresh_target_ref":str(fresh_target.get("ref") or ""),"fresh_target_phenomenon_id":fresh_target_id,"control_snapshot_sha256":control_sha,"api_memory_query_pack_sha256":api_pack.get("query_pack_sha256"),"api_memory_selected_ids":api_pack.get("selected_memory_ids") or []},prompt=prompt,max_output_tokens=5200,temperature=.85);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);provider_metadata=_provider_success_metadata(run_root=run_root,stem=f"expand-{lane}-p{part}",response=res)
+    return _compile_expansion_raw(pool=pool,run_root=run_root,lane=lane,count=count,part=part,memory_path=memory_path,requested_model=model,resolved_model=resolved,raw=raw,control_sha_override=control_sha,provider_metadata=provider_metadata,api_memory_pack=api_pack)
 
 
 def replay_expand(*,pool:Path|None,run_root:Path,lane:str,count:int,part:int,memory_path:Path|None,raw_input:Path,expected_raw_sha256:str,requested_model:str,resolved_model:str,raw_origin_control_snapshot_sha256:str)->dict:
@@ -492,7 +554,10 @@ def evolve(*,pool:Path|None,run_root:Path,generation:int,part:int,batch_size:int
     else:raise ValueError("generation must be 1 or 2")
     start=(part-1)*batch_size;batch=parents[start:start+batch_size]
     if not batch:raise ValueError(f"empty evolution batch generation={generation} part={part}")
-    temperature=.60 if generation==1 else .35;prompt=_evolution_prompt(batch,generation)+" SHADOW SEARCH-CLOSURE MEMORY (search control only; never scientific authority)="+json.dumps(memory,ensure_ascii=False,separators=(",",":"));res=_ark_with_provider_receipt(run_root=run_root,stem=f"evolve-g{generation}-p{part}",requested_model=model,context={"generation":generation,"part":part,"requested_children":len(batch),"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=temperature);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"evolve-g{generation}-p{part}",raw,resolved,provider_response=res,requested_model=model);pmap={p["seed_id"]:p for p in batch};children=[];search_closure_blocks=[]
+    temperature=.60 if generation==1 else .35
+    api_pack=_api_memory_pack(run_root=run_root,purpose="IDEA_DISCOVERY",stage=f"evolve-g{generation}-p{part}",context={"generation":generation,"parents":batch})
+    prompt=_evolution_prompt(batch,generation)+" SHADOW SEARCH-CLOSURE MEMORY (search control only; never scientific authority)="+json.dumps(memory,ensure_ascii=False,separators=(",",":"))+_api_memory_prompt_suffix(api_pack)
+    res=_ark_with_provider_receipt(run_root=run_root,stem=f"evolve-g{generation}-p{part}",requested_model=model,context={"generation":generation,"part":part,"requested_children":len(batch),"control_snapshot_sha256":control_sha,"api_memory_query_pack_sha256":api_pack.get("query_pack_sha256"),"api_memory_selected_ids":api_pack.get("selected_memory_ids") or []},prompt=prompt,max_output_tokens=5200,temperature=temperature);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"evolve-g{generation}-p{part}",raw,resolved,provider_response=res,requested_model=model);pmap={p["seed_id"]:p for p in batch};children=[];search_closure_blocks=[]
     for i,item in enumerate(payload.get("children") or [],1):
         if not isinstance(item,dict):continue
         parent=pmap.get(str(item.get("parent_id") or ""))
@@ -503,8 +568,9 @@ def evolve(*,pool:Path|None,run_root:Path,generation:int,part:int,batch_size:int
         if blocker:
             search_closure_blocks.append({"seed_id":row["seed_id"],**blocker});continue
         children.append(row)
-    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"generation":generation,"part":part,"parent_ids":[p["seed_id"] for p in batch],"requested_children":len(batch),"valid_children":len(children),"requested_model":model,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_search_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"search_closure_blocks":search_closure_blocks,"search_closure_block_count":len(search_closure_blocks),"temperature":temperature,"children":children,"scientific_authority":False}
+    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"generation":generation,"part":part,"parent_ids":[p["seed_id"] for p in batch],"requested_children":len(batch),"valid_children":len(children),"requested_model":model,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,**_api_memory_artifact_receipt(api_pack),"shadow_search_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"search_closure_blocks":search_closure_blocks,"search_closure_block_count":len(search_closure_blocks),"temperature":temperature,"children":children,"scientific_authority":False}
     (run_root/f"evolve-g{generation}-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    _record_api_consumption(run_root=run_root,stage=f"evolve-g{generation}-p{part}",pack=api_pack,raw_sha256=raw_sha,output_ids=[str(row.get("seed_id") or "") for row in children],outcome_status="EVOLUTION_COMPILED")
     return {k:out[k] for k in ("generation","part","requested_children","valid_children","resolved_model","raw_sha256")}
 
 
@@ -543,7 +609,8 @@ def formulate(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,budget:in
     pool=_require_resolved_pool(run_root,pool);memory_path=_resolve_run_memory(run_root,memory_path);control_sha=_assert_run_control(run_root,pool,memory_path)
     pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];memory=_shadow_search_memory(memory_path);effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();branches=formulation_pool(run_root,budget,control_sha);start=(part-1)*batch_size;batch=branches[start:start+batch_size]
     if not batch:raise ValueError(f"empty formulation batch part={part}")
-    prompt=_formulation_prompt(batch,registry,memory);res=_ark_with_provider_receipt(run_root=run_root,stem=f"formulate-p{part}",requested_model=model,context={"part":part,"branch_ids":[b["seed_id"] for b in batch],"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5600,temperature=.15);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);provider_metadata=_provider_success_metadata(run_root=run_root,stem=f"formulate-p{part}",response=res);payload,raw_sha=_parse_archived_json(run_root,f"formulate-p{part}",raw,resolved,provider_response=res,requested_model=model);live=[x for x in (payload.get("candidates") or []) if isinstance(x,dict)];dead=[x for x in (payload.get("rejected") or []) if isinstance(x,dict)]
+    api_pack=_api_memory_pack(run_root=run_root,purpose="FORMULATION",stage=f"formulate-p{part}",context={"part":part,"branches":batch})
+    prompt=_formulation_prompt(batch,registry,memory)+_api_memory_prompt_suffix(api_pack);res=_ark_with_provider_receipt(run_root=run_root,stem=f"formulate-p{part}",requested_model=model,context={"part":part,"branch_ids":[b["seed_id"] for b in batch],"control_snapshot_sha256":control_sha,"api_memory_query_pack_sha256":api_pack.get("query_pack_sha256"),"api_memory_selected_ids":api_pack.get("selected_memory_ids") or []},prompt=prompt,max_output_tokens=5600,temperature=.15);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);provider_metadata=_provider_success_metadata(run_root=run_root,stem=f"formulate-p{part}",response=res);payload,raw_sha=_parse_archived_json(run_root,f"formulate-p{part}",raw,resolved,provider_response=res,requested_model=model);live=[x for x in (payload.get("candidates") or []) if isinstance(x,dict)];dead=[x for x in (payload.get("rejected") or []) if isinstance(x,dict)]
     # Preserve branch provenance and typed evidence deterministically. The model
     # may sharpen claims but cannot silently change the source refs or lane. A
     # deterministic precheck then separates machine-ready problems from exact-
@@ -563,8 +630,9 @@ def formulate(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,budget:in
         if route=="reduction-pending":
             reduction_pending.append({"candidate_id":row["candidate_id"],"model_candidate_id":row["model_candidate_id"],"source_branch_id":row["source_branch_id"],"title":row.get("title"),"discovery_lane":row.get("discovery_lane"),"blockers":list(audit.get("blockers") or []),"exact_prediction":audited.get("exact_prediction"),"strongest_same_information_baseline":audited.get("strongest_same_information_baseline"),"cheapest_problem_falsifier":audited.get("cheapest_problem_falsifier"),"candidate":row,"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}});continue
         dead.append({"source_branch_id":row["source_branch_id"],"candidate_id":row["candidate_id"],"title":row.get("title"),"reason":"deterministic formulation precheck found blockers beyond exact-reduction uncertainty","matched_mature_theory":audited.get("strongest_same_information_baseline"),"reduction_class":"FORMULATION_MACHINE_CONTRACT_INCOMPLETE","exact_reduction_test":audited.get("cheapest_problem_falsifier"),"blockers":list(audit.get("blockers") or []),"rejection_origin":"deterministic-formulation-precheck","candidate":row,"scientific_authority":False})
-    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"branch_ids":[b["seed_id"] for b in batch],"requested_model":model,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"raw_replayed_without_provider":False,"raw_origin_control_snapshot_sha256":"",**provider_metadata,"shadow_search_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"search_closure_blocks":search_closure_blocks,"search_closure_block_count":len(search_closure_blocks),"candidates":normalized,"reduction_pending":reduction_pending,"reduction_pending_count":len(reduction_pending),"rejected":dead,"scientific_authority":False}
+    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"branch_ids":[b["seed_id"] for b in batch],"requested_model":model,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"raw_replayed_without_provider":False,"raw_origin_control_snapshot_sha256":"",**provider_metadata,**_api_memory_artifact_receipt(api_pack),"shadow_search_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"search_closure_blocks":search_closure_blocks,"search_closure_block_count":len(search_closure_blocks),"candidates":normalized,"reduction_pending":reduction_pending,"reduction_pending_count":len(reduction_pending),"rejected":dead,"scientific_authority":False}
     (run_root/f"formulate-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    _record_api_consumption(run_root=run_root,stage=f"formulate-p{part}",pack=api_pack,raw_sha256=raw_sha,output_ids=[str(row.get("candidate_id") or "") for row in normalized+reduction_pending+dead if isinstance(row,dict)],outcome_status="FORMULATION_COMPILED")
     return {"part":part,"branches":len(batch),"candidates":len(normalized),"reduction_pending":len(reduction_pending),"rejected":len(dead),"resolved_model":out["resolved_model"],"raw_sha256":out["raw_sha256"]}
 
 
@@ -712,10 +780,11 @@ def review(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,model:str=PR
     audit_path=run_root/"machine-audit.json";audit=json.loads(audit_path.read_text(encoding="utf-8"));_require_artifact_control(audit,control_sha,audit_path,"1.3-shadow");rows=audit.get("reviewable") or [];start=(part-1)*batch_size;selected=rows[start:start+batch_size]
     if not selected:raise ValueError(f"empty review batch part={part}")
     generator_receipts,generator_resolved=_review_generator_receipts(run_root,selected,control_sha)
-    candidates=[dict(row["candidate"]) for row in selected];prompt=reviewer_prompt(candidates,registry,shadow_mode=True);res=_ark_with_provider_receipt(run_root=run_root,stem=f"review-p{part}",requested_model=model,context={"part":part,"candidate_ids":[c["candidate_id"] for c in candidates],"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=0.0);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_json(run_root,f"review-p{part}",raw,resolved,provider_response=res,requested_model=model)
+    candidates=[dict(row["candidate"]) for row in selected];api_pack=_api_memory_pack(run_root=run_root,purpose="SEMANTIC_REVIEW",stage=f"review-p{part}",context={"part":part,"candidates":candidates});prompt=reviewer_prompt(candidates,registry,shadow_mode=True)+_api_memory_prompt_suffix(api_pack);res=_ark_with_provider_receipt(run_root=run_root,stem=f"review-p{part}",requested_model=model,context={"part":part,"candidate_ids":[c["candidate_id"] for c in candidates],"control_snapshot_sha256":control_sha,"api_memory_query_pack_sha256":api_pack.get("query_pack_sha256"),"api_memory_selected_ids":api_pack.get("selected_memory_ids") or []},prompt=prompt,max_output_tokens=5200,temperature=0.0);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_json(run_root,f"review-p{part}",raw,resolved,provider_response=res,requested_model=model)
     _apply_reviews(candidates,payload,model,resolved,generator_resolved,sha,registry)
-    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":[c["candidate_id"] for c in candidates],"requested_model":model,"resolved_model":resolved,"generator_resolved_model":generator_resolved,"generator_receipts":generator_receipts,"raw_sha256":sha,"raw_archived_before_parse":True,"candidates":candidates,"scientific_authority":False}
+    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":[c["candidate_id"] for c in candidates],"requested_model":model,"resolved_model":resolved,"generator_resolved_model":generator_resolved,"generator_receipts":generator_receipts,"raw_sha256":sha,"raw_archived_before_parse":True,**_api_memory_artifact_receipt(api_pack),"candidates":candidates,"scientific_authority":False}
     (run_root/f"review-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    _record_api_consumption(run_root=run_root,stage=f"review-p{part}",pack=api_pack,raw_sha256=sha,output_ids=[str(c.get("candidate_id") or "") for c in candidates],outcome_status="SEMANTIC_REVIEW_COMPILED")
     return {"part":part,"candidate_ids":out["candidate_ids"],"resolved_model":resolved,"raw_sha256":sha,"semantic_clear":sum((c.get("semantic_reduction_review") or {}).get("verdict")=="CLEAR" for c in candidates)}
 
 

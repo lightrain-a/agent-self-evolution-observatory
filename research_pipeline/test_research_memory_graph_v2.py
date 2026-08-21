@@ -172,6 +172,7 @@ class ResearchMemoryGraphV2Test(unittest.TestCase):
                     "title": "API candidate",
                     "status": "READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT",
                     "scientific_object": "memory-retrieval",
+                    "scientific_object_signature": "a" * 64,
                     "problem_contract": "bounded preflight only",
                     "provenance": {"provenance_status": "API_RESEARCH_MEMORY_BOUND"},
                     "scientific_authority": False,
@@ -186,6 +187,18 @@ class ResearchMemoryGraphV2Test(unittest.TestCase):
         self.assertEqual(candidate["source"], "api_research_memory")
         self.assertTrue(candidate["downstream_authorization_blocked"])
         self.assertFalse(candidate["scientific_authority"])
+        identity = next(
+            row for row in graph["overlay_nodes"]
+            if row["id"] == "scientific-identity:" + "a" * 64
+        )
+        self.assertEqual(identity["identity_semantics"], "DETERMINISTIC_EXACT_CONTRACT_ONLY")
+        self.assertFalse(identity["automatic_scientific_merge"])
+        self.assertTrue(any(
+            edge["source"] == candidate["id"]
+            and edge["target"] == identity["id"]
+            and edge["relation"] == "has_exact_contract_identity"
+            for edge in graph["overlay_edges"]
+        ))
         self.assertEqual(graph["summary"]["api_memory_candidate_nodes"], 1)
 
     def test_closure_propagates_only_on_exact_three_key_scope(self):
