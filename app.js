@@ -1318,6 +1318,19 @@ function renderProjectStatusStrip(){
       : [["paper-ready",h.paper_ready||0],["formal new ideas",h.canonical_live_ideas||0],["launchable experiments",h.launchable_formal_experiments||0]];
     return `<section class="field-current-status-strip" aria-label="${language==="zh"?"当前科研状态":"Current research state"}"><b>${language==="zh"?`当前科研状态${asOf?` · ${asOf}`:""}`:`Current research state${asOf?` · ${asOf}`:""}`}</b><div class="field-current-status-metrics">${labels.map(([label,value])=>`<span><strong>${value}</strong>${label}</span>`).join("")}</div><a href="research-map.html">${language==="zh"?"查看当前研究组合图谱 →":"Open current research map →"}</a></section>`;
   }
+  if(pageId==="system-overview") {
+    const acceptance=window.RESEARCH_SYSTEM_STATE?.paper_acceptance||{}, index=acceptance.ledger_index||{}, entries=index.entries||[];
+    const stri=entries.find(row=>row.paper_id==="STRI-ICLR2027")||{}, safety=entries.find(row=>row.paper_id==="AGENT-SAFETY-R9")||{};
+    const story=stri.latest_story_search||{}, mockModes=stri.mock_pc_modes||{};
+    const mockDone=[mockModes.BLIND_MANUSCRIPT,mockModes.ARTIFACT_AWARE].filter(Boolean).length;
+    const labels=language==="zh"
+      ? [["STRI",stri.current_state||"--"],["Story",story.pass?"PASS":"PENDING"],["Mock PC",`${mockDone}/2`],["Scientific HOLD",acceptance.summary?.scientific_holds??index.summary?.scientific_holds??0],["可启动实验",h.launchable_formal_experiments||0]]
+      : [["STRI",stri.current_state||"--"],["Story",story.pass?"PASS":"PENDING"],["Mock PC",`${mockDone}/2`],["Scientific holds",acceptance.summary?.scientific_holds??index.summary?.scientific_holds??0],["Launchable",h.launchable_formal_experiments||0]];
+    const message=language==="zh"
+      ? `STRI 科学证据已闭环，当前为 ${stri.current_state||"PAPER_EVIDENCE"}；${safety.paper_id?`Agent-Safety-R9 保持 ${safety.scientific_status||"CAUSAL_HOLD"} / ${safety.current_state||"PAPER_EVIDENCE"}`:"Agent Safety 仍保持科学 HOLD"}。`
+      : `STRI scientific evidence is closed and the paper is at ${stri.current_state||"PAPER_EVIDENCE"}; ${safety.paper_id?`Agent-Safety-R9 remains ${safety.scientific_status||"CAUSAL_HOLD"} / ${safety.current_state||"PAPER_EVIDENCE"}`:"Agent Safety remains on scientific hold"}.`;
+    return `<section class="project-status-strip current system-overview-status"><div class="project-status-copy"><b>${language==="zh"?`当前科研状态${asOf?` · ${asOf}`:""}`:`Current research state${asOf?` · ${asOf}`:""}`}</b><span>${message}</span></div><div class="system-overview-status-metrics">${labels.map(([label,value])=>`<span><strong>${value}</strong><small>${label}</small></span>`).join("")}</div></section>`;
+  }
   const selectedPaper=pageId==="selected-paper";
   const message=selectedPaper
     ? (language==="zh"?"当前选中论文是 STRI：三条核心主张已有对应证据，论文和匿名补充材料已经完成检查；现在只剩作者责任确认、OpenReview 账号与截止日期核验后提交。旧 Regression-Gated 项目只保留在下方历史区。":"The current selected paper is STRI: all three core claims have matching evidence and the paper plus anonymous supplement have passed their checks. The remaining work is author signoff and OpenReview account/deadline verification before submission. The older Regression-Gated project is kept only in the history section below.")
