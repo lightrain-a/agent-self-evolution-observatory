@@ -188,6 +188,9 @@ def build() -> Path:
         "STRI-ICLR2027-submission-ready-20260821.tex",
         "STRI-ICLR2027-submission-ready-20260821.pdf",
         "STRI-ICLR2027-submission-ready-20260821-source.zip",
+        "Agent-Safety-R9-submission-ready-20260822.tex",
+        "Agent-Safety-R9-submission-ready-20260822.pdf",
+        "Agent-Safety-R9-submission-ready-20260822-source.zip",
     ):
         source = downloads_source / name
         if source.exists():
@@ -287,6 +290,9 @@ def build() -> Path:
         OUTPUT / "downloads" / "STRI-ICLR2027-submission-ready-20260821.tex",
         OUTPUT / "downloads" / "STRI-ICLR2027-submission-ready-20260821.pdf",
         OUTPUT / "downloads" / "STRI-ICLR2027-submission-ready-20260821-source.zip",
+        OUTPUT / "downloads" / "Agent-Safety-R9-submission-ready-20260822.tex",
+        OUTPUT / "downloads" / "Agent-Safety-R9-submission-ready-20260822.pdf",
+        OUTPUT / "downloads" / "Agent-Safety-R9-submission-ready-20260822-source.zip",
     )
     missing = [str(path.relative_to(OUTPUT)) for path in required if not path.exists()]
     if missing:

@@ -117,9 +117,11 @@ def main() -> None:
     safety_registry = papers_by_id.get("AGENT-SAFETY-R9") or {}
     if len(papers) != 2 or stri_registry.get("source_research_item") != "E-7" or stri_registry.get("paper_stage") != "SUBMISSION_READY" or stri_registry.get("submission_ready") is not True:
         fail(f"PaperRegistry must bind STRI to E-7 at SUBMISSION_READY and mark it submission-ready: {papers}")
-    if safety_registry.get("source_research_item") != "G-1" or safety_registry.get("paper_stage") != "PAPER_EVIDENCE" or safety_registry.get("scientific_status") != "CAUSAL_HOLD" or safety_registry.get("submission_ready") is not False:
-        fail(f"PaperRegistry must retain Agent Safety at G-1 / PAPER_EVIDENCE / CAUSAL_HOLD: {safety_registry}")
-    if (paper_registry.get("summary") or {}).get("submission_ready") != 1 or (paper_registry.get("summary") or {}).get("scientific_holds") != 1:
+    if safety_registry.get("source_research_item") != "G-1" or safety_registry.get("paper_stage") != "SUBMISSION_READY" or safety_registry.get("scientific_status") != "READY" or safety_registry.get("submission_ready") is not True:
+        fail(f"PaperRegistry must bind the bounded Agent Safety R9 paper to G-1 at READY / SUBMISSION_READY: {safety_registry}")
+    if (ri_by_code.get("G-1") or {}).get("scientific_state") != "HOLD" or (ri_by_code.get("G-1") or {}).get("principle_dead_end_certified") is not False:
+        fail("the broader G-1 replication/support ResearchItem must remain reopenable HOLD even after the bounded R9 paper reaches Submission Ready")
+    if (paper_registry.get("summary") or {}).get("submission_ready") != 2 or (paper_registry.get("summary") or {}).get("scientific_holds") != 0:
         fail(f"PaperRegistry submission/hold summary is stale: {paper_registry.get('summary')}")
     timeline_summary = research_timeline.get("summary") or {}
     timeline_policy = research_timeline.get("projection_policy") or {}

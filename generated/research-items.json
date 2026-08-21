@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-21T16:05:35+00:00",
-  "source_revision": "7ac24ad9e73f41fa09760cb5b4875d67a4c95cd1",
+  "generated_at": "2026-08-21T16:56:43+00:00",
+  "source_revision": "55ea228bf56d926ca10ea144d00fb352c8ca97ba",
   "policy": {
     "research_item_is_primary_scientific_entity": true,
     "experiment_is_evidence_event_not_parallel_current_state": true,
@@ -5779,9 +5779,9 @@
       "paper_transition": {
         "paper_id": "AGENT-SAFETY-R9",
         "acceptance_paper_id": "AGENT-SAFETY-R9",
-        "status": "PAPER_EVIDENCE",
-        "scientific_status": "CAUSAL_HOLD",
-        "blocked": true
+        "status": "SUBMISSION_READY",
+        "scientific_status": "READY",
+        "blocked": false
       },
       "provenance_refs": [
         {

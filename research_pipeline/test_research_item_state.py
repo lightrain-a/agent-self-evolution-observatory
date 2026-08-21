@@ -48,11 +48,13 @@ class ResearchItemStateTest(unittest.TestCase):
         self.assertEqual(paper["source_research_item"], "E-7")
         self.assertEqual(paper["paper_stage"], "SUBMISSION_READY")
         self.assertTrue(paper["submission_ready"])
-        self.assertEqual(self.registry["summary"]["submission_ready"], 1)
+        self.assertEqual(self.registry["summary"]["submission_ready"], 2)
+        self.assertEqual(self.registry["summary"]["scientific_holds"], 0)
         self.assertEqual((paper["claims_supported"], paper["claims_total"], paper["paper_quality_evidence_debt"]), (3, 3, 0))
         safety = papers["AGENT-SAFETY-R9"]
-        self.assertEqual((safety["source_research_item"], safety["paper_stage"], safety["scientific_status"]), ("G-1", "PAPER_EVIDENCE", "CAUSAL_HOLD"))
-        self.assertFalse(safety["submission_ready"])
+        self.assertEqual((safety["source_research_item"], safety["paper_stage"], safety["scientific_status"]), ("G-1", "SUBMISSION_READY", "READY"))
+        self.assertTrue(safety["submission_ready"])
+        self.assertEqual(self.by_code["G-1"]["scientific_state"], "HOLD")
 
     def test_experiments_are_zero_authority_evidence_events(self) -> None:
         self.assertTrue(all(row["scientific_authority"] is False for row in self.state["experiment_records"]))

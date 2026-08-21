@@ -81318,8 +81318,8 @@
           "automatic_gpu_authority": 0,
           "automatic_submission_authority": 0,
           "registered_papers": 2,
-          "scientific_holds": 1,
-          "submission_ready_papers": 1,
+          "scientific_holds": 0,
+          "submission_ready_papers": 2,
           "invalid_ledgers": 0
         }
       },
@@ -81329,11 +81329,10 @@
         "detail": {
           "papers": 2,
           "invalid_ledgers": 0,
-          "scientific_holds": 1,
-          "submission_ready": 1,
+          "scientific_holds": 0,
+          "submission_ready": 2,
           "by_state": {
-            "PAPER_EVIDENCE": 1,
-            "SUBMISSION_READY": 1
+            "SUBMISSION_READY": 2
           }
         }
       }
@@ -84616,7 +84615,8 @@
       "submission_ready_requires_prebuttal_and_manuscript_ci": true,
       "paper_ledger_is_append_only_event_projection": true,
       "blocked_transitions_are_recorded": true,
-      "ledger_contract_digest_is_immutable": true,
+      "ledger_contract_digest_is_immutable_between_scientific_revisions": true,
+      "scientific_contract_revision_requires_evidence_closure_at_paper_evidence": true,
       "submitted_state_requires_external_human_submission_authority": true
     },
     "paper_states": [
@@ -84679,8 +84679,8 @@
       "automatic_gpu_authority": 0,
       "automatic_submission_authority": 0,
       "registered_papers": 2,
-      "scientific_holds": 1,
-      "submission_ready_papers": 1,
+      "scientific_holds": 0,
+      "submission_ready_papers": 2,
       "invalid_ledgers": 0
     },
     "scientific_authority": false,
@@ -84696,86 +84696,89 @@
       "summary": {
         "papers": 2,
         "invalid_ledgers": 0,
-        "scientific_holds": 1,
-        "submission_ready": 1,
+        "scientific_holds": 0,
+        "submission_ready": 2,
         "by_state": {
-          "PAPER_EVIDENCE": 1,
-          "SUBMISSION_READY": 1
+          "SUBMISSION_READY": 2
         }
       },
       "entries": [
         {
           "paper_id": "AGENT-SAFETY-R9",
-          "title": "Future First-Violation Hazard after Persistent State Evolution",
-          "central_question": "Does passing the frozen current-safety panel guarantee absence of future first-violation events under persistent-state evolution?",
-          "contract_sha256": "b4be1332f9c97f75c37a55f42df81f5b51729d0e101e252d37479555907ca03c",
-          "scientific_status": "CAUSAL_HOLD",
-          "current_state": "PAPER_EVIDENCE",
-          "supported_claims": 1,
-          "unsupported_claims": 4,
+          "title": "A Static Safety Pass Is Not a Temporal Certificate: Controlled First-Violation Evidence in a Persistent Web Agent",
+          "central_question": "After a persistent web agent passes a frozen current-safety panel, does that pass certify a declared future, and does a same-schedule no-update control leave a finite update-associated first-violation contrast?",
+          "contract_sha256": "9c7ce06d4e29894c93ce6f153570c8f37882801eb28bdbf8b9aecb3f2b603e89",
+          "scientific_status": "READY",
+          "current_state": "SUBMISSION_READY",
+          "supported_claims": 3,
+          "unsupported_claims": 7,
           "limitations": [
-            "Persistent update and held-out task schedule change together in the frozen design; causal attribution to the update alone remains on HOLD.",
-            "Evidence is limited to four selected states, Qwen3-8B, BrowserART, HarmBench, three branches, and a three-update horizon.",
-            "The branch event fraction is descriptive; common-random-number branches and the small frozen support set are not treated as IID population draws.",
-            "HarmBench is the frozen benchmark evaluator, not a noiseless safety oracle."
+            "The evidence is a finite frozen-design result on one Qwen3-8B backbone, four selected persistent states, 12 paired branches, and a three-step horizon; it is not a population effect estimate.",
+            "Matched seeds and a fixed protocol reduce design variation but fresh stochastic rollouts are not deterministic potential outcomes.",
+            "HarmBench-Llama-2-13b-cls is the frozen operational evaluator and has not been independently validated for this BrowserART realization.",
+            "The fixed-probe snapshot panel is descriptive and non-monotonic in two event trajectories; it does not identify a semantic mechanism."
           ],
-          "reopen_conditions": [
-            "Run a preregistered no-update control on the same held-out schedule to separate persistent-update effect from held-out schedule effect."
-          ],
+          "reopen_conditions": [],
           "summary": {
-            "events": 2,
-            "allowed_transitions": 0,
+            "events": 18,
+            "allowed_transitions": 8,
             "blocked_transitions": 1,
-            "mock_reviews": 0,
-            "manuscript_ci_receipts": 0,
-            "prebuttal_receipts": 0,
-            "submission_readiness_receipts": 0
+            "story_search_receipts": 1,
+            "mock_reviews": 2,
+            "claim_audit_receipts": 1,
+            "manuscript_ci_receipts": 1,
+            "prebuttal_receipts": 1,
+            "submission_readiness_receipts": 1,
+            "contract_revisions": 1
           },
           "latest_story_search": {
-            "pass": false,
-            "selected_story_id": "",
-            "selected_story_title": "",
-            "story_search_sha256": "",
-            "valid_candidates": 0
+            "pass": true,
+            "selected_story_id": "S1-TEMPORAL-CERTIFICATE-CONTROL",
+            "selected_story_title": "Static pass versus temporal certificate; same-schedule control localizes the finite update contrast",
+            "story_search_sha256": "1be1539c1470d96055fc75b0cea13634ecb657a421ae3fd1d040d8154a62241e",
+            "valid_candidates": 3
           },
           "mock_pc_modes": {
-            "BLIND_MANUSCRIPT": "",
-            "ARTIFACT_AWARE": ""
+            "BLIND_MANUSCRIPT": "6733b873c804c246a7f651286333fc83a89846d9e4ab6933339a5209be89ec58",
+            "ARTIFACT_AWARE": "b131d33ae459850c0d50e98fb9710ef0db0ab4fd2811d90c703c51aa93eea9e0"
           },
           "latest_mock_review": {
-            "mode": "",
-            "review_sha256": "",
-            "summary": {}
+            "mode": "ARTIFACT_AWARE",
+            "review_sha256": "b131d33ae459850c0d50e98fb9710ef0db0ab4fd2811d90c703c51aa93eea9e0",
+            "summary": {
+              "objections": 5,
+              "decision_critical": 5,
+              "targeted_experiment_proposals": 0,
+              "claim_expansion_requests_preserved_as_limitations": 1
+            }
           },
           "latest_claim_audit": {
-            "pass": false,
-            "claim_audit_sha256": "",
+            "pass": true,
+            "claim_audit_sha256": "942fe6857d8ed955fc4405e49a5fc763bc456ac153436cbdc2c1417979ee5e56",
             "blockers": []
           },
           "latest_manuscript_ci": {
-            "pass": false,
-            "required": 0,
-            "passed": 0,
+            "pass": true,
+            "required": 9,
+            "passed": 9,
             "missing": [],
             "failed": []
           },
           "latest_prebuttal": {
-            "pass": false,
-            "decision_critical": 0,
+            "pass": true,
+            "decision_critical": 10,
             "blockers": []
           },
           "latest_submission_readiness": {
-            "submission_ready": false,
-            "receipt_sha256": "",
+            "submission_ready": true,
+            "receipt_sha256": "0308664b4f224b9b8f8fc0e49d07bc764d2bf399a7d321be8394cbef1cde221b",
             "blockers": []
           },
           "latest_transition": {
-            "from": "PAPER_EVIDENCE",
-            "to": "PAPER_DESIGN",
-            "allowed": false,
-            "blockers": [
-              "causal-hold"
-            ]
+            "from": "PREBUTTAL",
+            "to": "SUBMISSION_READY",
+            "allowed": true,
+            "blockers": []
           },
           "authority": {
             "scientific": false,
