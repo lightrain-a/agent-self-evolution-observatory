@@ -215,6 +215,12 @@ def main() -> None:
     idea_scripts = canonical_scripts.get("paper-ideas.html", [])
     if not all(name in idea_scripts for name in ("generated/research-items.js", "generated/paper-registry.js")) or idea_scripts.index("generated/research-items.js") > idea_scripts.index("app.js") or idea_scripts.index("generated/paper-registry.js") > idea_scripts.index("app.js"):
         fail("paper-ideas must load canonical ResearchItem/PaperRegistry state before app.js")
+    map_scripts = canonical_scripts.get("research-map.html", [])
+    if not all(name in map_scripts for name in ("generated/research-items.js", "generated/paper-registry.js", "research-map-view.js")) or map_scripts.index("generated/research-items.js") > map_scripts.index("app.js") or map_scripts.index("generated/paper-registry.js") > map_scripts.index("app.js") or map_scripts.index("research-map-view.js") > map_scripts.index("app.js"):
+        fail("research-map must load canonical ResearchItem/PaperRegistry state and its renderer before app.js")
+    map_view_source = (ROOT / "research-map-view.js").read_text(encoding="utf-8")
+    if "RESEARCH_ITEM_STATE" not in map_view_source or "[\"A\",\"B\",\"C\",\"D\",\"E\",\"F\",\"G\"]" not in map_view_source:
+        fail("research-map must render the complete A-G map from canonical ResearchItem state with an explicit completeness guard")
     selected_scripts_list = canonical_scripts.get("selected-paper.html", [])
     if not all(name in selected_scripts_list for name in ("generated/research-items.js", "generated/paper-registry.js")) or selected_scripts_list.index("generated/research-items.js") > selected_scripts_list.index("app.js") or selected_scripts_list.index("generated/paper-registry.js") > selected_scripts_list.index("app.js"):
         fail("selected-paper must load canonical ResearchItem/PaperRegistry state before app.js")

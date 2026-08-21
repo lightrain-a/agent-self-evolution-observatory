@@ -70,8 +70,8 @@ window.PAGE_ARCHITECTURES = {
     chapters:[
       {id:"layering",title:{en:"I · Keep field history, the relationship map, and final ResearchItem decisions separate",zh:"第一章 · 分清领域历史、关系图谱和 ResearchItem 最终结论"},question:{en:"Where do we read the field's history, where do we inspect research relationships, and where do final scientific decisions live?",zh:"想看领域怎么发展、研究之间怎么关联、以及每个 Idea 最终为什么继续或停止，分别应该去哪里？"}},
       {id:"coverage-gaps",title:{en:"II · Internal research accumulation and gaps",zh:"第二章 · 哪里内部积累多，哪里当前覆盖少"},question:{en:"Which regions have accumulated more internal research records and which have fewer, without confusing record count with search frequency or priority?",zh:"哪些区域已经积累了较多 ResearchItem、方法和证据记录，哪些区域当前较少，同时避免把记录数量误当成真正搜索次数或优先级？"}},
-      {id:"integrated-map",title:{en:"III · Compare our status, research lineage, and external work in one view",zh:"第三章 · 同图比较我们的状态、研究链和外部工作"},question:{en:"For each A–G collection, where does our work stand, what key relationships explain how we got there, and how far has representative external work progressed?",zh:"对每个 A–G 集合，我们现在做到哪里、哪些关键关系解释了为什么走到这里、代表性外部工作又公开推进到了哪一步？"}},
-      {id:"handoff",title:{en:"IV · From the map to detailed evidence and paper workflow",zh:"第四章 · 从图谱进入详细证据和论文流程"},question:{en:"Where should a reader go for the full ResearchItem decision, chronological causal history, or the paper's current submission workflow?",zh:"需要查看某个 ResearchItem 的完整结论、按时间的因果历史，或论文现在处于哪一步投稿流程时，应该进入哪个页面？"}}
+      {id:"integrated-map",title:{en:"III · Read each A–G area as a research story",zh:"第三章 · 把每个 A–G 方向读成一条研究故事"},question:{en:"For each category, what is the problem, where does our work stand, what has neighboring work established, and why did the evidence lead to the current decision?",zh:"对每个 A–G 方向，先看它在问什么，再看我们做到哪里、别人做到哪里，以及证据为什么把我们带到今天这个结论。"}},
+      {id:"handoff",title:{en:"IV · Technical graph structure is optional audit detail",zh:"第四章 · 图谱技术结构只在需要审计时展开"},question:{en:"How can we preserve the full graph and provenance without making node/edge notation dominate the human reading path?",zh:"怎样完整保留节点、关系和 provenance，同时不让图谱符号占据主要阅读空间？"}}
     ]
   },
   "paper-ideas":{
