@@ -54,6 +54,14 @@ def _prefix(run_root: Path) -> str:
     return f"p12-recency-{manifest['harness_manifest_sha256'][:10]}-"
 
 
+def _current_call_cap(run_root: Path) -> tuple[int,int]:
+    plan,_=authorization_ok(run_root);row=next(x for x in plan["entries"] if x.get("candidate_id")==CANDIDATE_ID)
+    repair=row.get("harness_runtime_repair") or {}
+    if repair:
+        return int(repair["replacement_provider_call_cap"]),int(repair["provider_calls_already_charged"])
+    return PROVIDER_CALL_CAP,0
+
+
 def _recorded_calls(persistent_root: Path,prefix: str) -> tuple[int,set[str]]:
     db=database_path(root=persistent_root)
     if not db.is_file(): return 0,set()
@@ -86,7 +94,8 @@ def execute_difficulty_pair(*,run_root: Path,persistent_root: Path,pair_id: str)
     try:
         used,run_ids=_recorded_calls(persistent_root,prefix)
         if run_id in run_ids: raise RuntimeError(f"provider call already recorded:{run_id}")
-        if used>=PROVIDER_CALL_CAP: raise RuntimeError("P12 provider-call cap exhausted")
+        current_cap,_=_current_call_cap(run_root)
+        if used>=current_cap: raise RuntimeError("P12 provider-call cap exhausted")
         pair=pairs[pair_id];prompt=difficulty_prompt(pair);archive,failure=_call_once(persistent_root=persistent_root,run_id=run_id,stage="p12-difficulty-calibration",prompt=prompt,tools=difficulty_tool(),max_output_tokens=600)
         if archive is None: result={"schema_version":"1.0","status":"DIFFICULTY_PROVIDER_FAILURE","pair_id":pair_id,**failure};write_json(output,result);return result
         try: answers,source=parse_difficulty_answers(archive)
@@ -104,7 +113,8 @@ def execute_skill_bundle(*,run_root: Path,persistent_root: Path,bundle_id: str) 
     try:
         used,run_ids=_recorded_calls(persistent_root,prefix)
         if run_id in run_ids: raise RuntimeError(f"provider call already recorded:{run_id}")
-        if used>=PROVIDER_CALL_CAP: raise RuntimeError("P12 provider-call cap exhausted")
+        current_cap,_=_current_call_cap(run_root)
+        if used>=current_cap: raise RuntimeError("P12 provider-call cap exhausted")
         bundle=bundles[bundle_id];prompt=skill_compilation_prompt(bundle);archive,failure=_call_once(persistent_root=persistent_root,run_id=run_id,stage="p12-skill-compilation",prompt=prompt,tools=skill_tool(),max_output_tokens=1000)
         if archive is None: result={"schema_version":"1.0","status":"SKILL_PROVIDER_FAILURE","bundle_id":bundle_id,**failure};write_json(output,result);return result
         try: texts,source=parse_skills(archive)
@@ -116,8 +126,24 @@ def execute_skill_bundle(*,run_root: Path,persistent_root: Path,bundle_id: str) 
         if output.exists(): lock.unlink(missing_ok=True)
 
 
+def _difficulty_receipt_path(run_root: Path,pair_id: str) -> Path:
+    repaired=run_root/"difficulty-repair-v2"/f"{pair_id}.json"
+    if repaired.is_file(): return repaired
+    return run_root/"difficulty"/f"{pair_id}.json"
+
+
+def _all_difficulty_complete(run_root: Path) -> bool:
+    for row in difficulty_calibration_pairs():
+        path=_difficulty_receipt_path(run_root,row["pair_id"])
+        if not path.is_file() or load_json(path).get("status")!="DIFFICULTY_COMPLETE": return False
+    return True
+
+
 def pending_calibration(run_root: Path) -> dict[str,list[str]]:
-    diff=[row["pair_id"] for row in difficulty_calibration_pairs() if not (run_root/"difficulty"/f"{row['pair_id']}.json").is_file()]
+    diff=[]
+    for row in difficulty_calibration_pairs():
+        path=_difficulty_receipt_path(run_root,row["pair_id"])
+        if not path.is_file() or load_json(path).get("status")!="DIFFICULTY_COMPLETE": diff.append(row["pair_id"])
     skills=[row["bundle_id"] for row in skill_calibration_bundles() if not (run_root/"skill-compilation"/f"{row['bundle_id']}.json").is_file()]
     return {"difficulty":diff,"skills":skills}
 
@@ -125,13 +151,17 @@ def pending_calibration(run_root: Path) -> dict[str,list[str]]:
 def run_calibration(*,run_root: Path,persistent_root: Path) -> dict[str,Any]:
     authorization_ok(run_root);completed=[]
     for pid in pending_calibration(run_root)["difficulty"]:
+        # A recorded failed difficulty call must be repaired through the explicit
+        # runtime-repair route; never silently POST it again here.
+        old=run_root/"difficulty"/f"{pid}.json"
+        if old.is_file() and load_json(old).get("status")!="DIFFICULTY_COMPLETE": break
         result=execute_difficulty_pair(run_root=run_root,persistent_root=persistent_root,pair_id=pid);completed.append({"kind":"difficulty","id":pid,"status":result.get("status")})
         if result.get("status")!="DIFFICULTY_COMPLETE": break
-    if all(row["status"]=="DIFFICULTY_COMPLETE" for row in completed if row["kind"]=="difficulty"):
+    if _all_difficulty_complete(run_root):
         for bid in pending_calibration(run_root)["skills"]:
             result=execute_skill_bundle(run_root=run_root,persistent_root=persistent_root,bundle_id=bid);completed.append({"kind":"skill","id":bid,"status":result.get("status")})
             if result.get("status")!="SKILL_COMPILATION_COMPLETE": break
-    return {"schema_version":"1.0","status":"P12_CALIBRATION_PROGRESS","completed":completed,"pending":pending_calibration(run_root),"scientific_authority":False,"belief_authority":False}
+    return {"schema_version":"1.0","status":"P12_CALIBRATION_PROGRESS","difficulty_complete":_all_difficulty_complete(run_root),"completed":completed,"pending":pending_calibration(run_root),"scientific_authority":False,"belief_authority":False}
 
 
 def freeze_calibration(run_root: Path) -> dict[str,Any]:
@@ -139,9 +169,11 @@ def freeze_calibration(run_root: Path) -> dict[str,Any]:
     try:
         diff=[]
         for row in difficulty_calibration_pairs():
-            p=run_root/"difficulty"/f"{row['pair_id']}.json"
+            p=_difficulty_receipt_path(run_root,row["pair_id"])
             if not p.is_file(): raise RuntimeError(f"missing difficulty receipt:{row['pair_id']}")
-            diff.append(load_json(p))
+            receipt=load_json(p)
+            if receipt.get("status")!="DIFFICULTY_COMPLETE": raise RuntimeError(f"difficulty calibration not complete:{row['pair_id']}:{receipt.get('status')}")
+            diff.append(receipt)
         skills=[]
         for row in skill_calibration_bundles():
             p=run_root/"skill-compilation"/f"{row['bundle_id']}.json"
@@ -168,7 +200,8 @@ def execute_rollout_unit(*,run_root: Path,persistent_root: Path,unit_id: str) ->
     try:
         used,run_ids=_recorded_calls(persistent_root,prefix)
         if run_id in run_ids: raise RuntimeError(f"provider call already recorded:{run_id}")
-        if used>=PROVIDER_CALL_CAP: raise RuntimeError("P12 provider-call cap exhausted")
+        current_cap,_=_current_call_cap(run_root)
+        if used>=current_cap: raise RuntimeError("P12 provider-call cap exhausted")
         unit=units[unit_id];prompt=rollout_prompt(unit);archive,failure=_call_once(persistent_root=persistent_root,run_id=run_id,stage="p12-evaluation-unit",prompt=prompt,tools=answer_tool(),max_output_tokens=500)
         if archive is None: result={"schema_version":"1.0","status":"UNIT_PROVIDER_FAILURE","unit_id":unit_id,**failure};write_json(output,result);return result
         try: answer,source=parse_single_integer(archive)

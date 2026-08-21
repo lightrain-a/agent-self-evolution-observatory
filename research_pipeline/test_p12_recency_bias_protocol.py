@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from .p12_recency_bias_execute import freeze_calibration
+from .p12_recency_bias_execute import freeze_calibration, pending_calibration
 from .p12_recency_bias_harness import difficulty_calibration_pairs, skill_calibration_bundles
 from .p12_recency_bias_protocol import (
     parse_difficulty_answers,
@@ -33,6 +33,16 @@ class P12RecencyBiasProtocolTest(unittest.TestCase):
         s={"function_calls":[],"text":json.dumps({"older_skill_text":"Use a robust global pattern.","newer_skill_text":"Use a recent-window cross-check."})}
         out,source=parse_skills(s);self.assertEqual(source,"JSON_TEXT_FALLBACK");self.assertNotEqual(out["older_skill_text"],out["newer_skill_text"])
         with self.assertRaises(ValueError): parse_skills({"function_calls":[],"text":json.dumps({"older_skill_text":"same","newer_skill_text":"same"})})
+
+    def test_failed_difficulty_receipt_remains_pending_until_explicit_repair(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);(root/"difficulty").mkdir()
+            pair=difficulty_calibration_pairs()[0]
+            (root/"difficulty"/f"{pair['pair_id']}.json").write_text(json.dumps({"status":"DIFFICULTY_PROTOCOL_FAILURE","pair_id":pair["pair_id"]}))
+            self.assertIn(pair["pair_id"],pending_calibration(root)["difficulty"])
+            (root/"difficulty-repair-v2").mkdir()
+            (root/"difficulty-repair-v2"/f"{pair['pair_id']}.json").write_text(json.dumps({"status":"DIFFICULTY_COMPLETE","pair_id":pair["pair_id"]}))
+            self.assertNotIn(pair["pair_id"],pending_calibration(root)["difficulty"])
 
     def test_freeze_calibration_passes_only_with_matched_below_ceiling_difficulty(self):
         with tempfile.TemporaryDirectory() as td:
