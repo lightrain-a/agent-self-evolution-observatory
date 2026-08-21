@@ -336,7 +336,7 @@ def main() -> None:
           canonicalReviewCount: Object.keys(window.HUMAN_REVIEW_CANONICAL_20260810?.ideas || {}).length,
           originalIdeaLabels: [...document.querySelectorAll('.human-idea-title small')].map(x=>(x.textContent||'').trim()),
           concreteExamples: [...document.querySelectorAll('.human-review-idea-card h4')].filter(x=>/举个具体例子|Concrete example/.test(x.textContent||'')).length,
-          parentMergeRules: [...document.querySelectorAll('.human-review-idea-card h4')].filter(x=>/必须并回父(?: Idea| 研究方向)|must merge into its parent/.test(x.textContent||'')).length,
+          parentMergeRules: [...document.querySelectorAll('.human-review-idea-card h4')].filter(x=>/必须并回父(?: Idea| 研究方向|级研究方向)|must merge into its parent/.test(x.textContent||'')).length,
           openDiscussedCards: document.querySelectorAll('.human-review-idea-card[open]').length,
           codes: [...document.querySelectorAll('.human-idea-code')].map(x=>(x.textContent||'').trim()),
           newGroups: document.querySelectorAll('.canonical-related-bank').length,
