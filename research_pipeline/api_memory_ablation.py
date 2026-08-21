@@ -267,9 +267,9 @@ def build_relevant_escape_ablation_plan(
             max_items=max_items, max_chars=max_chars, max_item_chars=max_item_chars,
             required=True, record_query=False, root=root,
         )
-        for variant in ("relevant", "relevant_escape")
+        for variant in ("relevant_neutral", "relevant_escape")
     }
-    plain, escape = packs["relevant"], packs["relevant_escape"]
+    plain, escape = packs["relevant_neutral"], packs["relevant_escape"]
     plan = {
         "schema_version": "2.4",
         "status": "RELEVANT_ESCAPE_ABLATION_READY",
@@ -297,12 +297,15 @@ def build_relevant_escape_ablation_plan(
             "same_scientific_signatures": plain.get("selected_scientific_signatures") == escape.get("selected_scientific_signatures"),
             "same_memory_characters": int((plain.get("summary") or {}).get("characters") or 0) == int((escape.get("summary") or {}).get("characters") or 0),
             "same_item_count": int((plain.get("summary") or {}).get("selected") or 0) == max_items == int((escape.get("summary") or {}).get("selected") or 0),
+            "same_framing_prefix_lengths": [r.get("framing_prefix_chars") for r in plain.get("selected_memory_roles") or []] == [r.get("framing_prefix_chars") for r in escape.get("selected_memory_roles") or []],
+            "same_visible_source_chars": [r.get("visible_source_chars") for r in plain.get("selected_memory_roles") or []] == [r.get("visible_source_chars") for r in escape.get("selected_memory_roles") or []],
+            "same_visible_source_sha256": [r.get("visible_source_sha256") for r in plain.get("selected_memory_roles") or []] == [r.get("visible_source_sha256") for r in escape.get("selected_memory_roles") or []],
             "escape_has_role_annotations": len(escape.get("selected_memory_roles") or []) == max_items,
             "all_arms_zero_scientific_authority": all(pack.get("scientific_authority") is False for pack in packs.values()),
             "scientific_thresholds_unchanged": True,
         },
         "comparison_semantics": {
-            "relevant_escape_vs_relevant": "SAME_TOP_K_OBJECTS_AND_CHARACTERS_ONLY_ROLE_FRAMING_DIFFERS",
+            "relevant_escape_vs_relevant_neutral": "SAME_TOP_K_OBJECTS_PREFIX_LENGTH_VISIBLE_SOURCE_AND_TOTAL_CHARACTERS_ONLY_ROLE_SEMANTICS_DIFFER",
             "closed_basin_annotation_is_search_control_not_scientific_truth": True,
         },
         "scientific_authority": False,

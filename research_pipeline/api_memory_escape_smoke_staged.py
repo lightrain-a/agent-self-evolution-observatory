@@ -11,7 +11,7 @@ from .api_memory_search_smoke_staged import _client, _load, _lock, _write, conte
 from .api_research_memory import compile_api_memory_query_pack, record_provider_failure, record_raw_api_output
 from .ark_provider import extract_json_object
 
-ARMS = ("relevant", "relevant_escape")
+ARMS = ("relevant_neutral", "relevant_escape")
 GENERATOR_MODEL = "kimi-k3"
 MAX_ITEMS = 4
 MAX_ITEM_CHARS = 600
@@ -30,7 +30,7 @@ def prepare(*, root: Path, study: Path, prefix: str) -> dict[str, Any]:
             if pack.get("selected_memory_ids")!=expected.get("selected_memory_ids") or pack.get("selected_scientific_signatures")!=expected.get("selected_scientific_signatures"): raise RuntimeError(f"pack drift:{arm}")
             if int((pack.get("summary") or {}).get("characters") or 0)!=MAX_CHARS: raise RuntimeError(f"memory character mismatch:{arm}")
             packs[arm]=pack
-        if packs["relevant"]["selected_object_keys"]!=packs["relevant_escape"]["selected_object_keys"]: raise RuntimeError("escape treatment changed selected objects")
+        if packs["relevant_neutral"]["selected_object_keys"]!=packs["relevant_escape"]["selected_object_keys"]: raise RuntimeError("escape treatment changed selected objects")
         state={"schema_version":"2.4","status":"PREPARED","prefix":prefix,"context":ctx,"plan":plan,"packs":packs,"scientific_authority":False,"belief_authority":False};state["state_sha256"]=_sha_text(_canonical(state));_write(output,state);return state
     finally:
         if output.exists(): lock.unlink(missing_ok=True)

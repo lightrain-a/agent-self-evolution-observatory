@@ -449,8 +449,10 @@ class ApiResearchMemoryTest(unittest.TestCase):
             )
             self.assertEqual(plan["status"], "RELEVANT_ESCAPE_ABLATION_READY")
             self.assertTrue(all(plan["invariants"].values()))
-            self.assertEqual(plan["arms"]["relevant"]["selected_memory_ids"], plan["arms"]["relevant_escape"]["selected_memory_ids"])
-            self.assertEqual(plan["arms"]["relevant"]["summary"]["characters"], plan["arms"]["relevant_escape"]["summary"]["characters"])
+            self.assertEqual(plan["arms"]["relevant_neutral"]["selected_memory_ids"], plan["arms"]["relevant_escape"]["selected_memory_ids"])
+            self.assertEqual(plan["arms"]["relevant_neutral"]["summary"]["characters"], plan["arms"]["relevant_escape"]["summary"]["characters"])
+            self.assertEqual([r["framing_prefix_chars"] for r in plan["arms"]["relevant_neutral"]["selected_memory_roles"]], [r["framing_prefix_chars"] for r in plan["arms"]["relevant_escape"]["selected_memory_roles"]])
+            self.assertEqual([r["visible_source_sha256"] for r in plan["arms"]["relevant_neutral"]["selected_memory_roles"]], [r["visible_source_sha256"] for r in plan["arms"]["relevant_escape"]["selected_memory_roles"]])
             self.assertEqual(len(plan["arms"]["relevant_escape"]["selected_memory_roles"]), 1)
             self.assertFalse(plan["scientific_authority"])
 
