@@ -15,7 +15,7 @@ C02_LIVE_CONTRACT = ROOT / "generated/d2-proxy-reward-live-terminal-contract.jso
 C02_LIVE_PREFLIGHT = ROOT / "generated/d2-proxy-reward-live-terminal-environment-preflight.json"
 C01_BRIDGE = ROOT / "generated/d2-failure-memory-provenance-bridge.json"
 C01_FAITHFUL = ROOT / "generated/d2-failure-memory-provenance-faithful-reconstruction-preflight.json"
-C06_SUPPORT = ROOT / "generated/d2-temporal-skill-bottleneck-support-recheck-20260821.json"
+C06_SUPPORT = ROOT / "generated/d2-temporal-skill-bottleneck-support-recheck-20260822.json"
 
 
 PRIORITY = (
@@ -87,20 +87,22 @@ def build_scheduler() -> dict[str, Any]:
     })
 
     c06 = by_id[PRIORITY[1]]
-    c06_ready = bool((c06.get("support_state") or {}).get("local_frozen_evaluated_snapshot_available"))
+    c06_ready = bool((c06_support.get("support_gate") or {}).get("evaluated_snapshot_present"))
     entries.append({
         "priority": 2,
         "paper_id": c06["paper_id"],
         "title": c06["title"],
-        "paper_state": "TARGETED_REPAIR",
+        "paper_state": str(c06.get("paper_acceptance_state") or "TARGETED_REPAIR"),
         "scheduler_state": "REOPEN_NOW" if c06_ready else "HOLD_SUPPORT",
-        "why_priority": "Second Mock-PC rank; the decisive three-condition intervention is already specified and waits on one first-party evaluated-snapshot dependency.",
+        "why_priority": "Second Mock-PC rank; the manuscript is submission-ready and the decisive C3/C4 intervention is frozen, while execution still waits on one first-party evaluated-snapshot dependency.",
         "decisive_next_experiment": "Frozen TimeSage-EV targeted temporal/exogenous skill injection versus matched generic-skill and no-skill controls on preregistered failure families.",
         "current_evidence": {
-            "local_code_clone_head": c06_support["local_first_party_clones"]["code"]["head"],
-            "local_dataset_clone_head": c06_support["local_first_party_clones"]["dataset"]["head"],
-            "local_evaluated_snapshot_present": c06_support["local_conclusion"]["evaluated_snapshot_present"],
-            "fresh_remote_recheck_status": c06_support["fresh_remote_recheck"]["status"],
+            "code_repo_head": (c06_support.get("first_party") or {}).get("github", {}).get("head"),
+            "dataset_repo_head": (c06_support.get("first_party") or {}).get("huggingface", {}).get("sha"),
+            "evaluated_snapshot_present": (c06_support.get("support_gate") or {}).get("evaluated_snapshot_present"),
+            "fresh_remote_recheck_status": (c06.get("support_state") or {}).get("fresh_remote_recheck_status"),
+            "submission_ready_as_manuscript": str(c06.get("paper_acceptance_state") or "") == "SUBMISSION_READY",
+            "recommended_immediate_submission": c06.get("recommended_immediate_submission"),
         },
         "blocking_dependencies": [] if c06_ready else [
             "First-party frozen evaluated TimeSage-EV scenario snapshot or equivalent first-party inputs/outcomes/skill-interface artifacts."
@@ -108,7 +110,7 @@ def build_scheduler() -> dict[str, Any]:
         "reopen_condition": "A hashable first-party evaluated TimeSage-EV snapshot becomes available.",
         "forbid_before_reopen": [
             "Do not fabricate or substitute a synthetic TimeSage evaluated snapshot.",
-            "Do not use remote-network failure as evidence that the public release is still empty.",
+            "Do not infer future availability from the current empty first-party release; rerun the first-party support gate before execution.",
             "Do not run targeted-skill outcome calls before failure-family labels and controls can be frozen on first-party artifacts.",
         ],
         "scientific_authority": False,

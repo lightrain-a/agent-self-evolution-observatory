@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-260425",
+  "status": "completed",
+  "prompt_sha256": "2a89e1a730b2980f15089e62613533de5819d2bbf1aaed742e338491017fad0f",
+  "provider_response_id_archived_privately": true,
+  "provider_response_id_sha256": "caaf53e5832bd1feba9727ba3563cd1b5f9452a8ff602f573180db21b99ad095",
+  "usage": {
+    "input_tokens": 13840,
+    "output_tokens": 715,
+    "total_tokens": 14555,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "review": {
+    "recommendation": "reject",
+    "score_1_to_10": 3,
+    "submission_ready_as_manuscript": true,
+    "evidence_debt_blocks_claim_truth": true,
+    "evidence_debt_likely_blocks_acceptance": true,
+    "control_operationalization_resolved": true,
+    "unsupported_positive_c3_c4_result_claim_present": false,
+    "decision_critical_objections": [
+      {
+        "id": "OBJ1",
+        "text": "The paper's central causal claims C3 and C4 remain active unrefuted hypotheses with zero first-party experimental evidence. The TimeSage-EV evaluated snapshot is unavailable from the declared GitHub and Hugging Face release points (both are empty shells). The targeted-minus-generic intervention, the ordered mechanism ablation, and the cross-period/cross-domain transfer tests are all experiment debt. A causal-mechanism paper cannot be accepted when the mechanism experiment has not been executed.",
+        "resolved_in_manuscript": false,
+        "remaining_reason": "No first-party evaluated assets are available; the manuscript's strongest claims are entirely prospective. The manuscript itself acknowledges this in Limitations but the gap is fatal for acceptance."
+      },
+      {
+        "id": "OBJ2",
+        "text": "The paper lacks scientific authority because the frozen TimeSage-EV evaluated snapshot required for the registered intervention is not public. The GitHub repo (41f5e7656cb8) contains only README.md with 'Upcoming...'; the HF dataset (711f6443dc76) contains only .gitattributes. Without hashable scenario-period inputs, evaluator contracts, and the skill interface, no reviewer or third party can verify the proposed experiment. The paper is a protocol, not a completed study.",
+        "resolved_in_manuscript": false,
+        "remaining_reason": "External support blocker is confirmed by first-party audit. The manuscript cannot substitute another benchmark per the operationalization contract."
+      },
+      {
+        "id": "OBJ3",
+        "text": "The aggregate gains from TimeSage-1.0 (C2) are supported only by the source arXiv paper, which itself has not released its evaluated snapshot. The 0.82x token-cost ratio and aggregate performance claims therefore rest on an unreproducible source. Even the premises for the causal hypothesis lack independent verification.",
+        "resolved_in_manuscript": false,
+        "remaining_reason": "Both the source benchmark and the proposed intervention share the same support debt. The chain of evidence is broken at the root."
+      }
+    ],
+    "strongest_reject_reason": "The paper proposes a causal intervention to test whether targeted temporal skills repair recurring failures, but the required TimeSage-EV evaluated snapshot is not publicly available. C3 and C4 are registered active unrefuted hypotheses with zero executed experiments. A paper whose central claims are entirely experiment debt cannot be accepted.",
+    "highest_value_next_action": "Release the frozen TimeSage-EV evaluated snapshot at the declared GitHub and Hugging Face points. Execute the preregistered targeted-minus-generic intervention with the ordered T1-T2-T3 ablation and matched frozen controls. Then resubmit with results.",
+    "submission_advice": "hold_for_evidence"
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

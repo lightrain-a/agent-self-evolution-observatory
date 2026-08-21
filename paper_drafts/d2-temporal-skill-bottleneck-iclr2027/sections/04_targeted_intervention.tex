@@ -2,10 +2,18 @@
 \label{sec:intervention}
 The decisive experiment starts from endpoints with a documented recurring failure family. Each endpoint is replayed from the same frozen evidence package under three skill conditions.
 
-The targeted condition injects a skill whose procedure matches the observed failure mechanism. The generic condition injects a reusable helper with similar code length and similar tool complexity. The baseline condition uses the same harness without the targeted procedure. Model configuration remains fixed across the three conditions. The evaluated period also remains fixed.
+The targeted condition injects a skill whose procedure matches the observed failure mechanism. The generic condition injects a frozen target-blind helper under the same callable wrapper and persistent registration timing. The baseline condition adds no experimental skill. Every arm uses the same model configuration; prompt; evidence package; tool interfaces; harness; evaluated period.
 
 \subsection{Endpoint matching}
 A temporal-cutoff endpoint is paired with a skill that filters evidence by cutoff time. A release-alignment endpoint receives a date-to-period procedure. An exogenous-grounding endpoint receives a procedure that retrieves prior documentary evidence tied to the numerical change. Endpoint selection is frozen from source failure annotations before outcomes are inspected.
+
+\subsection{Frozen generic-skill control}
+The generic helper is matched before outcomes are inspected. Its source-token count must be within 10\% of the targeted implementation. Its abstract-syntax-tree node count must be within 5\%. The maximum number of external tool calls is identical. A static audit rejects the control when it can inspect a target cutoff, map a release date to a reporting period, or select a documentary event as the explanation for a numerical change.
+
+The family-matched generic helper remains useful while target blind. For cutoff endpoints it validates evidence-package schema and data types without reading timestamps. For release-alignment endpoints it checks table and index consistency without reading release dates or reporting-period fields. For exogenous-grounding endpoints it exposes document inventory and format metadata without selecting events or aligning documents to numerical changes. This control absorbs generic benefit from receiving an additional persistent callable tool while excluding the operation whose causal effect is being estimated.
+
+\subsection{Ordered mechanism ablation}
+The mechanism test is preregistered as an ordered skill construction. $T_1$ adds only cutoff-valid evidence filtering. $T_2$ keeps $T_1$ unchanged and adds release-to-period normalization with row verification. $T_3$ keeps $T_2$ unchanged and adds cutoff-valid documentary grounding for scored attribution targets. Each component source hash is frozen before evaluation. Every targeted arm is paired with the frozen generic control and the no-skill anchor on the same endpoint.
 
 \subsection{Primary outcome}
 The primary metric is correction of the matched failure. A temporal-validity error is corrected when the final answer uses only admissible evidence. A release-alignment error is corrected when the answer references the correct period. An exogenous-context error is corrected when the attribution is supported by cutoff-valid documentary evidence.
@@ -15,10 +23,12 @@ The targeted-skill effect is
 \Delta_{\mathrm{target}}=
 S_{\mathrm{target}}-S_{\mathrm{generic}},
 \end{equation}
-where $S$ is success on the matched failure criterion. The generic control absorbs the benefit of receiving a reusable helper. A positive effect identifies the mechanism-specific contribution.
+where $S$ is success on the matched failure criterion. The paired no-skill difference is reported as a baseline anchor. A positive targeted-minus-generic effect identifies the mechanism-specific contribution after generic callable assistance has been matched.
+
+Every result row is immutable and content-addressed. It binds the repository revisions; scenario and period identity; cutoff; failure family; condition; skill source hash; model configuration; harness hash; repeat identifier; raw response hash; family-specific outcome; source-native evaluator payload. This prevents a repair decision from drifting away from the exact benchmark object that produced it.
 
 \subsection{Transfer test}
-A reusable procedure should generalize beyond the endpoint that motivated it. Each targeted skill is therefore evaluated on later periods from the same scenario and on compatible scenarios from another domain. The skill is accepted as a reusable mechanism when it improves matched failures without inserting scenario-specific facts.
+A reusable procedure should generalize beyond the endpoint that motivated it. The first transfer test applies the frozen skill without edits to later periods from the same scenario under the same generic and no-skill controls. A compatible cross-domain test follows only when the first-party interface exposes the same registered failure-family criterion. The transferred skill cannot contain scenario-specific facts or receive outcome-dependent edits.
 
 \subsection{Chronological deployment}
 The intervention respects the TimeSage chronological contract. A skill enters the library before the evaluated future period. It cannot modify the acquisition-period answer. This preserves the direction of self-evolution and prevents current-answer leakage.

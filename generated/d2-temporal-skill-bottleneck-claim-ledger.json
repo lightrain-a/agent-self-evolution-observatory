@@ -56,11 +56,32 @@
     "prior_recorded_dataset_repo_commit": "ea07f80bc6813a2970062b8a1164fe530a07be20",
     "local_code_clone_head": "41f5e7656cb811dc47b7fd7f1cd7931f0fa2db66",
     "local_dataset_clone_head": "711f6443dc765b04980faf0a4145bef4261903e1",
+    "code_repo_commit": "41f5e7656cb811dc47b7fd7f1cd7931f0fa2db66",
+    "dataset_repo_commit": "711f6443dc765b04980faf0a4145bef4261903e1",
     "local_frozen_evaluated_snapshot_available": false,
     "public_evaluated_snapshot_available": false,
-    "fresh_remote_recheck_status": "UNAVAILABLE_NETWORK_SUPPORT",
-    "support_recheck_artifact": "generated/d2-temporal-skill-bottleneck-support-recheck-20260821.json",
-    "support_failure_has_scientific_authority": false
+    "fresh_remote_recheck_status": "FIRST_PARTY_REMOTE_RECHECK_COMPLETE_EVALUATED_SNAPSHOT_ABSENT",
+    "prior_support_recheck_artifact": "generated/d2-temporal-skill-bottleneck-support-recheck-20260821.json",
+    "support_failure_has_scientific_authority": false,
+    "support_recheck": {
+      "path": "generated/d2-temporal-skill-bottleneck-support-recheck-20260822.json",
+      "receipt_body_sha256": "7a8e9c67be4a260d685255fb1ffc71cdb73f5358cfc882d7c2a10066fcd5cc54",
+      "status": "HOLD_SUPPORT_FIRST_PARTY_EVALUATED_SNAPSHOT_UNAVAILABLE"
+    },
+    "c3_c4_operationalization": {
+      "path": "generated/d2-temporal-skill-bottleneck-operationalization-20260822.json",
+      "receipt_body_sha256": "40ff56efed88106a0e8264eaf4efb9a87a7875cc075653ec32d3872268dc99ec",
+      "matched_generic_control_frozen": true,
+      "ordered_within_skill_ablation_frozen": true,
+      "immutable_result_row_frozen": true
+    },
+    "scoped_execution": {
+      "path": "generated/d2-temporal-skill-bottleneck-scoped-authorization-20260822.json",
+      "receipt_body_sha256": "2fa80a7d36283f5c309221ececeb8106ab453099328208ef46f47e384b670dc3",
+      "scope_authorized": true,
+      "current_execution_authorized": false,
+      "blocked_reason": "TIMESAGE_EVALUATED_FIRST_PARTY_ASSETS_NOT_PUBLIC"
+    }
   },
   "scientific_authority": false
 }

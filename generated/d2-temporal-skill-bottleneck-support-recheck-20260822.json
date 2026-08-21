@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "first-party-support-recheck",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
+  "generated_at": "2026-08-21T17:50:26.679234+00:00",
+  "scientific_object": {
+    "arxiv": "arXiv:2608.14270",
+    "title": "TimeSage-EV: A Live Benchmark for Agentic Time Series Analysis in Evolving Environments",
+    "frozen_evaluated_horizon": "through 2026-05",
+    "benchmark_substitution_allowed": false
+  },
+  "first_party": {
+    "github": {
+      "canonical_url": "https://github.com/TimeSage-Series/TimeSage-EV",
+      "api_status": {
+        "repo": "HTTP_200",
+        "contents": "HTTP_200",
+        "readme": "HTTP_200",
+        "commit": "HTTP_200"
+      },
+      "private": false,
+      "default_branch": "master",
+      "repo_size": 0,
+      "pushed_at": "2026-08-05T10:58:38Z",
+      "head": "41f5e7656cb811dc47b7fd7f1cd7931f0fa2db66",
+      "root_paths": [
+        "README.md"
+      ],
+      "readme_blob_sha": "6160f7543e85338e952af72e4b578e11cd05c320",
+      "readme_size": 509,
+      "readme_text": "<div align=\"center\">\n  <h3>\n    <b>TimeSage-EV</b><br>\n    <sub>A Live Benchmark for Agentic Time Series Analysis in Evolving Environments</sub>\n  </h3>\n</div>\n\n<div align=\"center\">\n\n![](https://img.shields.io/github/last-commit/TimeSage-Series/TimeSage-EV?color=green)\n![](https://img.shields.io/github/stars/TimeSage-Series/TimeSage-EV?color=yellow)\n![](https://img.shields.io/github/forks/TimeSage-Series/TimeSage-EV?color=lightblue)\n![](https://img.shields.io/badge/PRs-Welcome-green)\n\n</div>\n\nUpcoming...",
+      "code_assets_present": false
+    },
+    "huggingface": {
+      "canonical_url": "https://huggingface.co/datasets/TimeSage-Series/TimeSage-EV",
+      "probe_url_used": "https://hf-mirror.com/api/datasets/TimeSage-Series/TimeSage-EV",
+      "api_status": "canonical=URLError:<urlopen error timed out>;mirror=HTTP_200",
+      "id": "TimeSage-Series/TimeSage-EV",
+      "sha": "711f6443dc765b04980faf0a4145bef4261903e1",
+      "private": false,
+      "disabled": false,
+      "created_at": "2026-08-14T09:22:07.000Z",
+      "last_modified": "2026-08-14T09:22:07.000Z",
+      "root_paths": [
+        ".gitattributes"
+      ],
+      "dataset_assets_present": false
+    }
+  },
+  "support_gate": {
+    "evaluated_snapshot_present": false,
+    "required_for_execution": [
+      "hashable first-party scenario-period inputs",
+      "hashable first-party expected outcomes or evaluator contract",
+      "hashable first-party skill interface / executable harness",
+      "period/cutoff metadata sufficient to freeze failure-family labels before outcomes"
+    ],
+    "pass": false,
+    "status": "HOLD_SUPPORT_FIRST_PARTY_EVALUATED_SNAPSHOT_UNAVAILABLE"
+  },
+  "interpretation": {
+    "paper_release_statement_is_not_asset_presence": true,
+    "support_failure_has_scientific_authority": false,
+    "support_failure_refutes_c3_or_c4": false,
+    "surrogate_benchmark_authorized": false
+  },
+  "reopen_condition": "A hashable first-party TimeSage-EV evaluated snapshot exposes the frozen scenario inputs, outcomes/evaluator contract, cutoff metadata, and skill interface needed by the registered C3/C4 intervention.",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_body_sha256": "7a8e9c67be4a260d685255fb1ffc71cdb73f5358cfc882d7c2a10066fcd5cc54"
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "external-human-scoped-experiment-authorization",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
+  "generated_at": "2026-08-21T17:50:26.679545+00:00",
+  "source_instruction_ref": "chat-instruction-2026-08-22-temporal-skill-targeted-repair",
+  "scope_authorized": true,
+  "authorized_claim_ids": [
+    "C3",
+    "C4"
+  ],
+  "authorized_debt": [
+    "targeted temporal cutoff skill intervention",
+    "release-alignment skill intervention",
+    "exogenous-grounding skill intervention",
+    "matched generic-skill control",
+    "same-endpoint no-skill control",
+    "cross-period transfer test",
+    "cross-domain compatible-scenario transfer test"
+  ],
+  "execution_priority": [
+    "ordered C3 ablation: temporal-cutoff -> +release-alignment -> +exogenous-grounding",
+    "matched frozen generic-skill and no-skill controls",
+    "C4 cross-period transfer",
+    "C4 cross-domain compatible-scenario transfer only if the same frozen first-party support object permits it"
+  ],
+  "authority_limits": {
+    "new_claim_authority": false,
+    "idea_search_authority": false,
+    "benchmark_substitution_authority": false,
+    "scientific_object_change_authority": false,
+    "unregistered_experiment_authority": false,
+    "69_to_52_jump_authority": false
+  },
+  "compute_scope": {
+    "preferred_execution_host": "root@10.42.8.52",
+    "gpu_index": 5,
+    "direct_local_mcp_connection_required": true,
+    "gpu_must_be_rechecked_idle_immediately_before_execution": true,
+    "independent_paper_run_root_required": true,
+    "shared_dirty_repo_overwrite_allowed": false,
+    "canonical_scientific_authority_host": "wyt@222.20.126.69"
+  },
+  "activation": {
+    "support_receipt_body_sha256": "7a8e9c67be4a260d685255fb1ffc71cdb73f5358cfc882d7c2a10066fcd5cc54",
+    "operationalization_receipt_body_sha256": "40ff56efed88106a0e8264eaf4efb9a87a7875cc075653ec32d3872268dc99ec",
+    "first_party_support_gate_pass": false,
+    "current_execution_authorized": false,
+    "blocked_reason": "TIMESAGE_EVALUATED_FIRST_PARTY_ASSETS_NOT_PUBLIC"
+  },
+  "scientific_authority": false,
+  "paper_workflow_authority": false,
+  "gpu_authority": false,
+  "receipt_body_sha256": "2fa80a7d36283f5c309221ececeb8106ab453099328208ef46f47e384b670dc3"
+}

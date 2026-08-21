@@ -1,0 +1,164 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "receipt_type": "rendered-pdf-qa",
+  "pdf_sha256": "59f193f14a8ab80083f49191850dfe3391540cefb7efa985974077733e6febab",
+  "render_dpi": 120,
+  "checks": {
+    "seven_rendered_pages": true,
+    "no_blank_pages": true,
+    "no_content_touches_page_edge": true,
+    "uniform_page_size": true,
+    "title_present": true,
+    "anonymous_header_present": true,
+    "required_source_numbers_present": true,
+    "pdfinfo_letter_page": true
+  },
+  "render_pages": [
+    {
+      "page": "page-1.png",
+      "width": 1020,
+      "height": 1320,
+      "content_bbox": [
+        122,
+        46,
+        842,
+        1266
+      ],
+      "margins_px": {
+        "left": 122,
+        "top": 46,
+        "right": 178,
+        "bottom": 54
+      },
+      "ink_fraction": 0.1046,
+      "blank": false,
+      "edge_touch": false
+    },
+    {
+      "page": "page-2.png",
+      "width": 1020,
+      "height": 1320,
+      "content_bbox": [
+        122,
+        46,
+        842,
+        1266
+      ],
+      "margins_px": {
+        "left": 122,
+        "top": 46,
+        "right": 178,
+        "bottom": 54
+      },
+      "ink_fraction": 0.0845,
+      "blank": false,
+      "edge_touch": false
+    },
+    {
+      "page": "page-3.png",
+      "width": 1020,
+      "height": 1320,
+      "content_bbox": [
+        122,
+        46,
+        842,
+        1267
+      ],
+      "margins_px": {
+        "left": 122,
+        "top": 46,
+        "right": 178,
+        "bottom": 53
+      },
+      "ink_fraction": 0.0991,
+      "blank": false,
+      "edge_touch": false
+    },
+    {
+      "page": "page-4.png",
+      "width": 1020,
+      "height": 1320,
+      "content_bbox": [
+        122,
+        46,
+        842,
+        1266
+      ],
+      "margins_px": {
+        "left": 122,
+        "top": 46,
+        "right": 178,
+        "bottom": 54
+      },
+      "ink_fraction": 0.1306,
+      "blank": false,
+      "edge_touch": false
+    },
+    {
+      "page": "page-5.png",
+      "width": 1020,
+      "height": 1320,
+      "content_bbox": [
+        122,
+        46,
+        841,
+        1267
+      ],
+      "margins_px": {
+        "left": 122,
+        "top": 46,
+        "right": 179,
+        "bottom": 53
+      },
+      "ink_fraction": 0.0961,
+      "blank": false,
+      "edge_touch": false
+    },
+    {
+      "page": "page-6.png",
+      "width": 1020,
+      "height": 1320,
+      "content_bbox": [
+        122,
+        46,
+        842,
+        1267
+      ],
+      "margins_px": {
+        "left": 122,
+        "top": 46,
+        "right": 178,
+        "bottom": 53
+      },
+      "ink_fraction": 0.0984,
+      "blank": false,
+      "edge_touch": false
+    },
+    {
+      "page": "page-7.png",
+      "width": 1020,
+      "height": 1320,
+      "content_bbox": [
+        122,
+        46,
+        842,
+        1267
+      ],
+      "margins_px": {
+        "left": 122,
+        "top": 46,
+        "right": 178,
+        "bottom": 53
+      },
+      "ink_fraction": 0.0646,
+      "blank": false,
+      "edge_touch": false
+    }
+  ],
+  "pass": true,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "qa_sha256": "96f8df96a4727f1ee70f0d23fa9075b7fef41ea27d8e7bc93c44d38a6bdd3d46"
+}

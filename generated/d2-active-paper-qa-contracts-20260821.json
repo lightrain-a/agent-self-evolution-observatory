@@ -52,7 +52,18 @@
       "required_pdf_fragments": ["60 institutional scenarios", "1,485", "0.82", "targeted skill intervention"],
       "max_pages": 9,
       "artifact_checks": [
-        {"path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json", "key": "support_state.public_evaluated_snapshot_available", "equals": false}
+        {"path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json", "key": "support_state.public_evaluated_snapshot_available", "equals": false},
+        {"path": "generated/d2-temporal-skill-bottleneck-support-recheck-20260822.json", "key": "support_gate.pass", "equals": false},
+        {"path": "generated/d2-temporal-skill-bottleneck-operationalization-20260822.json", "key": "scope.alternative_benchmark_allowed", "equals": false},
+        {"path": "generated/d2-temporal-skill-bottleneck-operationalization-20260822.json", "key": "conditions.generic_skill.matching.same_callable_signature", "equals": true},
+        {"path": "generated/d2-temporal-skill-bottleneck-operationalization-20260822.json", "key": "conditions.targeted_ablation.ordered", "equals": true},
+        {"path": "generated/d2-temporal-skill-bottleneck-operationalization-20260822.json", "key": "activation_gate.no_69_to_52_jump", "equals": true},
+        {"path": "generated/d2-temporal-skill-bottleneck-operationalization-20260822.json", "key": "activation_gate.52_gpu_index_if_used", "equals": 5},
+        {"path": "generated/d2-temporal-skill-bottleneck-scoped-authorization-20260822.json", "key": "scope_authorized", "equals": true},
+        {"path": "generated/d2-temporal-skill-bottleneck-scoped-authorization-20260822.json", "key": "activation.current_execution_authorized", "equals": false},
+        {"path": "generated/d2-temporal-skill-bottleneck-scoped-authorization-20260822.json", "key": "authority_limits.benchmark_substitution_authority", "equals": false},
+        {"path": "generated/d2-temporal-skill-bottleneck-statement-evidence-binding-20260822.json", "key": "pass", "equals": true},
+        {"path": "generated/d2-temporal-skill-bottleneck-rendered-pdf-qa-20260822.json", "key": "pass", "equals": true}
       ]
     }
   ],

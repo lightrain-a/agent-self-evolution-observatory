@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "requested_model": "kimi-k3",
+  "resolved_model": "kimi-k3",
+  "status": "completed",
+  "prompt_sha256": "2a89e1a730b2980f15089e62613533de5819d2bbf1aaed742e338491017fad0f",
+  "provider_response_id_archived_privately": true,
+  "provider_response_id_sha256": "a6aa5533316ae37051c5c6422ac8de39ffbf1305b384c8616a93b0ebc2075ad9",
+  "usage": {
+    "input_tokens": 12885,
+    "output_tokens": 1151,
+    "total_tokens": 14036,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "review": {
+    "recommendation": "weak_reject",
+    "score_1_to_10": 4,
+    "submission_ready_as_manuscript": true,
+    "evidence_debt_blocks_claim_truth": true,
+    "evidence_debt_likely_blocks_acceptance": true,
+    "control_operationalization_resolved": true,
+    "unsupported_positive_c3_c4_result_claim_present": false,
+    "decision_critical_objections": [
+      {
+        "id": "O1",
+        "text": "Central causal claims C3/C4 (targeted skills repair matched failure families beyond generic assistance; recurring failure identifies missing reusable procedure as agent state) have zero executed experimental support. The registered intervention, all three targeted skill arms, the matched generic control, the no-skill anchor, and both transfer tests are unexecuted experiment debt. The paper's title asserts a causal bottleneck that no first-party result in the paper demonstrates.",
+        "resolved_in_manuscript": false,
+        "remaining_reason": "External support blocker only: the first-party TimeSage-EV evaluated snapshot is unavailable (GitHub master 41f5e7656cb8 contains README.md only ending 'Upcoming...'; HF dataset 711f6443dc76 contains .gitattributes only). This has zero scientific authority and does not refute C3/C4, which remain active unrefuted hypotheses. But an ICLR acceptance normally requires the decisive experiment to be executed, not merely preregistered. The debt therefore blocks claim truth and likely blocks acceptance without being a manuscript defect."
+      },
+      {
+        "id": "O2",
+        "text": "Generic-skill control operationalization: prior concern was whether a 'matched generic skill' was specified tightly enough for a future targeted-minus-generic effect to be interpretable.",
+        "resolved_in_manuscript": true,
+        "remaining_reason": "Repair is adequate. Section 4.2 and Appendix A.4 now freeze the control pre-outcome with quantitative matching (source tokens within 10%, AST nodes within 5%, identical max external tool calls, identical callable signature and persistent registration timing), an explicit static audit rejecting any control that inspects cutoffs, maps release dates to periods, or selects explanatory events, and family-matched target-blind helpers (schema validation without timestamps; table/index consistency without release dates; document inventory metadata without event selection). Combined with frozen endpoint selection, frozen failure-family labels, ordered T1-T3 ablation with hashed components, and immutable content-addressed result rows, a future targeted-minus-generic effect is now interpretable as mechanism-specific. Residual risk is behavioral (does the helper deliver comparable generic assistance in the live harness), which the manuscript itself flags honestly in Limitations."
+      },
+      {
+        "id": "O3",
+        "text": "Risk that the manuscript credits C3/C4 as already-succeeded positive results, which would be an unsupported-claim defect given the evidence state.",
+        "resolved_in_manuscript": true,
+        "remaining_reason": "No unsupported positive C3/C4 claim is present. The abstract and introduction frame the mechanism as hypothesis and prediction ('Our hypothesis is...', 'The resulting protocol predicts that targeted skills will remove matched recurring failures more strongly than generic skills'); Section 4.6 states falsification conditions; Limitations explicitly state the source 'does not report the targeted intervention proposed here' and that the causal effect 'remains experiment debt'. C1/C2 are correctly attributed to the source benchmark. The statement-evidence binding confirms positive_result_claimed=false for C3/C4. The assertive title remains a framing risk but is not a fabricated result claim."
+      },
+      {
+        "id": "O4",
+        "text": "Contribution is currently a protocol/design paper whose empirical content is entirely second-hand (C1/C2 from Yao et al. 2026). At a competitive ICLR venue, a preregistered design without any executed result on the target benchmark is likely to be judged empirically insufficient regardless of manuscript quality.",
+        "resolved_in_manuscript": false,
+        "remaining_reason": "This is an evidence-state issue, not a manuscript-repair issue. The design is genuinely clean (chronological skill registration gives a real intervention surface; matched controls are now rigorous), so the correct remedy is executing the registered intervention once first-party assets exist, not further rewriting and not substituting another benchmark."
+      }
+    ],
+    "strongest_reject_reason": "The paper's central causal claims are supported only by a preregistered protocol, not by any executed experiment: the first-party TimeSage-EV evaluated snapshot is not public (README-only repo, .gitattributes-only dataset), so the targeted intervention, matched controls, and transfer tests are all unexecuted debt. The blocker is external and carries zero scientific authority against C3/C4, but ICLR competitiveness requires the decisive targeted-minus-generic result, which does not exist.",
+    "highest_value_next_action": "Hold submission until a hashable first-party TimeSage-EV evaluated snapshot (scenario-period inputs, expected outcomes or evaluator contract, executable skill interface, cutoff metadata) becomes available, then execute the already-frozen registered protocol: ordered T1->T2->T3 targeted ablation with the frozen matched generic control and no-skill anchor on identical endpoints, followed by the C4 cross-period transfer test. No manuscript rewrite and no benchmark substitution is needed; the operationalization is ready to run as-is.",
+    "submission_advice": "hold_for_evidence"
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

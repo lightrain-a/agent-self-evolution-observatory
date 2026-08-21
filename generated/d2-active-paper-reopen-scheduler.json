@@ -47,15 +47,17 @@
       "priority": 2,
       "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
       "title": "Temporal Skills Are a Causal Bottleneck in Evolving Time-Series Agents",
-      "paper_state": "TARGETED_REPAIR",
+      "paper_state": "SUBMISSION_READY",
       "scheduler_state": "HOLD_SUPPORT",
-      "why_priority": "Second Mock-PC rank; the decisive three-condition intervention is already specified and waits on one first-party evaluated-snapshot dependency.",
+      "why_priority": "Second Mock-PC rank; the manuscript is submission-ready and the decisive C3/C4 intervention is frozen, while execution still waits on one first-party evaluated-snapshot dependency.",
       "decisive_next_experiment": "Frozen TimeSage-EV targeted temporal/exogenous skill injection versus matched generic-skill and no-skill controls on preregistered failure families.",
       "current_evidence": {
-        "local_code_clone_head": "41f5e7656cb811dc47b7fd7f1cd7931f0fa2db66",
-        "local_dataset_clone_head": "711f6443dc765b04980faf0a4145bef4261903e1",
-        "local_evaluated_snapshot_present": false,
-        "fresh_remote_recheck_status": "UNAVAILABLE_NETWORK_SUPPORT"
+        "code_repo_head": "41f5e7656cb811dc47b7fd7f1cd7931f0fa2db66",
+        "dataset_repo_head": "711f6443dc765b04980faf0a4145bef4261903e1",
+        "evaluated_snapshot_present": false,
+        "fresh_remote_recheck_status": "FIRST_PARTY_REMOTE_RECHECK_COMPLETE_EVALUATED_SNAPSHOT_ABSENT",
+        "submission_ready_as_manuscript": true,
+        "recommended_immediate_submission": "HOLD_FOR_EVIDENCE"
       },
       "blocking_dependencies": [
         "First-party frozen evaluated TimeSage-EV scenario snapshot or equivalent first-party inputs/outcomes/skill-interface artifacts."
@@ -63,7 +65,7 @@
       "reopen_condition": "A hashable first-party evaluated TimeSage-EV snapshot becomes available.",
       "forbid_before_reopen": [
         "Do not fabricate or substitute a synthetic TimeSage evaluated snapshot.",
-        "Do not use remote-network failure as evidence that the public release is still empty.",
+        "Do not infer future availability from the current empty first-party release; rerun the first-party support gate before execution.",
         "Do not run targeted-skill outcome calls before failure-family labels and controls can be frozen on first-party artifacts."
       ],
       "scientific_authority": false,

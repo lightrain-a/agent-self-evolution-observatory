@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "c3-c4-operationalization",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
+  "generated_at": "2026-08-21T17:50:26.679419+00:00",
+  "scope": {
+    "claim_ids": [
+      "C3",
+      "C4"
+    ],
+    "new_claims_allowed": false,
+    "scientific_object": "TimeSage-EV arXiv:2608.14270, evaluated horizon through 2026-05",
+    "alternative_benchmark_allowed": false,
+    "synthetic_timesage_snapshot_allowed": false
+  },
+  "pre_outcome_freeze": {
+    "failure_family_labels_must_be_frozen_before_intervention_outcomes": true,
+    "endpoint_identity_must_be_frozen_before_condition_assignment": true,
+    "model_harness_and_evidence_package_must_be_identical_across_paired_conditions": true,
+    "repeat_count_and_condition_order_must_be_frozen_before_outcomes": true
+  },
+  "failure_families": {
+    "temporal_cutoff": {
+      "eligibility": "The first-party task contract exposes a target cutoff and timestamped candidate evidence, and the endpoint requires cutoff-valid reasoning.",
+      "success": "The answer uses no evidence that becomes available after the target cutoff; any cited or traceable support is cutoff-valid."
+    },
+    "release_alignment": {
+      "eligibility": "The first-party task requires mapping a source release/publication date to the benchmark reporting period represented by the evidence.",
+      "success": "The response selects the exact benchmark reporting period and the time-series row aligned to that period."
+    },
+    "exogenous_grounding": {
+      "eligibility": "The first-party task asks for attribution or contextual explanation that is scoreable against cutoff-valid documentary evidence.",
+      "success": "Each scored exogenous attribution is supported by a cutoff-valid first-party document span tied to the evaluated period."
+    }
+  },
+  "conditions": {
+    "no_skill": {
+      "id": "N0",
+      "contract": "Same source-faithful model, prompt, tools, evidence package, and harness; the experimental targeted/generic skill is absent and no scenario-specific answer artifact is injected."
+    },
+    "generic_skill": {
+      "id": "G0",
+      "contract": "Frozen reusable helper under the same callable wrapper and tool-interface envelope as the targeted skill. It may perform generic validation or organization but may not inspect or act on the target mechanism variables.",
+      "matching": {
+        "same_callable_signature": true,
+        "source_token_count_tolerance_fraction": 0.1,
+        "ast_node_count_tolerance_fraction": 0.05,
+        "same_max_external_tool_calls": true,
+        "same_persistent_registration_timing": true
+      },
+      "forbidden_target_actions": [
+        "compare evidence timestamps to the evaluation cutoff",
+        "map release dates to reporting-period identifiers",
+        "select documentary events as explanations for numerical changes",
+        "encode scenario-specific facts, answers, dates, labels, or expected outputs"
+      ],
+      "family_matched_helpers": {
+        "temporal_cutoff": "Generic evidence-package schema/type validator; it cannot read cutoff timestamps or filter by time.",
+        "release_alignment": "Generic table/index consistency validator; it cannot read release dates or reporting-period fields.",
+        "exogenous_grounding": "Generic document-structure helper that can expose document inventory/format metadata; it cannot select events, align them to numerical changes, or use document timestamps for attribution."
+      }
+    },
+    "targeted_ablation": {
+      "T1_temporal_cutoff_only": "Add only the cutoff-valid evidence filtering procedure.",
+      "T2_plus_release_alignment": "Keep T1 unchanged and add release-date to reporting-period normalization/verification.",
+      "T3_plus_exogenous_grounding": "Keep T2 unchanged and add cutoff-valid documentary grounding for scored attribution targets.",
+      "ordered": true,
+      "no_component_refit_after_outcome_inspection": true
+    }
+  },
+  "estimands": {
+    "C3_primary": "Paired targeted-minus-generic change in the matched family success indicator on the identical endpoint; no-skill supplies an additional baseline anchor.",
+    "C3_secondary": "Paired change in source-native TimeSage-EV metrics where the released evaluator supports immutable recomputation.",
+    "C4_cross_period": "Apply the frozen acquired targeted skill without edits to later periods of the same scenario and compare against the same generic/no-skill controls.",
+    "C4_cross_domain_compatible": "After the cross-period test, apply the unchanged skill only to a different-domain scenario whose first-party interface and registered failure-family criterion are compatible; no scenario-specific facts may be added."
+  },
+  "immutable_result_row": [
+    "dataset_repo_sha",
+    "code_repo_sha",
+    "scenario_id",
+    "period_id",
+    "cutoff_timestamp",
+    "failure_family",
+    "condition_id",
+    "skill_source_sha256",
+    "model_identifier",
+    "model_config_sha256",
+    "prompt_harness_sha256",
+    "repeat_id",
+    "raw_response_sha256",
+    "family_success",
+    "native_metric_payload",
+    "cutoff_or_grounding_evidence_refs",
+    "support_status"
+  ],
+  "activation_gate": {
+    "first_party_support_receipt_pass_required": true,
+    "scoped_human_authorization_required": true,
+    "gpu_preflight_required_if_gpu_execution_is_used": true,
+    "no_69_to_52_jump": true,
+    "52_gpu_index_if_used": 5,
+    "52_independent_run_root_required": true
+  },
+  "forbidden": [
+    "replace TimeSage-EV with TimeSage-MT or another benchmark",
+    "construct a synthetic evaluated TimeSage-EV snapshot and count it as benchmark evidence",
+    "choose endpoints or failure labels after seeing intervention outcomes",
+    "let the generic control access target-category operations",
+    "insert scenario-specific facts into any reusable skill",
+    "interpret support/network failure as scientific counterevidence"
+  ],
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_body_sha256": "40ff56efed88106a0e8264eaf4efb9a87a7875cc075653ec32d3872268dc99ec"
+}

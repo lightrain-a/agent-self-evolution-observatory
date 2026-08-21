@@ -1,0 +1,122 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "receipt_type": "prebuttal-details",
+  "contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
+  "position": {
+    "manuscript_submission_ready": true,
+    "c3_c4_positive_result_claimed": false,
+    "c3_c4_experiment_debt_preserved": true,
+    "support_blocker_preserved": true,
+    "benchmark_substitution_authorized": false,
+    "post_repair_mock_pc_acceptance_risk": "HIGH_EMPIRICAL_INSUFFICIENCY",
+    "recommended_immediate_submission": "HOLD_FOR_EVIDENCE"
+  },
+  "resolutions": [
+    {
+      "objection_id": "B-O1",
+      "decision_critical": true,
+      "resolution_status": "MANUSCRIPT_SCOPE_RESOLVED_EMPIRICAL_DEBT_PRESERVED",
+      "response": "C3/C4 are now explicitly bound as active hypotheses and preregistered protocols. The manuscript does not claim a positive targeted-skill result; the missing experiment is preserved as support-blocked debt.",
+      "evidence_refs": [
+        "artifact:sha256:ec836c8d38751001387d8fd1b800526342a61c70bd1d22c90c9601e5366a4269",
+        "artifact:sha256:d6cdbe8264f629d106f666dec08d736c966065d4f9aa7d17d1da25c2dbd64a08",
+        "artifact:sha256:e03307d8ce37bfa1d0d18f1625719a064e99a83b621d2792c21f4cd3f7785788"
+      ],
+      "resolved_for_prebuttal": true,
+      "scientific_counterevidence_claimed": false
+    },
+    {
+      "objection_id": "B-O2",
+      "decision_critical": true,
+      "resolution_status": "SUPPORT_STATUS_RESOLVED_EXECUTION_DEBT_PRESERVED",
+      "response": "The first-party support state is now reproducibly pinned: GitHub master exposes README.md only and Hugging Face exposes .gitattributes only. The experiment remains blocked and no surrogate benchmark is authorized.",
+      "evidence_refs": [
+        "artifact:sha256:d6cdbe8264f629d106f666dec08d736c966065d4f9aa7d17d1da25c2dbd64a08",
+        "artifact:sha256:b279426268ecc2329e2d6815036069f1c334c47fd4607bdc015f28f06f28b942"
+      ],
+      "resolved_for_prebuttal": true,
+      "scientific_counterevidence_claimed": false
+    },
+    {
+      "objection_id": "B-O3",
+      "decision_critical": true,
+      "resolution_status": "CONTROL_OPERATIONALIZATION_RESOLVED",
+      "response": "The matched generic control is frozen with identical callable/registration timing, token and AST tolerances, equal tool-call envelope, family-specific target-blind helpers, and explicit prohibited target actions.",
+      "evidence_refs": [
+        "artifact:sha256:9603374c2fe25ee740c42f263d371db61d3a87e99e9f44e80135d2f7084ae365",
+        "artifact:sha256:e03307d8ce37bfa1d0d18f1625719a064e99a83b621d2792c21f4cd3f7785788"
+      ],
+      "resolved_for_prebuttal": true,
+      "scientific_counterevidence_claimed": false
+    },
+    {
+      "objection_id": "A-O1",
+      "decision_critical": true,
+      "resolution_status": "MANUSCRIPT_SCOPE_RESOLVED_EMPIRICAL_DEBT_PRESERVED",
+      "response": "The decisive intervention is not represented as completed evidence. Statement-to-evidence binding marks C3/C4 DATA_PENDING while retaining the frozen causal hypothesis and protocol.",
+      "evidence_refs": [
+        "artifact:sha256:ec836c8d38751001387d8fd1b800526342a61c70bd1d22c90c9601e5366a4269",
+        "artifact:sha256:d6cdbe8264f629d106f666dec08d736c966065d4f9aa7d17d1da25c2dbd64a08",
+        "artifact:sha256:e03307d8ce37bfa1d0d18f1625719a064e99a83b621d2792c21f4cd3f7785788"
+      ],
+      "resolved_for_prebuttal": true,
+      "scientific_counterevidence_claimed": false
+    },
+    {
+      "objection_id": "A-O2",
+      "decision_critical": true,
+      "resolution_status": "SUPPORT_STATUS_RESOLVED_EXECUTION_DEBT_PRESERVED",
+      "response": "The unavailable evaluated snapshot is pinned by exact first-party repository revisions. This resolves the feasibility/provenance ambiguity while preserving the external execution blocker.",
+      "evidence_refs": [
+        "artifact:sha256:d6cdbe8264f629d106f666dec08d736c966065d4f9aa7d17d1da25c2dbd64a08"
+      ],
+      "resolved_for_prebuttal": true,
+      "scientific_counterevidence_claimed": false
+    },
+    {
+      "objection_id": "A-O3",
+      "decision_critical": true,
+      "resolution_status": "CONTRIBUTION_BOUNDARY_RESOLVED_EMPIRICAL_DEBT_PRESERVED",
+      "response": "The repaired paper isolates a mechanism-specific causal intervention surface with matched target-blind controls and immutable result rows. Post-repair reviewers agree the manuscript is submission-ready as an artifact while empirical insufficiency remains acceptance-critical.",
+      "evidence_refs": [
+        "artifact:sha256:9603374c2fe25ee740c42f263d371db61d3a87e99e9f44e80135d2f7084ae365",
+        "artifact:sha256:ec836c8d38751001387d8fd1b800526342a61c70bd1d22c90c9601e5366a4269",
+        "artifact:sha256:e03307d8ce37bfa1d0d18f1625719a064e99a83b621d2792c21f4cd3f7785788"
+      ],
+      "resolved_for_prebuttal": true,
+      "scientific_counterevidence_claimed": false
+    },
+    {
+      "objection_id": "A-O4",
+      "decision_critical": false,
+      "resolution_status": "CONTROL_OPERATIONALIZATION_RESOLVED",
+      "response": "The generic helper is preregistered quantitatively and statically audited to exclude target-mechanism operations before outcomes are observed.",
+      "evidence_refs": [
+        "artifact:sha256:9603374c2fe25ee740c42f263d371db61d3a87e99e9f44e80135d2f7084ae365",
+        "artifact:sha256:e03307d8ce37bfa1d0d18f1625719a064e99a83b621d2792c21f4cd3f7785788"
+      ],
+      "resolved_for_prebuttal": true,
+      "scientific_counterevidence_claimed": false
+    },
+    {
+      "objection_id": "A-O5",
+      "decision_critical": false,
+      "resolution_status": "TRANSFER_PROTOCOL_RESOLVED_OUTCOME_DEBT_PRESERVED",
+      "response": "C4 is frozen as cross-period transfer first, followed only by compatible cross-domain transfer using the unchanged skill and the same first-party scientific object. Transfer outcomes remain debt.",
+      "evidence_refs": [
+        "artifact:sha256:9603374c2fe25ee740c42f263d371db61d3a87e99e9f44e80135d2f7084ae365",
+        "artifact:sha256:ec836c8d38751001387d8fd1b800526342a61c70bd1d22c90c9601e5366a4269"
+      ],
+      "resolved_for_prebuttal": true,
+      "scientific_counterevidence_claimed": false
+    }
+  ],
+  "decision_critical_count": 6,
+  "decision_critical_with_grounded_response": 6,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false,
+  "prebuttal_sha256": "0cdae4b4f7264847f578db69459ea65e45341e96e35451f02a2811de2fb33cd3"
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
+  "manuscript_pdf_sha256": "59f193f14a8ab80083f49191850dfe3391540cefb7efa985974077733e6febab",
+  "policy": {
+    "active_unrefuted_hypothesis_is_not_counted_as_positive_result": true,
+    "support_failure_is_not_scientific_counterevidence": true,
+    "unsupported_claims_must_be_absent": true,
+    "limitations_preserved": true
+  },
+  "bindings": [
+    {
+      "claim_id": "C1",
+      "manuscript_role": "SUPPORTED_SOURCE_FACT",
+      "evidence_state": "SUPPORTED",
+      "evidence_refs": [
+        "arXiv:2608.14270"
+      ],
+      "positive_result_claimed": true,
+      "binding": "Source TimeSage-EV report; manuscript attributes the observation to the source benchmark."
+    },
+    {
+      "claim_id": "C2",
+      "manuscript_role": "SUPPORTED_SOURCE_FACT",
+      "evidence_state": "SUPPORTED",
+      "evidence_refs": [
+        "arXiv:2608.14270"
+      ],
+      "positive_result_claimed": true,
+      "binding": "Source TimeSage-1.0 aggregate skill result and 0.82x token-cost ratio; manuscript attributes the numbers to the source paper."
+    },
+    {
+      "claim_id": "C3",
+      "manuscript_role": "ACTIVE_UNREFUTED_HYPOTHESIS_AND_PREREGISTERED_CAUSAL_PROTOCOL",
+      "evidence_state": "DATA_PENDING_EXTERNAL_SUPPORT_BLOCKER",
+      "evidence_refs": [
+        "generated/d2-temporal-skill-bottleneck-operationalization-20260822.json",
+        "generated/d2-temporal-skill-bottleneck-scoped-authorization-20260822.json",
+        "generated/d2-temporal-skill-bottleneck-support-recheck-20260822.json"
+      ],
+      "positive_result_claimed": false,
+      "binding": "The manuscript states the mechanism as a hypothesis/prediction and specifies the targeted-minus-generic/no-skill experiment. It does not state that the intervention has already beaten controls."
+    },
+    {
+      "claim_id": "C4",
+      "manuscript_role": "ACTIVE_UNREFUTED_HYPOTHESIS_AND_TRANSFER_PROTOCOL",
+      "evidence_state": "DATA_PENDING_EXTERNAL_SUPPORT_BLOCKER",
+      "evidence_refs": [
+        "generated/d2-temporal-skill-bottleneck-operationalization-20260822.json",
+        "generated/d2-temporal-skill-bottleneck-support-recheck-20260822.json"
+      ],
+      "positive_result_claimed": false,
+      "binding": "The manuscript specifies cross-period and compatible cross-domain transfer as the test of reusable state. No positive transfer outcome is stated."
+    }
+  ],
+  "unsupported_claim_ids_present": [],
+  "limitations_preserved": true,
+  "pass": true,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "binding_sha256": "496b4e5ac06de382339da8845602395e70a686fe72a031d072d0b4ae60a0a6b3"
+}

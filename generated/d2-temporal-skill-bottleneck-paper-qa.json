@@ -4,11 +4,11 @@
   "status": "PASS",
   "paper_dir": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027",
   "summary": {
-    "checks": 22,
-    "passed": 22,
-    "pages": 6,
-    "pdf_sha256": "a3274e0af73058662e34f9462187e5638af8f59da8d77f1f4af76ad2de4efe90",
-    "pdf_bytes": 153271,
+    "checks": 33,
+    "passed": 33,
+    "pages": 7,
+    "pdf_sha256": "59f193f14a8ab80083f49191850dfe3391540cefb7efa985974077733e6febab",
+    "pdf_bytes": 160663,
     "active_unrefuted_claims": [
       "C3",
       "C4"
@@ -18,7 +18,7 @@
     {
       "name": "page_limit",
       "pass": true,
-      "detail": 6
+      "detail": 7
     },
     {
       "name": "anonymous_placeholder",
@@ -127,6 +127,94 @@
         "actual": false,
         "expected": false
       }
+    },
+    {
+      "name": "artifact:support_gate.pass",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:scope.alternative_benchmark_allowed",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:conditions.generic_skill.matching.same_callable_signature",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
+    },
+    {
+      "name": "artifact:conditions.targeted_ablation.ordered",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
+    },
+    {
+      "name": "artifact:activation_gate.no_69_to_52_jump",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
+    },
+    {
+      "name": "artifact:activation_gate.52_gpu_index_if_used",
+      "pass": true,
+      "detail": {
+        "actual": 5,
+        "expected": 5
+      }
+    },
+    {
+      "name": "artifact:scope_authorized",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
+    },
+    {
+      "name": "artifact:activation.current_execution_authorized",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:authority_limits.benchmark_substitution_authority",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:pass",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
+    },
+    {
+      "name": "artifact:pass",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
     }
   ],
   "style_audit": {
@@ -167,6 +255,83 @@
       "actual": false,
       "expected": false,
       "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-support-recheck-20260822.json",
+      "key": "support_gate.pass",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-operationalization-20260822.json",
+      "key": "scope.alternative_benchmark_allowed",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-operationalization-20260822.json",
+      "key": "conditions.generic_skill.matching.same_callable_signature",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-operationalization-20260822.json",
+      "key": "conditions.targeted_ablation.ordered",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-operationalization-20260822.json",
+      "key": "activation_gate.no_69_to_52_jump",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-operationalization-20260822.json",
+      "key": "activation_gate.52_gpu_index_if_used",
+      "actual": 5,
+      "expected": 5,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-scoped-authorization-20260822.json",
+      "key": "scope_authorized",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-scoped-authorization-20260822.json",
+      "key": "activation.current_execution_authorized",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-scoped-authorization-20260822.json",
+      "key": "authority_limits.benchmark_substitution_authority",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-statement-evidence-binding-20260822.json",
+      "key": "pass",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-rendered-pdf-qa-20260822.json",
+      "key": "pass",
+      "actual": true,
+      "expected": true,
+      "pass": true
     }
   ],
   "manuscript_files": [
@@ -192,7 +357,7 @@
     },
     {
       "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/04_targeted_intervention.tex",
-      "sha256": "94f1ef54f80fa7a48b45337f77f1153ed3c001991374afad13832935413c187d"
+      "sha256": "fcb5cfd0496624bf6cedfc59a5541c85d471438c6a591a902a5b50530d72ff8f"
     },
     {
       "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/05_related.tex",
@@ -200,11 +365,11 @@
     },
     {
       "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/06_limitations_conclusion.tex",
-      "sha256": "51233c539b3a73444fa029479bd05cd37b8d601ef72d728a4bbf54387c18b17c"
+      "sha256": "d5edc782a201a2443832539dad362708e6f3b0e5d6c7d7fbf85fd39eb1b70cf4"
     },
     {
       "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/07_appendix.tex",
-      "sha256": "3dcedf7f7b22a8a657f0a21ed532f2dbc089bd2cecee13e425ad0ee0bab6d4f1"
+      "sha256": "2ad25d29b1974505267ceb73153b36df7d80e7aaa828839910f4c87049c23d88"
     },
     {
       "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/references.bib",
@@ -213,7 +378,7 @@
   ],
   "claim_ledger": {
     "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
-    "sha256": "16cce26ac225366e443f7e78a623304732dd53517ec54bdd1b2f1b76ceffbaa4"
+    "sha256": "ca4bf3a7c5f38b31f6fc846abb25040af969e27a2966785139d2b327569736dd"
   },
   "scientific_authority": false
 }

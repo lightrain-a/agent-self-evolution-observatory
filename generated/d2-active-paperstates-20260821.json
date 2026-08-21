@@ -141,7 +141,7 @@
       ],
       "basin_id": "D2-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
       "title": "Temporal Skills Are a Causal Bottleneck in Evolving Time-Series Agents",
-      "status": "MANUSCRIPT_COMPLETE_EXPERIMENT_DEBT",
+      "status": "SUBMISSION_READY_EXTERNAL_SUPPORT_DEBT",
       "main_claim": "Reusable temporal and exogenous-context procedures are the causal bottleneck behind a large class of recurring TimeSage-EV failures, and targeted skill injection removes these failures beyond generic skill retrieval.",
       "evidence_state": "ACTIVE_UNREFUTED_HYPOTHESIS",
       "existing_evidence": [
@@ -150,29 +150,37 @@
         "The released paper Appendix defines explicit induct_skill and retrieve_skill interfaces, giving a concrete intervention surface for targeted temporal procedures."
       ],
       "support_state": {
-        "status": "LOCAL_FROZEN_RELEASE_STILL_LACKS_EVALUATED_SNAPSHOT_FRESH_REMOTE_RECHECK_UNAVAILABLE",
-        "artifact": "generated/d2-temporal-skill-bottleneck-support-recheck-20260821.json",
+        "status": "HOLD_SUPPORT_FIRST_PARTY_EVALUATED_SNAPSHOT_UNAVAILABLE",
+        "artifact": "generated/d2-temporal-skill-bottleneck-support-recheck-20260822.json",
+        "prior_artifact": "generated/d2-temporal-skill-bottleneck-support-recheck-20260821.json",
         "local_code_clone_head": "41f5e7656cb811dc47b7fd7f1cd7931f0fa2db66",
         "local_dataset_clone_head": "711f6443dc765b04980faf0a4145bef4261903e1",
         "local_frozen_evaluated_snapshot_available": false,
-        "fresh_remote_recheck_status": "UNAVAILABLE_NETWORK_SUPPORT",
+        "public_evaluated_snapshot_available": false,
+        "fresh_remote_recheck_status": "FIRST_PARTY_REMOTE_RECHECK_COMPLETE_EVALUATED_SNAPSHOT_ABSENT",
         "scientific_authority": false
       },
       "experiment_debt": [
-        "targeted temporal/exogenous skill injection",
-        "matched generic-skill control",
-        "same-endpoint no-skill control",
-        "frozen TimeSage-EV evaluated snapshot retrieval"
+        "targeted temporal cutoff skill intervention",
+        "release-alignment skill intervention",
+        "exogenous-grounding skill intervention",
+        "matched generic-skill control execution",
+        "same-endpoint no-skill control execution",
+        "cross-period transfer test",
+        "cross-domain compatible-scenario transfer test"
       ],
       "manuscript_dir": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027",
       "limitations_source": "sections/06_limitations_conclusion.tex",
       "scientific_authority": false,
       "paper_qa_artifact": "generated/d2-temporal-skill-bottleneck-paper-qa.json",
       "paper_qa_pass": true,
-      "pdf_sha256": "a3274e0af73058662e34f9462187e5638af8f59da8d77f1f4af76ad2de4efe90",
-      "pdf_pages": 6,
+      "pdf_sha256": "59f193f14a8ab80083f49191850dfe3391540cefb7efa985974077733e6febab",
+      "pdf_pages": 7,
       "manuscript_complete": true,
-      "evidence_complete": false
+      "evidence_complete": false,
+      "paper_acceptance_state": "SUBMISSION_READY",
+      "paper_acceptance_artifact": "generated/d2-temporal-skill-bottleneck-final-paper-acceptance-20260822.json",
+      "recommended_immediate_submission": "HOLD_FOR_EVIDENCE"
     }
   ],
   "scientific_authority": false

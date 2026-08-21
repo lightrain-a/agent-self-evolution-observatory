@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "title": "Temporal Skills Are a Causal Bottleneck in Evolving Time-Series Agents",
+  "status": "SUBMISSION_READY",
+  "scientific_status": "READY",
+  "contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
+  "scientific_claim_state": {
+    "supported": [
+      "C1",
+      "C2"
+    ],
+    "active_unrefuted_data_pending": [
+      "C3",
+      "C4"
+    ],
+    "unsupported_frozen": [
+      "U1",
+      "U2"
+    ],
+    "support_blocker": "HOLD_SUPPORT_FIRST_PARTY_EVALUATED_SNAPSHOT_UNAVAILABLE",
+    "support_blocker_has_scientific_authority": false
+  },
+  "execution_state": {
+    "scoped_c3_c4_authorization_exists": true,
+    "current_execution_authorized": false,
+    "experiment_started": false,
+    "reason": "TIMESAGE_EVALUATED_FIRST_PARTY_ASSETS_NOT_PUBLIC",
+    "alternative_benchmark_authorized": false,
+    "reserved_execution_host": "root@10.42.8.52",
+    "reserved_gpu_index": 5,
+    "direct_connection_only": true,
+    "last_gpu5_preflight": {
+      "free_mib_approx": 24247,
+      "total_mib": 24576,
+      "gpu_util_percent": 0,
+      "memory_util_percent": 0,
+      "idle": true
+    }
+  },
+  "paper_acceptance": {
+    "current_state": "SUBMISSION_READY",
+    "ledger_validation_errors": [],
+    "claim_audit": {
+      "schema_version": "1.0",
+      "receipt_type": "claim-audit",
+      "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
+      "manuscript_ref": "artifact:sha256:59f193f14a8ab80083f49191850dfe3391540cefb7efa985974077733e6febab",
+      "claimed_ids": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "evidence_bound_claim_ids": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "unsupported_claim_ids_present": [],
+      "limitations_preserved": true,
+      "pass": true,
+      "blockers": [],
+      "claim_audit_sha256": "013d75566cfc13cdf21404bb3c208c9288629ed585af2aaf4c363cc482e6797c",
+      "scientific_authority": false,
+      "experiment_authority": false,
+      "gpu_authority": false
+    },
+    "manuscript_ci": {
+      "pass": true,
+      "required": 9,
+      "passed": 9,
+      "missing": [],
+      "failed": [],
+      "scientific_authority": false
+    },
+    "prebuttal": {
+      "pass": true,
+      "decision_critical": 6,
+      "blockers": [],
+      "scientific_authority": false
+    },
+    "submission_readiness": {
+      "schema_version": "1.0",
+      "receipt_type": "submission-readiness",
+      "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
+      "manuscript_ci_pass": true,
+      "prebuttal_pass": true,
+      "submission_ready": true,
+      "blockers": [],
+      "receipt_sha256": "86b5b9bc1a3ce36b3481346c26f5c1620338484b1b70b8cdecc465f55c32fd80",
+      "scientific_authority": false,
+      "experiment_authority": false,
+      "gpu_authority": false,
+      "submission_authority": false
+    }
+  },
+  "manuscript": {
+    "pages": 7,
+    "qa_checks": 33,
+    "qa_passed": 33,
+    "pdf_sha256": "59f193f14a8ab80083f49191850dfe3391540cefb7efa985974077733e6febab",
+    "pdf_bytes": 160663
+  },
+  "post_repair_mock_pc": {
+    "voting_reviews": 2,
+    "submission_ready_as_manuscript": true,
+    "control_operationalization_resolved": true,
+    "unsupported_positive_c3_c4_result_claim_present": false,
+    "evidence_debt_likely_blocks_acceptance": true,
+    "recommendations": [
+      "reject",
+      "weak_reject"
+    ],
+    "scores": [
+      3,
+      4
+    ],
+    "submission_advice": [
+      "hold_for_evidence",
+      "hold_for_evidence"
+    ]
+  },
+  "interpretation": {
+    "artifact_submission_ready": true,
+    "recommended_immediate_submission": "HOLD_FOR_EVIDENCE",
+    "reason": "Both independent post-repair reviewers judge the manuscript artifact submission-ready and the control operationalization resolved, while still predicting rejection/weak-rejection because the decisive C3/C4 experiment cannot be executed until first-party TimeSage-EV evaluated assets are released.",
+    "submitted": false,
+    "external_human_submission_authority_required": true
+  },
+  "canonical": {
+    "ledger": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK.json",
+    "replication_packet": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/replication-packets/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260822-targeted-repair-r1",
+    "repair_receipts": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/repair-receipts/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260822-targeted-repair-r1"
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false,
+  "final_state_sha256": "b8ec8a1fb3e6d06cff89991efbc25edbe46a0779e25f70cf6587fa36eadd606f"
+}
