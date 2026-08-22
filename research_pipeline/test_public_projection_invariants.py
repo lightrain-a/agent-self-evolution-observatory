@@ -52,7 +52,8 @@ class PublicProjectionInvariantTest(unittest.TestCase):
 
     def test_system_readiness_alias_drift_is_detected(self) -> None:
         system = copy.deepcopy(self.system)
-        system["paper_acceptance"]["summary"]["gate_clean_submission_ready_papers"] = 4
+        expected = int((self.registry.get("summary") or {}).get("gate_clean_submission_ready") or 0)
+        system["paper_acceptance"]["summary"]["gate_clean_submission_ready_papers"] = expected + 1
         errors = self.validate(system=system)
         self.assertIn("ResearchSystem Paper Acceptance summary mismatch:gate_clean_submission_ready_papers", errors)
 
