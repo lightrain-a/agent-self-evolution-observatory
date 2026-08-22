@@ -84,6 +84,9 @@
     "reopen_p0_authority_invalid": 0,
     "reopen_p0_plan_frozen": 0,
     "reopen_p0_plan_invalid": 0,
+    "reopen_p0_pre_experiment_blocked": 0,
+    "reopen_p0_pre_experiment_pass": 0,
+    "reopen_p0_pre_experiment_invalid": 0,
     "scientific_reopen_invalid": 0
   },
   "papers": [
@@ -2428,5 +2431,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "7a3d4a18803d9e8979d692be56d8530ea45b28fe8679539b32f2825c9dd75a23"
+  "projection_sha256": "89c593931806e20189cc0831979dbfb8878545f2f44ae90b47ae15664097f2d9"
 }
