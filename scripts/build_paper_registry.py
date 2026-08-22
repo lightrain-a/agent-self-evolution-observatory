@@ -18,6 +18,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_LEDGER_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ROOT") else None
 DEFAULT_ARTIFACT_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ARTIFACT_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ARTIFACT_ROOT") else None
+DEFAULT_FREEZE_ROOT = Path(os.environ["PAPER_SUBMISSION_FREEZE_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_FREEZE_ROOT") else None
 DEFAULT_JSON = ROOT / "generated/paper-registry-state.json"
 DEFAULT_JS = ROOT / "generated/paper-registry-state.js"
 C01_ID = "D2-PAPER-FAILURE-MEMORY-PROVENANCE"
@@ -118,8 +119,8 @@ def paper_preparation(row: dict[str, Any], artifact_root: Path | None) -> dict[s
             except Exception:
                 pass
     state = str(row.get("current_state") or "")
-    if receipt.get("pass") is True:
-        status = "PASS"
+    if receipt:
+        status = "PASS" if receipt.get("pass") is True else "BLOCKED"
     elif state == "SUBMISSION_READY":
         status = "LEGACY_READY_NEEDS_PREPARATION_MIGRATION"
     else:
@@ -131,11 +132,46 @@ def paper_preparation(row: dict[str, Any], artifact_root: Path | None) -> dict[s
         "receipt_sha256": str(receipt.get("receipt_sha256") or ""),
         "gate_pass": dict(receipt.get("gate_pass") or {}),
         "blockers": list(receipt.get("blockers") or []),
-        "human_submission_signoff_pending": state == "SUBMISSION_READY",
+        "human_submission_signoff_pending": state == "SUBMISSION_READY" and receipt.get("pass") is True,
     }
 
 
-def project_paper(path: Path, artifact_root: Path | None) -> dict[str, Any]:
+def submission_freeze(paper_id: str, preparation: dict[str, Any], freeze_root: Path | None) -> dict[str, Any]:
+    receipt: dict[str, Any] = {}
+    if freeze_root is not None:
+        path = freeze_root / f"{paper_id}.json"
+        if path.exists():
+            try:
+                row = json.loads(path.read_text(encoding="utf-8"))
+                event = latest_event(row, "pre-submission-freeze")
+                candidate = event.get("receipt") or {}
+                identity = {key: candidate.get(key) for key in (
+                    "paper_id", "contract_sha256", "paper_preparation_receipt_sha256",
+                    "venue_policy_snapshot_sha256", "frozen_artifacts", "status", "human_signoff_status"
+                )}
+                if candidate.get("freeze_sha256") == digest(identity):
+                    receipt = candidate
+            except Exception:
+                receipt = {}
+    if receipt:
+        status = str(receipt.get("status") or "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING")
+    elif preparation.get("status") == "PASS":
+        status = "MACHINE_FREEZE_PENDING"
+    elif preparation.get("status") == "BLOCKED":
+        status = "PREPARATION_BLOCKED"
+    else:
+        status = "NOT_READY_FOR_HUMAN_SUBMISSION"
+    return {
+        "status": status,
+        "freeze_sha256": str(receipt.get("freeze_sha256") or ""),
+        "venue_policy_snapshot_sha256": str(receipt.get("venue_policy_snapshot_sha256") or ""),
+        "human_signoff_status": str(receipt.get("human_signoff_status") or ""),
+        "frozen_artifacts": len(receipt.get("frozen_artifacts") or []),
+        "external_human_submission_authority_required": True,
+    }
+
+
+def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | None = None) -> dict[str, Any]:
     row = json.loads(path.read_text(encoding="utf-8"))
     contract = row.get("contract") or {}
     summary = row.get("summary") or {}
@@ -154,6 +190,7 @@ def project_paper(path: Path, artifact_root: Path | None) -> dict[str, Any]:
     if not isinstance(active, dict):
         active = {}
     paper_id = str(row.get("paper_id") or contract.get("paper_id") or path.stem)
+    freeze = submission_freeze(paper_id, preparation, freeze_root)
     state = str(row.get("current_state") or "")
     scientific_layer = "SUPPORTED_AND_AUDITED" if claim_audit.get("pass") is True else ("ACTIVE_REPAIR" if state == "TARGETED_REPAIR" else "PRE_AUDIT")
     paper_quality_layer = "PASS" if manuscript_ci.get("pass") is True and prebuttal.get("pass") is True else ("IN_PROGRESS" if state not in {"PAPER_EVIDENCE", "PAPER_DESIGN"} else "NOT_STARTED")
@@ -172,7 +209,7 @@ def project_paper(path: Path, artifact_root: Path | None) -> dict[str, Any]:
             "scientific": scientific_layer,
             "paper_quality": paper_quality_layer,
             "paper_preparation": preparation["status"],
-            "submission": "HUMAN_HANDOFF_PENDING" if state == "SUBMISSION_READY" else "NOT_READY_FOR_HUMAN_SUBMISSION",
+            "submission": freeze["status"],
         },
         "gates": {
             "claim_audit": claim_audit.get("pass") is True,
@@ -181,6 +218,7 @@ def project_paper(path: Path, artifact_root: Path | None) -> dict[str, Any]:
             "submission_readiness": readiness.get("submission_ready") is True,
         },
         "paper_preparation": preparation,
+        "submission_freeze": freeze,
         "targeted_repair_boundary": targeted_repair_boundary(paper_id) if state == "TARGETED_REPAIR" else {},
         "ledger_summary": {
             "mock_reviews": int(summary.get("mock_reviews") or 0),
@@ -196,8 +234,8 @@ def project_paper(path: Path, artifact_root: Path | None) -> dict[str, Any]:
     }
 
 
-def build(ledger_root: Path, artifact_root: Path | None = None) -> dict[str, Any]:
-    papers = [project_paper(path, artifact_root) for path in sorted(ledger_root.glob("*.json"))]
+def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Path | None = None) -> dict[str, Any]:
+    papers = [project_paper(path, artifact_root, freeze_root) for path in sorted(ledger_root.glob("*.json"))]
     order = {"SUBMISSION_READY": 0, "PREBUTTAL": 1, "PDF_QA": 2, "CLAIM_AUDIT": 3, "TARGETED_REPAIR": 4, "MOCK_PC": 5, "MANUSCRIPT": 6, "PAPER_DESIGN": 7, "PAPER_EVIDENCE": 8}
     papers.sort(key=lambda p: (order.get(p["current_state"], 99), p["paper_id"]))
     summary = {
@@ -205,8 +243,10 @@ def build(ledger_root: Path, artifact_root: Path | None = None) -> dict[str, Any
         "submission_ready": sum(p["current_state"] == "SUBMISSION_READY" for p in papers),
         "targeted_repair": sum(p["current_state"] == "TARGETED_REPAIR" for p in papers),
         "preparation_pass": sum(p["paper_preparation"]["pass"] for p in papers),
+        "preparation_blocked": sum(p["paper_preparation"]["status"] == "BLOCKED" for p in papers),
         "legacy_ready_needs_preparation_migration": sum(p["paper_preparation"]["status"] == "LEGACY_READY_NEEDS_PREPARATION_MIGRATION" for p in papers),
-        "human_submission_signoff_pending": sum(p["current_state"] == "SUBMISSION_READY" for p in papers),
+        "machine_frozen_candidates": sum(p["submission_freeze"]["status"] == "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING" for p in papers),
+        "human_submission_signoff_pending": sum(p["submission_freeze"]["status"] == "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING" for p in papers),
     }
     payload = {
         "schema_version": "1.1",
@@ -224,12 +264,13 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--ledger-root", type=Path, default=DEFAULT_LEDGER_ROOT, help="Canonical Paper Acceptance ledger root; may also be supplied via PAPER_ACCEPTANCE_ROOT.")
     parser.add_argument("--artifact-root", type=Path, default=DEFAULT_ARTIFACT_ROOT, help="Optional paper-preparation artifact root; may also be supplied via PAPER_ACCEPTANCE_ARTIFACT_ROOT.")
+    parser.add_argument("--freeze-root", type=Path, default=DEFAULT_FREEZE_ROOT, help="Optional pre-submission freeze ledger root; may also be supplied via PAPER_SUBMISSION_FREEZE_ROOT.")
     parser.add_argument("--json-output", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--js-output", type=Path, default=DEFAULT_JS)
     args = parser.parse_args()
     if args.ledger_root is None:
         parser.error("canonical ledger root is required via --ledger-root or PAPER_ACCEPTANCE_ROOT")
-    state = build(args.ledger_root, args.artifact_root)
+    state = build(args.ledger_root, args.artifact_root, args.freeze_root)
     args.json_output.parent.mkdir(parents=True, exist_ok=True)
     args.json_output.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     args.js_output.write_text("window.PAPER_REGISTRY_STATE = " + json.dumps(state, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")

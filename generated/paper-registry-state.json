@@ -1,13 +1,15 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-22T06:46:16+00:00",
+  "generated_at": "2026-08-22T07:33:35+00:00",
   "source": "canonical_paper_acceptance_ledger",
   "summary": {
     "papers": 5,
-    "submission_ready": 4,
-    "targeted_repair": 1,
-    "preparation_pass": 1,
-    "legacy_ready_needs_preparation_migration": 3,
+    "submission_ready": 5,
+    "targeted_repair": 0,
+    "preparation_pass": 4,
+    "preparation_blocked": 1,
+    "legacy_ready_needs_preparation_migration": 0,
+    "machine_frozen_candidates": 4,
     "human_submission_signoff_pending": 4
   },
   "papers": [
@@ -17,7 +19,7 @@
       "central_question": "After a persistent web agent passes a frozen current-safety panel, does that pass certify a declared future, and does a same-schedule no-update control leave a finite update-associated first-violation contrast?",
       "current_state": "SUBMISSION_READY",
       "contract_sha256": "9c7ce06d4e29894c93ce6f153570c8f37882801eb28bdbf8b9aecb3f2b603e89",
-      "ledger_events": 18,
+      "ledger_events": 19,
       "supported_claims": 3,
       "active_unrefuted_claims": 0,
       "unsupported_claims": 7,
@@ -25,8 +27,8 @@
       "layers": {
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
-        "paper_preparation": "LEGACY_READY_NEEDS_PREPARATION_MIGRATION",
-        "submission": "HUMAN_HANDOFF_PENDING"
+        "paper_preparation": "PASS",
+        "submission": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING"
       },
       "gates": {
         "claim_audit": true,
@@ -35,13 +37,30 @@
         "submission_readiness": true
       },
       "paper_preparation": {
-        "status": "LEGACY_READY_NEEDS_PREPARATION_MIGRATION",
-        "pass": false,
-        "protocol_version": "",
-        "receipt_sha256": "",
-        "gate_pass": {},
+        "status": "PASS",
+        "pass": true,
+        "protocol_version": "1.0",
+        "receipt_sha256": "ff96d1d4e6f62cd54c02435eedbeea97643098afa2df5bf48be6eb8afd1c3b7a",
+        "gate_pass": {
+          "hierarchical-rubric": true,
+          "verification-refinement": true,
+          "citation-integrity": true,
+          "visual-story": true,
+          "reproducibility-bundle": true,
+          "agent-native-artifact": true,
+          "reader-simulation": true,
+          "submission-package": true
+        },
         "blockers": [],
         "human_submission_signoff_pending": true
+      },
+      "submission_freeze": {
+        "status": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING",
+        "freeze_sha256": "211d7e0608ec326b405bc83dd2deea49f79cbf380484e2232839065c13a941ae",
+        "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
+        "human_signoff_status": "PENDING_HUMAN",
+        "frozen_artifacts": 2,
+        "external_human_submission_authority_required": true
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -49,7 +68,69 @@
         "claim_audit_receipts": 1,
         "manuscript_ci_receipts": 1,
         "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 0
+        "paper_preparation_receipts": 1
+      },
+      "scientific_authority": false,
+      "experiment_authority": false,
+      "gpu_authority": false,
+      "submission_authority": false
+    },
+    {
+      "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+      "title": "Failure Memories Are Not Neutral: Causal Provenance Effects in Self-Evolving Agents",
+      "central_question": "Does failure-derived trajectory provenance causally sustain future error when future task difficulty and actionable memory guidance are matched?",
+      "current_state": "SUBMISSION_READY",
+      "contract_sha256": "582a203818f9f590d601b5ea9d3a3ecdc08acb3e34d3b1d9f190e17a2d1dcc25",
+      "ledger_events": 33,
+      "supported_claims": 3,
+      "active_unrefuted_claims": 2,
+      "unsupported_claims": 2,
+      "limitations": 5,
+      "layers": {
+        "scientific": "SUPPORTED_AND_AUDITED",
+        "paper_quality": "PASS",
+        "paper_preparation": "PASS",
+        "submission": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING"
+      },
+      "gates": {
+        "claim_audit": true,
+        "manuscript_ci": true,
+        "prebuttal": true,
+        "submission_readiness": true
+      },
+      "paper_preparation": {
+        "status": "PASS",
+        "pass": true,
+        "protocol_version": "1.0",
+        "receipt_sha256": "c7700fda1cccec6c585876da3bb124b8fff35967506d4e5878f9730c2464b54a",
+        "gate_pass": {
+          "hierarchical-rubric": true,
+          "verification-refinement": true,
+          "citation-integrity": true,
+          "visual-story": true,
+          "reproducibility-bundle": true,
+          "agent-native-artifact": true,
+          "reader-simulation": true,
+          "submission-package": true
+        },
+        "blockers": [],
+        "human_submission_signoff_pending": true
+      },
+      "submission_freeze": {
+        "status": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING",
+        "freeze_sha256": "e6842fe4d97c11683710b0b8834e33a06ec5e7a1328f5a6ea2e6a52510d180a6",
+        "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
+        "human_signoff_status": "PENDING_HUMAN",
+        "frozen_artifacts": 4,
+        "external_human_submission_authority_required": true
+      },
+      "targeted_repair_boundary": {},
+      "ledger_summary": {
+        "mock_reviews": 6,
+        "claim_audit_receipts": 1,
+        "manuscript_ci_receipts": 1,
+        "prebuttal_receipts": 1,
+        "paper_preparation_receipts": 1
       },
       "scientific_authority": false,
       "experiment_authority": false,
@@ -71,7 +152,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "HUMAN_HANDOFF_PENDING"
+        "submission": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING"
       },
       "gates": {
         "claim_audit": true,
@@ -97,6 +178,14 @@
         "blockers": [],
         "human_submission_signoff_pending": true
       },
+      "submission_freeze": {
+        "status": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING",
+        "freeze_sha256": "55785374bc82630f11a8195751c37b3995194375cf37d63e9a364f404b0622de",
+        "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
+        "human_signoff_status": "PENDING_HUMAN",
+        "frozen_artifacts": 4,
+        "external_human_submission_authority_required": true
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 4,
@@ -116,7 +205,7 @@
       "central_question": "Are recurring temporal-validity and exogenous-context failures caused by missing reusable procedures that targeted skills can repair beyond generic skill assistance?",
       "current_state": "SUBMISSION_READY",
       "contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
-      "ledger_events": 19,
+      "ledger_events": 20,
       "supported_claims": 2,
       "active_unrefuted_claims": 2,
       "unsupported_claims": 2,
@@ -124,8 +213,8 @@
       "layers": {
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
-        "paper_preparation": "LEGACY_READY_NEEDS_PREPARATION_MIGRATION",
-        "submission": "HUMAN_HANDOFF_PENDING"
+        "paper_preparation": "BLOCKED",
+        "submission": "PREPARATION_BLOCKED"
       },
       "gates": {
         "claim_audit": true,
@@ -134,13 +223,65 @@
         "submission_readiness": true
       },
       "paper_preparation": {
-        "status": "LEGACY_READY_NEEDS_PREPARATION_MIGRATION",
+        "status": "BLOCKED",
         "pass": false,
-        "protocol_version": "",
-        "receipt_sha256": "",
-        "gate_pass": {},
-        "blockers": [],
-        "human_submission_signoff_pending": true
+        "protocol_version": "1.0",
+        "receipt_sha256": "81fbaada572e1766c6c06cfefcc879c4f5e222d7a02169da54f900d67728f8bb",
+        "gate_pass": {
+          "hierarchical-rubric": false,
+          "verification-refinement": false,
+          "citation-integrity": true,
+          "visual-story": false,
+          "reproducibility-bundle": false,
+          "agent-native-artifact": false,
+          "reader-simulation": false,
+          "submission-package": false
+        },
+        "blockers": [
+          "rubric-dimension-not-pass:claim-evidence",
+          "rubric-dimension-not-pass:method-experiment",
+          "rubric-dimension-not-pass:statistics-uncertainty",
+          "rubric-dimension-not-pass:visual-evidence",
+          "rubric-dimension-not-pass:reproducibility",
+          "rubric-dimension-not-pass:venue-compliance",
+          "rubric-integrity-check-failed:plan_execution_parity_pass",
+          "rubric-integrity-check-failed:evidence_sufficiency_review_pass",
+          "unresolved-critical-verification-issue:c3-targeted-intervention-missing",
+          "unresolved-critical-verification-issue:c4-transfer-evidence-missing",
+          "unresolved-critical-verification-issue:first-party-evaluated-snapshot-unavailable",
+          "visual-story-check-failed:each_core_claim_has_main_visual",
+          "visual-story-check-failed:persistent_visual_contract_present",
+          "reproducibility-check-failed:self_contained_source_bundle",
+          "reproducibility-check-failed:clean_environment_compile_pass",
+          "reproducibility-check-failed:reproduction_entrypoint_present",
+          "reproducibility-check-failed:dependency_environment_manifest_present",
+          "reproducibility-check-failed:evaluation_code_and_protocol_bound",
+          "reproducibility-check-failed:artifact_hash_manifest_present",
+          "reproducibility-check-failed:numeric_claim_recompute_pass",
+          "reproducibility-check-failed:independent_reproduction_check_pass",
+          "agent-native-layer-incomplete:claim-evidence-grounding",
+          "claim-raw-output-roundtrip-failed",
+          "reader-mode-incomplete:figure-first-skimmer",
+          "reader-mode-unresolved-critical:figure-first-skimmer:1",
+          "reader-mode-incomplete:reproducibility-reviewer",
+          "reader-mode-unresolved-critical:reproducibility-reviewer:1",
+          "reader-paper-side-findings-not-closed",
+          "submission-package-check-failed:supplement_and_main_artifact_consistency_pass",
+          "submission-package-check-failed:fresh_directory_source_compile_pass",
+          "submission-package-check-failed:ai_use_disclosure_decision_recorded",
+          "submission-package-check-failed:authorship_and_conflict_checklist_recorded",
+          "submission-package-check-failed:venue_policy_snapshot_current",
+          "submission-package-check-failed:human_only_requirements_recorded"
+        ],
+        "human_submission_signoff_pending": false
+      },
+      "submission_freeze": {
+        "status": "PREPARATION_BLOCKED",
+        "freeze_sha256": "",
+        "venue_policy_snapshot_sha256": "",
+        "human_signoff_status": "",
+        "frozen_artifacts": 0,
+        "external_human_submission_authority_required": true
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -148,7 +289,7 @@
         "claim_audit_receipts": 1,
         "manuscript_ci_receipts": 1,
         "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 0
+        "paper_preparation_receipts": 1
       },
       "scientific_authority": false,
       "experiment_authority": false,
@@ -161,7 +302,7 @@
       "central_question": "Should semantically equivalent skill-package representations change a self-evolution control surface?",
       "current_state": "SUBMISSION_READY",
       "contract_sha256": "30ba1a82ae4547d8e3385f514352da55415b31dcf83b8dabab1f756af34309ad",
-      "ledger_events": 16,
+      "ledger_events": 17,
       "supported_claims": 3,
       "active_unrefuted_claims": 0,
       "unsupported_claims": 3,
@@ -169,8 +310,8 @@
       "layers": {
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
-        "paper_preparation": "LEGACY_READY_NEEDS_PREPARATION_MIGRATION",
-        "submission": "HUMAN_HANDOFF_PENDING"
+        "paper_preparation": "PASS",
+        "submission": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING"
       },
       "gates": {
         "claim_audit": true,
@@ -179,13 +320,30 @@
         "submission_readiness": true
       },
       "paper_preparation": {
-        "status": "LEGACY_READY_NEEDS_PREPARATION_MIGRATION",
-        "pass": false,
-        "protocol_version": "",
-        "receipt_sha256": "",
-        "gate_pass": {},
+        "status": "PASS",
+        "pass": true,
+        "protocol_version": "1.0",
+        "receipt_sha256": "f7ede3c2ec09d7774d2e480d01888b79dae166a9a9c9a46965b4fa50a4f43acf",
+        "gate_pass": {
+          "hierarchical-rubric": true,
+          "verification-refinement": true,
+          "citation-integrity": true,
+          "visual-story": true,
+          "reproducibility-bundle": true,
+          "agent-native-artifact": true,
+          "reader-simulation": true,
+          "submission-package": true
+        },
         "blockers": [],
         "human_submission_signoff_pending": true
+      },
+      "submission_freeze": {
+        "status": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING",
+        "freeze_sha256": "5c065d826ecae0b8db5620f039fa30e0df4759e28a7e6dc2c7ec7f70a0d306f1",
+        "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
+        "human_signoff_status": "PENDING_HUMAN",
+        "frozen_artifacts": 3,
+        "external_human_submission_authority_required": true
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -193,98 +351,7 @@
         "claim_audit_receipts": 1,
         "manuscript_ci_receipts": 1,
         "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 0
-      },
-      "scientific_authority": false,
-      "experiment_authority": false,
-      "gpu_authority": false,
-      "submission_authority": false
-    },
-    {
-      "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
-      "title": "Failure Memories Are Not Neutral: Causal Provenance Effects in Self-Evolving Agents",
-      "central_question": "Does failure-derived trajectory provenance causally sustain future error when future task difficulty and actionable memory guidance are matched?",
-      "current_state": "TARGETED_REPAIR",
-      "contract_sha256": "582a203818f9f590d601b5ea9d3a3ecdc08acb3e34d3b1d9f190e17a2d1dcc25",
-      "ledger_events": 22,
-      "supported_claims": 3,
-      "active_unrefuted_claims": 2,
-      "unsupported_claims": 2,
-      "limitations": 5,
-      "layers": {
-        "scientific": "ACTIVE_REPAIR",
-        "paper_quality": "IN_PROGRESS",
-        "paper_preparation": "NOT_YET_ELIGIBLE",
-        "submission": "NOT_READY_FOR_HUMAN_SUBMISSION"
-      },
-      "gates": {
-        "claim_audit": false,
-        "manuscript_ci": false,
-        "prebuttal": false,
-        "submission_readiness": false
-      },
-      "paper_preparation": {
-        "status": "NOT_YET_ELIGIBLE",
-        "pass": false,
-        "protocol_version": "",
-        "receipt_sha256": "",
-        "gate_pass": {},
-        "blockers": [],
-        "human_submission_signoff_pending": false
-      },
-      "targeted_repair_boundary": {
-        "scheduler_state": "HOLD_SUPPORT_AND_IDENTIFICATION",
-        "scientific_decision": "KEEP_ACTIVE_UNREFUTED; NOT SUPPORTED; NOT REFUTED",
-        "primary_result": {
-          "success_minus_failure": 0.166667,
-          "effect_floor": 0.15,
-          "permutation_p_success_greater": 0.07853921460785392,
-          "p_threshold": 0.05,
-          "support_gate_pass": false,
-          "counterevidence_gate_pass": false,
-          "verdict": "INCONCLUSIVE_NO_THRESHOLD_CHANGE"
-        },
-        "power": {
-          "four_pair_power_range": [
-            0.280479,
-            0.351994
-          ],
-          "independent_pairs_for_80pct_power_range": [
-            18,
-            22
-          ]
-        },
-        "identification": {
-          "primary_pairs": 4,
-          "original_verifier_strict_pass": 4,
-          "deepseek_strict_pass": 0,
-          "kimi_strict_pass": 1,
-          "three_reviewer_unanimous_strict_pass": 0,
-          "minimum_embedding_cosine": 0.901925
-        },
-        "independent_confirmation": {
-          "fresh_same_release_qualified_tasks": 0,
-          "same_release_confirmation_available": false
-        },
-        "reopen_conditions": [
-          "First-party financial per-query ReasoningBank artifacts become available, or auditable exact access to qwen3.7-flash-2026-07-15 plus qwen3.7-text-embedding enables source-faithful reconstruction.",
-          "An independently frozen support population supplies roughly 18-22 or more eligible matched pairs under a multi-reviewer information-equivalence gate, with a fully disjoint future evaluation set."
-        ],
-        "forbidden_repairs": [
-          "do not add seeds to the same four R4 pairs to rescue p<0.05",
-          "do not drop or replace R4 pairs based on post-hoc verifier disagreement",
-          "do not lower the 0.15 effect floor or raise the 0.05 p threshold",
-          "do not relax the original task structural qualification after observing R4 outcomes",
-          "do not substitute a different embedding or executor and call it source-faithful financial replication",
-          "do not reinterpret identification failure as scientific counterevidence to C4"
-        ]
-      },
-      "ledger_summary": {
-        "mock_reviews": 4,
-        "claim_audit_receipts": 0,
-        "manuscript_ci_receipts": 0,
-        "prebuttal_receipts": 0,
-        "paper_preparation_receipts": 0
+        "paper_preparation_receipts": 1
       },
       "scientific_authority": false,
       "experiment_authority": false,
@@ -298,5 +365,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "63fe92fe297f7555dcc83c748e7e1c28c62aabfafeea78524a84a76c928d176f"
+  "projection_sha256": "40956ad01e5926dfa2e4ddfd7d464c84740e4bf210d26963cfb92495181b4bdd"
 }

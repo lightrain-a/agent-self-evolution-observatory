@@ -122,12 +122,20 @@ def build() -> Path:
         cwd=ROOT,
         check=True,
     )
-    # PaperRegistry is a separate projection of the append-only Paper Acceptance
-    # ledgers. Rebuild it when the deployment environment supplies the canonical
-    # ledger root; otherwise publish the checked-in, content-addressed snapshot.
+    # PaperRegistry / Portfolio Audit are canonical projections only when the deployment
+    # environment explicitly supplies the private ledger root. Public builds otherwise
+    # use the checked-in, already-redacted content-addressed snapshots.
     paper_ledger_root = os.environ.get("PAPER_ACCEPTANCE_ROOT", "").strip()
     paper_artifact_root = os.environ.get("PAPER_ACCEPTANCE_ARTIFACT_ROOT", "").strip()
+    paper_freeze_root = os.environ.get("PAPER_SUBMISSION_FREEZE_ROOT", "").strip()
     if paper_ledger_root:
+        ledger_path = Path(paper_ledger_root).expanduser().resolve()
+        audit_root = ledger_path.parent if ledger_path.name == "paper-acceptance" else ledger_path
+        subprocess.run(
+            [sys.executable, "-m", "research_pipeline.paper_portfolio_audit", "--root", str(audit_root)],
+            cwd=ROOT,
+            check=True,
+        )
         command = [
             sys.executable,
             str(ROOT / "scripts" / "build_paper_registry.py"),
@@ -136,9 +144,13 @@ def build() -> Path:
         ]
         if paper_artifact_root:
             command.extend(["--artifact-root", paper_artifact_root])
+        if paper_freeze_root:
+            command.extend(["--freeze-root", paper_freeze_root])
         subprocess.run(command, cwd=ROOT, check=True)
-    elif not (ROOT / "generated" / "paper-registry-state.json").is_file():
-        raise RuntimeError("PaperRegistry snapshot missing and PAPER_ACCEPTANCE_ROOT is not configured")
+    else:
+        for snapshot in ("paper-registry-state.json", "paper-portfolio-audit.json"):
+            if not (ROOT / "generated" / snapshot).is_file():
+                raise RuntimeError(f"{snapshot} missing and PAPER_ACCEPTANCE_ROOT is not configured")
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     OUTPUT.mkdir(parents=True)

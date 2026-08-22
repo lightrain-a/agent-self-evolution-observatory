@@ -35,19 +35,27 @@ class PaperRegistryProjectionTest(unittest.TestCase):
 
     @unittest.skipUnless(registry.DEFAULT_LEDGER_ROOT is not None and registry.DEFAULT_LEDGER_ROOT.exists(), "canonical Paper Acceptance ledger unavailable")
     def test_public_projection_has_no_backend_path_or_provider_identifier(self) -> None:
-        state = registry.build(registry.DEFAULT_LEDGER_ROOT, registry.DEFAULT_ARTIFACT_ROOT)
+        state = registry.build(registry.DEFAULT_LEDGER_ROOT, registry.DEFAULT_ARTIFACT_ROOT, registry.DEFAULT_FREEZE_ROOT)
         self.assertEqual(state["schema_version"], "1.1")
         self.assertEqual(state["source"], "canonical_paper_acceptance_ledger")
         self.assertNotIn("canonical_ledger_root", state)
         raw = json.dumps(state, ensure_ascii=False)
         for forbidden in ("/data/wyt", "/home/wyt", "ARK_API_KEY", "Bearer ", "resp_"):
             self.assertNotIn(forbidden, raw)
-        self.assertEqual(state["summary"]["papers"], 5)
-        self.assertEqual(state["summary"]["submission_ready"], 4)
-        self.assertEqual(state["summary"]["targeted_repair"], 1)
-        c01 = next(row for row in state["papers"] if row["paper_id"] == registry.C01_ID)
-        self.assertEqual(c01["current_state"], "TARGETED_REPAIR")
-        self.assertEqual(c01["targeted_repair_boundary"]["scheduler_state"], "HOLD_SUPPORT_AND_IDENTIFICATION")
+        papers = state["papers"]
+        summary = state["summary"]
+        self.assertGreaterEqual(len(papers), 5)
+        self.assertEqual(summary["papers"], len(papers))
+        self.assertEqual(summary["submission_ready"], sum(p["current_state"] == "SUBMISSION_READY" for p in papers))
+        self.assertEqual(summary["targeted_repair"], sum(p["current_state"] == "TARGETED_REPAIR" for p in papers))
+        self.assertEqual(summary["preparation_pass"], sum(p["paper_preparation"]["status"] == "PASS" for p in papers))
+        self.assertEqual(summary["preparation_blocked"], sum(p["paper_preparation"]["status"] == "BLOCKED" for p in papers))
+        self.assertEqual(summary["machine_frozen_candidates"], sum(p["submission_freeze"]["status"] == "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING" for p in papers))
+        c01 = next(row for row in papers if row["paper_id"] == registry.C01_ID)
+        if c01["current_state"] == "TARGETED_REPAIR":
+            self.assertEqual(c01["targeted_repair_boundary"]["scheduler_state"], "HOLD_SUPPORT_AND_IDENTIFICATION")
+        else:
+            self.assertEqual(c01["targeted_repair_boundary"], {})
 
     def test_checked_in_snapshot_obeys_public_boundary(self) -> None:
         state = json.loads(registry.DEFAULT_JSON.read_text(encoding="utf-8"))
@@ -55,10 +63,19 @@ class PaperRegistryProjectionTest(unittest.TestCase):
         self.assertNotIn("canonical_ledger_root", state)
         self.assertNotIn("/data/wyt", raw)
         self.assertNotIn("/home/wyt", raw)
-        c01 = next(row for row in state["papers"] if row["paper_id"] == registry.C01_ID)
-        boundary = c01["targeted_repair_boundary"]
-        self.assertEqual(boundary["power"]["independent_pairs_for_80pct_power_range"], [18, 22])
-        self.assertEqual(boundary["identification"]["three_reviewer_unanimous_strict_pass"], 0)
+        papers = state["papers"]
+        summary = state["summary"]
+        self.assertEqual(summary["papers"], len(papers))
+        self.assertEqual(summary["human_submission_signoff_pending"], summary["machine_frozen_candidates"])
+        temporal = next(row for row in papers if row["paper_id"] == "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK")
+        self.assertEqual(temporal["paper_preparation"]["status"], "BLOCKED")
+        self.assertEqual(temporal["submission_freeze"]["status"], "PREPARATION_BLOCKED")
+        c01 = next(row for row in papers if row["paper_id"] == registry.C01_ID)
+        if c01["current_state"] != "TARGETED_REPAIR":
+            self.assertEqual(c01["targeted_repair_boundary"], {})
+        direct = registry.targeted_repair_boundary(registry.C01_ID)
+        self.assertEqual(direct["power"]["independent_pairs_for_80pct_power_range"], [18, 22])
+        self.assertEqual(direct["identification"]["three_reviewer_unanimous_strict_pass"], 0)
 
 
 if __name__ == "__main__":

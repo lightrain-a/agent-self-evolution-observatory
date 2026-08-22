@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "venue": "ICLR 2027",
+  "verified_on": "2026-08-22",
+  "official_sources": [
+    "https://iclr.cc/Conferences/2027/AuthorGuidelines",
+    "https://iclr.cc/Conferences/2027/AIPolicyForAuthors",
+    "https://iclr.cc/Conferences/2027/Dates"
+  ],
+  "deadlines_aoe": {
+    "abstract": "2026-09-18",
+    "full_paper": "2026-09-25"
+  },
+  "paper_rules": {
+    "main_text_max_pages": 9,
+    "double_blind": true,
+    "references_excluded_from_page_limit": true,
+    "appendix_after_references_allowed": true,
+    "ai_use_statement_required": true,
+    "ai_use_submission_form_disclosure_required": true,
+    "ethics_acknowledgement_required_at_submission": true
+  },
+  "author_rules": {
+    "all_authors_require_openreview_profile": true,
+    "new_authors_forbidden_after_abstract_deadline": true,
+    "author_order_editable_until_full_paper_deadline": true,
+    "no_author_changes_after_full_paper_deadline": true,
+    "author_quota_check_required": true,
+    "reciprocal_reviewing_check_required": true
+  },
+  "human_only_confirmation_required": true,
+  "scientific_authority": false,
+  "submission_authority": false,
+  "snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11"
+}
