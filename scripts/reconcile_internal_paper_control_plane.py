@@ -12,7 +12,7 @@ if str(ROOT) not in sys.path:
 
 from research_pipeline.config import StorageSettings, resolve_experiment_data_root
 from research_pipeline.paper_acceptance_ledger import build_paper_ledger_index
-from research_pipeline.paper_first_fresh_phenomenon_portfolio import build_fresh_phenomenon_portfolio, validate_fresh_phenomenon_portfolio, write_fresh_phenomenon_portfolio
+from research_pipeline.paper_first_fresh_phenomenon_portfolio import DEFAULT_JSON as FRESH_PHENOMENON_JSON, validate_fresh_phenomenon_portfolio
 from research_pipeline.paper_first_search_portfolio_design_adjudication import DEFAULT_JSON as SEARCH_DESIGN_JSON, validate_search_portfolio_design_adjudication
 from research_pipeline.research_memory_wiki import build_research_memory_wiki, write_research_memory_wiki
 
@@ -70,11 +70,10 @@ def main() -> None:
         raise RuntimeError("refusing to embed invalid Search Portfolio projection: " + "; ".join(search_errors))
     state["paper_first_search_portfolio_design_adjudication"] = search_design
 
-    fresh_phenomenon = build_fresh_phenomenon_portfolio()
+    fresh_phenomenon = load_json(FRESH_PHENOMENON_JSON)
     fresh_errors = validate_fresh_phenomenon_portfolio(fresh_phenomenon)
     if fresh_errors:
-        raise RuntimeError("refusing to publish invalid Fresh Phenomenon projection: " + "; ".join(fresh_errors))
-    fresh_phenomenon = write_fresh_phenomenon_portfolio()
+        raise RuntimeError("refusing to embed invalid durable Fresh Phenomenon projection: " + "; ".join(fresh_errors))
     state["paper_first_fresh_phenomenon_portfolio"] = fresh_phenomenon
 
     data_root = resolve_experiment_data_root(StorageSettings.from_env())
