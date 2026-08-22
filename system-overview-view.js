@@ -17,7 +17,7 @@
       `${sections.renderPaperDesignPhase ? sections.renderPaperDesignPhase(state) : ""}`,
       `${sections.renderExperimentCompilePhase ? sections.renderExperimentCompilePhase(state) : ""}${deep("完整机器门 / 问题发现 / 论文设计编译细节","Full machine gates, discovery, and paper-design compiler detail",machineCompileDetail)}`,
       `${sections.renderValidationScalePhase ? sections.renderValidationScalePhase(state) : ""}${sections.renderGovernanceV2 ? sections.renderGovernanceV2(state) : ""}${sections.renderFailureSemantics ? sections.renderFailureSemantics(state) : ""}${deep("运行时、GPU、科研工件、自动化与组件清单","Runtime, GPU, artifacts, automation, and component inventory",runtimeReference)}`,
-      `${sections.renderPaperEvidencePhase ? sections.renderPaperEvidencePhase(state) : ""}`,
+      `${sections.renderPaperEvidencePhase ? sections.renderPaperEvidencePhase(state) : ""}${sections.renderPaperPreparationProtocol ? sections.renderPaperPreparationProtocol() : ""}`,
       `${sections.renderSystemLearningPhase ? sections.renderSystemLearningPhase(state) : ""}${sections.renderClosure ? sections.renderClosure(state) : ""}${sections.renderLessons ? sections.renderLessons(state) : ""}`,
     ];
     return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("system-overview"))}${chapters.map((chapter,index)=>renderCustomChapter(chapter,index,bodies[index] || "")).join("")}`;

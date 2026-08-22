@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0",
+  "policy": {
+    "schema_version": "1.0",
+    "paper_preparation_is_subprotocol_not_new_scientific_authority": true,
+    "legacy_paper_contracts_remain_replayable": true,
+    "opt_in_contracts_fail_closed_before_submission_ready": true,
+    "hierarchical_rubric_precedes_single_score": true,
+    "verification_and_refinement_are_separate_roles": true,
+    "citation_existence_relevance_and_placement_must_be_verified": true,
+    "figure_caption_reference_review_is_independent_from_prose_review": true,
+    "reproducibility_requires_clean_environment_smoke": true,
+    "agent_native_artifact_preserves_failures_and_claim_grounding": true,
+    "reader_simulation_uses_multiple_reading_modes": true,
+    "submission_package_is_venue_specific_and_self_contained": true,
+    "ai_use_disclosure_decision_is_recorded_but_venue_policy_controls_wording": true,
+    "human_submission_authority_remains_external": true
+  },
+  "required_gates": [
+    "hierarchical-rubric",
+    "verification-refinement",
+    "citation-integrity",
+    "visual-story",
+    "reproducibility-bundle",
+    "agent-native-artifact",
+    "reader-simulation",
+    "submission-package"
+  ],
+  "required_rubric_dimensions": [
+    "claim-evidence",
+    "novelty-positioning",
+    "method-experiment",
+    "statistics-uncertainty",
+    "visual-evidence",
+    "limitations-scope",
+    "reproducibility",
+    "citation-integrity",
+    "venue-compliance"
+  ],
+  "required_agent_native_layers": [
+    "scientific-logic",
+    "executable-specification",
+    "exploration-graph",
+    "claim-evidence-grounding"
+  ],
+  "required_reader_modes": [
+    "blind-manuscript",
+    "artifact-aware",
+    "figure-first-skimmer",
+    "reproducibility-reviewer"
+  ],
+  "inspirations": [
+    {
+      "system": "The AI Scientist-v2",
+      "adopted_principle": "Separate write-up, citation gathering, paper review, plot aggregation, and image/caption/reference review."
+    },
+    {
+      "system": "Agent Laboratory",
+      "adopted_principle": "Treat report writing as a distinct research phase and preserve an explicit human-feedback checkpoint option."
+    },
+    {
+      "system": "PaperBench",
+      "adopted_principle": "Decompose paper completion into hierarchical, individually auditable rubric items instead of relying on one overall score."
+    },
+    {
+      "system": "Agent-Native Research Artifact (ARA)",
+      "adopted_principle": "Package scientific logic, executable specification, exploration/failure history, and claim-to-raw-evidence grounding together."
+    },
+    {
+      "system": "Collaborative verification/refinement agents",
+      "adopted_principle": "Verify each stage against its frozen contract and let a separate refiner repair only identified issues."
+    },
+    {
+      "system": "ResearchTown / FARS / AutoR",
+      "adopted_principle": "Use independent writing/review roles, preserve intermediate artifacts, and require adversarial review findings to be answered before final export."
+    },
+    {
+      "system": "Story2Proposal",
+      "adopted_principle": "Maintain a persistent manuscript/visual contract across architect, writer, refiner, renderer, and evaluation roles."
+    },
+    {
+      "system": "ResearchArena / ARI",
+      "adopted_principle": "Artifact-aware review checks plan/execution parity and result integrity; deterministic gates re-compute numeric claims and independent reproduction verifies the package."
+    }
+  ],
+  "summary": {
+    "required_gates": 8,
+    "rubric_dimensions": 9,
+    "agent_native_layers": 4,
+    "reader_modes": 4,
+    "automatic_scientific_authority": 0,
+    "automatic_experiment_authority": 0,
+    "automatic_gpu_authority": 0,
+    "automatic_submission_authority": 0,
+    "migrated_papers": 1,
+    "migrated_pass": 1
+  },
+  "scientific_authority": false,
+  "migrations": [
+    {
+      "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+      "protocol_version": "1.0",
+      "pass": true,
+      "receipt_sha256": "bf4cd503cb810877e432db173a8566017d0d24e482c84f7fc41130c3514cb933",
+      "gate_pass": {
+        "hierarchical-rubric": true,
+        "verification-refinement": true,
+        "citation-integrity": true,
+        "visual-story": true,
+        "reproducibility-bundle": true,
+        "agent-native-artifact": true,
+        "reader-simulation": true,
+        "submission-package": true
+      },
+      "blockers": [],
+      "current_state": "SUBMISSION_READY",
+      "scientific_authority": false
+    }
+  ]
+}

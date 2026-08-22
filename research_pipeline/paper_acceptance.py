@@ -88,6 +88,8 @@ POLICY: dict[str, Any] = {
     "decision_critical_prebuttal_objections_must_be_resolved": True,
     "manuscript_ci_fails_closed": True,
     "submission_ready_requires_prebuttal_and_manuscript_ci": True,
+    "paper_preparation_protocol_is_opt_in_for_legacy_digest_compatibility": True,
+    "paper_preparation_opt_in_fails_closed_before_submission_ready": True,
     "paper_ledger_is_append_only_event_projection": True,
     "blocked_transitions_are_recorded": True,
     "ledger_contract_digest_is_immutable": True,
@@ -108,6 +110,8 @@ class PaperContract:
     reopen_conditions: tuple[str, ...] = ()
     evidence_refs: tuple[str, ...] = ()
     scientific_status: ScientificPaperStatus = ScientificPaperStatus.READY
+    paper_preparation_protocol_version: str = ""
+    paper_preparation_requirements: tuple[str, ...] = ()
     scientific_authority: bool = field(default=False, init=False)
     experiment_authority: bool = field(default=False, init=False)
     gpu_authority: bool = field(default=False, init=False)
@@ -132,7 +136,7 @@ class PaperContract:
 
 
 def paper_contract_payload(contract: PaperContract) -> dict[str, Any]:
-    return {
+    payload = {
         "paper_id": contract.paper_id,
         "title": contract.title,
         "central_question": contract.central_question,
@@ -148,6 +152,12 @@ def paper_contract_payload(contract: PaperContract) -> dict[str, Any]:
         "experiment_authority": False,
         "gpu_authority": False,
     }
+    # Preserve the exact digest of legacy contracts. The preparation subprotocol is
+    # serialized only when a paper explicitly opts in.
+    if str(contract.paper_preparation_protocol_version or "").strip():
+        payload["paper_preparation_protocol_version"] = str(contract.paper_preparation_protocol_version)
+        payload["paper_preparation_requirements"] = list(contract.paper_preparation_requirements)
+    return payload
 
 
 def paper_contract_digest(contract: PaperContract) -> str:
@@ -479,28 +489,43 @@ def evaluate_submission_ready(
     contract: PaperContract,
     manuscript_ci: Mapping[str, Any],
     prebuttal: Mapping[str, Any],
+    paper_preparation: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     blockers = list(contract.blockers())
     if not manuscript_ci.get("pass"):
         blockers.append("manuscript-ci-not-pass")
     if not prebuttal.get("pass"):
         blockers.append("prebuttal-not-pass")
+    prep_required = bool(str(contract.paper_preparation_protocol_version or "").strip())
+    prep = paper_preparation or {}
+    if prep_required and prep.get("pass") is not True:
+        blockers.append("paper-preparation-not-pass")
     return {
         "paper_id": contract.paper_id,
         "submission_ready": not blockers,
         "blockers": tuple(dict.fromkeys(blockers)),
+        "paper_preparation_required": prep_required,
+        "paper_preparation_pass": prep.get("pass") is True if prep_required else None,
         "scientific_authority": False,
         "submission_authority": False,
     }
 
 
-def build_submission_readiness_receipt(contract: PaperContract, manuscript_ci: Mapping[str, Any], prebuttal: Mapping[str, Any]) -> dict[str, Any]:
-    gate = evaluate_submission_ready(contract, manuscript_ci, prebuttal)
+def build_submission_readiness_receipt(
+    contract: PaperContract,
+    manuscript_ci: Mapping[str, Any],
+    prebuttal: Mapping[str, Any],
+    paper_preparation: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    gate = evaluate_submission_ready(contract, manuscript_ci, prebuttal, paper_preparation)
     identity = {
         "paper_id": contract.paper_id,
         "contract_sha256": paper_contract_digest(contract),
         "manuscript_ci_pass": manuscript_ci.get("pass") is True,
         "prebuttal_pass": prebuttal.get("pass") is True,
+        "paper_preparation_required": gate["paper_preparation_required"],
+        "paper_preparation_pass": gate["paper_preparation_pass"],
+        "paper_preparation_receipt_sha256": str((paper_preparation or {}).get("receipt_sha256") or ""),
         "submission_ready": gate["submission_ready"],
         "blockers": list(gate["blockers"]),
     }
@@ -541,6 +566,10 @@ def build_paper_acceptance_system_state() -> dict[str, Any]:
         "temporal_keys": list(PAPER_ACCEPTANCE_TEMPORAL_KEYS),
         "mock_review_modes": [mode.value for mode in MockReviewMode],
         "mandatory_manuscript_ci_checks": list(MANDATORY_MANUSCRIPT_CI_CHECKS),
+        "paper_preparation_protocol": {
+            "mode": "opt-in-fail-closed",
+            "legacy_contract_digest_compatible": True,
+        },
         "review_action_classes": [action.value for action in ReviewActionClass],
         "summary": {
             "paper_states": len(PAPER_ACCEPTANCE_FLOW),

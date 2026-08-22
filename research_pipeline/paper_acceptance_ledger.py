@@ -11,6 +11,10 @@ from .paper_acceptance import (
     build_story_search_receipt, build_submission_readiness_receipt, evaluate_manuscript_ci,
     evaluate_paper_transition, evaluate_prebuttal, paper_contract_digest, paper_contract_payload,
 )
+from .paper_preparation_protocol import (
+    build_paper_preparation_receipt,
+    validate_paper_preparation_receipt,
+)
 
 
 def _now() -> str:
@@ -50,6 +54,7 @@ def _refresh(row: dict[str, Any]) -> None:
         "claim_audit_receipts": sum(event.get("event_type") == "claim-audit" for event in events),
         "manuscript_ci_receipts": sum(event.get("event_type") == "manuscript-ci" for event in events),
         "prebuttal_receipts": sum(event.get("event_type") == "prebuttal" for event in events),
+        "paper_preparation_receipts": sum(event.get("event_type") == "paper-preparation" for event in events),
         "submission_readiness_receipts": sum(event.get("event_type") == "submission-readiness" for event in events),
     }
 
@@ -131,6 +136,8 @@ def _receipt_hash_valid(receipt: Mapping[str, Any]) -> bool:
             "actions": receipt.get("actions") or [],
         }
         return str(receipt.get("review_sha256") or "") == _digest(identity)
+    if receipt_type == "paper-preparation":
+        return validate_paper_preparation_receipt(receipt)
     if receipt_type == "claim-audit":
         identity = {
             "paper_id": receipt.get("paper_id"),
@@ -195,6 +202,13 @@ def _transition_gate(row: Mapping[str, Any], current: PaperState, target: PaperS
             blockers.append("claim-audit-pass-receipt-required")
         else:
             gate_receipts["claim_audit_sha256"] = receipt_sha
+    if target == PaperState.SUBMISSION_READY and str((row.get("contract") or {}).get("paper_preparation_protocol_version") or "").strip():
+        receipt = next((_valid_stage_receipt(event, "paper-preparation", contract_sha256) for event in reversed(stage_events) if event.get("event_type") == "paper-preparation"), {})
+        receipt_sha = str(receipt.get("receipt_sha256") or "")
+        if receipt.get("pass") is not True or not receipt_sha:
+            blockers.append("paper-preparation-pass-receipt-required")
+        else:
+            gate_receipts["paper_preparation_receipt_sha256"] = receipt_sha
     return blockers, gate_receipts
 
 
@@ -257,11 +271,29 @@ def record_prebuttal(root: Path, contract: PaperContract, objections: Sequence[R
     return _append(root, contract, actor, {"event_type": "prebuttal", "result": {**result, "blockers": list(result["blockers"])}})
 
 
+def record_paper_preparation(
+    root: Path,
+    contract: PaperContract,
+    packet: Mapping[str, Any],
+    actor: str = "paper-preparation",
+) -> dict[str, Any]:
+    receipt = build_paper_preparation_receipt(
+        paper_id=contract.paper_id,
+        contract_sha256=paper_contract_digest(contract),
+        packet=packet,
+    )
+    return _append(root, contract, actor, {"event_type": "paper-preparation", "receipt": receipt})
+
+
 def record_submission_readiness(root: Path, contract: PaperContract, actor: str = "submission-readiness") -> dict[str, Any]:
     row = initialize_paper_ledger(root, contract, actor)
     ci = (_latest(row, "manuscript-ci").get("result") or {"pass": False})
     prebuttal = (_latest(row, "prebuttal").get("result") or {"pass": False})
-    receipt = build_submission_readiness_receipt(contract, ci, prebuttal)
+    prep_event = _latest(row, "paper-preparation")
+    prep = prep_event.get("receipt") if isinstance(prep_event.get("receipt"), dict) else {}
+    if prep and (str(prep.get("contract_sha256") or "") != paper_contract_digest(contract) or not validate_paper_preparation_receipt(prep)):
+        prep = {}
+    receipt = build_submission_readiness_receipt(contract, ci, prebuttal, prep)
     return _append(root, contract, actor, {"event_type": "submission-readiness", "receipt": receipt})
 
 
@@ -310,7 +342,7 @@ def validate_paper_ledger(row: Mapping[str, Any]) -> list[str]:
     if str(row.get("scientific_status") or "") != str(contract.get("scientific_status") or ""):
         errors.append("paper scientific status diverges from frozen contract")
     simulated_state = PaperState.PAPER_EVIDENCE
-    simulated_row: dict[str, Any] = {"contract_sha256": contract_sha256, "events": []}
+    simulated_row: dict[str, Any] = {"contract_sha256": contract_sha256, "contract": dict(contract), "events": []}
     for event in row.get("events") or []:
         if not isinstance(event, dict):
             errors.append("paper event must be an object")
@@ -318,7 +350,7 @@ def validate_paper_ledger(row: Mapping[str, Any]) -> list[str]:
         if any(event.get(key) is True for key in ("scientific_authority", "experiment_authority", "gpu_authority", "submission_authority")):
             errors.append("paper event leaked authority")
         event_type = str(event.get("event_type") or "")
-        if event_type in {"story-search", "mock-pc-review", "claim-audit"}:
+        if event_type in {"story-search", "mock-pc-review", "claim-audit", "paper-preparation"}:
             receipt = event.get("receipt") or {}
             if not isinstance(receipt, dict) or str(receipt.get("contract_sha256") or "") != contract_sha256 or not _receipt_hash_valid(receipt):
                 errors.append(f"invalid-content-addressed-receipt:{event_type}")
@@ -382,6 +414,7 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
     latest_ci = _latest(row, "manuscript-ci").get("result") or {}
     latest_prebuttal = _latest(row, "prebuttal").get("result") or {}
     latest_readiness = _latest(row, "submission-readiness").get("receipt") or {}
+    latest_prep = _latest(row, "paper-preparation").get("receipt") or {}
     latest_review = _latest(row, "mock-pc-review").get("receipt") or {}
     latest_claim_audit = _latest(row, "claim-audit").get("receipt") or {}
     mock_modes = {}
@@ -433,6 +466,14 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
             "pass": latest_prebuttal.get("pass") is True,
             "decision_critical": int(latest_prebuttal.get("decision_critical") or 0),
             "blockers": list(latest_prebuttal.get("blockers") or []),
+        },
+        "latest_paper_preparation": {
+            "required": bool(str(contract.get("paper_preparation_protocol_version") or "").strip()),
+            "pass": latest_prep.get("pass") is True,
+            "protocol_version": str(latest_prep.get("protocol_version") or ""),
+            "receipt_sha256": str(latest_prep.get("receipt_sha256") or ""),
+            "gate_pass": dict(latest_prep.get("gate_pass") or {}),
+            "blockers": list(latest_prep.get("blockers") or []),
         },
         "latest_submission_readiness": {
             "submission_ready": latest_readiness.get("submission_ready") is True,
