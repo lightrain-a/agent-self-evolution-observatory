@@ -615,6 +615,17 @@ def main() -> None:
             session_id,
             """return {
               chapters: document.querySelectorAll('.page-chapter').length,
+              decisionConsole: document.querySelectorAll('#portfolio-current').length,
+              currentAttentionCards: document.querySelectorAll('.portfolio-attention-card').length,
+              categoryIndexLinks: document.querySelectorAll('.canonical-category-nav a').length,
+              concludedOpen: document.querySelectorAll('.lane-concluded[open]').length,
+              assetsOpen: document.querySelectorAll('.lane-assets[open]').length,
+              mementoDefaultOpen: document.querySelector('#live-memento-paper-design')?.open === true,
+              safetyDefaultOpen: document.querySelector('.agent-safety-program-fold')?.open === true,
+              auditDefaultOpen: document.querySelector('#portfolio-audit')?.open === true,
+              portfolioToc: [...document.querySelectorAll('#page-toc a')].map(a=>a.textContent.trim()),
+              pageHeight: document.documentElement.scrollHeight,
+              pageOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
               categoryGroups: document.querySelectorAll('.canonical-idea-group').length,
               categoryLanes: document.querySelectorAll('.research-category-lane').length,
               evidenceTracks: document.querySelectorAll('.human-review-idea-card .research-item-evidence-track').length,
@@ -643,7 +654,9 @@ def main() -> None:
               text: document.body.textContent || ''
             };""",
         )
-        require(idea_portfolio["chapters"] == 0 and idea_portfolio["categoryGroups"] == 7 and idea_portfolio["categoryLanes"] == 21 and idea_portfolio["evidenceTracks"] == 26 and idea_portfolio["paperHandoffs"] == 1 and idea_portfolio["paperHandoffEvidence"] == 3, f"Research Portfolio must use seven A-G groups, three reading lanes per group, one integrated evidence trail per parent ResearchItem, and one STRI PaperState handoff: {idea_portfolio}")
+        require(idea_portfolio["chapters"] == 0 and idea_portfolio["categoryGroups"] == 7 and idea_portfolio["categoryLanes"] == 21 and idea_portfolio["evidenceTracks"] == 26 and idea_portfolio["paperHandoffs"] == 1 and idea_portfolio["paperHandoffEvidence"] == 3, f"Research Portfolio must preserve seven A-G groups, three reading lanes per group, one integrated evidence trail per parent ResearchItem, and one STRI PaperState handoff: {idea_portfolio}")
+        expected_portfolio_toc=["当前需要看什么","A–G 研究组合","更新可靠性与回归控制","记忆、经验与持久知识","评价器、奖励与自纠正","任务生成与课程","工作流与结构演化","世界模型与具身适应","Agent 自进化安全与未来风险","审计与历史"]
+        require(idea_portfolio["decisionConsole"] == 1 and idea_portfolio["currentAttentionCards"] == 6 and idea_portfolio["categoryIndexLinks"] == 7 and idea_portfolio["concludedOpen"] == 0 and idea_portfolio["assetsOpen"] == 0 and not idea_portfolio["mementoDefaultOpen"] and not idea_portfolio["safetyDefaultOpen"] and not idea_portfolio["auditDefaultOpen"] and idea_portfolio["portfolioToc"] == expected_portfolio_toc and idea_portfolio["pageHeight"] < 7500 and not idea_portfolio["pageOverflow"], f"Research Portfolio must be decision-first with current attention visible and audit/history collapsed by default: {idea_portfolio}")
         require(idea_portfolio["parentCards"] == 26, f"expected all 26 human-parent histories, got {idea_portfolio['parentCards']}")
         require(idea_portfolio["standaloneCards"] == 7, f"expected only the seven validated standalone methods after paper-first authority quarantine, got {idea_portfolio['standaloneCards']}")
         require((idea_portfolio["incubationCards"],idea_portfolio["incubationP0"],idea_portfolio["incubationSummary"].get("p0_authorized"),idea_portfolio["incubationSummary"].get("gpu_authorized")) == (9,0,0,0), f"paper-first queue must remain nine design candidates with zero validated P0/GPU authority: {idea_portfolio}")
@@ -669,8 +682,7 @@ def main() -> None:
         require((cs.get("paper_ready"),cs.get("paper_quality_hold"),cs.get("paper_quality_evidence_debt"),cs.get("canonical_live_ideas"),cs.get("launchable_formal_experiments"),cs.get("legacy_p0_lifecycle")) == (1,0,0,0,0,27) and cs.get("shadow_qualification_ready") == expected_headline.get("shadow_qualification_ready") and int(cs.get("shadow_dead_ends") or 0) >= 0 and int(cs.get("shadow_holds") or 0) >= 0, f"current status invariants are wrong: rendered={cs} expected={expected_headline}")
         require(idea_portfolio["legacyFinalPass"] == 20 and idea_portfolio["experimentStops"] >= 16, f"historical lineage state is unexpectedly missing: {idea_portfolio}")
         require("Historical ICLR Paper Workspace" not in idea_portfolio["text"] and "Selected ICLR Paper Workspace" not in idea_portfolio["text"], "historical paper workspace content leaked into Paper Ideas")
-        require((("当前科研状态" in idea_portfolio["text"] and "以前的记忆效应只保留为历史观察" in idea_portfolio["text"]) or ("Current research state" in idea_portfolio["text"] and "The earlier memory effect is historical only" in idea_portfolio["text"])) and "20 个当前 FINAL-PASS" not in idea_portfolio["text"], "Paper Ideas current-state explanation is incomplete or stale FINAL-PASS framing leaked into the current view")
-        require(all(marker in idea_portfolio["text"] for marker in ("最新门禁可投稿论文","还缺的旧版论文证据","通过正式问题检查的新研究问题","正在做最小验证的新现象","因缺证据暂缓的新现象","现在允许启动的正式实验","SUBMISSION_READY")), "Research Portfolio briefing-first canonical status labels are incomplete")
+        require("20 个当前 FINAL-PASS" not in idea_portfolio["text"] and all(marker in idea_portfolio["text"] for marker in ("先看 6 个当前需要关注对象","A–G 研究组合","当前关注","审计与历史","SUBMISSION_READY")), "Research Portfolio decision-first current-state framing is incomplete or stale FINAL-PASS framing leaked into the current view")
 
         navigate("/selected-paper.html", 4)
         ensure_language("zh")

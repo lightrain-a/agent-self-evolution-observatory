@@ -31,7 +31,7 @@ EXPECTATIONS = {
     "research-timeline": (0, 0, 0, 0),
     "research-map": (4, 5, 8, 0),
     "research-directions": (3, 4, 1, 0),
-    "paper-ideas": (0, 2, 9, 0),
+    "paper-ideas": (0, 3, 7, 0),
     "experiments": (3, 4, 3, 0),
     "selected-paper": (4, 5, 22, 0),
     "bibliography": (6, 7, 8, 0),
@@ -207,6 +207,11 @@ def main() -> None:
                 ddl = execute(session_id, """return {panel:document.querySelectorAll('#iclr-2027-deadlines').length,cards:document.querySelectorAll('.rt-ddl-card').length,targets:[...document.querySelectorAll('.rt-ddl-card')].map(x=>x.dataset.target||''),dates:[...document.querySelectorAll('.rt-ddl-card>div')].map(x=>x.textContent||''),official:document.querySelector('.rt-ddl-heading>a')?.href||'',overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2};""")
                 if ddl.get("panel") != 1 or ddl.get("cards") != 2 or ddl.get("targets") != ["2026-09-19T11:59:00Z","2026-09-26T11:59:00Z"] or not all("北京时间" in x for x in ddl.get("dates", [])) or "iclr.cc/Conferences/2027/AuthorGuidelines" not in ddl.get("official", "") or ddl.get("overflow"):
                     raise AssertionError(f"research-timeline: ICLR 2027 deadline/countdown contract failed: {ddl}")
+            if page == "paper-ideas":
+                portfolio = execute(session_id, """return {console:document.querySelectorAll('#portfolio-current').length,currentCards:document.querySelectorAll('.portfolio-attention-card').length,categories:document.querySelectorAll('.canonical-category-nav a').length,currentLanes:document.querySelectorAll('.lane-current').length,concludedOpen:document.querySelectorAll('.lane-concluded[open]').length,assetsOpen:document.querySelectorAll('.lane-assets[open]').length,mementoOpen:document.querySelector('#live-memento-paper-design')?.open===true,safetyOpen:document.querySelector('.agent-safety-program-fold')?.open===true,auditOpen:document.querySelector('#portfolio-audit')?.open===true,toc:[...document.querySelectorAll('#page-toc a')].map(a=>a.textContent.trim()),scrollHeight:document.documentElement.scrollHeight,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2};""")
+                expected_toc = ["当前需要看什么","A–G 研究组合","更新可靠性与回归控制","记忆、经验与持久知识","评价器、奖励与自纠正","任务生成与课程","工作流与结构演化","世界模型与具身适应","Agent 自进化安全与未来风险","审计与历史"]
+                if portfolio.get("console") != 1 or portfolio.get("currentCards") != 6 or portfolio.get("categories") != 7 or portfolio.get("currentLanes") != 7 or portfolio.get("concludedOpen") != 0 or portfolio.get("assetsOpen") != 0 or portfolio.get("mementoOpen") or portfolio.get("safetyOpen") or portfolio.get("auditOpen") or portfolio.get("toc") != expected_toc or portfolio.get("scrollHeight",99999) > 7500 or portfolio.get("overflow"):
+                    raise AssertionError(f"paper-ideas: decision-first portfolio contract failed: {portfolio}")
             if page == "bibliography":
                 paper_details = execute(session_id, """const rows=[...document.querySelectorAll('.reference-card .paper-analysis')]; const first=rows[0]||null; const before=rows.filter(x=>x.open).length; if(first) first.querySelector('summary')?.click(); return {total:rows.length,before,firstOpened:!!first?.open};""")
                 if paper_details.get("total") != 80 or paper_details.get("before") != 0 or not paper_details.get("firstOpened"):
