@@ -55,7 +55,8 @@ from .published_experiment_audit import write_audit as write_published_audit
 from .paper_first_idea_incubation import write_paper_first_idea_incubation
 from .paper_first_fresh_saturation import write_fresh_saturation_state
 from .paper_first_discovery_transaction import write_problem_discovery_transaction
-from .paper_first_pre_f0_queue import write_pre_f0_queue
+from .paper_first_pre_f0_queue import load_pre_f0_queue, write_pre_f0_queue
+from .paper_first_problem_falsifier_preflight import load_pre_f0_problem_falsifier_preflight
 from .paper_first_discovery_frontier import build_paper_first_discovery_frontier
 from .paper_first_legacy_reduction_migration import load_public_migration
 from .paper_first_global_relation_recall import load_global_relation_recall_state, write_global_relation_recall_state
@@ -82,6 +83,20 @@ from .publication import PUBLICATION_OK_STATES, publish_generated_state
 
 def _now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+
+
+def _write_pre_f0_queue_control() -> dict[str, Any]:
+    """Refresh current Pre-F0 candidates without deleting unresolved support debt.
+
+    A later zero-candidate discovery transaction closes current candidate flow but
+    does not resolve an older support hold.  Carry-forward is allowed only when
+    the existing queue and its support preflight still match exactly; the queue
+    writer itself enforces that fail-closed contract.
+    """
+    return write_pre_f0_queue(
+        previous_state=load_pre_f0_queue(),
+        support_preflight_state=load_pre_f0_problem_falsifier_preflight(),
+    )
 
 
 def _pid_is_alive(pid: int) -> bool:
@@ -328,7 +343,7 @@ def run_cycle(
             report["steps"].append(_step("paper-design-backlog-pre-discovery", write_paper_design_backlog))
             report["steps"].append(_step("paper-first-fresh-saturation", write_fresh_saturation_state))
             report["steps"].append(_step("paper-first-discovery-transaction", lambda: write_problem_discovery_transaction(storage=storage,generator_kwargs={"portfolio_mode":True})))
-            report["steps"].append(_step("paper-first-pre-f0-queue", write_pre_f0_queue))
+            report["steps"].append(_step("paper-first-pre-f0-queue", _write_pre_f0_queue_control))
             report["steps"].append(_step("paper-first-shadow-search-admission", _run_shadow_search_admission_control))
             # Shadow scientific-object recall is strictly downstream of the live atomic transaction.
             # It only runs when live source coverage is fully closed and cannot mutate canonical Primary/Generator/Queue.

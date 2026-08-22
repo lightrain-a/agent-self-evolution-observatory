@@ -69,7 +69,7 @@ from .paper_first_sp15_identifiability_support import build_sp15_identifiability
 from .paper_first_global_relation_recall import lane_review_execution_contract_sha256, load_global_relation_recall_state
 from .paper_first_global_relation_scan_admission import build_global_relation_scan_admission, public_global_relation_scan_admission_summary
 from .paper_first_relation_coverage import relation_recall_freshness
-from .paper_first_relation_delta_preflight import load_private_relation_delta_preflight, public_relation_delta_preflight_summary
+from .paper_first_relation_delta_preflight import build_relation_delta_preflight, load_private_relation_delta_preflight, public_relation_delta_preflight_summary
 from .paper_first_paper_design_backlog import load_paper_design_backlog
 from .paper_first_post_c2_adjudication import build_post_c2_adjudication, write_post_c2_adjudication
 from .paper_first_premature_method_diagnostics import resolve_premature_method_diagnostics, write_premature_method_diagnostics
@@ -407,6 +407,34 @@ def _load_ai_consultation_automation_public() -> dict[str, Any]:
     }
 
 
+def _resolve_public_relation_delta_preflight(
+    *,
+    storage: StorageSettings,
+    generator_state: dict[str, Any],
+    relation_state: dict[str, Any],
+    freshness_state: dict[str, Any],
+    private_state: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Prefer a portable exact-current delta proof over machine-local private state.
+
+    When the current relation universe exactly matches the last completed scan,
+    zero new reviewed sources is derivable from the portable Generator/Relation
+    digests alone.  This keeps daily/CI projections from regressing to NOT_RUN on
+    hosts that do not carry the research host's private delta-preflight file.
+    """
+    private = private_state if private_state is not None else load_private_relation_delta_preflight(storage=storage)
+    if freshness_state.get("status") == "CURRENT_RELATION_UNIVERSE":
+        exact = build_relation_delta_preflight(
+            storage=storage,
+            generator_state=generator_state,
+            relation_state=relation_state,
+            cache_records=[],
+        )
+        if exact.get("status") == "RELATION_DELTA_CURRENT_UNIVERSE_NO_NEW_SOURCES":
+            return exact
+    return private
+
+
 def build_research_system_state() -> dict[str, Any]:
     storage = StorageSettings.from_env()
     corpus = _load_corpus_with_site_fallback()
@@ -445,7 +473,12 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_paper_design_backlog = load_paper_design_backlog()
     paper_first_global_relation_recall = load_global_relation_recall_state()
     paper_first_global_relation_freshness = relation_recall_freshness(paper_first_problem_generator, paper_first_global_relation_recall)
-    paper_first_global_relation_delta_private = load_private_relation_delta_preflight(storage=storage)
+    paper_first_global_relation_delta_private = _resolve_public_relation_delta_preflight(
+        storage=storage,
+        generator_state=paper_first_problem_generator,
+        relation_state=paper_first_global_relation_recall,
+        freshness_state=paper_first_global_relation_freshness,
+    )
     paper_first_global_relation_delta_preflight = public_relation_delta_preflight_summary(paper_first_global_relation_delta_private)
     paper_first_global_relation_scan_admission = public_global_relation_scan_admission_summary(build_global_relation_scan_admission(primary_state=paper_first_primary_evidence,generator_state=paper_first_problem_generator,queue_state=paper_first_problem_gate_queue,relation_state=paper_first_global_relation_recall,delta_state=paper_first_global_relation_delta_private))
     paper_first_problem_search_portfolio = _load_shadow_search_portfolio_public()
@@ -1695,7 +1728,22 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             if snapshot: pre_f0_snapshots.append(snapshot)
         if len(pre_f0_snapshots)!=len(pre_f0_rows) or len(set(pre_f0_snapshots))!=len(pre_f0_snapshots): errors.append("canonical pre-F0 candidate snapshots must be present and unique")
         if any(row.get("scientific_authority") is not False or any((row.get("authority") or {}).get(key) is not False for key in ("problem_gate","paper_design","method","experiment","p0","gpu")) or str(row.get("next_if_positive") or "")!="RERUN_EXACT_SAME_INFORMATION_REDUCTION" for row in pre_f0_rows): errors.append("canonical pre-F0 row leaks authority or bypasses exact-reduction recheck")
-        if generator_double_funnel and int(generator_summary.get("pre_f0_eligible") or 0)!=int(pre_f0_summary.get("queued") or 0): errors.append("canonical generator and pre-F0 queue accounting must match")
+        carried_support_debt=pre_f0.get("status")=="PRE_F0_QUEUE_CARRIED_FORWARD_SUPPORT_DEBT"
+        if carried_support_debt:
+            if (
+                pre_f0_policy.get("zero_candidate_generator_may_preserve_exact_unresolved_support_debt") is not True
+                or pre_f0_policy.get("carried_forward_rows_are_not_current_generator_output") is not True
+                or str(pre_f0.get("current_generator_run_id") or "")!=str(generator.get("run_id") or "")
+                or str(pre_f0.get("current_generator_status") or "")!=str(generator.get("status") or "")
+                or str(generator.get("status") or "") not in {"GENERATED_ZERO_CANDIDATES","SKIPPED_SOURCE_COVERAGE_SATURATED"}
+                or int(generator_summary.get("pre_f0_eligible") or 0)!=0
+                or int(pre_f0_summary.get("carried_forward_support_debt") or 0)!=int(pre_f0_summary.get("queued") or 0)
+                or pre_f0_summary.get("current_generator_pre_f0_candidates") != 0
+                or not str(pre_f0.get("carried_forward_from_generator_run_id") or "")
+            ):
+                errors.append("carried-forward Pre-F0 support debt must bind an older exact queue to the current zero-candidate Generator without becoming current Generator output")
+        elif generator_double_funnel and int(generator_summary.get("pre_f0_eligible") or 0)!=int(pre_f0_summary.get("queued") or 0):
+            errors.append("canonical generator and pre-F0 queue accounting must match")
     pre_f0_support=state.get("paper_first_pre_f0_problem_falsifier_preflight") or {};pre_f0_support_summary=pre_f0_support.get("summary") or {};pre_f0_support_authority=pre_f0_support.get("authority") or {}
     if pre_f0_support:
         if pre_f0_support.get("scientific_authority") is not False or any(pre_f0_support_authority.get(key) is not False for key in ("canonical_generator","canonical_problem_gate","paper_design","method","experiment","p0","gpu")): errors.append("canonical Pre-F0 support preflight must remain zero-authority")

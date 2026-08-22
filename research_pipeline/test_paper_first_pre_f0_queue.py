@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 import unittest
 
-from .paper_first_pre_f0_queue import build_pre_f0_queue
+from .paper_first_pre_f0_queue import build_pre_f0_queue, carry_forward_unresolved_support_debt
 
 
 class PaperFirstPreF0QueueTest(unittest.TestCase):
@@ -75,6 +75,49 @@ class PaperFirstPreF0QueueTest(unittest.TestCase):
         self.assertEqual(state["status"],"PRE_F0_QUEUE_EMPTY")
         self.assertEqual(state["summary"]["queued"],0)
         self.assertFalse(state["scientific_authority"])
+
+    def test_zero_candidate_generator_carries_forward_exact_unresolved_support_debt(self) -> None:
+        previous=build_pre_f0_queue({"run_id":"old-run","status":"GENERATED_PRE_F0_EVIDENCE_ACQUISITION","policy":{"search_portfolio_enabled":True,"exact_reduction_required_before_final_problem_gate":True},"pre_f0_candidates":[self.candidate()]})
+        row=previous["rows"][0]
+        support={
+            "run_id":"old-run","status":"PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE","scientific_authority":False,
+            "authority":{"canonical_generator":False,"canonical_problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+            "summary":{"queued":1,"support_qualified":0,"hold_support_unavailable":1,"falsifier_executed":0},
+            "rows":[{"candidate_id":row["candidate_id"],"candidate_identity_version":row["candidate_identity_version"],"candidate_snapshot_sha256":row["candidate_snapshot_sha256"],"disposition":"HOLD_SUPPORT_UNAVAILABLE"}],
+        }
+        current={"run_id":"new-zero-run","status":"GENERATED_ZERO_CANDIDATES","policy":{"search_portfolio_enabled":True,"exact_reduction_required_before_final_problem_gate":True},"pre_f0_candidates":[]}
+        state=carry_forward_unresolved_support_debt(current,previous,support)
+        self.assertEqual(state["status"],"PRE_F0_QUEUE_CARRIED_FORWARD_SUPPORT_DEBT")
+        self.assertEqual(state["source_generator_run_id"],"old-run")
+        self.assertEqual(state["current_generator_run_id"],"new-zero-run")
+        self.assertEqual(state["summary"]["carried_forward_support_debt"],1)
+        self.assertEqual(state["summary"]["current_generator_pre_f0_candidates"],0)
+        self.assertEqual(state["rows"],[row])
+        self.assertFalse(state["scientific_authority"])
+        self.assertTrue(state["policy"]["carried_forward_rows_are_not_current_generator_output"])
+
+    def test_support_debt_carry_forward_fails_closed_on_snapshot_mismatch(self) -> None:
+        previous=build_pre_f0_queue({"run_id":"old-run","status":"GENERATED_PRE_F0_EVIDENCE_ACQUISITION","policy":{"search_portfolio_enabled":True,"exact_reduction_required_before_final_problem_gate":True},"pre_f0_candidates":[self.candidate()]})
+        row=previous["rows"][0]
+        support={
+            "run_id":"old-run","status":"PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE","scientific_authority":False,
+            "authority":{"canonical_generator":False,"canonical_problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+            "summary":{"queued":1,"support_qualified":0,"hold_support_unavailable":1,"falsifier_executed":0},
+            "rows":[{"candidate_id":row["candidate_id"],"candidate_identity_version":row["candidate_identity_version"],"candidate_snapshot_sha256":"0"*64,"disposition":"HOLD_SUPPORT_UNAVAILABLE"}],
+        }
+        current={"run_id":"new-zero-run","status":"GENERATED_ZERO_CANDIDATES","policy":{"search_portfolio_enabled":True,"exact_reduction_required_before_final_problem_gate":True},"pre_f0_candidates":[]}
+        state=carry_forward_unresolved_support_debt(current,previous,support)
+        self.assertEqual(state["status"],"PRE_F0_QUEUE_EMPTY")
+        self.assertEqual(state["summary"]["queued"],0)
+
+    def test_new_pre_f0_candidates_replace_older_support_debt(self) -> None:
+        previous=build_pre_f0_queue({"run_id":"old-run","status":"GENERATED_PRE_F0_EVIDENCE_ACQUISITION","policy":{"search_portfolio_enabled":True,"exact_reduction_required_before_final_problem_gate":True},"pre_f0_candidates":[self.candidate()]})
+        current_candidate=copy.deepcopy(self.candidate());current_candidate["candidate_id"]="PORT-002";current_candidate["title"]="A new current candidate"
+        current={"run_id":"new-run","status":"GENERATED_PRE_F0_EVIDENCE_ACQUISITION","policy":{"search_portfolio_enabled":True,"exact_reduction_required_before_final_problem_gate":True},"pre_f0_candidates":[current_candidate]}
+        state=carry_forward_unresolved_support_debt(current,previous,{})
+        self.assertEqual(state["status"],"PRE_F0_QUEUE_READY")
+        self.assertEqual(state["source_generator_run_id"],"new-run")
+        self.assertEqual([row["candidate_id"] for row in state["rows"]],["PORT-002"])
 
 
 if __name__ == "__main__":

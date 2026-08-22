@@ -36,6 +36,8 @@ POLICY = {
     "pre_f0_cannot_enter_persistent_dead_end_memory": True,
     "candidate_id_is_run_local_ordinal": True,
     "candidate_snapshot_sha256_required": True,
+    "zero_candidate_generator_may_preserve_exact_unresolved_support_debt": True,
+    "carried_forward_rows_are_not_current_generator_output": True,
     "automatic_provider_calls_authorized": False,
     "automatic_method_authority": False,
     "automatic_experiment_authority": False,
@@ -131,8 +133,84 @@ def build_pre_f0_queue(generator: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def write_pre_f0_queue(json_path: Path = DEFAULT_JSON, js_path: Path = DEFAULT_JS, *, generator_state: dict[str, Any] | None = None) -> dict[str, Any]:
-    state = build_pre_f0_queue(generator_state if generator_state is not None else load_problem_generator_state(GENERATOR_JSON))
+def carry_forward_unresolved_support_debt(
+    generator: dict[str, Any],
+    previous_queue: dict[str, Any],
+    support_preflight: dict[str, Any],
+) -> dict[str, Any]:
+    """Preserve an exact unresolved support queue across a later zero-candidate transaction.
+
+    The carried rows remain bound to their original canonical Generator run and
+    candidate snapshots.  The current zero-candidate Generator is recorded only
+    as search-control context; it does not become the source of the older rows.
+    """
+    fresh = build_pre_f0_queue(generator)
+    if fresh.get("rows"):
+        return fresh
+    if str(generator.get("status") or "") not in {"GENERATED_ZERO_CANDIDATES", "SKIPPED_SOURCE_COVERAGE_SATURATED"}:
+        return fresh
+    rows = [dict(row) for row in previous_queue.get("rows") or [] if isinstance(row, dict)]
+    support_rows = [dict(row) for row in support_preflight.get("rows") or [] if isinstance(row, dict)]
+    previous_summary = previous_queue.get("summary") or {}
+    support_summary = support_preflight.get("summary") or {}
+    if not rows or int(previous_summary.get("queued") or 0) != len(rows):
+        return fresh
+    if previous_queue.get("scientific_authority") is not False or any((previous_queue.get("authority") or {}).get(key) is not False for key in AUTHORITY):
+        return fresh
+    if support_preflight.get("status") != "PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE" or support_preflight.get("scientific_authority") is not False:
+        return fresh
+    if any(value is not False for value in (support_preflight.get("authority") or {}).values()):
+        return fresh
+    if (
+        int(support_summary.get("queued") or 0) != len(rows)
+        or int(support_summary.get("support_qualified") or 0) != 0
+        or int(support_summary.get("hold_support_unavailable") or 0) != len(rows)
+        or int(support_summary.get("falsifier_executed") or 0) != 0
+        or len(support_rows) != len(rows)
+        or any(str(row.get("disposition") or "") != "HOLD_SUPPORT_UNAVAILABLE" for row in support_rows)
+    ):
+        return fresh
+    queue_identity = {
+        (str(row.get("candidate_identity_version") or ""), str(row.get("candidate_snapshot_sha256") or ""))
+        for row in rows
+    }
+    support_identity = {
+        (str(row.get("candidate_identity_version") or ""), str(row.get("candidate_snapshot_sha256") or ""))
+        for row in support_rows
+    }
+    if len(queue_identity) != len(rows) or queue_identity != support_identity:
+        return fresh
+    out = json.loads(json.dumps(previous_queue, ensure_ascii=False))
+    out["schema_version"] = "1.1"
+    out["generated_at"] = _now()
+    out["status"] = "PRE_F0_QUEUE_CARRIED_FORWARD_SUPPORT_DEBT"
+    out["policy"] = {**dict(out.get("policy") or {}), **dict(POLICY)}
+    out["current_generator_run_id"] = str(generator.get("run_id") or "")
+    out["current_generator_status"] = str(generator.get("status") or "")
+    out["carried_forward_from_generator_run_id"] = str(previous_queue.get("source_generator_run_id") or "")
+    out["support_preflight_run_id"] = str(support_preflight.get("run_id") or "")
+    out["summary"] = {
+        **dict(previous_summary),
+        "carried_forward_support_debt": len(rows),
+        "current_generator_pre_f0_candidates": 0,
+    }
+    out["scientific_authority"] = False
+    out["authority"] = dict(AUTHORITY)
+    return out
+
+
+def write_pre_f0_queue(
+    json_path: Path = DEFAULT_JSON,
+    js_path: Path = DEFAULT_JS,
+    *,
+    generator_state: dict[str, Any] | None = None,
+    previous_state: dict[str, Any] | None = None,
+    support_preflight_state: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    generator = generator_state if generator_state is not None else load_problem_generator_state(GENERATOR_JSON)
+    state = build_pre_f0_queue(generator)
+    if previous_state is not None and support_preflight_state is not None and not state.get("rows"):
+        state = carry_forward_unresolved_support_debt(generator, previous_state, support_preflight_state)
     json_path.parent.mkdir(parents=True, exist_ok=True)
     json_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     js_path.write_text("window.PAPER_FIRST_PRE_F0_QUEUE = " + json.dumps(state, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")

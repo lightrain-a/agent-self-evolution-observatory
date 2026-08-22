@@ -7,10 +7,10 @@ from pathlib import Path
 
 from .paper_first_primary_evidence import SUPPORTED_TYPED_EVIDENCE_SNAPSHOT_VERSIONS, TYPED_EVIDENCE_EXTRACTION_VERSION
 from .paper_first_problem_discovery_contract import DISCOVERY_OPERATOR_VERSION, SEARCH_PORTFOLIO_PRIMITIVES
-from .paper_first_relation_coverage import relation_recall_freshness
+from .paper_first_relation_coverage import relation_recall_freshness, relation_universe_digest
 from .paper_first_discovery_frontier import build_paper_first_discovery_frontier
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier
-from .research_system import _canonicalize_public_state_locations, build_research_system_state, validate_state
+from .research_system import _canonicalize_public_state_locations, _resolve_public_relation_delta_preflight, build_research_system_state, validate_state
 
 
 class ResearchSystemTest(unittest.TestCase):
@@ -968,6 +968,23 @@ class ResearchSystemTest(unittest.TestCase):
         stale=copy.deepcopy(state)
         stale["paper_first_global_relation_freshness"]["status"]=("CURRENT_RELATION_UNIVERSE" if expected["status"]!="CURRENT_RELATION_UNIVERSE" else "STALE_RELATION_UNIVERSE")
         self.assertTrue(any("freshness must match embedded Generator and Relation state" in error for error in validate_state(stale)))
+
+    def test_current_relation_universe_reconstructs_zero_delta_without_private_preflight(self) -> None:
+        receipts=[{"run_id":"scan-r1","source_refs":["arXiv:1","arXiv:2","arXiv:3","arXiv:4"],"scientific_authority":False}]
+        digest=relation_universe_digest(receipts)
+        generator={"saturation_memory":{"portable_review_receipts":receipts}}
+        relation={"last_completed_scan":{"run_id":"scan-r1","relation_universe_digest":digest}}
+        private={"schema_version":"1.0","status":"NOT_RUN","summary":{},"scientific_authority":False}
+        state=_resolve_public_relation_delta_preflight(storage=object(),generator_state=generator,relation_state=relation,freshness_state={"status":"CURRENT_RELATION_UNIVERSE"},private_state=private)
+        self.assertEqual(state["status"],"RELATION_DELTA_CURRENT_UNIVERSE_NO_NEW_SOURCES")
+        self.assertEqual(state["summary"]["new_reviewed_sources"],0)
+        self.assertFalse(state["summary"]["model_scan_authorized"])
+        self.assertEqual(state["boundary_source"],"CURRENT_RELATION_UNIVERSE_EXACT_DIGEST")
+
+    def test_stale_relation_universe_preserves_private_delta_state(self) -> None:
+        private={"schema_version":"1.0","status":"HOLD_RELATION_DELTA_CACHE_INCOMPLETE","summary":{"cache_missing_sources":2},"scientific_authority":False}
+        state=_resolve_public_relation_delta_preflight(storage=object(),generator_state={},relation_state={},freshness_state={"status":"STALE_RELATION_UNIVERSE"},private_state=private)
+        self.assertIs(state,private)
 
     def test_relation_delta_preflight_is_typed_opportunity_only_and_cannot_reopen(self) -> None:
         state=copy.deepcopy(self.state)

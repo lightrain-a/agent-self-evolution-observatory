@@ -7,7 +7,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
-from .automation_cycle import _advisory_step, _run_discovery_frontier_control, _run_external_system_learning_review, _run_global_relation_control, _run_public_projection_invariants, _run_shadow_continuation_frontier_control, _run_shadow_search_admission_control, _step, _sync_literature, cycle_lock, run_cycle
+from .automation_cycle import _advisory_step, _run_discovery_frontier_control, _run_external_system_learning_review, _run_global_relation_control, _run_public_projection_invariants, _run_shadow_continuation_frontier_control, _run_shadow_search_admission_control, _step, _sync_literature, _write_pre_f0_queue_control, cycle_lock, run_cycle
 
 
 class AutomationCycleAIConsultationTest(unittest.TestCase):
@@ -72,6 +72,13 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
         self.assertEqual(result["fallback"],"paper-first-primary-evidence will use low-rate arXiv primary discovery")
         self.assertFalse(result["scientific_authority"])
         sync.assert_not_called()
+
+    def test_pre_f0_control_passes_existing_queue_and_preflight_to_writer(self) -> None:
+        prior={"status":"PRE_F0_QUEUE_READY"};support={"status":"PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE"};written={"status":"PRE_F0_QUEUE_CARRIED_FORWARD_SUPPORT_DEBT"}
+        with patch("research_pipeline.automation_cycle.load_pre_f0_queue",return_value=prior), patch("research_pipeline.automation_cycle.load_pre_f0_problem_falsifier_preflight",return_value=support), patch("research_pipeline.automation_cycle.write_pre_f0_queue",return_value=written) as writer:
+            result=_write_pre_f0_queue_control()
+        self.assertEqual(result,written)
+        writer.assert_called_once_with(previous_state=prior,support_preflight_state=support)
 
     def test_cycle_places_ai_consultation_between_pre_state_and_final_state(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
