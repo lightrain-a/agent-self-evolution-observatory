@@ -17,6 +17,10 @@ from research_pipeline.asset_first_stri_public_status import build_asset_first_s
 from research_pipeline.paper_first_problem_discovery_contract import build_problem_discovery_contract_state
 from research_pipeline.paper_first_pre_f0_queue import load_pre_f0_queue
 from research_pipeline.paper_first_problem_falsifier_preflight import load_pre_f0_problem_falsifier_preflight
+from research_pipeline.pre_researchitem_candidate_registry import (
+    build_pre_researchitem_candidate_registry,
+    validate_pre_researchitem_candidate_registry,
+)
 
 GEN = ROOT / "generated"
 
@@ -62,6 +66,11 @@ shadow_admission = load("paper-first-shadow-search-admission.json")
 positive_local = load("positive-residual-memory-local-mechanism-readjudication-20260816.json")
 positive_temporal = load("positive-residual-memory-temporal-exposure-principle-readjudication-20260816.json")
 positive_treatment = load("positive-residual-memory-treatment-semantics-principle-readjudication-20260816.json")
+pre_researchitem = build_pre_researchitem_candidate_registry(ROOT)
+pre_researchitem_errors = validate_pre_researchitem_candidate_registry(pre_researchitem)
+if pre_researchitem_errors:
+    raise RuntimeError("invalid pre-ResearchItem candidate registry:\n- " + "\n- ".join(pre_researchitem_errors))
+pre_researchitem_summary = pre_researchitem.get("summary", {})
 
 # STRI is a selected-paper/publication projection with its own content-addressed
 # source chain. Do not source it from the broader research-system snapshot: that
@@ -158,6 +167,9 @@ state = {
         "paper_quality_evidence_debt": int(stri_summary.get("paper_quality_evidence_debt", 0)),
         "canonical_live_ideas": int(queue_summary.get("paper_design_eligible", 0)),
         "canonical_problem_gate_pass": int(queue_summary.get("passed_problem_gate", 0)),
+        "pre_researchitem_problem_gate_pass": int(pre_researchitem_summary.get("pre_researchitem_candidates", 0)),
+        "canonical_live_pre_researchitem_candidates": int(pre_researchitem_summary.get("canonical_consumer_surface_live", 0)),
+        "pre_researchitem_experiment_holds": int(pre_researchitem_summary.get("experiment_holds", 0)),
         "canonical_paper_design_backlog": int(backlog_summary.get("pending_human_paper_design", 0)),
         "idea_search_raw_seeds": int(generator_summary.get("raw_seeds", 0)),
         "idea_search_semantic_unique": int(generator_summary.get("semantic_unique_seeds", 0)),
@@ -195,6 +207,17 @@ state = {
         "fresh_ready_problem_review": int(fresh_phenomenon_summary.get("ready_for_problem_review", 0)),
         "method_authorized": 0,
         "gpu_authorized": 0,
+    },
+    "pre_researchitem_candidates": {
+        "status": "CANONICAL_LIVE_PRE_RESEARCHITEM_INDEX",
+        "count": int(pre_researchitem_summary.get("pre_researchitem_candidates", 0)),
+        "canonical_consumer_surface_live": int(pre_researchitem_summary.get("canonical_consumer_surface_live", 0)),
+        "experiment_holds": int(pre_researchitem_summary.get("experiment_holds", 0)),
+        "scientific_authority": False,
+        "experiment_authority": False,
+        "promotion_authority": False,
+        "rows": list(pre_researchitem.get("candidates") or []),
+        "interpretation": "ProblemGate-passed paper-design candidates can be canonical and live before ResearchItem/PaperState promotion. This index makes that state enumerable without changing A-G or PaperRegistry counts.",
     },
     "leading_paper_track": {
         "paper_id": sys_stri.get("paper_id", "STRI"),

@@ -76,6 +76,7 @@ REQUIRED_STATIC = [
     "research-map.html", "research-map-view.js", "research-map.css", "research-landscape-data.js",
     "idea-lab.css",
     "current-research-status-view.js", "generated/current-research-status.json", "generated/current-research-status.js",
+    "generated/pre-researchitem-candidates.json", "generated/pre-researchitem-candidates.js",
     "generated/research-items.json", "generated/research-items.js", "generated/paper-registry.json", "generated/paper-registry.js",
     "research_pipeline/research_item_state.py", "research_pipeline/test_research_item_state.py", "scripts/build_research_items.py",
     "generated/research-memory-wiki.json", "generated/research-memory-wiki.js",
@@ -94,6 +95,7 @@ def main() -> None:
             fail(f"missing required file {name}")
 
     current_status = json.loads((ROOT / "generated" / "current-research-status.json").read_text(encoding="utf-8"))
+    pre_researchitem = json.loads((ROOT / "generated" / "pre-researchitem-candidates.json").read_text(encoding="utf-8"))
     research_system = json.loads((ROOT / "generated" / "research-system-state.json").read_text(encoding="utf-8"))
     research_memory = json.loads((ROOT / "generated" / "research-memory-wiki.json").read_text(encoding="utf-8"))
     research_timeline = json.loads((ROOT / "generated" / "research-timeline.json").read_text(encoding="utf-8"))
@@ -117,6 +119,20 @@ def main() -> None:
         fail("support/current-substrate stops must remain HOLD in canonical ResearchItem state")
     if (ri_by_code.get("E-7") or {}).get("scientific_state") != "PAPER_READY" or ((ri_by_code.get("E-7") or {}).get("paper_transition") or {}).get("paper_id") != "STRI":
         fail("E-7 must hand off to STRI PaperState")
+    pre_rows = pre_researchitem.get("candidates") or []
+    pre_by_id = {row.get("candidate_id"): row for row in pre_rows}
+    memento_pre = pre_by_id.get("MEMENTO-JOINT-BOUNDARY-CONTROL") or {}
+    pre_summary = pre_researchitem.get("summary") or {}
+    current_pre = current_status.get("pre_researchitem_candidates") or {}
+    current_pre_rows = {row.get("candidate_id"): row for row in current_pre.get("rows") or []}
+    if pre_researchitem.get("policy", {}).get("read_only_projection") is not True or any(pre_researchitem.get("policy", {}).get(key) is not False for key in ("scientific_authority", "experiment_authority", "promotion_authority")):
+        fail(f"pre-ResearchItem registry must remain read-only and zero-authority: {pre_researchitem.get('policy')}")
+    if int(pre_summary.get("pre_researchitem_candidates") or 0) != 1 or int(pre_summary.get("canonical_consumer_surface_live") or 0) != 1 or int(pre_summary.get("experiment_holds") or 0) != 1:
+        fail(f"pre-ResearchItem registry must enumerate the one live held MEMENTO candidate: {pre_summary}")
+    if not memento_pre or (memento_pre.get("canonical_consumer_surface") or {}).get("live") is not True or (memento_pre.get("promotion") or {}).get("research_item") is not False or (memento_pre.get("promotion") or {}).get("paper_state") is not False or (memento_pre.get("experiment_gate") or {}).get("episodes") != 36 or (memento_pre.get("experiment_gate") or {}).get("status") != "HOLD_EXACT_MEMENTO_RUNTIME_ASSETS_MISSING":
+        fail(f"MEMENTO must remain canonical/live but pre-ResearchItem/PaperState and exact-runtime F0-held: {memento_pre}")
+    if "MEMENTO-JOINT-BOUNDARY-CONTROL" not in current_pre_rows or int((current_status.get("headline") or {}).get("canonical_live_pre_researchitem_candidates") or 0) != 1:
+        fail(f"current research status must consume the pre-ResearchItem registry: {current_pre}")
     papers = paper_registry.get("papers") or []
     papers_by_id = {row.get("paper_id"): row for row in papers}
     stri_registry = papers_by_id.get("STRI") or {}

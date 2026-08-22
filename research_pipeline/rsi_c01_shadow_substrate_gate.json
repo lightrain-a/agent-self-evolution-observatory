@@ -1,0 +1,160 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "RSI-C01",
+  "title": "Intervention-surface lockout breaks recursive self-intervention closure",
+  "portfolio_class": "SHADOW_HOLD_NOT_PROJECTED",
+  "status": "HOLD_SUBSTRATE_NOT_YET_QUALIFIED",
+  "scientific_object": {
+    "broad_claim_status": "NOVELTY_FAIL",
+    "broad_claim": "Recursive/self-referential agents can improve their own scaffold or tools.",
+    "narrow_claim_status": "PASS_PROVISIONAL_CLOSEST_WORK_ONLY",
+    "narrow_claim": "When the capability used for self-reading, self-writing, and self-verification itself enters the fault domain, under what conditions does read-write-verify recursive closure break, and can a strictly bounded out-of-band repair side-channel restore that closure?",
+    "principal_difference": "intervention-surface lockout breaks recursive closure",
+    "promotion_status": "FORBIDDEN_UNTIL_ALL_SUBSTRATE_GATES_PASS"
+  },
+  "closest_work_boundary": {
+    "decision": "PASS_PROVISIONAL_NARROW_CLAIM_ONLY",
+    "broad_search": "STOPPED_LOW_MARGINAL_VALUE",
+    "collision_watch_only": "self-harness/self-modification x runtime tool failure/fault injection x repair side-channel",
+    "covered_by_existing_work": [
+      "DGM: recursive code self-modification and inherited self-modification capability",
+      "SICA: coding agent edits itself using coding tools",
+      "POLARIS: inspect policy/traces, produce persistent policy patch, continue",
+      "Self-Harness: prompts, tools, and execution harness are mutable optimization objects",
+      "runtime tool-failure benchmarks: availability denial, silent no-op, corrupted state, schema mismatch, retry/fallback/verification"
+    ],
+    "surviving_intersection": "The intervention capability responsible for self-inspection, self-modification, or self-verification is itself the faulted resource, rather than an ordinary task tool.",
+    "novelty_authority": false
+  },
+  "substrate": {
+    "primary": "Exo (exoharness/exo)",
+    "qualification": "PARTIAL_W_BOUNDARY_FEASIBILITY_ONLY",
+    "why_close": [
+      "The source tree is mounted into the agent sandbox at /workspace/exo and is intended to be readable and modifiable by the agent.",
+      "Canonical event history is host-side/outside the sandbox and survives ordinary restart/rewind, giving an external lineage domain.",
+      "The default harness exposes shell-class execution plus a host-side rebuild/restart capability, so self-intervention is a real multi-path capability surface rather than a single write_file tool.",
+      "The project is actively discussing canonical writer/harness identity when harness mutability is allowed, which is adjacent to the recursive trust boundary required here."
+    ],
+    "source_scan": {
+      "repository": "https://github.com/exoharness/exo",
+      "branch": "main",
+      "scanned_at": "2026-08-22",
+      "exact_main_sha": null,
+      "exact_pin_status": "HOLD_REMOTE_PIN_UNRESOLVED_DUE_GIT_TLS_SUPPORT_FAILURE",
+      "last_independent_public_pin_observed": "1c48c25332342d346b75b7d2add7b70c5d12b961",
+      "last_independent_public_pin_date": "2026-07-26",
+      "policy": "Do not treat the July pin as the current main SHA; acquire an exact upstream pin before any Exo-specific pilot."
+    }
+  },
+  "capability_equivalence_map": {
+    "R": {
+      "object": "self source/state needed to diagnose the intervention surface",
+      "equivalent_paths": [
+        "shell/cat/rg over /workspace/exo",
+        "Python or other interpreter reads over /workspace/exo",
+        "host-side canonical event introspection where exposed",
+        "self-map and prompt/harness source inspection"
+      ],
+      "qualified_lockout": false,
+      "reason": "No exhaustive Exo-specific read mediation has been demonstrated."
+    },
+    "W": {
+      "object": "persistent self source/tool state that changes the recursive object",
+      "equivalent_paths": [
+        "shell redirection",
+        "Python file write",
+        "sed -i",
+        "tee",
+        "rename/replace",
+        "chmod then write",
+        "remove/recreate",
+        "git/patch-class writes when installed",
+        "workspace-local tool-management writes"
+      ],
+      "qualified_lockout": "PARTIAL_RESOURCE_BOUNDARY_PASS",
+      "reason": "A read-only bind mount with no Docker socket and all Linux capabilities dropped blocked every enumerated direct file-write path; tool-name denial and same-owner mode bits did not."
+    },
+    "V": {
+      "object": "the mechanism that establishes whether a self-edit is valid and makes it active",
+      "equivalent_paths": [
+        "shell-run build/test/typecheck commands",
+        "host-side rebuild_and_restart_exo capability",
+        "post-restart canonical event/history inspection",
+        "other build/test endpoints reachable through unrestricted shell"
+      ],
+      "qualified_lockout": false,
+      "reason": "Disabling one verifier/restart tool leaves shell-equivalent build/test paths; no verifier firewall has yet mediated the whole class."
+    }
+  },
+  "dry_run": {
+    "kind": "CAPABILITY_EQUIVALENCE_WRITE_BOUNDARY_PROBE",
+    "host": "root@10.42.8.52",
+    "run_root": "/data/wyt/agent-self-evolution-observatory/runs/rsi-c01-exo-lockout-dryrun-20260822T214628+0800",
+    "receipt": "/data/wyt/agent-self-evolution-observatory/runs/rsi-c01-exo-lockout-dryrun-20260822T214628+0800/capability-lockout-dryrun.json",
+    "receipt_sha256": "10b308c7ddd0addb23a6637cf2acfdd62f79aa912d525960f90985e735c0918e",
+    "model_calls": 0,
+    "gpu_calls": 0,
+    "environment": {
+      "docker_image": "python:3.12-alpine",
+      "network": "none",
+      "linux_capabilities": "ALL_DROPPED",
+      "docker_socket_mounted": false
+    },
+    "results": {
+      "rw_equivalent_write_paths_mutating": 7,
+      "rw_equivalent_write_paths_total": 7,
+      "ro_equivalent_write_paths_mutating": 0,
+      "ro_equivalent_write_paths_total": 7,
+      "same_owner_mode_bits_bypassed": true,
+      "write_resource_boundary_supported": true,
+      "full_rwv_lockout_qualified": false
+    },
+    "scientific_interpretation": "The dry-run falsifies tool-name and chmod-style W lockout as capability boundaries and establishes that a resource-level read-only boundary can block the enumerated W-equivalent paths. It does not establish full recursive closure lockout because R and V remain unqualified.",
+    "scientific_authority": false
+  },
+  "promotion_gates": [
+    {
+      "id": "G1_CAPABILITY_LEVEL_LOCKOUT",
+      "status": "PARTIAL_W_ONLY",
+      "pass_rule": "Enumerate functionally equivalent R/W/V paths and demonstrate that the full-lockout arm cannot bypass the intended fault through shell, interpreters, patch/git plumbing, tool-management state, rebuild/restart, or another host API.",
+      "current_result": "W resource-boundary mechanism supported; full R/W/V class lockout not yet qualified."
+    },
+    {
+      "id": "G2_RECURSIVE_OBJECT_EXTERNAL_SUPERVISION_SEPARATION",
+      "status": "PENDING",
+      "pass_rule": "The modified harness/code persists across generations while checkpoint, lineage, and evaluator remain outside the fault domain; the supervisor may only restore a predeclared primitive and may not author the repair."
+    },
+    {
+      "id": "G3_PRINCIPAL_INTERACTION_PILOT",
+      "status": "PENDING",
+      "pass_rule": "No-fault sustains R-to-W-to-V; intervention-surface lockout collapses closure; the minimal out-of-band primitive restores it; fixed-agent, history-only reflection, and hidden redundant-tool controls do not recover equally."
+    }
+  ],
+  "next_gate": {
+    "name": "EXO_SPECIFIC_VERIFICATION_FIREWALL_AND_FULL_RWV_DRY_RUN",
+    "design": [
+      "Treat SELF_SRC, SELF_TOOL_STATE, CANONICAL_LOG, and BUILD_VERIFY_ENDPOINT as separately labeled resources.",
+      "Keep canonical lineage/evaluator outside the recursive fault domain.",
+      "Use the demonstrated resource-level boundary for W rather than tool-name denial.",
+      "Interpose V at the build/test/restart endpoint so shell cannot reproduce verification through an alternate route.",
+      "Expose exactly one predeclared out-of-band repair primitive whose semantics are restoration of capability, not authoring a repair patch."
+    ],
+    "execution_authorized": false
+  },
+  "projection_policy": {
+    "generated_frontend": false,
+    "research_item": false,
+    "paper_state": false,
+    "canonical_consumer_surface": false,
+    "reason": "RSI-C01 remains shadow/HOLD until all substrate gates pass."
+  },
+  "authority": {
+    "scientific": false,
+    "research_item_promotion": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}

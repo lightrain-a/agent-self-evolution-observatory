@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-22T06:40:02+00:00",
-  "source_revision": "5345ba8447c681482d7900424c0798e0398f7f8e",
+  "generated_at": "2026-08-22T13:50:19+00:00",
+  "source_revision": "b42fcd34274a39e60dd9361c3751782adb6cf45a",
   "as_of_date": "2026-08-22",
   "headline": {
     "paper_ready": 1,
@@ -9,6 +9,9 @@
     "paper_quality_evidence_debt": 0,
     "canonical_live_ideas": 0,
     "canonical_problem_gate_pass": 0,
+    "pre_researchitem_problem_gate_pass": 1,
+    "canonical_live_pre_researchitem_candidates": 1,
+    "pre_researchitem_experiment_holds": 1,
     "canonical_paper_design_backlog": 0,
     "idea_search_raw_seeds": 2,
     "idea_search_semantic_unique": 2,
@@ -46,6 +49,73 @@
     "fresh_ready_problem_review": 0,
     "method_authorized": 0,
     "gpu_authorized": 0
+  },
+  "pre_researchitem_candidates": {
+    "status": "CANONICAL_LIVE_PRE_RESEARCHITEM_INDEX",
+    "count": 1,
+    "canonical_consumer_surface_live": 1,
+    "experiment_holds": 1,
+    "scientific_authority": false,
+    "experiment_authority": false,
+    "promotion_authority": false,
+    "rows": [
+      {
+        "candidate_id": "MEMENTO-JOINT-BOUNDARY-CONTROL",
+        "title": {
+          "zh": "MEMENTO 多记忆协调成本是否被任务组合难度混淆？",
+          "en": "Joint-Memory Degradation Is Not a Coordination Estimate: A Composition-Controlled Audit of Agent Memory Evaluation"
+        },
+        "lifecycle_status": "PAPER_DESIGN_FROZEN_EXACT_RUNTIME_SUPPORT_HOLD",
+        "problem_gate_status": "PROBLEM_GATE_PASS_AWAIT_HUMAN_PAPER_DESIGN",
+        "paper_design_status": "FROZEN_FOR_HUMAN_REVIEW",
+        "paper_design_audit_passed": true,
+        "source_integrity_passed": true,
+        "source_sidecar": "generated/memento-joint-identifiability-paper-design.json",
+        "contract_sha256": "34b126311f9957b2ca8a37aaeb8699911941d08ecb37f8faf24c624704311f34",
+        "canonical_consumer_surface": {
+          "live": true,
+          "page": "paper-ideas.html",
+          "script_loaded": true,
+          "consumer_bound": true,
+          "js_global": "MEMENTO_JOINT_IDENTIFIABILITY_PAPER_DESIGN"
+        },
+        "promotion": {
+          "research_item": false,
+          "paper_state": false,
+          "paper_registry": false,
+          "promotion_decision_required": true
+        },
+        "experiment_gate": {
+          "status": "HOLD_EXACT_MEMENTO_RUNTIME_ASSETS_MISSING",
+          "stage": "F0_COMPOSITION_HEADROOM",
+          "units": 12,
+          "arms_per_unit": 3,
+          "episodes": 36,
+          "full_audit_unlock": "GO only",
+          "blocker": "HOLD_EXACT_MEMENTO_RUNTIME_ASSETS_MISSING",
+          "required_official_stack": [
+            "pinned MEMENTO code",
+            "Habitat-Sim 0.3.3",
+            "Habitat-Lab/PARTNR",
+            "HSSD scenes",
+            "PARTNR episodes",
+            "OVMM objects",
+            "audited exact planner/model"
+          ],
+          "proxy_policy": "Do not replace MEMENTO with ALFWorld, text-only proxy, or a different backbone merely to get Stage-1 numbers."
+        },
+        "authority": {
+          "scientific": false,
+          "method": false,
+          "experiment": false,
+          "local_validation": false,
+          "p0": false,
+          "gpu": false,
+          "full_experiment": false
+        }
+      }
+    ],
+    "interpretation": "ProblemGate-passed paper-design candidates can be canonical and live before ResearchItem/PaperState promotion. This index makes that state enumerable without changing A-G or PaperRegistry counts."
   },
   "leading_paper_track": {
     "paper_id": "STRI",

@@ -129,6 +129,14 @@ def build() -> Path:
         cwd=ROOT,
         check=True,
     )
+    # Enumerate ProblemGate-passed paper-design candidates that are canonical/live but
+    # intentionally not yet ResearchItems or PaperStates. This closes the pre-promotion
+    # control-plane blind spot without granting any scientific/execution authority.
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "build_pre_researchitem_candidates.py")],
+        cwd=ROOT,
+        check=True,
+    )
     # Recompute the small public current-state ledger from authoritative generated artifacts
     # immediately before copying the site, so every publish uses the same backend truth.
     subprocess.run(
@@ -307,6 +315,8 @@ def build() -> Path:
         OUTPUT / "generated" / "research-system-state.js",
         OUTPUT / "generated" / "current-research-status.js",
         OUTPUT / "generated" / "current-research-status.json",
+        OUTPUT / "generated" / "pre-researchitem-candidates.js",
+        OUTPUT / "generated" / "pre-researchitem-candidates.json",
         OUTPUT / "generated" / "research-items.js",
         OUTPUT / "generated" / "research-items.json",
         OUTPUT / "generated" / "paper-registry.js",
