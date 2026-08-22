@@ -9,6 +9,10 @@ User=root
 WorkingDirectory=/home/wyt/code/agent-self-evolution-observatory-automation
 Environment=PROJECT_ROOT=/home/wyt/code/agent-self-evolution-observatory-automation
 Environment=RESEARCH_ENV_FILE=/home/wyt/code/agent-self-evolution-observatory/.env
+# Recover only disposable generated projections left by an interrupted prior
+# cycle. Any source/config/manual edit outside generated/ still blocks ff-only.
+ExecStartPre=/usr/bin/git restore --source=HEAD --staged --worktree -- generated
+ExecStartPre=/usr/bin/git clean -fd -- generated
 ExecStartPre=/usr/bin/git -c http.proxy= -c https.proxy= fetch origin main
 ExecStartPre=/usr/bin/git merge --ff-only origin/main
 ExecStart=/usr/bin/bash scripts/on-52.sh python3 -m research_pipeline.automation_cycle --mode weekly --sync-literature --web-review-limit 2 --publish

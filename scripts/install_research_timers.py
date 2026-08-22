@@ -26,6 +26,18 @@ def run(*args: str) -> None:
     subprocess.run(list(args), check=True)
 
 
+def recover_automation_generated_state() -> None:
+    """Discard only generated leftovers in the isolated automation worktree.
+
+    A killed/degraded cycle may leave tracked or untracked generated projections
+    behind. They are reproducible automation outputs and must not block the next
+    ff-only preflight. Source/config/manual edits outside generated/ are preserved
+    so Git still fails closed on a genuinely modified automation checkout.
+    """
+    run("git", "-C", str(AUTOMATION_ROOT), "restore", "--source=HEAD", "--staged", "--worktree", "--", "generated")
+    run("git", "-C", str(AUTOMATION_ROOT), "clean", "-fd", "--", "generated")
+
+
 def ensure_automation_checkout() -> None:
     if not CANONICAL_ROOT.exists():
         raise SystemExit(f"Missing canonical checkout: {CANONICAL_ROOT}")
@@ -34,6 +46,7 @@ def ensure_automation_checkout() -> None:
         run("git", "-C", str(CANONICAL_ROOT), "worktree", "add", "--detach", str(AUTOMATION_ROOT), "origin/main")
     elif not (AUTOMATION_ROOT / ".git").exists():
         raise SystemExit(f"Automation root exists but is not a git worktree: {AUTOMATION_ROOT}")
+    recover_automation_generated_state()
     run("git", "-C", str(AUTOMATION_ROOT), "-c", "http.proxy=", "-c", "https.proxy=", "fetch", "origin", "main")
     run("git", "-C", str(AUTOMATION_ROOT), "merge", "--ff-only", "origin/main")
 

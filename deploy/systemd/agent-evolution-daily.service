@@ -9,6 +9,11 @@ User=root
 WorkingDirectory=/home/wyt/code/agent-self-evolution-observatory-automation
 Environment=PROJECT_ROOT=/home/wyt/code/agent-self-evolution-observatory-automation
 Environment=RESEARCH_ENV_FILE=/home/wyt/code/agent-self-evolution-observatory/.env
+# The automation worktree is disposable except for Git history. A prior cycle may
+# be interrupted after generating tracked/untracked public projections; restore
+# only generated/ before fast-forwarding. Non-generated edits remain fail-closed.
+ExecStartPre=/usr/bin/git restore --source=HEAD --staged --worktree -- generated
+ExecStartPre=/usr/bin/git clean -fd -- generated
 ExecStartPre=/usr/bin/git -c http.proxy= -c https.proxy= fetch origin main
 ExecStartPre=/usr/bin/git merge --ff-only origin/main
 ExecStart=/usr/bin/bash scripts/on-52.sh python3 -m research_pipeline.automation_cycle --mode daily --publish

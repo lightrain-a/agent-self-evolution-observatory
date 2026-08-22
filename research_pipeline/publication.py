@@ -80,6 +80,8 @@ DAILY_ARTIFACTS = (
     "generated/p0-e4-permission-cpu.js",
     "generated/research-system-state.json",
     "generated/research-system-state.js",
+    "generated/research-memory-wiki.json",
+    "generated/research-memory-wiki.js",
     "generated/asset-first-stri-paper-quality-v2-20260816.json",
     "generated/asset-first-stri-paper-analysis-suite-20260816.json",
     "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json",

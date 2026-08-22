@@ -15,6 +15,8 @@ class AutomationCheckoutIsolationTest(unittest.TestCase):
             self.assertIn(f"WorkingDirectory={AUTOMATION_ROOT}", text)
             self.assertIn(f"Environment=PROJECT_ROOT={AUTOMATION_ROOT}", text)
             self.assertIn(f"Environment=RESEARCH_ENV_FILE={CANONICAL_ENV}", text)
+            self.assertIn("ExecStartPre=/usr/bin/git restore --source=HEAD --staged --worktree -- generated", text)
+            self.assertIn("ExecStartPre=/usr/bin/git clean -fd -- generated", text)
             self.assertIn("ExecStartPre=/usr/bin/git -c http.proxy= -c https.proxy= fetch origin main", text)
             self.assertIn("ExecStartPre=/usr/bin/git merge --ff-only origin/main", text)
 
@@ -25,7 +27,10 @@ class AutomationCheckoutIsolationTest(unittest.TestCase):
     def test_timer_installer_bootstraps_detached_automation_worktree(self) -> None:
         text = (ROOT / "scripts" / "install_research_timers.py").read_text(encoding="utf-8")
         self.assertIn('"worktree", "add", "--detach"', text)
+        self.assertIn('"restore", "--source=HEAD", "--staged", "--worktree", "--", "generated"', text)
+        self.assertIn('"clean", "-fd", "--", "generated"', text)
         self.assertIn('"merge", "--ff-only", "origin/main"', text)
+        self.assertIn("recover_automation_generated_state()", text)
         self.assertIn("ensure_automation_checkout()", text)
 
 

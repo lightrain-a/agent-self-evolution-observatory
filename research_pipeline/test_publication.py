@@ -127,6 +127,8 @@ class PublicationTest(unittest.TestCase):
                 "generated/p0-e4-permission-cpu.js",
                 "generated/research-system-state.json",
                 "generated/research-system-state.js",
+                "generated/research-memory-wiki.json",
+                "generated/research-memory-wiki.js",
                 "generated/asset-first-stri-paper-quality-v2-20260816.json",
                 "generated/asset-first-stri-paper-analysis-suite-20260816.json",
                 "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json",
@@ -189,7 +191,7 @@ class PublicationTest(unittest.TestCase):
         self.assertIn("generated/s2-literature.js", WEEKLY_ARTIFACTS)
         self.assertIn("generated/iclr-low-resource-ideas.json", WEEKLY_ARTIFACTS)
         self.assertIn("generated/paper-first-paper-design-backlog.json", DAILY_ARTIFACTS)
-        for artifact in ("generated/research-items.json", "generated/research-items.js", "generated/paper-registry.json", "generated/paper-registry.js"):
+        for artifact in ("generated/research-items.json", "generated/research-items.js", "generated/paper-registry.json", "generated/paper-registry.js", "generated/research-memory-wiki.json", "generated/research-memory-wiki.js"):
             self.assertIn(artifact, DAILY_ARTIFACTS)
         for artifact in (
             "generated/paper-first-problem-search-portfolio-state.json",
