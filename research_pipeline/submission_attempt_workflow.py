@@ -510,23 +510,36 @@ def _event_sha(receipt: Mapping[str, Any]) -> tuple[str, str]:
         return "attempt-human-signoff", str(receipt.get("attempt_signoff_sha256") or "")
     if receipt.get("receipt_type") == "attempt-actual-submission":
         return "attempt-actual-submission", str(receipt.get("attempt_submission_receipt_sha256") or "")
+    if receipt.get("receipt_type") == "attempt-review-set":
+        return "attempt-review-set", str(receipt.get("attempt_review_set_sha256") or "")
+    if receipt.get("receipt_type") == "attempt-rebuttal-preparation":
+        return "attempt-rebuttal-preparation", str(receipt.get("attempt_rebuttal_receipt_sha256") or "")
+    if receipt.get("receipt_type") == "attempt-venue-final-decision":
+        return "attempt-venue-decision", str(receipt.get("attempt_venue_decision_sha256") or "")
+    if receipt.get("receipt_type") == "attempt-rebuttal-skipped-by-venue":
+        return "attempt-rebuttal-skipped-by-venue", str(receipt.get("attempt_rebuttal_skip_sha256") or "")
+    if receipt.get("receipt_type") == "attempt-post-decision-learning":
+        return "attempt-post-decision-learning", str(receipt.get("attempt_learning_receipt_sha256") or "")
     raise RuntimeError("unknown attempt workflow receipt type")
 
 
 def _validator(receipt: Mapping[str, Any]) -> bool:
-    return (
-        validate_attempt_preparation(receipt)
-        if receipt.get("receipt_type") == "attempt-preparation"
-        else validate_attempt_freeze(receipt)
-        if receipt.get("receipt_type") == "attempt-freeze"
-        else validate_attempt_handoff(receipt)
-        if receipt.get("receipt_type") == "attempt-handoff"
-        else validate_attempt_human_signoff(receipt)
-        if receipt.get("receipt_type") == "attempt-human-signoff"
-        else validate_attempt_actual_submission(receipt)
-        if receipt.get("receipt_type") == "attempt-actual-submission"
-        else False
+    receipt_type = str(receipt.get("receipt_type") or "")
+    if receipt_type == "attempt-preparation": return validate_attempt_preparation(receipt)
+    if receipt_type == "attempt-freeze": return validate_attempt_freeze(receipt)
+    if receipt_type == "attempt-handoff": return validate_attempt_handoff(receipt)
+    if receipt_type == "attempt-human-signoff": return validate_attempt_human_signoff(receipt)
+    if receipt_type == "attempt-actual-submission": return validate_attempt_actual_submission(receipt)
+    from .submission_attempt_post_submission import (
+        validate_attempt_learning_packet, validate_attempt_rebuttal_preparation,
+        validate_attempt_rebuttal_skipped, validate_attempt_review_set, validate_attempt_venue_decision,
     )
+    if receipt_type == "attempt-review-set": return validate_attempt_review_set(receipt)
+    if receipt_type == "attempt-rebuttal-preparation": return validate_attempt_rebuttal_preparation(receipt)
+    if receipt_type == "attempt-venue-final-decision": return validate_attempt_venue_decision(receipt)
+    if receipt_type == "attempt-rebuttal-skipped-by-venue": return validate_attempt_rebuttal_skipped(receipt)
+    if receipt_type == "attempt-post-decision-learning": return validate_attempt_learning_packet(receipt)
+    return False
 
 
 def validate_attempt_workflow_ledger(row: Mapping[str, Any]) -> list[str]:
@@ -538,6 +551,11 @@ def validate_attempt_workflow_ledger(row: Mapping[str, Any]) -> list[str]:
     seen_freezes: set[str] = set()
     seen_handoffs: set[str] = set()
     seen_signoffs: set[str] = set()
+    seen_submissions: set[str] = set()
+    seen_reviews: set[str] = set()
+    seen_rebuttals: set[str] = set()
+    seen_decisions: dict[str, str] = {}
+    seen_skip_decisions: set[str] = set()
     seen_receipts: set[str] = set()
     for index, event in enumerate(row.get("events") or []):
         if not isinstance(event, Mapping):
@@ -568,8 +586,43 @@ def validate_attempt_workflow_ledger(row: Mapping[str, Any]) -> list[str]:
             if str(receipt.get("attempt_handoff_sha256") or "") not in seen_handoffs:
                 errors.append("attempt-signoff-missing-prior-handoff")
             seen_signoffs.add(receipt_sha)
-        elif kind == "attempt-actual-submission" and str(receipt.get("attempt_signoff_sha256") or "") not in seen_signoffs:
-            errors.append("attempt-submission-missing-prior-signoff")
+        elif kind == "attempt-actual-submission":
+            if str(receipt.get("attempt_signoff_sha256") or "") not in seen_signoffs:
+                errors.append("attempt-submission-missing-prior-signoff")
+            seen_submissions.add(receipt_sha)
+        elif kind == "attempt-review-set":
+            if str(receipt.get("attempt_submission_receipt_sha256") or "") not in seen_submissions:
+                errors.append("attempt-review-missing-prior-submission")
+            seen_reviews.add(receipt_sha)
+        elif kind == "attempt-rebuttal-preparation":
+            if str(receipt.get("attempt_submission_receipt_sha256") or "") not in seen_submissions:
+                errors.append("attempt-rebuttal-missing-prior-submission")
+            if str(receipt.get("attempt_review_set_sha256") or "") not in seen_reviews:
+                errors.append("attempt-rebuttal-missing-prior-review-set")
+            seen_rebuttals.add(receipt_sha)
+        elif kind == "attempt-venue-decision":
+            if str(receipt.get("attempt_submission_receipt_sha256") or "") not in seen_submissions:
+                errors.append("attempt-decision-missing-prior-submission")
+            phase = str(receipt.get("decision_phase") or "")
+            rebuttal_sha = str(receipt.get("attempt_rebuttal_receipt_sha256") or "")
+            if phase == "POST_REBUTTAL" and rebuttal_sha not in seen_rebuttals:
+                errors.append("attempt-decision-missing-prior-rebuttal")
+            if phase == "PRE_REBUTTAL_TERMINAL" and rebuttal_sha:
+                errors.append("attempt-terminal-decision-must-not-bind-rebuttal")
+            seen_decisions[receipt_sha] = phase
+        elif kind == "attempt-rebuttal-skipped-by-venue":
+            decision_sha = str(receipt.get("attempt_venue_decision_sha256") or "")
+            if str(receipt.get("attempt_submission_receipt_sha256") or "") not in seen_submissions:
+                errors.append("attempt-skip-missing-prior-submission")
+            if seen_decisions.get(decision_sha) != "PRE_REBUTTAL_TERMINAL":
+                errors.append("attempt-skip-missing-prior-terminal-decision")
+            seen_skip_decisions.add(decision_sha)
+        elif kind == "attempt-post-decision-learning":
+            decision_sha = str(receipt.get("attempt_venue_decision_sha256") or "")
+            if decision_sha not in seen_decisions:
+                errors.append("attempt-learning-missing-prior-decision")
+            if seen_decisions.get(decision_sha) == "PRE_REBUTTAL_TERMINAL" and decision_sha not in seen_skip_decisions:
+                errors.append("attempt-learning-terminal-decision-missing-skip-receipt")
         expected_event_id = _digest([attempt_sha, index, kind, receipt_sha, str(event.get("recorded_at") or "")])[:24]
         if str(event.get("event_id") or "") != expected_event_id:
             errors.append("attempt-workflow-event-id-invalid")
@@ -639,18 +692,38 @@ def current_attempt_workflow_summary(row: Mapping[str, Any]) -> dict[str, Any]:
     handoffs = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-handoff"]
     signoffs = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-human-signoff"]
     submissions = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-actual-submission"]
-    preparation = preparations[-1] if preparations else {}
-    freeze = freezes[-1] if freezes else {}
-    handoff = handoffs[-1] if handoffs else {}
-    signoff = signoffs[-1] if signoffs else {}
-    submission = submissions[-1] if submissions else {}
+    reviews = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-review-set"]
+    rebuttals = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-rebuttal-preparation"]
+    decisions = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-venue-decision"]
+    skips = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-rebuttal-skipped-by-venue"]
+    learnings = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-post-decision-learning"]
+    preparation = preparations[-1] if preparations else {}; freeze = freezes[-1] if freezes else {}; handoff = handoffs[-1] if handoffs else {}
+    signoff = signoffs[-1] if signoffs else {}; submission = submissions[-1] if submissions else {}; review = reviews[-1] if reviews else {}
+    rebuttal = rebuttals[-1] if rebuttals else {}; decision = decisions[-1] if decisions else {}; skip = skips[-1] if skips else {}; learning = learnings[-1] if learnings else {}
     drift = verify_frozen_artifacts(freeze) if freeze else []
     freeze_current = bool(freeze) and not drift
     handoff_current = bool(handoff) and freeze_current and handoff.get("attempt_freeze_sha256") == freeze.get("attempt_freeze_sha256")
     signoff_current = bool(signoff) and handoff_current and signoff.get("attempt_handoff_sha256") == handoff.get("attempt_handoff_sha256") and signoff.get("attempt_freeze_sha256") == freeze.get("attempt_freeze_sha256")
     submission_valid = bool(submission) and validate_attempt_actual_submission(submission) and bool(signoff) and submission.get("attempt_signoff_sha256") == signoff.get("attempt_signoff_sha256")
+    from .submission_attempt_post_submission import (
+        validate_attempt_learning_packet, validate_attempt_rebuttal_preparation, validate_attempt_rebuttal_skipped,
+        validate_attempt_review_set, validate_attempt_venue_decision,
+    )
+    review_valid = bool(review) and validate_attempt_review_set(review) and submission_valid and review.get("attempt_submission_receipt_sha256") == submission.get("attempt_submission_receipt_sha256")
+    rebuttal_valid = bool(rebuttal) and rebuttal.get("pass") is True and validate_attempt_rebuttal_preparation(rebuttal) and review_valid and rebuttal.get("attempt_review_set_sha256") == review.get("attempt_review_set_sha256")
+    decision_valid = bool(decision) and validate_attempt_venue_decision(decision) and submission_valid and decision.get("attempt_submission_receipt_sha256") == submission.get("attempt_submission_receipt_sha256")
+    skip_valid = bool(skip) and validate_attempt_rebuttal_skipped(skip) and decision_valid and skip.get("attempt_venue_decision_sha256") == decision.get("attempt_venue_decision_sha256")
+    learning_valid = bool(learning) and learning.get("pass") is True and validate_attempt_learning_packet(learning) and decision_valid and learning.get("attempt_venue_decision_sha256") == decision.get("attempt_venue_decision_sha256")
     if errors:
         status = "ATTEMPT_WORKFLOW_INVALID"
+    elif learning_valid:
+        status = "ATTEMPT_POST_DECISION_LEARN_COMPLETE"
+    elif decision_valid:
+        status = "ATTEMPT_TERMINAL_DECISION_SKIP_PENDING" if decision.get("decision_phase") == "PRE_REBUTTAL_TERMINAL" and not skip_valid else "ATTEMPT_FINAL_DECISION_LEARNING_PENDING"
+    elif rebuttal_valid:
+        status = "ATTEMPT_REBUTTAL_PREPARED_DECISION_PENDING"
+    elif review_valid:
+        status = "ATTEMPT_VENUE_REVIEWS_RECORDED"
     elif submission_valid:
         status = "ATTEMPT_VENUE_SUBMISSION_CONFIRMED"
     elif signoff_current:
@@ -687,5 +760,17 @@ def current_attempt_workflow_summary(row: Mapping[str, Any]) -> dict[str, Any]:
         "parent_submission_bytes_immutable": True,
         "human_confirmation_status": str(signoff.get("status") or handoff.get("human_confirmation_status") or ""),
         "actual_submission_status": str(submission.get("actual_submission_status") or "NOT_SUBMITTED"),
+        "review_set_sha256": str(review.get("attempt_review_set_sha256") or ""),
+        "review_count": int(review.get("review_count") or 0),
+        "rebuttal_receipt_sha256": str(rebuttal.get("attempt_rebuttal_receipt_sha256") or ""),
+        "rebuttal_missing_decisive_evidence": int((rebuttal.get("summary") or {}).get("missing_decisive_evidence") or 0) if isinstance(rebuttal.get("summary"), Mapping) else 0,
+        "rebuttal_new_claim_requests": int((rebuttal.get("summary") or {}).get("new_claim_requests") or 0) if isinstance(rebuttal.get("summary"), Mapping) else 0,
+        "venue_decision_sha256": str(decision.get("attempt_venue_decision_sha256") or ""),
+        "venue_decision": str(decision.get("decision") or ""),
+        "decision_phase": str(decision.get("decision_phase") or ""),
+        "rebuttal_skip_sha256": str(skip.get("attempt_rebuttal_skip_sha256") or ""),
+        "learning_receipt_sha256": str(learning.get("attempt_learning_receipt_sha256") or ""),
+        "learning_lessons": int((learning.get("summary") or {}).get("lessons") or 0) if isinstance(learning.get("summary"), Mapping) else 0,
+        "learning_scientific_diagnostic_only": int((learning.get("summary") or {}).get("scientific_diagnostic_only") or 0) if isinstance(learning.get("summary"), Mapping) else 0,
         "authority": dict(ZERO_AUTHORITY),
     }

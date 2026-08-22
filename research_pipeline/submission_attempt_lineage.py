@@ -100,6 +100,7 @@ def build_attempt_plan(
     new_scientific_evidence_requested: bool = False,
     scientific_interpretation_change_requested: bool = False,
     parent_attempt: Mapping[str, Any] | None = None,
+    parent_attempt_workflow: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     paper_id = str(paper_ledger.get("paper_id") or "")
     contract_sha = str(paper_ledger.get("contract_sha256") or "")
@@ -136,15 +137,11 @@ def build_attempt_plan(
     if str(learning.get("venue_decision_sha256") or "") != str(decision.get("venue_decision_sha256") or ""):
         raise RuntimeError("parent learning/decision lineage mismatch")
 
+    parent_submission_sha = str(submission.get("submission_receipt_sha256") or "")
+    parent_decision_sha = str(decision.get("venue_decision_sha256") or "")
+    parent_learning_sha = str(learning.get("learning_receipt_sha256") or "")
     parent_decision = str(decision.get("decision") or "")
-    if attempt_type == "RESUBMISSION" and parent_decision not in RESUBMISSION_PARENT_DECISIONS:
-        raise RuntimeError(f"resubmission requires rejected/withdrawn/closed parent decision, got {parent_decision}")
-    if attempt_type == "CAMERA_READY":
-        if parent_decision != "ACCEPT":
-            raise RuntimeError(f"camera-ready requires ACCEPT parent decision, got {parent_decision}")
-        if target_venue != str(submission.get("venue") or ""):
-            raise RuntimeError("camera-ready target venue must match the accepted parent venue")
-
+    parent_submission_venue = str(submission.get("venue") or "")
     parent_attempt_sha = ""
     if parent_attempt:
         if not validate_attempt_plan(parent_attempt):
@@ -152,6 +149,45 @@ def build_attempt_plan(
         if str(parent_attempt.get("paper_id") or "") != paper_id or str(parent_attempt.get("contract_sha256") or "") != contract_sha:
             raise RuntimeError("parent attempt paper/contract mismatch")
         parent_attempt_sha = str(parent_attempt.get("attempt_sha256") or "")
+    if parent_attempt_workflow is not None:
+        if not parent_attempt:
+            raise RuntimeError("parent attempt workflow requires a parent attempt plan")
+        from .submission_attempt_post_submission import validate_attempt_learning_packet, validate_attempt_venue_decision
+        from .submission_attempt_workflow import current_attempt_workflow_summary, validate_attempt_actual_submission, validate_attempt_workflow_ledger
+        errors = validate_attempt_workflow_ledger(parent_attempt_workflow)
+        if errors:
+            raise RuntimeError(f"parent attempt workflow invalid: {errors}")
+        summary = current_attempt_workflow_summary(parent_attempt_workflow)
+        if summary.get("status") != "ATTEMPT_POST_DECISION_LEARN_COMPLETE":
+            raise RuntimeError("parent attempt outcome is not post-decision-learn complete")
+        if str(parent_attempt_workflow.get("attempt_sha256") or "") != parent_attempt_sha:
+            raise RuntimeError("parent attempt workflow/plan SHA mismatch")
+        child_submission = next((e.get("receipt") or {} for e in reversed(parent_attempt_workflow.get("events") or []) if isinstance(e, Mapping) and e.get("event_type") == "attempt-actual-submission"), {})
+        child_decision = next((e.get("receipt") or {} for e in reversed(parent_attempt_workflow.get("events") or []) if isinstance(e, Mapping) and e.get("event_type") == "attempt-venue-decision"), {})
+        child_learning = next((e.get("receipt") or {} for e in reversed(parent_attempt_workflow.get("events") or []) if isinstance(e, Mapping) and e.get("event_type") == "attempt-post-decision-learning"), {})
+        if not isinstance(child_submission, Mapping) or not validate_attempt_actual_submission(child_submission):
+            raise RuntimeError("valid parent child-attempt submission receipt required")
+        if not isinstance(child_decision, Mapping) or not validate_attempt_venue_decision(child_decision):
+            raise RuntimeError("valid parent child-attempt decision receipt required")
+        if not isinstance(child_learning, Mapping) or child_learning.get("pass") is not True or not validate_attempt_learning_packet(child_learning):
+            raise RuntimeError("valid parent child-attempt learning receipt required")
+        if child_decision.get("attempt_submission_receipt_sha256") != child_submission.get("attempt_submission_receipt_sha256"):
+            raise RuntimeError("parent child decision/submission lineage mismatch")
+        if child_learning.get("attempt_venue_decision_sha256") != child_decision.get("attempt_venue_decision_sha256"):
+            raise RuntimeError("parent child learning/decision lineage mismatch")
+        parent_submission_sha = str(child_submission.get("attempt_submission_receipt_sha256") or "")
+        parent_decision_sha = str(child_decision.get("attempt_venue_decision_sha256") or "")
+        parent_learning_sha = str(child_learning.get("attempt_learning_receipt_sha256") or "")
+        parent_decision = str(child_decision.get("decision") or "")
+        parent_submission_venue = str(child_submission.get("venue") or "")
+
+    if attempt_type == "RESUBMISSION" and parent_decision not in RESUBMISSION_PARENT_DECISIONS:
+        raise RuntimeError(f"resubmission requires rejected/withdrawn/closed parent decision, got {parent_decision}")
+    if attempt_type == "CAMERA_READY":
+        if parent_decision != "ACCEPT":
+            raise RuntimeError(f"camera-ready requires ACCEPT parent decision, got {parent_decision}")
+        if target_venue != parent_submission_venue:
+            raise RuntimeError("camera-ready target venue must match the accepted parent venue")
 
     science_category = bool(set(categories) & SCIENTIFIC_REVISION_CATEGORIES)
     scientific_change = (
@@ -174,9 +210,9 @@ def build_attempt_plan(
         "contract_sha256": contract_sha,
         "attempt_type": attempt_type,
         "target_venue": target_venue,
-        "parent_submission_receipt_sha256": str(submission.get("submission_receipt_sha256") or ""),
-        "parent_venue_decision_sha256": str(decision.get("venue_decision_sha256") or ""),
-        "parent_learning_receipt_sha256": str(learning.get("learning_receipt_sha256") or ""),
+        "parent_submission_receipt_sha256": parent_submission_sha,
+        "parent_venue_decision_sha256": parent_decision_sha,
+        "parent_learning_receipt_sha256": parent_learning_sha,
         "parent_attempt_sha256": parent_attempt_sha,
         "revision_categories": categories,
         "scientific_contract_unchanged": scientific_contract_unchanged is True,

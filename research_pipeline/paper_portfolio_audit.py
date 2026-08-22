@@ -291,6 +291,18 @@ def submission_attempt_workflow_state(root: Path, attempt: Mapping[str, Any]) ->
         'venue_submission_id': '',
         'submitted_at': '',
         'actual_submission_status': 'NOT_SUBMITTED',
+        'review_set_sha256': '',
+        'review_count': 0,
+        'rebuttal_receipt_sha256': '',
+        'rebuttal_missing_decisive_evidence': 0,
+        'rebuttal_new_claim_requests': 0,
+        'venue_decision_sha256': '',
+        'venue_decision': '',
+        'decision_phase': '',
+        'rebuttal_skip_sha256': '',
+        'learning_receipt_sha256': '',
+        'learning_lessons': 0,
+        'learning_scientific_diagnostic_only': 0,
         'frozen_artifacts': 0,
         'freeze_drift_errors': [],
         'validation_errors': [],
@@ -383,10 +395,24 @@ def project(path: Path, root: Path) -> dict[str, Any]:
             actions=['submission-attempt lineage is invalid; stop child preparation until the append-only attempt ledger is repaired']
         elif attempt['requires_explicit_scientific_reopen']:
             actions=['the planned child attempt requests a scientific change; obtain explicit scientific reopen authority before any new claim, evidence, experiment, or GPU work']
+        elif attempt_workflow['status']=='ATTEMPT_POST_DECISION_LEARN_COMPLETE':
+            actions=['the child attempt outcome is closed; any further submission must create a new child attempt bound to this child submission/decision/learning lineage']
+        elif attempt_workflow['status']=='ATTEMPT_FINAL_DECISION_LEARNING_PENDING':
+            actions=['record scoped child post-decision lessons; acceptance/rejection does not change scientific truth or authorize automatic reopen']
+        elif attempt_workflow['status']=='ATTEMPT_TERMINAL_DECISION_SKIP_PENDING':
+            actions=['record the explicit child venue-skip receipt before learning; never fabricate reviews or rebuttal for a no-window terminal decision']
+        elif attempt_workflow['status']=='ATTEMPT_REBUTTAL_PREPARED_DECISION_PENDING':
+            actions=['child rebuttal is prepared; await the real venue final decision without granting experiment or claim-expansion authority']
+        elif attempt_workflow['status']=='ATTEMPT_VENUE_REVIEWS_RECORDED':
+            actions=['classify child venue objections and prepare a scope-preserving rebuttal; missing decisive evidence cannot be papered over']
+        elif attempt_workflow['status']=='ATTEMPT_VENUE_SUBMISSION_CONFIRMED':
+            actions=['await real child venue reviews or an explicit terminal no-rebuttal decision; keep parent and child submission lineages distinct']
+        elif attempt_workflow['status']=='ATTEMPT_HUMAN_SIGNOFF_COMPLETE_ACTUAL_SUBMISSION_PENDING':
+            actions=['child human signoff is complete; actual child venue upload remains a separate explicit human action']
         elif attempt_workflow['status']=='ATTEMPT_MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED':
             actions=['the child attempt has its own preparation/freeze/handoff lineage; await explicit human confirmation and never reuse the parent submission signoff']
-        elif attempt_workflow['status'] in {'ATTEMPT_HANDOFF_STALE','ATTEMPT_FREEZE_STALE','ATTEMPT_WORKFLOW_INVALID'}:
-            actions=['the child attempt workflow is stale or invalid; stop handoff and repair/refreeze only within this attempt namespace']
+        elif attempt_workflow['status'] in {'ATTEMPT_HANDOFF_STALE','ATTEMPT_FREEZE_STALE','ATTEMPT_HUMAN_SIGNOFF_STALE','ATTEMPT_WORKFLOW_INVALID'}:
+            actions=['the child attempt workflow is stale or invalid; repair/refreeze only within this attempt namespace and never mutate the parent submission']
         elif attempt['machine_preparation_eligible']:
             actions=['the child attempt is paper-side only and may enter its fresh attempt-scoped Preparation/Freeze/Handoff pipeline while parent submitted bytes remain immutable']
         else:
@@ -494,6 +520,18 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         'submission_attempt_venue_submission_id': attempt_workflow['venue_submission_id'],
         'submission_attempt_submitted_at': attempt_workflow['submitted_at'],
         'submission_attempt_actual_submission_status': attempt_workflow['actual_submission_status'],
+        'submission_attempt_review_set_sha256': attempt_workflow['review_set_sha256'],
+        'submission_attempt_review_count': attempt_workflow['review_count'],
+        'submission_attempt_rebuttal_sha256': attempt_workflow['rebuttal_receipt_sha256'],
+        'submission_attempt_missing_decisive_evidence': attempt_workflow['rebuttal_missing_decisive_evidence'],
+        'submission_attempt_new_claim_requests': attempt_workflow['rebuttal_new_claim_requests'],
+        'submission_attempt_venue_decision_sha256': attempt_workflow['venue_decision_sha256'],
+        'submission_attempt_venue_decision': attempt_workflow['venue_decision'],
+        'submission_attempt_decision_phase': attempt_workflow['decision_phase'],
+        'submission_attempt_rebuttal_skip_sha256': attempt_workflow['rebuttal_skip_sha256'],
+        'submission_attempt_learning_sha256': attempt_workflow['learning_receipt_sha256'],
+        'submission_attempt_learning_lessons': attempt_workflow['learning_lessons'],
+        'submission_attempt_learning_scientific_diagnostic_only': attempt_workflow['learning_scientific_diagnostic_only'],
         'submission_attempt_frozen_artifacts': attempt_workflow['frozen_artifacts'],
         'submission_attempt_freeze_drift_errors': attempt_workflow['freeze_drift_errors'],
         'submission_attempt_workflow_errors': attempt_workflow['validation_errors'],
@@ -567,8 +605,13 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'attempt_machine_frozen': sum(p['submission_attempt_workflow_status'] == 'ATTEMPT_MACHINE_FROZEN_HANDOFF_PENDING' for p in papers),
             'attempt_machine_handoff_ready': sum(p['submission_attempt_workflow_status'] == 'ATTEMPT_MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED' for p in papers),
             'attempt_workflow_stale_or_invalid': sum(p['submission_attempt_workflow_status'] in {'ATTEMPT_HANDOFF_STALE','ATTEMPT_FREEZE_STALE','ATTEMPT_HUMAN_SIGNOFF_STALE','ATTEMPT_WORKFLOW_INVALID'} for p in papers),
-            'attempt_human_signoff_complete': sum(p['submission_attempt_workflow_status'] == 'ATTEMPT_HUMAN_SIGNOFF_COMPLETE_ACTUAL_SUBMISSION_PENDING' for p in papers),
-            'attempt_venue_submitted': sum(p['submission_attempt_workflow_status'] == 'ATTEMPT_VENUE_SUBMISSION_CONFIRMED' for p in papers),
+            'attempt_human_signoff_complete': sum(bool(p['submission_attempt_signoff_sha256']) for p in papers),
+            'attempt_venue_submitted': sum(p['submission_attempt_actual_submission_status'] == 'SUBMITTED' for p in papers),
+            'attempt_reviews_recorded': sum(int(p['submission_attempt_review_count'] or 0) > 0 for p in papers),
+            'attempt_rebuttals_prepared': sum(bool(p['submission_attempt_rebuttal_sha256']) for p in papers),
+            'attempt_final_decisions_recorded': sum(bool(p['submission_attempt_venue_decision_sha256']) for p in papers),
+            'attempt_post_decision_learning_complete': sum(p['submission_attempt_workflow_status'] == 'ATTEMPT_POST_DECISION_LEARN_COMPLETE' for p in papers),
+            'attempt_rebuttal_skipped_by_venue': sum(bool(p['submission_attempt_rebuttal_skip_sha256']) for p in papers),
             'submission_freeze_eligible': sum(p['submission_freeze_eligible'] for p in papers),
             'ledger_replay_failures': sum(not p['ledger_replay_pass'] for p in papers),
             'contract_integrity_failures': sum(not p['contract_integrity_pass'] for p in papers),

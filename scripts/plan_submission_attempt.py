@@ -18,6 +18,7 @@ from research_pipeline.submission_attempt_lineage import (
     validate_attempt_ledger,
     validate_attempt_plan,
 )
+from research_pipeline.submission_attempt_workflow import current_attempt_workflow_summary, validate_attempt_workflow_ledger
 
 
 def _load(path: Path) -> dict:
@@ -44,6 +45,22 @@ def _parent_attempt(root: Path, paper_id: str, attempt_sha: str) -> dict | None:
     raise RuntimeError("requested parent attempt SHA not found")
 
 
+def _completed_parent_attempt_workflow(root: Path, parent: dict | None) -> dict | None:
+    if not parent:
+        return None
+    attempt_id = str(parent.get("attempt_id") or "")
+    if not attempt_id:
+        return None
+    path = root / "paper-submission-attempt-workflows" / f"{attempt_id}.json"
+    if not path.exists():
+        return None
+    row = _load(path)
+    errors = validate_attempt_workflow_ledger(row)
+    if errors:
+        raise RuntimeError(f"parent attempt workflow invalid: {errors}")
+    return row if current_attempt_workflow_summary(row).get("status") == "ATTEMPT_POST_DECISION_LEARN_COMPLETE" else None
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Plan a resubmission or camera-ready child attempt without mutating the parent submission. The command never authorizes scientific changes or experiments."
@@ -65,6 +82,7 @@ def main() -> None:
     paper_path = args.root / "paper-acceptance" / f"{args.paper_id}.json"
     paper_ledger = _load(paper_path)
     parent = _parent_attempt(args.root, args.paper_id, args.parent_attempt_sha256)
+    parent_workflow = _completed_parent_attempt_workflow(args.root, parent)
     receipt = build_attempt_plan(
         paper_ledger=paper_ledger,
         target_venue=args.target_venue,
@@ -76,6 +94,7 @@ def main() -> None:
         new_scientific_evidence_requested=args.new_scientific_evidence_requested,
         scientific_interpretation_change_requested=args.scientific_interpretation_change_requested,
         parent_attempt=parent,
+        parent_attempt_workflow=parent_workflow,
     )
     if not validate_attempt_plan(receipt):
         raise RuntimeError("submission attempt plan failed validation")
@@ -99,6 +118,7 @@ def main() -> None:
         "machine_preparation_eligible": receipt["machine_preparation_eligible"],
         "requires_explicit_scientific_reopen": receipt["requires_explicit_scientific_reopen"],
         "parent_submission_bytes_immutable": receipt["parent_submission_bytes_immutable"],
+        "parent_attempt_outcome_bound": parent_workflow is not None,
         "attempt_ledger_events": events,
         "scientific_authority": False,
         "experiment_authority": False,
