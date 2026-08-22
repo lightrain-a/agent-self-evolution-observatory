@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 from .config import StorageSettings
 from .ark_provider import ArkResponseStateError, ArkSettings
-from .paper_first_global_relation_recall import LANE_REVIEW_BATCH_SIZE, LANE_REVIEW_MAX_OUTPUT_TOKENS, _ark, _card, _delta_scan_required_refs, _review_lane_proposals, lane_review_execution_contract_sha256, mark_lane_review_retry_exhausted, resume_global_relation_recall_from_relation_raw, run_global_relation_recall, write_global_relation_recall_state
+from .paper_first_global_relation_recall import LANE_REVIEW_BATCH_SIZE, LANE_REVIEW_MAX_OUTPUT_TOKENS, _ark, _card, _delta_scan_required_refs, _repair_trailing_relation_root_closure, _review_lane_proposals, lane_review_execution_contract_sha256, mark_lane_review_retry_exhausted, resume_global_relation_recall_from_relation_raw, run_global_relation_recall, write_global_relation_recall_state
 from .paper_first_relation_coverage import relation_universe_digest
 from .relation_scan_boundary_manifest import build_relation_scan_boundary_manifest
 
@@ -151,6 +151,31 @@ class GlobalRelationRecallTest(unittest.TestCase):
         self.assertEqual(calls,[])
         self.assertEqual(state["cache_missing_count"],2)
         self.assertFalse(state["policy"]["automatic_problem_gate_authority"])
+
+    def test_trailing_root_closure_repair_appends_only_one_byte(self) -> None:
+        raw='{"lanes":{"CONTRADICTION":[],"diagnosis":"bounded"}'
+        payload,repaired=_repair_trailing_relation_root_closure(raw)
+        self.assertIsNotNone(payload)
+        self.assertEqual(repaired,raw+'}')
+        self.assertEqual((payload or {}).get("lanes",{}).get("CONTRADICTION"),[])
+        self.assertEqual(_repair_trailing_relation_root_closure('{"lanes":{"CONTRADICTION":[{"x":1}'),(None,""))
+
+    def test_trailing_root_closure_repair_completes_zero_proposal_scan_without_retry(self) -> None:
+        calls=[]
+        def malformed_relation(**kwargs):
+            calls.append("relation")
+            return {"text":'{"lanes":{"diagnosis":"bounded"}',"resolved_model":"kimi-k3"}
+        def forbidden(**kwargs): calls.append("downstream"); raise AssertionError
+        with tempfile.TemporaryDirectory() as td:
+            state=run_global_relation_recall(storage=self.storage(Path(td)),primary_state=self.primary(),generator_state=self.generator(),cache_records=self.records(),previous_state={},relation_responder=malformed_relation,lane_responder=forbidden,reduction_responder=forbidden,now=datetime(2026,8,13,tzinfo=timezone.utc))
+        self.assertEqual(state["status"],"GLOBAL_RELATION_RECALL_COMPLETE")
+        self.assertEqual(calls,["relation"])
+        self.assertEqual(state["summary"]["relation_proposals"],0)
+        repair=state["raw_artifacts"]["relation_repair"]
+        self.assertEqual(repair["status"],"PARSE_REPAIRED_TRAILING_ROOT_CLOSURE_ZERO_AUTHORITY")
+        self.assertEqual(repair["inserted_closing_brace_count"],1)
+        self.assertFalse(repair["original_bytes_mutated"])
+        self.assertEqual(repair["provider_calls_executed"],0)
 
     def test_zero_proposal_scan_completes_without_downstream_calls(self) -> None:
         calls=[]; relation=self.relation(False)

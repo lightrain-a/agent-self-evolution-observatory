@@ -89,6 +89,71 @@ def _provider_error_text(error: Exception) -> str:
     return re.sub(r"response_id=[^;\s]+[;\s]*", "", text)[:500]
 
 
+def _repair_trailing_relation_root_closure(raw: str) -> tuple[dict[str, Any] | None, str]:
+    """Repair only one missing final root-object brace without editing prior bytes."""
+    text=str(raw or "")
+    if not text or text[-1] != "}":
+        return None, ""
+    stack:list[str]=[];in_string=False;escaped=False
+    for char in text:
+        if in_string:
+            if escaped:escaped=False
+            elif char=="\\":escaped=True
+            elif char=='"':in_string=False
+            continue
+        if char=='"':in_string=True;continue
+        if char in "[{":stack.append(char);continue
+        if char in "]}":
+            expected="[" if char=="]" else "{"
+            if not stack or stack[-1]!=expected:return None,""
+            stack.pop()
+    if in_string or stack!=["{"]:
+        return None,""
+    repaired=text+"}"
+    try:
+        payload=extract_json_object(repaired)
+    except Exception:
+        return None,""
+    lanes=payload.get("lanes") if isinstance(payload,dict) else None
+    if not isinstance(lanes,dict):
+        return None,""
+    if any(str(key) not in set(DISCOVERY_LANES)|{"diagnosis"} for key in lanes):
+        return None,""
+    return payload,repaired
+
+
+def _parse_relation_payload_with_bounded_repair(
+    *,storage:StorageSettings,run_id:str,raw:str,raw_sha256:str,resolved_model:str,
+) -> tuple[dict[str, Any], dict[str, Any] | None]:
+    try:
+        return extract_json_object(raw),None
+    except Exception:
+        payload,repaired=_repair_trailing_relation_root_closure(raw)
+        if payload is None:
+            raise
+    repaired_sha=hashlib.sha256(repaired.encode("utf-8")).hexdigest()
+    receipt={
+        "schema_version":"1.0",
+        "run_id":run_id,
+        "status":"PARSE_REPAIRED_TRAILING_ROOT_CLOSURE_ZERO_AUTHORITY",
+        "resolved_model":resolved_model,
+        "raw_sha256":raw_sha256,
+        "repaired_sha256":repaired_sha,
+        "repair_type":"APPEND_ONE_ROOT_OBJECT_CLOSING_BRACE_AT_EOF",
+        "inserted_closing_brace_count":1,
+        "insertion_offset":len(raw),
+        "original_bytes_mutated":False,
+        "string_content_mutated":False,
+        "provider_calls_executed":0,
+        "scientific_authority":False,
+        "authority":{"problem_gate":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+    }
+    repair_root=_root(storage)/"repairs";repair_root.mkdir(parents=True,exist_ok=True)
+    receipt_path=repair_root/f"{run_id}-relation-{raw_sha256[:12]}-trailing-root-closure.json"
+    receipt_path.write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    return payload,receipt
+
+
 def _receipts(generator: dict[str, Any]) -> list[dict[str, Any]]:
     return portable_review_receipts(generator)
 
@@ -372,7 +437,10 @@ def run_global_relation_recall(*,storage:StorageSettings|None=None,primary_state
     cards=[_card(registry[ref]) for ref in sorted(target)]
     call=relation_responder or _ark
     try:
-        response=call(prompt=relation_prompt(cards,required_touch_refs=required_touch_refs),model=RELATION_MODEL,max_output_tokens=5200);raw=str(response.get("text") or "");artifact=_write_raw(storage,run_id,"relation",RELATION_MODEL,raw);artifact["resolved_model"]=str(response.get("resolved_model") or RELATION_MODEL);state["raw_artifacts"]["relation"]=artifact;proposals=_normalize_proposals(extract_json_object(raw),registry,_coobserved(receipts),required_touch_refs=required_touch_refs)
+        response=call(prompt=relation_prompt(cards,required_touch_refs=required_touch_refs),model=RELATION_MODEL,max_output_tokens=5200);raw=str(response.get("text") or "");artifact=_write_raw(storage,run_id,"relation",RELATION_MODEL,raw);artifact["resolved_model"]=str(response.get("resolved_model") or RELATION_MODEL);state["raw_artifacts"]["relation"]=artifact
+        relation_payload,repair_receipt=_parse_relation_payload_with_bounded_repair(storage=storage,run_id=run_id,raw=raw,raw_sha256=str(artifact.get("sha256") or ""),resolved_model=str(artifact.get("resolved_model") or ""))
+        if repair_receipt is not None:state["raw_artifacts"]["relation_repair"]=repair_receipt
+        proposals=_normalize_proposals(relation_payload,registry,_coobserved(receipts),required_touch_refs=required_touch_refs)
     except Exception as error:
         state["status"]="RELATION_PROVIDER_ERROR_ZERO_AUTHORITY";state["error"]=_provider_error_text(error);state["summary"]=_summary(coverage,target,cached,[]);return state
     if proposals:
@@ -510,7 +578,9 @@ def resume_global_relation_recall_from_relation_raw(
     artifact.update({"resolved_model":resolved,"raw_replayed_without_provider":True,"provider_calls_executed":0,"origin_run_id":str(raw_origin_run_id or ""),"origin_raw_sha256":expected})
     state["raw_artifacts"]["relation"]=artifact
     try:
-        proposals=_normalize_proposals(extract_json_object(raw),registry,_coobserved(receipts),required_touch_refs=required_touch_refs)
+        relation_payload,repair_receipt=_parse_relation_payload_with_bounded_repair(storage=storage,run_id=run_id,raw=raw,raw_sha256=expected,resolved_model=resolved)
+        if repair_receipt is not None:state["raw_artifacts"]["relation_repair"]=repair_receipt
+        proposals=_normalize_proposals(relation_payload,registry,_coobserved(receipts),required_touch_refs=required_touch_refs)
     except Exception as error:
         state["status"]="RELATION_REPLAY_PARSE_ERROR_ZERO_AUTHORITY";state["error"]=_provider_error_text(error);state["summary"]=_summary(coverage,target,cached,[]);return state
 
