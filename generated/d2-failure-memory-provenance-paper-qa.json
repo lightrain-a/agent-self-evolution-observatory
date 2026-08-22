@@ -4,11 +4,11 @@
   "status": "PASS",
   "paper_dir": "paper_drafts/d2-failure-memory-provenance-iclr2027",
   "summary": {
-    "checks": 29,
-    "passed": 29,
-    "pages": 7,
-    "pdf_sha256": "681a608bd2c448233b3ad9f2b7c166fd3c97844fceab38af131bc9ec940ddd3e",
-    "pdf_bytes": 160497,
+    "checks": 39,
+    "passed": 39,
+    "pages": 8,
+    "pdf_sha256": "3907bf36d22fe56d816422633b4b04f74d090eed1418f7bdc64e5ca0f0a37fae",
+    "pdf_bytes": 156436,
     "active_unrefuted_claims": [
       "C4",
       "C5"
@@ -18,7 +18,7 @@
     {
       "name": "page_limit",
       "pass": true,
-      "detail": 7
+      "detail": 8
     },
     {
       "name": "anonymous_placeholder",
@@ -91,7 +91,27 @@
       "detail": null
     },
     {
-      "name": "pdf_fragment:144 requested calls",
+      "name": "pdf_fragment:48 completed requests",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.1667",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.0785",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.15",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:144 calls",
       "pass": true,
       "detail": null
     },
@@ -136,19 +156,75 @@
       "detail": 5
     },
     {
-      "name": "artifact:summary.active_unrefuted_hypotheses",
+      "name": "artifact:candidate_pairs.gate_pass",
       "pass": true,
       "detail": {
-        "actual": 3,
-        "expected": 3
+        "actual": true,
+        "expected": true
       }
     },
     {
-      "name": "artifact:status",
+      "name": "artifact:candidate_pairs.minimum_eligible_pairs",
       "pass": true,
       "detail": {
-        "actual": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS",
-        "expected": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS"
+        "actual": 4,
+        "expected": 4
+      }
+    },
+    {
+      "name": "artifact:execution.requests_complete",
+      "pass": true,
+      "detail": {
+        "actual": 48,
+        "expected": 48
+      }
+    },
+    {
+      "name": "artifact:execution.support_failures",
+      "pass": true,
+      "detail": {
+        "actual": 0,
+        "expected": 0
+      }
+    },
+    {
+      "name": "artifact:summary.mean_success_minus_failure_terminal_rate",
+      "pass": true,
+      "detail": {
+        "actual": 0.166667,
+        "expected": 0.166667
+      }
+    },
+    {
+      "name": "artifact:summary.permutation_p_success_greater",
+      "pass": true,
+      "detail": {
+        "actual": 0.07853921460785392,
+        "expected": 0.07853921460785392
+      }
+    },
+    {
+      "name": "artifact:summary.support_gate_pass",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:summary.counterevidence_gate_pass",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:summary.verdict",
+      "pass": true,
+      "detail": {
+        "actual": "INCONCLUSIVE_NO_THRESHOLD_CHANGE",
+        "expected": "INCONCLUSIVE_NO_THRESHOLD_CHANGE"
       }
     },
     {
@@ -157,14 +233,6 @@
       "detail": {
         "actual": 144,
         "expected": 144
-      }
-    },
-    {
-      "name": "artifact:summary.mean_success_minus_failure_terminal_rate",
-      "pass": true,
-      "detail": {
-        "actual": 0.0,
-        "expected": 0.0
       }
     },
     {
@@ -209,17 +277,66 @@
   },
   "artifact_checks": [
     {
-      "path": "generated/discovery-engine-terminal-replication-source-audit-20260821.json",
-      "key": "summary.active_unrefuted_hypotheses",
-      "actual": 3,
-      "expected": 3,
+      "path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json",
+      "key": "candidate_pairs.gate_pass",
+      "actual": true,
+      "expected": true,
       "pass": true
     },
     {
-      "path": "generated/d2-failure-memory-provenance-faithful-reconstruction-preflight.json",
-      "key": "status",
-      "actual": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS",
-      "expected": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS",
+      "path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json",
+      "key": "candidate_pairs.minimum_eligible_pairs",
+      "actual": 4,
+      "expected": 4,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json",
+      "key": "execution.requests_complete",
+      "actual": 48,
+      "expected": 48,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json",
+      "key": "execution.support_failures",
+      "actual": 0,
+      "expected": 0,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json",
+      "key": "summary.mean_success_minus_failure_terminal_rate",
+      "actual": 0.166667,
+      "expected": 0.166667,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json",
+      "key": "summary.permutation_p_success_greater",
+      "actual": 0.07853921460785392,
+      "expected": 0.07853921460785392,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json",
+      "key": "summary.support_gate_pass",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json",
+      "key": "summary.counterevidence_gate_pass",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json",
+      "key": "summary.verdict",
+      "actual": "INCONCLUSIVE_NO_THRESHOLD_CHANGE",
+      "expected": "INCONCLUSIVE_NO_THRESHOLD_CHANGE",
       "pass": true
     },
     {
@@ -227,13 +344,6 @@
       "key": "summary.complete_calls",
       "actual": 144,
       "expected": 144,
-      "pass": true
-    },
-    {
-      "path": "generated/d2-failure-memory-provenance-bridge.json",
-      "key": "summary.mean_success_minus_failure_terminal_rate",
-      "actual": 0.0,
-      "expected": 0.0,
       "pass": true
     },
     {
@@ -251,11 +361,11 @@
     },
     {
       "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/00_abstract.tex",
-      "sha256": "bc0a8715a61434a17df7f892eaea68499a11fd1cfe0d442ed62c87c660c58219"
+      "sha256": "1695d679eb46b5224e0d53c345b500fbcd161f3d751071cb1e45a4617fd6da5b"
     },
     {
       "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/01_intro.tex",
-      "sha256": "282c3ddea7453694abdc12d3c6f2cde011719c38acd0cc32a608bb156f6cebc4"
+      "sha256": "9350a9a7cfd0b1d83c3afcb0d81143579212a6baee923df313201bdad89d3a21"
     },
     {
       "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/02_formulation.tex",
@@ -267,7 +377,7 @@
     },
     {
       "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/04_intervention.tex",
-      "sha256": "5ed35559c0630c3d49f3a41ece4b382bed726b6e7383a8eb2b0b95291d253e4f"
+      "sha256": "9c81a68984018d752597d26c09389c9193cdc5a213995388b53c3538ac172381"
     },
     {
       "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/05_related.tex",
@@ -275,11 +385,11 @@
     },
     {
       "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/06_limitations_conclusion.tex",
-      "sha256": "5c4d78d5548457896ba7423b2d9efcce66fc39d0f8ff722b3aead946110540e1"
+      "sha256": "7551c71d1d40763cc2337b07c28e53471b21b1f72ccd620e96b74da1cd89ebca"
     },
     {
       "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/07_appendix.tex",
-      "sha256": "fa35243d4848397204ebb0bea81ebd3c4128ec5de7cecd2916cd941b4c59b2ca"
+      "sha256": "ac0201a355e8773822be45f69f55db0e5874322a277127ee779fbdb7a2f60f71"
     },
     {
       "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/references.bib",
@@ -288,7 +398,7 @@
   ],
   "claim_ledger": {
     "path": "generated/d2-failure-memory-provenance-claim-ledger.json",
-    "sha256": "b518db8b8511f748b20acc8d7bb38b3a21c50981adab536ac2e809c55e293a92"
+    "sha256": "5936e30b06af41502e2a9fb809abeb8365a62222ff014e68336ad824f048f758"
   },
   "scientific_authority": false
 }

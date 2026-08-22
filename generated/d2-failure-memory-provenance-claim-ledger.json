@@ -14,47 +14,62 @@
       "claim_id": "C1",
       "claim": "Success-derived ReasoningBank retrievals achieve 0.931 accuracy over 101 cases while failure-derived retrievals achieve 0.647 over 34 cases in the released financial-agent audit.",
       "verdict": "SUPPORTED",
-      "evidence_refs": ["arXiv:2608.17684"],
+      "evidence_refs": [
+        "arXiv:2608.17684"
+      ],
       "retain_in_manuscript": true
     },
     {
       "claim_id": "C2",
       "claim": "All ten reported ReasoningBank W->W persistent failures lie in the failure-derived retrieval stratum.",
       "verdict": "SUPPORTED",
-      "evidence_refs": ["arXiv:2608.17684"],
+      "evidence_refs": [
+        "arXiv:2608.17684"
+      ],
       "retain_in_manuscript": true
     },
     {
       "claim_id": "C3",
       "claim": "ReasoningBank writes successful and failed trajectories through outcome-conditioned reflection modes, making trajectory provenance an upstream intervention on persistent memory content.",
       "verdict": "SUPPORTED_ACTIVE",
-      "evidence_refs": ["arXiv:2608.17684", "ReasoningBank implementation contract"],
+      "evidence_refs": [
+        "arXiv:2608.17684",
+        "ReasoningBank implementation contract"
+      ],
       "retain_in_manuscript": true
     },
     {
       "claim_id": "C4",
       "claim": "Failure-derived memory provenance causally sustains future error beyond task difficulty and matched semantic guidance.",
       "verdict": "ACTIVE_UNREFUTED_HYPOTHESIS",
-      "evidence_state": "NATURAL_PROVENANCE_SWAP_SUPPORT_BLOCKED_EXPLICIT_CUE_BRIDGE_INCONCLUSIVE",
+      "evidence_state": "CONTROLLED_MATCHED_PROVENANCE_SWAP_EXECUTED_INCONCLUSIVE_SOURCE_FAITHFUL_FINANCIAL_REPLICATION_PENDING",
       "closure_authority": "",
       "retain_in_manuscript": true,
       "claim_narrowing_required": false,
       "evidence_refs": [
         "generated/d2-failure-memory-provenance-faithful-reconstruction-preflight.json",
-        "generated/d2-failure-memory-provenance-bridge.json"
+        "generated/d2-failure-memory-provenance-bridge.json",
+        "generated/d2-failure-memory-provenance-r4-controlled-swap.json"
       ],
       "support_state": {
         "source_faithful_reconstruction": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS",
         "explicit_provenance_cue_bridge": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
-        "bridge_calls_complete": 144,
-        "bridge_mean_success_minus_failure_terminal_rate": 0.0,
-        "bridge_permutation_p_success_greater": 1.0,
-        "bridge_counterevidence_gate_pass": false
+        "explicit_bridge_calls_complete": 144,
+        "explicit_bridge_mean_success_minus_failure_terminal_rate": 0.0,
+        "controlled_matched_swap": "INCONCLUSIVE_NO_THRESHOLD_CHANGE",
+        "controlled_matched_swap_information_equivalent_pairs": 4,
+        "controlled_matched_swap_requests_complete": 48,
+        "controlled_matched_swap_support_failures": 0,
+        "controlled_matched_swap_mean_success_minus_failure_terminal_rate": 0.166667,
+        "controlled_matched_swap_permutation_p_success_greater": 0.07853921460785392,
+        "controlled_matched_swap_support_effect_floor": 0.15,
+        "controlled_matched_swap_support_gate_pass": false,
+        "controlled_matched_swap_counterevidence_gate_pass": false,
+        "claim_update": "KEEP_ACTIVE_UNREFUTED_HYPOTHESIS_NO_THRESHOLD_CHANGE"
       },
       "experiment_debt": [
-        "source-faithful matched-query matched-semantic natural provenance swap",
-        "failure-derived to success-derived replacement",
-        "reverse success-derived to failure-derived replacement"
+        "source-faithful financial AgentDojo matched provenance replication",
+        "independently preregistered confirmatory controlled swap on disjoint outcome-blind support if such support becomes available"
       ]
     },
     {

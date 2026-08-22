@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "experiment_id": "D2-C45-R4-CONDITION-BLIND-UI-PROJECTION",
+  "status": "COMPLETE",
+  "scope": "Controlled same-query provenance swap on a condition-blind deterministic projection of released WebArena browser-state evidence using the first-party ReasoningBank writer contract. This experiment does not reconstruct the financial AgentDojo audit.",
+  "contract_sha256": "582a203818f9f590d601b5ea9d3a3ecdc08acb3e34d3b1d9f190e17a2d1dcc25",
+  "provenance": {
+    "memory_generation_sha256": "02623a2fdad5c87e17ecf175afe26df1d64cb8ac06a623ed3f1da99d1da15bf3",
+    "information_equivalence_sha256": "a436c47c4a65435126d2f4dab02cdcf237109a67f941add674d401dd09af7e23",
+    "condition_blind_projected_tasks_sha256": "656a2139e9202ae8d2447dbab6b0627d91812a66dcf0abb75a6ec0d0e05c9830",
+    "request_plan_sha256": "54facf086a14003487c0e244229846adece5eccc6305128b6eb4661734309bbf",
+    "runner_sha256": "d9535cf54fda600754fd7f11c16256dc1787e9b1d2163d4ea2bac14a6de7d237",
+    "downstream_sha256": "6b5c678f4b1e8e578e8ec3dd088bb07e7ed144401e1d44cc323e5daf3937119c",
+    "result_sha256": "0445854c9c4514a2ab19e0c072bcc2f31e2ee319cf1ae86820729ba7ad417b84"
+  },
+  "candidate_pairs": {
+    "outcome_blind_candidate_task_ids": ["385", "387", "167", "23", "388", "164"],
+    "eligible_pair_ids": ["387", "167", "23", "388"],
+    "minimum_eligible_pairs": 4,
+    "gate_pass": true,
+    "information_equivalence_rule": {
+      "embedding_cosine_minimum": 0.75,
+      "independent_verifier_requires_actionable_guidance_equivalent": true,
+      "independent_verifier_requires_no_unique_task_solving_fact": true,
+      "literal_reference_leakage_forbidden": true
+    },
+    "eligible_pair_cosines": {
+      "387": 0.931334,
+      "167": 0.901925,
+      "23": 0.905883,
+      "388": 0.904356
+    },
+    "pre_outcome_exclusions": [
+      {"task_id": "385", "reason": "literal reference leakage"},
+      {"task_id": "164", "reason": "literal reference leakage"}
+    ]
+  },
+  "runtime_repair": {
+    "condition_blind_projection_rules": [
+      "remove complete WebArena global menu blocks",
+      "drop blank lines",
+      "exact-line deduplicate while preserving first occurrence"
+    ],
+    "projection_uses_reference_answers": false,
+    "projection_uses_generated_answers_or_scores": false,
+    "r2_partial_scientific_use": false,
+    "r3_partial_scientific_use": false,
+    "r4_restart_all_requests": true,
+    "r4_context_tokens": 12288,
+    "largest_frozen_prompt_eval_tokens": 5209,
+    "context_token_headroom": 7079,
+    "input_truncation_risk_detected": false,
+    "model_changed": false,
+    "temperature_changed": false,
+    "pair_set_changed": false,
+    "seed_schedule_changed": false,
+    "scorer_changed": false,
+    "threshold_changed": false
+  },
+  "execution": {
+    "requests_expected": 48,
+    "requests_complete": 48,
+    "support_failures": 0,
+    "rollouts_per_condition_per_pair": 6,
+    "conditions": ["SUCCESS_DERIVED_MEMORY", "FAILURE_DERIVED_MEMORY"],
+    "executor_model": "qwen2.5:32b",
+    "executor_temperature": 0.6
+  },
+  "summary": {
+    "mean_success_minus_failure_terminal_rate": 0.166667,
+    "forward_failure_to_success_effect": 0.166667,
+    "reverse_success_to_failure_effect": -0.166667,
+    "permutation_p_success_greater": 0.07853921460785392,
+    "permutation_p_failure_greater": 0.99330006699933,
+    "support_effect_floor": 0.15,
+    "counterevidence_effect_ceiling": -0.15,
+    "p_threshold": 0.05,
+    "permutation_repetitions": 100000,
+    "permutation_seed": 20260825,
+    "support_gate_pass": false,
+    "counterevidence_gate_pass": false,
+    "verdict": "INCONCLUSIVE_NO_THRESHOLD_CHANGE"
+  },
+  "pair_results": [
+    {"pair_id": "167", "success_derived_rate": 0.0, "failure_derived_rate": 0.0, "success_minus_failure": 0.0},
+    {"pair_id": "23", "success_derived_rate": 1.0, "failure_derived_rate": 0.6666666666666666, "success_minus_failure": 0.33333333333333337},
+    {"pair_id": "387", "success_derived_rate": 0.0, "failure_derived_rate": 0.0, "success_minus_failure": 0.0},
+    {"pair_id": "388", "success_derived_rate": 0.5, "failure_derived_rate": 0.16666666666666666, "success_minus_failure": 0.33333333333333337}
+  ],
+  "claim_update": {
+    "C4": "KEEP_ACTIVE_UNREFUTED_HYPOTHESIS",
+    "reason": "The controlled effect exceeds the frozen magnitude floor but the preregistered one-sided permutation p-value does not cross 0.05. No counterevidence gate fires.",
+    "threshold_rescue_allowed": false,
+    "non_significance_is_no_effect_evidence": false
+  },
+  "remaining_debt": [
+    "source-faithful financial AgentDojo matched provenance replication",
+    "independently preregistered confirmatory controlled swap if additional outcome-blind support becomes available"
+  ],
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

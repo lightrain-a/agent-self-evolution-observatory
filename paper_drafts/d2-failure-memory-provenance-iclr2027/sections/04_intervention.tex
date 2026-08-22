@@ -1,21 +1,39 @@
-\section{Causal Provenance Intervention}
+\section{Controlled Provenance Intervention}
 \label{sec:intervention}
-The decisive experiment edits the retrieved memory while leaving the future task unchanged. We call this the matched provenance swap.
+We execute a matched provenance swap that edits the reusable memory while keeping the future query fixed. The targeted repair is a controlled bridge on released WebArena browser-state evidence. It uses the first-party ReasoningBank memory-writing contract. It does not reconstruct the financial AgentDojo experiment that motivated the paper.
 
-\subsection{Pair construction}
-For each future task that retrieves a failure-derived memory, we identify a successful trajectory from the same task family. The two trajectories are converted into memories using the same writer model. Each memory is then compressed to a matched procedural core. A verifier checks whether the pair exposes the same actionable information to the future agent. The pair enters the experiment when the procedural content is matched and the provenance differs.
+\subsection{Outcome-blind pair construction}
+We froze six candidate future tasks before memory writing or downstream evaluation. For each task, the same released browser-state evidence is converted into two acquisition traces. One trace ends with a successful terminal answer. The paired trace omits an evaluator-required component and receives failure. The first-party ReasoningBank writer then applies its success-reflection objective to the successful trace and its failure-reflection objective to the paired failed trace. The writer model is fixed across the two branches.
 
-The intervention produces two conditions. The first condition injects the failure-derived memory. The second condition injects the success-derived counterpart. The agent receives the same future query under both conditions. Model sampling is frozen. Tool state is frozen. The benchmark environment starts from the same snapshot.
+A pair enters downstream evaluation only after an information-equivalence gate. Both memories must parse as valid ReasoningBank items. Neither memory may contain a literal benchmark reference answer. Their embedding cosine must be at least 0.75. An independent verifier must judge the actionable guidance equivalent and find no task-solving fact unique to either memory. Four of the six frozen candidates pass this gate. Their cosine values range from 0.902 to 0.931. Two candidates are excluded before downstream outcomes because a memory repeats a benchmark reference answer.
 
-\subsection{Reverse swap}
-A complementary cohort begins with future tasks that normally retrieve success-derived memory. The intervention replaces that memory with a matched failure-derived counterpart. This direction tests whether failure provenance can introduce persistence into tasks that previously had access to successful guidance. The forward swap measures recovery from a failure-derived state. The reverse swap measures degradation after the state is introduced.
+\subsection{Condition-blind runtime repair}
+The frozen evidence packets contain repeated browser chrome that creates unnecessary context pressure. Before any completed controlled-swap dataset exists, we freeze a condition-blind projection. It removes complete global menu blocks. Blank lines are dropped. Exact repeated lines are deduplicated. The projection does not inspect benchmark references or generated answers. The identical projected evidence is used under both provenance conditions.
 
-\subsection{Outcome measures}
-The primary endpoint is task success on the matched future query. A secondary endpoint measures action divergence before terminal feedback. We record the first decision point at which the two provenance conditions choose different tool actions or different subgoals. This localizes the mechanism before outcome differences accumulate over a long trajectory.
+The first downstream runtime uses an unnecessarily large context allocation and is cancelled at the support layer. A clean restart reduces only the allocated context window. A pre-execution check shows that the largest frozen prompt uses 5,209 input tokens, leaving 7,079 tokens of headroom in the 12,288-token allocation before generation. The model remains Qwen2.5-32B. Sampling temperature remains 0.6. The pair set remains unchanged. The seed schedule is fixed. The scorer and statistical thresholds are also unchanged. Partial requests from cancelled runs are excluded from the scientific dataset.
 
-A provenance effect is supported when matched failure-derived memory produces lower future success or earlier error-consistent action divergence. The effect should replicate across task families. We also report pair-level heterogeneity because some failed trajectories may generate unusually strong corrective memories.
+\subsection{Terminal outcome result}
+The clean run evaluates four information-equivalent memory pairs. Each pair receives six paired seeds under success-derived memory and failure-derived memory, yielding 48 completed requests with zero support failures. Terminal correctness uses the frozen WebArena must-include evaluator. Table~\ref{tab:swap} reports pair-level success rates.
 
-\subsection{Memory governance implication}
-A positive effect changes how self-evolving memory should be represented. Memory retrieval should preserve provenance as structured metadata. The agent can then condition trust on the demonstrated process behind the memory. A failure-derived item can remain useful while receiving a different reuse policy from a memory backed by successful execution.
+\begin{table}[t]
+\centering
+\caption{Controlled matched-memory swap on four information-equivalent pairs. $\Delta$ is success-derived minus failure-derived terminal success.}
+\label{tab:swap}
+\begin{tabular}{lrrr}
+\toprule
+Released task & Success-derived & Failure-derived & $\Delta$ \\
+\midrule
+167 & 0.000 & 0.000 & 0.000 \\
+23  & 1.000 & 0.667 & +0.333 \\
+387 & 0.000 & 0.000 & 0.000 \\
+388 & 0.500 & 0.167 & +0.333 \\
+\midrule
+Mean & 0.375 & 0.208 & +0.167 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-This design is compatible with ReasoningBank because the acquisition mode is already explicit during memory writing \citep{ouyang2026reasoningbank}. It also transfers to workflow memory systems that store experience-derived procedures \citep{wang2024awm}. The intervention operates at the memory boundary, so it does not require parameter updates or changes to the base model.
+The mean controlled difference is +0.1667. The preregistered support gate requires a difference of at least 0.15 together with a one-sided stratified permutation value below 0.05. The magnitude criterion is met. The 100,000-permutation test gives $p=0.0785$, so the support gate remains closed. The reverse direction is $-0.1667$, while its one-sided permutation value is 0.9933; the counterevidence gate also remains closed. We therefore retain the causal provenance claim as an active hypothesis with a directional controlled signal. We do not change the frozen threshold after observing this result.
+
+\subsection{Interpretation}
+The controlled experiment changes the empirical status of the paper in two ways. First, semantic matching is now operational: four pairs survive a pre-outcome information-equivalence screen and are evaluated on the same future query evidence. Second, the observed direction agrees with the provenance-conditioned persistence signal from the financial audit. The present support is insufficient for a supported causal claim under the preregistered gate. A source-faithful financial replication remains the strongest next confirmation target.
