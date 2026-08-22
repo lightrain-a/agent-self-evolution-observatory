@@ -53,7 +53,7 @@ REQUIRED_STATIC = [
     "agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg",
     "agent-self-evolution-history-en.svg", "agent-self-evolution-history-zh.svg",
     "portfolio-data.js", "direction-guide-data.js", "direction-literature-data.js", "page-architecture-data.js", "idea-explanations.js", "idea-comparisons.js",
-    "paper-analysis-data.js", "top-paper-analysis-data.js", "published-literature-data.js", "citation-ranking-data.js",
+    "paper-analysis-data.js", "top-paper-analysis-data.js", "published-literature-data.js", "citation-ranking-data.js", "paper-novelty-audit-data.js",
     "history-figure-data.js", "catalog_audit.py", "build_citation_cache.py",
     "browser_smoke_test.py", "hierarchy_smoke_test.py", "CHANGELOG.md",
     "content-review-external.js", "generated/iclr-external-reviews.json",
@@ -307,6 +307,18 @@ def main() -> None:
         fail("selected-paper must be explicitly labeled as the canonical PaperRegistry workspace")
     if "current-research-status-view.js" not in selected_html:
         fail("selected-paper must load the unified current-paper renderer")
+    if "paper-novelty-audit-data.js" not in selected_html or selected_scripts_list.index("paper-novelty-audit-data.js") > selected_scripts_list.index("current-research-status-view.js"):
+        fail("selected-paper must load the advisor-facing novelty audit before the current-paper renderer")
+    novelty_source = (ROOT / "paper-novelty-audit-data.js").read_text(encoding="utf-8")
+    novelty_ids = ("STRI", "AGENT-SAFETY-R9", "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE", "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK", "D2-PAPER-FAILURE-MEMORY-PROVENANCE")
+    if not all(f'\"{paper_id}\"' in novelty_source for paper_id in novelty_ids) or "scientific_authority:false" not in novelty_source or "cannot_change_paper_state:true" not in novelty_source:
+        fail("paper novelty audit must cover all five PaperStates and remain a zero-authority read-only literature overlay")
+    for marker in ("Demystifying Agent Skills", "Remembering More, Risking More", "Memory Reward Inflation", "Not All Skills Help", "Memory Provenance Laundering"):
+        if marker not in novelty_source:
+            fail(f"paper novelty audit is missing nearest-work evidence: {marker}")
+    current_view_source = (ROOT / "current-research-status-view.js").read_text(encoding="utf-8")
+    if "paper-novelty-portfolio" not in current_view_source or "paper-novelty-detail" not in current_view_source or "Advisor decision" not in current_view_source:
+        fail("selected-paper must render both portfolio-level and per-paper advisor novelty decisions")
 
     stale_markers = (
         "Selected ICLR Paper Workspace", "选中 ICLR 论文工作区",
