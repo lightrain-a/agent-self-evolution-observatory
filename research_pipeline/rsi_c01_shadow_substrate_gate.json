@@ -1,19 +1,19 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "candidate_id": "RSI-C01",
   "title": "Intervention-surface lockout breaks recursive self-intervention closure",
-  "portfolio_class": "SHADOW_HOLD_NOT_PROJECTED",
-  "status": "HOLD_CANONICAL_SCIENTIFIC_OBJECT_IDENTITY_MISMATCH",
+  "portfolio_class": "HISTORICAL_SHADOW_ALIAS_SUPERSEDED_NOT_PROJECTED",
+  "status": "SUPERSEDED_BY_RSI_LOCKOUT_C01",
   "scientific_object": {
     "broad_claim_status": "NOVELTY_FAIL",
     "broad_claim": "Recursive/self-referential agents can improve their own scaffold or tools.",
-    "narrow_claim_status": "UNQUALIFIED_SHADOW_OBJECT_NO_CANONICAL_MATCH",
+    "narrow_claim_status": "REBIND_COMPLETE_AS_DISTINCT_ZERO_AUTHORITY_OBJECT",
     "narrow_claim": "When the capability used for self-reading, self-writing, and self-verification itself enters the fault domain, under what conditions does read-write-verify recursive closure break, and can a strictly bounded out-of-band repair side-channel restore that closure?",
     "principal_difference": "intervention-surface lockout breaks recursive closure",
-    "promotion_status": "FORBIDDEN_UNTIL_CANONICAL_OBJECT_IDENTITY_IS_RESOLVED"
+    "promotion_status": "MOVED_TO_RSI_LOCKOUT_C01_ZERO_AUTHORITY"
   },
   "canonical_object_qualification": {
-    "status": "FAIL_OBJECT_IDENTITY_MISMATCH",
+    "status": "RESOLVED_BY_DISTINCT_CANDIDATE_ID",
     "lookup_date": "2026-08-22",
     "lookup_scope": [
       "/data/wyt/agent-self-evolution-observatory canonical run/evidence roots",
@@ -37,14 +37,16 @@
       ]
     },
     "identity_match": false,
-    "current_object_found_in_canonical_data_root": false,
+    "current_object_found_in_canonical_data_root": true,
     "git_origin": "0354e9d first introduces the intervention-surface lockout formulation on this shadow branch.",
-    "decision": "Do not inherit closest-work, substrate, promotion, or scientific lineage from SHADOW-RSI-C01. The current lockout formulation must first be explicitly bound as a new canonical scientific object or assigned a distinct candidate identity.",
-    "scientific_authority": false
+    "decision": "Do not inherit any authority or lineage from SHADOW-RSI-C01. The intervention-surface-lockout formulation is now rebound as the distinct zero-authority scientific object RSI-LOCKOUT-C01; RSI-C01 remains only a historical alias.",
+    "scientific_authority": false,
+    "resolved_candidate_id": "RSI-LOCKOUT-C01",
+    "resolved_contract_sha256": "6b123f5a092b594500d7dd554f69bd20e62032f92dde6f9913229b1a8aba30d2"
   },
   "closest_work_boundary": {
-    "decision": "NOT_RUN_CANONICAL_OBJECT_IDENTITY_MISMATCH",
-    "qualification_rule": "Strict closest-work review is admissible only after the reviewed claim is bound to a canonical scientific object. A shadow-only formulation cannot earn novelty authority by literature review alone.",
+    "decision": "MOVED_TO_RSI_LOCKOUT_C01",
+    "qualification_rule": "Strict closest-work and same-information reduction now belong only to RSI-LOCKOUT-C01. This historical alias cannot earn or carry novelty authority.",
     "historical_exploratory_scan_only": [
       "DGM: recursive code self-modification and inherited self-modification capability",
       "SICA: coding agent edits itself using coding tools",
@@ -53,15 +55,17 @@
       "runtime tool-failure benchmarks: availability denial, silent no-op, corrupted state, schema mismatch, retry/fallback/verification"
     ],
     "unqualified_hypothesized_intersection": "The intervention capability responsible for self-inspection, self-modification, or self-verification is itself the faulted resource, rather than an ordinary task tool.",
-    "strict_closest_work_completed": false,
-    "same_information_reduction_completed": false,
-    "novelty_authority": false
+    "strict_closest_work_completed": true,
+    "same_information_reduction_completed": true,
+    "novelty_authority": false,
+    "resolved_review_sha256": "b98d42e14eb9a8e0c55c9d7c9890e0afc26357b1c169b6cf721348fdeb75f38f",
+    "resolved_review_decision": "PASS_PROVISIONAL_DIRECT_INTERSECTION_BUT_NO_NOVELTY_AUTHORITY_UNTIL_REDUCTION_GATE"
   },
   "substrate": {
     "primary": "Exo (exoharness/exo)",
-    "qualification": "ENGINEERING_FEASIBILITY_ONLY_NOT_SCIENTIFICALLY_QUALIFIED",
-    "same_substrate_qualification": "NOT_RUN_CANONICAL_OBJECT_IDENTITY_MISMATCH",
-    "qualification_rule": "Same-substrate qualification starts only after a canonical scientific object and its closest-work boundary are frozen; otherwise substrate work is engineering feasibility only.",
+    "qualification": "MOVED_TO_RSI_LOCKOUT_C01_W_ENGINEERING_QUALIFIED",
+    "same_substrate_qualification": "MOVED_TO_RSI_LOCKOUT_C01",
+    "qualification_rule": "All current Exo qualification belongs to RSI-LOCKOUT-C01. This alias retains historical dry-run evidence only and grants no substrate or scientific authority.",
     "why_close": [
       "The source tree is mounted into the agent sandbox at /workspace/exo and is intended to be readable and modifiable by the agent.",
       "Canonical event history is host-side/outside the sandbox and survives ordinary restart/rewind, giving an external lineage domain.",
@@ -72,11 +76,11 @@
       "repository": "https://github.com/exoharness/exo",
       "branch": "main",
       "scanned_at": "2026-08-22",
-      "exact_main_sha": null,
-      "exact_pin_status": "HOLD_REMOTE_PIN_UNRESOLVED_DUE_GIT_TLS_SUPPORT_FAILURE",
-      "last_independent_public_pin_observed": "1c48c25332342d346b75b7d2add7b70c5d12b961",
-      "last_independent_public_pin_date": "2026-07-26",
-      "policy": "Do not treat the July pin as the current main SHA; acquire an exact upstream pin before any Exo-specific pilot."
+      "exact_main_sha": "960656626097b3a4ef56f3e4aff3c25573c1623d",
+      "exact_pin_status": "RESOLVED_FOR_RSI_LOCKOUT_C01_QUALIFICATION",
+      "last_independent_public_pin_observed": "960656626097b3a4ef56f3e4aff3c25573c1623d",
+      "last_independent_public_pin_date": "2026-08-22",
+      "policy": "The exact Exo source pin and experimental profile commit are recorded under RSI-LOCKOUT-C01; this historical alias must not launch a pilot."
     }
   },
   "capability_equivalence_map": {
@@ -148,34 +152,35 @@
   "promotion_gates": [
     {
       "id": "G0_CANONICAL_SCIENTIFIC_OBJECT_IDENTITY",
-      "status": "FAIL_OBJECT_IDENTITY_MISMATCH",
+      "status": "RESOLVED_BY_SUPERSESSION",
       "pass_rule": "Bind the exact intervention-surface-lockout claim to one canonical scientific object with unique lineage. A reused numeric suffix or a shadow-only branch is insufficient.",
-      "current_result": "Canonical SHADOW-RSI-C01 is a different successor-as-improver object and is already terminal STOP_EXACT_REDUCTION_SUPPORTED; no canonical match exists for the current lockout formulation."
+      "current_result": "Resolved as distinct candidate RSI-LOCKOUT-C01. SHADOW-RSI-C01 remains a different terminal successor-as-improver object; no authority is inherited."
     },
     {
       "id": "G1_CAPABILITY_LEVEL_LOCKOUT",
-      "status": "ENGINEERING_PARTIAL_W_ONLY_BLOCKED_BY_G0",
-      "pass_rule": "After G0 passes, enumerate functionally equivalent R/W/V paths and demonstrate that the full-lockout arm cannot bypass the intended fault through shell, interpreters, patch/git plumbing, tool-management state, rebuild/restart, or another host API.",
-      "current_result": "The W resource-boundary dry-run remains useful engineering evidence only; it grants no scientific or substrate qualification while G0 fails."
+      "status": "MOVED_TO_RSI_LOCKOUT_C01",
+      "pass_rule": "Historical rule only: enumerate equivalent R/W/V paths and prevent bypass through shell, interpreters, patch/git plumbing, tool-management state, rebuild/restart, or another host API. Current qualification is tracked under RSI-LOCKOUT-C01.",
+      "current_result": "Current W-lockout engineering qualification is recorded under RSI-LOCKOUT-C01; this historical alias cannot carry that qualification."
     },
     {
       "id": "G2_RECURSIVE_OBJECT_EXTERNAL_SUPERVISION_SEPARATION",
-      "status": "BLOCKED_BY_G0",
-      "pass_rule": "After G0 passes, the modified harness/code must persist across generations while checkpoint, lineage, and evaluator remain outside the fault domain; the supervisor may only restore a predeclared primitive and may not author the repair."
+      "status": "MOVED_TO_RSI_LOCKOUT_C01",
+      "pass_rule": "Historical rule only: keep the recursive object persistent while checkpoint, lineage, evaluator, and the predeclared restore primitive stay outside the fault domain. Current gate is tracked under RSI-LOCKOUT-C01."
     },
     {
       "id": "G3_PRINCIPAL_INTERACTION_PILOT",
-      "status": "BLOCKED_BY_G0",
-      "pass_rule": "After G0-G2 pass, no-fault sustains R-to-W-to-V; intervention-surface lockout collapses closure; the minimal out-of-band primitive restores it; fixed-agent, history-only reflection, and hidden redundant-tool controls do not recover equally."
+      "status": "MOVED_TO_RSI_LOCKOUT_C01",
+      "pass_rule": "Historical rule only: principal interaction and matched ordinary-tool reduction control are tracked under RSI-LOCKOUT-C01; this alias cannot execute the pilot."
     }
   ],
   "next_gate": {
-    "name": "CANONICAL_OBJECT_REBIND_OR_DISTINCT_CANDIDATE_ID",
+    "name": "NONE_HISTORICAL_ALIAS_TERMINAL",
+    "successor_candidate_id": "RSI-LOCKOUT-C01",
+    "successor_current_gate": "MATCHED_ORDINARY_TOOL_REDUCTION_CONTROL_BEFORE_DYNAMIC_PILOT",
     "design": [
-      "Do not run further Exo R/V lockout work under RSI-C01.",
-      "Either bind the intervention-surface-lockout formulation into a new canonical scientific object with explicit lineage, or assign it a distinct candidate identity that cannot be confused with terminal SHADOW-RSI-C01.",
-      "Only after that binding is frozen may strict closest-work review run.",
-      "Only after closest-work survives may same-substrate qualification on Exo resume."
+      "Never run further scientific or substrate work under RSI-C01.",
+      "Follow RSI-LOCKOUT-C01 for closest-work reduction, Exo qualification, and any future pilot.",
+      "Do not infer promotion or execution authority from this alias supersession."
     ],
     "execution_authorized": false
   },
@@ -184,7 +189,7 @@
     "research_item": false,
     "paper_state": false,
     "canonical_consumer_surface": false,
-    "reason": "RSI-C01 remains shadow/HOLD because the current lockout formulation has no matching canonical scientific object; closest-work, same-substrate qualification, ResearchItem promotion, and PaperState entry are all blocked at G0."
+    "reason": "RSI-C01 is a historical shadow alias superseded by the distinct zero-authority scientific object RSI-LOCKOUT-C01. The alias itself can never enter ResearchItem, PaperState, or a canonical consumer surface."
   },
   "authority": {
     "scientific": false,
