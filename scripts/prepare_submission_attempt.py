@@ -52,21 +52,23 @@ def parse_artifact(value: str) -> tuple[str, Path]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run attempt-scoped Preparation → Freeze → Machine Handoff for a paper-side child attempt. This command does not perform human signoff or venue submission.")
+    parser = argparse.ArgumentParser(description="Run attempt-scoped Preparation → Freeze → Machine Handoff. Scientific-reopen attempts require an immutable audited child-paper resolution contract; this command never performs human signoff or venue submission.")
     parser.add_argument("--root", type=Path, required=True)
     parser.add_argument("--paper-id", required=True)
     parser.add_argument("--attempt-sha256", required=True)
     parser.add_argument("--preparation-packet", type=Path, required=True)
     parser.add_argument("--venue-policy", type=Path, required=True)
+    parser.add_argument("--scientific-resolution-contract", type=Path, help="Immutable child paper contract produced after reopened evidence handoff + Claim Audit. Required only for scientific-reopen attempts.")
     parser.add_argument("--artifact", action="append", type=parse_artifact, required=True, help="Repeat as LABEL=PATH; e.g. paper_pdf=/tmp/main.pdf")
     args = parser.parse_args()
 
     plan = find_attempt(args.root, args.paper_id, args.attempt_sha256)
     packet = load(args.preparation_packet)
     venue_policy = load(args.venue_policy)
+    resolution = load(args.scientific_resolution_contract) if args.scientific_resolution_contract else None
     specs = [artifact(label, path.resolve()) for label, path in args.artifact]
 
-    preparation = build_attempt_preparation(attempt_plan=plan, preparation_packet=packet)
+    preparation = build_attempt_preparation(attempt_plan=plan, preparation_packet=packet, scientific_resolution=resolution)
     freeze = build_attempt_freeze(attempt_plan=plan, preparation_receipt=preparation, artifacts=specs, venue_policy=venue_policy)
     handoff = build_attempt_handoff(attempt_plan=plan, preparation_receipt=preparation, freeze_receipt=freeze, venue_policy=venue_policy)
     row = append_attempt_workflow_receipt(args.root, preparation)
@@ -89,6 +91,8 @@ def main() -> None:
         "human_confirmation_status": summary["human_confirmation_status"],
         "parent_submission_bytes_immutable": True,
         "actual_submission_performed": False,
+        "scientific_reopen_resolved": preparation.get("scientific_reopen_resolved") is True,
+        "resolved_child_paper_contract_sha256": str(preparation.get("resolved_child_paper_contract_sha256") or ""),
         "scientific_authority": False,
         "experiment_authority": False,
         "gpu_authority": False,

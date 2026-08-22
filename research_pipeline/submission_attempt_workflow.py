@@ -11,6 +11,7 @@ from typing import Any, Mapping, Sequence
 
 from .paper_preparation_protocol import build_paper_preparation_receipt, validate_paper_preparation_receipt
 from .presubmission_freeze import verify_frozen_artifacts
+from .reopened_child_paper_contract import validate_child_paper_contract
 from .submission_attempt_lineage import validate_attempt_plan
 
 SCHEMA_VERSION = "1.0"
@@ -43,7 +44,7 @@ def _policy_valid(policy: Mapping[str, Any]) -> bool:
 
 
 def preparation_identity(receipt: Mapping[str, Any]) -> dict[str, Any]:
-    return {
+    identity = {
         "paper_id": receipt.get("paper_id"),
         "contract_sha256": receipt.get("contract_sha256"),
         "attempt_sha256": receipt.get("attempt_sha256"),
@@ -51,16 +52,37 @@ def preparation_identity(receipt: Mapping[str, Any]) -> dict[str, Any]:
         "paper_preparation_receipt_sha256": receipt.get("paper_preparation_receipt_sha256"),
         "status": receipt.get("status"),
     }
+    if receipt.get("scientific_reopen_resolved") is True:
+        identity.update({
+            "scientific_reopen_resolved": True,
+            "resolved_child_paper_contract_sha256": receipt.get("resolved_child_paper_contract_sha256"),
+            "child_claim_audit_sha256": receipt.get("child_claim_audit_sha256"),
+        })
+    return identity
 
 
-def build_attempt_preparation(*, attempt_plan: Mapping[str, Any], preparation_packet: Mapping[str, Any]) -> dict[str, Any]:
+def build_attempt_preparation(*, attempt_plan: Mapping[str, Any], preparation_packet: Mapping[str, Any], scientific_resolution: Mapping[str, Any] | None = None) -> dict[str, Any]:
     if not validate_attempt_plan(attempt_plan):
         raise RuntimeError("invalid submission attempt plan")
-    if attempt_plan.get("machine_preparation_eligible") is not True or attempt_plan.get("requires_explicit_scientific_reopen") is True:
-        raise RuntimeError("attempt requires explicit scientific reopen before machine preparation")
+    requires_reopen = attempt_plan.get("requires_explicit_scientific_reopen") is True
+    resolved = scientific_resolution is not None
+    if requires_reopen:
+        if not resolved or not validate_child_paper_contract(scientific_resolution or {}):
+            raise RuntimeError("attempt requires explicit scientific reopen before machine preparation")
+        if str((scientific_resolution or {}).get("attempt_sha256") or "") != str(attempt_plan.get("attempt_sha256") or ""):
+            raise RuntimeError("scientific resolution/attempt lineage mismatch")
+        if str((scientific_resolution or {}).get("paper_id") or "") != str(attempt_plan.get("paper_id") or "") or str((scientific_resolution or {}).get("parent_paper_contract_sha256") or "") != str(attempt_plan.get("contract_sha256") or ""):
+            raise RuntimeError("scientific resolution parent paper lineage mismatch")
+        preparation_contract_sha = str((scientific_resolution or {}).get("child_paper_contract_sha256") or "")
+    else:
+        if resolved:
+            raise RuntimeError("paper-side attempt must not inject a scientific-reopen resolution")
+        if attempt_plan.get("machine_preparation_eligible") is not True:
+            raise RuntimeError("attempt is not machine-preparation eligible")
+        preparation_contract_sha = str(attempt_plan.get("contract_sha256") or "")
     paper_receipt = build_paper_preparation_receipt(
         paper_id=str(attempt_plan.get("paper_id") or ""),
-        contract_sha256=str(attempt_plan.get("contract_sha256") or ""),
+        contract_sha256=preparation_contract_sha,
         packet=preparation_packet,
     )
     if paper_receipt.get("pass") is not True or not validate_paper_preparation_receipt(paper_receipt):
@@ -79,7 +101,7 @@ def build_attempt_preparation(*, attempt_plan: Mapping[str, Any], preparation_pa
         "paper_preparation_receipt": paper_receipt,
         "status": "ATTEMPT_PREPARATION_PASS",
         "parent_submission_bytes_immutable": True,
-        "scientific_contract_unchanged": True,
+        "scientific_contract_unchanged": not requires_reopen,
         "claim_expansion_authorized": False,
         "new_experiment_authorized": False,
         "scientific_authority": False,
@@ -87,6 +109,14 @@ def build_attempt_preparation(*, attempt_plan: Mapping[str, Any], preparation_pa
         "gpu_authority": False,
         "submission_authority": False,
     }
+    if requires_reopen:
+        receipt.update({
+            "scientific_reopen_resolved": True,
+            "resolved_child_paper_contract_sha256": str((scientific_resolution or {}).get("child_paper_contract_sha256") or ""),
+            "child_claim_audit_sha256": str((scientific_resolution or {}).get("child_claim_audit_sha256") or ""),
+            "parent_contract_sha256": str(attempt_plan.get("contract_sha256") or ""),
+            "child_claim_revision_frozen": True,
+        })
     receipt["attempt_preparation_sha256"] = _digest(preparation_identity(receipt))
     return receipt
 
@@ -99,7 +129,16 @@ def validate_attempt_preparation(receipt: Mapping[str, Any]) -> bool:
         return False
     if str(receipt.get("paper_preparation_receipt_sha256") or "") != str(paper_receipt.get("receipt_sha256") or ""):
         return False
-    if receipt.get("parent_submission_bytes_immutable") is not True or receipt.get("scientific_contract_unchanged") is not True:
+    if receipt.get("parent_submission_bytes_immutable") is not True:
+        return False
+    if receipt.get("scientific_reopen_resolved") is True:
+        if receipt.get("scientific_contract_unchanged") is not False or receipt.get("child_claim_revision_frozen") is not True:
+            return False
+        if not receipt.get("resolved_child_paper_contract_sha256") or not receipt.get("child_claim_audit_sha256") or not receipt.get("parent_contract_sha256"):
+            return False
+        if str(paper_receipt.get("contract_sha256") or "") != str(receipt.get("resolved_child_paper_contract_sha256") or ""):
+            return False
+    elif receipt.get("scientific_contract_unchanged") is not True:
         return False
     if receipt.get("claim_expansion_authorized") is not False or receipt.get("new_experiment_authorized") is not False:
         return False
