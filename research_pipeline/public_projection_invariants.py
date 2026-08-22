@@ -101,6 +101,11 @@ def validate_public_control_plane(
         if (registry_row.get("review_learning") or {}) != (ledger_row.get("review_learning") or {}):
             errors.append(f"Paper review-learning mismatch:{paper_id}")
 
+    dashboard_policy = research_dashboard.get("projection_policy") or {}
+    if dashboard_policy.get("next_action_class_is_canonical_control_semantics") is not True:
+        errors.append("ResearchDashboard must declare next_action_class as canonical control semantics")
+    if dashboard_policy.get("next_step_text_is_human_explanation_only") is not True:
+        errors.append("ResearchDashboard must declare next_step text as non-authoritative human explanation")
     dashboard_summary = research_dashboard.get("summary") or {}
     expected_dashboard = {
         "portfolio_objects": research_summary.get("portfolio_objects"),

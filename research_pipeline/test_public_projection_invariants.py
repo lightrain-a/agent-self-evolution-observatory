@@ -44,6 +44,12 @@ class PublicProjectionInvariantTest(unittest.TestCase):
         errors = self.validate(dashboard=dashboard)
         self.assertIn("ResearchDashboard action mismatch:E-7", errors)
 
+    def test_dashboard_action_semantics_policy_drift_is_detected(self) -> None:
+        dashboard = copy.deepcopy(self.dashboard)
+        dashboard["projection_policy"]["next_step_text_is_human_explanation_only"] = False
+        errors = self.validate(dashboard=dashboard)
+        self.assertIn("ResearchDashboard must declare next_step text as non-authoritative human explanation", errors)
+
     def test_system_readiness_alias_drift_is_detected(self) -> None:
         system = copy.deepcopy(self.system)
         system["paper_acceptance"]["summary"]["gate_clean_submission_ready_papers"] = 5

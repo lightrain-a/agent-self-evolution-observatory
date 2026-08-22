@@ -11,7 +11,9 @@
       "PaperRegistry",
       "ResearchTimeline"
     ],
-    "dashboard_never_overrides_source_ledgers": true
+    "dashboard_never_overrides_source_ledgers": true,
+    "next_action_class_is_canonical_control_semantics": true,
+    "next_step_text_is_human_explanation_only": true
   },
   "summary": {
     "portfolio_objects": 92,

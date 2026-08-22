@@ -1338,6 +1338,8 @@ def build_dashboard(timeline: dict[str, Any]) -> dict[str, Any]:
             "submission_authority": False,
             "sources": ["ResearchItemState", "PaperRegistry", "ResearchTimeline"],
             "dashboard_never_overrides_source_ledgers": True,
+            "next_action_class_is_canonical_control_semantics": True,
+            "next_step_text_is_human_explanation_only": True,
         },
         "summary": {
             "portfolio_objects": int(research_summary.get("portfolio_objects") or 0),
@@ -1382,6 +1384,8 @@ def validate_dashboard(payload: dict[str, Any]) -> None:
     assert policy.get("scientific_authority") is False
     assert policy.get("experiment_authority") is False
     assert policy.get("submission_authority") is False
+    assert policy.get("next_action_class_is_canonical_control_semantics") is True
+    assert policy.get("next_step_text_is_human_explanation_only") is True
     attention = payload.get("attention") or []
     codes = [row.get("code") for row in attention]
     assert len(codes) == len(set(codes))

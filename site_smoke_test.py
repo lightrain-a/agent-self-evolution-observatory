@@ -174,8 +174,8 @@ def main() -> None:
     dashboard_summary = research_dashboard.get("summary") or {}
     dashboard_attention = research_dashboard.get("attention") or []
     dashboard_by_code = {row.get("code"): row for row in dashboard_attention}
-    if research_dashboard.get("schema_version") != "1.0" or dashboard_policy.get("read_only") is not True or any(dashboard_policy.get(key) is not False for key in ("scientific_authority", "experiment_authority", "submission_authority")) or dashboard_policy.get("dashboard_never_overrides_source_ledgers") is not True:
-        fail(f"research dashboard must remain a read-only zero-authority presentation projection: {dashboard_policy}")
+    if research_dashboard.get("schema_version") != "1.0" or dashboard_policy.get("read_only") is not True or any(dashboard_policy.get(key) is not False for key in ("scientific_authority", "experiment_authority", "submission_authority")) or dashboard_policy.get("dashboard_never_overrides_source_ledgers") is not True or dashboard_policy.get("next_action_class_is_canonical_control_semantics") is not True or dashboard_policy.get("next_step_text_is_human_explanation_only") is not True:
+        fail(f"research dashboard must remain a read-only zero-authority presentation projection whose action class is canonical and next-step prose is explanatory only: {dashboard_policy}")
     expected_dashboard_summary = {"portfolio_objects":int(ri_summary.get("portfolio_objects") or 0),"research_items":int(ri_summary.get("research_items") or 0),"current_attention":6,"research_handoffs":1,"research_waiting_reopen":5,"machine_actionable_attention":0,"paper_ready":1,"holds":5,"launchable_formal_experiments":0,"papers":int(registry_summary.get("papers") or 0),"submission_ready":int(registry_summary.get("gate_clean_submission_ready") or 0),"ledger_submission_ready":int(registry_summary.get("submission_ready") or 0),"immediate_submission_holds":int(registry_summary.get("immediate_submission_holds") or 0)}
     if any(int(dashboard_summary.get(key) or 0) != value for key, value in expected_dashboard_summary.items()):
         fail(f"research dashboard canonical summary drifted: {dashboard_summary}")
@@ -185,7 +185,7 @@ def main() -> None:
     if (dashboard_by_code.get("E-7") or {}).get("paper_id") != "STRI" or (dashboard_by_code.get("E-7") or {}).get("paper_stage") != "SUBMISSION_READY" or (dashboard_by_code.get("E-7") or {}).get("submission_ready") is not True or (dashboard_by_code.get("G-1") or {}).get("paper_id") != "AGENT-SAFETY-R9" or (dashboard_by_code.get("G-1") or {}).get("paper_stage") != "SUBMISSION_READY" or (dashboard_by_code.get("G-1") or {}).get("submission_ready") is not True:
         fail(f"research dashboard must preserve ResearchItem→PaperState handoffs: {dashboard_by_code}")
     if any(not row.get("portfolio_href") or not row.get("timeline_href") or not row.get("briefing_zh") or not row.get("next_step_zh") for row in dashboard_attention):
-        fail("every dashboard attention row needs a human briefing, explicit next step, ResearchItem link, and timeline link")
+        fail("every dashboard attention row needs a human briefing, explanatory action text, ResearchItem link, and timeline link")
     dashboard_week = research_dashboard.get("week") or {}
     if not dashboard_week.get("start_date") or not dashboard_week.get("end_date") or int(dashboard_week.get("research_days") or 0) < 1 or int(dashboard_week.get("substantive_events") or 0) < 1 or len(dashboard_week.get("highlights") or []) < 3:
         fail(f"research dashboard weekly summary is incomplete: {dashboard_week}")

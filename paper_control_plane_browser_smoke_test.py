@@ -58,6 +58,7 @@ def main() -> None:
             actions: Object.fromEntries([...document.querySelectorAll('.paper-registry-card')].map(x => [x.dataset.paperId || '', x.dataset.nextAction || ''])),
             noveltyPortfolio: document.querySelectorAll('#paper-novelty-portfolio').length,
             noveltyDetails: document.querySelectorAll('.paper-novelty-detail').length,
+            acceptanceActionTexts: [...document.querySelectorAll('.paper-acceptance-workflow .current-status-rule')].map(x => (x.textContent || '').trim()),
             temporal: papers.find(x => x.paper_id === 'D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK') || {},
             failureMemory: papers.find(x => x.paper_id === 'D2-PAPER-FAILURE-MEMORY-PROVENANCE') || {},
             text: document.body.textContent || ''
@@ -70,6 +71,7 @@ def main() -> None:
         require(summary.get("internal_action_required") == 1 and summary.get("no_internal_action") == 4, f"internal-action split drifted: {summary}")
         require(summary.get("by_internal_action") == {"EXTERNAL_EVIDENCE_REQUIRED": 1, "NO_INTERNAL_ACTION": 4}, f"internal-action classes drifted: {summary}")
         require(selected["noveltyPortfolio"] == 1 and selected["noveltyDetails"] == 5, "advisor novelty audit must remain visible for all five papers")
+        require(len(selected["acceptanceActionTexts"]) == 5 and sum("NO_INTERNAL_ACTION" in text for text in selected["acceptanceActionTexts"]) == 4 and sum("EXTERNAL_EVIDENCE_REQUIRED" in text for text in selected["acceptanceActionTexts"]) == 1, f"Paper Acceptance detail panels must render canonical primary actions only: {selected['acceptanceActionTexts']}")
         require(selected["actions"].get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK") == "EXTERNAL_EVIDENCE_REQUIRED", f"Temporal-Skill action drifted: {selected['actions']}")
         require(selected["actions"].get("D2-PAPER-FAILURE-MEMORY-PROVENANCE") == "NO_INTERNAL_ACTION", f"Failure-Memory action drifted: {selected['actions']}")
         temporal = selected["temporal"]
