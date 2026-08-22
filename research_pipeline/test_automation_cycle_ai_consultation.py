@@ -24,6 +24,30 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "forced-drift"):
                 _run_public_projection_invariants()
 
+    def test_publish_is_skipped_when_cross_projection_gate_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            storage = SimpleNamespace(run_dir=root / "runs", lock_dir=root / "locks", ensure=lambda: None)
+            def fake_step(name, function):
+                status = "fail" if name == "public-control-plane-invariants-before-publish" else "pass"
+                row = {"name": name, "status": status, "duration_seconds": 0.0}
+                if status == "pass":
+                    row["summary"] = {}
+                else:
+                    row["error"] = "RuntimeError: forced projection drift"
+                return row
+            with patch("research_pipeline.automation_cycle.StorageSettings.from_env", return_value=storage), \
+                 patch("research_pipeline.automation_cycle._step", side_effect=fake_step), \
+                 patch("research_pipeline.automation_cycle._refresh_pre_publication_state"), \
+                 patch("research_pipeline.automation_cycle.publish_generated_state") as publish:
+                report = run_cycle(mode="daily", ai_consultations=False, publish=True)
+            publish.assert_not_called()
+            publication = next(row for row in report["steps"] if row["name"] == "publish-generated-state")
+            self.assertEqual(publication["status"], "fail")
+            self.assertEqual(publication["summary"]["status"], "SKIPPED_PUBLICATION_GATE_FAILED")
+            self.assertIn("public-control-plane-invariants-before-publish", publication["summary"]["failed_prerequisites"])
+            self.assertEqual(report["status"], "degraded")
+
     def test_orphan_pid_cycle_lock_is_reclaimed_immediately(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             lock=Path(td)/"cycle.lock"; lock.write_text(json.dumps({"pid":12345,"started_at":"old"}),encoding="utf-8")

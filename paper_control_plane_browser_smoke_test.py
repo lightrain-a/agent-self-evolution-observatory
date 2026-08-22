@@ -80,6 +80,18 @@ def main() -> None:
         has_internal_summary = ("内部已闭环=4" in selected["text"] and "仍有内部动作=1" in selected["text"]) or ("internally closed=4" in selected["text"] and "internal action required=1" in selected["text"])
         require(has_next_label and has_internal_summary, "PaperRegistry human-readable internal-action summary is missing")
 
+        navigate(session_id, "/index.html")
+        home = execute(session_id, """
+          return {
+            summary: window.RESEARCH_DASHBOARD?.summary || {},
+            text: document.body.textContent || ''
+          };
+        """)
+        home_summary = home["summary"]
+        require(home_summary.get("current_attention") == 6 and home_summary.get("research_handoffs") == 1 and home_summary.get("research_waiting_reopen") == 5, f"Home ResearchItem control split drifted: {home_summary}")
+        require(home_summary.get("machine_actionable_attention") == 0, f"Home machine-actionable attention must remain zero: {home_summary}")
+        require("PAPERSTATE_HANDOFF" in home["text"] and "REOPEN_CONDITION_REQUIRED" in home["text"] and "machine-actionable=0" in home["text"], "Home control plane does not distinguish tracked handoff / waiting HOLD / machine-actionable=0")
+
         navigate(session_id, "/system-overview.html")
         overview = execute(session_id, """
           return {
@@ -107,10 +119,34 @@ def main() -> None:
         """)
         research_summary = research_map["summary"]
         require(research_summary.get("research_primary_next_action_counts") == {"MERGED_NO_STANDALONE_ACTION": 10, "NO_INTERNAL_ACTION": 71, "PAPERSTATE_HANDOFF": 1, "REOPEN_CONDITION_REQUIRED": 5}, f"ResearchItem action distribution drifted: {research_summary}")
-        require(research_summary.get("machine_actionable_research_items") == 0, f"ResearchItem machine authority drifted: {research_summary}")
+        require(research_summary.get("machine_actionable_research_items") == 0 and research_summary.get("machine_actionable_attention") == 0, f"ResearchItem machine authority drifted: {research_summary}")
+        require(research_summary.get("research_handoffs") == 1 and research_summary.get("research_waiting_reopen") == 5, f"Dashboard ResearchItem control split drifted: {research_summary}")
         require(research_summary.get("paper_internal_action_required") == 1 and research_summary.get("paper_no_internal_action") == 4, f"Dashboard paper action split drifted: {research_summary}")
         require(research_map["actions"].get("E-7") == "PAPERSTATE_HANDOFF" and research_map["actions"].get("G-1") == "REOPEN_CONDITION_REQUIRED", f"Dashboard attention actions drifted: {research_map['actions']}")
-        require("PAPERSTATE_HANDOFF" in research_map["text"] and "REOPEN_CONDITION_REQUIRED" in research_map["text"], "Research Map does not expose human-readable ResearchItem action classes")
+        require("PAPERSTATE_HANDOFF" in research_map["text"] and "REOPEN_CONDITION_REQUIRED" in research_map["text"] and "machine-actionable=0" in research_map["text"], "Research Map does not expose tracked/waiting/machine-actionable ResearchItem control classes")
+
+        navigate(session_id, "/paper-ideas.html")
+        ideas = execute(session_id, """
+          const rows = window.RESEARCH_ITEM_STATE?.research_items || [];
+          const e7 = rows.find(x => x.code === 'E-7') || {};
+          const stri = (window.PAPER_REGISTRY?.papers || []).find(x => x.paper_id === 'STRI') || {};
+          const actionClasses = ['NO_INTERNAL_ACTION','MERGED_NO_STANDALONE_ACTION','REOPEN_CONDITION_REQUIRED','PAPERSTATE_HANDOFF'];
+          const parentActionClasses = [...document.querySelectorAll('.canonical-parent-item .canonical-lifecycle-strip')].map(strip => {
+            const text = strip.children[1]?.textContent || '';
+            return actionClasses.find(name => text.includes(name)) || '';
+          });
+          return {
+            summary: window.RESEARCH_ITEM_STATE?.summary || {},
+            e7Action: e7.primary_next_action?.action_class || '',
+            paperAction: stri.primary_next_action?.action_class || '',
+            parentActionClasses,
+            text: document.body.textContent || ''
+          };
+        """)
+        require(ideas["e7Action"] == "PAPERSTATE_HANDOFF" and ideas["paperAction"] == "NO_INTERNAL_ACTION", f"Paper Ideas handoff/internal-closure boundary drifted: {ideas}")
+        require("PAPERSTATE_HANDOFF" in ideas["text"] and "NO_INTERNAL_ACTION" in ideas["text"], "Paper Ideas does not expose canonical ResearchItem→PaperState actions")
+        require(len(ideas["parentActionClasses"]) == 26 and ideas["parentActionClasses"].count("NO_INTERNAL_ACTION") == 16 and ideas["parentActionClasses"].count("MERGED_NO_STANDALONE_ACTION") == 6 and ideas["parentActionClasses"].count("REOPEN_CONDITION_REQUIRED") == 4, f"Paper Ideas parent cards do not render canonical 16/6/4 actions: {ideas['parentActionClasses']}")
+        require("下一步只剩人工作者责任确认" not in ideas["text"] and "only human author responsibility/signoff" not in ideas["text"], "Paper Ideas still frames real submission as an internal Research OS next action")
 
         print("PASS")
         print("Public control plane verified in a real browser: ResearchItem 71/10/5/1 actions; PaperState 5/4/1; 5 review lessons")

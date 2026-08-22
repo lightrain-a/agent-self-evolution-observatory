@@ -176,7 +176,7 @@ def main() -> None:
     dashboard_by_code = {row.get("code"): row for row in dashboard_attention}
     if research_dashboard.get("schema_version") != "1.0" or dashboard_policy.get("read_only") is not True or any(dashboard_policy.get(key) is not False for key in ("scientific_authority", "experiment_authority", "submission_authority")) or dashboard_policy.get("dashboard_never_overrides_source_ledgers") is not True:
         fail(f"research dashboard must remain a read-only zero-authority presentation projection: {dashboard_policy}")
-    expected_dashboard_summary = {"portfolio_objects":int(ri_summary.get("portfolio_objects") or 0),"research_items":int(ri_summary.get("research_items") or 0),"current_attention":6,"paper_ready":1,"holds":5,"launchable_formal_experiments":0,"papers":int(registry_summary.get("papers") or 0),"submission_ready":int(registry_summary.get("gate_clean_submission_ready") or 0),"ledger_submission_ready":int(registry_summary.get("submission_ready") or 0),"immediate_submission_holds":int(registry_summary.get("immediate_submission_holds") or 0)}
+    expected_dashboard_summary = {"portfolio_objects":int(ri_summary.get("portfolio_objects") or 0),"research_items":int(ri_summary.get("research_items") or 0),"current_attention":6,"research_handoffs":1,"research_waiting_reopen":5,"machine_actionable_attention":0,"paper_ready":1,"holds":5,"launchable_formal_experiments":0,"papers":int(registry_summary.get("papers") or 0),"submission_ready":int(registry_summary.get("gate_clean_submission_ready") or 0),"ledger_submission_ready":int(registry_summary.get("submission_ready") or 0),"immediate_submission_holds":int(registry_summary.get("immediate_submission_holds") or 0)}
     if any(int(dashboard_summary.get(key) or 0) != value for key, value in expected_dashboard_summary.items()):
         fail(f"research dashboard canonical summary drifted: {dashboard_summary}")
     expected_attention = {"E-7","G-1","A-3","B-2","B-3","E-1"}
@@ -403,7 +403,7 @@ def main() -> None:
         "system-overview-reader.js": ("先确认异常现象真实存在", "这个最小实验无论成功或失败，都会改变下一步吗", "什么时候才允许说“这个原理走不通”", "终止结论、搜索记忆和历史 snapshot 必须分层读取", "关闭一个 Idea 不会让下一个 Idea 自动晋级"),
         "system-overview-operations.js": ("长实验怎样安全启动、断线后怎样继续", "哪些文件必须留下，才能以后证明当时到底发生了什么"),
         "content-idea-portfolio.js": ("这页不是“看起来不错的 Idea 清单”", "最近一轮问题发现又审查了 41 条草案", "先从 ResearchItem 理解问题和当前结论"),
-        "current-research-status-view.js": ("先看现在该做什么", "以前观察到的记忆效应为什么现在不继续做", "现在到底有没有实验可以正式启动"),
+        "current-research-status-view.js": ("先看控制面", "PAPERSTATE_HANDOFF", "REOPEN_CONDITION_REQUIRED", "machine-actionable ResearchItem"),
         "content-selected-iclr.js": ("这个旧项目现在没有任何实验允许启动", "不能只靠追加样本或换第二个模型重开"),
         "content-research-directions.js": ("领域图谱总入口", "历史项目只是过去尝试过的方案", "当前 A–G 才是今天 ResearchItem、实验与论文统一使用的权威坐标"),
     }

@@ -256,6 +256,36 @@ def _run_discovery_frontier_control(storage: StorageSettings) -> dict[str, Any]:
     return frontier
 
 
+def _refresh_pre_publication_state() -> None:
+    """Refresh deterministic public inputs before the fail-closed publication gate."""
+    write_human_terminal_state()
+    write_p0_realizability_suite()
+    write_revived_batch_f0()
+    write_b10_cpu_p0()
+    _preserve_on_missing_historical_source(write_a12_soft_audit_f0)
+    _preserve_on_missing_historical_source(write_a3_substrate_stop)
+    write_a4_cpu_p0()
+    write_a5_cpu_p0()
+    write_a6_cpu_p0()
+    write_a7_cpu_p0()
+    write_b2_support_stop()
+    write_b3_cpu_screen()
+    _preserve_on_missing_historical_source(write_b3_fresh_support_stop)
+    write_b3_real_state()
+    write_b5_cpu_p0()
+    write_b6_cpu_p0()
+    write_c2_cpu_p0()
+    write_d1_cpu_p0()
+    write_e1_table_stop()
+    write_e2_cpu_p0()
+    write_e3_real_api_p0()
+    write_e3_stateful_p0()
+    write_e4_permission_p0()
+    write_p0_offline_qualification_state()
+    write_p0_admission_state()
+    write_research_system_state()
+
+
 def run_cycle(
     *,
     mode: str = "daily",
@@ -385,32 +415,7 @@ def run_cycle(
     if publish:
         # Rebuild once so the public state can include the latest cycle report, then publish
         # only if normalized content has changed.
-        write_human_terminal_state()
-        write_p0_realizability_suite()
-        write_revived_batch_f0()
-        write_b10_cpu_p0()
-        _preserve_on_missing_historical_source(write_a12_soft_audit_f0)
-        _preserve_on_missing_historical_source(write_a3_substrate_stop)
-        write_a4_cpu_p0()
-        write_a5_cpu_p0()
-        write_a6_cpu_p0()
-        write_a7_cpu_p0()
-        write_b2_support_stop()
-        write_b3_cpu_screen()
-        _preserve_on_missing_historical_source(write_b3_fresh_support_stop)
-        write_b3_real_state()
-        write_b5_cpu_p0()
-        write_b6_cpu_p0()
-        write_c2_cpu_p0()
-        write_d1_cpu_p0()
-        write_e1_table_stop()
-        write_e2_cpu_p0()
-        write_e3_real_api_p0()
-        write_e3_stateful_p0()
-        write_e4_permission_p0()
-        write_p0_offline_qualification_state()
-        write_p0_admission_state()
-        write_research_system_state()
+        _refresh_pre_publication_state()
         research_item_publication = _step("research-item-state-before-publish", _run_research_item_projection)
         report["steps"].append(research_item_publication)
         if research_item_publication["status"] != "pass":

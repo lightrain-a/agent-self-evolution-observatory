@@ -1210,6 +1210,10 @@ def build_dashboard(timeline: dict[str, Any]) -> dict[str, Any]:
             "paper_href": f"selected-paper.html?paper={paper.get('paper_id')}" if paper.get("paper_id") else "",
         })
 
+    research_handoffs = sum(row.get("next_action_class") == "PAPERSTATE_HANDOFF" for row in attention_rows)
+    research_waiting_reopen = sum(row.get("next_action_class") == "REOPEN_CONDITION_REQUIRED" for row in attention_rows)
+    machine_actionable_attention = sum((row.get("primary_next_action") or {}).get("machine_actionable") is True for row in attention_rows)
+
     paper_rows = []
     for row in papers:
         source = str(row.get("source_research_item") or "")
@@ -1339,6 +1343,9 @@ def build_dashboard(timeline: dict[str, Any]) -> dict[str, Any]:
             "portfolio_objects": int(research_summary.get("portfolio_objects") or 0),
             "research_items": int(research_summary.get("research_items") or 0),
             "current_attention": len(attention_rows),
+            "research_handoffs": research_handoffs,
+            "research_waiting_reopen": research_waiting_reopen,
+            "machine_actionable_attention": machine_actionable_attention,
             "paper_ready": int(state_counts.get("PAPER_READY", 0)),
             "holds": int(state_counts.get("HOLD", 0)),
             "launchable_formal_experiments": int(research_summary.get("current_formal_experiment_authority") or 0),
@@ -1383,6 +1390,9 @@ def validate_dashboard(payload: dict[str, Any]) -> None:
     assert all(row.get("next_action_class") == expected_attention_action.get(row.get("scientific_state")) for row in attention)
     assert all((row.get("primary_next_action") or {}).get("machine_actionable") is False for row in attention)
     assert payload.get("summary", {}).get("current_attention") == len(attention)
+    assert payload.get("summary", {}).get("research_handoffs") == sum(row.get("next_action_class") == "PAPERSTATE_HANDOFF" for row in attention)
+    assert payload.get("summary", {}).get("research_waiting_reopen") == sum(row.get("next_action_class") == "REOPEN_CONDITION_REQUIRED" for row in attention)
+    assert payload.get("summary", {}).get("machine_actionable_attention") == 0
     assert payload.get("summary", {}).get("papers") == len(payload.get("papers") or [])
     assert payload.get("summary", {}).get("paper_internal_action_required") == sum(row.get("next_action_class") != "NO_INTERNAL_ACTION" for row in payload.get("papers") or [])
     assert payload.get("summary", {}).get("paper_no_internal_action") == sum(row.get("next_action_class") == "NO_INTERNAL_ACTION" for row in payload.get("papers") or [])
