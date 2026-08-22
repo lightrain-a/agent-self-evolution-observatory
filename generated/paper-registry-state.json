@@ -32,7 +32,9 @@
     "attempt_preparation_pass": 0,
     "attempt_machine_frozen": 0,
     "attempt_machine_handoff_ready": 0,
-    "attempt_workflow_stale_or_invalid": 0
+    "attempt_workflow_stale_or_invalid": 0,
+    "attempt_human_signoff_complete": 0,
+    "attempt_venue_submitted": 0
   },
   "papers": [
     {
@@ -206,6 +208,11 @@
         "preparation_sha256": "",
         "freeze_sha256": "",
         "handoff_sha256": "",
+        "signoff_sha256": "",
+        "submission_receipt_sha256": "",
+        "venue_submission_id": "",
+        "submitted_at": "",
+        "actual_submission_status": "NOT_SUBMITTED",
         "frozen_artifacts": 0,
         "freeze_drift_errors": [],
         "validation_errors": [],
@@ -413,6 +420,11 @@
         "preparation_sha256": "",
         "freeze_sha256": "",
         "handoff_sha256": "",
+        "signoff_sha256": "",
+        "submission_receipt_sha256": "",
+        "venue_submission_id": "",
+        "submitted_at": "",
+        "actual_submission_status": "NOT_SUBMITTED",
         "frozen_artifacts": 0,
         "freeze_drift_errors": [],
         "validation_errors": [],
@@ -620,6 +632,11 @@
         "preparation_sha256": "",
         "freeze_sha256": "",
         "handoff_sha256": "",
+        "signoff_sha256": "",
+        "submission_receipt_sha256": "",
+        "venue_submission_id": "",
+        "submitted_at": "",
+        "actual_submission_status": "NOT_SUBMITTED",
         "frozen_artifacts": 0,
         "freeze_drift_errors": [],
         "validation_errors": [],
@@ -824,6 +841,11 @@
         "preparation_sha256": "",
         "freeze_sha256": "",
         "handoff_sha256": "",
+        "signoff_sha256": "",
+        "submission_receipt_sha256": "",
+        "venue_submission_id": "",
+        "submitted_at": "",
+        "actual_submission_status": "NOT_SUBMITTED",
         "frozen_artifacts": 0,
         "freeze_drift_errors": [],
         "validation_errors": [],
@@ -1025,6 +1047,11 @@
         "preparation_sha256": "",
         "freeze_sha256": "",
         "handoff_sha256": "",
+        "signoff_sha256": "",
+        "submission_receipt_sha256": "",
+        "venue_submission_id": "",
+        "submitted_at": "",
+        "actual_submission_status": "NOT_SUBMITTED",
         "frozen_artifacts": 0,
         "freeze_drift_errors": [],
         "validation_errors": [],
@@ -1056,5 +1083,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "90688640d44338abe38228f43544d7baaac8c50de56e1e5488586acfdf4a08a6"
+  "projection_sha256": "c3ea13ab1f1f1ad30e9ec173d74e6d2a7318b86fe3078d201ca6a70c75de6f7c"
 }

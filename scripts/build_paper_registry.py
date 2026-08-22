@@ -432,6 +432,11 @@ def submission_attempt_workflow_state(attempt: dict[str, Any], workflow_root: Pa
         "preparation_sha256": "",
         "freeze_sha256": "",
         "handoff_sha256": "",
+        "signoff_sha256": "",
+        "submission_receipt_sha256": "",
+        "venue_submission_id": "",
+        "submitted_at": "",
+        "actual_submission_status": "NOT_SUBMITTED",
         "frozen_artifacts": 0,
         "freeze_drift_errors": [],
         "validation_errors": [],
@@ -601,7 +606,9 @@ def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Pat
         "attempt_preparation_pass": sum(p["submission_attempt_workflow"].get("status") == "ATTEMPT_PREPARATION_PASS_FREEZE_PENDING" for p in papers),
         "attempt_machine_frozen": sum(p["submission_attempt_workflow"].get("status") == "ATTEMPT_MACHINE_FROZEN_HANDOFF_PENDING" for p in papers),
         "attempt_machine_handoff_ready": sum(p["submission_attempt_workflow"].get("status") == "ATTEMPT_MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED" for p in papers),
-        "attempt_workflow_stale_or_invalid": sum(p["submission_attempt_workflow"].get("status") in {"ATTEMPT_HANDOFF_STALE", "ATTEMPT_FREEZE_STALE", "ATTEMPT_WORKFLOW_INVALID"} for p in papers),
+        "attempt_workflow_stale_or_invalid": sum(p["submission_attempt_workflow"].get("status") in {"ATTEMPT_HANDOFF_STALE", "ATTEMPT_FREEZE_STALE", "ATTEMPT_HUMAN_SIGNOFF_STALE", "ATTEMPT_WORKFLOW_INVALID"} for p in papers),
+        "attempt_human_signoff_complete": sum(p["submission_attempt_workflow"].get("status") == "ATTEMPT_HUMAN_SIGNOFF_COMPLETE_ACTUAL_SUBMISSION_PENDING" for p in papers),
+        "attempt_venue_submitted": sum(p["submission_attempt_workflow"].get("status") == "ATTEMPT_VENUE_SUBMISSION_CONFIRMED" for p in papers),
     }
     payload = {
         "schema_version": "1.1",
