@@ -143,6 +143,7 @@ def build() -> Path:
     research_run_start_root = os.environ.get("RESEARCH_RUN_START_ROOT", "").strip()
     research_resource_lease_root = os.environ.get("RESEARCH_RESOURCE_LEASE_ROOT", "").strip()
     research_run_completion_root = os.environ.get("RESEARCH_RUN_COMPLETION_ROOT", "").strip()
+    research_p0_auth_root = os.environ.get("RESEARCH_P0_AUTH_ROOT", "").strip()
     research_scientific_contract_root = os.environ.get("RESEARCH_SCIENTIFIC_CONTRACT_ROOT", "").strip()
     research_scientific_problem_gate_root = os.environ.get("RESEARCH_SCIENTIFIC_PROBLEM_GATE_ROOT", "").strip()
     if paper_ledger_root:
@@ -206,6 +207,9 @@ def build() -> Path:
         run_completion_path = Path(research_run_completion_root).expanduser().resolve() if research_run_completion_root else audit_root / "scientific-contract-run-completions"
         if run_completion_path.is_dir():
             command.extend(["--run-completion-root", str(run_completion_path)])
+        p0_auth_path = Path(research_p0_auth_root).expanduser().resolve() if research_p0_auth_root else audit_root / "scientific-contract-p0-authority"
+        if p0_auth_path.is_dir():
+            command.extend(["--p0-auth-root", str(p0_auth_path)])
         scientific_contract_path = Path(research_scientific_contract_root).expanduser().resolve() if research_scientific_contract_root else audit_root / "scientific-contracts"
         if scientific_contract_path.is_dir():
             command.extend(["--scientific-contract-root", str(scientific_contract_path)])

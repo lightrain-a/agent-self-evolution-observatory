@@ -80,6 +80,8 @@
     "reopen_local_f0_valid_no_signal": 0,
     "reopen_local_f0_typed_stop_or_inconclusive": 0,
     "reopen_local_f0_completion_invalid": 0,
+    "reopen_p0_lifecycle_authorized": 0,
+    "reopen_p0_authority_invalid": 0,
     "scientific_reopen_invalid": 0
   },
   "papers": [
@@ -2424,5 +2426,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "74990d6fb5fb3f0771f02c44db8ecbba0e2d93f9750a95e9c4536f562b4a4727"
+  "projection_sha256": "51ffe78095c23121c7ffa1091c17ddbf6ec84b1fac1b7c8d2bab56bae4cd9bfc"
 }

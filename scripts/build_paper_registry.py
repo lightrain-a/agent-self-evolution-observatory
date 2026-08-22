@@ -38,7 +38,8 @@ from research_pipeline.reopened_pre_experiment_adapter import public_reopened_pr
 from research_pipeline.reopened_experiment_lease_request import public_experiment_lease_request
 from research_pipeline.reopened_experiment_lease import public_reopened_experiment_lease
 from research_pipeline.reopened_local_f0_run import public_reopened_local_f0_run
-from research_pipeline.reopened_local_f0_completion import public_completion
+from research_pipeline.reopened_local_f0_completion import public_completion, SIGNAL as LOCAL_F0_SIGNAL
+from research_pipeline.reopened_p0_authorization import public_p0_authorization
 DEFAULT_LEDGER_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ROOT") else None
 DEFAULT_ARTIFACT_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ARTIFACT_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ARTIFACT_ROOT") else None
 DEFAULT_FREEZE_ROOT = Path(os.environ["PAPER_SUBMISSION_FREEZE_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_FREEZE_ROOT") else None
@@ -59,6 +60,7 @@ DEFAULT_EXPERIMENT_AUTHORITY_ROOT = Path(os.environ["RESEARCH_EXPERIMENT_AUTHORI
 DEFAULT_RUN_START_ROOT = Path(os.environ["RESEARCH_RUN_START_ROOT"]).expanduser() if os.environ.get("RESEARCH_RUN_START_ROOT") else None
 DEFAULT_RESOURCE_LEASE_ROOT = Path(os.environ["RESEARCH_RESOURCE_LEASE_ROOT"]).expanduser() if os.environ.get("RESEARCH_RESOURCE_LEASE_ROOT") else None
 DEFAULT_RUN_COMPLETION_ROOT = Path(os.environ["RESEARCH_RUN_COMPLETION_ROOT"]).expanduser() if os.environ.get("RESEARCH_RUN_COMPLETION_ROOT") else None
+DEFAULT_P0_AUTH_ROOT = Path(os.environ["RESEARCH_P0_AUTH_ROOT"]).expanduser() if os.environ.get("RESEARCH_P0_AUTH_ROOT") else None
 DEFAULT_JSON = ROOT / "generated/paper-registry-state.json"
 DEFAULT_JS = ROOT / "generated/paper-registry-state.js"
 C01_ID = "D2-PAPER-FAILURE-MEMORY-PROVENANCE"
@@ -502,7 +504,7 @@ def submission_attempt_workflow_state(attempt: dict[str, Any], workflow_root: Pa
     return {**empty, **summary}
 
 
-def scientific_reopen_state(paper_id: str, attempt: dict[str, Any], reopen_root: Path | None, scientific_contract_root: Path | None = None, scientific_problem_gate_root: Path | None = None, scientific_method_root: Path | None = None, scientific_blueprint_root: Path | None = None, local_validation_auth_root: Path | None = None, pre_experiment_adapter_root: Path | None = None, experiment_lease_request_root: Path | None = None, experiment_lease_root: Path | None = None, experiment_authority_root: Path | None = None, run_start_root: Path | None = None, resource_lease_root: Path | None = None, run_completion_root: Path | None = None) -> dict[str, Any]:
+def scientific_reopen_state(paper_id: str, attempt: dict[str, Any], reopen_root: Path | None, scientific_contract_root: Path | None = None, scientific_problem_gate_root: Path | None = None, scientific_method_root: Path | None = None, scientific_blueprint_root: Path | None = None, local_validation_auth_root: Path | None = None, pre_experiment_adapter_root: Path | None = None, experiment_lease_request_root: Path | None = None, experiment_lease_root: Path | None = None, experiment_authority_root: Path | None = None, run_start_root: Path | None = None, resource_lease_root: Path | None = None, run_completion_root: Path | None = None, p0_auth_root: Path | None = None) -> dict[str, Any]:
     empty = {
         "status": "SCIENTIFIC_REOPEN_PROPOSAL_REQUIRED" if attempt.get("requires_explicit_scientific_reopen") is True else "NOT_ELIGIBLE",
         "attempt_sha256": str(attempt.get("latest_attempt_sha256") or ""),
@@ -566,13 +568,15 @@ def scientific_reopen_state(paper_id: str, attempt: dict[str, Any], reopen_root:
             run_summary = public_reopened_local_f0_run(run_root, str(contract_summary.get("contract_id") or ""), resource_root=resource_root, authority_root=authority_root) if lease_summary.get("status") == "EXPERIMENT_LEASE_ACTIVE_RUN_NOT_STARTED" else public_reopened_local_f0_run(Path('/nonexistent'), '')
             completion_root = run_completion_root or (scientific_contract_root.parent / "scientific-contract-run-completions")
             completion_summary = public_completion(completion_root, str(contract_summary.get("contract_id") or ""))
-            contract_summary = {**contract_summary, "problem_gate": gate_summary, "method_design": method_summary, "experiment_blueprint": blueprint_summary, "local_validation_authorization": local_auth_summary, "pre_experiment": pre_experiment_summary, "experiment_lease_request": lease_request_summary, "experiment_lease": lease_summary, "local_f0_run": run_summary, "local_f0_completion": completion_summary}
+            p0_root = p0_auth_root or (scientific_contract_root.parent / "scientific-contract-p0-authority")
+            p0_summary = public_p0_authorization(p0_root, str(contract_summary.get("contract_id") or "")) if completion_summary.get("status") == LOCAL_F0_SIGNAL else public_p0_authorization(Path('/nonexistent'), '')
+            contract_summary = {**contract_summary, "problem_gate": gate_summary, "method_design": method_summary, "experiment_blueprint": blueprint_summary, "local_validation_authorization": local_auth_summary, "pre_experiment": pre_experiment_summary, "experiment_lease_request": lease_request_summary, "experiment_lease": lease_summary, "local_f0_run": run_summary, "local_f0_completion": completion_summary, "p0_authorization": p0_summary}
             if gate_summary["status"] == "REOPEN_PROBLEM_GATE_REQUIRED":
                 projected["status"] = "NEW_SCIENTIFIC_CONTRACT_CREATED_PROBLEM_GATE_REQUIRED"
             elif gate_summary["status"] == "REOPEN_PROBLEM_GATE_PASS_METHOD_DESIGN_REVIEW_ELIGIBLE":
                 if method_summary.get("status") == "REOPEN_METHOD_REVIEW_PASS_BLUEPRINT_DESIGN_ELIGIBLE":
                     if completion_summary.get("status") != "LOCAL_F0_COMPLETION_REQUIRED":
-                        projected["status"] = completion_summary.get("status")
+                        projected["status"] = p0_summary.get("status") if completion_summary.get("status") == LOCAL_F0_SIGNAL and p0_summary.get("status") == "P0_LIFECYCLE_AUTHORIZED_CONFIRMATORY_PLAN_REQUIRED" else completion_summary.get("status")
                     elif pre_experiment_summary.get("status") == "PRE_EXPERIMENT_COMPILER_PASS_EXPERIMENT_LEASE_REQUIRED":
                         if lease_summary.get("status") == "EXPERIMENT_LEASE_ACTIVE_RUN_NOT_STARTED":
                             projected["status"] = run_summary.get("status") if run_summary.get("status") != "REOPEN_LOCAL_F0_RUN_START_REQUIRED" else lease_summary.get("status")
@@ -588,7 +592,7 @@ def scientific_reopen_state(paper_id: str, attempt: dict[str, Any], reopen_root:
     return projected
 
 
-def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None, scientific_reopen_root: Path | None = None, scientific_contract_root: Path | None = None, scientific_problem_gate_root: Path | None = None, scientific_method_root: Path | None = None, scientific_blueprint_root: Path | None = None, local_validation_auth_root: Path | None = None, pre_experiment_adapter_root: Path | None = None, experiment_lease_request_root: Path | None = None, experiment_lease_root: Path | None = None, experiment_authority_root: Path | None = None, run_start_root: Path | None = None, resource_lease_root: Path | None = None, run_completion_root: Path | None = None) -> dict[str, Any]:
+def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None, scientific_reopen_root: Path | None = None, scientific_contract_root: Path | None = None, scientific_problem_gate_root: Path | None = None, scientific_method_root: Path | None = None, scientific_blueprint_root: Path | None = None, local_validation_auth_root: Path | None = None, pre_experiment_adapter_root: Path | None = None, experiment_lease_request_root: Path | None = None, experiment_lease_root: Path | None = None, experiment_authority_root: Path | None = None, run_start_root: Path | None = None, resource_lease_root: Path | None = None, run_completion_root: Path | None = None, p0_auth_root: Path | None = None) -> dict[str, Any]:
     row = json.loads(path.read_text(encoding="utf-8"))
     contract = row.get("contract") or {}
     summary = row.get("summary") or {}
@@ -617,7 +621,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
     attempt = submission_attempt_state(paper_id, state, attempt_root)
     attempt_workflow = submission_attempt_workflow_state(attempt, attempt_workflow_root)
     attempt_history = build_attempt_history(paper_id, attempt_root, attempt_workflow_root)
-    scientific_reopen = scientific_reopen_state(paper_id, attempt, scientific_reopen_root, scientific_contract_root, scientific_problem_gate_root, scientific_method_root, scientific_blueprint_root, local_validation_auth_root, pre_experiment_adapter_root, experiment_lease_request_root, experiment_lease_root, experiment_authority_root, run_start_root, resource_lease_root, run_completion_root)
+    scientific_reopen = scientific_reopen_state(paper_id, attempt, scientific_reopen_root, scientific_contract_root, scientific_problem_gate_root, scientific_method_root, scientific_blueprint_root, local_validation_auth_root, pre_experiment_adapter_root, experiment_lease_request_root, experiment_lease_root, experiment_authority_root, run_start_root, resource_lease_root, run_completion_root, p0_auth_root)
     scientific_layer = "SUPPORTED_AND_AUDITED" if claim_audit.get("pass") is True else ("ACTIVE_REPAIR" if state == "TARGETED_REPAIR" else "PRE_AUDIT")
     paper_quality_layer = "PASS" if manuscript_ci.get("pass") is True and prebuttal.get("pass") is True else ("IN_PROGRESS" if state not in {"PAPER_EVIDENCE", "PAPER_DESIGN"} else "NOT_STARTED")
     return {
@@ -676,7 +680,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
     }
 
 
-def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None, scientific_reopen_root: Path | None = None, scientific_contract_root: Path | None = None, scientific_problem_gate_root: Path | None = None, scientific_method_root: Path | None = None, scientific_blueprint_root: Path | None = None, local_validation_auth_root: Path | None = None, pre_experiment_adapter_root: Path | None = None, experiment_lease_request_root: Path | None = None, experiment_lease_root: Path | None = None, experiment_authority_root: Path | None = None, run_start_root: Path | None = None, resource_lease_root: Path | None = None, run_completion_root: Path | None = None) -> str:
+def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None, scientific_reopen_root: Path | None = None, scientific_contract_root: Path | None = None, scientific_problem_gate_root: Path | None = None, scientific_method_root: Path | None = None, scientific_blueprint_root: Path | None = None, local_validation_auth_root: Path | None = None, pre_experiment_adapter_root: Path | None = None, experiment_lease_request_root: Path | None = None, experiment_lease_root: Path | None = None, experiment_authority_root: Path | None = None, run_start_root: Path | None = None, resource_lease_root: Path | None = None, run_completion_root: Path | None = None, p0_auth_root: Path | None = None) -> str:
     timestamps: list[str] = []
     for path in sorted(ledger_root.glob("*.json")):
         try:
@@ -688,7 +692,7 @@ def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff
             timestamps.append(updated)
     authority_dir = (experiment_authority_root / "experiment-authority") if experiment_authority_root is not None else None
     resource_dir = (resource_lease_root / "resource-leases") if resource_lease_root is not None else None
-    for extra_root in (freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root, scientific_contract_root, scientific_problem_gate_root, scientific_method_root, scientific_blueprint_root, local_validation_auth_root, pre_experiment_adapter_root, experiment_lease_request_root, experiment_lease_root, run_start_root, run_completion_root, authority_dir, resource_dir):
+    for extra_root in (freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root, scientific_contract_root, scientific_problem_gate_root, scientific_method_root, scientific_blueprint_root, local_validation_auth_root, pre_experiment_adapter_root, experiment_lease_request_root, experiment_lease_root, run_start_root, run_completion_root, p0_auth_root, authority_dir, resource_dir):
         if extra_root is None or not extra_root.exists():
             continue
         for path in sorted(extra_root.glob("*.json")):
@@ -704,8 +708,8 @@ def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff
     return max(timestamps) if timestamps else "1970-01-01T00:00:00+00:00"
 
 
-def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None, scientific_reopen_root: Path | None = None, scientific_contract_root: Path | None = None, scientific_problem_gate_root: Path | None = None, scientific_method_root: Path | None = None, scientific_blueprint_root: Path | None = None, local_validation_auth_root: Path | None = None, pre_experiment_adapter_root: Path | None = None, experiment_lease_request_root: Path | None = None, experiment_lease_root: Path | None = None, experiment_authority_root: Path | None = None, run_start_root: Path | None = None, resource_lease_root: Path | None = None, run_completion_root: Path | None = None) -> dict[str, Any]:
-    papers = [project_paper(path, artifact_root, freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root, scientific_contract_root, scientific_problem_gate_root, scientific_method_root, scientific_blueprint_root, local_validation_auth_root, pre_experiment_adapter_root, experiment_lease_request_root, experiment_lease_root, experiment_authority_root, run_start_root, resource_lease_root, run_completion_root) for path in sorted(ledger_root.glob("*.json"))]
+def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None, scientific_reopen_root: Path | None = None, scientific_contract_root: Path | None = None, scientific_problem_gate_root: Path | None = None, scientific_method_root: Path | None = None, scientific_blueprint_root: Path | None = None, local_validation_auth_root: Path | None = None, pre_experiment_adapter_root: Path | None = None, experiment_lease_request_root: Path | None = None, experiment_lease_root: Path | None = None, experiment_authority_root: Path | None = None, run_start_root: Path | None = None, resource_lease_root: Path | None = None, run_completion_root: Path | None = None, p0_auth_root: Path | None = None) -> dict[str, Any]:
+    papers = [project_paper(path, artifact_root, freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root, scientific_contract_root, scientific_problem_gate_root, scientific_method_root, scientific_blueprint_root, local_validation_auth_root, pre_experiment_adapter_root, experiment_lease_request_root, experiment_lease_root, experiment_authority_root, run_start_root, resource_lease_root, run_completion_root, p0_auth_root) for path in sorted(ledger_root.glob("*.json"))]
     order = {"LEARN": -3, "REBUTTAL": -2, "SUBMITTED": -1, "SUBMISSION_READY": 0, "PREBUTTAL": 1, "PDF_QA": 2, "CLAIM_AUDIT": 3, "TARGETED_REPAIR": 4, "MOCK_PC": 5, "MANUSCRIPT": 6, "PAPER_DESIGN": 7, "PAPER_EVIDENCE": 8}
     papers.sort(key=lambda p: (order.get(p["current_state"], 99), p["paper_id"]))
     summary = {
@@ -786,11 +790,13 @@ def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Pat
         "reopen_local_f0_valid_no_signal": sum(p["scientific_reopen"].get("status") == "LOCAL_F0_VALID_SCREENING_NO_SIGNAL_NO_NEGATIVE_SCIENTIFIC_AUTHORITY" for p in papers),
         "reopen_local_f0_typed_stop_or_inconclusive": sum(p["scientific_reopen"].get("status") in {"LOCAL_F0_SUPPORT_STOP_NO_SCIENTIFIC_NEGATIVE","LOCAL_F0_PROTOCOL_STOP_NO_SCIENTIFIC_INTERPRETATION","LOCAL_F0_RUNTIME_STOP_NO_SCIENTIFIC_NEGATIVE","LOCAL_F0_IMPLEMENTATION_STOP_NO_SCIENTIFIC_NEGATIVE","LOCAL_F0_BUDGET_STOP_NO_SCIENTIFIC_RESULT","LOCAL_F0_BASELINE_BOUNDARY_NO_METHOD_NEGATIVE","LOCAL_F0_INCONCLUSIVE_NO_SCIENTIFIC_NEGATIVE"} for p in papers),
         "reopen_local_f0_completion_invalid": sum(p["scientific_reopen"].get("status") == "LOCAL_F0_COMPLETION_LEDGER_INVALID" for p in papers),
+        "reopen_p0_lifecycle_authorized": sum(p["scientific_reopen"].get("status") == "P0_LIFECYCLE_AUTHORIZED_CONFIRMATORY_PLAN_REQUIRED" for p in papers),
+        "reopen_p0_authority_invalid": sum(p["scientific_reopen"].get("status") == "P0_AUTHORITY_LEDGER_INVALID" for p in papers),
         "scientific_reopen_invalid": sum(p["scientific_reopen"].get("status") == "SCIENTIFIC_REOPEN_LEDGER_INVALID" for p in papers),
     }
     payload = {
         "schema_version": "1.1",
-        "generated_at": source_watermark(ledger_root, freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root, scientific_contract_root, scientific_problem_gate_root, scientific_method_root, scientific_blueprint_root, local_validation_auth_root, pre_experiment_adapter_root, experiment_lease_request_root, experiment_lease_root, experiment_authority_root, run_start_root, resource_lease_root, run_completion_root),
+        "generated_at": source_watermark(ledger_root, freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root, scientific_contract_root, scientific_problem_gate_root, scientific_method_root, scientific_blueprint_root, local_validation_auth_root, pre_experiment_adapter_root, experiment_lease_request_root, experiment_lease_root, experiment_authority_root, run_start_root, resource_lease_root, run_completion_root, p0_auth_root),
         "source": "canonical_paper_acceptance_ledger",
         "summary": summary,
         "papers": papers,
@@ -822,6 +828,7 @@ def main() -> None:
     parser.add_argument("--run-start-root", type=Path, default=DEFAULT_RUN_START_ROOT, help="Optional reopened local-F0 run-start ledger root; may also be supplied via RESEARCH_RUN_START_ROOT.")
     parser.add_argument("--resource-lease-root", type=Path, default=DEFAULT_RESOURCE_LEASE_ROOT, help="Root containing GPU/resource leases; may also be supplied via RESEARCH_RESOURCE_LEASE_ROOT.")
     parser.add_argument("--run-completion-root", type=Path, default=DEFAULT_RUN_COMPLETION_ROOT, help="Optional reopened local-F0 completion/adjudication ledger root; may also be supplied via RESEARCH_RUN_COMPLETION_ROOT.")
+    parser.add_argument("--p0-auth-root", type=Path, default=DEFAULT_P0_AUTH_ROOT, help="Optional reopened P0 lifecycle human-authority ledger root; may also be supplied via RESEARCH_P0_AUTH_ROOT.")
     parser.add_argument("--json-output", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--js-output", type=Path, default=DEFAULT_JS)
     args = parser.parse_args()
@@ -889,7 +896,11 @@ def main() -> None:
     if run_completion_root is None:
         candidate = args.ledger_root.parent / "scientific-contract-run-completions"
         run_completion_root = candidate if candidate.is_dir() else None
-    state = build(args.ledger_root, args.artifact_root, args.freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root, scientific_contract_root, scientific_problem_gate_root, scientific_method_root, scientific_blueprint_root, local_validation_auth_root, pre_experiment_adapter_root, experiment_lease_request_root, experiment_lease_root, experiment_authority_root, run_start_root, resource_lease_root, run_completion_root)
+    p0_auth_root = args.p0_auth_root
+    if p0_auth_root is None:
+        candidate = args.ledger_root.parent / "scientific-contract-p0-authority"
+        p0_auth_root = candidate if candidate.is_dir() else None
+    state = build(args.ledger_root, args.artifact_root, args.freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root, scientific_contract_root, scientific_problem_gate_root, scientific_method_root, scientific_blueprint_root, local_validation_auth_root, pre_experiment_adapter_root, experiment_lease_request_root, experiment_lease_root, experiment_authority_root, run_start_root, resource_lease_root, run_completion_root, p0_auth_root)
     args.json_output.parent.mkdir(parents=True, exist_ok=True)
     args.json_output.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     args.js_output.write_text("window.PAPER_REGISTRY_STATE = " + json.dumps(state, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
