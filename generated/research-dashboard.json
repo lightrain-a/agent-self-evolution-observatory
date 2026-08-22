@@ -21,7 +21,9 @@
     "holds": 5,
     "launchable_formal_experiments": 0,
     "papers": 5,
-    "submission_ready": 4
+    "submission_ready": 4,
+    "ledger_submission_ready": 5,
+    "immediate_submission_holds": 1
   },
   "attention": [
     {
@@ -45,7 +47,8 @@
       "submission_ready": true,
       "portfolio_href": "paper-ideas.html?research=E-7",
       "timeline_href": "research-timeline.html?research=E-7",
-      "paper_href": "selected-paper.html?paper=STRI"
+      "paper_href": "selected-paper.html?paper=STRI",
+      "ledger_submission_ready": true
     },
     {
       "code": "G-1",
@@ -68,7 +71,8 @@
       "submission_ready": true,
       "portfolio_href": "paper-ideas.html?research=G-1",
       "timeline_href": "research-timeline.html?research=G-1",
-      "paper_href": "selected-paper.html?paper=AGENT-SAFETY-R9"
+      "paper_href": "selected-paper.html?paper=AGENT-SAFETY-R9",
+      "ledger_submission_ready": true
     },
     {
       "code": "A-3",
@@ -91,7 +95,8 @@
       "submission_ready": false,
       "portfolio_href": "paper-ideas.html?research=A-3",
       "timeline_href": "research-timeline.html?research=A-3",
-      "paper_href": ""
+      "paper_href": "",
+      "ledger_submission_ready": false
     },
     {
       "code": "B-2",
@@ -114,7 +119,8 @@
       "submission_ready": false,
       "portfolio_href": "paper-ideas.html?research=B-2",
       "timeline_href": "research-timeline.html?research=B-2",
-      "paper_href": ""
+      "paper_href": "",
+      "ledger_submission_ready": false
     },
     {
       "code": "B-3",
@@ -137,7 +143,8 @@
       "submission_ready": false,
       "portfolio_href": "paper-ideas.html?research=B-3",
       "timeline_href": "research-timeline.html?research=B-3",
-      "paper_href": ""
+      "paper_href": "",
+      "ledger_submission_ready": false
     },
     {
       "code": "E-1",
@@ -160,7 +167,8 @@
       "submission_ready": false,
       "portfolio_href": "paper-ideas.html?research=E-1",
       "timeline_href": "research-timeline.html?research=E-1",
-      "paper_href": ""
+      "paper_href": "",
+      "ledger_submission_ready": false
     }
   ],
   "papers": [
@@ -173,7 +181,10 @@
       "submission_ready": true,
       "next_action": "Human authors review and accept responsibility for the final manuscript and AI-use disclosure, freeze the complete author list before the ICLR abstract deadline, complete the OpenReview signoff checklist, then submit the genuine abstract b…",
       "paper_href": "selected-paper.html?paper=STRI",
-      "timeline_href": "research-timeline.html?paper=STRI"
+      "timeline_href": "research-timeline.html?paper=STRI",
+      "ledger_submission_ready": true,
+      "gate_clean_submission_ready": true,
+      "immediate_submission_hold": false
     },
     {
       "paper_id": "AGENT-SAFETY-R9",
@@ -184,7 +195,10 @@
       "submission_ready": true,
       "next_action": "",
       "paper_href": "selected-paper.html?paper=AGENT-SAFETY-R9",
-      "timeline_href": "research-timeline.html?paper=AGENT-SAFETY-R9"
+      "timeline_href": "research-timeline.html?paper=AGENT-SAFETY-R9",
+      "ledger_submission_ready": true,
+      "gate_clean_submission_ready": true,
+      "immediate_submission_hold": false
     },
     {
       "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
@@ -195,7 +209,10 @@
       "submission_ready": true,
       "next_action": "",
       "paper_href": "selected-paper.html?paper=D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-      "timeline_href": "research-timeline.html?paper=D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE"
+      "timeline_href": "research-timeline.html?paper=D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+      "ledger_submission_ready": true,
+      "gate_clean_submission_ready": true,
+      "immediate_submission_hold": false
     },
     {
       "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
@@ -203,21 +220,27 @@
       "title": "Temporal Skills Are a Causal Bottleneck in Evolving Time-Series Agents",
       "paper_stage": "SUBMISSION_READY",
       "scientific_status": "READY",
-      "submission_ready": true,
+      "submission_ready": false,
       "next_action": "",
       "paper_href": "selected-paper.html?paper=D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
-      "timeline_href": "research-timeline.html?paper=D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK"
+      "timeline_href": "research-timeline.html?paper=D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "ledger_submission_ready": true,
+      "gate_clean_submission_ready": false,
+      "immediate_submission_hold": true
     },
     {
       "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
       "source_research_item": "",
       "title": "Failure Memories Are Not Neutral: Causal Provenance Effects in Self-Evolving Agents",
-      "paper_stage": "TARGETED_REPAIR",
+      "paper_stage": "SUBMISSION_READY",
       "scientific_status": "READY",
-      "submission_ready": false,
+      "submission_ready": true,
       "next_action": "",
       "paper_href": "selected-paper.html?paper=D2-PAPER-FAILURE-MEMORY-PROVENANCE",
-      "timeline_href": "research-timeline.html?paper=D2-PAPER-FAILURE-MEMORY-PROVENANCE"
+      "timeline_href": "research-timeline.html?paper=D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+      "ledger_submission_ready": true,
+      "gate_clean_submission_ready": true,
+      "immediate_submission_hold": false
     }
   ],
   "week": {

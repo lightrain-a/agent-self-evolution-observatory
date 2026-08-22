@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import unittest
 
 from research_pipeline.research_item_state import (
@@ -67,17 +68,33 @@ class ResearchItemStateTest(unittest.TestCase):
         if temporal:
             self.assertEqual(temporal["paper_stage"], "SUBMISSION_READY")
             self.assertTrue(temporal["submission_ready"])
+            self.assertFalse(temporal["gate_clean_submission_ready"])
+            self.assertTrue(temporal["immediate_submission_hold"])
             self.assertEqual(temporal["source_kind"], "paper-first-discovery-candidate")
             self.assertIsNone(temporal["source_research_item"])
             self.assertEqual(temporal["source_candidates"], ["D2-C06"])
+            preparation = temporal["latest_paper_preparation"]
+            self.assertFalse(preparation["pass"])
+            self.assertEqual((preparation["passed_gates"], preparation["required_gates"]), (1, 8))
+            context = temporal["submission_readiness_context"]
+            self.assertEqual(context["recommended_immediate_submission"], "HOLD_FOR_EVIDENCE")
+            self.assertEqual(context["support_blocker"], "TIMESAGE_EVALUATED_FIRST_PARTY_ASSETS_NOT_PUBLIC")
             self.assertEqual(self.registry["summary"]["papers"], 5)
+            self.assertEqual(self.registry["summary"]["submission_ready"], 5)
+            self.assertEqual(self.registry["summary"]["gate_clean_submission_ready"], 4)
+            self.assertEqual(self.registry["summary"]["paper_preparation_failed"], 1)
+            self.assertEqual(self.registry["summary"]["immediate_submission_holds"], 1)
+            for paper_id, candidate in papers.items():
+                if paper_id == "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK":
+                    continue
+                self.assertTrue(candidate["gate_clean_submission_ready"], paper_id)
+                self.assertTrue(candidate["latest_paper_preparation"]["pass"], paper_id)
             failure = papers["D2-PAPER-FAILURE-MEMORY-PROVENANCE"]
-            self.assertIn(failure["paper_stage"], {"TARGETED_REPAIR", "SUBMISSION_READY"})
-            self.assertEqual(failure["submission_ready"], failure["paper_stage"] == "SUBMISSION_READY")
-            self.assertEqual(
-                self.registry["summary"]["submission_ready"],
-                sum(row.get("paper_stage") == "SUBMISSION_READY" for row in papers.values()),
-            )
+            self.assertEqual(failure["paper_stage"], "SUBMISSION_READY")
+            self.assertEqual(failure["active_unrefuted_claims"], 2)
+            serialized = json.dumps(self.registry, ensure_ascii=False)
+            for private_marker in ("/home/wyt", "/data/wyt", "10.42.8.52", "222.20.126.69"):
+                self.assertNotIn(private_marker, serialized)
 
     def test_experiments_are_zero_authority_evidence_events(self) -> None:
         self.assertTrue(all(row["scientific_authority"] is False for row in self.state["experiment_records"]))

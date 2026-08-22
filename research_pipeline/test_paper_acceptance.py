@@ -40,6 +40,7 @@ from .paper_acceptance_ledger import (
     record_submission_readiness,
     revise_paper_contract,
     validate_paper_ledger,
+    public_paper_ledger_summary,
 )
 
 
@@ -349,6 +350,38 @@ class PaperAcceptanceTest(unittest.TestCase):
             self.assertEqual(index["summary"]["scientific_holds"], 1)
             self.assertEqual(index["entries"][0]["current_state"], PaperState.PAPER_EVIDENCE.value)
             self.assertIn("causal-hold", index["entries"][0]["latest_transition"]["blockers"])
+
+    def test_public_projection_keeps_later_preparation_failure_visible_after_submission_ready(self) -> None:
+        row = {
+            "paper_id": "PAPER-X",
+            "contract_sha256": "contract-sha",
+            "scientific_status": ScientificPaperStatus.READY.value,
+            "current_state": PaperState.SUBMISSION_READY.value,
+            "contract": {
+                "title": "Paper X",
+                "central_question": "Does the later readiness audit remain visible?",
+                "supported_claims": {"C1": "Supported."},
+                "active_unrefuted_claims": {"C2": "Still active."},
+                "unsupported_claims": {},
+                "limitations": [],
+                "reopen_conditions": [],
+            },
+            "events": [
+                {"event_type": "submission-readiness", "receipt": {"submission_ready": True, "receipt_sha256": "ready-sha", "blockers": []}},
+                {"event_type": "paper-preparation", "receipt": {"pass": False, "protocol_version": "1.0", "receipt_sha256": "prep-sha", "summary": {"required_gates": 8, "passed_gates": 1}, "gate_pass": {"citation-integrity": True, "visual-story": False}, "blockers": ["visual-story-check-failed"]}},
+                {"event_type": "submission-readiness-context", "artifact_submission_ready": True, "recommended_immediate_submission": "HOLD_FOR_EVIDENCE", "scientific_status": "READY", "support_blocker": "EXTERNAL_EVIDENCE_MISSING", "external_human_submission_authority_required_for_SUBMITTED": True, "c3_c4_evidence_state": "ACTIVE_UNREFUTED_DATA_PENDING_EXTERNAL_SUPPORT", "post_repair_mock_pc_recommendations": ["reject"], "post_repair_mock_pc_scores": [3]},
+            ],
+        }
+        public = public_paper_ledger_summary(row)
+        self.assertEqual(public["current_state"], PaperState.SUBMISSION_READY.value)
+        self.assertTrue(public["latest_submission_readiness"]["submission_ready"])
+        self.assertFalse(public["latest_paper_preparation"]["pass"])
+        self.assertEqual((public["latest_paper_preparation"]["passed_gates"], public["latest_paper_preparation"]["required_gates"]), (1, 8))
+        self.assertEqual(public["active_unrefuted_claims"], 1)
+        self.assertTrue(public["immediate_submission_hold"])
+        self.assertFalse(public["gate_clean_submission_ready"])
+        self.assertEqual(public["submission_readiness_context"]["recommended_immediate_submission"], "HOLD_FOR_EVIDENCE")
+        self.assertEqual(public["submission_readiness_context"]["support_blocker"], "EXTERNAL_EVIDENCE_MISSING")
 
     def test_ledger_validator_detects_tampered_hard_gate_receipt(self) -> None:
         with tempfile.TemporaryDirectory() as td:

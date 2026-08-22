@@ -531,9 +531,16 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
     latest_story = _latest(row, "story-search").get("receipt") or {}
     latest_ci = _latest(row, "manuscript-ci").get("result") or {}
     latest_prebuttal = _latest(row, "prebuttal").get("result") or {}
+    latest_preparation = _latest(row, "paper-preparation").get("receipt") or {}
     latest_readiness = _latest(row, "submission-readiness").get("receipt") or {}
     latest_review = _latest(row, "mock-pc-review").get("receipt") or {}
     latest_claim_audit = _latest(row, "claim-audit").get("receipt") or {}
+    latest_submission_context = _latest(row, "submission-readiness-context")
+    preparation_recorded = bool(latest_preparation)
+    preparation_pass = latest_preparation.get("pass") is True
+    immediate_recommendation = str(latest_submission_context.get("recommended_immediate_submission") or "")
+    immediate_submission_hold = immediate_recommendation.startswith("HOLD") or (preparation_recorded and not preparation_pass)
+    gate_clean_submission_ready = latest_readiness.get("submission_ready") is True and not immediate_submission_hold
     mock_modes = {}
     for event in row.get("events") or []:
         receipt = (event.get("receipt") or {}) if isinstance(event, dict) and event.get("event_type") == "mock-pc-review" else {}
@@ -548,7 +555,10 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
         "contract_sha256": str(row.get("contract_sha256") or ""),
         "scientific_status": str(row.get("scientific_status") or ""),
         "current_state": str(row.get("current_state") or ""),
+        "gate_clean_submission_ready": gate_clean_submission_ready,
+        "immediate_submission_hold": immediate_submission_hold,
         "supported_claims": len(contract.get("supported_claims") or {}),
+        "active_unrefuted_claims": len(contract.get("active_unrefuted_claims") or {}),
         "unsupported_claims": len(contract.get("unsupported_claims") or {}),
         "limitations": list(contract.get("limitations") or []),
         "reopen_conditions": list(contract.get("reopen_conditions") or []),
@@ -582,6 +592,25 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
             "pass": latest_prebuttal.get("pass") is True,
             "decision_critical": int(latest_prebuttal.get("decision_critical") or 0),
             "blockers": list(latest_prebuttal.get("blockers") or []),
+        },
+        "latest_paper_preparation": {
+            "pass": latest_preparation.get("pass") is True,
+            "protocol_version": str(latest_preparation.get("protocol_version") or ""),
+            "receipt_sha256": str(latest_preparation.get("receipt_sha256") or ""),
+            "required_gates": int((latest_preparation.get("summary") or {}).get("required_gates") or 0),
+            "passed_gates": int((latest_preparation.get("summary") or {}).get("passed_gates") or 0),
+            "gate_pass": {str(key): value is True for key, value in (latest_preparation.get("gate_pass") or {}).items()},
+            "blockers": [str(item) for item in (latest_preparation.get("blockers") or [])],
+        },
+        "submission_readiness_context": {
+            "artifact_submission_ready": latest_submission_context.get("artifact_submission_ready") is True,
+            "recommended_immediate_submission": str(latest_submission_context.get("recommended_immediate_submission") or ""),
+            "scientific_status": str(latest_submission_context.get("scientific_status") or ""),
+            "support_blocker": str(latest_submission_context.get("support_blocker") or ""),
+            "external_human_submission_authority_required_for_SUBMITTED": latest_submission_context.get("external_human_submission_authority_required_for_SUBMITTED") is True,
+            "c3_c4_evidence_state": str(latest_submission_context.get("c3_c4_evidence_state") or ""),
+            "post_repair_mock_pc_recommendations": [str(item) for item in (latest_submission_context.get("post_repair_mock_pc_recommendations") or [])],
+            "post_repair_mock_pc_scores": [int(item) for item in (latest_submission_context.get("post_repair_mock_pc_scores") or [])],
         },
         "latest_submission_readiness": {
             "submission_ready": latest_readiness.get("submission_ready") is True,
@@ -635,6 +664,9 @@ def build_paper_ledger_index(root: Path) -> dict[str, Any]:
             "invalid_ledgers": len(invalid),
             "scientific_holds": sum(str(row.get("scientific_status")) != "READY" for row in entries),
             "submission_ready": sum((row.get("latest_submission_readiness") or {}).get("submission_ready") is True for row in entries),
+            "gate_clean_submission_ready": sum(row.get("gate_clean_submission_ready") is True for row in entries),
+            "paper_preparation_failed": sum((row.get("latest_paper_preparation") or {}).get("required_gates", 0) > 0 and (row.get("latest_paper_preparation") or {}).get("pass") is not True for row in entries),
+            "immediate_submission_holds": sum(row.get("immediate_submission_hold") is True for row in entries),
             "by_state": by_state,
         },
         "entries": entries,

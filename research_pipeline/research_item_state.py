@@ -476,6 +476,9 @@ def paper_acceptance_state():
                     "invalid_ledgers": 0,
                     "scientific_holds": int(registry_summary.get("scientific_holds") or 0),
                     "submission_ready": int(registry_summary.get("submission_ready") or 0),
+                    "gate_clean_submission_ready": int(registry_summary.get("gate_clean_submission_ready") or 0),
+                    "paper_preparation_failed": int(registry_summary.get("paper_preparation_failed") or 0),
+                    "immediate_submission_holds": int(registry_summary.get("immediate_submission_holds") or 0),
                     "by_state": dict(registry_summary.get("by_stage") or {}),
                 },
             }
@@ -500,6 +503,9 @@ def paper_acceptance_state():
         "registered_papers": int(index_summary.get("papers") or 0),
         "scientific_holds": int(index_summary.get("scientific_holds") or 0),
         "submission_ready_papers": int(index_summary.get("submission_ready") or 0),
+        "gate_clean_submission_ready_papers": int(index_summary.get("gate_clean_submission_ready") or 0),
+        "paper_preparation_failed_papers": int(index_summary.get("paper_preparation_failed") or 0),
+        "immediate_submission_holds": int(index_summary.get("immediate_submission_holds") or 0),
         "invalid_ledgers": int(index_summary.get("invalid_ledgers") or 0),
     })
     acceptance["summary"] = summary
@@ -652,6 +658,9 @@ def build_paper_registry(research_state=None):
         "summary": {
             "papers": len(papers),
             "submission_ready": sum(bool(row.get("submission_ready")) for row in papers),
+            "gate_clean_submission_ready": sum(row.get("gate_clean_submission_ready") is True for row in papers),
+            "paper_preparation_failed": sum((row.get("latest_paper_preparation") or {}).get("required_gates", 0) > 0 and (row.get("latest_paper_preparation") or {}).get("pass") is not True for row in papers),
+            "immediate_submission_holds": sum(row.get("immediate_submission_hold") is True for row in papers),
             "scientific_holds": sum(str(row.get("scientific_status") or "") != "READY" for row in papers),
             "primary_paper": "STRI",
             "by_stage": stage_counts,

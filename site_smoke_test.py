@@ -124,16 +124,18 @@ def main() -> None:
     d2_temporal = papers_by_id.get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK") or {}
     d2_proxy = papers_by_id.get("D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE") or {}
     d2_failure = papers_by_id.get("D2-PAPER-FAILURE-MEMORY-PROVENANCE") or {}
-    if d2_temporal.get("paper_stage") != "SUBMISSION_READY" or d2_temporal.get("submission_ready") is not True or d2_temporal.get("source_kind") != "paper-first-discovery-candidate" or d2_temporal.get("source_research_item") is not None or d2_temporal.get("source_candidates") != ["D2-C06"]:
-        fail(f"Temporal Skill D2 PaperState must be submission-ready with paper-first candidate provenance: {d2_temporal}")
-    if d2_proxy.get("paper_stage") != "SUBMISSION_READY" or d2_proxy.get("submission_ready") is not True or d2_proxy.get("source_kind") != "paper-first-discovery-candidate":
-        fail(f"Proxy Reward D2 PaperState must remain submission-ready with paper-first provenance: {d2_proxy}")
-    if d2_failure.get("paper_stage") not in {"TARGETED_REPAIR", "SUBMISSION_READY"} or d2_failure.get("submission_ready") is not (d2_failure.get("paper_stage") == "SUBMISSION_READY") or d2_failure.get("source_kind") != "paper-first-discovery-candidate":
-        fail(f"Failure-Memory D2 PaperState must preserve paper-first provenance and internally consistent readiness: {d2_failure}")
+    temporal_prep = d2_temporal.get("latest_paper_preparation") or {}
+    temporal_context = d2_temporal.get("submission_readiness_context") or {}
+    if d2_temporal.get("paper_stage") != "SUBMISSION_READY" or d2_temporal.get("submission_ready") is not True or d2_temporal.get("gate_clean_submission_ready") is not False or d2_temporal.get("immediate_submission_hold") is not True or d2_temporal.get("source_kind") != "paper-first-discovery-candidate" or d2_temporal.get("source_research_item") is not None or d2_temporal.get("source_candidates") != ["D2-C06"] or temporal_prep.get("pass") is not False or (temporal_prep.get("passed_gates"), temporal_prep.get("required_gates")) != (1, 8) or temporal_context.get("recommended_immediate_submission") != "HOLD_FOR_EVIDENCE" or temporal_context.get("support_blocker") != "TIMESAGE_EVALUATED_FIRST_PARTY_ASSETS_NOT_PUBLIC":
+        fail(f"Temporal Skill D2 PaperState must preserve ledger SUBMISSION_READY while surfacing the later 1/8 Paper Preparation HOLD: {d2_temporal}")
+    if d2_proxy.get("paper_stage") != "SUBMISSION_READY" or d2_proxy.get("submission_ready") is not True or d2_proxy.get("gate_clean_submission_ready") is not True or (d2_proxy.get("latest_paper_preparation") or {}).get("pass") is not True or d2_proxy.get("source_kind") != "paper-first-discovery-candidate":
+        fail(f"Proxy Reward D2 PaperState must remain ledger-ready and latest-gate-clean with paper-first provenance: {d2_proxy}")
+    if d2_failure.get("paper_stage") != "SUBMISSION_READY" or d2_failure.get("submission_ready") is not True or d2_failure.get("gate_clean_submission_ready") is not True or (d2_failure.get("latest_paper_preparation") or {}).get("pass") is not True or d2_failure.get("active_unrefuted_claims") != 2 or d2_failure.get("source_kind") != "paper-first-discovery-candidate" or (d2_failure.get("acceptance_authority") or {}).get("submission") is not False:
+        fail(f"Failure-Memory D2 PaperState must match its canonical SUBMISSION_READY ledger while retaining active-unrefuted claims and zero submission authority: {d2_failure}")
     registry_summary = paper_registry.get("summary") or {}
     expected_stage_counts = dict(sorted(__import__("collections").Counter(row.get("paper_stage") for row in papers).items()))
-    if registry_summary.get("papers") != len(papers) or registry_summary.get("submission_ready") != sum(bool(row.get("submission_ready")) for row in papers) or registry_summary.get("by_stage") != expected_stage_counts or registry_summary.get("scientific_holds") != 0:
-        fail(f"PaperRegistry summary must match its five canonical PaperStates: {registry_summary}")
+    if registry_summary.get("papers") != len(papers) or registry_summary.get("submission_ready") != 5 or registry_summary.get("gate_clean_submission_ready") != 4 or registry_summary.get("paper_preparation_failed") != 1 or registry_summary.get("immediate_submission_holds") != 1 or registry_summary.get("by_stage") != expected_stage_counts or registry_summary.get("scientific_holds") != 0:
+        fail(f"PaperRegistry canonical five ledger-ready / four gate-clean / one hold summary is stale: {registry_summary}")
     timeline_summary = research_timeline.get("summary") or {}
     timeline_policy = research_timeline.get("projection_policy") or {}
     timeline_events = research_timeline.get("events") or []
@@ -168,7 +170,7 @@ def main() -> None:
     dashboard_by_code = {row.get("code"): row for row in dashboard_attention}
     if research_dashboard.get("schema_version") != "1.0" or dashboard_policy.get("read_only") is not True or any(dashboard_policy.get(key) is not False for key in ("scientific_authority", "experiment_authority", "submission_authority")) or dashboard_policy.get("dashboard_never_overrides_source_ledgers") is not True:
         fail(f"research dashboard must remain a read-only zero-authority presentation projection: {dashboard_policy}")
-    expected_dashboard_summary = {"portfolio_objects":int(ri_summary.get("portfolio_objects") or 0),"research_items":int(ri_summary.get("research_items") or 0),"current_attention":6,"paper_ready":1,"holds":5,"launchable_formal_experiments":0,"papers":int(registry_summary.get("papers") or 0),"submission_ready":int(registry_summary.get("submission_ready") or 0)}
+    expected_dashboard_summary = {"portfolio_objects":int(ri_summary.get("portfolio_objects") or 0),"research_items":int(ri_summary.get("research_items") or 0),"current_attention":6,"paper_ready":1,"holds":5,"launchable_formal_experiments":0,"papers":int(registry_summary.get("papers") or 0),"submission_ready":int(registry_summary.get("gate_clean_submission_ready") or 0),"ledger_submission_ready":int(registry_summary.get("submission_ready") or 0),"immediate_submission_holds":int(registry_summary.get("immediate_submission_holds") or 0)}
     if any(int(dashboard_summary.get(key) or 0) != value for key, value in expected_dashboard_summary.items()):
         fail(f"research dashboard canonical summary drifted: {dashboard_summary}")
     expected_attention = {"E-7","G-1","A-3","B-2","B-3","E-1"}
