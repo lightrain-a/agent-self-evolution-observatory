@@ -10,7 +10,7 @@ from .paper_first_problem_discovery_contract import DISCOVERY_OPERATOR_VERSION, 
 from .paper_first_relation_coverage import relation_recall_freshness, relation_universe_digest
 from .paper_first_discovery_frontier import build_paper_first_discovery_frontier
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier
-from .research_system import _canonicalize_public_state_locations, _resolve_public_relation_delta_preflight, build_research_system_state, validate_state
+from .research_system import _canonicalize_public_state_locations, _prefer_newer_zero_authority_public_projection, _resolve_public_relation_delta_preflight, build_research_system_state, validate_state
 
 
 class ResearchSystemTest(unittest.TestCase):
@@ -45,6 +45,16 @@ class ResearchSystemTest(unittest.TestCase):
     def test_state_is_valid_and_iclr_first(self) -> None:
         self.assertEqual(self.state["target_venue"], "ICLR")
         self.assertEqual(validate_state(self.state), [])
+
+    def test_zero_authority_maintenance_projection_prefers_newer_public_without_hiding_invalid_local_state(self) -> None:
+        previous={"status":"SUPPORT_RELEASE_WATCH_COMPLETE","generated_at":"2026-08-22T14:00:00+00:00","scientific_authority":False,"summary":{"support_holds":7}}
+        self.assertEqual(_prefer_newer_zero_authority_public_projection({"status":"NOT_RUN","scientific_authority":False},previous),previous)
+        older={"status":"SUPPORT_RELEASE_WATCH_COMPLETE","generated_at":"2026-08-21T14:00:00+00:00","scientific_authority":False,"summary":{"support_holds":5}}
+        self.assertEqual(_prefer_newer_zero_authority_public_projection(older,previous),previous)
+        newer={"status":"SUPPORT_RELEASE_WATCH_COMPLETE","generated_at":"2026-08-23T14:00:00+00:00","scientific_authority":False,"summary":{"support_holds":6}}
+        self.assertEqual(_prefer_newer_zero_authority_public_projection(newer,previous),newer)
+        invalid={"status":"STATE_INVALID","generated_at":"2026-08-23T15:00:00+00:00","scientific_authority":False}
+        self.assertEqual(_prefer_newer_zero_authority_public_projection(invalid,previous),invalid)
 
     def test_public_state_location_canonicalization_matches_private_durable_paths(self) -> None:
         public=[

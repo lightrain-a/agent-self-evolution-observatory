@@ -408,6 +408,59 @@ def _load_ai_consultation_automation_public() -> dict[str, Any]:
     }
 
 
+def _load_previous_research_system_public() -> dict[str, Any]:
+    """Load the last committed public ResearchSystem projection as zero-authority fallback context."""
+    path = PROJECT_ROOT / "generated" / "research-system-state.json"
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def _projection_time(value: Any) -> datetime | None:
+    raw = str(value or "").strip()
+    if not raw:
+        return None
+    try:
+        parsed = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def _prefer_newer_zero_authority_public_projection(current: dict[str, Any], previous: dict[str, Any]) -> dict[str, Any]:
+    """Prevent host-local maintenance cache absence/staleness from erasing a newer public summary.
+
+    This applies only to redacted maintenance projections that carry no scientific authority.
+    Explicit unreadable/invalid local states remain fail-closed and are never hidden by fallback.
+    """
+    current = current if isinstance(current, dict) else {}
+    previous = previous if isinstance(previous, dict) else {}
+    current_status = str(current.get("status") or "NOT_RUN")
+    previous_status = str(previous.get("status") or "NOT_RUN")
+    if current_status in {"STATE_INVALID", "STATE_UNREADABLE"}:
+        return current
+    previous_usable = bool(
+        previous
+        and previous_status not in {"NOT_RUN", "STATE_INVALID", "STATE_UNREADABLE"}
+        and previous.get("scientific_authority") is False
+    )
+    if not previous_usable:
+        return current
+    if current_status == "NOT_RUN" or not current:
+        return previous
+    if current.get("scientific_authority") is not False:
+        return current
+    current_time = _projection_time(current.get("generated_at"))
+    previous_time = _projection_time(previous.get("generated_at"))
+    if previous_time is not None and (current_time is None or previous_time > current_time):
+        return previous
+    return current
+
+
 def _resolve_public_relation_delta_preflight(
     *,
     storage: StorageSettings,
@@ -438,6 +491,7 @@ def _resolve_public_relation_delta_preflight(
 
 def build_research_system_state() -> dict[str, Any]:
     storage = StorageSettings.from_env()
+    previous_public = _load_previous_research_system_public()
     corpus = _load_corpus_with_site_fallback()
     idea_bank = build_iclr_idea_bank()
     evidence_graph = build_evidence_graph(corpus, idea_bank)
@@ -456,8 +510,14 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_pf357 = build_pf357_problem_adjudication()
     paper_first_fresh_saturation = build_fresh_saturation_state()
     paper_first_primary_evidence = load_primary_evidence_state()
-    paper_first_scientific_object_retrieval = public_shadow_scientific_object_retrieval_summary(load_private_shadow_scientific_object_retrieval_audit(storage=storage))
-    paper_first_scientific_object_candidate_evidence = public_scientific_object_candidate_evidence_summary(load_scientific_object_candidate_evidence_ledger(storage=storage))
+    paper_first_scientific_object_retrieval = _prefer_newer_zero_authority_public_projection(
+        public_shadow_scientific_object_retrieval_summary(load_private_shadow_scientific_object_retrieval_audit(storage=storage)),
+        previous_public.get("paper_first_scientific_object_retrieval_audit") or {},
+    )
+    paper_first_scientific_object_candidate_evidence = _prefer_newer_zero_authority_public_projection(
+        public_scientific_object_candidate_evidence_summary(load_scientific_object_candidate_evidence_ledger(storage=storage)),
+        previous_public.get("paper_first_scientific_object_candidate_evidence") or {},
+    )
     paper_first_problem_discovery_contract = build_problem_discovery_contract_state()
     paper_first_problem_generator = load_problem_generator_state()
     paper_first_pre_f0_queue = load_pre_f0_queue()
@@ -468,9 +528,18 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_last_lane_search = paper_first_lane_search.get("last_completed_lane_search") or {}
     paper_first_problem_gate_queue = load_problem_gate_queue_state()
     paper_first_search_portfolio_design = _load_or_build_search_portfolio_design_adjudication()
-    paper_first_support_release_watch = public_support_release_watch_summary(load_private_support_release_watch(storage=storage))
-    paper_first_support_asset_recheck = public_support_asset_recheck_summary(load_private_support_asset_recheck_queue(storage=storage))
-    paper_first_support_asset_recheck_handoff = public_support_asset_recheck_handoff_summary(load_private_support_asset_recheck_handoff(storage=storage))
+    paper_first_support_release_watch = _prefer_newer_zero_authority_public_projection(
+        public_support_release_watch_summary(load_private_support_release_watch(storage=storage)),
+        previous_public.get("paper_first_support_release_watch") or {},
+    )
+    paper_first_support_asset_recheck = _prefer_newer_zero_authority_public_projection(
+        public_support_asset_recheck_summary(load_private_support_asset_recheck_queue(storage=storage)),
+        previous_public.get("paper_first_support_asset_recheck_queue") or {},
+    )
+    paper_first_support_asset_recheck_handoff = _prefer_newer_zero_authority_public_projection(
+        public_support_asset_recheck_handoff_summary(load_private_support_asset_recheck_handoff(storage=storage)),
+        previous_public.get("paper_first_support_asset_recheck_handoff") or {},
+    )
     paper_first_sp15_support = build_sp15_identifiability_support()
     paper_first_paper_design_backlog = load_paper_design_backlog()
     paper_first_global_relation_recall = load_global_relation_recall_state()
