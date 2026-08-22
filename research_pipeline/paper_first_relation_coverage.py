@@ -5,6 +5,11 @@ import json
 from itertools import combinations
 from typing import Any
 
+from .relation_scan_boundary_manifest import (
+    boundary_receipts,
+    load_relation_scan_boundary_manifest,
+)
+
 
 def portable_review_receipts(generator_state: dict[str, Any]) -> list[dict[str, Any]]:
     rows = []
@@ -69,7 +74,11 @@ def source_pair_coverage(receipts: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def relation_recall_freshness(generator_state: dict[str, Any], relation_state: dict[str, Any]) -> dict[str, Any]:
+def relation_recall_freshness(
+    generator_state: dict[str, Any],
+    relation_state: dict[str, Any],
+    boundary_manifest: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """Compare the current semantic source universe with the last completed scan.
 
     Portable review receipts are scheduler metadata.  Their co-observation topology
@@ -90,12 +99,23 @@ def relation_recall_freshness(generator_state: dict[str, Any], relation_state: d
     has_completed_scan=bool(last_digest)
     raw_digest_changed=bool(has_completed_scan and current_digest and current_digest!=last_digest)
     cutoff=str(last.get("run_id") or "").strip()
-    source_boundary_reconstructable=False;last_source_digest=""
+    source_boundary_reconstructable=False;last_source_digest="";archived_boundary_recovery_used=False
     if has_completed_scan and cutoff:
         old_receipts=[row for row in receipts if str(row.get("run_id") or "")<=cutoff]
         if old_receipts and relation_universe_digest(old_receipts)==last_digest:
             source_boundary_reconstructable=True
             last_source_digest=source_universe_digest(old_receipts)
+        else:
+            manifest = (
+                boundary_manifest
+                if boundary_manifest is not None
+                else load_relation_scan_boundary_manifest()
+            )
+            archived_receipts = boundary_receipts(manifest, relation_state)
+            if archived_receipts:
+                source_boundary_reconstructable=True
+                archived_boundary_recovery_used=True
+                last_source_digest=source_universe_digest(archived_receipts)
     scheduler_topology_only_drift=bool(raw_digest_changed and source_boundary_reconstructable and current_source_digest==last_source_digest)
     semantic_stale=bool(raw_digest_changed and not scheduler_topology_only_drift)
     if not has_completed_scan:
@@ -117,6 +137,7 @@ def relation_recall_freshness(generator_state: dict[str, Any], relation_state: d
             "portable_review_receipts_are_scheduler_metadata_only":True,
             "scheduler_topology_only_drift_does_not_require_model_rescan":True,
             "source_set_change_or_unreconstructable_boundary_remains_stale":True,
+            "content_addressed_archived_boundary_may_recover_scheduler_provenance_only":True,
         },
         "summary":{
             "current_reviewed_sources":int(current.get("reviewed_receipt_sources") or 0),
@@ -128,6 +149,7 @@ def relation_recall_freshness(generator_state: dict[str, Any], relation_state: d
             "current_relation_blind_spot":current_blind_spot,
             "raw_topology_digest_changed":raw_digest_changed,
             "source_boundary_reconstructable":source_boundary_reconstructable,
+            "archived_boundary_recovery_used":archived_boundary_recovery_used,
             "scheduler_topology_only_drift":scheduler_topology_only_drift,
             "universe_stale":semantic_stale,
             "current_not_reduced_unknown":semantic_stale or not has_completed_scan,
