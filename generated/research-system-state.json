@@ -49073,7 +49073,7 @@
   },
   "research_memory_wiki": {
     "schema_version": "1.1",
-    "generated_at": "2026-08-22T10:39:14+00:00",
+    "generated_at": "2026-08-22T10:43:40+00:00",
     "status": "MEMORY_COMPILED",
     "policy": {
       "schema_version": "1.1",
@@ -52896,7 +52896,7 @@
       "scientific_authority": false
     },
     "ledger_index_source": "canonical-append-only-paper-ledgers",
-    "control_plane_reconciled_at": "2026-08-22T10:39:14+00:00"
+    "control_plane_reconciled_at": "2026-08-22T10:43:40+00:00"
   },
   "human_terminal_ideas": {
     "schema_version": "1.0",
