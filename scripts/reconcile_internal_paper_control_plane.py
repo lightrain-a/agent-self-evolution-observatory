@@ -11,7 +11,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from research_pipeline.config import StorageSettings, resolve_experiment_data_root
-from research_pipeline.paper_acceptance_ledger import build_paper_ledger_index
+from research_pipeline.paper_acceptance_ledger import build_paper_ledger_index, build_portable_paper_ledger_index
 from research_pipeline.paper_first_fresh_phenomenon_portfolio import DEFAULT_JSON as FRESH_PHENOMENON_JSON, validate_fresh_phenomenon_portfolio
 from research_pipeline.paper_first_search_portfolio_design_adjudication import DEFAULT_JSON as SEARCH_DESIGN_JSON, validate_search_portfolio_design_adjudication
 from research_pipeline.research_memory_wiki import build_research_memory_wiki, write_research_memory_wiki
@@ -68,19 +68,29 @@ def main() -> None:
     search_errors = validate_search_portfolio_design_adjudication(search_design)
     if search_errors:
         raise RuntimeError("refusing to embed invalid Search Portfolio projection: " + "; ".join(search_errors))
-    state["paper_first_search_portfolio_design_adjudication"] = search_design
 
     fresh_phenomenon = load_json(FRESH_PHENOMENON_JSON)
     fresh_errors = validate_fresh_phenomenon_portfolio(fresh_phenomenon)
     if fresh_errors:
         raise RuntimeError("refusing to embed invalid durable Fresh Phenomenon projection: " + "; ".join(fresh_errors))
-    state["paper_first_fresh_phenomenon_portfolio"] = fresh_phenomenon
 
     data_root = resolve_experiment_data_root(StorageSettings.from_env())
-    ledger_index = build_paper_ledger_index(data_root)
+    live_index = build_paper_ledger_index(data_root)
+    live_summary = live_index.get("summary") or {}
+    if int(live_summary.get("invalid_ledgers") or 0) != 0:
+        raise RuntimeError("refusing to reconcile an invalid live paper ledger index")
+    ledger_index = live_index
+    ledger_index_source = "canonical-append-only-paper-ledgers"
+    if int(live_summary.get("papers") or 0) == 0:
+        portable_registry = load_json(GEN / "paper-registry.json")
+        portable_index = build_portable_paper_ledger_index(portable_registry)
+        portable_summary = portable_index.get("summary") or {}
+        if int(portable_summary.get("invalid_ledgers") or 0) != 0:
+            raise RuntimeError("refusing to reconcile an invalid portable PaperRegistry fallback")
+        if int(portable_summary.get("papers") or 0) > 0:
+            ledger_index = portable_index
+            ledger_index_source = "generated/paper-registry.json"
     ledger_summary = ledger_index.get("summary") or {}
-    if int(ledger_summary.get("invalid_ledgers") or 0) != 0:
-        raise RuntimeError("refusing to reconcile an invalid paper ledger index")
 
     memory = build_research_memory_wiki(
         search_design_state=search_design,
@@ -97,6 +107,7 @@ def main() -> None:
 
     paper_acceptance = state.setdefault("paper_acceptance", {})
     paper_acceptance["ledger_index"] = ledger_index
+    paper_acceptance["ledger_index_source"] = ledger_index_source
     summary = paper_acceptance.setdefault("summary", {})
     summary.update({
         "registered_papers": int(ledger_summary.get("papers") or 0),
@@ -119,8 +130,6 @@ def main() -> None:
 
     state["research_memory_wiki"] = memory
     top_summary = state.setdefault("summary", {})
-    search_summary = search_design.get("summary") or {}
-    fresh_summary = fresh_phenomenon.get("summary") or {}
     top_summary.update({
         "research_memory_entries": int((memory.get("summary") or {}).get("entries") or 0),
         "research_memory_review_lessons": int((memory.get("summary") or {}).get("review_lessons") or 0),
@@ -129,18 +138,6 @@ def main() -> None:
         "paper_acceptance_ledger_submission_ready": int(ledger_summary.get("submission_ready") or 0),
         "paper_acceptance_gate_clean_submission_ready": int(ledger_summary.get("gate_clean_submission_ready") or 0),
         "paper_acceptance_internal_action_required": int(ledger_summary.get("internal_action_required") or 0),
-        "paper_first_search_portfolio_design_reviewed": int(search_summary.get("reviewed") or 0),
-        "paper_first_search_portfolio_design_advance_method": int(search_summary.get("advance_to_method_design") or 0),
-        "paper_first_search_portfolio_design_revise": int(search_summary.get("revise_paper_problem") or 0),
-        "paper_first_search_portfolio_design_stop": int(search_summary.get("stop_standalone") or 0),
-        "paper_first_fresh_phenomenon_status": str(fresh_phenomenon.get("status") or "NO_ACTIVE_F0"),
-        "paper_first_fresh_phenomenon_candidates": int(fresh_summary.get("candidates") or 0),
-        "paper_first_fresh_phenomenon_active_f0": int(fresh_summary.get("active_f0") or 0),
-        "paper_first_fresh_phenomenon_design_ready_f0": int(fresh_summary.get("design_ready_f0") or 0),
-        "paper_first_fresh_phenomenon_support_holds": int(fresh_summary.get("hold_support") or 0),
-        "paper_first_fresh_phenomenon_execution_holds": int(fresh_summary.get("hold_execution") or 0),
-        "paper_first_fresh_phenomenon_ready_problem_review": int(fresh_summary.get("ready_for_problem_review") or 0),
-        "paper_first_fresh_phenomenon_archived": int(fresh_summary.get("archived") or 0),
     })
     update_component_evidence(
         state,

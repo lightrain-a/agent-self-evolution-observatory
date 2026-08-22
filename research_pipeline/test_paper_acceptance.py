@@ -359,8 +359,12 @@ class PaperAcceptanceTest(unittest.TestCase):
         self.assertEqual(index["summary"]["papers"], 1)
         self.assertEqual(index["summary"]["invalid_ledgers"], 0)
         self.assertEqual(index["entries"][0]["paper_id"], "STRI-ICLR2027")
+        self.assertEqual((index["summary"]["internal_action_required"], index["summary"]["no_internal_action"]), (1, 0))
+        self.assertEqual(index["summary"]["by_internal_action"], {"PAPER_WORKFLOW_CONTINUE": 1})
+        self.assertEqual(index["entries"][0]["primary_next_action"]["action_class"], "PAPER_WORKFLOW_CONTINUE")
         self.assertFalse(index["scientific_authority"])
         self.assertTrue(index["policy"]["empty_machine_local_ledger_does_not_erase_portable_state"])
+        self.assertTrue(index["policy"]["primary_next_action_is_internal_only_and_zero_authority"])
 
     def test_public_ledger_index_keeps_causal_hold_visible(self) -> None:
         with tempfile.TemporaryDirectory() as td:

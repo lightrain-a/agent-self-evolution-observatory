@@ -243,6 +243,9 @@ python -m unittest \
   research_pipeline.test_experiment_iteration
 
 python site_smoke_test.py
+python hierarchy_smoke_test.py
+SYSTEM_OVERVIEW_ONLY=1 python browser_smoke_test.py
+python paper_control_plane_browser_smoke_test.py
 python scripts/build_static_site.py
 SYSTEM_OVERVIEW_ONLY=1 python idea_browser_smoke_test.py
 ```

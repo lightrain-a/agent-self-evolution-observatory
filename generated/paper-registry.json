@@ -1,13 +1,16 @@
 {
-  "schema_version": "1.2",
-  "generated_at": "2026-08-22T10:16:37+00:00",
-  "source_revision": "bf38cc8cd108952911ad8dd3e0d741f827b850e1",
-  "projection_source": "generated/research-system-state.json",
+  "schema_version": "1.3",
+  "generated_at": "2026-08-22T10:23:44+00:00",
+  "source_revision": "4e7f33420fecd7313499773ea83e6c8823b82678",
+  "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
     "paper_registry_cannot_grant_research_or_experiment_authority": true,
     "paper_registry_cannot_grant_submission_authority": true,
     "paper_claims_must_reference_existing_research_evidence": true,
+    "submission_ready_is_historical_ledger_readiness": true,
+    "gate_clean_submission_ready_is_latest_effective_internal_readiness": true,
+    "primary_next_action_is_internal_only": true,
     "paper_first_discovery_papers_need_not_fake_research_item_parentage": true,
     "schema_version": "1.0",
     "scientific_truth_precedes_paper_optimization": true,
@@ -30,7 +33,9 @@
     "blocked_transitions_are_recorded": true,
     "ledger_contract_digest_is_immutable_between_scientific_revisions": true,
     "scientific_contract_revision_requires_evidence_closure_at_paper_evidence": true,
-    "submitted_state_requires_external_human_submission_authority": true
+    "submitted_state_requires_external_human_submission_authority": true,
+    "submission_ready_papers_is_legacy_alias_for_ledger_submission_ready_papers": true,
+    "primary_next_action_is_internal_only_and_zero_authority": true
   },
   "summary": {
     "papers": 5,
@@ -38,6 +43,12 @@
     "gate_clean_submission_ready": 4,
     "paper_preparation_failed": 1,
     "immediate_submission_holds": 1,
+    "internal_action_required": 1,
+    "no_internal_action": 4,
+    "by_internal_action": {
+      "EXTERNAL_EVIDENCE_REQUIRED": 1,
+      "NO_INTERNAL_ACTION": 4
+    },
     "scientific_holds": 0,
     "primary_paper": "STRI",
     "by_stage": {
@@ -209,6 +220,46 @@
       "current_state": "SUBMISSION_READY",
       "gate_clean_submission_ready": true,
       "immediate_submission_hold": false,
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "No additional autonomous research, experiment, or paper-repair action is required by the internal Research OS.",
+        "action_zh": "内部 Research OS 已无新增科研、实验或论文修复动作；保持冻结证据与主张边界即可。",
+        "blocking_on": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "gpu_authority": false
+      },
+      "review_learning": {
+        "review_receipts": 2,
+        "decision_critical_objections": 10,
+        "category_counts": {
+          "artifact-baseline": 1,
+          "artifact-negative-control": 1,
+          "artifact-provenance": 1,
+          "artifact-qualification": 1,
+          "artifact-scope": 1,
+          "evidence": 1,
+          "mechanism": 1,
+          "novelty": 1,
+          "significance": 1,
+          "technical-scope": 1
+        },
+        "evidence_state_counts": {
+          "existing-evidence": 8,
+          "requires-new-claim": 2
+        },
+        "action_class_counts": {
+          "narrative-repair": 8,
+          "preserve-limitation": 2
+        },
+        "targeted_experiment_proposals": 0,
+        "claim_expansion_requests_preserved_as_limitations": 2,
+        "reviewer_prose_exposed": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "gpu_authority": false
+      },
       "supported_claims": 3,
       "active_unrefuted_claims": 0,
       "unsupported_claims": 3,
@@ -364,6 +415,46 @@
       "current_state": "SUBMISSION_READY",
       "gate_clean_submission_ready": true,
       "immediate_submission_hold": false,
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "No additional autonomous research, experiment, or paper-repair action is required by the internal Research OS.",
+        "action_zh": "内部 Research OS 已无新增科研、实验或论文修复动作；保持冻结证据与主张边界即可。",
+        "blocking_on": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "gpu_authority": false
+      },
+      "review_learning": {
+        "review_receipts": 2,
+        "decision_critical_objections": 10,
+        "category_counts": {
+          "artifact-integrity": 1,
+          "artifact-measurement": 1,
+          "artifact-protocol": 1,
+          "artifact-provenance": 1,
+          "artifact-traceability": 1,
+          "causal-scope": 1,
+          "clarity": 1,
+          "evidence-scope": 1,
+          "novelty": 1,
+          "significance": 1
+        },
+        "evidence_state_counts": {
+          "existing-evidence": 8,
+          "requires-new-claim": 2
+        },
+        "action_class_counts": {
+          "narrative-repair": 8,
+          "preserve-limitation": 2
+        },
+        "targeted_experiment_proposals": 0,
+        "claim_expansion_requests_preserved_as_limitations": 2,
+        "reviewer_prose_exposed": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "gpu_authority": false
+      },
       "supported_claims": 3,
       "active_unrefuted_claims": 0,
       "unsupported_claims": 7,
@@ -512,6 +603,50 @@
       "current_state": "SUBMISSION_READY",
       "gate_clean_submission_ready": true,
       "immediate_submission_hold": false,
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "No additional autonomous research, experiment, or paper-repair action is required by the internal Research OS.",
+        "action_zh": "内部 Research OS 已无新增科研、实验或论文修复动作；保持冻结证据与主张边界即可。",
+        "blocking_on": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "gpu_authority": false
+      },
+      "review_learning": {
+        "review_receipts": 4,
+        "decision_critical_objections": 10,
+        "category_counts": {
+          "conceptual": 1,
+          "empirical": 2,
+          "empirical-sufficiency": 4,
+          "insufficient-scale": 1,
+          "missing-evidence": 1,
+          "novelty": 1,
+          "overclaiming": 1,
+          "scope": 1,
+          "scope-of-support-debt": 1,
+          "technical-quality": 1
+        },
+        "evidence_state_counts": {
+          "existing-evidence": 2,
+          "false-premise-with-evidence": 1,
+          "missing-decisive-evidence": 9,
+          "uncertain": 2
+        },
+        "action_class_counts": {
+          "human-adjudication": 2,
+          "narrative-repair": 1,
+          "preserve-limitation": 6,
+          "targeted-experiment": 5
+        },
+        "targeted_experiment_proposals": 5,
+        "claim_expansion_requests_preserved_as_limitations": 6,
+        "reviewer_prose_exposed": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "gpu_authority": false
+      },
       "supported_claims": 4,
       "active_unrefuted_claims": 1,
       "unsupported_claims": 2,
@@ -666,6 +801,46 @@
       "current_state": "SUBMISSION_READY",
       "gate_clean_submission_ready": false,
       "immediate_submission_hold": true,
+      "primary_next_action": {
+        "action_class": "EXTERNAL_EVIDENCE_REQUIRED",
+        "action": "Wait for or acquire the named external support asset, then rerun the same frozen internal readiness checks.",
+        "action_zh": "等待或取得已命名的外部支持资产，再按同一冻结规则重跑内部就绪检查。",
+        "blocking_on": "TIMESAGE_EVALUATED_FIRST_PARTY_ASSETS_NOT_PUBLIC",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "gpu_authority": false
+      },
+      "review_learning": {
+        "review_receipts": 2,
+        "decision_critical_objections": 6,
+        "category_counts": {
+          "empirical": 1,
+          "empirical-sufficiency": 1,
+          "experimental-design": 1,
+          "infrastructure": 1,
+          "methodology": 1,
+          "novelty": 1,
+          "reproducibility-feasibility": 1,
+          "scope": 1
+        },
+        "evidence_state_counts": {
+          "missing-decisive-evidence": 6,
+          "requires-new-claim": 1,
+          "uncertain": 1
+        },
+        "action_class_counts": {
+          "human-adjudication": 1,
+          "preserve-limitation": 3,
+          "targeted-experiment": 4
+        },
+        "targeted_experiment_proposals": 4,
+        "claim_expansion_requests_preserved_as_limitations": 3,
+        "reviewer_prose_exposed": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "gpu_authority": false
+      },
       "supported_claims": 2,
       "active_unrefuted_claims": 2,
       "unsupported_claims": 2,
@@ -678,16 +853,16 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 20,
+        "events": 26,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
-        "mock_reviews": 2,
-        "claim_audit_receipts": 1,
+        "mock_reviews": 5,
+        "claim_audit_receipts": 2,
         "manuscript_ci_receipts": 1,
-        "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 1,
-        "submission_readiness_receipts": 1
+        "prebuttal_receipts": 2,
+        "paper_preparation_receipts": 2,
+        "submission_readiness_receipts": 2
       },
       "latest_story_search": {
         "pass": true,
@@ -859,6 +1034,57 @@
       "current_state": "SUBMISSION_READY",
       "gate_clean_submission_ready": true,
       "immediate_submission_hold": false,
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "No additional autonomous research, experiment, or paper-repair action is required by the internal Research OS.",
+        "action_zh": "内部 Research OS 已无新增科研、实验或论文修复动作；保持冻结证据与主张边界即可。",
+        "blocking_on": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "gpu_authority": false
+      },
+      "review_learning": {
+        "review_receipts": 6,
+        "decision_critical_objections": 14,
+        "category_counts": {
+          "confound-control": 1,
+          "confound-residual": 1,
+          "design": 1,
+          "design-operationalization": 1,
+          "empirical": 1,
+          "empirical-sufficiency": 2,
+          "empirical-support": 1,
+          "external-validity": 3,
+          "insufficient-empirical-contribution": 1,
+          "measurement": 2,
+          "measurement-validity": 1,
+          "missing-decisive-evidence": 1,
+          "missing-experiments": 1,
+          "novelty-and-incremental-contribution": 1,
+          "novelty-vs-source": 1,
+          "sample-size": 1,
+          "scope-of-claims": 1,
+          "small-sample-robustness": 1
+        },
+        "evidence_state_counts": {
+          "existing-evidence": 8,
+          "missing-decisive-evidence": 12,
+          "uncertain": 2
+        },
+        "action_class_counts": {
+          "human-adjudication": 1,
+          "narrative-repair": 6,
+          "preserve-limitation": 6,
+          "targeted-experiment": 9
+        },
+        "targeted_experiment_proposals": 9,
+        "claim_expansion_requests_preserved_as_limitations": 6,
+        "reviewer_prose_exposed": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "gpu_authority": false
+      },
       "supported_claims": 3,
       "active_unrefuted_claims": 2,
       "unsupported_claims": 2,
