@@ -31,6 +31,7 @@ from .paper_first_problem_generator import (
     _normalize_last_completed_lane_search_receipt,
     _pool_sha,
     _saturation_ledger_path,
+    installed_problem_generator_policy,
     write_archived_portfolio_ingestion_replay_state,
     write_problem_generator_state,
     write_replayed_problem_generator_state,
@@ -80,6 +81,7 @@ def _receipt_material(receipt: dict[str, Any]) -> dict[str, Any]:
         "pool_sha256": str(receipt.get("pool_sha256") or ""),
         "negative_space_sha256": str(receipt.get("negative_space_sha256") or ""),
         "discovery_operator_version": str(receipt.get("discovery_operator_version") or ""),
+        "discovery_execution_mode": str(receipt.get("discovery_execution_mode") or ""),
         "source_refs": sorted(str(ref) for ref in receipt.get("source_refs") or [] if str(ref)),
         "status": str(receipt.get("status") or ""),
         "requested_model": str(receipt.get("requested_model") or ""),
@@ -482,21 +484,51 @@ def _rewrite_staged_queue_public_projection(
 
 
 def _commit_files(temp_targets: list[tuple[Path, Path]]) -> None:
+    """Commit staged files without assuming staging and targets share a filesystem.
+
+    Every source is copied into a fully-written temporary file in the target directory
+    before any canonical target is replaced. The final ``os.replace`` therefore stays
+    on one filesystem even when public staging lives under the checkout while private
+    state lives under ``/data``. Multi-file failure still restores the previous bytes.
+    """
     backups: dict[Path, bytes | None] = {target: (target.read_bytes() if target.exists() else None) for _, target in temp_targets}
+    prepared: list[tuple[Path, Path]] = []
     replaced: list[Path] = []
+
+    def prepare_bytes(target: Path, payload: bytes, *, mode_source: Path | None = None) -> Path:
+        target.parent.mkdir(parents=True, exist_ok=True)
+        fd, name = tempfile.mkstemp(prefix=f".{target.name}.commit-", dir=str(target.parent))
+        staged = Path(name)
+        try:
+            with os.fdopen(fd, "wb") as handle:
+                handle.write(payload)
+                handle.flush()
+                os.fsync(handle.fileno())
+            if mode_source is not None:
+                shutil.copymode(mode_source, staged)
+            return staged
+        except Exception:
+            staged.unlink(missing_ok=True)
+            raise
+
     try:
         for source, target in temp_targets:
-            target.parent.mkdir(parents=True, exist_ok=True)
-            os.replace(source, target)
+            prepared.append((prepare_bytes(target, source.read_bytes(), mode_source=source), target))
+        for staged, target in prepared:
+            os.replace(staged, target)
             replaced.append(target)
     except Exception:
-        for target in replaced:
+        for target in reversed(replaced):
             previous = backups[target]
             if previous is None:
                 target.unlink(missing_ok=True)
             else:
-                target.write_bytes(previous)
+                restored = prepare_bytes(target, previous)
+                os.replace(restored, target)
         raise
+    finally:
+        for staged, _ in prepared:
+            staged.unlink(missing_ok=True)
 
 
 def close_existing_problem_discovery_transaction(
@@ -677,12 +709,12 @@ def recompile_existing_problem_discovery_transaction(
 ) -> dict[str, Any]:
     """Recompile Generator -> Queue on one already-certified Primary transaction.
 
-    This is the only live operator-upgrade path that is allowed to reuse an unchanged
+    This is the only live discovery-contract upgrade path allowed to reuse an unchanged
     Primary without rerunning retrieval, the source-coverage scheduler, or carrier
-    probing. The prior public Primary/Generator/Queue must be one closed zero-survivor
-    transaction, the prior Generator must have been produced by an older discovery
-    operator, and the supplied private Primary must match the public Primary manifest
-    exactly. All outputs are staged under the host-wide transaction lock and committed
+    probing. It accepts either an older discovery operator, or the same operator when
+    the prior receipt used the legacy single-call contract and the requested recompile
+    explicitly upgrades to the canonical double funnel. Same-contract reruns remain
+    forbidden. All outputs are staged under the host-wide transaction lock and committed
     atomically; any provider/reviewer/queue failure preserves every prior public/private
     control file.
     """
@@ -696,9 +728,18 @@ def recompile_existing_problem_discovery_transaction(
     queue_tx=str(previous_queue.get("discovery_transaction_id") or "").strip()
     if not re.fullmatch(r"[0-9a-f]{64}",primary_tx) or primary_tx!=generator_tx or primary_tx!=queue_tx:
         raise RuntimeError("existing paper-first discovery transaction identity mismatch")
-    previous_operator=str((previous_generator.get("policy") or {}).get("discovery_operator_version") or "")
-    if not previous_operator or previous_operator==DISCOVERY_OPERATOR_VERSION:
-        raise RuntimeError("operator recompile requires a closed transaction from an older discovery operator")
+    previous_policy=previous_generator.get("policy") or {}
+    previous_operator=str(previous_policy.get("discovery_operator_version") or "")
+    target_portfolio=bool((generator_kwargs or {}).get("portfolio_mode"))
+    operator_upgrade=bool(previous_operator and previous_operator!=DISCOVERY_OPERATOR_VERSION)
+    execution_contract_upgrade=bool(
+        previous_operator==DISCOVERY_OPERATOR_VERSION
+        and previous_policy.get("search_portfolio_enabled") is not True
+        and target_portfolio
+    )
+    if not operator_upgrade and not execution_contract_upgrade:
+        raise RuntimeError("operator recompile requires an older discovery operator or a legacy-to-double-funnel execution-contract upgrade")
+    recompile_kind="OPERATOR_VERSION" if operator_upgrade else "EXECUTION_CONTRACT"
     previous_qs=previous_queue.get("summary") or {}
     if int(previous_qs.get("passed_problem_gate") or 0)!=0 or int(previous_qs.get("paper_design_eligible") or 0)!=0:
         raise RuntimeError("operator recompile cannot supersede a transaction with a Problem-Gate survivor")
@@ -738,14 +779,14 @@ def recompile_existing_problem_discovery_transaction(
         if target_auto.exists():shutil.copyfile(target_auto,staged_auto)
         if target_ledger.exists():shutil.copyfile(target_ledger,staged_ledger)
         staged_pool=json.loads(json.dumps(source_pool,ensure_ascii=False));staged_pool["generated_at"]=str(primary.get("generated_at") or staged_pool.get("generated_at") or "")
-        staged_pool["operator_recompile"]={"prior_transaction_id":primary_tx,"prior_discovery_operator_version":previous_operator,"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"source_scheduler_runs_executed":0,"scientific_authority":False}
+        staged_pool["operator_recompile"]={"prior_transaction_id":primary_tx,"prior_discovery_operator_version":previous_operator,"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"recompile_kind":recompile_kind,"prior_execution_mode":"CANONICAL_DOUBLE_FUNNEL" if previous_policy.get("search_portfolio_enabled") is True else "LEGACY_SINGLE_CALL","target_execution_mode":"CANONICAL_DOUBLE_FUNNEL" if target_portfolio else "LEGACY_SINGLE_CALL","source_scheduler_runs_executed":0,"scientific_authority":False}
         if _pool_sha(staged_pool)!=source_pool_sha:raise RuntimeError("operator recompile changed the content-addressed Primary pool")
         staged_private.write_text(json.dumps(staged_pool,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
         clean_primary=dict(primary);clean_primary.pop("discovery_transaction_id",None);clean_primary.pop("discovery_transaction_role",None)
         p_json.write_text(json.dumps(clean_primary,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
         p_js.write_text("window.PAPER_FIRST_PRIMARY_EVIDENCE = "+json.dumps(clean_primary,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
         generator_internal:dict[str,Any]|None=None;queue_internal:dict[str,Any]|None=None
-        record={"schema_version":"1.0","started_at":started,"status":"running","prior_transaction_id":primary_tx,"prior_discovery_operator_version":previous_operator,"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"source_scheduler_runs_executed":0,"scientific_authority":False}
+        record={"schema_version":"1.0","started_at":started,"status":"running","prior_transaction_id":primary_tx,"prior_discovery_operator_version":previous_operator,"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"recompile_kind":recompile_kind,"prior_execution_mode":"CANONICAL_DOUBLE_FUNNEL" if previous_policy.get("search_portfolio_enabled") is True else "LEGACY_SINGLE_CALL","target_execution_mode":"CANONICAL_DOUBLE_FUNNEL" if target_portfolio else "LEGACY_SINGLE_CALL","source_scheduler_runs_executed":0,"scientific_authority":False}
         try:
             gkw=dict(generator_kwargs or {});gkw.update({"storage":storage,"json_path":g_json,"js_path":g_js,"previous_public_state_path":generator_json,"primary_pool_path":staged_private,"auto_inbox_path":staged_auto,"saturation_ledger_path":staged_ledger})
             generator_internal=write_problem_generator_state(**gkw)
@@ -760,9 +801,11 @@ def recompile_existing_problem_discovery_transaction(
                 raise RuntimeError("operator recompile Generator did not bind the current discovery operator")
             transaction_receipt=_generator_receipt(generator_public)
             transaction_receipt_material=_receipt_material(transaction_receipt)
+            expected_execution_mode="CANONICAL_DOUBLE_FUNNEL" if target_portfolio else "LEGACY_SINGLE_CALL"
             if transaction_receipt_material and (
                 transaction_receipt_material.get("pool_sha256")!=source_pool_sha
                 or transaction_receipt_material.get("discovery_operator_version")!=transaction_operator
+                or transaction_receipt_material.get("discovery_execution_mode")!=expected_execution_mode
                 or transaction_receipt_material.get("run_id")!=str(generator_public.get("run_id") or "")
                 or transaction_receipt_material.get("status")!=str(generator_public.get("status") or "")
                 or transaction_receipt_material.get("scientific_authority") is not False
@@ -777,7 +820,7 @@ def recompile_existing_problem_discovery_transaction(
             _commit_files([(p_json,primary_json),(p_js,primary_js),(g_json,generator_json),(g_js,generator_js),(q_json,queue_json),(q_js,queue_js),*private_targets])
             generator_calls,semantic_calls=_provider_call_accounting(generator_internal)
             record.update({
-                "status":"COMMITTED_OPERATOR_RECOMPILE","completed_at":_now(),"transaction_id":txn_id,"source_pool_sha256":source_pool_sha,
+                "status":"COMMITTED_OPERATOR_RECOMPILE" if operator_upgrade else "COMMITTED_EXECUTION_CONTRACT_RECOMPILE","completed_at":_now(),"transaction_id":txn_id,"source_pool_sha256":source_pool_sha,
                 "discovery_operator_version":transaction_operator,
                 "generator_receipt_run_id":str(transaction_receipt_material.get("run_id") or ""),
                 "generator_receipt_sha256":_receipt_sha256(transaction_receipt),
@@ -789,11 +832,93 @@ def recompile_existing_problem_discovery_transaction(
             (run_root/f"{txn_id}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
             return record
         except Exception as error:
-            record.update({"status":"ABORTED_OPERATOR_RECOMPILE_PUBLIC_STATE_PRESERVED","completed_at":_now(),"error":f"{type(error).__name__}: {error}","stage_diagnostics":{"generator_status":str((generator_internal or {}).get("status") or "NOT_REACHED"),"generator_run_id":str((generator_internal or {}).get("run_id") or ""),"generator_error":" ".join(str((generator_internal or {}).get("error") or "").split())[:500],"queue_reached":queue_internal is not None,"queue_audited":int((((queue_internal or {}).get("summary") or {}).get("audited")) or 0),"scientific_authority":False},"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}})
-            stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ");(run_root/f"aborted-recompile-{stamp}-{os.getpid()}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+            stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+            recovery_bundle=_persist_abort_recovery_bundle(run_root,stamp,os.getpid(),{
+                "primary_public":p_json,
+                "primary_private":staged_private,
+                "generator_public":g_json,
+                "queue_public":q_json,
+                "auto_inbox":staged_auto,
+                "saturation_ledger":staged_ledger,
+            })
+            record.update({"status":"ABORTED_OPERATOR_RECOMPILE_PUBLIC_STATE_PRESERVED","completed_at":_now(),"error":f"{type(error).__name__}: {error}","recovery_bundle":recovery_bundle,"stage_diagnostics":{"generator_status":str((generator_internal or {}).get("status") or "NOT_REACHED"),"generator_run_id":str((generator_internal or {}).get("run_id") or ""),"generator_error":" ".join(str((generator_internal or {}).get("error") or "").split())[:500],"queue_reached":queue_internal is not None,"queue_audited":int((((queue_internal or {}).get("summary") or {}).get("audited")) or 0),"scientific_authority":False},"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}})
+            (run_root/f"aborted-recompile-{stamp}-{os.getpid()}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
             raise
         finally:
             shutil.rmtree(temp_root,ignore_errors=True)
+
+
+def _aborted_double_funnel_source_state(*,storage:StorageSettings,previous_generator:dict[str,Any],source_pool:dict[str,Any],aborted_receipt:dict[str,Any],aborted_receipt_sha256:str)->dict[str,Any]:
+    """Reconstruct only the archived metadata needed for zero-provider formulation ingestion."""
+    diagnostics=aborted_receipt.get("stage_diagnostics") or {};run_id=str(diagnostics.get("generator_run_id") or "").strip();status=str(diagnostics.get("generator_status") or "").strip()
+    if status!="GENERATED_PRE_F0_EVIDENCE_ACQUISITION" or not run_id:raise RuntimeError("aborted execution-contract receipt did not finish double-funnel generation to Pre-F0")
+    private_root=storage.data_root/"paper-first-problem-discovery";portfolio_path=private_root/"search-portfolios"/f"{run_id}-portfolio.json"
+    if not portfolio_path.is_file():raise RuntimeError("aborted execution-contract portfolio artifact is missing")
+    portfolio_sha=hashlib.sha256(portfolio_path.read_bytes()).hexdigest();portfolio=json.loads(portfolio_path.read_text(encoding="utf-8"));portfolio_summary=portfolio.get("summary") or {}
+    raw_dir=private_root/"raw-generations";pattern=re.compile(rf"^{re.escape(run_id)}-(formulate-(\d+))-(.+)-([0-9a-f]{{12}})\.txt$");formulations=[]
+    for path in raw_dir.glob(f"{run_id}-formulate-*.txt"):
+        match=pattern.match(path.name)
+        if not match:continue
+        sha=hashlib.sha256(path.read_bytes()).hexdigest()
+        if not sha.startswith(match.group(4)):raise RuntimeError(f"aborted formulation filename SHA mismatch: {path.name}")
+        formulations.append((int(match.group(2)),{"role":match.group(1),"sha256":sha,"requested_model":match.group(3),"resolved_model":"","request_fingerprint":"","scientific_authority":False}))
+    formulations.sort(key=lambda item:item[0])
+    if not formulations or [part for part,_ in formulations]!=list(range(1,len(formulations)+1)):raise RuntimeError("aborted formulation archive is incomplete or non-contiguous")
+    all_raw=[]
+    for path in sorted(raw_dir.glob(f"{run_id}-*.txt"),key=lambda value:(value.stat().st_mtime_ns,value.name)):
+        all_raw.append({"name":path.name,"sha256":hashlib.sha256(path.read_bytes()).hexdigest()})
+    source_manifest_sha=hashlib.sha256(json.dumps({"portfolio_sha256":portfolio_sha,"raw_artifacts":all_raw},ensure_ascii=False,sort_keys=True,separators=(",",":")).encode("utf-8")).hexdigest()
+    policy=installed_problem_generator_policy(portfolio=True);policy["aborted_execution_contract_recovery_source"]=True
+    summary=dict(previous_generator.get("summary") or {});summary.update({
+        "primary_evidence_records":len(source_pool.get("records") or []),"raw_seeds":int(portfolio_summary.get("raw_seeds") or 0),"semantic_unique_seeds":int(portfolio_summary.get("semantic_unique") or 0),"unique_problem_families":int(portfolio_summary.get("unique_problem_families") or 0),"breadth_archive":int(portfolio_summary.get("breadth_archive") or 0),"archive_pairwise_distance":float(portfolio_summary.get("mean_archive_pairwise_distance") or 0.0),"evolved_branches":int(portfolio_summary.get("evolved_branches") or 0),"max_branch_depth":int(portfolio_summary.get("max_branch_depth") or 0),"reviewer_attacks":int(portfolio_summary.get("reviewer_attacks") or 0),"repair_children":int(portfolio_summary.get("repair_children") or 0),"portfolio_calls":int(portfolio_summary.get("portfolio_calls") or 0),"pre_f0_eligible":0,"generated":0,"structurally_reviewable":0,"semantic_clear":0,"semantic_blocked":0,"written_to_auto_inbox":0,
+    })
+    lane_counts=portfolio.get("lane_counts") or {};lane_search=[{"lane":lane,"status":"EXPANDED" if int(lane_counts.get(lane) or 0)>0 else "EMPTY","raw_seed_count":int(lane_counts.get(lane) or 0),"reason":"Archived canonical double-funnel expansion produced grounded seeds." if int(lane_counts.get(lane) or 0)>0 else "Archived canonical double-funnel expansion produced no machine-valid grounded seed."} for lane in SEARCH_PORTFOLIO_PRIMITIVES]
+    generated_at=str(aborted_receipt.get("started_at") or "");generation_notes=f"Archived execution-contract double funnel completed {int(portfolio_summary.get('portfolio_calls') or 0)} successful portfolio stages and formulated {int(portfolio_summary.get('formulated_candidates') or 0)} candidates before a commit-layer abort; this source object is recovery metadata only."
+    source={"schema_version":"3.0-double-funnel","generated_at":generated_at,"run_id":run_id,"status":status,"policy":policy,"summary":summary,"generation_notes":generation_notes,"search_diagnostics":{"lane_search_priority":list(SEARCH_PORTFOLIO_PRIMITIVES),"lane_search_complete":True,"lane_search":lane_search,"scientific_authority":False},"search_portfolio":{key:portfolio.get(key) for key in ("policy","config","summary","lane_counts","archive_lane_counts","family_counts")},"portfolio_provenance":[row for _,row in formulations],"raw_artifacts":{"generator":{"sha256":source_manifest_sha,"requested_model":formulations[0][1]["requested_model"],"resolved_model":"","portfolio":True,"portfolio_sha256":portfolio_sha,"calls":len(all_raw),"provider_calls_executed":len(all_raw),"aborted_recovery_source_manifest":True}},"pre_f0_candidates":[],"candidates":[],"aborted_execution_contract_source":{"aborted_receipt_sha256":aborted_receipt_sha256,"prior_transaction_id":str(aborted_receipt.get("prior_transaction_id") or ""),"source_generator_run_id":run_id,"source_portfolio_sha256":portfolio_sha,"source_formulated_candidates":int(portfolio_summary.get("formulated_candidates") or 0),"source_formulation_rejected":int(portfolio_summary.get("formulation_rejected") or 0),"source_portfolio_errors":int(portfolio_summary.get("errors") or 0),"provider_calls_replayed":0,"scientific_authority":False}}
+    source["search_portfolio"]["archive_counts"]={key:len(value) for key,value in (portfolio.get("archives") or {}).items()};source["search_portfolio"]["scientific_authority"]=False
+    source["search_diagnostics"]["last_completed_lane_search"]=_completed_lane_search_receipt_from_state(source)
+    prior_saturation=json.loads(json.dumps(previous_generator.get("saturation_memory") or {},ensure_ascii=False));prior_receipt=(previous_generator.get("saturation_memory") or {}).get("current_review_receipt") or {};pool_sha=_pool_sha(source_pool)
+    source_receipt={"run_id":run_id,"pool_sha256":pool_sha,"negative_space_sha256":str(prior_receipt.get("negative_space_sha256") or ""),"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"discovery_execution_mode":"CANONICAL_DOUBLE_FUNNEL","source_refs":sorted(str(row.get("ref") or "") for row in source_pool.get("records") or [] if row.get("ref")),"status":status,"requested_model":formulations[0][1]["requested_model"],"resolved_model":"","raw_sha256":source_manifest_sha,"scientific_authority":False};prior_saturation["current_review_receipt"]=source_receipt;prior_saturation["scientific_authority"]=False;source["saturation_memory"]=prior_saturation
+    return source
+
+
+def recover_aborted_execution_contract_recompile_transaction(*,storage:StorageSettings|None=None,primary_json:Path=PRIMARY_JSON,primary_js:Path=PRIMARY_JS,generator_json:Path=GENERATOR_JSON,generator_js:Path=GENERATOR_JS,queue_json:Path=QUEUE_JSON,queue_js:Path=QUEUE_JS,private_pool_source:Path|None=None,aborted_receipt_path:Path,queue_kwargs:dict[str,Any]|None=None)->dict[str,Any]:
+    """Commit a completed double-funnel search after a commit-layer abort, with zero provider calls."""
+    storage=storage or StorageSettings.from_env();storage.ensure();primary=_load(primary_json);previous_generator=_load(generator_json);previous_queue=_load(queue_json);errors=_validate(primary,previous_generator,previous_queue)
+    if errors:raise RuntimeError("existing paper-first discovery state invalid: "+",".join(errors))
+    primary_tx=_shared_existing_transaction_id(primary,previous_generator,previous_queue)
+    if not primary_tx:raise RuntimeError("aborted execution-contract recovery requires one closed prior transaction")
+    previous_policy=previous_generator.get("policy") or {}
+    if previous_generator.get("status")!="GENERATED_ZERO_CANDIDATES" or _generator_operator_version(previous_generator)!=DISCOVERY_OPERATOR_VERSION or previous_policy.get("search_portfolio_enabled") is True:raise RuntimeError("aborted execution-contract recovery requires the legacy current-operator zero-candidate predecessor")
+    pqs=previous_queue.get("summary") or {}
+    if int(pqs.get("passed_problem_gate") or 0)!=0 or int(pqs.get("paper_design_eligible") or 0)!=0:raise RuntimeError("aborted execution-contract recovery cannot supersede a Problem-Gate survivor")
+    aborted_path=Path(aborted_receipt_path);aborted_bytes=aborted_path.read_bytes();aborted_sha=hashlib.sha256(aborted_bytes).hexdigest();aborted=json.loads(aborted_bytes.decode("utf-8"));diagnostics=aborted.get("stage_diagnostics") or {}
+    if aborted.get("status")!="ABORTED_OPERATOR_RECOMPILE_PUBLIC_STATE_PRESERVED" or str(aborted.get("prior_transaction_id") or "")!=primary_tx or aborted.get("recompile_kind")!="EXECUTION_CONTRACT" or aborted.get("prior_execution_mode")!="LEGACY_SINGLE_CALL" or aborted.get("target_execution_mode")!="CANONICAL_DOUBLE_FUNNEL" or int(aborted.get("source_scheduler_runs_executed") or 0)!=0 or diagnostics.get("generator_status")!="GENERATED_PRE_F0_EVIDENCE_ACQUISITION" or diagnostics.get("queue_reached") is not True or aborted.get("scientific_authority") is not False:raise RuntimeError("aborted execution-contract receipt is not an exact recoverable commit-layer failure")
+    if "Invalid cross-device link" not in str(aborted.get("error") or "") and "Errno 18" not in str(aborted.get("error") or ""):raise RuntimeError("aborted execution-contract recovery is restricted to the verified cross-filesystem commit failure")
+    public_records=[row for row in primary.get("records") or [] if isinstance(row,dict)];public_manifest=[(str(row.get("ref") or ""),str(row.get("source_sha256") or ""),str(row.get("fulltext_sha256") or "")) for row in public_records];source_path=Path(private_pool_source) if private_pool_source is not None else private_primary_pool_path(storage);source_pool=load_private_primary_pool(source_path) or {};source_records=[row for row in source_pool.get("records") or [] if isinstance(row,dict)];source_manifest=[(str(row.get("ref") or ""),str(row.get("source_sha256") or ""),str(row.get("fulltext_sha256") or "")) for row in source_records]
+    if source_pool.get("status")!="READY" or not public_manifest or source_manifest!=public_manifest:raise RuntimeError("aborted execution-contract recovery private Primary does not match public manifest")
+    source_pool_sha=_pool_sha(source_pool);source_state=_aborted_double_funnel_source_state(storage=storage,previous_generator=previous_generator,source_pool=source_pool,aborted_receipt=aborted,aborted_receipt_sha256=aborted_sha);source_info=source_state.get("aborted_execution_contract_source") or {}
+    run_root=storage.run_dir/"paper-first-discovery-transactions";run_root.mkdir(parents=True,exist_ok=True);started=_now()
+    with _transaction_lock(storage):
+        temp_root=Path(tempfile.mkdtemp(prefix=".paper-first-aborted-recovery-",dir=str(primary_json.parent)));p_json=temp_root/"primary.json";p_js=temp_root/"primary.js";g_json=temp_root/"generator.json";g_js=temp_root/"generator.js";q_json=temp_root/"queue.json";q_js=temp_root/"queue.js";source_json=temp_root/"aborted-source-generator.json";staged_private=temp_root/"primary-private.json";staged_auto=temp_root/"auto-candidate-inbox.json";target_private=private_primary_pool_path(storage);target_auto=default_auto_inbox_path(storage);record={"schema_version":"1.0","started_at":started,"status":"running","prior_transaction_id":primary_tx,"aborted_receipt_sha256":aborted_sha,"source_pool_sha256":source_pool_sha,"provider_calls_authorized":0,"scientific_authority":False};generator_internal=None;queue_internal=None
+        try:
+            staged_pool=json.loads(json.dumps(source_pool,ensure_ascii=False));staged_pool["generated_at"]=str(primary.get("generated_at") or staged_pool.get("generated_at") or "");staged_pool["aborted_execution_contract_recovery"]={"prior_transaction_id":primary_tx,"aborted_receipt_sha256":aborted_sha,"source_generator_run_id":source_info.get("source_generator_run_id"),"provider_calls_executed":0,"scientific_authority":False}
+            if _pool_sha(staged_pool)!=source_pool_sha:raise RuntimeError("aborted execution-contract recovery changed content-addressed Primary pool")
+            staged_private.write_text(json.dumps(staged_pool,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");source_json.write_text(json.dumps(source_state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");clean_primary=dict(primary);clean_primary.pop("discovery_transaction_id",None);clean_primary.pop("discovery_transaction_role",None);p_json.write_text(json.dumps(clean_primary,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");p_js.write_text("window.PAPER_FIRST_PRIMARY_EVIDENCE = "+json.dumps(clean_primary,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
+            generator_internal=write_archived_portfolio_ingestion_replay_state(json_path=g_json,js_path=g_js,previous_public_state_path=source_json,storage=storage,primary_pool_path=staged_private,auto_inbox_path=staged_auto);gcalls,scalls=_provider_call_accounting(generator_internal);recovery=generator_internal.get("portfolio_ingestion_recovery") or {}
+            if gcalls or scalls or int(recovery.get("provider_calls_executed") or 0)!=0 or int(recovery.get("semantic_reviewer_calls_executed") or 0)!=0:raise RuntimeError("aborted execution-contract recovery attempted provider execution")
+            if int(recovery.get("recovered_candidates") or 0)!=int(source_info.get("source_formulated_candidates") or 0):raise RuntimeError("aborted execution-contract recovery did not reproduce every archived formulated candidate")
+            qkw=dict(queue_kwargs or {});qkw.update({"storage":storage,"json_path":q_json,"js_path":q_js,"primary_pool_path":staged_private,"auto_inbox_path":staged_auto});queue_internal=write_problem_gate_queue(**qkw);_rewrite_staged_queue_public_projection(queue_internal=queue_internal,q_json=q_json,q_js=q_js,storage=storage,staged_private=staged_private,target_private=target_private,staged_auto=staged_auto,target_auto=target_auto)
+            primary_public=_load(p_json);generator_public=_load(g_json);queue_public=_load(q_json);validation=_validate(primary_public,generator_public,queue_public)
+            if validation:raise RuntimeError("aborted execution-contract recovery transaction invalid: "+",".join(validation))
+            if generator_public.get("status")!="GENERATED_PRE_F0_EVIDENCE_ACQUISITION" or int((generator_public.get("summary") or {}).get("pre_f0_eligible") or 0)<=0:raise RuntimeError("aborted execution-contract recovery did not reproduce Pre-F0 routing")
+            new_receipt=_generator_receipt(generator_public);material=_receipt_material(new_receipt)
+            if not material or material.get("pool_sha256")!=source_pool_sha or material.get("discovery_operator_version")!=DISCOVERY_OPERATOR_VERSION or material.get("discovery_execution_mode")!="CANONICAL_DOUBLE_FUNNEL" or material.get("status")!="GENERATED_PRE_F0_EVIDENCE_ACQUISITION" or material.get("scientific_authority") is not False:raise RuntimeError("aborted execution-contract recovery receipt is not provenance-bound")
+            txn_id=_transaction_id(primary_public,generator_public,queue_public);primary_public=_stamp(p_json,p_js,"PAPER_FIRST_PRIMARY_EVIDENCE",txn_id,"primary");generator_public=_stamp(g_json,g_js,"PAPER_FIRST_PROBLEM_GENERATOR",txn_id,"generator");queue_public=_stamp(q_json,q_js,"PAPER_FIRST_PROBLEM_GATE_QUEUE",txn_id,"queue");_commit_files([(p_json,primary_json),(p_js,primary_js),(g_json,generator_json),(g_js,generator_js),(q_json,queue_json),(q_js,queue_js),(staged_private,target_private),(staged_auto,target_auto)])
+            record.update({"status":"COMMITTED_ABORTED_EXECUTION_CONTRACT_ZERO_PROVIDER_RECOVERY","completed_at":_now(),"transaction_id":txn_id,"source_generator_run_id":str(source_info.get("source_generator_run_id") or ""),"source_portfolio_sha256":str(source_info.get("source_portfolio_sha256") or ""),"recovered_from_aborted_receipt_sha256":aborted_sha,"generator_receipt_sha256":_receipt_sha256(new_receipt),"generator_receipt_raw_sha256":str(material.get("raw_sha256") or ""),"provider_calls_executed":0,"generator_provider_calls_executed":0,"semantic_reviewer_calls_executed":0,"summary":{"recovered_candidates":int(recovery.get("recovered_candidates") or 0),"pre_f0_eligible":int((generator_public.get("summary") or {}).get("pre_f0_eligible") or 0),"machine_blocked":len(recovery.get("blocked_rows") or []),"queue_submitted":int((queue_public.get("summary") or {}).get("submitted") or 0),"queue_passed":int((queue_public.get("summary") or {}).get("passed_problem_gate") or 0)},"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}});(run_root/f"{txn_id}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return record
+        except Exception as error:
+            stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ");recovery_bundle=_persist_abort_recovery_bundle(run_root,stamp,os.getpid(),{"primary_public":p_json,"primary_private":staged_private,"generator_public":g_json,"queue_public":q_json,"auto_inbox":staged_auto});record.update({"status":"ABORTED_EXECUTION_CONTRACT_RECOVERY_PUBLIC_STATE_PRESERVED","completed_at":_now(),"error":f"{type(error).__name__}: {error}","recovery_bundle":recovery_bundle,"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}});(run_root/f"aborted-execution-recovery-{stamp}-{os.getpid()}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raise
+        finally:shutil.rmtree(temp_root,ignore_errors=True)
 
 
 def replay_archived_portfolio_ingestion_transaction(
@@ -978,9 +1103,11 @@ def write_problem_discovery_transaction(
             transaction_receipt_material=_receipt_material(transaction_receipt)
             staged_pool=load_private_primary_pool(staged_private) or {}
             source_pool_sha=_pool_sha(staged_pool) if staged_pool else ""
+            transaction_execution_mode="CANONICAL_DOUBLE_FUNNEL" if (generator_public.get("policy") or {}).get("search_portfolio_enabled") is True else "LEGACY_SINGLE_CALL"
             if transaction_receipt_material and (
                 transaction_receipt_material.get("pool_sha256")!=source_pool_sha
                 or transaction_receipt_material.get("discovery_operator_version")!=transaction_operator
+                or transaction_receipt_material.get("discovery_execution_mode")!=transaction_execution_mode
                 or transaction_receipt_material.get("run_id")!=str(generator_public.get("run_id") or "")
                 or transaction_receipt_material.get("status")!=str(generator_public.get("status") or "")
                 or transaction_receipt_material.get("scientific_authority") is not False

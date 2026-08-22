@@ -324,27 +324,33 @@ def _private_dead_end_prompt_memory(storage:StorageSettings,public_memory:dict[s
     }
 
 
-def _is_current_operator_receipt(row:dict[str,Any],pool_sha:str,negative_space_sha:str)->bool:
+def _discovery_execution_mode(*, portfolio: bool) -> str:
+    return "CANONICAL_DOUBLE_FUNNEL" if portfolio else "LEGACY_SINGLE_CALL"
+
+
+def _is_current_operator_receipt(row:dict[str,Any],pool_sha:str,negative_space_sha:str,execution_mode:str)->bool:
     return bool(
         row.get("status") in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}
         and row.get("pool_sha256")==pool_sha
         and row.get("negative_space_sha256")==negative_space_sha
         and row.get("discovery_operator_version")==DISCOVERY_OPERATOR_VERSION
+        and row.get("discovery_execution_mode")==execution_mode
         and row.get("scientific_authority") is False
     )
 
 
-def _has_current_operator_receipt(storage:StorageSettings,pool_sha:str,portable_receipts:list[dict[str,Any]]|None=None,saturation_ledger_path:Path|None=None)->bool:
-    negative_space_sha=_negative_space_sha()
+def _has_current_operator_receipt(storage:StorageSettings,pool_sha:str,portable_receipts:list[dict[str,Any]]|None=None,saturation_ledger_path:Path|None=None,*,portfolio:bool=False)->bool:
+    negative_space_sha=_negative_space_sha();execution_mode=_discovery_execution_mode(portfolio=portfolio)
     rows=[*_load_saturation_ledger(storage,saturation_ledger_path),*[row for row in (portable_receipts or []) if isinstance(row,dict)]]
-    return any(_is_current_operator_receipt(row,pool_sha,negative_space_sha) for row in rows)
+    return any(_is_current_operator_receipt(row,pool_sha,negative_space_sha,execution_mode) for row in rows)
 
 
 def _record_saturation_run(storage:StorageSettings,state:dict[str,Any],pool_sha:str,registry:dict[str,dict[str,Any]],saturation_ledger_path:Path|None=None)->None:
     if state.get("status") not in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}: return
     ledger=_load_saturation_ledger(storage,saturation_ledger_path)
     raw=(state.get("raw_artifacts") or {}).get("generator") or {}
-    key={"pool_sha256":pool_sha,"negative_space_sha256":_negative_space_sha(),"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"requested_model":state.get("generator_model"),"resolved_model":raw.get("resolved_model")}
+    execution_mode=_discovery_execution_mode(portfolio=(state.get("policy") or {}).get("search_portfolio_enabled") is True)
+    key={"pool_sha256":pool_sha,"negative_space_sha256":_negative_space_sha(),"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"discovery_execution_mode":execution_mode,"requested_model":state.get("generator_model"),"resolved_model":raw.get("resolved_model")}
     prior_identical=sum(row.get("status")=="GENERATED_ZERO_CANDIDATES" and all(row.get(k)==v for k,v in key.items()) for row in ledger)
     entry={"run_id":state.get("run_id"),"generated_at":state.get("generated_at"),**key,"primary_evidence_records":len(registry),"source_refs":sorted(registry),"status":state.get("status"),"generated":(state.get("summary") or {}).get("generated",0),"semantic_clear":(state.get("summary") or {}).get("semantic_clear",0),"raw_sha256":raw.get("sha256"),"generation_notes":str(state.get("generation_notes") or "")[:2400],"scientific_authority":False}
     ledger.append(entry);ledger=ledger[-200:]
@@ -354,6 +360,7 @@ def _record_saturation_run(storage:StorageSettings,state:dict[str,Any],pool_sha:
         "pool_sha256":pool_sha,
         "negative_space_sha256":key["negative_space_sha256"],
         "discovery_operator_version":DISCOVERY_OPERATOR_VERSION,
+        "discovery_execution_mode":execution_mode,
         "source_refs":sorted(registry),
         "status":str(state.get("status") or ""),
         "requested_model":state.get("generator_model"),
@@ -830,7 +837,7 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
         state["coverage_skip_reason"]="No newly rescued lane-grounded source is ready yet; bounded no-lane carrier probing still has pending sources, so the existing content-addressed pool cannot trigger another live generator call."
         return finish("SKIPPED_SOURCE_CARRIER_PROBE_PENDING")
     if state["source_coverage"]["coverage_exhausted"] and state["source_coverage"]["unreviewed_lane_linked_sources"]==0:
-        if _has_current_operator_receipt(storage,psha,inherited_receipts,saturation_ledger_path):
+        if _has_current_operator_receipt(storage,psha,inherited_receipts,saturation_ledger_path,portfolio=portfolio_mode):
             state["coverage_skip_reason"]="No unreviewed freshness/relevance-qualified source remains and this exact evidence pool has already completed the current discovery operator; generation resumes when evidence, the mature-reduction ledger, or the discovery operator changes."
             return finish("SKIPPED_SOURCE_COVERAGE_SATURATED")
         state["operator_recompile_reason"]="Source coverage is saturated, but this evidence pool has no completed receipt for the current anomaly-first discovery operator. One bounded recompilation is allowed; scientific gates are unchanged."
@@ -1020,7 +1027,7 @@ def recover_archived_portfolio_ingestion(*,storage:StorageSettings|None=None,pri
     """
     storage=storage or StorageSettings.from_env();pool=load_private_primary_pool(Path(primary_pool_path)) or {};reg={str(row.get("ref") or ""):row for row in pool.get("records") or [] if isinstance(row,dict) and row.get("ref")}
     source=source_generator_state if isinstance(source_generator_state,dict) else {};policy=source.get("policy") or {};summary=source.get("summary") or {};run_id=str(source.get("run_id") or "").strip();receipt=(source.get("saturation_memory") or {}).get("current_review_receipt") or {}
-    if source.get("status")!="GENERATED_ZERO_CANDIDATES" or policy.get("search_portfolio_enabled") is not True or not run_id:raise ValueError("portfolio-ingestion-replay-requires-canonical-zero-candidate-double-funnel")
+    if source.get("status") not in {"GENERATED_ZERO_CANDIDATES","GENERATED_PRE_F0_EVIDENCE_ACQUISITION"} or policy.get("search_portfolio_enabled") is not True or not run_id:raise ValueError("portfolio-ingestion-replay-requires-archived-canonical-double-funnel")
     pool_sha=_pool_sha(pool)
     if pool.get("status")!="READY" or len(reg)<4 or str(receipt.get("pool_sha256") or "")!=pool_sha or str(receipt.get("discovery_operator_version") or "")!=DISCOVERY_OPERATOR_VERSION:raise ValueError("portfolio-ingestion-replay-primary-or-receipt-mismatch")
     generator_artifact=(source.get("raw_artifacts") or {}).get("generator") or {};portfolio_sha=str(generator_artifact.get("portfolio_sha256") or "").strip().lower();portfolio_path=_root(storage)/"search-portfolios"/f"{run_id}-portfolio.json"
@@ -1058,7 +1065,7 @@ def recover_archived_portfolio_ingestion(*,storage:StorageSettings|None=None,pri
     source_raw_sha=str(generator_artifact.get("sha256") or "");state["raw_artifacts"]["generator"]={"sha256":recovery_sha,"requested_model":str(generator_artifact.get("requested_model") or ""),"resolved_model":str(generator_artifact.get("resolved_model") or ""),"portfolio":True,"portfolio_sha256":portfolio_sha,"calls":0,"provider_calls_executed":0,"archived_replay_subcalls":len(recovery_audits),"raw_replayed_without_provider":True,"raw_origin_run_id":run_id,"raw_origin_sha256":source_raw_sha}
     state.pop("semantic_reviewer_batches",None);state["raw_artifacts"].pop("semantic_reviewer",None)
     diagnostics=state.setdefault("search_diagnostics",{});last=dict(diagnostics.get("last_completed_lane_search") or {});last.update({"run_id":new_run_id,"generator_status":state["status"],"generated_at":state["generated_at"],"scientific_authority":False});diagnostics["last_completed_lane_search"]=_normalize_last_completed_lane_search_receipt(last)
-    source_refs=sorted(reg);new_receipt={"run_id":new_run_id,"pool_sha256":pool_sha,"negative_space_sha256":str(receipt.get("negative_space_sha256") or ""),"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"source_refs":source_refs,"status":state["status"],"requested_model":str(generator_artifact.get("requested_model") or ""),"resolved_model":str(generator_artifact.get("resolved_model") or ""),"raw_sha256":recovery_sha,"scientific_authority":False};sat=state.setdefault("saturation_memory",{});sat["current_review_receipt"]=new_receipt;portable=[dict(row) for row in sat.get("portable_review_receipts") or [] if isinstance(row,dict)];portable=[row for row in portable if str(row.get("run_id") or "")!=new_run_id];portable.append(dict(new_receipt));sat["portable_review_receipts"]=portable[-PORTABLE_REVIEW_RECEIPT_LIMIT:];sat["portable_review_receipt_count"]=len(sat["portable_review_receipts"]);sat["current_run_recorded"]=True;sat["scientific_authority"]=False
+    source_refs=sorted(reg);new_receipt={"run_id":new_run_id,"pool_sha256":pool_sha,"negative_space_sha256":str(receipt.get("negative_space_sha256") or ""),"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"discovery_execution_mode":"CANONICAL_DOUBLE_FUNNEL","source_refs":source_refs,"status":state["status"],"requested_model":str(generator_artifact.get("requested_model") or ""),"resolved_model":str(generator_artifact.get("resolved_model") or ""),"raw_sha256":recovery_sha,"scientific_authority":False};sat=state.setdefault("saturation_memory",{});sat["current_review_receipt"]=new_receipt;portable=[dict(row) for row in sat.get("portable_review_receipts") or [] if isinstance(row,dict)];portable=[row for row in portable if str(row.get("run_id") or "")!=new_run_id];portable.append(dict(new_receipt));sat["portable_review_receipts"]=portable[-PORTABLE_REVIEW_RECEIPT_LIMIT:];sat["portable_review_receipt_count"]=len(sat["portable_review_receipts"]);sat["current_run_recorded"]=True;sat["scientific_authority"]=False
     state["generation_notes"]=(f"Zero-provider archived formulation-ingestion replay recovered {len(recovered)} complete formulation candidates from the source double-funnel transaction; {len(pre_f0)} are reduction-limited Pre-F0 evidence-acquisition rows, {len(blocked)} remain machine-blocked, and no semantic-review-required candidate was silently downgraded. Exact same-information reduction remains mandatory before Problem Gate.")
     return state
 

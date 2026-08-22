@@ -11,7 +11,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from .config import StorageSettings
-from .paper_first_discovery_transaction import close_existing_problem_discovery_transaction, recompile_existing_problem_discovery_transaction, recompile_primary_typed_evidence_with_generator_replay_transaction, _provider_call_accounting, _transaction_id, _transaction_lock, _transaction_lock_path, _validate, write_problem_discovery_transaction
+from .paper_first_discovery_transaction import close_existing_problem_discovery_transaction, recompile_existing_problem_discovery_transaction, recompile_primary_typed_evidence_with_generator_replay_transaction, _commit_files, _provider_call_accounting, _transaction_id, _transaction_lock, _transaction_lock_path, _validate, write_problem_discovery_transaction
 from .paper_first_primary_evidence import TYPED_EVIDENCE_EXTRACTION_VERSION
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION
 from .paper_first_problem_generator import _pool_sha
@@ -30,6 +30,19 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         self.assertEqual(_provider_call_accounting(generator),(0,0))
         live={"raw_artifacts":{"generator":{"sha256":"a"*64,"calls":12,"provider_calls_executed":7},"semantic_reviewer":{"sha256":"b"*64,"calls":2,"provider_calls_executed":1}}}
         self.assertEqual(_provider_call_accounting(live),(7,1))
+
+    def test_commit_files_prepares_every_replacement_in_target_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);source_dir=root/"source";target_dir=root/"target";source_dir.mkdir();target_dir.mkdir()
+            source_a=source_dir/"a.json";source_b=source_dir/"b.json";target_a=target_dir/"a.json";target_b=target_dir/"b.json"
+            source_a.write_text("new-a",encoding="utf-8");source_b.write_text("new-b",encoding="utf-8");target_a.write_text("old-a",encoding="utf-8");target_b.write_text("old-b",encoding="utf-8")
+            real_replace=os.replace;seen=[]
+            def same_directory_replace(source,target):
+                source=Path(source);target=Path(target);seen.append((source,target));self.assertEqual(source.parent,target.parent);return real_replace(source,target)
+            with patch("research_pipeline.paper_first_discovery_transaction.os.replace",side_effect=same_directory_replace):
+                _commit_files([(source_a,target_a),(source_b,target_b)])
+            self.assertEqual(target_a.read_text(encoding="utf-8"),"new-a");self.assertEqual(target_b.read_text(encoding="utf-8"),"new-b")
+            self.assertEqual(len(seen),2)
 
     def test_transaction_lock_is_host_shared_across_worktree_storage_dirs(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -312,6 +325,25 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
             source=storage.data_root/"paper-first-problem-discovery"/"primary-evidence-pool.json"
             with self.assertRaisesRegex(RuntimeError,"older discovery operator"):
                 recompile_existing_problem_discovery_transaction(storage=storage,**targets,private_pool_source=source,generator_kwargs={"generator_responder":self.generator,"now":now+timedelta(hours=1)})
+
+    def test_same_operator_legacy_transaction_may_upgrade_once_to_double_funnel(self) -> None:
+        empty_portfolio={"schema_version":"3.0-double-funnel","policy":{"scientific_authority":False},"config":{},"summary":{"raw_seeds":0,"semantic_unique":0,"unique_problem_families":0,"breadth_archive":0,"mean_archive_pairwise_distance":0.0,"evolved_branches":0,"max_branch_depth":0,"reviewer_attacks":0,"repair_children":0,"formulated_candidates":0,"portfolio_calls":0},"lane_counts":{},"archive_lane_counts":{},"family_counts":{},"archives":{},"formulated_candidates":[],"scientific_authority":False}
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);targets=self.targets(root);now=datetime(2026,8,13,12,0,tzinfo=timezone.utc)
+            first=self.run_txn(root,storage,targets,now)
+            source=storage.data_root/"paper-first-problem-discovery"/"primary-evidence-pool.json"
+            with patch("research_pipeline.paper_first_problem_generator.run_search_portfolio",return_value=empty_portfolio):
+                result=recompile_existing_problem_discovery_transaction(storage=storage,**targets,private_pool_source=source,generator_kwargs={"portfolio_mode":True,"now":now+timedelta(hours=1)})
+            generator=json.loads(targets["generator_json"].read_text());queue=json.loads(targets["queue_json"].read_text())
+            with self.assertRaisesRegex(RuntimeError,"older discovery operator or a legacy-to-double-funnel"):
+                recompile_existing_problem_discovery_transaction(storage=storage,**targets,private_pool_source=source,generator_kwargs={"portfolio_mode":True,"now":now+timedelta(hours=2)})
+        self.assertEqual(result["status"],"COMMITTED_EXECUTION_CONTRACT_RECOMPILE")
+        self.assertEqual(result["prior_transaction_id"],first["transaction_id"])
+        self.assertEqual(result["recompile_kind"],"EXECUTION_CONTRACT")
+        self.assertEqual((result["prior_execution_mode"],result["target_execution_mode"]),("LEGACY_SINGLE_CALL","CANONICAL_DOUBLE_FUNNEL"))
+        self.assertTrue(generator["policy"]["search_portfolio_enabled"])
+        self.assertEqual(generator["saturation_memory"]["current_review_receipt"]["discovery_execution_mode"],"CANONICAL_DOUBLE_FUNNEL")
+        self.assertEqual(queue["summary"]["submitted"],0)
 
     def test_operator_recompile_failure_preserves_previous_public_and_private_state(self) -> None:
         with tempfile.TemporaryDirectory() as td:
