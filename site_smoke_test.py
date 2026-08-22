@@ -883,6 +883,11 @@ def main() -> None:
     for marker in ["Problem motivation", "Comparative advantage", "Core intuition", "Why it should work", "Method flow", "Experimental validation"]:
         if marker not in app_text:
             fail(f"paper-card analysis renderer is missing {marker}")
+    for marker in ["paperConcreteDesign", "paperSpecificFlow", "Concrete design: how the paper actually works", "designComponents", "designInputs", "designLoop", "designArtifact", "designAcceptance"]:
+        if marker not in app_text:
+            fail(f"paper-card concrete implementation breakdown is missing {marker}")
+    if "Semantic Scholar retrieval" not in (ROOT / "generated/s2-literature.js").read_text(encoding="utf-8") or "semantic scholar retrieval" not in app_text.lower():
+        fail("Semantic Scholar retrieval provenance must remain present in the raw snapshot and explicitly handled by the analysis layer")
     for marker in ["sortBibliographyRecords", "publicationTier", "readingRoleInfo", "renderRecommendedPaperGroups", "bibliography-sort", "citation-ranking-status", "citationCount"]:
         if marker not in app_text:
             fail(f"literature ranking implementation is missing {marker}")

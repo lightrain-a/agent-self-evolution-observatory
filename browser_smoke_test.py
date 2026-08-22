@@ -330,6 +330,10 @@ def main() -> None:
               filters: document.querySelectorAll('.bibliography-controls select').length,
               analyses: document.querySelectorAll('.paper-analysis').length,
               analysisFields: document.querySelectorAll('.paper-analysis-grid > div').length,
+              designBreakdowns: document.querySelectorAll('.paper-design-breakdown').length,
+              designFields: document.querySelectorAll('.paper-design-grid > div').length,
+              catalogDesignAudit: window.paperConcreteDesignAudit?.() || {total:0,missing:0,s2SignalLeak:0,samples:{}},
+              concreteSamples: window.paperConcreteDesignAudit?.().samples || {},
               analysisGuide: !!document.querySelector('#paper-reading-schema'),
               rankingGuide: !!document.querySelector('#literature-ranking'),
               sortSelect: document.querySelector('#bibliography-sort')?.value || '',
@@ -355,6 +359,11 @@ def main() -> None:
         require(bibliography["exports"] == 3, "bibliography exports are incomplete")
         require(bibliography["filters"] == 3, "bibliography select filters are incomplete")
         require(bibliography["analyses"] == 80 and bibliography["analysisFields"] == 480, "paper analyses are incomplete on the initial bibliography page")
+        require(bibliography["designBreakdowns"] == 80 and bibliography["designFields"] == 400, "concrete paper-design breakdown is incomplete on the initial bibliography page")
+        design_audit=bibliography["catalogDesignAudit"]
+        require(design_audit["total"] >= 400 and design_audit["missing"] == 0 and design_audit["s2SignalLeak"] == 0, f"full currently loaded catalog concrete-design audit failed: {design_audit}")
+        samples=bibliography["concreteSamples"]
+        require("hypergraph" in samples["hyper"].lower() and "recombine" in samples["harness"].lower() and "validity/quality gates" in samples["harness"].lower() and "faulty skill rule" in samples["skill"].lower(), f"paper-specific implementation flows are still too generic: {samples}")
         require(bibliography["analysisGuide"], "paper analysis reading guide is missing")
         require(bibliography["rankingGuide"] and bibliography["sortSelect"] == "priority", "literature ranking controls are incomplete")
         require(bibliography["rankingStatus"], "citation ranking status is missing")

@@ -1201,7 +1201,8 @@ function updateCitationCard(record) {
   note.textContent = `${language === "zh" ? "引用数据" : "Citation data"}: ${CITATION_CONFIG.sourceName || "OpenAlex"} · ${language === "zh" ? "匹配" : "match"} ${Math.round((metadata.matchScore || 0) * 100)}%`;
 }
 function signalFamily(record) {
-  const text = `${record.signal || ""} ${record.category || ""} ${record.subcategory || ""}`.toLowerCase();
+  const declaredSignal = /semantic scholar retrieval/i.test(String(record.signal || "")) ? "" : (record.signal || "");
+  const text = `${declaredSignal} ${record.title || ""} ${record.summary || ""} ${record.summaryZh || ""} ${record.category || ""} ${record.subcategory || ""}`.toLowerCase();
   if (/counterfactual|formal|test|verification|validity|unit test|sealed/.test(text)) return "verification/tests";
   if (/critic|critique|judge|evaluation|feedback|reflection/.test(text)) return "critique/evaluation";
   if (/environment|web|robot|embodied|interaction|exploration|world/.test(text)) return "environment interaction";
@@ -3277,7 +3278,7 @@ function renderBibliography(config) {
   const mapGuide = `<section class="panel bibliography-map-guide"><div class="eyebrow">${language === "zh" ? "三张地图分别回答什么" : "WHAT EACH MAP ANSWERS"}</div><div class="bibliography-map-guide-grid"><article><b>${language === "zh" ? "更新对象 × 年份" : "Update surface × year"}</b><span>${language === "zh" ? "看研究热点何时从 Prompt / 参数扩展到 Memory、Skill、Workflow、World。" : "See when activity expanded from prompts/parameters toward memory, skills, workflows, and worlds."}</span></article><article><b>${language === "zh" ? "更新对象 × 反馈信号" : "Update surface × feedback"}</b><span>${language === "zh" ? "把“改什么”和“凭什么改”分开，看哪些机制组合已经拥挤、哪些仍稀疏。" : "Separate what changes from what drives the change to see dense and sparse mechanism combinations."}</span></article><article><b>${language === "zh" ? "发表类型 × 年份" : "Publication status × year"}</b><span>${language === "zh" ? "区分正式发表与预印本前沿，避免把最新但未正式发表的工作和历史主线混在一起。" : "Separate peer-reviewed history from the preprint frontier instead of mixing bibliographic status with scientific maturity."}</span></article></div><p class="bibliography-map-caveat">${language === "zh" ? "这些图只描述当前语料中的分布；点击单元格可以直接把条件带到第四章的文献筛选。" : "These maps describe the current corpus only. Clicking a cell carries the condition into the searchable corpus in Chapter IV."}</p></section>`;
   const readingPaths = `<section class="panel bibliography-reading-paths"><div class="eyebrow">${language === "zh" ? "按目的选阅读入口" : "CHOOSE A READING PATH BY GOAL"}</div><div class="bibliography-reading-path-grid"><article><span>01</span><div><b>${language === "zh" ? "第一次理解领域" : "Understand the field first"}</b><p>${language === "zh" ? "领域综述 → 直接自进化方法 → 评测 / 安全 / 治理。先建立边界，再看方法和证据要求。" : "Field overviews → direct self-evolution → evaluation/safety/governance. Establish the boundary before drilling into mechanisms."}</p></div></article><article><span>02</span><div><b>${language === "zh" ? "为一个 Idea 找最近工作" : "Find nearest work for an idea"}</b><p>${language === "zh" ? "先按更新对象和反馈信号缩小范围，再看直接方法与关键支撑机制，最后回到原文核对真正碰撞边界。" : "Narrow by update surface and feedback, inspect direct methods and enabling mechanisms, then verify the exact collision boundary in the source paper."}</p></div></article><article><span>03</span><div><b>${language === "zh" ? "追历史根源" : "Trace historical foundations"}</b><p>${language === "zh" ? "Agent 前置基础 → 基础模型前置按时间读；这部分解释能力从哪里来，不把它们误算成直接自进化方法。" : "Read agent foundations and model precursors chronologically; they explain capability origins without being counted as direct self-evolution."}</p></div></article></div></section>`;
   const rankingGuide = `<section class="panel citation-ranking-guide"><h3 id="literature-ranking">${language === "zh" ? "推荐阅读顺序与排序方式" : "Recommended reading order and sort modes"}</h3><p class="section-intro">${language === "zh" ? "默认顺序按论文在 Agent 自进化研究中的角色组织，而不是让总引用量主导：先读近期领域综述，再读直接自进化方法、评测与治理、关键支撑机制，最后回看 Agent 前置与基础模型前置工作。每一角色层内优先正式发表和较新的论文，引用量只作为辅助信号。纯引用量模式保留用于查看历史影响力。" : "The default order follows each paper's role in agent self-evolution rather than letting total citations dominate: recent field overviews first, then direct self-evolution methods, evaluation and governance, enabling mechanisms, agent foundations, and foundation-model precursors. Within each role, peer-reviewed and recent work is prioritized; citations are only a supporting signal. Citation-only mode remains available for historical influence."}</p><div class="citation-ranking-controls"><label><span>${language === "zh" ? "排序方式" : "Sort mode"}</span><select id="bibliography-sort">${sortOptions}</select></label><div id="citation-ranking-status" class="citation-ranking-status"><strong>${CITATION_CONFIG.sourceName || "OpenAlex snapshot"}</strong><span>${language === "zh" ? `引用覆盖 ${coverage.matched}/${coverage.total}` : `${coverage.matched}/${coverage.total} citation matches`}</span></div></div><div class="reading-role-legend">${roleLegend}</div><div class="ranking-secondary-note">${language === "zh" ? "角色层内部：正式发表优先 → 年份较新优先 → 引用量辅助；Agent 与模型基础层按历史时间顺序排列。" : "Within a role: peer-reviewed first → newer work first → citations as a tie-breaker. Agent and model foundations are shown chronologically."}</div></section>`;
-  const analysisGuide = `<section class="panel paper-analysis-guide"><h3 id="paper-reading-schema">${language === "zh" ? "每篇论文的六项阅读框架" : "Six-part reading framework for every paper"}</h3><p class="section-intro">${language === "zh" ? "每个文献卡片都可展开查看：目的／问题、核心思想、合理性、方法逻辑、重要性和相对优势。相对优势表示设计上更适合什么条件，不等于未经实验验证的绝对领先。" : "Every paper card expands into purpose/problem, core idea, rationale, method logic, importance, and comparative advantage. Comparative advantage describes conditions where a design may be better suited; it is not an unverified claim of absolute superiority."}</p><div class="property-grid"><div class="property-card"><b>${language === "zh" ? "核心方法注释" : "Core method note"}</b><span>${language === "zh" ? "关键里程碑论文具有针对该论文单独整理的方法描述。" : "Key milestone papers have a paper-specific method description."}</span></div><div class="property-card"><b>${language === "zh" ? "基于已有摘要归纳" : "Summary-derived"}</b><span>${language === "zh" ? "依据人工补充的简短摘要、更新对象和反馈信号组织六项解释。" : "Uses the curated short summary, update surface, and feedback signal."}</span></div><div class="property-card"><b>${language === "zh" ? "基于元数据保守归纳" : "Metadata-derived"}</b><span>${language === "zh" ? "长尾论文仅依据标题与目录元数据保守归纳；引用方法细节前必须回看原文。" : "Long-tail papers use conservative title and catalog metadata; consult the original paper before citing method details."}</span></div><div class="property-card"><b>${language === "zh" ? "导出" : "Export"}</b><span>${language === "zh" ? "JSON 与 CSV 会同时导出六项结构化解释和归纳依据。" : "JSON and CSV exports include all six fields and the analysis basis."}</span></div></div></section>`;
+  const analysisGuide = `<section class="panel paper-analysis-guide"><h3 id="paper-reading-schema">${language === "zh" ? "每篇论文：六项判断 + 具体实现拆解" : "Every paper: six judgments + concrete implementation breakdown"}</h3><p class="section-intro">${language === "zh" ? "除了目的、核心思想、成立依据、方法逻辑、实验验证和相对优势，每篇卡片现在还会继续拆到“系统由什么组成、输入反馈是什么、一次更新怎么跑、最后留下什么、怎么决定保留”。这样优先回答论文到底怎么设计、怎么做，而不是只给抽象概括。" : "Beyond purpose, intuition, rationale, method logic, validation, and comparative position, every card now decomposes the implementation into components, inputs/feedback, one update cycle, the persistent artifact, and the acceptance rule—so the page explains how the system is actually built and run."}</p><div class="property-grid"><div class="property-card"><b>${language === "zh" ? "逐篇人工方法" : "Paper-specific curated methods"}</b><span>${language === "zh" ? "关键里程碑论文优先使用逐篇核验的方法流程；不会被通用模板覆盖。" : "Key milestone papers keep individually verified method flows rather than being overwritten by generic templates."}</span></div><div class="property-card"><b>${language === "zh" ? "摘要驱动的具体拆解" : "Summary-grounded concrete breakdown"}</b><span>${language === "zh" ? "有摘要的长尾论文会从论文自己的标题、摘要、更新对象和反馈信号识别 memory bank、critic、verifier、RL、skill library、world model、Harness 等具体组件。" : "For long-tail papers with summaries, the page detects paper-specific components such as memory banks, critics, verifiers, RL, skill libraries, world models, and harnesses from the paper's own metadata and summary."}</span></div><div class="property-card"><b>${language === "zh" ? "信息不足就明确保守" : "Conservative when evidence is thin"}</b><span>${language === "zh" ? "只有元数据时，只写能够确认的更新对象、反馈和通用执行结构；不会虚构模型层数、阈值、数据规模或不存在的模块。" : "With metadata only, the page states only the confirmed update surface, feedback, and generic execution structure; it does not invent layers, thresholds, dataset sizes, or modules."}</span></div><div class="property-card"><b>${language === "zh" ? "结构化导出" : "Structured export"}</b><span>${language === "zh" ? "JSON / CSV 同时导出六项分析，以及组件、输入、更新闭环、持久产物和接受规则。" : "JSON / CSV exports include the six analysis fields plus components, inputs, update loop, persistent artifact, and acceptance rule."}</span></div></div></section>`;
   const chapters = pageArchitecture("bibliography").chapters || [];
   const refreshMeta = window.LITERATURE_REFRESH_META || {};
   const openAlexDelta = refreshMeta.openalex_arxiv || {};
@@ -3310,11 +3311,12 @@ function exportBibliography(format) {
   const rows = sortBibliographyRecords(bibliographySubset().filter((p) => !query || paperSearchText(p).includes(query)));
   const enriched = rows.map((p, index) => {
     const analysis = paperAnalysis(p);
-    return {...p, priorityRank:index + 1, readingRole:readingRoleLabel(p), readingRoleRank:readingRoleRank(p), publicationTier:publicationTierLabel(p), citationCount:citationCount(p), citationSource:CITATION_CONFIG.sourceName || "OpenAlex", citationMatchedTitle:citationMetadata(p)?.matchedTitle || "", citationMatchScore:citationMetadata(p)?.matchScore ?? "", analysisBasis:paperAnalysisLabel(analysis), problemMotivation:analysis.purpose, comparativeAdvantage:analysis.advantage, coreIntuition:analysis.core, rationale:analysis.rationale, methodFlow:analysis.logic, experimentalValidation:analysis.validation};
+    const design = paperConcreteDesign(p, analysis);
+    return {...p, priorityRank:index + 1, readingRole:readingRoleLabel(p), readingRoleRank:readingRoleRank(p), publicationTier:publicationTierLabel(p), citationCount:citationCount(p), citationSource:CITATION_CONFIG.sourceName || "OpenAlex", citationMatchedTitle:citationMetadata(p)?.matchedTitle || "", citationMatchScore:citationMetadata(p)?.matchScore ?? "", analysisBasis:paperAnalysisLabel(analysis), problemMotivation:analysis.purpose, comparativeAdvantage:analysis.advantage, coreIntuition:analysis.core, rationale:analysis.rationale, methodFlow:analysis.logic, experimentalValidation:analysis.validation, designComponents:design.components, designInputs:design.inputs, designLoop:design.loop, designArtifact:design.artifact, designAcceptance:design.acceptance};
   });
   if (format === "json") return downloadBlob("agent-self-evolution-bibliography.json", JSON.stringify(enriched, null, 2), "application/json;charset=utf-8");
   if (format === "bibtex") return downloadBlob("agent-self-evolution-bibliography.bib", rows.map(bibtexEntry).join("\n\n"));
-  const fields = ["priorityRank","readingRole","readingRoleRank","publicationTier","citationCount","citationSource","citationMatchedTitle","citationMatchScore","year","title","venue","category","subcategory","updateTarget","signal","vision","analysisBasis","problemMotivation","comparativeAdvantage","coreIntuition","rationale","methodFlow","experimentalValidation","url","repo"];
+  const fields = ["priorityRank","readingRole","readingRoleRank","publicationTier","citationCount","citationSource","citationMatchedTitle","citationMatchScore","year","title","venue","category","subcategory","updateTarget","signal","vision","analysisBasis","problemMotivation","comparativeAdvantage","coreIntuition","rationale","methodFlow","experimentalValidation","designComponents","designInputs","designLoop","designArtifact","designAcceptance","url","repo"];
   const csv = [fields.join(","), ...enriched.map((p) => fields.map((field) => `"${String(p[field] ?? "").replace(/"/g, '""')}"`).join(","))].join("\n");
   downloadBlob("agent-self-evolution-bibliography.csv", csv, "text/csv;charset=utf-8");
 }
@@ -3328,7 +3330,7 @@ function paperKind(record) {
   return "method";
 }
 function paperAnalysisFamily(record) {
-  const text = `${record.updateTarget || ""} ${record.category || ""} ${record.subcategory || ""}`.toLowerCase();
+  const text = `${record.title || ""} ${record.summary || ""} ${record.summaryZh || ""} ${record.updateTarget || ""} ${record.category || ""} ${record.subcategory || ""}`.toLowerCase();
   if (/prompt|context|instruction|reasoning trace/.test(text)) return "prompt";
   if (/memory|retrieval|experience|graph/.test(text)) return "memory";
   if (/tool|skill|api|code/.test(text)) return "tool";
@@ -3339,7 +3341,18 @@ function paperAnalysisFamily(record) {
   return "general";
 }
 function paperTargetLabel(record) {
-  const raw = record.updateTarget || (language === "zh" ? "Agent 组件" : "agent component");
+  let raw = record.updateTarget || "agent component";
+  const evidence = `${record.title || ""} ${record.summary || ""} ${record.summaryZh || ""} ${record.category || ""} ${record.subcategory || ""}`.toLowerCase();
+  const generic = !raw || /^(agent component|component|other)$/i.test(String(raw).trim());
+  if (generic) {
+    if (/memory|retriev|experience bank|episodic|procedural/.test(evidence)) raw = "memory";
+    else if (/tool|skill|api|function call/.test(evidence)) raw = "tool/skill";
+    else if (/workflow|harness|scaffold|architecture|agent graph/.test(evidence)) raw = "workflow/scaffold";
+    else if (/world model|dynamics|environment model/.test(evidence)) raw = "world model";
+    else if (/evaluator|critic|grader|reward model|metric/.test(evidence)) raw = "evaluator/reward";
+    else if (/prompt|instruction|context optimization/.test(evidence)) raw = "prompt/context";
+    else if (/reinforcement learning|fine[- ]tun|lora|adapter|parameter update/.test(evidence)) raw = "model parameters";
+  }
   if (language !== "zh") return raw;
   const key = String(raw).toLowerCase();
   if (/model parameter/.test(key)) return "模型参数";
@@ -3349,11 +3362,12 @@ function paperTargetLabel(record) {
   if (/workflow|scaffold|architecture/.test(key)) return "工作流／系统结构";
   if (/world|environment/.test(key)) return "世界模型／环境状态";
   if (/evaluator|reward/.test(key)) return "评价器／奖励";
-  return raw;
+  return raw === "agent component" ? "Agent 组件" : raw;
 }
 function paperSignalLabel(record) {
   const family = signalFamily(record);
-  if (language !== "zh") return record.signal || family;
+  const declared = /semantic scholar retrieval/i.test(String(record.signal || "")) ? "" : (record.signal || "");
+  if (language !== "zh") return declared || family;
   const labels = {
     "verification/tests":"可验证测试",
     "critique/evaluation":"批评与评价",
@@ -3363,8 +3377,106 @@ function paperSignalLabel(record) {
     "experience reuse":"经验复用",
     "self-generated artifact":"自生成数据或轨迹",
   };
-  return labels[family] || record.signal || family;
+  return labels[family] || declared || family;
 }
+function paperMechanismKeys(record) {
+  const text = `${record.title || ""} ${record.summary || ""} ${record.summaryZh || ""} ${record.category || ""} ${record.subcategory || ""} ${record.updateTarget || ""} ${record.signal || ""}`.toLowerCase();
+  const rules = [
+    ["attention",/transformer|multi[- ]head attention|self[- ]attention/],["reasoning",/chain[- ]of[- ]thought|rationale|reasoning trace|reasoning memory/],["demonstration",/in[- ]context|few[- ]shot|demonstration/],["synthetic",/self[- ]instruct|synthetic data|self[- ]generated instruction|self[- ]training/],
+    ["hypergraph",/hypergraph/],["graph",/graph|knowledge graph|semantic network/],["retrieval",/retriev|nearest[- ]neighbor|rag\b/],["reflection",/reflect|retrospect|critique|self-correct/],
+    ["skill",/skill library|skill bank|skill memory|procedural skill|skill[- ]aware/],["tool",/tool use|tool call|api\b|function call/],["harness",/harness|workflow|scaffold|agentic system/],
+    ["search",/mcts|monte carlo|evolutionary search|quality[- ]diversity|gene[- ]bank|population search|tree search/],["critic",/critic|evaluator|grader|judge|verifier/],
+    ["reward",/reward|preference|utility|score/],["rl",/reinforcement learning|policy gradient|\bppo\b|\bgrpo\b|\bdpo\b|lora|fine[- ]tun/],
+    ["curriculum",/curriculum|task generat|question generat|experience synthesis/],["selfplay",/self[- ]play|population|broadcast|multi[- ]agent/],
+    ["world",/world model|dynamics model|state transition|imagine[- ]then[- ]verify|prediction[- ]observation/],["planner",/planning|planner|reasoning policy/],
+    ["embodied",/embodied|robot|navigation|physical|environment interaction|web agent|computer use|mobile gui/],["counterfactual",/counterfactual|intervention|causal/],
+    ["provenance",/provenance|lineage|version|rollback|release engineering/],["compression",/compress|consolidat|prun|crystall|distill/],["safety",/safety|unsafe|attack|poison|backdoor|quarantine|guard/]
+  ];
+  return rules.filter(([,pattern])=>pattern.test(text)).map(([key])=>key).slice(0,6);
+}
+function paperMechanismLabel(key) {
+  const labels = {
+    attention:{zh:"Transformer / 多头注意力",en:"Transformer / multi-head attention"},reasoning:{zh:"显式推理/理由生成",en:"explicit reasoning / rationale generation"},demonstration:{zh:"上下文示例/任务演示",en:"in-context demonstrations"},synthetic:{zh:"自生成数据/自训练过滤",en:"self-generated data / self-training filter"},hypergraph:{zh:"超图结构",en:"hypergraph structure"},graph:{zh:"图结构/关系记忆",en:"graph-structured state"},retrieval:{zh:"检索器",en:"retriever"},reflection:{zh:"反思/经验抽取器",en:"reflection / experience extractor"},
+    skill:{zh:"技能库",en:"skill library"},tool:{zh:"工具/API 调用层",en:"tool / API layer"},harness:{zh:"Harness / workflow 程序",en:"harness / workflow program"},search:{zh:"候选搜索/进化器",en:"candidate search / evolver"},
+    critic:{zh:"Critic / evaluator / verifier",en:"critic / evaluator / verifier"},reward:{zh:"Reward / utility 信号",en:"reward / utility signal"},rl:{zh:"参数优化器",en:"parameter optimizer"},curriculum:{zh:"任务/课程生成器",en:"task / curriculum generator"},
+    selfplay:{zh:"群体/自博弈机制",en:"population / self-play mechanism"},world:{zh:"世界模型/动力学状态",en:"world / dynamics model"},planner:{zh:"规划/决策器",en:"planner / decision policy"},embodied:{zh:"环境/机器人执行器",en:"environment / embodied executor"},
+    counterfactual:{zh:"反事实/干预模块",en:"counterfactual / intervention module"},provenance:{zh:"版本/谱系/回滚层",en:"version / lineage / rollback layer"},compression:{zh:"压缩/巩固/剪枝模块",en:"compression / consolidation / pruning"},safety:{zh:"安全过滤/隔离层",en:"safety filter / quarantine layer"}
+  };
+  return textOf(labels[key] || {zh:key,en:key});
+}
+function paperSpecificFlow(record, kind, family, target, signal) {
+  const text = `${record.title || ""} ${record.summary || ""} ${record.summaryZh || ""} ${record.subcategory || ""}`.toLowerCase();
+  if (kind === "survey") return language === "zh" ? "定义检索问题与时间范围 → 从论文集/API/仓库收集候选 → 去重并按统一维度编码 → 比较更新对象、反馈、评测和失败边界 → 汇总研究空白与议程。" : "Define the review questions and time window → collect candidates from proceedings/APIs/repositories → deduplicate and code shared dimensions → compare update surfaces, feedback, evaluation, and failure boundaries → synthesize gaps and an agenda.";
+  if (kind === "benchmark") return language === "zh" ? "先定义要暴露的能力或失败 → 构造任务/任务流与受控条件 → 让多种 Agent 在完全相同协议下运行 → 按统一指标和分组条件统计 → 检查哪些方法在什么场景失效。" : "Define the capability or failure to expose → construct tasks/streams and controlled conditions → run multiple agents under the same protocol → compute shared and subgroup metrics → identify where each method fails.";
+  if (/hypergraph/.test(text)) return language === "zh" ? "把轨迹拆成子任务步骤与可复用技能 → 将步骤、技能及其多元关系写入超图 → 当前任务同时沿任务结构与技能关系检索 → 用执行结果更新节点/超边与效用 → 周期性整理超图后再服务后续任务。" : "Decompose trajectories into subtask steps and reusable skills → write steps, skills, and higher-order relations into a hypergraph → retrieve through both task structure and skill relations → update nodes/hyperedges from execution outcomes → periodically maintain the graph for later tasks.";
+  if (/gene[- ]bank|quality[- ]diversity/.test(text)) return language === "zh" ? "保存一组语义上彼此不同的高质量 Harness → 根据失败诊断从 gene bank 选择并重组父代 → 生成新的 Harness 候选 → 先过低成本有效性/质量门 → 再做高成本任务评测 → 只有通过门的候选进入 bank。" : "Maintain a semantically diverse bank of strong harnesses → diagnose failures and select/recombine parents → generate new harness candidates → pass cheap validity/quality gates → run expensive task evaluation → admit only verified offspring back to the bank.";
+  if (/population broadcast/.test(text) || (/broadcast/.test(text) && /memory/.test(text))) return language === "zh" ? "多个 Agent 实例分别执行任务并从失败轨迹生成语言记忆 → 评估每个实例的后续表现 → 选出当前最有效的记忆状态 → 把该记忆广播给群体 → 新一轮继续执行、反思和替换。" : "Let multiple agent instances act and derive verbal memories from failures → evaluate each instance on subsequent performance → select the strongest memory state → broadcast it to the population → repeat execution, reflection, and replacement.";
+  if (/imagine[- ]then[- ]verify/.test(text)) return language === "zh" ? "从多模态轨迹抽取短期反思与长期启发式记忆 → 面对新状态先在记忆中形成候选行动/未来结果 → 用当前观测或环境执行去验证想象结果 → 把验证后的经验写回记忆，再用于后续决策。" : "Extract short-term reflections and long-term heuristics from multimodal trajectories → imagine candidate actions/outcomes in a new state → verify them against current observations or environment execution → write verified experience back to memory for later decisions.";
+  if (/skill[- ]aware/.test(text) && /reflect/.test(text)) return language === "zh" ? "执行已有技能并记录轨迹 → 失败后先判断是“技能规则本身错”还是“Agent 没按正确规则执行” → 只有前一种证据触发技能重写 → 后一种只修正当前执行 → 用后续任务检查修改是否真的改善技能。" : "Execute the current skill and record the trajectory → after failure, distinguish a faulty skill rule from a lapse in following a valid rule → rewrite the persistent skill only for the former → correct execution only for the latter → test the revision on later tasks.";
+  if (/co[- ]evol|co-evol/.test(text) && /evaluat|grader|metric/.test(text)) return language === "zh" ? "维护技能版本和显式评价指标 → 新技能产生后同时检查旧指标是否还能区分好坏 → 用锚定样例/多评判共识提出指标修订 → 在留出审计集上验证评价器没有漂移 → 通过后再让新指标参与下一轮技能选择。" : "Maintain skill versions and explicit evaluation metrics → after a new skill appears, test whether the old metric still separates good from bad behavior → revise metrics using anchored examples/consensus → audit evaluator drift on held-out cases → only then use the revised metric for the next skill-selection round.";
+  const flows = {
+    parameter: language === "zh" ? `收集 ${signal} 与轨迹/样本 → 过滤或构造训练对 → 用 RL、微调或 Adapter 更新 ${target} → 用新参数重新 rollout → 根据任务表现与留出结果决定继续训练、保留或回滚。` : `Collect ${signal} plus trajectories/examples → filter or construct training pairs → update ${target} with RL, fine-tuning, or adapters → roll out the new parameters → retain, continue, or roll back based on task and held-out results.`,
+    prompt: language === "zh" ? `记录任务输出、失败与分数 → 把历史候选和反馈交给 prompt/文本优化器 → 生成新的 ${target} 候选 → 在开发任务上逐个执行比较 → 保留更好的版本并继续迭代 → 最后在未参与搜索的任务上复核。` : `Record outputs, failures, and scores → give candidate history and feedback to a prompt/text optimizer → generate new ${target} candidates → execute and compare them on development tasks → keep stronger versions and iterate → confirm on tasks not used by the search.`,
+    memory: language === "zh" ? `执行 episode/轨迹 → 从成功、失败或反思中抽取可复用经验 → 写入并组织 ${target} → 新任务先检索相关经验再决策 → 用新的任务结果更新效用、关系、压缩或删除策略 → 检查跨回合收益和负迁移。` : `Run episodes/trajectories → extract reusable experience from success, failure, or reflection → write and organize ${target} → retrieve relevant experience before later decisions → use new outcomes to update utility, relations, compression, or pruning → measure cross-episode benefit and negative transfer.`,
+    tool: language === "zh" ? `从轨迹中识别可重复操作模式 → 归纳/生成可执行的 ${target} → 存入带名称、说明或前置条件的技能/工具库 → 新任务检索并调用 → 用环境结果或测试验证 → 失败时修订、替换或淘汰具体技能。` : `Identify repeated procedures in trajectories → induce/generate executable ${target} → store them with names, descriptions, or preconditions in a skill/tool library → retrieve and invoke them on new tasks → verify with environment outcomes or tests → revise, replace, or retire failing skills.`,
+    workflow: language === "zh" ? `把 Agent 的 ${target} 表示为可修改程序、图或 Harness → 根据失败轨迹/历史分数生成结构或组件变体 → 实际执行候选 → 用 evaluator、任务分数或 verifier 比较 → 提交最佳候选并保留版本/回滚信息 → 继续下一轮搜索。` : `Represent the agent's ${target} as a mutable program, graph, or harness → generate structural/component variants from failures or score history → execute candidates → compare with evaluators, task scores, or verifiers → commit the best candidate with version/rollback information → continue the search.`,
+    world: language === "zh" ? `记录观测、动作和后继状态 → 更新 ${target} 中的环境规律/经验 → 用它预测候选动作的后果或规划下一步 → 在真实环境执行 → 比较预测与实际观测 → 只修订发生偏差的世界知识并在后续任务复用。` : `Record observations, actions, and successor states → update environmental knowledge in ${target} → predict action consequences or plan with it → execute in the real environment → compare prediction with observation → revise mismatched world knowledge and reuse it later.`,
+    evaluation: language === "zh" ? `收集 Agent 输出/轨迹与参考证据 → 用 critic、grader、reward 或 verifier 给出反馈 → 与锚定真值、测试或独立评判比较 → 用该信号选择/拒绝 Agent 更新，必要时也修订评价器 → 在留出条件检查评价是否仍可靠。` : `Collect agent outputs/trajectories and reference evidence → score them with a critic, grader, reward, or verifier → compare against anchors, tests, or independent judgments → use the signal to accept/reject agent updates and, when applicable, revise the evaluator → audit reliability on held-out conditions.`,
+    general: language === "zh" ? `收集 ${signal} → 定位需要变化的 ${target} → 生成一个或多个候选版本 → 在匹配任务上执行比较 → 按可观察结果保留、修订或拒绝 → 在后续/留出任务检查收益是否持续。` : `Collect ${signal} → identify the ${target} that should change → generate one or more candidate versions → execute them on matched tasks → retain, revise, or reject from observable outcomes → verify persistence on later/held-out tasks.`
+  };
+  return flows[family];
+}
+function paperConcreteDesign(record, analysis) {
+  const kind = paperKind(record);
+  const family = paperAnalysisFamily(record);
+  const keys = paperMechanismKeys(record);
+  const target = paperTargetLabel(record);
+  const signal = paperSignalLabel(record);
+  const text = `${record.title || ""} ${record.summary || ""} ${record.summaryZh || ""} ${record.signal || ""}`.toLowerCase();
+  const components = [...new Set([target, ...keys.map(paperMechanismLabel)])].slice(0,6).join(language === "zh" ? " · " : " · ");
+  const inputs = [];
+  if (/trajectory|episode|rollout|execution trace/.test(text)) inputs.push(language === "zh" ? "执行轨迹 / episode" : "execution trajectories / episodes");
+  if (/success|failure|outcome/.test(text)) inputs.push(language === "zh" ? "成功/失败结果" : "success/failure outcomes");
+  if (/image|video|observation|visual|robot|environment|web/.test(text)) inputs.push(language === "zh" ? "视觉/环境观测" : "visual/environment observations");
+  if (/reward|preference|utility|score/.test(text)) inputs.push(language === "zh" ? "reward / preference / utility" : "reward / preference / utility");
+  if (/human|anchor|ground truth|verifier|test/.test(text)) inputs.push(language === "zh" ? "人工/锚点/验证器证据" : "human / anchor / verifier evidence");
+  if (/task generat|question generat|synthetic|self-generated/.test(text)) inputs.push(language === "zh" ? "自生成任务/样本" : "self-generated tasks/examples");
+  if (!inputs.length) inputs.push(signal);
+  let artifact = target;
+  if (kind === "survey") artifact = language === "zh" ? "分类体系、证据表和研究议程；不修改被综述 Agent" : "taxonomy, evidence map, and research agenda; no agent update";
+  else if (kind === "benchmark") artifact = language === "zh" ? "任务/任务流、指标和评测结果；通常不修改被测 Agent" : "tasks/streams, metrics, and evaluation results; usually no agent update";
+  else if (family === "memory") artifact = /hypergraph/.test(text) ? (language === "zh" ? "可持续更新的超图/结构化记忆" : "evolving hypergraph/structured memory") : (language === "zh" ? "可检索、可修订的持久记忆/经验条目" : "retrievable and revisable persistent memories/experience records");
+  else if (family === "tool") artifact = language === "zh" ? "版本化的可执行技能/工具条目" : "versioned executable skills/tools";
+  else if (family === "workflow") artifact = language === "zh" ? "新的 workflow / Harness / Agent 程序版本" : "a new workflow / harness / agent-program version";
+  else if (family === "parameter") artifact = language === "zh" ? "更新后的模型权重、Adapter 或训练 checkpoint" : "updated model weights, adapters, or checkpoints";
+  else if (family === "prompt") artifact = language === "zh" ? "新的 prompt / instruction / context 模板" : "a new prompt / instruction / context template";
+  else if (family === "world") artifact = language === "zh" ? "更新后的世界模型、环境规律或具身经验" : "an updated world model, environment rule set, or embodied experience";
+  else if (family === "evaluation") artifact = /evaluator|grader|critic|reward/.test(text) ? (language === "zh" ? "评价器/指标/奖励规则及其版本" : "evaluator/metric/reward-rule versions") : target;
+  let acceptance = language === "zh" ? `主要依据 ${signal} 与任务表现决定候选是否保留；若论文没有公开固定提交门，则这里不臆造阈值。` : `Candidate retention is driven by ${signal} and task performance; if the paper does not expose a fixed commit gate, no threshold is invented here.`;
+  if (kind === "benchmark") acceptance = language === "zh" ? "不做“提交更新”判断；统一运行协议后按主指标、分组指标和失败案例比较系统。" : "No update-commit decision; systems are compared under a shared protocol using primary/subgroup metrics and failure cases.";
+  else if (kind === "survey") acceptance = language === "zh" ? "不做 Agent 更新；结论是否成立取决于检索覆盖、去重/分类一致性以及关键判断能否回到原始论文。" : "No agent update; validity depends on search coverage, deduplication/taxonomy consistency, and traceability of claims to primary papers.";
+  else if (/verifier|verification|sealed|held[- ]out|test gate|validity gate/.test(text)) acceptance = language === "zh" ? "候选先通过 verifier / validity test / 留出测试，再进入持久版本；失败候选不提交或回滚。" : "Candidates pass verifier/validity/held-out tests before becoming persistent versions; failed candidates are rejected or rolled back.";
+  else if (/reward|preference|utility|score/.test(text)) acceptance = language === "zh" ? "用 reward / utility / score 比较候选或更新其效用；真正是否持久保留还要看论文设置中的任务/留出表现。" : "Reward/utility/score ranks candidates or updates utility; persistence is then checked against task/held-out performance in the paper's protocol.";
+  return {components, inputs:[...new Set(inputs)].slice(0,4).join(language === "zh" ? " · " : " · "), loop:analysis.logic, artifact, acceptance};
+}
+window.paperConcreteDesignAudit = function() {
+  const rows = catalog || [];
+  let missing = 0, s2SignalLeak = 0;
+  rows.forEach((record) => {
+    const analysis = paperAnalysis(record), design = paperConcreteDesign(record, analysis);
+    if (![design.components,design.inputs,design.loop,design.artifact,design.acceptance].every(value=>String(value || "").trim())) missing += 1;
+    if (/Semantic Scholar retrieval/i.test(paperSignalLabel(record))) s2SignalLeak += 1;
+  });
+  const getLoop = title => { const record=rows.find(row=>row.title===title); return record ? paperConcreteDesign(record,paperAnalysis(record)).loop : ""; };
+  return {
+    total:rows.length, missing, s2SignalLeak,
+    samples:{
+      hyper:getLoop("HyperSkill: Self-Evolving LLM Agents via Hypergraph-Structured Skill Memory"),
+      harness:getLoop("HarnessBank: Semantic Gene-Bank Search with Gated Verification for Agent-Harness Self-Evolution"),
+      skill:getLoop("EmbodiSkill: Skill-Aware Reflection for Self-Evolving Embodied Agents")
+    }
+  };
+};
 function paperAnalysis(record) {
   const kind = paperKind(record);
   const family = paperAnalysisFamily(record);
@@ -3434,7 +3546,7 @@ function paperAnalysis(record) {
       purpose:language === "zh" ? `梳理 ${topic} 中分散的概念、方法与证据边界，建立可比较的研究框架。` : `Organize fragmented concepts, methods, and evidence boundaries in ${topic} into a comparable framework.`,
       core:summary || (language === "zh" ? "系统收集相关工作，建立分类体系，并比较不同方法的更新对象、反馈来源、评测方式与局限。" : "Systematically collect related work, build a taxonomy, and compare update targets, feedback sources, evaluation practices, and limitations."),
       rationale:language === "zh" ? "当术语和评测口径分散时，统一分类能够暴露方法之间真正可比和不可比的部分。" : "When terminology and evaluation practices are fragmented, a shared taxonomy reveals what is and is not genuinely comparable.",
-      logic:language === "zh" ? "定义检索范围 → 收集并去重论文 → 按统一维度编码 → 比较方法与证据 → 总结缺口和研究议程。" : "Define scope → collect and deduplicate papers → code them with shared dimensions → compare methods and evidence → identify gaps and an agenda.",
+      logic:paperSpecificFlow(record, kind, family, target, signal),
       importance:language === "zh" ? "综述为领域提供共同语言，降低重复造轮子和错误比较的风险。" : "A survey supplies common language for the field and reduces duplicated work and invalid comparisons.",
       advantage:language === "zh" ? "相较单篇方法论文，它提供跨方法的全局视角；但它不替代具体方法的实验验证。" : "Compared with a single method paper, it provides a field-wide view, but it does not replace empirical validation of individual methods.",
       validation:language === "zh" ? "核查检索协议、覆盖范围、去重规则、分类一致性和关键结论是否由正式来源支持，并与其他综述的覆盖差异比较。" : "Audit the search protocol, coverage, deduplication, taxonomy consistency, and source support for key claims, then compare coverage with other surveys."
@@ -3446,7 +3558,7 @@ function paperAnalysis(record) {
       purpose:language === "zh" ? `解决现有评测无法充分衡量 ${topic} 的问题。` : `Address the lack of adequate measurement for ${topic}.`,
       core:textOf(note) || summary || (language === "zh" ? `围绕 ${topic} 构造任务、失败类型和指标，并在统一设置下比较系统。` : `Construct tasks, failure types, and metrics for ${topic}, then compare systems under a shared protocol.`),
       rationale:familyText.rationale[language],
-      logic:language === "zh" ? `定义目标能力或失败 → 构造受控数据与任务 → 运行被测系统 → 计算统一指标 → 分析能力边界与失败来源。` : `Define the target capability or failure → construct controlled data and tasks → run evaluated systems → compute shared metrics → analyze capability boundaries and failure sources.`,
+      logic:paperSpecificFlow(record, kind, family, target, signal),
       importance:familyText.importance[language],
       advantage:familyText.advantage[language],
       validation:language === "zh" ? `在统一任务、失败类型和指标上运行多种代表系统，报告总体结果、分组结果、评价一致性和基准设计消融。` : `Run representative systems under shared tasks, failure types, and metrics; report aggregate and subgroup results, evaluator agreement, and benchmark-design ablations.`
@@ -3457,7 +3569,7 @@ function paperAnalysis(record) {
     purpose:language === "zh" ? `该论文面向 ${topic}，试图改进 ${target} 在 Agent 自进化过程中的学习或使用方式。` : `The paper targets ${topic}, aiming to improve how ${target} is learned or used during agent self-evolution.`,
     core:textOf(note) || summary || (language === "zh" ? `把 ${target} 作为主要更新对象，并使用 ${signal} 驱动候选变化。` : `Treat ${target} as the main update surface and use ${signal} to drive candidate changes.`),
     rationale:familyText.rationale[language],
-    logic:language === "zh" ? `收集 ${signal} → 生成针对 ${target} 的候选更新 → 在任务或留出数据上评估 → 保留、修订或拒绝更新 → 在后续任务中验证持久收益。` : `Collect ${signal} → propose a change to ${target} → evaluate it on tasks or held-out data → retain, revise, or reject the update → verify persistent benefit on later tasks.`,
+    logic:paperSpecificFlow(record, kind, family, target, signal),
     importance:familyText.importance[language],
     advantage:familyText.advantage[language],
     validation:language === "zh" ? `在留出或后续任务上与最强同类方法比较 ${target} 的收益、成本和回退；同时消融关键更新步骤、反馈来源和提交门控。` : `Compare gains, cost, and regressions for ${target} against the strongest same-family baselines on held-out or later tasks, with ablations of the update step, feedback source, and commitment gate.`
@@ -3471,7 +3583,8 @@ function paperAnalysisLabel(analysis) {
 }
 function paperSearchText(record) {
   const analysis = paperAnalysis(record);
-  return [record.title,record.venue,record.category,record.subcategory,record.updateTarget,record.signal,publicationType(record),analysis.purpose,analysis.advantage,analysis.core,analysis.rationale,analysis.logic,analysis.validation,analysis.importance].join(" ").toLowerCase();
+  const design = paperConcreteDesign(record, analysis);
+  return [record.title,record.venue,record.category,record.subcategory,record.updateTarget,record.signal,publicationType(record),analysis.purpose,analysis.advantage,analysis.core,analysis.rationale,analysis.logic,analysis.validation,analysis.importance,design.components,design.inputs,design.loop,design.artifact,design.acceptance].join(" ").toLowerCase();
 }
 function paperCard(p, priorityRank = null) {
   const summary = language === "zh" ? (p.summaryZh || p.summary || "") : (p.summary || p.summaryZh || "");
@@ -3479,13 +3592,14 @@ function paperCard(p, priorityRank = null) {
   const slug = p.slug || slugify(p.title);
   const type = publicationType(p);
   const analysis = paperAnalysis(p);
+  const design = paperConcreteDesign(p, analysis);
   const citations = citationCount(p);
   const citationMeta = citationMetadata(p);
   const tierLabel = publicationTierLabel(p);
   const role = readingRoleInfo(p);
   const requested = new URLSearchParams(location.search).get("paper") === slug;
-  const analysisSearch = [analysis.purpose,analysis.advantage,analysis.core,analysis.rationale,analysis.logic,analysis.validation,analysis.importance].join(" ");
-  return `<article class="card reference-card" id="ref-${slug}" data-reading-role="${esc(role.id)}" data-role-rank="${readingRoleRank(p)}" data-tier="${publicationTier(p)}" data-citations="${citations === null ? -1 : citations}" data-year="${p.year || 0}" data-priority-rank="${priorityRank || ""}" data-search="${esc([p.title,p.venue,p.category,p.subcategory,p.updateTarget,p.signal,type,analysisSearch].join(" ").toLowerCase())}"><div class="card-top"><div>${priorityRank ? `<div class="paper-priority-rank">${language === "zh" ? "推荐序号" : "reading order"} #${priorityRank}</div>` : ""}<h3 data-toc="false"><a class="ref-number" href="#ref-${slug}">[${refNo}]</a> ${esc(p.title)}</h3><div class="meta">${esc(String(p.year || ""))} · ${esc(localizedVenue(p.venue || "Unknown venue"))} · ${esc(localizedCategory(p.category || "Unclassified"))}</div></div><div class="badges"><span class="badge reading-role">${esc(textOf(role.title))}</span><span class="badge ranking-tier">${esc(tierLabel)}</span><span class="badge citation-count ${citations === null ? "citation-pending" : ""}">${citations === null ? (language === "zh" ? "引用量待匹配" : "citations pending") : `${citations.toLocaleString(language === "zh" ? "zh-CN" : "en-US")} ${language === "zh" ? "次引用" : "citations"}`}</span><span class="badge publication-type">${esc(localizedPublicationType(type))}</span><span class="badge ${p.vision ? "vision" : ""}">${p.vision ? (language === "zh" ? "视觉/多模态" : "vision/multimodal") : (language === "zh" ? "通用" : "general")}</span><span class="badge ${p.updateTarget === "model parameters" ? "model" : "scaffold"}">${esc(localizedUpdateTarget(p.updateTarget || "agent component"))}</span><span class="badge">${esc(localizedSignal(p.signal || "feedback"))}</span></div></div>${citationMeta ? `<div class="citation-source-note">${language === "zh" ? "引用数据" : "Citation data"}: ${esc(CITATION_CONFIG.sourceName || "OpenAlex")} · ${language === "zh" ? "匹配" : "match"} ${Math.round((citationMeta.matchScore || 0) * 100)}%</div>` : ""}${summary ? `<p>${esc(summary)}</p>` : ""}<details class="paper-analysis" ${requested || (priorityRank !== null && priorityRank <= 12 && analysis.basis === "curated-full") ? "open" : ""}><summary><span>${language === "zh" ? "六项论文梳理" : "Six-part paper analysis"}</span><small>${paperAnalysisLabel(analysis)}</small></summary><div class="paper-analysis-disclaimer">${analysis.basis === "curated-full" ? (language === "zh" ? "六项内容已针对该论文单独整理；仍建议在正式引用具体实验数字前回看原文。" : "All six fields are paper-specific; consult the original paper before citing exact experimental numbers.") : analysis.basis === "curated" ? (language === "zh" ? "核心方法描述已针对该论文单独整理；其余字段仍是面向快速阅读的压缩解释。" : "The core method description is paper-specific; the other fields remain compressed reading aids.") : (language === "zh" ? "该概览依据标题、目录分类、更新对象、反馈信号和已有摘要自动归纳；准确引用方法细节时仍应回看原文。" : "This overview is derived from the title, catalog taxonomy, update surface, feedback signal, and available summary. Consult the paper before citing method details.")}</div><div class="paper-analysis-grid"><div><b>${language === "zh" ? "问题动机（含重要性）" : "Problem motivation"}</b><p>${esc(analysis.purpose)}</p>${analysis.basis === "curated-full" ? "" : `<small>${esc(analysis.importance || "")}</small>`}</div><div><b>${language === "zh" ? "相对优势" : "Comparative advantage"}</b><p>${esc(analysis.advantage)}</p></div><div><b>${language === "zh" ? "核心直觉" : "Core intuition"}</b><p>${esc(analysis.core)}</p></div><div><b>${language === "zh" ? "成立依据" : "Why it should work"}</b><p>${esc(analysis.rationale)}</p></div><div><b>${language === "zh" ? "方法流程" : "Method flow"}</b><p>${esc(analysis.logic)}</p></div><div><b>${language === "zh" ? "实验验证" : "Experimental validation"}</b><p>${esc(analysis.validation || "")}</p></div></div></details><div class="links"><a class="link-btn" href="${esc(p.url)}" target="_blank" rel="noopener">${language === "zh" ? "论文" : "Paper"}</a>${p.repo ? `<a class="link-btn repo" href="${esc(p.repo)}" target="_blank" rel="noopener">${language === "zh" ? "代码" : "Code"}</a>` : ""}<button class="link-btn copy-citation" type="button" data-record="${encodeURIComponent(slug)}">${language === "zh" ? "复制引用" : "Copy citation"}</button><a class="link-btn cite-link" href="bibliography.html?paper=${encodeURIComponent(slug)}#ref-${slug}">${language === "zh" ? "引用定位" : "Reference"}</a></div></article>`;
+  const analysisSearch = [analysis.purpose,analysis.advantage,analysis.core,analysis.rationale,analysis.logic,analysis.validation,analysis.importance,design.components,design.inputs,design.loop,design.artifact,design.acceptance].join(" ");
+  return `<article class="card reference-card" id="ref-${slug}" data-reading-role="${esc(role.id)}" data-role-rank="${readingRoleRank(p)}" data-tier="${publicationTier(p)}" data-citations="${citations === null ? -1 : citations}" data-year="${p.year || 0}" data-priority-rank="${priorityRank || ""}" data-search="${esc([p.title,p.venue,p.category,p.subcategory,p.updateTarget,p.signal,type,analysisSearch].join(" ").toLowerCase())}"><div class="card-top"><div>${priorityRank ? `<div class="paper-priority-rank">${language === "zh" ? "推荐序号" : "reading order"} #${priorityRank}</div>` : ""}<h3 data-toc="false"><a class="ref-number" href="#ref-${slug}">[${refNo}]</a> ${esc(p.title)}</h3><div class="meta">${esc(String(p.year || ""))} · ${esc(localizedVenue(p.venue || "Unknown venue"))} · ${esc(localizedCategory(p.category || "Unclassified"))}</div></div><div class="badges"><span class="badge reading-role">${esc(textOf(role.title))}</span><span class="badge ranking-tier">${esc(tierLabel)}</span><span class="badge citation-count ${citations === null ? "citation-pending" : ""}">${citations === null ? (language === "zh" ? "引用量待匹配" : "citations pending") : `${citations.toLocaleString(language === "zh" ? "zh-CN" : "en-US")} ${language === "zh" ? "次引用" : "citations"}`}</span><span class="badge publication-type">${esc(localizedPublicationType(type))}</span><span class="badge ${p.vision ? "vision" : ""}">${p.vision ? (language === "zh" ? "视觉/多模态" : "vision/multimodal") : (language === "zh" ? "通用" : "general")}</span><span class="badge ${p.updateTarget === "model parameters" ? "model" : "scaffold"}">${esc(localizedUpdateTarget(p.updateTarget || "agent component"))}</span><span class="badge">${esc(localizedSignal(p.signal || "feedback"))}</span></div></div>${citationMeta ? `<div class="citation-source-note">${language === "zh" ? "引用数据" : "Citation data"}: ${esc(CITATION_CONFIG.sourceName || "OpenAlex")} · ${language === "zh" ? "匹配" : "match"} ${Math.round((citationMeta.matchScore || 0) * 100)}%</div>` : ""}${summary ? `<p>${esc(summary)}</p>` : ""}<details class="paper-analysis" ${requested || (priorityRank !== null && priorityRank <= 12 && analysis.basis === "curated-full") ? "open" : ""}><summary><span>${language === "zh" ? "论文怎么做 · 六项判断 + 具体实现" : "How it works · analysis + concrete design"}</span><small>${paperAnalysisLabel(analysis)}</small></summary><div class="paper-analysis-disclaimer">${analysis.basis === "curated-full" ? (language === "zh" ? "六项内容已针对该论文单独整理；仍建议在正式引用具体实验数字前回看原文。" : "All six fields are paper-specific; consult the original paper before citing exact experimental numbers.") : analysis.basis === "curated" ? (language === "zh" ? "核心方法描述已针对该论文单独整理；其余字段仍是面向快速阅读的压缩解释。" : "The core method description is paper-specific; the other fields remain compressed reading aids.") : (language === "zh" ? "该概览依据标题、目录分类、更新对象、反馈信号和已有摘要自动归纳；准确引用方法细节时仍应回看原文。" : "This overview is derived from the title, catalog taxonomy, update surface, feedback signal, and available summary. Consult the paper before citing method details.")}</div><div class="paper-analysis-grid"><div><b>${language === "zh" ? "问题动机（含重要性）" : "Problem motivation"}</b><p>${esc(analysis.purpose)}</p>${analysis.basis === "curated-full" ? "" : `<small>${esc(analysis.importance || "")}</small>`}</div><div><b>${language === "zh" ? "相对优势" : "Comparative advantage"}</b><p>${esc(analysis.advantage)}</p></div><div><b>${language === "zh" ? "核心直觉" : "Core intuition"}</b><p>${esc(analysis.core)}</p></div><div><b>${language === "zh" ? "成立依据" : "Why it should work"}</b><p>${esc(analysis.rationale)}</p></div><div><b>${language === "zh" ? "方法流程" : "Method flow"}</b><p>${esc(analysis.logic)}</p></div><div><b>${language === "zh" ? "实验验证" : "Experimental validation"}</b><p>${esc(analysis.validation || "")}</p></div></div><section class="paper-design-breakdown"><header><b>${language === "zh" ? "具体设计：这篇论文到底怎么做" : "Concrete design: how the paper actually works"}</b><span>${language === "zh" ? "按组件、输入、更新闭环、持久产物与接受规则拆开" : "Decomposed into components, inputs, update loop, persistent artifact, and acceptance rule"}</span></header><div class="paper-design-grid"><div><b>${language === "zh" ? "1 · 系统组成" : "1 · Components"}</b><p>${esc(design.components)}</p></div><div><b>${language === "zh" ? "2 · 输入与反馈" : "2 · Inputs & feedback"}</b><p>${esc(design.inputs)}</p></div><div class="paper-design-loop"><b>${language === "zh" ? "3 · 一次更新怎么跑" : "3 · One update cycle"}</b><p>${esc(design.loop)}</p></div><div><b>${language === "zh" ? "4 · 最后留下什么" : "4 · Persistent artifact"}</b><p>${esc(design.artifact)}</p></div><div><b>${language === "zh" ? "5 · 怎么决定保留" : "5 · Acceptance / validation"}</b><p>${esc(design.acceptance)}</p></div></div></section></details><div class="links"><a class="link-btn" href="${esc(p.url)}" target="_blank" rel="noopener">${language === "zh" ? "论文" : "Paper"}</a>${p.repo ? `<a class="link-btn repo" href="${esc(p.repo)}" target="_blank" rel="noopener">${language === "zh" ? "代码" : "Code"}</a>` : ""}<button class="link-btn copy-citation" type="button" data-record="${encodeURIComponent(slug)}">${language === "zh" ? "复制引用" : "Copy citation"}</button><a class="link-btn cite-link" href="bibliography.html?paper=${encodeURIComponent(slug)}#ref-${slug}">${language === "zh" ? "引用定位" : "Reference"}</a></div></article>`;
 }
 function bindPaperCardEvents() {
   document.querySelectorAll(".copy-citation").forEach((button) => button.addEventListener("click", async () => {
