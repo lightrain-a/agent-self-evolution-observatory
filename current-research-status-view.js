@@ -340,6 +340,86 @@
     "Backbone-dependent overrestriction is a security-utility operating point, not a new self-evolution cliff":"HARD 防御演化的安全—效用崩塌",
     "The reported ~20% MindMemOS dreaming compression is not an independently identified compression plateau":"MindMemOS dreaming 压缩平台期"
   };
+  const closedOneMinuteSceneZh = {
+    "B-14":"在 MetaSkill-Evolve 的 ALFWorld 实验里，Agent 已经接近任务成功率天花板；系统仍会在较慢的更新循环里，把不同任务分支上的经验汇总成更高层技能。这里原本想问：最后多出来的约 1.92 个百分点，是否暴露了一个还没被论文解释的新型慢循环效应。",
+    "B-15":"LOPD 会给 Agent 更多内部表示容量，并从记忆库取回多条相关信息。随着内部 token 或检索条数增加，效果先变好、随后趋于饱和。这里想判断这个平台期是不是一种自进化特有的容量边界。",
+    "B-16":"文档问答 Agent 不会把所有网页都读完，而是选择性打开页面并记录自己‘已经覆盖了多少资料’。问题是：页面看得多不等于真正看到了回答问题所需的证据；如果把覆盖数量当成证据充分性，就可能遗漏关键页面。",
+    "B-17":"做持久记忆因果实验时，我们常比较‘带这条记忆’和‘不带这条记忆’的 Agent。如果两个条件实际拿到的记忆版本、可执行内容或额外信息不一样，就很难说最终差异真的是‘记忆是否存在’造成的。这个方向想把这种处理语义本身立成独立研究对象。",
+    "B-18":"SEED 让当前 Agent 自己产生可学习的技能/轨迹，再利用成功后的 hindsight-SFT 数据继续训练。论文消融显示：不用当前策略生成的数据，或去掉 hindsight-SFT，都会掉性能。这里原本想把两种下降解释成新的自进化机制。",
+    "B-19":"一条持久记忆不是只在某一时刻‘开一次’：Agent 可能在很多后续任务和很多轮决策里反复检索它。这个方向想把‘一条记忆在时间上反复暴露’本身定义成新的因果对象，研究长期累积影响。",
+    "B-20":"MindMemOS 会在类似‘离线整理/做梦’的阶段，把重复或冲突的事实合并、删减，再写回长期记忆。论文中能看到明显压缩，因此这里原本想问：系统是否存在一个大约 20% 左右、继续压缩就很难再下降的平台期。",
+    "C-8":"一条 skill 可以先在本地验证集上试用，再部署到任务分布发生变化的真实场景。这里关心的是：本地看起来排名第一的 skill，换到偏移后的部署任务里会不会反而变差，以及这种排名翻转是不是 skill 自进化特有的问题。",
+    "C-9":"Double Ratchet 里回答模型会持续变化，而用来挑选模型/版本的评价器可能逐渐跟不上。我们关注的是：模型变化到某个程度后，评价器的选择质量会不会突然陡降，以及是否需要一个新的‘评价器悬崖’机制来解释。",
+    "C-10":"两项工作都讨论‘预先给 Agent 一套程序化规则/技能’，但一项在 ALFWorld 推理时加入静态技能后略有伤害，另一项在不同训练或更新表面上观察到收益。表面看是一正一负，这个方向原本想把它当成跨场景的符号反转。",
+    "E-8":"长期运行的 Agent 会不断积累技能库。某条旧 skill 如果有缺陷，不只会让一次任务失败，还可能在以后被检索、与其他 skill 组合，再把问题传播到更多任务。这里想把这种长期维护负担单独定义成‘技能技术债’。",
+    "E-9":"代码 Agent 先写出有缺陷的实现，再让同一个模型根据这份实现自动生成测试。危险在于：模型可能沿着原来的错误理解继续写测试，于是测试看起来全部通过，却只是把同一个错误再次确认了一遍。",
+    "E-10":"Agent 修改一个 skill 后，执行行为会变；与此同时，用来诊断这次修改是否正确的日志、轨迹和中间状态也可能跟着变。这里想问：如果‘被测对象’和‘测量它的观测’一起漂移，我们还能不能可靠判断这次 skill edit 的真实效果。",
+    "E-11":"形式化记忆模型常在理想条件下假设‘覆盖更多有用记忆不会更差’，而真实系统遇到互相冲突的记忆时会主动整合、删除或改写。这个方向原本想把二者之间的张力变成新的‘记忆单调性被破坏’问题。",
+    "E-12":"Skill-SP 用技能脚手架帮助 Agent 自己生成训练任务并继续学习。没有结构化技能时，自博弈数据很难启动；加入技能后数据生成明显恢复。这里原本想问：自进化系统是不是存在一个‘低于某个能力就无法自我再生产’的启动阈值。",
+    "E-13":"Skill-SP 一边更新技能库，一边决定哪些技能/任务应该被更多采样。论文分别显示‘冻结技能’和‘把路由改成均匀分配’都会掉性能。这里想知道两者是否存在一种必须共同演化、单独优化任何一边都不够的新交互。",
+    "E-14":"PACE 一类 Agent 根据验证器反馈反复修改程序或工作流：生成候选修复、执行、看反馈，再继续改。这里原本想研究‘什么修复表面可被证据唯一判断’，以及是否需要 Agent 特有的程序重设计理论。",
+    "E-15":"SkillCoach 面对一个技能库时，要从很多候选中挑出当前任务真正需要的 skill。随着候选越来越多、相似干扰项越来越多，选择会变难。这个方向想把‘技能库多大以后选择突然失效’当成新的系统边界。",
+    "E-16":"AutoDesign 会反复提出新设计，再用同一开发集决定‘接受还是拒绝’。即使不给模型看具体分数，连续很多轮的通过/不通过结果本身也会泄露开发集信息；系统可能逐渐学会迎合这套固定开发集。",
+    "E-17":"HarnessBank 会从多个执行 harness/脚手架中挑一个表现最好的。已发布结果里，训练集上的排序和测试集排序会反转，而且搜索已经基本收敛后还会出现看似继续进步的假象。这里想问这是否是 harness 选择独有的新机制。",
+    "E-18":"AutoDesign 用自己的内部评价信号反复优化设计，而 PosterBench 只是外部拿来评估成品的基准。这里原本想用 PosterBench 与人工评分的校准差异，判断 AutoDesign 的优化循环是否把这个基准‘优化坏了’。",
+    "E-19":"ERSkill 同时扩展/改写 skill，并学习一个路由器决定当前任务调用哪条 skill。论文里去掉 skill 演化或去掉路由能力都会明显下降。这里原本想进一步声称：两者之间存在一个新的、不可拆开的共同演化效应。",
+    "E-20":"Double Ratchet 的一条循环让评价指标指导技能更新。若指标本身也会被技能反过来改变，就可能形成‘指标↔技能’双向共同演化。这个方向想判断已发布实验是否真的观察到了这条反向反馈。",
+    "E-21":"文档 Agent 会边浏览边写覆盖笔记，例如‘已经看过多少页面/哪些章节’。如果系统用这些笔记决定还需不需要继续搜索，就可能因为‘看过很多’误以为‘关键证据已经齐了’，从而提前停止。",
+    "E-22":"Double Ratchet 即使用一个比较弱的指标，有时仍能持续改进；系统还会保留一组锁定参考来监控变化。这里原本想把‘弱指标也能工作’和‘锁定参考仍稳定’解释成一种新的指标自校准能力。",
+    "E-23":"GeoForge 会给 Agent 检索多个相关示例或指导。增加检索条数开始时有帮助，但取回太多以后，新增内容会变得重复、低价值甚至互相干扰，性能反而下降。这里想把这个 top-k 峰值当成新的自进化边界。",
+    "E-24":"ComfyClaw 的某些失败仅靠改 Prompt 很难修好，但更完整的闭环可以继续编辑工作流、根据局部验证器反馈重试，并保留目前最好的版本。这里原本想把‘Prompt 修不好、闭环能修好’解释成一种新的提示词修复边界。",
+    "F-4":"EvoDRC 在几何/设计任务中不断修改规则并修复约束违规，但某些 Block7 大块违规经过多轮知识演化仍然留着。这里原本想把‘违规长期留存’解释成知识/技能没有成功迁移到后续修复。",
+    "F-5":"DocAtlas 处理长文档时既使用页面图像，也维护可动态变化的树形索引来定位信息。消融任一部分都会掉性能。这里原本想问：这种观察方式和索引结构是否构成新的 Agent 自进化机制。",
+    "F-6":"具身/视觉 Agent 会从空间记忆里检索以前的位置、物体或导航经验。即使检索到高度相关的记忆，冻结的视觉模型仍可能看错物体或空间关系，最终执行失败。这里原本想把这种失败解释成‘程序与空间记忆不兼容’。",
+    "G-6":"Agent 有一条上下文技能，只有在某些任务、权限或安全条件下才应该启用。这个方向想设计一个专门的 skill governance 机制来决定何时允许、何时阻止；关键问题是它是否真的需要超出普通上下文约束策略的新方法。",
+    "G-7":"文档问答 Agent 会把网页里的证据整理成可长期复用的笔记。我们担心：当当前网页其实不足以回答问题时，一条看起来很像答案的旧笔记会不会让 Agent 更容易自信地答错。这里专门比较不同类型的额外上下文，判断风险来自记忆机制还是普通重复。",
+    "G-8":"SHAPER 同时在较低层的 VLA 策略和更高层的 Seed-Agent 脚手架上讨论扩展。表格看起来像‘规模扩大在一个层级有益、另一个层级有害’，这个方向原本想把它当成跨层 scaling sign reversal。",
+    "G-9":"MindMemOS 一开始提供的一条通用 skill 可能让某些任务更差；系统看过真实轨迹后继续细化这条 skill，后续版本又能带来收益。这里原本想把‘先伤害、再转为帮助’定义成新的技能演化符号反转。",
+    "G-10":"EvoDRC 会先用连通性/可行性门判断一次修复能不能执行，再看整个迭代最终有没有改善。一个修复可以‘允许执行’，但局部规则分数仍然变差。这里想问：能否把历史上的可行修复直接当成长期正信用。",
+    "G-11":"形式记忆理论讨论的是理想条件下‘多覆盖有用信息是否单调更好’，而真实 Agent 使用 skill 时可能因为执行错误反而被伤害。这个方向原本把两种现象放在一起，想说明形式记忆的覆盖假设被真实 skill 执行反例推翻。",
+    "G-12":"Double Ratchet 会长期复用一组锁定参考样本来观察指标是否稳定。这个方向想用‘旧参考集上的分数仍一致’证明当前评价指标仍然有效，即使系统后续已经去掉某些 anchor/guard。",
+    "G-13":"HARD 会在不同基础模型上演化安全防御。某些模型把防御加强后，危险行为下降，但正常任务也被过度拒绝，形成很差的安全—效用工作点。这里原本想把这种严重过度限制定义成新的自进化崩塌。"
+  };
+  const closedOneMinuteObservedZh = {
+    "B-14":"原论文自己的消融已经解释了约 1.92 个百分点来自哪里：去掉跨分支迁移，或去掉慢循环中的元更新，结果都会回到 92.31 的单层基线。因此‘剩下 1.92’并不是一个无人解释的新残差。",
+    "B-15":"增加内部 token 或检索条数确实会出现平台期，但目前看到的曲线符合普通的容量饱和与边际信息递减：新增表示或新增记忆越来越重复，没有证据表明还需要一个自进化专属机制。",
+    "B-16":"当前 P06 实现用‘覆盖了多少页面’代表‘证据是否齐全’，这一代理本身失效：页面数量高时，回答所需的关键证据仍可能完全没被访问。因此现在首先是测量对象错了，不是复杂修复方法没学好。",
+    "B-17":"当前方案给不同条件的可见信息并不完全相同；一旦把记忆版本、可执行内容和其他信息严格对齐，已有因果处理定义已经能表达要比较的对象。因此暂时没有独立的‘记忆处理语义’主张。",
+    "B-18":"SEED 的消融下降是真实的，但‘当前策略自己生成数据更贴近当前分布’以及‘hindsight 数据缓解冷启动’已经能解释这些收益；消融没有留下一个必须用新自进化机制解释的部分。",
+    "B-19":"反复检索同一条记忆确实会形成一段时间历史，但这在因果分析里就是重复处理/时间变化处理。成熟方法已经能表示‘过去多次暴露如何影响后续结果’，因此当前没有必要把它重新命名成独立原语。",
+    "B-20":"MindMemOS 的整理结果支持‘定向合并冗余、选择性遗忘’有用，但约 20% 压缩并不是被单独控制和扫描出来的饱和点。我们还不能说系统存在一个独立、可复现的 20% 压缩平台。",
+    "C-8":"SkillEvolBench 可以构造本地验证排名和偏移部署排名不一致的情况，但这首先就是‘分布变了以后模型选择会失效’。当前还没有看到一种只在 skill 更新里出现、普通分布偏移方法解释不了的额外结构。",
+    "C-9":"所谓评价器‘悬崖’可以由一个更普通的陈旧监督解释：只要简单基线也看到当前模型输出和模型已经漂移到什么程度，就能表达同样的阈值式失效，因此暂时没有独立机制。",
+    "C-10":"表面上的正负号冲突来自两篇论文改变的东西不同：一篇是在近天花板 ALFWorld 推理时额外加入静态技能，另一篇作用在不同的训练/更新表面。既然干预对象不同，就不能把一正一负当成同一机制发生反转。",
+    "E-8":"现有一手工作已经把坏 skill 的长期后果直接作为技能库维护问题来处理，并明确指出它会继续影响检索、组合和执行。因此现象真实，但‘技能技术债’目前没有超出现有维护框架。",
+    "E-9":"已有一手实验直接观察到：代码有缺陷时，LLM 会更倾向生成确认同一错误的测试，同时真正能暴露缺陷的测试反而减少。现象已经被直接覆盖，因此当前不需要重新包装成新的自进化污染机制。",
+    "E-10":"现在能确认的是：skill edit 可能同时改变执行轨迹和后续诊断输入；但当前证据还不能把‘诊断观测自己漂移’和普通的策略/数据分布变化区分开，因此没有独立机制证据。",
+    "E-11":"形式框架本身已经说明：一旦记忆之间冲突，简单的单调覆盖结论就不再保证成立；MindMemOS 的离线整合恰好就在处理冲突与冗余。因此这里没有出现理论没有预料到的新矛盾。",
+    "E-12":"Skill-SP 加技能脚手架后确实更容易启动自博弈，但同时也把‘谁负责构造困难约束/任务’这件事改了。因为生成责任一起变化，当前结果不能单独证明存在某个自进化能力阈值。",
+    "E-13":"冻结 skill 会掉性能，改成均匀路由也会掉性能，但这是两个分别改变不同组件的边际消融。没有完整的因子对照，就不能据此证明‘skill 更新 × 路由更新’之间还存在额外交互。",
+    "E-14":"当系统允许在一个宽泛的程序/工作流空间里搜索修复，并用验证器反馈不断淘汰候选时，它已经与通用的反馈驱动程序综合/程序修复是同一个计算问题。当前没有剩下 Agent 特有的新原理。",
+    "E-15":"来源论文已经显示，选择边界主要随候选数量、候选之间的语义相似度以及冻结选择器本身的能力变化。这些变量已经能解释为什么干扰项多了以后更容易选错。",
+    "E-16":"固定开发集即使不暴露分数，只返回一次次接受/拒绝，也会被长期自适应选择利用。这就是经典的反复使用开发集/自适应验证问题；当前没有额外的 Agent 自进化机制。",
+    "E-17":"训练—测试排序反转和收敛后的‘虚假进步’都是真实信号，但普通的自适应模型选择、噪声和赢家偏差已经能产生同类现象。当前证据不足以说明 harness 选择还有独有机制。",
+    "E-18":"PosterBench 根本没有进入 AutoDesign 的优化回路：系统优化时看不到它，也不会根据它更新。因此即使 PosterBench 与人工评分存在校准差异，也不能说是 AutoDesign 把 PosterBench 过拟合坏了。",
+    "E-19":"ERSkill 的两项大幅消融说明‘好 skill’和‘会选 skill’都重要，但现有消融一次会改变多个资源，缺少四格因子对照。因此目前只能确认两个组件重要，不能确认它们之间有额外共同演化效应。",
+    "E-20":"已发布实现里可以直接看到‘指标变化 → 技能更新’，但用于反向判断的 no-skill 参考被固定住了，没有让技能变化再反馈回指标。因此现有数据只能支持单向耦合，不能识别双向共同演化。",
+    "E-21":"冻结实现把‘看过多少页面’当成缺口大小，但这个数字与答案证据是否出现没有稳定对应关系。也就是说，Agent 可能覆盖很多页面仍没看到关键证据，所以当前覆盖笔记无法告诉系统该修哪里。",
+    "E-22":"弱指标下仍能改进，和系统同时拿到多种丰富、冗余的错误反馈是一致的；锁定参考稳定也只说明参考本身稳定，不等于评价指标在所有新状态下都继续有效。两件事都已有更直接解释。",
+    "E-23":"检索条数增加后的先升后降，来源论文自己就可以用‘新增有用信息越来越少、冗余和干扰越来越多’解释。当前没有证据表明这个峰值需要一个新的自进化原理。",
+    "E-24":"闭环修复成功时，系统不只改 Prompt：它还扩大到工作流编辑、使用更局部的验证反馈，并通过多轮重试保留最好版本。因而‘Prompt-only 失败、完整系统成功’主要说明后者拥有更强的修复动作和反馈。",
+    "F-4":"残余违规长期存在是真实的，但来源材料已经显示其中一些约束受几何条件限制，局部甚至没有可行修复；其他规则的修改还会重新制造冲突。因此‘一直没修掉’不能单独证明技能没有迁移。",
+    "F-5":"去掉页面图像会少一类可见信息，去掉树形索引会让搜索定位变差；两种性能下降都符合普通的信息可得性和检索质量变化。它们说明组件有用，但没有识别新的自进化机制。",
+    "F-6":"高相关空间记忆并不能修复视觉模型本身的识别/定位错误。当前失败案例可以直接由冻结视觉模型的 grounding 错误解释，因此不能仅凭‘记忆很相关但仍失败’推出新的程序—记忆兼容机制。",
+    "G-6":"在模型、触发条件、工作流、安全信息和效用信息都相同的情况下，普通的上下文约束规则已经能做同样的允许/阻止决定。当前没有一个必须靠专门 skill governance 才能表达的额外变量。",
+    "G-7":"64 个当前证据不足的问题里，加入抽取式持久笔记只比原网页多约 3.1 个百分点误答，和等长度中性文本相比也不显著；直接把原证据重复一次反而多约 9.4 个百分点误答且达到显著。更像普通重复或提示显著性，而不是记忆独有机制。",
+    "G-8":"把每一层都和自己的局部基线比较以后，扩大规模在 VLA 层和 Seed-Agent 层其实都变差；只是 Seed-Agent 自身的脚手架把基线抬高了。所谓‘跨层正负反转’主要是基线选择造成的视觉错觉。",
+    "G-9":"通用 skill 先伤害、随后经过真实轨迹纠正变得有用，这个现象是真实的，但它正是负迁移后做任务对齐纠错会出现的结果。当前没有留下超出成熟纠错/适应理论的新原理。",
+    "G-10":"24 个同时有局部分数和可行性门结果的修复都被允许执行，但其中 10/24 局部变差；甚至有 7 个局部有害修复出现在全局仍改善的迭代中。说明‘可执行/可行’不是‘这条修复本身有正因果收益’。",
+    "G-11":"两边讨论的对象不同：形式记忆覆盖是在理想假设下谈信息是否更充分，skill 伤害是在真实执行层谈错误动作。执行错误不能直接反证理想化的信息覆盖单调性，因此当前没有真正的理论矛盾。",
+    "G-12":"锁定参考集与后续 skill 演化在当前实现里没有形成需要检验的双向因果链：参考样本继续稳定，只能说明这组固定样本稳定，不能证明被移除 anchor/guard 后的评价指标仍普遍有效。",
+    "G-13":"不同基础模型经过 HARD 防御演化后确实落在不同的安全—效用位置，有的严重过度拒绝正常任务。但这已经可以由基础模型能力与安全约束之间的普通权衡解释，目前没有独立的‘自进化崩塌阈值’证据。"
+  };
   const closedLayerLabel = (value) => ({
     problem_novelty:pick("实验前问题/新颖性", "upstream problem/novelty"),
     execution:pick("执行", "execution"),
@@ -431,9 +511,8 @@
     const stopLead=String(stopReason||"").split(/[。；]/)[0].trim();
     const readerStopLead=closedReaderLead(stopLead);
     const readerTitle=closedReaderLead(title);
-    const isEvidenceEcho=(row.candidate_id||"")==="PA-01-EVIDENCE-ECHO";
-    const closedScene=pick(isEvidenceEcho?"文档问答 Agent 会把网页里的证据整理成可长期复用的笔记。我们担心：当当前网页其实不足以回答问题时，一条看起来很像答案的旧笔记会不会让 Agent 更容易自信地答错。这里专门比较“只看原网页”“加入等长度中性文本”“直接重复原证据”“加入抽取式持久笔记”等情况，判断风险到底来自记忆机制，还是普通的重复/显著性。":row.experiment_run_for_this_readjudication?`这条卡要判断“${readerTitle}”能不能单独形成一个新研究问题。本次确实有实验工件；先看最直接的现象：${readerStopLead||"存在一项已记录实验现象"}。后面的关键不是继续堆实验，而是判断这个现象是否真的需要一个新机制解释。`:`这条卡不是重新训练一个 Agent，而是在判断“${readerTitle}”这个已有现象是否足以立成新的研究问题。我们先回到原论文、源码或历史证据确认现象，再检查已有理论是否已经能解释它；本次没有为了换一个名字再新跑实验。`,`This direction asks whether ${title} supports a distinct research problem. See the technical audit for exact evidence scope.`);
-    const closedObserved=pick(isEvidenceEcho?"在 64 个本来就无法从当前证据回答的问题上，加入抽取式持久笔记相比只看原网页只多了约 3.1 个百分点的误答，和等长度中性文本相比也没有显著差异；反而最简单的“把原证据原样重复一次”多了约 9.4 个百分点误答，而且这个差异达到统计显著。说明当前看到的风险更像普通重复或提示显著性，而不是抽取式记忆独有的‘证据回声’机制。":row.experiment_run_for_this_readjudication?`本次实际看到的是：${closedReaderLead(stopReason)}`:`这次没有新跑负实验。最关键的已知事实是：${readerStopLead||closedReaderLead(stopReason)}。基于这条事实和已有解释，当前没有必要为了同一个问题再启动一轮实验。`,`See exact evidence in the technical audit.`);
+    const closedScene=pick(closedOneMinuteSceneZh[row._code]||(row.experiment_run_for_this_readjudication?`这条卡要判断“${readerTitle}”能不能单独形成一个新研究问题。本次确实有实验工件；先看最直接的现象：${readerStopLead||"存在一项已记录实验现象"}。后面的关键不是继续堆实验，而是判断这个现象是否真的需要一个新机制解释。`:`这条卡不是重新训练一个 Agent，而是在判断“${readerTitle}”这个已有现象是否足以立成新的研究问题。我们先回到原论文、源码或历史证据确认现象，再检查已有理论是否已经能解释它；本次没有为了换一个名字再新跑实验。`),`This direction asks whether ${title} supports a distinct research problem. See the technical audit for exact evidence scope.`);
+    const closedObserved=pick(closedOneMinuteObservedZh[row._code]||(row.experiment_run_for_this_readjudication?`本次实际看到的是：${closedReaderLead(stopReason)}`:`这次没有新跑负实验。最关键的已知事实是：${readerStopLead||closedReaderLead(stopReason)}。基于这条事实和已有解释，当前没有必要为了同一个问题再启动一轮实验。`),`See exact evidence in the technical audit.`);
     const closedHuman=pick(briefing.tone==="collision"?"希望人工检查：已有工作是否真的解释了同一个现象，以及是否还剩一个现有解释覆盖不了、又会改变实验设计或实际决策的具体差异；若没有，就保持关闭。":briefing.tone==="identify"?"希望人工检查：是否存在一个更小的对照或干预，能让候选机制和简单解释给出不同结果；如果没有，继续跑同一实验没有意义。":briefing.tone==="support"?"希望人工判断：当前缺的是数据、有效变化还是可运行实验环境；只有上游条件能被明确修好时才值得重开。":briefing.tone==="principle"?"希望人工复核：真正决定关闭的反证是否有效、适用范围是否写得过宽；只有反证本身被推翻才重开。":"希望人工判断：现有简单或结构解释之后是否还存在会改变决定的额外现象；如果没有，就只保留可复用资产。","Review the decisive closure boundary before reopening.");
     const closedNext=pick(briefing.tone==="collision"?"保持关闭；只有以后出现一个现有工作无法解释、并且会改变实验或实际决策的新现象，才重新写最小实验。":briefing.tone==="identify"?"先提出一个能把两种解释真正分开的最小对照；如果这个对照仍给不出不同预测，就不重开。":briefing.tone==="support"?"先修数据或实验环境，再用全新样本做前置检查；只有支持条件真正成立，才恢复方法实验。":briefing.tone==="principle"?"保持停止；只有新的独立证据直接推翻当前反证，才重新人工评审。":"默认保留现有解释和可复用资产；只有新证据显示它们无法解释一个稳定、会改变决定的现象，才重开。",reopenCondition);
     return `<details class="closed-idea-card" data-closed-code="${esc(row._code)}" data-closed-source="${esc(row.candidate_id||"")}" data-briefing-reason="${esc(briefing.tone)}"><summary><div><span>${esc(row._code)}</span><b>${esc(title)}</b><small>${pick("原始溯源标识","legacy provenance id")}: ${esc(row.candidate_id||"--")}</small></div><div class="closed-summary-state"><em>${pick("已停止","STOPPED")}</em><strong class="briefing-reason-pill tone-${esc(briefing.tone)}">${esc(briefing.label)}</strong></div></summary><div class="closed-idea-body"><section class="closed-idea-wide closed-one-minute-briefing one-minute-briefing"><header><b>${pick("【1min结论】","【1 min summary】")}</b><span class="briefing-reason-pill tone-${esc(briefing.tone)}">${esc(briefing.label)}</span></header><div class="one-minute-briefing-grid"><section class="briefing-scene" data-briefing-part="scene"><b>${pick("① 具体任务场景：到底在做什么？","① Concrete task scene")}</b><p>${esc(closedScene)}</p></section><section data-briefing-part="progress"><b>${pick("② 生命周期 + 我们实际做到哪","② Lifecycle + actual work")}</b><p>${esc(pick(`生命周期：问题/方法审查后已停止。${row.experiment_run_for_this_readjudication?"本次重审有实验工件，但只把它作为证据之一；":"本次重审没有启动新的任务实验；"}当前只保留原论文、源码、结构证据和停止理由供以后回顾。`,`Stopped after problem/method review; retained for evidence traceability.`))}</p></section><section data-briefing-part="observed"><b>${pick("③ 实验实际看到了什么","③ What the experiment observed")}</b><p>${esc(closedObserved)}</p></section><section data-briefing-part="judgment"><b>${pick("④ 所以现在能确定什么，还不能确定什么","④ What is / is not established")}</b><p>${esc(briefing.plain)}</p></section><section class="briefing-human" data-briefing-part="human"><b>${pick("⑤ 当前最需要解决的问题 / 希望人工判断什么","⑤ Human decision needed")}</b><p>${esc(closedHuman)}</p></section><section class="briefing-next" data-briefing-part="next"><b>${pick("⑥ 下一步方案","⑥ Next plan")}</b><p>${esc(closedNext)}</p></section></div></section><details class="closed-idea-wide closed-technical-audit"><summary>${pick("查看精确停止理由与审计证据","Inspect exact stop reason and audit evidence")}</summary><div class="closed-technical-grid"><section><b>${pick("失败层","Failure layer")}</b><p><strong>${esc(layer)}</strong> · ${esc(row.memory_class||row.source_stop_class||"typed closure")}</p></section><section class="closed-idea-stop"><b>${pick("精确停止理由","Exact stop reason")}</b><p>${esc(stopReason)}</p></section>${reduction?`<section><b>${pick("最强同信息归约","Strongest same-information reduction")}</b><p>${esc(reduction)}</p></section>`:""}<section><b>${pick("负实验是否决定关闭","Did a negative experiment decide closure?")}</b><p>${esc(evidence)}</p></section><section><b>${pick("一手裁决溯源","First-party adjudication provenance")}</b><p>${esc(row.source_readjudication_artifact||pick("历史终态账本记录","historical terminal-ledger record"))}</p></section></div></details></div></details>`;
