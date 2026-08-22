@@ -167,6 +167,27 @@
             "gpu": false,
             "submission": false
           }
+        },
+        "method_design": {
+          "status": "REOPEN_METHOD_DESIGN_REQUIRED",
+          "contract_id": "",
+          "method_design_sha256": "",
+          "method_review_sha256": "",
+          "experiment_blueprint_design_eligible": false,
+          "local_validation_eligible": false,
+          "failed_checks": [],
+          "validation_errors": [],
+          "authority": {
+            "scientific": false,
+            "paper_design": false,
+            "method": false,
+            "experiment_blueprint": false,
+            "experiment": false,
+            "local_validation": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
         }
       },
       "scientific_reopen_errors": [],
@@ -345,6 +366,27 @@
             "paper_design": false,
             "method": false,
             "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
+        },
+        "method_design": {
+          "status": "REOPEN_METHOD_DESIGN_REQUIRED",
+          "contract_id": "",
+          "method_design_sha256": "",
+          "method_review_sha256": "",
+          "experiment_blueprint_design_eligible": false,
+          "local_validation_eligible": false,
+          "failed_checks": [],
+          "validation_errors": [],
+          "authority": {
+            "scientific": false,
+            "paper_design": false,
+            "method": false,
+            "experiment_blueprint": false,
+            "experiment": false,
+            "local_validation": false,
             "p0": false,
             "gpu": false,
             "submission": false
@@ -531,6 +573,27 @@
             "gpu": false,
             "submission": false
           }
+        },
+        "method_design": {
+          "status": "REOPEN_METHOD_DESIGN_REQUIRED",
+          "contract_id": "",
+          "method_design_sha256": "",
+          "method_review_sha256": "",
+          "experiment_blueprint_design_eligible": false,
+          "local_validation_eligible": false,
+          "failed_checks": [],
+          "validation_errors": [],
+          "authority": {
+            "scientific": false,
+            "paper_design": false,
+            "method": false,
+            "experiment_blueprint": false,
+            "experiment": false,
+            "local_validation": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
         }
       },
       "scientific_reopen_errors": [],
@@ -709,6 +772,27 @@
             "paper_design": false,
             "method": false,
             "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
+        },
+        "method_design": {
+          "status": "REOPEN_METHOD_DESIGN_REQUIRED",
+          "contract_id": "",
+          "method_design_sha256": "",
+          "method_review_sha256": "",
+          "experiment_blueprint_design_eligible": false,
+          "local_validation_eligible": false,
+          "failed_checks": [],
+          "validation_errors": [],
+          "authority": {
+            "scientific": false,
+            "paper_design": false,
+            "method": false,
+            "experiment_blueprint": false,
+            "experiment": false,
+            "local_validation": false,
             "p0": false,
             "gpu": false,
             "submission": false
@@ -911,6 +995,27 @@
             "gpu": false,
             "submission": false
           }
+        },
+        "method_design": {
+          "status": "REOPEN_METHOD_DESIGN_REQUIRED",
+          "contract_id": "",
+          "method_design_sha256": "",
+          "method_review_sha256": "",
+          "experiment_blueprint_design_eligible": false,
+          "local_validation_eligible": false,
+          "failed_checks": [],
+          "validation_errors": [],
+          "authority": {
+            "scientific": false,
+            "paper_design": false,
+            "method": false,
+            "experiment_blueprint": false,
+            "experiment": false,
+            "local_validation": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
         }
       },
       "scientific_reopen_errors": [],
@@ -980,6 +1085,11 @@
     "reopen_problem_gate_pass": 0,
     "reopen_problem_gate_blocked": 0,
     "reopen_problem_gate_invalid": 0,
+    "reopen_method_design_required": 0,
+    "reopen_method_design_awaiting_review": 0,
+    "reopen_method_review_pass": 0,
+    "reopen_method_review_blocked": 0,
+    "reopen_method_invalid": 0,
     "scientific_reopen_invalid": 0,
     "submission_freeze_eligible": 4,
     "ledger_replay_failures": 0,
@@ -991,5 +1101,5 @@
     "gpu": false,
     "submission": false
   },
-  "audit_sha256": "059496c4b9b4930ff4c8100d90c027ac1b871854be0470cdc130e3858d353826"
+  "audit_sha256": "9db4fcc33cb8512a7cebee30af4c39e49fca1ff5ada70fc5a018a24d83eae42b"
 }

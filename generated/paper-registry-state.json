@@ -9,11 +9,11 @@
     "preparation_pass": 4,
     "preparation_blocked": 1,
     "legacy_ready_needs_preparation_migration": 0,
-    "machine_frozen_candidates": 4,
+    "machine_frozen_candidates": 0,
     "machine_freeze_stale": 0,
-    "machine_handoff_ready": 4,
-    "machine_handoff_stale": 0,
-    "human_submission_signoff_pending": 4,
+    "machine_handoff_ready": 0,
+    "machine_handoff_stale": 4,
+    "human_submission_signoff_pending": 0,
     "human_signoff_complete": 0,
     "human_signoff_stale": 0,
     "submitted": 0,
@@ -48,6 +48,11 @@
     "reopen_problem_gate_pass": 0,
     "reopen_problem_gate_blocked": 0,
     "reopen_problem_gate_invalid": 0,
+    "reopen_method_design_required": 0,
+    "reopen_method_design_awaiting_review": 0,
+    "reopen_method_review_pass": 0,
+    "reopen_method_review_blocked": 0,
+    "reopen_method_invalid": 0,
     "scientific_reopen_invalid": 0
   },
   "papers": [
@@ -66,7 +71,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "submission": "MACHINE_HANDOFF_STALE",
         "post_submission": "NOT_ELIGIBLE",
         "next_attempt": "NOT_ELIGIBLE"
       },
@@ -95,15 +100,15 @@
         "human_submission_signoff_pending": true
       },
       "submission_freeze": {
-        "status": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING",
-        "freeze_sha256": "211d7e0608ec326b405bc83dd2deea49f79cbf380484e2232839065c13a941ae",
-        "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
-        "human_signoff_status": "PENDING_HUMAN",
-        "frozen_artifacts": 2,
-        "integrity_pass": true,
+        "status": "MACHINE_FREEZE_PENDING",
+        "freeze_sha256": "",
+        "venue_policy_snapshot_sha256": "",
+        "human_signoff_status": "",
+        "frozen_artifacts": 0,
+        "integrity_pass": false,
         "drift_errors": [],
         "revision_impact": {
-          "status": "NO_CHANGE",
+          "status": "NOT_AVAILABLE",
           "impact_classes": [],
           "minimum_rerun_paper_preparation_gates": [],
           "minimum_rerun_paper_acceptance_checks": [],
@@ -112,7 +117,7 @@
         "external_human_submission_authority_required": true
       },
       "submission_handoff": {
-        "status": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "status": "MACHINE_HANDOFF_STALE",
         "handoff_sha256": "0a736c22afec337d0c98a674357511057e35afacad246c80854449f56faa1d2d",
         "freeze_sha256": "211d7e0608ec326b405bc83dd2deea49f79cbf380484e2232839065c13a941ae",
         "venue": "ICLR 2027",
@@ -149,12 +154,12 @@
         ],
         "must_not_submit_if_hash_mismatch": true,
         "must_not_submit_if_freeze_stale": true,
-        "integrity_pass": true,
+        "integrity_pass": false,
         "errors": [],
         "external_human_submission_authority_required": true
       },
       "human_signoff": {
-        "status": "PENDING_HUMAN_CONFIRMATION",
+        "status": "NOT_ELIGIBLE",
         "signoff_sha256": "",
         "integrity_pass": false,
         "errors": [],
@@ -331,6 +336,27 @@
               "gpu": false,
               "submission": false
             }
+          },
+          "method_design": {
+            "status": "REOPEN_METHOD_DESIGN_REQUIRED",
+            "contract_id": "",
+            "method_design_sha256": "",
+            "method_review_sha256": "",
+            "experiment_blueprint_design_eligible": false,
+            "local_validation_eligible": false,
+            "failed_checks": [],
+            "validation_errors": [],
+            "authority": {
+              "scientific": false,
+              "paper_design": false,
+              "method": false,
+              "experiment_blueprint": false,
+              "experiment": false,
+              "local_validation": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
           }
         }
       },
@@ -367,7 +393,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "submission": "MACHINE_HANDOFF_STALE",
         "post_submission": "NOT_ELIGIBLE",
         "next_attempt": "NOT_ELIGIBLE"
       },
@@ -396,15 +422,15 @@
         "human_submission_signoff_pending": true
       },
       "submission_freeze": {
-        "status": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING",
-        "freeze_sha256": "e6842fe4d97c11683710b0b8834e33a06ec5e7a1328f5a6ea2e6a52510d180a6",
-        "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
-        "human_signoff_status": "PENDING_HUMAN",
-        "frozen_artifacts": 4,
-        "integrity_pass": true,
+        "status": "MACHINE_FREEZE_PENDING",
+        "freeze_sha256": "",
+        "venue_policy_snapshot_sha256": "",
+        "human_signoff_status": "",
+        "frozen_artifacts": 0,
+        "integrity_pass": false,
         "drift_errors": [],
         "revision_impact": {
-          "status": "NO_CHANGE",
+          "status": "NOT_AVAILABLE",
           "impact_classes": [],
           "minimum_rerun_paper_preparation_gates": [],
           "minimum_rerun_paper_acceptance_checks": [],
@@ -413,7 +439,7 @@
         "external_human_submission_authority_required": true
       },
       "submission_handoff": {
-        "status": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "status": "MACHINE_HANDOFF_STALE",
         "handoff_sha256": "0821eb8c269dcf05e65884ff0a8063eab7b6be00c189f658586212070b5121e0",
         "freeze_sha256": "e6842fe4d97c11683710b0b8834e33a06ec5e7a1328f5a6ea2e6a52510d180a6",
         "venue": "ICLR 2027",
@@ -462,12 +488,12 @@
         ],
         "must_not_submit_if_hash_mismatch": true,
         "must_not_submit_if_freeze_stale": true,
-        "integrity_pass": true,
+        "integrity_pass": false,
         "errors": [],
         "external_human_submission_authority_required": true
       },
       "human_signoff": {
-        "status": "PENDING_HUMAN_CONFIRMATION",
+        "status": "NOT_ELIGIBLE",
         "signoff_sha256": "",
         "integrity_pass": false,
         "errors": [],
@@ -644,6 +670,27 @@
               "gpu": false,
               "submission": false
             }
+          },
+          "method_design": {
+            "status": "REOPEN_METHOD_DESIGN_REQUIRED",
+            "contract_id": "",
+            "method_design_sha256": "",
+            "method_review_sha256": "",
+            "experiment_blueprint_design_eligible": false,
+            "local_validation_eligible": false,
+            "failed_checks": [],
+            "validation_errors": [],
+            "authority": {
+              "scientific": false,
+              "paper_design": false,
+              "method": false,
+              "experiment_blueprint": false,
+              "experiment": false,
+              "local_validation": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
           }
         }
       },
@@ -680,7 +727,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "submission": "MACHINE_HANDOFF_STALE",
         "post_submission": "NOT_ELIGIBLE",
         "next_attempt": "NOT_ELIGIBLE"
       },
@@ -709,15 +756,15 @@
         "human_submission_signoff_pending": true
       },
       "submission_freeze": {
-        "status": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING",
-        "freeze_sha256": "55785374bc82630f11a8195751c37b3995194375cf37d63e9a364f404b0622de",
-        "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
-        "human_signoff_status": "PENDING_HUMAN",
-        "frozen_artifacts": 4,
-        "integrity_pass": true,
+        "status": "MACHINE_FREEZE_PENDING",
+        "freeze_sha256": "",
+        "venue_policy_snapshot_sha256": "",
+        "human_signoff_status": "",
+        "frozen_artifacts": 0,
+        "integrity_pass": false,
         "drift_errors": [],
         "revision_impact": {
-          "status": "NO_CHANGE",
+          "status": "NOT_AVAILABLE",
           "impact_classes": [],
           "minimum_rerun_paper_preparation_gates": [],
           "minimum_rerun_paper_acceptance_checks": [],
@@ -726,7 +773,7 @@
         "external_human_submission_authority_required": true
       },
       "submission_handoff": {
-        "status": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "status": "MACHINE_HANDOFF_STALE",
         "handoff_sha256": "c0efeabfa71bc1645ea44523f721e0acbbb609e838b76f2ceefd3372d80f7328",
         "freeze_sha256": "55785374bc82630f11a8195751c37b3995194375cf37d63e9a364f404b0622de",
         "venue": "ICLR 2027",
@@ -775,12 +822,12 @@
         ],
         "must_not_submit_if_hash_mismatch": true,
         "must_not_submit_if_freeze_stale": true,
-        "integrity_pass": true,
+        "integrity_pass": false,
         "errors": [],
         "external_human_submission_authority_required": true
       },
       "human_signoff": {
-        "status": "PENDING_HUMAN_CONFIRMATION",
+        "status": "NOT_ELIGIBLE",
         "signoff_sha256": "",
         "integrity_pass": false,
         "errors": [],
@@ -953,6 +1000,27 @@
               "paper_design": false,
               "method": false,
               "experiment": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
+          },
+          "method_design": {
+            "status": "REOPEN_METHOD_DESIGN_REQUIRED",
+            "contract_id": "",
+            "method_design_sha256": "",
+            "method_review_sha256": "",
+            "experiment_blueprint_design_eligible": false,
+            "local_validation_eligible": false,
+            "failed_checks": [],
+            "validation_errors": [],
+            "authority": {
+              "scientific": false,
+              "paper_design": false,
+              "method": false,
+              "experiment_blueprint": false,
+              "experiment": false,
+              "local_validation": false,
               "p0": false,
               "gpu": false,
               "submission": false
@@ -1267,6 +1335,27 @@
               "gpu": false,
               "submission": false
             }
+          },
+          "method_design": {
+            "status": "REOPEN_METHOD_DESIGN_REQUIRED",
+            "contract_id": "",
+            "method_design_sha256": "",
+            "method_review_sha256": "",
+            "experiment_blueprint_design_eligible": false,
+            "local_validation_eligible": false,
+            "failed_checks": [],
+            "validation_errors": [],
+            "authority": {
+              "scientific": false,
+              "paper_design": false,
+              "method": false,
+              "experiment_blueprint": false,
+              "experiment": false,
+              "local_validation": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
           }
         }
       },
@@ -1303,7 +1392,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "submission": "MACHINE_HANDOFF_STALE",
         "post_submission": "NOT_ELIGIBLE",
         "next_attempt": "NOT_ELIGIBLE"
       },
@@ -1332,15 +1421,15 @@
         "human_submission_signoff_pending": true
       },
       "submission_freeze": {
-        "status": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING",
-        "freeze_sha256": "5c065d826ecae0b8db5620f039fa30e0df4759e28a7e6dc2c7ec7f70a0d306f1",
-        "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
-        "human_signoff_status": "PENDING_HUMAN",
-        "frozen_artifacts": 3,
-        "integrity_pass": true,
+        "status": "MACHINE_FREEZE_PENDING",
+        "freeze_sha256": "",
+        "venue_policy_snapshot_sha256": "",
+        "human_signoff_status": "",
+        "frozen_artifacts": 0,
+        "integrity_pass": false,
         "drift_errors": [],
         "revision_impact": {
-          "status": "NO_CHANGE",
+          "status": "NOT_AVAILABLE",
           "impact_classes": [],
           "minimum_rerun_paper_preparation_gates": [],
           "minimum_rerun_paper_acceptance_checks": [],
@@ -1349,7 +1438,7 @@
         "external_human_submission_authority_required": true
       },
       "submission_handoff": {
-        "status": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "status": "MACHINE_HANDOFF_STALE",
         "handoff_sha256": "372fa5012a514ad53c2ec58fca54f1a30974182c49f9ff8bfe696500210fe665",
         "freeze_sha256": "5c065d826ecae0b8db5620f039fa30e0df4759e28a7e6dc2c7ec7f70a0d306f1",
         "venue": "ICLR 2027",
@@ -1392,12 +1481,12 @@
         ],
         "must_not_submit_if_hash_mismatch": true,
         "must_not_submit_if_freeze_stale": true,
-        "integrity_pass": true,
+        "integrity_pass": false,
         "errors": [],
         "external_human_submission_authority_required": true
       },
       "human_signoff": {
-        "status": "PENDING_HUMAN_CONFIRMATION",
+        "status": "NOT_ELIGIBLE",
         "signoff_sha256": "",
         "integrity_pass": false,
         "errors": [],
@@ -1574,6 +1663,27 @@
               "gpu": false,
               "submission": false
             }
+          },
+          "method_design": {
+            "status": "REOPEN_METHOD_DESIGN_REQUIRED",
+            "contract_id": "",
+            "method_design_sha256": "",
+            "method_review_sha256": "",
+            "experiment_blueprint_design_eligible": false,
+            "local_validation_eligible": false,
+            "failed_checks": [],
+            "validation_errors": [],
+            "authority": {
+              "scientific": false,
+              "paper_design": false,
+              "method": false,
+              "experiment_blueprint": false,
+              "experiment": false,
+              "local_validation": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
           }
         }
       },
@@ -1602,5 +1712,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "442b00ef7774cd0fe22b8f765c712fc1f3a8a6099ece0f51e9b03380756b46e8"
+  "projection_sha256": "ef55d9a2fde74191d0a7120cbfb69dc2b08cdb13c6ff424bbdbecc15fc6ae981"
 }

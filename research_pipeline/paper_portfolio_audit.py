@@ -21,6 +21,7 @@ from .submission_attempt_workflow import current_attempt_workflow_summary, valid
 from .scientific_reopen_protocol import public_scientific_reopen_summary, validate_scientific_reopen_ledger
 from .reopened_scientific_contract import find_contract_by_handoff, public_reopened_contract_summary
 from .reopened_scientific_problem_gate import load_latest_reopen_problem_gate, public_reopen_problem_gate_summary
+from .reopened_scientific_method_design import public_reopen_method_summary
 
 DEFAULT_ROOT = Path('/data/wyt/agent-self-evolution-observatory')
 
@@ -354,7 +355,7 @@ def scientific_reopen_state(root: Path, paper_id: str, attempt: Mapping[str, Any
         'new_experiment_authorized': False,
         'gpu_execution_authorized': False,
         'validation_errors': [],
-        'new_contract': {**public_reopened_contract_summary({}), 'problem_gate': public_reopen_problem_gate_summary({})},
+        'new_contract': {**public_reopened_contract_summary({}), 'problem_gate': public_reopen_problem_gate_summary({}), 'method_design': public_reopen_method_summary(Path('/nonexistent'), '')},
     }
     if attempt.get('requires_explicit_scientific_reopen') is not True:
         return empty
@@ -380,8 +381,14 @@ def scientific_reopen_state(root: Path, paper_id: str, attempt: Mapping[str, Any
         if contract_summary.get('status') == 'NEW_SCIENTIFIC_CONTRACT_CREATED_PROBLEM_GATE_REQUIRED':
             gate_receipt = load_latest_reopen_problem_gate(root / 'scientific-contract-problem-gates', str(contract_summary.get('contract_id') or ''))
             gate_summary = public_reopen_problem_gate_summary(gate_receipt)
-            contract_summary = {**contract_summary, 'problem_gate': gate_summary}
-            projected['status'] = gate_summary['status'] if gate_summary['status'] != 'REOPEN_PROBLEM_GATE_REQUIRED' else 'NEW_SCIENTIFIC_CONTRACT_CREATED_PROBLEM_GATE_REQUIRED'
+            method_summary = public_reopen_method_summary(root / 'scientific-contract-method-design', str(contract_summary.get('contract_id') or '')) if gate_summary.get('status') == 'REOPEN_PROBLEM_GATE_PASS_METHOD_DESIGN_REVIEW_ELIGIBLE' else public_reopen_method_summary(Path('/nonexistent'), '')
+            contract_summary = {**contract_summary, 'problem_gate': gate_summary, 'method_design': method_summary}
+            if gate_summary['status'] == 'REOPEN_PROBLEM_GATE_REQUIRED':
+                projected['status'] = 'NEW_SCIENTIFIC_CONTRACT_CREATED_PROBLEM_GATE_REQUIRED'
+            elif gate_summary['status'] == 'REOPEN_PROBLEM_GATE_PASS_METHOD_DESIGN_REVIEW_ELIGIBLE':
+                projected['status'] = method_summary.get('status') or 'REOPEN_METHOD_DESIGN_REQUIRED'
+            else:
+                projected['status'] = gate_summary['status']
         projected['new_contract'] = contract_summary
     return projected
 
@@ -464,8 +471,16 @@ def project(path: Path, root: Path) -> dict[str, Any]:
                 actions=['the approved reopen is compiled into a Research OS new-contract seed. Supply an explicit new-contract spec and create the immutable child scientific contract; method, P0, experiment, and GPU authority remain false']
             elif scientific_reopen['status']=='NEW_SCIENTIFIC_CONTRACT_CREATED_PROBLEM_GATE_REQUIRED':
                 actions=['the reopened child scientific contract now exists at scientific stage problem. Run an independent reopen Problem Gate next; it has zero paper-design, method, experiment, P0, or GPU authority until that gate is separately adjudicated']
-            elif scientific_reopen['status']=='REOPEN_PROBLEM_GATE_PASS_METHOD_DESIGN_REVIEW_ELIGIBLE':
-                actions=['the reopen Problem Gate passed. Paper-design and method-design review are eligible next, but method, experiment, P0, GPU, claim-expansion, and submission authority remain false']
+            elif scientific_reopen['status']=='REOPEN_METHOD_DESIGN_REQUIRED':
+                actions=['the reopen Problem Gate passed. Freeze a bounded method design with matched same-information baselines, identifiability boundary, cheapest local falsifier, resource budget, and stop rules; no execution authority exists']
+            elif scientific_reopen['status']=='REOPEN_METHOD_DESIGN_FROZEN_AWAITING_INDEPENDENT_REVIEW':
+                actions=['the reopened method design is frozen. Run independent method review against generic same-information reductions before any experiment blueprint is designed']
+            elif scientific_reopen['status']=='REOPEN_METHOD_REVIEW_PASS_BLUEPRINT_DESIGN_ELIGIBLE':
+                actions=['independent method review passed. Experiment blueprint design is eligible, while local validation, experiment, P0, GPU, and claim-expansion authority remain false']
+            elif scientific_reopen['status']=='REOPEN_METHOD_REVIEW_BLOCKED':
+                actions=['independent method review blocked this realization. Revise or stop the method design without launching experiments']
+            elif scientific_reopen['status']=='REOPEN_METHOD_LEDGER_INVALID':
+                actions=['the reopen method-design ledger is invalid. Stop blueprint design and repair the append-only method lineage']
             elif scientific_reopen['status']=='REOPEN_PROBLEM_GATE_BLOCKED':
                 actions=['the reopen Problem Gate is blocked; repair only the failed problem checks or stop this child scientific object. Do not proceed to method or experiment design']
             elif scientific_reopen['status']=='REOPEN_PROBLEM_GATE_LEDGER_INVALID':
@@ -642,7 +657,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
 
 def source_watermark(root: Path) -> str:
     timestamps: list[str] = []
-    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts', root / 'paper-submission-attempt-workflows', root / 'paper-scientific-reopen', root / 'scientific-contracts', root / 'scientific-contract-problem-gates'):
+    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts', root / 'paper-submission-attempt-workflows', root / 'paper-scientific-reopen', root / 'scientific-contracts', root / 'scientific-contract-problem-gates', root / 'scientific-contract-method-design'):
         if not directory.exists():
             continue
         for path in sorted(directory.glob('*.json')):
@@ -715,6 +730,11 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'reopen_problem_gate_pass': sum(p['scientific_reopen_status'] == 'REOPEN_PROBLEM_GATE_PASS_METHOD_DESIGN_REVIEW_ELIGIBLE' for p in papers),
             'reopen_problem_gate_blocked': sum(p['scientific_reopen_status'] == 'REOPEN_PROBLEM_GATE_BLOCKED' for p in papers),
             'reopen_problem_gate_invalid': sum(p['scientific_reopen_status'] == 'REOPEN_PROBLEM_GATE_LEDGER_INVALID' for p in papers),
+            'reopen_method_design_required': sum(p['scientific_reopen_status'] == 'REOPEN_METHOD_DESIGN_REQUIRED' for p in papers),
+            'reopen_method_design_awaiting_review': sum(p['scientific_reopen_status'] == 'REOPEN_METHOD_DESIGN_FROZEN_AWAITING_INDEPENDENT_REVIEW' for p in papers),
+            'reopen_method_review_pass': sum(p['scientific_reopen_status'] == 'REOPEN_METHOD_REVIEW_PASS_BLUEPRINT_DESIGN_ELIGIBLE' for p in papers),
+            'reopen_method_review_blocked': sum(p['scientific_reopen_status'] == 'REOPEN_METHOD_REVIEW_BLOCKED' for p in papers),
+            'reopen_method_invalid': sum(p['scientific_reopen_status'] == 'REOPEN_METHOD_LEDGER_INVALID' for p in papers),
             'scientific_reopen_invalid': sum(p['scientific_reopen_status'] == 'SCIENTIFIC_REOPEN_LEDGER_INVALID' for p in papers),
             'submission_freeze_eligible': sum(p['submission_freeze_eligible'] for p in papers),
             'ledger_replay_failures': sum(not p['ledger_replay_pass'] for p in papers),
