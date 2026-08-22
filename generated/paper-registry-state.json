@@ -60,6 +60,10 @@
     "reopen_blueprint_invalid": 0,
     "reopen_local_validation_authorized": 0,
     "reopen_local_validation_authority_invalid": 0,
+    "reopen_pre_experiment_required": 0,
+    "reopen_pre_experiment_blocked": 0,
+    "reopen_pre_experiment_pass_lease_required": 0,
+    "reopen_pre_experiment_invalid": 0,
     "scientific_reopen_invalid": 0
   },
   "papers": [
@@ -402,6 +406,26 @@
               "scientific": false,
               "method": false,
               "experiment_blueprint": false,
+              "experiment": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
+          },
+          "pre_experiment": {
+            "status": "PRE_EXPERIMENT_COMPILER_REQUIRED",
+            "contract_id": "",
+            "adapter_receipt_sha256": "",
+            "passed_gates": 0,
+            "gate_count": 8,
+            "compiler_blocker_count": 0,
+            "compiler_execution_ready": false,
+            "effective_execution_authorized": false,
+            "experiment_lease_required": true,
+            "authority": {
+              "scientific": false,
+              "method": false,
+              "local_validation": false,
               "experiment": false,
               "p0": false,
               "gpu": false,
@@ -784,6 +808,26 @@
               "gpu": false,
               "submission": false
             }
+          },
+          "pre_experiment": {
+            "status": "PRE_EXPERIMENT_COMPILER_REQUIRED",
+            "contract_id": "",
+            "adapter_receipt_sha256": "",
+            "passed_gates": 0,
+            "gate_count": 8,
+            "compiler_blocker_count": 0,
+            "compiler_execution_ready": false,
+            "effective_execution_authorized": false,
+            "experiment_lease_required": true,
+            "authority": {
+              "scientific": false,
+              "method": false,
+              "local_validation": false,
+              "experiment": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
           }
         }
       },
@@ -1156,6 +1200,26 @@
               "scientific": false,
               "method": false,
               "experiment_blueprint": false,
+              "experiment": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
+          },
+          "pre_experiment": {
+            "status": "PRE_EXPERIMENT_COMPILER_REQUIRED",
+            "contract_id": "",
+            "adapter_receipt_sha256": "",
+            "passed_gates": 0,
+            "gate_count": 8,
+            "compiler_blocker_count": 0,
+            "compiler_execution_ready": false,
+            "effective_execution_authorized": false,
+            "experiment_lease_required": true,
+            "authority": {
+              "scientific": false,
+              "method": false,
+              "local_validation": false,
               "experiment": false,
               "p0": false,
               "gpu": false,
@@ -1535,6 +1599,26 @@
               "gpu": false,
               "submission": false
             }
+          },
+          "pre_experiment": {
+            "status": "PRE_EXPERIMENT_COMPILER_REQUIRED",
+            "contract_id": "",
+            "adapter_receipt_sha256": "",
+            "passed_gates": 0,
+            "gate_count": 8,
+            "compiler_blocker_count": 0,
+            "compiler_execution_ready": false,
+            "effective_execution_authorized": false,
+            "experiment_lease_required": true,
+            "authority": {
+              "scientific": false,
+              "method": false,
+              "local_validation": false,
+              "experiment": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
           }
         }
       },
@@ -1906,6 +1990,26 @@
               "gpu": false,
               "submission": false
             }
+          },
+          "pre_experiment": {
+            "status": "PRE_EXPERIMENT_COMPILER_REQUIRED",
+            "contract_id": "",
+            "adapter_receipt_sha256": "",
+            "passed_gates": 0,
+            "gate_count": 8,
+            "compiler_blocker_count": 0,
+            "compiler_execution_ready": false,
+            "effective_execution_authorized": false,
+            "experiment_lease_required": true,
+            "authority": {
+              "scientific": false,
+              "method": false,
+              "local_validation": false,
+              "experiment": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
           }
         }
       },
@@ -1934,5 +2038,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "191bfadc2553b1348f77d92d3b7740ef77ab438742ba5962b4463179c0b62c7a"
+  "projection_sha256": "0601280c32358837e474d3601e2a4f5429910046573d726112ecb36447bf8764"
 }
