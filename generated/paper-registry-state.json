@@ -28,7 +28,11 @@
     "attempt_machine_preparation_eligible": 0,
     "attempts_requiring_scientific_reopen": 0,
     "resubmission_plans": 0,
-    "camera_ready_plans": 0
+    "camera_ready_plans": 0,
+    "attempt_preparation_pass": 0,
+    "attempt_machine_frozen": 0,
+    "attempt_machine_handoff_ready": 0,
+    "attempt_workflow_stale_or_invalid": 0
   },
   "papers": [
     {
@@ -194,6 +198,19 @@
         "requires_explicit_scientific_reopen": false,
         "parent_submission_bytes_immutable": true,
         "validation_errors": []
+      },
+      "submission_attempt_workflow": {
+        "status": "NOT_ELIGIBLE",
+        "attempt_id": "",
+        "attempt_sha256": "",
+        "preparation_sha256": "",
+        "freeze_sha256": "",
+        "handoff_sha256": "",
+        "frozen_artifacts": 0,
+        "freeze_drift_errors": [],
+        "validation_errors": [],
+        "human_confirmation_status": "",
+        "parent_submission_bytes_immutable": true
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -389,6 +406,19 @@
         "parent_submission_bytes_immutable": true,
         "validation_errors": []
       },
+      "submission_attempt_workflow": {
+        "status": "NOT_ELIGIBLE",
+        "attempt_id": "",
+        "attempt_sha256": "",
+        "preparation_sha256": "",
+        "freeze_sha256": "",
+        "handoff_sha256": "",
+        "frozen_artifacts": 0,
+        "freeze_drift_errors": [],
+        "validation_errors": [],
+        "human_confirmation_status": "",
+        "parent_submission_bytes_immutable": true
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 6,
@@ -583,6 +613,19 @@
         "parent_submission_bytes_immutable": true,
         "validation_errors": []
       },
+      "submission_attempt_workflow": {
+        "status": "NOT_ELIGIBLE",
+        "attempt_id": "",
+        "attempt_sha256": "",
+        "preparation_sha256": "",
+        "freeze_sha256": "",
+        "handoff_sha256": "",
+        "frozen_artifacts": 0,
+        "freeze_drift_errors": [],
+        "validation_errors": [],
+        "human_confirmation_status": "",
+        "parent_submission_bytes_immutable": true
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 4,
@@ -774,6 +817,19 @@
         "parent_submission_bytes_immutable": true,
         "validation_errors": []
       },
+      "submission_attempt_workflow": {
+        "status": "NOT_ELIGIBLE",
+        "attempt_id": "",
+        "attempt_sha256": "",
+        "preparation_sha256": "",
+        "freeze_sha256": "",
+        "handoff_sha256": "",
+        "frozen_artifacts": 0,
+        "freeze_drift_errors": [],
+        "validation_errors": [],
+        "human_confirmation_status": "",
+        "parent_submission_bytes_immutable": true
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 5,
@@ -962,6 +1018,19 @@
         "parent_submission_bytes_immutable": true,
         "validation_errors": []
       },
+      "submission_attempt_workflow": {
+        "status": "NOT_ELIGIBLE",
+        "attempt_id": "",
+        "attempt_sha256": "",
+        "preparation_sha256": "",
+        "freeze_sha256": "",
+        "handoff_sha256": "",
+        "frozen_artifacts": 0,
+        "freeze_drift_errors": [],
+        "validation_errors": [],
+        "human_confirmation_status": "",
+        "parent_submission_bytes_immutable": true
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
@@ -987,5 +1056,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "618dfe7a22db2f5132a19b023febd0f7e90c576a47e890872c8855b2c29875e8"
+  "projection_sha256": "90688640d44338abe38228f43544d7baaac8c50de56e1e5488586acfdf4a08a6"
 }

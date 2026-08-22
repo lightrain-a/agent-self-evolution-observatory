@@ -26,12 +26,14 @@ from research_pipeline.revision_impact_audit import audit_freeze_receipt
 from research_pipeline.rebuttal_protocol import validate_rebuttal_receipt
 from research_pipeline.post_decision_learning import validate_learning_receipt, validate_rebuttal_skipped_by_venue_receipt, validate_venue_decision_receipt
 from research_pipeline.submission_attempt_lineage import public_attempt_summary, validate_attempt_ledger
+from research_pipeline.submission_attempt_workflow import current_attempt_workflow_summary, validate_attempt_workflow_ledger
 DEFAULT_LEDGER_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ROOT") else None
 DEFAULT_ARTIFACT_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ARTIFACT_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ARTIFACT_ROOT") else None
 DEFAULT_FREEZE_ROOT = Path(os.environ["PAPER_SUBMISSION_FREEZE_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_FREEZE_ROOT") else None
 DEFAULT_HANDOFF_ROOT = Path(os.environ["PAPER_SUBMISSION_HANDOFF_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_HANDOFF_ROOT") else None
 DEFAULT_SIGNOFF_ROOT = Path(os.environ["PAPER_HUMAN_SIGNOFF_ROOT"]).expanduser() if os.environ.get("PAPER_HUMAN_SIGNOFF_ROOT") else None
 DEFAULT_ATTEMPT_ROOT = Path(os.environ["PAPER_SUBMISSION_ATTEMPT_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_ATTEMPT_ROOT") else None
+DEFAULT_ATTEMPT_WORKFLOW_ROOT = Path(os.environ["PAPER_SUBMISSION_ATTEMPT_WORKFLOW_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_ATTEMPT_WORKFLOW_ROOT") else None
 DEFAULT_JSON = ROOT / "generated/paper-registry-state.json"
 DEFAULT_JS = ROOT / "generated/paper-registry-state.js"
 C01_ID = "D2-PAPER-FAILURE-MEMORY-PROVENANCE"
@@ -422,7 +424,40 @@ def submission_attempt_state(paper_id: str, paper_state: str, attempt_root: Path
     return {**empty, **summary, "status": str(summary.get("latest_status") or empty["status"])}
 
 
-def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None) -> dict[str, Any]:
+def submission_attempt_workflow_state(attempt: dict[str, Any], workflow_root: Path | None) -> dict[str, Any]:
+    empty = {
+        "status": "ATTEMPT_WORKFLOW_NOT_STARTED" if int(attempt.get("attempts") or 0) > 0 and attempt.get("machine_preparation_eligible") is True else "NOT_ELIGIBLE",
+        "attempt_id": str(attempt.get("latest_attempt_id") or ""),
+        "attempt_sha256": str(attempt.get("latest_attempt_sha256") or ""),
+        "preparation_sha256": "",
+        "freeze_sha256": "",
+        "handoff_sha256": "",
+        "frozen_artifacts": 0,
+        "freeze_drift_errors": [],
+        "validation_errors": [],
+        "human_confirmation_status": "",
+        "parent_submission_bytes_immutable": True,
+    }
+    attempt_id = str(attempt.get("latest_attempt_id") or "")
+    if not attempt_id or workflow_root is None:
+        return empty
+    path = workflow_root / f"{attempt_id}.json"
+    if not path.exists():
+        return empty
+    try:
+        row = _load_json(path)
+        errors = validate_attempt_workflow_ledger(row)
+        summary = current_attempt_workflow_summary(row)
+    except Exception:
+        return {**empty, "status": "ATTEMPT_WORKFLOW_INVALID", "validation_errors": ["attempt-workflow-ledger-unreadable"]}
+    if errors:
+        return {**empty, **summary, "status": "ATTEMPT_WORKFLOW_INVALID", "validation_errors": errors}
+    if str(summary.get("attempt_sha256") or "") != str(attempt.get("latest_attempt_sha256") or ""):
+        return {**empty, **summary, "status": "ATTEMPT_WORKFLOW_INVALID", "validation_errors": ["attempt-workflow-plan-lineage-mismatch"]}
+    return {**empty, **summary}
+
+
+def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None) -> dict[str, Any]:
     row = json.loads(path.read_text(encoding="utf-8"))
     contract = row.get("contract") or {}
     summary = row.get("summary") or {}
@@ -449,6 +484,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
     learning = learning_state(row)
     state = str(row.get("current_state") or "")
     attempt = submission_attempt_state(paper_id, state, attempt_root)
+    attempt_workflow = submission_attempt_workflow_state(attempt, attempt_workflow_root)
     scientific_layer = "SUPPORTED_AND_AUDITED" if claim_audit.get("pass") is True else ("ACTIVE_REPAIR" if state == "TARGETED_REPAIR" else "PRE_AUDIT")
     paper_quality_layer = "PASS" if manuscript_ci.get("pass") is True and prebuttal.get("pass") is True else ("IN_PROGRESS" if state not in {"PAPER_EVIDENCE", "PAPER_DESIGN"} else "NOT_STARTED")
     return {
@@ -468,7 +504,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
             "paper_preparation": preparation["status"],
             "submission": submission["status"] if submission["status"] != "NOT_SUBMITTED" else (signoff["status"] if signoff["status"] != "PENDING_HUMAN_CONFIRMATION" and signoff["status"] != "NOT_ELIGIBLE" else handoff["status"]),
             "post_submission": learning["status"] if learning["status"] != "NOT_ELIGIBLE" else rebuttal["status"],
-            "next_attempt": attempt["status"],
+            "next_attempt": attempt_workflow["status"] if attempt_workflow["status"] != "NOT_ELIGIBLE" else attempt["status"],
         },
         "gates": {
             "claim_audit": claim_audit.get("pass") is True,
@@ -484,6 +520,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
         "rebuttal": rebuttal,
         "learning": learning,
         "submission_attempt": attempt,
+        "submission_attempt_workflow": attempt_workflow,
         "targeted_repair_boundary": targeted_repair_boundary(paper_id) if state == "TARGETED_REPAIR" else {},
         "ledger_summary": {
             "mock_reviews": int(summary.get("mock_reviews") or 0),
@@ -504,7 +541,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
     }
 
 
-def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None) -> str:
+def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None) -> str:
     timestamps: list[str] = []
     for path in sorted(ledger_root.glob("*.json")):
         try:
@@ -514,7 +551,7 @@ def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff
         updated = str(payload.get("updated_at") or "")
         if updated:
             timestamps.append(updated)
-    for extra_root in (freeze_root, handoff_root, signoff_root, attempt_root):
+    for extra_root in (freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root):
         if extra_root is None or not extra_root.exists():
             continue
         for path in sorted(extra_root.glob("*.json")):
@@ -530,8 +567,8 @@ def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff
     return max(timestamps) if timestamps else "1970-01-01T00:00:00+00:00"
 
 
-def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None) -> dict[str, Any]:
-    papers = [project_paper(path, artifact_root, freeze_root, handoff_root, signoff_root, attempt_root) for path in sorted(ledger_root.glob("*.json"))]
+def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None) -> dict[str, Any]:
+    papers = [project_paper(path, artifact_root, freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root) for path in sorted(ledger_root.glob("*.json"))]
     order = {"LEARN": -3, "REBUTTAL": -2, "SUBMITTED": -1, "SUBMISSION_READY": 0, "PREBUTTAL": 1, "PDF_QA": 2, "CLAIM_AUDIT": 3, "TARGETED_REPAIR": 4, "MOCK_PC": 5, "MANUSCRIPT": 6, "PAPER_DESIGN": 7, "PAPER_EVIDENCE": 8}
     papers.sort(key=lambda p: (order.get(p["current_state"], 99), p["paper_id"]))
     summary = {
@@ -561,10 +598,14 @@ def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Pat
         "attempts_requiring_scientific_reopen": sum(p["submission_attempt"].get("requires_explicit_scientific_reopen") is True for p in papers),
         "resubmission_plans": sum(p["submission_attempt"].get("latest_attempt_type") == "RESUBMISSION" for p in papers),
         "camera_ready_plans": sum(p["submission_attempt"].get("latest_attempt_type") == "CAMERA_READY" for p in papers),
+        "attempt_preparation_pass": sum(p["submission_attempt_workflow"].get("status") == "ATTEMPT_PREPARATION_PASS_FREEZE_PENDING" for p in papers),
+        "attempt_machine_frozen": sum(p["submission_attempt_workflow"].get("status") == "ATTEMPT_MACHINE_FROZEN_HANDOFF_PENDING" for p in papers),
+        "attempt_machine_handoff_ready": sum(p["submission_attempt_workflow"].get("status") == "ATTEMPT_MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED" for p in papers),
+        "attempt_workflow_stale_or_invalid": sum(p["submission_attempt_workflow"].get("status") in {"ATTEMPT_HANDOFF_STALE", "ATTEMPT_FREEZE_STALE", "ATTEMPT_WORKFLOW_INVALID"} for p in papers),
     }
     payload = {
         "schema_version": "1.1",
-        "generated_at": source_watermark(ledger_root, freeze_root, handoff_root, signoff_root, attempt_root),
+        "generated_at": source_watermark(ledger_root, freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root),
         "source": "canonical_paper_acceptance_ledger",
         "summary": summary,
         "papers": papers,
@@ -582,6 +623,7 @@ def main() -> None:
     parser.add_argument("--handoff-root", type=Path, default=DEFAULT_HANDOFF_ROOT, help="Optional machine submission handoff ledger root; may also be supplied via PAPER_SUBMISSION_HANDOFF_ROOT.")
     parser.add_argument("--signoff-root", type=Path, default=DEFAULT_SIGNOFF_ROOT, help="Optional human signoff ledger root; may also be supplied via PAPER_HUMAN_SIGNOFF_ROOT.")
     parser.add_argument("--attempt-root", type=Path, default=DEFAULT_ATTEMPT_ROOT, help="Optional resubmission/camera-ready attempt ledger root; may also be supplied via PAPER_SUBMISSION_ATTEMPT_ROOT.")
+    parser.add_argument("--attempt-workflow-root", type=Path, default=DEFAULT_ATTEMPT_WORKFLOW_ROOT, help="Optional attempt-scoped Preparation/Freeze/Handoff workflow root; may also be supplied via PAPER_SUBMISSION_ATTEMPT_WORKFLOW_ROOT.")
     parser.add_argument("--json-output", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--js-output", type=Path, default=DEFAULT_JS)
     args = parser.parse_args()
@@ -599,7 +641,11 @@ def main() -> None:
     if attempt_root is None:
         candidate = args.ledger_root.parent / "paper-submission-attempts"
         attempt_root = candidate if candidate.is_dir() else None
-    state = build(args.ledger_root, args.artifact_root, args.freeze_root, handoff_root, signoff_root, attempt_root)
+    attempt_workflow_root = args.attempt_workflow_root
+    if attempt_workflow_root is None:
+        candidate = args.ledger_root.parent / "paper-submission-attempt-workflows"
+        attempt_workflow_root = candidate if candidate.is_dir() else None
+    state = build(args.ledger_root, args.artifact_root, args.freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root)
     args.json_output.parent.mkdir(parents=True, exist_ok=True)
     args.json_output.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     args.js_output.write_text("window.PAPER_REGISTRY_STATE = " + json.dumps(state, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")

@@ -16,6 +16,7 @@ from .revision_impact_audit import audit_freeze_receipt
 from .rebuttal_protocol import validate_rebuttal_receipt, validate_review_set
 from .post_decision_learning import validate_learning_receipt, validate_rebuttal_skipped_by_venue_receipt, validate_venue_decision_receipt
 from .submission_attempt_lineage import public_attempt_summary, validate_attempt_ledger
+from .submission_attempt_workflow import current_attempt_workflow_summary, validate_attempt_workflow_ledger
 
 DEFAULT_ROOT = Path('/data/wyt/agent-self-evolution-observatory')
 
@@ -277,6 +278,39 @@ def submission_attempt_state(root: Path, paper_id: str, paper_state: str) -> dic
     return {**empty, **summary, 'status': str(summary.get('latest_status') or empty['status'])}
 
 
+def submission_attempt_workflow_state(root: Path, attempt: Mapping[str, Any]) -> dict[str, Any]:
+    empty = {
+        'status': 'ATTEMPT_WORKFLOW_NOT_STARTED' if int(attempt.get('attempts') or 0) > 0 and attempt.get('machine_preparation_eligible') is True else 'NOT_ELIGIBLE',
+        'attempt_id': str(attempt.get('latest_attempt_id') or ''),
+        'attempt_sha256': str(attempt.get('latest_attempt_sha256') or ''),
+        'preparation_sha256': '',
+        'freeze_sha256': '',
+        'handoff_sha256': '',
+        'frozen_artifacts': 0,
+        'freeze_drift_errors': [],
+        'validation_errors': [],
+        'human_confirmation_status': '',
+        'parent_submission_bytes_immutable': True,
+    }
+    attempt_id = str(attempt.get('latest_attempt_id') or '')
+    if not attempt_id:
+        return empty
+    path = root / 'paper-submission-attempt-workflows' / f'{attempt_id}.json'
+    if not path.exists():
+        return empty
+    try:
+        row = json.loads(path.read_text(encoding='utf-8'))
+        errors = validate_attempt_workflow_ledger(row)
+        summary = current_attempt_workflow_summary(row)
+    except (OSError, json.JSONDecodeError, TypeError, ValueError):
+        return {**empty, 'status': 'ATTEMPT_WORKFLOW_INVALID', 'validation_errors': ['attempt-workflow-ledger-unreadable']}
+    if errors:
+        return {**empty, **summary, 'status': 'ATTEMPT_WORKFLOW_INVALID', 'validation_errors': errors}
+    if str(summary.get('attempt_sha256') or '') != str(attempt.get('latest_attempt_sha256') or ''):
+        return {**empty, **summary, 'status': 'ATTEMPT_WORKFLOW_INVALID', 'validation_errors': ['attempt-workflow-plan-lineage-mismatch']}
+    return {**empty, **summary}
+
+
 def project(path: Path, root: Path) -> dict[str, Any]:
     row = json.loads(path.read_text(encoding='utf-8'))
     paper_id = str(row.get('paper_id') or path.stem)
@@ -333,6 +367,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         review_intake={**review_intake,'status':'REVIEW_NOT_REQUIRED_VENUE_TERMINAL','review_count':0,'errors':[]}
     learning=learning_state(row)
     attempt=submission_attempt_state(root,paper_id,state)
+    attempt_workflow=submission_attempt_workflow_state(root,attempt)
     actions = next_actions(groups)
     if state == 'LEARN':
         if learning['status']!='LEARN_COMPLETE':
@@ -343,8 +378,12 @@ def project(path: Path, root: Path) -> dict[str, Any]:
             actions=['submission-attempt lineage is invalid; stop child preparation until the append-only attempt ledger is repaired']
         elif attempt['requires_explicit_scientific_reopen']:
             actions=['the planned child attempt requests a scientific change; obtain explicit scientific reopen authority before any new claim, evidence, experiment, or GPU work']
+        elif attempt_workflow['status']=='ATTEMPT_MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED':
+            actions=['the child attempt has its own preparation/freeze/handoff lineage; await explicit human confirmation and never reuse the parent submission signoff']
+        elif attempt_workflow['status'] in {'ATTEMPT_HANDOFF_STALE','ATTEMPT_FREEZE_STALE','ATTEMPT_WORKFLOW_INVALID'}:
+            actions=['the child attempt workflow is stale or invalid; stop handoff and repair/refreeze only within this attempt namespace']
         elif attempt['machine_preparation_eligible']:
-            actions=['the child attempt is paper-side only and may enter a fresh preparation/freeze pipeline while the parent submitted bytes remain immutable']
+            actions=['the child attempt is paper-side only and may enter its fresh attempt-scoped Preparation/Freeze/Handoff pipeline while parent submitted bytes remain immutable']
         else:
             actions=['post-decision learning is complete; preserve parent submission immutability and inspect the latest child-attempt plan']
     elif state == 'REBUTTAL':
@@ -441,6 +480,14 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         'submission_attempt_requires_scientific_reopen': attempt['requires_explicit_scientific_reopen'],
         'parent_submission_bytes_immutable': attempt['parent_submission_bytes_immutable'],
         'submission_attempt_errors': attempt['validation_errors'],
+        'submission_attempt_workflow_status': attempt_workflow['status'],
+        'submission_attempt_preparation_sha256': attempt_workflow['preparation_sha256'],
+        'submission_attempt_freeze_sha256': attempt_workflow['freeze_sha256'],
+        'submission_attempt_handoff_sha256': attempt_workflow['handoff_sha256'],
+        'submission_attempt_frozen_artifacts': attempt_workflow['frozen_artifacts'],
+        'submission_attempt_freeze_drift_errors': attempt_workflow['freeze_drift_errors'],
+        'submission_attempt_workflow_errors': attempt_workflow['validation_errors'],
+        'submission_attempt_human_confirmation_status': attempt_workflow['human_confirmation_status'],
         'blocker_groups': groups,
         'blocker_count': len(blockers),
         'next_actions': actions,
@@ -452,7 +499,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
 
 def source_watermark(root: Path) -> str:
     timestamps: list[str] = []
-    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts'):
+    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts', root / 'paper-submission-attempt-workflows'):
         if not directory.exists():
             continue
         for path in sorted(directory.glob('*.json')):
@@ -506,6 +553,10 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'resubmission_plans': sum(p['latest_submission_attempt_type'] == 'RESUBMISSION' for p in papers),
             'camera_ready_plans': sum(p['latest_submission_attempt_type'] == 'CAMERA_READY' for p in papers),
             'attempt_ledger_invalid': sum(p['submission_attempt_status'] == 'ATTEMPT_LEDGER_INVALID' for p in papers),
+            'attempt_preparation_pass': sum(p['submission_attempt_workflow_status'] == 'ATTEMPT_PREPARATION_PASS_FREEZE_PENDING' for p in papers),
+            'attempt_machine_frozen': sum(p['submission_attempt_workflow_status'] == 'ATTEMPT_MACHINE_FROZEN_HANDOFF_PENDING' for p in papers),
+            'attempt_machine_handoff_ready': sum(p['submission_attempt_workflow_status'] == 'ATTEMPT_MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED' for p in papers),
+            'attempt_workflow_stale_or_invalid': sum(p['submission_attempt_workflow_status'] in {'ATTEMPT_HANDOFF_STALE','ATTEMPT_FREEZE_STALE','ATTEMPT_WORKFLOW_INVALID'} for p in papers),
             'submission_freeze_eligible': sum(p['submission_freeze_eligible'] for p in papers),
             'ledger_replay_failures': sum(not p['ledger_replay_pass'] for p in papers),
             'contract_integrity_failures': sum(not p['contract_integrity_pass'] for p in papers),
