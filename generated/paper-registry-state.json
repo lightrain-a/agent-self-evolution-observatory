@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-22T07:37:27+00:00",
+  "generated_at": "2026-08-22T07:23:05+00:00",
   "source": "canonical_paper_acceptance_ledger",
   "summary": {
     "papers": 5,
@@ -376,5 +376,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "db673624ad7bb0977088304d1af238924e904205526a6ea55a5d52e0c88514b3"
+  "projection_sha256": "f0586de8dfdadda3d5530e01caf35a08dde0d797521a80d014472dc945f3e0fd"
 }

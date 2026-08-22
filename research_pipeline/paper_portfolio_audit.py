@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -159,11 +158,29 @@ def project(path: Path, root: Path) -> dict[str, Any]:
     }
 
 
+def source_watermark(root: Path) -> str:
+    timestamps: list[str] = []
+    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes'):
+        if not directory.exists():
+            continue
+        for path in sorted(directory.glob('*.json')):
+            if path.name in {'current-freeze-index.json', 'venue-policy-iclr2027-20260822.json'}:
+                continue
+            try:
+                payload = json.loads(path.read_text(encoding='utf-8'))
+            except (OSError, json.JSONDecodeError):
+                continue
+            updated = str(payload.get('updated_at') or '')
+            if updated:
+                timestamps.append(updated)
+    return max(timestamps) if timestamps else '1970-01-01T00:00:00+00:00'
+
+
 def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
     papers = [project(path, root) for path in sorted((root / 'paper-acceptance').glob('*.json'))]
     return {
         'schema_version': '1.1',
-        'generated_at': datetime.now(timezone.utc).isoformat(timespec='seconds'),
+        'generated_at': source_watermark(root),
         'papers': papers,
         'summary': {
             'papers': len(papers),

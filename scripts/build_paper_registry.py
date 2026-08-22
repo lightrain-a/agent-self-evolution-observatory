@@ -12,7 +12,6 @@ import hashlib
 import json
 import os
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -256,6 +255,30 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
     }
 
 
+def source_watermark(ledger_root: Path, freeze_root: Path | None = None) -> str:
+    timestamps: list[str] = []
+    for path in sorted(ledger_root.glob("*.json")):
+        try:
+            payload = _load_json(path)
+        except (OSError, json.JSONDecodeError):
+            continue
+        updated = str(payload.get("updated_at") or "")
+        if updated:
+            timestamps.append(updated)
+    if freeze_root is not None and freeze_root.exists():
+        for path in sorted(freeze_root.glob("*.json")):
+            if path.name in {"current-freeze-index.json", "venue-policy-iclr2027-20260822.json"}:
+                continue
+            try:
+                payload = _load_json(path)
+            except (OSError, json.JSONDecodeError):
+                continue
+            updated = str(payload.get("updated_at") or "")
+            if updated:
+                timestamps.append(updated)
+    return max(timestamps) if timestamps else "1970-01-01T00:00:00+00:00"
+
+
 def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Path | None = None) -> dict[str, Any]:
     papers = [project_paper(path, artifact_root, freeze_root) for path in sorted(ledger_root.glob("*.json"))]
     order = {"SUBMISSION_READY": 0, "PREBUTTAL": 1, "PDF_QA": 2, "CLAIM_AUDIT": 3, "TARGETED_REPAIR": 4, "MOCK_PC": 5, "MANUSCRIPT": 6, "PAPER_DESIGN": 7, "PAPER_EVIDENCE": 8}
@@ -273,7 +296,7 @@ def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Pat
     }
     payload = {
         "schema_version": "1.1",
-        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "generated_at": source_watermark(ledger_root, freeze_root),
         "source": "canonical_paper_acceptance_ledger",
         "summary": summary,
         "papers": papers,
