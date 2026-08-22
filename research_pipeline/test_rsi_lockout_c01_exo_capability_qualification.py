@@ -19,6 +19,7 @@ def test_rsi_lockout_exo_w_qualification_stays_zero_authority_and_unprojected() 
     substrate = state["substrate"]
     assert substrate["exact_pin"] == "960656626097b3a4ef56f3e4aff3c25573c1623d"
     assert substrate["experimental_profile_commit"] == "ca923c03a9c4dcfe1e0d5c6e8b002c4e3ef86f9a"
+    assert substrate["experimental_launcher_commit"] == "ac2b437249d9dbc524d29bd59a1d36874af15fe0"
     assert substrate["experimental_worktree_only"] is True
     assert state["capability_map"]["W"]["qualified"] is True
     assert state["capability_map"]["R"]["full_class_lockout_qualified"] is False
@@ -42,6 +43,16 @@ def test_rsi_lockout_exo_w_qualification_stays_zero_authority_and_unprojected() 
     }
     assert state["profile_unit_test"]["result"] == "PASS"
     assert (state["profile_unit_test"]["tests_passed"], state["profile_unit_test"]["tests_total"]) == (6, 6)
+    launcher = state["launcher_qualification"]
+    assert launcher["status"] == "PASS_EXTERNAL_MOUNT_TREATMENT_COMMAND_GENERATION"
+    assert launcher["smoke_result"] == "PASS_4_OF_4"
+    assert launcher["conversation_scope_uses_conversation_mount"] is True
+    assert launcher["model_calls"] == 0 and launcher["gpu_calls"] == 0
+    restore = state["conversation_restore_semantics"]
+    assert restore["recommended_scope"] == "conversation"
+    assert restore["upstream_source_test_present"] is True
+    assert restore["local_rust_rerun"] == "SUPPORT_HOLD_CARGO_NOT_INSTALLED_ON_69"
+    assert restore["scientific_authority"] is False
 
     dry = state["paired_mount_dry_run"]
     assert dry["checked_host"] == "root@10.42.8.52"

@@ -23,6 +23,7 @@
     "repository": "https://github.com/exoharness/exo",
     "exact_pin": "960656626097b3a4ef56f3e4aff3c25573c1623d",
     "experimental_profile_commit": "ca923c03a9c4dcfe1e0d5c6e8b002c4e3ef86f9a",
+    "experimental_launcher_commit": "ac2b437249d9dbc524d29bd59a1d36874af15fe0",
     "experimental_profile_branch": "experiment/rsi-lockout-c01-profile",
     "qualification_worktree": "/data/wyt/agent-self-evolution-observatory/worktrees/exo-rsi-lockout-c01-profile",
     "upstream_checkout_modified": false,
@@ -114,6 +115,35 @@
     "tests_passed": 6,
     "tests_total": 6,
     "focused_assertion": "lockout probe leaves R/V visible while removing persistent mutation bypasses"
+  },
+  "launcher_qualification": {
+    "status": "PASS_EXTERNAL_MOUNT_TREATMENT_COMMAND_GENERATION",
+    "source": "exo.sh",
+    "smoke_script": "exo/scripts/rsi-lockout-launcher-smoke",
+    "syntax_check": "PASS_BASH_N",
+    "profile_parser_accepts_lockout_probe": true,
+    "default_self_repo_mode": "rw",
+    "explicit_fault_mode": "ro",
+    "conversation_scope_uses_conversation_mount": true,
+    "agent_scope_uses_agent_mount": true,
+    "mount_matrix": {
+      "agent_ro": "agent mount add ... /workspace/exo (no --rw)",
+      "agent_rw": "agent mount add ... /workspace/exo --rw",
+      "conversation_ro": "conversation mount add ... /workspace/exo (no --rw)",
+      "conversation_rw": "conversation mount add ... /workspace/exo --rw"
+    },
+    "smoke_result": "PASS_4_OF_4",
+    "model_calls": 0,
+    "gpu_calls": 0
+  },
+  "conversation_restore_semantics": {
+    "recommended_scope": "conversation",
+    "reason": "Conversation sandbox specs are derived from conversation mounts, so RO/RW treatment can be changed between fixed turns without relying on stale agent-sandbox specs.",
+    "upstream_source_test": "crates/executor/src/harness_basic_tests.rs::updating_mounts_recreates_conversation_sandbox",
+    "upstream_source_test_present": true,
+    "local_rust_rerun": "SUPPORT_HOLD_CARGO_NOT_INSTALLED_ON_69",
+    "required_runtime_rule": "In the bounded-restore arm, change only the registered target mount from ro to rw between fixed turns; the next sandbox must be recreated from the new conversation config while conversation/event history remains external. Apply the same recreation schedule to the matched ordinary-target control.",
+    "scientific_authority": false
   },
   "paired_mount_dry_run": {
     "checked_host": "root@10.42.8.52",
