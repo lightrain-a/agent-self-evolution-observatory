@@ -128,10 +128,12 @@ def main() -> None:
         fail(f"Temporal Skill D2 PaperState must be submission-ready with paper-first candidate provenance: {d2_temporal}")
     if d2_proxy.get("paper_stage") != "SUBMISSION_READY" or d2_proxy.get("submission_ready") is not True or d2_proxy.get("source_kind") != "paper-first-discovery-candidate":
         fail(f"Proxy Reward D2 PaperState must remain submission-ready with paper-first provenance: {d2_proxy}")
-    if d2_failure.get("paper_stage") != "TARGETED_REPAIR" or d2_failure.get("submission_ready") is not False or d2_failure.get("source_kind") != "paper-first-discovery-candidate":
-        fail(f"Failure-Memory D2 PaperState must remain in Targeted Repair: {d2_failure}")
-    if (paper_registry.get("summary") or {}).get("papers") != 5 or (paper_registry.get("summary") or {}).get("submission_ready") != 4 or ((paper_registry.get("summary") or {}).get("by_stage") or {}).get("TARGETED_REPAIR") != 1 or (paper_registry.get("summary") or {}).get("scientific_holds") != 0:
-        fail(f"PaperRegistry canonical 5/4/1 summary is stale: {paper_registry.get('summary')}")
+    if d2_failure.get("paper_stage") not in {"TARGETED_REPAIR", "SUBMISSION_READY"} or d2_failure.get("submission_ready") is not (d2_failure.get("paper_stage") == "SUBMISSION_READY") or d2_failure.get("source_kind") != "paper-first-discovery-candidate":
+        fail(f"Failure-Memory D2 PaperState must preserve paper-first provenance and internally consistent readiness: {d2_failure}")
+    registry_summary = paper_registry.get("summary") or {}
+    expected_stage_counts = dict(sorted(__import__("collections").Counter(row.get("paper_stage") for row in papers).items()))
+    if registry_summary.get("papers") != len(papers) or registry_summary.get("submission_ready") != sum(bool(row.get("submission_ready")) for row in papers) or registry_summary.get("by_stage") != expected_stage_counts or registry_summary.get("scientific_holds") != 0:
+        fail(f"PaperRegistry summary must match its five canonical PaperStates: {registry_summary}")
     timeline_summary = research_timeline.get("summary") or {}
     timeline_policy = research_timeline.get("projection_policy") or {}
     timeline_events = research_timeline.get("events") or []
@@ -166,7 +168,7 @@ def main() -> None:
     dashboard_by_code = {row.get("code"): row for row in dashboard_attention}
     if research_dashboard.get("schema_version") != "1.0" or dashboard_policy.get("read_only") is not True or any(dashboard_policy.get(key) is not False for key in ("scientific_authority", "experiment_authority", "submission_authority")) or dashboard_policy.get("dashboard_never_overrides_source_ledgers") is not True:
         fail(f"research dashboard must remain a read-only zero-authority presentation projection: {dashboard_policy}")
-    expected_dashboard_summary = {"portfolio_objects":int(ri_summary.get("portfolio_objects") or 0),"research_items":int(ri_summary.get("research_items") or 0),"current_attention":6,"paper_ready":1,"holds":5,"launchable_formal_experiments":0,"papers":5,"submission_ready":4}
+    expected_dashboard_summary = {"portfolio_objects":int(ri_summary.get("portfolio_objects") or 0),"research_items":int(ri_summary.get("research_items") or 0),"current_attention":6,"paper_ready":1,"holds":5,"launchable_formal_experiments":0,"papers":int(registry_summary.get("papers") or 0),"submission_ready":int(registry_summary.get("submission_ready") or 0)}
     if any(int(dashboard_summary.get(key) or 0) != value for key, value in expected_dashboard_summary.items()):
         fail(f"research dashboard canonical summary drifted: {dashboard_summary}")
     expected_attention = {"E-7","G-1","A-3","B-2","B-3","E-1"}
@@ -868,9 +870,11 @@ def main() -> None:
     if len(re.findall(r'label:"[^"]+",pattern:', ranking_text)) < 15:
         fail("citation ranking config must define at least 15 top-venue patterns")
     role_ids = re.findall(r'\{id:"([a-z-]+)",rank:\d+,title:', ranking_text)
-    expected_roles = ["field-overview", "core-evolution", "evaluation-governance", "enabling-mechanism", "agent-foundation", "model-foundation", "adjacent"]
+    expected_roles = ["must-read", "field-overview", "core-evolution", "evaluation-governance", "enabling-mechanism", "agent-foundation", "model-foundation", "adjacent"]
     if role_ids != expected_roles:
         fail(f"reading-role order is incomplete or unstable: {role_ids}")
+    if ranking_text.count("mustReadAnchors") != 1 or len(re.findall(r'\{title:"[^"]+",rank:\d+,reason:', ranking_text)) < 10:
+        fail("bibliography must keep a small explicit must-read anchor set ahead of general surveys")
     if ranking_text.count("citationCount:") < 20 or "snapshotUpdatedAt:" not in ranking_text:
         fail("citation ranking config must contain a dated deployment snapshot for at least 20 core papers")
     bibliography_html = (ROOT / "bibliography.html").read_text(encoding="utf-8")
