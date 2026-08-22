@@ -98,11 +98,11 @@ def main() -> None:
     paper_registry = json.loads((ROOT / "generated" / "paper-registry.json").read_text(encoding="utf-8"))
     research_dashboard = json.loads((ROOT / "generated" / "research-dashboard.json").read_text(encoding="utf-8"))
     ri_summary = research_items.get("summary") or {}
-    if (int(ri_summary.get("research_items") or 0), int(ri_summary.get("experiment_records") or 0), int(ri_summary.get("portfolio_experiment_contexts") or 0), int(ri_summary.get("evidence_contexts") or 0), int(ri_summary.get("portfolio_objects") or 0)) != (86, 30, 3, 2, 91):
+    if (int(ri_summary.get("research_items") or 0), int(ri_summary.get("experiment_records") or 0), int(ri_summary.get("portfolio_experiment_contexts") or 0), int(ri_summary.get("evidence_contexts") or 0), int(ri_summary.get("portfolio_objects") or 0)) != (87, 30, 3, 2, 92):
         fail(f"canonical ResearchItem projection counts drifted: {ri_summary}")
     if ri_summary.get("parent_scientific_states") != {"HOLD": 4, "MERGED": 6, "STOPPED": 16}:
         fail(f"canonical parent scientific states must be HOLD=4/MERGED=6/STOPPED=16: {ri_summary.get('parent_scientific_states')}")
-    expected_category_totals = {"A": 12, "B": 20, "C": 10, "D": 3, "E": 27, "F": 6, "G": 13}
+    expected_category_totals = {"A": 12, "B": 21, "C": 10, "D": 3, "E": 27, "F": 6, "G": 13}
     actual_category_totals = {key: int(((ri_summary.get("by_category") or {}).get(key) or {}).get("portfolio_total") or 0) for key in expected_category_totals}
     if actual_category_totals != expected_category_totals:
         fail(f"canonical A-G portfolio totals drifted: {actual_category_totals}")
@@ -166,13 +166,13 @@ def main() -> None:
     dashboard_by_code = {row.get("code"): row for row in dashboard_attention}
     if research_dashboard.get("schema_version") != "1.0" or dashboard_policy.get("read_only") is not True or any(dashboard_policy.get(key) is not False for key in ("scientific_authority", "experiment_authority", "submission_authority")) or dashboard_policy.get("dashboard_never_overrides_source_ledgers") is not True:
         fail(f"research dashboard must remain a read-only zero-authority presentation projection: {dashboard_policy}")
-    expected_dashboard_summary = {"portfolio_objects":91,"research_items":86,"current_attention":6,"paper_ready":1,"holds":5,"launchable_formal_experiments":0,"papers":2,"submission_ready":1}
+    expected_dashboard_summary = {"portfolio_objects":int(ri_summary.get("portfolio_objects") or 0),"research_items":int(ri_summary.get("research_items") or 0),"current_attention":6,"paper_ready":1,"holds":5,"launchable_formal_experiments":0,"papers":5,"submission_ready":4}
     if any(int(dashboard_summary.get(key) or 0) != value for key, value in expected_dashboard_summary.items()):
         fail(f"research dashboard canonical summary drifted: {dashboard_summary}")
     expected_attention = {"E-7","G-1","A-3","B-2","B-3","E-1"}
     if set(dashboard_by_code) != expected_attention or dashboard_by_code.get("E-7",{}).get("scientific_state") != "PAPER_READY" or any(dashboard_by_code.get(code,{}).get("scientific_state") != "HOLD" for code in expected_attention-{"E-7"}):
         fail(f"research dashboard current-attention set is incomplete or misclassified: {dashboard_by_code}")
-    if (dashboard_by_code.get("E-7") or {}).get("paper_id") != "STRI" or (dashboard_by_code.get("E-7") or {}).get("paper_stage") != "SUBMISSION_READY" or (dashboard_by_code.get("E-7") or {}).get("submission_ready") is not True or (dashboard_by_code.get("G-1") or {}).get("paper_id") != "AGENT-SAFETY-R9" or (dashboard_by_code.get("G-1") or {}).get("paper_stage") != "PAPER_EVIDENCE":
+    if (dashboard_by_code.get("E-7") or {}).get("paper_id") != "STRI" or (dashboard_by_code.get("E-7") or {}).get("paper_stage") != "SUBMISSION_READY" or (dashboard_by_code.get("E-7") or {}).get("submission_ready") is not True or (dashboard_by_code.get("G-1") or {}).get("paper_id") != "AGENT-SAFETY-R9" or (dashboard_by_code.get("G-1") or {}).get("paper_stage") != "SUBMISSION_READY" or (dashboard_by_code.get("G-1") or {}).get("submission_ready") is not True:
         fail(f"research dashboard must preserve ResearchItem→PaperState handoffs: {dashboard_by_code}")
     if any(not row.get("portfolio_href") or not row.get("timeline_href") or not row.get("briefing_zh") or not row.get("next_step_zh") for row in dashboard_attention):
         fail("every dashboard attention row needs a human briefing, explicit next step, ResearchItem link, and timeline link")

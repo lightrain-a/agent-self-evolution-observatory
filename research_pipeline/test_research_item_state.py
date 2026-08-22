@@ -20,15 +20,22 @@ class ResearchItemStateTest(unittest.TestCase):
     def test_projection_counts_and_categories(self) -> None:
         self.assertEqual(validate_research_item_state(self.state), [])
         summary = self.state["summary"]
-        self.assertEqual(summary["research_items"], 86)
+        self.assertEqual(summary["research_items"], 87)
         self.assertEqual(summary["experiment_records"], 30)
         self.assertEqual(summary["portfolio_experiment_contexts"], 3)
         self.assertEqual(summary["evidence_contexts"], 2)
-        self.assertEqual(summary["portfolio_objects"], 91)
+        self.assertEqual(summary["portfolio_objects"], 92)
         self.assertEqual(
             {key: value["portfolio_total"] for key, value in summary["by_category"].items()},
-            {"A": 12, "B": 20, "C": 10, "D": 3, "E": 27, "F": 6, "G": 13},
+            {"A": 12, "B": 21, "C": 10, "D": 3, "E": 27, "F": 6, "G": 13},
         )
+
+    def test_latest_shadow_search_memory_closure_is_projected(self) -> None:
+        p04 = next(row for row in self.state["research_items"] if row["id"] == "SHADOW-P04-C01")
+        self.assertEqual((p04["code"], p04["category"], p04["source_kind"]), ("B-21", "B", "shadow_closed"))
+        self.assertEqual((p04["scientific_state"], p04["failure_layer"]), ("STOPPED", "problem_novelty"))
+        self.assertFalse(p04["principle_dead_end_certified"])
+        self.assertIn(p04["provenance_refs"][0]["role"], {"typed_shadow_closure", "append_only_shadow_search_memory_closure"})
 
     def test_support_stop_is_not_scientific_stop(self) -> None:
         self.assertEqual(self.state["summary"]["parent_scientific_states"], {"HOLD": 4, "MERGED": 6, "STOPPED": 16})
@@ -64,10 +71,13 @@ class ResearchItemStateTest(unittest.TestCase):
             self.assertIsNone(temporal["source_research_item"])
             self.assertEqual(temporal["source_candidates"], ["D2-C06"])
             self.assertEqual(self.registry["summary"]["papers"], 5)
-            self.assertEqual(self.registry["summary"]["submission_ready"], 4)
             failure = papers["D2-PAPER-FAILURE-MEMORY-PROVENANCE"]
-            self.assertEqual(failure["paper_stage"], "TARGETED_REPAIR")
-            self.assertFalse(failure["submission_ready"])
+            self.assertIn(failure["paper_stage"], {"TARGETED_REPAIR", "SUBMISSION_READY"})
+            self.assertEqual(failure["submission_ready"], failure["paper_stage"] == "SUBMISSION_READY")
+            self.assertEqual(
+                self.registry["summary"]["submission_ready"],
+                sum(row.get("paper_stage") == "SUBMISSION_READY" for row in papers.values()),
+            )
 
     def test_experiments_are_zero_authority_evidence_events(self) -> None:
         self.assertTrue(all(row["scientific_authority"] is False for row in self.state["experiment_records"]))

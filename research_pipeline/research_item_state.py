@@ -242,13 +242,104 @@ def build_safety_items(safety, current_status):
     return out
 
 
-def build_shadow_closed_items(current_status):
-    counters = dict(CLOSED_CODE_START); out = []
-    for row in current_status.get("shadow_search", {}).get("closed_rows", []):
+def _shadow_closed_rows(current_status: dict[str, Any], search_design: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+    """Merge the public closure ledger with newer append-only Shadow Search Memory.
+
+    ``current-research-status.json`` is intentionally a compact public projection and can
+    lag a newly persisted search closure.  The search-memory ledger is append-only and is
+    therefore allowed to contribute only *missing* candidate ids here; it never rewrites
+    an already projected closure.  This keeps existing A–G codes stable while ensuring a
+    newly certified closure cannot disappear from ResearchItemState before the next full
+    current-status rebuild.
+    """
+    rows = [dict(row) for row in current_status.get("shadow_search", {}).get("closed_rows", [])]
+    def closure_key(row: dict[str, Any]) -> tuple[str, str, str]:
+        return (
+            str(row.get("candidate_id") or row.get("source_candidate_id") or ""),
+            str(row.get("reason") or ""),
+            str(row.get("strongest_reduction") or ""),
+        )
+    by_key = {closure_key(row): row for row in rows}
+    memory = (search_design or {}).get("shadow_search_memory", {})
+    for obj in memory.get("closed_objects", []):
+        cid = str(obj.get("source_candidate_id") or obj.get("candidate_id") or "")
+        if not cid:
+            continue
+        normalized = {
+            "candidate_id": cid,
+            "reason": obj.get("reason"),
+            "strongest_reduction": obj.get("strongest_reduction"),
+        }
+        key = closure_key(normalized)
+        if key in by_key:
+            continue
+        avoid = list(obj.get("avoid") or [])
+        title = ""
+        if avoid:
+            title = re.sub(r"^paraphrase-only variants of:\s*", "", str(avoid[0]), flags=re.I).strip()
+        normalized.update({
+            "title": title or cid,
+            "reopen_only_if": obj.get("reopen_only_if"),
+            "failure_layer": obj.get("failure_layer"),
+            "closure_layer": obj.get("closure_layer"),
+            "memory_class": obj.get("memory_class"),
+            "source_stop_class": obj.get("source_stop_class"),
+            "principle_update_allowed": obj.get("principle_update_allowed"),
+            "broader_core_principle_falsified": obj.get("broader_core_principle_falsified"),
+            "experiment_run_for_this_readjudication": obj.get("experiment_run_for_this_readjudication"),
+            "experiment_alone_authorizes_closure": obj.get("experiment_alone_authorizes_closure"),
+            "_closure_projection_source": "generated/paper-first-search-portfolio-design-adjudication.json",
+        })
+        rows.append(normalized)
+        by_key[key] = normalized
+    return rows
+
+
+def build_shadow_closed_items(current_status, search_design=None):
+    # Preserve already-published A–G codes even if append-only search memory is
+    # rebuilt in a different row order.  New closures take the next unused code
+    # in their category; existing closures never renumber.
+    existing_by_reason: dict[tuple[str, str], str] = {}
+    existing_by_title: dict[tuple[str, str], str] = {}
+    used_codes: set[str] = set()
+    try:
+        existing = load_generated("research-items.json")
+        for item in existing.get("research_items", []):
+            if item.get("source_kind") != "shadow_closed":
+                continue
+            code = str(item.get("code") or "")
+            cid = str(item.get("id") or "")
+            title = str((item.get("title") or {}).get("en") or (item.get("title") or {}).get("zh") or "")
+            reason = str((item.get("decision_reason") or {}).get("en") or (item.get("decision_reason") or {}).get("zh") or "")
+            if code:
+                used_codes.add(code)
+                existing_by_title[(cid, title)] = code
+                existing_by_reason[(cid, reason)] = code
+    except Exception:
+        pass
+    counters = dict(CLOSED_CODE_START)
+    for code in used_codes:
+        match = re.fullmatch(r"([A-G])-(\d+)", code)
+        if match:
+            group, number = match.group(1), int(match.group(2))
+            counters[group] = max(counters[group], number + 1)
+    out = []
+    for row in _shadow_closed_rows(current_status, search_design):
         cid = str(row.get("candidate_id") or "")
         if cid in MERGED_SHADOW_CLOSURES: continue
-        group = closed_category(row); code = f"{group}-{counters[group]}"; counters[group] += 1
+        group = closed_category(row)
+        title = str(row.get("title") or cid)
+        reason = str(row.get("reason") or row.get("strongest_reduction") or "")
+        code = existing_by_reason.get((cid, reason)) or existing_by_title.get((cid, title))
+        if not code or group_from_code(code) != group:
+            while f"{group}-{counters[group]}" in used_codes:
+                counters[group] += 1
+            code = f"{group}-{counters[group]}"
+            counters[group] += 1
+        used_codes.add(code)
         failure_layer = row.get("failure_layer") or row.get("closure_layer")
+        projection_source = row.get("_closure_projection_source") or "generated/current-research-status.json"
+        projection_role = "append_only_shadow_search_memory_closure" if row.get("_closure_projection_source") else "typed_shadow_closure"
         out.append({
             "id": cid, "code": code, "category": group, "entity_type": "ResearchItem", "source_kind": "shadow_closed",
             "title": {"zh": str(row.get("title") or cid), "en": str(row.get("title") or cid)}, "problem": bi(row.get("title") or cid),
@@ -259,7 +350,7 @@ def build_shadow_closed_items(current_status):
             "evidence_state": "TYPED_CLOSURE", "execution_authority": authority(), "experiment_refs": [], "failure_layer": failure_layer,
             "principle_dead_end_certified": bool(row.get("principle_update_allowed") and failure_layer == "core_principle"),
             "reopen_condition": bi(row.get("reopen_only_if") or ""), "absorbed_children": [], "paper_transition": None,
-            "provenance_refs": [source_ref("generated/current-research-status.json", "typed_shadow_closure")],
+            "provenance_refs": [source_ref(projection_source, projection_role)],
             "closure_metadata": {k: row.get(k) for k in ("experiment_run_for_this_readjudication", "experiment_alone_authorizes_closure", "broader_core_principle_falsified", "memory_class")},
         })
     return out
@@ -355,16 +446,42 @@ def build_evidence_contexts(current_status):
 def paper_acceptance_state():
     """Return the freshest auditable Paper Acceptance projection available at build time.
 
-    The static research-system snapshot is portable and remains the fallback for CI or
-    machines without the canonical data root.  On the canonical research host we read
-    the append-only ledger index directly so newly advanced papers cannot disappear
-    from PaperRegistry simply because research-system-state.json predates them.
+    The canonical append-only ledger remains authoritative on the research host.  For
+    portable/Pages builds, use the newest committed read-only projection available:
+    paper-registry.json may be newer than the much larger research-system snapshot and
+    must not be silently rolled back merely because /data is unavailable in CI.
     """
     system = load_generated("research-system-state.json")
     acceptance = dict(system.get("paper_acceptance") or {})
     snapshot_index = dict(acceptance.get("ledger_index") or {})
     ledger_index = snapshot_index
     projection_source = "generated/research-system-state.json"
+    try:
+        portable_registry = load_generated("paper-registry.json")
+        registry_rows = []
+        for row in portable_registry.get("papers") or []:
+            if not isinstance(row, dict):
+                continue
+            item = dict(row)
+            item["paper_id"] = str(item.get("acceptance_paper_id") or item.get("paper_id") or "")
+            registry_rows.append(item)
+        registry_summary = portable_registry.get("summary") or {}
+        registry_generated = str(portable_registry.get("generated_at") or "")
+        system_generated = str(system.get("generated_at") or "")
+        if registry_rows and registry_generated > system_generated:
+            ledger_index = {
+                "entries": registry_rows,
+                "summary": {
+                    "papers": int(registry_summary.get("papers") or len(registry_rows)),
+                    "invalid_ledgers": 0,
+                    "scientific_holds": int(registry_summary.get("scientific_holds") or 0),
+                    "submission_ready": int(registry_summary.get("submission_ready") or 0),
+                    "by_state": dict(registry_summary.get("by_stage") or {}),
+                },
+            }
+            projection_source = "generated/paper-registry.json"
+    except Exception:
+        pass
     try:
         root = resolve_experiment_data_root(StorageSettings.from_env())
         live_index = build_paper_ledger_index(root)
@@ -374,7 +491,7 @@ def paper_acceptance_state():
             projection_source = "canonical-append-only-paper-ledgers"
     except Exception:
         # Portable/static builds intentionally remain valid without /data access.
-        ledger_index = snapshot_index
+        pass
     acceptance["ledger_index"] = ledger_index
     acceptance["projection_source"] = projection_source
     summary = dict(acceptance.get("summary") or {})
@@ -394,7 +511,8 @@ def build_research_item_state():
     terminal = load_generated("human-terminal-idea-state.json"); low = load_generated("iclr-low-resource-ideas.json"); final = load_generated("current-final-ideas.json")
     batch = load_generated("p0-revived-batch-f0.json"); admissions = load_generated("p0-admission-state.json"); incubation = load_generated("paper-first-idea-incubation.json")
     current = load_generated("current-research-status.json"); safety = load_generated("agent-safety-program-state.json")
-    items = [*build_parent_items(terminal, low, final, batch, admissions), *build_independent_items(terminal, final, admissions), *build_pf_items(incubation), *build_safety_items(safety, current), *build_shadow_closed_items(current), build_stri_research_item(current)]
+    search_design = load_generated("paper-first-search-portfolio-design-adjudication.json")
+    items = [*build_parent_items(terminal, low, final, batch, admissions), *build_independent_items(terminal, final, admissions), *build_pf_items(incubation), *build_safety_items(safety, current), *build_shadow_closed_items(current, search_design), build_stri_research_item(current)]
     _, acceptance_by_id = paper_acceptance_state()
     for row in items:
         if row.get("code") == "E-7" and acceptance_by_id.get("STRI-ICLR2027"):
@@ -420,7 +538,7 @@ def build_research_item_state():
                     "source_kind_counts": dict(sorted(Counter(r.get("source_kind") for r in items).items())), "scientific_state_counts": dict(sorted(Counter(r.get("scientific_state") for r in items).items())), "by_category": by_category,
                     "parent_scientific_states": dict(sorted(Counter(r["scientific_state"] for r in items if r["source_kind"] == "parent").items())), "current_formal_experiment_authority": int((current.get("headline") or {}).get("launchable_formal_experiments") or 0)},
         "research_items": items, "experiment_records": experiments, "evidence_contexts": contexts,
-        "provenance": {"canonical_inputs": ["generated/human-terminal-idea-state.json", "generated/iclr-low-resource-ideas.json", "generated/current-final-ideas.json", "generated/p0-admission-state.json", "generated/p0-revived-batch-f0.json", "generated/paper-first-idea-incubation.json", "generated/current-research-status.json", "generated/agent-safety-program-state.json", "generated/research-system-state.json#paper_acceptance.ledger_index"]},
+        "provenance": {"canonical_inputs": ["generated/human-terminal-idea-state.json", "generated/iclr-low-resource-ideas.json", "generated/current-final-ideas.json", "generated/p0-admission-state.json", "generated/p0-revived-batch-f0.json", "generated/paper-first-idea-incubation.json", "generated/current-research-status.json", "generated/paper-first-search-portfolio-design-adjudication.json#shadow_search_memory.closed_objects", "generated/agent-safety-program-state.json", "generated/research-system-state.json#paper_acceptance.ledger_index"]},
     }
 
 
@@ -544,14 +662,25 @@ def build_paper_registry(research_state=None):
 def validate_research_item_state(state):
     errors = []; items = state.get("research_items") or []; experiments = state.get("experiment_records") or []; contexts = state.get("evidence_contexts") or []; summary = state.get("summary") or {}
     codes = [r.get("code") for r in items]
-    if len(items) != 86: errors.append(f"expected 86 ResearchItems, got {len(items)}")
+    current = load_generated("current-research-status.json")
+    search_design = load_generated("paper-first-search-portfolio-design-adjudication.json")
+    source_shadow_rows = [row for row in _shadow_closed_rows(current, search_design) if str(row.get("candidate_id") or "") not in MERGED_SHADOW_CLOSURES]
+    expected_shadow_ids = Counter(str(row.get("candidate_id") or "") for row in source_shadow_rows)
+    actual_shadow_ids = Counter(str(row.get("id") or "") for row in items if row.get("source_kind") == "shadow_closed")
+    if actual_shadow_ids != expected_shadow_ids:
+        errors.append(f"shadow closure projection drifted: expected={dict(expected_shadow_ids)}, actual={dict(actual_shadow_ids)}")
+    expected_items = 48 + len(source_shadow_rows)
+    if len(items) != expected_items: errors.append(f"expected {expected_items} ResearchItems, got {len(items)}")
     if len(set(codes)) != len(codes): errors.append("ResearchItem codes are not unique")
     if len(experiments) != 30: errors.append(f"expected 30 ExperimentRecords, got {len(experiments)}")
     if len(contexts) != 2: errors.append(f"expected 2 EvidenceContexts, got {len(contexts)}")
-    if int(summary.get("portfolio_objects") or 0) != 91: errors.append(f"expected 91 portfolio objects, got {summary.get('portfolio_objects')}")
-    expected = {"A":12,"B":20,"C":10,"D":3,"E":27,"F":6,"G":13}
+    expected_portfolio_objects = expected_items + 3 + 2
+    if int(summary.get("portfolio_objects") or 0) != expected_portfolio_objects: errors.append(f"expected {expected_portfolio_objects} portfolio objects, got {summary.get('portfolio_objects')}")
+    base_category_totals = {"A":12,"B":13,"C":7,"D":3,"E":10,"F":3,"G":5}
+    closure_category_counts = Counter(closed_category(row) for row in source_shadow_rows)
+    expected = {key: base_category_totals[key] + int(closure_category_counts.get(key, 0)) for key in base_category_totals}
     actual = {k:int((summary.get("by_category",{}).get(k) or {}).get("portfolio_total") or 0) for k in expected}
-    if actual != expected: errors.append(f"category totals drifted: {actual}")
+    if actual != expected: errors.append(f"category totals drifted: expected={expected}, actual={actual}")
     if summary.get("parent_scientific_states") != {"HOLD":4,"MERGED":6,"STOPPED":16}: errors.append(f"parent state split drifted: {summary.get('parent_scientific_states')}")
     by_code = {r.get("code"):r for r in items}
     for code in ("A-3","B-2","B-3","E-1"):
@@ -565,7 +694,7 @@ def validate_research_item_state(state):
     public_codes = set(codes)
     public_codes.update(r.get("portfolio_code") for r in experiments if r.get("portfolio_context"))
     public_codes.update(r.get("code") for r in contexts if r.get("portfolio_context"))
-    if len(public_codes) != 91: errors.append(f"portfolio codes must be unique across 91 objects, got {len(public_codes)}")
+    if len(public_codes) != expected_portfolio_objects: errors.append(f"portfolio codes must be unique across {expected_portfolio_objects} objects, got {len(public_codes)}")
     return errors
 
 

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "as_of_date": "2026-08-21",
+  "as_of_date": "2026-08-22",
   "projection_policy": {
     "read_only": true,
     "scientific_authority": false,
@@ -14,14 +14,14 @@
     "dashboard_never_overrides_source_ledgers": true
   },
   "summary": {
-    "portfolio_objects": 91,
-    "research_items": 86,
+    "portfolio_objects": 92,
+    "research_items": 87,
     "current_attention": 6,
     "paper_ready": 1,
     "holds": 5,
     "launchable_formal_experiments": 0,
-    "papers": 2,
-    "submission_ready": 1
+    "papers": 5,
+    "submission_ready": 4
   },
   "attention": [
     {
@@ -63,9 +63,9 @@
       "current_reason_zh": "The fixed SecureClaw context restores headroom on two previously known failure probes but fails to generalize to the preregistered fresh development panel. Its released rules primarily target operational-security concerns rather…",
       "reopen_condition_zh": "Use a fresh preregistered backbone/runtime and obtain enough frozen currently-safe states before touching held-out future probes.",
       "paper_id": "AGENT-SAFETY-R9",
-      "paper_stage": "PAPER_EVIDENCE",
-      "paper_scientific_status": "CAUSAL_HOLD",
-      "submission_ready": false,
+      "paper_stage": "SUBMISSION_READY",
+      "paper_scientific_status": "READY",
+      "submission_ready": true,
       "portfolio_href": "paper-ideas.html?research=G-1",
       "timeline_href": "research-timeline.html?research=G-1",
       "paper_href": "selected-paper.html?paper=AGENT-SAFETY-R9"
@@ -178,35 +178,68 @@
     {
       "paper_id": "AGENT-SAFETY-R9",
       "source_research_item": "G-1",
-      "title": "Future First-Violation Hazard after Persistent State Evolution",
-      "paper_stage": "PAPER_EVIDENCE",
-      "scientific_status": "CAUSAL_HOLD",
-      "submission_ready": false,
+      "title": "A Static Safety Pass Is Not a Temporal Certificate: Controlled First-Violation Evidence in a Persistent Web Agent",
+      "paper_stage": "SUBMISSION_READY",
+      "scientific_status": "READY",
+      "submission_ready": true,
       "next_action": "",
       "paper_href": "selected-paper.html?paper=AGENT-SAFETY-R9",
       "timeline_href": "research-timeline.html?paper=AGENT-SAFETY-R9"
+    },
+    {
+      "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+      "source_research_item": "",
+      "title": "Noisy Rewards Write Noisy Memories: Reward Error as a Variance Amplifier in Self-Improving Agents",
+      "paper_stage": "SUBMISSION_READY",
+      "scientific_status": "READY",
+      "submission_ready": true,
+      "next_action": "",
+      "paper_href": "selected-paper.html?paper=D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+      "timeline_href": "research-timeline.html?paper=D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE"
+    },
+    {
+      "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "source_research_item": "",
+      "title": "Temporal Skills Are a Causal Bottleneck in Evolving Time-Series Agents",
+      "paper_stage": "SUBMISSION_READY",
+      "scientific_status": "READY",
+      "submission_ready": true,
+      "next_action": "",
+      "paper_href": "selected-paper.html?paper=D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "timeline_href": "research-timeline.html?paper=D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK"
+    },
+    {
+      "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+      "source_research_item": "",
+      "title": "Failure Memories Are Not Neutral: Causal Provenance Effects in Self-Evolving Agents",
+      "paper_stage": "TARGETED_REPAIR",
+      "scientific_status": "READY",
+      "submission_ready": false,
+      "next_action": "",
+      "paper_href": "selected-paper.html?paper=D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+      "timeline_href": "research-timeline.html?paper=D2-PAPER-FAILURE-MEMORY-PROVENANCE"
     }
   ],
   "week": {
     "start_date": "2026-08-17",
-    "end_date": "2026-08-21",
-    "research_days": 5,
-    "events": 334,
-    "substantive_events": 212,
+    "end_date": "2026-08-22",
+    "research_days": 6,
+    "events": 695,
+    "substantive_events": 224,
     "key_changes": 7,
     "class_counts": {
-      "blocker": 14,
-      "closure": 83,
-      "experiment": 52,
-      "idea": 42,
-      "paper": 19,
+      "blocker": 15,
+      "closure": 84,
+      "experiment": 53,
+      "idea": 46,
+      "paper": 24,
       "scientific": 2,
-      "system": 122
+      "system": 471
     },
     "attention_activity": {
       "B-3": 1,
-      "E-7": 36,
-      "G-1": 28
+      "E-7": 37,
+      "G-1": 50
     },
     "highlights": [
       {
@@ -260,7 +293,7 @@
         "href": "research-timeline.html?research=G-7"
       },
       {
-        "date": "2026-08-20",
+        "date": "2026-08-22",
         "event_class": "idea",
         "title_zh": "Canonical 双漏斗 Idea 发现状态快照",
         "title_en": "Canonical double-funnel discovery snapshot",

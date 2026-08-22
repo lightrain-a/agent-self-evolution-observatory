@@ -56,6 +56,8 @@ def require(condition: bool, message: str) -> None:
 
 def main() -> None:
     expected_headline=json.loads((ROOT/"generated/current-research-status.json").read_text(encoding="utf-8"))["headline"]
+    expected_research_summary=json.loads((ROOT/"generated/research-items.json").read_text(encoding="utf-8"))["summary"]
+    expected_dashboard_summary=json.loads((ROOT/"generated/research-dashboard.json").read_text(encoding="utf-8"))["summary"]
     firefox = shutil.which("firefox")
     geckodriver = shutil.which("geckodriver")
     # On the 69 host, the Snap wrapper can fail before WebDriver startup when
@@ -180,7 +182,7 @@ def main() -> None:
         require(home["missing"] == 0, "home contains unresolved citations")
         require(home["corpus"] >= 100, "curated literature snapshot did not load")
         require(home["researchConsole"] == 1 and home["consoleKpis"] == 4 and home["primaryPaper"] == "E-7" and home["holdRows"] == 5 and set(home["attentionCodes"]) == {"E-7","G-1","A-3","B-2","B-3","E-1"}, f"home current-research console must expose exactly the six actionable ResearchItems: {home}")
-        require(home["dashboardSummary"].get("current_attention") == 6 and home["dashboardSummary"].get("paper_ready") == 1 and home["dashboardSummary"].get("holds") == 5 and home["dashboardSummary"].get("launchable_formal_experiments") == 0 and home["dashboardSummary"].get("submission_ready") == 1, f"home dashboard summary must remain canonical, submission-ready, and zero-launch: {home['dashboardSummary']}")
+        require(all(home["dashboardSummary"].get(key) == expected_dashboard_summary.get(key) for key in ("portfolio_objects","research_items","current_attention","paper_ready","holds","launchable_formal_experiments","papers","submission_ready")), f"home dashboard summary must match canonical generated dashboard: rendered={home['dashboardSummary']} expected={expected_dashboard_summary}")
         require(home["weekHighlights"] >= 3 and "research-timeline.html?research=A-3" in home["consoleLinks"] and "selected-paper.html?paper=STRI" in home["consoleLinks"], f"home console must expose weekly provenance plus direct A-3/STRI navigation: {home}")
 
         navigate("/system-overview.html", 5)
@@ -596,9 +598,9 @@ def main() -> None:
         require("STOP_MATCHED_POST_ONLY_EQUIVALENT" in idea_portfolio["text"] and "STOP_MATCHED_SOFT_SCALAR_EQUIVALENT" in idea_portfolio["text"] and "DIAGNOSTIC ONLY" in idea_portfolio["text"], "completed premature Method diagnostics are not visible on Paper Ideas")
         require(idea_portfolio["terminalGroups"] == 0 and idea_portfolio["terminalStats"] == 0, f"legacy terminal-status grouping must not compete with the A-G ResearchItem lanes: {idea_portfolio['terminalGroups']}/{idea_portfolio['terminalStats']}")
         require(idea_portfolio["legacyPreGpuBoards"] == 0 and idea_portfolio["legacyP0Entry"] == 0, "legacy Pre-GPU/P0-entry boards leaked back into canonical Paper Ideas")
-        require(idea_portfolio["currentLedger"] == 1 and idea_portfolio["currentInventoryTotal"] == 91 and idea_portfolio["legacyCurrentRows"] == 0 and idea_portfolio["leadingPaperTracks"] == 1, f"complete ResearchItem accounting or PaperState handoff is incomplete, or the legacy current-status row table leaked back in: {idea_portfolio}")
+        require(idea_portfolio["currentLedger"] == 1 and idea_portfolio["currentInventoryTotal"] == int(expected_research_summary.get("portfolio_objects") or 0) and idea_portfolio["legacyCurrentRows"] == 0 and idea_portfolio["leadingPaperTracks"] == 1, f"complete ResearchItem accounting or PaperState handoff is incomplete, or the legacy current-status row table leaked back in: {idea_portfolio}")
         crs=idea_portfolio["canonicalResearchSummary"]
-        require((crs.get("research_items"),crs.get("experiment_records"),crs.get("portfolio_experiment_contexts"),crs.get("evidence_contexts"),crs.get("portfolio_objects")) == (86,30,3,2,91) and crs.get("parent_scientific_states") == {"HOLD":4,"MERGED":6,"STOPPED":16}, f"canonical ResearchItem projection is missing or inconsistent: {crs}")
+        require((crs.get("research_items"),crs.get("experiment_records"),crs.get("portfolio_experiment_contexts"),crs.get("evidence_contexts"),crs.get("portfolio_objects")) == (expected_research_summary.get("research_items"),expected_research_summary.get("experiment_records"),expected_research_summary.get("portfolio_experiment_contexts"),expected_research_summary.get("evidence_contexts"),expected_research_summary.get("portfolio_objects")) and crs.get("parent_scientific_states") == {"HOLD":4,"MERGED":6,"STOPPED":16}, f"canonical ResearchItem projection is missing or inconsistent: {crs}")
         require(all(idea_portfolio["canonicalResearchItems"].get(code)=="HOLD" for code in ("A-3","B-2","B-3","E-1")) and idea_portfolio["canonicalResearchItems"].get("E-7")=="PAPER_READY" and idea_portfolio["canonicalResearchItems"].get("G-1")=="HOLD", f"canonical ResearchItem state authority drifted: {idea_portfolio['canonicalResearchItems']}")
         registry_summary=idea_portfolio["paperRegistry"].get("summary") or {}
         registry_papers={row.get("paper_id"):row for row in (idea_portfolio["paperRegistry"].get("papers") or [])}

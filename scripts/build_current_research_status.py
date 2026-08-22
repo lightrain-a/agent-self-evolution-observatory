@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -101,9 +102,12 @@ shadow_memory = shadow.get("shadow_search_memory") or shadow.get("shadow_dead_en
 for row in (shadow_memory.get("closed_objects") or shadow_memory.get("blocked_objects") or []):
     if not isinstance(row, dict):
         continue
+    title = row.get("title") or row.get("problem_text")
+    if not title and row.get("source_candidate_id") == "SHADOW-P04-C01" and (row.get("avoid") or []):
+        title = re.sub(r"^paraphrase-only variants of:\s*", "", str((row.get("avoid") or [""])[0]), flags=re.I).strip()
     shadow_closed_rows.append({
         "candidate_id": row.get("source_candidate_id"),
-        "title": row.get("title") or row.get("problem_text") or row.get("source_candidate_id"),
+        "title": title or row.get("source_candidate_id"),
         "closure_layer": row.get("closure_layer"),
         "failure_layer": row.get("failure_layer"),
         "memory_class": row.get("memory_class"),

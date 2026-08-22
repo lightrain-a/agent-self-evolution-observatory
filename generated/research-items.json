@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-21T16:56:43+00:00",
-  "source_revision": "55ea228bf56d926ca10ea144d00fb352c8ca97ba",
+  "generated_at": "2026-08-22T06:40:02+00:00",
+  "source_revision": "5345ba8447c681482d7900424c0798e0398f7f8e",
   "policy": {
     "research_item_is_primary_scientific_entity": true,
     "experiment_is_evidence_event_not_parallel_current_state": true,
@@ -64,24 +64,24 @@
     }
   ],
   "summary": {
-    "research_items": 86,
+    "research_items": 87,
     "experiment_records": 30,
     "portfolio_experiment_contexts": 3,
     "evidence_contexts": 2,
-    "portfolio_objects": 91,
+    "portfolio_objects": 92,
     "source_kind_counts": {
       "independent_method": 7,
       "paper_first": 9,
       "paper_source": 1,
       "parent": 26,
       "safety": 5,
-      "shadow_closed": 38
+      "shadow_closed": 39
     },
     "scientific_state_counts": {
       "HOLD": 5,
       "MERGED": 10,
       "PAPER_READY": 1,
-      "STOPPED": 70
+      "STOPPED": 71
     },
     "by_category": {
       "A": {
@@ -91,10 +91,10 @@
         "portfolio_total": 12
       },
       "B": {
-        "research_items": 18,
+        "research_items": 19,
         "experiment_contexts": 0,
         "evidence_contexts": 2,
-        "portfolio_total": 20
+        "portfolio_total": 21
       },
       "C": {
         "research_items": 10,
@@ -2427,6 +2427,81 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      }
+    },
+    {
+      "id": "SHADOW-P04-C01",
+      "code": "B-21",
+      "category": "B",
+      "entity_type": "ResearchItem",
+      "source_kind": "shadow_closed",
+      "title": {
+        "zh": "Nonmonotonic skill-pool scaling with irreversible contamination collapse",
+        "en": "Nonmonotonic skill-pool scaling with irreversible contamination collapse"
+      },
+      "problem": {
+        "zh": "Nonmonotonic skill-pool scaling with irreversible contamination collapse",
+        "en": "Nonmonotonic skill-pool scaling with irreversible contamination collapse"
+      },
+      "hypothesis": {
+        "zh": "Nonmonotonic skill-pool scaling with irreversible contamination collapse",
+        "en": "Nonmonotonic skill-pool scaling with irreversible contamination collapse"
+      },
+      "mechanism": {
+        "zh": "Nonmonotonic skill-pool scaling with irreversible contamination collapse",
+        "en": "Nonmonotonic skill-pool scaling with irreversible contamination collapse"
+      },
+      "method_logic": {
+        "zh": "",
+        "en": ""
+      },
+      "novelty_boundary": {
+        "zh": "arXiv:2608.05810 already claims the same inverted-U skill-pool tipping point together with weak source-only rollback and descendant-lineage irreversibility.",
+        "en": "arXiv:2608.05810 already claims the same inverted-U skill-pool tipping point together with weak source-only rollback and descendant-lineage irreversibility."
+      },
+      "strongest_baseline": {
+        "zh": "arXiv:2608.05810 already claims the same inverted-U skill-pool tipping point together with weak source-only rollback and descendant-lineage irreversibility.",
+        "en": "arXiv:2608.05810 already claims the same inverted-U skill-pool tipping point together with weak source-only rollback and descendant-lineage irreversibility."
+      },
+      "minimum_falsifier": {
+        "zh": "",
+        "en": ""
+      },
+      "lifecycle_state": "CLOSED",
+      "scientific_state": "STOPPED",
+      "portfolio_disposition": "CONCLUDED",
+      "decision_code": "PROBLEM_NOVELTY_STOP",
+      "decision_reason": {
+        "zh": "Independent exact-reduction review found no surviving frozen residual: the closest primary source already states, formalizes, and tests nonmonotonic scaling, a contamination tipping point, weak recovery after source-only removal, and irreversible descendant-lineage propagation. Additional cross-substrate replication cannot rescue the frozen claim because universality is not part of P04.",
+        "en": "Independent exact-reduction review found no surviving frozen residual: the closest primary source already states, formalizes, and tests nonmonotonic scaling, a contamination tipping point, weak recovery after source-only removal, and irreversible descendant-lineage propagation. Additional cross-substrate replication cannot rescue the frozen claim because universality is not part of P04."
+      },
+      "evidence_state": "TYPED_CLOSURE",
+      "execution_authority": {
+        "method": false,
+        "experiment": false,
+        "p0": false,
+        "gpu": false
+      },
+      "experiment_refs": [],
+      "failure_layer": "problem_novelty",
+      "principle_dead_end_certified": false,
+      "reopen_condition": {
+        "zh": "New primary evidence supplies an ex-ante same-information prediction that the recorded current-source reduction cannot express under matched information, budget, and operational scope; renaming components, changing application domain, or proposing an unexecuted ablation does not reopen the basin.",
+        "en": "New primary evidence supplies an ex-ante same-information prediction that the recorded current-source reduction cannot express under matched information, budget, and operational scope; renaming components, changing application domain, or proposing an unexecuted ablation does not reopen the basin."
+      },
+      "absorbed_children": [],
+      "paper_transition": null,
+      "provenance_refs": [
+        {
+          "path": "generated/current-research-status.json",
+          "role": "typed_shadow_closure"
+        }
+      ],
+      "closure_metadata": {
+        "experiment_run_for_this_readjudication": false,
+        "experiment_alone_authorizes_closure": false,
+        "broader_core_principle_falsified": false,
+        "memory_class": "PROBLEM_NOVELTY_STOP"
       }
     },
     {
@@ -13178,6 +13253,7 @@
       "generated/p0-revived-batch-f0.json",
       "generated/paper-first-idea-incubation.json",
       "generated/current-research-status.json",
+      "generated/paper-first-search-portfolio-design-adjudication.json#shadow_search_memory.closed_objects",
       "generated/agent-safety-program-state.json",
       "generated/research-system-state.json#paper_acceptance.ledger_index"
     ]
