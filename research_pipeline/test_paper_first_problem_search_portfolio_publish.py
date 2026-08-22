@@ -30,6 +30,12 @@ class SearchPortfolioPublishTest(unittest.TestCase):
         self.assertEqual(publisher._artifact_provider_calls({"provider_calls_executed":1}),1)
         self.assertEqual(publisher._artifact_provider_calls({}),1)
 
+    def test_local_missing_api_key_error_does_not_increment_provider_call_count(self) -> None:
+        self.assertEqual(publisher._error_provider_calls({"status":"PROVIDER_ERROR_ZERO_AUTHORITY","complete_response_received":False,"error":"RuntimeError:ARK_API_KEY_NOT_CONFIGURED"}),0)
+        self.assertEqual(publisher._error_provider_calls({"status":"PROVIDER_TIMEOUT_ZERO_AUTHORITY","complete_response_received":False,"error":"ReadTimeout: provider timed out"}),1)
+        self.assertEqual(publisher._error_provider_calls({"status":"PARSE_ERROR_ZERO_AUTHORITY","raw_sha256":"f"*64,"error":"JSONDecodeError"}),1)
+        self.assertEqual(publisher._error_provider_calls({"status":"PROVIDER_ERROR_ZERO_AUTHORITY","provider_calls_executed":0,"error":"explicit receipt"}),0)
+
     def test_formulation_exact_retry_counts_one_terminal_shard_and_actual_branch(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td)
