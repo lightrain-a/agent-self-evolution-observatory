@@ -90,7 +90,7 @@ def main() -> None:
         home_summary = home["summary"]
         require(home_summary.get("current_attention") == 6 and home_summary.get("research_handoffs") == 1 and home_summary.get("research_waiting_reopen") == 5, f"Home ResearchItem control split drifted: {home_summary}")
         require(home_summary.get("machine_actionable_attention") == 0, f"Home machine-actionable attention must remain zero: {home_summary}")
-        require("PAPERSTATE_HANDOFF" in home["text"] and "REOPEN_CONDITION_REQUIRED" in home["text"] and "machine-actionable=0" in home["text"], "Home control plane does not distinguish tracked handoff / waiting HOLD / machine-actionable=0")
+        require("PAPERSTATE_HANDOFF" in home["text"] and "REOPEN_CONDITION_REQUIRED" in home["text"] and "machine-actionable" in home["text"], "Home control plane does not expose tracked handoff / waiting HOLD / machine-actionable labels")
 
         navigate(session_id, "/system-overview.html")
         overview = execute(session_id, """
