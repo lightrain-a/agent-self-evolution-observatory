@@ -11,11 +11,15 @@ import argparse
 import hashlib
 import json
 import os
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from research_pipeline.presubmission_freeze import verify_frozen_artifacts
 DEFAULT_LEDGER_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ROOT") else None
 DEFAULT_ARTIFACT_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ARTIFACT_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ARTIFACT_ROOT") else None
 DEFAULT_FREEZE_ROOT = Path(os.environ["PAPER_SUBMISSION_FREEZE_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_FREEZE_ROOT") else None
@@ -138,6 +142,7 @@ def paper_preparation(row: dict[str, Any], artifact_root: Path | None) -> dict[s
 
 def submission_freeze(paper_id: str, preparation: dict[str, Any], freeze_root: Path | None) -> dict[str, Any]:
     receipt: dict[str, Any] = {}
+    drift_errors: list[str] = []
     if freeze_root is not None:
         path = freeze_root / f"{paper_id}.json"
         if path.exists():
@@ -151,10 +156,25 @@ def submission_freeze(paper_id: str, preparation: dict[str, Any], freeze_root: P
                 )}
                 if candidate.get("freeze_sha256") == digest(identity):
                     receipt = candidate
+                else:
+                    drift_errors.append("freeze-receipt-hash-invalid")
             except Exception:
-                receipt = {}
+                drift_errors.append("freeze-ledger-unreadable")
     if receipt:
-        status = str(receipt.get("status") or "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING")
+        drift_errors.extend(verify_frozen_artifacts(receipt))
+        if preparation.get("receipt_sha256") and receipt.get("paper_preparation_receipt_sha256") != preparation.get("receipt_sha256"):
+            drift_errors.append("freeze-preparation-receipt-stale")
+        if freeze_root is not None:
+            index = freeze_root / "current-freeze-index.json"
+            if index.exists():
+                try:
+                    current_policy = str(json.loads(index.read_text(encoding="utf-8")).get("venue_policy_snapshot_sha256") or "")
+                    if current_policy and receipt.get("venue_policy_snapshot_sha256") != current_policy:
+                        drift_errors.append("freeze-venue-policy-stale")
+                except Exception:
+                    drift_errors.append("freeze-policy-index-unreadable")
+        drift_errors = list(dict.fromkeys(drift_errors))
+        status = "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING" if not drift_errors else "MACHINE_FREEZE_STALE"
     elif preparation.get("status") == "PASS":
         status = "MACHINE_FREEZE_PENDING"
     elif preparation.get("status") == "BLOCKED":
@@ -167,6 +187,8 @@ def submission_freeze(paper_id: str, preparation: dict[str, Any], freeze_root: P
         "venue_policy_snapshot_sha256": str(receipt.get("venue_policy_snapshot_sha256") or ""),
         "human_signoff_status": str(receipt.get("human_signoff_status") or ""),
         "frozen_artifacts": len(receipt.get("frozen_artifacts") or []),
+        "integrity_pass": bool(receipt) and not drift_errors,
+        "drift_errors": drift_errors,
         "external_human_submission_authority_required": True,
     }
 
@@ -246,6 +268,7 @@ def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Pat
         "preparation_blocked": sum(p["paper_preparation"]["status"] == "BLOCKED" for p in papers),
         "legacy_ready_needs_preparation_migration": sum(p["paper_preparation"]["status"] == "LEGACY_READY_NEEDS_PREPARATION_MIGRATION" for p in papers),
         "machine_frozen_candidates": sum(p["submission_freeze"]["status"] == "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING" for p in papers),
+        "machine_freeze_stale": sum(p["submission_freeze"]["status"] == "MACHINE_FREEZE_STALE" for p in papers),
         "human_submission_signoff_pending": sum(p["submission_freeze"]["status"] == "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING" for p in papers),
     }
     payload = {

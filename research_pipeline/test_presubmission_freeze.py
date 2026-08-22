@@ -4,7 +4,7 @@ from pathlib import Path
 from .paper_acceptance import MANDATORY_MANUSCRIPT_CI_CHECKS, MockReviewMode, ObjectionEvidenceState, PaperContract, PaperState, PrebuttalResolution, ReviewerObjection, ScientificPaperStatus, StoryCandidate
 from .paper_acceptance_ledger import advance_paper_ledger, initialize_paper_ledger, record_claim_audit, record_manuscript_ci, record_mock_review, record_paper_preparation, record_prebuttal, record_story_search, record_submission_readiness
 from .paper_preparation_protocol import PAPER_PREPARATION_GATE_KEYS, PAPER_PREPARATION_PROTOCOL_VERSION
-from .presubmission_freeze import artifact, build_freeze, digest, publish_freeze, validate_freeze
+from .presubmission_freeze import artifact, build_freeze, digest, publish_freeze, validate_freeze, verify_current_frozen_artifacts
 from .test_paper_preparation_protocol import passing_packet
 
 class PreSubmissionFreezeTest(unittest.TestCase):
@@ -22,7 +22,8 @@ class PreSubmissionFreezeTest(unittest.TestCase):
             root=Path(td);self.ready(root);f=root/'paper.pdf';f.write_bytes(b'paper-bytes');a=artifact('paper_pdf',f)
             policy={'schema_version':'1.0','venue':'TEST','human_only_confirmation_required':True};policy['snapshot_sha256']=digest(policy)
             r=build_freeze('FREEZE-PAPER',[a],policy,root);self.assertEqual(r['status'],'MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING');self.assertFalse(r['submission_authority'])
-            row=publish_freeze(r,root);row=publish_freeze(r,root);self.assertEqual(len(row['events']),1);self.assertEqual(validate_freeze(row),[])
+            row=publish_freeze(r,root);row=publish_freeze(r,root);self.assertEqual(len(row['events']),1);self.assertEqual(validate_freeze(row),[]);self.assertEqual(verify_current_frozen_artifacts(row),[])
+            f.write_bytes(b'paper-bytes-changed');self.assertIn('freeze-artifact-drift:paper_pdf',verify_current_frozen_artifacts(row))
             row['events'][0]['receipt']['human_signoff_status']='TAMPERED';self.assertIn('invalid-freeze-receipt-hash',validate_freeze(row))
     def test_artifact_hash_changes_when_bytes_change(self):
         with tempfile.TemporaryDirectory() as td:

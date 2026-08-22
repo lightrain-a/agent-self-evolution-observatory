@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-22T07:33:35+00:00",
+  "generated_at": "2026-08-22T07:37:27+00:00",
   "source": "canonical_paper_acceptance_ledger",
   "summary": {
     "papers": 5,
@@ -10,6 +10,7 @@
     "preparation_blocked": 1,
     "legacy_ready_needs_preparation_migration": 0,
     "machine_frozen_candidates": 4,
+    "machine_freeze_stale": 0,
     "human_submission_signoff_pending": 4
   },
   "papers": [
@@ -60,6 +61,8 @@
         "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
         "human_signoff_status": "PENDING_HUMAN",
         "frozen_artifacts": 2,
+        "integrity_pass": true,
+        "drift_errors": [],
         "external_human_submission_authority_required": true
       },
       "targeted_repair_boundary": {},
@@ -122,6 +125,8 @@
         "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
         "human_signoff_status": "PENDING_HUMAN",
         "frozen_artifacts": 4,
+        "integrity_pass": true,
+        "drift_errors": [],
         "external_human_submission_authority_required": true
       },
       "targeted_repair_boundary": {},
@@ -184,6 +189,8 @@
         "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
         "human_signoff_status": "PENDING_HUMAN",
         "frozen_artifacts": 4,
+        "integrity_pass": true,
+        "drift_errors": [],
         "external_human_submission_authority_required": true
       },
       "targeted_repair_boundary": {},
@@ -281,6 +288,8 @@
         "venue_policy_snapshot_sha256": "",
         "human_signoff_status": "",
         "frozen_artifacts": 0,
+        "integrity_pass": false,
+        "drift_errors": [],
         "external_human_submission_authority_required": true
       },
       "targeted_repair_boundary": {},
@@ -343,6 +352,8 @@
         "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
         "human_signoff_status": "PENDING_HUMAN",
         "frozen_artifacts": 3,
+        "integrity_pass": true,
+        "drift_errors": [],
         "external_human_submission_authority_required": true
       },
       "targeted_repair_boundary": {},
@@ -365,5 +376,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "40956ad01e5926dfa2e4ddfd7d464c84740e4bf210d26963cfb92495181b4bdd"
+  "projection_sha256": "db673624ad7bb0977088304d1af238924e904205526a6ea55a5d52e0c88514b3"
 }

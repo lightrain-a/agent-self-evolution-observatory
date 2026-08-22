@@ -1,6 +1,6 @@
 {
-  "schema_version": "1.0",
-  "generated_at": "2026-08-22T07:33:35+00:00",
+  "schema_version": "1.1",
+  "generated_at": "2026-08-22T07:37:27+00:00",
   "papers": [
     {
       "paper_id": "AGENT-SAFETY-R9",
@@ -13,6 +13,10 @@
       "paper_preparation_passed_gates": 8,
       "paper_preparation_required_gates": 8,
       "paper_preparation_receipt_sha256": "ff96d1d4e6f62cd54c02435eedbeea97643098afa2df5bf48be6eb8afd1c3b7a",
+      "freeze_status": "MACHINE_FROZEN_CURRENT",
+      "freeze_integrity_pass": true,
+      "freeze_sha256": "211d7e0608ec326b405bc83dd2deea49f79cbf380484e2232839065c13a941ae",
+      "freeze_errors": [],
       "blocker_groups": [],
       "blocker_count": 0,
       "next_actions": [],
@@ -36,6 +40,10 @@
       "paper_preparation_passed_gates": 8,
       "paper_preparation_required_gates": 8,
       "paper_preparation_receipt_sha256": "c7700fda1cccec6c585876da3bb124b8fff35967506d4e5878f9730c2464b54a",
+      "freeze_status": "MACHINE_FROZEN_CURRENT",
+      "freeze_integrity_pass": true,
+      "freeze_sha256": "e6842fe4d97c11683710b0b8834e33a06ec5e7a1328f5a6ea2e6a52510d180a6",
+      "freeze_errors": [],
       "blocker_groups": [],
       "blocker_count": 0,
       "next_actions": [],
@@ -59,6 +67,10 @@
       "paper_preparation_passed_gates": 8,
       "paper_preparation_required_gates": 8,
       "paper_preparation_receipt_sha256": "bf4cd503cb810877e432db173a8566017d0d24e482c84f7fc41130c3514cb933",
+      "freeze_status": "MACHINE_FROZEN_CURRENT",
+      "freeze_integrity_pass": true,
+      "freeze_sha256": "55785374bc82630f11a8195751c37b3995194375cf37d63e9a364f404b0622de",
+      "freeze_errors": [],
       "blocker_groups": [],
       "blocker_count": 0,
       "next_actions": [],
@@ -82,6 +94,10 @@
       "paper_preparation_passed_gates": 1,
       "paper_preparation_required_gates": 8,
       "paper_preparation_receipt_sha256": "81fbaada572e1766c6c06cfefcc879c4f5e222d7a02169da54f900d67728f8bb",
+      "freeze_status": "PREPARATION_BLOCKED",
+      "freeze_integrity_pass": false,
+      "freeze_sha256": "",
+      "freeze_errors": [],
       "blocker_groups": [
         "DECISIVE_EVIDENCE",
         "OTHER",
@@ -121,6 +137,10 @@
       "paper_preparation_passed_gates": 8,
       "paper_preparation_required_gates": 8,
       "paper_preparation_receipt_sha256": "f7ede3c2ec09d7774d2e480d01888b79dae166a9a9c9a46965b4fa50a4f43acf",
+      "freeze_status": "MACHINE_FROZEN_CURRENT",
+      "freeze_integrity_pass": true,
+      "freeze_sha256": "5c065d826ecae0b8db5620f039fa30e0df4759e28a7e6dc2c7ec7f70a0d306f1",
+      "freeze_errors": [],
       "blocker_groups": [],
       "blocker_count": 0,
       "next_actions": [],
@@ -140,6 +160,8 @@
     "preparation_pass": 4,
     "preparation_blocked": 1,
     "legacy_pending": 0,
+    "machine_frozen_current": 4,
+    "machine_freeze_stale": 0,
     "human_handoff_ready": 4,
     "submission_freeze_eligible": 4,
     "ledger_replay_failures": 0,
@@ -151,5 +173,5 @@
     "gpu": false,
     "submission": false
   },
-  "audit_sha256": "515eef710394f7bfc94364115488b0ace3b233a3ff3beb8619498e02debde952"
+  "audit_sha256": "6e9180a61cfda994940289749da3ea6b80ffc359fda0c8ae7d0f7812fdaf0236"
 }

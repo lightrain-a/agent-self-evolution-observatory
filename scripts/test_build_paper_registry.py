@@ -51,6 +51,7 @@ class PaperRegistryProjectionTest(unittest.TestCase):
         self.assertEqual(summary["preparation_pass"], sum(p["paper_preparation"]["status"] == "PASS" for p in papers))
         self.assertEqual(summary["preparation_blocked"], sum(p["paper_preparation"]["status"] == "BLOCKED" for p in papers))
         self.assertEqual(summary["machine_frozen_candidates"], sum(p["submission_freeze"]["status"] == "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING" for p in papers))
+        self.assertEqual(summary["machine_freeze_stale"], sum(p["submission_freeze"]["status"] == "MACHINE_FREEZE_STALE" for p in papers))
         c01 = next(row for row in papers if row["paper_id"] == registry.C01_ID)
         if c01["current_state"] == "TARGETED_REPAIR":
             self.assertEqual(c01["targeted_repair_boundary"]["scheduler_state"], "HOLD_SUPPORT_AND_IDENTIFICATION")

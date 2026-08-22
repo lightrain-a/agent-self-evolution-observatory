@@ -31,6 +31,31 @@ def artifact(label:str,path:Path,tree:bool=False)->dict[str,Any]:
   entries.append({'path':str(p.relative_to(path)),'sha256':fsha(p),'bytes':p.stat().st_size})
  if not entries:raise RuntimeError(f'empty source tree: {path}')
  return {'label':label,'kind':'tree','path':str(path),'files':len(entries),'bytes':sum(x['bytes'] for x in entries),'sha256':digest(entries),'entries':entries}
+def verify_frozen_artifacts(receipt:Mapping[str,Any])->list[str]:
+ errors=[]
+ for spec in receipt.get('frozen_artifacts') or []:
+  if not isinstance(spec,Mapping):
+   errors.append('freeze-artifact-invalid-spec');continue
+  label=str(spec.get('label') or 'unnamed')
+  path=Path(str(spec.get('path') or ''))
+  if not path.exists():
+   errors.append(f'freeze-artifact-missing:{label}');continue
+  kind=str(spec.get('kind') or 'file')
+  try:
+   current=artifact(label,path,tree=(kind=='tree'))
+  except Exception:
+   errors.append(f'freeze-artifact-unreadable:{label}');continue
+  if current.get('sha256')!=spec.get('sha256') or int(current.get('bytes') or 0)!=int(spec.get('bytes') or 0):
+   errors.append(f'freeze-artifact-drift:{label}');continue
+  if kind=='tree' and int(current.get('files') or 0)!=int(spec.get('files') or 0):
+   errors.append(f'freeze-artifact-drift:{label}')
+ return list(dict.fromkeys(errors))
+
+def verify_current_frozen_artifacts(row:Mapping[str,Any])->list[str]:
+ event=latest(row,'pre-submission-freeze');receipt=event.get('receipt') if isinstance(event.get('receipt'),Mapping) else {}
+ if not receipt:return ['freeze-receipt-missing']
+ return verify_frozen_artifacts(receipt)
+
 def validate_freeze(row:Mapping[str,Any])->list[str]:
  errors=[]
  if (row.get('authority') or {})!={'scientific':False,'experiment':False,'gpu':False,'submission':False}:errors.append('freeze-ledger-authority-leak')
