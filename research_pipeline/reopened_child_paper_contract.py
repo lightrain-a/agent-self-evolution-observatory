@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from .reopened_child_claim_audit import PASS_STATUS, validate_child_claim_audit
+from .reopened_child_claim_expansion_authorization import validate_child_claim_expansion_authorization
 from .reopened_scientific_evidence_paper_handoff import validate_scientific_evidence_paper_handoff
 
 SCHEMA_VERSION = "1.0"
@@ -29,14 +30,20 @@ def _slug(value: str) -> str:
 
 
 def contract_identity(contract: Mapping[str, Any]) -> dict[str, Any]:
-    return {key: contract.get(key) for key in (
+    identity = {key: contract.get(key) for key in (
         "paper_id", "attempt_sha256", "parent_paper_contract_sha256", "reopened_contract_sha256",
         "paper_revision_handoff_sha256", "child_claim_audit_sha256", "supported_claims",
         "held_new_claim_ids", "manuscript_scope", "limitations_boundary", "status",
     )}
+    if contract.get("new_claim_expansion_authorized") is True:
+        identity.update({
+            "claim_expansion_authorization_sha256": contract.get("claim_expansion_authorization_sha256"),
+            "approved_new_claim_ids": contract.get("approved_new_claim_ids") or [],
+        })
+    return identity
 
 
-def build_child_paper_contract(*, handoff: Mapping[str, Any], claim_audit: Mapping[str, Any], revision_spec: Mapping[str, Any]) -> dict[str, Any]:
+def build_child_paper_contract(*, handoff: Mapping[str, Any], claim_audit: Mapping[str, Any], revision_spec: Mapping[str, Any], claim_expansion_authorization: Mapping[str, Any] | None = None) -> dict[str, Any]:
     if not validate_scientific_evidence_paper_handoff(handoff):
         raise RuntimeError("valid scientific-evidence child paper handoff required")
     if not validate_child_claim_audit(claim_audit) or claim_audit.get("status") != PASS_STATUS or claim_audit.get("paper_contract_revision_eligible") is not True:
@@ -53,25 +60,39 @@ def build_child_paper_contract(*, handoff: Mapping[str, Any], claim_audit: Mappi
     if not isinstance(wording, Mapping):
         raise RuntimeError("child paper claim_wording must be an object")
     supported_ids = list(claim_audit.get("supported_claim_ids") or [])
-    if set(wording.keys()) != set(supported_ids):
-        raise RuntimeError("child paper claim wording must cover exactly the audit-supported claims")
+    held_at_audit = list(claim_audit.get("held_new_claim_ids") or [])
+    approved_new: list[str] = []
+    expansion_sha = ""
+    if claim_expansion_authorization is not None:
+        if not validate_child_claim_expansion_authorization(claim_expansion_authorization):
+            raise RuntimeError("valid human child-claim expansion authorization required")
+        if _text(claim_expansion_authorization.get("attempt_sha256")) != _text(claim_audit.get("attempt_sha256")) or _text(claim_expansion_authorization.get("child_claim_audit_sha256")) != _text(claim_audit.get("child_claim_audit_sha256")):
+            raise RuntimeError("child claim-expansion authorization/audit lineage mismatch")
+        approved_new = list(claim_expansion_authorization.get("approved_new_claim_ids") or [])
+        if not set(approved_new).issubset(set(held_at_audit)):
+            raise RuntimeError("approved new claim ids exceed audit-held claims")
+        expansion_sha = _text(claim_expansion_authorization.get("child_claim_expansion_authorization_sha256"))
+    contract_claim_ids = supported_ids + approved_new
+    if set(wording.keys()) != set(contract_claim_ids):
+        raise RuntimeError("child paper claim wording must cover exactly the audit-supported plus human-approved new claims")
     candidate_by_id = {_text(row.get("claim_id")): row for row in handoff.get("candidate_claims") or []}
     supported_claims: list[dict[str, str]] = []
-    for claim_id in supported_ids:
+    for claim_id in contract_claim_ids:
         candidate = candidate_by_id.get(claim_id) or {}
         text = _text(wording.get(claim_id))
         if not text:
             raise RuntimeError(f"child paper claim wording empty: {claim_id}")
-        if candidate.get("claim_relation") == "NEW_CHILD_CLAIM":
+        relation = _text(candidate.get("claim_relation"))
+        if relation == "NEW_CHILD_CLAIM" and claim_id not in approved_new:
             raise RuntimeError("new child claim cannot enter contract without separate expansion authority")
         supported_claims.append({
             "claim_id": claim_id,
             "claim_text": text,
-            "claim_relation": _text(candidate.get("claim_relation")),
+            "claim_relation": relation,
             "evidence_role": _text(candidate.get("evidence_role")),
             "evidence_bundle_sha256": _text(handoff.get("evidence_bundle_sha256")),
         })
-    held_new = list(claim_audit.get("held_new_claim_ids") or [])
+    held_new = [claim_id for claim_id in held_at_audit if claim_id not in approved_new]
     contract: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
         "contract_type": "SCIENTIFIC_REOPEN_CHILD_PAPER_REVISION",
@@ -84,6 +105,8 @@ def build_child_paper_contract(*, handoff: Mapping[str, Any], claim_audit: Mappi
         "child_claim_audit_sha256": _text(claim_audit.get("child_claim_audit_sha256")),
         "supported_claims": supported_claims,
         "held_new_claim_ids": held_new,
+        "approved_new_claim_ids": approved_new,
+        "claim_expansion_authorization_sha256": expansion_sha,
         "manuscript_scope": manuscript_scope,
         "limitations_boundary": limitations,
         "status": STATUS,
@@ -93,7 +116,9 @@ def build_child_paper_contract(*, handoff: Mapping[str, Any], claim_audit: Mappi
         "submission_eligible": False,
         "parent_submitted_bytes_immutable": True,
         "parent_claim_update_authorized": False,
-        "new_claim_expansion_authorized": False,
+        "new_claim_expansion_authorized": bool(approved_new),
+        "human_claim_expansion_authority_confirmed": bool(approved_new),
+        "future_claim_expansion_authorized": False,
         "held_new_claims_excluded_from_contract": True,
         "method_pass_not_principle_proof": True,
         "scientific_authority": False,
@@ -118,7 +143,14 @@ def validate_child_paper_contract(contract: Mapping[str, Any]) -> bool:
         return False
     if len({row.get("claim_id") for row in claims if isinstance(row, Mapping)}) != len(claims):
         return False
-    if any(not isinstance(row, Mapping) or not _text(row.get("claim_id")) or not _text(row.get("claim_text")) or row.get("claim_relation") == "NEW_CHILD_CLAIM" for row in claims):
+    if any(not isinstance(row, Mapping) or not _text(row.get("claim_id")) or not _text(row.get("claim_text")) for row in claims):
+        return False
+    approved = list(contract.get("approved_new_claim_ids") or [])
+    included_new = [str(row.get("claim_id") or "") for row in claims if row.get("claim_relation") == "NEW_CHILD_CLAIM"]
+    if contract.get("new_claim_expansion_authorized") is True:
+        if not approved or included_new != approved or contract.get("human_claim_expansion_authority_confirmed") is not True or not _text(contract.get("claim_expansion_authorization_sha256")):
+            return False
+    elif approved or included_new or contract.get("human_claim_expansion_authority_confirmed") is not False or _text(contract.get("claim_expansion_authorization_sha256")):
         return False
     if any(contract.get(key) is not True for key in (
         "child_claim_revision_frozen", "paper_preparation_review_eligible", "parent_submitted_bytes_immutable",
@@ -127,7 +159,7 @@ def validate_child_paper_contract(contract: Mapping[str, Any]) -> bool:
         return False
     if any(contract.get(key) is not False for key in (
         "paper_preparation_authorized", "submission_eligible", "parent_claim_update_authorized",
-        "new_claim_expansion_authorized", "scientific_authority", "experiment_authority", "gpu_authority", "submission_authority",
+        "future_claim_expansion_authorized", "scientific_authority", "experiment_authority", "gpu_authority", "submission_authority",
     )):
         return False
     expected_sha = _digest(contract_identity(contract))

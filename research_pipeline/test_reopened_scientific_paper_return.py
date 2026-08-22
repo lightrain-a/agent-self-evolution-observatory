@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 from .reopened_child_claim_audit import build_child_claim_audit, publish_child_claim_audit
+from .reopened_child_claim_expansion_authorization import build_child_claim_expansion_authorization, publish_child_claim_expansion_authorization
 from .reopened_child_paper_contract import build_child_paper_contract, publish_child_paper_contract
 from .reopened_scientific_evidence_paper_handoff import build_scientific_evidence_paper_handoff, publish_scientific_evidence_paper_handoff
 from .reopened_scientific_paper_return import public_scientific_paper_return_state
@@ -67,6 +68,24 @@ class ReopenedScientificPaperReturnTest(unittest.TestCase):
             self.assertEqual(state["status"], "SCIENTIFIC_REOPEN_CHILD_PAPER_CONTRACT_FROZEN_PREPARATION_REQUIRED")
             self.assertEqual(state["supported_claims"], 2)
             self.assertFalse(state["new_claim_expansion_authorized"])
+
+    def test_human_new_claim_expansion_is_visible_but_still_requires_contract_revision(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            from .test_reopened_scientific_evidence_paper_handoff import ReopenedScientificEvidencePaperHandoffTest
+            source = ReopenedScientificEvidencePaperHandoffTest(methodName="test_method_pass_creates_child_revision_handoff_but_not_claim_or_preparation_authority")
+            spec = source.revision_spec(); spec["candidate_claims"].append({"claim_id":"C-NEW-RETURN","claim_text":"A new child claim for explicit expansion authority.","evidence_role":"SUPPORTING","claim_relation":"NEW_CHILD_CLAIM"})
+            helper = ReopenedChildClaimAuditTest(methodName="test_new_child_claim_is_held_for_human_expansion_authority")
+            handoff = helper.handoff(root, spec=spec); publish_scientific_evidence_paper_handoff(root, handoff, recorded_at="2027-04-14T12:00:00+00:00")
+            audit = build_child_claim_audit(handoff=handoff, audit_packet=helper.packet(handoff)); publish_child_claim_audit(root, audit)
+            auth = build_child_claim_expansion_authorization(claim_audit=audit, approved_new_claim_ids=["C-NEW-RETURN"], external_authority_ref="human:private-expansion", authorized_at="2027-04-16T12:00:00+00:00", scope="Only C-NEW-RETURN within this child paper revision.")
+            publish_child_claim_expansion_authorization(root, auth)
+            state = public_scientific_paper_return_state(root, handoff["attempt_sha256"])
+            self.assertEqual(state["status"], "CHILD_NEW_CLAIM_HUMAN_EXPANSION_AUTHORIZED_CONTRACT_REVISION_REQUIRED")
+            self.assertEqual(state["approved_new_claims"], 1)
+            self.assertTrue(state["claim_expansion_authorization_sha256"])
+            self.assertFalse(state["new_claim_expansion_authorized"])
+            self.assertFalse(state["parent_claim_update_authorized"])
 
     def test_resolved_attempt_workflow_overrides_scientific_reopen_hold_without_parent_authority(self) -> None:
         with tempfile.TemporaryDirectory() as td:
