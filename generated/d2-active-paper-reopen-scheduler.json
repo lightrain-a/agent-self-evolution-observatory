@@ -1,44 +1,33 @@
 {
-  "schema_version": "1.0",
-  "status": "ALL_THREE_TARGETED_REPAIRS_EXTERNALLY_BLOCKED",
+  "schema_version": "1.1",
+  "status": "PORTFOLIO_HAS_SUBMISSION_READY_WITH_HELD_TARGETED_REPAIR",
   "policy": {
-    "priority_source": "Initial dual-mode Mock-PC ranking; later experiments may remove reviewer objections but do not silently reorder papers without a new comparable Mock-PC round.",
+    "canonical_paper_acceptance_state_overrides_stale_pre_ready_scheduler_state": true,
+    "submission_ready_papers_are_removed_from_targeted_repair_spending": true,
+    "priority_source": "Initial dual-mode Mock-PC rank is retained only as historical ordering; canonical Paper Acceptance state controls current scheduling.",
     "support_failure_has_no_scientific_authority": true,
     "no_surrogate_expansion_when_decisive_dependency_is_blocked": true,
     "resume_only_at_decisive_experiment": true
+  },
+  "canonical_paper_acceptance_states": {
+    "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE": "SUBMISSION_READY",
+    "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK": "SUBMISSION_READY",
+    "D2-PAPER-FAILURE-MEMORY-PROVENANCE": "TARGETED_REPAIR"
   },
   "entries": [
     {
       "priority": 1,
       "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
       "title": "Noisy Rewards Write Noisy Memories: Reward Error as a Variance Amplifier in Self-Improving Agents",
-      "paper_state": "TARGETED_REPAIR",
-      "scheduler_state": "HOLD_ENVIRONMENT",
-      "why_priority": "Highest Mock-PC rank and the only paper with a completed direct write-channel intervention plus a passed same-information prompt control.",
-      "decisive_next_experiment": "Live matched WebArena browser continuation under paired reward-conditioned memories, measuring terminal benchmark success and first divergence with the frozen source environment and evaluator.",
-      "frozen_execution_contract": "generated/d2-proxy-reward-live-terminal-contract.json",
-      "environment_preflight": "generated/d2-proxy-reward-live-terminal-environment-preflight.json",
-      "current_evidence": {
-        "f0_prompt_control_gate_pass": true,
-        "fresh_first_action_distribution_decision": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
-        "fixed_evidence_terminal_decision": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
-        "fixed_evidence_terminal_mean_absolute_success_rate_difference": 0.145833,
-        "fixed_evidence_terminal_permutation_p": 0.160128,
-        "live_contract_status": "FROZEN_WAITING_ENVIRONMENT",
-        "live_environment_preflight_status": "HOLD_ENVIRONMENT",
-        "live_asset_gate_pass": true,
-        "live_shopping_tcp_reachable": false,
-        "live_reset_tcp_reachable": false
-      },
-      "blocking_dependencies": [
-        "Reachable source-faithful WebArena Shopping service.",
-        "Reachable reset service or equivalent reproducible reset mechanism."
-      ],
-      "reopen_condition": "A source-faithful live Shopping environment and reset path become reachable from an authorized execution host.",
+      "paper_state": "SUBMISSION_READY",
+      "scheduler_state": "DONE_SUBMISSION_READY",
+      "why_priority": "Canonical Paper Acceptance has already admitted this paper to Submission Ready. Earlier targeted-repair blockers no longer authorize more experiment spending.",
+      "decisive_next_experiment": "",
+      "blocking_dependencies": [],
+      "reopen_condition": "Only reopen the scientific or experiment contract through a new explicit Research OS authorization if post-ready review discovers a decision-critical defect.",
       "forbid_before_reopen": [
-        "Do not add more fixed-state first-action rollouts.",
-        "Do not add more fixed-evidence terminal-answer surrogate rollouts.",
-        "Do not interpret environment unavailability as scientific counterevidence."
+        "Do not resume obsolete targeted-repair experiments from the pre-Submission-Ready scheduler.",
+        "Do not spend experiment budget merely because an older support receipt remains unresolved."
       ],
       "scientific_authority": false,
       "experiment_authority": false
@@ -47,24 +36,15 @@
       "priority": 2,
       "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
       "title": "Temporal Skills Are a Causal Bottleneck in Evolving Time-Series Agents",
-      "paper_state": "TARGETED_REPAIR",
-      "scheduler_state": "HOLD_SUPPORT",
-      "why_priority": "Second Mock-PC rank; the decisive three-condition intervention is already specified and waits on one first-party evaluated-snapshot dependency.",
-      "decisive_next_experiment": "Frozen TimeSage-EV targeted temporal/exogenous skill injection versus matched generic-skill and no-skill controls on preregistered failure families.",
-      "current_evidence": {
-        "local_code_clone_head": "41f5e7656cb811dc47b7fd7f1cd7931f0fa2db66",
-        "local_dataset_clone_head": "711f6443dc765b04980faf0a4145bef4261903e1",
-        "local_evaluated_snapshot_present": false,
-        "fresh_remote_recheck_status": "UNAVAILABLE_NETWORK_SUPPORT"
-      },
-      "blocking_dependencies": [
-        "First-party frozen evaluated TimeSage-EV scenario snapshot or equivalent first-party inputs/outcomes/skill-interface artifacts."
-      ],
-      "reopen_condition": "A hashable first-party evaluated TimeSage-EV snapshot becomes available.",
+      "paper_state": "SUBMISSION_READY",
+      "scheduler_state": "DONE_SUBMISSION_READY",
+      "why_priority": "Canonical Paper Acceptance has already admitted this paper to Submission Ready. Earlier targeted-repair blockers no longer authorize more experiment spending.",
+      "decisive_next_experiment": "",
+      "blocking_dependencies": [],
+      "reopen_condition": "Only reopen the scientific or experiment contract through a new explicit Research OS authorization if post-ready review discovers a decision-critical defect.",
       "forbid_before_reopen": [
-        "Do not fabricate or substitute a synthetic TimeSage evaluated snapshot.",
-        "Do not use remote-network failure as evidence that the public release is still empty.",
-        "Do not run targeted-skill outcome calls before failure-family labels and controls can be frozen on first-party artifacts."
+        "Do not resume obsolete targeted-repair experiments from the pre-Submission-Ready scheduler.",
+        "Do not spend experiment budget merely because an older support receipt remains unresolved."
       ],
       "scientific_authority": false,
       "experiment_authority": false
@@ -74,25 +54,42 @@
       "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
       "title": "Failure Memories Are Not Neutral: Causal Provenance Effects in Self-Evolving Agents",
       "paper_state": "TARGETED_REPAIR",
-      "scheduler_state": "HOLD_SUPPORT",
-      "why_priority": "Lowest Mock-PC rank and the explicit-provenance bridge has already exhausted its information value; only a source-faithful natural-memory swap can change the central causal claim.",
-      "decisive_next_experiment": "Source-faithful matched semantic-memory provenance swap on the financial AgentDojo/ReasoningBank setting, including forward and reverse swaps.",
+      "scheduler_state": "HOLD_SUPPORT_AND_IDENTIFICATION",
+      "why_priority": "The only D2 paper still below Submission Ready. R4 produced a directional effect, but both the frozen statistical gate and the post-hoc identification robustness audit remain unresolved.",
+      "decisive_next_experiment": "Either a source-faithful financial AgentDojo matched-provenance replication, or an independently frozen confirmation with roughly 18-22 or more eligible pairs under a robust multi-reviewer information-equivalence gate.",
       "current_evidence": {
         "faithful_reconstruction_status": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS",
         "explicit_provenance_bridge_decision": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
-        "explicit_provenance_bridge_calls": 144,
-        "explicit_provenance_bridge_success_minus_failure": 0.0
+        "r4_verdict": "INCONCLUSIVE_NO_THRESHOLD_CHANGE",
+        "r4_mean_success_minus_failure_terminal_rate": 0.166667,
+        "r4_permutation_p_success_greater": 0.07853921460785392,
+        "r4_support_gate_pass": false,
+        "r4_counterevidence_gate_pass": false,
+        "approx_power_at_four_pairs_range": [
+          0.280479,
+          0.351994
+        ],
+        "approx_independent_pairs_for_80pct_power_range": [
+          18,
+          22
+        ],
+        "original_verifier_primary_strict_pass": 4,
+        "deepseek_primary_strict_pass": 0,
+        "kimi_primary_strict_pass": 1,
+        "three_reviewer_unanimous_primary_strict_pass": 0,
+        "fresh_same_release_confirmation_tasks": 0
       },
       "blocking_dependencies": [
-        "Auditable access to the exact qwen3.7-flash-2026-07-15 executor snapshot.",
-        "Auditable access to qwen3.7-text-embedding for source-faithful top-1 retrieval.",
-        "A faithful AgentDojo bridge plus aggregate-fidelity gate, or first-party per-query audit artifacts from the financial study."
+        "Source-faithful first-party financial artifacts or auditable exact qwen3.7 executor plus embedding access.",
+        "Or a disjoint independently frozen support population large enough for approximately 18-22 eligible pairs under robust multi-reviewer equivalence."
       ],
-      "reopen_condition": "Exact executor+embedding access becomes available, or the financial-audit authors release per-query artifacts sufficient for the natural matched provenance swap.",
+      "reopen_condition": "One of the two decisive support paths above becomes available before any new outcome is inspected.",
       "forbid_before_reopen": [
-        "Do not add more explicit SUCCESS/FAILURE metadata-tag bridge rollouts.",
-        "Do not substitute a different embedding model and call it source-faithful reproduction.",
-        "Do not treat the 0.000 bridge difference as equivalence because no equivalence margin was preregistered."
+        "Do not add seeds to the same four R4 pairs to rescue p<0.05.",
+        "Do not drop or replace R4 pairs after the verifier audit.",
+        "Do not relax the 0.15 effect floor, 0.05 p threshold, or structural task qualification.",
+        "Do not treat identification failure as scientific counterevidence to C4.",
+        "Do not spend more budget on the explicit SUCCESS/FAILURE metadata bridge."
       ],
       "scientific_authority": false,
       "experiment_authority": false
@@ -100,9 +97,11 @@
   ],
   "summary": {
     "papers": 3,
+    "submission_ready": 2,
     "reopen_now": 0,
-    "hold_environment": 1,
-    "hold_support": 2
+    "hold_environment": 0,
+    "hold_support": 0,
+    "hold_support_and_identification": 1
   },
   "scientific_authority": false,
   "experiment_authority": false,
