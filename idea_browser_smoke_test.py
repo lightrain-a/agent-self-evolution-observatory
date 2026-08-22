@@ -56,7 +56,7 @@ def main() -> None:
     expected_category_totals = [int(((expected_research_summary.get("by_category") or {}).get(code) or {}).get("portfolio_total") or 0) for code in "ABCDEFG"]
     expected_shadow_closed = int((expected_research_summary.get("source_kind_counts") or {}).get("shadow_closed") or 0)
     expected_closed_codes = {str(row.get("code") or "") for row in (expected_research.get("research_items") or []) if row.get("source_kind") == "shadow_closed"}
-    expected_one_minute = 26 + 7 + 9 + expected_shadow_closed + 1
+    expected_one_minute = 26 + 7 + 9 + expected_shadow_closed + 1 + 1  # +1 live MEMENTO Paper Design candidate
     expected_headline = expected_current_status.get("headline") or {}
     expected_shadow_latest = ((expected_state.get("paper_first_problem_search_portfolio") or {}).get("latest_run") or {})
     expected_shadow_summary = expected_shadow_latest.get("summary") or {}
@@ -526,6 +526,10 @@ def main() -> None:
           mergedMethods: document.querySelectorAll('.human-absorbed-methods').length,
           freshCollisionBlocks: document.querySelectorAll('.human-fresh-collision').length,
           freshCollisionLinks: document.querySelectorAll('.human-fresh-collision nav a').length,
+          liveMementoCards: document.querySelectorAll('#live-memento-paper-design').length,
+          liveMementoText: document.querySelector('#live-memento-paper-design')?.textContent||'',
+          liveMementoState: window.MEMENTO_JOINT_IDENTIFIABILITY_PAPER_DESIGN || {},
+          liveMementoSimpleGuideCells: document.querySelectorAll('#live-memento-paper-design .simple-method-guide span').length,
           incubationCards: document.querySelectorAll('.paper-incubation-card').length,
           incubationBriefingSummaries: document.querySelectorAll('.paper-incubation-card .one-minute-briefing').length,
           incubationAdvance: document.querySelectorAll('.paper-incubation-card.incubation-advance').length,
@@ -650,6 +654,9 @@ def main() -> None:
         require(ideas["evidenceDispositionCounts"] == {"stop":16,"hold":4,"merge":6} and ideas["evidenceDispositionPanels"] == 26, f"latest evidence disposition is missing or collapsed into terminal state: {ideas['evidenceDispositionCounts']}/{ideas['evidenceDispositionPanels']}")
         require((ideas["briefingHeroes"],ideas["briefingMetrics"],ideas["briefingDecisions"],ideas["briefingGuides"],ideas["briefingLessons"],ideas["briefingTaxonomyCards"],ideas["briefingModeButtons"],ideas["categoryBriefings"]) == (1,4,3,1,3,6,2,7), f"briefing-first overview/taxonomy/category summaries are incomplete: {ideas}")
         require((ideas["parentBriefingSummaries"],ideas["parentBriefingReasonPills"],ideas["supplementalBriefingSummaries"],ideas["incubationBriefingSummaries"],ideas["closedIdeaBriefingSummaries"],ideas["safetyBriefingSummaries"]) == (26,26,7,9,expected_shadow_closed,1), f"one-minute idea summaries are incomplete: {ideas}")
+        live=ideas["liveMementoState"]
+        require(ideas["liveMementoCards"] == 1 and live.get("status") == "PAPER_DESIGN_FROZEN_EXACT_RUNTIME_SUPPORT_HOLD" and (live.get("paper_design_audit") or {}).get("passed") is True and (live.get("source_integrity") or {}).get("passed") is True and ideas["liveMementoSimpleGuideCells"] == 4, f"live MEMENTO Paper Design candidate is missing or unverified: cards={ideas['liveMementoCards']} state={live} guide_cells={ideas['liveMementoSimpleGuideCells']}")
+        require(all(marker in ideas["liveMementoText"] for marker in ("36/36", "12", "36", "-0.05", "简单方法具体怎么做到", "任务组合", "当前没有实验执行权限")), f"live MEMENTO card lacks concrete task/control/F0 explanation: {ideas['liveMementoText']}")
         require(len(ideas["oneMinuteBriefingLabels"]) == expected_one_minute and all(label == "【1min结论】" for label in ideas["oneMinuteBriefingLabels"]) and not ideas["staleThirtySecondCopy"], f"all idea-card briefings must use the unified one-minute label with no stale 30-second copy: count={len(ideas['oneMinuteBriefingLabels'])} expected={expected_one_minute} / stale={ideas['staleThirtySecondCopy']}")
         require(ideas["oneMinuteSixPartCards"] == expected_one_minute and ideas["oneMinuteStandardCards"] == 6, f"all one-minute briefings must implement the six-part decision-memory standard: cards={ideas['oneMinuteSixPartCards']} expected={expected_one_minute} standard={ideas['oneMinuteStandardCards']}")
         reader_jargon=("STOP_CURRENT_SUBSTRATE_UPDATER_INCOMPETENT","effective candidate fraction","future_eval","development unit","72-unit","pair-target","n-ary","RSIC","reward invariance","reward-meaning","source workflow","paired-edit","同信息","谱系")
