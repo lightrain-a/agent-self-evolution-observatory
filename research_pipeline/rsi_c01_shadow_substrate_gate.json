@@ -1,34 +1,67 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "candidate_id": "RSI-C01",
   "title": "Intervention-surface lockout breaks recursive self-intervention closure",
   "portfolio_class": "SHADOW_HOLD_NOT_PROJECTED",
-  "status": "HOLD_SUBSTRATE_NOT_YET_QUALIFIED",
+  "status": "HOLD_CANONICAL_SCIENTIFIC_OBJECT_IDENTITY_MISMATCH",
   "scientific_object": {
     "broad_claim_status": "NOVELTY_FAIL",
     "broad_claim": "Recursive/self-referential agents can improve their own scaffold or tools.",
-    "narrow_claim_status": "PASS_PROVISIONAL_CLOSEST_WORK_ONLY",
+    "narrow_claim_status": "UNQUALIFIED_SHADOW_OBJECT_NO_CANONICAL_MATCH",
     "narrow_claim": "When the capability used for self-reading, self-writing, and self-verification itself enters the fault domain, under what conditions does read-write-verify recursive closure break, and can a strictly bounded out-of-band repair side-channel restore that closure?",
     "principal_difference": "intervention-surface lockout breaks recursive closure",
-    "promotion_status": "FORBIDDEN_UNTIL_ALL_SUBSTRATE_GATES_PASS"
+    "promotion_status": "FORBIDDEN_UNTIL_CANONICAL_OBJECT_IDENTITY_IS_RESOLVED"
+  },
+  "canonical_object_qualification": {
+    "status": "FAIL_OBJECT_IDENTITY_MISMATCH",
+    "lookup_date": "2026-08-22",
+    "lookup_scope": [
+      "/data/wyt/agent-self-evolution-observatory canonical run/evidence roots",
+      "repository Git history across all refs"
+    ],
+    "lookup_rule": "Match the scientific object by candidate identity plus exact problem/mechanism text. A shared C01 suffix is not sufficient provenance.",
+    "current_shadow_object": {
+      "candidate_id": "RSI-C01",
+      "title": "Intervention-surface lockout breaks recursive self-intervention closure",
+      "principal_difference": "intervention-surface lockout breaks recursive closure"
+    },
+    "canonical_candidate_with_conflicting_identity": {
+      "candidate_id": "SHADOW-RSI-C01",
+      "title": "Does AI4AI Improvement Compound? Measuring Successor-as-Improver Recursive Closure",
+      "scientific_object": "Successor-as-improver yield under a frozen AI4AI/MLE research harness; recursive-closure delta compares validated next-improvement utility of successor versus predecessor.",
+      "terminal_status": "STOP_EXACT_REDUCTION_SUPPORTED",
+      "terminal_reason": "Successor-as-improver yield was reduced one-to-one to a one-generation restricted HGM/CMP metaproductivity functional under identical lineage information, utility, expansion policy, horizon, and budget.",
+      "canonical_sources": [
+        "/data/wyt/agent-self-evolution-observatory/runs/shadow-rsi-recursive-closure-20260822T115518Z/03-shadow-problem-contract.json",
+        "/data/wyt/agent-self-evolution-observatory/runs/shadow-rsi-formal-review-20260822T132532Z/08-terminal-exact-reduction-closure.json"
+      ]
+    },
+    "identity_match": false,
+    "current_object_found_in_canonical_data_root": false,
+    "git_origin": "0354e9d first introduces the intervention-surface lockout formulation on this shadow branch.",
+    "decision": "Do not inherit closest-work, substrate, promotion, or scientific lineage from SHADOW-RSI-C01. The current lockout formulation must first be explicitly bound as a new canonical scientific object or assigned a distinct candidate identity.",
+    "scientific_authority": false
   },
   "closest_work_boundary": {
-    "decision": "PASS_PROVISIONAL_NARROW_CLAIM_ONLY",
-    "broad_search": "STOPPED_LOW_MARGINAL_VALUE",
-    "collision_watch_only": "self-harness/self-modification x runtime tool failure/fault injection x repair side-channel",
-    "covered_by_existing_work": [
+    "decision": "NOT_RUN_CANONICAL_OBJECT_IDENTITY_MISMATCH",
+    "qualification_rule": "Strict closest-work review is admissible only after the reviewed claim is bound to a canonical scientific object. A shadow-only formulation cannot earn novelty authority by literature review alone.",
+    "historical_exploratory_scan_only": [
       "DGM: recursive code self-modification and inherited self-modification capability",
       "SICA: coding agent edits itself using coding tools",
       "POLARIS: inspect policy/traces, produce persistent policy patch, continue",
       "Self-Harness: prompts, tools, and execution harness are mutable optimization objects",
       "runtime tool-failure benchmarks: availability denial, silent no-op, corrupted state, schema mismatch, retry/fallback/verification"
     ],
-    "surviving_intersection": "The intervention capability responsible for self-inspection, self-modification, or self-verification is itself the faulted resource, rather than an ordinary task tool.",
+    "unqualified_hypothesized_intersection": "The intervention capability responsible for self-inspection, self-modification, or self-verification is itself the faulted resource, rather than an ordinary task tool.",
+    "strict_closest_work_completed": false,
+    "same_information_reduction_completed": false,
     "novelty_authority": false
   },
   "substrate": {
     "primary": "Exo (exoharness/exo)",
-    "qualification": "PARTIAL_W_BOUNDARY_FEASIBILITY_ONLY",
+    "qualification": "ENGINEERING_FEASIBILITY_ONLY_NOT_SCIENTIFICALLY_QUALIFIED",
+    "same_substrate_qualification": "NOT_RUN_CANONICAL_OBJECT_IDENTITY_MISMATCH",
+    "qualification_rule": "Same-substrate qualification starts only after a canonical scientific object and its closest-work boundary are frozen; otherwise substrate work is engineering feasibility only.",
     "why_close": [
       "The source tree is mounted into the agent sandbox at /workspace/exo and is intended to be readable and modifiable by the agent.",
       "Canonical event history is host-side/outside the sandbox and survives ordinary restart/rewind, giving an external lineage domain.",
@@ -114,30 +147,35 @@
   },
   "promotion_gates": [
     {
+      "id": "G0_CANONICAL_SCIENTIFIC_OBJECT_IDENTITY",
+      "status": "FAIL_OBJECT_IDENTITY_MISMATCH",
+      "pass_rule": "Bind the exact intervention-surface-lockout claim to one canonical scientific object with unique lineage. A reused numeric suffix or a shadow-only branch is insufficient.",
+      "current_result": "Canonical SHADOW-RSI-C01 is a different successor-as-improver object and is already terminal STOP_EXACT_REDUCTION_SUPPORTED; no canonical match exists for the current lockout formulation."
+    },
+    {
       "id": "G1_CAPABILITY_LEVEL_LOCKOUT",
-      "status": "PARTIAL_W_ONLY",
-      "pass_rule": "Enumerate functionally equivalent R/W/V paths and demonstrate that the full-lockout arm cannot bypass the intended fault through shell, interpreters, patch/git plumbing, tool-management state, rebuild/restart, or another host API.",
-      "current_result": "W resource-boundary mechanism supported; full R/W/V class lockout not yet qualified."
+      "status": "ENGINEERING_PARTIAL_W_ONLY_BLOCKED_BY_G0",
+      "pass_rule": "After G0 passes, enumerate functionally equivalent R/W/V paths and demonstrate that the full-lockout arm cannot bypass the intended fault through shell, interpreters, patch/git plumbing, tool-management state, rebuild/restart, or another host API.",
+      "current_result": "The W resource-boundary dry-run remains useful engineering evidence only; it grants no scientific or substrate qualification while G0 fails."
     },
     {
       "id": "G2_RECURSIVE_OBJECT_EXTERNAL_SUPERVISION_SEPARATION",
-      "status": "PENDING",
-      "pass_rule": "The modified harness/code persists across generations while checkpoint, lineage, and evaluator remain outside the fault domain; the supervisor may only restore a predeclared primitive and may not author the repair."
+      "status": "BLOCKED_BY_G0",
+      "pass_rule": "After G0 passes, the modified harness/code must persist across generations while checkpoint, lineage, and evaluator remain outside the fault domain; the supervisor may only restore a predeclared primitive and may not author the repair."
     },
     {
       "id": "G3_PRINCIPAL_INTERACTION_PILOT",
-      "status": "PENDING",
-      "pass_rule": "No-fault sustains R-to-W-to-V; intervention-surface lockout collapses closure; the minimal out-of-band primitive restores it; fixed-agent, history-only reflection, and hidden redundant-tool controls do not recover equally."
+      "status": "BLOCKED_BY_G0",
+      "pass_rule": "After G0-G2 pass, no-fault sustains R-to-W-to-V; intervention-surface lockout collapses closure; the minimal out-of-band primitive restores it; fixed-agent, history-only reflection, and hidden redundant-tool controls do not recover equally."
     }
   ],
   "next_gate": {
-    "name": "EXO_SPECIFIC_VERIFICATION_FIREWALL_AND_FULL_RWV_DRY_RUN",
+    "name": "CANONICAL_OBJECT_REBIND_OR_DISTINCT_CANDIDATE_ID",
     "design": [
-      "Treat SELF_SRC, SELF_TOOL_STATE, CANONICAL_LOG, and BUILD_VERIFY_ENDPOINT as separately labeled resources.",
-      "Keep canonical lineage/evaluator outside the recursive fault domain.",
-      "Use the demonstrated resource-level boundary for W rather than tool-name denial.",
-      "Interpose V at the build/test/restart endpoint so shell cannot reproduce verification through an alternate route.",
-      "Expose exactly one predeclared out-of-band repair primitive whose semantics are restoration of capability, not authoring a repair patch."
+      "Do not run further Exo R/V lockout work under RSI-C01.",
+      "Either bind the intervention-surface-lockout formulation into a new canonical scientific object with explicit lineage, or assign it a distinct candidate identity that cannot be confused with terminal SHADOW-RSI-C01.",
+      "Only after that binding is frozen may strict closest-work review run.",
+      "Only after closest-work survives may same-substrate qualification on Exo resume."
     ],
     "execution_authorized": false
   },
@@ -146,7 +184,7 @@
     "research_item": false,
     "paper_state": false,
     "canonical_consumer_surface": false,
-    "reason": "RSI-C01 remains shadow/HOLD until all substrate gates pass."
+    "reason": "RSI-C01 remains shadow/HOLD because the current lockout formulation has no matching canonical scientific object; closest-work, same-substrate qualification, ResearchItem promotion, and PaperState entry are all blocked at G0."
   },
   "authority": {
     "scientific": false,

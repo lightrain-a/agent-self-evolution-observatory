@@ -1343,10 +1343,13 @@ def build_dashboard(timeline: dict[str, Any]) -> dict[str, Any]:
             "dashboard_never_overrides_source_ledgers": True,
             "next_action_class_is_canonical_control_semantics": True,
             "next_step_text_is_human_explanation_only": True,
+            "zero_active_research_items_is_valid": True,
+            "attention_is_visibility_not_activity": True,
         },
         "summary": {
             "portfolio_objects": int(research_summary.get("portfolio_objects") or 0),
             "research_items": int(research_summary.get("research_items") or 0),
+            "active_research_items": int(research_summary.get("active_research_items") or 0),
             "current_attention": len(attention_rows),
             "research_handoffs": research_handoffs,
             "research_waiting_reopen": research_waiting_reopen,
@@ -1389,6 +1392,9 @@ def validate_dashboard(payload: dict[str, Any]) -> None:
     assert policy.get("submission_authority") is False
     assert policy.get("next_action_class_is_canonical_control_semantics") is True
     assert policy.get("next_step_text_is_human_explanation_only") is True
+    assert policy.get("zero_active_research_items_is_valid") is True
+    assert policy.get("attention_is_visibility_not_activity") is True
+    assert int(payload.get("summary", {}).get("active_research_items") or 0) >= 0
     attention = payload.get("attention") or []
     codes = [row.get("code") for row in attention]
     assert len(codes) == len(set(codes))

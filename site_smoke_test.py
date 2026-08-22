@@ -110,6 +110,8 @@ def main() -> None:
         fail(f"canonical ResearchItem projection counts drifted: {ri_summary}")
     if ri_summary.get("parent_scientific_states") != {"HOLD": 4, "MERGED": 6, "STOPPED": 16}:
         fail(f"canonical parent scientific states must be HOLD=4/MERGED=6/STOPPED=16: {ri_summary.get('parent_scientific_states')}")
+    if int(ri_summary.get("active_research_items") or 0) != 0 or research_items.get("policy", {}).get("zero_active_research_items_is_valid") is not True or research_items.get("policy", {}).get("visibility_tracking_does_not_create_active_slot") is not True:
+        fail(f"canonical ResearchItem registry must explicitly permit and currently expose zero active rows: {ri_summary}")
     expected_category_totals = {"A": 12, "B": 21, "C": 10, "D": 3, "E": 27, "F": 6, "G": 13}
     actual_category_totals = {key: int(((ri_summary.get("by_category") or {}).get(key) or {}).get("portfolio_total") or 0) for key in expected_category_totals}
     if actual_category_totals != expected_category_totals:
@@ -117,6 +119,8 @@ def main() -> None:
     ri_by_code = {row.get("code"): row for row in research_items.get("research_items") or []}
     if any((ri_by_code.get(code) or {}).get("scientific_state") != "HOLD" for code in ("A-3", "B-2", "B-3", "E-1")):
         fail("support/current-substrate stops must remain HOLD in canonical ResearchItem state")
+    if (ri_by_code.get("F-4") or {}).get("scientific_state") != "STOPPED" or (ri_by_code.get("F-4") or {}).get("portfolio_disposition") == "ACTIVE_RESEARCH":
+        fail("F-4 must remain a stopped historical ResearchItem and never backfill an active slot")
     if (ri_by_code.get("E-7") or {}).get("scientific_state") != "PAPER_READY" or ((ri_by_code.get("E-7") or {}).get("paper_transition") or {}).get("paper_id") != "STRI":
         fail("E-7 must hand off to STRI PaperState")
     pre_rows = pre_researchitem.get("candidates") or []
@@ -192,9 +196,9 @@ def main() -> None:
     dashboard_summary = research_dashboard.get("summary") or {}
     dashboard_attention = research_dashboard.get("attention") or []
     dashboard_by_code = {row.get("code"): row for row in dashboard_attention}
-    if research_dashboard.get("schema_version") != "1.0" or dashboard_policy.get("read_only") is not True or any(dashboard_policy.get(key) is not False for key in ("scientific_authority", "experiment_authority", "submission_authority")) or dashboard_policy.get("dashboard_never_overrides_source_ledgers") is not True or dashboard_policy.get("next_action_class_is_canonical_control_semantics") is not True or dashboard_policy.get("next_step_text_is_human_explanation_only") is not True:
-        fail(f"research dashboard must remain a read-only zero-authority presentation projection whose action class is canonical and next-step prose is explanatory only: {dashboard_policy}")
-    expected_dashboard_summary = {"portfolio_objects":int(ri_summary.get("portfolio_objects") or 0),"research_items":int(ri_summary.get("research_items") or 0),"current_attention":6,"research_handoffs":1,"research_waiting_reopen":5,"machine_actionable_attention":0,"paper_ready":1,"holds":5,"launchable_formal_experiments":0,"papers":int(registry_summary.get("papers") or 0),"submission_ready":int(registry_summary.get("gate_clean_submission_ready") or 0),"ledger_submission_ready":int(registry_summary.get("submission_ready") or 0),"immediate_submission_holds":int(registry_summary.get("immediate_submission_holds") or 0)}
+    if research_dashboard.get("schema_version") != "1.0" or dashboard_policy.get("read_only") is not True or any(dashboard_policy.get(key) is not False for key in ("scientific_authority", "experiment_authority", "submission_authority")) or dashboard_policy.get("dashboard_never_overrides_source_ledgers") is not True or dashboard_policy.get("next_action_class_is_canonical_control_semantics") is not True or dashboard_policy.get("next_step_text_is_human_explanation_only") is not True or dashboard_policy.get("zero_active_research_items_is_valid") is not True or dashboard_policy.get("attention_is_visibility_not_activity") is not True:
+        fail(f"research dashboard must remain read-only, allow zero active rows, and separate attention visibility from activity: {dashboard_policy}")
+    expected_dashboard_summary = {"portfolio_objects":int(ri_summary.get("portfolio_objects") or 0),"research_items":int(ri_summary.get("research_items") or 0),"active_research_items":0,"current_attention":6,"research_handoffs":1,"research_waiting_reopen":5,"machine_actionable_attention":0,"paper_ready":1,"holds":5,"launchable_formal_experiments":0,"papers":int(registry_summary.get("papers") or 0),"submission_ready":int(registry_summary.get("gate_clean_submission_ready") or 0),"ledger_submission_ready":int(registry_summary.get("submission_ready") or 0),"immediate_submission_holds":int(registry_summary.get("immediate_submission_holds") or 0)}
     if any(int(dashboard_summary.get(key) or 0) != value for key, value in expected_dashboard_summary.items()):
         fail(f"research dashboard canonical summary drifted: {dashboard_summary}")
     expected_attention = {"E-7","G-1","A-3","B-2","B-3","E-1"}

@@ -48,6 +48,11 @@ def validate_public_control_plane(
             errors.append(f"ResearchItem action authority leak:{code}")
     if dict(sorted(research_action_counts.items())) != dict(research_summary.get("primary_next_action_counts") or {}):
         errors.append("ResearchItem action summary mismatch")
+    actual_active = sum(str(row.get("scientific_state") or "") == "ACTIVE" for row in research_items)
+    if int(research_summary.get("active_research_items") or 0) != actual_active:
+        errors.append("ResearchItem active count mismatch")
+    if (research_state.get("policy") or {}).get("zero_active_research_items_is_valid") is not True or (research_state.get("policy") or {}).get("visibility_tracking_does_not_create_active_slot") is not True:
+        errors.append("ResearchItem activity policy must allow zero active rows and separate visibility from activity")
     if int(research_summary.get("machine_actionable_research_items") or 0) != 0:
         errors.append("ResearchItem machine-actionable count must remain zero")
 
@@ -113,10 +118,13 @@ def validate_public_control_plane(
         errors.append("ResearchDashboard must declare next_action_class as canonical control semantics")
     if dashboard_policy.get("next_step_text_is_human_explanation_only") is not True:
         errors.append("ResearchDashboard must declare next_step text as non-authoritative human explanation")
+    if dashboard_policy.get("zero_active_research_items_is_valid") is not True or dashboard_policy.get("attention_is_visibility_not_activity") is not True:
+        errors.append("ResearchDashboard must allow zero active ResearchItems and separate attention visibility from activity")
     dashboard_summary = research_dashboard.get("summary") or {}
     expected_dashboard = {
         "portfolio_objects": research_summary.get("portfolio_objects"),
         "research_items": research_summary.get("research_items"),
+        "active_research_items": research_summary.get("active_research_items", 0),
         "paper_ready": (research_summary.get("scientific_state_counts") or {}).get("PAPER_READY", 0),
         "holds": (research_summary.get("scientific_state_counts") or {}).get("HOLD", 0),
         "research_handoffs": sum((row.get("primary_next_action") or {}).get("action_class") == "PAPERSTATE_HANDOFF" for row in research_items),

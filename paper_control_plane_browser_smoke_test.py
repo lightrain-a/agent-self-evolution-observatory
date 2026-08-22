@@ -94,7 +94,7 @@ def main() -> None:
           };
         """)
         home_summary = home["summary"]
-        require(home_summary.get("current_attention") == 6 and home_summary.get("research_handoffs") == 1 and home_summary.get("research_waiting_reopen") == 5, f"Home ResearchItem control split drifted: {home_summary}")
+        require(home_summary.get("active_research_items") == 0 and home_summary.get("current_attention") == 6 and home_summary.get("research_handoffs") == 1 and home_summary.get("research_waiting_reopen") == 5, f"Home ResearchItem activity/visibility split drifted: {home_summary}")
         require(home_summary.get("machine_actionable_attention") == 0, f"Home machine-actionable attention must remain zero: {home_summary}")
         require("PAPERSTATE_HANDOFF" in home["text"] and "REOPEN_CONDITION_REQUIRED" in home["text"] and "machine-actionable" in home["text"], "Home control plane does not expose tracked handoff / waiting HOLD / machine-actionable labels")
 
@@ -129,11 +129,12 @@ def main() -> None:
         """)
         research_summary = research_map["summary"]
         require(research_summary.get("research_primary_next_action_counts") == {"MERGED_NO_STANDALONE_ACTION": 10, "NO_INTERNAL_ACTION": 71, "PAPERSTATE_HANDOFF": 1, "REOPEN_CONDITION_REQUIRED": 5}, f"ResearchItem action distribution drifted: {research_summary}")
-        require(research_summary.get("machine_actionable_research_items") == 0 and research_summary.get("machine_actionable_attention") == 0, f"ResearchItem machine authority drifted: {research_summary}")
+        require(research_summary.get("active_research_items") == 0 and research_summary.get("machine_actionable_research_items") == 0 and research_summary.get("machine_actionable_attention") == 0, f"ResearchItem activity/machine authority drifted: {research_summary}")
         require(research_summary.get("research_handoffs") == 1 and research_summary.get("research_waiting_reopen") == 5, f"Dashboard ResearchItem control split drifted: {research_summary}")
         require(research_summary.get("paper_internal_action_required") == 0 and research_summary.get("paper_no_internal_action") == 5, f"Dashboard paper action split drifted: {research_summary}")
         require(research_map["actions"].get("E-7") == "PAPERSTATE_HANDOFF" and research_map["actions"].get("G-1") == "REOPEN_CONDITION_REQUIRED", f"Dashboard attention actions drifted: {research_map['actions']}")
-        require("PAPERSTATE_HANDOFF" in research_map["text"] and "REOPEN_CONDITION_REQUIRED" in research_map["text"] and "machine-actionable=0" in research_map["text"], "Research Map does not expose tracked/waiting/machine-actionable ResearchItem control classes")
+        zero_active_label = "active ResearchItem=0" in research_map["text"] or "Active ResearchItems=0" in research_map["text"]
+        require("PAPERSTATE_HANDOFF" in research_map["text"] and "REOPEN_CONDITION_REQUIRED" in research_map["text"] and zero_active_label and "machine-actionable=0" in research_map["text"], "Research Map does not expose zero-active plus tracked/waiting/machine-actionable ResearchItem control classes")
 
         navigate(session_id, "/paper-ideas.html")
         ideas = execute(session_id, """

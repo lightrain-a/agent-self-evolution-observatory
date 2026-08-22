@@ -72,7 +72,12 @@ class ResearchItemStateTest(unittest.TestCase):
             counts[action["action_class"]] = counts.get(action["action_class"], 0) + 1
         self.assertEqual(counts, {"NO_INTERNAL_ACTION": 71, "MERGED_NO_STANDALONE_ACTION": 10, "REOPEN_CONDITION_REQUIRED": 5, "PAPERSTATE_HANDOFF": 1})
         self.assertEqual(self.state["summary"]["primary_next_action_counts"], counts)
+        self.assertEqual(self.state["summary"]["active_research_items"], 0)
+        self.assertTrue(self.state["policy"]["zero_active_research_items_is_valid"])
+        self.assertTrue(self.state["policy"]["visibility_tracking_does_not_create_active_slot"])
         self.assertEqual(self.state["summary"]["machine_actionable_research_items"], 0)
+        self.assertEqual(self.by_code["F-4"]["scientific_state"], "STOPPED")
+        self.assertNotEqual(self.by_code["F-4"]["portfolio_disposition"], "ACTIVE_RESEARCH")
         self.assertEqual(self.by_code["E-7"]["primary_next_action"]["paper_id"], "STRI")
         self.assertEqual(self.by_code["E-7"]["primary_next_action"]["paper_next_action_class"], "NO_INTERNAL_ACTION")
 

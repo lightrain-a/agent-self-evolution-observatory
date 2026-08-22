@@ -189,8 +189,9 @@ def main() -> None:
         require(not home["figure"] and home["distribution"] == 0, "home should route readers instead of duplicating the field-history figure or literature distribution")
         require(home["missing"] == 0, "home contains unresolved citations")
         require(home["corpus"] >= 100, "curated literature snapshot did not load")
-        require(home["researchConsole"] == 1 and home["consoleKpis"] == 4 and home["primaryPaper"] == "E-7" and home["holdRows"] == 5 and set(home["attentionCodes"]) == {"E-7","G-1","A-3","B-2","B-3","E-1"}, f"home current-research console must expose exactly the six actionable ResearchItems: {home}")
-        require(all(home["dashboardSummary"].get(key) == expected_dashboard_summary.get(key) for key in ("portfolio_objects","research_items","current_attention","paper_ready","holds","launchable_formal_experiments","papers","submission_ready")), f"home dashboard summary must match canonical generated dashboard: rendered={home['dashboardSummary']} expected={expected_dashboard_summary}")
+        require(home["researchConsole"] == 1 and home["consoleKpis"] == 4 and home["primaryPaper"] == "E-7" and home["holdRows"] == 5 and set(home["attentionCodes"]) == {"E-7","G-1","A-3","B-2","B-3","E-1"}, f"home current-research console must expose the six visibility-tracked ResearchItems without treating them as active: {home}")
+        require(all(home["dashboardSummary"].get(key) == expected_dashboard_summary.get(key) for key in ("portfolio_objects","research_items","active_research_items","current_attention","paper_ready","holds","launchable_formal_experiments","papers","submission_ready")), f"home dashboard summary must match canonical generated dashboard: rendered={home['dashboardSummary']} expected={expected_dashboard_summary}")
+        require(home["dashboardSummary"].get("active_research_items") == 0, f"home must render zero active ResearchItems without synthetic backfill: {home}")
         require(home["weekHighlights"] >= 3 and "research-timeline.html?research=A-3" in home["consoleLinks"] and "selected-paper.html?paper=STRI" in home["consoleLinks"], f"home console must expose weekly provenance plus direct A-3/STRI navigation: {home}")
 
         navigate("/system-overview.html", 5)
