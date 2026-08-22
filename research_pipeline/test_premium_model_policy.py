@@ -32,7 +32,7 @@ class PremiumModelPolicyTests(unittest.TestCase):
             "evidence_recompile": "kimi-k3",
             "evidence_review": "deepseek-v4-pro",
             "relation_mining": "kimi-k3",
-            "relation_lane_review": "deepseek-v4-pro",
+            "relation_lane_review": "glm-5.3",
             "relation_reduction_review": "deepseek-v4-pro",
             "paper_design": "kimi-k3",
             "method_synthesis": "kimi-k3",
@@ -54,6 +54,10 @@ class PremiumModelPolicyTests(unittest.TestCase):
         self.assertNotEqual(
             stage_model_priority("portfolio_formulate")[0],
             stage_model_priority("semantic_review")[0],
+        )
+        self.assertNotEqual(
+            stage_model_priority("relation_lane_review")[0],
+            stage_model_priority("relation_reduction_review")[0],
         )
         self.assertNotIn("deepseek-v4-pro", independent_priority("evidence_review", exclude_resolved="deepseek-v4-pro"))
 

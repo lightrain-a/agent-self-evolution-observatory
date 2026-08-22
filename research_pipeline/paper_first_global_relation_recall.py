@@ -23,6 +23,7 @@ from .paper_first_relation_coverage import coobserved_pairs, portable_review_rec
 from .paper_first_scientific_object_ontology import current_lane_axes, reviewed_primary_cache_records
 from .public_state_redaction import redact_private_paths
 from .premium_model_policy import preferred_model
+from .relation_scan_boundary_manifest import boundary_receipts, load_relation_scan_boundary_manifest
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-global-relation-recall.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-global-relation-recall.js"
@@ -119,14 +120,33 @@ def _lane_contracts() -> list[dict[str, Any]]:
     ]
 
 
-def _delta_scan_required_refs(receipts: list[dict[str, Any]], prior_scan: dict[str, Any]) -> tuple[set[str], bool]:
+def _delta_scan_required_refs(
+    receipts: list[dict[str, Any]],
+    prior_scan: dict[str, Any],
+    *,
+    relation_state: dict[str, Any] | None = None,
+    boundary_manifest: dict[str, Any] | None = None,
+) -> tuple[set[str], bool]:
+    """Recover the prior relation boundary without trusting scheduler order alone.
+
+    The historical run-id cutoff remains the first choice. Portable review receipts
+    are scheduler metadata, however, so later migrations may reorder their run IDs.
+    When the cutoff no longer reproduces the exact prior relation-universe digest,
+    fall back only to a validated content-addressed boundary manifest bound to this
+    exact last_completed_scan. Missing or mismatched provenance remains fail-closed.
+    """
     prior_digest=str(prior_scan.get("relation_universe_digest") or "")
     cutoff=str(prior_scan.get("run_id") or "")
     if not prior_digest or not cutoff:
         return set(), False
     old_receipts=[row for row in receipts if str(row.get("run_id") or "")<=cutoff]
     if relation_universe_digest(old_receipts)!=prior_digest:
-        return set(), False
+        manifest=boundary_manifest if boundary_manifest is not None else load_relation_scan_boundary_manifest()
+        binding_state=relation_state if isinstance(relation_state,dict) else {"last_completed_scan":dict(prior_scan)}
+        archived=boundary_receipts(manifest,binding_state)
+        if not archived or relation_universe_digest(archived)!=prior_digest:
+            return set(), False
+        old_receipts=archived
     old_refs={str(ref) for row in old_receipts for ref in row.get("source_refs") or []}
     current_refs={str(ref) for row in receipts for ref in row.get("source_refs") or []}
     return current_refs-old_refs, True
@@ -334,7 +354,7 @@ def run_global_relation_recall(*,storage:StorageSettings|None=None,primary_state
         return state
     required_touch_refs:set[str]=set()
     if prior_digest:
-        required_touch_refs,reconstructable=_delta_scan_required_refs(receipts,prior_scan)
+        required_touch_refs,reconstructable=_delta_scan_required_refs(receipts,prior_scan,relation_state=previous_state)
         if not reconstructable:
             state["status"]="HOLD_RELATION_DELTA_BOUNDARY_UNRECONSTRUCTABLE";state["summary"]=_summary(coverage,target,cached,[]);return state
         if not required_touch_refs:
@@ -470,7 +490,7 @@ def resume_global_relation_recall_from_relation_raw(
         return state
     required_touch_refs:set[str]=set()
     if prior_digest:
-        required_touch_refs,reconstructable=_delta_scan_required_refs(receipts,prior_scan)
+        required_touch_refs,reconstructable=_delta_scan_required_refs(receipts,prior_scan,relation_state=previous_state)
         if not reconstructable:
             state["status"]="HOLD_RELATION_DELTA_BOUNDARY_UNRECONSTRUCTABLE";state["summary"]=_summary(coverage,target,cached,[]);return state
         if not required_touch_refs:

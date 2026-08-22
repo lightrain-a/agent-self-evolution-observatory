@@ -10,8 +10,9 @@ from unittest.mock import patch
 
 from .config import StorageSettings
 from .ark_provider import ArkResponseStateError, ArkSettings
-from .paper_first_global_relation_recall import LANE_REVIEW_BATCH_SIZE, LANE_REVIEW_MAX_OUTPUT_TOKENS, _ark, _card, _review_lane_proposals, lane_review_execution_contract_sha256, mark_lane_review_retry_exhausted, resume_global_relation_recall_from_relation_raw, run_global_relation_recall, write_global_relation_recall_state
+from .paper_first_global_relation_recall import LANE_REVIEW_BATCH_SIZE, LANE_REVIEW_MAX_OUTPUT_TOKENS, _ark, _card, _delta_scan_required_refs, _review_lane_proposals, lane_review_execution_contract_sha256, mark_lane_review_retry_exhausted, resume_global_relation_recall_from_relation_raw, run_global_relation_recall, write_global_relation_recall_state
 from .paper_first_relation_coverage import relation_universe_digest
+from .relation_scan_boundary_manifest import build_relation_scan_boundary_manifest
 
 
 class GlobalRelationRecallTest(unittest.TestCase):
@@ -273,6 +274,22 @@ class GlobalRelationRecallTest(unittest.TestCase):
             "last_completed_scan":{"run_id":"r1","relation_universe_digest":digest,"relation_coverage":{"reviewed_receipt_sources":2,"possible_source_pairs":1,"coobserved_source_pairs":1,"pair_coverage_fraction":1.0},"summary":{"not_reduced":0},"scientific_authority":False},
             "scientific_authority":False,
         }
+
+    def test_archived_boundary_recovers_delta_after_scheduler_run_id_drift(self) -> None:
+        previous=self.previous_scan_for_first_receipt()
+        archived_generator={"saturation_memory":{"portable_review_receipts":[self.generator()["saturation_memory"]["portable_review_receipts"][0]]}}
+        current_receipts=[
+            {"run_id":"z-old","source_refs":["arXiv:1","arXiv:2"],"scientific_authority":False},
+            {"run_id":"z-new","source_refs":["arXiv:3","arXiv:4"],"scientific_authority":False},
+        ]
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);archived_path=root/"archived-generator.json";relation_path=root/"relation.json"
+            archived_path.write_text(json.dumps(archived_generator),encoding="utf-8")
+            relation_path.write_text(json.dumps(previous),encoding="utf-8")
+            manifest=build_relation_scan_boundary_manifest(archived_generator_path=archived_path,relation_path=relation_path)
+            required,reconstructable=_delta_scan_required_refs(current_receipts,previous["last_completed_scan"],relation_state=previous,boundary_manifest=manifest)
+        self.assertTrue(reconstructable)
+        self.assertEqual(required,{"arXiv:3","arXiv:4"})
 
     def test_stale_relation_universe_scans_only_pairs_touching_new_source(self) -> None:
         prompts=[]
