@@ -45,6 +45,9 @@
     "scientific_reopen_authorized_new_contract_required": 0,
     "scientific_reopen_research_os_handoff_ready": 0,
     "reopened_scientific_contract_problem_gate_required": 0,
+    "reopen_problem_gate_pass": 0,
+    "reopen_problem_gate_blocked": 0,
+    "reopen_problem_gate_invalid": 0,
     "scientific_reopen_invalid": 0
   },
   "papers": [
@@ -310,6 +313,24 @@
             "p0": false,
             "gpu": false,
             "submission": false
+          },
+          "problem_gate": {
+            "status": "REOPEN_PROBLEM_GATE_REQUIRED",
+            "pass": false,
+            "failed_checks": [],
+            "problem_gate_receipt_sha256": "",
+            "paper_design_eligible": false,
+            "method_design_review_eligible": false,
+            "validation_errors": [],
+            "authority": {
+              "scientific": false,
+              "paper_design": false,
+              "method": false,
+              "experiment": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
           }
         }
       },
@@ -605,6 +626,24 @@
             "p0": false,
             "gpu": false,
             "submission": false
+          },
+          "problem_gate": {
+            "status": "REOPEN_PROBLEM_GATE_REQUIRED",
+            "pass": false,
+            "failed_checks": [],
+            "problem_gate_receipt_sha256": "",
+            "paper_design_eligible": false,
+            "method_design_review_eligible": false,
+            "validation_errors": [],
+            "authority": {
+              "scientific": false,
+              "paper_design": false,
+              "method": false,
+              "experiment": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
           }
         }
       },
@@ -900,6 +939,24 @@
             "p0": false,
             "gpu": false,
             "submission": false
+          },
+          "problem_gate": {
+            "status": "REOPEN_PROBLEM_GATE_REQUIRED",
+            "pass": false,
+            "failed_checks": [],
+            "problem_gate_receipt_sha256": "",
+            "paper_design_eligible": false,
+            "method_design_review_eligible": false,
+            "validation_errors": [],
+            "authority": {
+              "scientific": false,
+              "paper_design": false,
+              "method": false,
+              "experiment": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
           }
         }
       },
@@ -1192,6 +1249,24 @@
             "p0": false,
             "gpu": false,
             "submission": false
+          },
+          "problem_gate": {
+            "status": "REOPEN_PROBLEM_GATE_REQUIRED",
+            "pass": false,
+            "failed_checks": [],
+            "problem_gate_receipt_sha256": "",
+            "paper_design_eligible": false,
+            "method_design_review_eligible": false,
+            "validation_errors": [],
+            "authority": {
+              "scientific": false,
+              "paper_design": false,
+              "method": false,
+              "experiment": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
           }
         }
       },
@@ -1481,6 +1556,24 @@
             "p0": false,
             "gpu": false,
             "submission": false
+          },
+          "problem_gate": {
+            "status": "REOPEN_PROBLEM_GATE_REQUIRED",
+            "pass": false,
+            "failed_checks": [],
+            "problem_gate_receipt_sha256": "",
+            "paper_design_eligible": false,
+            "method_design_review_eligible": false,
+            "validation_errors": [],
+            "authority": {
+              "scientific": false,
+              "paper_design": false,
+              "method": false,
+              "experiment": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
           }
         }
       },
@@ -1509,5 +1602,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "568cddde3720b7a254357868b77e034a420efeac2ba84c34d7f03afc34ba1fe2"
+  "projection_sha256": "442b00ef7774cd0fe22b8f765c712fc1f3a8a6099ece0f51e9b03380756b46e8"
 }

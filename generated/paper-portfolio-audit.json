@@ -149,6 +149,24 @@
           "p0": false,
           "gpu": false,
           "submission": false
+        },
+        "problem_gate": {
+          "status": "REOPEN_PROBLEM_GATE_REQUIRED",
+          "pass": false,
+          "failed_checks": [],
+          "problem_gate_receipt_sha256": "",
+          "paper_design_eligible": false,
+          "method_design_review_eligible": false,
+          "validation_errors": [],
+          "authority": {
+            "scientific": false,
+            "paper_design": false,
+            "method": false,
+            "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
         }
       },
       "scientific_reopen_errors": [],
@@ -313,6 +331,24 @@
           "p0": false,
           "gpu": false,
           "submission": false
+        },
+        "problem_gate": {
+          "status": "REOPEN_PROBLEM_GATE_REQUIRED",
+          "pass": false,
+          "failed_checks": [],
+          "problem_gate_receipt_sha256": "",
+          "paper_design_eligible": false,
+          "method_design_review_eligible": false,
+          "validation_errors": [],
+          "authority": {
+            "scientific": false,
+            "paper_design": false,
+            "method": false,
+            "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
         }
       },
       "scientific_reopen_errors": [],
@@ -477,6 +513,24 @@
           "p0": false,
           "gpu": false,
           "submission": false
+        },
+        "problem_gate": {
+          "status": "REOPEN_PROBLEM_GATE_REQUIRED",
+          "pass": false,
+          "failed_checks": [],
+          "problem_gate_receipt_sha256": "",
+          "paper_design_eligible": false,
+          "method_design_review_eligible": false,
+          "validation_errors": [],
+          "authority": {
+            "scientific": false,
+            "paper_design": false,
+            "method": false,
+            "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
         }
       },
       "scientific_reopen_errors": [],
@@ -641,6 +695,24 @@
           "p0": false,
           "gpu": false,
           "submission": false
+        },
+        "problem_gate": {
+          "status": "REOPEN_PROBLEM_GATE_REQUIRED",
+          "pass": false,
+          "failed_checks": [],
+          "problem_gate_receipt_sha256": "",
+          "paper_design_eligible": false,
+          "method_design_review_eligible": false,
+          "validation_errors": [],
+          "authority": {
+            "scientific": false,
+            "paper_design": false,
+            "method": false,
+            "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
         }
       },
       "scientific_reopen_errors": [],
@@ -821,6 +893,24 @@
           "p0": false,
           "gpu": false,
           "submission": false
+        },
+        "problem_gate": {
+          "status": "REOPEN_PROBLEM_GATE_REQUIRED",
+          "pass": false,
+          "failed_checks": [],
+          "problem_gate_receipt_sha256": "",
+          "paper_design_eligible": false,
+          "method_design_review_eligible": false,
+          "validation_errors": [],
+          "authority": {
+            "scientific": false,
+            "paper_design": false,
+            "method": false,
+            "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
         }
       },
       "scientific_reopen_errors": [],
@@ -887,6 +977,9 @@
     "scientific_reopen_authorized_new_contract_required": 0,
     "scientific_reopen_research_os_handoff_ready": 0,
     "reopened_scientific_contract_problem_gate_required": 0,
+    "reopen_problem_gate_pass": 0,
+    "reopen_problem_gate_blocked": 0,
+    "reopen_problem_gate_invalid": 0,
     "scientific_reopen_invalid": 0,
     "submission_freeze_eligible": 4,
     "ledger_replay_failures": 0,
@@ -898,5 +991,5 @@
     "gpu": false,
     "submission": false
   },
-  "audit_sha256": "2019fccf821355c1868c428895118e06bca0f20e0305dcd519b7558fff06c92f"
+  "audit_sha256": "059496c4b9b4930ff4c8100d90c027ac1b871854be0470cdc130e3858d353826"
 }
