@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import copy
 import unittest
 
 from .paper_first_evidence_acquisition import (
     adjudicate_evidence_receipts,
     build_provisional_evidence_plan,
+    build_provisional_evidence_plan_from_pre_f0,
     compile_evidence_designs,
     compile_evidence_reviews,
     compile_operationalization_recompiles,
@@ -63,6 +65,31 @@ def preflight_ready(plan):
 
 
 class EvidenceAcquisitionTest(unittest.TestCase):
+    def test_canonical_pre_f0_support_hold_routes_to_bounded_design_without_authority(self):
+        queue={"source_generator_run_id":"g1","status":"PRE_F0_QUEUE_READY","summary":{"queued":1},"scientific_authority":False,"authority":{"problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False},"rows":[{"candidate_id":"PORT-013","candidate_identity_version":"candidate-content-v1","candidate_snapshot_sha256":"","title":"interface binding","discovery_lane":"CONVERGENT_FAILURE","source_branch_id":"B1","primary_refs":["arXiv:2608.17684"],"irreducible_object":"literal syntactic-envelope binding rather than semantic intent transfer","reduction_blockers":["unresolved-exact-reduction-test:1"],"exact_prediction":"varied envelopes transfer better","strongest_same_information_baseline":"domain adaptation","cheapest_problem_falsifier":"compare varied versus single envelope","endpoint_headroom_requirement":"nondegenerate utility gap"}]}
+        from .candidate_identity import attach_candidate_identity
+        queue["rows"][0]=attach_candidate_identity(queue["rows"][0])
+        row=queue["rows"][0]
+        support={"status":"PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE","support_inventory_sha256":"a"*64,"summary":{"queued":1,"support_qualified":0,"hold_support_unavailable":1,"falsifier_executed":0},"scientific_authority":False,"authority":{"canonical_generator":False,"canonical_problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False},"rows":[{"candidate_id":"PORT-013","candidate_identity_version":row["candidate_identity_version"],"candidate_snapshot_sha256":row["candidate_snapshot_sha256"],"disposition":"HOLD_SUPPORT_UNAVAILABLE","required_unit":"matched native function-call units","asset_audit":"released units are absent","reopen_only_if":"first-party units are released","bounded_first_party_evidence_design_allowed":True,"scientific_authority":False}]}
+        state=build_provisional_evidence_plan_from_pre_f0(queue,support)
+        self.assertEqual(state["status"],"EVIDENCE_DESIGN_PENDING")
+        self.assertEqual(state["summary"]["canonical_pre_f0_support_hold_design_eligible"],1)
+        self.assertEqual(state["entries"][0]["frozen_irreducible_object"],queue["rows"][0]["irreducible_object"])
+        self.assertEqual(state["entries"][0]["source_refs"],["arXiv:2608.17684"])
+        self.assertEqual(state["entries"][0]["prior_support"]["disposition"],"HOLD_SUPPORT_UNAVAILABLE")
+        self.assertEqual(validate_evidence_plan(state),[])
+        self.assertFalse(state["entries"][0]["execution_authorized"])
+
+    def test_canonical_pre_f0_release_only_hold_is_not_routed_to_designer(self):
+        queue={"source_generator_run_id":"g1","summary":{"queued":1},"scientific_authority":False,"authority":{"problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False},"rows":[{"candidate_id":"P1","title":"x","discovery_lane":"UNEXPLAINED_BOUNDARY","source_branch_id":"B1","primary_refs":["arXiv:1"],"irreducible_object":"frozen object","reduction_blockers":["unresolved-exact-reduction-test:1"],"exact_prediction":"p","strongest_same_information_baseline":"b","cheapest_problem_falsifier":"f","endpoint_headroom_requirement":"h"}]}
+        from .candidate_identity import attach_candidate_identity
+        queue["rows"][0]=attach_candidate_identity(queue["rows"][0]);row=queue["rows"][0]
+        support={"status":"PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE","summary":{"queued":1},"scientific_authority":False,"authority":{"canonical_generator":False,"canonical_problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False},"rows":[{"candidate_id":"P1","candidate_identity_version":row["candidate_identity_version"],"candidate_snapshot_sha256":row["candidate_snapshot_sha256"],"disposition":"HOLD_SUPPORT_UNAVAILABLE","bounded_first_party_evidence_design_allowed":False}]}
+        state=build_provisional_evidence_plan_from_pre_f0(queue,support)
+        self.assertEqual(state["summary"]["canonical_pre_f0_support_hold_design_eligible"],0)
+        self.assertEqual(state["summary"]["canonical_pre_f0_wait_primary_asset"],1)
+        self.assertEqual(state["entries"],[])
+
     def test_reduction_pending_becomes_bounded_provisional_portfolio(self):
         state=build_provisional_evidence_plan(machine(6),run_id="shadow-new")
         self.assertEqual(state["summary"]["provisional_problem_candidates"],6)
@@ -164,6 +191,7 @@ class EvidenceAcquisitionTest(unittest.TestCase):
         receipt={"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"outcome":"INCONCLUSIVE","evidence_manifest_sha256":"b"*64,"protocol_valid":True,"qualified_units":24,"metric_summary":"interval overlaps both frozen predictions"}]}
         branched=adjudicate_evidence_receipts(state,receipt);entry=branched["entries"][0]
         self.assertEqual(entry["status"],"BRANCH_REPAIR_READY")
+        self.assertFalse(entry["execution_authorized"]);self.assertFalse((entry.get("authority") or {}).get("bounded_evidence_acquisition",False))
         repair=design_for(entry);repair["changed_variable"]=entry["branch_repair"]["changed_variable"]
         repaired=compile_evidence_designs(branched,{"designs":[repair]},part=2)
         self.assertEqual(repaired["entries"][0]["tree"]["depth"],1)
@@ -192,9 +220,12 @@ class EvidenceAcquisitionTest(unittest.TestCase):
         receipt={"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"outcome":"RESIDUAL_SURVIVES","evidence_manifest_sha256":"a"*64,"protocol_valid":True,"qualified_units":24,"metric_summary":"matched baseline fails while residual prediction holds"}]}
         out=adjudicate_evidence_receipts(state,receipt)
         self.assertEqual(out["entries"][0]["status"],"RETURN_TO_SEMANTIC_CURRENT_SOURCE_REVIEW")
+        self.assertFalse(out["entries"][0]["execution_authorized"]);self.assertFalse((out["entries"][0].get("authority") or {}).get("bounded_evidence_acquisition",False))
         self.assertEqual(out["summary"]["residual_survives"],1)
         self.assertEqual(out["summary"]["paper_design_authorized"],0)
         self.assertEqual(validate_evidence_plan(out),[])
+        stale=copy.deepcopy(out);stale["entries"][0]["authority"]["bounded_evidence_acquisition"]=True
+        self.assertIn("stale-bounded-evidence-authority",validate_evidence_plan(stale))
 
 
 if __name__ == "__main__": unittest.main()

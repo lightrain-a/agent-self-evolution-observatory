@@ -89,6 +89,7 @@ def build_pre_f0_queue(generator: dict[str, Any]) -> dict[str, Any]:
             "discovery_lane": str(source.get("discovery_lane") or "").strip(),
             "source_branch_id": str(source.get("source_branch_id") or "").strip(),
             "primary_refs": primary_refs,
+            "irreducible_object": " ".join(str(source.get("irreducible_object") or "").split()),
             "paperability_axes": dict(source.get("paperability_axes") or {}),
             "surviving_paperability_axes": surviving,
             "non_principle_surviving_axes": [str(axis) for axis in source.get("non_principle_surviving_axes") or [] if str(axis) in {"M", "E", "B", "T", "S"}],

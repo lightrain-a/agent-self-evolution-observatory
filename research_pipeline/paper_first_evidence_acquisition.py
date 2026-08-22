@@ -5,6 +5,8 @@ from datetime import datetime,timezone
 from pathlib import Path
 from typing import Any
 
+from .candidate_identity import validate_candidate_identity
+
 PLAN_FILENAME="evidence-acquisition-plan.json"
 SCHEMA_VERSION="1.0"
 MAX_ACTIVE=4; MAX_DEPTH=2; MAX_UNITS=128; MAX_WALL_MIN=90; MAX_GPU_HOURS=1.0; MAX_MODEL_CALLS=256
@@ -82,6 +84,53 @@ def build_provisional_evidence_plan(machine:dict,*,run_id:str="",max_active:int=
    "blockers":sorted({str(x) for x in r.get("blockers") or [] if str(x)}),"tree":{"depth":0,"parent_contract_sha256":"","repair_count":0},"design":{},"contract_sha256":"","execution_authorized":False,"scientific_authority":False,"authority":dict(AUTHORITY)})
  selected=sum(r["design_selected"] for r in entries)
  return {"schema_version":SCHEMA_VERSION,"generated_at":_now(),"run_id":run_id,"status":"EVIDENCE_DESIGN_PENDING" if selected else "NO_REDUCTION_PENDING_EVIDENCE_WORK","policy":dict(POLICY),"portfolio":{"selection":"bounded-top-k","max_active_candidates":MAX_ACTIVE,"active_candidates":selected,"experiment_tree_max_depth":MAX_DEPTH},"summary":_summary(entries),"entries":entries,"scientific_authority":False,"authority":dict(AUTHORITY)}
+
+def build_provisional_evidence_plan_from_pre_f0(pre_f0_queue:dict,support_preflight:dict,*,run_id:str="",max_active:int=MAX_ACTIVE)->dict:
+ """Adapt exact canonical Pre-F0 support holds into the existing bounded evidence planner.
+
+ This adapter grants no execution or scientific authority.  It only routes support-held
+ candidates whose receipt explicitly permits bounded first-party evidence design.  The
+ candidate identity, scientific object, prediction, baseline, falsifier, and source refs
+ remain compiler-owned from the canonical Pre-F0 queue; support-qualified rows bypass
+ this design route and release-change-only holds remain waiting.
+ """
+ if pre_f0_queue.get("scientific_authority") is not False or support_preflight.get("scientific_authority") is not False: raise ValueError("canonical Pre-F0 evidence adapter requires zero-authority inputs")
+ qauth=pre_f0_queue.get("authority") or {};sauth=support_preflight.get("authority") or {}
+ if any(qauth.get(k) is not False for k in ("problem_gate","paper_design","method","experiment","p0","gpu")): raise ValueError("canonical Pre-F0 queue leaked downstream authority")
+ if any(sauth.get(k) is not False for k in ("canonical_generator","canonical_problem_gate","paper_design","method","experiment","p0","gpu")): raise ValueError("canonical Pre-F0 support preflight leaked downstream authority")
+ qrows=[r for r in pre_f0_queue.get("rows") or [] if isinstance(r,dict)];srows=[r for r in support_preflight.get("rows") or [] if isinstance(r,dict)]
+ if support_preflight.get("status")!="PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE": raise ValueError("canonical Pre-F0 support preflight must be complete before evidence design")
+ if int((pre_f0_queue.get("summary") or {}).get("queued") or 0)!=len(qrows) or int((support_preflight.get("summary") or {}).get("queued") or 0)!=len(srows): raise ValueError("canonical Pre-F0 queue/support accounting mismatch")
+ qby={str(r.get("candidate_id") or ""):r for r in qrows};sby={str(r.get("candidate_id") or ""):r for r in srows}
+ if not qby or len(qby)!=len(qrows) or set(qby)!=set(sby): raise ValueError("canonical Pre-F0 support preflight must cover the queue exactly")
+ machine_rows=[];wait_primary=0;qualified=0
+ for candidate_id in sorted(qby):
+  q=qby[candidate_id];s=sby[candidate_id];validate_candidate_identity(q)
+  if str(s.get("candidate_identity_version") or "")!=str(q.get("candidate_identity_version") or "") or str(s.get("candidate_snapshot_sha256") or "").lower()!=str(q.get("candidate_snapshot_sha256") or "").lower(): raise ValueError(f"canonical Pre-F0 support identity mismatch:{candidate_id}")
+  disposition=str(s.get("disposition") or "").upper()
+  if disposition=="SUPPORT_QUALIFIED": qualified+=1;continue
+  if disposition!="HOLD_SUPPORT_UNAVAILABLE": raise ValueError(f"unsupported canonical Pre-F0 support disposition:{candidate_id}")
+  if s.get("bounded_first_party_evidence_design_allowed") is not True: wait_primary+=1;continue
+  irreducible=_b(q.get("irreducible_object"),2400)
+  if not irreducible: raise ValueError(f"canonical Pre-F0 evidence design requires frozen irreducible_object:{candidate_id}")
+  machine_rows.append({"candidate_id":candidate_id,"title":q.get("title"),"discovery_lane":q.get("discovery_lane"),"source_branch_id":q.get("source_branch_id"),"blockers":list(q.get("reduction_blockers") or []),"irreducible_object":irreducible,"endpoint_headroom_requirement":q.get("endpoint_headroom_requirement"),"exact_prediction":q.get("exact_prediction"),"strongest_same_information_baseline":q.get("strongest_same_information_baseline"),"cheapest_problem_falsifier":q.get("cheapest_problem_falsifier"),"scientific_authority":False})
+ machine={"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False},"problem_falsifier_queue":machine_rows}
+ plan=build_provisional_evidence_plan(machine,run_id=run_id or str(pre_f0_queue.get("source_generator_run_id") or ""),max_active=max_active)
+ for entry in plan.get("entries") or []:
+  q=qby[entry["candidate_id"]];s=sby[entry["candidate_id"]]
+  entry["source_refs"]=sorted(str(ref) for ref in q.get("primary_refs") or [] if str(ref).startswith("arXiv:"))
+  entry["candidate_identity_version"]=str(q.get("candidate_identity_version") or "")
+  entry["candidate_snapshot_sha256"]=str(q.get("candidate_snapshot_sha256") or "")
+  entry["prior_support"]={"disposition":"HOLD_SUPPORT_UNAVAILABLE","required_unit":_b(s.get("required_unit"),1800),"asset_audit":_b(s.get("asset_audit"),2200),"reopen_only_if":_b(s.get("reopen_only_if"),1800),"bounded_first_party_evidence_design_allowed":True,"support_inventory_sha256":str(support_preflight.get("support_inventory_sha256") or ""),"scientific_authority":False}
+  entry["canonical_pre_f0_source"]={"source_generator_run_id":str(pre_f0_queue.get("source_generator_run_id") or ""),"candidate_snapshot_sha256":entry["candidate_snapshot_sha256"],"scientific_authority":False}
+ plan["source"]="CANONICAL_PRE_F0_SUPPORT_HOLD"
+ plan["support_inventory_sha256"]=str(support_preflight.get("support_inventory_sha256") or "")
+ plan["policy"]["canonical_pre_f0_support_hold_adapter_zero_authority"]=True
+ plan["policy"]["support_qualified_bypasses_evidence_design_adapter"]=True
+ plan["policy"]["release_change_only_hold_remains_waiting"]=True
+ plan["summary"].update({"canonical_pre_f0_support_hold_design_eligible":len(machine_rows),"canonical_pre_f0_wait_primary_asset":wait_primary,"canonical_pre_f0_support_qualified_bypassed":qualified})
+ return plan
+
 
 def _summary(entries:list[dict])->dict:
  return {
@@ -370,7 +419,7 @@ def adjudicate_evidence_receipts(plan:dict,receipt_payload:dict)->dict:
   if not re.fullmatch(r"[0-9a-f]{64}",manifest): raise ValueError(f"manifest digest required:{cid}")
   if rec.get("protocol_valid") is not True: raise ValueError(f"invalid protocol cannot update belief:{cid}")
   if not isinstance(units,int) or units<=0 or not _b(rec.get("metric_summary")): raise ValueError(f"qualified evidence summary required:{cid}")
-  e["execution_authorized"]=False;e["evidence_receipt"]={"outcome":outcome,"qualified_units":units,"evidence_manifest_sha256":manifest,"metric_summary":_b(rec.get("metric_summary"),1800),"protocol_valid":True}
+  e["execution_authorized"]=False;e["authority"]=dict(AUTHORITY);e["evidence_receipt"]={"outcome":outcome,"qualified_units":units,"evidence_manifest_sha256":manifest,"metric_summary":_b(rec.get("metric_summary"),1800),"protocol_valid":True}
   if outcome=="REDUCTION_SUPPORTED": e["status"]="STOP_EXACT_REDUCTION_SUPPORTED";e["next_action"]="persist-semantic-dead-end"
   elif outcome=="RESIDUAL_SURVIVES": e["status"]="RETURN_TO_SEMANTIC_CURRENT_SOURCE_REVIEW";e["next_action"]="semantic-and-current-source-review"
   else:
@@ -400,4 +449,5 @@ def validate_evidence_plan(state:dict)->list[str]:
   if r.get("status")=="READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT" and r.get("execution_authorized") is not False:errors.append("contract-review-clear-cannot-authorize-execution")
   auth=r.get("authority") or {}
   if any(auth.get(k) is not False for k in ("scientific_claim","live_problem_gate","paper_design","method","p0","full_experiment")): errors.append("entry-downstream-authority-leak")
+  if auth.get("bounded_evidence_acquisition") is True and (r.get("status")!="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION" or r.get("execution_authorized") is not True): errors.append("stale-bounded-evidence-authority")
  return sorted(set(errors))

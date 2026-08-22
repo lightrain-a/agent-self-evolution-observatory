@@ -31,6 +31,7 @@ class ResearchSystemTest(unittest.TestCase):
             support_asset_recheck_state=state.get("paper_first_support_asset_recheck_queue") or {},
             shadow_portfolio_state=state.get("paper_first_problem_search_portfolio") or {},
             evidence_migration_state=state.get("paper_first_evidence_migration") or {},
+            pre_f0_evidence_state=state.get("paper_first_pre_f0_evidence_acquisition") or {},
         )
         return state
 
@@ -649,11 +650,17 @@ class ResearchSystemTest(unittest.TestCase):
         broken["paper_first_problem_discovery_contract"]["policy"]["search_portfolio_is_shadow_only"]=False
         self.assertTrue(any("shadow-only" in error for error in validate_state(broken)))
         leaked=copy.deepcopy(self.state)
-        leaked["paper_first_problem_generator"]["policy"]["search_portfolio_is_shadow_only"]=True
-        self.assertTrue(any("canonical double-funnel" in error for error in validate_state(leaked)))
+        generator_policy=leaked["paper_first_problem_generator"]["policy"]
+        if generator_policy.get("search_portfolio_enabled") is True:
+            generator_policy["search_portfolio_is_shadow_only"]=True
+            self.assertTrue(any("canonical double-funnel" in error for error in validate_state(leaked)))
+        else:
+            generator_policy["canonical_transaction_forbids_search_portfolio"]=False
+            self.assertTrue(any("Search Portfolio out of the live transaction" in error for error in validate_state(leaked)))
         multi=copy.deepcopy(self.state)
-        multi["paper_first_problem_generator"]["policy"]["one_generator_call_max"]=True
-        self.assertTrue(any("one bounded discovery transaction" in error for error in validate_state(multi)))
+        multi_policy=multi["paper_first_problem_generator"]["policy"]
+        multi_policy["one_generator_call_max"]=not bool(multi_policy.get("one_generator_call_max"))
+        self.assertTrue(any(("one bounded discovery transaction" in error) or ("at most one generator call" in error) for error in validate_state(multi)))
 
     def test_shadow_search_admission_is_zero_provider_search_control(self) -> None:
         admission=self.state["paper_first_shadow_search_admission"];summary=admission.get("summary") or {}
@@ -888,6 +895,7 @@ class ResearchSystemTest(unittest.TestCase):
             support_asset_recheck_state=self.state.get("paper_first_support_asset_recheck_queue") or {},
             shadow_portfolio_state=self.state.get("paper_first_problem_search_portfolio") or {},
             evidence_migration_state=self.state.get("paper_first_evidence_migration") or {},
+            pre_f0_evidence_state=self.state.get("paper_first_pre_f0_evidence_acquisition") or {},
         )
         for key in ("status","summary","blockers","triggers"):
             self.assertEqual(frontier.get(key),expected.get(key))

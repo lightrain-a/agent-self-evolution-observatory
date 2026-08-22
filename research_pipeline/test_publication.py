@@ -196,6 +196,10 @@ class PublicationTest(unittest.TestCase):
         for artifact in ("generated/research-items.json", "generated/research-items.js", "generated/paper-registry.json", "generated/paper-registry.js", "generated/research-memory-wiki.json", "generated/research-memory-wiki.js", "generated/research-dashboard.json", "generated/research-dashboard.js"):
             self.assertIn(artifact, DAILY_ARTIFACTS)
         for artifact in (
+            "generated/paper-first-pre-f0-queue.json",
+            "generated/paper-first-pre-f0-queue.js",
+            "generated/paper-first-shadow-search-admission.json",
+            "generated/paper-first-shadow-search-admission.js",
             "generated/paper-first-problem-search-portfolio-state.json",
             "generated/paper-first-problem-search-portfolio-state.js",
             "generated/paper-first-problem-search-portfolio-queue-shadow.json",

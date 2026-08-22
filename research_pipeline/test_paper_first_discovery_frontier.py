@@ -51,6 +51,36 @@ class PaperFirstDiscoveryFrontierTest(unittest.TestCase):
         self.assertEqual(state["status"],"WAIT_EXTERNAL_EVIDENCE_TRIGGERS")
         self.assertEqual(validate_paper_first_discovery_frontier(state),[])
 
+    def test_canonical_pre_f0_handoff_routes_open_work_to_evidence_not_generator(self) -> None:
+        states=self.states()
+        states["generator_state"]={"status":"GENERATED_PRE_F0_EVIDENCE_ACQUISITION","summary":{"pre_f0_eligible":1,"generated":0,"written_to_auto_inbox":0}}
+        states["pre_f0_evidence_state"]={"status":"EVIDENCE_EXECUTION_READY","summary":{"provisional_problem_candidates":1,"execution_ready":1},"scientific_authority":False}
+        state=self.build(states)
+        self.assertTrue(state["summary"]["live_generator_closed"])
+        self.assertTrue(state["summary"]["pre_f0_handoff_bound"])
+        self.assertEqual(state["summary"]["canonical_evidence_internal_open"],1)
+        self.assertEqual(state["status"],"EVIDENCE_ACQUISITION_PENDING")
+        self.assertEqual(validate_paper_first_discovery_frontier(state),[])
+
+    def test_canonical_pre_f0_terminal_hold_closes_generator_and_returns_external_wait(self) -> None:
+        states=self.states()
+        states["generator_state"]={"status":"GENERATED_PRE_F0_EVIDENCE_ACQUISITION","summary":{"pre_f0_eligible":1,"generated":0,"written_to_auto_inbox":0}}
+        states["pre_f0_evidence_state"]={"status":"EVIDENCE_WAIT_OR_HOLD","summary":{"provisional_problem_candidates":1,"execution_ready":0,"execution_completed":1,"inconclusive":1},"scientific_authority":False}
+        state=self.build(states)
+        self.assertTrue(state["summary"]["live_generator_closed"])
+        self.assertTrue(state["summary"]["evidence_acquisition_closed"])
+        self.assertEqual(state["summary"]["open_internal_frontiers"],0)
+        self.assertEqual(state["status"],"WAIT_EXTERNAL_EVIDENCE_TRIGGERS")
+        self.assertEqual(validate_paper_first_discovery_frontier(state),[])
+
+    def test_pre_f0_generator_without_bound_evidence_state_remains_open(self) -> None:
+        states=self.states()
+        states["generator_state"]={"status":"GENERATED_PRE_F0_EVIDENCE_ACQUISITION","summary":{"pre_f0_eligible":1,"generated":0,"written_to_auto_inbox":0}}
+        state=self.build(states)
+        self.assertFalse(state["summary"]["live_generator_closed"])
+        self.assertFalse(state["summary"]["pre_f0_handoff_bound"])
+        self.assertEqual(state["status"],"LIVE_SOURCE_DISCOVERY_PENDING")
+
     def test_new_live_source_backlog_opens_live_source_frontier_not_model_authority(self) -> None:
         states=self.states();states["primary_state"]["summary"].update({"source_coverage_exhausted":False,"unreviewed_lane_linked_sources":2})
         state=self.build(states)

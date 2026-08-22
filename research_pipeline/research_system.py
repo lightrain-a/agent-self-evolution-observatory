@@ -62,6 +62,7 @@ from .paper_first_problem_generator import installed_problem_generator_policy, l
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
 from .paper_first_pre_f0_queue import load_pre_f0_queue
 from .paper_first_problem_falsifier_preflight import load_pre_f0_problem_falsifier_preflight
+from .paper_first_pre_f0_evidence_control import load_public as load_pre_f0_evidence_acquisition_public, validate_public_state as validate_pre_f0_evidence_acquisition_public
 from .paper_first_shadow_search_admission import DEFAULT_JSON as SHADOW_SEARCH_ADMISSION_JSON, build_shadow_search_admission, public_shadow_search_admission_summary, validate_shadow_search_admission, write_shadow_search_admission
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier, validate_shadow_continuation_frontier
 from .paper_first_search_portfolio_design_adjudication import DEFAULT_JSON as SEARCH_PORTFOLIO_DESIGN_JSON, build_search_portfolio_design_adjudication, validate_search_portfolio_design_adjudication, write_search_portfolio_design_adjudication
@@ -461,6 +462,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_problem_generator = load_problem_generator_state()
     paper_first_pre_f0_queue = load_pre_f0_queue()
     paper_first_pre_f0_problem_falsifier_preflight = load_pre_f0_problem_falsifier_preflight()
+    paper_first_pre_f0_evidence_acquisition = load_pre_f0_evidence_acquisition_public()
     paper_first_problem_memory = ((paper_first_problem_generator.get("saturation_memory") or {}).get("blocked_problem_memory") or {})
     paper_first_lane_search = paper_first_problem_generator.get("search_diagnostics") or {}
     paper_first_last_lane_search = paper_first_lane_search.get("last_completed_lane_search") or {}
@@ -499,6 +501,7 @@ def build_research_system_state() -> dict[str, Any]:
         support_asset_recheck_state=paper_first_support_asset_recheck,
         shadow_portfolio_state=paper_first_problem_search_portfolio,
         evidence_migration_state=paper_first_evidence_migration,
+        pre_f0_evidence_state=paper_first_pre_f0_evidence_acquisition,
     )
     research_candidate_portfolio = build_research_candidate_portfolio(
         generator_state=paper_first_problem_generator,
@@ -745,6 +748,13 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_pre_f0_support_status":paper_first_pre_f0_problem_falsifier_preflight.get("status"),
             "paper_first_pre_f0_support_ready":(paper_first_pre_f0_problem_falsifier_preflight.get("summary") or {}).get("support_qualified",0),
             "paper_first_pre_f0_support_holds":(paper_first_pre_f0_problem_falsifier_preflight.get("summary") or {}).get("hold_support_unavailable",0),
+            "paper_first_pre_f0_evidence_status":paper_first_pre_f0_evidence_acquisition.get("status","NOT_RUN"),
+            "paper_first_pre_f0_evidence_candidates":int((paper_first_pre_f0_evidence_acquisition.get("summary") or {}).get("provisional_problem_candidates") or 0),
+            "paper_first_pre_f0_evidence_execution_ready":int((paper_first_pre_f0_evidence_acquisition.get("summary") or {}).get("execution_ready") or 0),
+            "paper_first_pre_f0_evidence_execution_completed":int((paper_first_pre_f0_evidence_acquisition.get("summary") or {}).get("execution_completed") or 0),
+            "paper_first_pre_f0_evidence_reduction_supported":int((paper_first_pre_f0_evidence_acquisition.get("summary") or {}).get("reduction_supported") or 0),
+            "paper_first_pre_f0_evidence_residual_survives":int((paper_first_pre_f0_evidence_acquisition.get("summary") or {}).get("residual_survives") or 0),
+            "paper_first_pre_f0_evidence_inconclusive":int((paper_first_pre_f0_evidence_acquisition.get("summary") or {}).get("inconclusive") or 0),
             "paper_first_problem_generator_semantic_clear":(paper_first_problem_generator.get("summary") or {}).get("semantic_clear",0),
             "paper_first_problem_generator_semantic_blocked":(paper_first_problem_generator.get("summary") or {}).get("semantic_blocked",0),
             "paper_first_problem_generator_saturation_entries":(paper_first_problem_generator.get("saturation_memory") or {}).get("ledger_entries",0),
@@ -1096,6 +1106,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_problem_generator":paper_first_problem_generator,
         "paper_first_pre_f0_queue":paper_first_pre_f0_queue,
         "paper_first_pre_f0_problem_falsifier_preflight":paper_first_pre_f0_problem_falsifier_preflight,
+        "paper_first_pre_f0_evidence_acquisition":paper_first_pre_f0_evidence_acquisition,
         "paper_first_problem_gate_queue":paper_first_problem_gate_queue,
         "paper_first_search_portfolio_design_adjudication":paper_first_search_portfolio_design,
         "paper_first_support_release_watch":paper_first_support_release_watch,
@@ -1733,9 +1744,8 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             if (
                 pre_f0_policy.get("zero_candidate_generator_may_preserve_exact_unresolved_support_debt") is not True
                 or pre_f0_policy.get("carried_forward_rows_are_not_current_generator_output") is not True
-                or str(pre_f0.get("current_generator_run_id") or "")!=str(generator.get("run_id") or "")
-                or str(pre_f0.get("current_generator_status") or "")!=str(generator.get("status") or "")
-                or str(generator.get("status") or "") not in {"GENERATED_ZERO_CANDIDATES","SKIPPED_SOURCE_COVERAGE_SATURATED"}
+                or not str(pre_f0.get("current_generator_run_id") or "")
+                or str(pre_f0.get("current_generator_status") or "") not in {"GENERATED_ZERO_CANDIDATES","SKIPPED_SOURCE_COVERAGE_SATURATED"}
                 or int(generator_summary.get("pre_f0_eligible") or 0)!=0
                 or int(pre_f0_summary.get("carried_forward_support_debt") or 0)!=int(pre_f0_summary.get("queued") or 0)
                 or pre_f0_summary.get("current_generator_pre_f0_candidates") != 0
@@ -1869,6 +1879,11 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     errors.extend(f"Asset-first STRI paper-ready: {error}" for error in validate_asset_first_stri_public_status(asset_first_stri))
     if int((asset_first_stri.get("summary") or {}).get("canonical_problem_gate_pass_added") or 0)!=0 or int((asset_first_stri.get("summary") or {}).get("canonical_generator_candidates_added") or 0)!=0 or int((asset_first_stri.get("summary") or {}).get("canonical_queue_candidates_added") or 0)!=0:
         errors.append("asset-first STRI paper-ready track cannot mutate canonical discovery accounting")
+    pre_f0_evidence=state.get("paper_first_pre_f0_evidence_acquisition") or {}
+    if pre_f0_evidence and str(pre_f0_evidence.get("status") or "NOT_RUN")!="NOT_RUN":
+        errors.extend(f"Canonical Pre-F0 evidence acquisition: {error}" for error in validate_pre_f0_evidence_acquisition_public(pre_f0_evidence))
+        if any(key in pre_f0_evidence for key in ("entries","candidate_id","source_refs","design","evidence_receipt")):
+            errors.append("canonical Pre-F0 evidence public state cannot expose private candidate or evidence material")
     discovery_frontier=state.get("paper_first_discovery_frontier") or {}
     if discovery_frontier:
         errors.extend(f"Paper-first discovery frontier: {error}" for error in validate_paper_first_discovery_frontier(discovery_frontier))
@@ -1884,6 +1899,7 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             support_asset_recheck_state=state.get("paper_first_support_asset_recheck_queue") or {},
             shadow_portfolio_state=state.get("paper_first_problem_search_portfolio") or {},
             evidence_migration_state=state.get("paper_first_evidence_migration") or {},
+            pre_f0_evidence_state=state.get("paper_first_pre_f0_evidence_acquisition") or {},
         )
         if any(discovery_frontier.get(key)!=expected_discovery_frontier.get(key) for key in ("status","policy","summary","blockers","triggers")):
             errors.append("paper-first discovery frontier must equal the deterministic projection of embedded control states")

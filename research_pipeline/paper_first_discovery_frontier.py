@@ -30,6 +30,7 @@ def build_paper_first_discovery_frontier(
     support_asset_recheck_state: dict[str, Any],
     shadow_portfolio_state: dict[str, Any] | None = None,
     evidence_migration_state: dict[str, Any] | None = None,
+    pre_f0_evidence_state: dict[str, Any] | None = None,
     now: datetime | None = None,
 ) -> dict[str, Any]:
     """Compile zero-authority discovery-control states into one trigger-driven frontier.
@@ -49,6 +50,8 @@ def build_paper_first_discovery_frontier(
     shadow_latest = ((shadow_portfolio_state or {}).get("latest_run") or {}) if isinstance(shadow_portfolio_state, dict) else {}
     es = shadow_latest.get("summary") or {}
     ms = (evidence_migration_state or {}).get("summary") or {}
+    pe_state = pre_f0_evidence_state or {}
+    pe = pe_state.get("summary") or {}
 
     live_source_closed = bool(
         primary_state.get("status") == "READY"
@@ -64,6 +67,13 @@ def build_paper_first_discovery_frontier(
         and _int(qs, "paper_design_eligible") == 0
         and _int(qs, "inbox_errors") == 0
     )
+    pre_f0_handoff_bound = bool(
+        generator_state.get("status") == "GENERATED_PRE_F0_EVIDENCE_ACQUISITION"
+        and _int(gs, "pre_f0_eligible") > 0
+        and _int(pe, "provisional_problem_candidates") == _int(gs, "pre_f0_eligible")
+        and str(pe_state.get("status") or "") not in {"", "NOT_RUN", "STATE_UNREADABLE", "STATE_INVALID"}
+        and pe_state.get("scientific_authority") is False
+    )
     live_generator_closed = bool(
         (
             generator_state.get("status") in {"SKIPPED_SOURCE_COVERAGE_SATURATED", "GENERATED_ZERO_CANDIDATES"}
@@ -76,6 +86,7 @@ def build_paper_first_discovery_frontier(
             and _int(qs, "submitted") == _int(qs, "audited")
             and live_queue_closed
         )
+        or pre_f0_handoff_bound
     )
     relation_current_closed = bool(
         relation_freshness_state.get("status") == "CURRENT_RELATION_UNIVERSE"
@@ -103,13 +114,18 @@ def build_paper_first_discovery_frontier(
         _int(oc, "activation_authorized") == 0
         and _int(oc, "pending_cache") == 0
     )
-    shadow_evidence_open = sum(_int(es, key) for key in (
-        "evidence_design_pending", "evidence_operationalization_recompile_pending", "evidence_review_pending", "evidence_substrate_preflight_pending", "evidence_harness_implementation_pending", "evidence_execution_ready", "evidence_residual_survives", "evidence_branch_repair_ready"
+    evidence_open_keys = (
+        "evidence_design_pending", "evidence_operationalization_recompile_pending", "evidence_review_pending",
+        "evidence_substrate_preflight_pending", "evidence_harness_implementation_pending", "evidence_execution_ready",
+        "evidence_residual_survives", "evidence_branch_repair_ready",
+    )
+    canonical_evidence_open = sum(_int(pe, key) for key in (
+        "design_pending", "operationalization_recompile_pending", "review_pending", "substrate_preflight_pending",
+        "substrate_implementation_pending", "execution_ready", "residual_survives", "branch_repair_ready",
     ))
-    migration_evidence_open = sum(_int(ms, key) for key in (
-        "evidence_design_pending", "evidence_operationalization_recompile_pending", "evidence_review_pending", "evidence_substrate_preflight_pending", "evidence_harness_implementation_pending", "evidence_execution_ready", "evidence_residual_survives", "evidence_branch_repair_ready"
-    )) if str((evidence_migration_state or {}).get("status") or "") == "LEGACY_REDUCTION_EVIDENCE_MIGRATION_READY" else 0
-    evidence_internal_open = shadow_evidence_open + migration_evidence_open
+    shadow_evidence_open = sum(_int(es, key) for key in evidence_open_keys)
+    migration_evidence_open = sum(_int(ms, key) for key in evidence_open_keys) if str((evidence_migration_state or {}).get("status") or "") == "LEGACY_REDUCTION_EVIDENCE_MIGRATION_READY" else 0
+    evidence_internal_open = canonical_evidence_open + shadow_evidence_open + migration_evidence_open
     evidence_loop_closed = evidence_internal_open == 0
     support_closed = bool(
         _int(rw, "recheck_required") == 0
@@ -217,16 +233,18 @@ def build_paper_first_discovery_frontier(
         "support_release_closed": support_closed,
         "evidence_acquisition_closed": evidence_loop_closed,
         "evidence_internal_open": evidence_internal_open,
+        "canonical_evidence_internal_open": canonical_evidence_open,
         "shadow_evidence_internal_open": shadow_evidence_open,
         "migration_evidence_internal_open": migration_evidence_open,
-        "evidence_design_pending": _int(es, "evidence_design_pending") + (_int(ms, "evidence_design_pending") if migration_evidence_open else 0),
-        "evidence_operationalization_recompile_pending": _int(es, "evidence_operationalization_recompile_pending") + (_int(ms, "evidence_operationalization_recompile_pending") if migration_evidence_open else 0),
-        "evidence_review_pending": _int(es, "evidence_review_pending") + (_int(ms, "evidence_review_pending") if migration_evidence_open else 0),
-        "evidence_substrate_preflight_pending": _int(es, "evidence_substrate_preflight_pending") + (_int(ms, "evidence_substrate_preflight_pending") if migration_evidence_open else 0),
-        "evidence_harness_implementation_pending": _int(es, "evidence_harness_implementation_pending") + (_int(ms, "evidence_harness_implementation_pending") if migration_evidence_open else 0),
-        "evidence_execution_ready": _int(es, "evidence_execution_ready") + (_int(ms, "evidence_execution_ready") if migration_evidence_open else 0),
-        "evidence_residual_survives": _int(es, "evidence_residual_survives") + (_int(ms, "evidence_residual_survives") if migration_evidence_open else 0),
-        "evidence_branch_repair_ready": _int(es, "evidence_branch_repair_ready") + (_int(ms, "evidence_branch_repair_ready") if migration_evidence_open else 0),
+        "pre_f0_handoff_bound": pre_f0_handoff_bound,
+        "evidence_design_pending": _int(pe, "design_pending") + _int(es, "evidence_design_pending") + (_int(ms, "evidence_design_pending") if migration_evidence_open else 0),
+        "evidence_operationalization_recompile_pending": _int(pe, "operationalization_recompile_pending") + _int(es, "evidence_operationalization_recompile_pending") + (_int(ms, "evidence_operationalization_recompile_pending") if migration_evidence_open else 0),
+        "evidence_review_pending": _int(pe, "review_pending") + _int(es, "evidence_review_pending") + (_int(ms, "evidence_review_pending") if migration_evidence_open else 0),
+        "evidence_substrate_preflight_pending": _int(pe, "substrate_preflight_pending") + _int(es, "evidence_substrate_preflight_pending") + (_int(ms, "evidence_substrate_preflight_pending") if migration_evidence_open else 0),
+        "evidence_harness_implementation_pending": _int(pe, "substrate_implementation_pending") + _int(es, "evidence_harness_implementation_pending") + (_int(ms, "evidence_harness_implementation_pending") if migration_evidence_open else 0),
+        "evidence_execution_ready": _int(pe, "execution_ready") + _int(es, "evidence_execution_ready") + (_int(ms, "evidence_execution_ready") if migration_evidence_open else 0),
+        "evidence_residual_survives": _int(pe, "residual_survives") + _int(es, "evidence_residual_survives") + (_int(ms, "evidence_residual_survives") if migration_evidence_open else 0),
+        "evidence_branch_repair_ready": _int(pe, "branch_repair_ready") + _int(es, "evidence_branch_repair_ready") + (_int(ms, "evidence_branch_repair_ready") if migration_evidence_open else 0),
         "open_internal_frontiers": len(blockers),
         "external_triggers": len(triggers),
         "automatic_model_calls_authorized": 0,

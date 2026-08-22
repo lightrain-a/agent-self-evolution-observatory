@@ -57,6 +57,7 @@ from .paper_first_fresh_saturation import write_fresh_saturation_state
 from .paper_first_discovery_transaction import write_problem_discovery_transaction
 from .paper_first_pre_f0_queue import load_pre_f0_queue, write_pre_f0_queue
 from .paper_first_problem_falsifier_preflight import load_pre_f0_problem_falsifier_preflight
+from .paper_first_pre_f0_evidence_control import load_public as load_pre_f0_evidence_acquisition_public
 from .paper_first_discovery_frontier import build_paper_first_discovery_frontier
 from .paper_first_legacy_reduction_migration import load_public_migration
 from .paper_first_global_relation_recall import load_global_relation_recall_state, write_global_relation_recall_state
@@ -240,6 +241,7 @@ def _run_discovery_frontier_control(storage: StorageSettings) -> dict[str, Any]:
     )
     shadow_admission = public_shadow_search_admission_summary(build_shadow_search_admission())
     evidence_migration = load_public_migration()
+    pre_f0_evidence = load_pre_f0_evidence_acquisition_public()
     try:
         shadow_portfolio = json.loads(SHADOW_PORTFOLIO_JSON.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
@@ -261,6 +263,7 @@ def _run_discovery_frontier_control(storage: StorageSettings) -> dict[str, Any]:
         support_asset_recheck_state=asset_queue,
         shadow_portfolio_state=shadow_portfolio,
         evidence_migration_state=evidence_migration,
+        pre_f0_evidence_state=pre_f0_evidence,
     )
     frontier.setdefault("summary", {}).update({
         "frontier_status": frontier.get("status", "WAIT_EXTERNAL_EVIDENCE_TRIGGERS"),
