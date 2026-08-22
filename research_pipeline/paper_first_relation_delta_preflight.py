@@ -80,6 +80,46 @@ def build_relation_delta_preflight(
     if not cutoff or not last_digest:
         base.update({"status":"NO_COMPLETED_RELATION_SCAN","summary":{"current_receipt_runs":len(receipts),"new_reviewed_sources":0,"model_scan_authorized":False,"focused_generator_reopen_authorized":False}})
         return base
+    if current_digest==last_digest:
+        current_refs=_refs(receipts)
+        base.update({
+            "status":"RELATION_DELTA_CURRENT_UNIVERSE_NO_NEW_SOURCES",
+            "boundary_source":"CURRENT_RELATION_UNIVERSE_EXACT_DIGEST",
+            "summary":{
+                "old_receipt_runs":len(receipts),
+                "new_receipt_runs":0,
+                "old_reviewed_sources":len(current_refs),
+                "current_reviewed_sources":len(current_refs),
+                "new_reviewed_sources":0,
+                "new_empirical_sources":0,
+                "new_assumption_sources":0,
+                "new_failure_sources":0,
+                "new_boundary_sources":0,
+                "assumption_break_has_new_assumption_endpoint":False,
+                "convergent_failure_has_new_failure_evidence":False,
+                "unexplained_boundary_has_new_boundary_evidence":False,
+                "contradiction_has_new_empirical_evidence":False,
+                "cache_missing_sources":0,
+                "model_scan_authorized":False,
+                "focused_generator_reopen_authorized":False,
+            },
+            "pair_slots":{
+                "empirical_empirical_slots_touching_new":0,
+                "failure_failure_slots_touching_new":0,
+                "assumption_failure_slots_touching_new":0,
+                "boundary_empirical_slots_touching_new":0,
+            },
+            "interpretation":{
+                "assumption_break":"NO_NEW_ASSUMPTION_ENDPOINT",
+                "convergent_failure":"NO_NEW_FAILURE_EVIDENCE",
+                "unexplained_boundary":"NO_NEW_BOUNDARY_EVIDENCE",
+                "contradiction":"NO_NEW_EMPIRICAL_EVIDENCE",
+            },
+            "last_scanned_relation_universe_digest":last_digest,
+            "reconstructed_last_relation_universe_digest":last_digest,
+            "current_relation_universe_digest":current_digest,
+        })
+        return base
     old_receipts=[row for row in receipts if str(row.get("run_id") or "")<=cutoff]
     cutoff_new_receipts=[row for row in receipts if str(row.get("run_id") or "")>cutoff]
     reconstructed_digest=relation_universe_digest(old_receipts)
