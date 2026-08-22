@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "status": "HOLD_CANONICAL_DISCOVERY_TRANSACTION_OPEN",
-  "reason": "Canonical Primary -> Generator -> Queue is not a closed, internally consistent zero-authority discovery transaction.",
+  "status": "READY_FOR_SHADOW_QUALIFICATION",
+  "reason": "Canonical discovery is closed and the current source transaction differs from the latest terminal shadow source identity.",
   "policy": {
     "scientific_authority": false,
     "admission_is_deterministic_search_control_only": true,
@@ -13,7 +13,7 @@
   },
   "summary": {
     "primary_records": 32,
-    "canonical_transaction_closed": false,
+    "canonical_transaction_closed": true,
     "latest_shadow_present": true,
     "latest_shadow_terminal": true,
     "same_source_transaction": false,
@@ -22,16 +22,16 @@
     "same_discovery_operator_version": false,
     "operator_upgrade_recompile": false,
     "source_identity_conflict": false,
-    "qualification_allowed": false,
+    "qualification_allowed": true,
     "automatic_provider_calls_authorized": 0,
     "checks": 14,
-    "passed_checks": 12,
-    "failed_checks": 2
+    "passed_checks": 14,
+    "failed_checks": 0
   },
   "source_identity": {
-    "current_source_generated_at": "2026-08-20T14:13:29+00:00",
-    "current_source_set_sha256": "385e25d7d3d8bcfc7efd2b0ace49932e29d1bef8d15d927e32bfc85d9832da2e",
-    "current_primary_content_sha256": "8bd5658084e414dca811401700196a9ca8c7b33c81433ab1426a4b623b37f36c",
+    "current_source_generated_at": "2026-08-21T18:07:24+00:00",
+    "current_source_set_sha256": "3185936481b2c7ace129ccd86f73e06552a5c999c0db3ec7524202ff6d66784c",
+    "current_primary_content_sha256": "bb81cad361ee733be077b483540e1fc564ae73c51eb637470960cacb0edc0f29",
     "latest_run_id": "shadow-auto-3eb8aa25b7961110",
     "latest_status": "SHADOW_TERMINAL_COMPLETE",
     "latest_source_generated_at": "2026-08-17T16:17:14+00:00",

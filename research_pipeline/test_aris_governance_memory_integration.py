@@ -286,6 +286,31 @@ class ArisGovernanceLayerTest(unittest.TestCase):
         self.assertEqual(by_stage["problem-gate"]["held_count"], 2)
         self.assertEqual(by_stage["problem-gate"]["eliminated_count"], 0)
 
+    def test_stage_receipts_ignore_historical_portfolio_rows_for_zero_candidate_transaction(self) -> None:
+        receipts = candidate_stage_receipts(
+            generator_state={
+                "run_id": "current-zero",
+                "pre_f0_candidates": [],
+                "search_portfolio": {
+                    "config": {"requested_raw_seeds": 0},
+                    "summary": {"raw_seeds": 0, "semantic_unique": 0, "pre_f0_eligible": 0},
+                },
+            },
+            candidate_portfolio={
+                "summary": {"visible_candidates": 3},
+                "rows": [
+                    {"candidate_id": "OLD-1", "stage": "PRE_F0_EVIDENCE_ACQUISITION"},
+                    {"candidate_id": "OLD-2", "stage": "PRE_F0_EVIDENCE_ACQUISITION"},
+                    {"candidate_id": "OLD-3", "stage": "PRE_F0_EVIDENCE_ACQUISITION"},
+                ],
+            },
+            problem_gate_state={"summary": {"passed_problem_gate": 0}},
+        )
+        by_stage = {row["stage"]: row for row in receipts}
+        self.assertEqual(by_stage["portfolio-visibility"]["input_count"], 0)
+        self.assertEqual(by_stage["portfolio-visibility"]["output_count"], 0)
+        self.assertEqual(by_stage["problem-gate"]["input_count"], 0)
+
     def test_stage_receipts_expose_unreceipted_elimination_lineage(self) -> None:
         receipts = candidate_stage_receipts(
             generator_state={

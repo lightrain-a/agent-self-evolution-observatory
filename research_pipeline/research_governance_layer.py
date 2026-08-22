@@ -565,8 +565,22 @@ def candidate_stage_receipts(
     requested = int(config.get("requested_raw_seeds") or 0)
     raw = int(summary.get("raw_seeds") or 0)
     unique = int(summary.get("semantic_unique") or summary.get("semantic_unique_seeds") or 0)
-    pre_f0 = int(summary.get("recovered_pre_f0_eligible") or summary.get("pre_f0_eligible") or len(generator_state.get("pre_f0_candidates") or []))
-    visible = int((candidate_portfolio.get("summary") or {}).get("visible_candidates") or 0)
+    current_pre_f0_rows = [row for row in generator_state.get("pre_f0_candidates") or [] if isinstance(row, dict)]
+    current_pre_f0_ids = {str(row.get("candidate_id") or row.get("id") or "").strip() for row in current_pre_f0_rows if str(row.get("candidate_id") or row.get("id") or "").strip()}
+    pre_f0 = int(summary.get("recovered_pre_f0_eligible") or summary.get("pre_f0_eligible") or len(current_pre_f0_rows))
+    persistent_portfolio_rows = [row for row in candidate_portfolio.get("rows") or [] if isinstance(row, dict)]
+    persistent_visible = int((candidate_portfolio.get("summary") or {}).get("visible_candidates") or 0)
+    # Candidate Portfolio is intentionally persistent across discovery transactions. Stage-flow
+    # accounting must therefore count only portfolio rows emitted by the *current* Generator
+    # transaction; otherwise a terminal zero-candidate transaction is falsely recorded as 0 -> N
+    # when historical Pre-F0 holds remain visible for operator continuity. Older fixtures/states may
+    # lack record-level candidate IDs, so preserve their aggregate accounting as a compatibility path.
+    if "pre_f0_candidates" in generator_state and not current_pre_f0_rows:
+        visible = 0
+    elif current_pre_f0_ids and persistent_portfolio_rows:
+        visible = sum(1 for row in persistent_portfolio_rows if str(row.get("candidate_id") or "").strip() in current_pre_f0_ids)
+    else:
+        visible = min(pre_f0, persistent_visible)
     passed = int((problem_gate_state.get("summary") or {}).get("passed_problem_gate") or 0)
     run_id = _text(generator_state.get("run_id"))
     manifest = provenance_manifest or {}

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-21T17:32:04+00:00",
+  "generated_at": "2026-08-22T07:22:59+00:00",
   "status": "NO_ACTIVE_F0",
   "policy": {
     "portfolio_is_outside_canonical_problem_queue": true,
@@ -36,7 +36,7 @@
     "stop_reduction": 6,
     "archived": 0,
     "primary_verified": 32,
-    "primary_empirical_fact_candidates": 102,
+    "primary_empirical_fact_candidates": 101,
     "canonical_problem_gate_added": 0,
     "method_authorized": 0,
     "experiment_authorized": 0,
@@ -570,7 +570,7 @@
     },
     "primary_state": {
       "path": "generated/paper-first-primary-evidence-state.json",
-      "sha256": "bfc4f9bbe1853cffa476a304a0fe4b9243cb4f79e0e3748c9387c04d22ff1875"
+      "sha256": "bceb7ccb5946e65aa57067f380201ff8f773c9f88b35a88df19e4dd51f825d45"
     },
     "dead_end_memory": {
       "path": "generated/paper-first-search-portfolio-design-adjudication.json",
