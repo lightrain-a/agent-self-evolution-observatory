@@ -55,6 +55,16 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(_prefer_newer_zero_authority_public_projection(newer,previous),newer)
         invalid={"status":"STATE_INVALID","generated_at":"2026-08-23T15:00:00+00:00","scientific_authority":False}
         self.assertEqual(_prefer_newer_zero_authority_public_projection(invalid,previous),invalid)
+        wrapped_old={"status":"SHADOW_CANDIDATE_EVIDENCE_PARTIAL","scientific_authority":False,"summary":{"pending_cache":2}}
+        committed={"status":"SHADOW_CANDIDATE_EVIDENCE_COMPLETE","scientific_authority":False,"summary":{"pending_cache":0}}
+        self.assertEqual(
+            _prefer_newer_zero_authority_public_projection(
+                wrapped_old,committed,
+                current_observed_at="2026-08-16T19:28:20+00:00",
+                previous_observed_at="2026-08-22T14:30:29+00:00",
+            ),
+            committed,
+        )
 
     def test_public_state_location_canonicalization_matches_private_durable_paths(self) -> None:
         public=[

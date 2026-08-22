@@ -431,7 +431,13 @@ def _projection_time(value: Any) -> datetime | None:
     return parsed.astimezone(timezone.utc)
 
 
-def _prefer_newer_zero_authority_public_projection(current: dict[str, Any], previous: dict[str, Any]) -> dict[str, Any]:
+def _prefer_newer_zero_authority_public_projection(
+    current: dict[str, Any],
+    previous: dict[str, Any],
+    *,
+    current_observed_at: Any = None,
+    previous_observed_at: Any = None,
+) -> dict[str, Any]:
     """Prevent host-local maintenance cache absence/staleness from erasing a newer public summary.
 
     This applies only to redacted maintenance projections that carry no scientific authority.
@@ -454,8 +460,12 @@ def _prefer_newer_zero_authority_public_projection(current: dict[str, Any], prev
         return previous
     if current.get("scientific_authority") is not False:
         return current
-    current_time = _projection_time(current.get("generated_at"))
-    previous_time = _projection_time(previous.get("generated_at"))
+    # Public maintenance summaries intentionally redact private provenance and often
+    # omit generated_at. Compare the raw private ledger timestamp supplied by the
+    # caller against the enclosing committed ResearchSystem timestamp instead of
+    # wrapper construction time, which can make an old host-local ledger look new.
+    current_time = _projection_time(current_observed_at if current_observed_at is not None else current.get("generated_at"))
+    previous_time = _projection_time(previous_observed_at if previous_observed_at is not None else previous.get("generated_at"))
     if previous_time is not None and (current_time is None or previous_time > current_time):
         return previous
     return current
@@ -510,13 +520,19 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_pf357 = build_pf357_problem_adjudication()
     paper_first_fresh_saturation = build_fresh_saturation_state()
     paper_first_primary_evidence = load_primary_evidence_state()
+    private_scientific_object_retrieval = load_private_shadow_scientific_object_retrieval_audit(storage=storage)
     paper_first_scientific_object_retrieval = _prefer_newer_zero_authority_public_projection(
-        public_shadow_scientific_object_retrieval_summary(load_private_shadow_scientific_object_retrieval_audit(storage=storage)),
+        public_shadow_scientific_object_retrieval_summary(private_scientific_object_retrieval),
         previous_public.get("paper_first_scientific_object_retrieval_audit") or {},
+        current_observed_at=private_scientific_object_retrieval.get("generated_at"),
+        previous_observed_at=previous_public.get("generated_at"),
     )
+    private_scientific_object_candidate_evidence = load_scientific_object_candidate_evidence_ledger(storage=storage)
     paper_first_scientific_object_candidate_evidence = _prefer_newer_zero_authority_public_projection(
-        public_scientific_object_candidate_evidence_summary(load_scientific_object_candidate_evidence_ledger(storage=storage)),
+        public_scientific_object_candidate_evidence_summary(private_scientific_object_candidate_evidence),
         previous_public.get("paper_first_scientific_object_candidate_evidence") or {},
+        current_observed_at=private_scientific_object_candidate_evidence.get("generated_at"),
+        previous_observed_at=previous_public.get("generated_at"),
     )
     paper_first_problem_discovery_contract = build_problem_discovery_contract_state()
     paper_first_problem_generator = load_problem_generator_state()
@@ -528,17 +544,26 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_last_lane_search = paper_first_lane_search.get("last_completed_lane_search") or {}
     paper_first_problem_gate_queue = load_problem_gate_queue_state()
     paper_first_search_portfolio_design = _load_or_build_search_portfolio_design_adjudication()
+    private_support_release_watch = load_private_support_release_watch(storage=storage)
     paper_first_support_release_watch = _prefer_newer_zero_authority_public_projection(
-        public_support_release_watch_summary(load_private_support_release_watch(storage=storage)),
+        public_support_release_watch_summary(private_support_release_watch),
         previous_public.get("paper_first_support_release_watch") or {},
+        current_observed_at=private_support_release_watch.get("generated_at"),
+        previous_observed_at=previous_public.get("generated_at"),
     )
+    private_support_asset_recheck = load_private_support_asset_recheck_queue(storage=storage)
     paper_first_support_asset_recheck = _prefer_newer_zero_authority_public_projection(
-        public_support_asset_recheck_summary(load_private_support_asset_recheck_queue(storage=storage)),
+        public_support_asset_recheck_summary(private_support_asset_recheck),
         previous_public.get("paper_first_support_asset_recheck_queue") or {},
+        current_observed_at=private_support_asset_recheck.get("generated_at"),
+        previous_observed_at=previous_public.get("generated_at"),
     )
+    private_support_asset_recheck_handoff = load_private_support_asset_recheck_handoff(storage=storage)
     paper_first_support_asset_recheck_handoff = _prefer_newer_zero_authority_public_projection(
-        public_support_asset_recheck_handoff_summary(load_private_support_asset_recheck_handoff(storage=storage)),
+        public_support_asset_recheck_handoff_summary(private_support_asset_recheck_handoff),
         previous_public.get("paper_first_support_asset_recheck_handoff") or {},
+        current_observed_at=private_support_asset_recheck_handoff.get("generated_at"),
+        previous_observed_at=previous_public.get("generated_at"),
     )
     paper_first_sp15_support = build_sp15_identifiability_support()
     paper_first_paper_design_backlog = load_paper_design_backlog()
