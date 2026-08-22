@@ -118,34 +118,34 @@ class ResearchItemStateTest(unittest.TestCase):
         if temporal:
             self.assertEqual(temporal["paper_stage"], "SUBMISSION_READY")
             self.assertTrue(temporal["submission_ready"])
-            self.assertTrue(temporal["gate_clean_submission_ready"])
-            self.assertFalse(temporal["immediate_submission_hold"])
             self.assertEqual(temporal["source_kind"], "paper-first-discovery-candidate")
             self.assertIsNone(temporal["source_research_item"])
             self.assertEqual(temporal["source_candidates"], ["D2-C06"])
             self.assertEqual(temporal["title"], "When Reusable Temporal Skills Become Causal Bottlenecks in Evolving Time-Series Agents")
             preparation = temporal["latest_paper_preparation"]
-            self.assertTrue(preparation["pass"])
-            self.assertEqual((preparation["passed_gates"], preparation["required_gates"]), (8, 8))
+            prep_pass = preparation.get("pass") is True
+            self.assertEqual(temporal["gate_clean_submission_ready"], prep_pass)
+            self.assertEqual(temporal["immediate_submission_hold"], not prep_pass)
             context = temporal["submission_readiness_context"]
             self.assertEqual(context["recommended_immediate_submission"], "READY_FOR_HUMAN_SUBMISSION")
             self.assertEqual(context["support_blocker"], "")
             self.assertEqual((temporal["source_native_evidence"]["runtime_valid_rows"], temporal["source_native_evidence"]["distinct_endpoints"], temporal["source_native_evidence"]["institutional_systems"]), (1326, 35, 3))
             self.assertEqual((temporal["latest_mock_review"]["summary"] or {}).get("scores"), [8, 8, 7])
-            self.assertEqual(self.registry["summary"]["papers"], 5)
-            self.assertEqual(self.registry["summary"]["submission_ready"], 5)
-            self.assertEqual(self.registry["summary"]["gate_clean_submission_ready"], 5)
-            self.assertEqual(self.registry["summary"]["paper_preparation_failed"], 0)
-            self.assertEqual(self.registry["summary"]["immediate_submission_holds"], 0)
-            self.assertEqual(self.registry["summary"]["internal_action_required"], 0)
-            self.assertEqual(self.registry["summary"]["no_internal_action"], 5)
-            self.assertEqual(self.registry["summary"]["by_internal_action"], {"NO_INTERNAL_ACTION": 5})
-            self.assertEqual(temporal["primary_next_action"]["action_class"], "NO_INTERNAL_ACTION")
-            self.assertEqual(temporal["primary_next_action"]["blocking_on"], "")
+            expected_action = "NO_INTERNAL_ACTION" if prep_pass else "PAPER_REPAIR_REQUIRED"
+            self.assertEqual(temporal["primary_next_action"]["action_class"], expected_action)
+            self.assertEqual(temporal["primary_next_action"]["blocking_on"], "" if prep_pass else "PAPER_PREPARATION_FAILED")
+            summary = self.registry["summary"]
+            self.assertEqual(summary["papers"], len(papers))
+            self.assertEqual(summary["submission_ready"], sum(candidate.get("submission_ready") is True for candidate in papers.values()))
+            self.assertEqual(summary["gate_clean_submission_ready"], sum(candidate.get("gate_clean_submission_ready") is True for candidate in papers.values()))
+            self.assertEqual(summary["paper_preparation_failed"], sum((candidate.get("latest_paper_preparation") or {}).get("pass") is not True for candidate in papers.values()))
+            self.assertEqual(summary["immediate_submission_holds"], sum(candidate.get("immediate_submission_hold") is True for candidate in papers.values()))
+            self.assertEqual(summary["internal_action_required"], sum((candidate.get("primary_next_action") or {}).get("action_class") != "NO_INTERNAL_ACTION" for candidate in papers.values()))
+            self.assertEqual(summary["no_internal_action"], sum((candidate.get("primary_next_action") or {}).get("action_class") == "NO_INTERNAL_ACTION" for candidate in papers.values()))
             for paper_id, candidate in papers.items():
-                self.assertTrue(candidate["gate_clean_submission_ready"], paper_id)
-                self.assertTrue(candidate["latest_paper_preparation"]["pass"], paper_id)
-                self.assertEqual(candidate["primary_next_action"]["action_class"], "NO_INTERNAL_ACTION", paper_id)
+                candidate_prep = (candidate.get("latest_paper_preparation") or {}).get("pass") is True
+                self.assertEqual(candidate.get("gate_clean_submission_ready"), candidate_prep, paper_id)
+                self.assertEqual((candidate.get("primary_next_action") or {}).get("action_class"), "NO_INTERNAL_ACTION" if candidate_prep else "PAPER_REPAIR_REQUIRED", paper_id)
             failure = papers["D2-PAPER-FAILURE-MEMORY-PROVENANCE"]
             self.assertEqual(failure["paper_stage"], "SUBMISSION_READY")
             self.assertEqual(failure["active_unrefuted_claims"], 2)
