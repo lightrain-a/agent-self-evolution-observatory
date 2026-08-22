@@ -1804,6 +1804,8 @@
     "reopen_local_f0_completion_invalid": 0,
     "reopen_p0_lifecycle_authorized": 0,
     "reopen_p0_authority_invalid": 0,
+    "reopen_p0_plan_frozen": 0,
+    "reopen_p0_plan_invalid": 0,
     "scientific_reopen_invalid": 0,
     "submission_freeze_eligible": 4,
     "ledger_replay_failures": 0,
@@ -1815,5 +1817,5 @@
     "gpu": false,
     "submission": false
   },
-  "audit_sha256": "144b07b441301b7f1b19862e23410e17efcd05fcad97c86f2925d0ab104fac99"
+  "audit_sha256": "e5ca2fb3c95a2df11596f01b3d2c9f22cb5bad2702fc4bb637893baadca45c7f"
 }

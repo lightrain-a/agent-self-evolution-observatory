@@ -30,6 +30,7 @@ from .reopened_experiment_lease import public_reopened_experiment_lease
 from .reopened_local_f0_run import public_reopened_local_f0_run
 from .reopened_local_f0_completion import public_completion, SIGNAL as LOCAL_F0_SIGNAL
 from .reopened_p0_authorization import public_p0_authorization
+from .reopened_p0_plan import public_p0_plan
 
 DEFAULT_ROOT = Path('/data/wyt/agent-self-evolution-observatory')
 
@@ -398,13 +399,14 @@ def scientific_reopen_state(root: Path, paper_id: str, attempt: Mapping[str, Any
             run_summary = public_reopened_local_f0_run(root / 'scientific-contract-run-starts', str(contract_summary.get('contract_id') or ''), resource_root=root, authority_root=root) if lease_summary.get('status') == 'EXPERIMENT_LEASE_ACTIVE_RUN_NOT_STARTED' else public_reopened_local_f0_run(Path('/nonexistent'), '')
             completion_summary = public_completion(root / 'scientific-contract-run-completions', str(contract_summary.get('contract_id') or ''))
             p0_summary = public_p0_authorization(root / 'scientific-contract-p0-authority', str(contract_summary.get('contract_id') or '')) if completion_summary.get('status') == LOCAL_F0_SIGNAL else public_p0_authorization(Path('/nonexistent'), '')
-            contract_summary = {**contract_summary, 'problem_gate': gate_summary, 'method_design': method_summary, 'experiment_blueprint': blueprint_summary, 'local_validation_authorization': local_auth_summary, 'pre_experiment': pre_experiment_summary, 'experiment_lease_request': lease_request_summary, 'experiment_lease': lease_summary, 'local_f0_run': run_summary, 'local_f0_completion': completion_summary, 'p0_authorization': p0_summary}
+            p0_plan_summary = public_p0_plan(root / 'scientific-contract-p0-plans', str(contract_summary.get('contract_id') or '')) if p0_summary.get('status') == 'P0_LIFECYCLE_AUTHORIZED_CONFIRMATORY_PLAN_REQUIRED' else public_p0_plan(Path('/nonexistent'), '')
+            contract_summary = {**contract_summary, 'problem_gate': gate_summary, 'method_design': method_summary, 'experiment_blueprint': blueprint_summary, 'local_validation_authorization': local_auth_summary, 'pre_experiment': pre_experiment_summary, 'experiment_lease_request': lease_request_summary, 'experiment_lease': lease_summary, 'local_f0_run': run_summary, 'local_f0_completion': completion_summary, 'p0_authorization': p0_summary, 'p0_plan': p0_plan_summary}
             if gate_summary['status'] == 'REOPEN_PROBLEM_GATE_REQUIRED':
                 projected['status'] = 'NEW_SCIENTIFIC_CONTRACT_CREATED_PROBLEM_GATE_REQUIRED'
             elif gate_summary['status'] == 'REOPEN_PROBLEM_GATE_PASS_METHOD_DESIGN_REVIEW_ELIGIBLE':
                 if method_summary.get('status') == 'REOPEN_METHOD_REVIEW_PASS_BLUEPRINT_DESIGN_ELIGIBLE':
                     if completion_summary.get('status') != 'LOCAL_F0_COMPLETION_REQUIRED':
-                        projected['status'] = p0_summary.get('status') if completion_summary.get('status') == LOCAL_F0_SIGNAL and p0_summary.get('status') == 'P0_LIFECYCLE_AUTHORIZED_CONFIRMATORY_PLAN_REQUIRED' else completion_summary.get('status')
+                        projected['status'] = p0_plan_summary.get('status') if completion_summary.get('status') == LOCAL_F0_SIGNAL and p0_summary.get('status') == 'P0_LIFECYCLE_AUTHORIZED_CONFIRMATORY_PLAN_REQUIRED' and p0_plan_summary.get('status') == 'P0_CONFIRMATORY_PLAN_FROZEN_PRE_EXPERIMENT_REQUIRED' else (p0_summary.get('status') if completion_summary.get('status') == LOCAL_F0_SIGNAL and p0_summary.get('status') == 'P0_LIFECYCLE_AUTHORIZED_CONFIRMATORY_PLAN_REQUIRED' else completion_summary.get('status'))
                     elif pre_experiment_summary.get('status') == 'PRE_EXPERIMENT_COMPILER_PASS_EXPERIMENT_LEASE_REQUIRED':
                         if lease_summary.get('status') == 'EXPERIMENT_LEASE_ACTIVE_RUN_NOT_STARTED':
                             projected['status'] = run_summary.get('status') if run_summary.get('status') != 'REOPEN_LOCAL_F0_RUN_START_REQUIRED' else lease_summary.get('status')
@@ -730,7 +732,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
 
 def source_watermark(root: Path) -> str:
     timestamps: list[str] = []
-    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts', root / 'paper-submission-attempt-workflows', root / 'paper-scientific-reopen', root / 'scientific-contracts', root / 'scientific-contract-problem-gates', root / 'scientific-contract-method-design', root / 'scientific-contract-experiment-blueprints', root / 'scientific-contract-local-validation-authority', root / 'scientific-contract-pre-experiment', root / 'scientific-contract-experiment-lease-requests', root / 'scientific-contract-experiment-leases', root / 'scientific-contract-run-starts', root / 'scientific-contract-run-completions', root / 'scientific-contract-p0-authority', root / 'experiment-authority', root / 'resource-leases'):
+    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts', root / 'paper-submission-attempt-workflows', root / 'paper-scientific-reopen', root / 'scientific-contracts', root / 'scientific-contract-problem-gates', root / 'scientific-contract-method-design', root / 'scientific-contract-experiment-blueprints', root / 'scientific-contract-local-validation-authority', root / 'scientific-contract-pre-experiment', root / 'scientific-contract-experiment-lease-requests', root / 'scientific-contract-experiment-leases', root / 'scientific-contract-run-starts', root / 'scientific-contract-run-completions', root / 'scientific-contract-p0-authority', root / 'scientific-contract-p0-plans', root / 'experiment-authority', root / 'resource-leases'):
         if not directory.exists():
             continue
         for path in sorted(directory.glob('*.json')):
@@ -837,6 +839,8 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'reopen_local_f0_completion_invalid': sum(p['scientific_reopen_status'] == 'LOCAL_F0_COMPLETION_LEDGER_INVALID' for p in papers),
             'reopen_p0_lifecycle_authorized': sum(p['scientific_reopen_status'] == 'P0_LIFECYCLE_AUTHORIZED_CONFIRMATORY_PLAN_REQUIRED' for p in papers),
             'reopen_p0_authority_invalid': sum(p['scientific_reopen_status'] == 'P0_AUTHORITY_LEDGER_INVALID' for p in papers),
+            'reopen_p0_plan_frozen': sum(p['scientific_reopen_status'] == 'P0_CONFIRMATORY_PLAN_FROZEN_PRE_EXPERIMENT_REQUIRED' for p in papers),
+            'reopen_p0_plan_invalid': sum(p['scientific_reopen_status'] == 'P0_PLAN_LEDGER_INVALID' for p in papers),
             'scientific_reopen_invalid': sum(p['scientific_reopen_status'] == 'SCIENTIFIC_REOPEN_LEDGER_INVALID' for p in papers),
             'submission_freeze_eligible': sum(p['submission_freeze_eligible'] for p in papers),
             'ledger_replay_failures': sum(not p['ledger_replay_pass'] for p in papers),
