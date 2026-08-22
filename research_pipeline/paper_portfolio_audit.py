@@ -23,6 +23,7 @@ from .reopened_scientific_contract import find_contract_by_handoff, public_reope
 from .reopened_scientific_problem_gate import load_latest_reopen_problem_gate, public_reopen_problem_gate_summary
 from .reopened_scientific_method_design import public_reopen_method_summary
 from .reopened_scientific_experiment_blueprint import public_reopen_blueprint_summary
+from .reopened_local_validation_authorization import public_local_validation_authorization
 
 DEFAULT_ROOT = Path('/data/wyt/agent-self-evolution-observatory')
 
@@ -356,7 +357,7 @@ def scientific_reopen_state(root: Path, paper_id: str, attempt: Mapping[str, Any
         'new_experiment_authorized': False,
         'gpu_execution_authorized': False,
         'validation_errors': [],
-        'new_contract': {**public_reopened_contract_summary({}), 'problem_gate': public_reopen_problem_gate_summary({}), 'method_design': public_reopen_method_summary(Path('/nonexistent'), ''), 'experiment_blueprint': public_reopen_blueprint_summary(Path('/nonexistent'), '')},
+        'new_contract': {**public_reopened_contract_summary({}), 'problem_gate': public_reopen_problem_gate_summary({}), 'method_design': public_reopen_method_summary(Path('/nonexistent'), ''), 'experiment_blueprint': public_reopen_blueprint_summary(Path('/nonexistent'), ''), 'local_validation_authorization': public_local_validation_authorization(Path('/nonexistent'), '')},
     }
     if attempt.get('requires_explicit_scientific_reopen') is not True:
         return empty
@@ -384,11 +385,15 @@ def scientific_reopen_state(root: Path, paper_id: str, attempt: Mapping[str, Any
             gate_summary = public_reopen_problem_gate_summary(gate_receipt)
             method_summary = public_reopen_method_summary(root / 'scientific-contract-method-design', str(contract_summary.get('contract_id') or '')) if gate_summary.get('status') == 'REOPEN_PROBLEM_GATE_PASS_METHOD_DESIGN_REVIEW_ELIGIBLE' else public_reopen_method_summary(Path('/nonexistent'), '')
             blueprint_summary = public_reopen_blueprint_summary(root / 'scientific-contract-experiment-blueprints', str(contract_summary.get('contract_id') or '')) if method_summary.get('status') == 'REOPEN_METHOD_REVIEW_PASS_BLUEPRINT_DESIGN_ELIGIBLE' else public_reopen_blueprint_summary(Path('/nonexistent'), '')
-            contract_summary = {**contract_summary, 'problem_gate': gate_summary, 'method_design': method_summary, 'experiment_blueprint': blueprint_summary}
+            local_auth_summary = public_local_validation_authorization(root / 'scientific-contract-local-validation-authority', str(contract_summary.get('contract_id') or '')) if blueprint_summary.get('status') == 'REOPEN_BLUEPRINT_REVIEW_PASS_LOCAL_VALIDATION_AUTHORIZATION_ELIGIBLE' else public_local_validation_authorization(Path('/nonexistent'), '')
+            contract_summary = {**contract_summary, 'problem_gate': gate_summary, 'method_design': method_summary, 'experiment_blueprint': blueprint_summary, 'local_validation_authorization': local_auth_summary}
             if gate_summary['status'] == 'REOPEN_PROBLEM_GATE_REQUIRED':
                 projected['status'] = 'NEW_SCIENTIFIC_CONTRACT_CREATED_PROBLEM_GATE_REQUIRED'
             elif gate_summary['status'] == 'REOPEN_PROBLEM_GATE_PASS_METHOD_DESIGN_REVIEW_ELIGIBLE':
-                projected['status'] = blueprint_summary.get('status') if method_summary.get('status') == 'REOPEN_METHOD_REVIEW_PASS_BLUEPRINT_DESIGN_ELIGIBLE' else (method_summary.get('status') or 'REOPEN_METHOD_DESIGN_REQUIRED')
+                if method_summary.get('status') == 'REOPEN_METHOD_REVIEW_PASS_BLUEPRINT_DESIGN_ELIGIBLE':
+                    projected['status'] = local_auth_summary.get('status') if blueprint_summary.get('status') == 'REOPEN_BLUEPRINT_REVIEW_PASS_LOCAL_VALIDATION_AUTHORIZATION_ELIGIBLE' else blueprint_summary.get('status')
+                else:
+                    projected['status'] = method_summary.get('status') or 'REOPEN_METHOD_DESIGN_REQUIRED'
             else:
                 projected['status'] = gate_summary['status']
         projected['new_contract'] = contract_summary
@@ -481,8 +486,12 @@ def project(path: Path, root: Path) -> dict[str, Any]:
                 actions=['independent method review passed. Freeze a bounded local-F0 experiment blueprint with units, qualification, arms, truth, metrics, same-information baselines, statistics, budget, GO/STOP, recovery, and escalation rules; execution remains unauthorized']
             elif scientific_reopen['status']=='REOPEN_EXPERIMENT_BLUEPRINT_FROZEN_AWAITING_INDEPENDENT_REVIEW':
                 actions=['the local-F0 blueprint is frozen. Run independent blueprint review before any local-validation authorization or Pre-Experiment Compiler handoff']
-            elif scientific_reopen['status']=='REOPEN_BLUEPRINT_REVIEW_PASS_LOCAL_VALIDATION_AUTHORIZATION_ELIGIBLE':
-                actions=['independent blueprint review passed. The plan is eligible for local-validation authorization review and Pre-Experiment Compiler input, but execution, P0, and GPU authority remain false']
+            elif scientific_reopen['status']=='LOCAL_VALIDATION_AUTHORIZATION_REQUIRED':
+                actions=['independent blueprint review passed. Obtain explicit external human/PI authorization for the bounded local F0; this authorization may not exceed the frozen blueprint budget and does not authorize execution']
+            elif scientific_reopen['status']=='LOCAL_VALIDATION_AUTHORIZED_PRE_EXPERIMENT_COMPILER_REQUIRED':
+                actions=['bounded local validation is explicitly authorized, but execution remains locked. Compile the existing Pre-Experiment 8-gate card next; only an 8/8 card plus a later single-writer experiment lease may launch the run']
+            elif scientific_reopen['status']=='LOCAL_VALIDATION_AUTHORITY_LEDGER_INVALID':
+                actions=['local-validation authority ledger is invalid. Stop execution preparation and repair the content-addressed human authority lineage']
             elif scientific_reopen['status']=='REOPEN_BLUEPRINT_REVIEW_BLOCKED':
                 actions=['independent blueprint review blocked the plan. Repair only the blueprint or stop; do not execute local validation']
             elif scientific_reopen['status']=='REOPEN_BLUEPRINT_LEDGER_INVALID':
@@ -667,7 +676,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
 
 def source_watermark(root: Path) -> str:
     timestamps: list[str] = []
-    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts', root / 'paper-submission-attempt-workflows', root / 'paper-scientific-reopen', root / 'scientific-contracts', root / 'scientific-contract-problem-gates', root / 'scientific-contract-method-design', root / 'scientific-contract-experiment-blueprints'):
+    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts', root / 'paper-submission-attempt-workflows', root / 'paper-scientific-reopen', root / 'scientific-contracts', root / 'scientific-contract-problem-gates', root / 'scientific-contract-method-design', root / 'scientific-contract-experiment-blueprints', root / 'scientific-contract-local-validation-authority'):
         if not directory.exists():
             continue
         for path in sorted(directory.glob('*.json')):
@@ -750,6 +759,8 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'reopen_blueprint_review_pass': sum(p['scientific_reopen_status'] == 'REOPEN_BLUEPRINT_REVIEW_PASS_LOCAL_VALIDATION_AUTHORIZATION_ELIGIBLE' for p in papers),
             'reopen_blueprint_review_blocked': sum(p['scientific_reopen_status'] == 'REOPEN_BLUEPRINT_REVIEW_BLOCKED' for p in papers),
             'reopen_blueprint_invalid': sum(p['scientific_reopen_status'] == 'REOPEN_BLUEPRINT_LEDGER_INVALID' for p in papers),
+            'reopen_local_validation_authorized': sum(p['scientific_reopen_status'] == 'LOCAL_VALIDATION_AUTHORIZED_PRE_EXPERIMENT_COMPILER_REQUIRED' for p in papers),
+            'reopen_local_validation_authority_invalid': sum(p['scientific_reopen_status'] == 'LOCAL_VALIDATION_AUTHORITY_LEDGER_INVALID' for p in papers),
             'scientific_reopen_invalid': sum(p['scientific_reopen_status'] == 'SCIENTIFIC_REOPEN_LEDGER_INVALID' for p in papers),
             'submission_freeze_eligible': sum(p['submission_freeze_eligible'] for p in papers),
             'ledger_replay_failures': sum(not p['ledger_replay_pass'] for p in papers),
