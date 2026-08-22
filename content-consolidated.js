@@ -31,11 +31,11 @@
   };
 
   pages.mechanisms = {
-    eyebrow:{en:"Mechanisms",zh:"进化机制"},
-    title:{en:"How agents evolve: parameters, prompts, memory, skills, and workflows",zh:"Agent 如何进化：参数、提示词、记忆、技能与工作流"},
-    lead:{en:"This page compares five concrete ways an agent can change itself: update model parameters, rewrite prompts, store or revise memory, create or modify skills/tools, or change the workflow that coordinates them.",zh:"本页比较 Agent 改变自己的五种具体方式：更新模型参数、改写提示词、写入或修订记忆、创建或修改技能/工具，以及改变这些组件如何协作的工作流。"},
-    callout:{en:"For each mechanism, look for three things: what state is actually changed, what evidence justifies keeping the change, and what simpler update would solve the same problem with less cost or risk.",zh:"看每种机制时重点问三件事：到底改了什么状态、凭什么证据保留这次修改、是否存在成本和风险更低但能解决同一问题的更简单更新。"},
-    renderMode:"merged-hub",
+    eyebrow:{en:"Field Atlas · Unified Matrix",zh:"领域图谱 · 统一矩阵"},
+    title:{en:"Mechanism × domain × evidence: one field matrix for agent self-evolution",zh:"领域矩阵：机制 × 场景 × 评测，一张图读懂 Agent 自进化"},
+    lead:{en:"Instead of treating mechanism, application domain, and evaluation as three separate mini-surveys, this page connects them. First identify the persistent update surface, then the environment constraints, then the evidence required to call the change a genuine improvement.",zh:"不再把“进化机制、应用场景、评测证据”拆成三个低密度小综述。本页把它们直接连起来：先判断 Agent 持久改了什么，再看环境带来哪些约束，最后检查什么证据才足以称为真正改进。"},
+    callout:{en:"Read every result as one tuple: update surface × environment × evidence. A mechanism is not strong in the abstract; its value depends on what can be observed and reset, what failures cost, and whether future gains survive regression and safety checks.",zh:"任何结果都按一个三元组来读：更新对象 × 环境约束 × 证据标准。机制本身没有脱离场景的“绝对强弱”；能观察什么、能否重置、错误代价多大，以及未来收益能否通过回退与安全检查，都会改变结论。"},
+    renderMode:"field-matrix",
     chapters:chaptersFor("mechanisms")
   };
 
@@ -71,7 +71,7 @@
     pages["research-directions"] = Object.assign({}, sources["research-directions"], {
       eyebrow:{en:"Field Atlas · Landscape",zh:"领域图谱 · 全景入口"},
       title:{en:"Field landscape: history and research-problem map",zh:"领域全景 · 历史与问题图谱"},
-      lead:{en:"This is the field-atlas entry point. Read the historical expansion of update targets first, then the D1–D10 problem map, then continue through three orthogonal views—mechanism, application domain, and evaluation. Current A–G ResearchItems remain a separate live research layer.",zh:"这是领域图谱的总入口。先看 Agent 的更新对象如何从 Prompt / Model 逐步扩展到 Memory、Skill / Tool、Workflow 与 World，再看 D1–D10 研究问题怎样形成；随后从“进化机制、应用场景、评测证据”三个正交切面继续阅读。当前 A–G ResearchItem 仍单独属于实时科研层。"},
+      lead:{en:"This is the field-atlas entry point. Read one compact historical spine, compare D1–D10 in a single problem table, then move to the unified mechanism × domain × evidence matrix. Current A–G ResearchItems remain a separate live research layer.",zh:"这是领域图谱的总入口。先用一条紧凑历史主线理解更新对象怎样扩展，再在一张表里横向比较 D1–D10；如果要判断一个具体方法，就进入“机制 × 场景 × 评测”统一矩阵。当前 A–G ResearchItem 仍单独属于实时科研层。"},
       groupsAfter:[group("research-agenda")]
     });
   }

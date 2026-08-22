@@ -1,7 +1,7 @@
 window.PAGE_ARCHITECTURES = {
   home:{
     chapters:[
-      {id:"understand-field",title:{en:"Understand the field",zh:"理解领域"},question:{en:"What counts as self-evolution, how did the field form, and how can it be read through mechanism, application domain, and evaluation evidence?",zh:"什么算自进化、这个领域怎样形成，以及怎样分别从进化机制、应用场景和评测证据三个切面理解它？"},links:["foundations.html","research-directions.html","mechanisms.html","domains.html","evaluation.html"]},
+      {id:"understand-field",title:{en:"Understand the field",zh:"理解领域"},question:{en:"What counts as self-evolution, how did the field form, and how do mechanism, environment, and evidence interact?",zh:"什么算自进化、这个领域怎样形成，以及更新机制、环境约束和证据标准如何相互作用？"},links:["foundations.html","research-directions.html","mechanisms.html"]},
       {id:"select-research",title:{en:"Understand current research",zh:"理解当前科研"},question:{en:"Where are our current A–G ResearchItems in the field, what is each authoritative decision, how did those decisions change over time, and which workflow produced them?",zh:"我们的 A–G ResearchItem 在领域里处于什么位置、每个对象当前的权威结论是什么、这些结论怎样随时间变化，以及科研系统怎样产生这些状态？"},links:["research-map.html","paper-ideas.html","research-timeline.html","system-overview.html"]},
 
       {id:"execute-audit",title:{en:"Run, inspect, and submit",zh:"运行、核查与投稿"},question:{en:"Which experiments are still allowed to run, what exact evidence supports the current STRI submission, and how can old projects be inspected without mistaking their archived plans for today's work?",zh:"哪些实验现在仍允许运行、STRI 当前投稿具体由哪些证据支持，以及怎样查看旧项目而不把它们已经归档的计划误当成今天的待办？"},links:["experiments.html","selected-paper.html","bibliography.html"]}
@@ -15,23 +15,9 @@ window.PAGE_ARCHITECTURES = {
   },
   mechanisms:{
     chapters:[
-      {id:"model-internal",title:{en:"I · Model-internal adaptation",zh:"第一章 · 模型内部适应"},question:{en:"When should the agent change parameters, prompts, context, or reasoning traces?",zh:"Agent 何时应修改参数、提示词、上下文或推理轨迹？"},relation:{en:"Closest to the foundation model; potentially broad transfer but increasing cost and irreversibility.",zh:"最接近基础模型；迁移范围可能更广，但成本和不可逆性也更高。"},sourceIds:["model-improvement","prompt-evolution"]},
-      {id:"externalized-experience",title:{en:"II · Externalized experience and capability",zh:"第二章 · 外部化经验与能力"},question:{en:"How can experience persist outside model weights as memory, skills, and tools?",zh:"经验如何不依赖模型权重，而以记忆、技能和工具持续存在？"},relation:{en:"More inspectable and reversible than parameter updates; more persistent than one-session context.",zh:"比参数更新更可检查和可回滚；比单次上下文更具持久性。"},sourceIds:["memory-evolution","tool-evolution"]},
-      {id:"system-level",title:{en:"III · System-level self-design",zh:"第三章 · 系统级自设计"},question:{en:"How can the agent change routing, control flow, component composition, and its own improvement harness?",zh:"Agent 如何改变路由、控制流、组件组合和自身改进框架？"},relation:{en:"Coordinates all lower-level update surfaces and determines how they are searched, tested, and released.",zh:"协调所有低层更新对象，并决定它们如何被搜索、测试和发布。"},sourceIds:["workflow-evolution"]}
-    ]
-  },
-  domains:{
-    chapters:[
-      {id:"multimodal-reasoning",title:{en:"I · Multimodal perception and reasoning",zh:"第一章 · 多模态感知与推理"},question:{en:"How do visual evidence, critique, self-play, and multimodal memory support persistent improvement?",zh:"视觉证据、批评、自博弈和多模态记忆如何支持持久改进？"},sourceIds:["visual-multimodal"]},
-      {id:"digital-interaction",title:{en:"II · Digital interaction: GUI and Web",zh:"第二章 · 数字交互：GUI 与 Web"},question:{en:"How does a visual agent learn from websites, interfaces, tools, and partially observable interaction histories?",zh:"视觉 Agent 如何从网站、界面、工具和部分可观测交互历史中学习？"},sourceIds:["gui-web"]},
-      {id:"physical-world",title:{en:"III · Embodiment and world adaptation",zh:"第三章 · 具身与世界适应"},question:{en:"How should agents adapt when bodies, sensors, dynamics, and physical environments change?",zh:"当身体、传感器、动力学和物理环境变化时，Agent 应如何适应？"},sourceIds:["embodied-world"]}
-    ]
-  },
-  evaluation:{
-    chapters:[
-      {id:"validity-safety",title:{en:"I · What counts as improvement?",zh:"第一章 · 什么才算改进？"},question:{en:"How should persistent gain, regression, negative evolution, safety, and rollback be measured?",zh:"如何测量持久收益、回退、负向进化、安全与回滚？"},sourceIds:["evaluation-safety"]},
-      {id:"tasks-benchmarks",title:{en:"II · Where should evolution be tested?",zh:"第二章 · 应该在哪里测试进化？"},question:{en:"Which task streams, environments, datasets, and benchmarks expose genuine longitudinal behavior?",zh:"哪些任务流、环境、数据集和基准能够暴露真实纵向行为？"},sourceIds:["datasets-benchmarks"],resourceModes:["benchmarks"]},
-      {id:"reproducibility",title:{en:"III · Can another person rerun the result?",zh:"第三章 · 别人能否重新跑出同样结果？"},question:{en:"Which code, data, environment versions, commands, logs, and reporting details must be saved so another researcher can reproduce the key result rather than merely read a summary?",zh:"需要保存哪些代码、数据、环境版本、运行命令、日志和报告细节，才能让另一位研究者真正重新跑出关键结果，而不是只能阅读摘要？"},sourceIds:["repositories"],resourceModes:["repositories"]}
+      {id:"mechanism-axis",title:{en:"I · What does the agent actually change?",zh:"第一章 · Agent 到底改什么？"},question:{en:"Compare parameter, prompt, memory, skill/tool, and workflow updates by persistent artifact, feedback, cost, rollback, and characteristic failure mode.",zh:"把参数、Prompt、Memory、Skill / Tool、Workflow 放到同一套维度里比较：留下什么持久产物、由什么反馈驱动、成本多高、能否回滚、最容易怎样失败？"}},
+      {id:"domain-axis",title:{en:"II · What changes when the environment changes?",zh:"第二章 · 换一个场景，哪些条件会变？"},question:{en:"Compare multimodal, GUI/Web, and embodied settings by observability, action space, resetability, failure cost, and transfer assumptions.",zh:"比较多模态、GUI/Web 与具身场景的可观测性、动作空间、可重置性、错误代价和迁移假设，判断同一种机制为什么不能直接跨场景外推。"}},
+      {id:"evidence-axis",title:{en:"III · What evidence is enough to call it improvement?",zh:"第三章 · 什么证据才足以叫“改进”？"},question:{en:"Move from current-task score to future gain, regression, persistence, safety, rollback, and reproducibility; use the bibliography for concrete benchmark and repository records.",zh:"从当前任务分数继续检查未来收益、旧能力回退、跨回合持久性、安全、回滚与可复现性；具体 benchmark 和代码仓库统一去文献库检索。"}}
     ]
   },
   "system-overview":{
@@ -60,10 +46,9 @@ window.PAGE_ARCHITECTURES = {
   },
   "research-directions":{
     chapters:[
-      {id:"orientation",title:{en:"I · Field evolution and three reading axes",zh:"第一章 · 领域怎样形成，以及三种阅读切面"},question:{en:"How did self-evolution expand from local model/prompt changes to memory, skills, workflows, and world adaptation, and how should the field now be read through mechanism, application domain, and evaluation?",zh:"Agent 自进化怎样从局部模型/Prompt 更新扩展到记忆、技能、工作流和世界适应？今天又该怎样分别从机制、场景和评测三个切面理解这个领域？"}},
-      {id:"landscape",title:{en:"II · Historical problem map and migration to current A–G",zh:"第二章 · 历史问题图谱，以及如何迁移到当前 A–G"},question:{en:"How did D1–D10 form from the historical evolution of the field, and how does that field-history coordinate system connect to today's authoritative A–G ResearchItems?",zh:"D1–D10 怎样从领域历史中形成？这套“理解领域”的历史坐标又怎样连接到今天真正维护 ResearchItem 的 A–G 坐标？"}},
-      {id:"direction-clusters",title:{en:"III · Ten historical directions, boundaries, and literature",zh:"第三章 · 十个历史方向、科学边界与代表文献"},question:{en:"What did each direction study, how did it differ from neighboring questions, and which papers grounded the boundary?",zh:"每个历史方向研究什么、与相邻问题有何区别、哪些代表论文支撑了它的边界？"}},
-      {id:"long-term-agenda",title:{en:"IV · Former agenda and still-open field questions",zh:"第四章 · 历史长期议程与仍开放的领域问题"},question:{en:"Which older program-level questions remain useful as field knowledge even though today's work is scheduled by ResearchItems rather than a static agenda?",zh:"哪些过去的项目级长期问题仍值得作为领域知识保留，即使今天的研究调度已经由 ResearchItem 而不是静态议程决定？"},sourceIds:["research-agenda"]}
+      {id:"orientation",title:{en:"I · Field spine: how self-evolution expanded",zh:"第一章 · 领域主线：自进化对象怎样扩展"},question:{en:"Build one compact historical spine from prompt/model adaptation to persistent memory, skills/tools, workflow evolution, world adaptation, and governance.",zh:"用一条紧凑历史主线看清更新对象怎样从 Prompt / Model 扩展到 Memory、Skill / Tool、Workflow、World 与治理，不在首页式结构中重复三种切面。"}},
+      {id:"direction-atlas",title:{en:"II · D1–D10 problem atlas",zh:"第二章 · D1–D10 问题图谱"},question:{en:"Read all ten historical problem directions in one comparison table first, then open a direction only when its boundary, literature, or historical idea lineage is needed.",zh:"先在一张表里横向比较 D1–D10 的问题、通俗解释、典型案例、当前 A–G 落点与代表文献；需要边界或谱系时再展开单个方向。"}},
+      {id:"current-bridge",title:{en:"III · From field history to current A–G and open questions",zh:"第三章 · 从领域历史连接到当前 A–G 与开放问题"},question:{en:"Keep the D1–D10 → A–G migration and older open questions visible without treating the historical agenda as today's research queue.",zh:"保留 D1–D10 → A–G 的迁移关系和长期开放问题，但不把历史议程误当成今天的研究待办。"}}
     ]
   },
   "research-map":{

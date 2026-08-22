@@ -5,9 +5,7 @@ window.NAV_GROUPS = [
   ]},
   { title:{en:"Field Atlas",zh:"领域图谱"}, open:true, pages:[
     ["research-directions.html",{en:"Field Landscape · History & Problems",zh:"领域全景 · 历史与问题"}],
-    ["mechanisms.html",{en:"Evolution Mechanisms",zh:"进化机制图谱"}],
-    ["domains.html",{en:"Application Domains",zh:"应用场景图谱"}],
-    ["evaluation.html",{en:"Evaluation & Infrastructure",zh:"评测与基础设施"}],
+    ["mechanisms.html",{en:"Field Matrix · Mechanism × Domain × Evidence",zh:"领域矩阵 · 机制 × 场景 × 评测"}],
   ]},
   { title:{en:"Current Research",zh:"当前科研"}, open:true, pages:[
     ["research-map.html",{en:"Current Research Map",zh:"当前研究组合图谱"}],
@@ -185,11 +183,7 @@ window.PAGE_CONTENT = {
   featured:[
     {href:"foundations.html",title:{en:"What Is Agent Self-Evolution?",zh:"什么是 Agent 自进化"},desc:{en:"Defines the boundary: what counts as a persistent update, what is only retry or self-correction, and which four questions classify any self-evolving system.",zh:"先把边界说清楚：什么是持久更新、什么只是重试或自纠错，再用四个问题判断任何自进化系统到底改了什么、为什么改、何时持久化、怎样验证。"}},
 
-    {href:"mechanisms.html",title:{en:"Evolution Mechanism Atlas",zh:"进化机制图谱"},desc:{en:"Compares how agents persistently change parameters, prompts, memory, skills/tools, and workflows, and shows the typical benefit and failure mode of each update type.",zh:"分别比较 Agent 如何持久修改参数、提示词、记忆、技能/工具和工作流，并说明每类更新通常能解决什么问题、又最容易在哪里失败。"}},
-
-    {href:"domains.html",title:{en:"Application Domains",zh:"应用场景图谱"},desc:{en:"Compares multimodal, GUI/web, and embodied environments by observation, action space, resetability, failure cost, and the evidence needed for persistent improvement.",zh:"从观察、动作空间、可重置性、错误代价和纵向证据要求比较多模态、GUI/Web 与具身环境，回答同一种进化机制换到不同场景后为什么会表现不同。"}},
-
-    {href:"evaluation.html",title:{en:"Evaluation & Infrastructure",zh:"评测与基础设施"},desc:{en:"Shows how to test whether an update still helps on later tasks, whether it hurts old tasks or safety, and which benchmarks, datasets, environments, and codebases can support those tests.",zh:"说明怎样验证一次更新在后续任务上是否仍然有效、是否伤害旧任务或安全性，以及有哪些基准、数据集、环境和代码可以直接用于这些实验。"}},
+    {href:"mechanisms.html",title:{en:"Field Matrix · Mechanism × Domain × Evidence",zh:"领域矩阵 · 机制 × 场景 × 评测"},desc:{en:"One dense view connecting what the agent changes, where the update is deployed, and what evidence is required to call it a persistent improvement. Detailed mechanism/domain/evaluation notes remain expandable on demand.",zh:"把“Agent 改什么、在哪种环境里改、凭什么证据证明真的变好”放进同一张高密度矩阵；具体机制、场景和评测细节需要时再展开。"}},
 
     {href:"system-overview.html",paper:true,title:{en:"Research System",zh:"科研系统"},desc:{en:"Explains the actual research workflow: how papers become candidate problems, how we decide whether an idea is novel enough to keep, what must be checked before spending GPU, how experiments are launched, and how a PASS/STOP/HOLD result changes the next step.",zh:"解释实际科研流程：论文证据怎样变成候选问题、怎样判断一个 Idea 是否值得继续、用 GPU 前必须检查什么、实验怎样启动，以及 PASS/STOP/HOLD 结果会怎样改变下一步。"}},
 

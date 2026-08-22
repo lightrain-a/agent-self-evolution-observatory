@@ -15,8 +15,6 @@ CANONICAL_PAGES = {
     "index.html": "home",
     "foundations.html": "foundations",
     "mechanisms.html": "mechanisms",
-    "domains.html": "domains",
-    "evaluation.html": "evaluation",
     "system-overview.html": "system-overview",
     "research-map.html": "research-map",
     "research-timeline.html": "research-timeline",
@@ -29,17 +27,19 @@ CANONICAL_PAGES = {
 }
 REDIRECT_PAGES = {
     "taxonomy.html": "foundations.html#group-taxonomy",
-    "model-improvement.html": "mechanisms.html#group-model-improvement",
-    "prompt-evolution.html": "mechanisms.html#group-prompt-evolution",
-    "memory-evolution.html": "mechanisms.html#group-memory-evolution",
-    "tool-evolution.html": "mechanisms.html#group-tool-evolution",
-    "workflow-evolution.html": "mechanisms.html#group-workflow-evolution",
-    "visual-multimodal.html": "domains.html#group-visual-multimodal",
-    "gui-web.html": "domains.html#group-gui-web",
-    "embodied-world.html": "domains.html#group-embodied-world",
-    "evaluation-safety.html": "evaluation.html#group-evaluation-safety",
-    "datasets-benchmarks.html": "evaluation.html#group-datasets-benchmarks",
-    "repositories.html": "evaluation.html#group-repositories",
+    "model-improvement.html": "mechanisms.html#field-model-parameters",
+    "prompt-evolution.html": "mechanisms.html#field-prompt-policy",
+    "memory-evolution.html": "mechanisms.html#field-memory",
+    "tool-evolution.html": "mechanisms.html#field-skill-tool",
+    "workflow-evolution.html": "mechanisms.html#field-workflow",
+    "domains.html": "mechanisms.html#chapter-domain-axis",
+    "visual-multimodal.html": "mechanisms.html#field-multimodal",
+    "gui-web.html": "mechanisms.html#field-gui-web",
+    "embodied-world.html": "mechanisms.html#field-embodied",
+    "evaluation.html": "mechanisms.html#chapter-evidence-axis",
+    "evaluation-safety.html": "mechanisms.html#field-evaluation-safety",
+    "datasets-benchmarks.html": "mechanisms.html#field-datasets-benchmarks",
+    "repositories.html": "mechanisms.html#field-repositories",
     "coverage-method.html": "bibliography.html#group-coverage-method",
     "research-agenda.html": "research-directions.html#group-research-agenda",
     "direction-board.html": "paper-ideas.html#discussed-ideas",
@@ -271,7 +271,7 @@ def main() -> None:
     for filename in current_state_pages:
         if "generated/research-system-state.js" not in canonical_scripts.get(filename, []):
             fail(f"{filename} must load the unified current research-system state")
-    stable_reference_pages = {"foundations.html", "mechanisms.html", "domains.html", "evaluation.html", "bibliography.html"}
+    stable_reference_pages = {"foundations.html", "mechanisms.html", "bibliography.html"}
     for filename in stable_reference_pages:
         if "generated/research-system-state.js" in canonical_scripts.get(filename, []):
             fail(f"{filename} is a stable reference page and must not mix in current P0 state")
@@ -363,10 +363,8 @@ def main() -> None:
     expected_chapter_ids = {
         "home": ["understand-field", "select-research", "execute-audit"],
         "foundations": ["boundary", "taxonomy-evidence"],
-        "mechanisms": ["model-internal", "externalized-experience", "system-level"],
-        "domains": ["multimodal-reasoning", "digital-interaction", "physical-world"],
-        "evaluation": ["validity-safety", "tasks-benchmarks", "reproducibility"],
-        "research-directions": ["orientation", "landscape", "direction-clusters", "long-term-agenda"],
+        "mechanisms": ["mechanism-axis", "domain-axis", "evidence-axis"],
+        "research-directions": ["orientation", "direction-atlas", "current-bridge"],
         "research-map": ["layering", "coverage-gaps", "integrated-map", "handoff"],
         "paper-ideas": ["discussed-ideas", "new-ideas"],
         "selected-paper": ["problem-scope", "evidence-experiments", "narrative-execution", "review-gates"],

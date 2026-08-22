@@ -184,8 +184,8 @@ def main() -> None:
               consoleLinks: [...document.querySelectorAll('.home-research-console a')].map(x=>x.getAttribute('href')||'')
             };""",
         )
-        require(home["nav"] == 12, f"expected 12 primary navigation targets across Start Here, Field Atlas, Current Research, and Literature, got {home['nav']}")
-        require(home["stats"] == 4 and home["routeCards"] == 11 and home["hero"] == 1 and home["heroActions"] == 4 and home["ruleSteps"] == 4 and home["routeGroups"] == 3 and home["legacyFramework"] == 0, f"home compact portal layout is incomplete or duplicated: {home}")
+        require(home["nav"] == 10, f"expected 10 primary navigation targets after consolidating the field atlas, got {home['nav']}")
+        require(home["stats"] == 4 and home["routeCards"] == 9 and home["hero"] == 1 and home["heroActions"] == 4 and home["ruleSteps"] == 4 and home["routeGroups"] == 3 and home["legacyFramework"] == 0, f"home compact portal layout is incomplete or duplicated: {home}")
         require(not home["figure"] and home["distribution"] == 0, "home should route readers instead of duplicating the field-history figure or literature distribution")
         require(home["missing"] == 0, "home contains unresolved citations")
         require(home["corpus"] >= 100, "curated literature snapshot did not load")
@@ -495,9 +495,6 @@ def main() -> None:
 
         expected_hubs = {
             "/foundations.html": {"groups": 2, "sections": 8},
-            "/mechanisms.html": {"groups": 5, "sections": 26},
-            "/domains.html": {"groups": 3, "sections": 14},
-            "/evaluation.html": {"groups": 3, "sections": 16},
             "/selected-paper.html": {"groups": None, "sections": None},
         }
         for page, expected in expected_hubs.items():
@@ -508,9 +505,6 @@ def main() -> None:
                   heading: document.querySelector('h1')?.textContent || '',
                   groups: document.querySelectorAll('.merged-group').length,
                   sections: document.querySelectorAll('.topic-section').length,
-                  resources: document.querySelectorAll('.live-resource-panel').length,
-                  axisSwitcher: document.querySelectorAll('.field-axis-switcher').length,
-                  axisPrimer: document.querySelectorAll('.field-axis-primer').length,
                   historySrc: document.querySelector('.overview-figure img')?.getAttribute('src') || '',
                   missing: document.querySelectorAll('.citation-missing').length,
                   pageOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
@@ -524,60 +518,68 @@ def main() -> None:
                 require(result["sections"] >= expected["sections"], f"{page} has too few sections")
             require(result["missing"] == 0, f"{page} contains unresolved citations")
             require(not result["pageOverflow"], f"{page} causes page-level horizontal overflow")
-            if page in {"/mechanisms.html", "/domains.html", "/evaluation.html"}:
-                require(result["axisSwitcher"] == 1 and result["axisPrimer"] == 1, f"{page} is missing the shared field-axis switcher or at-a-glance primer")
-            else:
-                require(result["axisSwitcher"] == 0 and result["axisPrimer"] == 0, f"{page} should not render a field-axis switcher/primer")
             if page == "/foundations.html":
                 require(not result["historySrc"], "foundations should stay focused on definition/taxonomy instead of duplicating the field-history figure")
-            if page == "/evaluation.html":
-                require(result["resources"] == 2, "evaluation live resource indexes are incomplete")
             if page == "/selected-paper.html":
                 require("PaperRegistry" in result["text"] and "SUBMISSION_READY" in result["text"] and "AGENT-SAFETY-R9" in result["text"] and "STRI" in result["text"] and "Temporal Skills Are a Causal Bottleneck" in result["text"] and "Failure Memories Are Not Neutral" in result["text"] and all(stage in result["text"] for stage in set(expected_registry_stages.values())), "canonical five-paper PaperRegistry is missing or incomplete")
 
+        navigate("/mechanisms.html", 7)
+        field_matrix = execute(session_id, """return {
+          bridge:document.querySelectorAll('.field-atlas-bridge a').length,
+          chapters:document.querySelectorAll('.field-matrix-chapter').length,
+          crossRows:document.querySelectorAll('.field-cross-matrix tbody tr').length,
+          denseDetails:document.querySelectorAll('.field-dense-detail').length,
+          openDetails:document.querySelectorAll('.field-dense-detail[open]').length,
+          evidenceSteps:document.querySelectorAll('.field-evidence-stack>div').length,
+          evidenceResources:document.querySelectorAll('.field-evidence-resource').length,
+          resourceCards:document.querySelectorAll('.reference-card').length,
+          sourceSections:document.querySelectorAll('.field-source-section').length,
+          overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2,
+          text:document.body.textContent||''
+        };""")
+        require(field_matrix["bridge"] == 2 and field_matrix["chapters"] == 3 and field_matrix["crossRows"] == 5, f"unified field matrix shell is incomplete: {field_matrix}")
+        require(field_matrix["denseDetails"] == 8 and field_matrix["openDetails"] == 0 and field_matrix["evidenceSteps"] == 7 and field_matrix["evidenceResources"] == 3, f"mechanism/domain/evidence detail inventory is incomplete: {field_matrix}")
+        require(field_matrix["resourceCards"] == 0 and field_matrix["sourceSections"] >= 50 and not field_matrix["overflow"], f"field atlas must retain detailed source notes without duplicating bibliography resource cards: {field_matrix}")
+        require(all(marker in field_matrix["text"] for marker in ("Model parameters","GUI / Web","Embodied / robotics","Future gain","Rollback & recovery","Filter in bibliography")), "unified field matrix is missing one or more mechanism/domain/evidence anchors")
+
         navigate("/research-directions.html", 7)
         ensure_language("en")
-        direction_map = execute(
-            session_id,
-            """return {
-              directions: document.querySelectorAll('.direction-card').length,
-              chips: document.querySelectorAll('.idea-chip').length,
-              chipLinks: document.querySelectorAll('a.idea-chip').length,
-              macroCards: document.querySelectorAll('.direction-macro-card').length,
-              explanationGrids: document.querySelectorAll('.direction-explanation-grid').length,
-              exampleRows: document.querySelectorAll('.direction-running-example tbody tr').length,
-              evidenceSections: document.querySelectorAll('.direction-literature').length,
-              evidencePapers: document.querySelectorAll('.direction-paper-evidence').length,
-              evidenceCitations: document.querySelectorAll('.direction-paper-evidence .inline-citations a').length,
-              evidenceMethods: document.querySelectorAll('.direction-paper-evidence > p').length,
-              evidenceFits: document.querySelectorAll('.direction-paper-evidence > div').length,
-              fieldAxes: document.querySelector('#field-reading-axes')?.closest('.panel')?.querySelectorAll('.framework-card').length || 0,
-              historyFigures: document.querySelectorAll('.history-overview-figure').length,
-              historyStages: document.querySelectorAll('.history-overview-figure .history-stage').length,
-              missing: document.querySelectorAll('.citation-missing').length,
-              src: document.querySelector('.overview-figure img')?.getAttribute('src') || '',
-              text: document.body.textContent || ''
-            };""",
-        )
-        require(direction_map["directions"] == 10, f"expected 10 directions, got {direction_map['directions']}")
-        require(direction_map["chips"] == 34 and direction_map["chipLinks"] == 0, f"expected 34 read-only historical idea-lineage chips, got {direction_map['chips']} with {direction_map['chipLinks']} links")
-        require(direction_map["fieldAxes"] == 3, "field landscape must expose mechanism, application-domain, and evaluation as three orthogonal reading views")
-        require(direction_map["historyFigures"] == 1 and direction_map["historyStages"] == 6, "field landscape must own the historical evolution figure")
-        require(direction_map["macroCards"] == 4, "four-question direction primer is incomplete")
-        require(direction_map["explanationGrids"] == 10, "plain-language direction explanations are incomplete")
-        require(direction_map["exampleRows"] == 10, "running example does not cover all directions")
-        require(direction_map["evidenceSections"] == 10 and direction_map["evidencePapers"] >= 30, "representative literature does not cover all directions")
-        require(direction_map["evidenceCitations"] == direction_map["evidencePapers"] and direction_map["evidenceMethods"] == direction_map["evidencePapers"] and direction_map["evidenceFits"] == direction_map["evidencePapers"], "direction literature cards are incomplete")
-        require(direction_map["missing"] == 0, "direction literature contains unresolved citations")
-        require(direction_map["src"].endswith("agent-self-evolution-directions-en.svg"), "English direction figure is not active")
-        require("Representative papers" in direction_map["text"] and "Why here" in direction_map["text"], "English direction literature is not active")
+        direction_map = execute(session_id, """return {
+          bridge:document.querySelectorAll('.field-atlas-bridge a').length,
+          chapters:document.querySelectorAll('.page-chapter').length,
+          macroCards:document.querySelectorAll('.direction-macro-card').length,
+          historySpine:document.querySelectorAll('.field-history-stage').length,
+          historyAudit:document.querySelectorAll('.field-history-audit').length,
+          historyAuditOpen:document.querySelectorAll('.field-history-audit[open]').length,
+          atlasRows:document.querySelectorAll('.direction-atlas-table tbody tr').length,
+          details:document.querySelectorAll('.direction-atlas-detail').length,
+          openDetails:document.querySelectorAll('.direction-atlas-detail[open]').length,
+          chips:document.querySelectorAll('.idea-chip').length,
+          evidenceSections:document.querySelectorAll('.direction-literature').length,
+          evidencePapers:document.querySelectorAll('.direction-paper-evidence').length,
+          migrationRows:document.querySelectorAll('.historical-taxonomy-migration tbody tr').length,
+          agendaOpen:document.querySelectorAll('.historical-agenda-fold[open]').length,
+          missing:document.querySelectorAll('.citation-missing').length,
+          overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2,
+          text:document.body.textContent||''
+        };""")
+        require(direction_map["bridge"] == 2 and direction_map["chapters"] == 3 and direction_map["historySpine"] == 6 and direction_map["macroCards"] == 4, f"compact field-landscape spine is incomplete: {direction_map}")
+        require(direction_map["atlasRows"] == 10 and direction_map["details"] == 10 and direction_map["openDetails"] == 0, f"D1-D10 must render as one table plus ten collapsed details: {direction_map}")
+        require(direction_map["chips"] == 34 and direction_map["evidenceSections"] == 10 and direction_map["evidencePapers"] >= 30, f"collapsed direction dossiers lost literature or historical lineage: {direction_map}")
+        require(direction_map["historyAudit"] == 1 and direction_map["historyAuditOpen"] == 0 and direction_map["migrationRows"] == 10 and direction_map["agendaOpen"] == 0, f"history/migration audit layers are incomplete or too expanded: {direction_map}")
+        require(direction_map["missing"] == 0 and not direction_map["overflow"], f"field landscape has unresolved citations or horizontal overflow: {direction_map}")
+        require(all(marker in direction_map["text"] for marker in ("Field matrix","Compare all ten problems first","Representative papers","Current canonical ResearchItem landing")), "English compact field landscape is missing key comparison layers")
         ensure_language("zh")
-        zh_state = execute(session_id, "return {src:document.querySelector('.overview-figure img')?.getAttribute('src')||'', text:document.querySelector('.direction-literature')?.textContent||''};")
-        require(zh_state["src"].endswith("agent-self-evolution-directions-zh.svg"), "Chinese direction figure did not switch")
-        require("代表论文" in zh_state["text"] and "方向关联" in zh_state["text"], "Chinese direction literature did not switch")
-        shell_zh = execute(session_id, """return {brand:[document.querySelector('.brand strong')?.textContent||'',document.querySelector('.brand span')?.textContent||''],nav:[...document.querySelectorAll('.nav-level1 span:first-child,.nav-level2')].map(x=>x.textContent.trim()),placeholder:document.querySelector('#site-search')?.getAttribute('placeholder')||'',status:document.querySelector('.field-current-status-strip,.project-status-strip')?.textContent||''};""")
-        require(shell_zh["brand"] == ["Agent 自进化","科研观测站"] and "开始阅读" in shell_zh["nav"] and "领域图谱" in shell_zh["nav"] and "当前科研" in shell_zh["nav"] and "文献" in shell_zh["nav"] and "Start Here" not in shell_zh["nav"] and shell_zh["placeholder"] == "搜索研究站内容…", f"shared shell did not fully switch to Chinese: {shell_zh}")
-        require(all(marker in shell_zh["status"] for marker in ("当前科研状态","可提交论文","正式新问题","可启动实验","查看当前研究组合图谱")), f"field-atlas current-status bridge is incomplete: {shell_zh['status']}")
+        zh_state = execute(session_id, """return {text:document.body.textContent||'',brand:[document.querySelector('.brand strong')?.textContent||'',document.querySelector('.brand span')?.textContent||''],nav:[...document.querySelectorAll('.nav-level1 span:first-child,.nav-level2')].map(x=>x.textContent.trim()),placeholder:document.querySelector('#site-search')?.getAttribute('placeholder')||''};""")
+        require(all(marker in zh_state["text"] for marker in ("领域矩阵 · 机制 × 场景 × 评测","先横向比较十个问题","代表论文","今天落到哪些","当前 A 类")), "Chinese compact field landscape did not switch")
+        require(zh_state["brand"] == ["Agent 自进化","科研观测站"] and "开始阅读" in zh_state["nav"] and "领域图谱" in zh_state["nav"] and "当前科研" in zh_state["nav"] and "文献" in zh_state["nav"] and "Start Here" not in zh_state["nav"] and zh_state["placeholder"] == "搜索研究站内容…", f"shared shell did not fully switch to Chinese: {zh_state}")
+
+        navigate("/domains.html#group-gui-web", 3)
+        redirected_domain = execute(session_id, """return {href:location.pathname+location.hash,open:!!document.getElementById('field-gui-web')?.open};""")
+        require(redirected_domain["href"].endswith("/mechanisms.html#field-gui-web") and redirected_domain["open"], f"legacy domain deep link did not map/open precisely: {redirected_domain}")
+        navigate("/evaluation.html#group-repositories", 3)
+        redirected_eval = execute(session_id, """return {href:location.pathname+location.hash,open:!!document.getElementById('field-repositories')?.open};""")
+        require(redirected_eval["href"].endswith("/mechanisms.html#field-repositories") and redirected_eval["open"], f"legacy evaluation deep link did not map/open precisely: {redirected_eval}")
 
         navigate("/research-map.html", 7)
         ensure_language("zh")
@@ -758,15 +760,15 @@ def main() -> None:
         bibliography_zh = execute(session_id, "return document.body.textContent || ''")
         require(all(marker in bibliography_zh for marker in ("正式发表","预印本","代码仓库","博客/报告","Agent 组件","模型参数","工具/技能","工作流/脚手架","批评/评测","环境交互","最近增量核验","+33 篇","key 不进入网页")), "Bibliography filters/maps/cards or incremental refresh provenance are not localized to Chinese display labels")
 
-        navigate("/evaluation.html", 4)
+        navigate("/mechanisms.html#field-evaluation-safety", 4)
         evaluation_zh = execute(session_id, "return document.body.textContent || ''")
-        require(all(marker in evaluation_zh for marker in ("初始化","提出更新","部署使用","运行脚手架（Harness）基线","谱系组合遗憾（regret）")), "Evaluation lifecycle terminology is not Chinese-first")
+        require(all(marker in evaluation_zh for marker in ("初始化","提出更新","部署使用","运行脚手架（Harness）基线","谱系组合遗憾（regret）")), "Consolidated field-matrix evaluation terminology is not Chinese-first")
 
         # Site-wide navigation/readability contract: every canonical page must use the same
         # global language state and the exact same left navigation labels. Literature stays
         # expanded everywhere so readers can jump to the bibliography without another click.
         canonical_frontend_pages = (
-            "/index.html", "/foundations.html", "/mechanisms.html", "/domains.html", "/evaluation.html",
+            "/index.html", "/foundations.html", "/mechanisms.html",
             "/system-overview.html", "/research-map.html", "/research-timeline.html", "/research-directions.html",
             "/paper-ideas.html", "/experiments.html", "/selected-paper.html", "/bibliography.html",
         )
@@ -816,7 +818,9 @@ def main() -> None:
             require(mobile_width["scroll"] <= mobile_width["inner"] + 2, f"{frontend_page} has page-level horizontal overflow on mobile-width viewport: {mobile_width}")
 
         redirect_checks = {
-            "/memory-evolution.html": "mechanisms.html#group-memory-evolution",
+            "/memory-evolution.html": "mechanisms.html#field-memory",
+            "/domains.html": "mechanisms.html#chapter-domain-axis",
+            "/evaluation.html": "mechanisms.html#chapter-evidence-axis",
             "/direction-board.html": "paper-ideas.html#discussed-ideas",
             "/paper-roadmap.html": "selected-paper.html#group-paper-roadmap",
         }

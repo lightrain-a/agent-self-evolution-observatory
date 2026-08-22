@@ -772,11 +772,11 @@ function syncShellLanguage() {
         : pageId === "research-map"
           ? (language === "zh" ? "A–G 当前研究组合 · 只读映射 · 权威结论仍在 ResearchItem" : "Current A–G portfolio · read-only map · authoritative decisions stay on ResearchItems")
           : pageId === "research-directions"
-            ? (language === "zh" ? "领域图谱总入口 · 历史演化 · D1–D10 · 机制 / 场景 / 评测三切面 · 连接当前 A–G" : "Field-atlas entry · history · D1–D10 · mechanism/domain/evaluation views · bridge to current A–G")
-            : pageId === "foundations"
-              ? (language === "zh" ? "定义与边界 · 核心名词 · 四个分类问题 · 历史全景统一进入领域图谱" : "Definition and boundary · core vocabulary · four classification questions · history lives in the Field Atlas")
-              : pageId === "domains"
-                ? (language === "zh" ? "应用场景切面 · 多模态 / GUI-Web / 具身 · 观察、动作、重置与纵向证据" : "Application-domain view · multimodal / GUI-web / embodied · observation, action, resetability, and longitudinal evidence")
+            ? (language === "zh" ? "领域图谱总入口 · 六阶段主线 · D1–D10 总表 · 连接当前 A–G" : "Field-atlas entry · six-stage spine · D1–D10 comparison · bridge to current A–G")
+            : pageId === "mechanisms"
+              ? (language === "zh" ? "统一领域矩阵 · 更新对象 × 环境约束 × 证据标准 · 详细内容按需展开" : "Unified field matrix · update surface × environment × evidence · details on demand")
+              : pageId === "foundations"
+                ? (language === "zh" ? "定义与边界 · 核心名词 · 四个分类问题 · 历史全景统一进入领域图谱" : "Definition and boundary · core vocabulary · four classification questions · history lives in the Field Atlas")
                 : pageId === "bibliography"
                   ? (language === "zh" ? "先看来源与可信度 · 再看领域分布 · 再决定读什么 · 最后检索、引用与导出" : "Provenance first · field maps next · choose what to read · search, cite, and export last")
                   : (language === "zh" ? "实时科研状态 · 文献、实验与论文证据持续更新" : "Live research state · literature, experiments, and paper evidence update continuously");
@@ -1505,6 +1505,116 @@ function renderFieldAxisPrimer() {
   }
   return "";
 }
+function fieldSourceConfig(sourceId) {
+  return (window.CONSOLIDATED_SOURCE_PAGES || {})[sourceId] || window.PAGE_CONTENT?.[sourceId] || null;
+}
+function renderFieldSourceSections(sourceId) {
+  const config = fieldSourceConfig(sourceId);
+  if (!config) return "";
+  const sections = (config.sections || []).map((section,index) => {
+    const citations = PAGE_CITATIONS[sourceId]?.[index] || [];
+    const referenceNote = citations.length ? `<div class="section-reference-note"><span>${language === "zh" ? "代表文献" : "Representative references"}</span><span data-cite="${esc(citations.join("||"))}"></span></div>` : "";
+    return `<section class="field-source-section"><h4 data-toc="false">${textOf(section.title)}</h4>${section.intro ? `<p class="section-intro">${textOf(section.intro)}</p>` : ""}<div class="section-body">${textOf(section.body)}${referenceNote}</div></section>`;
+  }).join("");
+  return `<div class="field-source-intro">${config.lead ? `<p>${textOf(config.lead)}</p>` : ""}${config.callout ? `<div class="field-source-callout">${textOf(config.callout)}</div>` : ""}</div>${sections}`;
+}
+function renderFieldDenseDetail(item, index) {
+  const columns=(item.columns||[]).map(([label,value])=>`<span><small>${label}</small><b>${value}</b></span>`).join("");
+  return `<details class="field-dense-detail" id="${esc(item.anchor)}"><summary><em>${String(index+1).padStart(2,"0")}</em><div><b>${item.title}</b><small>${item.subtitle}</small></div><div class="field-detail-summary-cols">${columns}</div></summary><div class="field-dense-detail-body">${renderFieldSourceSections(item.sourceId)}</div></details>`;
+}
+function renderFieldAtlasBridge(active="matrix") {
+  return `<nav class="field-atlas-bridge" aria-label="${language === "zh" ? "领域图谱入口" : "Field atlas navigation"}"><a class="${active==="landscape"?"active":""}" href="research-directions.html"><span>01</span><div><b>${language === "zh" ? "领域全景 · 历史与问题" : "Field landscape · history & problems"}</b><small>${language === "zh" ? "领域怎么形成，D1–D10 在问什么" : "How the field formed and what D1–D10 asks"}</small></div></a><a class="${active==="matrix"?"active":""}" href="mechanisms.html"><span>02</span><div><b>${language === "zh" ? "领域矩阵 · 机制 × 场景 × 评测" : "Field matrix · mechanism × domain × evidence"}</b><small>${language === "zh" ? "改什么、在哪里改、怎么证明" : "What changes, where, and how it is proven"}</small></div></a></nav>`;
+}
+function renderFieldCrossMatrix() {
+  const headers = language === "zh" ? ["更新对象","持久产物","回滚 / 成本","场景敏感点","最少要补的纵向证据","典型风险"] : ["Update surface","Persistent artifact","Rollback / cost","Domain sensitivity","Minimum longitudinal evidence","Typical risk"];
+  const rows = language === "zh" ? [
+    ["模型参数","权重 / Adapter","回滚重；高成本","数据分布、动作反馈质量","未来任务 + 旧能力回退 + 等预算基线","遗忘、奖励投机、难归因"],
+    ["Prompt / Policy","版本化指令 / 文本策略","回滚易；低成本","上下文与工具描述漂移","留出任务 + 等预算推理搜索","基准过拟合、上下文膨胀"],
+    ["Memory","事实 / 轨迹 / 规则 / 摘要","可编辑；低–中成本","可观测性、检索条件、时间漂移","跨回合复用 + 污染/过期测试","错误写入、过期、检索失败"],
+    ["Skill / Tool","可执行过程 / 宏工具 / 路由规则","可版本化；中成本","动作空间、权限、接口稳定性","跨任务复用 + 契约 / 回退测试","不兼容、技能爆炸、权限风险"],
+    ["Workflow / Scaffold","控制流 / 组件组合 / 评价器","可回滚但耦合强；中–高成本","环境状态、组件接口、评价器可靠性","未来收益 + 组件消融 + evaluator audit","搜索成本、归因困难、评价器过拟合"],
+  ] : [
+    ["Model parameters","Weights / adapters","Hard rollback; high cost","Data distribution and action-feedback quality","Future tasks + regression + matched-budget baseline","Forgetting, reward hacking, weak attribution"],
+    ["Prompt / policy","Versioned instructions / textual policy","Easy rollback; low cost","Context and tool-description drift","Held-out tasks + matched-budget inference search","Benchmark overfit, context bloat"],
+    ["Memory","Facts / trajectories / rules / summaries","Editable; low–medium cost","Observability, retrieval conditions, temporal drift","Cross-episode reuse + pollution/staleness tests","Bad writes, staleness, retrieval failure"],
+    ["Skill / tool","Executable procedures / macro-tools / routing rules","Versionable; medium cost","Action space, permissions, interface stability","Cross-task reuse + contract / rollback tests","Incompatibility, skill explosion, permission risk"],
+    ["Workflow / scaffold","Control flow / composition / evaluators","Rollback possible but coupled; medium–high cost","Environment state, component interfaces, evaluator reliability","Future gain + component ablation + evaluator audit","Search cost, attribution, evaluator overfit"],
+  ];
+  return `<section class="panel field-cross-matrix"><div class="field-matrix-title"><div><div class="eyebrow">${language === "zh" ? "先看这一张表" : "START WITH ONE TABLE"}</div><h2 data-toc="false">${language === "zh" ? "同一种“自进化”主张，必须同时回答三个维度" : "Every self-evolution claim must resolve three dimensions together"}</h2></div><div class="field-tuple"><span>${language === "zh" ? "更新对象" : "update"}</span><i>×</i><span>${language === "zh" ? "环境约束" : "environment"}</span><i>×</i><span>${language === "zh" ? "证据标准" : "evidence"}</span></div></div><div class="field-primer-table-wrap"><table class="matrix field-primer-table"><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map((cell,i)=>i===0?`<th>${cell}</th>`:`<td>${cell}</td>`).join("")}</tr>`).join("")}</tbody></table></div></section>`;
+}
+function renderUnifiedMechanismAxis(chapter,index) {
+  const items = language === "zh" ? [
+    {anchor:"field-model-parameters",sourceId:"model-improvement",title:"模型参数",subtitle:"SFT / DPO / RL / LoRA：真正改变基础策略",columns:[["成本","高"],["回滚","重"],["最常见失败","遗忘 / reward hacking"]]},
+    {anchor:"field-prompt-policy",sourceId:"prompt-evolution",title:"Prompt / Policy",subtitle:"把反馈写成下一版本可复用指令或文本策略",columns:[["成本","低"],["回滚","易"],["最常见失败","过拟合 / context bloat"]]},
+    {anchor:"field-memory",sourceId:"memory-evolution",title:"Memory",subtitle:"把经验变成可写、可检索、可修订的持久状态",columns:[["成本","低–中"],["回滚","易"],["最常见失败","污染 / 过期 / 检索错"]]},
+    {anchor:"field-skill-tool",sourceId:"tool-evolution",title:"Skill / Tool",subtitle:"把过程知识变成跨任务可复用的可执行能力",columns:[["成本","中"],["回滚","中"],["最常见失败","不兼容 / 权限风险"]]},
+    {anchor:"field-workflow",sourceId:"workflow-evolution",title:"Workflow / Scaffold",subtitle:"修改路由、控制流、组件组合与 evaluator",columns:[["成本","中–高"],["回滚","可行但耦合"],["最常见失败","归因 / evaluator 过拟合"]]},
+  ] : [
+    {anchor:"field-model-parameters",sourceId:"model-improvement",title:"Model parameters",subtitle:"SFT / DPO / RL / LoRA: change the underlying policy",columns:[["Cost","High"],["Rollback","Hard"],["Failure","Forgetting / reward hacking"]]},
+    {anchor:"field-prompt-policy",sourceId:"prompt-evolution",title:"Prompt / policy",subtitle:"Write feedback into the next reusable textual policy",columns:[["Cost","Low"],["Rollback","Easy"],["Failure","Overfit / context bloat"]]},
+    {anchor:"field-memory",sourceId:"memory-evolution",title:"Memory",subtitle:"Turn experience into writable, retrievable, revisable persistent state",columns:[["Cost","Low–medium"],["Rollback","Easy"],["Failure","Pollution / staleness / retrieval"]]},
+    {anchor:"field-skill-tool",sourceId:"tool-evolution",title:"Skill / tool",subtitle:"Turn procedural knowledge into reusable executable capability",columns:[["Cost","Medium"],["Rollback","Medium"],["Failure","Incompatibility / permission risk"]]},
+    {anchor:"field-workflow",sourceId:"workflow-evolution",title:"Workflow / scaffold",subtitle:"Change routing, control flow, composition, and evaluators",columns:[["Cost","Medium–high"],["Rollback","Coupled"],["Failure","Attribution / evaluator overfit"]]},
+  ];
+  return `<section class="page-chapter field-matrix-chapter" data-chapter="${esc(chapter.id)}"><header class="field-matrix-chapter-head"><span>${String(index+1).padStart(2,"0")}</span><div><h2 id="chapter-${esc(chapter.id)}">${textOf(chapter.title)}</h2><p>${textOf(chapter.question)}</p></div></header><div class="field-dense-list">${items.map(renderFieldDenseDetail).join("")}</div></section>`;
+}
+function renderUnifiedDomainAxis(chapter,index) {
+  const headers = language === "zh" ? ["场景","观察","动作","重置","错误代价","最关键证据"] : ["Domain","Observation","Action","Reset","Failure cost","Critical evidence"];
+  const rows = language === "zh" ? [
+    ["多模态 / 视觉","图像、视频、文本、多模态记忆","生成、检索、视觉工具调用","通常可离线重复","中","证明改进依赖正确视觉证据，而不是语言先验"],
+    ["GUI / Web","页面状态、截图、DOM、交互历史","点击、输入、导航、工具调用","多数可重置，但网站会漂移","中–高","跨任务 / 跨会话验证，并分离环境漂移与 Agent 更新"],
+    ["具身 / 机器人","传感器、视觉、身体状态、动力学","连续控制、导航、操作","常只能近似重置","高","安全、恢复、动力学变化和不可逆动作必须单独报告"],
+  ] : [
+    ["Multimodal / visual","Images, video, text, multimodal memory","Generation, retrieval, visual-tool calls","Usually repeatable offline","Medium","Show reliance on correct visual evidence, not language priors"],
+    ["GUI / Web","Page state, screenshots, DOM, interaction history","Clicks, typing, navigation, tool calls","Often resettable, websites drift","Medium–high","Cross-task/session tests; separate environment drift from agent updates"],
+    ["Embodied / robotics","Sensors, vision, body state, dynamics","Continuous control, navigation, manipulation","Often only approximately resettable","High","Report safety, recovery, dynamics shift, and irreversible actions separately"],
+  ];
+  const items = language === "zh" ? [
+    {anchor:"field-multimodal",sourceId:"visual-multimodal",title:"多模态 / 视觉",subtitle:"离线可复现更容易，但必须证明视觉证据真的驱动更新",columns:[["重置","较容易"],["动作风险","中"],["关键混杂","语言先验"]]},
+    {anchor:"field-gui-web",sourceId:"gui-web",title:"GUI / Web",subtitle:"页面可部分重置，但网站漂移和长轨迹让因果归因更难",columns:[["重置","中"],["动作风险","中–高"],["关键混杂","环境漂移"]]},
+    {anchor:"field-embodied",sourceId:"embodied-world",title:"具身 / 机器人",subtitle:"动作不可逆、动力学变化和安全代价让评测要求最高",columns:[["重置","弱"],["动作风险","高"],["关键混杂","动力学 / 恢复"]]},
+  ] : [
+    {anchor:"field-multimodal",sourceId:"visual-multimodal",title:"Multimodal / visual",subtitle:"Offline repetition is easier, but visual evidence must actually drive the update",columns:[["Reset","Easier"],["Risk","Medium"],["Confound","Language prior"]]},
+    {anchor:"field-gui-web",sourceId:"gui-web",title:"GUI / Web",subtitle:"Partly resettable, but website drift and long trajectories complicate attribution",columns:[["Reset","Medium"],["Risk","Medium–high"],["Confound","Environment drift"]]},
+    {anchor:"field-embodied",sourceId:"embodied-world",title:"Embodied / robotics",subtitle:"Irreversibility, dynamics, and safety impose the strongest evidence burden",columns:[["Reset","Weak"],["Risk","High"],["Confound","Dynamics / recovery"]]},
+  ];
+  return `<section class="page-chapter field-matrix-chapter" data-chapter="${esc(chapter.id)}"><header class="field-matrix-chapter-head"><span>${String(index+1).padStart(2,"0")}</span><div><h2 id="chapter-${esc(chapter.id)}">${textOf(chapter.title)}</h2><p>${textOf(chapter.question)}</p></div></header><div class="field-primer-table-wrap field-domain-table"><table class="matrix field-primer-table"><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map((cell,i)=>i===0?`<th>${cell}</th>`:`<td>${cell}</td>`).join("")}</tr>`).join("")}</tbody></table></div><div class="field-dense-list">${items.map(renderFieldDenseDetail).join("")}</div></section>`;
+}
+function renderUnifiedEvidenceAxis(chapter,index) {
+  const steps = language === "zh" ? [
+    ["01","当前任务","先确认更新后当前任务确实更好"],
+    ["02","未来收益","在未用于选更新的后续任务上仍受益"],
+    ["03","旧能力回退","新能力提升没有靠牺牲旧能力换来"],
+    ["04","跨回合持久性","变化跨 episode / session / version 仍存在"],
+    ["05","负向进化与安全","统计有害更新、违规和最坏情况"],
+    ["06","回滚与恢复","坏更新可识别、撤回并恢复"],
+    ["07","可复现性","冻结数据、环境、版本、日志和统计单位可重跑"],
+  ] : [
+    ["01","Current task","Confirm the updated agent really improves the current task"],
+    ["02","Future gain","Gain survives on later tasks not used for update selection"],
+    ["03","Regression","New capability is not bought by destroying old capability"],
+    ["04","Persistence","Change survives across episodes, sessions, or versions"],
+    ["05","Negative evolution & safety","Count harmful updates, violations, and worst cases"],
+    ["06","Rollback & recovery","Bad updates can be detected, reverted, and recovered"],
+    ["07","Reproducibility","Frozen data, environment, versions, logs, and units reproduce the result"],
+  ];
+  const resources = language === "zh" ? [
+    ["评测 / 安全原则","evaluation-safety","future gain regression safety rollback"],
+    ["Benchmark / 数据 / 环境","datasets-benchmarks","benchmark dataset environment longitudinal"],
+    ["代码 / 复现资产","repositories","repository code reproducibility"],
+  ] : [
+    ["Evaluation / safety principles","evaluation-safety","future gain regression safety rollback"],
+    ["Benchmarks / data / environments","datasets-benchmarks","benchmark dataset environment longitudinal"],
+    ["Code / reproduction assets","repositories","repository code reproducibility"],
+  ];
+  const resourceDetails = resources.map(([title,sourceId,q],i)=>`<details class="field-evidence-resource" id="field-${esc(sourceId)}"><summary><span>${String(i+1).padStart(2,"0")}</span><b>${title}</b><a href="bibliography.html?q=${encodeURIComponent(q)}">${language === "zh" ? "去文献库筛选 →" : "Filter in bibliography →"}</a></summary><div>${renderFieldSourceSections(sourceId)}</div></details>`).join("");
+  return `<section class="page-chapter field-matrix-chapter" data-chapter="${esc(chapter.id)}"><header class="field-matrix-chapter-head"><span>${String(index+1).padStart(2,"0")}</span><div><h2 id="chapter-${esc(chapter.id)}">${textOf(chapter.title)}</h2><p>${textOf(chapter.question)}</p></div></header><div class="evolution-evidence-stack field-evidence-stack">${steps.map(([n,t,d])=>`<div><span>${n}</span><b>${t}</b><p>${d}</p></div>`).join("")}</div><div class="field-resource-note"><b>${language === "zh" ? "为什么这里不再列 160 张资源卡？" : "Why are 160 resource cards no longer duplicated here?"}</b><span>${language === "zh" ? "领域图谱负责解释“该测什么、为什么测”；具体 benchmark、dataset、environment 和 repository 统一由文献库负责检索、排序和跳转。" : "The field atlas explains what to measure and why. Concrete benchmarks, datasets, environments, and repositories belong in the searchable bibliography."}</span></div><div class="field-evidence-resources">${resourceDetails}</div></section>`;
+}
+function renderFieldMatrixHub(config) {
+  const chapters = pageArchitecture("mechanisms").chapters || [];
+  const header = `<div class="field-matrix-page-header"><div class="eyebrow">${textOf(config.eyebrow)}</div><h1>${textOf(config.title)}</h1><p class="lead">${textOf(config.lead)}</p>${config.callout?`<div class="field-matrix-callout">${textOf(config.callout)}</div>`:""}</div>`;
+  return `${header}${renderFieldAtlasBridge("matrix")}${renderFieldCrossMatrix()}${renderUnifiedMechanismAxis(chapters[0],0)}${renderUnifiedDomainAxis(chapters[1],1)}${renderUnifiedEvidenceAxis(chapters[2],2)}`;
+}
 function renderMergedHub(config) {
   const chapters = config.chapters || [];
   const fallbackOverview = !chapters.some((chapter) => chapter.includeOverview) && config.overviewFigure ? renderOverviewFigure(config) : "";
@@ -1582,22 +1692,39 @@ function renderHistoricalDirectionMigration() {
   const currentCell = (rawCategories) => String(rawCategories).replace(/ · sparse/g,"").split("+").map(x=>x.trim()).filter(x=>/^[A-G]$/.test(x)).map(category=>{const snap=canonicalCategorySnapshot(category);return `<a class="taxonomy-current-link" href="paper-ideas.html#canonical-group-${category.toLowerCase()}"><b>${category}</b><span>${snap.total} ${language==="zh"?"个对象":"objects"}</span></a>`;}).join("");
   return `<section class="panel historical-taxonomy-migration"><div class="idea-panel-heading"><div><div class="eyebrow">${language==="zh"?"历史分类迁移":"TAXONOMY MIGRATION"}</div><h2 id="historical-to-current-taxonomy">${language==="zh"?"旧 D1–D10 没有废弃：它们被重新编译进当前 A–G":"D1–D10 was not discarded; it was recompiled into current A–G"}</h2><p class="section-intro">${language==="zh"?"这是多对多迁移，不是简单改名。现在表里的 A–G 不是静态文字，而是直接读取 canonical ResearchItemState 的对象数，并可跳到对应 Research Portfolio。":"This is a many-to-many migration, not a rename. The A–G cells now read canonical ResearchItemState counts and link directly to the corresponding Research Portfolio category."}</p></div><a class="link-btn" href="research-map.html">${language==="zh"?"打开当前研究组合图谱 →":"Open Current Research Map →"}</a></div><div class="history-table-scroll"><table class="matrix"><thead><tr><th>${language==="zh"?"历史方向":"Historical"}</th><th>${language==="zh"?"原问题":"Former problem"}</th><th>${language==="zh"?"当前 canonical 落点":"Current canonical landing"}</th><th>${language==="zh"?"迁移说明":"Migration"}</th></tr></thead><tbody>${rows.map(row=>`<tr><th><a href="#${esc(directionByCode(row[0])?.id||"")}">${esc(row[0])}</a></th><td>${esc(row[1])}</td><td><div class="taxonomy-current-links">${currentCell(row[2])}</div></td><td>${esc(row[3])}</td></tr>`).join("")}</tbody></table></div></section>`;
 }
-function renderDirectionMap(config) {
-  const directions = portfolioDirections();
-  const ideas = portfolioIdeas();
-  const guide = directionGuideData();
-  const chapters = pageArchitecture("research-directions").chapters || [];
-  const macroCards = (guide.macroGroups || []).map((group) => `<article class="direction-macro-card"><span>${esc(group.code)}</span><h4>${textOf(group.title)}</h4><p>${textOf(group.plain)}</p><div>${(group.directionIds || []).map((id) => { const direction = directionById(id); return direction ? `<a href="#${esc(id)}">${esc(direction.code)} · ${textOf(direction.title)}</a>` : ""; }).join("")}</div></article>`).join("");
-  const exampleRows = directions.map((direction) => { const detail = directionGuide(direction.id); return `<tr><th>${esc(direction.code)}</th><td><a href="#${esc(direction.id)}"><strong>${textOf(direction.title)}</strong></a><span>${textOf(detail.plain)}</span></td><td>${textOf(detail.example)}</td></tr>`; }).join("");
-  const atlasAxes = `<section class="panel"><h3 id="field-reading-axes">${language === "zh" ? "先用三个正交切面读这个领域" : "Read the field through three orthogonal views"}</h3><p class="section-intro">${language === "zh" ? "历史问题坐标回答“问题是怎么形成的”；下面三个页面分别回答“怎么改、在哪里改、怎么证明真的改好了”。它们是同一领域的不同投影，不是互相竞争的分类体系。" : "The historical problem map explains how questions formed. The three views below answer how agents change, where they change, and how improvement is proven. They are orthogonal projections of the same field rather than competing taxonomies."}</p><div class="framework-grid"><a class="framework-card" href="mechanisms.html"><b>${language === "zh" ? "进化机制 · 怎么改？" : "Mechanisms · How does it change?"}</b><span>${language === "zh" ? "参数、Prompt、Memory、Skill / Tool、Workflow：比较真正被持久修改的对象、反馈来源、成本和典型失败。" : "Parameters, prompts, memory, skills/tools, and workflows: compare the persistent update surface, feedback, cost, and failure modes."}</span></a><a class="framework-card" href="domains.html"><b>${language === "zh" ? "应用场景 · 在哪里改？" : "Domains · Where does it change?"}</b><span>${language === "zh" ? "多模态、GUI/Web、具身：比较观察、动作空间、可重置性、错误代价和环境反馈。" : "Multimodal, GUI/web, and embodied settings: compare observations, actions, resetability, failure cost, and environment feedback."}</span></a><a class="framework-card" href="evaluation.html"><b>${language === "zh" ? "评测证据 · 怎么证明？" : "Evaluation · How is it proven?"}</b><span>${language === "zh" ? "未来收益、旧能力回退、负向进化、安全、回滚与可复现性：定义什么证据才足以叫“改进”。" : "Future gain, regressions, negative evolution, safety, rollback, and reproducibility define what evidence is enough to call an update an improvement."}</span></a></div></section>`;
-  const orientation = `${atlasAxes}<section class="panel direction-primer"><h3 id="four-big-questions">${language === "zh" ? "D1–D10 从四类大问题继续拆分" : "D1–D10 further decomposes four large questions"}</h3><p class="section-intro">${language === "zh" ? "十个方向不是十种互相竞争的方法，而是自进化生命周期中四类大问题的进一步拆分。" : "The ten directions are not ten competing methods. They decompose four large questions across the evolution lifecycle."}</p><div class="direction-macro-grid">${macroCards}</div></section><section class="panel direction-running-example"><h3 id="running-example">${textOf(guide.runningExample?.title)}</h3><p class="section-intro">${textOf(guide.runningExample?.intro)}</p><div class="history-table-scroll"><table class="matrix"><thead><tr><th>ID</th><th>${language === "zh" ? "这个方向在研究什么" : "What the direction studies"}</th><th>${language === "zh" ? "在这个案例中会问什么" : "Question in this example"}</th></tr></thead><tbody>${exampleRows}</tbody></table></div></section>`;
-  const stats = `<div class="grid direction-stats"><div class="stat"><b>${directions.length}</b><span>${language === "zh" ? "个历史方向坐标" : "historical direction coordinates"}</span></div><div class="stat"><b>${ideas.length}</b><span>${language === "zh" ? "个历史 Idea formulation" : "historical idea formulations"}</span></div><div class="stat"><b>${portfolioTracks().length}</b><span>${language === "zh" ? "类历史论文赛道" : "historical paper tracks"}</span></div></div>`;
-  const landscape = `${renderHistoryFigure()}${renderHistoricalDirectionMigration()}${renderOverviewFigure(config, language === "zh" ? "Agent 自进化研究方向与历史 Idea 谱系图" : "Agent self-evolution direction and historical idea-lineage map")}${stats}`;
-  const clusters = (guide.macroGroups || []).map((group, index) => { const groupDirections = (group.directionIds || []).map(directionById).filter(Boolean); return `<section class="direction-cluster"><header><span>${esc(group.code)}</span><div><h3 id="direction-cluster-${esc(group.id)}">${textOf(group.title)}</h3><p>${textOf(group.plain)}</p></div></header><div class="direction-grid">${groupDirections.map(renderDirectionCard).join("")}</div></section>`; }).join("");
-  const agendaGroups = config.groupsAfter || [];
-  const agenda = `<details class="panel historical-agenda-fold"><summary><div><b>${language==="zh"?"历史长期议程与仍开放的领域问题":"Former long-term agenda and still-open field questions"}</b><span>${language==="zh"?"保留旧页面梳理作为领域知识；当前研究调度不再由这份静态议程决定。":"Preserved as field knowledge; current research scheduling no longer follows this static agenda."}</span></div><strong>${language==="zh"?"历史资产":"HISTORY"}</strong></summary><div>${renderGroupNav(agendaGroups)}${renderMergedGroups(agendaGroups)}</div></details>`;
-  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("research-directions"))}${renderCustomChapter(chapters[0],0,orientation)}${renderCustomChapter(chapters[1],1,landscape)}${renderCustomChapter(chapters[2],2,clusters)}${renderCustomChapter(chapters[3],3,agenda)}`;
+function renderCompactFieldHistory() {
+  const data=historyFigureData();
+  if(!data?.stages?.length)return "";
+  const cards=data.stages.map(stage=>`<article class="field-history-stage" style="--stage:${esc(stage.color||"#456")}"><header><span>${esc(stage.code)}</span><b>${esc(stage.period)}</b></header><h3 data-toc="false">${textOf(stage.title)}</h3><p>${textOf(stage.subtitle)}</p><dl><div><dt>${language==="zh"?"更新对象":"Update"}</dt><dd>${textOf(stage.target)}</dd></div><div><dt>${language==="zh"?"反馈":"Feedback"}</dt><dd>${textOf(stage.feedback)}</dd></div></dl></article>`).join("");
+  return `<section class="field-history-spine"><div class="field-compact-heading"><div><div class="eyebrow">${language==="zh"?"六阶段主线":"SIX-STAGE SPINE"}</div><h2 data-toc="false">${language==="zh"?"更新对象从局部改写扩展到系统级持续进化":"Update surfaces expanded from local rewriting to system-level evolution"}</h2></div><p>${language==="zh"?"这里只保留理解领域最需要的时间、更新对象和反馈变化；完整历史图放到下方审计折叠层。":"Keep only the time, update target, and feedback shifts needed for orientation; the full history figure remains in the audit fold below."}</p></div><div class="field-history-stage-grid">${cards}</div></section>`;
 }
+function renderDirectionAtlasTable(directions) {
+  const rows=directions.map(direction=>{
+    const detail=directionGuide(direction.id), categories=currentCategoriesForDirection(direction);
+    const current=categories.map(category=>{const snap=canonicalCategorySnapshot(category);return `<a href="research-map.html#research-map-${category.toLowerCase()}"><b>${category}</b><small>${snap.total}</small></a>`;}).join("") || "—";
+    const papers=directionLiterature(direction.id).slice(0,2).map(p=>`<a href="${directionPaperHref(p.title)}">${esc(p.short||p.title)}<small>${esc(String(p.year||""))}</small></a>`).join("") || "—";
+    return `<tr><th><a href="#${esc(direction.id)}">${esc(direction.code)}</a></th><td><b>${textOf(direction.title)}</b><span>${textOf(direction.question)}</span></td><td>${textOf(detail.plain)}</td><td>${textOf(detail.example)}</td><td><div class="direction-table-current">${current}</div></td><td><div class="direction-table-papers">${papers}</div></td></tr>`;
+  }).join("");
+  return `<section class="panel direction-atlas-table-panel"><div class="field-compact-heading"><div><div class="eyebrow">D1–D10</div><h2 data-toc="false">${language==="zh"?"先横向比较十个问题，再决定要不要展开某个方向":"Compare all ten problems first, then open only the direction you need"}</h2></div><p>${language==="zh"?"总表直接回答“研究什么、通俗怎么理解、典型例子、今天落到 A–G 哪里、先读哪两篇论文”。":"The table answers what each direction studies, its plain meaning, a concrete example, its current A–G landing, and two papers to read first."}</p></div><div class="history-table-scroll"><table class="matrix direction-atlas-table"><thead><tr><th>ID</th><th>${language==="zh"?"问题":"Problem"}</th><th>${language==="zh"?"通俗理解":"Plain meaning"}</th><th>${language==="zh"?"典型例子":"Example"}</th><th>${language==="zh"?"当前 A–G":"Current A–G"}</th><th>${language==="zh"?"代表论文":"Papers"}</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+}
+function renderDirectionDetailFold(direction,index) {
+  const directionIdeas=direction.ideaIds.map(ideaByName).filter(Boolean).sort((a,b)=>a.rank-b.rank), detail=directionGuide(direction.id), papers=directionLiterature(direction.id);
+  const categories=currentCategoriesForDirection(direction).join(" · ") || "—";
+  return `<details class="direction-atlas-detail" id="${esc(direction.id)}"><summary><span>${esc(direction.code)}</span><div><b>${textOf(direction.title)}</b><small>${textOf(detail.plain)}</small></div><em>${esc(categories)} · ${papers.length} ${language==="zh"?"篇代表论文":"papers"}</em></summary><div class="direction-atlas-detail-body"><div class="direction-explanation-grid"><div><b>${language === "zh" ? "主要研究对象" : "Main object"}</b><p>${textOf(detail.object)}</p></div><div><b>${language === "zh" ? "典型例子" : "Typical example"}</b><p>${textOf(detail.example)}</p></div><div><b>${language === "zh" ? "与邻近方向的区别" : "Difference from neighbors"}</b><p>${textOf(detail.distinction)}</p></div><div><b>${language === "zh" ? "科学边界" : "Scientific boundary"}</b><p>${textOf(direction.boundary)}</p></div></div>${renderDirectionCurrentBridge(direction)}${renderDirectionLiterature(direction)}<div class="idea-chip-list" aria-label="historical idea lineage">${directionIdeas.map(idea=>`<span class="idea-chip" title="${language==="zh"?"历史候选谱系，不代表当前合同":"Historical candidate lineage; not a current contract"}"><span>#${idea.rank}</span>${esc(idea.name)}</span>`).join("")}</div></div></details>`;
+}
+function renderDirectionMap(config) {
+  const directions=portfolioDirections(), ideas=portfolioIdeas(), guide=directionGuideData(), chapters=pageArchitecture("research-directions").chapters||[];
+  const macroCards=(guide.macroGroups||[]).map(group=>`<article class="direction-macro-card"><span>${esc(group.code)}</span><h3 data-toc="false">${textOf(group.title)}</h3><p>${textOf(group.plain)}</p><div>${(group.directionIds||[]).map(id=>{const direction=directionById(id);return direction?`<a href="#${esc(id)}">${esc(direction.code)} · ${textOf(direction.title)}</a>`:"";}).join("")}</div></article>`).join("");
+  const stats=`<div class="field-landscape-stats"><span><b>${directions.length}</b>${language==="zh"?"个历史问题方向":"historical directions"}</span><span><b>${ideas.length}</b>${language==="zh"?"个历史 Idea formulation":"historical idea formulations"}</span><span><b>${portfolioTracks().length}</b>${language==="zh"?"类历史论文赛道":"historical paper tracks"}</span></div>`;
+  const orientation=`${renderFieldAtlasBridge("landscape")}${renderCompactFieldHistory()}${stats}<section class="direction-primer"><div class="field-compact-heading"><div><h2 data-toc="false">${language==="zh"?"D1–D10 本质上是四类生命周期问题的进一步拆分":"D1–D10 decomposes four lifecycle questions"}</h2></div><p>${language==="zh"?"它们不是十种竞争方法；先用四类问题定位，再进入十方向总表。":"They are not ten competing methods. Use the four macro questions for orientation, then enter the ten-direction table."}</p></div><div class="direction-macro-grid">${macroCards}</div></section><details class="panel field-history-audit"><summary><div><b>${language==="zh"?"展开完整历史图与旧方向 SVG":"Open full history figure and legacy direction SVG"}</b><span>${language==="zh"?"审计层：保留能力增长、范式迁移、里程碑、驱动因素与开放问题。":"Audit layer retaining capability growth, paradigm shifts, milestones, enablers, and open problems."}</span></div><strong>${language==="zh"?"按需查看":"DETAIL"}</strong></summary><div>${renderHistoryFigure()}${renderOverviewFigure(config,language==="zh"?"Agent 自进化研究方向与历史 Idea 谱系图":"Agent self-evolution direction and historical idea-lineage map")}</div></details>`;
+  const directionAtlas=`${renderDirectionAtlasTable(directions)}<section class="direction-detail-folds"><div class="field-compact-heading"><div><h2 data-toc="false">${language==="zh"?"需要边界、论文或历史谱系时，再展开单个方向":"Open a direction only for boundary, literature, or lineage detail"}</h2></div><p>${language==="zh"?"10 个方向默认全部收起，避免把总览重新拉成长页面。":"All ten directions stay collapsed by default so the atlas remains a comparison page rather than a long dossier dump."}</p></div>${directions.map(renderDirectionDetailFold).join("")}</section>`;
+  const agendaGroups=config.groupsAfter||[];
+  const agenda=`<details class="panel historical-agenda-fold"><summary><div><b>${language==="zh"?"历史长期议程与仍开放的领域问题":"Former long-term agenda and still-open field questions"}</b><span>${language==="zh"?"作为领域知识保留，不再作为当前研究队列。":"Preserved as field knowledge, not the current research queue."}</span></div><strong>${language==="zh"?"历史资产":"HISTORY"}</strong></summary><div>${renderGroupNav(agendaGroups)}${renderMergedGroups(agendaGroups)}</div></details>`;
+  const bridge=`${renderHistoricalDirectionMigration()}${agenda}`;
+  const header=`<div class="field-landscape-page-header"><div class="eyebrow">${textOf(config.eyebrow)}</div><h1>${textOf(config.title)}</h1><p class="lead">${textOf(config.lead)}</p></div>`;
+  return `${header}${renderCustomChapter(chapters[0],0,orientation)}${renderCustomChapter(chapters[1],1,directionAtlas)}${renderCustomChapter(chapters[2],2,bridge)}`;
+}
+
 function ideaExplanation(name) { return (window.IDEA_EXPLANATIONS || {})[name] || {}; }
 function ideaComparison(name) { return (window.IDEA_COMPARISONS || {})[name] || {}; }
 function ideaPipelineMeta() { return window.IDEA_PIPELINE_META || {funnel:[],operators:[],reviewers:[],advisorShortlist:[],stages:{},warnings:[]}; }
@@ -4390,6 +4517,7 @@ function renderPage() {
   else if (pageId === "system-overview") root.innerHTML = window.renderSystemOverview ? window.renderSystemOverview(config) : renderMergedHub(config);
   else if (pageId === "research-timeline") root.innerHTML = window.renderResearchTimeline ? window.renderResearchTimeline(config) : `${pageHeader(config)}<div class="empty">Research timeline unavailable.</div>`;
   else if (pageId === "selected-paper") root.innerHTML = window.renderSelectedPaperWorkspace ? window.renderSelectedPaperWorkspace(config) : renderMergedHub(config);
+  else if (config.renderMode === "field-matrix") root.innerHTML = renderFieldMatrixHub(config);
   else if (config.renderMode === "merged-hub") root.innerHTML = renderMergedHub(config);
   else if (pageId === "research-directions") root.innerHTML = renderDirectionMap(config);
   else if (pageId === "research-map") root.innerHTML = window.renderCurrentResearchMap ? window.renderCurrentResearchMap(config) : `${pageHeader(config)}<div class="empty">Current research map unavailable.</div>`;
@@ -4410,6 +4538,18 @@ function renderPage() {
   updateCitationStatus();
   localizeRenderedChinese(root);
   buildToc();
+  if (new Set(["mechanisms","research-directions"]).has(pageId) && location.hash) {
+    const fieldAliases = pageId === "mechanisms" ? {
+      "group-model-improvement":"field-model-parameters","group-prompt-evolution":"field-prompt-policy","group-memory-evolution":"field-memory","group-tool-evolution":"field-skill-tool","group-workflow-evolution":"field-workflow",
+      "group-visual-multimodal":"field-multimodal","group-gui-web":"field-gui-web","group-embodied-world":"field-embodied","group-evaluation-safety":"field-evaluation-safety","group-datasets-benchmarks":"field-datasets-benchmarks","group-repositories":"field-repositories",
+    } : {};
+    const requestedId = decodeURIComponent(location.hash.slice(1));
+    const targetId = fieldAliases[requestedId] || requestedId;
+    const target = document.getElementById(targetId);
+    const detail = target?.matches?.("details") ? target : target?.closest?.("details");
+    if (detail) detail.open = true;
+    if (target) requestAnimationFrame(() => target.scrollIntoView({block:"start"}));
+  }
   requestAnimationFrame(() => applyReadabilityFloor());
 }
 
