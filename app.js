@@ -1909,16 +1909,16 @@ const PARENT_SIMPLE_COMPARISONS_ZH = {
   "B-1":{ours:"从最终结果相同、但过程不同的轨迹中学习“过程不变量”，再决定哪些经验值得保留。",baseline:"只按经验对未来任务的实际 utility／effect 做准入，不额外建模同结果过程差异。",matched:"真实实验使用匹配的简化对照；当前终态记录只保留了 matched-simplification tie 和隐藏残余效应约 0.0139。",rows:[{metric:"隐藏独立残余效应",ours:"≈0.0139",baseline:"匹配简化对照打平",delta:"未留下可支持独立机制的差值"}],verdict:"这里不是说问题不存在，而是现有记录中过程不变量没有带来可区分于 utility/effect 准入的效果，因此并入后者。"},
   "B-5":{ours:"每遇到反例，只单调收紧经验的适用条件，不改经验正文和谓词词表。",baseline:"标准穷举 ILP／前置条件学习器，在相同复杂度预算内直接寻找条件。",matched:"同一 12 条技能、同一技能正文、谓词词表、反例、旧正例和复杂度上限。",rows:[{metric:"学到完全相同的 gate",ours:"12/12",baseline:"12/12",delta:"0"},{metric:"真实 gate 恢复",ours:"10/12",baseline:"10/12",delta:"0"}],verdict:"两边在 12 条技能上逐条得到相同 gate，失败案例也相同，所以单调修复只保留为实现约束。"},
   "B-6":{ours:"训练 utility-hazard 模型，根据未来复用效果决定记忆复验、降权或删除。",baseline:"固定规则：最近至少 4 个周期没用、且使用次数不超过 2 次，就隔离；阈值在同一审计标签上选。",matched:"12 条记忆×25 次复用=300 次机会；两边都只审计每 5 次激活（60/300），再看其余 240 次未来复用。",rows:[{metric:"仍保留的有害复用",ours:"16",baseline:"0",delta:"简单规则少 16"},{metric:"保留的有益复用",ours:"192",baseline:"192",delta:"0"}],verdict:"简单规则多移除了 16 次有害复用，却没有损失任何有益复用，因此停止学习型风险模型。"},
-  "C-1":{ours:"给 400 个标签事件建立来源／祖先谱系图；共享祖先的标签不能被当成独立投票。",baseline:"按标签来源和谱系做简单降权，不构造完整图推断。",matched:"同一 Qwen2.5-7B+ALFWorld 冻结 40 行、400 个标签事件，同一来源和锚点信息。",rows:[{metric:"标签富集度",ours:"96.03%",baseline:"同一数据上的来源降权",delta:"—"},{metric:"两种方法的决策分歧",ours:"2.5%",baseline:"97.5% 决策相同",delta:"仅 2.5 个百分点有差异"}],verdict:"没有记录可支持“准确率完全相同”，但 97.5% 的准入决策相同，独立谱系机制没有留下足够可检验空间。"},
+  "C-1":{ours:"给 400 个标签事件建立来源／祖先谱系图；共享祖先的标签不能被当成独立投票。",baseline:"按标签来源和谱系做简单降权，不构造完整图推断。",matched:"同一 Qwen2.5-7B+ALFWorld 冻结 40 行、400 个标签事件，同一来源和锚点信息。",rows:[{metric:"标签富集度",ours:"96.03%",baseline:"同一数据上的来源降权",delta:"—"},{metric:"两种方法的决策分歧",ours:"2.5%",baseline:"97.5% 决策相同",delta:"仅 2.5 个百分点有差异"}],verdict:"没有记录可支持“准确率完全相同”，但 97.5% 的准入决策相同，完整来源关系图没有留下足够可检验的额外价值。"},
   "C-2":{ours:"建立 3×3 的 actor版本×evaluator版本矩阵，再用因果中和干预定位并修复评分漂移。",baseline:"在每个 evaluator 上用冻结外部锚点拟合截距和 shortcut 残差，直接校准。",matched:"同一冻结外部锚点、同一锚点输出和同一跨版本比较。",rows:[{metric:"漂移归因正确",ours:"3/3",baseline:"3/3",delta:"0"},{metric:"修复 MAE / 最大误差",ours:"相同",baseline:"相同",delta:"0"},{metric:"额外干预调用",ours:"54",baseline:"0",delta:"我们多 54 次"}],verdict:"复杂矩阵没有改善归因或修复误差，只多了 54 次干预调用；矩阵保留为诊断图，不再当控制方法。"},
   "C-4":{ours:"学习失败序列中的重复／顺序特征，预测自纠正是否已经坍缩。",baseline:"只用同一批事前可见特征训练一棵浅层 CART 决策树。",matched:"同一 Qwen2.5-7B+ALFWorld 30 个失败案例、同一冻结 holdout。",rows:[{metric:"冻结 F0 得分",ours:"80.0%",baseline:"76.67%",delta:"我们 +3.33 个百分点"},{metric:"决策分歧率",ours:"6.67%",baseline:"93.33% 决策相同",delta:"只差 6.67 个百分点"}],verdict:"复杂检测器只提高 3.33 个百分点，且 93.33% 的决定与浅树相同，未达到独立方法所需的分歧和增益。"},
-  "C-5":{ours:"训练干预验证 gate，只有模型判断某次纠正确实改变未来行为时才写入。",baseline:"使用与 A-3 相同特征的简单阈值规则。",matched:"同一 24 个候选、同一冻结未来观察；未来正向信号只有 3/21。",rows:[{metric:"冻结结果得分",ours:"62.5%",baseline:"79.17%",delta:"简单方法 +16.67 个百分点"},{metric:"准入决策分歧",ours:"33.33%",baseline:"—",delta:"1/3 决策不同"}],verdict:"这里不是打平：简单阈值实际高 16.67 个百分点，因此停止单独训练纠正准入 gate。"},
+  "C-5":{ours:"训练干预验证 gate，只有模型判断某次纠正确实改变未来行为时才写入。",baseline:"使用与 A-3 相同特征的简单阈值规则。",matched:"同一 24 个候选、同一冻结未来观察；未来正向信号只有 3/21。",rows:[{metric:"冻结结果得分",ours:"62.5%",baseline:"79.17%",delta:"简单方法 +16.67 个百分点"},{metric:"准入决策分歧",ours:"33.33%",baseline:"—",delta:"1/3 决策不同"}],verdict:"这里不是打平：简单阈值实际高 16.67 个百分点，因此停止单独训练复杂的纠正准入判断器。"},
   "D-1":{ours:"对每个已验证反例做 delta-debug，删到 1-minimal，再用这些最小反例更新规则。",baseline:"不逐例最小化；对同一规则的多条验证反例直接求共同约束，再更新规则。",matched:"同一 20 条规则、每条 4 个验证反例、最终同为 320 个训练 token。",rows:[{metric:"编译后的规则",ours:"20/20 与对照相同",baseline:"20/20",delta:"0"},{metric:"隐藏边界正确",ours:"60/60",baseline:"60/60",delta:"0"},{metric:"额外 verifier 调用",ours:"320",baseline:"0",delta:"我们多 320 次"}],verdict:"逐例最小化没有改变一条最终规则或一个隐藏答案，只多 320 次验证调用。"},
   "D-2":{ours:"用三个历史版本的趋势和排名变化，选择下一批最值得生成的训练任务。",baseline:"直接用每个候选算子的历史产出拟合线性 yield 预测器。",matched:"3 个冻结版本、30 个 typed operator、留出第 2 版、top-k=6；两边都在看结果前冻结。",rows:[{metric:"隐藏 top-k utility",ours:"-21",baseline:"-21",delta:"0"},{metric:"选择集合一致率",ours:"100%",baseline:"100%",delta:"0"},{metric:"Oracle top-k utility",ours:"39",baseline:"39",delta:"说明场景有空间，但两种当前选择器都没抓到"}],verdict:"版本化选择器与直接产出预测器选了完全相同的 6 个任务，结果同为 -21；保留趋势图做诊断即可。"},
   "E-2":{ours:"学习带结构 credit 的因果工作流语法，定位失败分支并编译局部改写。",baseline:"把同类工作流编辑的配对效果直接存成 typed lookup，遇到新工作流就复用。",matched:"16 个源工作流、32 次调用；8 个 API 和 identity 都未见的隐藏工作流；隐藏阶段都不搜索。",rows:[{metric:"隐藏修复成功",ours:"8/8",baseline:"8/8",delta:"0"},{metric:"有害修复",ours:"0",baseline:"0",delta:"0"},{metric:"逐例改写一致",ours:"8/8",baseline:"8/8",delta:"0"}],verdict:"直接编辑复用逐例生成了相同改写，复杂因果语法没有带来额外结果。"},
   "F-1":{ours:"训练 value-aware residual selector，只挑预计会改变后续价值／决策的世界模型误差。",baseline:"不学价值模型，直接检查世界模型动作和真实动作是否不同。",matched:"同一 120 条 residual（80 开发、40 隐藏）、同一冻结策略；隐藏集中有 9 个真正改变决策的案例。",rows:[{metric:"隐藏 top-k 召回",ours:"33.33%",baseline:"100%",delta:"简单方法 +66.67 个百分点"},{metric:"真正改变决策的案例",ours:"9 个中的 3 个",baseline:"9 个中的 9 个",delta:"简单方法多找回 6 个"}],verdict:"直接动作分歧找全了 9 个决策变化，我们只找回 3 个，所以停止 value-aware selector。"},
   "F-2":{ours:"从反事实前驱案例编译“在什么状态下禁止某动作”的不可逆前置条件。",baseline:"使用同容量的单调 direct shield，直接从状态特征判断允许／禁止。",matched:"5 个风险族；4 个训练拓扑、2 个隐藏拓扑、20 个隐藏案例；隐藏时都关闭模拟器并使用相同信息和容量。",rows:[{metric:"隐藏准确率",ours:"100%",baseline:"100%",delta:"0"},{metric:"逐例决策一致",ours:"20/20",baseline:"20/20",delta:"0"}],verdict:"20 个隐藏案例逐例完全一致；前置条件可作为安全屏障解释，但不再独立训练编译器。"},
-  "F-3":{ours:"从同起点的成功普通／扰动轨迹对中抽取重复出现的恢复 residual，形成 2 个恢复算子。",baseline:"不建算子库，直接用相同配对数据训练 residual-conditioned recovery policy。",matched:"同一 120 对成功轨迹、7 个训练场景、3 个隐藏场景、36 个隐藏案例。",rows:[{metric:"重复 residual 占比",ours:"80%",baseline:"使用同一数据",delta:"—"},{metric:"隐藏恢复准确率",ours:"100%",baseline:"100%",delta:"0"},{metric:"逐例决策一致",ours:"36/36",baseline:"36/36",delta:"0"}],verdict:"算子库在 36 个隐藏案例上没有产生一个不同决定；保留复现审计，执行改用直接恢复策略。"},
+  "F-3":{ours:"从同一起点的正常成功轨迹和受扰后成功恢复轨迹中，抽取反复出现的“还差哪一步恢复”的动作模式，形成 2 个恢复算子。",baseline:"不建立恢复算子库，直接用相同配对轨迹训练一个根据当前恢复状态选择动作的策略。",matched:"同一 120 对成功轨迹、7 个训练场景、3 个隐藏场景、36 个隐藏案例。",rows:[{metric:"重复恢复模式占比",ours:"80%",baseline:"使用同一数据",delta:"—"},{metric:"隐藏恢复准确率",ours:"100%",baseline:"100%",delta:"0"},{metric:"逐例决策一致",ours:"36/36",baseline:"36/36",delta:"0"}],verdict:"算子库在 36 个隐藏案例上没有产生一个不同决定；保留恢复模式复现审计，执行改用直接恢复策略。"},
 };
 function renderConcreteMethodComparison(comparison,scope="parent") {
   if(language!=="zh"||!comparison)return "";
@@ -1935,6 +1935,34 @@ function ideaStopReasonMeta(decision="", finalState="", failureLayer="") {
   else if(/CORE_PRINCIPLE|PRINCIPLE_STOP|DEAD_END|FALSIF/.test(raw)) key="principle";
   return {key,...IDEA_STOP_TAXONOMY[key]};
 }
+const PARENT_SCENE_ZH = {
+  "A-1":"Agent 接受一次候选更新后，不可能把所有旧任务都完整重跑。这里具体做的是：先看更新前后轨迹最早在哪一步发生行为变化，再用这个信号给旧任务排回归检查优先级；真正要回答的是，能不能更便宜地把最可能被更新弄坏的旧任务先找出来。",
+  "A-2":"同样是在更新后的回归检查里，区别在于不预先固定要检查几步。我们让一个控制器根据已经看到的证据决定继续检查还是停止，再和“所有案例固定只检查 1 步”比较；如果自适应没有多发现回退，却花更多检查成本，就没有必要训练控制器。",
+  "A-3":"Qwen2.5-7B-Instruct 在 ALFWorld 的文字家庭环境里执行多步家务。某个任务失败后，更新流程会根据失败轨迹生成一条候选 Prompt patch，作为后续执行持续可见的新规则，目的是让同类失败下次不再发生。我们先确认 patch 真的修好目标任务，再问它会不会让 Agent 原本会做的其他家务任务变差。",
+  "A-4":"Agent 连续接受多条更新时，两条单独看都没问题的规则可能因为先后顺序或组合方式发生冲突。我们把 Prompt、工具和工作流更新组成成对/三元组合，比较复杂的冲突规则系统与直接记录“哪种有序组合有风险”的简单查表修复，看复杂表示是否真的能处理未见组合。",
+  "A-5":"Agent 长期运行后会积累很多 Prompt、Memory 和 Workflow 更新，但出问题时仍要能准确回到某个旧版本。这里把 40 次顺序更新当成一段版本历史，比较语义压缩、普通状态差分和定期检查点：谁既能答对 12 个回滚请求，又更省存储和回放。",
+  "B-1":"Agent 可能用不同操作过程完成同一个任务。我们想知道，能不能从这些“结果相同、过程不同”的成功轨迹里提取一条真正跨过程有用的经验；具体会把候选经验开/关后重放未来任务，再和只看实际任务收益的简单记忆准入方法比较。",
+  "B-2":"Agent 的记忆库越来越大时，我们不想因为一条经验看起来重要就永久保留它。真正要找的是“删掉这条记忆以后，Agent 对任务的结论或动作真的会改变”的案例；只有这类删除敏感案例足够多，才有数据训练一个保留/删除选择器。",
+  "B-3":"Agent 一次可能同时检索出多条记忆。某条记忆单独使用没问题，但和另一条一起出现时可能让动作变坏。这个方向想通过控制“是否检索、检索内容、排序和共同出现组合”来定位到底是哪一条或哪一组记忆造成干扰，再决定隔离、改写或限制排序。",
+  "B-4":"Agent 生成一条新经验后，不直接写入长期记忆，而是先拿少量未来任务验证：这条经验到底有没有真正帮助后续决策。问题与 A-3 很接近——都是在接受持久更新前，用有限测试决定是否准入；这里把更新对象具体限定成 memory/lesson。",
+  "B-5":"一条经验在厨房任务里可能有用，但遇到反例后不一定应该整条删除。我们给每条 skill 保留正文，只逐步收紧“什么状态下可以用它”的前置条件，再与普通 ILP/前置条件学习器比较，看这种单调收缩是否真的有额外价值。",
+  "B-6":"长期记忆早期有用，随着任务分布变化可能逐渐过时。这里在连续复用任务流中记录每条记忆什么时候被用、用了以后是帮助还是伤害，再决定何时复验、降权或删除；对照是最简单的“多久没用 + 使用频率”缓存规则。",
+  "B-7":"这个方向同样关心“经验在什么情况下才适用”：给每条 lesson 学一个明确的状态边界，避免在不合适的任务里继续调用。后续审查发现，它和 B-5 的“遇到反例就收紧适用范围”实际是在解决同一个决策问题。",
+  "C-1":"Agent 反复用自己的输出给新数据打标签时，同一个错误来源可能被复制很多次，看起来像有很多独立证据。这里追踪 4 轮自标注中每个标签最初来自谁、哪些标签其实共享同一个上游来源，再比较完整的来源关系图和简单的“同来源降权”规则能否更好识别不可靠标签。",
+  "C-2":"同一个回答今天被评价器打高分，换了新版评价器后可能被打低分；如果回答模型和评价器一起迭代，很难知道性能变化到底来自模型还是评分标准。这里把多个回答模型版本和多个评价器版本交叉评分，再用固定外部锚点判断评分漂移，并比较复杂修复与简单锚点校准。",
+  "C-3":"系统版本更新后，奖励函数表面上还是同一个分数，但它可能已经不再代表原来的目标。这个方向原计划把同一批行为交给不同版本的奖励/评价器，检查“高分”含义是否发生改变；审查后发现它本质上就是 C-2 的评价器漂移诊断。",
+  "C-4":"模型答错题后会让自己再纠正一轮，但有时会连续重复同一种错误。这里用 GSM8K/HumanEval 的失败与纠错轨迹，预测“再纠正一轮到底会不会有帮助”，并比较复杂序列检测器和一棵只看少量当前特征的浅层决策树。",
+  "C-5":"Agent 答错后会生成一条纠错经验。我们不想因为它下一次偶然答对，就马上把这条经验永久写入；因此会对同一个失败做受控测试，确认这条纠正确实改变了后续行为，再决定是否保存，并与看到完全相同证据的简单阈值规则比较。",
+  "C-6":"一次自纠正轨迹可能包含好几个动作：重新观察、换工具、改答案。我们原本想找出到底哪一步真正导致成功，再只保留那部分纠正经验；后续发现这个问题与已有自纠正信用分配工作高度重叠，因此没有继续建立独立任务实验。",
+  "D-1":"Agent 失败后可以生成很多相似反例。这里想把一个已验证的失败任务删减到“再删任何条件就不再暴露错误”的最小反例，再用于更新规则；对照是不逐条最小化，直接从多条已验证反例里提取共同约束。",
+  "D-2":"自动课程系统每轮都要决定“下一批让 Agent 练什么”。我们根据模型过去几个版本的失败变化来挑新任务，再和更简单的“哪个任务生成器过去产出最高就优先哪个”比较，看复杂的前沿跟踪是否真能选出更有用的训练任务。",
+  "D-3":"如果自动课程长期由系统自己生成，课程可能越来越偏向容易生成、容易得分的题，而不是 Agent 真正缺的能力。这个方向想监控课程分布随版本漂移；但它依赖 D-2 的自动课程生成先可靠，因此当前只作为 D-2 的监控组件。",
+  "E-1":"一个 Agent 工作流由多个工具/API 节点组成。我们想根据过去“改某个节点前后任务表现怎样变化”的配对记录，预测在一个没见过的新工作流里应该提交哪种局部编辑；但前提是源数据里不同编辑真的产生可排序的效果。",
+  "E-2":"工作流失败时，不想整张图重写。这里根据真实执行轨迹定位最可能出错的分支，生成局部改写，再和更直接的办法比较：把过去同类局部编辑的实际效果记下来，在新工作流里直接复用最有效的编辑。",
+  "F-1":"世界模型会预测下一状态，但不是每个预测误差都值得学习。我们只关心那些会让冻结策略改动作的误差：把预测状态替换成真实状态后，如果 Agent 的下一动作会变，就优先修这个误差；并与最简单的“直接看动作是否不同”规则比较。",
+  "F-2":"具身 Agent 进入某些状态后，再怎么补救也无法恢复安全，例如跨过不可逆边界。这里从已知不可逆失败与安全案例里学习“什么状态下禁止什么动作”的前置条件，再和容量相同、直接从状态特征判断允许/禁止的安全屏障比较。",
+  "F-3":"机器人受到扰动后仍可能最终完成任务。我们把从同一起点出发的正常轨迹和受扰后成功恢复轨迹配对，提取重复出现的最小恢复动作模式，再看这些恢复算子能否在新场景里比直接学习一个恢复策略更好。"
+};
 const PARENT_ONE_MINUTE_ZH = {
   "A-3":{
     scene:"Qwen2.5-7B-Instruct 在 ALFWorld 的文字版家庭环境里做多步家务，例如找物体、拿起物体、加热/清洗/冷却后再放到指定位置。某个源任务失败后，更新流程根据这次失败生成一条候选 Prompt patch，作为后续任务一直可见的新行为规则，目的是让同类失败下一次不再发生。A-3 关心的是：这条新规则即使修好了刚才的任务，会不会改变 Agent 在原来已经会做的家务任务上的动作，造成“学会新的、弄坏旧的”。",
@@ -1943,6 +1971,70 @@ const PARENT_ONE_MINUTE_ZH = {
     judgment:"现在还不能判断 A-3 的回归检查器有没有用。A-3 真正需要比较的是一批“已经确认改善目标任务”的更新里，哪些会破坏旧能力；当前有效更新太少，核心测试集没有形成。因此被暂停的是这套 Qwen2.5-7B + ALFWorld + 当前 Prompt-patch 生成方式，不是 A-3 的科学问题或回归检查方法。",
     human:"现在最值得人工一起看的不是 A-3 门控模型，而是 7 个失败 patch 和唯一成功 patch 为什么不同：失败 patch 是没有抓到真实失败原因、写得太泛、没有改变实际动作，还是 Prompt 本身就不是这些失败的合适更新表面？尤其可以把原始失败轨迹、patch 内容和更新后动作逐例并排看，判断是否存在共同失败模式。",
     next:"先逐例对齐 8 个源任务的失败轨迹、patch 和更新后行为，给 7 个失败 patch 做原因归类，并与唯一成功 patch 对照；再决定是补充 updater 输入、修改 patch 生成方式，还是更换成 memory/skill 等更容易产生可测变化的更新表面。修好以后先在不打开隐藏旧任务的前提下生成一批全新的候选，确认有效更新比例达到预先冻结的资格要求；只有这一步通过，才打开旧能力回归测试并正式比较 A-3 与简单规则。"
+  },
+  "B-2":{
+    scene:PARENT_SCENE_ZH["B-2"],
+    progress:"生命周期：历史 P0 → 当前 HOLD。当前有 72 个记忆影响单元，其中 11 个已经确认“打开或关闭这条记忆会改变结果”；但专门用于 B-2 的“删掉一条记忆会让最终结论改变”案例是 0 个，隐藏旧任务没有打开。",
+    observed:"B-2 需要的不是一般的记忆有效案例，而是可重复的“删除敏感”案例。当前 72 个单元里这类案例为 0，而预先要求至少 30 个，说明现有数据根本没有提供训练或比较记忆保留选择器所需的正例。",
+    judgment:"现在不能说 B-2 的选择器失败，因为选择器还没有得到它要学习的现象。能确定的是：当前这张记忆影响表适合研究“记忆有没有影响”，不适合研究“哪条记忆删掉会改变结论”。",
+    human:"希望人工重点判断两件事：第一，什么具体任务最容易自然产生“删掉一条经验就改变最终决策”的案例；第二，这类案例应该靠真实长期记忆积累获得，还是可以通过受控构造先验证方法可行性。不要在当前 0 正例的数据上继续调选择器。",
+    next:"新建一个专门的删除敏感性数据收集：先只收集并复验“有/无某条记忆时最终动作或结论不同”的案例；达到预注册的至少 30 个可重复案例后，再冻结训练/留出划分，最后才训练 B-2 选择器并打开隐藏原任务。"
+  },
+  "B-3":{
+    scene:PARENT_SCENE_ZH["B-3"],
+    progress:"生命周期：历史 P0 → 当前 HOLD。已经做过合成筛查，也在 ALFWorld 中寻找真实的多记忆共同检索案例；但严格排除旧 source/target 和重复 target 后，只剩 5 个真正独立的新组合，低于预先要求的 6 对。",
+    observed:"合成环境里可以看到“哪条记忆通过哪条路径造成干扰”的信号，但真实 ALFWorld 数据严格去掉旧任务、旧目标和重复目标后，只剩 5 个全新的独立共检索组合。样本量甚至没达到启动核心比较的最低门槛，所以现在没有资格判断复杂干扰定位器好不好。",
+    judgment:"停止的是当前 ALFWorld 数据实例，不是“多条记忆一起出现会产生交互”这个问题。当前最可靠的结论只是：真实共检索案例太少，继续在同一批数据上扩模型会把重复样本当成证据。",
+    human:"希望人工帮助选择新的数据来源：哪里会自然出现多条长期记忆同时被检索，而且能形成足够多彼此独立的新任务组合？优先判断换环境是否比继续挖 ALFWorld 更合理。",
+    next:"换到新的共检索数据环境，先完全不训练方法，只检查是否有足够真实案例；拿到至少 6 个彼此独立、以前没见过的“记忆组合 × 目标任务”案例后，再冻结实验方案，比较“定位哪条/哪组记忆致害”与简单的逐条隔离或排序规则。"
+  },
+  "B-4":{
+    scene:PARENT_SCENE_ZH["B-4"],
+    progress:"生命周期：历史人工裁决 → 当前 MERGED。方法设计曾把每条经验限制为固定 6 个 sentinel 测试，但在进入独立核心实验前先做了问题归并审查。",
+    observed:"B-4 要用的输入与 A-3 本质相同：都是拿有限的旧/未来任务证据，判断一条持久更新是否应该被接受。当前没有一组独立任务结果证明“更新对象是 memory”以后会产生 A-3 无法表达的新决策。",
+    judgment:"因此没有必要再为 B-4 单独训练一个经验准入器。科学问题仍有用，但把它作为 A-3 的 memory 应用场景更清楚，也能避免两个方向重复消耗同一批实验。",
+    human:"希望人工判断的是：memory 准入是否存在 A-3 通用回归检查无法处理的特殊信息，例如检索范围、记忆竞争或长期复用效应。如果没有这样的独有变量，就保持合并。",
+    next:"后续若 A-3 重开，可把 memory admission 作为一个具体实验场景加入；只有出现通用回归门无法表达、且会改变接受/拒绝决定的 memory 特有证据，才重新独立立 B-4。"
+  },
+  "B-7":{
+    scene:PARENT_SCENE_ZH["B-7"],
+    progress:"生命周期：历史人工裁决 → 当前 MERGED。B-7 没有继续建立独立 P0，因为方法审查时已经发现它和 B-5 使用同一类反例、同一类适用条件，并做同一种“把可用范围越收越窄”的更新。",
+    observed:"当前没有独立实验能把“给经验学习适用边界”和 B-5 的“遇到反例后收紧前置条件”区分成两个不同决策问题。两者最终都回答：这条经验在什么状态下还能安全使用。",
+    judgment:"B-7 不是失败，而是被去重。它最有价值的部分是“显式显示经验适用边界”，现在作为 B-5 的表示/可解释组件保留。",
+    human:"希望人工只检查一个问题：是否存在一种 B-7 边界表示能表达 B-5 单调前置条件无法表达的情况，并且这种差异会改变实际任务决策。如果没有，就不需要重开。",
+    next:"继续在 B-5 下使用边界可视化和适用范围记录；只有出现 B-5 无法表示的新型非单调边界并有真实任务后果时，再单独评审 B-7。"
+  },
+  "C-3":{
+    scene:PARENT_SCENE_ZH["C-3"],
+    progress:"生命周期：历史人工裁决 → 当前 MERGED。该方向在独立实验前完成了问题去重：奖励含义随版本变化，本质上需要比较不同评价器版本对同一行为的评分，这正是 C-2 已经在做的事情。",
+    observed:"当前没有一组独立结果说明“奖励含义是否保持不变”会给出不同于 C-2“评价器版本变化”检查的诊断或修复决定，因此继续单独跑实验只会重复同一套跨版本评分比较。",
+    judgment:"C-3 保留为 C-2 的一个检查项：除了问评价器有没有漂移，还要问漂移后这个分数是否仍代表原来要优化的目标；不再作为独立论文方向。",
+    human:"希望人工判断是否存在“评分器本身没漂移，但奖励语义仍发生目标替换”的具体任务案例。如果有，而且 C-2 的版本评分矩阵看不出来，才可能形成独立问题。",
+    next:"先在 C-2 的审计里增加“这个分数是否仍代表原目标”的检查；只有拿到 C-2 无法解释的真实目标替换案例，才重开 C-3。"
+  },
+  "C-6":{
+    scene:PARENT_SCENE_ZH["C-6"],
+    progress:"生命周期：历史人工裁决 → 当前 MERGED。这个方向在独立实验前完成了最近工作与问题边界审查，没有再为“哪一步纠正真正起作用”单独启动新任务实验。",
+    observed:"现有自纠正和信用分配研究已经直接处理“多步纠正轨迹里哪一步贡献成功”这一对象。当前没有发现一个 Agent 自进化特有、会改变归因结果的新变量。",
+    judgment:"因此 C-6 不再单独成篇，但“把有效纠正动作编译成可复用动作/规则”的工程资产仍可供其他 C 类方向使用。",
+    human:"希望人工关注是否出现真正持久化后的新问题：例如某一步当下有用，但写入长期系统后效果改变。如果只是普通轨迹信用分配，就不重开。",
+    next:"把动作级归因作为其他自纠正实验的诊断工具使用；只有持久更新引入了现有信用分配无法解释的新现象时，再重新立题。"
+  },
+  "D-3":{
+    scene:PARENT_SCENE_ZH["D-3"],
+    progress:"生命周期：历史人工裁决 → 当前 MERGED。没有单独启动 D-3 的完整实验，因为它必须建立在 D-2 能稳定生成有学习价值的下一批任务之上，而这个前提本身尚未成立。",
+    observed:"当前 D-2 的任务选择器还不能稳定优于简单的直接产出预测。上游课程生成都没有证明可靠时，继续研究“课程长期漂移”无法区分是监控方法问题，还是课程本身就不够好。",
+    judgment:"D-3 作为 D-2 的监控维度保留：一旦自动课程真正可用，就同时记录任务分布是否越来越偏、是否遗漏真实薄弱能力。现在不单独占一个研究方向。",
+    human:"希望人工先判断 D-2 的自动课程场景是否值得继续。如果以后有一个真实系统能连续多轮生成有效训练任务，再讨论什么漂移最危险、用什么指标监控。",
+    next:"先解决 D-2 的任务生成/选择有效性；只有出现连续多轮有效自动课程后，才启动 D-3 的长期漂移测量。"
+  },
+  "E-1":{
+    scene:PARENT_SCENE_ZH["E-1"],
+    progress:"生命周期：历史 P0 → 当前 HOLD。已经冻结 16 个源工作流，每个比较 5 种局部编辑；但这张源表里只有 4/16 个工作流存在任何正向编辑，只有 3 个工作流能把不同编辑的效果排出唯一顺序。隐藏工作流没有打开。",
+    observed:"我们想训练的是“看到新工作流后，选哪个编辑最可能有效”的编辑排序器，但源数据里大多数编辑效果都是并列或都不改善。只有 25% 的工作流提供可学习的排序信号，因此现在训练任何复杂排序方法都无法说明方法好坏。",
+    judgment:"这不是 E-1 方法失败，而是 配对编辑数据表没有足够变化。当前可以确定的是：先要有一张不同编辑确实会产生不同结果的源表，才有资格比较复杂编辑策略。",
+    human:"希望人工重点看 16×5 编辑表：为什么大多数编辑没有产生可排序差异？是编辑动作太弱、任务指标太粗，还是工作流本身对这些局部编辑不敏感？下一步应先改编辑集合还是换工作流场景。",
+    next:"重新构造一张源工作流配对编辑表，先只检查“同一工作流的不同编辑是否产生稳定、非并列的真实效果”；达到预注册支持门后再冻结表，最后才训练 E-1 并打开完全未见工作流。"
   }
 };
 function parentBriefingCopy(idea,current,terminal,currentStatus,disposition) {
@@ -1972,10 +2064,12 @@ function parentOneMinuteCopy({idea,current,terminal,currentStatus,disposition,li
     ? `${(comparison.rows||[]).slice(0,2).map(row=>`${row.metric}：我们=${row.ours}；简单方法=${row.baseline}；差异=${row.delta}`).join("。")}${comparison.verdict?`。${comparison.verdict}`:""}`
     : "";
   const reason=briefing.reason?.key||"simple";
-  const scene=pilot
-    ? `这个方向要解决的是：${briefing.wanted} 当前页面记录的最小任务/实验场景是：${pilot}`
-    : `这个方向要解决的是：${briefing.wanted} 当前还没有一套已经运行的具体任务实验；下面的判断主要来自文献、结构分析或已有证据。`;
-  const progress=`生命周期：${lifecycleStage} → 当前${humanParentFinalStatusLabel(currentStatus)}。已经形成问题、最强对照和最小可证伪方案；${comparisonEvidence?"已有可直接解释的对照结果。":"是否真正跑到核心实验，以“实验实际看到了什么”为准，历史阶段本身不代表实验已经完成。"}`;
+  const scene=PARENT_SCENE_ZH[code]||(pilot
+    ? `${briefing.wanted} 具体怎么测：${pilot}`
+    : `${briefing.wanted} 当前还没有进入一套独立任务实验；下面只说明已经确认的问题边界，不补造任务案例。`);
+  const progress=comparisonEvidence
+    ? `生命周期：${lifecycleStage} → ${humanParentFinalStatusLabel(currentStatus)}。实际已经完成公平对照：我们的方法和简单方法使用相同的数据、可见信息与测试预算，并在同一冻结留出数据上比较；结果如下。`
+    : `生命周期：${lifecycleStage} → 当前${humanParentFinalStatusLabel(currentStatus)}。目前已完成问题、对照与最小验证设计；是否真正运行核心任务实验，以“实验实际看到了什么”为准，历史阶段本身不等于实验已完成。`;
   const observed=comparisonEvidence||briefing.why||decisiveEvidence||"当前没有可归纳为任务级结果的独立实验；现阶段只保留设计、文献或结构证据。";
   const judgment=reason==="support"
     ? `当前证据只足以说明这套数据、更新器或实验底座还不能公平检验方法，不能据此判定科学问题或方法失败。${briefing.learned}`
@@ -1991,7 +2085,7 @@ function parentOneMinuteCopy({idea,current,terminal,currentStatus,disposition,li
   const human=reason==="support"
     ? "希望人工优先判断：当前卡点究竟来自任务/数据不足、更新器没有产生有效变化，还是实验底座本身不适合检验这个问题；应该修上游条件，还是更换实验实现？"
     : reason==="identify"
-      ? "希望人工优先判断：还缺哪个对照或干预，才能把本文声称的机制与更简单解释真正区分开；如果同信息下仍不可区分，就不值得继续加算力。"
+      ? "希望人工优先判断：还缺哪个对照或干预，才能把本文声称的机制与更简单解释真正区分开；如果使用相同可见信息时仍然区分不了，就不值得继续加算力。"
       : reason==="collision"
         ? "希望人工优先判断：最近工作之后是否还剩一个会改变实验设计或实际决策的不可约差异；如果只剩换术语或重组组件，就不重开。"
         : reason==="merge"
@@ -2000,14 +2094,16 @@ function parentOneMinuteCopy({idea,current,terminal,currentStatus,disposition,li
             ? "希望人工检查真正决定停止的反证是否充分、适用范围是否写得过宽；只有发现反证本身有问题，才考虑重开。"
             : "希望人工检查复杂方法相对最强简单方法是否还存在一个真正会改变决策的变量；如果没有，就优先复用简单方法。";
   const next=reason==="support"
-    ? `先补齐或替换当前缺失的实验支持条件，再用全新、未触碰的任务/候选重新做资格检查；资格通过后才进入核心方法比较。原始重开边界：${plainReopen}`
+    ? "先补齐或替换当前缺失的数据、有效变化或实验环境，再用全新任务做前置资格检查；只有资格通过，才进入核心方法比较。"
     : reason==="identify"
-      ? `先设计一个能区分本文机制和最强替代解释的最小干预；只有出现稳定分歧，才恢复后续实验。原始重开边界：${plainReopen}`
+      ? "先设计一个最小对照，让本文机制和最强替代解释必须给出不同结果；如果仍然区分不了，就不继续扩大实验。"
       : reason==="collision"
-        ? `先从最近工作之后重新写出一个不可被同信息方法表达的剩余问题，再决定是否需要实验；没有这个差异就保持关闭。原始重开边界：${plainReopen}`
+        ? "先写出一个现有工作覆盖不了、而且会改变实验或实际决策的具体差异；没有这个差异就保持关闭。"
         : reason==="merge"
-          ? `继续把可复用部分作为父方向资产使用；只有出现父方向无法表达的新机制证据才重新独立立题。原始重开边界：${plainReopen}`
-          : `${plainReopen}`;
+          ? "继续把可复用部分作为父方向资产使用；只有父方向无法表达的新现象真实出现，才重新独立立题。"
+          : reason==="principle"
+            ? "保持停止。只有新的独立结果直接推翻当前反证，才重新人工评审。"
+            : "默认采用当前更简单的方法。只有新的冻结任务里，复杂方法在相同输入和预算下稳定做出更好的决定，才重新评审。";
   return {scene,progress,observed,judgment,human,next};
 }
 function humanReviewStatusLabel(status) {
@@ -2541,6 +2637,64 @@ const SUPPLEMENTAL_BRIEFING_ZH = {
   "active-causal-minimal-rollback":{tone:"simple",label:"简单方法逐项打平",why:"标准二元组测试在相同信息和预算下取得完全相同结果，因此当前主动因果机制没有显示额外价值。",learned:"相对 ddmin 的收益来自稀疏组测试，不是新的因果学习机制。"},
   "counterfactual-evolution-decision-controller":{tone:"simple",label:"简单方法逐项打平",why:"只用相同四个状态特征的浅层决策树，完全复现了学习控制器的四动作选择和零 regret。",learned:"反事实表有诊断价值，但执行策略可以并入简单规则。"},
 };
+const SUPPLEMENTAL_ONE_MINUTE_ZH = {
+  "active-causal-minimal-rollback":{
+    scene:"Agent 连续接受 4–8 个更新后突然出现回退时，最笨的办法是把最近所有更新都撤掉。这个方向想用少量“成组开/关更新”的测试，找出真正共同导致故障的最小更新集合，只回滚有问题的那几条。",
+    progress:"生命周期：历史 P0 → 当前 STOP。已经在 24 个冻结的稀疏故障案例上实际比较主动因果定位和标准二元组测试；两边看到相同更新集合、相同故障真值，并按每个案例用了多少次测试公平计费。",
+    observed:"两种方法都在 24/24 个案例中找对最小故障集，平均都需要 5.708 次测试，逐案例完全一致。相对逐个删除方法约 62% 的节省是真实的，但标准二元组测试已经完整获得这项收益。",
+    judgment:"能确定的是：稀疏组测试很适合做最小回滚；不能把这项收益归给主动因果学习。当前复杂方法没有留下任何额外决策或成本优势。",
+    human:"希望人工判断是否还存在标准二元组测试处理不了的真实故障结构，例如强交互、非单调依赖或未知稀疏度。如果实际系统没有这种结构，就直接把二元组测试做成回滚工具。",
+    next:"默认采用标准稀疏组测试作为实现。只有拿到新的真实更新故障，其中匹配信息和预算的二元组测试明显失效，而历史/因果排序稳定减少测试或提高定位率，才重开独立方法。"
+  },
+  "counterfactual-evolution-decision-controller":{
+    scene:"Agent 在一次自我更新循环里经常面临四个动作：继续尝试、接受当前更新、回滚，或停止。这个方向想根据当前状态和四种动作可能带来的结果学习一个控制器，减少无效搜索和错误提交。",
+    progress:"生命周期：历史 P0 → 当前 STOP。已经构造同一状态下四种动作的离线对照表，用训练/校准部分冻结控制器，再在 16 个完全留出的状态上与只看相同 4 个原始特征的浅层决策树比较。",
+    observed:"学习控制器和 depth-3 浅树都在 16/16 个留出状态上选对动作，平均和最坏决策损失都是 0，continue/commit/rollback/stop 的动作分布也逐项相同。",
+    judgment:"四动作反事实表本身很适合诊断，但当前不需要学习控制器；一棵 13 节点浅树已经完全复现执行策略。",
+    human:"希望人工判断真实线上状态是否存在这 4 个简单特征无法表达的情况。如果没有，就优先把浅树作为可解释控制规则，而不是追加 GPU replay。",
+    next:"保留反事实表做诊断，执行层改用浅树。只有在新的冻结任务流里出现稳定的浅树失效案例，并且学习控制器在看到完全相同输入时仍真正改善决定，才重开。"
+  },
+  "replicated-effect-memory-gate":{
+    scene:"Agent 在 ALFWorld 做家务时会检索过去的记忆。我们观察到同一条记忆可以很稳定地让 Agent 在早期选择另一条行动分支，但这条分支在不同后续任务里有时帮助、有时伤害。这个方向原本想根据这种可复现影响决定一条记忆应写入、隔离还是删除。",
+    progress:"生命周期：历史 P0 → 当前 STOP（方法证据不足，不是原理否定）。已经对 11 个真实非零记忆影响单元做同卡重放：最早分叉位置 11/11 复现，具体分叉动作 10/11 复现；同时检查了用早期状态特征预测最终帮助/伤害的能力。",
+    observed:"记忆确实稳定改变早期行为，但“早期怎么分叉”不能稳定告诉我们最终是好还是坏。同一类早期行为签名在冷却、加热、清洗等不同目标上下文里会出现负/正/负不同结果；状态特征相对简单任务先验的改善也很弱。",
+    judgment:"能确定的是“记忆会稳定推 Agent 走向不同早期分支”；不能据此做一个全局硬准入门，因为最终收益取决于后续任务上下文。早期分叉只适合告诉我们哪些记忆值得优先审计。",
+    human:"希望人工判断是否存在更合适的、在结果发生前就能观察到的上下文变量，能把“这条记忆在什么任务里会帮忙、什么任务里会伤害”区分开。如果只能事后看最终结果，就不适合做准入证书。",
+    next:"把早期分叉降级成软审计排序信号，不再用它直接淘汰记忆。只有新的独立样本证明某个结果前上下文变量能稳定预测最终影响，而且显著优于简单任务先验，才重开硬门控。"
+  },
+  "cross-task-effect-transport-certificate":{
+    scene:"一条记忆在“冷却物体”任务上帮过 Agent，并不意味着换成“加热”或“清洗”任务后仍然有帮助。这个方向想给记忆做一个迁移证书：在源任务上验证有效后，判断它的帮助/伤害方向能不能安全带到未见任务族。",
+    progress:"生命周期：历史 P0 → 当前 STOP（跨任务支持不足）。已经检查 11 个非零记忆影响单元的重放稳定性：早期分叉位置 11/11 可复现、动作 10/11 可复现，但没有观察到同样稳定的最终收益方向。",
+    observed:"真正稳定的是“记忆会把早期轨迹推向另一条分支”，不是“这条记忆最后一定有益或有害”。完全相同的早期行为签名，在不同目标上下文下会翻转最终收益方向。",
+    judgment:"因此当前不能给记忆发一个跨任务通用的效应证书。局部轨迹可复现不等于最终收益可迁移，这条区别本身保留为重要经验。",
+    human:"希望人工判断是否有比任务名称或早期动作更接近最终后果的结果前上下文，例如目标约束、剩余子任务或资源状态；如果能找到跨任务稳定变量，迁移问题仍有机会。",
+    next:"不再做 task-level 全局证书。未来若找到新的结果前上下文变量，先在完整留出任务族上检验其能否预测收益方向，并与语义相似度和简单任务先验比较；稳定胜出后再重开。"
+  },
+  "bounded-probe-api-transition-operator":{
+    scene:"工具型 Agent 调 API 时，需要知道 create/update/delete 之后系统状态会怎样变化，以及失败后怎么恢复。这个方向原本想让模型通过少量探针学习 API 状态转移；对照是直接按接口的前置条件、效果和异常规则手写状态机。",
+    progress:"生命周期：历史 P0 → 当前 STOP。先在 GitLab/Codeberg 做了 12 个只读案例，再在 ledger/vault 两类有副作用 API 上覆盖创建、更新、删除、重复操作和恢复。复杂 learned arm 没有运行，因为简单规则先达到满分。",
+    observed:"手写确定性规则在 12/12 只读案例和 12/12 有副作用+恢复案例上都正确。简单方法已经达到 100%，因此没有剩余误差让学习型转移算子证明额外价值。",
+    judgment:"这里不能说“两种方法打平”，因为复杂方法根本没有运行。能确定的是：当前这批 API 的状态语义已经可以被明确规则完整表达，继续训练模型没有可测提升空间。",
+    human:"希望人工判断未来目标 API 是否真的存在规则无法直接写出的隐含状态、服务端异步行为或跨调用依赖。如果没有，就把确定性状态机当基础设施即可。",
+    next:"保留类型化 API 语义和恢复测试，不训练独立模型。只有出现一类规则在相同可见信息下系统性预测不了、但少量探针能学出的真实 API 行为，才重开。"
+  },
+  "interventional-permission-triage-under-ceiling":{
+    scene:"Agent 更新了 Prompt、记忆、工具或工作流后，如果每次都重新审核所有旧权限，成本很高。这个方向想预测“哪些既有权限因为这次更新真的需要重新授权”，同时绝不允许扩大原权限上限。",
+    progress:"生命周期：历史 P0 → 当前 STOP。已经在 32 个训练/测试特征组合完全不重叠的工具变更上，比较线性风险模型与使用完全相同输入和风险标签的单调布尔规则；两边都必须做到不漏风险。",
+    observed:"两种方法都漏掉 0 个风险，但学习模型触发 53 次重授权，简单布尔规则只触发 29 次，少打断 24 次操作（45.3%）。",
+    judgment:"当前复杂风险模型被简单规则严格支配：安全性没有更好，人工/运行中断却更多。因此保留“按变更影响选择性重授权”的问题，执行方法改用可审计规则。",
+    human:"希望人工检查简单规则在哪些真实权限变化上可能失效，尤其是多权限交互或隐式可达行为。如果没有这种失败案例，就没有理由恢复学习模型。",
+    next:"默认部署简单单调规则并持续记录漏检/误报案例。只有新的冻结数据出现简单规则稳定漏掉的风险，而学习方法在使用相同输入时能补上且不显著增加重授权，才重开。"
+  },
+  "constraint-complete-typed-memory-order-logic":{
+    scene:"Agent 一次检索到多条不同类型的记忆时，执行顺序可能重要：例如安全约束要先于普通策略，某些工具规则只有在特定上下文才生效。这个方向想用显式符号约束描述这些高阶顺序关系，再在没见过的记忆类型组合上检查能否正确排序。",
+    progress:"生命周期：历史 P0 → 当前 STOP。已经在 32 个全部含有效约束的留出类型组合上，比较符号约束程序与容量、输入和检查预算完全匹配的多元因子模型，并同时比较编译后的免搜索执行。",
+    observed:"原始准确率两边都是 100%，编译后准确率仍都是 100%，平均检查边数也同为 1.125。复杂符号表示没有产生一个不同决定，也没有节省检查成本。",
+    judgment:"可以保留“多记忆顺序必须满足约束”这件事，但当前证据不支持独立的符号表示贡献；匹配的因子模型已经完整表达同一约束。",
+    human:"希望人工判断是否存在因子模型无法用相同预算表达、而符号程序能系统外推的新组合结构。如果没有，就把符号形式保留为解释层而非方法贡献。",
+    next:"执行层使用更简单的匹配表示，符号规则只保留为可读约束和真值检查器。只有新的组合任务里出现稳定、会改变决定的表示差异时才重开。"
+  }
+};
 const SUPPLEMENTAL_SIMPLE_COMPARISONS_ZH = {
   "bounded-probe-api-transition-operator":{ours:"学习一个 API 状态转移算子：先做少量探针，再预测 create／update／delete 的最终状态与失败后的恢复动作。",baseline:"手写确定性的 P/E/X 规则：根据 precondition、effect 和 exception 直接更新状态，不训练模型。",matched:"先在 GitLab/Codeberg 做 12 个无泄漏只读案例；再在 ledger/vault 两个不同状态码 family 各做 6 个探针，并覆盖隐藏 create/update/delete、duplicate 和跨操作恢复。",rows:[{metric:"只读案例",ours:"未运行 learned arm",baseline:"12/12",delta:"无实验差值；简单法已到 100%"},{metric:"有副作用+恢复",ours:"未运行 learned arm",baseline:"12/12",delta:"无实验差值；简单法已到 100%"}],verdict:"这里不能写成“两边打平”：复杂方法没有运行。停止原因是简单规则在两层任务都已经 100%，继续训练 learned arm 没有可测提升空间。"},
   "interventional-permission-triage-under-ceiling":{ours:"用干预数据拟合线性 q，预测每个工具变更后是否必须重新授权。",baseline:"用完全相同的 mutation 表示和干预标签，归纳一条单调 DNF 布尔规则。",matched:"32 个 train/test 特征组合零重叠的 unseen operator；两边用相同输入和标签，都要求 missed risk=0。",rows:[{metric:"漏掉风险",ours:"0",baseline:"0",delta:"0"},{metric:"触发重授权",ours:"53",baseline:"29",delta:"简单规则少 24 次（45.3%）"}],verdict:"安全性相同，但简单规则少打断 24 次操作，因此 learned q 被严格支配。"},
@@ -2589,10 +2743,11 @@ function renderSupplementalIdeaCard(row) {
   const terminalPanel=source === "terminal-independent" ? `<section class="supplemental-terminal-panel"><b>${language === "zh" ? "当前终态、停止原因与重开条件" : "Current terminal state, stop reason, and reopen condition"}</b><div><span><strong>${language === "zh" ? "当前状态" : "Current state"}</strong>${terminalDisplay.stopped ? (language === "zh" ? "已停止独立升级；历史 P0 仅作谱系记录" : "Standalone escalation stopped; historical P0 is lineage only") : humanReviewStatusLabel(idea.terminal_state || idea.status || "")}</span><span><strong>${language === "zh" ? "失败层" : "Failure layer"}</strong>${esc(textOf(terminalDisplay.failureLayer))}</span><span><strong>${language === "zh" ? "为什么停止" : "Why it stopped"}</strong>${esc(currentRole)}</span><span><strong>${language === "zh" ? "什么情况下重开" : "Reopen only if"}</strong>${esc(textOf(terminalDisplay.reopen))}</span></div>${terminalDisplay.decision ? `<small>${esc(terminalDisplay.decision)}</small>` : ""}</section>` : "";
   const experimentIdea={...idea,decisive_metric:idea.decisive_metric||terminalDisplay.metric,success_gate:idea.success_gate||terminalDisplay.reopen};
   const supplementalComparison=language==="zh"?SUPPLEMENTAL_SIMPLE_COMPARISONS_ZH[id]:null;
-  const supplementalObserved=supplementalComparison?.verdict||briefing.why;
-  const supplementalHuman=language==="zh"?(briefing.tone==="support"?"希望人工判断：当前缺的是更多真实交互/更稳定的任务支持，还是假设本身要求了一个并不存在的稳定结构；先决定补证据还是收缩问题。":briefing.tone==="simple"?"希望人工检查：简单方法已经解释到什么程度，复杂方法还剩哪个会改变决策的变量；如果没有，就不要为复杂机制追加实验。":"希望人工检查当前停止理由是否仍覆盖最新证据，以及保留下来的部分最适合并入哪个父方向。") : "";
-  const supplementalNext=language==="zh"?`先按上面的人工判断确定唯一需要补的事实；如果缺真实任务实验，就先做最小、未触碰留出集的验证；如果简单方法已经充分解释，就直接保留为基线/审计资产。原始重开边界：${textOf(terminalDisplay.reopen)}`:textOf(terminalDisplay.reopen);
-  return `<details class="supplemental-idea-card" id="new-${esc(id)}" data-research-code="${esc(code)}" data-briefing-reason="${esc(briefing.tone)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><div class="supplemental-summary-brief"><strong class="briefing-reason-pill tone-${esc(briefing.tone)}">${esc(briefing.label)}</strong><p>${esc(briefing.why)}</p></div></summary><div class="supplemental-human-grid"><section class="supplemental-briefing-section one-minute-briefing"><header><b>${language==="zh"?"【1min结论】":"【1 min summary】"}</b><span>${esc(briefing.label)}</span></header><div class="one-minute-briefing-grid"><section class="briefing-scene" data-briefing-part="scene"><b>${language==="zh"?"① 具体任务场景：到底在做什么？":"① Concrete task scene"}</b><p>${esc(language==="zh"?`${problem} ${method?`当前设计准备这样做：${method}`:"当前没有已经运行的独立任务实验；这里只能说明问题和设计边界。"}`:problem)}</p></section><section data-briefing-part="progress"><b>${language==="zh"?"② 生命周期 + 我们实际做到哪":"② Lifecycle + actual work"}</b><p>${esc(`${sourceLabel}；${language==="zh"?"当前判断":"current decision"}=${currentRole}`)}</p></section><section data-briefing-part="observed"><b>${language==="zh"?"③ 实验实际看到了什么":"③ What the experiment observed"}</b><p>${esc(supplementalObserved)}</p></section><section data-briefing-part="judgment"><b>${language==="zh"?"④ 所以现在能确定什么，还不能确定什么":"④ What is / is not established"}</b><p>${esc(language==="zh"?`${briefing.why} ${briefing.learned}`:briefing.learned)}</p></section><section class="briefing-human" data-briefing-part="human"><b>${language==="zh"?"⑤ 当前最需要解决的问题 / 希望人工判断什么":"⑤ Human decision needed"}</b><p>${esc(supplementalHuman||briefing.why)}</p></section><section class="briefing-next" data-briefing-part="next"><b>${language==="zh"?"⑥ 下一步方案":"⑥ Next plan"}</b><p>${esc(supplementalNext)}</p></section></div></section>${renderConcreteMethodComparison(SUPPLEMENTAL_SIMPLE_COMPARISONS_ZH[id],"supplemental")}<details class="supplemental-complete-intro"><summary>${language==="zh"?"完整 Idea 介绍":"Complete idea introduction"}</summary><div class="supplemental-intro-grid"><section><b>${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</b><p>${esc(problem)}</p></section><section><b>${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</b><p>${esc(intuition)}</p></section><section><b>${language === "zh" ? "具体准备怎么做" : "What would we actually do?"}</b><p>${esc(method || methodLogic)}</p></section><section><b>${language === "zh" ? "为什么值得试" : "Why might this work?"}</b><p>${esc(rationale || importance || problem)}</p></section></div></details>${terminalPanel}<details class="human-technical-details supplemental-technical-details"><summary>${language === "zh" ? "方法细节与论文边界" : "Method details and paper boundary"}<small>${language === "zh" ? "审方法或 novelty 时再展开" : "Open for method/novelty review"}</small></summary><div class="human-evidence-grid"><section><h4 data-toc="false">${language === "zh" ? "方法步骤" : "Method steps"}</h4><p>${esc(methodLogic)}</p></section><section><h4 data-toc="false">${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${esc(importance || rationale || problem)}</p></section><section><h4 data-toc="false">${language === "zh" ? "相比简单方法多了什么" : "What it adds"}</h4><p>${esc(advantage)}</p></section><section><h4 data-toc="false">${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${esc(collision)}</p></section><section><h4 data-toc="false">${language === "zh" ? "最强对照" : "Strongest baseline"}</h4><p>${baseline}</p></section><section><h4 data-toc="false">${language === "zh" ? "当前判断" : "Current role"}</h4><p>${esc(currentRole)}</p></section></div></details>${renderIdeaExperimentSection(experimentIdea,{status:source === "terminal-independent" ? (idea.terminal_state || idea.status || "new-review") : "new-review"},sourceIdeas)}</div></details>`;
+  const oneMinute=language==="zh"?(SUPPLEMENTAL_ONE_MINUTE_ZH[id]||null):null;
+  const supplementalObserved=oneMinute?.observed||supplementalComparison?.verdict||briefing.why;
+  const supplementalHuman=oneMinute?.human||(language==="zh"?(briefing.tone==="support"?"希望人工判断：当前缺的是更多真实交互/更稳定的任务支持，还是假设本身要求了一个并不存在的稳定结构；先决定补证据还是收缩问题。":briefing.tone==="simple"?"希望人工检查：简单方法已经解释到什么程度，复杂方法还剩哪个会改变决策的变量；如果没有，就不要为复杂机制追加实验。":"希望人工检查当前停止理由是否仍覆盖最新证据，以及保留下来的部分最适合并入哪个父方向。") : "");
+  const supplementalNext=oneMinute?.next||(language==="zh"?`先按上面的人工判断确定唯一需要补的事实；如果缺真实任务实验，就先做最小、未触碰留出集的验证；如果简单方法已经充分解释，就直接保留为基线/审计资产。原始重开边界：${textOf(terminalDisplay.reopen)}`:textOf(terminalDisplay.reopen));
+  return `<details class="supplemental-idea-card" id="new-${esc(id)}" data-research-code="${esc(code)}" data-briefing-reason="${esc(briefing.tone)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><div class="supplemental-summary-brief"><strong class="briefing-reason-pill tone-${esc(briefing.tone)}">${esc(briefing.label)}</strong><p>${esc(briefing.why)}</p></div></summary><div class="supplemental-human-grid"><section class="supplemental-briefing-section one-minute-briefing"><header><b>${language==="zh"?"【1min结论】":"【1 min summary】"}</b><span>${esc(briefing.label)}</span></header><div class="one-minute-briefing-grid"><section class="briefing-scene" data-briefing-part="scene"><b>${language==="zh"?"① 具体任务场景：到底在做什么？":"① Concrete task scene"}</b><p>${esc(oneMinute?.scene||(language==="zh"?`${problem} ${method?`当前设计准备这样做：${method}`:"当前没有已经运行的独立任务实验；这里只能说明问题和设计边界。"}`:problem))}</p></section><section data-briefing-part="progress"><b>${language==="zh"?"② 生命周期 + 我们实际做到哪":"② Lifecycle + actual work"}</b><p>${esc(oneMinute?.progress||`${sourceLabel}；${language==="zh"?"当前判断":"current decision"}=${currentRole}`)}</p></section><section data-briefing-part="observed"><b>${language==="zh"?"③ 实验实际看到了什么":"③ What the experiment observed"}</b><p>${esc(supplementalObserved)}</p></section><section data-briefing-part="judgment"><b>${language==="zh"?"④ 所以现在能确定什么，还不能确定什么":"④ What is / is not established"}</b><p>${esc(oneMinute?.judgment||(language==="zh"?`${briefing.why} ${briefing.learned}`:briefing.learned))}</p></section><section class="briefing-human" data-briefing-part="human"><b>${language==="zh"?"⑤ 当前最需要解决的问题 / 希望人工判断什么":"⑤ Human decision needed"}</b><p>${esc(supplementalHuman||briefing.why)}</p></section><section class="briefing-next" data-briefing-part="next"><b>${language==="zh"?"⑥ 下一步方案":"⑥ Next plan"}</b><p>${esc(supplementalNext)}</p></section></div></section>${renderConcreteMethodComparison(SUPPLEMENTAL_SIMPLE_COMPARISONS_ZH[id],"supplemental")}<details class="supplemental-complete-intro"><summary>${language==="zh"?"完整 Idea 介绍":"Complete idea introduction"}</summary><div class="supplemental-intro-grid"><section><b>${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</b><p>${esc(problem)}</p></section><section><b>${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</b><p>${esc(intuition)}</p></section><section><b>${language === "zh" ? "具体准备怎么做" : "What would we actually do?"}</b><p>${esc(method || methodLogic)}</p></section><section><b>${language === "zh" ? "为什么值得试" : "Why might this work?"}</b><p>${esc(rationale || importance || problem)}</p></section></div></details>${terminalPanel}<details class="human-technical-details supplemental-technical-details"><summary>${language === "zh" ? "方法细节与论文边界" : "Method details and paper boundary"}<small>${language === "zh" ? "审方法或 novelty 时再展开" : "Open for method/novelty review"}</small></summary><div class="human-evidence-grid"><section><h4 data-toc="false">${language === "zh" ? "方法步骤" : "Method steps"}</h4><p>${esc(methodLogic)}</p></section><section><h4 data-toc="false">${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${esc(importance || rationale || problem)}</p></section><section><h4 data-toc="false">${language === "zh" ? "相比简单方法多了什么" : "What it adds"}</h4><p>${esc(advantage)}</p></section><section><h4 data-toc="false">${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${esc(collision)}</p></section><section><h4 data-toc="false">${language === "zh" ? "最强对照" : "Strongest baseline"}</h4><p>${baseline}</p></section><section><h4 data-toc="false">${language === "zh" ? "当前判断" : "Current role"}</h4><p>${esc(currentRole)}</p></section></div></details>${renderIdeaExperimentSection(experimentIdea,{status:source === "terminal-independent" ? (idea.terminal_state || idea.status || "new-review") : "new-review"},sourceIdeas)}</div></details>`;
 }
 function renderNewIdeaCandidates() {
   const ledger = humanTerminalState();
