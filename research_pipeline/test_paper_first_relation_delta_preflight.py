@@ -50,6 +50,19 @@ class RelationDeltaPreflightTest(unittest.TestCase):
         self.assertFalse(state["scientific_authority"])
         self.assertTrue(state["policy"]["pair_slots_are_not_lane_valid_pairs"])
 
+    def test_current_relation_universe_short_circuits_scheduler_boundary_reconstruction(self) -> None:
+        old=self.receipt("20260813T100000Z",["arXiv:1","arXiv:2"])
+        scheduler_duplicate=self.receipt("20260814T010000Z",["arXiv:1","arXiv:2"])
+        relation=self.relation([old],"20260813T235959Z")
+        state=build_relation_delta_preflight(generator_state=self.generator([old,scheduler_duplicate]),relation_state=relation,cache_records=[])
+        self.assertEqual(state["status"],"RELATION_DELTA_CURRENT_UNIVERSE_NO_NEW_SOURCES")
+        self.assertEqual(state["boundary_source"],"CURRENT_RELATION_UNIVERSE_EXACT_DIGEST")
+        self.assertEqual(state["summary"]["new_reviewed_sources"],0)
+        self.assertEqual(state["summary"]["new_receipt_runs"],0)
+        self.assertEqual(state["summary"]["cache_missing_sources"],0)
+        self.assertFalse(state["summary"]["model_scan_authorized"])
+        self.assertFalse(state["summary"]["focused_generator_reopen_authorized"])
+
     def test_scan_boundary_must_reconstruct_exact_digest(self) -> None:
         old=[self.receipt("20260813T100000Z",["arXiv:1","arXiv:2"])]
         relation=self.relation(old,"20260813T235959Z")
