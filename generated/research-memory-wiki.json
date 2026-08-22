@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-19T08:43:46+00:00",
+  "generated_at": "2026-08-22T10:16:31+00:00",
   "status": "MEMORY_COMPILED",
   "policy": {
     "schema_version": "1.0",
@@ -19,7 +19,7 @@
     "idea_search_and_experiment_design_use_distinct_memory_priorities": true
   },
   "source_manifest": {
-    "search_memory_closed_objects": 41,
+    "search_memory_closed_objects": 42,
     "search_memory_hold_objects": 9,
     "failure_assets": 6,
     "candidate_portfolio_visible": 2,
@@ -27,18 +27,18 @@
     "generator_blocked_attempts": 13
   },
   "summary": {
-    "entries": 59,
-    "search_closures": 39,
+    "entries": 60,
+    "search_closures": 40,
     "scientific_closures": 2,
     "holds": 9,
     "failure_assets": 3,
     "success_assets": 3,
     "open_questions": 2,
     "repeated_review_blocks": 1,
-    "prompt_eligible": 59,
+    "prompt_eligible": 60,
     "transient": 0,
     "recurring_systemic": 3,
-    "scientific": 56
+    "scientific": 57
   },
   "entries": [
     {
@@ -130,7 +130,7 @@
       "scientific_authority": false
     },
     {
-      "memory_id": "MEM-HOLD-1aa172ec2500132831",
+      "memory_id": "MEM-HOLD-25b692734789d6e35c",
       "kind": "HOLD",
       "title": "History-Dependent Skill-Induced Failure: Why the Same Skill Causes Different Failure Modes Across Tasks",
       "summary": "the proposed residual remains unresolved until the frozen same-information falsifier can be executed on source-faithful or independently equivalent assets",
@@ -143,7 +143,7 @@
       "search_closure_certified": false,
       "scientific_dead_end_certified": false,
       "principle_update_allowed": false,
-      "reopen_condition": "Reopen only when the source-specific/released assets required by the frozen falsifier become available with provenance sufficient to execute the same scientific object, or when an independently reviewed operationalization proves equivalent without changing the frozen prediction, same-information baseline, or causal unit.",
+      "reopen_condition": "Reopen when a first-party case-level release, or an independently reviewed equivalent truth source, exposes the manually adjudicated IRF/RRO labels together with stable harmful-paper host-task and loaded-skill identities. A future public release triggers re-audit; absence is asserted only as of the 2026-08-19 audit, not permanently.",
       "opposite_search_seed": "",
       "reusable_precheck": "",
       "source_refs": [],
@@ -1342,6 +1342,30 @@
       "scientific_authority": false
     },
     {
+      "memory_id": "MEM-SEAR-f333e882d62f61a526",
+      "kind": "SEARCH_CLOSURE",
+      "title": "SHADOW-P04-C01",
+      "summary": "arXiv:2608.05810 already claims the same inverted-U skill-pool tipping point together with weak source-only rollback and descendant-lineage irreversibility.",
+      "candidate_id": "SHADOW-P04-C01",
+      "scope": "the bounded candidate problem formulation and current-source collision review",
+      "affected_layer": "problem_novelty",
+      "memory_class": "PROBLEM_NOVELTY_STOP",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": true,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "New primary evidence supplies an ex-ante same-information prediction that the recorded current-source reduction cannot express under matched information, budget, and operational scope.",
+      "opposite_search_seed": "Search for a bounded condition where the cited mechanism receives identical information but makes a distinct falsifiable prediction from the candidate mechanism.",
+      "reusable_precheck": "",
+      "source_refs": [
+        "arXiv:2608.05810"
+      ],
+      "source_artifact": "shadow_search_memory",
+      "reuse_effectiveness": {},
+      "scientific_authority": false
+    },
+    {
       "memory_id": "MEM-SEAR-f7666f0670963d8d7c",
       "kind": "SEARCH_CLOSURE",
       "title": "SHADOW-P12-C02",
@@ -1469,10 +1493,10 @@
       "scientific_authority": false
     },
     {
-      "memory_id": "MEM-SUCC-d701c7e9b2565acd5d",
+      "memory_id": "MEM-SUCC-ff21703f69998ff65c",
       "kind": "SUCCESS_ASSET",
       "title": "Claim N1: SUPPORTED_NARROWLY",
-      "summary": "Released skill controllers can assign different semantic control solely because equivalent implementation content is represented by different package identities.",
+      "summary": "Released skill controllers can assign different semantic control solely because equivalent implementation content is represented by different package identities; in one bounded frozen AutoSkill substrate, that representation change propagates to executed behavior.",
       "candidate_id": "N1",
       "scope": "AFFIRMATIVE_NARROW_ONLY",
       "affected_layer": "empirical_analysis",
@@ -1490,7 +1514,9 @@
         "B-DEDUP",
         "B-ANALYTICAL",
         "A-REDUCTION-TOURNAMENT",
-        "O-MAIN"
+        "AN-DYNAMIC-CONSEQUENCE",
+        "O-MAIN",
+        "O-DYNAMIC"
       ],
       "source_artifact": "asset_first_stri_claim_ledger",
       "reuse_effectiveness": {},
@@ -1506,7 +1532,7 @@
     "p0": false,
     "gpu": false
   },
-  "wiki_sha256": "3531943234ba708716a43625709adf01fd57f346e22a7a1b83dace2b96815f29",
+  "wiki_sha256": "d2df154d3493e96da0e491c469302d3a32a022b8971fa231dcefda10525ce8ce",
   "lint": {
     "schema_version": "1.0",
     "status": "PASS",
@@ -1524,7 +1550,7 @@
       },
       {
         "code": "hold-missing-source-ref",
-        "memory_id": "MEM-HOLD-1aa172ec2500132831"
+        "memory_id": "MEM-HOLD-25b692734789d6e35c"
       },
       {
         "code": "hold-missing-source-ref",

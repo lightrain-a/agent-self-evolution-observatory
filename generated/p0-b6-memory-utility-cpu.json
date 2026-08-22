@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T18:30:38+00:00",
+  "generated_at": "2026-08-22T10:13:46+00:00",
   "idea_id": "memory-half-life",
   "code": "B-6",
   "scientific_role": "CPU longitudinal reuse P0 with frozen 20% activation audit and independent ON/OFF utility truth",

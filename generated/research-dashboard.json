@@ -45,10 +45,10 @@
       "paper_stage": "SUBMISSION_READY",
       "paper_scientific_status": "READY",
       "submission_ready": true,
+      "ledger_submission_ready": true,
       "portfolio_href": "paper-ideas.html?research=E-7",
       "timeline_href": "research-timeline.html?research=E-7",
-      "paper_href": "selected-paper.html?paper=STRI",
-      "ledger_submission_ready": true
+      "paper_href": "selected-paper.html?paper=STRI"
     },
     {
       "code": "G-1",
@@ -69,10 +69,10 @@
       "paper_stage": "SUBMISSION_READY",
       "paper_scientific_status": "READY",
       "submission_ready": true,
+      "ledger_submission_ready": true,
       "portfolio_href": "paper-ideas.html?research=G-1",
       "timeline_href": "research-timeline.html?research=G-1",
-      "paper_href": "selected-paper.html?paper=AGENT-SAFETY-R9",
-      "ledger_submission_ready": true
+      "paper_href": "selected-paper.html?paper=AGENT-SAFETY-R9"
     },
     {
       "code": "A-3",
@@ -93,10 +93,10 @@
       "paper_stage": "",
       "paper_scientific_status": "",
       "submission_ready": false,
+      "ledger_submission_ready": false,
       "portfolio_href": "paper-ideas.html?research=A-3",
       "timeline_href": "research-timeline.html?research=A-3",
-      "paper_href": "",
-      "ledger_submission_ready": false
+      "paper_href": ""
     },
     {
       "code": "B-2",
@@ -117,10 +117,10 @@
       "paper_stage": "",
       "paper_scientific_status": "",
       "submission_ready": false,
+      "ledger_submission_ready": false,
       "portfolio_href": "paper-ideas.html?research=B-2",
       "timeline_href": "research-timeline.html?research=B-2",
-      "paper_href": "",
-      "ledger_submission_ready": false
+      "paper_href": ""
     },
     {
       "code": "B-3",
@@ -141,10 +141,10 @@
       "paper_stage": "",
       "paper_scientific_status": "",
       "submission_ready": false,
+      "ledger_submission_ready": false,
       "portfolio_href": "paper-ideas.html?research=B-3",
       "timeline_href": "research-timeline.html?research=B-3",
-      "paper_href": "",
-      "ledger_submission_ready": false
+      "paper_href": ""
     },
     {
       "code": "E-1",
@@ -165,10 +165,10 @@
       "paper_stage": "",
       "paper_scientific_status": "",
       "submission_ready": false,
+      "ledger_submission_ready": false,
       "portfolio_href": "paper-ideas.html?research=E-1",
       "timeline_href": "research-timeline.html?research=E-1",
-      "paper_href": "",
-      "ledger_submission_ready": false
+      "paper_href": ""
     }
   ],
   "papers": [
@@ -179,12 +179,12 @@
       "paper_stage": "SUBMISSION_READY",
       "scientific_status": "READY",
       "submission_ready": true,
-      "next_action": "Human authors review and accept responsibility for the final manuscript and AI-use disclosure, freeze the complete author list before the ICLR abstract deadline, complete the OpenReview signoff checklist, then submit the genuine abstract b…",
-      "paper_href": "selected-paper.html?paper=STRI",
-      "timeline_href": "research-timeline.html?paper=STRI",
       "ledger_submission_ready": true,
       "gate_clean_submission_ready": true,
-      "immediate_submission_hold": false
+      "immediate_submission_hold": false,
+      "next_action": "Human authors review and accept responsibility for the final manuscript and AI-use disclosure, freeze the complete author list before the ICLR abstract deadline, complete the OpenReview signoff checklist, then submit the genuine abstract b…",
+      "paper_href": "selected-paper.html?paper=STRI",
+      "timeline_href": "research-timeline.html?paper=STRI"
     },
     {
       "paper_id": "AGENT-SAFETY-R9",
@@ -193,12 +193,12 @@
       "paper_stage": "SUBMISSION_READY",
       "scientific_status": "READY",
       "submission_ready": true,
-      "next_action": "",
-      "paper_href": "selected-paper.html?paper=AGENT-SAFETY-R9",
-      "timeline_href": "research-timeline.html?paper=AGENT-SAFETY-R9",
       "ledger_submission_ready": true,
       "gate_clean_submission_ready": true,
-      "immediate_submission_hold": false
+      "immediate_submission_hold": false,
+      "next_action": "",
+      "paper_href": "selected-paper.html?paper=AGENT-SAFETY-R9",
+      "timeline_href": "research-timeline.html?paper=AGENT-SAFETY-R9"
     },
     {
       "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
@@ -207,12 +207,12 @@
       "paper_stage": "SUBMISSION_READY",
       "scientific_status": "READY",
       "submission_ready": true,
-      "next_action": "",
-      "paper_href": "selected-paper.html?paper=D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-      "timeline_href": "research-timeline.html?paper=D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
       "ledger_submission_ready": true,
       "gate_clean_submission_ready": true,
-      "immediate_submission_hold": false
+      "immediate_submission_hold": false,
+      "next_action": "",
+      "paper_href": "selected-paper.html?paper=D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+      "timeline_href": "research-timeline.html?paper=D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE"
     },
     {
       "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
@@ -221,12 +221,12 @@
       "paper_stage": "SUBMISSION_READY",
       "scientific_status": "READY",
       "submission_ready": false,
-      "next_action": "",
-      "paper_href": "selected-paper.html?paper=D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
-      "timeline_href": "research-timeline.html?paper=D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
       "ledger_submission_ready": true,
       "gate_clean_submission_ready": false,
-      "immediate_submission_hold": true
+      "immediate_submission_hold": true,
+      "next_action": "",
+      "paper_href": "selected-paper.html?paper=D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "timeline_href": "research-timeline.html?paper=D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK"
     },
     {
       "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
@@ -235,29 +235,29 @@
       "paper_stage": "SUBMISSION_READY",
       "scientific_status": "READY",
       "submission_ready": true,
-      "next_action": "",
-      "paper_href": "selected-paper.html?paper=D2-PAPER-FAILURE-MEMORY-PROVENANCE",
-      "timeline_href": "research-timeline.html?paper=D2-PAPER-FAILURE-MEMORY-PROVENANCE",
       "ledger_submission_ready": true,
       "gate_clean_submission_ready": true,
-      "immediate_submission_hold": false
+      "immediate_submission_hold": false,
+      "next_action": "",
+      "paper_href": "selected-paper.html?paper=D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+      "timeline_href": "research-timeline.html?paper=D2-PAPER-FAILURE-MEMORY-PROVENANCE"
     }
   ],
   "week": {
     "start_date": "2026-08-17",
     "end_date": "2026-08-22",
     "research_days": 6,
-    "events": 695,
-    "substantive_events": 224,
+    "events": 382,
+    "substantive_events": 230,
     "key_changes": 7,
     "class_counts": {
       "blocker": 15,
       "closure": 84,
-      "experiment": 53,
-      "idea": 46,
-      "paper": 24,
+      "experiment": 54,
+      "idea": 49,
+      "paper": 26,
       "scientific": 2,
-      "system": 471
+      "system": 152
     },
     "attention_activity": {
       "B-3": 1,

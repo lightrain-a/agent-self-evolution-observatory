@@ -1,6 +1,6 @@
 {
   "schema_version": "2.4",
-  "generated_at": "2026-08-19T05:24:07+00:00",
+  "generated_at": "2026-08-22T10:16:32+00:00",
   "policy": {
     "schema_version": "2.3",
     "paper_novelty_precedes_method_design": true,
@@ -25,7 +25,11 @@
     "principle_stop_requires_same_information_or_scope_matched_counter_explanation": true,
     "execution_completeness_cannot_set_scientific_pass": true,
     "scientific_status_requires_independent_stage_authority": true,
-    "executor_may_report_artifact_completion_but_cannot_acquit_quality": true
+    "executor_may_report_artifact_completion_but_cannot_acquit_quality": true,
+    "paper_acceptance_begins_only_after_paper_evidence_closure": true,
+    "paper_optimization_cannot_expand_scientific_claims": true,
+    "causal_or_evidence_hold_blocks_post_evidence_paper_advancement": true,
+    "submission_readiness_never_grants_submission_authority": true
   },
   "stop_classes": {
     "REALIZATION_STOP": {
@@ -60,6 +64,16 @@
     "method-freeze",
     "full-experiment",
     "paper-evidence",
+    "paper-design",
+    "manuscript",
+    "mock-pc",
+    "targeted-repair",
+    "claim-audit",
+    "pdf-qa",
+    "prebuttal",
+    "submission-ready",
+    "submitted",
+    "rebuttal",
     "learn"
   ],
   "stages": [
@@ -162,5 +176,5 @@
       "persistent_dead_end_authority": true
     }
   },
-  "stage_scope_note": "The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle. Every STOP must be typed as REALIZATION_STOP, SUPPORT_STOP, PROTOCOL_STOP, or PRINCIPLE_STOP; only PRINCIPLE_STOP may enter persistent dead-end memory, and only after a scope-matched positive counter-explanation or exact same-information reduction."
+  "stage_scope_note": "The seven scientific stages are the experiment-evidence state machine nested inside the 21-stage paper-first lifecycle; they do not replace the paper lifecycle. Every STOP must be typed as REALIZATION_STOP, SUPPORT_STOP, PROTOCOL_STOP, or PRINCIPLE_STOP; only PRINCIPLE_STOP may enter persistent dead-end memory, and only after a scope-matched positive counter-explanation or exact same-information reduction. Post-evidence Paper Acceptance cannot weaken scientific authority or bypass causal/evidence holds."
 }

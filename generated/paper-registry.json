@@ -1,8 +1,8 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-08-22T07:40:03+00:00",
-  "source_revision": "73741dad6ecce6be415590a3ed3aaa608da15057",
-  "projection_source": "canonical-append-only-paper-ledgers",
+  "generated_at": "2026-08-22T10:16:37+00:00",
+  "source_revision": "bf38cc8cd108952911ad8dd3e0d741f827b850e1",
+  "projection_source": "generated/research-system-state.json",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
     "paper_registry_cannot_grant_research_or_experiment_authority": true,

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-22T05:46:42+00:00",
+  "generated_at": "2026-08-22T10:15:39+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -56,7 +56,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-19T05:53:50+00:00",
+    "generated_at": "2026-08-22T10:15:39+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -3761,8 +3761,8 @@
     "hold_object_count": 9,
     "current_source_hard_veto_count": 1,
     "current_source_hard_veto_added_from_latest_run": 0,
-    "current_source_hard_veto_added_from_terminal_run": 1,
-    "current_source_hard_veto_inherited": 0,
+    "current_source_hard_veto_added_from_terminal_run": 0,
+    "current_source_hard_veto_inherited": 1,
     "semantic_blocker_count": 0,
     "semantic_hold_count": 1,
     "semantic_blocker_added_from_latest_run": 0,
@@ -3997,8 +3997,8 @@
     "shadow_hold_objects": 9,
     "current_source_hard_veto_dead_ends": 1,
     "current_source_hard_veto_added_from_latest_run": 0,
-    "current_source_hard_veto_added_from_terminal_run": 1,
-    "current_source_hard_veto_inherited": 0,
+    "current_source_hard_veto_added_from_terminal_run": 0,
+    "current_source_hard_veto_inherited": 1,
     "semantic_blocker_dead_ends": 0,
     "semantic_hold_objects": 1,
     "semantic_hold_added_from_latest_run": 0,
