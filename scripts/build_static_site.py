@@ -169,6 +169,15 @@ def build() -> Path:
         cwd=ROOT,
         check=True,
     )
+    # PaperRegistry is reader-facing only when every canonical PaperState has a
+    # complete Paper Story V3 argument.  This gate is intentionally zero-authority:
+    # it cannot change claims or PaperState, but it fails closed before public copy
+    # if a new paper omits the scientific-story contract.
+    subprocess.run(
+        ["node", str(ROOT / "scripts" / "validate_paper_story_contract.js")],
+        cwd=ROOT,
+        check=True,
+    )
     generated = ROOT / "generated"
     projection_errors = validate_public_control_plane(
         research_state=json.loads((generated / "research-items.json").read_text(encoding="utf-8")),

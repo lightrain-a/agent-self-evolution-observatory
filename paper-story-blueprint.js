@@ -1,20 +1,40 @@
-window.PAPER_STORY_DATA={schema_version:"1.0",papers:{},blueprint:{steps:[
-{id:"scene",zh:"场景与价值",en:"Scenario & value",q_zh:"谁在什么场景遇到什么问题？不解决有什么实际损失？",q_en:"Who faces what problem, and why does it matter?"},
-{id:"failure",zh:"具体现象",en:"Concrete failure",q_zh:"先给一个能看懂的失败例子，再抽象问题。",q_en:"Show a concrete failure before abstraction."},
-{id:"prior",zh:"现有方法",en:"Existing approaches",q_zh:"今天大家怎么做？最强简单方法是什么？每类方法卡在哪里？",q_en:"What do people do today, and where does each approach fail?"},
-{id:"gaps",zh:"三个核心缺口",en:"Three gaps",q_zh:"把现有方法的问题压成三个可检验的 gap。",q_en:"Reduce prior limitations to three testable gaps."},
-{id:"design",zh:"设计动机与方法",en:"Design motivation & method",q_zh:"每个组件为什么存在？解决哪个 gap？去掉会失去什么？",q_en:"Map every component to a gap and explain why it is necessary."},
-{id:"experiments",zh:"实验论证",en:"Experimental argument",q_zh:"逐个回答：有效吗？比最强基线好吗？为什么好？哪里不成立？",q_en:"Answer effect, strongest baseline, mechanism, and boundary questions."},
-{id:"mechanism",zh:"组件与机制",en:"Components & mechanism",q_zh:"用 control / ablation / mediator / null 说明是哪部分生效。",q_en:"Use controls, ablations, mediators, and nulls to identify what matters."},
-{id:"boundary",zh:"边界与意义",en:"Boundary & significance",q_zh:"最后明确证明了什么、没证明什么、为什么值得知道。",q_en:"State what is established, what is not, and why it matters."}
-],outline:[
-{sec:"Abstract",zh:"场景1句 → gap1句 → 方法1–2句 → 最关键数字 → bounded takeaway。",en:"Setting → gap → method → decisive results → bounded takeaway."},
-{sec:"1 · Introduction",zh:"真实场景与价值 → 一个具体失败 → 现有方法为什么不够 → 三个 gap → 设计原则 → contributions。",en:"Scenario/value → failure → prior limitations → three gaps → design principle → contributions."},
-{sec:"2 · Problem & Prior Approaches",zh:"定义任务、干预对象、控制变量、strongest simple baseline；Related Work 围绕“差在哪”组织。",en:"Define task, intervention, controls, and strongest simple baseline; organize related work by missing capability."},
-{sec:"3 · Method",zh:"先讲设计动机，再逐组件解释“解决哪个 gap”，最后给完整 pipeline。",en:"Start from design requirements, map components to gaps, then present the full pipeline."},
-{sec:"4 · Experimental Design",zh:"RQ1主效应、RQ2强基线、RQ3机制/消融、RQ4 transfer/robustness；提前写 falsifier 和统计单位。",en:"RQ1 main effect, RQ2 strongest baseline, RQ3 mechanism/ablation, RQ4 transfer/robustness with falsifiers."},
-{sec:"5 · Results",zh:"按 RQ 回答，不按数据集流水账；每节先一句答案，再给数字、图、统计与反例。",en:"Answer RQs rather than narrating datasets; lead with the answer and decisive evidence."},
-{sec:"6 · Mechanism / Ablation",zh:"说明哪个组件生效、哪个替代解释被排除、哪些结果是 null。",en:"Show which component matters, what alternative explanation is ruled out, and which results are null."},
-{sec:"7 · Limitations & Scope",zh:"明确 assumptions、统计分辨率、外部效度和缺失 baseline 如何限制 claim。",en:"State assumptions, statistical resolution, external validity, and missing baselines."},
-{sec:"Appendix / Reproducibility",zh:"完整协议、prompt/skill、数据处理、统计、失败结果和复现命令放附录；主文只保留理解 claim 必需的信息。",en:"Put full protocols, prompts/skills, data processing, statistics, failures, and reproduction commands in appendices."}
+window.PAPER_STORY_DATA={schema_version:"3.0",papers:{},blueprint:{
+protocol_name:"Paper Story V3 · Scientific Argument Contract",
+principle:{zh:"不要按‘我们先做了什么’讲论文，而要按‘为什么这个问题成立、现有范式在哪里坏、缺了什么科学对象、为什么这个设计能补上、什么实验现象会验证或反驳这个解释、最终能下多强的结论’来组织。",en:"Do not narrate the chronology of the project. Build an argument: why the problem matters, where the current paradigm fails, what scientific object is missing, why the design addresses it, which observable signatures would validate or falsify the mechanism, and how strong the final claim may be."},
+steps:[
+{id:"scene",zh:"具体场景",en:"Concrete scene",q_zh:"谁 / 什么 Agent，在什么任务里，具体遇到了什么？",q_en:"Who or what agent encounters what concrete problem?"},
+{id:"value",zh:"实际价值",en:"Practical stake",q_zh:"不解决会造成什么真实损失？解决后谁真正受益？",q_en:"What real consequence follows if this remains unsolved, and who benefits?"},
+{id:"paradigm",zh:"现有范式",en:"Current paradigm",q_zh:"今天最接近的 2–4 类方法实际怎么做？它们分别能解决什么？",q_en:"How do the closest existing approaches actually work, and what do they already solve?"},
+{id:"failure-mode",zh:"具体失败机制",en:"Concrete failure mode",q_zh:"现有范式究竟在哪个环节坏掉？先给 failure case，再抽象 gap。",q_en:"Where exactly does the current paradigm break? Show a failure before abstracting it."},
+{id:"missing-object",zh:"缺失的科学对象",en:"Missing scientific object",q_zh:"以前到底没有显式定义、控制、估计或证书化什么对象？",q_en:"What variable, estimand, control, invariant, or certificate is missing from prior work?"},
+{id:"question",zh:"可证伪问题",en:"Falsifiable question",q_zh:"因此本文真正需要回答的、可以被实验反驳的问题是什么？",q_en:"What falsifiable research question follows from the missing object?"},
+{id:"requirements",zh:"设计要求",en:"Design requirements",q_zh:"一个合格方案必须同时满足哪些条件，才能真正回答上面的问题？",q_en:"What requirements must any valid solution satisfy?"},
+{id:"components",zh:"Gap → Component",en:"Gap → component",q_zh:"每个组件解决哪个 gap？没有这个组件会重新暴露哪个混杂或失败？",q_en:"Which gap does each component solve, and what failure returns if it is removed?"},
+{id:"prediction",zh:"机制预测",en:"Mechanism prediction",q_zh:"如果我们的解释是对的，在哪种条件下应该出现什么特定 signature？",q_en:"If the mechanism is correct, what specific signature should appear under which condition?"},
+{id:"contract",zh:"评测合同",en:"Evaluation contract",q_zh:"跟谁比、什么保持一致、统计单位是什么、怎样才算成功或失败？",q_en:"What is held fixed, what is the strongest baseline, what is the unit, and what counts as success?"},
+{id:"main-effect",zh:"主结果",en:"Main effect",q_zh:"最重要的结果到底是什么？数字在数什么，为什么改变判断？",q_en:"What is the decisive result, what exactly is counted, and why does it change the conclusion?"},
+{id:"stress",zh:"机制对齐压力测试",en:"Mechanism-aligned stress test",q_zh:"在理论上最需要该机制的条件里，优势是否按预测放大、消失或翻转？",q_en:"Does the effect strengthen, disappear, or reverse exactly where the proposed mechanism predicts?"},
+{id:"alternatives",zh:"组件 / 替代解释检验",en:"Component / alternative tests",q_zh:"哪个组件真的生效？最强简单解释、prompt effect、schedule effect、ceiling 等有没有被排除？",q_en:"Which component matters, and are the strongest simpler explanations ruled out?"},
+{id:"boundary",zh:"泛化与失效边界",en:"Generalization & failure boundary",q_zh:"能迁移到哪里？成本如何？在哪些 model×task×regime 明确不成立？",q_en:"Where does it transfer, what does it cost, and where does it explicitly fail?"},
+{id:"claim",zh:"最终 Claim",en:"Final claim",q_zh:"所以现在新知道了什么？哪些更宽的话仍然不能说？",q_en:"What new knowledge is established, and which broader claims remain unsupported?"}
+],
+required_fields:["paper_archetype","thesis","scene","value","failure_example","approaches","gaps","missing_scientific_object","research_question","design_requirements","motivation","components","mechanism_predictions","alternative_explanations","evaluation_contract","experiments","mechanism_tests","component_evidence","generalization","failure_regimes","boundary","chain_of_evidence","outline"],
+archetypes:[
+{id:"theory_certificate",zh:"Theory / Certificate / Representation Audit",en:"Theory / Certificate / Representation Audit",judge_zh:"核心不是平均分更高，而是定义是否必要、定理/证书是否 exact、positive/negative boundary 是否一致、真实 system instantiation 是否符合预测。",judge_en:"Judge necessity of the object, exactness of the certificate, positive/negative boundaries, and whether system instantiations match the prediction."},
+{id:"evaluation_protocol",zh:"Evaluation / Measurement Protocol",en:"Evaluation / Measurement Protocol",judge_zh:"核心是旧评测漏掉了什么对象，新 protocol 是否通过 matched controls 识别它，以及新 measurement 是否改变真实判断。",judge_en:"Judge the missing evaluation object, matched controls, and whether the new measurement changes the scientific conclusion."},
+{id:"causal_identification",zh:"Causal Identification",en:"Causal Identification",judge_zh:"核心不是强行得到 positive effect，而是 confound 是否被隔离、统计单位和 power 是否诚实、多个 endpoint 是否共同支持同一个 causal sign。",judge_en:"Judge confound isolation, statistical units/power, and whether multiple endpoints consistently identify the same causal direction."},
+{id:"causal_mechanism",zh:"Causal Mechanism",en:"Causal Mechanism",judge_zh:"核心是 treatment 是否沿明确链路传播，替代解释是否被强 control 排除，intermediate witness 与 downstream outcome 是否都出现。",judge_en:"Judge the intervention chain, strong alternative-explanation controls, intermediate witnesses, and downstream outcomes."},
+{id:"mechanism_intervention",zh:"Mechanism-Specific Intervention",en:"Mechanism-Specific Intervention",judge_zh:"核心是 targeted intervention 是否同时超过原系统与强 generic control，是否按 mechanism regime 出现、在 ceiling / transfer boundary 消失。",judge_en:"Judge whether the targeted intervention beats both the original system and strong generic control, and whether effects follow predicted regimes and boundaries."}
+],
+outline:[
+{sec:"Abstract",zh:"场景 / stake 1 句 → missing object / gap 1 句 → 方法 1–2 句 → load-bearing 数字 → bounded takeaway。",en:"Setting/stake → missing object → method → load-bearing numbers → bounded takeaway."},
+{sec:"1 · Introduction",zh:"现实场景 → 为什么重要 → 今天怎么做 → 一个具体 failure → missing scientific object → Research Question → design requirements → contributions。",en:"Scene → stake → current paradigm → concrete failure → missing scientific object → research question → design requirements → contributions."},
+{sec:"2 · Problem & Closest Work",zh:"定义任务、treatment / estimand / invariant；Related Work 用‘已有方法怎么做 → 能解决什么 → 为什么仍缺本文对象’组织，而不是论文名流水账。",en:"Define task and scientific object; organize closest work as mechanism → solved problem → remaining missing object."},
+{sec:"3 · Method / Protocol",zh:"Requirement → Component → Mechanism Prediction。每个组件都必须能回指一个 gap，并提前说清如果机制为真应该看到什么。",en:"Requirement → component → mechanism prediction. Every component must trace to a gap and imply an observable signature."},
+{sec:"4 · Evaluation Contract",zh:"按 RQ 冻结 strongest same-information baseline、held-fixed variables、统计单位、成功门、falsifier；先写识别逻辑，再写模型/数据细节。",en:"Freeze RQs, strongest same-information baseline, held-fixed variables, statistical units, success gates, and falsifiers before implementation detail."},
+{sec:"5 · Main Results",zh:"按 RQ 回答，不按 benchmark 流水账；每节先一句答案，再给数字，并解释‘在数什么 / 为什么改变判断 / 支持哪条 claim’。",en:"Answer RQs rather than narrating benchmarks; lead with the answer, then explain what the number counts and which claim it supports."},
+{sec:"6 · Mechanism / Stress / Ablation",zh:"验证 predicted signature；做 component ablation、mediator、negative control、ceiling / noise / distance stress；null 结果必须保留。",en:"Test predicted signatures with component ablations, mediators, negative controls, and mechanism-aligned stress regimes; retain nulls."},
+{sec:"7 · Generalization / Efficiency / Failure",zh:"说明 transfer、OOD、成本和 capability frontier；同时明确哪类 regime 不工作，避免只给平均提升。",en:"Report transfer, OOD, cost, capability frontier, and explicit failure regimes rather than only average gains."},
+{sec:"8 · Discussion & Claim Boundary",zh:"写清 What we learned / Why it matters / What surprised us / What we cannot claim；不要把未来工作写成已经证明。",en:"State what was learned, why it matters, what surprised us, and what remains unsupported."},
+{sec:"Appendix · Chain of Evidence",zh:"每个核心 Claim → Figure/Table → Experiment/RQ → receipt / raw artifact / code；完整协议、失败结果、prompt/skill 和统计细节放附录。",en:"Bind each core claim to figure/table, experiment/RQ, receipt/raw artifact/code; keep full protocols and failure details in the appendix."}
 ]}};

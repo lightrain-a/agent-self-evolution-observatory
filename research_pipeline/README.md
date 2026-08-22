@@ -186,6 +186,8 @@ The Decision Ledger is the single current experiment-decision view; old planned 
 
 Every publishable claim must close against a real artifact through Evidence Integrity / Chain-of-Evidence. Uncalibrated judges are not ground truth.
 
+PaperRegistry also has a mandatory reader-facing **Paper Story V3** contract. It is a zero-authority explanatory projection, not a second scientific ledger. Every current PaperState must have one matching Paper Story that follows the 15-step argument chain `concrete scene → practical stake → current paradigm → concrete failure → missing scientific object → falsifiable question → design requirements → gap/component mapping → mechanism prediction → evaluation contract → main effect → mechanism-aligned stress test → component/alternative tests → generalization/failure boundary → bounded claim`. The full schema, archetype rules, required fields, manuscript outline, onboarding procedure, and authority boundary live in `PAPER_STORY_V3.md`. `scripts/validate_paper_story_contract.js` enforces a one-to-one PaperRegistry↔PaperStory mapping and fails closed when a future paper omits load-bearing reasoning fields such as the missing scientific object, mechanism prediction, strongest alternative explanation, evaluation contract, failure regime, or Chain-of-Evidence.
+
 Paper readiness uses two deliberately different quantities. `ledger_submission_ready` records that an append-only readiness receipt was reached historically; `gate_clean_submission_ready` asks whether the latest effective internal audit is still clean. A later failed Paper Preparation receipt never disappears behind an older state label. Every PaperState also exposes one zero-authority `primary_next_action`; a fully closed internal paper receives `NO_INTERNAL_ACTION`, while a named external support blocker remains `EXTERNAL_EVIDENCE_REQUIRED`.
 
 Every ResearchItem now exposes the same single-action control-plane shape without creating execution authority. `STOPPED → NO_INTERNAL_ACTION`, `MERGED → MERGED_NO_STANDALONE_ACTION`, `HOLD → REOPEN_CONDITION_REQUIRED`, and `PAPER_READY → PAPERSTATE_HANDOFF`. These are derived read-only instructions over canonical state; `machine_actionable_research_items` must remain zero unless a future, separately authorized execution contract changes that rule.
@@ -246,6 +248,7 @@ python -m unittest \
   research_pipeline.test_research_learning_loop \
   research_pipeline.test_experiment_iteration
 
+node scripts/validate_paper_story_contract.js
 python site_smoke_test.py
 python hierarchy_smoke_test.py
 SYSTEM_OVERVIEW_ONLY=1 python browser_smoke_test.py

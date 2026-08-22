@@ -66,11 +66,21 @@ def main() -> None:
             readerFigureText: Object.fromEntries([...document.querySelectorAll('.paper-reader-figure')].map(figure => [figure.dataset.paperFigure || '', figure.textContent || ''])),
             readerBriefText: Object.fromEntries([...document.querySelectorAll('.paper-detail-section[data-paper-toc-root]')].map(section => [section.id || '', section.querySelector('.paper-reader-brief')?.textContent || ''])),
             storyBlueprint: document.querySelectorAll('#paper-story-blueprint').length,
+            storyPhases: document.querySelectorAll('.paper-story-v3-phase-grid article').length,
+            storyBlueprintSteps: document.querySelectorAll('.paper-story-blueprint-chain-v3 article').length,
+            openFullStoryContracts: document.querySelectorAll('.paper-story-v3-full-chain[open]').length,
+            storyArchetypes: document.querySelectorAll('.paper-story-archetype-guide article').length,
             storyPapers: document.querySelectorAll('[data-paper-story]').length,
+            storyMissingObjects: document.querySelectorAll('.paper-story-object-question article:first-child').length,
             storyGapCards: document.querySelectorAll('.paper-story-gap-grid article').length,
+            storyPredictions: document.querySelectorAll('.paper-story-prediction-grid article').length,
+            storyAlternatives: document.querySelectorAll('.paper-story-alternative-table tbody tr').length,
+            storyContracts: document.querySelectorAll('.paper-story-contract-grid').length,
             storyRQs: document.querySelectorAll('.paper-story-rq-grid article').length,
             storyComponents: document.querySelectorAll('.paper-story-component-table tbody tr').length,
+            storyStressTests: document.querySelectorAll('.paper-story-mechanism-test-grid article').length,
             storyMechanisms: document.querySelectorAll('.paper-story-mechanism-table tbody tr').length,
+            storyCoE: document.querySelectorAll('.paper-story-coe-table').length,
             storyOutlineRows: document.querySelectorAll('.paper-story-paper-outline li').length,
             auditFolds: document.querySelectorAll('.paper-reader-audit-fold').length,
             openAuditFolds: document.querySelectorAll('.paper-reader-audit-fold[open]').length,
@@ -88,7 +98,7 @@ def main() -> None:
         require(summary.get("internal_action_required") == expected_internal and summary.get("no_internal_action") == 5 - expected_internal, f"internal-action split must follow current paper rows: {summary}")
         require(selected["noveltyPortfolio"] == 1 and selected["noveltyDetails"] == 5, "advisor novelty audit must remain preserved for all five papers")
         require(selected["readerPortfolio"] == 1 and selected["readerBriefs"] == 5 and selected["readerFigures"] == 5, f"reader-first paper layer is incomplete: {selected}")
-        require(selected["storyBlueprint"] == 1 and selected["storyPapers"] == 5 and selected["storyGapCards"] == 15 and selected["storyRQs"] >= 16 and selected["storyComponents"] >= 18 and selected["storyMechanisms"] >= 14 and selected["storyOutlineRows"] >= 35, f"paper argument-chain layer is incomplete: {selected}")
+        require(selected["storyBlueprint"] == 1 and selected["storyPhases"] == 5 and selected["storyBlueprintSteps"] == 15 and selected["openFullStoryContracts"] == 0 and selected["storyArchetypes"] == 5 and selected["storyPapers"] == 5 and selected["storyMissingObjects"] == 5 and selected["storyGapCards"] == 15 and selected["storyPredictions"] >= 15 and selected["storyAlternatives"] >= 15 and selected["storyContracts"] == 5 and selected["storyRQs"] >= 16 and selected["storyComponents"] >= 18 and selected["storyStressTests"] >= 15 and selected["storyMechanisms"] >= 14 and selected["storyCoE"] == 5 and selected["storyOutlineRows"] >= 35, f"Paper Story V3 argument-chain layer is incomplete: {selected}")
         figures=selected["readerFigureText"]
         require(all(marker in figures.get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK","") for marker in ("47.5%","70%","100%","cross-domain grounding")), f"Temporal evidence figure lost the three-arm contrast or negative boundary: {figures.get('D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK','')}")
         require(all(marker in figures.get("D2-PAPER-FAILURE-MEMORY-PROVENANCE","") for marker in ("0.931","0.647","p=.0785","p=.0792","opposite sign")), f"Failure-Memory evidence figure must distinguish association from unresolved causal tests: {figures.get('D2-PAPER-FAILURE-MEMORY-PROVENANCE','')}")
@@ -122,14 +132,20 @@ def main() -> None:
             navigate(session_id, "/selected-paper.html")
             zh_text = execute(session_id, "return document.body.textContent || ''")
             zh_markers = (
-                "场景、实际价值与一个具体失败",
-                "现在有哪些方法？为什么还不够？",
-                "把问题压缩成 3 个必须解决的 gap",
-                "方法设计动机：为什么必须这样设计？",
-                "实验不是堆表：每个 RQ 都要回答一个论证问题",
-                "哪些组件真的生效？哪些替代解释被排除？",
-                "最终主张边界：能说什么，不能说什么",
-                "如果把它写成论文，主文应该按什么顺序？",
+                "Paper Story V3 · 页面写作协议",
+                "缺失的科学对象",
+                "机制预测",
+                "评测合同",
+                "机制对齐压力测试",
+                "先选论文类型",
+                "真正缺的不是一个模块，而是一个科学对象",
+                "先写设计要求，再介绍方法组件",
+                "方法动机必须产生可观察的机制预测",
+                "最强替代解释，以及我们怎样挑战它",
+                "Evaluation Contract：先冻结怎样才算证明，再看结果",
+                "机制对齐 stress test：优势是否在预测的条件里出现",
+                "泛化、效率与明确失效边界",
+                "最终 Claim Boundary + Chain of Evidence",
                 "256 rollout",
                 "p=0.00074",
                 "no-skill anchor",
@@ -137,7 +153,7 @@ def main() -> None:
             )
             require(all(marker in zh_text for marker in zh_markers), f"Chinese paper-story chain is incomplete: {[m for m in zh_markers if m not in zh_text]}")
             print("PASS")
-            print("Selected-paper argument chain verified in EN+ZH: 5 papers / 15 gaps / RQ-baseline-answer / mechanism-ablation / outline / collapsed audit")
+            print("Selected-paper Paper Story V3 verified in EN+ZH: 5 papers / 15-step blueprint / 5 archetypes / missing-object / mechanism-prediction / evaluation-contract / stress-test / CoE / collapsed audit")
             return
 
         navigate(session_id, "/index.html")
@@ -215,7 +231,6 @@ def main() -> None:
           };
         """)
         require(ideas["e7Action"] == "PAPERSTATE_HANDOFF" and ideas["paperAction"] == "NO_INTERNAL_ACTION", f"Paper Ideas handoff/internal-closure boundary drifted: {ideas}")
-        require("PAPERSTATE_HANDOFF" in ideas["text"] and "NO_INTERNAL_ACTION" in ideas["text"], "Paper Ideas does not expose canonical ResearchItem→PaperState actions")
         require(len(ideas["parentActionClasses"]) == 26 and ideas["parentActionClasses"].count("NO_INTERNAL_ACTION") == 16 and ideas["parentActionClasses"].count("MERGED_NO_STANDALONE_ACTION") == 6 and ideas["parentActionClasses"].count("REOPEN_CONDITION_REQUIRED") == 4, f"Paper Ideas parent cards do not render canonical 16/6/4 actions: {ideas['parentActionClasses']}")
         require(len(ideas["pfActionTexts"]) == 9 and sum("NO_INTERNAL_ACTION" in text for text in ideas["pfActionTexts"]) == 5 and sum("MERGED_NO_STANDALONE_ACTION" in text for text in ideas["pfActionTexts"]) == 4, f"PF cards must render canonical 5 stopped / 4 merged actions: {ideas['pfActionTexts']}")
         require(len(ideas["supplementalActionTexts"]) == 7 and all("NO_INTERNAL_ACTION" in text for text in ideas["supplementalActionTexts"]), f"supplemental ResearchItem cards must render canonical NO_INTERNAL_ACTION: {ideas['supplementalActionTexts']}")

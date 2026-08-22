@@ -345,6 +345,12 @@ def main() -> None:
         fail("selected-paper must load the advisor-facing novelty audit before the current-paper renderer")
     if "paper-external-review-data.js" not in selected_html or selected_scripts_list.index("paper-external-review-data.js") > selected_scripts_list.index("current-research-status-view.js"):
         fail("selected-paper must load the external-review repair overlay before the current-paper renderer")
+    paper_story_data_scripts = tuple(sorted(path.name for path in ROOT.glob("paper-story-*.js") if path.name not in {"paper-story-blueprint.js", "paper-story-view.js"}))
+    paper_story_scripts = ("paper-story-blueprint.js",) + paper_story_data_scripts + ("paper-story-view.js",)
+    if not all(name in selected_scripts_list for name in paper_story_scripts):
+        fail("selected-paper must load the complete Paper Story V3 blueprint, every discovered paper story, and renderer")
+    if paper_story_data_scripts and (selected_scripts_list.index("paper-story-blueprint.js") > min(selected_scripts_list.index(name) for name in paper_story_data_scripts) or max(selected_scripts_list.index(name) for name in paper_story_data_scripts) > selected_scripts_list.index("paper-story-view.js")) or selected_scripts_list.index("paper-story-view.js") > selected_scripts_list.index("current-research-status-view.js"):
+        fail("Paper Story V3 data must load after its blueprint and before the PaperRegistry renderer")
     novelty_source = (ROOT / "paper-novelty-audit-data.js").read_text(encoding="utf-8")
     novelty_ids = ("STRI", "AGENT-SAFETY-R9", "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE", "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK", "D2-PAPER-FAILURE-MEMORY-PROVENANCE")
     if not all(f'\"{paper_id}\"' in novelty_source for paper_id in novelty_ids) or "scientific_authority:false" not in novelty_source or "cannot_change_paper_state:true" not in novelty_source:
@@ -398,6 +404,7 @@ def main() -> None:
     js_files = sorted(ROOT.glob("*.js"))
     for path in js_files:
         subprocess.run(["node", "--check", str(path)], check=True)
+    subprocess.run(["node", str(ROOT / "scripts" / "validate_paper_story_contract.js")], cwd=ROOT, check=True)
 
     combined = "\n".join(path.read_text(encoding="utf-8") for path in js_files if path.name != "app.js")
     architecture_text = (ROOT / "page-architecture-data.js").read_text(encoding="utf-8")
