@@ -19,9 +19,11 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from research_pipeline.presubmission_freeze import verify_frozen_artifacts
+from research_pipeline.submission_handoff import validate_handoff_ledger, validate_handoff_receipt
 DEFAULT_LEDGER_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ROOT") else None
 DEFAULT_ARTIFACT_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ARTIFACT_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ARTIFACT_ROOT") else None
 DEFAULT_FREEZE_ROOT = Path(os.environ["PAPER_SUBMISSION_FREEZE_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_FREEZE_ROOT") else None
+DEFAULT_HANDOFF_ROOT = Path(os.environ["PAPER_SUBMISSION_HANDOFF_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_HANDOFF_ROOT") else None
 DEFAULT_JSON = ROOT / "generated/paper-registry-state.json"
 DEFAULT_JS = ROOT / "generated/paper-registry-state.js"
 C01_ID = "D2-PAPER-FAILURE-MEMORY-PROVENANCE"
@@ -192,7 +194,53 @@ def submission_freeze(paper_id: str, preparation: dict[str, Any], freeze_root: P
     }
 
 
-def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | None = None) -> dict[str, Any]:
+def submission_handoff(paper_id: str, freeze: dict[str, Any], handoff_root: Path | None) -> dict[str, Any]:
+    receipt: dict[str, Any] = {}
+    errors: list[str] = []
+    if handoff_root is not None:
+        path = handoff_root / f"{paper_id}.json"
+        if path.exists():
+            try:
+                row = _load_json(path)
+                errors.extend(validate_handoff_ledger(row))
+                event = latest_event(row, "machine-submission-handoff")
+                candidate = event.get("receipt") or {}
+                if isinstance(candidate, dict) and validate_handoff_receipt(candidate):
+                    receipt = candidate
+                else:
+                    errors.append("handoff-receipt-invalid")
+            except Exception:
+                errors.append("handoff-ledger-unreadable")
+    if receipt and freeze.get("freeze_sha256") and receipt.get("freeze_sha256") != freeze.get("freeze_sha256"):
+        errors.append("handoff-freeze-stale")
+    errors = list(dict.fromkeys(errors))
+    if receipt:
+        status = "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED" if not errors and freeze.get("integrity_pass") is True else "MACHINE_HANDOFF_STALE"
+    elif freeze.get("status") == "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING":
+        status = "MACHINE_HANDOFF_PENDING"
+    elif freeze.get("status") == "PREPARATION_BLOCKED":
+        status = "PREPARATION_BLOCKED"
+    else:
+        status = "NOT_READY_FOR_HUMAN_SUBMISSION"
+    return {
+        "status": status,
+        "handoff_sha256": str(receipt.get("handoff_sha256") or ""),
+        "freeze_sha256": str(receipt.get("freeze_sha256") or ""),
+        "venue": str(receipt.get("venue") or ""),
+        "deadlines_aoe": dict(receipt.get("deadlines_aoe") or {}),
+        "human_confirmation_status": str(receipt.get("human_confirmation_status") or ""),
+        "frozen_artifacts": len(receipt.get("frozen_artifacts") or []),
+        "artifacts": [dict(item) for item in receipt.get("frozen_artifacts") or [] if isinstance(item, dict)],
+        "human_checklist": [str(item) for item in receipt.get("human_checklist") or [] if str(item)],
+        "must_not_submit_if_hash_mismatch": receipt.get("must_not_submit_if_hash_mismatch") is True,
+        "must_not_submit_if_freeze_stale": receipt.get("must_not_submit_if_freeze_stale") is True,
+        "integrity_pass": bool(receipt) and not errors and freeze.get("integrity_pass") is True,
+        "errors": errors,
+        "external_human_submission_authority_required": True,
+    }
+
+
+def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | None = None, handoff_root: Path | None = None) -> dict[str, Any]:
     row = json.loads(path.read_text(encoding="utf-8"))
     contract = row.get("contract") or {}
     summary = row.get("summary") or {}
@@ -212,6 +260,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
         active = {}
     paper_id = str(row.get("paper_id") or contract.get("paper_id") or path.stem)
     freeze = submission_freeze(paper_id, preparation, freeze_root)
+    handoff = submission_handoff(paper_id, freeze, handoff_root)
     state = str(row.get("current_state") or "")
     scientific_layer = "SUPPORTED_AND_AUDITED" if claim_audit.get("pass") is True else ("ACTIVE_REPAIR" if state == "TARGETED_REPAIR" else "PRE_AUDIT")
     paper_quality_layer = "PASS" if manuscript_ci.get("pass") is True and prebuttal.get("pass") is True else ("IN_PROGRESS" if state not in {"PAPER_EVIDENCE", "PAPER_DESIGN"} else "NOT_STARTED")
@@ -230,7 +279,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
             "scientific": scientific_layer,
             "paper_quality": paper_quality_layer,
             "paper_preparation": preparation["status"],
-            "submission": freeze["status"],
+            "submission": handoff["status"],
         },
         "gates": {
             "claim_audit": claim_audit.get("pass") is True,
@@ -240,6 +289,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
         },
         "paper_preparation": preparation,
         "submission_freeze": freeze,
+        "submission_handoff": handoff,
         "targeted_repair_boundary": targeted_repair_boundary(paper_id) if state == "TARGETED_REPAIR" else {},
         "ledger_summary": {
             "mock_reviews": int(summary.get("mock_reviews") or 0),
@@ -255,7 +305,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
     }
 
 
-def source_watermark(ledger_root: Path, freeze_root: Path | None = None) -> str:
+def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff_root: Path | None = None) -> str:
     timestamps: list[str] = []
     for path in sorted(ledger_root.glob("*.json")):
         try:
@@ -265,9 +315,11 @@ def source_watermark(ledger_root: Path, freeze_root: Path | None = None) -> str:
         updated = str(payload.get("updated_at") or "")
         if updated:
             timestamps.append(updated)
-    if freeze_root is not None and freeze_root.exists():
-        for path in sorted(freeze_root.glob("*.json")):
-            if path.name in {"current-freeze-index.json", "venue-policy-iclr2027-20260822.json"}:
+    for extra_root in (freeze_root, handoff_root):
+        if extra_root is None or not extra_root.exists():
+            continue
+        for path in sorted(extra_root.glob("*.json")):
+            if path.name in {"current-freeze-index.json", "venue-policy-iclr2027-20260822.json", "index.json"}:
                 continue
             try:
                 payload = _load_json(path)
@@ -279,8 +331,8 @@ def source_watermark(ledger_root: Path, freeze_root: Path | None = None) -> str:
     return max(timestamps) if timestamps else "1970-01-01T00:00:00+00:00"
 
 
-def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Path | None = None) -> dict[str, Any]:
-    papers = [project_paper(path, artifact_root, freeze_root) for path in sorted(ledger_root.glob("*.json"))]
+def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Path | None = None, handoff_root: Path | None = None) -> dict[str, Any]:
+    papers = [project_paper(path, artifact_root, freeze_root, handoff_root) for path in sorted(ledger_root.glob("*.json"))]
     order = {"SUBMISSION_READY": 0, "PREBUTTAL": 1, "PDF_QA": 2, "CLAIM_AUDIT": 3, "TARGETED_REPAIR": 4, "MOCK_PC": 5, "MANUSCRIPT": 6, "PAPER_DESIGN": 7, "PAPER_EVIDENCE": 8}
     papers.sort(key=lambda p: (order.get(p["current_state"], 99), p["paper_id"]))
     summary = {
@@ -292,11 +344,13 @@ def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Pat
         "legacy_ready_needs_preparation_migration": sum(p["paper_preparation"]["status"] == "LEGACY_READY_NEEDS_PREPARATION_MIGRATION" for p in papers),
         "machine_frozen_candidates": sum(p["submission_freeze"]["status"] == "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING" for p in papers),
         "machine_freeze_stale": sum(p["submission_freeze"]["status"] == "MACHINE_FREEZE_STALE" for p in papers),
-        "human_submission_signoff_pending": sum(p["submission_freeze"]["status"] == "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING" for p in papers),
+        "machine_handoff_ready": sum(p["submission_handoff"]["status"] == "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED" for p in papers),
+        "machine_handoff_stale": sum(p["submission_handoff"]["status"] == "MACHINE_HANDOFF_STALE" for p in papers),
+        "human_submission_signoff_pending": sum(p["submission_handoff"]["status"] == "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED" for p in papers),
     }
     payload = {
         "schema_version": "1.1",
-        "generated_at": source_watermark(ledger_root, freeze_root),
+        "generated_at": source_watermark(ledger_root, freeze_root, handoff_root),
         "source": "canonical_paper_acceptance_ledger",
         "summary": summary,
         "papers": papers,
@@ -311,12 +365,17 @@ def main() -> None:
     parser.add_argument("--ledger-root", type=Path, default=DEFAULT_LEDGER_ROOT, help="Canonical Paper Acceptance ledger root; may also be supplied via PAPER_ACCEPTANCE_ROOT.")
     parser.add_argument("--artifact-root", type=Path, default=DEFAULT_ARTIFACT_ROOT, help="Optional paper-preparation artifact root; may also be supplied via PAPER_ACCEPTANCE_ARTIFACT_ROOT.")
     parser.add_argument("--freeze-root", type=Path, default=DEFAULT_FREEZE_ROOT, help="Optional pre-submission freeze ledger root; may also be supplied via PAPER_SUBMISSION_FREEZE_ROOT.")
+    parser.add_argument("--handoff-root", type=Path, default=DEFAULT_HANDOFF_ROOT, help="Optional machine submission handoff ledger root; may also be supplied via PAPER_SUBMISSION_HANDOFF_ROOT.")
     parser.add_argument("--json-output", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--js-output", type=Path, default=DEFAULT_JS)
     args = parser.parse_args()
     if args.ledger_root is None:
         parser.error("canonical ledger root is required via --ledger-root or PAPER_ACCEPTANCE_ROOT")
-    state = build(args.ledger_root, args.artifact_root, args.freeze_root)
+    handoff_root = args.handoff_root
+    if handoff_root is None:
+        candidate = args.ledger_root.parent / "paper-submission-handoffs"
+        handoff_root = candidate if candidate.is_dir() else None
+    state = build(args.ledger_root, args.artifact_root, args.freeze_root, handoff_root)
     args.json_output.parent.mkdir(parents=True, exist_ok=True)
     args.json_output.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     args.js_output.write_text("window.PAPER_REGISTRY_STATE = " + json.dumps(state, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")

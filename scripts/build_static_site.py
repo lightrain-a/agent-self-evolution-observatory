@@ -128,6 +128,7 @@ def build() -> Path:
     paper_ledger_root = os.environ.get("PAPER_ACCEPTANCE_ROOT", "").strip()
     paper_artifact_root = os.environ.get("PAPER_ACCEPTANCE_ARTIFACT_ROOT", "").strip()
     paper_freeze_root = os.environ.get("PAPER_SUBMISSION_FREEZE_ROOT", "").strip()
+    paper_handoff_root = os.environ.get("PAPER_SUBMISSION_HANDOFF_ROOT", "").strip()
     if paper_ledger_root:
         ledger_path = Path(paper_ledger_root).expanduser().resolve()
         audit_root = ledger_path.parent if ledger_path.name == "paper-acceptance" else ledger_path
@@ -146,6 +147,9 @@ def build() -> Path:
             command.extend(["--artifact-root", paper_artifact_root])
         if paper_freeze_root:
             command.extend(["--freeze-root", paper_freeze_root])
+        handoff_path = Path(paper_handoff_root).expanduser().resolve() if paper_handoff_root else audit_root / "paper-submission-handoffs"
+        if handoff_path.is_dir():
+            command.extend(["--handoff-root", str(handoff_path)])
         subprocess.run(command, cwd=ROOT, check=True)
     else:
         for snapshot in ("paper-registry-state.json", "paper-portfolio-audit.json"):

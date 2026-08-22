@@ -11,6 +11,8 @@
     "legacy_ready_needs_preparation_migration": 0,
     "machine_frozen_candidates": 4,
     "machine_freeze_stale": 0,
+    "machine_handoff_ready": 4,
+    "machine_handoff_stale": 0,
     "human_submission_signoff_pending": 4
   },
   "papers": [
@@ -29,7 +31,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING"
+        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED"
       },
       "gates": {
         "claim_audit": true,
@@ -65,6 +67,48 @@
         "drift_errors": [],
         "external_human_submission_authority_required": true
       },
+      "submission_handoff": {
+        "status": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "handoff_sha256": "0a736c22afec337d0c98a674357511057e35afacad246c80854449f56faa1d2d",
+        "freeze_sha256": "211d7e0608ec326b405bc83dd2deea49f79cbf380484e2232839065c13a941ae",
+        "venue": "ICLR 2027",
+        "deadlines_aoe": {
+          "abstract": "2026-09-18",
+          "full_paper": "2026-09-25"
+        },
+        "human_confirmation_status": "PENDING_HUMAN",
+        "frozen_artifacts": 2,
+        "artifacts": [
+          {
+            "label": "paper_pdf",
+            "filename": "agent-safety-r9-iclr2027.pdf",
+            "sha256": "15d49730c3b322f8801d0d18ec34144f8ec3bb7d3d6a4241a317c84d31ed4e99",
+            "bytes": 280889
+          },
+          {
+            "label": "submission_bundle",
+            "filename": "agent-safety-r9-paper-prep-v2-20260822.zip",
+            "sha256": "06972cc5486e7d2c772fd76b17b711dd4340ed3e6195676db1aa4c724626614e",
+            "bytes": 803930
+          }
+        ],
+        "human_checklist": [
+          "confirm complete author list and OpenReview profiles",
+          "confirm author quota and reciprocal-reviewing obligations",
+          "confirm dual-submission compliance",
+          "acknowledge ICLR Code of Ethics",
+          "review and approve mandatory AI-use disclosure",
+          "verify final PDF/source/supplement hashes immediately before upload",
+          "confirm title and abstract used for reviewer bidding are the intended final submission metadata",
+          "confirm every author accepts responsibility for the final manuscript and AI-assisted artifacts",
+          "recompute and compare every frozen artifact SHA256 immediately before upload"
+        ],
+        "must_not_submit_if_hash_mismatch": true,
+        "must_not_submit_if_freeze_stale": true,
+        "integrity_pass": true,
+        "errors": [],
+        "external_human_submission_authority_required": true
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
@@ -93,7 +137,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING"
+        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED"
       },
       "gates": {
         "claim_audit": true,
@@ -129,6 +173,60 @@
         "drift_errors": [],
         "external_human_submission_authority_required": true
       },
+      "submission_handoff": {
+        "status": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "handoff_sha256": "0821eb8c269dcf05e65884ff0a8063eab7b6be00c189f658586212070b5121e0",
+        "freeze_sha256": "e6842fe4d97c11683710b0b8834e33a06ec5e7a1328f5a6ea2e6a52510d180a6",
+        "venue": "ICLR 2027",
+        "deadlines_aoe": {
+          "abstract": "2026-09-18",
+          "full_paper": "2026-09-25"
+        },
+        "human_confirmation_status": "PENDING_HUMAN",
+        "frozen_artifacts": 4,
+        "artifacts": [
+          {
+            "label": "paper_pdf",
+            "filename": "main.pdf",
+            "sha256": "7774bfc7758cda682f2f5c5b0b49740d0b1ac5c1a46fe4b0ba528fbf6c74923f",
+            "bytes": 208909
+          },
+          {
+            "label": "source_zip",
+            "filename": "source.zip",
+            "sha256": "0c3da48d99c91e9fe6504f01b0dffaa38ae046855648b598a713b7a7f245d627",
+            "bytes": 64398
+          },
+          {
+            "label": "supplement_zip",
+            "filename": "supplement.zip",
+            "sha256": "b2bfcff808e68e7dc65c280cc46514922d0a53a7faec7b629bd6a0d0d504840e",
+            "bytes": 14829
+          },
+          {
+            "label": "package_manifest",
+            "filename": "package-manifest.json",
+            "sha256": "018f716ef5e1860cfce2336f99944aab6d0dafd871e592016b088d1eb0fedf00",
+            "bytes": 8451
+          }
+        ],
+        "human_checklist": [
+          "confirm complete author list and OpenReview profiles",
+          "confirm author quota and reciprocal-reviewing obligations",
+          "confirm dual-submission compliance",
+          "acknowledge ICLR Code of Ethics",
+          "review and approve mandatory AI-use disclosure",
+          "verify final PDF/source/supplement hashes immediately before upload",
+          "confirm title and abstract used for reviewer bidding are the intended final submission metadata",
+          "confirm every author accepts responsibility for the final manuscript and AI-assisted artifacts",
+          "recompute and compare every frozen artifact SHA256 immediately before upload"
+        ],
+        "must_not_submit_if_hash_mismatch": true,
+        "must_not_submit_if_freeze_stale": true,
+        "integrity_pass": true,
+        "errors": [],
+        "external_human_submission_authority_required": true
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 6,
@@ -157,7 +255,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING"
+        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED"
       },
       "gates": {
         "claim_audit": true,
@@ -191,6 +289,60 @@
         "frozen_artifacts": 4,
         "integrity_pass": true,
         "drift_errors": [],
+        "external_human_submission_authority_required": true
+      },
+      "submission_handoff": {
+        "status": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "handoff_sha256": "c0efeabfa71bc1645ea44523f721e0acbbb609e838b76f2ceefd3372d80f7328",
+        "freeze_sha256": "55785374bc82630f11a8195751c37b3995194375cf37d63e9a364f404b0622de",
+        "venue": "ICLR 2027",
+        "deadlines_aoe": {
+          "abstract": "2026-09-18",
+          "full_paper": "2026-09-25"
+        },
+        "human_confirmation_status": "PENDING_HUMAN",
+        "frozen_artifacts": 4,
+        "artifacts": [
+          {
+            "label": "paper_pdf",
+            "filename": "main.pdf",
+            "sha256": "fb5df60ac2da35d61fb2d0be8450c79469a8ec63228c09183fcce42674f7ff22",
+            "bytes": 281896
+          },
+          {
+            "label": "source_zip",
+            "filename": "source.zip",
+            "sha256": "1e90eb5ece9e59d5a03eb7e2981e7dcaf93a464ff33653f5e53699b0098c4b06",
+            "bytes": 239533
+          },
+          {
+            "label": "supplement_zip",
+            "filename": "supplement.zip",
+            "sha256": "8a0ab8ef07cca59205f4de0bf63e33618e8730c4d67cb7bc0152088a27b3c860",
+            "bytes": 117928
+          },
+          {
+            "label": "package_manifest",
+            "filename": "package-manifest.json",
+            "sha256": "e5c73b2dd0cfecd7245b637f62c1fdbc4cb0cfbfb138a63c94a9d9ad7893a840",
+            "bytes": 741
+          }
+        ],
+        "human_checklist": [
+          "confirm complete author list and OpenReview profiles",
+          "confirm author quota and reciprocal-reviewing obligations",
+          "confirm dual-submission compliance",
+          "acknowledge ICLR Code of Ethics",
+          "review and approve mandatory AI-use disclosure",
+          "verify final PDF/source/supplement hashes immediately before upload",
+          "confirm title and abstract used for reviewer bidding are the intended final submission metadata",
+          "confirm every author accepts responsibility for the final manuscript and AI-assisted artifacts",
+          "recompute and compare every frozen artifact SHA256 immediately before upload"
+        ],
+        "must_not_submit_if_hash_mismatch": true,
+        "must_not_submit_if_freeze_stale": true,
+        "integrity_pass": true,
+        "errors": [],
         "external_human_submission_authority_required": true
       },
       "targeted_repair_boundary": {},
@@ -292,6 +444,22 @@
         "drift_errors": [],
         "external_human_submission_authority_required": true
       },
+      "submission_handoff": {
+        "status": "PREPARATION_BLOCKED",
+        "handoff_sha256": "",
+        "freeze_sha256": "",
+        "venue": "",
+        "deadlines_aoe": {},
+        "human_confirmation_status": "",
+        "frozen_artifacts": 0,
+        "artifacts": [],
+        "human_checklist": [],
+        "must_not_submit_if_hash_mismatch": false,
+        "must_not_submit_if_freeze_stale": false,
+        "integrity_pass": false,
+        "errors": [],
+        "external_human_submission_authority_required": true
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
@@ -320,7 +488,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING"
+        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED"
       },
       "gates": {
         "claim_audit": true,
@@ -356,6 +524,54 @@
         "drift_errors": [],
         "external_human_submission_authority_required": true
       },
+      "submission_handoff": {
+        "status": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "handoff_sha256": "372fa5012a514ad53c2ec58fca54f1a30974182c49f9ff8bfe696500210fe665",
+        "freeze_sha256": "5c065d826ecae0b8db5620f039fa30e0df4759e28a7e6dc2c7ec7f70a0d306f1",
+        "venue": "ICLR 2027",
+        "deadlines_aoe": {
+          "abstract": "2026-09-18",
+          "full_paper": "2026-09-25"
+        },
+        "human_confirmation_status": "PENDING_HUMAN",
+        "frozen_artifacts": 3,
+        "artifacts": [
+          {
+            "label": "paper_pdf",
+            "filename": "STRI-ICLR2027-20260816.pdf",
+            "sha256": "56a26d51d20a2683e3718d63ba86f047561626b8203d437f7b0ce3da402621c5",
+            "bytes": 363233
+          },
+          {
+            "label": "source_zip",
+            "filename": "STRI-ICLR2027-20260816-source.zip",
+            "sha256": "7b5dbe61e9c76f8226c0f0f3da727afb5455a20ec445e51edf0a3cbf0f92db20",
+            "bytes": 117124
+          },
+          {
+            "label": "supplement_zip",
+            "filename": "STRI-ICLR2027-20260816-supplement.zip",
+            "sha256": "c0f2ece30cab3a816549acf963f5e0a6351f8a473347f7c424e2186fb5f8172b",
+            "bytes": 575289
+          }
+        ],
+        "human_checklist": [
+          "confirm complete author list and OpenReview profiles",
+          "confirm author quota and reciprocal-reviewing obligations",
+          "confirm dual-submission compliance",
+          "acknowledge ICLR Code of Ethics",
+          "review and approve mandatory AI-use disclosure",
+          "verify final PDF/source/supplement hashes immediately before upload",
+          "confirm title and abstract used for reviewer bidding are the intended final submission metadata",
+          "confirm every author accepts responsibility for the final manuscript and AI-assisted artifacts",
+          "recompute and compare every frozen artifact SHA256 immediately before upload"
+        ],
+        "must_not_submit_if_hash_mismatch": true,
+        "must_not_submit_if_freeze_stale": true,
+        "integrity_pass": true,
+        "errors": [],
+        "external_human_submission_authority_required": true
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
@@ -376,5 +592,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "f0586de8dfdadda3d5530e01caf35a08dde0d797521a80d014472dc945f3e0fd"
+  "projection_sha256": "b7c55a9a26617e5dc594ad636c52f7bc431f2f22ea50076afc55d9cb0c145bb1"
 }

@@ -9,6 +9,7 @@ from typing import Any, Mapping
 from .paper_acceptance_ledger import validate_paper_ledger
 from .paper_preparation_protocol import validate_paper_preparation_receipt
 from .presubmission_freeze import validate_freeze, verify_current_frozen_artifacts
+from .submission_handoff import validate_handoff_ledger, validate_handoff_receipt
 
 DEFAULT_ROOT = Path('/data/wyt/agent-self-evolution-observatory')
 
@@ -29,6 +30,10 @@ def blocker_group(value: str) -> str:
     text = str(value)
     if any(token in text for token in ('claim-evidence', 'method-experiment', 'evidence_sufficiency', 'unresolved-critical')):
         return 'DECISIVE_EVIDENCE'
+    if 'statistics-uncertainty' in text:
+        return 'STATISTICS_UNCERTAINTY'
+    if 'plan_execution_parity' in text:
+        return 'PLAN_EXECUTION_PARITY'
     if 'visual' in text:
         return 'VISUAL_CONTRACT'
     if 'reproducibility' in text:
@@ -37,7 +42,7 @@ def blocker_group(value: str) -> str:
         return 'CLAIM_RAW_GROUNDING'
     if 'reader-' in text:
         return 'READER_SIMULATION'
-    if 'submission-package' in text:
+    if 'submission-package' in text or 'venue-compliance' in text:
         return 'VENUE_HANDOFF'
     return 'OTHER'
 
@@ -45,6 +50,8 @@ def blocker_group(value: str) -> str:
 def next_actions(groups: list[str]) -> list[str]:
     table = {
         'DECISIVE_EVIDENCE': 'close decision-critical claim-evidence gaps; support unavailability is support debt, not scientific counterevidence',
+        'STATISTICS_UNCERTAINTY': 'complete the uncertainty/sensitivity analysis required by the retained claims',
+        'PLAN_EXECUTION_PARITY': 'close the gap between the frozen paper plan and the evidence actually executed',
         'VISUAL_CONTRACT': 'bind each core claim/boundary to a main-text visual contract',
         'REPRODUCIBILITY': 'build a self-contained source/reproduction bundle and pass clean-room compile/recompute',
         'CLAIM_RAW_GROUNDING': 'close claim-to-raw-evidence roundtrip in the agent-native artifact',
@@ -93,6 +100,30 @@ def freeze_state(root: Path, paper_id: str, preparation_receipt_sha: str) -> dic
     }
 
 
+def handoff_state(root: Path, paper_id: str, freeze_sha256: str) -> dict[str, Any]:
+    path = root / 'paper-submission-handoffs' / f'{paper_id}.json'
+    if not path.exists():
+        return {'status': 'MACHINE_HANDOFF_PENDING', 'integrity_pass': False, 'errors': ['handoff-receipt-missing'], 'handoff_sha256': ''}
+    try:
+        row = json.loads(path.read_text(encoding='utf-8'))
+    except (OSError, json.JSONDecodeError):
+        return {'status': 'MACHINE_HANDOFF_STALE', 'integrity_pass': False, 'errors': ['handoff-ledger-unreadable'], 'handoff_sha256': ''}
+    errors = list(validate_handoff_ledger(row))
+    event = latest(row, 'machine-submission-handoff')
+    receipt = event.get('receipt') if isinstance(event.get('receipt'), dict) else {}
+    if not receipt or not validate_handoff_receipt(receipt):
+        errors.append('handoff-receipt-invalid')
+    if freeze_sha256 and receipt.get('freeze_sha256') != freeze_sha256:
+        errors.append('handoff-freeze-stale')
+    errors = list(dict.fromkeys(errors))
+    return {
+        'status': 'MACHINE_HANDOFF_CURRENT' if not errors else 'MACHINE_HANDOFF_STALE',
+        'integrity_pass': not errors,
+        'errors': errors,
+        'handoff_sha256': str(receipt.get('handoff_sha256') or ''),
+    }
+
+
 def project(path: Path, root: Path) -> dict[str, Any]:
     row = json.loads(path.read_text(encoding='utf-8'))
     paper_id = str(row.get('paper_id') or path.stem)
@@ -125,12 +156,25 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         'errors': [],
         'freeze_sha256': '',
     }
-    handoff = base_ready and freeze['status'] == 'MACHINE_FROZEN_CURRENT'
+    if base_ready and freeze['status'] == 'MACHINE_FROZEN_CURRENT':
+        machine_handoff = handoff_state(root, paper_id, freeze['freeze_sha256'])
+    else:
+        machine_handoff = {
+            'status': 'PREPARATION_BLOCKED' if preparation == 'BLOCKED' else 'NOT_ELIGIBLE',
+            'integrity_pass': False,
+            'errors': [],
+            'handoff_sha256': '',
+        }
+    handoff = machine_handoff['status'] == 'MACHINE_HANDOFF_CURRENT'
     actions = next_actions(groups)
     if base_ready and freeze['status'] == 'MACHINE_FREEZE_PENDING':
-        actions = ['create a pre-submission freeze checkpoint before human handoff']
+        actions = ['create a pre-submission freeze checkpoint before machine handoff']
     elif base_ready and freeze['status'] == 'MACHINE_FREEZE_STALE':
-        actions = ['re-freeze the exact PDF/source/supplement bytes before human handoff']
+        actions = ['re-freeze the exact PDF/source/supplement bytes before machine handoff']
+    elif base_ready and machine_handoff['status'] == 'MACHINE_HANDOFF_PENDING':
+        actions = ['build the machine submission handoff packet from the current freeze before author confirmation']
+    elif base_ready and machine_handoff['status'] == 'MACHINE_HANDOFF_STALE':
+        actions = ['rebuild the machine submission handoff packet from the current freeze before author confirmation']
     elif not groups and not handoff:
         actions = ['complete Paper Preparation migration before human handoff']
 
@@ -149,6 +193,10 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         'freeze_integrity_pass': freeze['integrity_pass'],
         'freeze_sha256': freeze['freeze_sha256'],
         'freeze_errors': freeze['errors'],
+        'machine_handoff_status': machine_handoff['status'],
+        'machine_handoff_integrity_pass': machine_handoff['integrity_pass'],
+        'machine_handoff_sha256': machine_handoff['handoff_sha256'],
+        'machine_handoff_errors': machine_handoff['errors'],
         'blocker_groups': groups,
         'blocker_count': len(blockers),
         'next_actions': actions,
@@ -160,7 +208,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
 
 def source_watermark(root: Path) -> str:
     timestamps: list[str] = []
-    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes'):
+    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs'):
         if not directory.exists():
             continue
         for path in sorted(directory.glob('*.json')):
@@ -190,6 +238,8 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'legacy_pending': sum(p['paper_preparation_status'] == 'LEGACY_PENDING' for p in papers),
             'machine_frozen_current': sum(p['freeze_status'] == 'MACHINE_FROZEN_CURRENT' for p in papers),
             'machine_freeze_stale': sum(p['freeze_status'] == 'MACHINE_FREEZE_STALE' for p in papers),
+            'machine_handoff_current': sum(p['machine_handoff_status'] == 'MACHINE_HANDOFF_CURRENT' for p in papers),
+            'machine_handoff_stale': sum(p['machine_handoff_status'] == 'MACHINE_HANDOFF_STALE' for p in papers),
             'human_handoff_ready': sum(p['human_handoff_ready'] for p in papers),
             'submission_freeze_eligible': sum(p['submission_freeze_eligible'] for p in papers),
             'ledger_replay_failures': sum(not p['ledger_replay_pass'] for p in papers),
