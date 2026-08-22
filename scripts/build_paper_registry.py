@@ -25,6 +25,7 @@ from research_pipeline.venue_submission_receipt import validate_submission_recei
 from research_pipeline.revision_impact_audit import audit_freeze_receipt
 from research_pipeline.rebuttal_protocol import validate_rebuttal_receipt
 from research_pipeline.post_decision_learning import validate_learning_receipt, validate_rebuttal_skipped_by_venue_receipt, validate_venue_decision_receipt
+from research_pipeline.submission_attempt_history import build_attempt_history
 from research_pipeline.submission_attempt_lineage import public_attempt_summary, validate_attempt_ledger
 from research_pipeline.submission_attempt_workflow import current_attempt_workflow_summary, validate_attempt_workflow_ledger
 DEFAULT_LEDGER_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ROOT") else None
@@ -502,6 +503,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
     state = str(row.get("current_state") or "")
     attempt = submission_attempt_state(paper_id, state, attempt_root)
     attempt_workflow = submission_attempt_workflow_state(attempt, attempt_workflow_root)
+    attempt_history = build_attempt_history(paper_id, attempt_root, attempt_workflow_root)
     scientific_layer = "SUPPORTED_AND_AUDITED" if claim_audit.get("pass") is True else ("ACTIVE_REPAIR" if state == "TARGETED_REPAIR" else "PRE_AUDIT")
     paper_quality_layer = "PASS" if manuscript_ci.get("pass") is True and prebuttal.get("pass") is True else ("IN_PROGRESS" if state not in {"PAPER_EVIDENCE", "PAPER_DESIGN"} else "NOT_STARTED")
     return {
@@ -538,6 +540,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
         "learning": learning,
         "submission_attempt": attempt,
         "submission_attempt_workflow": attempt_workflow,
+        "submission_attempt_history": attempt_history,
         "targeted_repair_boundary": targeted_repair_boundary(paper_id) if state == "TARGETED_REPAIR" else {},
         "ledger_summary": {
             "mock_reviews": int(summary.get("mock_reviews") or 0),
@@ -610,22 +613,22 @@ def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Pat
         "final_decisions_recorded": sum(p["learning"]["decision_valid"] for p in papers),
         "learning_prepared": sum(p["learning"]["status"] == "LEARNING_PREPARED_TRANSITION_PENDING" for p in papers),
         "learn_complete": sum(p["learning"]["status"] == "LEARN_COMPLETE" for p in papers),
-        "submission_attempt_plans": sum(int(p["submission_attempt"].get("attempts") or 0) for p in papers),
-        "attempt_machine_preparation_eligible": sum(p["submission_attempt"].get("machine_preparation_eligible") is True for p in papers),
-        "attempts_requiring_scientific_reopen": sum(p["submission_attempt"].get("requires_explicit_scientific_reopen") is True for p in papers),
-        "resubmission_plans": sum(p["submission_attempt"].get("latest_attempt_type") == "RESUBMISSION" for p in papers),
-        "camera_ready_plans": sum(p["submission_attempt"].get("latest_attempt_type") == "CAMERA_READY" for p in papers),
+        "submission_attempt_plans": sum(int((p["submission_attempt_history"].get("summary") or {}).get("attempts") or 0) for p in papers),
+        "attempt_machine_preparation_eligible": sum(int((p["submission_attempt_history"].get("summary") or {}).get("machine_preparation_eligible") or 0) for p in papers),
+        "attempts_requiring_scientific_reopen": sum(int((p["submission_attempt_history"].get("summary") or {}).get("requires_explicit_scientific_reopen") or 0) for p in papers),
+        "resubmission_plans": sum(int((p["submission_attempt_history"].get("summary") or {}).get("resubmissions") or 0) for p in papers),
+        "camera_ready_plans": sum(int((p["submission_attempt_history"].get("summary") or {}).get("camera_ready") or 0) for p in papers),
         "attempt_preparation_pass": sum(p["submission_attempt_workflow"].get("status") == "ATTEMPT_PREPARATION_PASS_FREEZE_PENDING" for p in papers),
         "attempt_machine_frozen": sum(p["submission_attempt_workflow"].get("status") == "ATTEMPT_MACHINE_FROZEN_HANDOFF_PENDING" for p in papers),
         "attempt_machine_handoff_ready": sum(p["submission_attempt_workflow"].get("status") == "ATTEMPT_MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED" for p in papers),
-        "attempt_workflow_stale_or_invalid": sum(p["submission_attempt_workflow"].get("status") in {"ATTEMPT_HANDOFF_STALE", "ATTEMPT_FREEZE_STALE", "ATTEMPT_HUMAN_SIGNOFF_STALE", "ATTEMPT_WORKFLOW_INVALID"} for p in papers),
-        "attempt_human_signoff_complete": sum(bool(p["submission_attempt_workflow"].get("signoff_sha256")) for p in papers),
-        "attempt_venue_submitted": sum(p["submission_attempt_workflow"].get("actual_submission_status") == "SUBMITTED" for p in papers),
-        "attempt_reviews_recorded": sum(int(p["submission_attempt_workflow"].get("review_count") or 0) > 0 for p in papers),
-        "attempt_rebuttals_prepared": sum(bool(p["submission_attempt_workflow"].get("rebuttal_receipt_sha256")) for p in papers),
-        "attempt_final_decisions_recorded": sum(bool(p["submission_attempt_workflow"].get("venue_decision_sha256")) for p in papers),
-        "attempt_post_decision_learning_complete": sum(p["submission_attempt_workflow"].get("status") == "ATTEMPT_POST_DECISION_LEARN_COMPLETE" for p in papers),
-        "attempt_rebuttal_skipped_by_venue": sum(bool(p["submission_attempt_workflow"].get("rebuttal_skip_sha256")) for p in papers),
+        "attempt_workflow_stale_or_invalid": sum(int((p["submission_attempt_history"].get("summary") or {}).get("invalid_attempts") or 0) for p in papers),
+        "attempt_human_signoff_complete": sum(int((p["submission_attempt_history"].get("summary") or {}).get("human_signoffs") or 0) for p in papers),
+        "attempt_venue_submitted": sum(int((p["submission_attempt_history"].get("summary") or {}).get("venue_submissions") or 0) for p in papers),
+        "attempt_reviews_recorded": sum(int((p["submission_attempt_history"].get("summary") or {}).get("review_sets") or 0) for p in papers),
+        "attempt_rebuttals_prepared": sum(int((p["submission_attempt_history"].get("summary") or {}).get("rebuttals_prepared") or 0) for p in papers),
+        "attempt_final_decisions_recorded": sum(int((p["submission_attempt_history"].get("summary") or {}).get("final_decisions") or 0) for p in papers),
+        "attempt_post_decision_learning_complete": sum(int((p["submission_attempt_history"].get("summary") or {}).get("post_decision_learn_complete") or 0) for p in papers),
+        "attempt_rebuttal_skipped_by_venue": sum(int((p["submission_attempt_history"].get("summary") or {}).get("rebuttals_skipped_by_venue") or 0) for p in papers),
     }
     payload = {
         "schema_version": "1.1",

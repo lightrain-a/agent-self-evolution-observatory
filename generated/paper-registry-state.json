@@ -236,6 +236,37 @@
         "human_confirmation_status": "",
         "parent_submission_bytes_immutable": true
       },
+      "submission_attempt_history": {
+        "schema_version": "1.0",
+        "paper_id": "AGENT-SAFETY-R9",
+        "attempts": [],
+        "summary": {
+          "attempts": 0,
+          "resubmissions": 0,
+          "camera_ready": 0,
+          "machine_preparation_eligible": 0,
+          "requires_explicit_scientific_reopen": 0,
+          "human_signoffs": 0,
+          "venue_submissions": 0,
+          "review_sets": 0,
+          "rebuttals_prepared": 0,
+          "rebuttals_skipped_by_venue": 0,
+          "final_decisions": 0,
+          "post_decision_learn_complete": 0,
+          "active_or_pending": 0,
+          "invalid_attempts": 0
+        },
+        "latest_attempt_id": "",
+        "latest_attempt_sha256": "",
+        "validation_errors": [],
+        "authority": {
+          "scientific": false,
+          "experiment": false,
+          "gpu": false,
+          "submission": false
+        },
+        "history_sha256": "d36bb3c6c0044d2e338764234015dca75c3b5ca25f6d4d14e74b17cab258f39f"
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
@@ -459,6 +490,37 @@
         "validation_errors": [],
         "human_confirmation_status": "",
         "parent_submission_bytes_immutable": true
+      },
+      "submission_attempt_history": {
+        "schema_version": "1.0",
+        "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+        "attempts": [],
+        "summary": {
+          "attempts": 0,
+          "resubmissions": 0,
+          "camera_ready": 0,
+          "machine_preparation_eligible": 0,
+          "requires_explicit_scientific_reopen": 0,
+          "human_signoffs": 0,
+          "venue_submissions": 0,
+          "review_sets": 0,
+          "rebuttals_prepared": 0,
+          "rebuttals_skipped_by_venue": 0,
+          "final_decisions": 0,
+          "post_decision_learn_complete": 0,
+          "active_or_pending": 0,
+          "invalid_attempts": 0
+        },
+        "latest_attempt_id": "",
+        "latest_attempt_sha256": "",
+        "validation_errors": [],
+        "authority": {
+          "scientific": false,
+          "experiment": false,
+          "gpu": false,
+          "submission": false
+        },
+        "history_sha256": "7aa22569b4bbe9e62c5b9648a169730f3cce35facbd4caa56d8eb6472b9f2fa6"
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -684,6 +746,37 @@
         "human_confirmation_status": "",
         "parent_submission_bytes_immutable": true
       },
+      "submission_attempt_history": {
+        "schema_version": "1.0",
+        "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+        "attempts": [],
+        "summary": {
+          "attempts": 0,
+          "resubmissions": 0,
+          "camera_ready": 0,
+          "machine_preparation_eligible": 0,
+          "requires_explicit_scientific_reopen": 0,
+          "human_signoffs": 0,
+          "venue_submissions": 0,
+          "review_sets": 0,
+          "rebuttals_prepared": 0,
+          "rebuttals_skipped_by_venue": 0,
+          "final_decisions": 0,
+          "post_decision_learn_complete": 0,
+          "active_or_pending": 0,
+          "invalid_attempts": 0
+        },
+        "latest_attempt_id": "",
+        "latest_attempt_sha256": "",
+        "validation_errors": [],
+        "authority": {
+          "scientific": false,
+          "experiment": false,
+          "gpu": false,
+          "submission": false
+        },
+        "history_sha256": "814bde84d562ba95bf502ecc94ee40905ee4d6da20214cfeb8e647eee90feeb4"
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 4,
@@ -905,6 +998,37 @@
         "human_confirmation_status": "",
         "parent_submission_bytes_immutable": true
       },
+      "submission_attempt_history": {
+        "schema_version": "1.0",
+        "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+        "attempts": [],
+        "summary": {
+          "attempts": 0,
+          "resubmissions": 0,
+          "camera_ready": 0,
+          "machine_preparation_eligible": 0,
+          "requires_explicit_scientific_reopen": 0,
+          "human_signoffs": 0,
+          "venue_submissions": 0,
+          "review_sets": 0,
+          "rebuttals_prepared": 0,
+          "rebuttals_skipped_by_venue": 0,
+          "final_decisions": 0,
+          "post_decision_learn_complete": 0,
+          "active_or_pending": 0,
+          "invalid_attempts": 0
+        },
+        "latest_attempt_id": "",
+        "latest_attempt_sha256": "",
+        "validation_errors": [],
+        "authority": {
+          "scientific": false,
+          "experiment": false,
+          "gpu": false,
+          "submission": false
+        },
+        "history_sha256": "893e7122c07a039c5e3fe76f08e405e6969e994bb08aadc2b94a7a7bcb690b5e"
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 5,
@@ -1123,6 +1247,37 @@
         "human_confirmation_status": "",
         "parent_submission_bytes_immutable": true
       },
+      "submission_attempt_history": {
+        "schema_version": "1.0",
+        "paper_id": "STRI-ICLR2027",
+        "attempts": [],
+        "summary": {
+          "attempts": 0,
+          "resubmissions": 0,
+          "camera_ready": 0,
+          "machine_preparation_eligible": 0,
+          "requires_explicit_scientific_reopen": 0,
+          "human_signoffs": 0,
+          "venue_submissions": 0,
+          "review_sets": 0,
+          "rebuttals_prepared": 0,
+          "rebuttals_skipped_by_venue": 0,
+          "final_decisions": 0,
+          "post_decision_learn_complete": 0,
+          "active_or_pending": 0,
+          "invalid_attempts": 0
+        },
+        "latest_attempt_id": "",
+        "latest_attempt_sha256": "",
+        "validation_errors": [],
+        "authority": {
+          "scientific": false,
+          "experiment": false,
+          "gpu": false,
+          "submission": false
+        },
+        "history_sha256": "f68a61c8c11435856b26d494a6f922fea549e9d53a872820fabe18c9f0789f23"
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
@@ -1148,5 +1303,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "186920d3bfdfcef699393ef5996208e26d5de022a2771022f348936e53e66a7f"
+  "projection_sha256": "a6eda24da9738f8bf0792992ff32c48d4d0d9d0fec52a8972b8980d7d9232537"
 }
