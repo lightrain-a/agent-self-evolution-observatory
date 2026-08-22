@@ -31,6 +31,7 @@ from .paper_acceptance import (
 from .paper_acceptance_ledger import (
     advance_paper_ledger,
     build_paper_ledger_index,
+    build_portable_paper_ledger_index,
     initialize_paper_ledger,
     record_claim_audit,
     record_manuscript_ci,
@@ -340,6 +341,26 @@ class PaperAcceptanceTest(unittest.TestCase):
             self.assertNotIn("events", entry)
             self.assertNotIn("actor", str(entry))
             self.assertEqual(entry["authority"], {"scientific": False, "experiment": False, "gpu": False, "submission": False})
+
+    def test_portable_registry_reconstructs_canonical_zero_authority_index(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); contract = self.stri_contract()
+            initialize_paper_ledger(root, contract)
+            advance_paper_ledger(root, contract, PaperState.PAPER_DESIGN)
+            source = build_paper_ledger_index(root)["entries"][0]
+        registry_row = dict(source)
+        registry_row["acceptance_paper_id"] = "STRI-ICLR2027"
+        registry_row["paper_id"] = "STRI"
+        registry = {
+            "policy": {"paper_registry_is_projection_of_append_only_acceptance_ledgers": True},
+            "papers": [registry_row],
+        }
+        index = build_portable_paper_ledger_index(registry)
+        self.assertEqual(index["summary"]["papers"], 1)
+        self.assertEqual(index["summary"]["invalid_ledgers"], 0)
+        self.assertEqual(index["entries"][0]["paper_id"], "STRI-ICLR2027")
+        self.assertFalse(index["scientific_authority"])
+        self.assertTrue(index["policy"]["empty_machine_local_ledger_does_not_erase_portable_state"])
 
     def test_public_ledger_index_keeps_causal_hold_visible(self) -> None:
         with tempfile.TemporaryDirectory() as td:

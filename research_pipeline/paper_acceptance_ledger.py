@@ -627,6 +627,78 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
+def build_portable_paper_ledger_index(registry: Mapping[str, Any]) -> dict[str, Any]:
+    """Reconstruct a zero-authority ledger index from a committed PaperRegistry.
+
+    The append-only ledger on the research host remains authoritative whenever it
+    is available. This portable projection exists for automation/CI hosts that do
+    not mount that host-private directory: an empty local directory must not erase
+    a previously published, provenance-bound paper state.
+    """
+    entries: list[dict[str, Any]] = []
+    invalid: list[dict[str, Any]] = []
+    policy = registry.get("policy") or {}
+    if policy.get("paper_registry_is_projection_of_append_only_acceptance_ledgers") is not True:
+        invalid.append({"paper_id": "paper-registry", "errors": ["portable-registry-provenance-policy-missing"]})
+    seen: set[str] = set()
+    for raw in registry.get("papers") or []:
+        if not isinstance(raw, Mapping):
+            invalid.append({"paper_id": "unknown", "errors": ["portable-registry-row-not-object"]})
+            continue
+        canonical_id = str(raw.get("acceptance_paper_id") or raw.get("paper_id") or "").strip()
+        errors: list[str] = []
+        if not canonical_id:
+            errors.append("portable-registry-paper-id-missing")
+        elif canonical_id in seen:
+            errors.append("portable-registry-paper-id-duplicate")
+        current_state = str(raw.get("current_state") or "")
+        if current_state not in {state.value for state in PAPER_ACCEPTANCE_FLOW}:
+            errors.append("portable-registry-current-state-invalid")
+        authority = raw.get("acceptance_authority") or raw.get("authority") or {}
+        if any(bool(authority.get(key)) for key in ("scientific", "experiment", "gpu", "submission")):
+            errors.append("portable-registry-authority-leak")
+        readiness = raw.get("latest_submission_readiness") or {}
+        if not isinstance(readiness, Mapping):
+            errors.append("portable-registry-readiness-invalid")
+        if errors:
+            invalid.append({"paper_id": canonical_id or "unknown", "errors": errors})
+            continue
+        seen.add(canonical_id)
+        row = dict(raw)
+        row["paper_id"] = canonical_id
+        row["authority"] = {"scientific": False, "experiment": False, "gpu": False, "submission": False}
+        entries.append(row)
+    by_state: dict[str, int] = {}
+    for row in entries:
+        state = str(row.get("current_state") or "UNKNOWN")
+        by_state[state] = by_state.get(state, 0) + 1
+    return {
+        "schema_version": "1.0-portable-registry",
+        "policy": {
+            "source_ledgers_are_append_only": True,
+            "public_projection_excludes_raw_reviewer_prose": True,
+            "public_projection_excludes_filesystem_paths_and_actors": True,
+            "invalid_ledgers_are_visible_and_never_silently_dropped": True,
+            "ledger_projection_has_zero_authority": True,
+            "portable_registry_fallback_requires_committed_ledger_projection": True,
+            "empty_machine_local_ledger_does_not_erase_portable_state": True,
+        },
+        "summary": {
+            "papers": len(entries),
+            "invalid_ledgers": len(invalid),
+            "scientific_holds": sum(str(row.get("scientific_status")) != "READY" for row in entries),
+            "submission_ready": sum((row.get("latest_submission_readiness") or {}).get("submission_ready") is True for row in entries),
+            "gate_clean_submission_ready": sum(row.get("gate_clean_submission_ready") is True for row in entries),
+            "paper_preparation_failed": sum((row.get("latest_paper_preparation") or {}).get("required_gates", 0) > 0 and (row.get("latest_paper_preparation") or {}).get("pass") is not True for row in entries),
+            "immediate_submission_holds": sum(row.get("immediate_submission_hold") is True for row in entries),
+            "by_state": by_state,
+        },
+        "entries": entries,
+        "invalid": invalid,
+        "scientific_authority": False,
+    }
+
+
 def build_paper_ledger_index(root: Path) -> dict[str, Any]:
     directory = Path(root) / "paper-acceptance"
     entries: list[dict[str, Any]] = []

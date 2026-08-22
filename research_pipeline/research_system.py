@@ -41,7 +41,7 @@ from .p0_mem_xfer_offline_analysis import build_mem_xfer_workflow_state
 from .paper_design_contract import build_paper_first_workflow_state
 from .paper_visual_evidence import build_paper_visual_evidence_portfolio
 from .paper_acceptance import PAPER_ACCEPTANCE_TEMPORAL_KEYS, build_paper_acceptance_system_state
-from .paper_acceptance_ledger import build_paper_ledger_index
+from .paper_acceptance_ledger import build_paper_ledger_index, build_portable_paper_ledger_index
 from .paper_first_design_adjudication import build_paper_first_design_adjudication, write_paper_first_design_adjudication
 from .paper_first_pf1_problem_adjudication import build_pf1_problem_adjudication, write_pf1_problem_adjudication
 from .paper_first_pf2_method_adjudication import build_pf2_method_adjudication, write_pf2_method_adjudication
@@ -535,12 +535,32 @@ def build_research_system_state() -> dict[str, Any]:
     research_system_replay = build_research_system_replay(pre_experiment_compiler)
     external_system_learning = build_external_system_learning_state()
     paper_acceptance = build_paper_acceptance_system_state()
-    paper_acceptance["ledger_index"] = build_paper_ledger_index(experiment_data_root)
+    live_ledger_index = build_paper_ledger_index(experiment_data_root)
+    live_ledger_summary = live_ledger_index.get("summary") or {}
+    paper_ledger_index = live_ledger_index
+    paper_ledger_source = "canonical-append-only-paper-ledgers"
+    # The 52 automation/CI host intentionally does not mirror 69's private
+    # append-only paper ledgers. An empty local directory is absence of substrate,
+    # not evidence that published PaperState disappeared. Fall back only to the
+    # committed zero-authority PaperRegistry projection; any invalid live ledger
+    # remains authoritative and fail-closed rather than being hidden by fallback.
+    if int(live_ledger_summary.get("papers") or 0) == 0 and int(live_ledger_summary.get("invalid_ledgers") or 0) == 0:
+        try:
+            portable_registry = json.loads((PROJECT_ROOT / "generated" / "paper-registry.json").read_text(encoding="utf-8"))
+            portable_index = build_portable_paper_ledger_index(portable_registry)
+            portable_summary = portable_index.get("summary") or {}
+            if int(portable_summary.get("papers") or 0) > 0 or int(portable_summary.get("invalid_ledgers") or 0) > 0:
+                paper_ledger_index = portable_index
+                paper_ledger_source = "generated/paper-registry.json"
+        except (OSError, json.JSONDecodeError, TypeError, ValueError):
+            pass
+    paper_acceptance["ledger_index"] = paper_ledger_index
+    paper_acceptance["ledger_index_source"] = paper_ledger_source
     paper_acceptance["summary"].update({
-        "registered_papers": int((paper_acceptance["ledger_index"].get("summary") or {}).get("papers") or 0),
-        "scientific_holds": int((paper_acceptance["ledger_index"].get("summary") or {}).get("scientific_holds") or 0),
-        "submission_ready_papers": int((paper_acceptance["ledger_index"].get("summary") or {}).get("submission_ready") or 0),
-        "invalid_ledgers": int((paper_acceptance["ledger_index"].get("summary") or {}).get("invalid_ledgers") or 0),
+        "registered_papers": int((paper_ledger_index.get("summary") or {}).get("papers") or 0),
+        "scientific_holds": int((paper_ledger_index.get("summary") or {}).get("scientific_holds") or 0),
+        "submission_ready_papers": int((paper_ledger_index.get("summary") or {}).get("submission_ready") or 0),
+        "invalid_ledgers": int((paper_ledger_index.get("summary") or {}).get("invalid_ledgers") or 0),
     })
     p0_offline_public = {"summary": p0_offline_qualification["summary"], "policy": p0_offline_qualification["policy"]}
     p0_realizability_public = {"summary": p0_realizability["summary"], "policy": p0_realizability["policy"]}

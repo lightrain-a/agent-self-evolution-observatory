@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import StorageSettings, resolve_experiment_data_root
-from .paper_acceptance_ledger import build_paper_ledger_index
+from .paper_acceptance_ledger import build_paper_ledger_index, build_portable_paper_ledger_index
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 GENERATED = PROJECT_ROOT / "generated"
@@ -458,30 +458,14 @@ def paper_acceptance_state():
     projection_source = "generated/research-system-state.json"
     try:
         portable_registry = load_generated("paper-registry.json")
-        registry_rows = []
-        for row in portable_registry.get("papers") or []:
-            if not isinstance(row, dict):
-                continue
-            item = dict(row)
-            item["paper_id"] = str(item.get("acceptance_paper_id") or item.get("paper_id") or "")
-            registry_rows.append(item)
-        registry_summary = portable_registry.get("summary") or {}
+        portable_index = build_portable_paper_ledger_index(portable_registry)
+        portable_summary = portable_index.get("summary") or {}
         registry_generated = str(portable_registry.get("generated_at") or "")
         system_generated = str(system.get("generated_at") or "")
-        if registry_rows and registry_generated > system_generated:
-            ledger_index = {
-                "entries": registry_rows,
-                "summary": {
-                    "papers": int(registry_summary.get("papers") or len(registry_rows)),
-                    "invalid_ledgers": 0,
-                    "scientific_holds": int(registry_summary.get("scientific_holds") or 0),
-                    "submission_ready": int(registry_summary.get("submission_ready") or 0),
-                    "gate_clean_submission_ready": int(registry_summary.get("gate_clean_submission_ready") or 0),
-                    "paper_preparation_failed": int(registry_summary.get("paper_preparation_failed") or 0),
-                    "immediate_submission_holds": int(registry_summary.get("immediate_submission_holds") or 0),
-                    "by_state": dict(registry_summary.get("by_stage") or {}),
-                },
-            }
+        snapshot_summary = snapshot_index.get("summary") or {}
+        portable_available = int(portable_summary.get("papers") or 0) > 0 or int(portable_summary.get("invalid_ledgers") or 0) > 0
+        if portable_available and (registry_generated > system_generated or int(snapshot_summary.get("papers") or 0) == 0):
+            ledger_index = portable_index
             projection_source = "generated/paper-registry.json"
     except Exception:
         pass
@@ -489,7 +473,10 @@ def paper_acceptance_state():
         root = resolve_experiment_data_root(StorageSettings.from_env())
         live_index = build_paper_ledger_index(root)
         live_summary = live_index.get("summary") or {}
-        if int(live_summary.get("papers") or 0) > 0 and int(live_summary.get("invalid_ledgers") or 0) == 0:
+        if int(live_summary.get("invalid_ledgers") or 0) > 0:
+            ledger_index = live_index
+            projection_source = "canonical-append-only-paper-ledgers-invalid"
+        elif int(live_summary.get("papers") or 0) > 0:
             ledger_index = live_index
             projection_source = "canonical-append-only-paper-ledgers"
     except Exception:

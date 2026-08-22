@@ -2,16 +2,41 @@ from __future__ import annotations
 
 import json
 import unittest
+from unittest.mock import patch
 
 from research_pipeline.research_item_state import (
     build_paper_registry,
     build_research_item_state,
+    paper_acceptance_state,
     validate_paper_registry,
     validate_research_item_state,
 )
 
 
 class ResearchItemStateTest(unittest.TestCase):
+    def test_empty_machine_local_ledger_uses_portable_registry_even_when_system_snapshot_is_newer(self) -> None:
+        with open("generated/paper-registry.json", encoding="utf-8") as handle:
+            registry = json.load(handle)
+        self.assertGreaterEqual(int((registry.get("summary") or {}).get("papers") or 0), 2)
+        empty_index = {
+            "summary": {"papers": 0, "invalid_ledgers": 0, "scientific_holds": 0, "submission_ready": 0},
+            "entries": [], "invalid": [], "scientific_authority": False,
+        }
+        system = {
+            "generated_at": "9999-01-01T00:00:00+00:00",
+            "paper_acceptance": {"summary": {}, "ledger_index": empty_index},
+        }
+        def load(name: str):
+            if name == "research-system-state.json": return system
+            if name == "paper-registry.json": return registry
+            raise AssertionError(name)
+        with patch("research_pipeline.research_item_state.load_generated", side_effect=load), patch("research_pipeline.research_item_state.build_paper_ledger_index", return_value=empty_index):
+            acceptance, by_id = paper_acceptance_state()
+        self.assertEqual(acceptance["projection_source"], "generated/paper-registry.json")
+        self.assertIn("STRI-ICLR2027", by_id)
+        self.assertIn("AGENT-SAFETY-R9", by_id)
+        self.assertEqual(by_id["STRI-ICLR2027"]["current_state"], "SUBMISSION_READY")
+
     @classmethod
     def setUpClass(cls) -> None:
         cls.state = build_research_item_state()
