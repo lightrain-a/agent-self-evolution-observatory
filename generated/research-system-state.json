@@ -84678,9 +84678,9 @@
       "automatic_experiment_authority": 0,
       "automatic_gpu_authority": 0,
       "automatic_submission_authority": 0,
-      "registered_papers": 2,
+      "registered_papers": 5,
       "scientific_holds": 0,
-      "submission_ready_papers": 2,
+      "submission_ready_papers": 4,
       "invalid_ledgers": 0
     },
     "scientific_authority": false,
@@ -84694,12 +84694,13 @@
         "ledger_projection_has_zero_authority": true
       },
       "summary": {
-        "papers": 2,
+        "papers": 5,
         "invalid_ledgers": 0,
         "scientific_holds": 0,
-        "submission_ready": 2,
+        "submission_ready": 4,
         "by_state": {
-          "SUBMISSION_READY": 2
+          "SUBMISSION_READY": 4,
+          "TARGETED_REPAIR": 1
         }
       },
       "entries": [
@@ -84772,6 +84773,259 @@
           "latest_submission_readiness": {
             "submission_ready": true,
             "receipt_sha256": "0308664b4f224b9b8f8fc0e49d07bc764d2bf399a7d321be8394cbef1cde221b",
+            "blockers": []
+          },
+          "latest_transition": {
+            "from": "PREBUTTAL",
+            "to": "SUBMISSION_READY",
+            "allowed": true,
+            "blockers": []
+          },
+          "authority": {
+            "scientific": false,
+            "experiment": false,
+            "gpu": false,
+            "submission": false
+          }
+        },
+        {
+          "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+          "title": "Failure Memories Are Not Neutral: Causal Provenance Effects in Self-Evolving Agents",
+          "central_question": "Does failure-derived trajectory provenance causally sustain future error when future task difficulty and actionable memory guidance are matched?",
+          "contract_sha256": "582a203818f9f590d601b5ea9d3a3ecdc08acb3e34d3b1d9f190e17a2d1dcc25",
+          "scientific_status": "READY",
+          "current_state": "TARGETED_REPAIR",
+          "supported_claims": 3,
+          "unsupported_claims": 2,
+          "limitations": [
+            "The current public financial-agent release provides aggregate provenance counts and transition statistics. The matched provenance swap requires the first-party per-query memory artifacts or a faithful reconstruction of the audited ReasoningBank runs. Those artifacts are announced for release upon publication and are currently experiment debt.",
+            "The reported provenance accuracies are rounded to three decimals. The integer correct counts used in our decomposition are the unique counts consistent with the reported support sizes and rounded accuracies. The transition allocation beyond the ten W$\\rightarrow$W cases is therefore a derived arithmetic decomposition from public aggregate statistics.",
+            "Semantic matching between failure-derived memory and success-derived memory is an experimental design challenge. A pair can preserve procedural content while differing in wording. We therefore require an information-equivalence audit before the swap. Pair construction and verifier agreement remain experiment debt until the first-party memory artifacts are available.",
+            "The causal claim concerns future persistence under matched memory information. The existing audit supports the provenance-conditioned association and identifies task difficulty as a confound. Direct causal effect size remains experiment debt for the swap experiment in Section~\\ref{sec:intervention}.",
+            "The empirical source is a financial AgentDojo setting with ReasoningBank. Replication in web agents and other external-memory architectures remains experiment debt for a broader cross-domain claim."
+          ],
+          "reopen_conditions": [],
+          "summary": {
+            "events": 13,
+            "allowed_transitions": 4,
+            "blocked_transitions": 0,
+            "story_search_receipts": 1,
+            "mock_reviews": 2,
+            "claim_audit_receipts": 0,
+            "manuscript_ci_receipts": 0,
+            "prebuttal_receipts": 0,
+            "submission_readiness_receipts": 0
+          },
+          "latest_story_search": {
+            "pass": true,
+            "selected_story_id": "S1-CURRENT-CHAIN",
+            "selected_story_title": "Current mechanism chain",
+            "story_search_sha256": "e3123c9dfcf670e0fcab11859aaad3e4b302f4fd93b11e5b476e5133468e3702",
+            "valid_candidates": 3
+          },
+          "mock_pc_modes": {
+            "BLIND_MANUSCRIPT": "0e3776ae12dc72ea51edfff657354ad1f4cb022daf92e0d1a3328f2b86468683",
+            "ARTIFACT_AWARE": "5f150067d114c8a09adae0af63badd911e4ba1253ab0de6511019d84aff06a97"
+          },
+          "latest_mock_review": {
+            "mode": "ARTIFACT_AWARE",
+            "review_sha256": "5f150067d114c8a09adae0af63badd911e4ba1253ab0de6511019d84aff06a97",
+            "summary": {
+              "objections": 4,
+              "decision_critical": 2,
+              "targeted_experiment_proposals": 3,
+              "claim_expansion_requests_preserved_as_limitations": 0
+            }
+          },
+          "latest_claim_audit": {
+            "pass": false,
+            "claim_audit_sha256": "",
+            "blockers": []
+          },
+          "latest_manuscript_ci": {
+            "pass": false,
+            "required": 0,
+            "passed": 0,
+            "missing": [],
+            "failed": []
+          },
+          "latest_prebuttal": {
+            "pass": false,
+            "decision_critical": 0,
+            "blockers": []
+          },
+          "latest_submission_readiness": {
+            "submission_ready": false,
+            "receipt_sha256": "",
+            "blockers": []
+          },
+          "latest_transition": {
+            "from": "MOCK_PC",
+            "to": "TARGETED_REPAIR",
+            "allowed": true,
+            "blockers": []
+          },
+          "authority": {
+            "scientific": false,
+            "experiment": false,
+            "gpu": false,
+            "submission": false
+          }
+        },
+        {
+          "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+          "title": "Noisy Rewards Write Noisy Memories: Reward Error as a Variance Amplifier in Self-Improving Agents",
+          "central_question": "Can an erroneous reward label become persistent agent state by changing the memory written from an otherwise identical trajectory, and does that perturbation reach later behavior?",
+          "contract_sha256": "ff6edaa9d93fe289bb84e74937cece3176329925435de8b0c03649f239623ccb",
+          "scientific_status": "READY",
+          "current_state": "SUBMISSION_READY",
+          "supported_claims": 4,
+          "unsupported_claims": 2,
+          "limitations": [
+            "The F0 intervention requests six paired memories. Four pairs return complete outputs in both reward conditions. Two failure-label provider responses terminate as incomplete before assistant text is produced. Their provider response identifiers are archived and GET-only recovery confirms that no text is available. These two cases remain support debt. They do not change the observed 4/4 content-divergence result among complete pairs.",
+            "F0 establishes the reward-to-memory write channel. It does not yet measure the full reward-to-future-outcome effect. Matched future-task injection and run-level corruption experiments remain experiment debt. The manuscript therefore treats downstream variance amplification as an active causal hypothesis grounded by the observed write-channel mechanism.",
+            "The paired intervention uses DeepSeek-V4-Flash as the memory writer. The released ReasoningBank implementation can use other writer models. Replication across memory-writer families remains experiment debt for a model-independent effect-size claim.",
+            "The released trajectories used for F0 come from one WebArena Shopping run. They include both original-success and original-failure episodes, which supports the mechanism across outcome strata. Broader task-family replication remains experiment debt.",
+            "Token-set Jaccard distance measures content divergence at a coarse lexical level. Title-set changes supply an additional structural measure. A semantic representation analysis can further quantify whether reward labels move memories toward distinct strategy clusters.",
+            "Support debt: Two requested F0 failure-label responses remain provider-incomplete after GET-only recovery and are excluded from scientific counts."
+          ],
+          "reopen_conditions": [],
+          "summary": {
+            "events": 18,
+            "allowed_transitions": 8,
+            "blocked_transitions": 0,
+            "story_search_receipts": 1,
+            "mock_reviews": 4,
+            "claim_audit_receipts": 1,
+            "manuscript_ci_receipts": 1,
+            "prebuttal_receipts": 1,
+            "submission_readiness_receipts": 1
+          },
+          "latest_story_search": {
+            "pass": true,
+            "selected_story_id": "S1-CURRENT-CHAIN",
+            "selected_story_title": "Current mechanism chain",
+            "story_search_sha256": "32885d13b5eb44ae667cb046a46c4694acf25a128e3cfe5ed00855d6e2c090d0",
+            "valid_candidates": 3
+          },
+          "mock_pc_modes": {
+            "BLIND_MANUSCRIPT": "d9d25dd35e9f58cba1154235620daea2c66b15b8846629874ebc0d5e8016bdf6",
+            "ARTIFACT_AWARE": "9535a18a9463a76d31eb0f42e93fe50c316e9f9c98c18869e58483349495929b"
+          },
+          "latest_mock_review": {
+            "mode": "ARTIFACT_AWARE",
+            "review_sha256": "9535a18a9463a76d31eb0f42e93fe50c316e9f9c98c18869e58483349495929b",
+            "summary": {
+              "objections": 4,
+              "decision_critical": 3,
+              "targeted_experiment_proposals": 3,
+              "claim_expansion_requests_preserved_as_limitations": 0
+            }
+          },
+          "latest_claim_audit": {
+            "pass": true,
+            "claim_audit_sha256": "d2c92b6676f7904b167f9102d601a307b303c3229683841edf1a7b6eeaaccd5f",
+            "blockers": []
+          },
+          "latest_manuscript_ci": {
+            "pass": true,
+            "required": 9,
+            "passed": 9,
+            "missing": [],
+            "failed": []
+          },
+          "latest_prebuttal": {
+            "pass": true,
+            "decision_critical": 10,
+            "blockers": []
+          },
+          "latest_submission_readiness": {
+            "submission_ready": true,
+            "receipt_sha256": "9ec12b08da9d0aa488fb3b27ddd08445f3a99959b4ad77b5b961e062d983af22",
+            "blockers": []
+          },
+          "latest_transition": {
+            "from": "PREBUTTAL",
+            "to": "SUBMISSION_READY",
+            "allowed": true,
+            "blockers": []
+          },
+          "authority": {
+            "scientific": false,
+            "experiment": false,
+            "gpu": false,
+            "submission": false
+          }
+        },
+        {
+          "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+          "title": "Temporal Skills Are a Causal Bottleneck in Evolving Time-Series Agents",
+          "central_question": "Are recurring temporal-validity and exogenous-context failures caused by missing reusable procedures that targeted skills can repair beyond generic skill assistance?",
+          "contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
+          "scientific_status": "READY",
+          "current_state": "SUBMISSION_READY",
+          "supported_claims": 2,
+          "unsupported_claims": 2,
+          "limitations": [
+            "The TimeSage paper declares a public dataset and code release. The current first-party GitHub repository contains a placeholder README, while the public Hugging Face repository currently exposes only repository metadata. The frozen May 2026 evaluated snapshot is therefore unavailable from these public release points at the time of this audit. Targeted reruns remain support debt until the evaluated snapshot or equivalent first-party artifacts are available.",
+            "The source paper reports aggregate gains from reusable skills and a 0.82$\\times$ token-cost ratio. It does not report the targeted intervention proposed here. The mechanism-specific causal effect therefore remains experiment debt even though the aggregate skill benefit is already observed.",
+            "Failure-family labels must be frozen before intervention outcomes are inspected. Temporal-validity cases require evidence-cutoff errors that can be checked against the benchmark timestamp contract. Exogenous-context cases require a source-grounded attribution target. This annotation pass remains experiment debt for the frozen snapshot.",
+            "A targeted skill can change more than one internal reasoning step. The matched generic-skill control reduces this concern by providing comparable reusable tooling. A stronger control can also match code length and tool-call count. This control refinement remains experiment debt.",
+            "The paper focuses on reusable procedural state. Some recurring failures can arise from model capability limits even when the correct procedure is available. The targeted-skill effect therefore estimates the subset of failures that are repairable through explicit reusable procedures."
+          ],
+          "reopen_conditions": [],
+          "summary": {
+            "events": 19,
+            "allowed_transitions": 8,
+            "blocked_transitions": 0,
+            "story_search_receipts": 1,
+            "mock_reviews": 2,
+            "claim_audit_receipts": 1,
+            "manuscript_ci_receipts": 1,
+            "prebuttal_receipts": 1,
+            "submission_readiness_receipts": 1
+          },
+          "latest_story_search": {
+            "pass": true,
+            "selected_story_id": "S1-CURRENT-CHAIN",
+            "selected_story_title": "Current mechanism chain",
+            "story_search_sha256": "92856a345632fd19a6dd1bb513b4f0754cc3f2a97e7ccc5b4149f48e6e444615",
+            "valid_candidates": 3
+          },
+          "mock_pc_modes": {
+            "BLIND_MANUSCRIPT": "29cdb7faf01a55647b79b93883a792ecd2c756f6148a990f1cf25aac14ac885f",
+            "ARTIFACT_AWARE": "5d1cf4251bf0da590459a90e10779096c0092231bb2e0dd06794155ca0f70f50"
+          },
+          "latest_mock_review": {
+            "mode": "ARTIFACT_AWARE",
+            "review_sha256": "5d1cf4251bf0da590459a90e10779096c0092231bb2e0dd06794155ca0f70f50",
+            "summary": {
+              "objections": 5,
+              "decision_critical": 3,
+              "targeted_experiment_proposals": 4,
+              "claim_expansion_requests_preserved_as_limitations": 0
+            }
+          },
+          "latest_claim_audit": {
+            "pass": true,
+            "claim_audit_sha256": "013d75566cfc13cdf21404bb3c208c9288629ed585af2aaf4c363cc482e6797c",
+            "blockers": []
+          },
+          "latest_manuscript_ci": {
+            "pass": true,
+            "required": 9,
+            "passed": 9,
+            "missing": [],
+            "failed": []
+          },
+          "latest_prebuttal": {
+            "pass": true,
+            "decision_critical": 6,
+            "blockers": []
+          },
+          "latest_submission_readiness": {
+            "submission_ready": true,
+            "receipt_sha256": "86b5b9bc1a3ce36b3481346c26f5c1620338484b1b70b8cdecc465f55c32fd80",
             "blockers": []
           },
           "latest_transition": {

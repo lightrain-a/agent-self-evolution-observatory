@@ -8,6 +8,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .config import StorageSettings, resolve_experiment_data_root
+from .paper_acceptance_ledger import build_paper_ledger_index
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 GENERATED = PROJECT_ROOT / "generated"
 
@@ -350,9 +353,40 @@ def build_evidence_contexts(current_status):
 
 
 def paper_acceptance_state():
+    """Return the freshest auditable Paper Acceptance projection available at build time.
+
+    The static research-system snapshot is portable and remains the fallback for CI or
+    machines without the canonical data root.  On the canonical research host we read
+    the append-only ledger index directly so newly advanced papers cannot disappear
+    from PaperRegistry simply because research-system-state.json predates them.
+    """
     system = load_generated("research-system-state.json")
-    acceptance = system.get("paper_acceptance") or {}
-    entries = (acceptance.get("ledger_index") or {}).get("entries") or []
+    acceptance = dict(system.get("paper_acceptance") or {})
+    snapshot_index = dict(acceptance.get("ledger_index") or {})
+    ledger_index = snapshot_index
+    projection_source = "generated/research-system-state.json"
+    try:
+        root = resolve_experiment_data_root(StorageSettings.from_env())
+        live_index = build_paper_ledger_index(root)
+        live_summary = live_index.get("summary") or {}
+        if int(live_summary.get("papers") or 0) > 0 and int(live_summary.get("invalid_ledgers") or 0) == 0:
+            ledger_index = live_index
+            projection_source = "canonical-append-only-paper-ledgers"
+    except Exception:
+        # Portable/static builds intentionally remain valid without /data access.
+        ledger_index = snapshot_index
+    acceptance["ledger_index"] = ledger_index
+    acceptance["projection_source"] = projection_source
+    summary = dict(acceptance.get("summary") or {})
+    index_summary = ledger_index.get("summary") or {}
+    summary.update({
+        "registered_papers": int(index_summary.get("papers") or 0),
+        "scientific_holds": int(index_summary.get("scientific_holds") or 0),
+        "submission_ready_papers": int(index_summary.get("submission_ready") or 0),
+        "invalid_ledgers": int(index_summary.get("invalid_ledgers") or 0),
+    })
+    acceptance["summary"] = summary
+    entries = ledger_index.get("entries") or []
     return acceptance, {str(row.get("paper_id") or ""): row for row in entries}
 
 
@@ -404,8 +438,11 @@ def build_paper_registry(research_state=None):
         "paper_id": "STRI",
         "acceptance_paper_id": "STRI-ICLR2027",
         "entity_type": "PaperState",
+        "source_kind": "research-item",
         "source_research_item": "E-7",
         "source_research_item_id": (by_code.get("E-7") or {}).get("id"),
+        "source_research_object": "E-7",
+        "source_candidates": [],
         "paper_stage": stri_acceptance.get("current_state") or "PAPER_EVIDENCE",
         "submission_status": stri_acceptance.get("current_state") or "PAPER_EVIDENCE",
         "legacy_submission_status": legacy_stri.get("submission_status"),
@@ -413,29 +450,96 @@ def build_paper_registry(research_state=None):
         "experiment_refs": list((by_code.get("E-7") or {}).get("experiment_refs") or []),
         "research_authority": authority(),
         "acceptance_authority": stri_acceptance.get("authority") or {},
-        "provenance_refs": [source_ref("generated/research-system-state.json", "paper_acceptance.ledger_index.STRI-ICLR2027"), source_ref("generated/current-research-status.json", "legacy_paper_quality_projection"), source_ref("generated/research-items.json", "source_research_item")],
+        "provenance_refs": [source_ref("canonical-paper-acceptance-ledger", "STRI-ICLR2027"), source_ref("generated/current-research-status.json", "legacy_paper_quality_projection"), source_ref("generated/research-items.json", "source_research_item")],
     }
     safety = {
         **safety_acceptance,
         "paper_id": "AGENT-SAFETY-R9",
         "acceptance_paper_id": "AGENT-SAFETY-R9",
         "entity_type": "PaperState",
+        "source_kind": "research-item",
         "source_research_item": "G-1",
         "source_research_item_id": (by_code.get("G-1") or {}).get("id"),
+        "source_research_object": "G-1",
+        "source_candidates": [],
         "paper_stage": safety_acceptance.get("current_state") or "PAPER_EVIDENCE",
         "submission_status": safety_acceptance.get("current_state") or "PAPER_EVIDENCE",
         "submission_ready": bool((safety_acceptance.get("latest_submission_readiness") or {}).get("submission_ready")),
         "experiment_refs": list((by_code.get("G-1") or {}).get("experiment_refs") or []),
         "research_authority": authority(),
         "acceptance_authority": safety_acceptance.get("authority") or {},
-        "provenance_refs": [source_ref("generated/research-system-state.json", "paper_acceptance.ledger_index.AGENT-SAFETY-R9"), source_ref("generated/research-items.json", "source_research_item")],
+        "provenance_refs": [source_ref("canonical-paper-acceptance-ledger", "AGENT-SAFETY-R9"), source_ref("generated/research-items.json", "source_research_item")],
     }
-    papers = [stri, safety]
+
+    # D2 papers were promoted from the paper-first discovery campaign rather than
+    # from an A–G ResearchItem. Preserve that provenance explicitly instead of
+    # inventing a false ResearchItem mapping merely to satisfy the UI schema.
+    d2_meta = {
+        "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE": {
+            "source_research_object": "D2-PROXY-REWARD-MEMORY-VARIANCE",
+            "source_candidates": ["D2-C02", "D2-C05"],
+            "display_order": 30,
+        },
+        "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK": {
+            "source_research_object": "D2-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+            "source_candidates": ["D2-C06"],
+            "display_order": 31,
+        },
+        "D2-PAPER-FAILURE-MEMORY-PROVENANCE": {
+            "source_research_object": "D2-FAILURE-MEMORY-PROVENANCE",
+            "source_candidates": ["D2-C01", "D2-C04"],
+            "display_order": 32,
+        },
+    }
+    d2_papers = []
+    for paper_id, meta in d2_meta.items():
+        accepted = dict(acceptance_by_id.get(paper_id) or {})
+        if not accepted:
+            continue
+        d2_papers.append({
+            **accepted,
+            "paper_id": paper_id,
+            "acceptance_paper_id": paper_id,
+            "entity_type": "PaperState",
+            "source_kind": "paper-first-discovery-candidate",
+            "source_research_item": None,
+            "source_research_item_id": None,
+            "source_research_object": meta["source_research_object"],
+            "source_candidates": list(meta["source_candidates"]),
+            "paper_stage": accepted.get("current_state") or "PAPER_EVIDENCE",
+            "submission_status": accepted.get("current_state") or "PAPER_EVIDENCE",
+            "submission_ready": bool((accepted.get("latest_submission_readiness") or {}).get("submission_ready")),
+            "experiment_refs": [],
+            "research_authority": authority(),
+            "acceptance_authority": accepted.get("authority") or {},
+            "display_order": meta["display_order"],
+            "provenance_refs": [source_ref("canonical-paper-acceptance-ledger", paper_id), source_ref("paper-first-discovery-candidates", ",".join(meta["source_candidates"]))],
+        })
+
+    papers = [stri, safety, *sorted(d2_papers, key=lambda row: int(row.get("display_order") or 999))]
     stage_counts = dict(sorted(Counter(row.get("paper_stage") for row in papers).items()))
-    return {"schema_version": "1.1", "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "source_revision": git_head(),
-            "policy": {"paper_registry_is_projection_of_append_only_acceptance_ledgers": True, "paper_registry_cannot_grant_research_or_experiment_authority": True, "paper_registry_cannot_grant_submission_authority": True, "paper_claims_must_reference_existing_research_evidence": True, **(acceptance.get("policy") or {})},
-            "summary": {"papers": len(papers), "submission_ready": sum(bool(row.get("submission_ready")) for row in papers), "scientific_holds": sum(row.get("scientific_status") == "CAUSAL_HOLD" for row in papers), "primary_paper": "STRI", "by_stage": stage_counts},
-            "papers": papers}
+    return {
+        "schema_version": "1.2",
+        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "source_revision": git_head(),
+        "projection_source": acceptance.get("projection_source") or "generated/research-system-state.json",
+        "policy": {
+            "paper_registry_is_projection_of_append_only_acceptance_ledgers": True,
+            "paper_registry_cannot_grant_research_or_experiment_authority": True,
+            "paper_registry_cannot_grant_submission_authority": True,
+            "paper_claims_must_reference_existing_research_evidence": True,
+            "paper_first_discovery_papers_need_not_fake_research_item_parentage": True,
+            **(acceptance.get("policy") or {}),
+        },
+        "summary": {
+            "papers": len(papers),
+            "submission_ready": sum(bool(row.get("submission_ready")) for row in papers),
+            "scientific_holds": sum(str(row.get("scientific_status") or "") != "READY" for row in papers),
+            "primary_paper": "STRI",
+            "by_stage": stage_counts,
+        },
+        "papers": papers,
+    }
 
 def validate_research_item_state(state):
     errors = []; items = state.get("research_items") or []; experiments = state.get("experiment_records") or []; contexts = state.get("evidence_contexts") or []; summary = state.get("summary") or {}
@@ -466,18 +570,48 @@ def validate_research_item_state(state):
 
 
 def validate_paper_registry(registry, research_state):
-    errors = []; papers = registry.get("papers") or []
-    if len(papers) != 2: return [f"expected two registered PaperStates, got {len(papers)}"]
+    errors = []
+    papers = registry.get("papers") or []
+    acceptance, acceptance_by_id = paper_acceptance_state()
+    expected_ids = {"STRI" if key == "STRI-ICLR2027" else key for key in acceptance_by_id}
+    actual_ids = {row.get("paper_id") for row in papers}
+    if actual_ids != expected_ids:
+        errors.append(f"PaperRegistry must project every canonical acceptance ledger: expected={sorted(expected_ids)}, actual={sorted(str(x) for x in actual_ids)}")
     by_id = {row.get("paper_id"): row for row in papers}
     paper = by_id.get("STRI") or {}
     safety = by_id.get("AGENT-SAFETY-R9") or {}
-    if paper.get("source_research_item") != "E-7" or paper.get("acceptance_paper_id") != "STRI-ICLR2027": errors.append("STRI must bind E-7 to the STRI-ICLR2027 acceptance ledger")
-    if (int(paper.get("claims_supported") or 0), int(paper.get("claims_total") or 0)) != (3,3): errors.append("STRI frozen supported claims must remain 3/3")
-    if int(paper.get("paper_quality_evidence_debt") or 0) != 0: errors.append("legacy STRI evidence checklist must remain zero-debt")
-    if paper.get("paper_stage") != "SUBMISSION_READY" or paper.get("submission_ready") is not True: errors.append(f"STRI must follow latest acceptance state SUBMISSION_READY with submission_ready=true, got {paper.get('paper_stage')}/{paper.get('submission_ready')}")
-    if safety.get("source_research_item") != "G-1" or safety.get("paper_stage") != "SUBMISSION_READY" or safety.get("scientific_status") != "READY" or safety.get("submission_ready") is not True: errors.append("Agent Safety bounded R9 PaperState must be G-1 / READY / SUBMISSION_READY")
-    if int((registry.get("summary") or {}).get("submission_ready") or 0) != 2 or int((registry.get("summary") or {}).get("scientific_holds") or 0) != 0: errors.append("Curated PaperRegistry must report both registered papers submission-ready and zero scientific holds")
+    if paper.get("source_research_item") != "E-7" or paper.get("acceptance_paper_id") != "STRI-ICLR2027":
+        errors.append("STRI must bind E-7 to the STRI-ICLR2027 acceptance ledger")
+    if (int(paper.get("claims_supported") or 0), int(paper.get("claims_total") or 0)) != (3,3):
+        errors.append("STRI frozen supported claims must remain 3/3")
+    if int(paper.get("paper_quality_evidence_debt") or 0) != 0:
+        errors.append("legacy STRI evidence checklist must remain zero-debt")
+    if paper.get("paper_stage") != "SUBMISSION_READY" or paper.get("submission_ready") is not True:
+        errors.append(f"STRI must follow latest acceptance state SUBMISSION_READY with submission_ready=true, got {paper.get('paper_stage')}/{paper.get('submission_ready')}")
+    if safety.get("source_research_item") != "G-1" or safety.get("paper_stage") != "SUBMISSION_READY" or safety.get("scientific_status") != "READY" or safety.get("submission_ready") is not True:
+        errors.append("Agent Safety bounded R9 PaperState must be G-1 / READY / SUBMISSION_READY")
+
+    expected_summary = (acceptance.get("ledger_index") or {}).get("summary") or {}
+    summary = registry.get("summary") or {}
+    if int(summary.get("papers") or 0) != int(expected_summary.get("papers") or 0):
+        errors.append("PaperRegistry paper count must match canonical acceptance ledger index")
+    if int(summary.get("submission_ready") or 0) != int(expected_summary.get("submission_ready") or 0):
+        errors.append("PaperRegistry submission-ready count must match canonical acceptance ledger index")
+    if int(summary.get("scientific_holds") or 0) != int(expected_summary.get("scientific_holds") or 0):
+        errors.append("PaperRegistry scientific-hold count must match canonical acceptance ledger index")
+
     research_codes = {r.get("code") for r in research_state.get("research_items") or []}
-    if any(row.get("source_research_item") not in research_codes for row in papers): errors.append("PaperState source ResearchItem is missing")
-    if any(bool((row.get("acceptance_authority") or {}).get(key)) for row in papers for key in ("scientific","experiment","gpu","submission")): errors.append("PaperRegistry must preserve zero automatic authority from acceptance ledgers")
+    for row in papers:
+        source_kind = str(row.get("source_kind") or "")
+        source_item = row.get("source_research_item")
+        if source_kind == "research-item":
+            if source_item not in research_codes:
+                errors.append(f"PaperState source ResearchItem is missing: {row.get('paper_id')}->{source_item}")
+        elif source_kind == "paper-first-discovery-candidate":
+            if source_item is not None or not (row.get("source_candidates") or []) or not row.get("source_research_object"):
+                errors.append(f"paper-first PaperState must preserve candidate/object provenance without fake ResearchItem parentage: {row.get('paper_id')}")
+        else:
+            errors.append(f"unknown PaperState source_kind:{row.get('paper_id')}:{source_kind}")
+    if any(bool((row.get("acceptance_authority") or {}).get(key)) for row in papers for key in ("scientific","experiment","gpu","submission")):
+        errors.append("PaperRegistry must preserve zero automatic authority from acceptance ledgers")
     return errors

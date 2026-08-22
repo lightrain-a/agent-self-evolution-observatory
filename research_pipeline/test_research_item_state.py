@@ -48,13 +48,26 @@ class ResearchItemStateTest(unittest.TestCase):
         self.assertEqual(paper["source_research_item"], "E-7")
         self.assertEqual(paper["paper_stage"], "SUBMISSION_READY")
         self.assertTrue(paper["submission_ready"])
-        self.assertEqual(self.registry["summary"]["submission_ready"], 2)
+        self.assertGreaterEqual(self.registry["summary"]["papers"], 2)
+        self.assertGreaterEqual(self.registry["summary"]["submission_ready"], 2)
         self.assertEqual(self.registry["summary"]["scientific_holds"], 0)
         self.assertEqual((paper["claims_supported"], paper["claims_total"], paper["paper_quality_evidence_debt"]), (3, 3, 0))
         safety = papers["AGENT-SAFETY-R9"]
         self.assertEqual((safety["source_research_item"], safety["paper_stage"], safety["scientific_status"]), ("G-1", "SUBMISSION_READY", "READY"))
         self.assertTrue(safety["submission_ready"])
         self.assertEqual(self.by_code["G-1"]["scientific_state"], "HOLD")
+        temporal = papers.get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK")
+        if temporal:
+            self.assertEqual(temporal["paper_stage"], "SUBMISSION_READY")
+            self.assertTrue(temporal["submission_ready"])
+            self.assertEqual(temporal["source_kind"], "paper-first-discovery-candidate")
+            self.assertIsNone(temporal["source_research_item"])
+            self.assertEqual(temporal["source_candidates"], ["D2-C06"])
+            self.assertEqual(self.registry["summary"]["papers"], 5)
+            self.assertEqual(self.registry["summary"]["submission_ready"], 4)
+            failure = papers["D2-PAPER-FAILURE-MEMORY-PROVENANCE"]
+            self.assertEqual(failure["paper_stage"], "TARGETED_REPAIR")
+            self.assertFalse(failure["submission_ready"])
 
     def test_experiments_are_zero_authority_evidence_events(self) -> None:
         self.assertTrue(all(row["scientific_authority"] is False for row in self.state["experiment_records"]))

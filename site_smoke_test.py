@@ -115,14 +115,23 @@ def main() -> None:
     papers_by_id = {row.get("paper_id"): row for row in papers}
     stri_registry = papers_by_id.get("STRI") or {}
     safety_registry = papers_by_id.get("AGENT-SAFETY-R9") or {}
-    if len(papers) != 2 or stri_registry.get("source_research_item") != "E-7" or stri_registry.get("paper_stage") != "SUBMISSION_READY" or stri_registry.get("submission_ready") is not True:
-        fail(f"PaperRegistry must bind STRI to E-7 at SUBMISSION_READY and mark it submission-ready: {papers}")
+    if len(papers) != 5 or stri_registry.get("source_research_item") != "E-7" or stri_registry.get("paper_stage") != "SUBMISSION_READY" or stri_registry.get("submission_ready") is not True:
+        fail(f"PaperRegistry must project all five canonical ledgers while binding STRI to E-7 at SUBMISSION_READY: {papers}")
     if safety_registry.get("source_research_item") != "G-1" or safety_registry.get("paper_stage") != "SUBMISSION_READY" or safety_registry.get("scientific_status") != "READY" or safety_registry.get("submission_ready") is not True:
         fail(f"PaperRegistry must bind the bounded Agent Safety R9 paper to G-1 at READY / SUBMISSION_READY: {safety_registry}")
     if (ri_by_code.get("G-1") or {}).get("scientific_state") != "HOLD" or (ri_by_code.get("G-1") or {}).get("principle_dead_end_certified") is not False:
         fail("the broader G-1 replication/support ResearchItem must remain reopenable HOLD even after the bounded R9 paper reaches Submission Ready")
-    if (paper_registry.get("summary") or {}).get("submission_ready") != 2 or (paper_registry.get("summary") or {}).get("scientific_holds") != 0:
-        fail(f"PaperRegistry submission/hold summary is stale: {paper_registry.get('summary')}")
+    d2_temporal = papers_by_id.get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK") or {}
+    d2_proxy = papers_by_id.get("D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE") or {}
+    d2_failure = papers_by_id.get("D2-PAPER-FAILURE-MEMORY-PROVENANCE") or {}
+    if d2_temporal.get("paper_stage") != "SUBMISSION_READY" or d2_temporal.get("submission_ready") is not True or d2_temporal.get("source_kind") != "paper-first-discovery-candidate" or d2_temporal.get("source_research_item") is not None or d2_temporal.get("source_candidates") != ["D2-C06"]:
+        fail(f"Temporal Skill D2 PaperState must be submission-ready with paper-first candidate provenance: {d2_temporal}")
+    if d2_proxy.get("paper_stage") != "SUBMISSION_READY" or d2_proxy.get("submission_ready") is not True or d2_proxy.get("source_kind") != "paper-first-discovery-candidate":
+        fail(f"Proxy Reward D2 PaperState must remain submission-ready with paper-first provenance: {d2_proxy}")
+    if d2_failure.get("paper_stage") != "TARGETED_REPAIR" or d2_failure.get("submission_ready") is not False or d2_failure.get("source_kind") != "paper-first-discovery-candidate":
+        fail(f"Failure-Memory D2 PaperState must remain in Targeted Repair: {d2_failure}")
+    if (paper_registry.get("summary") or {}).get("papers") != 5 or (paper_registry.get("summary") or {}).get("submission_ready") != 4 or ((paper_registry.get("summary") or {}).get("by_stage") or {}).get("TARGETED_REPAIR") != 1 or (paper_registry.get("summary") or {}).get("scientific_holds") != 0:
+        fail(f"PaperRegistry canonical 5/4/1 summary is stale: {paper_registry.get('summary')}")
     timeline_summary = research_timeline.get("summary") or {}
     timeline_policy = research_timeline.get("projection_policy") or {}
     timeline_events = research_timeline.get("events") or []
