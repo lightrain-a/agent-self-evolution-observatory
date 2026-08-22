@@ -13,7 +13,10 @@
     "machine_freeze_stale": 0,
     "machine_handoff_ready": 4,
     "machine_handoff_stale": 0,
-    "human_submission_signoff_pending": 4
+    "human_submission_signoff_pending": 4,
+    "human_signoff_complete": 0,
+    "human_signoff_stale": 0,
+    "submitted": 0
   },
   "papers": [
     {
@@ -108,6 +111,13 @@
         "integrity_pass": true,
         "errors": [],
         "external_human_submission_authority_required": true
+      },
+      "human_signoff": {
+        "status": "PENDING_HUMAN_CONFIRMATION",
+        "signoff_sha256": "",
+        "integrity_pass": false,
+        "errors": [],
+        "actual_submission_status": "NOT_SUBMITTED"
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -227,6 +237,13 @@
         "errors": [],
         "external_human_submission_authority_required": true
       },
+      "human_signoff": {
+        "status": "PENDING_HUMAN_CONFIRMATION",
+        "signoff_sha256": "",
+        "integrity_pass": false,
+        "errors": [],
+        "actual_submission_status": "NOT_SUBMITTED"
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 6,
@@ -345,6 +362,13 @@
         "errors": [],
         "external_human_submission_authority_required": true
       },
+      "human_signoff": {
+        "status": "PENDING_HUMAN_CONFIRMATION",
+        "signoff_sha256": "",
+        "integrity_pass": false,
+        "errors": [],
+        "actual_submission_status": "NOT_SUBMITTED"
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 4,
@@ -460,6 +484,13 @@
         "errors": [],
         "external_human_submission_authority_required": true
       },
+      "human_signoff": {
+        "status": "NOT_ELIGIBLE",
+        "signoff_sha256": "",
+        "integrity_pass": false,
+        "errors": [],
+        "actual_submission_status": "NOT_SUBMITTED"
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
@@ -572,6 +603,13 @@
         "errors": [],
         "external_human_submission_authority_required": true
       },
+      "human_signoff": {
+        "status": "PENDING_HUMAN_CONFIRMATION",
+        "signoff_sha256": "",
+        "integrity_pass": false,
+        "errors": [],
+        "actual_submission_status": "NOT_SUBMITTED"
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
@@ -592,5 +630,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "b7c55a9a26617e5dc594ad636c52f7bc431f2f22ea50076afc55d9cb0c145bb1"
+  "projection_sha256": "aff3a91cd3a4ac976c37d3b31bdcf47fe1d6a0dc674f356eaa553739fcb8095d"
 }

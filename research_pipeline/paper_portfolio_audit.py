@@ -10,6 +10,7 @@ from .paper_acceptance_ledger import validate_paper_ledger
 from .paper_preparation_protocol import validate_paper_preparation_receipt
 from .presubmission_freeze import validate_freeze, verify_current_frozen_artifacts
 from .submission_handoff import validate_handoff_ledger, validate_handoff_receipt
+from .human_submission_signoff import validate_signoff_ledger, verify_current_signoff
 
 DEFAULT_ROOT = Path('/data/wyt/agent-self-evolution-observatory')
 
@@ -124,6 +125,33 @@ def handoff_state(root: Path, paper_id: str, freeze_sha256: str) -> dict[str, An
     }
 
 
+def human_signoff_state(root: Path, paper_id: str, machine_handoff_status: str) -> dict[str, Any]:
+    if machine_handoff_status != 'MACHINE_HANDOFF_CURRENT':
+        return {'status': 'NOT_ELIGIBLE', 'integrity_pass': False, 'errors': [], 'signoff_sha256': ''}
+    signoff_path = root / 'paper-human-signoffs' / f'{paper_id}.json'
+    if not signoff_path.exists():
+        return {'status': 'PENDING_HUMAN_CONFIRMATION', 'integrity_pass': False, 'errors': [], 'signoff_sha256': ''}
+    handoff_path = root / 'paper-submission-handoffs' / f'{paper_id}.json'
+    freeze_path = root / 'paper-submission-freezes' / f'{paper_id}.json'
+    try:
+        signoff = json.loads(signoff_path.read_text(encoding='utf-8'))
+        handoff = json.loads(handoff_path.read_text(encoding='utf-8'))
+        freeze = json.loads(freeze_path.read_text(encoding='utf-8'))
+    except (OSError, json.JSONDecodeError):
+        return {'status': 'HUMAN_SIGNOFF_STALE', 'integrity_pass': False, 'errors': ['human-signoff-ledger-unreadable'], 'signoff_sha256': ''}
+    errors = list(validate_signoff_ledger(signoff))
+    errors.extend(verify_current_signoff(signoff, handoff, freeze))
+    errors = list(dict.fromkeys(errors))
+    event = latest(signoff, 'human-submission-signoff')
+    receipt = event.get('receipt') if isinstance(event.get('receipt'), dict) else {}
+    return {
+        'status': 'HUMAN_SIGNOFF_COMPLETE_ACTUAL_SUBMISSION_PENDING' if not errors else 'HUMAN_SIGNOFF_STALE',
+        'integrity_pass': not errors,
+        'errors': errors,
+        'signoff_sha256': str(receipt.get('signoff_sha256') or ''),
+    }
+
+
 def project(path: Path, root: Path) -> dict[str, Any]:
     row = json.loads(path.read_text(encoding='utf-8'))
     paper_id = str(row.get('paper_id') or path.stem)
@@ -166,6 +194,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
             'handoff_sha256': '',
         }
     handoff = machine_handoff['status'] == 'MACHINE_HANDOFF_CURRENT'
+    human_signoff = human_signoff_state(root, paper_id, machine_handoff['status'])
     actions = next_actions(groups)
     if base_ready and freeze['status'] == 'MACHINE_FREEZE_PENDING':
         actions = ['create a pre-submission freeze checkpoint before machine handoff']
@@ -175,6 +204,12 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         actions = ['build the machine submission handoff packet from the current freeze before author confirmation']
     elif base_ready and machine_handoff['status'] == 'MACHINE_HANDOFF_STALE':
         actions = ['rebuild the machine submission handoff packet from the current freeze before author confirmation']
+    elif human_signoff['status'] == 'PENDING_HUMAN_CONFIRMATION':
+        actions = ['collect explicit human confirmations bound to the current handoff SHA; actual submission remains a separate action']
+    elif human_signoff['status'] == 'HUMAN_SIGNOFF_STALE':
+        actions = ['repeat human signoff against the current freeze and handoff before any upload']
+    elif human_signoff['status'] == 'HUMAN_SIGNOFF_COMPLETE_ACTUAL_SUBMISSION_PENDING':
+        actions = ['human signoff is complete; actual venue upload still requires a separate explicit human submission action and receipt']
     elif not groups and not handoff:
         actions = ['complete Paper Preparation migration before human handoff']
 
@@ -197,6 +232,10 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         'machine_handoff_integrity_pass': machine_handoff['integrity_pass'],
         'machine_handoff_sha256': machine_handoff['handoff_sha256'],
         'machine_handoff_errors': machine_handoff['errors'],
+        'human_signoff_status': human_signoff['status'],
+        'human_signoff_integrity_pass': human_signoff['integrity_pass'],
+        'human_signoff_sha256': human_signoff['signoff_sha256'],
+        'human_signoff_errors': human_signoff['errors'],
         'blocker_groups': groups,
         'blocker_count': len(blockers),
         'next_actions': actions,
@@ -208,7 +247,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
 
 def source_watermark(root: Path) -> str:
     timestamps: list[str] = []
-    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs'):
+    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs'):
         if not directory.exists():
             continue
         for path in sorted(directory.glob('*.json')):
@@ -241,6 +280,10 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'machine_handoff_current': sum(p['machine_handoff_status'] == 'MACHINE_HANDOFF_CURRENT' for p in papers),
             'machine_handoff_stale': sum(p['machine_handoff_status'] == 'MACHINE_HANDOFF_STALE' for p in papers),
             'human_handoff_ready': sum(p['human_handoff_ready'] for p in papers),
+            'human_signoff_pending': sum(p['human_signoff_status'] == 'PENDING_HUMAN_CONFIRMATION' for p in papers),
+            'human_signoff_complete': sum(p['human_signoff_status'] == 'HUMAN_SIGNOFF_COMPLETE_ACTUAL_SUBMISSION_PENDING' for p in papers),
+            'human_signoff_stale': sum(p['human_signoff_status'] == 'HUMAN_SIGNOFF_STALE' for p in papers),
+            'submitted': sum(p['paper_state'] == 'SUBMITTED' for p in papers),
             'submission_freeze_eligible': sum(p['submission_freeze_eligible'] for p in papers),
             'ledger_replay_failures': sum(not p['ledger_replay_pass'] for p in papers),
             'contract_integrity_failures': sum(not p['contract_integrity_pass'] for p in papers),

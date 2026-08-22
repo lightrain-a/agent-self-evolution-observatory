@@ -21,9 +21,15 @@
       "machine_handoff_integrity_pass": true,
       "machine_handoff_sha256": "0a736c22afec337d0c98a674357511057e35afacad246c80854449f56faa1d2d",
       "machine_handoff_errors": [],
+      "human_signoff_status": "PENDING_HUMAN_CONFIRMATION",
+      "human_signoff_integrity_pass": false,
+      "human_signoff_sha256": "",
+      "human_signoff_errors": [],
       "blocker_groups": [],
       "blocker_count": 0,
-      "next_actions": [],
+      "next_actions": [
+        "collect explicit human confirmations bound to the current handoff SHA; actual submission remains a separate action"
+      ],
       "human_handoff_ready": true,
       "submission_freeze_eligible": true,
       "authority": {
@@ -52,9 +58,15 @@
       "machine_handoff_integrity_pass": true,
       "machine_handoff_sha256": "0821eb8c269dcf05e65884ff0a8063eab7b6be00c189f658586212070b5121e0",
       "machine_handoff_errors": [],
+      "human_signoff_status": "PENDING_HUMAN_CONFIRMATION",
+      "human_signoff_integrity_pass": false,
+      "human_signoff_sha256": "",
+      "human_signoff_errors": [],
       "blocker_groups": [],
       "blocker_count": 0,
-      "next_actions": [],
+      "next_actions": [
+        "collect explicit human confirmations bound to the current handoff SHA; actual submission remains a separate action"
+      ],
       "human_handoff_ready": true,
       "submission_freeze_eligible": true,
       "authority": {
@@ -83,9 +95,15 @@
       "machine_handoff_integrity_pass": true,
       "machine_handoff_sha256": "c0efeabfa71bc1645ea44523f721e0acbbb609e838b76f2ceefd3372d80f7328",
       "machine_handoff_errors": [],
+      "human_signoff_status": "PENDING_HUMAN_CONFIRMATION",
+      "human_signoff_integrity_pass": false,
+      "human_signoff_sha256": "",
+      "human_signoff_errors": [],
       "blocker_groups": [],
       "blocker_count": 0,
-      "next_actions": [],
+      "next_actions": [
+        "collect explicit human confirmations bound to the current handoff SHA; actual submission remains a separate action"
+      ],
       "human_handoff_ready": true,
       "submission_freeze_eligible": true,
       "authority": {
@@ -114,6 +132,10 @@
       "machine_handoff_integrity_pass": false,
       "machine_handoff_sha256": "",
       "machine_handoff_errors": [],
+      "human_signoff_status": "NOT_ELIGIBLE",
+      "human_signoff_integrity_pass": false,
+      "human_signoff_sha256": "",
+      "human_signoff_errors": [],
       "blocker_groups": [
         "DECISIVE_EVIDENCE",
         "STATISTICS_UNCERTAINTY",
@@ -163,9 +185,15 @@
       "machine_handoff_integrity_pass": true,
       "machine_handoff_sha256": "372fa5012a514ad53c2ec58fca54f1a30974182c49f9ff8bfe696500210fe665",
       "machine_handoff_errors": [],
+      "human_signoff_status": "PENDING_HUMAN_CONFIRMATION",
+      "human_signoff_integrity_pass": false,
+      "human_signoff_sha256": "",
+      "human_signoff_errors": [],
       "blocker_groups": [],
       "blocker_count": 0,
-      "next_actions": [],
+      "next_actions": [
+        "collect explicit human confirmations bound to the current handoff SHA; actual submission remains a separate action"
+      ],
       "human_handoff_ready": true,
       "submission_freeze_eligible": true,
       "authority": {
@@ -187,6 +215,10 @@
     "machine_handoff_current": 4,
     "machine_handoff_stale": 0,
     "human_handoff_ready": 4,
+    "human_signoff_pending": 4,
+    "human_signoff_complete": 0,
+    "human_signoff_stale": 0,
+    "submitted": 0,
     "submission_freeze_eligible": 4,
     "ledger_replay_failures": 0,
     "contract_integrity_failures": 0
@@ -197,5 +229,5 @@
     "gpu": false,
     "submission": false
   },
-  "audit_sha256": "e8c1124ba4a9ada54c4e607fc7d1ce86f80503b33fb162c0c79704b5d76b1ba0"
+  "audit_sha256": "1ae7d2ed68d5b211d907b00b99891373ce796d66cbb6f97f1459743664c15bcd"
 }
