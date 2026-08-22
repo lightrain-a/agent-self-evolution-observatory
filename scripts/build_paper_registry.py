@@ -21,6 +21,7 @@ if str(ROOT) not in sys.path:
 from research_pipeline.presubmission_freeze import verify_frozen_artifacts
 from research_pipeline.submission_handoff import validate_handoff_ledger, validate_handoff_receipt
 from research_pipeline.human_submission_signoff import validate_signoff_ledger, verify_current_signoff
+from research_pipeline.venue_submission_receipt import validate_submission_receipt
 DEFAULT_LEDGER_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ROOT") else None
 DEFAULT_ARTIFACT_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ARTIFACT_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ARTIFACT_ROOT") else None
 DEFAULT_FREEZE_ROOT = Path(os.environ["PAPER_SUBMISSION_FREEZE_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_FREEZE_ROOT") else None
@@ -274,6 +275,27 @@ def human_signoff(paper_id: str, handoff: dict[str, Any], freeze_root: Path | No
     }
 
 
+def actual_submission(row: dict[str, Any]) -> dict[str, Any]:
+    receipt = event_payload(row, "actual-submission")
+    valid = bool(receipt) and str(receipt.get("contract_sha256") or "") == str(row.get("contract_sha256") or "") and validate_submission_receipt(receipt)
+    state = str(row.get("current_state") or "")
+    if state == "SUBMITTED":
+        status = "VENUE_SUBMISSION_CONFIRMED" if valid else "SUBMITTED_RECEIPT_INVALID"
+    elif valid:
+        status = "VENUE_SUBMISSION_RECEIPT_RECORDED_TRANSITION_PENDING"
+    else:
+        status = "NOT_SUBMITTED"
+    return {
+        "status": status,
+        "valid": valid,
+        "venue": str(receipt.get("venue") or ""),
+        "venue_submission_id": str(receipt.get("venue_submission_id") or ""),
+        "venue_forum_ref": str(receipt.get("venue_forum_ref") or ""),
+        "submitted_at": str(receipt.get("submitted_at") or ""),
+        "submission_receipt_sha256": str(receipt.get("submission_receipt_sha256") or ""),
+    }
+
+
 def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None) -> dict[str, Any]:
     row = json.loads(path.read_text(encoding="utf-8"))
     contract = row.get("contract") or {}
@@ -296,6 +318,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
     freeze = submission_freeze(paper_id, preparation, freeze_root)
     handoff = submission_handoff(paper_id, freeze, handoff_root)
     signoff = human_signoff(paper_id, handoff, freeze_root, handoff_root, signoff_root)
+    submission = actual_submission(row)
     state = str(row.get("current_state") or "")
     scientific_layer = "SUPPORTED_AND_AUDITED" if claim_audit.get("pass") is True else ("ACTIVE_REPAIR" if state == "TARGETED_REPAIR" else "PRE_AUDIT")
     paper_quality_layer = "PASS" if manuscript_ci.get("pass") is True and prebuttal.get("pass") is True else ("IN_PROGRESS" if state not in {"PAPER_EVIDENCE", "PAPER_DESIGN"} else "NOT_STARTED")
@@ -314,7 +337,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
             "scientific": scientific_layer,
             "paper_quality": paper_quality_layer,
             "paper_preparation": preparation["status"],
-            "submission": signoff["status"] if signoff["status"] != "PENDING_HUMAN_CONFIRMATION" and signoff["status"] != "NOT_ELIGIBLE" else handoff["status"],
+            "submission": submission["status"] if submission["status"] != "NOT_SUBMITTED" else (signoff["status"] if signoff["status"] != "PENDING_HUMAN_CONFIRMATION" and signoff["status"] != "NOT_ELIGIBLE" else handoff["status"]),
         },
         "gates": {
             "claim_audit": claim_audit.get("pass") is True,
@@ -326,6 +349,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
         "submission_freeze": freeze,
         "submission_handoff": handoff,
         "human_signoff": signoff,
+        "actual_submission": submission,
         "targeted_repair_boundary": targeted_repair_boundary(paper_id) if state == "TARGETED_REPAIR" else {},
         "ledger_summary": {
             "mock_reviews": int(summary.get("mock_reviews") or 0),
@@ -369,7 +393,7 @@ def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff
 
 def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None) -> dict[str, Any]:
     papers = [project_paper(path, artifact_root, freeze_root, handoff_root, signoff_root) for path in sorted(ledger_root.glob("*.json"))]
-    order = {"SUBMISSION_READY": 0, "PREBUTTAL": 1, "PDF_QA": 2, "CLAIM_AUDIT": 3, "TARGETED_REPAIR": 4, "MOCK_PC": 5, "MANUSCRIPT": 6, "PAPER_DESIGN": 7, "PAPER_EVIDENCE": 8}
+    order = {"SUBMITTED": -1, "SUBMISSION_READY": 0, "PREBUTTAL": 1, "PDF_QA": 2, "CLAIM_AUDIT": 3, "TARGETED_REPAIR": 4, "MOCK_PC": 5, "MANUSCRIPT": 6, "PAPER_DESIGN": 7, "PAPER_EVIDENCE": 8}
     papers.sort(key=lambda p: (order.get(p["current_state"], 99), p["paper_id"]))
     summary = {
         "papers": len(papers),
@@ -386,6 +410,7 @@ def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Pat
         "human_signoff_complete": sum(p["human_signoff"]["status"] == "HUMAN_SIGNOFF_COMPLETE_ACTUAL_SUBMISSION_PENDING" for p in papers),
         "human_signoff_stale": sum(p["human_signoff"]["status"] == "HUMAN_SIGNOFF_STALE" for p in papers),
         "submitted": sum(p["current_state"] == "SUBMITTED" for p in papers),
+        "submitted_receipt_bound": sum(p["actual_submission"]["status"] == "VENUE_SUBMISSION_CONFIRMED" for p in papers),
     }
     payload = {
         "schema_version": "1.1",

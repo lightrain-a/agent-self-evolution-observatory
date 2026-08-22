@@ -56,6 +56,7 @@ def _refresh(row: dict[str, Any]) -> None:
         "prebuttal_receipts": sum(event.get("event_type") == "prebuttal" for event in events),
         "paper_preparation_receipts": sum(event.get("event_type") == "paper-preparation" for event in events),
         "submission_readiness_receipts": sum(event.get("event_type") == "submission-readiness" for event in events),
+        "actual_submission_receipts": sum(event.get("event_type") == "actual-submission" for event in events),
     }
 
 
@@ -113,6 +114,18 @@ def _stage_events(row: Mapping[str, Any], state: PaperState) -> list[dict[str, A
     return events[start + 1:] if start >= 0 else []
 
 
+def _validate_actual_submission_receipt(receipt: Mapping[str, Any]) -> bool:
+    # Lazy import avoids a module cycle: venue_submission_receipt verifies the
+    # current freeze, while presubmission_freeze imports this ledger validator.
+    from .venue_submission_receipt import validate_submission_receipt
+    return validate_submission_receipt(receipt)
+
+
+def _actual_submission_transition_ref(receipt: Mapping[str, Any]) -> str:
+    from .venue_submission_receipt import external_transition_authority_ref
+    return external_transition_authority_ref(receipt)
+
+
 def _receipt_hash_valid(receipt: Mapping[str, Any]) -> bool:
     receipt_type = str(receipt.get("receipt_type") or "")
     if receipt_type == "story-search":
@@ -138,6 +151,8 @@ def _receipt_hash_valid(receipt: Mapping[str, Any]) -> bool:
         return str(receipt.get("review_sha256") or "") == _digest(identity)
     if receipt_type == "paper-preparation":
         return validate_paper_preparation_receipt(receipt)
+    if receipt_type == "actual-venue-submission":
+        return _validate_actual_submission_receipt(receipt)
     if receipt_type == "claim-audit":
         identity = {
             "paper_id": receipt.get("paper_id"),
@@ -209,6 +224,24 @@ def _transition_gate(row: Mapping[str, Any], current: PaperState, target: PaperS
             blockers.append("paper-preparation-pass-receipt-required")
         else:
             gate_receipts["paper_preparation_receipt_sha256"] = receipt_sha
+    if target == PaperState.SUBMITTED:
+        receipt: dict[str, Any] = {}
+        for event in reversed(stage_events):
+            if event.get("event_type") != "actual-submission":
+                continue
+            candidate = event.get("receipt") or {}
+            if not isinstance(candidate, dict):
+                continue
+            if str(candidate.get("contract_sha256") or "") != contract_sha256:
+                continue
+            if _validate_actual_submission_receipt(candidate):
+                receipt = candidate
+                break
+        receipt_sha = str(receipt.get("submission_receipt_sha256") or "")
+        if not receipt_sha:
+            blockers.append("actual-submission-receipt-required")
+        else:
+            gate_receipts["actual_submission_receipt_sha256"] = receipt_sha
     return blockers, gate_receipts
 
 
@@ -346,6 +379,156 @@ def record_submission_readiness(root: Path, contract: PaperContract, actor: str 
     return _append(root, contract, actor, {"event_type": "submission-readiness", "receipt": receipt})
 
 
+def record_actual_submission(
+    root: Path,
+    contract: PaperContract,
+    receipt: Mapping[str, Any],
+    actor: str = "actual-venue-submission",
+) -> dict[str, Any]:
+    if not _validate_actual_submission_receipt(receipt):
+        raise RuntimeError("invalid actual submission receipt")
+    if str(receipt.get("paper_id") or "") != contract.paper_id:
+        raise RuntimeError("actual submission paper id mismatch")
+    if str(receipt.get("contract_sha256") or "") != paper_contract_digest(contract):
+        raise RuntimeError("actual submission contract digest mismatch")
+    row = initialize_paper_ledger(root, contract, actor)
+    if str(row.get("current_state") or "") != PaperState.SUBMISSION_READY.value:
+        raise RuntimeError("actual submission receipt may only be recorded from SUBMISSION_READY")
+    prior = _latest(row, "actual-submission").get("receipt") or {}
+    if isinstance(prior, dict) and prior.get("submission_receipt_sha256") == receipt.get("submission_receipt_sha256"):
+        return row
+    return _append(root, contract, actor, {"event_type": "actual-submission", "receipt": dict(receipt), "recorded_at": str(receipt.get("submitted_at") or _now())})
+
+
+def record_frozen_contract_actual_submission(
+    root: Path,
+    paper_id: str,
+    receipt: Mapping[str, Any],
+    actor: str = "actual-venue-submission",
+) -> dict[str, Any]:
+    if not _validate_actual_submission_receipt(receipt):
+        raise RuntimeError("invalid actual submission receipt")
+    path, lock = _paths(root, paper_id)
+    with lock.open("a+", encoding="utf-8") as handle:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+        if not path.exists():
+            raise FileNotFoundError(path)
+        row = json.loads(path.read_text(encoding="utf-8"))
+        digest = str(row.get("contract_sha256") or "")
+        if not digest or _digest(row.get("contract") or {}) != digest:
+            raise RuntimeError(f"frozen paper contract payload digest mismatch for {paper_id}")
+        if str(row.get("paper_id") or "") != paper_id or str(receipt.get("paper_id") or "") != paper_id:
+            raise RuntimeError("actual submission paper id mismatch")
+        if str(receipt.get("contract_sha256") or "") != digest:
+            raise RuntimeError("actual submission contract digest mismatch")
+        if str(row.get("current_state") or "") != PaperState.SUBMISSION_READY.value:
+            raise RuntimeError("actual submission receipt may only be recorded from SUBMISSION_READY")
+        prior = _latest(row, "actual-submission").get("receipt") or {}
+        if isinstance(prior, dict) and prior.get("submission_receipt_sha256") == receipt.get("submission_receipt_sha256"):
+            return row
+        payload = {
+            "event_type": "actual-submission",
+            "receipt": dict(receipt),
+            "actor": actor,
+            "recorded_at": str(receipt.get("submitted_at") or _now()),
+            "scientific_authority": False,
+            "experiment_authority": False,
+            "gpu_authority": False,
+            "submission_authority": False,
+        }
+        payload["event_id"] = _digest([paper_id, digest, len(row.get("events") or []), payload])[:24]
+        row.setdefault("events", []).append(payload)
+        row["updated_at"] = payload["recorded_at"]
+        _refresh(row)
+        _atomic(path, row)
+        return row
+
+
+def _current_actual_submission_receipt(row: Mapping[str, Any], current: PaperState) -> dict[str, Any]:
+    if current != PaperState.SUBMISSION_READY:
+        return {}
+    contract_sha256 = str(row.get("contract_sha256") or "")
+    for event in reversed(_stage_events(row, current)):
+        if event.get("event_type") != "actual-submission":
+            continue
+        receipt = event.get("receipt") or {}
+        if isinstance(receipt, dict) and str(receipt.get("contract_sha256") or "") == contract_sha256 and _validate_actual_submission_receipt(receipt):
+            return receipt
+    return {}
+
+
+def advance_frozen_paper_to_submitted(
+    root: Path,
+    paper_id: str,
+    *,
+    external_submission_authority_ref: str,
+    actor: str = "actual-venue-submission",
+) -> dict[str, Any]:
+    """Advance a legacy frozen contract from SUBMISSION_READY to SUBMITTED.
+
+    This path never reserializes the contract. It requires a current content-addressed
+    actual-submission receipt and an external authority reference derived from that exact
+    receipt. Repeating the same completed transition is idempotent.
+    """
+    path, lock = _paths(root, paper_id)
+    with lock.open("a+", encoding="utf-8") as handle:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+        if not path.exists():
+            raise FileNotFoundError(path)
+        row = json.loads(path.read_text(encoding="utf-8"))
+        digest = str(row.get("contract_sha256") or "")
+        if not digest or _digest(row.get("contract") or {}) != digest:
+            raise RuntimeError(f"frozen paper contract payload digest mismatch for {paper_id}")
+        if str(row.get("paper_id") or "") != paper_id:
+            raise RuntimeError("paper id mismatch")
+        current = PaperState(str(row.get("current_state") or ""))
+        if current == PaperState.SUBMITTED:
+            prior = _latest(row, "paper-transition")
+            if (
+                prior.get("allowed") is True
+                and prior.get("to") == PaperState.SUBMITTED.value
+                and prior.get("external_submission_authority_ref") == external_submission_authority_ref
+            ):
+                return {"ledger": row, "receipt": prior}
+            raise RuntimeError("paper already submitted under a different transition receipt")
+        if current != PaperState.SUBMISSION_READY:
+            raise RuntimeError("paper must be SUBMISSION_READY before actual venue submission")
+        blockers, gate_receipts = _transition_gate(row, current, PaperState.SUBMITTED)
+        submission_receipt = _current_actual_submission_receipt(row, current)
+        expected_ref = _actual_submission_transition_ref(submission_receipt) if submission_receipt else ""
+        if not submission_receipt:
+            blockers.append("actual-submission-receipt-required")
+        elif external_submission_authority_ref != expected_ref:
+            blockers.append("external-submission-authority-ref-must-bind-receipt")
+        event = {
+            "event_type": "paper-transition",
+            "actor": actor,
+            "recorded_at": str(submission_receipt.get("submitted_at") or _now()) if submission_receipt else _now(),
+            "from": current.value,
+            "to": PaperState.SUBMITTED.value,
+            "allowed": not blockers,
+            "blockers": list(dict.fromkeys(blockers)),
+            "artifact_refs": [],
+            "gate_receipts": gate_receipts,
+            "external_submission_authority_ref": external_submission_authority_ref,
+            "scientific_authority": False,
+            "experiment_authority": False,
+            "gpu_authority": False,
+            "submission_authority": False,
+        }
+        event["event_id"] = _digest([paper_id, digest, len(row.get("events") or []), event])[:24]
+        row.setdefault("events", []).append(event)
+        if event["allowed"]:
+            row["current_state"] = PaperState.SUBMITTED.value
+        row["updated_at"] = event["recorded_at"]
+        _refresh(row)
+        errors = validate_paper_ledger(row)
+        if errors:
+            raise RuntimeError(f"paper ledger invalid after submission transition: {errors}")
+        _atomic(path, row)
+        return {"ledger": row, "receipt": event}
+
+
 def advance_paper_ledger(root: Path, contract: PaperContract, target: PaperState, *, actor: str = "paper-workflow",
                          artifact_refs: Sequence[str] = (), external_submission_authority_ref: str = "") -> dict[str, Any]:
     path, lock = _paths(root, contract.paper_id)
@@ -363,8 +546,13 @@ def advance_paper_ledger(root: Path, contract: PaperContract, target: PaperState
             blockers.append("manuscript-ci-not-pass")
         if target == PaperState.SUBMISSION_READY and (_latest(row, "submission-readiness").get("receipt") or {}).get("submission_ready") is not True:
             blockers.append("submission-readiness-receipt-not-pass")
-        if target == PaperState.SUBMITTED and not external_submission_authority_ref:
-            blockers.append("external-human-submission-authority-required")
+        if target == PaperState.SUBMITTED:
+            submission_receipt = _current_actual_submission_receipt(row, current)
+            expected_ref = _actual_submission_transition_ref(submission_receipt) if submission_receipt else ""
+            if not submission_receipt:
+                blockers.append("actual-submission-receipt-required")
+            elif external_submission_authority_ref != expected_ref:
+                blockers.append("external-submission-authority-ref-must-bind-receipt")
         event = {"event_type": "paper-transition", "actor": actor, "recorded_at": _now(), "from": current.value, "to": target.value,
                  "allowed": not blockers, "blockers": list(dict.fromkeys(blockers)), "artifact_refs": list(artifact_refs),
                  "gate_receipts": gate_receipts,
@@ -399,7 +587,7 @@ def validate_paper_ledger(row: Mapping[str, Any]) -> list[str]:
         if any(event.get(key) is True for key in ("scientific_authority", "experiment_authority", "gpu_authority", "submission_authority")):
             errors.append("paper event leaked authority")
         event_type = str(event.get("event_type") or "")
-        if event_type in {"story-search", "mock-pc-review", "claim-audit", "paper-preparation"}:
+        if event_type in {"story-search", "mock-pc-review", "claim-audit", "paper-preparation", "actual-submission"}:
             receipt = event.get("receipt") or {}
             if not isinstance(receipt, dict) or str(receipt.get("contract_sha256") or "") != contract_sha256 or not _receipt_hash_valid(receipt):
                 errors.append(f"invalid-content-addressed-receipt:{event_type}")
@@ -434,8 +622,13 @@ def validate_paper_ledger(row: Mapping[str, Any]) -> list[str]:
                 latest_readiness = _latest(simulated_row, "submission-readiness").get("receipt") or {}
                 if latest_readiness.get("submission_ready") is not True:
                     structural_blockers.append("submission-readiness-receipt-not-pass")
-            if target == PaperState.SUBMITTED and not event.get("external_submission_authority_ref"):
-                structural_blockers.append("external-human-submission-authority-required")
+            if target == PaperState.SUBMITTED:
+                submission_receipt = _current_actual_submission_receipt(simulated_row, simulated_state)
+                expected_ref = _actual_submission_transition_ref(submission_receipt) if submission_receipt else ""
+                if not submission_receipt:
+                    structural_blockers.append("actual-submission-receipt-required")
+                elif event.get("external_submission_authority_ref") != expected_ref:
+                    structural_blockers.append("external-submission-authority-ref-must-bind-receipt")
             should_allow = not structural_blockers
             if event.get("allowed") is True and not should_allow:
                 errors.append("allowed transition bypassed a fail-closed gate")
@@ -464,6 +657,7 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
     latest_prebuttal = _latest(row, "prebuttal").get("result") or {}
     latest_readiness = _latest(row, "submission-readiness").get("receipt") or {}
     latest_prep = _latest(row, "paper-preparation").get("receipt") or {}
+    latest_actual_submission = _latest(row, "actual-submission").get("receipt") or {}
     latest_review = _latest(row, "mock-pc-review").get("receipt") or {}
     latest_claim_audit = _latest(row, "claim-audit").get("receipt") or {}
     mock_modes = {}
@@ -528,6 +722,14 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
             "submission_ready": latest_readiness.get("submission_ready") is True,
             "receipt_sha256": str(latest_readiness.get("receipt_sha256") or ""),
             "blockers": list(latest_readiness.get("blockers") or []),
+        },
+        "latest_actual_submission": {
+            "valid": bool(latest_actual_submission) and _validate_actual_submission_receipt(latest_actual_submission),
+            "venue": str(latest_actual_submission.get("venue") or ""),
+            "venue_submission_id": str(latest_actual_submission.get("venue_submission_id") or ""),
+            "venue_forum_ref": str(latest_actual_submission.get("venue_forum_ref") or ""),
+            "submitted_at": str(latest_actual_submission.get("submitted_at") or ""),
+            "submission_receipt_sha256": str(latest_actual_submission.get("submission_receipt_sha256") or ""),
         },
         "latest_transition": {
             "from": str(latest_transition.get("from") or ""),

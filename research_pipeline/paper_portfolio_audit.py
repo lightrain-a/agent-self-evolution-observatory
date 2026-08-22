@@ -11,6 +11,7 @@ from .paper_preparation_protocol import validate_paper_preparation_receipt
 from .presubmission_freeze import validate_freeze, verify_current_frozen_artifacts
 from .submission_handoff import validate_handoff_ledger, validate_handoff_receipt
 from .human_submission_signoff import validate_signoff_ledger, verify_current_signoff
+from .venue_submission_receipt import validate_submission_receipt
 
 DEFAULT_ROOT = Path('/data/wyt/agent-self-evolution-observatory')
 
@@ -177,14 +178,16 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         if group not in groups:
             groups.append(group)
 
-    base_ready = row.get('current_state') == 'SUBMISSION_READY' and preparation == 'PASS' and contract_ok and not ledger_errors
-    freeze = freeze_state(root, paper_id, str(prep_receipt.get('receipt_sha256') or '')) if base_ready else {
+    state = str(row.get('current_state') or '')
+    lineage_ready = state in {'SUBMISSION_READY', 'SUBMITTED'} and preparation == 'PASS' and contract_ok and not ledger_errors
+    base_ready = state == 'SUBMISSION_READY' and lineage_ready
+    freeze = freeze_state(root, paper_id, str(prep_receipt.get('receipt_sha256') or '')) if lineage_ready else {
         'status': 'PREPARATION_BLOCKED' if preparation == 'BLOCKED' else 'NOT_ELIGIBLE',
         'integrity_pass': False,
         'errors': [],
         'freeze_sha256': '',
     }
-    if base_ready and freeze['status'] == 'MACHINE_FROZEN_CURRENT':
+    if lineage_ready and freeze['status'] == 'MACHINE_FROZEN_CURRENT':
         machine_handoff = handoff_state(root, paper_id, freeze['freeze_sha256'])
     else:
         machine_handoff = {
@@ -195,8 +198,14 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         }
     handoff = machine_handoff['status'] == 'MACHINE_HANDOFF_CURRENT'
     human_signoff = human_signoff_state(root, paper_id, machine_handoff['status'])
+    actual_event = latest(row, 'actual-submission')
+    actual_receipt = actual_event.get('receipt') if isinstance(actual_event.get('receipt'), dict) else {}
+    actual_valid = bool(actual_receipt) and str(actual_receipt.get('contract_sha256') or '') == recorded and validate_submission_receipt(actual_receipt)
+    actual_submission_status = 'VENUE_SUBMISSION_CONFIRMED' if state == 'SUBMITTED' and actual_valid else ('SUBMITTED_RECEIPT_INVALID' if state == 'SUBMITTED' else ('VENUE_SUBMISSION_RECEIPT_RECORDED_TRANSITION_PENDING' if actual_valid else 'NOT_SUBMITTED'))
     actions = next_actions(groups)
-    if base_ready and freeze['status'] == 'MACHINE_FREEZE_PENDING':
+    if state == 'SUBMITTED':
+        actions = ['submission is recorded and receipt-bound; preserve the frozen submission lineage for rebuttal and camera-ready work'] if actual_valid else ['SUBMITTED state has an invalid or missing venue submission receipt; treat the ledger as invalid until repaired']
+    elif base_ready and freeze['status'] == 'MACHINE_FREEZE_PENDING':
         actions = ['create a pre-submission freeze checkpoint before machine handoff']
     elif base_ready and freeze['status'] == 'MACHINE_FREEZE_STALE':
         actions = ['re-freeze the exact PDF/source/supplement bytes before machine handoff']
@@ -236,6 +245,12 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         'human_signoff_integrity_pass': human_signoff['integrity_pass'],
         'human_signoff_sha256': human_signoff['signoff_sha256'],
         'human_signoff_errors': human_signoff['errors'],
+        'actual_submission_status': actual_submission_status,
+        'actual_submission_receipt_valid': actual_valid,
+        'actual_submission_receipt_sha256': str(actual_receipt.get('submission_receipt_sha256') or ''),
+        'venue_submission_id': str(actual_receipt.get('venue_submission_id') or ''),
+        'venue_forum_ref': str(actual_receipt.get('venue_forum_ref') or ''),
+        'submitted_at': str(actual_receipt.get('submitted_at') or ''),
         'blocker_groups': groups,
         'blocker_count': len(blockers),
         'next_actions': actions,
@@ -284,6 +299,8 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'human_signoff_complete': sum(p['human_signoff_status'] == 'HUMAN_SIGNOFF_COMPLETE_ACTUAL_SUBMISSION_PENDING' for p in papers),
             'human_signoff_stale': sum(p['human_signoff_status'] == 'HUMAN_SIGNOFF_STALE' for p in papers),
             'submitted': sum(p['paper_state'] == 'SUBMITTED' for p in papers),
+            'submitted_receipt_bound': sum(p['actual_submission_status'] == 'VENUE_SUBMISSION_CONFIRMED' for p in papers),
+            'submitted_receipt_invalid': sum(p['actual_submission_status'] == 'SUBMITTED_RECEIPT_INVALID' for p in papers),
             'submission_freeze_eligible': sum(p['submission_freeze_eligible'] for p in papers),
             'ledger_replay_failures': sum(not p['ledger_replay_pass'] for p in papers),
             'contract_integrity_failures': sum(not p['contract_integrity_pass'] for p in papers),

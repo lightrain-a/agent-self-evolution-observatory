@@ -94,6 +94,8 @@ POLICY: dict[str, Any] = {
     "blocked_transitions_are_recorded": True,
     "ledger_contract_digest_is_immutable": True,
     "submitted_state_requires_external_human_submission_authority": True,
+    "submitted_state_requires_actual_venue_submission_receipt": True,
+    "actual_submission_receipt_binds_human_signoff_freeze_and_uploaded_hashes": True,
 }
 
 

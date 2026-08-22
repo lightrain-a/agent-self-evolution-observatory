@@ -306,10 +306,12 @@ class PaperAcceptanceTest(unittest.TestCase):
             row = record_submission_readiness(root, contract)
             self.assertTrue((row["events"][-1]["receipt"])["submission_ready"])
             self.assertTrue(advance_paper_ledger(root, contract, PaperState.SUBMISSION_READY)["receipt"]["allowed"])
-            self.assertFalse(advance_paper_ledger(root, contract, PaperState.SUBMITTED)["receipt"]["allowed"])
-            submitted = advance_paper_ledger(root, contract, PaperState.SUBMITTED, external_submission_authority_ref="human:submit-approval")
-            self.assertTrue(submitted["receipt"]["allowed"])
-            self.assertFalse(submitted["receipt"]["submission_authority"])
+            missing = advance_paper_ledger(root, contract, PaperState.SUBMITTED)
+            self.assertFalse(missing["receipt"]["allowed"])
+            self.assertIn("actual-submission-receipt-required", missing["receipt"]["blockers"])
+            arbitrary = advance_paper_ledger(root, contract, PaperState.SUBMITTED, external_submission_authority_ref="human:submit-approval")
+            self.assertFalse(arbitrary["receipt"]["allowed"])
+            self.assertIn("actual-submission-receipt-required", arbitrary["receipt"]["blockers"])
 
     def test_public_ledger_index_exposes_state_without_raw_events_or_paths(self) -> None:
         with tempfile.TemporaryDirectory() as td:

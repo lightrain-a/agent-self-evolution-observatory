@@ -25,6 +25,12 @@
       "human_signoff_integrity_pass": false,
       "human_signoff_sha256": "",
       "human_signoff_errors": [],
+      "actual_submission_status": "NOT_SUBMITTED",
+      "actual_submission_receipt_valid": false,
+      "actual_submission_receipt_sha256": "",
+      "venue_submission_id": "",
+      "venue_forum_ref": "",
+      "submitted_at": "",
       "blocker_groups": [],
       "blocker_count": 0,
       "next_actions": [
@@ -62,6 +68,12 @@
       "human_signoff_integrity_pass": false,
       "human_signoff_sha256": "",
       "human_signoff_errors": [],
+      "actual_submission_status": "NOT_SUBMITTED",
+      "actual_submission_receipt_valid": false,
+      "actual_submission_receipt_sha256": "",
+      "venue_submission_id": "",
+      "venue_forum_ref": "",
+      "submitted_at": "",
       "blocker_groups": [],
       "blocker_count": 0,
       "next_actions": [
@@ -99,6 +111,12 @@
       "human_signoff_integrity_pass": false,
       "human_signoff_sha256": "",
       "human_signoff_errors": [],
+      "actual_submission_status": "NOT_SUBMITTED",
+      "actual_submission_receipt_valid": false,
+      "actual_submission_receipt_sha256": "",
+      "venue_submission_id": "",
+      "venue_forum_ref": "",
+      "submitted_at": "",
       "blocker_groups": [],
       "blocker_count": 0,
       "next_actions": [
@@ -136,6 +154,12 @@
       "human_signoff_integrity_pass": false,
       "human_signoff_sha256": "",
       "human_signoff_errors": [],
+      "actual_submission_status": "NOT_SUBMITTED",
+      "actual_submission_receipt_valid": false,
+      "actual_submission_receipt_sha256": "",
+      "venue_submission_id": "",
+      "venue_forum_ref": "",
+      "submitted_at": "",
       "blocker_groups": [
         "DECISIVE_EVIDENCE",
         "STATISTICS_UNCERTAINTY",
@@ -189,6 +213,12 @@
       "human_signoff_integrity_pass": false,
       "human_signoff_sha256": "",
       "human_signoff_errors": [],
+      "actual_submission_status": "NOT_SUBMITTED",
+      "actual_submission_receipt_valid": false,
+      "actual_submission_receipt_sha256": "",
+      "venue_submission_id": "",
+      "venue_forum_ref": "",
+      "submitted_at": "",
       "blocker_groups": [],
       "blocker_count": 0,
       "next_actions": [
@@ -219,6 +249,8 @@
     "human_signoff_complete": 0,
     "human_signoff_stale": 0,
     "submitted": 0,
+    "submitted_receipt_bound": 0,
+    "submitted_receipt_invalid": 0,
     "submission_freeze_eligible": 4,
     "ledger_replay_failures": 0,
     "contract_integrity_failures": 0
@@ -229,5 +261,5 @@
     "gpu": false,
     "submission": false
   },
-  "audit_sha256": "1ae7d2ed68d5b211d907b00b99891373ce796d66cbb6f97f1459743664c15bcd"
+  "audit_sha256": "99d24074e8d432cb510195c5a803122dfb6c637a066eab6e64cc483538b8c279"
 }

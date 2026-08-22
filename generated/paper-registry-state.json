@@ -16,7 +16,8 @@
     "human_submission_signoff_pending": 4,
     "human_signoff_complete": 0,
     "human_signoff_stale": 0,
-    "submitted": 0
+    "submitted": 0,
+    "submitted_receipt_bound": 0
   },
   "papers": [
     {
@@ -118,6 +119,15 @@
         "integrity_pass": false,
         "errors": [],
         "actual_submission_status": "NOT_SUBMITTED"
+      },
+      "actual_submission": {
+        "status": "NOT_SUBMITTED",
+        "valid": false,
+        "venue": "",
+        "venue_submission_id": "",
+        "venue_forum_ref": "",
+        "submitted_at": "",
+        "submission_receipt_sha256": ""
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -244,6 +254,15 @@
         "errors": [],
         "actual_submission_status": "NOT_SUBMITTED"
       },
+      "actual_submission": {
+        "status": "NOT_SUBMITTED",
+        "valid": false,
+        "venue": "",
+        "venue_submission_id": "",
+        "venue_forum_ref": "",
+        "submitted_at": "",
+        "submission_receipt_sha256": ""
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 6,
@@ -369,6 +388,15 @@
         "errors": [],
         "actual_submission_status": "NOT_SUBMITTED"
       },
+      "actual_submission": {
+        "status": "NOT_SUBMITTED",
+        "valid": false,
+        "venue": "",
+        "venue_submission_id": "",
+        "venue_forum_ref": "",
+        "submitted_at": "",
+        "submission_receipt_sha256": ""
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 4,
@@ -491,6 +519,15 @@
         "errors": [],
         "actual_submission_status": "NOT_SUBMITTED"
       },
+      "actual_submission": {
+        "status": "NOT_SUBMITTED",
+        "valid": false,
+        "venue": "",
+        "venue_submission_id": "",
+        "venue_forum_ref": "",
+        "submitted_at": "",
+        "submission_receipt_sha256": ""
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
@@ -610,6 +647,15 @@
         "errors": [],
         "actual_submission_status": "NOT_SUBMITTED"
       },
+      "actual_submission": {
+        "status": "NOT_SUBMITTED",
+        "valid": false,
+        "venue": "",
+        "venue_submission_id": "",
+        "venue_forum_ref": "",
+        "submitted_at": "",
+        "submission_receipt_sha256": ""
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
@@ -630,5 +676,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "aff3a91cd3a4ac976c37d3b31bdcf47fe1d6a0dc674f356eaa553739fcb8095d"
+  "projection_sha256": "3586b5729e2bd2d1ecc43f8ff91772d47b228204f2b3999c27e355f557282045"
 }
