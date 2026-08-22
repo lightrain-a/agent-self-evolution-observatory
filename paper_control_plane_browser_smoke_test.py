@@ -64,7 +64,14 @@ def main() -> None:
             readerEvidenceCards: document.querySelectorAll('.paper-reader-evidence-card').length,
             readerFigures: document.querySelectorAll('.paper-reader-figure').length,
             readerFigureText: Object.fromEntries([...document.querySelectorAll('.paper-reader-figure')].map(figure => [figure.dataset.paperFigure || '', figure.textContent || ''])),
-            readerBriefText: Object.fromEntries([...document.querySelectorAll('.paper-detail-section[data-paper-toc-root]')].map(section => [section.id || '', section.querySelector('.paper-reader-brief')?.textContent || '']))
+            readerBriefText: Object.fromEntries([...document.querySelectorAll('.paper-detail-section[data-paper-toc-root]')].map(section => [section.id || '', section.querySelector('.paper-reader-brief')?.textContent || ''])),
+            storyBlueprint: document.querySelectorAll('#paper-story-blueprint').length,
+            storyPapers: document.querySelectorAll('[data-paper-story]').length,
+            storyGapCards: document.querySelectorAll('.paper-story-gap-grid article').length,
+            storyRQs: document.querySelectorAll('.paper-story-rq-grid article').length,
+            storyComponents: document.querySelectorAll('.paper-story-component-table tbody tr').length,
+            storyMechanisms: document.querySelectorAll('.paper-story-mechanism-table tbody tr').length,
+            storyOutlineRows: document.querySelectorAll('.paper-story-paper-outline li').length,
             auditFolds: document.querySelectorAll('.paper-reader-audit-fold').length,
             openAuditFolds: document.querySelectorAll('.paper-reader-audit-fold[open]').length,
             acceptanceActionTexts: [...document.querySelectorAll('.paper-acceptance-workflow .current-status-rule')].map(x => (x.textContent || '').trim()),
@@ -80,15 +87,16 @@ def main() -> None:
         require(summary.get("gate_clean_submission_ready") == selected["gateCleanCount"], f"gate-clean count must be derived from current paper rows: {summary}")
         require(summary.get("internal_action_required") == expected_internal and summary.get("no_internal_action") == 5 - expected_internal, f"internal-action split must follow current paper rows: {summary}")
         require(selected["noveltyPortfolio"] == 1 and selected["noveltyDetails"] == 5, "advisor novelty audit must remain preserved for all five papers")
-        require(selected["readerPortfolio"] == 1 and selected["readerBriefs"] == 5 and selected["readerEvidenceCards"] >= 15 and selected["readerFigures"] == 5, f"reader-first paper layer is incomplete: {selected}")
+        require(selected["readerPortfolio"] == 1 and selected["readerBriefs"] == 5 and selected["readerFigures"] == 5, f"reader-first paper layer is incomplete: {selected}")
+        require(selected["storyBlueprint"] == 1 and selected["storyPapers"] == 5 and selected["storyGapCards"] == 15 and selected["storyRQs"] >= 16 and selected["storyComponents"] >= 18 and selected["storyMechanisms"] >= 14 and selected["storyOutlineRows"] >= 35, f"paper argument-chain layer is incomplete: {selected}")
         figures=selected["readerFigureText"]
         require(all(marker in figures.get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK","") for marker in ("47.5%","70%","100%","cross-domain grounding")), f"Temporal evidence figure lost the three-arm contrast or negative boundary: {figures.get('D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK','')}")
         require(all(marker in figures.get("D2-PAPER-FAILURE-MEMORY-PROVENANCE","") for marker in ("0.931","0.647","p=.0785","p=.0792","opposite sign")), f"Failure-Memory evidence figure must distinguish association from unresolved causal tests: {figures.get('D2-PAPER-FAILURE-MEMORY-PROVENANCE','')}")
-        require(all(marker in figures.get("D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE","") for marker in ("4/4","0.735","Not established")), f"Reward-Memory evidence figure must keep downstream effects visibly open: {figures.get('D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE','')}")
+        require(all(marker in figures.get("D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE","") for marker in ("0.700","0.595","256 rollouts","p=.00074","p=.311")), f"Reward-Memory figure must show prompt-control, terminal confirmation, and the negative action-distribution result: {figures.get('D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE','')}")
         briefs=selected["readerBriefText"]
-        require(all(marker in briefs.get("paper-d2-paper-temporal-skill-causal-bottleneck","") for marker in ("100% vs 70% / 47.5%","p=0.0156","cross-domain grounding")), f"Temporal reader brief lost its load-bearing effect or negative boundary: {briefs.get('paper-d2-paper-temporal-skill-causal-bottleneck','')}")
+        require(all(marker in briefs.get("paper-d2-paper-temporal-skill-causal-bottleneck","") for marker in ("100%","70%","47.5%","p=0.0156","Cross-domain grounding")), f"Temporal story lost its three-arm effect or negative boundary: {briefs.get('paper-d2-paper-temporal-skill-causal-bottleneck','')}")
         require(all(marker in briefs.get("paper-d2-paper-failure-memory-provenance","") for marker in ("0.931 vs 0.647","p=.0785","p=.0792","causal sign")), f"Failure-Memory reader brief must expose association and unresolved causal sign: {briefs.get('paper-d2-paper-failure-memory-provenance','')}")
-        require(all(marker in briefs.get("paper-d2-paper-proxy-reward-memory-variance","") for marker in ("4/4","0.735","downstream")), f"Reward-Memory reader brief must distinguish the write channel from unproven downstream effects: {briefs.get('paper-d2-paper-proxy-reward-memory-variance','')}")
+        require(all(marker in briefs.get("paper-d2-paper-proxy-reward-memory-variance","") for marker in ("byte-identical","0.700","0.595","256","0.15625","p=0.00074","no-memory")), f"Reward-Memory story must explain write-time identification, strongest prompt control, terminal confirmation, and the no-memory boundary: {briefs.get('paper-d2-paper-proxy-reward-memory-variance','')}")
         require(selected["auditFolds"] >= 7 and selected["openAuditFolds"] == 0, f"machine audit layers must be present but collapsed by default: {selected}")
         temporal = selected["temporal"]
         temporal_prep = temporal.get("latest_paper_preparation") or {}
@@ -109,6 +117,28 @@ def main() -> None:
         action_count = summary.get("internal_action_required")
         has_internal_summary = (f"内部已闭环={closed_count}" in selected["text"] and f"仍有内部动作={action_count}" in selected["text"]) or (f"internally closed={closed_count}" in selected["text"] and f"internal action required={action_count}" in selected["text"])
         require(has_next_label and has_internal_summary, "PaperRegistry human-readable internal-action summary is missing")
+        if "--selected-paper-only" in sys.argv:
+            execute(session_id, "localStorage.setItem('agent-evolution-language','zh'); return true;")
+            navigate(session_id, "/selected-paper.html")
+            zh_text = execute(session_id, "return document.body.textContent || ''")
+            zh_markers = (
+                "场景、实际价值与一个具体失败",
+                "现在有哪些方法？为什么还不够？",
+                "把问题压缩成 3 个必须解决的 gap",
+                "方法设计动机：为什么必须这样设计？",
+                "实验不是堆表：每个 RQ 都要回答一个论证问题",
+                "哪些组件真的生效？哪些替代解释被排除？",
+                "最终主张边界：能说什么，不能说什么",
+                "如果把它写成论文，主文应该按什么顺序？",
+                "256 rollout",
+                "p=0.00074",
+                "no-skill anchor",
+                "causal sign unresolved",
+            )
+            require(all(marker in zh_text for marker in zh_markers), f"Chinese paper-story chain is incomplete: {[m for m in zh_markers if m not in zh_text]}")
+            print("PASS")
+            print("Selected-paper argument chain verified in EN+ZH: 5 papers / 15 gaps / RQ-baseline-answer / mechanism-ablation / outline / collapsed audit")
+            return
 
         navigate(session_id, "/index.html")
         home = execute(session_id, """
