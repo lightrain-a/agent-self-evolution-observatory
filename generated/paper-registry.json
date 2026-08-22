@@ -1,7 +1,7 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-08-22T16:26:40+00:00",
-  "source_revision": "ee6aef14671dd0eb8e91789452fa31de9a1527e0",
+  "generated_at": "2026-08-22T17:08:24+00:00",
+  "source_revision": "5b8303e093c69a45cca48855172cd4e1a60521e5",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -35,7 +35,9 @@
     "blocked_transitions_are_recorded": true,
     "ledger_contract_digest_is_immutable_between_scientific_revisions": true,
     "scientific_contract_revision_requires_evidence_closure_at_paper_evidence": true,
-    "submitted_state_requires_external_human_submission_authority": true
+    "submitted_state_requires_external_human_submission_authority": true,
+    "submission_ready_papers_is_legacy_alias_for_ledger_submission_ready_papers": true,
+    "primary_next_action_is_internal_only_and_zero_authority": true
   },
   "summary": {
     "papers": 5,
@@ -669,16 +671,16 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 20,
+        "events": 28,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
         "mock_reviews": 4,
         "claim_audit_receipts": 1,
-        "manuscript_ci_receipts": 1,
+        "manuscript_ci_receipts": 2,
         "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 1,
-        "submission_readiness_receipts": 1
+        "submission_readiness_receipts": 1,
+        "contract_revisions": 0
       },
       "latest_story_search": {
         "pass": true,
@@ -697,19 +699,30 @@
         "ARTIFACT_AWARE": "9535a18a9463a76d31eb0f42e93fe50c316e9f9c98c18869e58483349495929b"
       },
       "latest_mock_review": {
-        "mode": "ARTIFACT_AWARE",
-        "review_sha256": "9535a18a9463a76d31eb0f42e93fe50c316e9f9c98c18869e58483349495929b",
+        "mode": "FINAL_MULTI_REVIEW",
+        "review_sha256": "9df2b35dcd1884e138bf0247ffe8a919f20f0aac295b8d84057d4113248544c4",
         "summary": {
-          "objections": 4,
-          "decision_critical": 3,
-          "targeted_experiment_proposals": 3,
-          "claim_expansion_requests_preserved_as_limitations": 0
+          "scores": [
+            7,
+            8,
+            7
+          ],
+          "recommendations": [
+            "weak_accept",
+            "accept",
+            "weak_accept"
+          ],
+          "mean_score": 7.333333333333333,
+          "minimum_score": 7,
+          "decision_critical_blockers": 0
         }
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "d2c92b6676f7904b167f9102d601a307b303c3229683841edf1a7b6eeaaccd5f",
-        "blockers": []
+        "claim_audit_sha256": "f105b8f7b9f8408fe2896bdac671960e878ec8c44466cee2e2c403fdadc6c64d",
+        "blockers": [],
+        "checks": 11,
+        "passed": 11
       },
       "latest_manuscript_ci": {
         "pass": true,
@@ -720,40 +733,50 @@
       },
       "latest_prebuttal": {
         "pass": true,
-        "decision_critical": 10,
-        "blockers": []
+        "decision_critical": 7,
+        "blockers": [],
+        "unresolved_decision_critical": 0
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0",
-        "receipt_sha256": "bf4cd503cb810877e432db173a8566017d0d24e482c84f7fc41130c3514cb933",
+        "protocol_version": "1.0+r2",
+        "receipt_sha256": "09aeabfebae9e31c82aeb8aee6bcb5c98e047d93d992f2c1b3e53ba097c1aa2d",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
-          "hierarchical-rubric": true,
-          "verification-refinement": true,
-          "citation-integrity": true,
-          "visual-story": true,
-          "reproducibility-bundle": true,
           "agent-native-artifact": true,
+          "citation-integrity": true,
+          "hierarchical-rubric": true,
           "reader-simulation": true,
-          "submission-package": true
+          "reproducibility-bundle": true,
+          "submission-package": true,
+          "verification-refinement": true,
+          "visual-story": true
         },
         "blockers": []
       },
       "submission_readiness_context": {
-        "artifact_submission_ready": false,
-        "recommended_immediate_submission": "",
-        "scientific_status": "",
+        "artifact_submission_ready": true,
+        "recommended_immediate_submission": "READY_FOR_HUMAN_SUBMISSION",
+        "scientific_status": "READY",
         "support_blocker": "",
-        "external_human_submission_authority_required_for_SUBMITTED": false,
+        "external_human_submission_authority_required_for_SUBMITTED": true,
         "c3_c4_evidence_state": "",
-        "post_repair_mock_pc_recommendations": [],
-        "post_repair_mock_pc_scores": []
+        "exact_timesage_replication_debt": "",
+        "post_repair_mock_pc_recommendations": [
+          "weak_accept",
+          "accept",
+          "weak_accept"
+        ],
+        "post_repair_mock_pc_scores": [
+          7,
+          8,
+          7
+        ]
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "9ec12b08da9d0aa488fb3b27ddd08445f3a99959b4ad77b5b961e062d983af22",
+        "receipt_sha256": "fbb9444e49a7b13f294eb6eead8a4aafa0c8ac5fc8866f71d57b1238ce9410f9",
         "blockers": []
       },
       "latest_transition": {
