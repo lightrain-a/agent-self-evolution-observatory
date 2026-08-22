@@ -19,6 +19,7 @@ from .submission_attempt_history import build_attempt_history
 from .submission_attempt_lineage import public_attempt_summary, validate_attempt_ledger
 from .submission_attempt_workflow import current_attempt_workflow_summary, validate_attempt_workflow_ledger
 from .scientific_reopen_protocol import public_scientific_reopen_summary, validate_scientific_reopen_ledger
+from .reopened_scientific_contract import find_contract_by_handoff, public_reopened_contract_summary
 
 DEFAULT_ROOT = Path('/data/wyt/agent-self-evolution-observatory')
 
@@ -352,6 +353,7 @@ def scientific_reopen_state(root: Path, paper_id: str, attempt: Mapping[str, Any
         'new_experiment_authorized': False,
         'gpu_execution_authorized': False,
         'validation_errors': [],
+        'new_contract': public_reopened_contract_summary({}),
     }
     if attempt.get('requires_explicit_scientific_reopen') is not True:
         return empty
@@ -366,7 +368,18 @@ def scientific_reopen_state(root: Path, paper_id: str, attempt: Mapping[str, Any
         return {**empty, 'status': 'SCIENTIFIC_REOPEN_LEDGER_INVALID', 'validation_errors': ['scientific-reopen-ledger-unreadable']}
     if errors:
         return {**empty, **summary, 'status': 'SCIENTIFIC_REOPEN_LEDGER_INVALID', 'validation_errors': errors}
-    return {**empty, **summary}
+    projected = {**empty, **summary}
+    handoff_sha = str(projected.get('research_os_handoff_sha256') or '')
+    if handoff_sha:
+        try:
+            contract = find_contract_by_handoff(root / 'scientific-contracts', handoff_sha)
+            contract_summary = public_reopened_contract_summary(contract)
+        except Exception:
+            contract_summary = {**public_reopened_contract_summary({}), 'status': 'NEW_SCIENTIFIC_CONTRACT_INVALID'}
+        projected['new_contract'] = contract_summary
+        if contract_summary.get('status') == 'NEW_SCIENTIFIC_CONTRACT_CREATED_PROBLEM_GATE_REQUIRED':
+            projected['status'] = 'NEW_SCIENTIFIC_CONTRACT_CREATED_PROBLEM_GATE_REQUIRED'
+    return projected
 
 
 def project(path: Path, root: Path) -> dict[str, Any]:
@@ -444,7 +457,9 @@ def project(path: Path, root: Path) -> dict[str, Any]:
             elif scientific_reopen['status']=='EXTERNAL_SCIENTIFIC_REOPEN_CONFIRMED_NEW_CONTRACT_REQUIRED':
                 actions=['external scientific reopen authority is recorded only for creating a new scientific contract. Compile the content-addressed Research OS handoff before contract creation; the old attempt remains blocked']
             elif scientific_reopen['status']=='RESEARCH_OS_NEW_CONTRACT_HANDOFF_READY':
-                actions=['the approved reopen is compiled into a Research OS new-contract seed. Enter the scientific-contract creation gate next; method, P0, experiment, and GPU authority all remain false until the new contract independently passes downstream gates']
+                actions=['the approved reopen is compiled into a Research OS new-contract seed. Supply an explicit new-contract spec and create the immutable child scientific contract; method, P0, experiment, and GPU authority remain false']
+            elif scientific_reopen['status']=='NEW_SCIENTIFIC_CONTRACT_CREATED_PROBLEM_GATE_REQUIRED':
+                actions=['the reopened child scientific contract now exists at scientific stage problem. Run an independent reopen Problem Gate next; it has zero paper-design, method, experiment, P0, or GPU authority until that gate is separately adjudicated']
             else:
                 actions=['scientific-reopen ledger is invalid; stop scientific changes until the proposal/authorization lineage is repaired']
         elif attempt_workflow['status']=='ATTEMPT_POST_DECISION_LEARN_COMPLETE':
@@ -604,6 +619,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         'scientific_reopen_destination_gate': scientific_reopen['destination_gate'],
         'scientific_reopen_new_contract_creation_eligible': scientific_reopen['new_contract_creation_eligible'],
         'scientific_reopen_new_contract_required': scientific_reopen['new_scientific_contract_required'],
+        'reopened_scientific_contract': scientific_reopen['new_contract'],
         'scientific_reopen_errors': scientific_reopen['validation_errors'],
         'blocker_groups': groups,
         'blocker_count': len(blockers),
@@ -616,7 +632,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
 
 def source_watermark(root: Path) -> str:
     timestamps: list[str] = []
-    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts', root / 'paper-submission-attempt-workflows', root / 'paper-scientific-reopen'):
+    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts', root / 'paper-submission-attempt-workflows', root / 'paper-scientific-reopen', root / 'scientific-contracts'):
         if not directory.exists():
             continue
         for path in sorted(directory.glob('*.json')):
@@ -626,7 +642,7 @@ def source_watermark(root: Path) -> str:
                 payload = json.loads(path.read_text(encoding='utf-8'))
             except (OSError, json.JSONDecodeError):
                 continue
-            updated = str(payload.get('updated_at') or '')
+            updated = str(payload.get('updated_at') or payload.get('created_at') or '')
             if updated:
                 timestamps.append(updated)
     return max(timestamps) if timestamps else '1970-01-01T00:00:00+00:00'
@@ -685,6 +701,7 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'scientific_reopen_proposed': sum(p['scientific_reopen_status'] == 'SCIENTIFIC_REOPEN_PROPOSED_EXTERNAL_AUTHORITY_REQUIRED' for p in papers),
             'scientific_reopen_authorized_new_contract_required': sum(p['scientific_reopen_status'] == 'EXTERNAL_SCIENTIFIC_REOPEN_CONFIRMED_NEW_CONTRACT_REQUIRED' for p in papers),
             'scientific_reopen_research_os_handoff_ready': sum(p['scientific_reopen_status'] == 'RESEARCH_OS_NEW_CONTRACT_HANDOFF_READY' for p in papers),
+            'reopened_scientific_contract_problem_gate_required': sum(p['scientific_reopen_status'] == 'NEW_SCIENTIFIC_CONTRACT_CREATED_PROBLEM_GATE_REQUIRED' for p in papers),
             'scientific_reopen_invalid': sum(p['scientific_reopen_status'] == 'SCIENTIFIC_REOPEN_LEDGER_INVALID' for p in papers),
             'submission_freeze_eligible': sum(p['submission_freeze_eligible'] for p in papers),
             'ledger_replay_failures': sum(not p['ledger_replay_pass'] for p in papers),

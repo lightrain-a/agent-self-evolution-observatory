@@ -29,6 +29,7 @@ from research_pipeline.submission_attempt_history import build_attempt_history
 from research_pipeline.submission_attempt_lineage import public_attempt_summary, validate_attempt_ledger
 from research_pipeline.submission_attempt_workflow import current_attempt_workflow_summary, validate_attempt_workflow_ledger
 from research_pipeline.scientific_reopen_protocol import public_scientific_reopen_summary, validate_scientific_reopen_ledger
+from research_pipeline.reopened_scientific_contract import find_contract_by_handoff, public_reopened_contract_summary
 DEFAULT_LEDGER_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ROOT") else None
 DEFAULT_ARTIFACT_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ARTIFACT_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ARTIFACT_ROOT") else None
 DEFAULT_FREEZE_ROOT = Path(os.environ["PAPER_SUBMISSION_FREEZE_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_FREEZE_ROOT") else None
@@ -37,6 +38,7 @@ DEFAULT_SIGNOFF_ROOT = Path(os.environ["PAPER_HUMAN_SIGNOFF_ROOT"]).expanduser()
 DEFAULT_ATTEMPT_ROOT = Path(os.environ["PAPER_SUBMISSION_ATTEMPT_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_ATTEMPT_ROOT") else None
 DEFAULT_ATTEMPT_WORKFLOW_ROOT = Path(os.environ["PAPER_SUBMISSION_ATTEMPT_WORKFLOW_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_ATTEMPT_WORKFLOW_ROOT") else None
 DEFAULT_SCIENTIFIC_REOPEN_ROOT = Path(os.environ["PAPER_SCIENTIFIC_REOPEN_ROOT"]).expanduser() if os.environ.get("PAPER_SCIENTIFIC_REOPEN_ROOT") else None
+DEFAULT_SCIENTIFIC_CONTRACT_ROOT = Path(os.environ["RESEARCH_SCIENTIFIC_CONTRACT_ROOT"]).expanduser() if os.environ.get("RESEARCH_SCIENTIFIC_CONTRACT_ROOT") else None
 DEFAULT_JSON = ROOT / "generated/paper-registry-state.json"
 DEFAULT_JS = ROOT / "generated/paper-registry-state.js"
 C01_ID = "D2-PAPER-FAILURE-MEMORY-PROVENANCE"
@@ -480,7 +482,7 @@ def submission_attempt_workflow_state(attempt: dict[str, Any], workflow_root: Pa
     return {**empty, **summary}
 
 
-def scientific_reopen_state(paper_id: str, attempt: dict[str, Any], reopen_root: Path | None) -> dict[str, Any]:
+def scientific_reopen_state(paper_id: str, attempt: dict[str, Any], reopen_root: Path | None, scientific_contract_root: Path | None = None) -> dict[str, Any]:
     empty = {
         "status": "SCIENTIFIC_REOPEN_PROPOSAL_REQUIRED" if attempt.get("requires_explicit_scientific_reopen") is True else "NOT_ELIGIBLE",
         "attempt_sha256": str(attempt.get("latest_attempt_sha256") or ""),
@@ -499,6 +501,7 @@ def scientific_reopen_state(paper_id: str, attempt: dict[str, Any], reopen_root:
         "new_experiment_authorized": False,
         "gpu_execution_authorized": False,
         "validation_errors": [],
+        "new_contract": public_reopened_contract_summary({}),
     }
     if attempt.get("requires_explicit_scientific_reopen") is not True or reopen_root is None:
         return empty
@@ -513,10 +516,21 @@ def scientific_reopen_state(paper_id: str, attempt: dict[str, Any], reopen_root:
         return {**empty, "status": "SCIENTIFIC_REOPEN_LEDGER_INVALID", "validation_errors": ["scientific-reopen-ledger-unreadable"]}
     if errors:
         return {**empty, **summary, "status": "SCIENTIFIC_REOPEN_LEDGER_INVALID", "validation_errors": errors}
-    return {**empty, **summary}
+    projected = {**empty, **summary}
+    handoff_sha = str(projected.get("research_os_handoff_sha256") or "")
+    if handoff_sha and scientific_contract_root is not None:
+        try:
+            contract = find_contract_by_handoff(scientific_contract_root, handoff_sha)
+            contract_summary = public_reopened_contract_summary(contract)
+        except Exception:
+            contract_summary = {**public_reopened_contract_summary({}), "status": "NEW_SCIENTIFIC_CONTRACT_INVALID"}
+        projected["new_contract"] = contract_summary
+        if contract_summary.get("status") == "NEW_SCIENTIFIC_CONTRACT_CREATED_PROBLEM_GATE_REQUIRED":
+            projected["status"] = "NEW_SCIENTIFIC_CONTRACT_CREATED_PROBLEM_GATE_REQUIRED"
+    return projected
 
 
-def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None, scientific_reopen_root: Path | None = None) -> dict[str, Any]:
+def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None, scientific_reopen_root: Path | None = None, scientific_contract_root: Path | None = None) -> dict[str, Any]:
     row = json.loads(path.read_text(encoding="utf-8"))
     contract = row.get("contract") or {}
     summary = row.get("summary") or {}
@@ -545,7 +559,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
     attempt = submission_attempt_state(paper_id, state, attempt_root)
     attempt_workflow = submission_attempt_workflow_state(attempt, attempt_workflow_root)
     attempt_history = build_attempt_history(paper_id, attempt_root, attempt_workflow_root)
-    scientific_reopen = scientific_reopen_state(paper_id, attempt, scientific_reopen_root)
+    scientific_reopen = scientific_reopen_state(paper_id, attempt, scientific_reopen_root, scientific_contract_root)
     scientific_layer = "SUPPORTED_AND_AUDITED" if claim_audit.get("pass") is True else ("ACTIVE_REPAIR" if state == "TARGETED_REPAIR" else "PRE_AUDIT")
     paper_quality_layer = "PASS" if manuscript_ci.get("pass") is True and prebuttal.get("pass") is True else ("IN_PROGRESS" if state not in {"PAPER_EVIDENCE", "PAPER_DESIGN"} else "NOT_STARTED")
     return {
@@ -604,7 +618,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
     }
 
 
-def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None, scientific_reopen_root: Path | None = None) -> str:
+def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None, scientific_reopen_root: Path | None = None, scientific_contract_root: Path | None = None) -> str:
     timestamps: list[str] = []
     for path in sorted(ledger_root.glob("*.json")):
         try:
@@ -614,7 +628,7 @@ def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff
         updated = str(payload.get("updated_at") or "")
         if updated:
             timestamps.append(updated)
-    for extra_root in (freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root):
+    for extra_root in (freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root, scientific_contract_root):
         if extra_root is None or not extra_root.exists():
             continue
         for path in sorted(extra_root.glob("*.json")):
@@ -624,14 +638,14 @@ def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff
                 payload = _load_json(path)
             except (OSError, json.JSONDecodeError):
                 continue
-            updated = str(payload.get("updated_at") or "")
+            updated = str(payload.get("updated_at") or payload.get("created_at") or "")
             if updated:
                 timestamps.append(updated)
     return max(timestamps) if timestamps else "1970-01-01T00:00:00+00:00"
 
 
-def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None, scientific_reopen_root: Path | None = None) -> dict[str, Any]:
-    papers = [project_paper(path, artifact_root, freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root) for path in sorted(ledger_root.glob("*.json"))]
+def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None, scientific_reopen_root: Path | None = None, scientific_contract_root: Path | None = None) -> dict[str, Any]:
+    papers = [project_paper(path, artifact_root, freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root, scientific_contract_root) for path in sorted(ledger_root.glob("*.json"))]
     order = {"LEARN": -3, "REBUTTAL": -2, "SUBMITTED": -1, "SUBMISSION_READY": 0, "PREBUTTAL": 1, "PDF_QA": 2, "CLAIM_AUDIT": 3, "TARGETED_REPAIR": 4, "MOCK_PC": 5, "MANUSCRIPT": 6, "PAPER_DESIGN": 7, "PAPER_EVIDENCE": 8}
     papers.sort(key=lambda p: (order.get(p["current_state"], 99), p["paper_id"]))
     summary = {
@@ -676,11 +690,12 @@ def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Pat
         "scientific_reopen_proposed": sum(p["scientific_reopen"].get("status") == "SCIENTIFIC_REOPEN_PROPOSED_EXTERNAL_AUTHORITY_REQUIRED" for p in papers),
         "scientific_reopen_authorized_new_contract_required": sum(p["scientific_reopen"].get("status") == "EXTERNAL_SCIENTIFIC_REOPEN_CONFIRMED_NEW_CONTRACT_REQUIRED" for p in papers),
         "scientific_reopen_research_os_handoff_ready": sum(p["scientific_reopen"].get("status") == "RESEARCH_OS_NEW_CONTRACT_HANDOFF_READY" for p in papers),
+        "reopened_scientific_contract_problem_gate_required": sum(p["scientific_reopen"].get("status") == "NEW_SCIENTIFIC_CONTRACT_CREATED_PROBLEM_GATE_REQUIRED" for p in papers),
         "scientific_reopen_invalid": sum(p["scientific_reopen"].get("status") == "SCIENTIFIC_REOPEN_LEDGER_INVALID" for p in papers),
     }
     payload = {
         "schema_version": "1.1",
-        "generated_at": source_watermark(ledger_root, freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root),
+        "generated_at": source_watermark(ledger_root, freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root, scientific_contract_root),
         "source": "canonical_paper_acceptance_ledger",
         "summary": summary,
         "papers": papers,
@@ -700,6 +715,7 @@ def main() -> None:
     parser.add_argument("--attempt-root", type=Path, default=DEFAULT_ATTEMPT_ROOT, help="Optional resubmission/camera-ready attempt ledger root; may also be supplied via PAPER_SUBMISSION_ATTEMPT_ROOT.")
     parser.add_argument("--attempt-workflow-root", type=Path, default=DEFAULT_ATTEMPT_WORKFLOW_ROOT, help="Optional attempt-scoped Preparation/Freeze/Handoff workflow root; may also be supplied via PAPER_SUBMISSION_ATTEMPT_WORKFLOW_ROOT.")
     parser.add_argument("--scientific-reopen-root", type=Path, default=DEFAULT_SCIENTIFIC_REOPEN_ROOT, help="Optional scientific-reopen proposal/authorization ledger root; may also be supplied via PAPER_SCIENTIFIC_REOPEN_ROOT.")
+    parser.add_argument("--scientific-contract-root", type=Path, default=DEFAULT_SCIENTIFIC_CONTRACT_ROOT, help="Optional reopened scientific-contract directory; may also be supplied via RESEARCH_SCIENTIFIC_CONTRACT_ROOT.")
     parser.add_argument("--json-output", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--js-output", type=Path, default=DEFAULT_JS)
     args = parser.parse_args()
@@ -725,7 +741,11 @@ def main() -> None:
     if scientific_reopen_root is None:
         candidate = args.ledger_root.parent / "paper-scientific-reopen"
         scientific_reopen_root = candidate if candidate.is_dir() else None
-    state = build(args.ledger_root, args.artifact_root, args.freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root)
+    scientific_contract_root = args.scientific_contract_root
+    if scientific_contract_root is None:
+        candidate = args.ledger_root.parent / "scientific-contracts"
+        scientific_contract_root = candidate if candidate.is_dir() else None
+    state = build(args.ledger_root, args.artifact_root, args.freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root, scientific_contract_root)
     args.json_output.parent.mkdir(parents=True, exist_ok=True)
     args.json_output.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     args.js_output.write_text("window.PAPER_REGISTRY_STATE = " + json.dumps(state, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")

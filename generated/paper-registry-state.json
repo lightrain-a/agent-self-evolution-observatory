@@ -44,6 +44,7 @@
     "scientific_reopen_proposed": 0,
     "scientific_reopen_authorized_new_contract_required": 0,
     "scientific_reopen_research_os_handoff_ready": 0,
+    "reopened_scientific_contract_problem_gate_required": 0,
     "scientific_reopen_invalid": 0
   },
   "papers": [
@@ -293,7 +294,24 @@
         "claim_expansion_authorized": false,
         "new_experiment_authorized": false,
         "gpu_execution_authorized": false,
-        "validation_errors": []
+        "validation_errors": [],
+        "new_contract": {
+          "status": "NEW_SCIENTIFIC_CONTRACT_NOT_CREATED",
+          "contract_id": "",
+          "contract_sha256": "",
+          "scientific_question": "",
+          "scientific_stage": "",
+          "problem_gate_required": true,
+          "authority": {
+            "problem_gate": false,
+            "paper_design": false,
+            "method": false,
+            "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
+        }
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -571,7 +589,24 @@
         "claim_expansion_authorized": false,
         "new_experiment_authorized": false,
         "gpu_execution_authorized": false,
-        "validation_errors": []
+        "validation_errors": [],
+        "new_contract": {
+          "status": "NEW_SCIENTIFIC_CONTRACT_NOT_CREATED",
+          "contract_id": "",
+          "contract_sha256": "",
+          "scientific_question": "",
+          "scientific_stage": "",
+          "problem_gate_required": true,
+          "authority": {
+            "problem_gate": false,
+            "paper_design": false,
+            "method": false,
+            "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
+        }
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -849,7 +884,24 @@
         "claim_expansion_authorized": false,
         "new_experiment_authorized": false,
         "gpu_execution_authorized": false,
-        "validation_errors": []
+        "validation_errors": [],
+        "new_contract": {
+          "status": "NEW_SCIENTIFIC_CONTRACT_NOT_CREATED",
+          "contract_id": "",
+          "contract_sha256": "",
+          "scientific_question": "",
+          "scientific_stage": "",
+          "problem_gate_required": true,
+          "authority": {
+            "problem_gate": false,
+            "paper_design": false,
+            "method": false,
+            "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
+        }
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -1124,7 +1176,24 @@
         "claim_expansion_authorized": false,
         "new_experiment_authorized": false,
         "gpu_execution_authorized": false,
-        "validation_errors": []
+        "validation_errors": [],
+        "new_contract": {
+          "status": "NEW_SCIENTIFIC_CONTRACT_NOT_CREATED",
+          "contract_id": "",
+          "contract_sha256": "",
+          "scientific_question": "",
+          "scientific_stage": "",
+          "problem_gate_required": true,
+          "authority": {
+            "problem_gate": false,
+            "paper_design": false,
+            "method": false,
+            "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
+        }
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -1396,7 +1465,24 @@
         "claim_expansion_authorized": false,
         "new_experiment_authorized": false,
         "gpu_execution_authorized": false,
-        "validation_errors": []
+        "validation_errors": [],
+        "new_contract": {
+          "status": "NEW_SCIENTIFIC_CONTRACT_NOT_CREATED",
+          "contract_id": "",
+          "contract_sha256": "",
+          "scientific_question": "",
+          "scientific_stage": "",
+          "problem_gate_required": true,
+          "authority": {
+            "problem_gate": false,
+            "paper_design": false,
+            "method": false,
+            "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
+        }
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -1423,5 +1509,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "222b46bcc33149f64c7c0b1cd3f4107162a6fe1c80dc4c66ab87f4c14b8c22c1"
+  "projection_sha256": "568cddde3720b7a254357868b77e034a420efeac2ba84c34d7f03afc34ba1fe2"
 }

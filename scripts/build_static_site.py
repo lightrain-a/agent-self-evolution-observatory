@@ -133,6 +133,7 @@ def build() -> Path:
     paper_attempt_root = os.environ.get("PAPER_SUBMISSION_ATTEMPT_ROOT", "").strip()
     paper_attempt_workflow_root = os.environ.get("PAPER_SUBMISSION_ATTEMPT_WORKFLOW_ROOT", "").strip()
     paper_scientific_reopen_root = os.environ.get("PAPER_SCIENTIFIC_REOPEN_ROOT", "").strip()
+    research_scientific_contract_root = os.environ.get("RESEARCH_SCIENTIFIC_CONTRACT_ROOT", "").strip()
     if paper_ledger_root:
         ledger_path = Path(paper_ledger_root).expanduser().resolve()
         audit_root = ledger_path.parent if ledger_path.name == "paper-acceptance" else ledger_path
@@ -166,6 +167,9 @@ def build() -> Path:
         scientific_reopen_path = Path(paper_scientific_reopen_root).expanduser().resolve() if paper_scientific_reopen_root else audit_root / "paper-scientific-reopen"
         if scientific_reopen_path.is_dir():
             command.extend(["--scientific-reopen-root", str(scientific_reopen_path)])
+        scientific_contract_path = Path(research_scientific_contract_root).expanduser().resolve() if research_scientific_contract_root else audit_root / "scientific-contracts"
+        if scientific_contract_path.is_dir():
+            command.extend(["--scientific-contract-root", str(scientific_contract_path)])
         subprocess.run(command, cwd=ROOT, check=True)
     else:
         for snapshot in ("paper-registry-state.json", "paper-portfolio-audit.json"):
