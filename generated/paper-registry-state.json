@@ -32,6 +32,7 @@
     "attempt_preparation_pass": 0,
     "attempt_machine_frozen": 0,
     "attempt_machine_handoff_ready": 0,
+    "attempt_submission_blocked_active_sibling": 0,
     "attempt_workflow_stale_or_invalid": 0,
     "attempt_human_signoff_complete": 0,
     "attempt_venue_submitted": 0,
@@ -214,6 +215,9 @@
         "freeze_sha256": "",
         "handoff_sha256": "",
         "signoff_sha256": "",
+        "submission_conflict_guard_sha256": "",
+        "submission_conflict_guard_status": "",
+        "submission_conflict_count": 0,
         "submission_receipt_sha256": "",
         "venue_submission_id": "",
         "submitted_at": "",
@@ -247,6 +251,7 @@
           "machine_preparation_eligible": 0,
           "requires_explicit_scientific_reopen": 0,
           "human_signoffs": 0,
+          "submission_conflict_blocks": 0,
           "venue_submissions": 0,
           "review_sets": 0,
           "rebuttals_prepared": 0,
@@ -265,7 +270,7 @@
           "gpu": false,
           "submission": false
         },
-        "history_sha256": "d36bb3c6c0044d2e338764234015dca75c3b5ca25f6d4d14e74b17cab258f39f"
+        "history_sha256": "199e20b29ead2c23f096d96813bdee54e3420ef1ff77b1c54cff6554f342b161"
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -469,6 +474,9 @@
         "freeze_sha256": "",
         "handoff_sha256": "",
         "signoff_sha256": "",
+        "submission_conflict_guard_sha256": "",
+        "submission_conflict_guard_status": "",
+        "submission_conflict_count": 0,
         "submission_receipt_sha256": "",
         "venue_submission_id": "",
         "submitted_at": "",
@@ -502,6 +510,7 @@
           "machine_preparation_eligible": 0,
           "requires_explicit_scientific_reopen": 0,
           "human_signoffs": 0,
+          "submission_conflict_blocks": 0,
           "venue_submissions": 0,
           "review_sets": 0,
           "rebuttals_prepared": 0,
@@ -520,7 +529,7 @@
           "gpu": false,
           "submission": false
         },
-        "history_sha256": "7aa22569b4bbe9e62c5b9648a169730f3cce35facbd4caa56d8eb6472b9f2fa6"
+        "history_sha256": "3fe039568ca4fd78b386d832d05d1a23c79edbe5a82f015361c6a579bada142d"
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -724,6 +733,9 @@
         "freeze_sha256": "",
         "handoff_sha256": "",
         "signoff_sha256": "",
+        "submission_conflict_guard_sha256": "",
+        "submission_conflict_guard_status": "",
+        "submission_conflict_count": 0,
         "submission_receipt_sha256": "",
         "venue_submission_id": "",
         "submitted_at": "",
@@ -757,6 +769,7 @@
           "machine_preparation_eligible": 0,
           "requires_explicit_scientific_reopen": 0,
           "human_signoffs": 0,
+          "submission_conflict_blocks": 0,
           "venue_submissions": 0,
           "review_sets": 0,
           "rebuttals_prepared": 0,
@@ -775,7 +788,7 @@
           "gpu": false,
           "submission": false
         },
-        "history_sha256": "814bde84d562ba95bf502ecc94ee40905ee4d6da20214cfeb8e647eee90feeb4"
+        "history_sha256": "298cd39338be9958bffde8e9a4abced7ea262fbfde8d6cff1d18506daa4ff3e0"
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -976,6 +989,9 @@
         "freeze_sha256": "",
         "handoff_sha256": "",
         "signoff_sha256": "",
+        "submission_conflict_guard_sha256": "",
+        "submission_conflict_guard_status": "",
+        "submission_conflict_count": 0,
         "submission_receipt_sha256": "",
         "venue_submission_id": "",
         "submitted_at": "",
@@ -1009,6 +1025,7 @@
           "machine_preparation_eligible": 0,
           "requires_explicit_scientific_reopen": 0,
           "human_signoffs": 0,
+          "submission_conflict_blocks": 0,
           "venue_submissions": 0,
           "review_sets": 0,
           "rebuttals_prepared": 0,
@@ -1027,7 +1044,7 @@
           "gpu": false,
           "submission": false
         },
-        "history_sha256": "893e7122c07a039c5e3fe76f08e405e6969e994bb08aadc2b94a7a7bcb690b5e"
+        "history_sha256": "cf3004a11842425a5dd28599bcc22f6cb25ee5b7c854e22e7b48d6ccb866ce98"
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -1225,6 +1242,9 @@
         "freeze_sha256": "",
         "handoff_sha256": "",
         "signoff_sha256": "",
+        "submission_conflict_guard_sha256": "",
+        "submission_conflict_guard_status": "",
+        "submission_conflict_count": 0,
         "submission_receipt_sha256": "",
         "venue_submission_id": "",
         "submitted_at": "",
@@ -1258,6 +1278,7 @@
           "machine_preparation_eligible": 0,
           "requires_explicit_scientific_reopen": 0,
           "human_signoffs": 0,
+          "submission_conflict_blocks": 0,
           "venue_submissions": 0,
           "review_sets": 0,
           "rebuttals_prepared": 0,
@@ -1276,7 +1297,7 @@
           "gpu": false,
           "submission": false
         },
-        "history_sha256": "f68a61c8c11435856b26d494a6f922fea549e9d53a872820fabe18c9f0789f23"
+        "history_sha256": "26754163cd15aa0cb1a0c3aed5efaf90d60959e60c0c3635dc1cfb92cf10bf70"
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -1303,5 +1324,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "a6eda24da9738f8bf0792992ff32c48d4d0d9d0fec52a8972b8980d7d9232537"
+  "projection_sha256": "1403c9f6dfb37596681d3b5a7127f120a54289237de37066c10cd5d8c6fbd586"
 }

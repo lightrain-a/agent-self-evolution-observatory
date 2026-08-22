@@ -13,6 +13,7 @@ if str(ROOT) not in sys.path:
 from research_pipeline.submission_attempt_workflow import (
     append_attempt_workflow_receipt,
     build_attempt_actual_submission,
+    build_attempt_submission_conflict_guard,
     current_attempt_workflow_summary,
     validate_attempt_human_signoff,
     validate_attempt_workflow_ledger,
@@ -65,16 +66,47 @@ def main() -> None:
     uploaded = {label: sha for label, sha in args.uploaded_hash}
     if len(uploaded) != len(args.uploaded_hash):
         raise RuntimeError("duplicate uploaded artifact labels are not allowed")
-    receipt = build_attempt_actual_submission(
-        workflow_ledger=row,
-        signoff_receipt=signoff,
-        venue_submission_id=args.venue_submission_id,
-        venue_forum_ref=args.venue_forum_ref,
-        uploaded_artifact_sha256=uploaded,
-        submitted_at=args.submitted_at,
-        external_human_submission_authority_ref=args.external_human_submission_authority_ref,
-    )
-    row = append_attempt_workflow_receipt(args.root, receipt)
+    receipt = None
+    for _ in range(3):
+        row = load_workflow(args.root, args.attempt_id)
+        signoff = latest_signoff(row)
+        guard = build_attempt_submission_conflict_guard(root=args.root, workflow_ledger=row, signoff_receipt=signoff)
+        row = append_attempt_workflow_receipt(args.root, guard)
+        if guard.get("pass") is not True:
+            summary = current_attempt_workflow_summary(row)
+            print(json.dumps({
+                "status": "BLOCKED_ATTEMPT_ACTIVE_SIBLING_SUBMISSION",
+                "paper_id": row["paper_id"],
+                "attempt_id": row["attempt_id"],
+                "attempt_sha256": row["attempt_sha256"],
+                "workflow_status": summary["status"],
+                "submission_conflict_guard_sha256": guard["attempt_submission_conflict_guard_sha256"],
+                "active_conflicts": guard.get("active_conflicts") or [],
+                "actual_submission_recorded": False,
+                "scientific_authority": False,
+                "experiment_authority": False,
+                "gpu_authority": False,
+                "submission_authority": False,
+            }, ensure_ascii=False, indent=2))
+            raise SystemExit(2)
+        receipt = build_attempt_actual_submission(
+            workflow_ledger=row,
+            signoff_receipt=signoff,
+            conflict_guard_receipt=guard,
+            venue_submission_id=args.venue_submission_id,
+            venue_forum_ref=args.venue_forum_ref,
+            uploaded_artifact_sha256=uploaded,
+            submitted_at=args.submitted_at,
+            external_human_submission_authority_ref=args.external_human_submission_authority_ref,
+        )
+        try:
+            row = append_attempt_workflow_receipt(args.root, receipt)
+            break
+        except RuntimeError as exc:
+            if "conflict guard stale or blocked" not in str(exc):
+                raise
+    else:
+        raise RuntimeError("submission conflict guard could not stabilize after three attempts")
     errors = validate_attempt_workflow_ledger(row)
     if errors:
         raise RuntimeError(errors)
@@ -85,6 +117,7 @@ def main() -> None:
         "attempt_id": row["attempt_id"],
         "attempt_sha256": row["attempt_sha256"],
         "venue_submission_id": receipt["venue_submission_id"],
+        "submission_conflict_guard_sha256": receipt["attempt_submission_conflict_guard_sha256"],
         "attempt_submission_receipt_sha256": receipt["attempt_submission_receipt_sha256"],
         "workflow_status": summary["status"],
         "parent_submission_receipt_reuse_forbidden": True,

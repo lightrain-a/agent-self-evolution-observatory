@@ -407,6 +407,170 @@ def validate_attempt_human_signoff(receipt: Mapping[str, Any]) -> bool:
     return str(receipt.get("attempt_signoff_sha256") or "") == _digest(attempt_signoff_identity(receipt))
 
 
+def submission_conflict_guard_identity(receipt: Mapping[str, Any]) -> dict[str, Any]:
+    return {
+        "paper_id": receipt.get("paper_id"),
+        "attempt_id": receipt.get("attempt_id"),
+        "attempt_sha256": receipt.get("attempt_sha256"),
+        "attempt_signoff_sha256": receipt.get("attempt_signoff_sha256"),
+        "attempt_type": receipt.get("attempt_type"),
+        "target_venue": receipt.get("target_venue"),
+        "parent_attempt_sha256": receipt.get("parent_attempt_sha256"),
+        "sibling_snapshot": receipt.get("sibling_snapshot") or [],
+        "sibling_snapshot_sha256": receipt.get("sibling_snapshot_sha256"),
+        "active_conflicts": receipt.get("active_conflicts") or [],
+        "status": receipt.get("status"),
+        "pass": receipt.get("pass"),
+    }
+
+
+def _attempt_plan_for_workflow(root: Path, workflow_ledger: Mapping[str, Any]) -> dict[str, Any]:
+    paper_id = str(workflow_ledger.get("paper_id") or "")
+    attempt_sha = str(workflow_ledger.get("attempt_sha256") or "")
+    path = Path(root) / "paper-submission-attempts" / f"{_slug(paper_id)}.json"
+    if not path.exists():
+        raise RuntimeError("submission-attempt plan ledger missing")
+    row = json.loads(path.read_text(encoding="utf-8"))
+    for event in row.get("events") or []:
+        receipt = event.get("receipt") or {} if isinstance(event, Mapping) else {}
+        if isinstance(receipt, Mapping) and str(receipt.get("attempt_sha256") or "") == attempt_sha:
+            if not validate_attempt_plan(receipt):
+                raise RuntimeError("submission-attempt plan receipt invalid")
+            return dict(receipt)
+    raise RuntimeError("submission-attempt plan for workflow not found")
+
+
+def _sibling_submission_snapshot(root: Path, workflow_ledger: Mapping[str, Any], current_plan: Mapping[str, Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    directory = Path(root) / "paper-submission-attempt-workflows"
+    paper_id = str(workflow_ledger.get("paper_id") or "")
+    attempt_sha = str(workflow_ledger.get("attempt_sha256") or "")
+    rows: list[dict[str, Any]] = []
+    conflicts: list[dict[str, Any]] = []
+    if not directory.exists():
+        return rows, conflicts
+    for path in sorted(directory.glob("*.json")):
+        try:
+            sibling = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            rows.append({"attempt_sha256": "", "workflow_status": "ATTEMPT_WORKFLOW_UNREADABLE", "validation_errors": ["unreadable-workflow"]})
+            conflicts.append({"attempt_sha256": "", "reason": "SIBLING_WORKFLOW_UNREADABLE"})
+            continue
+        if str(sibling.get("paper_id") or "") != paper_id or str(sibling.get("attempt_sha256") or "") == attempt_sha:
+            continue
+        sibling_sha = str(sibling.get("attempt_sha256") or "")
+        errors = validate_attempt_workflow_ledger(sibling)
+        if errors:
+            rows.append({"attempt_sha256": sibling_sha, "workflow_status": "ATTEMPT_WORKFLOW_INVALID", "validation_errors": list(errors)})
+            conflicts.append({"attempt_sha256": sibling_sha, "reason": "SIBLING_WORKFLOW_INVALID"})
+            continue
+        summary = current_attempt_workflow_summary(sibling)
+        submission = _latest_receipt(sibling, "attempt-actual-submission")
+        decision = _latest_receipt(sibling, "attempt-venue-decision")
+        decision_value = str(decision.get("decision") or "")
+        snapshot = {
+            "attempt_sha256": sibling_sha,
+            "workflow_status": str(summary.get("status") or ""),
+            "submission_receipt_sha256": str(submission.get("attempt_submission_receipt_sha256") or ""),
+            "venue": str(submission.get("venue") or ""),
+            "venue_decision": decision_value,
+            "venue_decision_sha256": str(decision.get("attempt_venue_decision_sha256") or ""),
+            "validation_errors": [],
+        }
+        rows.append(snapshot)
+        if not snapshot["submission_receipt_sha256"]:
+            continue
+        closed = decision_value in {"REJECT", "WITHDRAWN", "VENUE_CLOSED_WITHOUT_DECISION"}
+        accepted_camera_ready_parent = (
+            decision_value == "ACCEPT"
+            and str(current_plan.get("attempt_type") or "") == "CAMERA_READY"
+            and str(current_plan.get("parent_attempt_sha256") or "") == sibling_sha
+            and str(current_plan.get("target_venue") or "") == snapshot["venue"]
+        )
+        if not closed and not accepted_camera_ready_parent:
+            conflicts.append({
+                "attempt_sha256": sibling_sha,
+                "submission_receipt_sha256": snapshot["submission_receipt_sha256"],
+                "venue": snapshot["venue"],
+                "venue_decision": decision_value,
+                "reason": "ACCEPTED_PARENT_REQUIRES_CAMERA_READY" if decision_value == "ACCEPT" else "ACTIVE_SIBLING_SUBMISSION",
+            })
+    rows.sort(key=lambda item: (str(item.get("attempt_sha256") or ""), str(item.get("workflow_status") or "")))
+    conflicts.sort(key=lambda item: (str(item.get("attempt_sha256") or ""), str(item.get("reason") or "")))
+    return rows, conflicts
+
+
+def build_attempt_submission_conflict_guard(*, root: Path, workflow_ledger: Mapping[str, Any], signoff_receipt: Mapping[str, Any]) -> dict[str, Any]:
+    errors = validate_attempt_workflow_ledger(workflow_ledger)
+    if errors:
+        raise RuntimeError(f"attempt workflow ledger invalid: {errors}")
+    if not validate_attempt_human_signoff(signoff_receipt):
+        raise RuntimeError("valid attempt human signoff required before submission conflict check")
+    if str(signoff_receipt.get("attempt_sha256") or "") != str(workflow_ledger.get("attempt_sha256") or ""):
+        raise RuntimeError("submission conflict guard signoff belongs to another attempt")
+    plan = _attempt_plan_for_workflow(root, workflow_ledger)
+    siblings, conflicts = _sibling_submission_snapshot(root, workflow_ledger, plan)
+    snapshot_sha = _digest(siblings)
+    receipt: dict[str, Any] = {
+        "schema_version": SCHEMA_VERSION,
+        "receipt_type": "attempt-submission-conflict-guard",
+        "paper_id": str(workflow_ledger.get("paper_id") or ""),
+        "attempt_id": str(workflow_ledger.get("attempt_id") or ""),
+        "attempt_sha256": str(workflow_ledger.get("attempt_sha256") or ""),
+        "attempt_signoff_sha256": str(signoff_receipt.get("attempt_signoff_sha256") or ""),
+        "attempt_type": str(plan.get("attempt_type") or ""),
+        "target_venue": str(plan.get("target_venue") or ""),
+        "parent_attempt_sha256": str(plan.get("parent_attempt_sha256") or ""),
+        "sibling_snapshot": siblings,
+        "sibling_snapshot_sha256": snapshot_sha,
+        "active_conflicts": conflicts,
+        "status": "ATTEMPT_SUBMISSION_CONFLICT_GUARD_PASS" if not conflicts else "ATTEMPT_SUBMISSION_BLOCKED_ACTIVE_SIBLING",
+        "pass": not conflicts,
+        "dual_submission_machine_guard": True,
+        "parent_submission_bytes_immutable": True,
+        "scientific_authority": False,
+        "experiment_authority": False,
+        "gpu_authority": False,
+        "submission_authority": False,
+    }
+    receipt["attempt_submission_conflict_guard_sha256"] = _digest(submission_conflict_guard_identity(receipt))
+    return receipt
+
+
+def validate_attempt_submission_conflict_guard(receipt: Mapping[str, Any]) -> bool:
+    if receipt.get("receipt_type") != "attempt-submission-conflict-guard":
+        return False
+    if receipt.get("status") not in {"ATTEMPT_SUBMISSION_CONFLICT_GUARD_PASS", "ATTEMPT_SUBMISSION_BLOCKED_ACTIVE_SIBLING"}:
+        return False
+    conflicts = list(receipt.get("active_conflicts") or [])
+    if receipt.get("pass") is not (not conflicts):
+        return False
+    if str(receipt.get("sibling_snapshot_sha256") or "") != _digest(receipt.get("sibling_snapshot") or []):
+        return False
+    if receipt.get("dual_submission_machine_guard") is not True or receipt.get("parent_submission_bytes_immutable") is not True:
+        return False
+    if not receipt.get("attempt_signoff_sha256"):
+        return False
+    if any(receipt.get(key) is True for key in ("scientific_authority", "experiment_authority", "gpu_authority", "submission_authority")):
+        return False
+    return str(receipt.get("attempt_submission_conflict_guard_sha256") or "") == _digest(submission_conflict_guard_identity(receipt))
+
+
+def verify_attempt_submission_conflict_guard_current(*, root: Path, workflow_ledger: Mapping[str, Any], guard_receipt: Mapping[str, Any]) -> list[str]:
+    errors: list[str] = []
+    if not validate_attempt_submission_conflict_guard(guard_receipt):
+        return ["attempt-submission-conflict-guard-invalid"]
+    signoff = _latest_receipt(workflow_ledger, "attempt-human-signoff")
+    if not signoff or guard_receipt.get("attempt_signoff_sha256") != signoff.get("attempt_signoff_sha256"):
+        errors.append("attempt-submission-conflict-guard-signoff-stale")
+        return errors
+    fresh = build_attempt_submission_conflict_guard(root=root, workflow_ledger=workflow_ledger, signoff_receipt=signoff)
+    if fresh.get("attempt_submission_conflict_guard_sha256") != guard_receipt.get("attempt_submission_conflict_guard_sha256"):
+        errors.append("attempt-submission-conflict-guard-sibling-snapshot-stale")
+    if fresh.get("pass") is not True:
+        errors.append("attempt-submission-conflict-active-sibling")
+    return list(dict.fromkeys(errors))
+
+
 def attempt_submission_identity(receipt: Mapping[str, Any]) -> dict[str, Any]:
     return {
         "paper_id": receipt.get("paper_id"),
@@ -414,6 +578,7 @@ def attempt_submission_identity(receipt: Mapping[str, Any]) -> dict[str, Any]:
         "attempt_signoff_sha256": receipt.get("attempt_signoff_sha256"),
         "attempt_handoff_sha256": receipt.get("attempt_handoff_sha256"),
         "attempt_freeze_sha256": receipt.get("attempt_freeze_sha256"),
+        "attempt_submission_conflict_guard_sha256": receipt.get("attempt_submission_conflict_guard_sha256"),
         "venue": receipt.get("venue"),
         "venue_submission_id": receipt.get("venue_submission_id"),
         "venue_forum_ref": receipt.get("venue_forum_ref"),
@@ -429,6 +594,7 @@ def build_attempt_actual_submission(
     *,
     workflow_ledger: Mapping[str, Any],
     signoff_receipt: Mapping[str, Any],
+    conflict_guard_receipt: Mapping[str, Any],
     venue_submission_id: str,
     venue_forum_ref: str,
     uploaded_artifact_sha256: Mapping[str, str],
@@ -440,10 +606,14 @@ def build_attempt_actual_submission(
         raise RuntimeError(f"attempt workflow ledger invalid: {errors}")
     if not validate_attempt_human_signoff(signoff_receipt):
         raise RuntimeError("valid attempt human signoff required")
+    if not validate_attempt_submission_conflict_guard(conflict_guard_receipt) or conflict_guard_receipt.get("pass") is not True:
+        raise RuntimeError("passing attempt submission conflict guard required")
     handoff = _latest_receipt(workflow_ledger, "attempt-handoff")
     freeze = _latest_receipt(workflow_ledger, "attempt-freeze")
     if str(signoff_receipt.get("attempt_sha256") or "") != str(workflow_ledger.get("attempt_sha256") or ""):
         raise RuntimeError("attempt signoff belongs to a different attempt")
+    if str(conflict_guard_receipt.get("attempt_sha256") or "") != str(workflow_ledger.get("attempt_sha256") or "") or conflict_guard_receipt.get("attempt_signoff_sha256") != signoff_receipt.get("attempt_signoff_sha256"):
+        raise RuntimeError("attempt submission conflict guard belongs to a different attempt/signoff")
     if signoff_receipt.get("attempt_handoff_sha256") != handoff.get("attempt_handoff_sha256") or signoff_receipt.get("attempt_freeze_sha256") != freeze.get("attempt_freeze_sha256"):
         raise RuntimeError("attempt signoff is stale relative to current handoff/freeze")
     drift = verify_frozen_artifacts(freeze)
@@ -466,6 +636,7 @@ def build_attempt_actual_submission(
         "attempt_signoff_sha256": str(signoff_receipt.get("attempt_signoff_sha256") or ""),
         "attempt_handoff_sha256": str(handoff.get("attempt_handoff_sha256") or ""),
         "attempt_freeze_sha256": str(freeze.get("attempt_freeze_sha256") or ""),
+        "attempt_submission_conflict_guard_sha256": str(conflict_guard_receipt.get("attempt_submission_conflict_guard_sha256") or ""),
         "venue": str(handoff.get("target_venue") or ""),
         "venue_submission_id": str(venue_submission_id).strip(),
         "venue_forum_ref": str(venue_forum_ref).strip(),
@@ -492,7 +663,7 @@ def validate_attempt_actual_submission(receipt: Mapping[str, Any]) -> bool:
         return False
     if receipt.get("parent_submission_bytes_immutable") is not True:
         return False
-    if not receipt.get("attempt_signoff_sha256") or not receipt.get("venue_submission_id") or not receipt.get("venue_forum_ref") or not receipt.get("external_human_submission_authority_ref"):
+    if not receipt.get("attempt_signoff_sha256") or not receipt.get("attempt_submission_conflict_guard_sha256") or not receipt.get("venue_submission_id") or not receipt.get("venue_forum_ref") or not receipt.get("external_human_submission_authority_ref"):
         return False
     if any(receipt.get(key) is True for key in ("scientific_authority", "experiment_authority", "gpu_authority", "submission_authority")):
         return False
@@ -508,6 +679,8 @@ def _event_sha(receipt: Mapping[str, Any]) -> tuple[str, str]:
         return "attempt-handoff", str(receipt.get("attempt_handoff_sha256") or "")
     if receipt.get("receipt_type") == "attempt-human-signoff":
         return "attempt-human-signoff", str(receipt.get("attempt_signoff_sha256") or "")
+    if receipt.get("receipt_type") == "attempt-submission-conflict-guard":
+        return "attempt-submission-conflict-guard", str(receipt.get("attempt_submission_conflict_guard_sha256") or "")
     if receipt.get("receipt_type") == "attempt-actual-submission":
         return "attempt-actual-submission", str(receipt.get("attempt_submission_receipt_sha256") or "")
     if receipt.get("receipt_type") == "attempt-review-set":
@@ -529,6 +702,7 @@ def _validator(receipt: Mapping[str, Any]) -> bool:
     if receipt_type == "attempt-freeze": return validate_attempt_freeze(receipt)
     if receipt_type == "attempt-handoff": return validate_attempt_handoff(receipt)
     if receipt_type == "attempt-human-signoff": return validate_attempt_human_signoff(receipt)
+    if receipt_type == "attempt-submission-conflict-guard": return validate_attempt_submission_conflict_guard(receipt)
     if receipt_type == "attempt-actual-submission": return validate_attempt_actual_submission(receipt)
     from .submission_attempt_post_submission import (
         validate_attempt_learning_packet, validate_attempt_rebuttal_preparation,
@@ -551,6 +725,7 @@ def validate_attempt_workflow_ledger(row: Mapping[str, Any]) -> list[str]:
     seen_freezes: set[str] = set()
     seen_handoffs: set[str] = set()
     seen_signoffs: set[str] = set()
+    seen_guards: dict[str, bool] = {}
     seen_submissions: set[str] = set()
     seen_reviews: set[str] = set()
     seen_rebuttals: set[str] = set()
@@ -586,9 +761,16 @@ def validate_attempt_workflow_ledger(row: Mapping[str, Any]) -> list[str]:
             if str(receipt.get("attempt_handoff_sha256") or "") not in seen_handoffs:
                 errors.append("attempt-signoff-missing-prior-handoff")
             seen_signoffs.add(receipt_sha)
+        elif kind == "attempt-submission-conflict-guard":
+            if str(receipt.get("attempt_signoff_sha256") or "") not in seen_signoffs:
+                errors.append("attempt-conflict-guard-missing-prior-signoff")
+            seen_guards[receipt_sha] = receipt.get("pass") is True
         elif kind == "attempt-actual-submission":
             if str(receipt.get("attempt_signoff_sha256") or "") not in seen_signoffs:
                 errors.append("attempt-submission-missing-prior-signoff")
+            guard_sha = str(receipt.get("attempt_submission_conflict_guard_sha256") or "")
+            if guard_sha not in seen_guards or seen_guards.get(guard_sha) is not True:
+                errors.append("attempt-submission-missing-prior-passing-conflict-guard")
             seen_submissions.add(receipt_sha)
         elif kind == "attempt-review-set":
             if str(receipt.get("attempt_submission_receipt_sha256") or "") not in seen_submissions:
@@ -639,9 +821,13 @@ def _path(root: Path, attempt_id: str) -> tuple[Path, Path]:
     return directory / f"{stem}.json", directory / f".{stem}.lock"
 
 
-def append_attempt_workflow_receipt(root: Path, receipt: Mapping[str, Any]) -> dict[str, Any]:
-    if not _validator(receipt):
-        raise RuntimeError("invalid attempt workflow receipt")
+def _paper_submission_lock_path(root: Path, paper_id: str) -> Path:
+    directory = Path(root) / "paper-submission-attempt-workflows" / ".paper-submission-locks"
+    directory.mkdir(parents=True, exist_ok=True)
+    return directory / f"{_slug(paper_id)}.lock"
+
+
+def _append_attempt_workflow_receipt_unlocked(root: Path, receipt: Mapping[str, Any]) -> dict[str, Any]:
     attempt_id = str(receipt.get("attempt_id") or "")
     attempt_sha = str(receipt.get("attempt_sha256") or "")
     path, lock = _path(root, attempt_id)
@@ -685,12 +871,45 @@ def append_attempt_workflow_receipt(root: Path, receipt: Mapping[str, Any]) -> d
         return row
 
 
+def append_attempt_workflow_receipt(root: Path, receipt: Mapping[str, Any]) -> dict[str, Any]:
+    if not _validator(receipt):
+        raise RuntimeError("invalid attempt workflow receipt")
+    if receipt.get("receipt_type") != "attempt-actual-submission":
+        return _append_attempt_workflow_receipt_unlocked(root, receipt)
+
+    paper_id = str(receipt.get("paper_id") or "")
+    attempt_id = str(receipt.get("attempt_id") or "")
+    path, _ = _path(root, attempt_id)
+    paper_lock = _paper_submission_lock_path(root, paper_id)
+    with paper_lock.open("a+", encoding="utf-8") as handle:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+        if not path.exists():
+            raise RuntimeError("attempt workflow ledger missing before actual submission")
+        row = json.loads(path.read_text(encoding="utf-8"))
+        guard_sha = str(receipt.get("attempt_submission_conflict_guard_sha256") or "")
+        guard = next((
+            event.get("receipt") or {}
+            for event in reversed(row.get("events") or [])
+            if isinstance(event, Mapping)
+            and event.get("event_type") == "attempt-submission-conflict-guard"
+            and isinstance(event.get("receipt"), Mapping)
+            and str((event.get("receipt") or {}).get("attempt_submission_conflict_guard_sha256") or "") == guard_sha
+        ), {})
+        if not guard:
+            raise RuntimeError("actual child submission missing prior conflict guard receipt")
+        guard_errors = verify_attempt_submission_conflict_guard_current(root=root, workflow_ledger=row, guard_receipt=guard)
+        if guard_errors:
+            raise RuntimeError("attempt submission conflict guard stale or blocked: " + ",".join(guard_errors))
+        return _append_attempt_workflow_receipt_unlocked(root, receipt)
+
+
 def current_attempt_workflow_summary(row: Mapping[str, Any]) -> dict[str, Any]:
     errors = validate_attempt_workflow_ledger(row)
     preparations = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-preparation"]
     freezes = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-freeze"]
     handoffs = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-handoff"]
     signoffs = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-human-signoff"]
+    guards = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-submission-conflict-guard"]
     submissions = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-actual-submission"]
     reviews = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-review-set"]
     rebuttals = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-rebuttal-preparation"]
@@ -698,7 +917,7 @@ def current_attempt_workflow_summary(row: Mapping[str, Any]) -> dict[str, Any]:
     skips = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-rebuttal-skipped-by-venue"]
     learnings = [event.get("receipt") or {} for event in row.get("events") or [] if isinstance(event, Mapping) and event.get("event_type") == "attempt-post-decision-learning"]
     preparation = preparations[-1] if preparations else {}; freeze = freezes[-1] if freezes else {}; handoff = handoffs[-1] if handoffs else {}
-    signoff = signoffs[-1] if signoffs else {}; submission = submissions[-1] if submissions else {}; review = reviews[-1] if reviews else {}
+    signoff = signoffs[-1] if signoffs else {}; guard = guards[-1] if guards else {}; submission = submissions[-1] if submissions else {}; review = reviews[-1] if reviews else {}
     rebuttal = rebuttals[-1] if rebuttals else {}; decision = decisions[-1] if decisions else {}; skip = skips[-1] if skips else {}; learning = learnings[-1] if learnings else {}
     drift = verify_frozen_artifacts(freeze) if freeze else []
     freeze_current = bool(freeze) and not drift
@@ -726,6 +945,8 @@ def current_attempt_workflow_summary(row: Mapping[str, Any]) -> dict[str, Any]:
         status = "ATTEMPT_VENUE_REVIEWS_RECORDED"
     elif submission_valid:
         status = "ATTEMPT_VENUE_SUBMISSION_CONFIRMED"
+    elif signoff_current and guard and guard.get("pass") is False:
+        status = "ATTEMPT_SUBMISSION_BLOCKED_ACTIVE_SIBLING"
     elif signoff_current:
         status = "ATTEMPT_HUMAN_SIGNOFF_COMPLETE_ACTUAL_SUBMISSION_PENDING"
     elif signoff:
@@ -751,6 +972,9 @@ def current_attempt_workflow_summary(row: Mapping[str, Any]) -> dict[str, Any]:
         "freeze_sha256": str(freeze.get("attempt_freeze_sha256") or ""),
         "handoff_sha256": str(handoff.get("attempt_handoff_sha256") or ""),
         "signoff_sha256": str(signoff.get("attempt_signoff_sha256") or ""),
+        "submission_conflict_guard_sha256": str(guard.get("attempt_submission_conflict_guard_sha256") or ""),
+        "submission_conflict_guard_status": str(guard.get("status") or ""),
+        "submission_conflict_count": len(guard.get("active_conflicts") or []),
         "submission_receipt_sha256": str(submission.get("attempt_submission_receipt_sha256") or ""),
         "venue_submission_id": str(submission.get("venue_submission_id") or ""),
         "submitted_at": str(submission.get("submitted_at") or ""),

@@ -288,6 +288,9 @@ def submission_attempt_workflow_state(root: Path, attempt: Mapping[str, Any]) ->
         'freeze_sha256': '',
         'handoff_sha256': '',
         'signoff_sha256': '',
+        'submission_conflict_guard_sha256': '',
+        'submission_conflict_guard_status': '',
+        'submission_conflict_count': 0,
         'submission_receipt_sha256': '',
         'venue_submission_id': '',
         'submitted_at': '',
@@ -409,8 +412,10 @@ def project(path: Path, root: Path) -> dict[str, Any]:
             actions=['classify child venue objections and prepare a scope-preserving rebuttal; missing decisive evidence cannot be papered over']
         elif attempt_workflow['status']=='ATTEMPT_VENUE_SUBMISSION_CONFIRMED':
             actions=['await real child venue reviews or an explicit terminal no-rebuttal decision; keep parent and child submission lineages distinct']
+        elif attempt_workflow['status']=='ATTEMPT_SUBMISSION_BLOCKED_ACTIVE_SIBLING':
+            actions=['child human signoff is complete, but a sibling attempt has an active real venue submission; do not dual-submit and re-run the conflict guard only after that sibling reaches a terminal venue outcome']
         elif attempt_workflow['status']=='ATTEMPT_HUMAN_SIGNOFF_COMPLETE_ACTUAL_SUBMISSION_PENDING':
-            actions=['child human signoff is complete; actual child venue upload remains a separate explicit human action']
+            actions=['child human signoff is complete; actual child venue upload remains a separate explicit human action and must pass the paper-level sibling-submission conflict guard']
         elif attempt_workflow['status']=='ATTEMPT_MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED':
             actions=['the child attempt has its own preparation/freeze/handoff lineage; await explicit human confirmation and never reuse the parent submission signoff']
         elif attempt_workflow['status'] in {'ATTEMPT_HANDOFF_STALE','ATTEMPT_FREEZE_STALE','ATTEMPT_HUMAN_SIGNOFF_STALE','ATTEMPT_WORKFLOW_INVALID'}:
@@ -518,6 +523,9 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         'submission_attempt_freeze_sha256': attempt_workflow['freeze_sha256'],
         'submission_attempt_handoff_sha256': attempt_workflow['handoff_sha256'],
         'submission_attempt_signoff_sha256': attempt_workflow['signoff_sha256'],
+        'submission_attempt_conflict_guard_sha256': attempt_workflow['submission_conflict_guard_sha256'],
+        'submission_attempt_conflict_guard_status': attempt_workflow['submission_conflict_guard_status'],
+        'submission_attempt_conflict_count': attempt_workflow['submission_conflict_count'],
         'submission_attempt_actual_receipt_sha256': attempt_workflow['submission_receipt_sha256'],
         'submission_attempt_venue_submission_id': attempt_workflow['venue_submission_id'],
         'submission_attempt_submitted_at': attempt_workflow['submitted_at'],
@@ -607,6 +615,7 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'attempt_preparation_pass': sum(p['submission_attempt_workflow_status'] == 'ATTEMPT_PREPARATION_PASS_FREEZE_PENDING' for p in papers),
             'attempt_machine_frozen': sum(p['submission_attempt_workflow_status'] == 'ATTEMPT_MACHINE_FROZEN_HANDOFF_PENDING' for p in papers),
             'attempt_machine_handoff_ready': sum(p['submission_attempt_workflow_status'] == 'ATTEMPT_MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED' for p in papers),
+            'attempt_submission_blocked_active_sibling': sum(p['submission_attempt_workflow_status'] == 'ATTEMPT_SUBMISSION_BLOCKED_ACTIVE_SIBLING' for p in papers),
             'attempt_workflow_stale_or_invalid': sum(int((p['submission_attempt_history'].get('summary') or {}).get('invalid_attempts') or 0) for p in papers),
             'attempt_human_signoff_complete': sum(int((p['submission_attempt_history'].get('summary') or {}).get('human_signoffs') or 0) for p in papers),
             'attempt_venue_submitted': sum(int((p['submission_attempt_history'].get('summary') or {}).get('venue_submissions') or 0) for p in papers),

@@ -18,6 +18,7 @@ from .submission_attempt_workflow import (
     build_attempt_human_signoff,
     build_attempt_preparation,
     build_attempt_signoff_template,
+    build_attempt_submission_conflict_guard,
     current_attempt_workflow_summary,
     validate_attempt_actual_submission,
     validate_attempt_freeze,
@@ -74,6 +75,12 @@ class SubmissionAttemptWorkflowTest(unittest.TestCase):
         row = append_attempt_workflow_receipt(root, freeze)
         row = append_attempt_workflow_receipt(root, handoff)
         return parent, plan, pdf, artifacts, prep, freeze, handoff, row
+
+    def passing_conflict_guard(self, root: Path, row: dict, signoff: dict):
+        guard = build_attempt_submission_conflict_guard(root=root, workflow_ledger=row, signoff_receipt=signoff)
+        self.assertTrue(guard["pass"])
+        row = append_attempt_workflow_receipt(root, guard)
+        return guard, row
 
     def test_attempt_scoped_preparation_freeze_handoff_is_append_only_and_ready(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -202,9 +209,11 @@ class SubmissionAttemptWorkflowTest(unittest.TestCase):
             self.assertEqual(current_attempt_workflow_summary(row)["status"], "ATTEMPT_HUMAN_SIGNOFF_COMPLETE_ACTUAL_SUBMISSION_PENDING")
 
             uploaded = {item["label"]: item["sha256"] for item in artifacts}
+            guard, row = self.passing_conflict_guard(root, row, signoff)
             submission = build_attempt_actual_submission(
                 workflow_ledger=row,
                 signoff_receipt=signoff,
+                conflict_guard_receipt=guard,
                 venue_submission_id="child-submission-001",
                 venue_forum_ref="venue:child-submission-001",
                 uploaded_artifact_sha256=uploaded,
@@ -265,12 +274,14 @@ class SubmissionAttemptWorkflowTest(unittest.TestCase):
                 acknowledge_actual_submission_not_performed=True,
             )
             row = append_attempt_workflow_receipt(root, signoff)
+            guard, row = self.passing_conflict_guard(root, row, signoff)
             bad_uploaded = {item["label"]: item["sha256"] for item in artifacts}
             bad_uploaded["paper_pdf"] = "0" * 64
             with self.assertRaisesRegex(RuntimeError, "hashes do not match"):
                 build_attempt_actual_submission(
                     workflow_ledger=row,
                     signoff_receipt=signoff,
+                    conflict_guard_receipt=guard,
                     venue_submission_id="child-002",
                     venue_forum_ref="venue:child-002",
                     uploaded_artifact_sha256=bad_uploaded,
@@ -282,6 +293,7 @@ class SubmissionAttemptWorkflowTest(unittest.TestCase):
                 build_attempt_actual_submission(
                     workflow_ledger=row,
                     signoff_receipt=signoff,
+                    conflict_guard_receipt=guard,
                     venue_submission_id="child-002",
                     venue_forum_ref="venue:child-002",
                     uploaded_artifact_sha256={item["label"]: item["sha256"] for item in artifacts},
@@ -303,9 +315,11 @@ class SubmissionAttemptWorkflowTest(unittest.TestCase):
                 acknowledge_actual_submission_not_performed=True,
             )
             row = append_attempt_workflow_receipt(root, signoff)
+            guard, row = self.passing_conflict_guard(root, row, signoff)
             submission = build_attempt_actual_submission(
                 workflow_ledger=row,
                 signoff_receipt=signoff,
+                conflict_guard_receipt=guard,
                 venue_submission_id="child-003",
                 venue_forum_ref="venue:child-003",
                 uploaded_artifact_sha256={item["label"]: item["sha256"] for item in artifacts},

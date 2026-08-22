@@ -23,6 +23,7 @@ from .submission_attempt_workflow import (
     attempt_checklist_items,
     build_attempt_actual_submission,
     build_attempt_human_signoff,
+    build_attempt_submission_conflict_guard,
     current_attempt_workflow_summary,
     validate_attempt_workflow_ledger,
 )
@@ -43,9 +44,13 @@ class SubmissionAttemptPostSubmissionTest(unittest.TestCase):
             acknowledge_actual_submission_not_performed=True,
         )
         row = append_attempt_workflow_receipt(root, signoff)
+        guard = build_attempt_submission_conflict_guard(root=root, workflow_ledger=row, signoff_receipt=signoff)
+        self.assertTrue(guard["pass"])
+        row = append_attempt_workflow_receipt(root, guard)
         submission = build_attempt_actual_submission(
             workflow_ledger=row,
             signoff_receipt=signoff,
+            conflict_guard_receipt=guard,
             venue_submission_id="child-review-001",
             venue_forum_ref="venue:child-review-001",
             uploaded_artifact_sha256={item["label"]: item["sha256"] for item in artifacts},
