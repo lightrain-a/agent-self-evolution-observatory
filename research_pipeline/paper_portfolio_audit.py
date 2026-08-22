@@ -12,6 +12,7 @@ from .presubmission_freeze import validate_freeze, verify_current_frozen_artifac
 from .submission_handoff import validate_handoff_ledger, validate_handoff_receipt
 from .human_submission_signoff import validate_signoff_ledger, verify_current_signoff
 from .venue_submission_receipt import validate_submission_receipt
+from .revision_impact_audit import audit_freeze_receipt
 
 DEFAULT_ROOT = Path('/data/wyt/agent-self-evolution-observatory')
 
@@ -126,6 +127,25 @@ def handoff_state(root: Path, paper_id: str, freeze_sha256: str) -> dict[str, An
     }
 
 
+def revision_impact_state(root: Path, paper_id: str, freeze_status: str) -> dict[str, Any]:
+    path = root / 'paper-submission-freezes' / f'{paper_id}.json'
+    if not path.exists():
+        return {'status': 'NOT_AVAILABLE', 'impact_classes': [], 'minimum_rerun_paper_preparation_gates': [], 'minimum_rerun_paper_acceptance_checks': []}
+    try:
+        row = json.loads(path.read_text(encoding='utf-8'))
+    except (OSError, json.JSONDecodeError):
+        return {'status': 'UNREADABLE', 'impact_classes': ['UNKNOWN'], 'minimum_rerun_paper_preparation_gates': [], 'minimum_rerun_paper_acceptance_checks': []}
+    event = latest(row, 'pre-submission-freeze')
+    receipt = event.get('receipt') if isinstance(event.get('receipt'), dict) else {}
+    if not receipt:
+        return {'status': 'NOT_AVAILABLE', 'impact_classes': [], 'minimum_rerun_paper_preparation_gates': [], 'minimum_rerun_paper_acceptance_checks': []}
+    result = audit_freeze_receipt(receipt)
+    if freeze_status == 'MACHINE_FROZEN_CURRENT' and result.get('status') != 'NO_CHANGE':
+        result = dict(result)
+        result['status'] = 'INCONSISTENT_FREEZE_AUDIT'
+    return result
+
+
 def human_signoff_state(root: Path, paper_id: str, machine_handoff_status: str) -> dict[str, Any]:
     if machine_handoff_status != 'MACHINE_HANDOFF_CURRENT':
         return {'status': 'NOT_ELIGIBLE', 'integrity_pass': False, 'errors': [], 'signoff_sha256': ''}
@@ -197,6 +217,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
             'handoff_sha256': '',
         }
     handoff = machine_handoff['status'] == 'MACHINE_HANDOFF_CURRENT'
+    impact = revision_impact_state(root, paper_id, freeze['status']) if lineage_ready else {'status': 'NOT_AVAILABLE', 'impact_classes': [], 'minimum_rerun_paper_preparation_gates': [], 'minimum_rerun_paper_acceptance_checks': []}
     human_signoff = human_signoff_state(root, paper_id, machine_handoff['status'])
     actual_event = latest(row, 'actual-submission')
     actual_receipt = actual_event.get('receipt') if isinstance(actual_event.get('receipt'), dict) else {}
@@ -208,7 +229,8 @@ def project(path: Path, root: Path) -> dict[str, Any]:
     elif base_ready and freeze['status'] == 'MACHINE_FREEZE_PENDING':
         actions = ['create a pre-submission freeze checkpoint before machine handoff']
     elif base_ready and freeze['status'] == 'MACHINE_FREEZE_STALE':
-        actions = ['re-freeze the exact PDF/source/supplement bytes before machine handoff']
+        rerun = list(impact.get('minimum_rerun_paper_preparation_gates') or []) + list(impact.get('minimum_rerun_paper_acceptance_checks') or [])
+        actions = ['revision impact requires rerun: ' + ', '.join(rerun)] if rerun else ['re-freeze the exact PDF/source/supplement bytes before machine handoff']
     elif base_ready and machine_handoff['status'] == 'MACHINE_HANDOFF_PENDING':
         actions = ['build the machine submission handoff packet from the current freeze before author confirmation']
     elif base_ready and machine_handoff['status'] == 'MACHINE_HANDOFF_STALE':
@@ -237,6 +259,11 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         'freeze_integrity_pass': freeze['integrity_pass'],
         'freeze_sha256': freeze['freeze_sha256'],
         'freeze_errors': freeze['errors'],
+        'revision_impact_status': str(impact.get('status') or ''),
+        'revision_impact_classes': list(impact.get('impact_classes') or []),
+        'revision_impact_preparation_reruns': list(impact.get('minimum_rerun_paper_preparation_gates') or []),
+        'revision_impact_acceptance_reruns': list(impact.get('minimum_rerun_paper_acceptance_checks') or []),
+        'revision_impact_requires_full_reaudit': impact.get('requires_full_preparation_reaudit') is True,
         'machine_handoff_status': machine_handoff['status'],
         'machine_handoff_integrity_pass': machine_handoff['integrity_pass'],
         'machine_handoff_sha256': machine_handoff['handoff_sha256'],

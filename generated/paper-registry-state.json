@@ -69,6 +69,13 @@
         "frozen_artifacts": 2,
         "integrity_pass": true,
         "drift_errors": [],
+        "revision_impact": {
+          "status": "NO_CHANGE",
+          "impact_classes": [],
+          "minimum_rerun_paper_preparation_gates": [],
+          "minimum_rerun_paper_acceptance_checks": [],
+          "requires_full_preparation_reaudit": false
+        },
         "external_human_submission_authority_required": true
       },
       "submission_handoff": {
@@ -191,6 +198,13 @@
         "frozen_artifacts": 4,
         "integrity_pass": true,
         "drift_errors": [],
+        "revision_impact": {
+          "status": "NO_CHANGE",
+          "impact_classes": [],
+          "minimum_rerun_paper_preparation_gates": [],
+          "minimum_rerun_paper_acceptance_checks": [],
+          "requires_full_preparation_reaudit": false
+        },
         "external_human_submission_authority_required": true
       },
       "submission_handoff": {
@@ -325,6 +339,13 @@
         "frozen_artifacts": 4,
         "integrity_pass": true,
         "drift_errors": [],
+        "revision_impact": {
+          "status": "NO_CHANGE",
+          "impact_classes": [],
+          "minimum_rerun_paper_preparation_gates": [],
+          "minimum_rerun_paper_acceptance_checks": [],
+          "requires_full_preparation_reaudit": false
+        },
         "external_human_submission_authority_required": true
       },
       "submission_handoff": {
@@ -494,6 +515,13 @@
         "frozen_artifacts": 0,
         "integrity_pass": false,
         "drift_errors": [],
+        "revision_impact": {
+          "status": "NOT_AVAILABLE",
+          "impact_classes": [],
+          "minimum_rerun_paper_preparation_gates": [],
+          "minimum_rerun_paper_acceptance_checks": [],
+          "requires_full_preparation_reaudit": false
+        },
         "external_human_submission_authority_required": true
       },
       "submission_handoff": {
@@ -590,6 +618,13 @@
         "frozen_artifacts": 3,
         "integrity_pass": true,
         "drift_errors": [],
+        "revision_impact": {
+          "status": "NO_CHANGE",
+          "impact_classes": [],
+          "minimum_rerun_paper_preparation_gates": [],
+          "minimum_rerun_paper_acceptance_checks": [],
+          "requires_full_preparation_reaudit": false
+        },
         "external_human_submission_authority_required": true
       },
       "submission_handoff": {
@@ -676,5 +711,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "3586b5729e2bd2d1ecc43f8ff91772d47b228204f2b3999c27e355f557282045"
+  "projection_sha256": "1012f85affe23dacec0f4d728f48e5f2458eacf6d8255bb166e108d89f669347"
 }

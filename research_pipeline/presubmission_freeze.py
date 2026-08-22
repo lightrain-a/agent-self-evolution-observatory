@@ -1,5 +1,5 @@
 from __future__ import annotations
-import fcntl, hashlib, json, os
+import fcntl, hashlib, json, os, re, zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -16,6 +16,33 @@ def fsha(p:Path)->str:
  with p.open('rb') as f:
   for chunk in iter(lambda:f.read(1024*1024),b''):h.update(chunk)
  return h.hexdigest()
+def bsha(data:bytes)->str:return hashlib.sha256(data).hexdigest()
+def content_role(rel:str)->str:
+ p=Path(rel);name=p.name.lower();suffix=p.suffix.lower();parts={x.lower() for x in p.parts}
+ if suffix in {'.sty','.bst','.cls'}:return 'LAYOUT_STYLE'
+ if suffix=='.bib' or name in {'references.bib','bibliography.bib'}:return 'CITATION'
+ if 'figures' in parts or suffix in {'.png','.jpg','.jpeg','.svg','.pdf'}:return 'VISUAL_ARTIFACT'
+ if suffix=='.tex':return 'MANUSCRIPT_TEXT'
+ if suffix in {'.json','.jsonl','.csv','.tsv','.parquet','.npy','.npz'}:return 'EVIDENCE_DATA'
+ if suffix in {'.py','.ipynb','.sh','.r','.jl'}:return 'REPRODUCTION_CODE'
+ if name.startswith('readme') or name.startswith('requirements') or name.startswith('environment') or suffix in {'.toml','.lock','.yaml','.yml'}:return 'REPRODUCTION_METADATA'
+ return 'PACKAGE_SUPPORT'
+def semantic_sha(rel:str,data:bytes)->str:
+ try:text=data.decode('utf-8')
+ except UnicodeDecodeError:return ''
+ if Path(rel).suffix.lower()=='.tex':
+  text='\n'.join(re.split(r'(?<!\\)%',line,maxsplit=1)[0] for line in text.splitlines())
+ text=re.sub(r'\s+',' ',text).strip()
+ return hashlib.sha256(text.encode('utf-8')).hexdigest()
+def expanded_entries(rows:Sequence[tuple[str,bytes]])->dict[str,Any]:
+ entries=[]
+ for rel,data in sorted(rows,key=lambda x:x[0]):
+  entries.append({'path':rel,'role':content_role(rel),'sha256':bsha(data),'semantic_sha256':semantic_sha(rel,data),'bytes':len(data)})
+ return {'schema_version':'1.0','files':len(entries),'bytes':sum(x['bytes'] for x in entries),'sha256':digest(entries),'entries':entries}
+def expanded_zip_manifest(path:Path)->dict[str,Any]:
+ with zipfile.ZipFile(path,'r') as z:
+  rows=[(info.filename,z.read(info.filename)) for info in z.infolist() if not info.is_dir() and Path(info.filename).suffix not in EXCLUDE_SUFFIXES]
+ return expanded_entries(rows)
 def latest(row:Mapping[str,Any],kind:str)->dict[str,Any]:
  for e in reversed(row.get('events') or []):
   if isinstance(e,dict) and e.get('event_type')==kind:return e
@@ -25,12 +52,18 @@ def artifact(label:str,path:Path,tree:bool=False)->dict[str,Any]:
  if not path.exists():raise FileNotFoundError(path)
  if not tree:
   if not path.is_file():raise TypeError(path)
-  return {'label':label,'kind':'file','path':str(path),'sha256':fsha(path),'bytes':path.stat().st_size}
- entries=[]
+  row={'label':label,'kind':'file','path':str(path),'sha256':fsha(path),'bytes':path.stat().st_size}
+  if path.suffix.lower()=='.zip':
+   try:row['expanded_manifest']=expanded_zip_manifest(path)
+   except (zipfile.BadZipFile,OSError):pass
+  return row
+ raw=[]
  for p in sorted(x for x in path.rglob('*') if x.is_file() and x.suffix not in EXCLUDE_SUFFIXES):
-  entries.append({'path':str(p.relative_to(path)),'sha256':fsha(p),'bytes':p.stat().st_size})
- if not entries:raise RuntimeError(f'empty source tree: {path}')
- return {'label':label,'kind':'tree','path':str(path),'files':len(entries),'bytes':sum(x['bytes'] for x in entries),'sha256':digest(entries),'entries':entries}
+  raw.append((str(p.relative_to(path)),p.read_bytes()))
+ if not raw:raise RuntimeError(f'empty source tree: {path}')
+ expanded=expanded_entries(raw)
+ legacy_entries=[{'path':rel,'sha256':bsha(data),'bytes':len(data)} for rel,data in raw]
+ return {'label':label,'kind':'tree','path':str(path),'files':len(legacy_entries),'bytes':sum(x['bytes'] for x in legacy_entries),'sha256':digest(legacy_entries),'entries':legacy_entries,'expanded_manifest':expanded}
 def verify_frozen_artifacts(receipt:Mapping[str,Any])->list[str]:
  errors=[]
  for spec in receipt.get('frozen_artifacts') or []:
@@ -49,6 +82,10 @@ def verify_frozen_artifacts(receipt:Mapping[str,Any])->list[str]:
    errors.append(f'freeze-artifact-drift:{label}');continue
   if kind=='tree' and int(current.get('files') or 0)!=int(spec.get('files') or 0):
    errors.append(f'freeze-artifact-drift:{label}')
+  frozen_expanded=spec.get('expanded_manifest') if isinstance(spec.get('expanded_manifest'),Mapping) else {}
+  current_expanded=current.get('expanded_manifest') if isinstance(current.get('expanded_manifest'),Mapping) else {}
+  if frozen_expanded and frozen_expanded.get('sha256')!=current_expanded.get('sha256'):
+   errors.append(f'freeze-expanded-manifest-drift:{label}')
  return list(dict.fromkeys(errors))
 
 def verify_current_frozen_artifacts(row:Mapping[str,Any])->list[str]:

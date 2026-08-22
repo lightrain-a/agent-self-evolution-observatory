@@ -22,6 +22,7 @@ from research_pipeline.presubmission_freeze import verify_frozen_artifacts
 from research_pipeline.submission_handoff import validate_handoff_ledger, validate_handoff_receipt
 from research_pipeline.human_submission_signoff import validate_signoff_ledger, verify_current_signoff
 from research_pipeline.venue_submission_receipt import validate_submission_receipt
+from research_pipeline.revision_impact_audit import audit_freeze_receipt
 DEFAULT_LEDGER_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ROOT") else None
 DEFAULT_ARTIFACT_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ARTIFACT_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ARTIFACT_ROOT") else None
 DEFAULT_FREEZE_ROOT = Path(os.environ["PAPER_SUBMISSION_FREEZE_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_FREEZE_ROOT") else None
@@ -185,6 +186,16 @@ def submission_freeze(paper_id: str, preparation: dict[str, Any], freeze_root: P
         status = "PREPARATION_BLOCKED"
     else:
         status = "NOT_READY_FOR_HUMAN_SUBMISSION"
+    impact = audit_freeze_receipt(receipt) if receipt else {
+        "status": "NOT_AVAILABLE",
+        "impact_classes": [],
+        "minimum_rerun_paper_preparation_gates": [],
+        "minimum_rerun_paper_acceptance_checks": [],
+        "requires_full_preparation_reaudit": False,
+    }
+    if status == "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING" and impact.get("status") != "NO_CHANGE":
+        impact = dict(impact)
+        impact["status"] = "INCONSISTENT_FREEZE_AUDIT"
     return {
         "status": status,
         "freeze_sha256": str(receipt.get("freeze_sha256") or ""),
@@ -193,6 +204,13 @@ def submission_freeze(paper_id: str, preparation: dict[str, Any], freeze_root: P
         "frozen_artifacts": len(receipt.get("frozen_artifacts") or []),
         "integrity_pass": bool(receipt) and not drift_errors,
         "drift_errors": drift_errors,
+        "revision_impact": {
+            "status": str(impact.get("status") or ""),
+            "impact_classes": list(impact.get("impact_classes") or []),
+            "minimum_rerun_paper_preparation_gates": list(impact.get("minimum_rerun_paper_preparation_gates") or []),
+            "minimum_rerun_paper_acceptance_checks": list(impact.get("minimum_rerun_paper_acceptance_checks") or []),
+            "requires_full_preparation_reaudit": impact.get("requires_full_preparation_reaudit") is True,
+        },
         "external_human_submission_authority_required": True,
     }
 
