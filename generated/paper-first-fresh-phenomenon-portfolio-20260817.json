@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-22T15:16:13+00:00",
+  "generated_at": "2026-08-22T18:26:14+00:00",
   "status": "NO_ACTIVE_F0",
   "policy": {
     "portfolio_is_outside_canonical_problem_queue": true,
@@ -409,7 +409,7 @@
     },
     "dead_end_memory": {
       "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-      "sha256": "d45dd37b881cb5cec36e9c99f5397c74be4479860ecd55c2566e5f59c5f80826"
+      "sha256": "1a751c2db8f1c3808e102b03f046fc135b27a81020728249170c4f317985157b"
     },
     "defense_principle_reduction": {
       "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
@@ -418,7 +418,7 @@
     },
     "skill_validation_transfer_scout": {
       "path": "generated/paper-first-skill-validation-transfer-scout-20260817.json",
-      "sha256": "0bb08aa12eaee87d7f6ca25528134025aff47fc0ea3af7c512a073f41db74cd8",
+      "sha256": "748a8d9ea070a96ea8accd7c98665e2a622595734e3ddbc46942a39f90377bb7",
       "status": "DESIGN_READY_EXECUTION_ENV_HOLD",
       "plan_sha256": "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c"
     },

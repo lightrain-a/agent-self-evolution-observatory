@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "as_of_date": "2026-08-22",
+  "as_of_date": "2026-08-23",
   "projection_policy": {
     "read_only": true,
     "scientific_authority": false,
@@ -413,23 +413,23 @@
   ],
   "week": {
     "start_date": "2026-08-17",
-    "end_date": "2026-08-22",
-    "research_days": 6,
-    "events": 382,
-    "substantive_events": 230,
+    "end_date": "2026-08-23",
+    "research_days": 7,
+    "events": 423,
+    "substantive_events": 253,
     "key_changes": 7,
     "class_counts": {
-      "blocker": 15,
-      "closure": 84,
-      "experiment": 54,
-      "idea": 49,
-      "paper": 26,
+      "blocker": 18,
+      "closure": 87,
+      "experiment": 56,
+      "idea": 53,
+      "paper": 37,
       "scientific": 2,
-      "system": 152
+      "system": 170
     },
     "attention_activity": {
       "B-3": 1,
-      "E-7": 37,
+      "E-7": 38,
       "G-1": 50
     },
     "highlights": [
@@ -484,7 +484,7 @@
         "href": "research-timeline.html?research=G-7"
       },
       {
-        "date": "2026-08-22",
+        "date": "2026-08-23",
         "event_class": "idea",
         "title_zh": "Canonical 双漏斗 Idea 发现状态快照",
         "title_en": "Canonical double-funnel discovery snapshot",
