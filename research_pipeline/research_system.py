@@ -91,6 +91,7 @@ from .research_capability_registry import build_research_capability_registry
 from .research_candidate_portfolio import build_research_candidate_portfolio
 from .research_harness_assurance import build_research_harness_assurance
 from .research_memory_wiki import build_research_memory_wiki, write_research_memory_wiki
+from .reopened_principle_memory_closure import load_principle_closures
 from .search_funnel_telemetry import build_search_funnel_telemetry
 from .premium_model_policy import policy_summary as premium_model_policy_summary
 from .public_state_redaction import redact_private_paths
@@ -512,6 +513,8 @@ def build_research_system_state() -> dict[str, Any]:
     p0_decision_ledger_public = {"summary": p0_decision_ledger["summary"], "policy": p0_decision_ledger["policy"]}
     scientific_meta_trace = build_scientific_meta_trace(pre_experiment_compiler, principle_layer, experiment_iteration, p0_decision_ledger_public)
     failure_asset_library = build_failure_asset_library(experiment_iteration, p0_economy_public, paper_first_post_c2, paper_first_p0_f0, principle_layer)
+    principle_closure_dir = experiment_data_root / "research-memory-principle-closures"
+    principle_closure_registry = load_principle_closures(experiment_data_root) if principle_closure_dir.is_dir() else None
     research_memory_wiki = build_research_memory_wiki(
         search_design_state=paper_first_search_portfolio_design,
         failure_asset_library=failure_asset_library,
@@ -519,6 +522,7 @@ def build_research_system_state() -> dict[str, Any]:
         candidate_portfolio=research_candidate_portfolio,
         experiment_iteration=experiment_iteration,
         generator_state=paper_first_problem_generator,
+        principle_closure_registry=principle_closure_registry,
     )
     scientific_research_graph = build_scientific_research_graph(
         evidence_graph=evidence_graph,
