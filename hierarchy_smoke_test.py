@@ -180,9 +180,9 @@ def main() -> None:
             if [group.get("title") for group in nav_contract.get("groups", [])] != ["开始阅读", "领域图谱", "当前科研", "文献"]:
                 raise AssertionError(f"{page}: sidebar group names drifted: {nav_contract}")
             expected_group_links = [
-                [("研究站首页", "index.html")],
+                [("研究站首页", "index.html"), ("研究时间轴", "research-timeline.html"), ("科研系统", "system-overview.html")],
                 [("定义与边界 · 什么是 Agent 自进化", "foundations.html"), ("领域全景 · 历史与问题", "research-directions.html"), ("领域矩阵 · 机制 × 场景 × 评测", "mechanisms.html")],
-                [("当前研究组合图谱", "research-map.html"), ("研究组合 · ResearchItems", "paper-ideas.html"), ("研究时间轴", "research-timeline.html"), ("科研系统", "system-overview.html"), ("论文 · PaperRegistry", "selected-paper.html")],
+                [("当前研究组合图谱", "research-map.html"), ("研究组合 · ResearchItems", "paper-ideas.html"), ("论文 · PaperRegistry", "selected-paper.html")],
                 [("文献库 · 主线与研究空白", "bibliography.html")],
             ]
             actual_group_links = [[tuple(link) for link in group.get("links", [])] for group in nav_contract.get("groups", [])]

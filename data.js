@@ -1,6 +1,8 @@
 window.NAV_GROUPS = [
   { title:{en:"Start Here",zh:"开始阅读"}, open:true, pages:[
     ["index.html",{en:"Observatory Home",zh:"研究站首页"}],
+    ["research-timeline.html",{en:"Research Timeline",zh:"研究时间轴"}],
+    ["system-overview.html",{en:"Research System",zh:"科研系统"}],
   ]},
   { title:{en:"Field Atlas",zh:"领域图谱"}, open:true, pages:[
     ["foundations.html",{en:"Definition & Boundary · What Is Self-Evolution?",zh:"定义与边界 · 什么是 Agent 自进化"}],
@@ -10,8 +12,6 @@ window.NAV_GROUPS = [
   { title:{en:"Current Research",zh:"当前科研"}, open:true, pages:[
     ["research-map.html",{en:"Current Research Map",zh:"当前研究组合图谱"}],
     ["paper-ideas.html",{en:"Research Portfolio · ResearchItems",zh:"研究组合 · ResearchItems"}],
-    ["research-timeline.html",{en:"Research Timeline",zh:"研究时间轴"}],
-    ["system-overview.html",{en:"Research System",zh:"科研系统"}],
     ["selected-paper.html",{en:"Papers · PaperRegistry",zh:"论文 · PaperRegistry"}],
   ]},
   { title:{en:"Literature",zh:"文献"}, open:true, pages:[
