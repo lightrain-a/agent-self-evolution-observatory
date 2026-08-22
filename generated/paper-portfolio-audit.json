@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-22T07:23:05+00:00",
+  "generated_at": "2026-08-22T09:14:11.712168+00:00",
   "papers": [
     {
       "paper_id": "AGENT-SAFETY-R9",
@@ -42,6 +42,7 @@
       "review_intake_errors": [],
       "rebuttal_status": "NOT_ELIGIBLE",
       "rebuttal_receipt_sha256": "",
+      "rebuttal_skip_sha256": "",
       "rebuttal_errors": [],
       "rebuttal_objections": 0,
       "rebuttal_decision_critical": 0,
@@ -107,6 +108,7 @@
       "review_intake_errors": [],
       "rebuttal_status": "NOT_ELIGIBLE",
       "rebuttal_receipt_sha256": "",
+      "rebuttal_skip_sha256": "",
       "rebuttal_errors": [],
       "rebuttal_objections": 0,
       "rebuttal_decision_critical": 0,
@@ -172,6 +174,7 @@
       "review_intake_errors": [],
       "rebuttal_status": "NOT_ELIGIBLE",
       "rebuttal_receipt_sha256": "",
+      "rebuttal_skip_sha256": "",
       "rebuttal_errors": [],
       "rebuttal_objections": 0,
       "rebuttal_decision_critical": 0,
@@ -237,6 +240,7 @@
       "review_intake_errors": [],
       "rebuttal_status": "NOT_ELIGIBLE",
       "rebuttal_receipt_sha256": "",
+      "rebuttal_skip_sha256": "",
       "rebuttal_errors": [],
       "rebuttal_objections": 0,
       "rebuttal_decision_critical": 0,
@@ -318,6 +322,7 @@
       "review_intake_errors": [],
       "rebuttal_status": "NOT_ELIGIBLE",
       "rebuttal_receipt_sha256": "",
+      "rebuttal_skip_sha256": "",
       "rebuttal_errors": [],
       "rebuttal_objections": 0,
       "rebuttal_decision_critical": 0,
@@ -365,6 +370,7 @@
     "review_sets_current": 0,
     "rebuttal_preparation_pending": 0,
     "rebuttal_active": 0,
+    "rebuttal_skipped_by_venue": 0,
     "final_decisions_recorded": 0,
     "post_decision_learning_pending": 0,
     "learning_prepared": 0,
@@ -379,5 +385,5 @@
     "gpu": false,
     "submission": false
   },
-  "audit_sha256": "95e7a63c12b207f781988f296193f8f4e720b0d8b842e69527d545d21e149f28"
+  "audit_sha256": "53864ea75eaf69595d76139b858f30d5f0f134469ac27f421e1d69b63d0d37d8"
 }

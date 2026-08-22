@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-22T07:23:05+00:00",
+  "generated_at": "2026-08-22T09:14:11.712168+00:00",
   "source": "canonical_paper_acceptance_ledger",
   "summary": {
     "papers": 5,
@@ -20,6 +20,7 @@
     "submitted_receipt_bound": 0,
     "rebuttal_active": 0,
     "rebuttal_prepared": 0,
+    "rebuttal_skipped_by_venue": 0,
     "final_decisions_recorded": 0,
     "learning_prepared": 0,
     "learn_complete": 0
@@ -148,6 +149,9 @@
         "pass": false,
         "review_set_sha256": "",
         "rebuttal_receipt_sha256": "",
+        "rebuttal_skip_sha256": "",
+        "venue_decision_sha256": "",
+        "review_fabrication_forbidden": false,
         "reviews": 0,
         "objections": 0,
         "decision_critical": 0,
@@ -182,6 +186,7 @@
         "paper_preparation_receipts": 1,
         "actual_submission_receipts": 0,
         "rebuttal_preparation_receipts": 0,
+        "rebuttal_skipped_receipts": 0,
         "venue_decision_receipts": 0,
         "post_decision_learning_receipts": 0
       },
@@ -325,6 +330,9 @@
         "pass": false,
         "review_set_sha256": "",
         "rebuttal_receipt_sha256": "",
+        "rebuttal_skip_sha256": "",
+        "venue_decision_sha256": "",
+        "review_fabrication_forbidden": false,
         "reviews": 0,
         "objections": 0,
         "decision_critical": 0,
@@ -359,6 +367,7 @@
         "paper_preparation_receipts": 1,
         "actual_submission_receipts": 0,
         "rebuttal_preparation_receipts": 0,
+        "rebuttal_skipped_receipts": 0,
         "venue_decision_receipts": 0,
         "post_decision_learning_receipts": 0
       },
@@ -502,6 +511,9 @@
         "pass": false,
         "review_set_sha256": "",
         "rebuttal_receipt_sha256": "",
+        "rebuttal_skip_sha256": "",
+        "venue_decision_sha256": "",
+        "review_fabrication_forbidden": false,
         "reviews": 0,
         "objections": 0,
         "decision_critical": 0,
@@ -536,6 +548,7 @@
         "paper_preparation_receipts": 1,
         "actual_submission_receipts": 0,
         "rebuttal_preparation_receipts": 0,
+        "rebuttal_skipped_receipts": 0,
         "venue_decision_receipts": 0,
         "post_decision_learning_receipts": 0
       },
@@ -550,7 +563,7 @@
       "central_question": "Are recurring temporal-validity and exogenous-context failures caused by missing reusable procedures that targeted skills can repair beyond generic skill assistance?",
       "current_state": "SUBMISSION_READY",
       "contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
-      "ledger_events": 20,
+      "ledger_events": 26,
       "supported_claims": 2,
       "active_unrefuted_claims": 2,
       "unsupported_claims": 2,
@@ -676,6 +689,9 @@
         "pass": false,
         "review_set_sha256": "",
         "rebuttal_receipt_sha256": "",
+        "rebuttal_skip_sha256": "",
+        "venue_decision_sha256": "",
+        "review_fabrication_forbidden": false,
         "reviews": 0,
         "objections": 0,
         "decision_critical": 0,
@@ -703,13 +719,14 @@
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
-        "mock_reviews": 2,
-        "claim_audit_receipts": 1,
+        "mock_reviews": 5,
+        "claim_audit_receipts": 2,
         "manuscript_ci_receipts": 1,
-        "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 1,
+        "prebuttal_receipts": 2,
+        "paper_preparation_receipts": 2,
         "actual_submission_receipts": 0,
         "rebuttal_preparation_receipts": 0,
+        "rebuttal_skipped_receipts": 0,
         "venue_decision_receipts": 0,
         "post_decision_learning_receipts": 0
       },
@@ -847,6 +864,9 @@
         "pass": false,
         "review_set_sha256": "",
         "rebuttal_receipt_sha256": "",
+        "rebuttal_skip_sha256": "",
+        "venue_decision_sha256": "",
+        "review_fabrication_forbidden": false,
         "reviews": 0,
         "objections": 0,
         "decision_critical": 0,
@@ -881,6 +901,7 @@
         "paper_preparation_receipts": 1,
         "actual_submission_receipts": 0,
         "rebuttal_preparation_receipts": 0,
+        "rebuttal_skipped_receipts": 0,
         "venue_decision_receipts": 0,
         "post_decision_learning_receipts": 0
       },
@@ -896,5 +917,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "ae1601deb7a485486451fadd26a91da0e1583a6a091d3ed1c31fb6a90a367c3f"
+  "projection_sha256": "33da38567d9962328f091ed8ae3fc1dfa0855cdaf7ea9af54aaf0e49f3147cc4"
 }

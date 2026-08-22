@@ -8,16 +8,20 @@ from pathlib import Path
 from .paper_acceptance import PaperState
 from .paper_acceptance_ledger import (
     advance_frozen_paper_to_learn,
+    advance_frozen_paper_to_rebuttal,
     advance_paper_ledger,
     record_frozen_contract_post_decision_learning,
+    record_frozen_contract_rebuttal_skipped_by_venue,
     record_frozen_contract_venue_decision,
     record_rebuttal_preparation,
     validate_paper_ledger,
 )
 from .post_decision_learning import (
     build_learning_packet,
+    build_rebuttal_skipped_by_venue_receipt,
     build_venue_decision_receipt,
     validate_learning_receipt,
+    validate_rebuttal_skipped_by_venue_receipt,
     validate_venue_decision_receipt,
 )
 from .rebuttal_protocol import build_review_set
@@ -106,6 +110,69 @@ class PostDecisionLearningTest(unittest.TestCase):
             self.assertTrue(decision["acceptance_does_not_prove_scientific_truth"])
             self.assertTrue(decision["scientific_claim_status_unchanged"])
             self.assertFalse(decision["scientific_authority"])
+
+    def test_pre_rebuttal_terminal_decisions_skip_rebuttal_without_fabricating_reviews(self) -> None:
+        for terminal_decision in ("REJECT", "ACCEPT", "WITHDRAWN"):
+            with self.subTest(decision=terminal_decision), tempfile.TemporaryDirectory() as td:
+                root = Path(td)
+                helper = RebuttalProtocolTest(methodName="test_review_intake_and_rebuttal_gate_are_content_addressed")
+                _, submitted, _ = helper.submitted_fixture(root)
+                decision = build_venue_decision_receipt(
+                    paper_ledger=submitted,
+                    decision_id=f"terminal-{terminal_decision.lower()}",
+                    source_ref=f"venue-terminal:{terminal_decision.lower()}",
+                    received_at="2026-10-01T12:00:00+00:00",
+                    decision=terminal_decision,
+                    decision_text=f"Terminal venue decision: {terminal_decision}.",
+                    decision_phase="PRE_REBUTTAL_TERMINAL",
+                    rebuttal_available=False,
+                )
+                self.assertTrue(validate_venue_decision_receipt(decision))
+                self.assertEqual(decision["rebuttal_receipt_sha256"], "")
+                record_frozen_contract_venue_decision(root, submitted["paper_id"], decision)
+
+                blocked = advance_frozen_paper_to_rebuttal(root, submitted["paper_id"])
+                self.assertFalse(blocked["receipt"]["allowed"])
+                self.assertIn("rebuttal-preparation-or-venue-skip-receipt-required", blocked["receipt"]["blockers"])
+
+                current = __import__("json").loads((root / "paper-acceptance" / f"{submitted['paper_id']}.json").read_text())
+                skip = build_rebuttal_skipped_by_venue_receipt(paper_ledger=current, venue_decision=decision)
+                self.assertTrue(validate_rebuttal_skipped_by_venue_receipt(skip))
+                self.assertTrue(skip["review_fabrication_forbidden"])
+                record_frozen_contract_rebuttal_skipped_by_venue(root, submitted["paper_id"], skip)
+
+                advanced = advance_frozen_paper_to_rebuttal(root, submitted["paper_id"])
+                self.assertTrue(advanced["receipt"]["allowed"])
+                self.assertEqual(advanced["ledger"]["current_state"], PaperState.REBUTTAL.value)
+                self.assertEqual(advanced["receipt"]["gate_receipts"]["rebuttal_skipped_by_venue_sha256"], skip["rebuttal_skip_sha256"])
+                self.assertEqual(advanced["receipt"]["gate_receipts"]["venue_decision_sha256"], decision["venue_decision_sha256"])
+                self.assertEqual(sum(event.get("event_type") == "rebuttal-preparation" for event in advanced["ledger"]["events"]), 0)
+                self.assertEqual(validate_paper_ledger(advanced["ledger"]), [])
+
+                learning = build_learning_packet(paper_ledger=advanced["ledger"], venue_decision=decision, lessons=self.lessons(decision))
+                self.assertTrue(learning["pass"])
+                record_frozen_contract_post_decision_learning(root, submitted["paper_id"], learning)
+                learned = advance_frozen_paper_to_learn(root, submitted["paper_id"])
+                self.assertTrue(learned["receipt"]["allowed"])
+                self.assertEqual(learned["ledger"]["current_state"], PaperState.LEARN.value)
+                self.assertEqual(validate_paper_ledger(learned["ledger"]), [])
+
+    def test_pre_rebuttal_terminal_decision_requires_false_rebuttal_available(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            helper = RebuttalProtocolTest(methodName="test_review_intake_and_rebuttal_gate_are_content_addressed")
+            _, submitted, _ = helper.submitted_fixture(root)
+            with self.assertRaisesRegex(RuntimeError, "rebuttal_available=false"):
+                build_venue_decision_receipt(
+                    paper_ledger=submitted,
+                    decision_id="bad-terminal",
+                    source_ref="venue-terminal:bad",
+                    received_at="2026-10-01T12:00:00+00:00",
+                    decision="REJECT",
+                    decision_text="Desk reject.",
+                    decision_phase="PRE_REBUTTAL_TERMINAL",
+                    rebuttal_available=True,
+                )
 
     def test_scientific_lesson_cannot_escape_diagnostic_scope(self) -> None:
         with tempfile.TemporaryDirectory() as td:

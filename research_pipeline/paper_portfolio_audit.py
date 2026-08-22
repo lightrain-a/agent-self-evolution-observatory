@@ -14,7 +14,7 @@ from .human_submission_signoff import validate_signoff_ledger, verify_current_si
 from .venue_submission_receipt import validate_submission_receipt
 from .revision_impact_audit import audit_freeze_receipt
 from .rebuttal_protocol import validate_rebuttal_receipt, validate_review_set
-from .post_decision_learning import validate_learning_receipt, validate_venue_decision_receipt
+from .post_decision_learning import validate_learning_receipt, validate_rebuttal_skipped_by_venue_receipt, validate_venue_decision_receipt
 
 DEFAULT_ROOT = Path('/data/wyt/agent-self-evolution-observatory')
 
@@ -202,17 +202,25 @@ def rebuttal_state(row: Mapping[str, Any], review_set_sha256: str) -> dict[str, 
     state=str(row.get('current_state') or '')
     event=latest(row,'rebuttal-preparation')
     receipt=event.get('receipt') if isinstance(event.get('receipt'),dict) else {}
+    skip_event=latest(row,'rebuttal-skipped-by-venue'); skip=skip_event.get('receipt') if isinstance(skip_event.get('receipt'),dict) else {}
+    decision_event=latest(row,'venue-decision'); decision=decision_event.get('receipt') if isinstance(decision_event.get('receipt'),dict) else {}
     valid=bool(receipt) and str(receipt.get('contract_sha256') or '')==str(row.get('contract_sha256') or '') and validate_rebuttal_receipt(receipt)
+    skip_valid=bool(skip) and str(skip.get('contract_sha256') or '')==str(row.get('contract_sha256') or '') and validate_rebuttal_skipped_by_venue_receipt(skip)
+    decision_valid=bool(decision) and str(decision.get('contract_sha256') or '')==str(row.get('contract_sha256') or '') and validate_venue_decision_receipt(decision)
+    skip_lineage_ok=skip_valid and decision_valid and decision.get('decision_phase')=='PRE_REBUTTAL_TERMINAL' and decision.get('rebuttal_available') is False and skip.get('venue_decision_sha256')==decision.get('venue_decision_sha256')
     errors=[]
     if receipt and not valid: errors.append('rebuttal-receipt-invalid')
+    if skip and not skip_valid: errors.append('rebuttal-skip-receipt-invalid')
     if valid and review_set_sha256 and receipt.get('review_set_sha256')!=review_set_sha256: errors.append('rebuttal-review-set-stale')
     summary=receipt.get('summary') if isinstance(receipt.get('summary'),dict) else {}
-    if state=='REBUTTAL': status='REBUTTAL_ACTIVE' if valid and not errors and receipt.get('pass') is True else 'REBUTTAL_RECEIPT_INVALID'
-    elif state=='SUBMITTED': status='REBUTTAL_PREPARED_TRANSITION_PENDING' if valid and not errors and receipt.get('pass') is True else 'REBUTTAL_PREPARATION_PENDING'
+    if state=='REBUTTAL': status='REBUTTAL_ACTIVE' if valid and not errors and receipt.get('pass') is True else ('REBUTTAL_SKIPPED_BY_VENUE' if skip_lineage_ok and not errors else 'REBUTTAL_RECEIPT_INVALID')
+    elif state=='SUBMITTED': status='REBUTTAL_PREPARED_TRANSITION_PENDING' if valid and not errors and receipt.get('pass') is True else ('REBUTTAL_SKIPPED_TRANSITION_PENDING' if skip_lineage_ok and not errors else 'REBUTTAL_PREPARATION_PENDING')
+    elif state=='LEARN' and skip_lineage_ok: status='REBUTTAL_SKIPPED_BY_VENUE'
     else: status='NOT_ELIGIBLE'
     return {
-        'status':status,'valid':valid and not errors,'errors':errors,
+        'status':status,'valid':(valid and not errors and receipt.get('pass') is True) or (skip_lineage_ok and not errors),'errors':errors,
         'rebuttal_receipt_sha256':str(receipt.get('rebuttal_receipt_sha256') or ''),
+        'rebuttal_skip_sha256':str(skip.get('rebuttal_skip_sha256') or ''),
         'review_set_sha256':str(receipt.get('review_set_sha256') or ''),
         'reviews':int(summary.get('reviews') or 0),'objections':int(summary.get('objections') or 0),
         'decision_critical':int(summary.get('decision_critical') or 0),
@@ -293,18 +301,23 @@ def project(path: Path, root: Path) -> dict[str, Any]:
     actual_submission_status = 'VENUE_SUBMISSION_CONFIRMED' if state in {'SUBMITTED','REBUTTAL','LEARN'} and actual_valid else ('SUBMITTED_RECEIPT_INVALID' if state in {'SUBMITTED','REBUTTAL','LEARN'} else ('VENUE_SUBMISSION_RECEIPT_RECORDED_TRANSITION_PENDING' if actual_valid else 'NOT_SUBMITTED'))
     review_intake=review_intake_state(root,paper_id,str(actual_receipt.get('submission_receipt_sha256') or ''),state)
     rebuttal=rebuttal_state(row,review_intake['review_set_sha256'])
+    if rebuttal['status'] in {'REBUTTAL_SKIPPED_TRANSITION_PENDING','REBUTTAL_SKIPPED_BY_VENUE'}:
+        review_intake={**review_intake,'status':'REVIEW_NOT_REQUIRED_VENUE_TERMINAL','review_count':0,'errors':[]}
     learning=learning_state(row)
     actions = next_actions(groups)
     if state == 'LEARN':
         actions = ['post-decision learning is complete; reuse process lessons only within their declared scope, while scientific lessons remain diagnostic until independent evidence exists'] if learning['status']=='LEARN_COMPLETE' else ['LEARN state has invalid decision/learning lineage; stop reuse until repaired']
     elif state == 'REBUTTAL':
-        if rebuttal['status']!='REBUTTAL_ACTIVE': actions=['REBUTTAL state has an invalid or stale preparation receipt; stop response workflow until repaired']
+        if rebuttal['status']=='REBUTTAL_SKIPPED_BY_VENUE':
+            actions=['venue provided no rebuttal window; do not fabricate reviews or a rebuttal, and proceed only with scoped post-decision learning'] if learning['status']=='POST_DECISION_LEARNING_PENDING' else ['venue-skipped rebuttal lineage is closed; advance to LEARN only after the scoped learning receipt passes']
+        elif rebuttal['status']!='REBUTTAL_ACTIVE': actions=['REBUTTAL state has an invalid or stale preparation/venue-skip receipt; stop downstream workflow until repaired']
         elif learning['status']=='AWAITING_FINAL_VENUE_DECISION': actions=['rebuttal is active; await the real final venue decision']
         elif learning['status']=='POST_DECISION_LEARNING_PENDING': actions=['record scoped post-decision lessons; acceptance/rejection does not change scientific claim truth']
         elif learning['status']=='LEARNING_PREPARED_TRANSITION_PENDING': actions=['post-decision learning passed; advance REBUTTAL → LEARN without granting scientific or experiment authority']
     elif state == 'SUBMITTED':
         if not actual_valid: actions=['SUBMITTED state has an invalid or missing venue submission receipt; treat the ledger as invalid until repaired']
-        elif review_intake['status']=='AWAITING_VENUE_REVIEWS': actions=['await real venue reviews; do not synthesize mock reviews into the rebuttal ledger']
+        elif rebuttal['status']=='REBUTTAL_SKIPPED_TRANSITION_PENDING': actions=['venue issued a terminal decision with no rebuttal window; advance through the logical REBUTTAL node using the bound venue-skip receipt, without fabricating reviews']
+        elif review_intake['status']=='AWAITING_VENUE_REVIEWS': actions=['await real venue reviews or an explicit terminal venue decision; do not synthesize mock reviews into the rebuttal ledger']
         elif review_intake['status']=='REVIEW_INTAKE_STALE': actions=['repair review intake lineage against the current venue submission receipt']
         elif rebuttal['status']=='REBUTTAL_PREPARATION_PENDING': actions=['classify venue objections and prepare a scope-preserving rebuttal; reviewer requests do not authorize experiments']
         elif rebuttal['status']=='REBUTTAL_PREPARED_TRANSITION_PENDING': actions=['rebuttal preparation passed; advance the paper to REBUTTAL without changing scientific authority']
@@ -366,6 +379,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         'review_intake_errors': review_intake['errors'],
         'rebuttal_status': rebuttal['status'],
         'rebuttal_receipt_sha256': rebuttal['rebuttal_receipt_sha256'],
+        'rebuttal_skip_sha256': rebuttal['rebuttal_skip_sha256'],
         'rebuttal_errors': rebuttal['errors'],
         'rebuttal_objections': rebuttal['objections'],
         'rebuttal_decision_critical': rebuttal['decision_critical'],
@@ -431,6 +445,7 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'review_sets_current': sum(p['review_intake_status'] == 'REVIEW_SET_CURRENT' for p in papers),
             'rebuttal_preparation_pending': sum(p['rebuttal_status'] == 'REBUTTAL_PREPARATION_PENDING' for p in papers),
             'rebuttal_active': sum(p['rebuttal_status'] == 'REBUTTAL_ACTIVE' for p in papers),
+            'rebuttal_skipped_by_venue': sum(p['rebuttal_status'] in {'REBUTTAL_SKIPPED_TRANSITION_PENDING','REBUTTAL_SKIPPED_BY_VENUE'} for p in papers),
             'final_decisions_recorded': sum(bool(p['venue_decision_sha256']) for p in papers),
             'post_decision_learning_pending': sum(p['learning_status'] == 'POST_DECISION_LEARNING_PENDING' for p in papers),
             'learning_prepared': sum(p['learning_status'] == 'LEARNING_PREPARED_TRANSITION_PENDING' for p in papers),

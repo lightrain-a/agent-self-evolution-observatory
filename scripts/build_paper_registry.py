@@ -24,7 +24,7 @@ from research_pipeline.human_submission_signoff import validate_signoff_ledger, 
 from research_pipeline.venue_submission_receipt import validate_submission_receipt
 from research_pipeline.revision_impact_audit import audit_freeze_receipt
 from research_pipeline.rebuttal_protocol import validate_rebuttal_receipt
-from research_pipeline.post_decision_learning import validate_learning_receipt, validate_venue_decision_receipt
+from research_pipeline.post_decision_learning import validate_learning_receipt, validate_rebuttal_skipped_by_venue_receipt, validate_venue_decision_receipt
 DEFAULT_LEDGER_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ROOT") else None
 DEFAULT_ARTIFACT_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ARTIFACT_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ARTIFACT_ROOT") else None
 DEFAULT_FREEZE_ROOT = Path(os.environ["PAPER_SUBMISSION_FREEZE_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_FREEZE_ROOT") else None
@@ -299,7 +299,7 @@ def actual_submission(row: dict[str, Any]) -> dict[str, Any]:
     receipt = event_payload(row, "actual-submission")
     valid = bool(receipt) and str(receipt.get("contract_sha256") or "") == str(row.get("contract_sha256") or "") and validate_submission_receipt(receipt)
     state = str(row.get("current_state") or "")
-    if state in {"SUBMITTED", "REBUTTAL"}:
+    if state in {"SUBMITTED", "REBUTTAL", "LEARN"}:
         status = "VENUE_SUBMISSION_CONFIRMED" if valid else "SUBMITTED_RECEIPT_INVALID"
     elif valid:
         status = "VENUE_SUBMISSION_RECEIPT_RECORDED_TRANSITION_PENDING"
@@ -318,21 +318,31 @@ def actual_submission(row: dict[str, Any]) -> dict[str, Any]:
 
 def rebuttal_state(row: dict[str, Any]) -> dict[str, Any]:
     receipt = event_payload(row, "rebuttal-preparation")
+    skip = event_payload(row, "rebuttal-skipped-by-venue")
+    decision = event_payload(row, "venue-decision")
     valid = bool(receipt) and str(receipt.get("contract_sha256") or "") == str(row.get("contract_sha256") or "") and validate_rebuttal_receipt(receipt)
+    skip_valid = bool(skip) and str(skip.get("contract_sha256") or "") == str(row.get("contract_sha256") or "") and validate_rebuttal_skipped_by_venue_receipt(skip)
+    decision_valid = bool(decision) and str(decision.get("contract_sha256") or "") == str(row.get("contract_sha256") or "") and validate_venue_decision_receipt(decision)
+    skip_lineage_ok = skip_valid and decision_valid and decision.get("decision_phase") == "PRE_REBUTTAL_TERMINAL" and decision.get("rebuttal_available") is False and skip.get("venue_decision_sha256") == decision.get("venue_decision_sha256")
     state = str(row.get("current_state") or "")
     if state == "REBUTTAL":
-        status = "REBUTTAL_ACTIVE" if valid and receipt.get("pass") is True else "REBUTTAL_RECEIPT_INVALID"
+        status = "REBUTTAL_ACTIVE" if valid and receipt.get("pass") is True else ("REBUTTAL_SKIPPED_BY_VENUE" if skip_lineage_ok else "REBUTTAL_RECEIPT_INVALID")
     elif state == "SUBMITTED":
-        status = "REBUTTAL_PREPARED_TRANSITION_PENDING" if valid and receipt.get("pass") is True else "AWAITING_REVIEW_OR_REBUTTAL_PREPARATION"
+        status = "REBUTTAL_PREPARED_TRANSITION_PENDING" if valid and receipt.get("pass") is True else ("REBUTTAL_SKIPPED_TRANSITION_PENDING" if skip_lineage_ok else "AWAITING_REVIEW_OR_REBUTTAL_PREPARATION")
+    elif state == "LEARN" and skip_lineage_ok:
+        status = "REBUTTAL_SKIPPED_BY_VENUE"
     else:
         status = "NOT_ELIGIBLE"
     summary = receipt.get("summary") if isinstance(receipt.get("summary"), dict) else {}
     return {
         "status": status,
-        "valid": valid,
-        "pass": receipt.get("pass") is True,
+        "valid": (valid and receipt.get("pass") is True) or skip_lineage_ok,
+        "pass": receipt.get("pass") is True or skip_lineage_ok,
         "review_set_sha256": str(receipt.get("review_set_sha256") or ""),
         "rebuttal_receipt_sha256": str(receipt.get("rebuttal_receipt_sha256") or ""),
+        "rebuttal_skip_sha256": str(skip.get("rebuttal_skip_sha256") or ""),
+        "venue_decision_sha256": str(decision.get("venue_decision_sha256") or "") if skip_lineage_ok else "",
+        "review_fabrication_forbidden": skip.get("review_fabrication_forbidden") is True if skip_lineage_ok else False,
         "reviews": int(summary.get("reviews") or 0),
         "objections": int(summary.get("objections") or 0),
         "decision_critical": int(summary.get("decision_critical") or 0),
@@ -449,6 +459,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
             "paper_preparation_receipts": int(summary.get("paper_preparation_receipts") or 0),
             "actual_submission_receipts": int(summary.get("actual_submission_receipts") or 0),
             "rebuttal_preparation_receipts": int(summary.get("rebuttal_preparation_receipts") or 0),
+            "rebuttal_skipped_receipts": int(summary.get("rebuttal_skipped_receipts") or 0),
             "venue_decision_receipts": int(summary.get("venue_decision_receipts") or 0),
             "post_decision_learning_receipts": int(summary.get("post_decision_learning_receipts") or 0),
         },
@@ -507,6 +518,7 @@ def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Pat
         "submitted_receipt_bound": sum(p["actual_submission"]["status"] == "VENUE_SUBMISSION_CONFIRMED" for p in papers),
         "rebuttal_active": sum(p["rebuttal"]["status"] == "REBUTTAL_ACTIVE" for p in papers),
         "rebuttal_prepared": sum(p["rebuttal"]["status"] == "REBUTTAL_PREPARED_TRANSITION_PENDING" for p in papers),
+        "rebuttal_skipped_by_venue": sum(p["rebuttal"]["status"] in {"REBUTTAL_SKIPPED_TRANSITION_PENDING", "REBUTTAL_SKIPPED_BY_VENUE"} for p in papers),
         "final_decisions_recorded": sum(p["learning"]["decision_valid"] for p in papers),
         "learning_prepared": sum(p["learning"]["status"] == "LEARNING_PREPARED_TRANSITION_PENDING" for p in papers),
         "learn_complete": sum(p["learning"]["status"] == "LEARN_COMPLETE" for p in papers),

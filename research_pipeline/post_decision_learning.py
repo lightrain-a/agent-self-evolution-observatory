@@ -6,6 +6,7 @@ from typing import Any, Mapping, Sequence
 
 LEARN_SCHEMA_VERSION = "1.0"
 FINAL_DECISIONS = {"ACCEPT", "REJECT", "WITHDRAWN", "VENUE_CLOSED_WITHOUT_DECISION"}
+DECISION_PHASES = {"POST_REBUTTAL", "PRE_REBUTTAL_TERMINAL"}
 LESSON_CATEGORIES = {
     "PAPER_POSITIONING",
     "EVIDENCE_DESIGN",
@@ -51,6 +52,8 @@ def venue_decision_identity(receipt: Mapping[str, Any]) -> dict[str, Any]:
         "contract_sha256": receipt.get("contract_sha256"),
         "submission_receipt_sha256": receipt.get("submission_receipt_sha256"),
         "rebuttal_receipt_sha256": receipt.get("rebuttal_receipt_sha256"),
+        "decision_phase": receipt.get("decision_phase"),
+        "rebuttal_available": receipt.get("rebuttal_available"),
         "decision_id": receipt.get("decision_id"),
         "source_ref": receipt.get("source_ref"),
         "received_at": receipt.get("received_at"),
@@ -68,22 +71,37 @@ def build_venue_decision_receipt(
     received_at: str,
     decision: str,
     decision_text: str,
+    decision_phase: str = "POST_REBUTTAL",
+    rebuttal_available: bool = True,
 ) -> dict[str, Any]:
     from .rebuttal_protocol import validate_rebuttal_receipt
     from .venue_submission_receipt import validate_submission_receipt
 
     paper_id = str(paper_ledger.get("paper_id") or "")
     contract_sha = str(paper_ledger.get("contract_sha256") or "")
-    if str(paper_ledger.get("current_state") or "") != "REBUTTAL":
-        raise RuntimeError("final venue decision requires paper state REBUTTAL")
+    state = str(paper_ledger.get("current_state") or "")
+    phase = str(decision_phase or "").strip().upper()
+    if phase not in DECISION_PHASES:
+        raise RuntimeError(f"unsupported decision phase: {phase}")
     submission = _receipt(paper_ledger, "actual-submission")
     rebuttal = _receipt(paper_ledger, "rebuttal-preparation")
     if not submission or not validate_submission_receipt(submission):
         raise RuntimeError("valid actual submission receipt required")
-    if not rebuttal or rebuttal.get("pass") is not True or not validate_rebuttal_receipt(rebuttal):
-        raise RuntimeError("valid rebuttal preparation receipt required")
-    if rebuttal.get("submission_receipt_sha256") != submission.get("submission_receipt_sha256"):
-        raise RuntimeError("rebuttal/submission lineage mismatch")
+    if phase == "POST_REBUTTAL":
+        if state != "REBUTTAL":
+            raise RuntimeError("post-rebuttal final venue decision requires paper state REBUTTAL")
+        if rebuttal_available is not True:
+            raise RuntimeError("post-rebuttal decision must declare rebuttal_available=true")
+        if not rebuttal or rebuttal.get("pass") is not True or not validate_rebuttal_receipt(rebuttal):
+            raise RuntimeError("valid rebuttal preparation receipt required")
+        if rebuttal.get("submission_receipt_sha256") != submission.get("submission_receipt_sha256"):
+            raise RuntimeError("rebuttal/submission lineage mismatch")
+    else:
+        if state != "SUBMITTED":
+            raise RuntimeError("pre-rebuttal terminal decision requires paper state SUBMITTED")
+        if rebuttal_available is not False:
+            raise RuntimeError("pre-rebuttal terminal decision must declare rebuttal_available=false")
+        rebuttal = {}
     decision = str(decision or "").strip().upper()
     if decision not in FINAL_DECISIONS:
         raise RuntimeError(f"unsupported final decision: {decision}")
@@ -96,6 +114,8 @@ def build_venue_decision_receipt(
         "contract_sha256": contract_sha,
         "submission_receipt_sha256": str(submission.get("submission_receipt_sha256") or ""),
         "rebuttal_receipt_sha256": str(rebuttal.get("rebuttal_receipt_sha256") or ""),
+        "decision_phase": phase,
+        "rebuttal_available": bool(rebuttal_available),
         "decision_id": str(decision_id).strip(),
         "source_ref": str(source_ref).strip(),
         "received_at": str(received_at).strip(),
@@ -116,6 +136,14 @@ def build_venue_decision_receipt(
 def validate_venue_decision_receipt(receipt: Mapping[str, Any]) -> bool:
     if receipt.get("receipt_type") != "venue-final-decision" or receipt.get("decision") not in FINAL_DECISIONS:
         return False
+    phase = str(receipt.get("decision_phase") or "")
+    if phase not in DECISION_PHASES:
+        return False
+    if phase == "POST_REBUTTAL":
+        if receipt.get("rebuttal_available") is not True or not receipt.get("rebuttal_receipt_sha256"):
+            return False
+    elif receipt.get("rebuttal_available") is not False or receipt.get("rebuttal_receipt_sha256"):
+        return False
     if receipt.get("scientific_claim_status_unchanged") is not True:
         return False
     if receipt.get("acceptance_does_not_prove_scientific_truth") is not True or receipt.get("rejection_does_not_refute_scientific_claims") is not True:
@@ -123,6 +151,76 @@ def validate_venue_decision_receipt(receipt: Mapping[str, Any]) -> bool:
     if any(receipt.get(key) is True for key in ("scientific_authority", "experiment_authority", "gpu_authority", "submission_authority")):
         return False
     return str(receipt.get("venue_decision_sha256") or "") == _digest(venue_decision_identity(receipt))
+
+
+def rebuttal_skip_identity(receipt: Mapping[str, Any]) -> dict[str, Any]:
+    return {
+        "paper_id": receipt.get("paper_id"),
+        "contract_sha256": receipt.get("contract_sha256"),
+        "submission_receipt_sha256": receipt.get("submission_receipt_sha256"),
+        "venue_decision_sha256": receipt.get("venue_decision_sha256"),
+        "status": receipt.get("status"),
+        "pass": receipt.get("pass"),
+        "scientific_claim_status_unchanged": receipt.get("scientific_claim_status_unchanged"),
+    }
+
+
+def build_rebuttal_skipped_by_venue_receipt(
+    *,
+    paper_ledger: Mapping[str, Any],
+    venue_decision: Mapping[str, Any],
+) -> dict[str, Any]:
+    from .venue_submission_receipt import validate_submission_receipt
+
+    paper_id = str(paper_ledger.get("paper_id") or "")
+    contract_sha = str(paper_ledger.get("contract_sha256") or "")
+    submission = _receipt(paper_ledger, "actual-submission")
+    if str(paper_ledger.get("current_state") or "") != "SUBMITTED":
+        raise RuntimeError("rebuttal skip may only be recorded from SUBMITTED")
+    if not submission or not validate_submission_receipt(submission):
+        raise RuntimeError("valid actual submission receipt required")
+    if not validate_venue_decision_receipt(venue_decision):
+        raise RuntimeError("valid venue final decision required")
+    if venue_decision.get("decision_phase") != "PRE_REBUTTAL_TERMINAL" or venue_decision.get("rebuttal_available") is not False:
+        raise RuntimeError("rebuttal skip requires a pre-rebuttal terminal venue decision")
+    if str(venue_decision.get("paper_id") or "") != paper_id or str(venue_decision.get("contract_sha256") or "") != contract_sha:
+        raise RuntimeError("rebuttal skip decision paper/contract mismatch")
+    if str(venue_decision.get("submission_receipt_sha256") or "") != str(submission.get("submission_receipt_sha256") or ""):
+        raise RuntimeError("rebuttal skip submission lineage mismatch")
+    receipt: dict[str, Any] = {
+        "schema_version": LEARN_SCHEMA_VERSION,
+        "receipt_type": "rebuttal-skipped-by-venue",
+        "paper_id": paper_id,
+        "contract_sha256": contract_sha,
+        "submission_receipt_sha256": str(submission.get("submission_receipt_sha256") or ""),
+        "venue_decision_sha256": str(venue_decision.get("venue_decision_sha256") or ""),
+        "status": "REBUTTAL_SKIPPED_BY_VENUE",
+        "pass": True,
+        "scientific_claim_status_unchanged": True,
+        "review_fabrication_forbidden": True,
+        "claim_expansion_authorized": False,
+        "new_experiment_authorized": False,
+        "scientific_authority": False,
+        "experiment_authority": False,
+        "gpu_authority": False,
+        "submission_authority": False,
+    }
+    receipt["rebuttal_skip_sha256"] = _digest(rebuttal_skip_identity(receipt))
+    return receipt
+
+
+def validate_rebuttal_skipped_by_venue_receipt(receipt: Mapping[str, Any]) -> bool:
+    if receipt.get("receipt_type") != "rebuttal-skipped-by-venue" or receipt.get("status") != "REBUTTAL_SKIPPED_BY_VENUE" or receipt.get("pass") is not True:
+        return False
+    if receipt.get("scientific_claim_status_unchanged") is not True or receipt.get("review_fabrication_forbidden") is not True:
+        return False
+    if receipt.get("claim_expansion_authorized") is not False or receipt.get("new_experiment_authorized") is not False:
+        return False
+    if not receipt.get("submission_receipt_sha256") or not receipt.get("venue_decision_sha256"):
+        return False
+    if any(receipt.get(key) is True for key in ("scientific_authority", "experiment_authority", "gpu_authority", "submission_authority")):
+        return False
+    return str(receipt.get("rebuttal_skip_sha256") or "") == _digest(rebuttal_skip_identity(receipt))
 
 
 def learning_receipt_identity(receipt: Mapping[str, Any]) -> dict[str, Any]:

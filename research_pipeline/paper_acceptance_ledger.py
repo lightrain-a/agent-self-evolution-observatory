@@ -58,6 +58,7 @@ def _refresh(row: dict[str, Any]) -> None:
         "submission_readiness_receipts": sum(event.get("event_type") == "submission-readiness" for event in events),
         "actual_submission_receipts": sum(event.get("event_type") == "actual-submission" for event in events),
         "rebuttal_preparation_receipts": sum(event.get("event_type") == "rebuttal-preparation" for event in events),
+        "rebuttal_skipped_receipts": sum(event.get("event_type") == "rebuttal-skipped-by-venue" for event in events),
         "venue_decision_receipts": sum(event.get("event_type") == "venue-decision" for event in events),
         "post_decision_learning_receipts": sum(event.get("event_type") == "post-decision-learning" for event in events),
     }
@@ -144,6 +145,11 @@ def _validate_post_decision_learning_receipt(receipt: Mapping[str, Any]) -> bool
     return validate_learning_receipt(receipt)
 
 
+def _validate_rebuttal_skipped_receipt(receipt: Mapping[str, Any]) -> bool:
+    from .post_decision_learning import validate_rebuttal_skipped_by_venue_receipt
+    return validate_rebuttal_skipped_by_venue_receipt(receipt)
+
+
 def _receipt_hash_valid(receipt: Mapping[str, Any]) -> bool:
     receipt_type = str(receipt.get("receipt_type") or "")
     if receipt_type == "story-search":
@@ -173,6 +179,8 @@ def _receipt_hash_valid(receipt: Mapping[str, Any]) -> bool:
         return _validate_actual_submission_receipt(receipt)
     if receipt_type == "rebuttal-preparation":
         return _validate_rebuttal_preparation_receipt(receipt)
+    if receipt_type == "rebuttal-skipped-by-venue":
+        return _validate_rebuttal_skipped_receipt(receipt)
     if receipt_type == "venue-final-decision":
         return _validate_venue_decision_receipt(receipt)
     if receipt_type == "post-decision-learning":
@@ -269,35 +277,42 @@ def _transition_gate(row: Mapping[str, Any], current: PaperState, target: PaperS
     if target == PaperState.REBUTTAL:
         actual = _latest(row, "actual-submission").get("receipt") or {}
         actual_sha = str(actual.get("submission_receipt_sha256") or "") if isinstance(actual, dict) and _validate_actual_submission_receipt(actual) else ""
-        receipt: dict[str, Any] = {}
+        prepared: dict[str, Any] = {}
+        skipped: dict[str, Any] = {}
+        decision: dict[str, Any] = {}
         for event in reversed(stage_events):
-            if event.get("event_type") != "rebuttal-preparation":
-                continue
             candidate = event.get("receipt") or {}
-            if not isinstance(candidate, dict):
+            if not isinstance(candidate, dict) or str(candidate.get("contract_sha256") or "") != contract_sha256:
                 continue
-            if str(candidate.get("contract_sha256") or "") != contract_sha256:
-                continue
-            if candidate.get("pass") is True and _validate_rebuttal_preparation_receipt(candidate) and str(candidate.get("submission_receipt_sha256") or "") == actual_sha:
-                receipt = candidate
-                break
-        rebuttal_sha = str(receipt.get("rebuttal_receipt_sha256") or "")
+            if not prepared and event.get("event_type") == "rebuttal-preparation" and candidate.get("pass") is True and _validate_rebuttal_preparation_receipt(candidate) and str(candidate.get("submission_receipt_sha256") or "") == actual_sha:
+                prepared = candidate
+            if not skipped and event.get("event_type") == "rebuttal-skipped-by-venue" and candidate.get("pass") is True and _validate_rebuttal_skipped_receipt(candidate) and str(candidate.get("submission_receipt_sha256") or "") == actual_sha:
+                skipped = candidate
+            if not decision and event.get("event_type") == "venue-decision" and _validate_venue_decision_receipt(candidate) and candidate.get("decision_phase") == "PRE_REBUTTAL_TERMINAL" and candidate.get("rebuttal_available") is False and str(candidate.get("submission_receipt_sha256") or "") == actual_sha:
+                decision = candidate
+        rebuttal_sha = str(prepared.get("rebuttal_receipt_sha256") or "")
+        skip_sha = str(skipped.get("rebuttal_skip_sha256") or "")
+        decision_sha = str(decision.get("venue_decision_sha256") or "")
+        skip_lineage_ok = bool(skip_sha and decision_sha and str(skipped.get("venue_decision_sha256") or "") == decision_sha)
         if not actual_sha:
             blockers.append("rebuttal-valid-actual-submission-receipt-required")
-        if not rebuttal_sha:
-            blockers.append("rebuttal-preparation-pass-receipt-required")
-        else:
+        if rebuttal_sha:
             gate_receipts["rebuttal_preparation_receipt_sha256"] = rebuttal_sha
-            gate_receipts["review_set_sha256"] = str(receipt.get("review_set_sha256") or "")
+            gate_receipts["review_set_sha256"] = str(prepared.get("review_set_sha256") or "")
+        elif skip_lineage_ok:
+            gate_receipts["rebuttal_skipped_by_venue_sha256"] = skip_sha
+            gate_receipts["venue_decision_sha256"] = decision_sha
+        else:
+            blockers.append("rebuttal-preparation-pass-receipt-required")
+            blockers.append("rebuttal-preparation-or-venue-skip-receipt-required")
     if target == PaperState.LEARN:
-        decision: dict[str, Any] = {}
+        latest_decision = _latest(row, "venue-decision").get("receipt") or {}
+        decision: dict[str, Any] = dict(latest_decision) if isinstance(latest_decision, dict) and str(latest_decision.get("contract_sha256") or "") == contract_sha256 and _validate_venue_decision_receipt(latest_decision) else {}
         learning: dict[str, Any] = {}
         for event in reversed(stage_events):
             candidate = event.get("receipt") or {}
             if not isinstance(candidate, dict) or str(candidate.get("contract_sha256") or "") != contract_sha256:
                 continue
-            if not decision and event.get("event_type") == "venue-decision" and _validate_venue_decision_receipt(candidate):
-                decision = candidate
             if not learning and event.get("event_type") == "post-decision-learning" and candidate.get("pass") is True and _validate_post_decision_learning_receipt(candidate):
                 learning = candidate
         decision_sha = str(decision.get("venue_decision_sha256") or "")
@@ -674,12 +689,32 @@ def record_venue_decision(
     if str(receipt.get("paper_id") or "") != contract.paper_id or str(receipt.get("contract_sha256") or "") != paper_contract_digest(contract):
         raise RuntimeError("venue decision paper/contract mismatch")
     row = initialize_paper_ledger(root, contract, actor)
-    if str(row.get("current_state") or "") != PaperState.REBUTTAL.value:
-        raise RuntimeError("venue final decision may only be recorded from REBUTTAL")
+    expected_state = PaperState.SUBMITTED.value if receipt.get("decision_phase") == "PRE_REBUTTAL_TERMINAL" else PaperState.REBUTTAL.value
+    if str(row.get("current_state") or "") != expected_state:
+        raise RuntimeError(f"venue final decision phase requires paper state {expected_state}")
     prior = _latest(row, "venue-decision").get("receipt") or {}
     if isinstance(prior, dict) and prior.get("venue_decision_sha256") == receipt.get("venue_decision_sha256"):
         return row
     return _append(root, contract, actor, {"event_type": "venue-decision", "receipt": dict(receipt), "recorded_at": str(receipt.get("received_at") or _now())})
+
+
+def record_rebuttal_skipped_by_venue(
+    root: Path,
+    contract: PaperContract,
+    receipt: Mapping[str, Any],
+    actor: str = "rebuttal-skipped-by-venue",
+) -> dict[str, Any]:
+    if not _validate_rebuttal_skipped_receipt(receipt) or receipt.get("pass") is not True:
+        raise RuntimeError("invalid rebuttal-skipped-by-venue receipt")
+    if str(receipt.get("paper_id") or "") != contract.paper_id or str(receipt.get("contract_sha256") or "") != paper_contract_digest(contract):
+        raise RuntimeError("rebuttal skip paper/contract mismatch")
+    row = initialize_paper_ledger(root, contract, actor)
+    if str(row.get("current_state") or "") != PaperState.SUBMITTED.value:
+        raise RuntimeError("rebuttal skip may only be recorded from SUBMITTED")
+    prior = _latest(row, "rebuttal-skipped-by-venue").get("receipt") or {}
+    if isinstance(prior, dict) and prior.get("rebuttal_skip_sha256") == receipt.get("rebuttal_skip_sha256"):
+        return row
+    return _append(root, contract, actor, {"event_type": "rebuttal-skipped-by-venue", "receipt": dict(receipt)})
 
 
 def record_post_decision_learning(
@@ -701,7 +736,7 @@ def record_post_decision_learning(
     return _append(root, contract, actor, {"event_type": "post-decision-learning", "receipt": dict(receipt)})
 
 
-def _append_frozen_post_submission_receipt(root: Path, paper_id: str, event_type: str, receipt: Mapping[str, Any], actor: str, recorded_at: str) -> dict[str, Any]:
+def _append_frozen_post_submission_receipt(root: Path, paper_id: str, event_type: str, receipt: Mapping[str, Any], actor: str, recorded_at: str, *, allowed_states: Sequence[PaperState] = (PaperState.REBUTTAL,), hash_key: str = "") -> dict[str, Any]:
     path, lock = _paths(root, paper_id)
     with lock.open("a+", encoding="utf-8") as handle:
         fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
@@ -713,11 +748,12 @@ def _append_frozen_post_submission_receipt(root: Path, paper_id: str, event_type
             raise RuntimeError(f"frozen paper contract payload digest mismatch for {paper_id}")
         if str(row.get("paper_id") or "") != paper_id or str(receipt.get("paper_id") or "") != paper_id or str(receipt.get("contract_sha256") or "") != digest:
             raise RuntimeError(f"{event_type} paper/contract mismatch")
-        if str(row.get("current_state") or "") != PaperState.REBUTTAL.value:
-            raise RuntimeError(f"{event_type} may only be recorded from REBUTTAL")
-        hash_key = "venue_decision_sha256" if event_type == "venue-decision" else "learning_receipt_sha256"
+        allowed_values = {state.value for state in allowed_states}
+        if str(row.get("current_state") or "") not in allowed_values:
+            raise RuntimeError(f"{event_type} may only be recorded from {sorted(allowed_values)}")
+        resolved_hash_key = hash_key or ("venue_decision_sha256" if event_type == "venue-decision" else "learning_receipt_sha256")
         prior = _latest(row, event_type).get("receipt") or {}
-        if isinstance(prior, dict) and prior.get(hash_key) == receipt.get(hash_key):
+        if isinstance(prior, dict) and prior.get(resolved_hash_key) == receipt.get(resolved_hash_key):
             return row
         payload = {
             "event_type": event_type,
@@ -740,7 +776,14 @@ def _append_frozen_post_submission_receipt(root: Path, paper_id: str, event_type
 def record_frozen_contract_venue_decision(root: Path, paper_id: str, receipt: Mapping[str, Any], actor: str = "venue-final-decision") -> dict[str, Any]:
     if not _validate_venue_decision_receipt(receipt):
         raise RuntimeError("invalid venue final-decision receipt")
-    return _append_frozen_post_submission_receipt(root, paper_id, "venue-decision", receipt, actor, str(receipt.get("received_at") or _now()))
+    allowed = (PaperState.SUBMITTED,) if receipt.get("decision_phase") == "PRE_REBUTTAL_TERMINAL" else (PaperState.REBUTTAL,)
+    return _append_frozen_post_submission_receipt(root, paper_id, "venue-decision", receipt, actor, str(receipt.get("received_at") or _now()), allowed_states=allowed, hash_key="venue_decision_sha256")
+
+
+def record_frozen_contract_rebuttal_skipped_by_venue(root: Path, paper_id: str, receipt: Mapping[str, Any], actor: str = "rebuttal-skipped-by-venue") -> dict[str, Any]:
+    if not _validate_rebuttal_skipped_receipt(receipt) or receipt.get("pass") is not True:
+        raise RuntimeError("invalid rebuttal-skipped-by-venue receipt")
+    return _append_frozen_post_submission_receipt(root, paper_id, "rebuttal-skipped-by-venue", receipt, actor, _now(), allowed_states=(PaperState.SUBMITTED,), hash_key="rebuttal_skip_sha256")
 
 
 def record_frozen_contract_post_decision_learning(root: Path, paper_id: str, receipt: Mapping[str, Any], actor: str = "post-decision-learning") -> dict[str, Any]:
@@ -909,7 +952,7 @@ def validate_paper_ledger(row: Mapping[str, Any]) -> list[str]:
         if any(event.get(key) is True for key in ("scientific_authority", "experiment_authority", "gpu_authority", "submission_authority")):
             errors.append("paper event leaked authority")
         event_type = str(event.get("event_type") or "")
-        if event_type in {"story-search", "mock-pc-review", "claim-audit", "paper-preparation", "actual-submission", "rebuttal-preparation", "venue-decision", "post-decision-learning"}:
+        if event_type in {"story-search", "mock-pc-review", "claim-audit", "paper-preparation", "actual-submission", "rebuttal-preparation", "rebuttal-skipped-by-venue", "venue-decision", "post-decision-learning"}:
             receipt = event.get("receipt") or {}
             if not isinstance(receipt, dict) or str(receipt.get("contract_sha256") or "") != contract_sha256 or not _receipt_hash_valid(receipt):
                 errors.append(f"invalid-content-addressed-receipt:{event_type}")
