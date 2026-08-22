@@ -87,7 +87,7 @@ def main() -> None:
         receipt = expected
         status = "PASS_VALIDATE_ONLY" if args.validate_only else "PASS_ANONYMITY_PREPARATION_UPGRADED"
         if not args.validate_only:
-            updated = record_frozen_contract_paper_preparation(ledger_root, args.paper_id, upgraded, actor=args.actor)
+            updated = record_frozen_contract_paper_preparation(args.data_root, args.paper_id, upgraded, actor=args.actor)
             receipt = latest_preparation_receipt(updated)
             after_errors = validate_paper_ledger(updated)
             if after_errors: raise RuntimeError(f"paper ledger invalid after anonymity upgrade: {after_errors}")
