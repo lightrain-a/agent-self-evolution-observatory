@@ -522,6 +522,7 @@ def main() -> None:
           bridgeLinks:document.querySelectorAll('.rpm-bridge-grid a').length,
           categories:document.querySelectorAll('.rpm-category').length,
           overviewCards:document.querySelectorAll('.rpm-overview-card').length,
+          externalDensityRows:document.querySelectorAll('.rpm-external-density').length,
           frontierBoundaries:document.querySelectorAll('.rpm-frontier-boundary').length,
           graphAppendix:document.querySelectorAll('.rpm-graph-schema').length,
           controlBoard:document.querySelectorAll('.rpm-control-board').length,
@@ -533,12 +534,12 @@ def main() -> None:
           pageOverflow:document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
           text:document.body.textContent||''
         };""")
-        require((research_map["chapters"],research_map["toc2"],research_map["bridgeLinks"],research_map["categories"],research_map["overviewCards"],research_map["frontierBoundaries"],research_map["graphAppendix"]) == (4,5,3,7,7,7,1), f"current research map hierarchy/latest-literature boundary layer is incomplete: {research_map}")
+        require((research_map["chapters"],research_map["toc2"],research_map["bridgeLinks"],research_map["categories"],research_map["overviewCards"],research_map["externalDensityRows"],research_map["frontierBoundaries"],research_map["graphAppendix"]) == (4,5,3,7,7,6,7,1), f"current research map hierarchy/coverage-density/latest-literature layers are incomplete: {research_map}")
         require(all(marker in research_map["text"] for marker in ("最新文献把边界推到哪里","HarnessBank","RoMeRL","Who Grades the Grader?","EmbodiSkill","Robo-Cortex","SpaceMind","不自动改变 ResearchItem")), f"authenticated S2 boundary interpretation is missing from the current research map: {research_map}")
         require(research_map["controlBoard"] == 1 and research_map["controlRows"] == 5 and set(research_map["controlCodes"]) == {"E-7","G-1","A-3","B-2","B-3","E-1"} and research_map["controlHighlights"] >= 3, f"current research map must begin with the same six-object action queue as home: {research_map}")
         require(research_map["dashboardSummary"].get("launchable_formal_experiments") == 0 and "research-timeline.html?research=A-3" in research_map["controlLinks"] and "selected-paper.html?paper=STRI" in research_map["controlLinks"], f"research-map control board must preserve zero experiment authority and direct provenance links: {research_map}")
         require(not research_map["pageOverflow"], "current research map causes page-level horizontal overflow")
-        require("现在真正需要盯住的只有 6 个对象" in research_map["text"] and "正式实验权限=0" in research_map["text"] and "领域全景" in research_map["text"] and "研究组合：完整证据" in research_map["text"] and "A–G 快速总览" in research_map["text"] and "完整知识图谱技术结构" in research_map["text"], "current research map reading chain/control-board summary is incomplete")
+        require("现在真正需要盯住的只有 6 个对象" in research_map["text"] and "正式实验权限=0" in research_map["text"] and "领域全景" in research_map["text"] and "研究组合：完整证据" in research_map["text"] and "A–G 快速总览" in research_map["text"] and "把“我们做得多不多”和“外部已经拥不拥挤”分开看" in research_map["text"] and "外部文献更密集" in research_map["text"] and "完整知识图谱技术结构" in research_map["text"], "current research map reading chain/control-board/coverage-density summary is incomplete")
 
         navigate("/paper-ideas.html", 7)
         ensure_language("zh")

@@ -276,6 +276,8 @@ def main() -> None:
         fail("research-map must carry seven bilingual latest-literature boundary notes grounded in the authenticated S2 refresh")
     if "frontierBoundary" not in map_view_source or "ResearchItem scientific state" not in map_view_source:
         fail("latest-literature boundary notes must remain a read-only nearest-work overlay and explicitly preserve ResearchItem authority")
+    if "rpm-external-density" not in map_view_source or "EXTERNAL LITERATURE DENSITY" not in map_view_source or "novelty verdicts" not in map_view_source:
+        fail("research-map coverage chapter must separate internal ResearchItem accumulation from external literature density without treating density as novelty")
     if "row.source_kind!==\"shadow_closed\"" not in map_view_source or "primaryLedger" not in map_view_source or "attentionCard" not in map_view_source or "formalCategoryList" not in map_view_source:
         fail("research-map must list every reader-facing internal research line, expand active/hold evidence, and give the wider literature column a year-grouped formal-paper view")
     directions_scripts = canonical_scripts.get("research-directions.html", [])
