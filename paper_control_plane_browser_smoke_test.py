@@ -137,17 +137,26 @@ def main() -> None:
             const text = strip.children[1]?.textContent || '';
             return actionClasses.find(name => text.includes(name)) || '';
           });
+          const pfActionTexts = [...document.querySelectorAll('.paper-incubation-card .briefing-next')].map(x => x.textContent || '');
+          const supplementalActionTexts = [...document.querySelectorAll('.supplemental-idea-card .briefing-next')].map(x => x.textContent || '');
+          const safetyActionTexts = [...document.querySelectorAll('.agent-safety-briefing .briefing-next, #agent-safety-program .agent-safety-next-gate')].map(x => x.textContent || '');
           return {
             summary: window.RESEARCH_ITEM_STATE?.summary || {},
             e7Action: e7.primary_next_action?.action_class || '',
             paperAction: stri.primary_next_action?.action_class || '',
             parentActionClasses,
+            pfActionTexts,
+            supplementalActionTexts,
+            safetyActionTexts,
             text: document.body.textContent || ''
           };
         """)
         require(ideas["e7Action"] == "PAPERSTATE_HANDOFF" and ideas["paperAction"] == "NO_INTERNAL_ACTION", f"Paper Ideas handoff/internal-closure boundary drifted: {ideas}")
         require("PAPERSTATE_HANDOFF" in ideas["text"] and "NO_INTERNAL_ACTION" in ideas["text"], "Paper Ideas does not expose canonical ResearchItem→PaperState actions")
         require(len(ideas["parentActionClasses"]) == 26 and ideas["parentActionClasses"].count("NO_INTERNAL_ACTION") == 16 and ideas["parentActionClasses"].count("MERGED_NO_STANDALONE_ACTION") == 6 and ideas["parentActionClasses"].count("REOPEN_CONDITION_REQUIRED") == 4, f"Paper Ideas parent cards do not render canonical 16/6/4 actions: {ideas['parentActionClasses']}")
+        require(len(ideas["pfActionTexts"]) == 9 and sum("NO_INTERNAL_ACTION" in text for text in ideas["pfActionTexts"]) == 5 and sum("MERGED_NO_STANDALONE_ACTION" in text for text in ideas["pfActionTexts"]) == 4, f"PF cards must render canonical 5 stopped / 4 merged actions: {ideas['pfActionTexts']}")
+        require(len(ideas["supplementalActionTexts"]) == 7 and all("NO_INTERNAL_ACTION" in text for text in ideas["supplementalActionTexts"]), f"supplemental ResearchItem cards must render canonical NO_INTERNAL_ACTION: {ideas['supplementalActionTexts']}")
+        require(len(ideas["safetyActionTexts"]) >= 2 and all("REOPEN_CONDITION_REQUIRED" in text for text in ideas["safetyActionTexts"]), f"Agent Safety current cards must render canonical REOPEN_CONDITION_REQUIRED: {ideas['safetyActionTexts']}")
         require("下一步只剩人工作者责任确认" not in ideas["text"] and "only human author responsibility/signoff" not in ideas["text"], "Paper Ideas still frames real submission as an internal Research OS next action")
 
         print("PASS")
