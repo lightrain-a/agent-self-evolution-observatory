@@ -705,7 +705,7 @@ def main() -> None:
         expected_registry_ids={"STRI","AGENT-SAFETY-R9","D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE","D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK","D2-PAPER-FAILURE-MEMORY-PROVENANCE"}
         require(selected["paperRegistrySummary"] == expected_registry_summary and selected["paperRegistrySummary"].get("scientific_holds") == 0 and selected["paperRegistryPanel"] == 1 and selected["paperRegistryCards"] == len(expected_registry_ids) and set(selected["paperRegistryIds"]) == expected_registry_ids and selected["paperRegistryStages"] == expected_registry_stages, f"PaperRegistry summary/UI is missing or stale relative to the current generated projection: {selected}")
         require(selected["noveltyPortfolio"] == 1 and selected["noveltyDetails"] == 5 and selected["noveltyDims"] == 25 and selected["noveltyNearest"] == 17 and selected["noveltyAdvisorQuestions"] == 5 and set(selected["noveltyIds"]) == expected_registry_ids, f"advisor novelty audit must cover all five PaperStates with five-dimensional comparisons and nearest work: {selected}")
-        require(all(marker in selected["noveltyText"] for marker in ("4.5/5","Memory Reward Inflation","Remembering More, Risking More","Not All Skills Help","Memory Provenance Laundering","希望师兄判断","建议下一步","只读文献 overlay")), f"advisor novelty audit is missing decision-critical nearest-work or action markers: {selected['noveltyText'][:1800]}")
+        require(all(marker in selected["noveltyText"] for marker in ("4.5/5","Memory Reward Inflation","Remembering More, Risking More","Not All Skills Help","Memory Provenance Laundering","需要判断","建议下一步","只读文献 overlay")), f"paper novelty audit is missing decision-critical nearest-work or action markers: {selected['noveltyText'][:1800]}")
         require(selected["paperRegistrySummary"].get("submission_ready") == 5 and selected["paperRegistrySummary"].get("gate_clean_submission_ready") == 4 and selected["paperRegistrySummary"].get("paper_preparation_failed") == 1 and selected["paperRegistrySummary"].get("immediate_submission_holds") == 1 and selected["paperRegistryGateClean"].get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK") == "false" and selected["paperRegistryGateClean"].get("D2-PAPER-FAILURE-MEMORY-PROVENANCE") == "true" and (selected["temporalPaper"].get("latest_paper_preparation") or {}).get("pass") is False and (selected["temporalPaper"].get("submission_readiness_context") or {}).get("support_blocker") == "TIMESAGE_EVALUATED_FIRST_PARTY_ASSETS_NOT_PUBLIC" and selected["failureMemoryPaper"].get("active_unrefuted_claims") == 2, f"PaperRegistry effective readiness boundary is missing or stale: {selected}")
         require(selected["currentPaper"].get("paper_id") == "STRI" and selected["currentPaper"].get("source_research_item") == "E-7" and selected["currentPaper"].get("paper_stage") == "SUBMISSION_READY" and selected["currentPaper"].get("scientific_status") == "READY" and selected["currentPaper"].get("submission_ready") is True and selected["currentPaper"].get("paper_quality_v2_passed") is True and selected["currentPaper"].get("paper_quality_content_addressed_completion") is True and selected["currentPaper"].get("paper_quality_content_addressed_files") == 29 and selected["currentPaper"].get("paper_quality_evidence_debt") == 0 and (selected["currentPaper"].get("qa_passed"),selected["currentPaper"].get("qa_total")) == (60,60) and (selected["currentPaper"].get("official_qa_passed"),selected["currentPaper"].get("official_qa_total")) == (60,60) and selected["currentPaper"].get("paper_quality_schema_version") == "2.1" and selected["currentPaper"].get("paper_quality_main_visualizations") == 4 and selected["currentPaper"].get("paper_visual_figure_qa") == "PASS" and selected["currentPaper"].get("supplement_unit_tests") == "29/29 PASS" and selected["currentPaper"].get("official_source_conflict") is False and selected["currentPaper"].get("deadline_status") == "AUTHOR_SUBMISSION_SOURCES_ALIGNED" and (selected["currentPaper"].get("latest_story_search") or {}).get("pass") is True and bool((selected["currentPaper"].get("mock_pc_modes") or {}).get("BLIND_MANUSCRIPT")) and bool((selected["currentPaper"].get("mock_pc_modes") or {}).get("ARTIFACT_AWARE")) and (selected["currentPaper"].get("latest_claim_audit") or {}).get("pass") is True and (selected["currentPaper"].get("latest_manuscript_ci") or {}).get("pass") is True and ((selected["currentPaper"].get("latest_manuscript_ci") or {}).get("passed"),(selected["currentPaper"].get("latest_manuscript_ci") or {}).get("required")) == (9,9) and (selected["currentPaper"].get("latest_prebuttal") or {}).get("pass") is True and (selected["currentPaper"].get("latest_prebuttal") or {}).get("decision_critical") == 10 and (selected["currentPaper"].get("latest_submission_readiness") or {}).get("submission_ready") is True and (selected["currentPaper"].get("latest_transition") or {}).get("from") == "PREBUTTAL" and (selected["currentPaper"].get("latest_transition") or {}).get("to") == "SUBMISSION_READY" and (selected["currentPaper"].get("authority") or {}).get("submission") is False and selected["currentStatus"].get("paper_ready") == 1, f"selected-paper current STRI projection is stale: {selected}")
         safety_paper=selected["agentSafetyPaper"]
@@ -755,18 +755,35 @@ def main() -> None:
         evaluation_zh = execute(session_id, "return document.body.textContent || ''")
         require(all(marker in evaluation_zh for marker in ("初始化","提出更新","部署使用","运行脚手架（Harness）基线","谱系组合遗憾（regret）")), "Evaluation lifecycle terminology is not Chinese-first")
 
-        # Site-wide Chinese/readability contract: all 11 canonical pages use an H2/H3-only
-        # sidebar hierarchy, readable direct text, and no ordinary English prose mixed into
-        # Chinese explanatory nodes. Machine IDs, paper/model names, metrics, and status enums
-        # remain intentionally untouched.
+        # Site-wide navigation/readability contract: every canonical page must use the same
+        # global language state and the exact same left navigation labels. Literature stays
+        # expanded everywhere so readers can jump to the bibliography without another click.
         canonical_frontend_pages = (
             "/index.html", "/foundations.html", "/mechanisms.html", "/domains.html", "/evaluation.html",
-            "/system-overview.html", "/research-directions.html", "/paper-ideas.html", "/experiments.html",
-            "/selected-paper.html", "/bibliography.html",
+            "/system-overview.html", "/research-map.html", "/research-timeline.html", "/research-directions.html",
+            "/paper-ideas.html", "/experiments.html", "/selected-paper.html", "/bibliography.html",
         )
+        execute(session_id, "localStorage.setItem('agent-evolution-language','zh');")
         request("POST", f"/session/{session_id}/window/rect", {"width": 1440, "height": 1000, "x": 0, "y": 0})
+        sidebar_signature = None
         for frontend_page in canonical_frontend_pages:
             navigate(frontend_page, 2)
+            nav_contract = execute(session_id, """const groups=[...document.querySelectorAll('.sidebar .nav > details.nav-group')].map(d=>({
+                title:(d.querySelector('summary span')?.textContent||'').trim(),
+                open:d.open,
+                links:[...d.querySelectorAll('a.nav-level2')].map(a=>[(a.textContent||'').trim(),a.getAttribute('href')||''])
+              }));
+              const literature=groups.find(g=>g.links.some(x=>x[1]==='bibliography.html'))||null;
+              return {lang:document.documentElement.lang,groups,literatureOpen:!!literature?.open,roleTerm:(document.body.textContent||'').includes('师兄')};""")
+            require(nav_contract["lang"] == "zh-CN", f"{frontend_page} did not honor the shared Chinese sidebar language state: {nav_contract}")
+            require(nav_contract["literatureOpen"], f"{frontend_page} must keep the Literature navigation group expanded")
+            require(not nav_contract["roleTerm"], f"{frontend_page} still renders a role-specific decision label")
+            require([group["title"] for group in nav_contract["groups"]] == ["开始阅读","领域图谱","当前科研","文献"], f"{frontend_page} sidebar group names drifted: {nav_contract['groups']}")
+            current_signature = [(group["title"], tuple(tuple(link) for link in group["links"])) for group in nav_contract["groups"]]
+            if sidebar_signature is None:
+                sidebar_signature = current_signature
+            else:
+                require(current_signature == sidebar_signature, f"{frontend_page} sidebar labels/targets differ from the canonical navigation: {current_signature}")
             site_readability = execute(session_id, """document.querySelectorAll('#dynamic-page details').forEach(x=>x.open=true);
               const visible=e=>{const s=getComputedStyle(e),r=e.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&Number(s.opacity)>0&&r.width>0&&r.height>0};
               const own=e=>[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent.trim()).filter(Boolean).join(' ');

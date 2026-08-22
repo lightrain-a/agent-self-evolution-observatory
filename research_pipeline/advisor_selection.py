@@ -156,7 +156,7 @@ def write_advisor_selection(json_path: Path = DEFAULT_JSON, js_path: Path = DEFA
         raw_priority = public_meta.pop("primary_shortlist", public_meta.get("priority_first_read", []))
         public_meta["priority_first_read"] = raw_priority
         public_meta["interpretation"] = "All 22 strict R2 PASS ideas remain in the formal senior-discussion pool. priority_first_read is only a navigation aid and does not remove the other ideas."
-        public_meta["interpretation_zh"] = "22 个严格 R2 PASS 全部保留在正式师兄讨论池中；priority_first_read 只是优先阅读建议，不会移除其他 Idea。"
+        public_meta["interpretation_zh"] = "22 个严格 R2 PASS 全部保留在正式讨论池中；priority_first_read 只是优先阅读建议，不会移除其他 Idea。"
         public_meta["portfolio_comment"] = "The meta-review ranks all 22 formal discussion candidates and suggests eight first reads to reduce review effort; it does not reduce the discussion pool."
         public_meta["portfolio_comment_zh"] = "元审查对全部 22 个正式讨论候选做相对排序，并建议 8 个优先阅读方向以降低浏览成本；它不会把讨论池缩减到 8 个。"
         DEFAULT_REVIEW_JSON.write_text(json.dumps(public_meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

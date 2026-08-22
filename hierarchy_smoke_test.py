@@ -36,7 +36,7 @@ EXPECTATIONS = {
     "paper-ideas": (0, 2, 9, 0),
     "experiments": (3, 4, 3, 0),
     "selected-paper": (4, 5, 22, 0),
-    "bibliography": (5, 6, 8, 0),
+    "bibliography": (6, 7, 8, 0),
 }
 
 
@@ -154,6 +154,10 @@ def main() -> None:
             raise RuntimeError(f"unable to create browser session after retries: {last_session_error}")
 
         base = f"http://127.0.0.1:{HTTP_PORT}"
+        request("POST", f"/session/{session_id}/url", {"url": f"{base}/index.html"})
+        time.sleep(0.5)
+        execute(session_id, "localStorage.setItem('agent-evolution-language','zh'); return true;")
+        sidebar_signature = None
         for page, expected in EXPECTATIONS.items():
             request(
                 "POST",
@@ -177,6 +181,20 @@ def main() -> None:
                 time.sleep(0.5)
             if actual != expected:
                 raise AssertionError(f"{page}: expected chapters/toc={expected}, got {actual}")
+            nav_contract = execute(session_id, """const groups=[...document.querySelectorAll('.sidebar .nav > details.nav-group')].map(d=>({title:(d.querySelector('summary span')?.textContent||'').trim(),open:d.open,links:[...d.querySelectorAll('a.nav-level2')].map(a=>[(a.textContent||'').trim(),a.getAttribute('href')||''])})); const literature=groups.find(g=>g.links.some(x=>x[1]==='bibliography.html'))||null; return {lang:document.documentElement.lang,groups,literatureOpen:!!literature?.open,roleTerm:(document.body.textContent||'').includes('师兄')};""")
+            if nav_contract.get("lang") != "zh-CN":
+                raise AssertionError(f"{page}: shared sidebar language state drifted: {nav_contract}")
+            if [group.get("title") for group in nav_contract.get("groups", [])] != ["开始阅读", "领域图谱", "当前科研", "文献"]:
+                raise AssertionError(f"{page}: sidebar group names drifted: {nav_contract}")
+            if not nav_contract.get("literatureOpen"):
+                raise AssertionError(f"{page}: Literature navigation group must remain default-open")
+            if nav_contract.get("roleTerm"):
+                raise AssertionError(f"{page}: public page still renders the forbidden role-specific label")
+            current_sidebar = tuple((group.get("title"), tuple(tuple(link) for link in group.get("links", []))) for group in nav_contract.get("groups", []))
+            if sidebar_signature is None:
+                sidebar_signature = current_sidebar
+            elif current_sidebar != sidebar_signature:
+                raise AssertionError(f"{page}: sidebar labels/targets differ from the canonical navigation: {current_sidebar}")
             if page not in {"paper-ideas", "selected-paper", "research-timeline", "research-map"} and 'id="page-framework"' not in dom:
                 raise AssertionError(f"{page}: page framework overview is missing")
             if page == "research-map":

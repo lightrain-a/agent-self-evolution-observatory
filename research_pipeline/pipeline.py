@@ -275,7 +275,7 @@ def build_snapshot(
     funnel = [
         FunnelStage("formulations", text("Candidate formulations", "候选表述"), raw_count, text("Generated or manually proposed formulations before collision, identifiability, and experiment checks.", "在文献碰撞、可识别性和实验检查前生成或人工提出的表述。")),
         FunnelStage("retained", text("Structurally complete ideas", "结构完整 Idea"), retained_count, text("Ideas with a problem, mechanism, rationale, method logic, importance, advantage, and Go/Stop experiment.", "具有问题、机制、依据、方法逻辑、重要性、优势和 Go／Stop 实验的 Idea。")),
-        FunnelStage("final-advisor-pool", text("Final advisor discussion pool", "最终师兄讨论池"), final_discussion_count, text("Current R3.1/R3.2 ideas that passed two independent reviewers plus the fresh primary-source collision gate; no shortlist or priority ranking is applied.", "当前 R3.1/R3.2 版本中，通过两位独立 reviewer 与最新 primary-source 碰撞门槛的 Idea；不再施加 shortlist 或优先级排序。")),
+        FunnelStage("final-advisor-pool", text("Final advisor discussion pool", "最终讨论池"), final_discussion_count, text("Current R3.1/R3.2 ideas that passed two independent reviewers plus the fresh primary-source collision gate; no shortlist or priority ranking is applied.", "当前 R3.1/R3.2 版本中，通过两位独立 reviewer 与最新 primary-source 碰撞门槛的 Idea；不再施加 shortlist 或优先级排序。")),
         FunnelStage("pilot", text("Selected / pilot stage", "已选／Pilot 阶段"), pilot_count, text("Candidates with a bounded falsification experiment and an explicit resource decision.", "具有有界证伪实验和明确资源决策的候选。")),
     ]
 
@@ -288,7 +288,7 @@ def build_snapshot(
         generation_operators=operator_specs(),
         reviewer_roles=reviewer_specs(),
         warnings=[
-            text("Legacy decimal scores and historical shortlist stages are preserved only for traceability; the current advisor pool is defined exclusively by the calculable FINAL gate.", "旧小数分数与历史 shortlist 阶段仅用于追溯；当前师兄讨论池只由可计算的 FINAL 门槛定义。"),
+            text("Legacy decimal scores and historical shortlist stages are preserved only for traceability; the current advisor pool is defined exclusively by the calculable FINAL gate.", "旧小数分数与历史 shortlist 阶段仅用于追溯；当前讨论池只由可计算的 FINAL 门槛定义。"),
             text("Direction-level literature anchors are not sufficient to claim novelty. Exact idea-level collision checks remain mandatory.", "方向级文献锚点不足以声称新颖性；仍必须执行 Idea 级精确碰撞检查。"),
             text(
                 "Semantic Scholar nearest-work matches are retrieval aids, not automatic novelty judgments; every claimed difference still requires paper-level verification.",

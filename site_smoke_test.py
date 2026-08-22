@@ -318,8 +318,8 @@ def main() -> None:
         if marker not in novelty_source:
             fail(f"paper novelty audit is missing nearest-work evidence: {marker}")
     current_view_source = (ROOT / "current-research-status-view.js").read_text(encoding="utf-8")
-    if "paper-novelty-portfolio" not in current_view_source or "paper-novelty-detail" not in current_view_source or "Advisor decision" not in current_view_source:
-        fail("selected-paper must render both portfolio-level and per-paper advisor novelty decisions")
+    if "paper-novelty-portfolio" not in current_view_source or "paper-novelty-detail" not in current_view_source or "Decision needed" not in current_view_source:
+        fail("selected-paper must render both portfolio-level and per-paper novelty decisions")
 
     stale_markers = (
         "Selected ICLR Paper Workspace", "选中 ICLR 论文工作区",
@@ -962,6 +962,24 @@ def main() -> None:
     for marker in ["sortBibliographyRecords", "publicationTier", "readingRoleInfo", "renderRecommendedPaperGroups", "bibliography-sort", "citation-ranking-status", "citationCount"]:
         if marker not in app_text:
             fail(f"literature ranking implementation is missing {marker}")
+
+    literature_nav = re.search(r'\{ title:\{en:"Literature",zh:"文献"\}, open:true, pages:\[(.*?)\]\}', data_text, re.DOTALL)
+    if not literature_nav or '"bibliography.html",{en:"Literature Library · Spine & Research Gaps",zh:"文献库 · 主线与研究空白"}' not in literature_nav.group(1):
+        fail("Literature navigation must be default-open and use the canonical bibliography label")
+    if '"selected-paper.html",{en:"Papers · PaperRegistry",zh:"论文 · PaperRegistry"}' not in data_text:
+        fail("PaperRegistry navigation label must be canonical in both languages")
+    if 'const LANGUAGE_STORAGE_KEY = "agent-evolution-language";' not in app_text or 'localStorage.setItem(LANGUAGE_STORAGE_KEY, language);' not in app_text or "scopedLanguageKey" in app_text:
+        fail("all canonical pages must share one sidebar language state instead of page-scoped navigation language")
+
+    public_role_assets = [
+        *(ROOT / name for name in CANONICAL_PAGES),
+        *ROOT.glob("*.js"),
+        *(ROOT / "generated").glob("*.js"),
+        *(ROOT / "generated").glob("*.json"),
+    ]
+    role_term_leaks = [str(path.relative_to(ROOT)) for path in public_role_assets if path.is_file() and "师兄" in path.read_text(encoding="utf-8", errors="ignore")]
+    if role_term_leaks:
+        fail(f"public pages/assets must use role-neutral decision language; residual role term found in: {role_term_leaks[:12]}")
 
     nav_targets = sorted(set(re.findall(r'\["([a-z0-9-]+\.html)"', data_text.split("window.SUPPLEMENTAL_PAPERS", 1)[0])))
     expected_nav = set(CANONICAL_PAGES) - {"experiments.html"}

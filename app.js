@@ -30,11 +30,11 @@ const pageId = document.body.dataset.page || "home";
 const NAVIGATION_TYPE = performance.getEntriesByType?.("navigation")?.[0]?.type || "navigate";
 if (pageId === "paper-ideas" && "scrollRestoration" in history) history.scrollRestoration = "manual";
 const initialQuery = new URLSearchParams(location.search);
-const SCOPED_LANGUAGE_KEYS = {"research-timeline":"research-timeline-language","research-map":"research-map-language","research-directions":"research-directions-language"};
-const scopedLanguageKey = SCOPED_LANGUAGE_KEYS[pageId] || "";
-let language = scopedLanguageKey
-  ? (localStorage.getItem(scopedLanguageKey) || "zh")
-  : (localStorage.getItem("agent-evolution-language") || "en");
+const LANGUAGE_STORAGE_KEY = "agent-evolution-language";
+const LEGACY_SCOPED_LANGUAGE_KEYS = {"research-timeline":"research-timeline-language","research-map":"research-map-language","research-directions":"research-directions-language"};
+const legacyScopedLanguage = localStorage.getItem(LEGACY_SCOPED_LANGUAGE_KEYS[pageId] || "") || "";
+let language = localStorage.getItem(LANGUAGE_STORAGE_KEY) || legacyScopedLanguage || "en";
+if (!localStorage.getItem(LANGUAGE_STORAGE_KEY) && legacyScopedLanguage) localStorage.setItem(LANGUAGE_STORAGE_KEY, legacyScopedLanguage);
 let catalog = [];
 let activeFilter = initialQuery.get("method") || "all";
 let activeYear = initialQuery.get("year") || "all";
@@ -785,7 +785,7 @@ function setLanguage(next) {
   const oldHeight = Math.max(document.documentElement.scrollHeight, 1);
   const ratio = window.scrollY / oldHeight;
   language = next;
-  localStorage.setItem(scopedLanguageKey || "agent-evolution-language", language);
+  localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
   syncShellLanguage();
   renderPage();
   requestAnimationFrame(() => window.scrollTo(0, ratio * document.documentElement.scrollHeight));
@@ -1685,7 +1685,7 @@ function renderAdvisorBoard(ideas) {
     ["review",language === "zh" ? "待 Reviewer 判断" : "Reviewer check"],
     ["visual",language === "zh" ? "CVPR 后续视觉方向" : "CVPR visual follow-up"],
   ];
-  return `<section class="panel advisor-board"><div class="idea-panel-heading"><div><h3 id="advisor-comparison-board">${language === "zh" ? "师兄与老师横向决策板" : "Advisor comparison board"}</h3><p class="section-intro">${language === "zh" ? "先横向比较问题、机制、优势和决定性证据，再打开下方完整论证卡。这里的阶段是资源决策，不是论文质量结论。" : "Compare the problem, mechanism, advantage, and decisive evidence first, then open the full dossiers below. Stages are resource decisions, not paper-quality claims."}</p></div><strong>${ideas.length} ${language === "zh" ? "个优先候选" : "priority candidates"}</strong></div><div class="idea-board-filters">${filters.map(([key,label],index) => `<button class="idea-board-filter ${index === 0 ? "active" : ""}" data-idea-filter="${key}">${label}</button>`).join("")}</div>${renderAdvisorDecisionTable(ideas)}${(meta.warnings || []).map((warning) => `<div class="idea-board-warning">${textOf(warning)}</div>`).join("")}</section>`;
+  return `<section class="panel advisor-board"><div class="idea-panel-heading"><div><h3 id="advisor-comparison-board">${language === "zh" ? "研究方向横向决策板" : "Advisor comparison board"}</h3><p class="section-intro">${language === "zh" ? "先横向比较问题、机制、优势和决定性证据，再打开下方完整论证卡。这里的阶段是资源决策，不是论文质量结论。" : "Compare the problem, mechanism, advantage, and decisive evidence first, then open the full dossiers below. Stages are resource decisions, not paper-quality claims."}</p></div><strong>${ideas.length} ${language === "zh" ? "个优先候选" : "priority candidates"}</strong></div><div class="idea-board-filters">${filters.map(([key,label],index) => `<button class="idea-board-filter ${index === 0 ? "active" : ""}" data-idea-filter="${key}">${label}</button>`).join("")}</div>${renderAdvisorDecisionTable(ideas)}${(meta.warnings || []).map((warning) => `<div class="idea-board-warning">${textOf(warning)}</div>`).join("")}</section>`;
 }
 function renderAdvisorDossier(idea, index) {
   const direction = directionById(idea.directionId);

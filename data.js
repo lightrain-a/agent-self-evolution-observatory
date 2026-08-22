@@ -14,10 +14,10 @@ window.NAV_GROUPS = [
     ["paper-ideas.html",{en:"Research Portfolio · ResearchItems",zh:"研究组合 · ResearchItems"}],
     ["research-timeline.html",{en:"Research Timeline",zh:"研究时间轴"}],
     ["system-overview.html",{en:"Research System",zh:"科研系统"}],
-    ["selected-paper.html",{en:"Papers · Registry",zh:"论文 · PaperRegistry"}],
+    ["selected-paper.html",{en:"Papers · PaperRegistry",zh:"论文 · PaperRegistry"}],
   ]},
-  { title:{en:"Literature",zh:"文献"}, pages:[
-    ["bibliography.html",{en:"Literature Library · Spine & Idea Gaps",zh:"文献库 · 主线与研究空白"}],
+  { title:{en:"Literature",zh:"文献"}, open:true, pages:[
+    ["bibliography.html",{en:"Literature Library · Spine & Research Gaps",zh:"文献库 · 主线与研究空白"}],
   ]},
 ];
 

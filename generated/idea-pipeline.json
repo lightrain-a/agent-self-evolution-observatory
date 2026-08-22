@@ -32,7 +32,7 @@
       "key": "final-advisor-pool",
       "label": {
         "en": "Final advisor discussion pool",
-        "zh": "最终师兄讨论池"
+        "zh": "最终讨论池"
       },
       "count": 20,
       "description": {
@@ -10804,7 +10804,7 @@
   "warnings": [
     {
       "en": "Legacy decimal scores and historical shortlist stages are preserved only for traceability; the current advisor pool is defined exclusively by the calculable FINAL gate.",
-      "zh": "旧小数分数与历史 shortlist 阶段仅用于追溯；当前师兄讨论池只由可计算的 FINAL 门槛定义。"
+      "zh": "旧小数分数与历史 shortlist 阶段仅用于追溯；当前讨论池只由可计算的 FINAL 门槛定义。"
     },
     {
       "en": "Direction-level literature anchors are not sufficient to claim novelty. Exact idea-level collision checks remain mandatory.",
