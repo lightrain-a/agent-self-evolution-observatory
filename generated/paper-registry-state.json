@@ -70,6 +70,10 @@
     "reopen_experiment_lease_active_run_not_started": 0,
     "reopen_experiment_lease_stale_or_released": 0,
     "reopen_experiment_lease_invalid": 0,
+    "reopen_local_f0_run_start_required": 0,
+    "reopen_local_f0_run_active": 0,
+    "reopen_local_f0_run_stale_or_released": 0,
+    "reopen_local_f0_run_invalid": 0,
     "scientific_reopen_invalid": 0
   },
   "papers": [
@@ -473,6 +477,27 @@
               "gpu": false,
               "scientific": false,
               "p0": false,
+              "submission": false
+            }
+          },
+          "local_f0_run": {
+            "status": "REOPEN_LOCAL_F0_RUN_START_REQUIRED",
+            "contract_id": "",
+            "run_start_sha256": "",
+            "run_id": "",
+            "model_name": "",
+            "model_revision": "",
+            "server_gpu_binding_sha256": "",
+            "gpu_lease_id": "",
+            "experiment_authority_active": false,
+            "resource_lease_active": false,
+            "execution_started": false,
+            "model_loaded": false,
+            "gpu_allocated": false,
+            "authority": {
+              "scientific": false,
+              "p0": false,
+              "full_experiment": false,
               "submission": false
             }
           }
@@ -910,6 +935,27 @@
               "p0": false,
               "submission": false
             }
+          },
+          "local_f0_run": {
+            "status": "REOPEN_LOCAL_F0_RUN_START_REQUIRED",
+            "contract_id": "",
+            "run_start_sha256": "",
+            "run_id": "",
+            "model_name": "",
+            "model_revision": "",
+            "server_gpu_binding_sha256": "",
+            "gpu_lease_id": "",
+            "experiment_authority_active": false,
+            "resource_lease_active": false,
+            "execution_started": false,
+            "model_loaded": false,
+            "gpu_allocated": false,
+            "authority": {
+              "scientific": false,
+              "p0": false,
+              "full_experiment": false,
+              "submission": false
+            }
           }
         }
       },
@@ -1345,6 +1391,27 @@
               "p0": false,
               "submission": false
             }
+          },
+          "local_f0_run": {
+            "status": "REOPEN_LOCAL_F0_RUN_START_REQUIRED",
+            "contract_id": "",
+            "run_start_sha256": "",
+            "run_id": "",
+            "model_name": "",
+            "model_revision": "",
+            "server_gpu_binding_sha256": "",
+            "gpu_lease_id": "",
+            "experiment_authority_active": false,
+            "resource_lease_active": false,
+            "execution_started": false,
+            "model_loaded": false,
+            "gpu_allocated": false,
+            "authority": {
+              "scientific": false,
+              "p0": false,
+              "full_experiment": false,
+              "submission": false
+            }
           }
         }
       },
@@ -1777,6 +1844,27 @@
               "p0": false,
               "submission": false
             }
+          },
+          "local_f0_run": {
+            "status": "REOPEN_LOCAL_F0_RUN_START_REQUIRED",
+            "contract_id": "",
+            "run_start_sha256": "",
+            "run_id": "",
+            "model_name": "",
+            "model_revision": "",
+            "server_gpu_binding_sha256": "",
+            "gpu_lease_id": "",
+            "experiment_authority_active": false,
+            "resource_lease_active": false,
+            "execution_started": false,
+            "model_loaded": false,
+            "gpu_allocated": false,
+            "authority": {
+              "scientific": false,
+              "p0": false,
+              "full_experiment": false,
+              "submission": false
+            }
           }
         }
       },
@@ -2206,6 +2294,27 @@
               "p0": false,
               "submission": false
             }
+          },
+          "local_f0_run": {
+            "status": "REOPEN_LOCAL_F0_RUN_START_REQUIRED",
+            "contract_id": "",
+            "run_start_sha256": "",
+            "run_id": "",
+            "model_name": "",
+            "model_revision": "",
+            "server_gpu_binding_sha256": "",
+            "gpu_lease_id": "",
+            "experiment_authority_active": false,
+            "resource_lease_active": false,
+            "execution_started": false,
+            "model_loaded": false,
+            "gpu_allocated": false,
+            "authority": {
+              "scientific": false,
+              "p0": false,
+              "full_experiment": false,
+              "submission": false
+            }
           }
         }
       },
@@ -2234,5 +2343,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "7a2d591051d08595c02c96b6c6de19d2c7b8693f7a4cfd043338ba2f8f7c57cc"
+  "projection_sha256": "5c3a9002777d1735031084f82e09c1494c9a790cf7c3c8f0944aa667a25009b1"
 }

@@ -27,6 +27,7 @@ from .reopened_local_validation_authorization import public_local_validation_aut
 from .reopened_pre_experiment_adapter import public_reopened_pre_experiment
 from .reopened_experiment_lease_request import public_experiment_lease_request
 from .reopened_experiment_lease import public_reopened_experiment_lease
+from .reopened_local_f0_run import public_reopened_local_f0_run
 
 DEFAULT_ROOT = Path('/data/wyt/agent-self-evolution-observatory')
 
@@ -360,7 +361,7 @@ def scientific_reopen_state(root: Path, paper_id: str, attempt: Mapping[str, Any
         'new_experiment_authorized': False,
         'gpu_execution_authorized': False,
         'validation_errors': [],
-        'new_contract': {**public_reopened_contract_summary({}), 'problem_gate': public_reopen_problem_gate_summary({}), 'method_design': public_reopen_method_summary(Path('/nonexistent'), ''), 'experiment_blueprint': public_reopen_blueprint_summary(Path('/nonexistent'), ''), 'local_validation_authorization': public_local_validation_authorization(Path('/nonexistent'), ''), 'pre_experiment': public_reopened_pre_experiment(Path('/nonexistent'), ''), 'experiment_lease_request': public_experiment_lease_request(Path('/nonexistent'), ''), 'experiment_lease': public_reopened_experiment_lease(Path('/nonexistent'), '')},
+        'new_contract': {**public_reopened_contract_summary({}), 'problem_gate': public_reopen_problem_gate_summary({}), 'method_design': public_reopen_method_summary(Path('/nonexistent'), ''), 'experiment_blueprint': public_reopen_blueprint_summary(Path('/nonexistent'), ''), 'local_validation_authorization': public_local_validation_authorization(Path('/nonexistent'), ''), 'pre_experiment': public_reopened_pre_experiment(Path('/nonexistent'), ''), 'experiment_lease_request': public_experiment_lease_request(Path('/nonexistent'), ''), 'experiment_lease': public_reopened_experiment_lease(Path('/nonexistent'), ''), 'local_f0_run': public_reopened_local_f0_run(Path('/nonexistent'), '')},
     }
     if attempt.get('requires_explicit_scientific_reopen') is not True:
         return empty
@@ -392,13 +393,17 @@ def scientific_reopen_state(root: Path, paper_id: str, attempt: Mapping[str, Any
             pre_experiment_summary = public_reopened_pre_experiment(root / 'scientific-contract-pre-experiment', str(contract_summary.get('contract_id') or '')) if local_auth_summary.get('status') == 'LOCAL_VALIDATION_AUTHORIZED_PRE_EXPERIMENT_COMPILER_REQUIRED' else public_reopened_pre_experiment(Path('/nonexistent'), '')
             lease_request_summary = public_experiment_lease_request(root / 'scientific-contract-experiment-lease-requests', str(contract_summary.get('contract_id') or '')) if pre_experiment_summary.get('status') == 'PRE_EXPERIMENT_COMPILER_PASS_EXPERIMENT_LEASE_REQUIRED' else public_experiment_lease_request(Path('/nonexistent'), '')
             lease_summary = public_reopened_experiment_lease(root / 'scientific-contract-experiment-leases', str(contract_summary.get('contract_id') or ''), authority_root=root) if lease_request_summary.get('status') == 'EXPERIMENT_LEASE_REQUEST_READY_EXPLICIT_ACQUIRE_REQUIRED' else public_reopened_experiment_lease(Path('/nonexistent'), '')
-            contract_summary = {**contract_summary, 'problem_gate': gate_summary, 'method_design': method_summary, 'experiment_blueprint': blueprint_summary, 'local_validation_authorization': local_auth_summary, 'pre_experiment': pre_experiment_summary, 'experiment_lease_request': lease_request_summary, 'experiment_lease': lease_summary}
+            run_summary = public_reopened_local_f0_run(root / 'scientific-contract-run-starts', str(contract_summary.get('contract_id') or ''), resource_root=root, authority_root=root) if lease_summary.get('status') == 'EXPERIMENT_LEASE_ACTIVE_RUN_NOT_STARTED' else public_reopened_local_f0_run(Path('/nonexistent'), '')
+            contract_summary = {**contract_summary, 'problem_gate': gate_summary, 'method_design': method_summary, 'experiment_blueprint': blueprint_summary, 'local_validation_authorization': local_auth_summary, 'pre_experiment': pre_experiment_summary, 'experiment_lease_request': lease_request_summary, 'experiment_lease': lease_summary, 'local_f0_run': run_summary}
             if gate_summary['status'] == 'REOPEN_PROBLEM_GATE_REQUIRED':
                 projected['status'] = 'NEW_SCIENTIFIC_CONTRACT_CREATED_PROBLEM_GATE_REQUIRED'
             elif gate_summary['status'] == 'REOPEN_PROBLEM_GATE_PASS_METHOD_DESIGN_REVIEW_ELIGIBLE':
                 if method_summary.get('status') == 'REOPEN_METHOD_REVIEW_PASS_BLUEPRINT_DESIGN_ELIGIBLE':
                     if pre_experiment_summary.get('status') == 'PRE_EXPERIMENT_COMPILER_PASS_EXPERIMENT_LEASE_REQUIRED':
-                        projected['status'] = lease_summary.get('status') if lease_summary.get('status') != 'EXPERIMENT_LEASE_ACQUIRE_REQUIRED' else lease_request_summary.get('status')
+                        if lease_summary.get('status') == 'EXPERIMENT_LEASE_ACTIVE_RUN_NOT_STARTED':
+                            projected['status'] = run_summary.get('status') if run_summary.get('status') != 'REOPEN_LOCAL_F0_RUN_START_REQUIRED' else lease_summary.get('status')
+                        else:
+                            projected['status'] = lease_summary.get('status') if lease_summary.get('status') != 'EXPERIMENT_LEASE_ACQUIRE_REQUIRED' else lease_request_summary.get('status')
                     else:
                         projected['status'] = pre_experiment_summary.get('status') if local_auth_summary.get('status') == 'LOCAL_VALIDATION_AUTHORIZED_PRE_EXPERIMENT_COMPILER_REQUIRED' else (local_auth_summary.get('status') if blueprint_summary.get('status') == 'REOPEN_BLUEPRINT_REVIEW_PASS_LOCAL_VALIDATION_AUTHORIZATION_ELIGIBLE' else blueprint_summary.get('status'))
                 else:
@@ -507,6 +512,12 @@ def project(path: Path, root: Path) -> dict[str, Any]:
                 actions=['the single-writer experiment lease request is ready. A separate explicit executor action must assign run_id/actor, recheck governance stage, and acquire the exact-plan lease before execution']
             elif scientific_reopen['status']=='EXPERIMENT_LEASE_ACTIVE_RUN_NOT_STARTED':
                 actions=['the single-writer experiment lease is active, but the run has not started and no GPU is allocated. Perform an explicit resource/GPU lease and run-start step next; do not treat experiment authority as evidence or P0 authority']
+            elif scientific_reopen['status']=='REOPEN_LOCAL_F0_RUN_STARTED_RESOURCE_LEASE_ACTIVE':
+                actions=['the bounded local-F0 run is operationally started under active experiment and GPU resource leases. Continue only inside the frozen run root/trace policy; run activity itself is not scientific evidence, P0 authority, or a method verdict']
+            elif scientific_reopen['status']=='REOPEN_LOCAL_F0_RUN_RESOURCE_LEASE_STALE_OR_RELEASED':
+                actions=['the local-F0 run-start receipt is historical but its experiment or GPU resource lease is no longer active. Do not continue execution under the stale run; reconcile/close the run before any new execution authority is acquired']
+            elif scientific_reopen['status']=='REOPEN_LOCAL_F0_RUN_LEDGER_INVALID':
+                actions=['the local-F0 run-start ledger is invalid. Stop execution immediately and repair the content-addressed run/resource lineage before interpreting any produced artifact']
             elif scientific_reopen['status']=='EXPERIMENT_LEASE_STALE_OR_RELEASED':
                 actions=['the recorded experiment lease is stale or released. Reacquire a current exact-plan single-writer lease only after rechecking the same frozen runtime/governance lineage; do not start from the stale receipt']
             elif scientific_reopen['status']=='EXPERIMENT_LEASE_LEDGER_INVALID':
@@ -701,7 +712,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
 
 def source_watermark(root: Path) -> str:
     timestamps: list[str] = []
-    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts', root / 'paper-submission-attempt-workflows', root / 'paper-scientific-reopen', root / 'scientific-contracts', root / 'scientific-contract-problem-gates', root / 'scientific-contract-method-design', root / 'scientific-contract-experiment-blueprints', root / 'scientific-contract-local-validation-authority', root / 'scientific-contract-pre-experiment', root / 'scientific-contract-experiment-lease-requests', root / 'scientific-contract-experiment-leases', root / 'experiment-authority'):
+    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts', root / 'paper-submission-attempt-workflows', root / 'paper-scientific-reopen', root / 'scientific-contracts', root / 'scientific-contract-problem-gates', root / 'scientific-contract-method-design', root / 'scientific-contract-experiment-blueprints', root / 'scientific-contract-local-validation-authority', root / 'scientific-contract-pre-experiment', root / 'scientific-contract-experiment-lease-requests', root / 'scientific-contract-experiment-leases', root / 'scientific-contract-run-starts', root / 'experiment-authority', root / 'resource-leases'):
         if not directory.exists():
             continue
         for path in sorted(directory.glob('*.json')):
@@ -796,6 +807,10 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'reopen_experiment_lease_active_run_not_started': sum(p['scientific_reopen_status'] == 'EXPERIMENT_LEASE_ACTIVE_RUN_NOT_STARTED' for p in papers),
             'reopen_experiment_lease_stale_or_released': sum(p['scientific_reopen_status'] == 'EXPERIMENT_LEASE_STALE_OR_RELEASED' for p in papers),
             'reopen_experiment_lease_invalid': sum(p['scientific_reopen_status'] == 'EXPERIMENT_LEASE_LEDGER_INVALID' for p in papers),
+            'reopen_local_f0_run_start_required': sum(p['scientific_reopen_status'] == 'REOPEN_LOCAL_F0_RUN_START_REQUIRED' for p in papers),
+            'reopen_local_f0_run_active': sum(p['scientific_reopen_status'] == 'REOPEN_LOCAL_F0_RUN_STARTED_RESOURCE_LEASE_ACTIVE' for p in papers),
+            'reopen_local_f0_run_stale_or_released': sum(p['scientific_reopen_status'] == 'REOPEN_LOCAL_F0_RUN_RESOURCE_LEASE_STALE_OR_RELEASED' for p in papers),
+            'reopen_local_f0_run_invalid': sum(p['scientific_reopen_status'] == 'REOPEN_LOCAL_F0_RUN_LEDGER_INVALID' for p in papers),
             'scientific_reopen_invalid': sum(p['scientific_reopen_status'] == 'SCIENTIFIC_REOPEN_LEDGER_INVALID' for p in papers),
             'submission_freeze_eligible': sum(p['submission_freeze_eligible'] for p in papers),
             'ledger_replay_failures': sum(not p['ledger_replay_pass'] for p in papers),

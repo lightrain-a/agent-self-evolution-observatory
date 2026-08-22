@@ -35,6 +35,14 @@ class ReopenedExperimentLeaseTest(unittest.TestCase):
             "blockers": [],
             "research_execution_plan": {"plan_hash": "7" * 64},
             "config_hash": "compiler-does-not-own-config-identity",
+            "expected_runtime": {
+                "model_names": list(runtime["models"]),
+                "competence_model_name": str(runtime["models"][0]),
+                "policy_mode": str(runtime["scope"]["policy_mode"]),
+            },
+            "gates": [
+                {"key": "observability_recovery", "pass": True, "detail": dict(runtime["pre_experiment"]["recovery"])},
+            ],
         }
         with patch("research_pipeline.reopened_pre_experiment_adapter.compile_pre_experiment_card", return_value=fake):
             pre = compile_reopened_pre_experiment(
