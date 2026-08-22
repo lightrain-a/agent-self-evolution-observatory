@@ -28,6 +28,7 @@ from .paper_acceptance_ledger import (
     record_manuscript_ci,
     record_mock_review,
     record_paper_preparation,
+    record_frozen_contract_paper_preparation,
     record_prebuttal,
     record_story_search,
     record_submission_readiness,
@@ -216,6 +217,44 @@ class PaperPreparationProtocolTest(unittest.TestCase):
         }
         expected = hashlib.sha256(json.dumps(old_shape, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
         self.assertEqual(paper_contract_digest(contract), expected)
+
+    def test_frozen_legacy_contract_can_append_preparation_without_reserialization(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            paper_id = "LEGACY-PREP"
+            legacy_contract = {
+                "paper_id": paper_id,
+                "title": "Legacy preparation paper",
+                "central_question": "Can frozen legacy identity be preserved?",
+                "supported_claims": {"C1": "Supported."},
+                "unsupported_claims": {},
+                "limitations": [],
+                "reopen_conditions": [],
+                "evidence_refs": ["artifact:evidence"],
+                "scientific_status": "READY",
+                "scientific_authority": False,
+                "experiment_authority": False,
+                "gpu_authority": False,
+            }
+            digest = hashlib.sha256(json.dumps(legacy_contract, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+            directory = root / "paper-acceptance"
+            directory.mkdir(parents=True)
+            (directory / f"{paper_id}.json").write_text(json.dumps({
+                "schema_version": "1.0",
+                "paper_id": paper_id,
+                "contract_sha256": digest,
+                "contract": legacy_contract,
+                "current_state": "PAPER_EVIDENCE",
+                "scientific_status": "READY",
+                "events": [],
+                "authority": {"scientific": False, "experiment": False, "gpu": False, "submission": False},
+            }))
+            row = record_frozen_contract_paper_preparation(root, paper_id, passing_packet())
+            receipt = row["events"][-1]["receipt"]
+            self.assertEqual(receipt["contract_sha256"], digest)
+            self.assertTrue(receipt["pass"])
+            self.assertEqual(row["contract"], legacy_contract)
+            self.assertEqual(validate_paper_ledger(row), [])
 
     def test_opt_in_submission_ready_requires_preparation(self) -> None:
         contract = self.contract(prep=True)

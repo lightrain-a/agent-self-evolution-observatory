@@ -285,6 +285,55 @@ def record_paper_preparation(
     return _append(root, contract, actor, {"event_type": "paper-preparation", "receipt": receipt})
 
 
+def record_frozen_contract_paper_preparation(
+    root: Path,
+    paper_id: str,
+    packet: Mapping[str, Any],
+    actor: str = "legacy-paper-preparation-migration",
+) -> dict[str, Any]:
+    """Append preparation evidence to a legacy ledger without reserializing its contract.
+
+    Older ledgers may predate optional contract fields that current dataclasses emit even
+    when empty. Their byte-level contract identity remains authoritative. This helper
+    verifies that the stored canonical payload still hashes to the recorded digest, then
+    binds the new preparation receipt to that frozen digest. It never changes contract,
+    scientific state, or any authority bit.
+    """
+    path, lock = _paths(root, paper_id)
+    with lock.open("a+", encoding="utf-8") as handle:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+        if not path.exists():
+            raise FileNotFoundError(path)
+        row = json.loads(path.read_text(encoding="utf-8"))
+        digest = str(row.get("contract_sha256") or "")
+        frozen_contract = row.get("contract") or {}
+        if not digest or _digest(frozen_contract) != digest:
+            raise RuntimeError(f"frozen paper contract payload digest mismatch for {paper_id}")
+        if str(row.get("paper_id") or "") != paper_id:
+            raise RuntimeError(f"paper id mismatch for frozen ledger {paper_id}")
+        receipt = build_paper_preparation_receipt(
+            paper_id=paper_id,
+            contract_sha256=digest,
+            packet=packet,
+        )
+        payload = {
+            "event_type": "paper-preparation",
+            "receipt": receipt,
+            "actor": actor,
+            "recorded_at": _now(),
+            "scientific_authority": False,
+            "experiment_authority": False,
+            "gpu_authority": False,
+            "submission_authority": False,
+        }
+        payload["event_id"] = _digest([paper_id, digest, len(row.get("events") or []), payload])[:24]
+        row.setdefault("events", []).append(payload)
+        row["updated_at"] = payload["recorded_at"]
+        _refresh(row)
+        _atomic(path, row)
+        return row
+
+
 def record_submission_readiness(root: Path, contract: PaperContract, actor: str = "submission-readiness") -> dict[str, Any]:
     row = initialize_paper_ledger(root, contract, actor)
     ci = (_latest(row, "manuscript-ci").get("result") or {"pass": False})
