@@ -13,6 +13,7 @@ from .submission_handoff import validate_handoff_ledger, validate_handoff_receip
 from .human_submission_signoff import validate_signoff_ledger, verify_current_signoff
 from .venue_submission_receipt import validate_submission_receipt
 from .revision_impact_audit import audit_freeze_receipt
+from .rebuttal_protocol import validate_rebuttal_receipt, validate_review_set
 
 DEFAULT_ROOT = Path('/data/wyt/agent-self-evolution-observatory')
 
@@ -173,6 +174,52 @@ def human_signoff_state(root: Path, paper_id: str, machine_handoff_status: str) 
     }
 
 
+def review_intake_state(root: Path, paper_id: str, submission_receipt_sha256: str, state: str) -> dict[str, Any]:
+    if state not in {'SUBMITTED', 'REBUTTAL'}:
+        return {'status': 'NOT_ELIGIBLE', 'review_set_sha256': '', 'review_count': 0, 'errors': []}
+    path = root / 'paper-review-intake' / f'{paper_id}.json'
+    if not path.exists():
+        return {'status': 'AWAITING_VENUE_REVIEWS', 'review_set_sha256': '', 'review_count': 0, 'errors': []}
+    try:
+        row = json.loads(path.read_text(encoding='utf-8'))
+    except (OSError, json.JSONDecodeError):
+        return {'status': 'REVIEW_INTAKE_STALE', 'review_set_sha256': '', 'review_count': 0, 'errors': ['review-intake-ledger-unreadable']}
+    event = latest(row, 'review-set')
+    review_set = event.get('review_set') if isinstance(event.get('review_set'), dict) else {}
+    errors=[]
+    if not review_set or not validate_review_set(review_set): errors.append('review-set-invalid')
+    if submission_receipt_sha256 and review_set.get('submission_receipt_sha256') != submission_receipt_sha256: errors.append('review-set-submission-stale')
+    return {
+        'status': 'REVIEW_SET_CURRENT' if not errors else 'REVIEW_INTAKE_STALE',
+        'review_set_sha256': str(review_set.get('review_set_sha256') or ''),
+        'review_count': int(review_set.get('review_count') or 0),
+        'errors': errors,
+    }
+
+
+def rebuttal_state(row: Mapping[str, Any], review_set_sha256: str) -> dict[str, Any]:
+    state=str(row.get('current_state') or '')
+    event=latest(row,'rebuttal-preparation')
+    receipt=event.get('receipt') if isinstance(event.get('receipt'),dict) else {}
+    valid=bool(receipt) and str(receipt.get('contract_sha256') or '')==str(row.get('contract_sha256') or '') and validate_rebuttal_receipt(receipt)
+    errors=[]
+    if receipt and not valid: errors.append('rebuttal-receipt-invalid')
+    if valid and review_set_sha256 and receipt.get('review_set_sha256')!=review_set_sha256: errors.append('rebuttal-review-set-stale')
+    summary=receipt.get('summary') if isinstance(receipt.get('summary'),dict) else {}
+    if state=='REBUTTAL': status='REBUTTAL_ACTIVE' if valid and not errors and receipt.get('pass') is True else 'REBUTTAL_RECEIPT_INVALID'
+    elif state=='SUBMITTED': status='REBUTTAL_PREPARED_TRANSITION_PENDING' if valid and not errors and receipt.get('pass') is True else 'REBUTTAL_PREPARATION_PENDING'
+    else: status='NOT_ELIGIBLE'
+    return {
+        'status':status,'valid':valid and not errors,'errors':errors,
+        'rebuttal_receipt_sha256':str(receipt.get('rebuttal_receipt_sha256') or ''),
+        'review_set_sha256':str(receipt.get('review_set_sha256') or ''),
+        'reviews':int(summary.get('reviews') or 0),'objections':int(summary.get('objections') or 0),
+        'decision_critical':int(summary.get('decision_critical') or 0),
+        'missing_decisive_evidence':int(summary.get('missing_decisive_evidence') or 0),
+        'new_claim_requests':int(summary.get('new_claim_requests') or 0),
+    }
+
+
 def project(path: Path, root: Path) -> dict[str, Any]:
     row = json.loads(path.read_text(encoding='utf-8'))
     paper_id = str(row.get('paper_id') or path.stem)
@@ -222,10 +269,18 @@ def project(path: Path, root: Path) -> dict[str, Any]:
     actual_event = latest(row, 'actual-submission')
     actual_receipt = actual_event.get('receipt') if isinstance(actual_event.get('receipt'), dict) else {}
     actual_valid = bool(actual_receipt) and str(actual_receipt.get('contract_sha256') or '') == recorded and validate_submission_receipt(actual_receipt)
-    actual_submission_status = 'VENUE_SUBMISSION_CONFIRMED' if state == 'SUBMITTED' and actual_valid else ('SUBMITTED_RECEIPT_INVALID' if state == 'SUBMITTED' else ('VENUE_SUBMISSION_RECEIPT_RECORDED_TRANSITION_PENDING' if actual_valid else 'NOT_SUBMITTED'))
+    actual_submission_status = 'VENUE_SUBMISSION_CONFIRMED' if state in {'SUBMITTED','REBUTTAL'} and actual_valid else ('SUBMITTED_RECEIPT_INVALID' if state in {'SUBMITTED','REBUTTAL'} else ('VENUE_SUBMISSION_RECEIPT_RECORDED_TRANSITION_PENDING' if actual_valid else 'NOT_SUBMITTED'))
+    review_intake=review_intake_state(root,paper_id,str(actual_receipt.get('submission_receipt_sha256') or ''),state)
+    rebuttal=rebuttal_state(row,review_intake['review_set_sha256'])
     actions = next_actions(groups)
-    if state == 'SUBMITTED':
-        actions = ['submission is recorded and receipt-bound; preserve the frozen submission lineage for rebuttal and camera-ready work'] if actual_valid else ['SUBMITTED state has an invalid or missing venue submission receipt; treat the ledger as invalid until repaired']
+    if state == 'REBUTTAL':
+        actions = ['rebuttal preparation is receipt-bound and active; do not add experiments or claims without separate scientific authorization'] if rebuttal['status']=='REBUTTAL_ACTIVE' else ['REBUTTAL state has an invalid or stale preparation receipt; stop response workflow until repaired']
+    elif state == 'SUBMITTED':
+        if not actual_valid: actions=['SUBMITTED state has an invalid or missing venue submission receipt; treat the ledger as invalid until repaired']
+        elif review_intake['status']=='AWAITING_VENUE_REVIEWS': actions=['await real venue reviews; do not synthesize mock reviews into the rebuttal ledger']
+        elif review_intake['status']=='REVIEW_INTAKE_STALE': actions=['repair review intake lineage against the current venue submission receipt']
+        elif rebuttal['status']=='REBUTTAL_PREPARATION_PENDING': actions=['classify venue objections and prepare a scope-preserving rebuttal; reviewer requests do not authorize experiments']
+        elif rebuttal['status']=='REBUTTAL_PREPARED_TRANSITION_PENDING': actions=['rebuttal preparation passed; advance the paper to REBUTTAL without changing scientific authority']
     elif base_ready and freeze['status'] == 'MACHINE_FREEZE_PENDING':
         actions = ['create a pre-submission freeze checkpoint before machine handoff']
     elif base_ready and freeze['status'] == 'MACHINE_FREEZE_STALE':
@@ -278,6 +333,17 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         'venue_submission_id': str(actual_receipt.get('venue_submission_id') or ''),
         'venue_forum_ref': str(actual_receipt.get('venue_forum_ref') or ''),
         'submitted_at': str(actual_receipt.get('submitted_at') or ''),
+        'review_intake_status': review_intake['status'],
+        'review_set_sha256': review_intake['review_set_sha256'],
+        'venue_review_count': review_intake['review_count'],
+        'review_intake_errors': review_intake['errors'],
+        'rebuttal_status': rebuttal['status'],
+        'rebuttal_receipt_sha256': rebuttal['rebuttal_receipt_sha256'],
+        'rebuttal_errors': rebuttal['errors'],
+        'rebuttal_objections': rebuttal['objections'],
+        'rebuttal_decision_critical': rebuttal['decision_critical'],
+        'rebuttal_missing_decisive_evidence': rebuttal['missing_decisive_evidence'],
+        'rebuttal_new_claim_requests': rebuttal['new_claim_requests'],
         'blocker_groups': groups,
         'blocker_count': len(blockers),
         'next_actions': actions,
@@ -289,7 +355,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
 
 def source_watermark(root: Path) -> str:
     timestamps: list[str] = []
-    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs'):
+    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake'):
         if not directory.exists():
             continue
         for path in sorted(directory.glob('*.json')):
@@ -328,6 +394,10 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'submitted': sum(p['paper_state'] == 'SUBMITTED' for p in papers),
             'submitted_receipt_bound': sum(p['actual_submission_status'] == 'VENUE_SUBMISSION_CONFIRMED' for p in papers),
             'submitted_receipt_invalid': sum(p['actual_submission_status'] == 'SUBMITTED_RECEIPT_INVALID' for p in papers),
+            'awaiting_venue_reviews': sum(p['review_intake_status'] == 'AWAITING_VENUE_REVIEWS' for p in papers),
+            'review_sets_current': sum(p['review_intake_status'] == 'REVIEW_SET_CURRENT' for p in papers),
+            'rebuttal_preparation_pending': sum(p['rebuttal_status'] == 'REBUTTAL_PREPARATION_PENDING' for p in papers),
+            'rebuttal_active': sum(p['rebuttal_status'] == 'REBUTTAL_ACTIVE' for p in papers),
             'submission_freeze_eligible': sum(p['submission_freeze_eligible'] for p in papers),
             'ledger_replay_failures': sum(not p['ledger_replay_pass'] for p in papers),
             'contract_integrity_failures': sum(not p['contract_integrity_pass'] for p in papers),

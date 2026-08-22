@@ -57,6 +57,7 @@ def _refresh(row: dict[str, Any]) -> None:
         "paper_preparation_receipts": sum(event.get("event_type") == "paper-preparation" for event in events),
         "submission_readiness_receipts": sum(event.get("event_type") == "submission-readiness" for event in events),
         "actual_submission_receipts": sum(event.get("event_type") == "actual-submission" for event in events),
+        "rebuttal_preparation_receipts": sum(event.get("event_type") == "rebuttal-preparation" for event in events),
     }
 
 
@@ -126,6 +127,11 @@ def _actual_submission_transition_ref(receipt: Mapping[str, Any]) -> str:
     return external_transition_authority_ref(receipt)
 
 
+def _validate_rebuttal_preparation_receipt(receipt: Mapping[str, Any]) -> bool:
+    from .rebuttal_protocol import validate_rebuttal_receipt
+    return validate_rebuttal_receipt(receipt)
+
+
 def _receipt_hash_valid(receipt: Mapping[str, Any]) -> bool:
     receipt_type = str(receipt.get("receipt_type") or "")
     if receipt_type == "story-search":
@@ -153,6 +159,8 @@ def _receipt_hash_valid(receipt: Mapping[str, Any]) -> bool:
         return validate_paper_preparation_receipt(receipt)
     if receipt_type == "actual-venue-submission":
         return _validate_actual_submission_receipt(receipt)
+    if receipt_type == "rebuttal-preparation":
+        return _validate_rebuttal_preparation_receipt(receipt)
     if receipt_type == "claim-audit":
         identity = {
             "paper_id": receipt.get("paper_id"),
@@ -242,6 +250,29 @@ def _transition_gate(row: Mapping[str, Any], current: PaperState, target: PaperS
             blockers.append("actual-submission-receipt-required")
         else:
             gate_receipts["actual_submission_receipt_sha256"] = receipt_sha
+    if target == PaperState.REBUTTAL:
+        actual = _latest(row, "actual-submission").get("receipt") or {}
+        actual_sha = str(actual.get("submission_receipt_sha256") or "") if isinstance(actual, dict) and _validate_actual_submission_receipt(actual) else ""
+        receipt: dict[str, Any] = {}
+        for event in reversed(stage_events):
+            if event.get("event_type") != "rebuttal-preparation":
+                continue
+            candidate = event.get("receipt") or {}
+            if not isinstance(candidate, dict):
+                continue
+            if str(candidate.get("contract_sha256") or "") != contract_sha256:
+                continue
+            if candidate.get("pass") is True and _validate_rebuttal_preparation_receipt(candidate) and str(candidate.get("submission_receipt_sha256") or "") == actual_sha:
+                receipt = candidate
+                break
+        rebuttal_sha = str(receipt.get("rebuttal_receipt_sha256") or "")
+        if not actual_sha:
+            blockers.append("rebuttal-valid-actual-submission-receipt-required")
+        if not rebuttal_sha:
+            blockers.append("rebuttal-preparation-pass-receipt-required")
+        else:
+            gate_receipts["rebuttal_preparation_receipt_sha256"] = rebuttal_sha
+            gate_receipts["review_set_sha256"] = str(receipt.get("review_set_sha256") or "")
     return blockers, gate_receipts
 
 
@@ -444,6 +475,71 @@ def record_frozen_contract_actual_submission(
         return row
 
 
+def record_rebuttal_preparation(
+    root: Path,
+    contract: PaperContract,
+    receipt: Mapping[str, Any],
+    actor: str = "rebuttal-preparation",
+) -> dict[str, Any]:
+    if not _validate_rebuttal_preparation_receipt(receipt) or receipt.get("pass") is not True:
+        raise RuntimeError("invalid or blocked rebuttal preparation receipt")
+    if str(receipt.get("paper_id") or "") != contract.paper_id:
+        raise RuntimeError("rebuttal preparation paper id mismatch")
+    if str(receipt.get("contract_sha256") or "") != paper_contract_digest(contract):
+        raise RuntimeError("rebuttal preparation contract digest mismatch")
+    row = initialize_paper_ledger(root, contract, actor)
+    if str(row.get("current_state") or "") != PaperState.SUBMITTED.value:
+        raise RuntimeError("rebuttal preparation may only be recorded from SUBMITTED")
+    prior = _latest(row, "rebuttal-preparation").get("receipt") or {}
+    if isinstance(prior, dict) and prior.get("rebuttal_receipt_sha256") == receipt.get("rebuttal_receipt_sha256"):
+        return row
+    return _append(root, contract, actor, {"event_type": "rebuttal-preparation", "receipt": dict(receipt)})
+
+
+def record_frozen_contract_rebuttal_preparation(
+    root: Path,
+    paper_id: str,
+    receipt: Mapping[str, Any],
+    actor: str = "rebuttal-preparation",
+) -> dict[str, Any]:
+    if not _validate_rebuttal_preparation_receipt(receipt) or receipt.get("pass") is not True:
+        raise RuntimeError("invalid or blocked rebuttal preparation receipt")
+    path, lock = _paths(root, paper_id)
+    with lock.open("a+", encoding="utf-8") as handle:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+        if not path.exists():
+            raise FileNotFoundError(path)
+        row = json.loads(path.read_text(encoding="utf-8"))
+        digest = str(row.get("contract_sha256") or "")
+        if not digest or _digest(row.get("contract") or {}) != digest:
+            raise RuntimeError(f"frozen paper contract payload digest mismatch for {paper_id}")
+        if str(row.get("paper_id") or "") != paper_id or str(receipt.get("paper_id") or "") != paper_id:
+            raise RuntimeError("rebuttal preparation paper id mismatch")
+        if str(receipt.get("contract_sha256") or "") != digest:
+            raise RuntimeError("rebuttal preparation contract digest mismatch")
+        if str(row.get("current_state") or "") != PaperState.SUBMITTED.value:
+            raise RuntimeError("rebuttal preparation may only be recorded from SUBMITTED")
+        prior = _latest(row, "rebuttal-preparation").get("receipt") or {}
+        if isinstance(prior, dict) and prior.get("rebuttal_receipt_sha256") == receipt.get("rebuttal_receipt_sha256"):
+            return row
+        payload = {
+            "event_type": "rebuttal-preparation",
+            "receipt": dict(receipt),
+            "actor": actor,
+            "recorded_at": _now(),
+            "scientific_authority": False,
+            "experiment_authority": False,
+            "gpu_authority": False,
+            "submission_authority": False,
+        }
+        payload["event_id"] = _digest([paper_id, digest, len(row.get("events") or []), payload])[:24]
+        row.setdefault("events", []).append(payload)
+        row["updated_at"] = payload["recorded_at"]
+        _refresh(row)
+        _atomic(path, row)
+        return row
+
+
 def _current_actual_submission_receipt(row: Mapping[str, Any], current: PaperState) -> dict[str, Any]:
     if current != PaperState.SUBMISSION_READY:
         return {}
@@ -529,6 +625,59 @@ def advance_frozen_paper_to_submitted(
         return {"ledger": row, "receipt": event}
 
 
+def advance_frozen_paper_to_rebuttal(
+    root: Path,
+    paper_id: str,
+    *,
+    actor: str = "rebuttal-preparation",
+) -> dict[str, Any]:
+    path, lock = _paths(root, paper_id)
+    with lock.open("a+", encoding="utf-8") as handle:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+        if not path.exists():
+            raise FileNotFoundError(path)
+        row = json.loads(path.read_text(encoding="utf-8"))
+        digest = str(row.get("contract_sha256") or "")
+        if not digest or _digest(row.get("contract") or {}) != digest:
+            raise RuntimeError(f"frozen paper contract payload digest mismatch for {paper_id}")
+        current = PaperState(str(row.get("current_state") or ""))
+        if current == PaperState.REBUTTAL:
+            prior = _latest(row, "paper-transition")
+            if prior.get("allowed") is True and prior.get("to") == PaperState.REBUTTAL.value:
+                return {"ledger": row, "receipt": prior}
+            raise RuntimeError("paper already in REBUTTAL without a replayable transition")
+        if current != PaperState.SUBMITTED:
+            raise RuntimeError("paper must be SUBMITTED before entering REBUTTAL")
+        blockers, gate_receipts = _transition_gate(row, current, PaperState.REBUTTAL)
+        event = {
+            "event_type": "paper-transition",
+            "actor": actor,
+            "recorded_at": _now(),
+            "from": current.value,
+            "to": PaperState.REBUTTAL.value,
+            "allowed": not blockers,
+            "blockers": list(dict.fromkeys(blockers)),
+            "artifact_refs": [],
+            "gate_receipts": gate_receipts,
+            "external_submission_authority_ref": "",
+            "scientific_authority": False,
+            "experiment_authority": False,
+            "gpu_authority": False,
+            "submission_authority": False,
+        }
+        event["event_id"] = _digest([paper_id, digest, len(row.get("events") or []), event])[:24]
+        row.setdefault("events", []).append(event)
+        if event["allowed"]:
+            row["current_state"] = PaperState.REBUTTAL.value
+        row["updated_at"] = event["recorded_at"]
+        _refresh(row)
+        errors = validate_paper_ledger(row)
+        if errors:
+            raise RuntimeError(f"paper ledger invalid after rebuttal transition: {errors}")
+        _atomic(path, row)
+        return {"ledger": row, "receipt": event}
+
+
 def advance_paper_ledger(root: Path, contract: PaperContract, target: PaperState, *, actor: str = "paper-workflow",
                          artifact_refs: Sequence[str] = (), external_submission_authority_ref: str = "") -> dict[str, Any]:
     path, lock = _paths(root, contract.paper_id)
@@ -587,7 +736,7 @@ def validate_paper_ledger(row: Mapping[str, Any]) -> list[str]:
         if any(event.get(key) is True for key in ("scientific_authority", "experiment_authority", "gpu_authority", "submission_authority")):
             errors.append("paper event leaked authority")
         event_type = str(event.get("event_type") or "")
-        if event_type in {"story-search", "mock-pc-review", "claim-audit", "paper-preparation", "actual-submission"}:
+        if event_type in {"story-search", "mock-pc-review", "claim-audit", "paper-preparation", "actual-submission", "rebuttal-preparation"}:
             receipt = event.get("receipt") or {}
             if not isinstance(receipt, dict) or str(receipt.get("contract_sha256") or "") != contract_sha256 or not _receipt_hash_valid(receipt):
                 errors.append(f"invalid-content-addressed-receipt:{event_type}")

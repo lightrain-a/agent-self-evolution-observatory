@@ -17,7 +17,9 @@
     "human_signoff_complete": 0,
     "human_signoff_stale": 0,
     "submitted": 0,
-    "submitted_receipt_bound": 0
+    "submitted_receipt_bound": 0,
+    "rebuttal_active": 0,
+    "rebuttal_prepared": 0
   },
   "papers": [
     {
@@ -35,7 +37,8 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED"
+        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "post_submission": "NOT_ELIGIBLE"
       },
       "gates": {
         "claim_audit": true,
@@ -136,13 +139,31 @@
         "submitted_at": "",
         "submission_receipt_sha256": ""
       },
+      "rebuttal": {
+        "status": "NOT_ELIGIBLE",
+        "valid": false,
+        "pass": false,
+        "review_set_sha256": "",
+        "rebuttal_receipt_sha256": "",
+        "reviews": 0,
+        "objections": 0,
+        "decision_critical": 0,
+        "missing_decisive_evidence": 0,
+        "new_claim_requests": 0,
+        "response_words": 0,
+        "response_limit_words": 0,
+        "claim_expansion_authorized": false,
+        "new_experiment_authorized": false
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
         "claim_audit_receipts": 1,
         "manuscript_ci_receipts": 1,
         "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 1
+        "paper_preparation_receipts": 1,
+        "actual_submission_receipts": 0,
+        "rebuttal_preparation_receipts": 0
       },
       "scientific_authority": false,
       "experiment_authority": false,
@@ -164,7 +185,8 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED"
+        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "post_submission": "NOT_ELIGIBLE"
       },
       "gates": {
         "claim_audit": true,
@@ -277,13 +299,31 @@
         "submitted_at": "",
         "submission_receipt_sha256": ""
       },
+      "rebuttal": {
+        "status": "NOT_ELIGIBLE",
+        "valid": false,
+        "pass": false,
+        "review_set_sha256": "",
+        "rebuttal_receipt_sha256": "",
+        "reviews": 0,
+        "objections": 0,
+        "decision_critical": 0,
+        "missing_decisive_evidence": 0,
+        "new_claim_requests": 0,
+        "response_words": 0,
+        "response_limit_words": 0,
+        "claim_expansion_authorized": false,
+        "new_experiment_authorized": false
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 6,
         "claim_audit_receipts": 1,
         "manuscript_ci_receipts": 1,
         "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 1
+        "paper_preparation_receipts": 1,
+        "actual_submission_receipts": 0,
+        "rebuttal_preparation_receipts": 0
       },
       "scientific_authority": false,
       "experiment_authority": false,
@@ -305,7 +345,8 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED"
+        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "post_submission": "NOT_ELIGIBLE"
       },
       "gates": {
         "claim_audit": true,
@@ -418,13 +459,31 @@
         "submitted_at": "",
         "submission_receipt_sha256": ""
       },
+      "rebuttal": {
+        "status": "NOT_ELIGIBLE",
+        "valid": false,
+        "pass": false,
+        "review_set_sha256": "",
+        "rebuttal_receipt_sha256": "",
+        "reviews": 0,
+        "objections": 0,
+        "decision_critical": 0,
+        "missing_decisive_evidence": 0,
+        "new_claim_requests": 0,
+        "response_words": 0,
+        "response_limit_words": 0,
+        "claim_expansion_authorized": false,
+        "new_experiment_authorized": false
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 4,
         "claim_audit_receipts": 1,
         "manuscript_ci_receipts": 1,
         "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 1
+        "paper_preparation_receipts": 1,
+        "actual_submission_receipts": 0,
+        "rebuttal_preparation_receipts": 0
       },
       "scientific_authority": false,
       "experiment_authority": false,
@@ -446,7 +505,8 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "BLOCKED",
-        "submission": "PREPARATION_BLOCKED"
+        "submission": "PREPARATION_BLOCKED",
+        "post_submission": "NOT_ELIGIBLE"
       },
       "gates": {
         "claim_audit": true,
@@ -556,13 +616,31 @@
         "submitted_at": "",
         "submission_receipt_sha256": ""
       },
+      "rebuttal": {
+        "status": "NOT_ELIGIBLE",
+        "valid": false,
+        "pass": false,
+        "review_set_sha256": "",
+        "rebuttal_receipt_sha256": "",
+        "reviews": 0,
+        "objections": 0,
+        "decision_critical": 0,
+        "missing_decisive_evidence": 0,
+        "new_claim_requests": 0,
+        "response_words": 0,
+        "response_limit_words": 0,
+        "claim_expansion_authorized": false,
+        "new_experiment_authorized": false
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
         "claim_audit_receipts": 1,
         "manuscript_ci_receipts": 1,
         "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 1
+        "paper_preparation_receipts": 1,
+        "actual_submission_receipts": 0,
+        "rebuttal_preparation_receipts": 0
       },
       "scientific_authority": false,
       "experiment_authority": false,
@@ -584,7 +662,8 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED"
+        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "post_submission": "NOT_ELIGIBLE"
       },
       "gates": {
         "claim_audit": true,
@@ -691,13 +770,31 @@
         "submitted_at": "",
         "submission_receipt_sha256": ""
       },
+      "rebuttal": {
+        "status": "NOT_ELIGIBLE",
+        "valid": false,
+        "pass": false,
+        "review_set_sha256": "",
+        "rebuttal_receipt_sha256": "",
+        "reviews": 0,
+        "objections": 0,
+        "decision_critical": 0,
+        "missing_decisive_evidence": 0,
+        "new_claim_requests": 0,
+        "response_words": 0,
+        "response_limit_words": 0,
+        "claim_expansion_authorized": false,
+        "new_experiment_authorized": false
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
         "claim_audit_receipts": 1,
         "manuscript_ci_receipts": 1,
         "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 1
+        "paper_preparation_receipts": 1,
+        "actual_submission_receipts": 0,
+        "rebuttal_preparation_receipts": 0
       },
       "scientific_authority": false,
       "experiment_authority": false,
@@ -711,5 +808,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "1012f85affe23dacec0f4d728f48e5f2458eacf6d8255bb166e108d89f669347"
+  "projection_sha256": "a5090a173b7962c2344f0a1f816dc89288a82c7dbdf457358d7410db6c5d4585"
 }

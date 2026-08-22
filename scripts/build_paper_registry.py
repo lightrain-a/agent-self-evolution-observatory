@@ -23,6 +23,7 @@ from research_pipeline.submission_handoff import validate_handoff_ledger, valida
 from research_pipeline.human_submission_signoff import validate_signoff_ledger, verify_current_signoff
 from research_pipeline.venue_submission_receipt import validate_submission_receipt
 from research_pipeline.revision_impact_audit import audit_freeze_receipt
+from research_pipeline.rebuttal_protocol import validate_rebuttal_receipt
 DEFAULT_LEDGER_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ROOT") else None
 DEFAULT_ARTIFACT_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ARTIFACT_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ARTIFACT_ROOT") else None
 DEFAULT_FREEZE_ROOT = Path(os.environ["PAPER_SUBMISSION_FREEZE_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_FREEZE_ROOT") else None
@@ -297,7 +298,7 @@ def actual_submission(row: dict[str, Any]) -> dict[str, Any]:
     receipt = event_payload(row, "actual-submission")
     valid = bool(receipt) and str(receipt.get("contract_sha256") or "") == str(row.get("contract_sha256") or "") and validate_submission_receipt(receipt)
     state = str(row.get("current_state") or "")
-    if state == "SUBMITTED":
+    if state in {"SUBMITTED", "REBUTTAL"}:
         status = "VENUE_SUBMISSION_CONFIRMED" if valid else "SUBMITTED_RECEIPT_INVALID"
     elif valid:
         status = "VENUE_SUBMISSION_RECEIPT_RECORDED_TRANSITION_PENDING"
@@ -311,6 +312,35 @@ def actual_submission(row: dict[str, Any]) -> dict[str, Any]:
         "venue_forum_ref": str(receipt.get("venue_forum_ref") or ""),
         "submitted_at": str(receipt.get("submitted_at") or ""),
         "submission_receipt_sha256": str(receipt.get("submission_receipt_sha256") or ""),
+    }
+
+
+def rebuttal_state(row: dict[str, Any]) -> dict[str, Any]:
+    receipt = event_payload(row, "rebuttal-preparation")
+    valid = bool(receipt) and str(receipt.get("contract_sha256") or "") == str(row.get("contract_sha256") or "") and validate_rebuttal_receipt(receipt)
+    state = str(row.get("current_state") or "")
+    if state == "REBUTTAL":
+        status = "REBUTTAL_ACTIVE" if valid and receipt.get("pass") is True else "REBUTTAL_RECEIPT_INVALID"
+    elif state == "SUBMITTED":
+        status = "REBUTTAL_PREPARED_TRANSITION_PENDING" if valid and receipt.get("pass") is True else "AWAITING_REVIEW_OR_REBUTTAL_PREPARATION"
+    else:
+        status = "NOT_ELIGIBLE"
+    summary = receipt.get("summary") if isinstance(receipt.get("summary"), dict) else {}
+    return {
+        "status": status,
+        "valid": valid,
+        "pass": receipt.get("pass") is True,
+        "review_set_sha256": str(receipt.get("review_set_sha256") or ""),
+        "rebuttal_receipt_sha256": str(receipt.get("rebuttal_receipt_sha256") or ""),
+        "reviews": int(summary.get("reviews") or 0),
+        "objections": int(summary.get("objections") or 0),
+        "decision_critical": int(summary.get("decision_critical") or 0),
+        "missing_decisive_evidence": int(summary.get("missing_decisive_evidence") or 0),
+        "new_claim_requests": int(summary.get("new_claim_requests") or 0),
+        "response_words": int(receipt.get("response_words") or 0),
+        "response_limit_words": int(receipt.get("response_limit_words") or 0),
+        "claim_expansion_authorized": False,
+        "new_experiment_authorized": False,
     }
 
 
@@ -337,6 +367,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
     handoff = submission_handoff(paper_id, freeze, handoff_root)
     signoff = human_signoff(paper_id, handoff, freeze_root, handoff_root, signoff_root)
     submission = actual_submission(row)
+    rebuttal = rebuttal_state(row)
     state = str(row.get("current_state") or "")
     scientific_layer = "SUPPORTED_AND_AUDITED" if claim_audit.get("pass") is True else ("ACTIVE_REPAIR" if state == "TARGETED_REPAIR" else "PRE_AUDIT")
     paper_quality_layer = "PASS" if manuscript_ci.get("pass") is True and prebuttal.get("pass") is True else ("IN_PROGRESS" if state not in {"PAPER_EVIDENCE", "PAPER_DESIGN"} else "NOT_STARTED")
@@ -356,6 +387,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
             "paper_quality": paper_quality_layer,
             "paper_preparation": preparation["status"],
             "submission": submission["status"] if submission["status"] != "NOT_SUBMITTED" else (signoff["status"] if signoff["status"] != "PENDING_HUMAN_CONFIRMATION" and signoff["status"] != "NOT_ELIGIBLE" else handoff["status"]),
+            "post_submission": rebuttal["status"],
         },
         "gates": {
             "claim_audit": claim_audit.get("pass") is True,
@@ -368,6 +400,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
         "submission_handoff": handoff,
         "human_signoff": signoff,
         "actual_submission": submission,
+        "rebuttal": rebuttal,
         "targeted_repair_boundary": targeted_repair_boundary(paper_id) if state == "TARGETED_REPAIR" else {},
         "ledger_summary": {
             "mock_reviews": int(summary.get("mock_reviews") or 0),
@@ -375,6 +408,8 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
             "manuscript_ci_receipts": int(summary.get("manuscript_ci_receipts") or 0),
             "prebuttal_receipts": int(summary.get("prebuttal_receipts") or 0),
             "paper_preparation_receipts": int(summary.get("paper_preparation_receipts") or 0),
+            "actual_submission_receipts": int(summary.get("actual_submission_receipts") or 0),
+            "rebuttal_preparation_receipts": int(summary.get("rebuttal_preparation_receipts") or 0),
         },
         "scientific_authority": False,
         "experiment_authority": False,
@@ -429,6 +464,8 @@ def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Pat
         "human_signoff_stale": sum(p["human_signoff"]["status"] == "HUMAN_SIGNOFF_STALE" for p in papers),
         "submitted": sum(p["current_state"] == "SUBMITTED" for p in papers),
         "submitted_receipt_bound": sum(p["actual_submission"]["status"] == "VENUE_SUBMISSION_CONFIRMED" for p in papers),
+        "rebuttal_active": sum(p["rebuttal"]["status"] == "REBUTTAL_ACTIVE" for p in papers),
+        "rebuttal_prepared": sum(p["rebuttal"]["status"] == "REBUTTAL_PREPARED_TRANSITION_PENDING" for p in papers),
     }
     payload = {
         "schema_version": "1.1",
