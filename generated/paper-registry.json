@@ -1,7 +1,7 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-08-22T13:42:44+00:00",
-  "source_revision": "b42fcd34274a39e60dd9361c3751782adb6cf45a",
+  "generated_at": "2026-08-22T14:50:54+00:00",
+  "source_revision": "cad2c1e6698bbda9696995b80041f2e17584b561",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,

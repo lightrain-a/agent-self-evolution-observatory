@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-22T14:42:14+00:00",
-  "source_revision": "0354e9d5fc9b9952d860eb8361cdfab37f519917",
+  "generated_at": "2026-08-22T14:50:54+00:00",
+  "source_revision": "cad2c1e6698bbda9696995b80041f2e17584b561",
   "policy": {
     "research_item_is_primary_scientific_entity": true,
     "experiment_is_evidence_event_not_parallel_current_state": true,

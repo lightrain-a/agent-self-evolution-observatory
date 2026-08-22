@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-22T06:40:02+00:00",
+  "generated_at": "2026-08-22T14:50:54+00:00",
   "projection_policy": {
     "read_only": true,
     "scientific_authority": false,
@@ -14,7 +14,7 @@
     "literature_gap_registry": "literature-idea-mining-data.json",
     "research_item_ledger": "generated/research-items.json",
     "research_item_schema_version": "1.0",
-    "research_item_source_revision": "5345ba8447c681482d7900424c0798e0398f7f8e"
+    "research_item_source_revision": "cad2c1e6698bbda9696995b80041f2e17584b561"
   },
   "basis": {
     "zh": "以当前正式发表主线为第一层证据。这里的“拥挤/机会”只表示当前文献库中的碰撞风险，不是最终 novelty 判决；候选生成后仍必须补最新预印本检索、原文核验和 strongest-baseline 对齐。",
@@ -1034,7 +1034,17 @@
         "paper_id": "STRI",
         "acceptance_paper_id": "STRI-ICLR2027",
         "status": "SUBMISSION_READY",
-        "scientific_status": "READY"
+        "scientific_status": "READY",
+        "primary_next_action": {
+          "action_class": "NO_INTERNAL_ACTION",
+          "action": "No additional autonomous research, experiment, or paper-repair action is required by the internal Research OS.",
+          "action_zh": "内部 Research OS 已无新增科研、实验或论文修复动作；保持冻结证据与主张边界即可。",
+          "blocking_on": "",
+          "machine_actionable": false,
+          "scientific_authority": false,
+          "experiment_authority": false,
+          "gpu_authority": false
+        }
       }
     },
     "E-8": {
@@ -1496,7 +1506,17 @@
         "acceptance_paper_id": "AGENT-SAFETY-R9",
         "status": "SUBMISSION_READY",
         "scientific_status": "READY",
-        "blocked": false
+        "blocked": false,
+        "primary_next_action": {
+          "action_class": "NO_INTERNAL_ACTION",
+          "action": "No additional autonomous research, experiment, or paper-repair action is required by the internal Research OS.",
+          "action_zh": "内部 Research OS 已无新增科研、实验或论文修复动作；保持冻结证据与主张边界即可。",
+          "blocking_on": "",
+          "machine_actionable": false,
+          "scientific_authority": false,
+          "experiment_authority": false,
+          "gpu_authority": false
+        }
       }
     },
     "G-2": {
