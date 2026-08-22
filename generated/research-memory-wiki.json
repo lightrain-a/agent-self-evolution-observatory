@@ -23,7 +23,7 @@
     "reviewer_prose_and_rationale_are_excluded_from_memory_projection": true
   },
   "source_manifest": {
-    "search_memory_closed_objects": 42,
+    "search_memory_closed_objects": 43,
     "search_memory_hold_objects": 9,
     "failure_assets": 6,
     "candidate_portfolio_visible": 1,
@@ -32,8 +32,8 @@
     "paper_review_ledgers": 5
   },
   "summary": {
-    "entries": 65,
-    "search_closures": 40,
+    "entries": 66,
+    "search_closures": 41,
     "scientific_closures": 2,
     "holds": 9,
     "failure_assets": 3,
@@ -41,10 +41,10 @@
     "open_questions": 2,
     "repeated_review_blocks": 1,
     "review_lessons": 5,
-    "prompt_eligible": 65,
+    "prompt_eligible": 66,
     "transient": 0,
     "recurring_systemic": 8,
-    "scientific": 57
+    "scientific": 58
   },
   "entries": [
     {
@@ -1246,6 +1246,32 @@
       "scientific_authority": false
     },
     {
+      "memory_id": "MEM-SEAR-acf18c05269e6c6c6a",
+      "kind": "SEARCH_CLOSURE",
+      "title": "Intervention-surface lockout breaks recursive self-intervention closure",
+      "summary": "Under identical target bytes, W capability, persistent mount fault, failure signal, verification obligation, restore primitive, and budget, the frozen binary closure endpoint has no self-specific W-lockout residual: both SELF and capability-isomorphic ORDINARY require the same persistent write edge, both close in RW, and both fail in RO.",
+      "candidate_id": "RSI-LOCKOUT-C01",
+      "scope": "RSI-LOCKOUT-C01 frozen binary repair-and-activation closure under matched W lockout and fixed bounded restore.",
+      "affected_layer": "problem_novelty",
+      "memory_class": "PROBLEM_NOVELTY_STOP",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": true,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "Only a distinct scientific object may reopen this direction with a pre-registered non-saturated post-activation outcome and timing that yields an ex-ante self-specific prediction under identical pre-treatment information and capability availability.",
+      "opposite_search_seed": "If revisited, create a distinct object around a pre-registered non-saturated post-activation outcome under blinded SELF-versus-PEER binding and identical pre-treatment capabilities.",
+      "reusable_precheck": "",
+      "source_refs": [
+        "OpenReview:j7YsSnA64D",
+        "arXiv:2606.05806",
+        "arXiv:2608.11977"
+      ],
+      "source_artifact": "shadow_search_memory",
+      "reuse_effectiveness": {},
+      "scientific_authority": false
+    },
+    {
       "memory_id": "MEM-SEAR-ad180c70ac80541fa2",
       "kind": "SEARCH_CLOSURE",
       "title": "High-TRS spatial-memory failures do not establish a procedure-compatibility mechanism",
@@ -1803,7 +1829,7 @@
     "p0": false,
     "gpu": false
   },
-  "wiki_sha256": "6dd0658f5be81a15e53cd887b966e02ebae385c6a1e155881575ae64f525296b",
+  "wiki_sha256": "0ebc5f0636fecb13be10ebdef5ece381967b93920ee841416b91db23bb119861",
   "lint": {
     "schema_version": "1.1",
     "status": "PASS",

@@ -6594,7 +6594,7 @@
     "meta_trace_unresolved": 2,
     "scientific_research_graph_nodes": 698,
     "scientific_research_graph_edges": 1044,
-    "research_memory_entries": 65,
+    "research_memory_entries": 66,
     "research_memory_lint_warnings": 6,
     "failure_assets": 6,
     "value_scheduler_candidates": 0,
@@ -35748,7 +35748,7 @@
   },
   "paper_first_search_portfolio_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-22T10:15:40+00:00",
+    "generated_at": "2026-08-22T17:44:54+00:00",
     "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
     "target_venue": "ICLR",
     "component_owner": "paper-design-contract",
@@ -35804,7 +35804,7 @@
     },
     "shadow_near_miss_preflight": {
       "schema_version": "1.0",
-      "generated_at": "2026-08-22T10:15:40+00:00",
+      "generated_at": "2026-08-22T17:44:54+00:00",
       "audit_id": "shadow-r2-near-miss-preflight-20260814",
       "policy": {
         "shadow_search_control_only": true,
@@ -36517,6 +36517,95 @@
             "same_information_reduction_verified": true,
             "reopen_condition": "A new agent-specific primary phenomenon yields an ex-ante prediction under identical treatment, monitoring, state, task-distribution, and trace-availability information that cannot be expressed by treatment-induced confounding, joint treatment-monitoring interventions, informative monitoring/missingness, or performative/adaptive data-collection models; textual-policy terminology alone does not reopen the basin."
           }
+        },
+        {
+          "source_candidate_id": "RSI-LOCKOUT-C01",
+          "basin": "matched-simplification-readjudication-3fdc078df275f1b3",
+          "search_primitive": "MATCHED_SIMPLIFICATION",
+          "title": "Intervention-surface lockout breaks recursive self-intervention closure",
+          "avoid": [
+            "paraphrase-only variants of: Intervention-surface lockout breaks recursive self-intervention closure",
+            "adding repetitions, models, budgets, R/V firewall work, or a new substrate to rescue the same saturated binary interaction",
+            "treating the raw automated pilot GO as authoritative after the trace audit rejected it"
+          ],
+          "strongest_reduction": "Under identical target bytes, W capability, persistent mount fault, failure signal, verification obligation, restore primitive, and budget, the frozen binary closure endpoint has no self-specific W-lockout residual: both SELF and capability-isomorphic ORDINARY require the same persistent write edge, both close in RW, and both fail in RO.",
+          "current_source_refs": [
+            "arXiv:2608.11977",
+            "arXiv:2606.05806",
+            "OpenReview:j7YsSnA64D"
+          ],
+          "evidence_basis": [
+            "arXiv:2608.11977",
+            "arXiv:2606.05806",
+            "OpenReview:j7YsSnA64D",
+            "canonical-run:rsi-lockout-c01-matched-reduction-closure-20260822T164000Z#manifest=6e1d8a18bafdb247811c84e5db2747ddf5c311cd66cd496090a318db04a7f115",
+            "cross-host-run:rsi-lockout-c01-g3-matched-pilot-20260823#manifest=4040ab2d1258a9971d883b32b20ba730ec3265196fbf6c15ca3e6a53fa33eddd"
+          ],
+          "problem_text": "The frozen RSI-LOCKOUT-C01 paper-problem formulation using binary repair-and-activation closure under capability-isomorphic SELF versus ORDINARY persistent-target W lockout and fixed bounded restore.",
+          "reason": "The current realization stops before full scale-up because the strongest matched simplification structurally saturates the registered primary binary interaction and the bounded falsifier leaves no replicated self-specific residual.",
+          "reopen_only_if": "Only a distinct scientific object may reopen this direction: pre-register a non-saturated post-activation outcome and timing that yields an ex-ante self-specific prediction under identical pre-treatment information and capability availability. More repetitions, larger models, extra R/V firewall work, or a new substrate do not reopen RSI-LOCKOUT-C01.",
+          "search_closure_certified": true,
+          "dead_end_certified": false,
+          "closure_layer": "problem_novelty",
+          "failure_layer": null,
+          "memory_class": "PROBLEM_NOVELTY_STOP",
+          "principle_update_allowed": false,
+          "broader_core_principle_falsified": false,
+          "source_stop_class": "PROBLEM_NOVELTY_STOP",
+          "failure_layer_reason": "The current realization stops before full scale-up because the strongest matched simplification structurally saturates the registered primary binary interaction and the bounded falsifier leaves no replicated self-specific residual.",
+          "failure_layer_review_basis": "rsi-lockout-c01-matched-simplification-readjudication-2026-08-22",
+          "experiment_run_for_this_readjudication": true,
+          "experiment_alone_authorizes_closure": false,
+          "counter_explanation": {
+            "type": "SAME_INFORMATION_REDUCTION",
+            "statement": "Under identical target bytes, capability graph, W fault, failure signal, verification obligation, restore primitive, and budget, the frozen binary recursive-closure endpoint has no self-specific W-lockout residual: the required persistent write edge is removed in both SELF and ORDINARY and restored in the same way.",
+            "opposite_prediction": "A capability-isomorphic ordinary persistent-target control predicts the same RW success / RO failure structure as the recursive self target. Any paper-level residual must instead survive exact support matching as a replicated same-direction downstream self-state effect.",
+            "opposite_principle": "For the frozen endpoint, persistent self-intervention lockout behaves as matched persistent tool/path failure unless an additional post-activation self-state effect survives identical-information control.",
+            "opposite_search_seed": "If revisited, create a distinct object around a pre-registered non-saturated post-activation outcome under blinded SELF-versus-PEER binding and identical pre-treatment capabilities.",
+            "scope": "RSI-LOCKOUT-C01 frozen binary repair-and-activation closure under matched W lockout and fixed bounded restore.",
+            "same_information_or_scope_matched": true,
+            "evidence_refs": [
+              "arXiv:2608.11977",
+              "arXiv:2606.05806",
+              "OpenReview:j7YsSnA64D",
+              "canonical-run:rsi-lockout-c01-matched-reduction-closure-20260822T164000Z#manifest=6e1d8a18bafdb247811c84e5db2747ddf5c311cd66cd496090a318db04a7f115"
+            ],
+            "alternative_explanations_ruled_out": [
+              "identity collision with terminal SHADOW-RSI-C01",
+              "tool-name-only denial rather than resource-level W lockout",
+              "hidden supervisor-authored repair content or target-byte mutation",
+              "different SELF versus ORDINARY OS-level fault severity",
+              "support/provider failure in the bounded pilot",
+              "stable same-direction self-specific restore effect",
+              "the raw automated GO after its decision-rule implementation bug was identified"
+            ],
+            "positive_support": true,
+            "same_information_reduction_verified": true,
+            "reopen_condition": "Only a distinct scientific object may reopen this direction with a pre-registered non-saturated post-activation outcome and timing that yields an ex-ante self-specific prediction under identical pre-treatment information and capability availability."
+          },
+          "source_readjudication_artifact": "generated/rsi-lockout-c01-matched-simplification-readjudication-20260822.json",
+          "canonical_binding": {
+            "run_id": "rsi-lockout-c01-matched-reduction-closure-20260822T164000Z",
+            "object_contract_sha256": "6b123f5a092b594500d7dd554f69bd20e62032f92dde6f9913229b1a8aba30d2",
+            "closest_work_review_sha256": "b98d42e14eb9a8e0c55c9d7c9890e0afc26357b1c169b6cf721348fdeb75f38f",
+            "readjudication_sha256": "0c635c401f2ed823d56c287995511daac63f486d4491ff37071ae2144b4f09ce",
+            "terminal_closure_sha256": "79bd6170b427ac9b32b2b8a0d180e898155d8fc029099c39e635d41b954eef55",
+            "counter_explanation_audit_repair_sha256": "c40522209d13c20888f5b9488f5e59eb06709f466bb321decb559ce355bc07e7",
+            "manifest_sha256": "6e1d8a18bafdb247811c84e5db2747ddf5c311cd66cd496090a318db04a7f115"
+          },
+          "matched_result": {
+            "qualified_episodes": 18,
+            "self_rw_success": "3/3",
+            "self_ro_success": "0/3",
+            "ordinary_rw_success": "3/3",
+            "ordinary_ro_success": "0/3",
+            "primary_difference_in_differences": 0.0,
+            "self_restore_success": "2/3",
+            "ordinary_restore_success": "2/3",
+            "aggregate_restore_difference": 0.0,
+            "replicated_same_direction_self_specific_excess": false
+          },
+          "scientific_authority": false
         },
         {
           "source_candidate_id": "PA-01-EVIDENCE-ECHO",
@@ -37340,7 +37429,7 @@
           "evidence_basis": [
             "arXiv:2608.11350",
             "primary-fulltext:arXiv:2608.11350#sha256=b03c9040d0bcc6148ceb8e89a4a0c5a635e88700179eba8b3a238ce90d7e5011",
-            "run:private-data://runs/shadow-20260817-boundary-closure-v12-r1/expand-UNEXPLAINED_BOUNDARY-p16.json#sha256=27e946082a5339844e81226ab51cb365e8be94c397f8df0691e21f789a06be4b"
+            "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260817-boundary-closure-v12-r1/expand-UNEXPLAINED_BOUNDARY-p16.json#sha256=27e946082a5339844e81226ab51cb365e8be94c397f8df0691e21f789a06be4b"
           ],
           "problem_text": "The standalone claim that SHAPER's VLABench table exhibits a sign reversal in the causal effect of MG-Select/VOTE when moving from direct VLA execution to the Seed Agent, inferred from the fact that scaled Seed-Agent scores exceed direct VLA scores while scaled VLA scores fall below direct VLA.",
           "reason": "The SHAPER table shows scaling degradation relative to the local baseline at both the VLA and Seed-Agent levels, while the Seed-Agent scaffold itself improves the baseline. The proposed cross-level scaling sign reversal is therefore a comparator artifact, not a new mechanism.",
@@ -37370,7 +37459,7 @@
             "evidence_refs": [
               "arXiv:2608.11350",
               "primary-fulltext:arXiv:2608.11350#sha256=b03c9040d0bcc6148ceb8e89a4a0c5a635e88700179eba8b3a238ce90d7e5011",
-              "run:private-data://runs/shadow-20260817-boundary-closure-v12-r1/expand-UNEXPLAINED_BOUNDARY-p16.json#sha256=27e946082a5339844e81226ab51cb365e8be94c397f8df0691e21f789a06be4b"
+              "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260817-boundary-closure-v12-r1/expand-UNEXPLAINED_BOUNDARY-p16.json#sha256=27e946082a5339844e81226ab51cb365e8be94c397f8df0691e21f789a06be4b"
             ],
             "alternative_explanations_ruled_out": [
               "The Seed-Agent scaling effect is positive because 24.38/23.50 exceed direct VLA 23.25: this compares different scaffold states and attributes the Seed-Agent baseline improvement to scaling.",
@@ -37725,8 +37814,8 @@
             "arXiv:2607.02901"
           ],
           "evidence_basis": [
-            "run:private-data://runs/shadow-20260816-treatment-semantics-v8-r1/formulate-p1.json#sha256=f0c39f8b6826c75c91566eab97d82b918e43155b4ef7ae201dda2789f43c48d7",
-            "run:private-data://runs/shadow-20260816-treatment-semantics-v8-r1/raw/formulate-p1-2bc1537aec0b.txt#sha256=2bc1537aec0b5810894c0e4ff8f4a15a5139b78d0056962f457b79927b2a1aed",
+            "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-treatment-semantics-v8-r1/formulate-p1.json#sha256=f0c39f8b6826c75c91566eab97d82b918e43155b4ef7ae201dda2789f43c48d7",
+            "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-treatment-semantics-v8-r1/raw/formulate-p1-2bc1537aec0b.txt#sha256=2bc1537aec0b5810894c0e4ff8f4a15a5139b78d0056962f457b79927b2a1aed",
             "repo:generated/positive-residual-memory-temporal-exposure-principle-readjudication-20260816.json#sha256=2656e6faf2132ebdac5842f8249eef90d5ae18aa3fef0a7c0956084c2dbaeff1",
             "arXiv:2607.02901",
             "arXiv:1806.11153"
@@ -37757,8 +37846,8 @@
             "same_information_reduction_verified": true,
             "positive_support": true,
             "evidence_refs": [
-              "run:private-data://runs/shadow-20260816-treatment-semantics-v8-r1/formulate-p1.json#sha256=f0c39f8b6826c75c91566eab97d82b918e43155b4ef7ae201dda2789f43c48d7",
-              "run:private-data://runs/shadow-20260816-treatment-semantics-v8-r1/raw/formulate-p1-2bc1537aec0b.txt#sha256=2bc1537aec0b5810894c0e4ff8f4a15a5139b78d0056962f457b79927b2a1aed",
+              "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-treatment-semantics-v8-r1/formulate-p1.json#sha256=f0c39f8b6826c75c91566eab97d82b918e43155b4ef7ae201dda2789f43c48d7",
+              "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-treatment-semantics-v8-r1/raw/formulate-p1-2bc1537aec0b.txt#sha256=2bc1537aec0b5810894c0e4ff8f4a15a5139b78d0056962f457b79927b2a1aed",
               "repo:generated/positive-residual-memory-temporal-exposure-principle-readjudication-20260816.json#sha256=2656e6faf2132ebdac5842f8249eef90d5ae18aa3fef0a7c0956084c2dbaeff1",
               "arXiv:2607.02901",
               "arXiv:1806.11153"
@@ -38204,8 +38293,8 @@
           ],
           "evidence_basis": [
             "first-party-asset:double-ratchet@0f14e910d361196422d9b938f45280919952d4fd",
-            "run:private-data://runs/shadow-20260816-double-ratchet-v9-r1/formulate-p1.json#sha256=c5f06dc71e323bbed7cb18f9c11f23515ecdd196597c9d358d0dab62f5b9a3b0",
-            "run:private-data://runs/shadow-20260816-double-ratchet-v9-r1/raw/formulate-p1-92f8ef904761.txt#sha256=92f8ef904761caeac882af386dcc4bb18299bbc6aca8d3de8b7cb212d65a0808",
+            "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-double-ratchet-v9-r1/formulate-p1.json#sha256=c5f06dc71e323bbed7cb18f9c11f23515ecdd196597c9d358d0dab62f5b9a3b0",
+            "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-double-ratchet-v9-r1/raw/formulate-p1-92f8ef904761.txt#sha256=92f8ef904761caeac882af386dcc4bb18299bbc6aca8d3de8b7cb212d65a0808",
             "repo:generated/shadow-v4-reciprocal-coupling-principle-readjudication-20260816.json",
             "repo:generated/shadow-p01-locked-set-causal-nopath-principle-readjudication-20260816.json",
             "arXiv:2607.12790"
@@ -38237,8 +38326,8 @@
             "positive_support": true,
             "evidence_refs": [
               "first-party-asset:double-ratchet@0f14e910d361196422d9b938f45280919952d4fd",
-              "run:private-data://runs/shadow-20260816-double-ratchet-v9-r1/formulate-p1.json#sha256=c5f06dc71e323bbed7cb18f9c11f23515ecdd196597c9d358d0dab62f5b9a3b0",
-              "run:private-data://runs/shadow-20260816-double-ratchet-v9-r1/raw/formulate-p1-92f8ef904761.txt#sha256=92f8ef904761caeac882af386dcc4bb18299bbc6aca8d3de8b7cb212d65a0808",
+              "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-double-ratchet-v9-r1/formulate-p1.json#sha256=c5f06dc71e323bbed7cb18f9c11f23515ecdd196597c9d358d0dab62f5b9a3b0",
+              "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-double-ratchet-v9-r1/raw/formulate-p1-92f8ef904761.txt#sha256=92f8ef904761caeac882af386dcc4bb18299bbc6aca8d3de8b7cb212d65a0808",
               "repo:generated/shadow-v4-reciprocal-coupling-principle-readjudication-20260816.json",
               "repo:generated/shadow-p01-locked-set-causal-nopath-principle-readjudication-20260816.json",
               "arXiv:2607.12790"
@@ -38447,7 +38536,7 @@
             "arXiv:2608.07527",
             "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/plan.json#sha256=dd3d915cb9f16291f171b36d111ba3b2df60bddbb399b26e52a61bbda7657e39",
             "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/analysis.json#sha256=2b5ca3000d2c491ff2df6a1126667edd6fb59dfa7ec8fc446c9a6b30da959a16",
-            "host52:repo://generated/paper-first-search-portfolio-design-adjudication.json#SHADOW-P06-C01"
+            "host52:/home/wyt/code/agent-self-evolution-observatory-automation/generated/paper-first-search-portfolio-design-adjudication.json#SHADOW-P06-C01"
           ],
           "problem_text": "The standalone P06 mechanism claiming that page-coverage certification, with no answer-relevance information beyond the same retrieved snippets/question, selectively exposes hidden answer-evidence gaps relative to covered-answerable cases.",
           "reason": "The frozen P06 realization is a dead end because relevance-agnostic page-coverage quantity cannot identify the hidden answer-evidence gap it is supposed to selectively repair. The experiment supplies compatible behavioral evidence, but the dead-end decision is authorized by the stronger information-structure witness, not by the negative metric alone.",
@@ -38479,7 +38568,7 @@
               "arXiv:2608.07527",
               "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/plan.json#sha256=dd3d915cb9f16291f171b36d111ba3b2df60bddbb399b26e52a61bbda7657e39",
               "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/analysis.json#sha256=2b5ca3000d2c491ff2df6a1126667edd6fb59dfa7ec8fc446c9a6b30da959a16",
-              "host52:repo://generated/paper-first-search-portfolio-design-adjudication.json#SHADOW-P06-C01"
+              "host52:/home/wyt/code/agent-self-evolution-observatory-automation/generated/paper-first-search-portfolio-design-adjudication.json#SHADOW-P06-C01"
             ],
             "alternative_explanations_ruled_out": [
               "support insufficiency: the repaired run had 128 valid units, including 47 gap-answerable and 17 covered-answerable units",
@@ -39254,7 +39343,7 @@
             "repo:MindMemOS/tests/pipelines/dreaming/test_default.py#sha256=6ab7fbfb4033db0f0fc051150812c1bd41f795b3a117519af62ebd708b91a71a",
             "repo:MindMemOS/tests/components/dreaming/test_action_planning.py#sha256=893b26ebaa31e4bd023b5fe2486d89b359fb1433f7532c24f9c1464d020384ca",
             "repo:MindMemOS/docs/eval/README_ZH.md#sha256=0dc912c7cb98070c607d1f438481f7291ffb2495ca8010706283eeff23b1047b",
-            "run:private-data://runs/shadow-20260817-source-coverage-v11-r1/formulate-p1.json#sha256=daa18de25a298c67391053af6f6a9e2f779bf05f39fbefd7c5147ea4f409882e"
+            "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260817-source-coverage-v11-r1/formulate-p1.json#sha256=daa18de25a298c67391053af6f6a9e2f779bf05f39fbefd7c5147ea4f409882e"
           ],
           "problem_text": "The v11 MindMemOS formulation claiming that the reported ~19-23% active-memory archive ratio identifies a nonmonotone compression plateau/cliff whose location is a new causal object beyond conflict-aware selective forgetting, redundancy removal, and belief revision on MemoryAgentBench FactConsolidation.",
           "reason": "The reported MindMemOS FactConsolidation result supports targeted consolidation/selective forgetting, but it does not identify a standalone ~20% compression plateau. The latter is reduced by benchmark semantics plus first-party conflict-aware dreaming behavior before any new experiment is run.",
@@ -39290,7 +39379,7 @@
               "repo:MindMemOS/tests/pipelines/dreaming/test_default.py#sha256=6ab7fbfb4033db0f0fc051150812c1bd41f795b3a117519af62ebd708b91a71a",
               "repo:MindMemOS/tests/components/dreaming/test_action_planning.py#sha256=893b26ebaa31e4bd023b5fe2486d89b359fb1433f7532c24f9c1464d020384ca",
               "repo:MindMemOS/docs/eval/README_ZH.md#sha256=0dc912c7cb98070c607d1f438481f7291ffb2495ca8010706283eeff23b1047b",
-              "run:private-data://runs/shadow-20260817-source-coverage-v11-r1/formulate-p1.json#sha256=daa18de25a298c67391053af6f6a9e2f779bf05f39fbefd7c5147ea4f409882e"
+              "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260817-source-coverage-v11-r1/formulate-p1.json#sha256=daa18de25a298c67391053af6f6a9e2f779bf05f39fbefd7c5147ea4f409882e"
             ],
             "alternative_explanations_ruled_out": [
               "The ~20% value is a controlled compression treatment: not supported. The paper reports the archive fraction produced by dreaming for each evaluated condition, not an intervention sweep over AMCR.",
@@ -39316,9 +39405,9 @@
           "scientific_authority": false
         }
       ],
-      "closed_basin_count": 42,
+      "closed_basin_count": 43,
       "closure_layer_counts": {
-        "problem_novelty": 5,
+        "problem_novelty": 6,
         "execution": 0,
         "experiment_identifiability": 2,
         "optimization": 0,
@@ -39336,7 +39425,7 @@
         "assumption_scope": 2,
         "core_principle": 2
       },
-      "problem_novelty_stop_count": 5,
+      "problem_novelty_stop_count": 6,
       "execution_stop_count": 0,
       "experiment_identifiability_stop_count": 2,
       "optimization_stop_count": 0,
@@ -39524,7 +39613,7 @@
       "near_miss_base_preflight_count": 4,
       "near_miss_terminal_support_hold_count": 3,
       "search_control_only": true,
-      "closed_object_count": 42
+      "closed_object_count": 43
     },
     "shadow_dead_end_memory": {
       "memory_id": "shadow-paper-design-core-principle-dead-end-memory-20260818-v1",
@@ -39729,10 +39818,10 @@
       "stop_standalone": 1,
       "support_inventory_required": 1,
       "shadow_dead_end_objects": 2,
-      "shadow_closed_basins": 42,
+      "shadow_closed_basins": 43,
       "principle_readjudication_dead_ends": 2,
       "principle_readjudication_closed_basins": 37,
-      "problem_novelty_stops": 5,
+      "problem_novelty_stops": 6,
       "execution_stops": 0,
       "experiment_identifiability_stops": 2,
       "optimization_stops": 0,
@@ -40553,7 +40642,7 @@
       },
       "dead_end_memory": {
         "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-        "sha256": "0c314fd2c944248124f0b594449dd15462639b40315910d4f91bccd0e7ece63a"
+        "sha256": "d45dd37b881cb5cec36e9c99f5397c74be4479860ecd55c2566e5f59c5f80826"
       },
       "defense_principle_reduction": {
         "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
@@ -48849,7 +48938,7 @@
       "reviewer_prose_and_rationale_are_excluded_from_memory_projection": true
     },
     "source_manifest": {
-      "search_memory_closed_objects": 42,
+      "search_memory_closed_objects": 43,
       "search_memory_hold_objects": 9,
       "failure_assets": 6,
       "candidate_portfolio_visible": 1,
@@ -48858,8 +48947,8 @@
       "paper_review_ledgers": 5
     },
     "summary": {
-      "entries": 65,
-      "search_closures": 40,
+      "entries": 66,
+      "search_closures": 41,
       "scientific_closures": 2,
       "holds": 9,
       "failure_assets": 3,
@@ -48867,10 +48956,10 @@
       "open_questions": 2,
       "repeated_review_blocks": 1,
       "review_lessons": 5,
-      "prompt_eligible": 65,
+      "prompt_eligible": 66,
       "transient": 0,
       "recurring_systemic": 8,
-      "scientific": 57
+      "scientific": 58
     },
     "entries": [
       {
@@ -50072,6 +50161,32 @@
         "scientific_authority": false
       },
       {
+        "memory_id": "MEM-SEAR-acf18c05269e6c6c6a",
+        "kind": "SEARCH_CLOSURE",
+        "title": "Intervention-surface lockout breaks recursive self-intervention closure",
+        "summary": "Under identical target bytes, W capability, persistent mount fault, failure signal, verification obligation, restore primitive, and budget, the frozen binary closure endpoint has no self-specific W-lockout residual: both SELF and capability-isomorphic ORDINARY require the same persistent write edge, both close in RW, and both fail in RO.",
+        "candidate_id": "RSI-LOCKOUT-C01",
+        "scope": "RSI-LOCKOUT-C01 frozen binary repair-and-activation closure under matched W lockout and fixed bounded restore.",
+        "affected_layer": "problem_novelty",
+        "memory_class": "PROBLEM_NOVELTY_STOP",
+        "durability_class": "scientific",
+        "prompt_eligible": true,
+        "search_closure_certified": true,
+        "scientific_dead_end_certified": false,
+        "principle_update_allowed": false,
+        "reopen_condition": "Only a distinct scientific object may reopen this direction with a pre-registered non-saturated post-activation outcome and timing that yields an ex-ante self-specific prediction under identical pre-treatment information and capability availability.",
+        "opposite_search_seed": "If revisited, create a distinct object around a pre-registered non-saturated post-activation outcome under blinded SELF-versus-PEER binding and identical pre-treatment capabilities.",
+        "reusable_precheck": "",
+        "source_refs": [
+          "OpenReview:j7YsSnA64D",
+          "arXiv:2606.05806",
+          "arXiv:2608.11977"
+        ],
+        "source_artifact": "shadow_search_memory",
+        "reuse_effectiveness": {},
+        "scientific_authority": false
+      },
+      {
         "memory_id": "MEM-SEAR-ad180c70ac80541fa2",
         "kind": "SEARCH_CLOSURE",
         "title": "High-TRS spatial-memory failures do not establish a procedure-compatibility mechanism",
@@ -50629,7 +50744,7 @@
       "p0": false,
       "gpu": false
     },
-    "wiki_sha256": "6dd0658f5be81a15e53cd887b966e02ebae385c6a1e155881575ae64f525296b",
+    "wiki_sha256": "0ebc5f0636fecb13be10ebdef5ece381967b93920ee841416b91db23bb119861",
     "lint": {
       "schema_version": "1.1",
       "status": "PASS",

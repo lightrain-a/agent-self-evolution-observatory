@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-22T10:15:39+00:00",
+  "generated_at": "2026-08-22T17:44:54+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -56,7 +56,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-22T10:15:39+00:00",
+    "generated_at": "2026-08-22T17:44:54+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -769,6 +769,95 @@
           "same_information_reduction_verified": true,
           "reopen_condition": "A new agent-specific primary phenomenon yields an ex-ante prediction under identical treatment, monitoring, state, task-distribution, and trace-availability information that cannot be expressed by treatment-induced confounding, joint treatment-monitoring interventions, informative monitoring/missingness, or performative/adaptive data-collection models; textual-policy terminology alone does not reopen the basin."
         }
+      },
+      {
+        "source_candidate_id": "RSI-LOCKOUT-C01",
+        "basin": "matched-simplification-readjudication-3fdc078df275f1b3",
+        "search_primitive": "MATCHED_SIMPLIFICATION",
+        "title": "Intervention-surface lockout breaks recursive self-intervention closure",
+        "avoid": [
+          "paraphrase-only variants of: Intervention-surface lockout breaks recursive self-intervention closure",
+          "adding repetitions, models, budgets, R/V firewall work, or a new substrate to rescue the same saturated binary interaction",
+          "treating the raw automated pilot GO as authoritative after the trace audit rejected it"
+        ],
+        "strongest_reduction": "Under identical target bytes, W capability, persistent mount fault, failure signal, verification obligation, restore primitive, and budget, the frozen binary closure endpoint has no self-specific W-lockout residual: both SELF and capability-isomorphic ORDINARY require the same persistent write edge, both close in RW, and both fail in RO.",
+        "current_source_refs": [
+          "arXiv:2608.11977",
+          "arXiv:2606.05806",
+          "OpenReview:j7YsSnA64D"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.11977",
+          "arXiv:2606.05806",
+          "OpenReview:j7YsSnA64D",
+          "canonical-run:rsi-lockout-c01-matched-reduction-closure-20260822T164000Z#manifest=6e1d8a18bafdb247811c84e5db2747ddf5c311cd66cd496090a318db04a7f115",
+          "cross-host-run:rsi-lockout-c01-g3-matched-pilot-20260823#manifest=4040ab2d1258a9971d883b32b20ba730ec3265196fbf6c15ca3e6a53fa33eddd"
+        ],
+        "problem_text": "The frozen RSI-LOCKOUT-C01 paper-problem formulation using binary repair-and-activation closure under capability-isomorphic SELF versus ORDINARY persistent-target W lockout and fixed bounded restore.",
+        "reason": "The current realization stops before full scale-up because the strongest matched simplification structurally saturates the registered primary binary interaction and the bounded falsifier leaves no replicated self-specific residual.",
+        "reopen_only_if": "Only a distinct scientific object may reopen this direction: pre-register a non-saturated post-activation outcome and timing that yields an ex-ante self-specific prediction under identical pre-treatment information and capability availability. More repetitions, larger models, extra R/V firewall work, or a new substrate do not reopen RSI-LOCKOUT-C01.",
+        "search_closure_certified": true,
+        "dead_end_certified": false,
+        "closure_layer": "problem_novelty",
+        "failure_layer": null,
+        "memory_class": "PROBLEM_NOVELTY_STOP",
+        "principle_update_allowed": false,
+        "broader_core_principle_falsified": false,
+        "source_stop_class": "PROBLEM_NOVELTY_STOP",
+        "failure_layer_reason": "The current realization stops before full scale-up because the strongest matched simplification structurally saturates the registered primary binary interaction and the bounded falsifier leaves no replicated self-specific residual.",
+        "failure_layer_review_basis": "rsi-lockout-c01-matched-simplification-readjudication-2026-08-22",
+        "experiment_run_for_this_readjudication": true,
+        "experiment_alone_authorizes_closure": false,
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "Under identical target bytes, capability graph, W fault, failure signal, verification obligation, restore primitive, and budget, the frozen binary recursive-closure endpoint has no self-specific W-lockout residual: the required persistent write edge is removed in both SELF and ORDINARY and restored in the same way.",
+          "opposite_prediction": "A capability-isomorphic ordinary persistent-target control predicts the same RW success / RO failure structure as the recursive self target. Any paper-level residual must instead survive exact support matching as a replicated same-direction downstream self-state effect.",
+          "opposite_principle": "For the frozen endpoint, persistent self-intervention lockout behaves as matched persistent tool/path failure unless an additional post-activation self-state effect survives identical-information control.",
+          "opposite_search_seed": "If revisited, create a distinct object around a pre-registered non-saturated post-activation outcome under blinded SELF-versus-PEER binding and identical pre-treatment capabilities.",
+          "scope": "RSI-LOCKOUT-C01 frozen binary repair-and-activation closure under matched W lockout and fixed bounded restore.",
+          "same_information_or_scope_matched": true,
+          "evidence_refs": [
+            "arXiv:2608.11977",
+            "arXiv:2606.05806",
+            "OpenReview:j7YsSnA64D",
+            "canonical-run:rsi-lockout-c01-matched-reduction-closure-20260822T164000Z#manifest=6e1d8a18bafdb247811c84e5db2747ddf5c311cd66cd496090a318db04a7f115"
+          ],
+          "alternative_explanations_ruled_out": [
+            "identity collision with terminal SHADOW-RSI-C01",
+            "tool-name-only denial rather than resource-level W lockout",
+            "hidden supervisor-authored repair content or target-byte mutation",
+            "different SELF versus ORDINARY OS-level fault severity",
+            "support/provider failure in the bounded pilot",
+            "stable same-direction self-specific restore effect",
+            "the raw automated GO after its decision-rule implementation bug was identified"
+          ],
+          "positive_support": true,
+          "same_information_reduction_verified": true,
+          "reopen_condition": "Only a distinct scientific object may reopen this direction with a pre-registered non-saturated post-activation outcome and timing that yields an ex-ante self-specific prediction under identical pre-treatment information and capability availability."
+        },
+        "source_readjudication_artifact": "generated/rsi-lockout-c01-matched-simplification-readjudication-20260822.json",
+        "canonical_binding": {
+          "run_id": "rsi-lockout-c01-matched-reduction-closure-20260822T164000Z",
+          "object_contract_sha256": "6b123f5a092b594500d7dd554f69bd20e62032f92dde6f9913229b1a8aba30d2",
+          "closest_work_review_sha256": "b98d42e14eb9a8e0c55c9d7c9890e0afc26357b1c169b6cf721348fdeb75f38f",
+          "readjudication_sha256": "0c635c401f2ed823d56c287995511daac63f486d4491ff37071ae2144b4f09ce",
+          "terminal_closure_sha256": "79bd6170b427ac9b32b2b8a0d180e898155d8fc029099c39e635d41b954eef55",
+          "counter_explanation_audit_repair_sha256": "c40522209d13c20888f5b9488f5e59eb06709f466bb321decb559ce355bc07e7",
+          "manifest_sha256": "6e1d8a18bafdb247811c84e5db2747ddf5c311cd66cd496090a318db04a7f115"
+        },
+        "matched_result": {
+          "qualified_episodes": 18,
+          "self_rw_success": "3/3",
+          "self_ro_success": "0/3",
+          "ordinary_rw_success": "3/3",
+          "ordinary_ro_success": "0/3",
+          "primary_difference_in_differences": 0.0,
+          "self_restore_success": "2/3",
+          "ordinary_restore_success": "2/3",
+          "aggregate_restore_difference": 0.0,
+          "replicated_same_direction_self_specific_excess": false
+        },
+        "scientific_authority": false
       },
       {
         "source_candidate_id": "PA-01-EVIDENCE-ECHO",
@@ -3568,9 +3657,9 @@
         "scientific_authority": false
       }
     ],
-    "closed_basin_count": 42,
+    "closed_basin_count": 43,
     "closure_layer_counts": {
-      "problem_novelty": 5,
+      "problem_novelty": 6,
       "execution": 0,
       "experiment_identifiability": 2,
       "optimization": 0,
@@ -3588,7 +3677,7 @@
       "assumption_scope": 2,
       "core_principle": 2
     },
-    "problem_novelty_stop_count": 5,
+    "problem_novelty_stop_count": 6,
     "execution_stop_count": 0,
     "experiment_identifiability_stop_count": 2,
     "optimization_stop_count": 0,
@@ -3776,7 +3865,7 @@
     "near_miss_base_preflight_count": 4,
     "near_miss_terminal_support_hold_count": 3,
     "search_control_only": true,
-    "closed_object_count": 42
+    "closed_object_count": 43
   },
   "shadow_dead_end_memory": {
     "memory_id": "shadow-paper-design-core-principle-dead-end-memory-20260818-v1",
@@ -3981,10 +4070,10 @@
     "stop_standalone": 1,
     "support_inventory_required": 1,
     "shadow_dead_end_objects": 2,
-    "shadow_closed_basins": 42,
+    "shadow_closed_basins": 43,
     "principle_readjudication_dead_ends": 2,
     "principle_readjudication_closed_basins": 37,
-    "problem_novelty_stops": 5,
+    "problem_novelty_stops": 6,
     "execution_stops": 0,
     "experiment_identifiability_stops": 2,
     "optimization_stops": 0,

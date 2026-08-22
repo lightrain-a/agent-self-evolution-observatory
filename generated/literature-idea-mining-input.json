@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-22T14:50:54+00:00",
+  "generated_at": "2026-08-22T17:46:49+00:00",
   "projection_policy": {
     "read_only": true,
     "scientific_authority": false,
@@ -14,7 +14,7 @@
     "literature_gap_registry": "literature-idea-mining-data.json",
     "research_item_ledger": "generated/research-items.json",
     "research_item_schema_version": "1.0",
-    "research_item_source_revision": "cad2c1e6698bbda9696995b80041f2e17584b561"
+    "research_item_source_revision": "2be0be0f3e0cba1b301b6e6202818e9335163e29"
   },
   "basis": {
     "zh": "以当前正式发表主线为第一层证据。这里的“拥挤/机会”只表示当前文献库中的碰撞风险，不是最终 novelty 判决；候选生成后仍必须补最新预印本检索、原文核验和 strongest-baseline 对齐。",
@@ -287,6 +287,25 @@
       "reopen_condition": {
         "zh": "evidence-impact-revalidation: maintain dependency scope and selectively invalidate/revalidate affected evidence as a runtime/governance optimization, not a standalone paper thesis.",
         "en": "evidence-impact-revalidation: maintain dependency scope and selectively invalidate/revalidate affected evidence as a runtime/governance optimization, not a standalone paper thesis."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "A-13": {
+      "code": "A-13",
+      "category": "A",
+      "title": {
+        "zh": "Intervention-surface lockout breaks recursive self-intervention closure",
+        "en": "Intervention-surface lockout breaks recursive self-intervention closure"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Intervention-surface lockout breaks recursive self-intervention closure",
+        "en": "Intervention-surface lockout breaks recursive self-intervention closure"
+      },
+      "reopen_condition": {
+        "zh": "Only a distinct scientific object may reopen this direction: pre-register a non-saturated post-activation outcome and timing that yields an ex-ante self-specific prediction under identical pre-treatment information and capability availability. More repetitions, larger models, extra R/V firewall work, or a new substrate do not reopen RSI-LOCKOUT-C01.",
+        "en": "Only a distinct scientific object may reopen this direction: pre-register a non-saturated post-activation outcome and timing that yields an ex-ante self-specific prediction under identical pre-treatment information and capability availability. More repetitions, larger models, extra R/V firewall work, or a new substrate do not reopen RSI-LOCKOUT-C01."
       },
       "principle_dead_end_certified": false,
       "paper_transition": null
@@ -1802,6 +1821,7 @@
         "A-10",
         "A-11",
         "A-12",
+        "A-13",
         "B-1",
         "B-2",
         "B-3",
@@ -1842,6 +1862,7 @@
         "A-10",
         "A-11",
         "A-12",
+        "A-13",
         "B-1",
         "B-4",
         "B-5",
@@ -1864,9 +1885,9 @@
         "D-3"
       ],
       "collision_summary": {
-        "mapped_research_items": 34,
+        "mapped_research_items": 35,
         "active_or_reopenable": 3,
-        "terminal_history": 31,
+        "terminal_history": 32,
         "nearest_published": 3
       }
     },
@@ -2139,6 +2160,7 @@
         "A-10",
         "A-11",
         "A-12",
+        "A-13",
         "E-1",
         "E-2",
         "E-3",
@@ -2181,6 +2203,7 @@
         "A-10",
         "A-11",
         "A-12",
+        "A-13",
         "E-2",
         "E-3",
         "E-4",
@@ -2205,9 +2228,9 @@
         "E-24"
       ],
       "collision_summary": {
-        "mapped_research_items": 36,
+        "mapped_research_items": 37,
         "active_or_reopenable": 3,
-        "terminal_history": 33,
+        "terminal_history": 34,
         "nearest_published": 4
       }
     },
@@ -2424,6 +2447,7 @@
         "A-10",
         "A-11",
         "A-12",
+        "A-13",
         "G-1",
         "G-2",
         "G-3",
@@ -2454,6 +2478,7 @@
         "A-10",
         "A-11",
         "A-12",
+        "A-13",
         "G-2",
         "G-3",
         "G-4",
@@ -2468,9 +2493,9 @@
         "G-13"
       ],
       "collision_summary": {
-        "mapped_research_items": 25,
+        "mapped_research_items": 26,
         "active_or_reopenable": 2,
-        "terminal_history": 23,
+        "terminal_history": 24,
         "nearest_published": 2
       }
     },
@@ -2526,6 +2551,7 @@
         "A-10",
         "A-11",
         "A-12",
+        "A-13",
         "D-1",
         "D-2",
         "D-3",
@@ -2559,6 +2585,7 @@
         "A-10",
         "A-11",
         "A-12",
+        "A-13",
         "D-1",
         "D-2",
         "D-3",
@@ -2576,9 +2603,9 @@
         "G-13"
       ],
       "collision_summary": {
-        "mapped_research_items": 28,
+        "mapped_research_items": 29,
         "active_or_reopenable": 2,
-        "terminal_history": 26,
+        "terminal_history": 27,
         "nearest_published": 2
       }
     },
@@ -2750,6 +2777,7 @@
         "A-10",
         "A-11",
         "A-12",
+        "A-13",
         "B-1",
         "B-2",
         "B-3",
@@ -2787,6 +2815,7 @@
         "A-10",
         "A-11",
         "A-12",
+        "A-13",
         "B-1",
         "B-4",
         "B-5",
@@ -2806,9 +2835,9 @@
         "B-21"
       ],
       "collision_summary": {
-        "mapped_research_items": 31,
+        "mapped_research_items": 32,
         "active_or_reopenable": 3,
-        "terminal_history": 28,
+        "terminal_history": 29,
         "nearest_published": 2
       }
     }
