@@ -47,6 +47,12 @@
       "rebuttal_decision_critical": 0,
       "rebuttal_missing_decisive_evidence": 0,
       "rebuttal_new_claim_requests": 0,
+      "learning_status": "NOT_ELIGIBLE",
+      "venue_final_decision": "",
+      "venue_decision_sha256": "",
+      "post_decision_learning_sha256": "",
+      "post_decision_lessons": 0,
+      "post_decision_scientific_diagnostic_lessons": 0,
       "blocker_groups": [],
       "blocker_count": 0,
       "next_actions": [
@@ -106,6 +112,12 @@
       "rebuttal_decision_critical": 0,
       "rebuttal_missing_decisive_evidence": 0,
       "rebuttal_new_claim_requests": 0,
+      "learning_status": "NOT_ELIGIBLE",
+      "venue_final_decision": "",
+      "venue_decision_sha256": "",
+      "post_decision_learning_sha256": "",
+      "post_decision_lessons": 0,
+      "post_decision_scientific_diagnostic_lessons": 0,
       "blocker_groups": [],
       "blocker_count": 0,
       "next_actions": [
@@ -165,6 +177,12 @@
       "rebuttal_decision_critical": 0,
       "rebuttal_missing_decisive_evidence": 0,
       "rebuttal_new_claim_requests": 0,
+      "learning_status": "NOT_ELIGIBLE",
+      "venue_final_decision": "",
+      "venue_decision_sha256": "",
+      "post_decision_learning_sha256": "",
+      "post_decision_lessons": 0,
+      "post_decision_scientific_diagnostic_lessons": 0,
       "blocker_groups": [],
       "blocker_count": 0,
       "next_actions": [
@@ -224,6 +242,12 @@
       "rebuttal_decision_critical": 0,
       "rebuttal_missing_decisive_evidence": 0,
       "rebuttal_new_claim_requests": 0,
+      "learning_status": "NOT_ELIGIBLE",
+      "venue_final_decision": "",
+      "venue_decision_sha256": "",
+      "post_decision_learning_sha256": "",
+      "post_decision_lessons": 0,
+      "post_decision_scientific_diagnostic_lessons": 0,
       "blocker_groups": [
         "DECISIVE_EVIDENCE",
         "STATISTICS_UNCERTAINTY",
@@ -299,6 +323,12 @@
       "rebuttal_decision_critical": 0,
       "rebuttal_missing_decisive_evidence": 0,
       "rebuttal_new_claim_requests": 0,
+      "learning_status": "NOT_ELIGIBLE",
+      "venue_final_decision": "",
+      "venue_decision_sha256": "",
+      "post_decision_learning_sha256": "",
+      "post_decision_lessons": 0,
+      "post_decision_scientific_diagnostic_lessons": 0,
       "blocker_groups": [],
       "blocker_count": 0,
       "next_actions": [
@@ -335,6 +365,10 @@
     "review_sets_current": 0,
     "rebuttal_preparation_pending": 0,
     "rebuttal_active": 0,
+    "final_decisions_recorded": 0,
+    "post_decision_learning_pending": 0,
+    "learning_prepared": 0,
+    "learn_complete": 0,
     "submission_freeze_eligible": 4,
     "ledger_replay_failures": 0,
     "contract_integrity_failures": 0
@@ -345,5 +379,5 @@
     "gpu": false,
     "submission": false
   },
-  "audit_sha256": "af11c2725fef5b9d1a28020e019f9fbb5767a8c824da7f5bba746df8b7d3bfc5"
+  "audit_sha256": "95e7a63c12b207f781988f296193f8f4e720b0d8b842e69527d545d21e149f28"
 }

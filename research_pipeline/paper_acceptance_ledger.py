@@ -58,6 +58,8 @@ def _refresh(row: dict[str, Any]) -> None:
         "submission_readiness_receipts": sum(event.get("event_type") == "submission-readiness" for event in events),
         "actual_submission_receipts": sum(event.get("event_type") == "actual-submission" for event in events),
         "rebuttal_preparation_receipts": sum(event.get("event_type") == "rebuttal-preparation" for event in events),
+        "venue_decision_receipts": sum(event.get("event_type") == "venue-decision" for event in events),
+        "post_decision_learning_receipts": sum(event.get("event_type") == "post-decision-learning" for event in events),
     }
 
 
@@ -132,6 +134,16 @@ def _validate_rebuttal_preparation_receipt(receipt: Mapping[str, Any]) -> bool:
     return validate_rebuttal_receipt(receipt)
 
 
+def _validate_venue_decision_receipt(receipt: Mapping[str, Any]) -> bool:
+    from .post_decision_learning import validate_venue_decision_receipt
+    return validate_venue_decision_receipt(receipt)
+
+
+def _validate_post_decision_learning_receipt(receipt: Mapping[str, Any]) -> bool:
+    from .post_decision_learning import validate_learning_receipt
+    return validate_learning_receipt(receipt)
+
+
 def _receipt_hash_valid(receipt: Mapping[str, Any]) -> bool:
     receipt_type = str(receipt.get("receipt_type") or "")
     if receipt_type == "story-search":
@@ -161,6 +173,10 @@ def _receipt_hash_valid(receipt: Mapping[str, Any]) -> bool:
         return _validate_actual_submission_receipt(receipt)
     if receipt_type == "rebuttal-preparation":
         return _validate_rebuttal_preparation_receipt(receipt)
+    if receipt_type == "venue-final-decision":
+        return _validate_venue_decision_receipt(receipt)
+    if receipt_type == "post-decision-learning":
+        return _validate_post_decision_learning_receipt(receipt)
     if receipt_type == "claim-audit":
         identity = {
             "paper_id": receipt.get("paper_id"),
@@ -273,6 +289,28 @@ def _transition_gate(row: Mapping[str, Any], current: PaperState, target: PaperS
         else:
             gate_receipts["rebuttal_preparation_receipt_sha256"] = rebuttal_sha
             gate_receipts["review_set_sha256"] = str(receipt.get("review_set_sha256") or "")
+    if target == PaperState.LEARN:
+        decision: dict[str, Any] = {}
+        learning: dict[str, Any] = {}
+        for event in reversed(stage_events):
+            candidate = event.get("receipt") or {}
+            if not isinstance(candidate, dict) or str(candidate.get("contract_sha256") or "") != contract_sha256:
+                continue
+            if not decision and event.get("event_type") == "venue-decision" and _validate_venue_decision_receipt(candidate):
+                decision = candidate
+            if not learning and event.get("event_type") == "post-decision-learning" and candidate.get("pass") is True and _validate_post_decision_learning_receipt(candidate):
+                learning = candidate
+        decision_sha = str(decision.get("venue_decision_sha256") or "")
+        learning_sha = str(learning.get("learning_receipt_sha256") or "")
+        if not decision_sha:
+            blockers.append("venue-final-decision-receipt-required")
+        if not learning_sha:
+            blockers.append("post-decision-learning-pass-receipt-required")
+        elif not decision_sha or str(learning.get("venue_decision_sha256") or "") != decision_sha:
+            blockers.append("post-decision-learning-decision-lineage-mismatch")
+        else:
+            gate_receipts["venue_decision_sha256"] = decision_sha
+            gate_receipts["learning_receipt_sha256"] = learning_sha
     return blockers, gate_receipts
 
 
@@ -625,6 +663,141 @@ def advance_frozen_paper_to_submitted(
         return {"ledger": row, "receipt": event}
 
 
+def record_venue_decision(
+    root: Path,
+    contract: PaperContract,
+    receipt: Mapping[str, Any],
+    actor: str = "venue-final-decision",
+) -> dict[str, Any]:
+    if not _validate_venue_decision_receipt(receipt):
+        raise RuntimeError("invalid venue final-decision receipt")
+    if str(receipt.get("paper_id") or "") != contract.paper_id or str(receipt.get("contract_sha256") or "") != paper_contract_digest(contract):
+        raise RuntimeError("venue decision paper/contract mismatch")
+    row = initialize_paper_ledger(root, contract, actor)
+    if str(row.get("current_state") or "") != PaperState.REBUTTAL.value:
+        raise RuntimeError("venue final decision may only be recorded from REBUTTAL")
+    prior = _latest(row, "venue-decision").get("receipt") or {}
+    if isinstance(prior, dict) and prior.get("venue_decision_sha256") == receipt.get("venue_decision_sha256"):
+        return row
+    return _append(root, contract, actor, {"event_type": "venue-decision", "receipt": dict(receipt), "recorded_at": str(receipt.get("received_at") or _now())})
+
+
+def record_post_decision_learning(
+    root: Path,
+    contract: PaperContract,
+    receipt: Mapping[str, Any],
+    actor: str = "post-decision-learning",
+) -> dict[str, Any]:
+    if not _validate_post_decision_learning_receipt(receipt) or receipt.get("pass") is not True:
+        raise RuntimeError("invalid or blocked post-decision learning receipt")
+    if str(receipt.get("paper_id") or "") != contract.paper_id or str(receipt.get("contract_sha256") or "") != paper_contract_digest(contract):
+        raise RuntimeError("learning receipt paper/contract mismatch")
+    row = initialize_paper_ledger(root, contract, actor)
+    if str(row.get("current_state") or "") != PaperState.REBUTTAL.value:
+        raise RuntimeError("post-decision learning may only be recorded from REBUTTAL")
+    prior = _latest(row, "post-decision-learning").get("receipt") or {}
+    if isinstance(prior, dict) and prior.get("learning_receipt_sha256") == receipt.get("learning_receipt_sha256"):
+        return row
+    return _append(root, contract, actor, {"event_type": "post-decision-learning", "receipt": dict(receipt)})
+
+
+def _append_frozen_post_submission_receipt(root: Path, paper_id: str, event_type: str, receipt: Mapping[str, Any], actor: str, recorded_at: str) -> dict[str, Any]:
+    path, lock = _paths(root, paper_id)
+    with lock.open("a+", encoding="utf-8") as handle:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+        if not path.exists():
+            raise FileNotFoundError(path)
+        row = json.loads(path.read_text(encoding="utf-8"))
+        digest = str(row.get("contract_sha256") or "")
+        if not digest or _digest(row.get("contract") or {}) != digest:
+            raise RuntimeError(f"frozen paper contract payload digest mismatch for {paper_id}")
+        if str(row.get("paper_id") or "") != paper_id or str(receipt.get("paper_id") or "") != paper_id or str(receipt.get("contract_sha256") or "") != digest:
+            raise RuntimeError(f"{event_type} paper/contract mismatch")
+        if str(row.get("current_state") or "") != PaperState.REBUTTAL.value:
+            raise RuntimeError(f"{event_type} may only be recorded from REBUTTAL")
+        hash_key = "venue_decision_sha256" if event_type == "venue-decision" else "learning_receipt_sha256"
+        prior = _latest(row, event_type).get("receipt") or {}
+        if isinstance(prior, dict) and prior.get(hash_key) == receipt.get(hash_key):
+            return row
+        payload = {
+            "event_type": event_type,
+            "receipt": dict(receipt),
+            "actor": actor,
+            "recorded_at": recorded_at,
+            "scientific_authority": False,
+            "experiment_authority": False,
+            "gpu_authority": False,
+            "submission_authority": False,
+        }
+        payload["event_id"] = _digest([paper_id, digest, len(row.get("events") or []), payload])[:24]
+        row.setdefault("events", []).append(payload)
+        row["updated_at"] = recorded_at
+        _refresh(row)
+        _atomic(path, row)
+        return row
+
+
+def record_frozen_contract_venue_decision(root: Path, paper_id: str, receipt: Mapping[str, Any], actor: str = "venue-final-decision") -> dict[str, Any]:
+    if not _validate_venue_decision_receipt(receipt):
+        raise RuntimeError("invalid venue final-decision receipt")
+    return _append_frozen_post_submission_receipt(root, paper_id, "venue-decision", receipt, actor, str(receipt.get("received_at") or _now()))
+
+
+def record_frozen_contract_post_decision_learning(root: Path, paper_id: str, receipt: Mapping[str, Any], actor: str = "post-decision-learning") -> dict[str, Any]:
+    if not _validate_post_decision_learning_receipt(receipt) or receipt.get("pass") is not True:
+        raise RuntimeError("invalid or blocked post-decision learning receipt")
+    return _append_frozen_post_submission_receipt(root, paper_id, "post-decision-learning", receipt, actor, _now())
+
+
+def advance_frozen_paper_to_learn(root: Path, paper_id: str, *, actor: str = "post-decision-learning") -> dict[str, Any]:
+    path, lock = _paths(root, paper_id)
+    with lock.open("a+", encoding="utf-8") as handle:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+        if not path.exists():
+            raise FileNotFoundError(path)
+        row = json.loads(path.read_text(encoding="utf-8"))
+        digest = str(row.get("contract_sha256") or "")
+        if not digest or _digest(row.get("contract") or {}) != digest:
+            raise RuntimeError(f"frozen paper contract payload digest mismatch for {paper_id}")
+        current = PaperState(str(row.get("current_state") or ""))
+        if current == PaperState.LEARN:
+            prior = _latest(row, "paper-transition")
+            if prior.get("allowed") is True and prior.get("to") == PaperState.LEARN.value:
+                return {"ledger": row, "receipt": prior}
+            raise RuntimeError("paper already in LEARN without a replayable transition")
+        if current != PaperState.REBUTTAL:
+            raise RuntimeError("paper must be REBUTTAL before entering LEARN")
+        blockers, gate_receipts = _transition_gate(row, current, PaperState.LEARN)
+        decision = _latest(row, "venue-decision").get("receipt") or {}
+        event = {
+            "event_type": "paper-transition",
+            "actor": actor,
+            "recorded_at": str(decision.get("received_at") or _now()),
+            "from": current.value,
+            "to": PaperState.LEARN.value,
+            "allowed": not blockers,
+            "blockers": list(dict.fromkeys(blockers)),
+            "artifact_refs": [],
+            "gate_receipts": gate_receipts,
+            "external_submission_authority_ref": "",
+            "scientific_authority": False,
+            "experiment_authority": False,
+            "gpu_authority": False,
+            "submission_authority": False,
+        }
+        event["event_id"] = _digest([paper_id, digest, len(row.get("events") or []), event])[:24]
+        row.setdefault("events", []).append(event)
+        if event["allowed"]:
+            row["current_state"] = PaperState.LEARN.value
+        row["updated_at"] = event["recorded_at"]
+        _refresh(row)
+        errors = validate_paper_ledger(row)
+        if errors:
+            raise RuntimeError(f"paper ledger invalid after LEARN transition: {errors}")
+        _atomic(path, row)
+        return {"ledger": row, "receipt": event}
+
+
 def advance_frozen_paper_to_rebuttal(
     root: Path,
     paper_id: str,
@@ -736,7 +909,7 @@ def validate_paper_ledger(row: Mapping[str, Any]) -> list[str]:
         if any(event.get(key) is True for key in ("scientific_authority", "experiment_authority", "gpu_authority", "submission_authority")):
             errors.append("paper event leaked authority")
         event_type = str(event.get("event_type") or "")
-        if event_type in {"story-search", "mock-pc-review", "claim-audit", "paper-preparation", "actual-submission", "rebuttal-preparation"}:
+        if event_type in {"story-search", "mock-pc-review", "claim-audit", "paper-preparation", "actual-submission", "rebuttal-preparation", "venue-decision", "post-decision-learning"}:
             receipt = event.get("receipt") or {}
             if not isinstance(receipt, dict) or str(receipt.get("contract_sha256") or "") != contract_sha256 or not _receipt_hash_valid(receipt):
                 errors.append(f"invalid-content-addressed-receipt:{event_type}")

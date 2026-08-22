@@ -14,6 +14,7 @@ from .human_submission_signoff import validate_signoff_ledger, verify_current_si
 from .venue_submission_receipt import validate_submission_receipt
 from .revision_impact_audit import audit_freeze_receipt
 from .rebuttal_protocol import validate_rebuttal_receipt, validate_review_set
+from .post_decision_learning import validate_learning_receipt, validate_venue_decision_receipt
 
 DEFAULT_ROOT = Path('/data/wyt/agent-self-evolution-observatory')
 
@@ -175,7 +176,7 @@ def human_signoff_state(root: Path, paper_id: str, machine_handoff_status: str) 
 
 
 def review_intake_state(root: Path, paper_id: str, submission_receipt_sha256: str, state: str) -> dict[str, Any]:
-    if state not in {'SUBMITTED', 'REBUTTAL'}:
+    if state not in {'SUBMITTED', 'REBUTTAL', 'LEARN'}:
         return {'status': 'NOT_ELIGIBLE', 'review_set_sha256': '', 'review_count': 0, 'errors': []}
     path = root / 'paper-review-intake' / f'{paper_id}.json'
     if not path.exists():
@@ -220,6 +221,26 @@ def rebuttal_state(row: Mapping[str, Any], review_set_sha256: str) -> dict[str, 
     }
 
 
+def learning_state(row: Mapping[str, Any]) -> dict[str, Any]:
+    state=str(row.get('current_state') or '')
+    d_event=latest(row,'venue-decision'); decision=d_event.get('receipt') if isinstance(d_event.get('receipt'),dict) else {}
+    l_event=latest(row,'post-decision-learning'); learning=l_event.get('receipt') if isinstance(l_event.get('receipt'),dict) else {}
+    decision_valid=bool(decision) and str(decision.get('contract_sha256') or '')==str(row.get('contract_sha256') or '') and validate_venue_decision_receipt(decision)
+    learning_valid=bool(learning) and str(learning.get('contract_sha256') or '')==str(row.get('contract_sha256') or '') and validate_learning_receipt(learning)
+    lineage_ok=decision_valid and learning_valid and learning.get('venue_decision_sha256')==decision.get('venue_decision_sha256')
+    if state=='LEARN': status='LEARN_COMPLETE' if lineage_ok and learning.get('pass') is True else 'LEARN_RECEIPT_INVALID'
+    elif state=='REBUTTAL': status='AWAITING_FINAL_VENUE_DECISION' if not decision_valid else ('LEARNING_PREPARED_TRANSITION_PENDING' if lineage_ok and learning.get('pass') is True else 'POST_DECISION_LEARNING_PENDING')
+    else: status='NOT_ELIGIBLE'
+    summary=learning.get('summary') if isinstance(learning.get('summary'),dict) else {}
+    return {
+        'status':status,'decision':str(decision.get('decision') or ''),'decision_valid':decision_valid,
+        'venue_decision_sha256':str(decision.get('venue_decision_sha256') or ''),
+        'learning_valid':lineage_ok,'learning_receipt_sha256':str(learning.get('learning_receipt_sha256') or ''),
+        'lessons':int(summary.get('lessons') or 0),'scientific_diagnostic_only':int(summary.get('scientific_diagnostic_only') or 0),
+        'paper_process_lessons':int(summary.get('paper_process_lessons') or 0),
+    }
+
+
 def project(path: Path, root: Path) -> dict[str, Any]:
     row = json.loads(path.read_text(encoding='utf-8'))
     paper_id = str(row.get('paper_id') or path.stem)
@@ -246,7 +267,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
             groups.append(group)
 
     state = str(row.get('current_state') or '')
-    lineage_ready = state in {'SUBMISSION_READY', 'SUBMITTED'} and preparation == 'PASS' and contract_ok and not ledger_errors
+    lineage_ready = state in {'SUBMISSION_READY', 'SUBMITTED', 'REBUTTAL', 'LEARN'} and preparation == 'PASS' and contract_ok and not ledger_errors
     base_ready = state == 'SUBMISSION_READY' and lineage_ready
     freeze = freeze_state(root, paper_id, str(prep_receipt.get('receipt_sha256') or '')) if lineage_ready else {
         'status': 'PREPARATION_BLOCKED' if preparation == 'BLOCKED' else 'NOT_ELIGIBLE',
@@ -269,12 +290,18 @@ def project(path: Path, root: Path) -> dict[str, Any]:
     actual_event = latest(row, 'actual-submission')
     actual_receipt = actual_event.get('receipt') if isinstance(actual_event.get('receipt'), dict) else {}
     actual_valid = bool(actual_receipt) and str(actual_receipt.get('contract_sha256') or '') == recorded and validate_submission_receipt(actual_receipt)
-    actual_submission_status = 'VENUE_SUBMISSION_CONFIRMED' if state in {'SUBMITTED','REBUTTAL'} and actual_valid else ('SUBMITTED_RECEIPT_INVALID' if state in {'SUBMITTED','REBUTTAL'} else ('VENUE_SUBMISSION_RECEIPT_RECORDED_TRANSITION_PENDING' if actual_valid else 'NOT_SUBMITTED'))
+    actual_submission_status = 'VENUE_SUBMISSION_CONFIRMED' if state in {'SUBMITTED','REBUTTAL','LEARN'} and actual_valid else ('SUBMITTED_RECEIPT_INVALID' if state in {'SUBMITTED','REBUTTAL','LEARN'} else ('VENUE_SUBMISSION_RECEIPT_RECORDED_TRANSITION_PENDING' if actual_valid else 'NOT_SUBMITTED'))
     review_intake=review_intake_state(root,paper_id,str(actual_receipt.get('submission_receipt_sha256') or ''),state)
     rebuttal=rebuttal_state(row,review_intake['review_set_sha256'])
+    learning=learning_state(row)
     actions = next_actions(groups)
-    if state == 'REBUTTAL':
-        actions = ['rebuttal preparation is receipt-bound and active; do not add experiments or claims without separate scientific authorization'] if rebuttal['status']=='REBUTTAL_ACTIVE' else ['REBUTTAL state has an invalid or stale preparation receipt; stop response workflow until repaired']
+    if state == 'LEARN':
+        actions = ['post-decision learning is complete; reuse process lessons only within their declared scope, while scientific lessons remain diagnostic until independent evidence exists'] if learning['status']=='LEARN_COMPLETE' else ['LEARN state has invalid decision/learning lineage; stop reuse until repaired']
+    elif state == 'REBUTTAL':
+        if rebuttal['status']!='REBUTTAL_ACTIVE': actions=['REBUTTAL state has an invalid or stale preparation receipt; stop response workflow until repaired']
+        elif learning['status']=='AWAITING_FINAL_VENUE_DECISION': actions=['rebuttal is active; await the real final venue decision']
+        elif learning['status']=='POST_DECISION_LEARNING_PENDING': actions=['record scoped post-decision lessons; acceptance/rejection does not change scientific claim truth']
+        elif learning['status']=='LEARNING_PREPARED_TRANSITION_PENDING': actions=['post-decision learning passed; advance REBUTTAL → LEARN without granting scientific or experiment authority']
     elif state == 'SUBMITTED':
         if not actual_valid: actions=['SUBMITTED state has an invalid or missing venue submission receipt; treat the ledger as invalid until repaired']
         elif review_intake['status']=='AWAITING_VENUE_REVIEWS': actions=['await real venue reviews; do not synthesize mock reviews into the rebuttal ledger']
@@ -344,6 +371,12 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         'rebuttal_decision_critical': rebuttal['decision_critical'],
         'rebuttal_missing_decisive_evidence': rebuttal['missing_decisive_evidence'],
         'rebuttal_new_claim_requests': rebuttal['new_claim_requests'],
+        'learning_status': learning['status'],
+        'venue_final_decision': learning['decision'],
+        'venue_decision_sha256': learning['venue_decision_sha256'],
+        'post_decision_learning_sha256': learning['learning_receipt_sha256'],
+        'post_decision_lessons': learning['lessons'],
+        'post_decision_scientific_diagnostic_lessons': learning['scientific_diagnostic_only'],
         'blocker_groups': groups,
         'blocker_count': len(blockers),
         'next_actions': actions,
@@ -398,6 +431,10 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'review_sets_current': sum(p['review_intake_status'] == 'REVIEW_SET_CURRENT' for p in papers),
             'rebuttal_preparation_pending': sum(p['rebuttal_status'] == 'REBUTTAL_PREPARATION_PENDING' for p in papers),
             'rebuttal_active': sum(p['rebuttal_status'] == 'REBUTTAL_ACTIVE' for p in papers),
+            'final_decisions_recorded': sum(bool(p['venue_decision_sha256']) for p in papers),
+            'post_decision_learning_pending': sum(p['learning_status'] == 'POST_DECISION_LEARNING_PENDING' for p in papers),
+            'learning_prepared': sum(p['learning_status'] == 'LEARNING_PREPARED_TRANSITION_PENDING' for p in papers),
+            'learn_complete': sum(p['learning_status'] == 'LEARN_COMPLETE' for p in papers),
             'submission_freeze_eligible': sum(p['submission_freeze_eligible'] for p in papers),
             'ledger_replay_failures': sum(not p['ledger_replay_pass'] for p in papers),
             'contract_integrity_failures': sum(not p['contract_integrity_pass'] for p in papers),

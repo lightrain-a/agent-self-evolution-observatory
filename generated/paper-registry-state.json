@@ -19,7 +19,10 @@
     "submitted": 0,
     "submitted_receipt_bound": 0,
     "rebuttal_active": 0,
-    "rebuttal_prepared": 0
+    "rebuttal_prepared": 0,
+    "final_decisions_recorded": 0,
+    "learning_prepared": 0,
+    "learn_complete": 0
   },
   "papers": [
     {
@@ -155,6 +158,21 @@
         "claim_expansion_authorized": false,
         "new_experiment_authorized": false
       },
+      "learning": {
+        "status": "NOT_ELIGIBLE",
+        "decision": "",
+        "venue_decision_sha256": "",
+        "learning_receipt_sha256": "",
+        "decision_valid": false,
+        "learning_valid": false,
+        "lessons": 0,
+        "scientific_diagnostic_only": 0,
+        "paper_process_lessons": 0,
+        "scientific_claim_status_unchanged": true,
+        "automatic_reopen_authorized": false,
+        "new_experiment_authorized": false,
+        "claim_expansion_authorized": false
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
@@ -163,7 +181,9 @@
         "prebuttal_receipts": 1,
         "paper_preparation_receipts": 1,
         "actual_submission_receipts": 0,
-        "rebuttal_preparation_receipts": 0
+        "rebuttal_preparation_receipts": 0,
+        "venue_decision_receipts": 0,
+        "post_decision_learning_receipts": 0
       },
       "scientific_authority": false,
       "experiment_authority": false,
@@ -315,6 +335,21 @@
         "claim_expansion_authorized": false,
         "new_experiment_authorized": false
       },
+      "learning": {
+        "status": "NOT_ELIGIBLE",
+        "decision": "",
+        "venue_decision_sha256": "",
+        "learning_receipt_sha256": "",
+        "decision_valid": false,
+        "learning_valid": false,
+        "lessons": 0,
+        "scientific_diagnostic_only": 0,
+        "paper_process_lessons": 0,
+        "scientific_claim_status_unchanged": true,
+        "automatic_reopen_authorized": false,
+        "new_experiment_authorized": false,
+        "claim_expansion_authorized": false
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 6,
@@ -323,7 +358,9 @@
         "prebuttal_receipts": 1,
         "paper_preparation_receipts": 1,
         "actual_submission_receipts": 0,
-        "rebuttal_preparation_receipts": 0
+        "rebuttal_preparation_receipts": 0,
+        "venue_decision_receipts": 0,
+        "post_decision_learning_receipts": 0
       },
       "scientific_authority": false,
       "experiment_authority": false,
@@ -475,6 +512,21 @@
         "claim_expansion_authorized": false,
         "new_experiment_authorized": false
       },
+      "learning": {
+        "status": "NOT_ELIGIBLE",
+        "decision": "",
+        "venue_decision_sha256": "",
+        "learning_receipt_sha256": "",
+        "decision_valid": false,
+        "learning_valid": false,
+        "lessons": 0,
+        "scientific_diagnostic_only": 0,
+        "paper_process_lessons": 0,
+        "scientific_claim_status_unchanged": true,
+        "automatic_reopen_authorized": false,
+        "new_experiment_authorized": false,
+        "claim_expansion_authorized": false
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 4,
@@ -483,7 +535,9 @@
         "prebuttal_receipts": 1,
         "paper_preparation_receipts": 1,
         "actual_submission_receipts": 0,
-        "rebuttal_preparation_receipts": 0
+        "rebuttal_preparation_receipts": 0,
+        "venue_decision_receipts": 0,
+        "post_decision_learning_receipts": 0
       },
       "scientific_authority": false,
       "experiment_authority": false,
@@ -632,6 +686,21 @@
         "claim_expansion_authorized": false,
         "new_experiment_authorized": false
       },
+      "learning": {
+        "status": "NOT_ELIGIBLE",
+        "decision": "",
+        "venue_decision_sha256": "",
+        "learning_receipt_sha256": "",
+        "decision_valid": false,
+        "learning_valid": false,
+        "lessons": 0,
+        "scientific_diagnostic_only": 0,
+        "paper_process_lessons": 0,
+        "scientific_claim_status_unchanged": true,
+        "automatic_reopen_authorized": false,
+        "new_experiment_authorized": false,
+        "claim_expansion_authorized": false
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
@@ -640,7 +709,9 @@
         "prebuttal_receipts": 1,
         "paper_preparation_receipts": 1,
         "actual_submission_receipts": 0,
-        "rebuttal_preparation_receipts": 0
+        "rebuttal_preparation_receipts": 0,
+        "venue_decision_receipts": 0,
+        "post_decision_learning_receipts": 0
       },
       "scientific_authority": false,
       "experiment_authority": false,
@@ -786,6 +857,21 @@
         "claim_expansion_authorized": false,
         "new_experiment_authorized": false
       },
+      "learning": {
+        "status": "NOT_ELIGIBLE",
+        "decision": "",
+        "venue_decision_sha256": "",
+        "learning_receipt_sha256": "",
+        "decision_valid": false,
+        "learning_valid": false,
+        "lessons": 0,
+        "scientific_diagnostic_only": 0,
+        "paper_process_lessons": 0,
+        "scientific_claim_status_unchanged": true,
+        "automatic_reopen_authorized": false,
+        "new_experiment_authorized": false,
+        "claim_expansion_authorized": false
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
@@ -794,7 +880,9 @@
         "prebuttal_receipts": 1,
         "paper_preparation_receipts": 1,
         "actual_submission_receipts": 0,
-        "rebuttal_preparation_receipts": 0
+        "rebuttal_preparation_receipts": 0,
+        "venue_decision_receipts": 0,
+        "post_decision_learning_receipts": 0
       },
       "scientific_authority": false,
       "experiment_authority": false,
@@ -808,5 +896,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "a5090a173b7962c2344f0a1f816dc89288a82c7dbdf457358d7410db6c5d4585"
+  "projection_sha256": "ae1601deb7a485486451fadd26a91da0e1583a6a091d3ed1c31fb6a90a367c3f"
 }

@@ -24,6 +24,7 @@ from research_pipeline.human_submission_signoff import validate_signoff_ledger, 
 from research_pipeline.venue_submission_receipt import validate_submission_receipt
 from research_pipeline.revision_impact_audit import audit_freeze_receipt
 from research_pipeline.rebuttal_protocol import validate_rebuttal_receipt
+from research_pipeline.post_decision_learning import validate_learning_receipt, validate_venue_decision_receipt
 DEFAULT_LEDGER_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ROOT") else None
 DEFAULT_ARTIFACT_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ARTIFACT_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ARTIFACT_ROOT") else None
 DEFAULT_FREEZE_ROOT = Path(os.environ["PAPER_SUBMISSION_FREEZE_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_FREEZE_ROOT") else None
@@ -344,6 +345,42 @@ def rebuttal_state(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def learning_state(row: dict[str, Any]) -> dict[str, Any]:
+    decision = event_payload(row, "venue-decision")
+    learning = event_payload(row, "post-decision-learning")
+    decision_valid = bool(decision) and str(decision.get("contract_sha256") or "") == str(row.get("contract_sha256") or "") and validate_venue_decision_receipt(decision)
+    learning_valid = bool(learning) and str(learning.get("contract_sha256") or "") == str(row.get("contract_sha256") or "") and validate_learning_receipt(learning)
+    lineage_ok = decision_valid and learning_valid and learning.get("venue_decision_sha256") == decision.get("venue_decision_sha256")
+    state = str(row.get("current_state") or "")
+    if state == "LEARN":
+        status = "LEARN_COMPLETE" if lineage_ok and learning.get("pass") is True else "LEARN_RECEIPT_INVALID"
+    elif state == "REBUTTAL":
+        if not decision_valid:
+            status = "AWAITING_FINAL_VENUE_DECISION"
+        elif lineage_ok and learning.get("pass") is True:
+            status = "LEARNING_PREPARED_TRANSITION_PENDING"
+        else:
+            status = "POST_DECISION_LEARNING_PENDING"
+    else:
+        status = "NOT_ELIGIBLE"
+    summary = learning.get("summary") if isinstance(learning.get("summary"), dict) else {}
+    return {
+        "status": status,
+        "decision": str(decision.get("decision") or ""),
+        "venue_decision_sha256": str(decision.get("venue_decision_sha256") or ""),
+        "learning_receipt_sha256": str(learning.get("learning_receipt_sha256") or ""),
+        "decision_valid": decision_valid,
+        "learning_valid": lineage_ok,
+        "lessons": int(summary.get("lessons") or 0),
+        "scientific_diagnostic_only": int(summary.get("scientific_diagnostic_only") or 0),
+        "paper_process_lessons": int(summary.get("paper_process_lessons") or 0),
+        "scientific_claim_status_unchanged": True,
+        "automatic_reopen_authorized": False,
+        "new_experiment_authorized": False,
+        "claim_expansion_authorized": False,
+    }
+
+
 def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None) -> dict[str, Any]:
     row = json.loads(path.read_text(encoding="utf-8"))
     contract = row.get("contract") or {}
@@ -368,6 +405,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
     signoff = human_signoff(paper_id, handoff, freeze_root, handoff_root, signoff_root)
     submission = actual_submission(row)
     rebuttal = rebuttal_state(row)
+    learning = learning_state(row)
     state = str(row.get("current_state") or "")
     scientific_layer = "SUPPORTED_AND_AUDITED" if claim_audit.get("pass") is True else ("ACTIVE_REPAIR" if state == "TARGETED_REPAIR" else "PRE_AUDIT")
     paper_quality_layer = "PASS" if manuscript_ci.get("pass") is True and prebuttal.get("pass") is True else ("IN_PROGRESS" if state not in {"PAPER_EVIDENCE", "PAPER_DESIGN"} else "NOT_STARTED")
@@ -387,7 +425,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
             "paper_quality": paper_quality_layer,
             "paper_preparation": preparation["status"],
             "submission": submission["status"] if submission["status"] != "NOT_SUBMITTED" else (signoff["status"] if signoff["status"] != "PENDING_HUMAN_CONFIRMATION" and signoff["status"] != "NOT_ELIGIBLE" else handoff["status"]),
-            "post_submission": rebuttal["status"],
+            "post_submission": learning["status"] if learning["status"] != "NOT_ELIGIBLE" else rebuttal["status"],
         },
         "gates": {
             "claim_audit": claim_audit.get("pass") is True,
@@ -401,6 +439,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
         "human_signoff": signoff,
         "actual_submission": submission,
         "rebuttal": rebuttal,
+        "learning": learning,
         "targeted_repair_boundary": targeted_repair_boundary(paper_id) if state == "TARGETED_REPAIR" else {},
         "ledger_summary": {
             "mock_reviews": int(summary.get("mock_reviews") or 0),
@@ -410,6 +449,8 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
             "paper_preparation_receipts": int(summary.get("paper_preparation_receipts") or 0),
             "actual_submission_receipts": int(summary.get("actual_submission_receipts") or 0),
             "rebuttal_preparation_receipts": int(summary.get("rebuttal_preparation_receipts") or 0),
+            "venue_decision_receipts": int(summary.get("venue_decision_receipts") or 0),
+            "post_decision_learning_receipts": int(summary.get("post_decision_learning_receipts") or 0),
         },
         "scientific_authority": False,
         "experiment_authority": False,
@@ -446,7 +487,7 @@ def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff
 
 def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None) -> dict[str, Any]:
     papers = [project_paper(path, artifact_root, freeze_root, handoff_root, signoff_root) for path in sorted(ledger_root.glob("*.json"))]
-    order = {"SUBMITTED": -1, "SUBMISSION_READY": 0, "PREBUTTAL": 1, "PDF_QA": 2, "CLAIM_AUDIT": 3, "TARGETED_REPAIR": 4, "MOCK_PC": 5, "MANUSCRIPT": 6, "PAPER_DESIGN": 7, "PAPER_EVIDENCE": 8}
+    order = {"LEARN": -3, "REBUTTAL": -2, "SUBMITTED": -1, "SUBMISSION_READY": 0, "PREBUTTAL": 1, "PDF_QA": 2, "CLAIM_AUDIT": 3, "TARGETED_REPAIR": 4, "MOCK_PC": 5, "MANUSCRIPT": 6, "PAPER_DESIGN": 7, "PAPER_EVIDENCE": 8}
     papers.sort(key=lambda p: (order.get(p["current_state"], 99), p["paper_id"]))
     summary = {
         "papers": len(papers),
@@ -466,6 +507,9 @@ def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Pat
         "submitted_receipt_bound": sum(p["actual_submission"]["status"] == "VENUE_SUBMISSION_CONFIRMED" for p in papers),
         "rebuttal_active": sum(p["rebuttal"]["status"] == "REBUTTAL_ACTIVE" for p in papers),
         "rebuttal_prepared": sum(p["rebuttal"]["status"] == "REBUTTAL_PREPARED_TRANSITION_PENDING" for p in papers),
+        "final_decisions_recorded": sum(p["learning"]["decision_valid"] for p in papers),
+        "learning_prepared": sum(p["learning"]["status"] == "LEARNING_PREPARED_TRANSITION_PENDING" for p in papers),
+        "learn_complete": sum(p["learning"]["status"] == "LEARN_COMPLETE" for p in papers),
     }
     payload = {
         "schema_version": "1.1",
