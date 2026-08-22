@@ -8,10 +8,10 @@ ROOT = Path(__file__).resolve().parents[1]
 SPEC = ROOT / "research_pipeline" / "rsi_lockout_c01_exo_capability_qualification.json"
 
 
-def test_rsi_lockout_exo_w_qualification_stays_zero_authority_and_unprojected() -> None:
+def test_rsi_lockout_exo_qualification_is_terminal_support_only() -> None:
     state = json.loads(SPEC.read_text(encoding="utf-8"))
     assert state["candidate_id"] == "RSI-LOCKOUT-C01"
-    assert state["status"] == "W_LOCKOUT_ENGINEERING_QUALIFIED_NOVELTY_REDUCTION_GATE_HOLD"
+    assert state["status"] == "TERMINAL_SUPERSEDED_BY_MATCHED_SIMPLIFICATION_STOP"
     assert state["identity_binding"]["identity_status"] == "PASS_UNIQUE_IDENTITY_FROZEN"
     assert state["closest_work_binding"]["novelty_authority"] is False
     assert state["closest_work_binding"]["matched_ordinary_tool_control_required"] is True
@@ -72,11 +72,13 @@ def test_rsi_lockout_exo_w_qualification_stays_zero_authority_and_unprojected() 
     assert gates == {
         "G0_CANONICAL_SCIENTIFIC_OBJECT_IDENTITY": "PASS",
         "G1_W_CAPABILITY_LEVEL_LOCKOUT": "PASS_ENGINEERING_QUALIFICATION_ONLY",
-        "G1B_SAME_INFORMATION_REDUCTION_CONTROL": "DESIGN_FROZEN_NOT_RUN",
-        "G2_RECURSIVE_OBJECT_EXTERNAL_SUPERVISION_SEPARATION": "DESIGN_PASS_RUNTIME_PILOT_NOT_RUN",
-        "G3_PRINCIPAL_INTERACTION_PILOT": "NOT_RUN",
+        "G1B_SAME_INFORMATION_REDUCTION_CONTROL": "STOP_MATCHED_SIMPLIFICATION_SUPPORTED",
+        "G2_RECURSIVE_OBJECT_EXTERNAL_SUPERVISION_SEPARATION": "PASS_HISTORICAL_SUPPORT_READJUDICATED",
+        "G3_PRINCIPAL_INTERACTION_PILOT": "STOP_NO_REPLICATED_SELF_SPECIFIC_INTERACTION",
     }
-    assert state["decision"]["overall"] == "HOLD_BEFORE_DYNAMIC_PILOT"
+    assert state["terminal_closure"]["primary_difference_in_differences"] == 0.0
+    assert state["terminal_closure"]["later_64_trajectory_design_executed"] is False
+    assert state["decision"]["overall"] == "STOP_MATCHED_SIMPLIFICATION_PRIMARY_INTERACTION_SATURATED"
     assert not any(state["authority"].values())
     assert state["decision"]["research_item_promotion"] is False
     assert state["decision"]["paper_state_entry"] is False
@@ -85,9 +87,9 @@ def test_rsi_lockout_exo_w_qualification_stays_zero_authority_and_unprojected() 
     research_items = json.loads((ROOT / "generated" / "research-items.json").read_text(encoding="utf-8"))
     paper_registry = json.loads((ROOT / "generated" / "paper-registry.json").read_text(encoding="utf-8"))
     pre = json.loads((ROOT / "generated" / "pre-researchitem-candidates.json").read_text(encoding="utf-8"))
-    assert len(research_items["research_items"]) == 87
     assert len(paper_registry["papers"]) == 5
     assert pre["summary"]["pre_researchitem_candidates"] == 1
     assert [row["candidate_id"] for row in pre["candidates"]] == ["MEMENTO-JOINT-BOUNDARY-CONTROL"]
-    assert state["candidate_id"] not in json.dumps(research_items, ensure_ascii=False)
+    hits = [row for row in research_items["research_items"] if row.get("id") == state["candidate_id"]]
+    assert len(hits) == 1 and hits[0]["scientific_state"] == "STOPPED"
     assert state["candidate_id"] not in json.dumps(paper_registry, ensure_ascii=False)

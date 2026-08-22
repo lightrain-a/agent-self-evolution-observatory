@@ -8,6 +8,7 @@ from pathlib import Path
 from .paper_first_search_portfolio_design_adjudication import (
     _continuation_hold_rows,
     _fresh_phenomenon_support_hold_rows,
+    _matched_simplification_readjudication_rows,
     _principle_readjudication_rows,
     _shadow_dead_end_memory,
     _terminal_evidence_hold_rows,
@@ -66,6 +67,27 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertEqual(hold["source_ref"],"arXiv:2607.13683")
         self.assertEqual(hold["evidence_sha256"],"03bd345821be718b2b342e2348ab18c44a91146219bdde5db2d909336cb8ce52")
         self.assertFalse(hold["scientific_authority"])
+
+    def test_rsi_lockout_matched_simplification_is_upstream_problem_novelty_stop(self) -> None:
+        path=Path(__file__).resolve().parents[1]/"generated"/"rsi-lockout-c01-matched-simplification-readjudication-20260822.json"
+        rows=_matched_simplification_readjudication_rows([path])
+        self.assertEqual(len(rows),1)
+        row=rows[0]
+        self.assertEqual(row["source_candidate_id"],"RSI-LOCKOUT-C01")
+        self.assertEqual((row["closure_layer"],row["failure_layer"],row["memory_class"]),("problem_novelty",None,"PROBLEM_NOVELTY_STOP"))
+        self.assertTrue(row["search_closure_certified"])
+        self.assertFalse(row["dead_end_certified"])
+        self.assertFalse(row["principle_update_allowed"])
+        self.assertTrue(row["experiment_run_for_this_readjudication"])
+        self.assertFalse(row["experiment_alone_authorizes_closure"])
+        self.assertEqual((row.get("matched_result") or {}).get("primary_difference_in_differences"),0.0)
+        self.assertTrue((row.get("counter_explanation") or {}).get("same_information_reduction_verified"))
+
+        memory=self.state["shadow_search_memory"]
+        hits=[x for x in memory.get("closed_objects") or [] if x.get("source_candidate_id")=="RSI-LOCKOUT-C01"]
+        self.assertEqual(len(hits),1)
+        self.assertEqual(hits[0]["closure_layer"],"problem_novelty")
+        self.assertFalse(hits[0]["dead_end_certified"])
 
     def test_evodrc_feasibility_credit_is_in_persistent_principle_memory(self) -> None:
         memory=self.state["shadow_search_memory"]
@@ -155,9 +177,9 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
 
     def test_current_closed_basins_are_typed_by_actual_failure_layer(self) -> None:
         memory = self.state["shadow_search_memory"]
-        self.assertEqual(memory["closed_basin_count"], 42)
+        self.assertEqual(memory["closed_basin_count"], 43)
         self.assertEqual(memory["closure_layer_counts"], {
-            "problem_novelty": 5,
+            "problem_novelty": 6,
             "execution": 0,
             "experiment_identifiability": 2,
             "optimization": 0,

@@ -106,13 +106,13 @@ def main() -> None:
     if projection_errors:
         fail("public control-plane projection invariants failed: " + "; ".join(projection_errors))
     ri_summary = research_items.get("summary") or {}
-    if (int(ri_summary.get("research_items") or 0), int(ri_summary.get("experiment_records") or 0), int(ri_summary.get("portfolio_experiment_contexts") or 0), int(ri_summary.get("evidence_contexts") or 0), int(ri_summary.get("portfolio_objects") or 0)) != (87, 30, 3, 2, 92):
+    if (int(ri_summary.get("research_items") or 0), int(ri_summary.get("experiment_records") or 0), int(ri_summary.get("portfolio_experiment_contexts") or 0), int(ri_summary.get("evidence_contexts") or 0), int(ri_summary.get("portfolio_objects") or 0)) != (88, 30, 3, 2, 93):
         fail(f"canonical ResearchItem projection counts drifted: {ri_summary}")
     if ri_summary.get("parent_scientific_states") != {"HOLD": 4, "MERGED": 6, "STOPPED": 16}:
         fail(f"canonical parent scientific states must be HOLD=4/MERGED=6/STOPPED=16: {ri_summary.get('parent_scientific_states')}")
     if int(ri_summary.get("active_research_items") or 0) != 0 or research_items.get("policy", {}).get("zero_active_research_items_is_valid") is not True or research_items.get("policy", {}).get("visibility_tracking_does_not_create_active_slot") is not True:
         fail(f"canonical ResearchItem registry must explicitly permit and currently expose zero active rows: {ri_summary}")
-    expected_category_totals = {"A": 12, "B": 21, "C": 10, "D": 3, "E": 27, "F": 6, "G": 13}
+    expected_category_totals = {"A": 13, "B": 21, "C": 10, "D": 3, "E": 27, "F": 6, "G": 13}
     actual_category_totals = {key: int(((ri_summary.get("by_category") or {}).get(key) or {}).get("portfolio_total") or 0) for key in expected_category_totals}
     if actual_category_totals != expected_category_totals:
         fail(f"canonical A-G portfolio totals drifted: {actual_category_totals}")

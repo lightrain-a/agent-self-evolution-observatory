@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "RSI-LOCKOUT-C01",
+  "title": "Intervention-surface lockout breaks recursive self-intervention closure",
+  "status": "STOP_MATCHED_SIMPLIFICATION_PRIMARY_INTERACTION_SATURATED",
+  "terminal_disposition": "TERMINATE_CURRENT_REALIZATION",
+  "closure_layer": "problem_novelty",
+  "failure_layer": null,
+  "memory_class": "PROBLEM_NOVELTY_STOP",
+  "canonical_binding": {
+    "run_id": "rsi-lockout-c01-matched-reduction-closure-20260822T164000Z",
+    "evidence_binding_sha256": "df1f9379a13f371a02a79a9b948a58afc0817124c469c597eb21714240cf2eae",
+    "readjudication_sha256": "0c635c401f2ed823d56c287995511daac63f486d4491ff37071ae2144b4f09ce",
+    "terminal_closure_sha256": "79bd6170b427ac9b32b2b8a0d180e898155d8fc029099c39e635d41b954eef55",
+    "manifest_sha256": "6e1d8a18bafdb247811c84e5db2747ddf5c311cd66cd496090a318db04a7f115",
+    "object_contract_sha256": "6b123f5a092b594500d7dd554f69bd20e62032f92dde6f9913229b1a8aba30d2",
+    "closest_work_review_sha256": "b98d42e14eb9a8e0c55c9d7c9890e0afc26357b1c169b6cf721348fdeb75f38f",
+    "cross_host_pilot_manifest_sha256": "4040ab2d1258a9971d883b32b20ba730ec3265196fbf6c15ca3e6a53fa33eddd"
+  },
+  "matched_result": {
+    "qualified_episodes": "18/18",
+    "self_rw": "3/3",
+    "self_ro": "0/3",
+    "ordinary_rw": "3/3",
+    "ordinary_ro": "0/3",
+    "primary_difference_in_differences": 0.0,
+    "self_restore": "2/3",
+    "ordinary_restore": "2/3",
+    "aggregate_restore_difference": 0.0,
+    "replicated_same_direction_self_specific_excess": false,
+    "persistent_self_state_causal_trace": false
+  },
+  "scientific_interpretation": "The strongest capability-isomorphic ordinary persistent-target control saturates the frozen binary W-lockout endpoint. The bounded local falsifier corroborates an exact zero primary interaction; restore mismatches are opposite in sign and trace to generic censoring/repair-policy behavior rather than persistent self-state.",
+  "raw_auto_go": {
+    "accepted": false,
+    "raw_summary_sha256": "1cfb47bfad60308ac975a66943b71fad40051767a8188690326c49793963fb7b",
+    "authoritative_trace_audit_sha256": "1ac0a9918caaa511b0f47445eaea29c7f6fd3deb762617ebf5a9c156c7c54293",
+    "reason": "The executor failed to require same-direction replication and a persistent-self-state causal trace."
+  },
+  "mainline_64_trajectory_design": {
+    "artifact": "research_pipeline/rsi_lockout_c01_matched_reduction_pilot_design.json",
+    "executed": false,
+    "disposition": "SUPERSEDED_BEFORE_EXECUTION_BY_MATCHED_SIMPLIFICATION_STOP",
+    "reason": "More repetitions cannot create discriminating variation for the structurally saturated primary binary lockout estimand; the cheaper restore falsifier also leaves no replicated same-direction residual."
+  },
+  "reopen_condition": "Only a distinct scientific object may reopen this direction: pre-register a non-saturated post-activation outcome and timing that yields an ex-ante self-specific prediction under identical pre-treatment information and capability availability. More repetitions, larger models, extra R/V firewall work, or a new substrate do not reopen RSI-LOCKOUT-C01.",
+  "projection_policy": {
+    "research_item": "STOPPED_ONLY",
+    "active_slot": false,
+    "experiment_state": false,
+    "paper_state": false
+  },
+  "authority": {
+    "scientific": false,
+    "problem_gate": false,
+    "research_item_promotion": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}

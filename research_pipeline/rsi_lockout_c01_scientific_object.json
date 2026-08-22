@@ -2,8 +2,8 @@
   "schema_version": "1.0",
   "candidate_id": "RSI-LOCKOUT-C01",
   "title": "Intervention-surface lockout breaks recursive self-intervention closure",
-  "portfolio_class": "CANONICAL_SCIENTIFIC_OBJECT_ZERO_AUTHORITY_NOT_PROJECTED",
-  "status": "CANONICAL_SCIENTIFIC_OBJECT_IDENTITY_FROZEN_ZERO_AUTHORITY",
+  "portfolio_class": "CANONICAL_SCIENTIFIC_OBJECT_TERMINAL_ZERO_AUTHORITY",
+  "status": "STOP_MATCHED_SIMPLIFICATION_PRIMARY_INTERACTION_SATURATED",
   "lineage": {
     "origin": "shadow formulation formerly labeled RSI-C01",
     "alias_disposition": "RSI-C01 remains a historical shadow alias only and must not be conflated with terminal SHADOW-RSI-C01.",
@@ -61,16 +61,26 @@
     "receipt_sha256": "6bc39cbf1c743756334116ed5418d9a78d7432bfd0e07b6bc515591824e3fb4d",
     "scientific_authority": false
   },
+  "terminal_closure": {
+    "run_id": "rsi-lockout-c01-matched-reduction-closure-20260822T164000Z",
+    "manifest_sha256": "6e1d8a18bafdb247811c84e5db2747ddf5c311cd66cd496090a318db04a7f115",
+    "closure_layer": "problem_novelty",
+    "failure_layer": null,
+    "memory_class": "PROBLEM_NOVELTY_STOP",
+    "primary_difference_in_differences": 0.0,
+    "later_64_trajectory_design_executed": false,
+    "reason": "The capability-isomorphic ordinary persistent-target control structurally saturates the frozen binary W-lockout endpoint, and the bounded local falsifier leaves no replicated same-direction self-specific residual."
+  },
   "next_gate": {
-    "name": "STRICT_CLOSEST_WORK_AND_SAME_INFORMATION_REDUCTION",
+    "name": "NONE_TERMINAL_CURRENT_REALIZATION",
     "execution_authorized": false,
-    "note": "Identity qualification only unlocks literature/reduction review. It does not authorize substrate experiments or promotion."
+    "note": "Do not run the frozen 64-trajectory scale-up or additional R/V firewall work. Only a distinct non-saturated post-activation scientific object may reopen the direction."
   },
   "projection_policy": {
-    "frontend": false,
-    "research_item": false,
+    "frontend": true,
+    "research_item": "STOPPED_ONLY",
     "paper_state": false,
-    "canonical_consumer_surface": false
+    "canonical_consumer_surface": true
   },
   "authority": {
     "problem_gate": false,

@@ -29,6 +29,7 @@ DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-search-portfolio-design-a
 SHADOW_PORTFOLIO_JSON = PROJECT_ROOT / "generated" / "paper-first-problem-search-portfolio-state.json"
 SHADOW_QUEUE_JSON = PROJECT_ROOT / "generated" / "paper-first-problem-search-portfolio-queue-shadow.json"
 PRINCIPLE_READJUDICATION_GLOB = "*principle-readjudication-*.json"
+MATCHED_SIMPLIFICATION_READJUDICATION_GLOB = "*matched-simplification-readjudication-*.json"
 FRESH_PHENOMENON_SUPPORT_HOLD_GLOB = "*fresh-phenomenon-support-hold-*.json"
 CONTINUATION_HOLD_GLOB = "*continuation-hold-*.json"
 
@@ -480,6 +481,77 @@ def _run_formulation_primary_refs(run_root: Path) -> dict[str, list[str]]:
                 if cid and values:
                     refs.setdefault(cid, set()).update(values)
     return {key: sorted(values) for key, values in refs.items()}
+
+
+def _matched_simplification_readjudication_rows(paths: list[Path] | None = None) -> list[dict[str, Any]]:
+    """Compile explicit matched-simplification Problem Novelty closures.
+
+    These are upstream paper-problem stops, not principle failures. A bounded
+    falsifier may support the same-information reduction, but experiment evidence
+    alone cannot authorize the closure and no core-principle memory is created.
+    """
+    candidates = paths if paths is not None else sorted((PROJECT_ROOT / "generated").glob(MATCHED_SIMPLIFICATION_READJUDICATION_GLOB))
+    rows: list[dict[str, Any]] = []
+    for path in candidates:
+        payload = _load_json(path)
+        if payload.get("matched_simplification_stop_certified") is not True or payload.get("scientific_authority") is not False:
+            continue
+        if payload.get("closure_layer") != PROBLEM_NOVELTY or payload.get("failure_layer") is not None or payload.get("dead_end_certified") is not False:
+            continue
+        candidate_id = str(payload.get("candidate_id") or "").strip()
+        title = str(payload.get("title") or "").strip()
+        scope = " ".join(str(payload.get("dead_end_scope") or "").split())
+        strongest = " ".join(str(payload.get("strongest_reduction") or "").split())
+        counter = payload.get("counter_explanation") or {}
+        audit = audit_dead_end_counter_explanation(counter)
+        refs = [str(ref) for ref in payload.get("evidence_refs") or counter.get("evidence_refs") or [] if str(ref)]
+        reopen = str(payload.get("reopen_condition") or counter.get("reopen_condition") or "").strip()
+        binding = payload.get("canonical_binding") or {}
+        hashes = [str(binding.get(key) or "").strip().lower() for key in ("object_contract_sha256", "closest_work_review_sha256", "readjudication_sha256", "terminal_closure_sha256", "manifest_sha256")]
+        if not candidate_id or not title or not scope or not strongest or not refs or not reopen or audit.get("passed") is not True or any(not re.fullmatch(r"[0-9a-f]{64}", value) for value in hashes):
+            continue
+        if payload.get("experiment_alone_authorizes_closure") is not False or counter.get("same_information_reduction_verified") is not True or counter.get("same_information_or_scope_matched") is not True:
+            continue
+        signature = hashlib.sha256(json.dumps({"candidate_id": candidate_id, "scope": scope, "strongest_reduction": strongest}, sort_keys=True, separators=(",", ":")).encode()).hexdigest()[:16]
+        try:
+            artifact_ref = str(path.relative_to(PROJECT_ROOT))
+        except ValueError:
+            artifact_ref = str(path)
+        rows.append({
+            "source_candidate_id": candidate_id,
+            "basin": f"matched-simplification-readjudication-{signature}",
+            "search_primitive": "MATCHED_SIMPLIFICATION",
+            "title": title,
+            "avoid": [
+                f"paraphrase-only variants of: {title}",
+                "adding repetitions, models, budgets, R/V firewall work, or a new substrate to rescue the same saturated binary interaction",
+                "treating the raw automated pilot GO as authoritative after the trace audit rejected it",
+            ],
+            "strongest_reduction": strongest,
+            "current_source_refs": [ref for ref in refs if ref.startswith(("arXiv:", "OpenReview:"))],
+            "evidence_basis": refs,
+            "problem_text": scope,
+            "reason": str(payload.get("failure_layer_reason") or strongest).strip(),
+            "reopen_only_if": reopen,
+            "search_closure_certified": True,
+            "dead_end_certified": False,
+            "closure_layer": PROBLEM_NOVELTY,
+            "failure_layer": None,
+            "memory_class": "PROBLEM_NOVELTY_STOP",
+            "principle_update_allowed": False,
+            "broader_core_principle_falsified": False,
+            "source_stop_class": "PROBLEM_NOVELTY_STOP",
+            "failure_layer_reason": str(payload.get("failure_layer_reason") or ""),
+            "failure_layer_review_basis": str(payload.get("failure_layer_review_basis") or "matched-simplification-readjudication"),
+            "experiment_run_for_this_readjudication": payload.get("experiment_run_for_this_readjudication") is True,
+            "experiment_alone_authorizes_closure": False,
+            "counter_explanation": dict(counter),
+            "source_readjudication_artifact": artifact_ref,
+            "canonical_binding": dict(binding),
+            "matched_result": dict(payload.get("matched_result") or {}),
+            "scientific_authority": False,
+        })
+    return rows
 
 
 def _principle_readjudication_rows(paths: list[Path] | None = None) -> list[dict[str, Any]]:
@@ -954,8 +1026,8 @@ def merge_shadow_terminal_run_memory(state: dict[str, Any], terminal_run: dict[s
     prior_hard = [dict(row) for row in prior_rows if str(row.get("basin") or "").startswith("current-source-hard-veto-")]
     prior_semantic = [dict(row) for row in prior_rows if str(row.get("basin") or "").startswith(("semantic-exact-reduction-", "semantic-lane-contract-"))]
     prior_near = [dict(row) for row in prior_rows if str(row.get("basin") or "").startswith("near-miss-")]
-    prior_principle = [dict(row) for row in prior_rows if str(row.get("basin") or "").startswith("principle-readjudication-")]
-    current_principle = _principle_readjudication_rows()
+    prior_principle = [dict(row) for row in prior_rows if str(row.get("basin") or "").startswith(("principle-readjudication-", "matched-simplification-readjudication-"))]
+    current_principle = [*_principle_readjudication_rows(), *_matched_simplification_readjudication_rows()]
     principle_by_basin = {str(row.get("basin") or ""): row for row in prior_principle + current_principle if str(row.get("basin") or "")}
     extra_near = _terminal_support_hold_rows(preflight, run_id=run_id, stage_manifest_sha256=stage_manifest_sha256)
     extra_near.extend(_terminal_evidence_hold_rows(evidence_plan, run_id=run_id, stage_manifest_sha256=stage_manifest_sha256, fallback_primary_refs=evidence_fallback_primary_refs))
@@ -1198,7 +1270,7 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
     for row in rows:
         counts[row["verdict"]] = counts.get(row["verdict"], 0) + 1
     near_miss_preflight = build_shadow_near_miss_preflight()
-    memory_compat = _shadow_dead_end_memory(portfolio, near_miss_preflight, principle_readjudication_rows=_principle_readjudication_rows())
+    memory_compat = _shadow_dead_end_memory(portfolio, near_miss_preflight, principle_readjudication_rows=[*_principle_readjudication_rows(), *_matched_simplification_readjudication_rows()])
     search_memory = _canonical_search_memory(memory_compat)
     dead_end_memory = _principle_dead_end_projection(search_memory)
     prior_maintenance = prior_state.get("shadow_memory_maintenance") or {}

@@ -2,8 +2,8 @@
   "schema_version": "1.0",
   "candidate_id": "RSI-LOCKOUT-C01",
   "title": "Exo capability-level self-write lockout qualification",
-  "status": "W_LOCKOUT_ENGINEERING_QUALIFIED_NOVELTY_REDUCTION_GATE_HOLD",
-  "portfolio_class": "CANONICAL_SCIENTIFIC_OBJECT_ZERO_AUTHORITY_NOT_PROJECTED",
+  "status": "TERMINAL_SUPERSEDED_BY_MATCHED_SIMPLIFICATION_STOP",
+  "portfolio_class": "CANONICAL_SCIENTIFIC_OBJECT_TERMINAL_ZERO_AUTHORITY",
   "identity_binding": {
     "scientific_object_contract_sha256": "6b123f5a092b594500d7dd554f69bd20e62032f92dde6f9913229b1a8aba30d2",
     "identity_status": "PASS_UNIQUE_IDENTITY_FROZEN",
@@ -212,20 +212,29 @@
     },
     {
       "id": "G1B_SAME_INFORMATION_REDUCTION_CONTROL",
-      "status": "DESIGN_FROZEN_NOT_RUN"
+      "status": "STOP_MATCHED_SIMPLIFICATION_SUPPORTED",
+      "note": "A bounded matched SELF/ORDINARY pilot produced an exact-zero primary lockout DID; the later 64-trajectory scale-up was not executed because the binary endpoint is structurally saturated under the matched W fault."
     },
     {
       "id": "G2_RECURSIVE_OBJECT_EXTERNAL_SUPERVISION_SEPARATION",
-      "status": "DESIGN_PASS_RUNTIME_PILOT_NOT_RUN"
+      "status": "PASS_HISTORICAL_SUPPORT_READJUDICATED",
+      "note": "The earlier restricted-profile v3c evidence qualifies supervisor separation as zero-authority engineering support after canonical identity binding."
     },
     {
       "id": "G3_PRINCIPAL_INTERACTION_PILOT",
-      "status": "NOT_RUN"
+      "status": "STOP_NO_REPLICATED_SELF_SPECIFIC_INTERACTION",
+      "note": "18/18 bounded episodes qualified; SELF and ORDINARY were 3/3 RW, 0/3 RO, and 2/3 after fixed restore. Opposite-sign restore mismatches were generic censoring/repair errors rather than persistent-self-state traces."
     }
   ],
+  "terminal_closure": {
+    "run_id": "rsi-lockout-c01-matched-reduction-closure-20260822T164000Z",
+    "manifest_sha256": "6e1d8a18bafdb247811c84e5db2747ddf5c311cd66cd496090a318db04a7f115",
+    "primary_difference_in_differences": 0.0,
+    "later_64_trajectory_design_executed": false
+  },
   "decision": {
-    "overall": "HOLD_BEFORE_DYNAMIC_PILOT",
-    "reason": "Exo now supports a genuine resource-level W lockout with persistent mutation bypasses removed, but the paper claim is still reducible unless a capability-isomorphic ordinary-tool control leaves a self-specific interaction. No dynamic model/API pilot has been run.",
+    "overall": "STOP_MATCHED_SIMPLIFICATION_PRIMARY_INTERACTION_SATURATED",
+    "reason": "The strongest capability-isomorphic ordinary persistent-target control explains the frozen W-lockout closure effect exactly. The bounded dynamic falsifier produced no replicated same-direction self-specific residual, so scale-up and extra R/V engineering cannot rescue the current scientific object.",
     "research_item_promotion": false,
     "paper_state_entry": false,
     "frontend_projection": false

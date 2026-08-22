@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "RSI-LOCKOUT-C01",
+  "title": "Intervention-surface lockout breaks recursive self-intervention closure",
+  "status": "STOP_MATCHED_SIMPLIFICATION_PRIMARY_INTERACTION_SATURATED",
+  "matched_simplification_stop_certified": true,
+  "closure_layer": "problem_novelty",
+  "failure_layer": null,
+  "memory_class": "PROBLEM_NOVELTY_STOP",
+  "dead_end_scope": "The frozen RSI-LOCKOUT-C01 paper-problem formulation using binary repair-and-activation closure under capability-isomorphic SELF versus ORDINARY persistent-target W lockout and fixed bounded restore.",
+  "strongest_reduction": "Under identical target bytes, W capability, persistent mount fault, failure signal, verification obligation, restore primitive, and budget, the frozen binary closure endpoint has no self-specific W-lockout residual: both SELF and capability-isomorphic ORDINARY require the same persistent write edge, both close in RW, and both fail in RO.",
+  "primary_refs": [
+    "arXiv:2608.11977",
+    "arXiv:2606.05806",
+    "OpenReview:j7YsSnA64D"
+  ],
+  "evidence_refs": [
+    "arXiv:2608.11977",
+    "arXiv:2606.05806",
+    "OpenReview:j7YsSnA64D",
+    "canonical-run:rsi-lockout-c01-matched-reduction-closure-20260822T164000Z#manifest=6e1d8a18bafdb247811c84e5db2747ddf5c311cd66cd496090a318db04a7f115",
+    "cross-host-run:rsi-lockout-c01-g3-matched-pilot-20260823#manifest=4040ab2d1258a9971d883b32b20ba730ec3265196fbf6c15ca3e6a53fa33eddd"
+  ],
+  "matched_result": {
+    "qualified_episodes": 18,
+    "self_rw_success": "3/3",
+    "self_ro_success": "0/3",
+    "ordinary_rw_success": "3/3",
+    "ordinary_ro_success": "0/3",
+    "primary_difference_in_differences": 0.0,
+    "self_restore_success": "2/3",
+    "ordinary_restore_success": "2/3",
+    "aggregate_restore_difference": 0.0,
+    "replicated_same_direction_self_specific_excess": false
+  },
+  "counter_explanation": {
+    "type": "SAME_INFORMATION_REDUCTION",
+    "statement": "Under identical target bytes, capability graph, W fault, failure signal, verification obligation, restore primitive, and budget, the frozen binary recursive-closure endpoint has no self-specific W-lockout residual: the required persistent write edge is removed in both SELF and ORDINARY and restored in the same way.",
+    "opposite_prediction": "A capability-isomorphic ordinary persistent-target control predicts the same RW success / RO failure structure as the recursive self target. Any paper-level residual must instead survive exact support matching as a replicated same-direction downstream self-state effect.",
+    "opposite_principle": "For the frozen endpoint, persistent self-intervention lockout behaves as matched persistent tool/path failure unless an additional post-activation self-state effect survives identical-information control.",
+    "opposite_search_seed": "If revisited, create a distinct object around a pre-registered non-saturated post-activation outcome under blinded SELF-versus-PEER binding and identical pre-treatment capabilities.",
+    "scope": "RSI-LOCKOUT-C01 frozen binary repair-and-activation closure under matched W lockout and fixed bounded restore.",
+    "same_information_or_scope_matched": true,
+    "evidence_refs": [
+      "arXiv:2608.11977",
+      "arXiv:2606.05806",
+      "OpenReview:j7YsSnA64D",
+      "canonical-run:rsi-lockout-c01-matched-reduction-closure-20260822T164000Z#manifest=6e1d8a18bafdb247811c84e5db2747ddf5c311cd66cd496090a318db04a7f115"
+    ],
+    "alternative_explanations_ruled_out": [
+      "identity collision with terminal SHADOW-RSI-C01",
+      "tool-name-only denial rather than resource-level W lockout",
+      "hidden supervisor-authored repair content or target-byte mutation",
+      "different SELF versus ORDINARY OS-level fault severity",
+      "support/provider failure in the bounded pilot",
+      "stable same-direction self-specific restore effect",
+      "the raw automated GO after its decision-rule implementation bug was identified"
+    ],
+    "positive_support": true,
+    "same_information_reduction_verified": true,
+    "reopen_condition": "Only a distinct scientific object may reopen this direction with a pre-registered non-saturated post-activation outcome and timing that yields an ex-ante self-specific prediction under identical pre-treatment information and capability availability."
+  },
+  "raw_auto_go": {
+    "accepted": false,
+    "raw_summary_sha256": "1cfb47bfad60308ac975a66943b71fad40051767a8188690326c49793963fb7b",
+    "authoritative_trace_audit_sha256": "1ac0a9918caaa511b0f47445eaea29c7f6fd3deb762617ebf5a9c156c7c54293"
+  },
+  "later_mainline_design": {
+    "executed": false,
+    "disposition": "SUPERSEDED_BEFORE_EXECUTION_BY_MATCHED_SIMPLIFICATION_STOP"
+  },
+  "canonical_binding": {
+    "run_id": "rsi-lockout-c01-matched-reduction-closure-20260822T164000Z",
+    "object_contract_sha256": "6b123f5a092b594500d7dd554f69bd20e62032f92dde6f9913229b1a8aba30d2",
+    "closest_work_review_sha256": "b98d42e14eb9a8e0c55c9d7c9890e0afc26357b1c169b6cf721348fdeb75f38f",
+    "readjudication_sha256": "0c635c401f2ed823d56c287995511daac63f486d4491ff37071ae2144b4f09ce",
+    "terminal_closure_sha256": "79bd6170b427ac9b32b2b8a0d180e898155d8fc029099c39e635d41b954eef55",
+    "counter_explanation_audit_repair_sha256": "c40522209d13c20888f5b9488f5e59eb06709f466bb321decb559ce355bc07e7",
+    "manifest_sha256": "6e1d8a18bafdb247811c84e5db2747ddf5c311cd66cd496090a318db04a7f115"
+  },
+  "reopen_condition": "Only a distinct scientific object may reopen this direction: pre-register a non-saturated post-activation outcome and timing that yields an ex-ante self-specific prediction under identical pre-treatment information and capability availability. More repetitions, larger models, extra R/V firewall work, or a new substrate do not reopen RSI-LOCKOUT-C01.",
+  "search_closure_certified": true,
+  "dead_end_certified": false,
+  "principle_update_allowed": false,
+  "broader_core_principle_falsified": false,
+  "source_stop_class": "PROBLEM_NOVELTY_STOP",
+  "failure_layer_reason": "The current realization stops before full scale-up because the strongest matched simplification structurally saturates the registered primary binary interaction and the bounded falsifier leaves no replicated self-specific residual.",
+  "failure_layer_review_basis": "rsi-lockout-c01-matched-simplification-readjudication-2026-08-22",
+  "experiment_run_for_this_readjudication": true,
+  "experiment_alone_authorizes_closure": false,
+  "scientific_authority": false
+}

@@ -46,14 +46,14 @@ class ResearchItemStateTest(unittest.TestCase):
     def test_projection_counts_and_categories(self) -> None:
         self.assertEqual(validate_research_item_state(self.state), [])
         summary = self.state["summary"]
-        self.assertEqual(summary["research_items"], 87)
+        self.assertEqual(summary["research_items"], 88)
         self.assertEqual(summary["experiment_records"], 30)
         self.assertEqual(summary["portfolio_experiment_contexts"], 3)
         self.assertEqual(summary["evidence_contexts"], 2)
-        self.assertEqual(summary["portfolio_objects"], 92)
+        self.assertEqual(summary["portfolio_objects"], 93)
         self.assertEqual(
             {key: value["portfolio_total"] for key, value in summary["by_category"].items()},
-            {"A": 12, "B": 21, "C": 10, "D": 3, "E": 27, "F": 6, "G": 13},
+            {"A": 13, "B": 21, "C": 10, "D": 3, "E": 27, "F": 6, "G": 13},
         )
 
     def test_every_research_item_has_one_zero_authority_next_action(self) -> None:
@@ -70,7 +70,7 @@ class ResearchItemStateTest(unittest.TestCase):
             self.assertFalse(action["machine_actionable"], row["code"])
             self.assertFalse(any(action[key] for key in ("scientific_authority", "experiment_authority", "p0_authority", "gpu_authority")), row["code"])
             counts[action["action_class"]] = counts.get(action["action_class"], 0) + 1
-        self.assertEqual(counts, {"NO_INTERNAL_ACTION": 71, "MERGED_NO_STANDALONE_ACTION": 10, "REOPEN_CONDITION_REQUIRED": 5, "PAPERSTATE_HANDOFF": 1})
+        self.assertEqual(counts, {"NO_INTERNAL_ACTION": 72, "MERGED_NO_STANDALONE_ACTION": 10, "REOPEN_CONDITION_REQUIRED": 5, "PAPERSTATE_HANDOFF": 1})
         self.assertEqual(self.state["summary"]["primary_next_action_counts"], counts)
         self.assertEqual(self.state["summary"]["active_research_items"], 0)
         self.assertTrue(self.state["policy"]["zero_active_research_items_is_valid"])
@@ -84,7 +84,7 @@ class ResearchItemStateTest(unittest.TestCase):
     def test_latest_shadow_search_memory_closure_is_projected(self) -> None:
         p04 = next(row for row in self.state["research_items"] if row["id"] == "SHADOW-P04-C01")
         self.assertEqual((p04["code"], p04["category"], p04["source_kind"]), ("B-21", "B", "shadow_closed"))
-        self.assertEqual((p04["scientific_state"], p04["failure_layer"]), ("STOPPED", "problem_novelty"))
+        self.assertEqual((p04["scientific_state"], p04["closure_layer"], p04["failure_layer"]), ("STOPPED", "problem_novelty", None))
         self.assertFalse(p04["principle_dead_end_certified"])
         self.assertIn(p04["provenance_refs"][0]["role"], {"typed_shadow_closure", "append_only_shadow_search_memory_closure"})
 

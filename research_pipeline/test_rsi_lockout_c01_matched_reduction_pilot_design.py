@@ -62,8 +62,11 @@ def test_rsi_lockout_matched_reduction_design_is_frozen_zero_authority() -> None
     research_items = json.loads((ROOT / "generated" / "research-items.json").read_text(encoding="utf-8"))
     paper_registry = json.loads((ROOT / "generated" / "paper-registry.json").read_text(encoding="utf-8"))
     pre = json.loads((ROOT / "generated" / "pre-researchitem-candidates.json").read_text(encoding="utf-8"))
-    assert len(research_items["research_items"]) == 87
     assert len(paper_registry["papers"]) == 5
     assert [row["candidate_id"] for row in pre["candidates"]] == ["MEMENTO-JOINT-BOUNDARY-CONTROL"]
-    assert state["candidate_id"] not in json.dumps(research_items, ensure_ascii=False)
+    hits = [row for row in research_items["research_items"] if row.get("id") == state["candidate_id"]]
+    assert len(hits) == 1 and hits[0]["scientific_state"] == "STOPPED"
     assert state["candidate_id"] not in json.dumps(paper_registry, ensure_ascii=False)
+    closure = json.loads((ROOT / "research_pipeline" / "rsi_lockout_c01_matched_reduction_closure.json").read_text(encoding="utf-8"))
+    assert closure["mainline_64_trajectory_design"]["executed"] is False
+    assert closure["mainline_64_trajectory_design"]["disposition"] == "SUPERSEDED_BEFORE_EXECUTION_BY_MATCHED_SIMPLIFICATION_STOP"

@@ -198,7 +198,7 @@ def main() -> None:
           };
         """)
         research_summary = research_map["summary"]
-        require(research_summary.get("research_primary_next_action_counts") == {"MERGED_NO_STANDALONE_ACTION": 10, "NO_INTERNAL_ACTION": 71, "PAPERSTATE_HANDOFF": 1, "REOPEN_CONDITION_REQUIRED": 5}, f"ResearchItem action distribution drifted: {research_summary}")
+        require(research_summary.get("research_primary_next_action_counts") == {"MERGED_NO_STANDALONE_ACTION": 10, "NO_INTERNAL_ACTION": 72, "PAPERSTATE_HANDOFF": 1, "REOPEN_CONDITION_REQUIRED": 5}, f"ResearchItem action distribution drifted: {research_summary}")
         require(research_summary.get("active_research_items") == 0 and research_summary.get("machine_actionable_research_items") == 0 and research_summary.get("machine_actionable_attention") == 0, f"ResearchItem activity/machine authority drifted: {research_summary}")
         require(research_summary.get("research_handoffs") == 1 and research_summary.get("research_waiting_reopen") == 5, f"Dashboard ResearchItem control split drifted: {research_summary}")
         require(research_summary.get("paper_internal_action_required") == summary.get("internal_action_required") and research_summary.get("paper_no_internal_action") == summary.get("no_internal_action"), f"Dashboard paper action split drifted: {research_summary}")
@@ -238,7 +238,7 @@ def main() -> None:
         require("下一步只剩人工作者责任确认" not in ideas["text"] and "only human author responsibility/signoff" not in ideas["text"], "Paper Ideas still frames real submission as an internal Research OS next action")
 
         print("PASS")
-        print(f"Public control plane verified in a real browser: ResearchItem 71/10/5/1 actions; PaperState ledger=5 gate-clean={summary.get('gate_clean_submission_ready')} internal-actions={summary.get('internal_action_required')}; 5 review lessons")
+        print(f"Public control plane verified in a real browser: ResearchItem 72/10/5/1 actions; PaperState ledger=5 gate-clean={summary.get('gate_clean_submission_ready')} internal-actions={summary.get('internal_action_required')}; 5 review lessons")
     finally:
         if session_id:
             try:
