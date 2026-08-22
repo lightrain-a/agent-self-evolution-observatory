@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0-pre-f0",
+  "generated_at": "2026-08-22T12:39:10+00:00",
+  "inventory_origin": "port-013-local-primary-and-provenance-substrate-audit-20260822",
+  "source_generator_run_id": "20260822T120628Z-ingestion-replay",
+  "source_transaction_id": null,
+  "rows": [
+    {
+      "candidate_id": "PORT-013",
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "eb5c3da354c9bafae9f6f80f68555444833cd7fbdeb1699d06a190017714781e",
+      "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+      "required_unit": "Matched AWM/WebArena skill-acquisition units in which the same frozen semantic skill is serialized under at least three independently chosen, semantically equivalent syntactic envelopes and then evaluated through a fully native function-calling executor, with per-unit tool name, argument, observation/output, held-out state, memory/null-history control, and independent task truth sufficient to distinguish literal-envelope replication from semantic transfer.",
+      "asset_audit": "The frozen Primary evidence for arXiv:2608.17684 reports LiteralPort/NoEnvelope-style controls and states that its code and audit artifacts will be released upon publication; the current first-party/public evidence therefore exposes paper-level aggregate findings but not the required per-trajectory AWM acquisition records, native function-call tool/argument/output traces, or independent truth manifest. arXiv:2607.26809 (HERO) exposes a separate hierarchical-embedding/WebArena method and does not provide the matched financial-agent native-function execution units required by this falsifier. A bounded scan of both canonical project data roots found zero execution-like files whose paths identify AWM/WebArena financial trajectories, LiteralPort/NoEnvelope rollouts, native function-call records, or matched result manifests. Current Generator/Search-Portfolio text mentions these controls but is search output, not independent support truth. Constructing synthetic trajectories, inventing envelope outcomes, or writing a candidate-specific executor would violate the frozen anti-substitution and independent-truth contract.",
+      "primary_refs": [
+        "arXiv:2607.26809",
+        "arXiv:2608.17684"
+      ],
+      "bounded_first_party_evidence_design_allowed": true,
+      "reopen_only_if": "Reopen when first-party released artifacts or another already provenance-audited substrate materialize the same frozen AWM/WebArena skill content under at least three semantically equivalent envelope realizations and a native function-calling executor with per-unit tool/argument/output records, matched held-out states, null-memory/history controls, and independent task truth. The materialization must freeze the operationalization before outcome readout and may not use synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.",
+      "scientific_authority": false
+    }
+  ],
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0-shadow",
-  "generated_at": "2026-08-19T13:10:03+00:00",
-  "run_id": "20260818T164230Z-ingestion-replay",
+  "generated_at": "2026-08-22T12:39:10+00:00",
+  "run_id": "20260822T120628Z-ingestion-replay",
   "status": "PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE",
-  "support_inventory_origin": "first-party-release-and-code-audit-20260819",
-  "support_inventory_sha256": "e44124b17c5274ae495bc8828175662cfd83ea38a062744dcaa09d127e3ac54d",
+  "support_inventory_origin": "port-013-local-primary-and-provenance-substrate-audit-20260822",
+  "support_inventory_sha256": "7762e3c763d51988413e19913b087b11a3c2e7a494756afdf3be4bfbc5dab0e0",
   "policy": {
     "problem_falsifier_queue_is_zero_authority": true,
     "support_inventory_precedes_falsifier_execution": true,
@@ -36,9 +36,9 @@
     "no_gpu": true
   },
   "summary": {
-    "queued": 2,
+    "queued": 1,
     "support_qualified": 0,
-    "hold_support_unavailable": 2,
+    "hold_support_unavailable": 1,
     "falsifier_executed": 0,
     "problem_gate_authorized": 0,
     "paper_design_authorized": 0,
@@ -49,50 +49,21 @@
   },
   "rows": [
     {
-      "candidate_id": "PORT-001",
-      "title": "Rank-inverted skill harm across harnesses as a non-composability witness",
+      "candidate_id": "PORT-013",
+      "title": "Syntactic Interface Overfitting in Web Agents: Why do learned skills bind to literal text envelopes rather than semantic intents?",
       "disposition": "HOLD_SUPPORT_UNAVAILABLE",
-      "required_unit": "One frozen TBA-poisoned SKILL.md artifact executed under both Codex and Gemini CLI on matched task instances, with logged skill availability/retrieval/invocation and outcome fields sufficient to compare harm ranking under the exact same artifact.",
-      "asset_audit": "Trajectory-Backdoor-Attack first-party origin HEAD/master is exactly 0d0f58e50bfeace9c13b73afbd7f8290d7d53a47. After unshallowing, the complete public history contains only two commits (b76b0f44c725b4a49250c6215be8c6c7c0df8cc6 and 0d0f58e...), with the second changing only one README line. Across both commits there is no Gemini implementation. scripts/eval_only.py (sha256=615212ed8a50f1fba66e32e218fc5d834a1682c4719fb3420fa18948f39eedeb) exposes Codex/Claude/OpenAI/Bedrock choices but no Gemini backend; skillopt/model/codex_harness.py (sha256=ed0e1e05cdd911206395135ec7704bb5aa099d709feb15935b8abebda1988d48) installs the supplied artifact at .agents/skills/skillopt-target/SKILL.md and records Codex use. The public tree/history contains oracle/initial skill markdown but not the paper-run poisoned TBA SKILL.md. arXiv:2608.14036 explicitly evaluates fixed Codex-derived skills in Gemini CLI, yet its author-submitted source archive (sha256=49c4b7c4472196f0254e574f1e5e7c5eaac2e9f099de6ebbb0fb4b77dfd88006) contains only manuscript/style/bibliography/figures, with no runner, result bundle, or author code/project URL; its arXiv abstract metadata likewise exposes no author release endpoint. Thus no released first-party joint unit binds the exact poisoned artifact to both Codex and Gemini with matched invocation observables. Synthesizing the poison or writing a Gemini wrapper would change the realization substrate.",
+      "required_unit": "Matched AWM/WebArena skill-acquisition units in which the same frozen semantic skill is serialized under at least three independently chosen, semantically equivalent syntactic envelopes and then evaluated through a fully native function-calling executor, with per-unit tool name, argument, observation/output, held-out state, memory/null-history control, and independent task truth sufficient to distinguish literal-envelope replication from semantic transfer.",
+      "asset_audit": "The frozen Primary evidence for arXiv:2608.17684 reports LiteralPort/NoEnvelope-style controls and states that its code and audit artifacts will be released upon publication; the current first-party/public evidence therefore exposes paper-level aggregate findings but not the required per-trajectory AWM acquisition records, native function-call tool/argument/output traces, or independent truth manifest. arXiv:2607.26809 (HERO) exposes a separate hierarchical-embedding/WebArena method and does not provide the matched financial-agent native-function execution units required by this falsifier. A bounded scan of both canonical project data roots found zero execution-like files whose paths identify AWM/WebArena financial trajectories, LiteralPort/NoEnvelope rollouts, native function-call records, or matched result manifests. Current Generator/Search-Portfolio text mentions these controls but is search output, not independent support truth. Constructing synthetic trajectories, inventing envelope outcomes, or writing a candidate-specific executor would violate the frozen anti-substitution and independent-truth contract.",
       "primary_refs": [
-        "arXiv:2608.08303",
-        "arXiv:2608.14036"
+        "arXiv:2607.26809",
+        "arXiv:2608.17684"
       ],
       "scientific_authority": false,
       "candidate_identity_version": "candidate-content-v1",
-      "candidate_snapshot_sha256": "9b255e3ac6e3896a155b185b507073e6e36c65761f9e99d4e9bb5a0b7004bdd4",
-      "reopen_only_if": "Reopen only when first-party provenance exposes both missing halves of the joint unit: the exact frozen paper-run TBA poisoned SKILL.md (or a content-addressed equivalent) and an author-released Gemini CLI execution path that can consume that same artifact on matched tasks while exposing matched availability/retrieval/invocation/outcome fields. An equivalent existing provenance-audited substrate is admissible only if it requires no poison synthesis, skill re-evolution, custom Gemini wrapper, candidate-mechanism injection, hidden-outcome tuning, or change to the Codex/Gemini task interface.",
+      "candidate_snapshot_sha256": "eb5c3da354c9bafae9f6f80f68555444833cd7fbdeb1699d06a190017714781e",
+      "reopen_only_if": "Reopen when first-party released artifacts or another already provenance-audited substrate materialize the same frozen AWM/WebArena skill content under at least three semantically equivalent envelope realizations and a native function-calling executor with per-unit tool/argument/output records, matched held-out states, null-memory/history controls, and independent task truth. The materialization must freeze the operationalization before outcome readout and may not use synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.",
       "bounded_first_party_evidence_design_allowed": true,
       "next_route": "BOUNDED_EVIDENCE_DESIGN_OR_WAIT_PRIMARY_ASSET"
-    },
-    {
-      "candidate_id": "PORT-003",
-      "title": "Timescale-isolated ablation of action-frequency governance on a frozen skill set",
-      "disposition": "HOLD_SUPPORT_UNAVAILABLE",
-      "required_unit": "A frozen Zetta policy/skill state supporting independent A/B/C/D timescale interventions (post-hoc only; episode/retrieval only; skill-level closed loop only; full Zetta) plus a matched-frequency hierarchical baseline, all on the same tasks/seeds with fixed base policy, skill state, and compute.",
-      "asset_audit": "arXiv:2608.09096 (Evo-Bench) motivates isolating harness improvement from base-model strength but does not release the Zetta-specific timescale intervention arms. Zetta first-party repository origin HEAD/main is exactly commit 6129934d53ea00ac306c14723874321dc3667246. At that revision, rpent/evolution/models.py CandidateBundle.__post_init__ rejects Recovery-only bundles because each recovery trigger must reference a present critic (unknown_triggers), and rejects Critic-only bundles because every critic must have a frozen executable recovery path (uncovered_rules). rpent/evolution/stages.py::_require_atomic_parent_inheritance further requires each candidate delta to append exactly one critic and one linked recovery. robots/libero/run_evolution_rollout.py loads and SHA-checks the intact CandidateBundle for active_bundle mode. Thus A=strict_pure_vla and D=full active bundle are native, but B=Recovery-only and C=Critic-only are contract-invalid in the released substrate. Adding a mask/wrapper or weakening validation would change the experimental substrate, so A-vs-D alone cannot identify the claimed action-frequency primitive.",
-      "primary_refs": [
-        "arXiv:2608.09096",
-        "arXiv:2608.16590"
-      ],
-      "scientific_authority": false,
-      "candidate_identity_version": "candidate-content-v1",
-      "candidate_snapshot_sha256": "d15348638054d336246774f5f9410dcc33faccb4942b02ec842eb8c831fbf366",
-      "support_audit_artifact": "generated/zetta-timescale-support-audit-20260819.json",
-      "support_audit_sha256": "0c55ccce2d3506d92fc8680f4da864408aa712d9d5927f123e2463e2ac186218",
-      "reopen_only_if": "Reopen only if a first-party revision changes the released CandidateBundle/atomic-inheritance contract or runtime so that the required intermediate one-factor timescale arms are native and contract-valid on the same frozen bundle. Validator weakening, wrapper-based masking, synthetic mechanism injection, retraining, hidden-outcome tuning, or changing the base policy/skill state does not clear this hold.",
-      "release_watch_targets": [
-        {
-          "source_ref": "arXiv:2608.16590",
-          "url": "https://github.com/air-embodied-brain/Zetta-Embodiment",
-          "declaration_kind": "FIRST_PARTY_REPOSITORY",
-          "baseline_revision": "6129934d53ea00ac306c14723874321dc3667246",
-          "scientific_authority": false
-        }
-      ],
-      "bounded_first_party_evidence_design_allowed": false,
-      "next_route": "WAIT_FIRST_PARTY_RELEASE_CHANGE",
-      "support_recheck_mode": "FIRST_PARTY_RELEASE_CHANGE_ONLY"
     }
   ],
   "authority": {

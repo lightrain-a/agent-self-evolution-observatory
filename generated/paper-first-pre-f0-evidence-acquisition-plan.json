@@ -1,0 +1,390 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-22T14:19:54+00:00",
+  "run_id": "canonical-pre-f0-20260822T120628Z-ingestion-replay",
+  "status": "EVIDENCE_WAIT_OR_HOLD",
+  "policy": {
+    "reduction_pending_is_provisional_not_failed": true,
+    "exploration_authority_is_separate_from_scientific_claim_authority": true,
+    "first_party_evidence_may_be_acquired_before_problem_gate_pass": true,
+    "first_party_evidence_must_use_independent_truth": true,
+    "candidate_mechanism_cannot_define_labels_or_ground_truth": true,
+    "same_information_baseline_is_mandatory": true,
+    "frozen_scientific_fields_are_compiler_owned": true,
+    "outcome_labels_are_compiler_owned": true,
+    "execution_adapter_is_compiler_owned": true,
+    "independent_evidence_contract_review_required_before_execution": true,
+    "evidence_designer_cannot_self_review": true,
+    "bounded_substrate_preflight_required_after_contract_review": true,
+    "contract_review_clear_does_not_authorize_execution": true,
+    "prior_support_receipt_is_review_context_not_automatic_veto": true,
+    "support_inventory_is_one_acquisition_route_not_a_global_prerequisite": true,
+    "source_specific_claims_still_require_source_specific_assets": true,
+    "source_asset_dependency_may_receive_one_operationalization_recompile": true,
+    "operationalization_recompile_cannot_change_frozen_prediction_or_baseline": true,
+    "operationalization_recompile_requires_independent_equivalence_review": true,
+    "operationalization_recompile_is_single_attempt": true,
+    "new_evidence_never_auto_certifies_novelty": true,
+    "residual_survival_returns_to_semantic_and_current_source_review": true,
+    "bounded_evidence_execution_is_not_p0": true,
+    "experiment_tree_branch_depth_is_bounded": true,
+    "single_variable_repair_only_after_inconclusive": true,
+    "automatic_method_training_forbidden": true,
+    "second_backbone_forbidden": true,
+    "hidden_outcome_retuning_forbidden": true,
+    "research_memory_query_pack_required_before_evidence_design": true,
+    "research_memory_query_pack_is_zero_authority": true,
+    "transient_operational_memory_excluded_from_evidence_design": true,
+    "research_memory_query_pack_receipt_required": true,
+    "scientific_authority": false,
+    "canonical_pre_f0_support_hold_adapter_zero_authority": true,
+    "support_qualified_bypasses_evidence_design_adapter": true,
+    "release_change_only_hold_remains_waiting": true
+  },
+  "portfolio": {
+    "selection": "bounded-top-k",
+    "max_active_candidates": 4,
+    "active_candidates": 1,
+    "experiment_tree_max_depth": 2
+  },
+  "summary": {
+    "provisional_problem_candidates": 1,
+    "design_selected": 1,
+    "design_pending": 0,
+    "design_invalid": 0,
+    "wait_primary_asset": 0,
+    "operationalization_recompile_pending": 0,
+    "operationalization_recompiled": 1,
+    "operationalization_intrinsic_source_specific": 0,
+    "review_pending": 0,
+    "review_clear": 1,
+    "review_revise": 0,
+    "review_blocked": 0,
+    "substrate_preflight_pending": 0,
+    "substrate_ready": 0,
+    "substrate_implementation_pending": 0,
+    "substrate_hold": 0,
+    "execution_ready": 0,
+    "execution_completed": 1,
+    "reduction_supported": 0,
+    "residual_survives": 0,
+    "inconclusive": 1,
+    "branch_repair_ready": 0,
+    "deferred_by_portfolio_budget": 0,
+    "paper_design_authorized": 0,
+    "method_authorized": 0,
+    "p0_authorized": 0,
+    "full_experiment_authorized": 0
+  },
+  "entries": [
+    {
+      "candidate_id": "PORT-013",
+      "title": "Syntactic Interface Overfitting in Web Agents: Why do learned skills bind to literal text envelopes rather than semantic intents?",
+      "discovery_lane": "CONVERGENT_FAILURE",
+      "source_branch_id": "CONVERGENT_FAILURE-P2-006-R1",
+      "source_refs": [
+        "arXiv:2607.26809",
+        "arXiv:2608.17684"
+      ],
+      "priority_rank": 1,
+      "selection_basis": "fewest-unresolved-reduction-blockers-then-stable-id",
+      "design_selected": true,
+      "status": "HOLD_INCONCLUSIVE_TREE_BUDGET_EXHAUSTED",
+      "frozen_irreducible_object": "The binding of learned procedural memory to literal syntactic action envelopes (surface text patterns) rather than semantic task intents, causing transfer failure across execution substrates with equivalent semantics but different interface formats.",
+      "frozen_endpoint_headroom_requirement": "Utility must be significantly below 0.756 (the restored utility) when the envelope is mismatched, and significantly above 0.319 (the collapsed utility) when the envelope is varied during acquisition.",
+      "frozen_exact_prediction": "Skills acquired with varied syntactic envelopes (but same semantics) will show higher transfer utility to native function-calling executors than skills acquired with a single envelope, under matched semantic content and task distribution.",
+      "frozen_same_information_baseline": "Domain adaptation with distribution alignment.",
+      "frozen_falsifier_expression": "Run the AWM skill acquisition with varied syntactic envelopes (e.g., paraphrased WebArena envelopes) and test transfer utility to native function-calling executors. If utility remains low, the syntactic-binding hypothesis is falsified.",
+      "blockers": [
+        "saturation-exact-reduction-pending:model-scaffold-enactability",
+        "unresolved-exact-reduction-test:1"
+      ],
+      "tree": {
+        "depth": 0,
+        "parent_contract_sha256": "",
+        "repair_count": 0
+      },
+      "design": {
+        "candidate_id": "PORT-013",
+        "changed_variable": "",
+        "source_specificity": "REPRODUCIBLE_FIRST_PARTY",
+        "acquisition_mode": "FIRST_PARTY_SANDBOX",
+        "reproduction_target": "First-party skill acquisition in a public web environment (e.g., WorkArena or MiniWoB++) where identical semantic skill content is serialized under varied syntactic envelopes (paraphrased text instructions) versus a single envelope, then evaluated via native function-calling execution on held-out tasks.",
+        "independent_truth": "Programmatic state-based evaluation of the web environment (e.g., exact URL match, database state verification, or DOM element presence) applied to held-out tasks, independent of the skill acquisition envelope or syntactic-binding mechanism.",
+        "causal_unit": "A single skill-trajectory pair: one frozen semantic skill content serialized under a specific syntactic envelope realization, executed in a native function-calling executor on a held-out web task.",
+        "observable": "Per-unit native function-call trace (tool name, arguments, observation/output) and binary task success from the independent state-based evaluator, recorded separately for each envelope realization and null-history control.",
+        "intervention": "Skill acquisition with varied syntactic envelopes (at least three independently chosen, semantically equivalent paraphrases) versus single-envelope acquisition, with semantic content, task distribution, and executor budget held constant.",
+        "same_information_lock": "The varied-envelope and single-envelope conditions expose identical semantic skill content, identical task distribution, identical executor budget, and identical observation history; only the syntactic envelope serialization differs. The domain-adaptation baseline receives the same semantic content and task distribution, attempting transfer via distribution alignment without access to varied syntactic envelopes during acquisition.",
+        "matched_baseline_execution": "Domain adaptation with distribution alignment is executed on the same frozen units: it receives the same semantic skill content and task distribution, and attempts transfer via semantic distribution alignment without access to varied syntactic envelopes during acquisition. It receives exactly the same observables (function-call traces) and budget as the candidate condition.",
+        "anti_bake_in_controls": [
+          "Null-history control: each unit is executed with empty memory/history to isolate the effect of the skill envelope from trajectory context.",
+          "Held-out task split: evaluation tasks are disjoint from acquisition tasks and frozen before outcome readout.",
+          "Independent envelope selection: the at-least-three semantically equivalent envelopes are chosen by a frozen procedure (e.g., back-translation or diverse paraphrase generation) independent of the candidate mechanism and outcome.",
+          "Frozen operationalization: the executor, tool schema, and evaluation contract are fixed before any outcome data is examined.",
+          "No synthetic generator encoding: envelopes are generated via paraphrase algorithms that do not have access to the predicted threshold/sign/order, and task truth is determined by environment state, not by the generator."
+        ],
+        "decision_criteria": {
+          "baseline_reduction_supported": "The domain-adaptation baseline achieves transfer utility statistically indistinguishable from the varied-envelope condition on held-out tasks, indicating that semantic distribution alignment explains the prediction and literal-envelope binding is not the operative mechanism.",
+          "candidate_residual_survives": "The varied-envelope condition shows significantly higher transfer utility than both the single-envelope condition and the domain-adaptation baseline on held-out tasks, with the residual localized to envelope variation rather than semantic content or task difficulty.",
+          "inconclusive": "The semantic equivalence probe fails (envelopes are not semantically equivalent or skill content differs), or the native function-calling executor is not sufficiently distinct from the acquisition envelopes to prevent literal replication, or the held-out truth manifest is missing, preventing valid separation between literal-envelope replication and semantic transfer."
+        },
+        "single_variable_repair_if_inconclusive": "",
+        "adapter_intent": "First-party sandbox using public web environment with native function-calling API; no reuse of AWM/WebArena primary assets; synthetic envelope generation via paraphrase algorithms without access to outcome thresholds.",
+        "budget": {
+          "max_units": 128,
+          "max_wall_minutes": 90,
+          "max_gpu_hours": 1.0,
+          "max_model_calls": 256
+        },
+        "execution_adapter": "SUBSTRATE_PREFLIGHT_REQUIRED",
+        "frozen_exact_prediction": "Skills acquired with varied syntactic envelopes (but same semantics) will show higher transfer utility to native function-calling executors than skills acquired with a single envelope, under matched semantic content and task distribution.",
+        "frozen_same_information_baseline": "Domain adaptation with distribution alignment.",
+        "frozen_falsifier_expression": "Run the AWM skill acquisition with varied syntactic envelopes (e.g., paraphrased WebArena envelopes) and test transfer utility to native function-calling executors. If utility remains low, the syntactic-binding hypothesis is falsified.",
+        "decision_rule": {
+          "REDUCTION_SUPPORTED": "The domain-adaptation baseline achieves transfer utility statistically indistinguishable from the varied-envelope condition on held-out tasks, indicating that semantic distribution alignment explains the prediction and literal-envelope binding is not the operative mechanism.",
+          "RESIDUAL_SURVIVES": "The varied-envelope condition shows significantly higher transfer utility than both the single-envelope condition and the domain-adaptation baseline on held-out tasks, with the residual localized to envelope variation rather than semantic content or task difficulty.",
+          "INCONCLUSIVE": "The semantic equivalence probe fails (envelopes are not semantically equivalent or skill content differs), or the native function-calling executor is not sufficiently distinct from the acquisition envelopes to prevent literal replication, or the held-out truth manifest is missing, preventing valid separation between literal-envelope replication and semantic transfer."
+        }
+      },
+      "contract_sha256": "c7354d8bc6c54521c21024ecb6b62d3148452714f57eed644c87666d0424f860",
+      "execution_authorized": false,
+      "scientific_authority": false,
+      "authority": {
+        "scientific_claim": false,
+        "live_problem_gate": false,
+        "paper_design": false,
+        "method": false,
+        "p0": false,
+        "full_experiment": false
+      },
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "eb5c3da354c9bafae9f6f80f68555444833cd7fbdeb1699d06a190017714781e",
+      "prior_support": {
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "required_unit": "Matched AWM/WebArena skill-acquisition units in which the same frozen semantic skill is serialized under at least three independently chosen, semantically equivalent syntactic envelopes and then evaluated through a fully native function-calling executor, with per-unit tool name, argument, observation/output, held-out state, memory/null-history control, and independent task truth sufficient to distinguish literal-envelope replication from semantic transfer.",
+        "asset_audit": "The frozen Primary evidence for arXiv:2608.17684 reports LiteralPort/NoEnvelope-style controls and states that its code and audit artifacts will be released upon publication; the current first-party/public evidence therefore exposes paper-level aggregate findings but not the required per-trajectory AWM acquisition records, native function-call tool/argument/output traces, or independent truth manifest. arXiv:2607.26809 (HERO) exposes a separate hierarchical-embedding/WebArena method and does not provide the matched financial-agent native-function execution units required by this falsifier. A bounded scan of both canonical project data roots found zero execution-like files whose paths identify AWM/WebArena financial trajectories, LiteralPort/NoEnvelope rollouts, native function-call records, or matched result manifests. Current Generator/Search-Portfolio text mentions these controls but is search output, not independent support truth. Constructing synthetic trajectories, inventing envelope outcomes, or writing a candidate-specific executor would violate the frozen anti-substitution and independent-truth contract.",
+        "reopen_only_if": "Reopen when first-party released artifacts or another already provenance-audited substrate materialize the same frozen AWM/WebArena skill content under at least three semantically equivalent envelope realizations and a native function-calling executor with per-unit tool/argument/output records, matched held-out states, null-memory/history controls, and independent task truth. The materialization must freeze the operationalization before outcome readout and may not use synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.",
+        "bounded_first_party_evidence_design_allowed": true,
+        "support_inventory_sha256": "7762e3c763d51988413e19913b087b11a3c2e7a494756afdf3be4bfbc5dab0e0",
+        "scientific_authority": false
+      },
+      "canonical_pre_f0_source": {
+        "source_generator_run_id": "20260822T120628Z-ingestion-replay",
+        "candidate_snapshot_sha256": "eb5c3da354c9bafae9f6f80f68555444833cd7fbdeb1699d06a190017714781e",
+        "scientific_authority": false
+      },
+      "design_audit": {
+        "passed": true,
+        "errors": []
+      },
+      "design_provenance": {
+        "resolved_model": "kimi-k3",
+        "part": 1,
+        "stage": "operationalization-recompile",
+        "scientific_authority": false
+      },
+      "source_specific_design": {
+        "candidate_id": "PORT-013",
+        "changed_variable": "",
+        "source_specificity": "SOURCE_SPECIFIC_REQUIRED",
+        "acquisition_mode": "PRIMARY_ASSET_REUSE",
+        "reproduction_target": "Frozen AWM/WebArena financial-agent skill-acquisition units from arXiv:2608.17684, specifically the LiteralPort/NoEnvelope-style controls, where the same frozen semantic skill is serialized under at least three independently chosen, semantically equivalent syntactic envelopes and evaluated through a fully native function-calling executor with per-unit tool/argument/output traces.",
+        "independent_truth": "Task success is determined by the WebArena environment's programmatic state-based evaluator (e.g., exact URL match, database state, or page content verification) applied to held-out tasks, independent of the skill acquisition envelope or the candidate's syntactic-binding mechanism.",
+        "causal_unit": "A single skill-trajectory pair: one frozen semantic skill content serialized under a specific syntactic envelope realization, executed in a native function-calling executor on a held-out WebArena financial task.",
+        "observable": "Per-unit native function-call trace (tool name, arguments, observation/output) and binary task success from the independent evaluator, recorded separately for each envelope realization and null-history control.",
+        "intervention": "Reuse of the frozen primary asset's matched skill-acquisition units: the same semantic skill content is evaluated under varied syntactic envelopes versus a single envelope, with the executor and task distribution held constant.",
+        "same_information_lock": "The varied-envelope and single-envelope conditions expose identical semantic skill content, identical task distribution, identical executor budget, and identical observation history; only the syntactic envelope serialization differs.",
+        "matched_baseline_execution": "Domain adaptation with distribution alignment is executed on the same frozen units: it receives the same semantic skill content and task distribution, and attempts transfer via semantic distribution alignment without access to varied syntactic envelopes during acquisition.",
+        "anti_bake_in_controls": [
+          "Null-history control: each unit is executed with empty memory/history to isolate the effect of the skill envelope from trajectory context.",
+          "Held-out task split: evaluation tasks are disjoint from acquisition tasks and frozen before outcome readout.",
+          "Independent envelope selection: the at-least-three semantically equivalent envelopes are chosen by a frozen procedure independent of the candidate mechanism and outcome.",
+          "Frozen operationalization: the executor, tool schema, and evaluation contract are fixed before any outcome data is examined."
+        ],
+        "decision_criteria": {
+          "baseline_reduction_supported": "The domain-adaptation baseline achieves transfer utility statistically indistinguishable from the varied-envelope condition on held-out tasks, indicating that semantic distribution alignment explains the prediction and literal-envelope binding is not the operative mechanism.",
+          "candidate_residual_survives": "The varied-envelope condition shows significantly higher transfer utility than both the single-envelope condition and the domain-adaptation baseline on held-out tasks, with the residual localized to envelope variation rather than semantic content or task difficulty.",
+          "inconclusive": "The primary asset does not expose the required per-unit native function-call traces, or the envelope realizations are not independently verifiable as semantically equivalent, or the held-out truth manifest is missing, preventing valid separation between literal-envelope replication and semantic transfer."
+        },
+        "single_variable_repair_if_inconclusive": "",
+        "adapter_intent": "Primary asset only: reuse of the frozen arXiv:2608.17684 released artifacts (upon publication) or another already provenance-audited substrate that materializes the exact AWM/WebArena skill-acquisition units with native function-calling executor traces; no first-party synthetic construction or candidate-specific executor is permitted.",
+        "budget": {
+          "max_units": 128,
+          "max_wall_minutes": 90,
+          "max_gpu_hours": 1.0,
+          "max_model_calls": 256
+        },
+        "execution_adapter": "PRIMARY_ASSET_ONLY",
+        "frozen_exact_prediction": "Skills acquired with varied syntactic envelopes (but same semantics) will show higher transfer utility to native function-calling executors than skills acquired with a single envelope, under matched semantic content and task distribution.",
+        "frozen_same_information_baseline": "Domain adaptation with distribution alignment.",
+        "frozen_falsifier_expression": "Run the AWM skill acquisition with varied syntactic envelopes (e.g., paraphrased WebArena envelopes) and test transfer utility to native function-calling executors. If utility remains low, the syntactic-binding hypothesis is falsified.",
+        "decision_rule": {
+          "REDUCTION_SUPPORTED": "The domain-adaptation baseline achieves transfer utility statistically indistinguishable from the varied-envelope condition on held-out tasks, indicating that semantic distribution alignment explains the prediction and literal-envelope binding is not the operative mechanism.",
+          "RESIDUAL_SURVIVES": "The varied-envelope condition shows significantly higher transfer utility than both the single-envelope condition and the domain-adaptation baseline on held-out tasks, with the residual localized to envelope variation rather than semantic content or task difficulty.",
+          "INCONCLUSIVE": "The primary asset does not expose the required per-unit native function-call traces, or the envelope realizations are not independently verifiable as semantically equivalent, or the held-out truth manifest is missing, preventing valid separation between literal-envelope replication and semantic transfer."
+        }
+      },
+      "operationalization_recompile_attempts": 1,
+      "operationalization_recompile_adjudication": {
+        "verdict": "RECOMPILED_FIRST_PARTY",
+        "reason": "The unavailable AWM/WebArena financial trajectories and LiteralPort/NoEnvelope artifacts are incidental acquisition provenance, not the scientific object. The irreducible object is the binding of learned procedural memory to literal syntactic envelopes versus semantic intents, and the exact prediction compares varied-envelope acquisition against single-envelope acquisition under matched semantic content and task distribution. A first-party sandbox can instantiate the same variables and contrast using a public web environment with native function-calling execution, programmatic state-based truth, and independently generated semantically equivalent envelopes. Historical memory confirms the need for provenance-audited matched units and post-update context verification, but does not prohibit transport when the operationalization is recompiled from public semantics.",
+        "recompiler_model": "kimi-k3",
+        "part": 1,
+        "scientific_authority": false
+      },
+      "operationalization_recompile_audit": {
+        "passed": true,
+        "errors": []
+      },
+      "original_source_specific_design": {
+        "candidate_id": "PORT-013",
+        "changed_variable": "",
+        "source_specificity": "SOURCE_SPECIFIC_REQUIRED",
+        "acquisition_mode": "PRIMARY_ASSET_REUSE",
+        "reproduction_target": "Frozen AWM/WebArena financial-agent skill-acquisition units from arXiv:2608.17684, specifically the LiteralPort/NoEnvelope-style controls, where the same frozen semantic skill is serialized under at least three independently chosen, semantically equivalent syntactic envelopes and evaluated through a fully native function-calling executor with per-unit tool/argument/output traces.",
+        "independent_truth": "Task success is determined by the WebArena environment's programmatic state-based evaluator (e.g., exact URL match, database state, or page content verification) applied to held-out tasks, independent of the skill acquisition envelope or the candidate's syntactic-binding mechanism.",
+        "causal_unit": "A single skill-trajectory pair: one frozen semantic skill content serialized under a specific syntactic envelope realization, executed in a native function-calling executor on a held-out WebArena financial task.",
+        "observable": "Per-unit native function-call trace (tool name, arguments, observation/output) and binary task success from the independent evaluator, recorded separately for each envelope realization and null-history control.",
+        "intervention": "Reuse of the frozen primary asset's matched skill-acquisition units: the same semantic skill content is evaluated under varied syntactic envelopes versus a single envelope, with the executor and task distribution held constant.",
+        "same_information_lock": "The varied-envelope and single-envelope conditions expose identical semantic skill content, identical task distribution, identical executor budget, and identical observation history; only the syntactic envelope serialization differs.",
+        "matched_baseline_execution": "Domain adaptation with distribution alignment is executed on the same frozen units: it receives the same semantic skill content and task distribution, and attempts transfer via semantic distribution alignment without access to varied syntactic envelopes during acquisition.",
+        "anti_bake_in_controls": [
+          "Null-history control: each unit is executed with empty memory/history to isolate the effect of the skill envelope from trajectory context.",
+          "Held-out task split: evaluation tasks are disjoint from acquisition tasks and frozen before outcome readout.",
+          "Independent envelope selection: the at-least-three semantically equivalent envelopes are chosen by a frozen procedure independent of the candidate mechanism and outcome.",
+          "Frozen operationalization: the executor, tool schema, and evaluation contract are fixed before any outcome data is examined."
+        ],
+        "decision_criteria": {
+          "baseline_reduction_supported": "The domain-adaptation baseline achieves transfer utility statistically indistinguishable from the varied-envelope condition on held-out tasks, indicating that semantic distribution alignment explains the prediction and literal-envelope binding is not the operative mechanism.",
+          "candidate_residual_survives": "The varied-envelope condition shows significantly higher transfer utility than both the single-envelope condition and the domain-adaptation baseline on held-out tasks, with the residual localized to envelope variation rather than semantic content or task difficulty.",
+          "inconclusive": "The primary asset does not expose the required per-unit native function-call traces, or the envelope realizations are not independently verifiable as semantically equivalent, or the held-out truth manifest is missing, preventing valid separation between literal-envelope replication and semantic transfer."
+        },
+        "single_variable_repair_if_inconclusive": "",
+        "adapter_intent": "Primary asset only: reuse of the frozen arXiv:2608.17684 released artifacts (upon publication) or another already provenance-audited substrate that materializes the exact AWM/WebArena skill-acquisition units with native function-calling executor traces; no first-party synthetic construction or candidate-specific executor is permitted.",
+        "budget": {
+          "max_units": 128,
+          "max_wall_minutes": 90,
+          "max_gpu_hours": 1.0,
+          "max_model_calls": 256
+        },
+        "execution_adapter": "PRIMARY_ASSET_ONLY",
+        "frozen_exact_prediction": "Skills acquired with varied syntactic envelopes (but same semantics) will show higher transfer utility to native function-calling executors than skills acquired with a single envelope, under matched semantic content and task distribution.",
+        "frozen_same_information_baseline": "Domain adaptation with distribution alignment.",
+        "frozen_falsifier_expression": "Run the AWM skill acquisition with varied syntactic envelopes (e.g., paraphrased WebArena envelopes) and test transfer utility to native function-calling executors. If utility remains low, the syntactic-binding hypothesis is falsified.",
+        "decision_rule": {
+          "REDUCTION_SUPPORTED": "The domain-adaptation baseline achieves transfer utility statistically indistinguishable from the varied-envelope condition on held-out tasks, indicating that semantic distribution alignment explains the prediction and literal-envelope binding is not the operative mechanism.",
+          "RESIDUAL_SURVIVES": "The varied-envelope condition shows significantly higher transfer utility than both the single-envelope condition and the domain-adaptation baseline on held-out tasks, with the residual localized to envelope variation rather than semantic content or task difficulty.",
+          "INCONCLUSIVE": "The primary asset does not expose the required per-unit native function-call traces, or the envelope realizations are not independently verifiable as semantically equivalent, or the held-out truth manifest is missing, preventing valid separation between literal-envelope replication and semantic transfer."
+        }
+      },
+      "operationalization_recompile": {
+        "scientific_object_invariants": [
+          "Semantic skill content is held identical across varied-envelope and single-envelope acquisition conditions.",
+          "Task distribution is drawn from the same public web environment family and held constant between conditions.",
+          "Evaluation uses a native function-calling executor with structured tool schemas, not the original text-based interface.",
+          "Transfer utility is measured on held-out tasks with programmatic state-based ground truth independent of the acquisition envelope.",
+          "Null-history controls isolate the effect of the skill envelope from trajectory context.",
+          "The same-information baseline (domain adaptation with distribution alignment) receives exactly the same observables, budget, and semantic content."
+        ],
+        "source_specific_dependencies_removed": [
+          "AWM (Agent Workflow Memory) specific implementation and checkpoint lineage",
+          "WebArena financial-agent trajectory logs and LiteralPort/NoEnvelope artifact files",
+          "arXiv:2608.17684 author-released audit artifacts and result manifests",
+          "Specific paper-reported utility values 0.756 and 0.319 as calibration targets"
+        ],
+        "why_dependencies_are_not_scientific_object": "The scientific object is the causal relationship between syntactic envelope variation during skill acquisition and transfer utility to native function-calling executors. The specific AWM implementation, WebArena financial trajectories, and author-released artifacts are acquisition provenance—particular historical instantiations that happen to be unavailable. The exact prediction does not depend on hidden author state or specific file hashes; it depends on the contrast between varied and single envelope acquisition under matched semantics. The utility thresholds 0.756 and 0.319 are replaced by relative contrasts between conditions within the new substrate, as the absolute values are properties of the original substrate, not the universal scientific object.",
+        "transport_scope": "Public web interaction environments with programmatic state-based evaluation (e.g., WorkArena, MiniWoB++, or similar substrates supporting native function-calling execution and independent truth verification).",
+        "equivalence_probe": "Semantic equivalence verification: (1) Independent human raters or a frozen semantic parser confirm that the at-least-three syntactic envelopes are semantically equivalent (same intent, different surface realization) and that the skill content is identical across conditions; (2) Native function-calling executor validation confirms that the tool schema is structurally different from the acquisition envelopes (preventing literal string matching); (3) Held-out task verification confirms that evaluation tasks are disjoint from acquisition tasks and that ground truth is programmatically verifiable. If any envelope is found to alter semantic content, or if the executor can be solved by literal envelope replication without semantic understanding, the probe fails.",
+        "equivalence_failure_action": "return to source-specific wait",
+        "scientific_authority": false
+      },
+      "evidence_review": {
+        "verdict": "CLEAR_FOR_SUBSTRATE_PREFLIGHT",
+        "checks": {
+          "independent_truth_valid": true,
+          "scientific_object_preserved": true,
+          "no_mechanism_bake_in": true,
+          "same_information_baseline_valid": true,
+          "falsifier_not_method_evaluation": true,
+          "outcome_semantics_valid": true,
+          "bounded_budget_valid": true,
+          "prior_support_constraint_respected": true,
+          "operationalization_equivalence_valid": true
+        },
+        "reason": "All nine checks pass. Independent truth comes from programmatic state-based evaluation of a public web environment, not from the candidate mechanism. The scientific object (causal relationship between syntactic envelope variation and transfer utility) is preserved through the operationalization recompile, which removes only acquisition-provenance dependencies (AWM implementation, WebArena logs, author artifacts) while keeping all scientific-object invariants intact. No mechanism bake-in: anti-bake-in controls include null-history, held-out task split, independent envelope selection via frozen paraphrase algorithms without outcome access, and frozen operationalization. The same-information baseline (domain adaptation with distribution alignment) receives identical semantic content, task distribution, observables, and budget. The falsifier discriminates the frozen paper problem (syntactic-binding hypothesis), not a new method. Outcome semantics are valid: baseline reduction means the domain-adaptation baseline explains the prediction; candidate residual means varied-envelope condition significantly outperforms both single-envelope and baseline conditions. Budget (128 units, 90 wall minutes, 1 GPU-hour, 256 model calls) stays within bounded-evidence caps. Prior support constraint is respected: the design does not manufacture missing provenance by construction; it uses a public web environment with native function-calling API and synthetic envelope generation, preserving the frozen scientific object without requiring unavailable AWM/WebArena assets. Operationalization equivalence is valid: all six scientific-object invariants survive unchanged, removed dependencies are genuinely acquisition provenance/nuisance, and the equivalence probe (semantic equivalence verification, e",
+        "required_revision": "",
+        "reviewer_model": "deepseek-v4-pro-260425",
+        "part": 1,
+        "scientific_authority": false
+      },
+      "substrate_preflight": {
+        "disposition": "MINIMAL_HARNESS_IMPLEMENTATION_READY",
+        "reason": "The reviewed first-party falsifier has a viable public substrate: BrowserGym 0.14.3 already exposes OpenAI-format native function tools, and MiniWoB++ supplies environment-owned reward/done truth. The current server lacks the MiniWoB backend/assets and the compatible Chromium revision in the shared runtime, so the substrate is not EXISTING_HARNESS_READY; it requires only run-local dependency/assets plus a generic tool-call/recording adapter.",
+        "inventory_summary": "Preflight found BrowserGym core/experiments 0.14.3 and Playwright 1.44 in the provenance-audited R9 runtime; native click/fill function schemas round-trip through strict BrowserGym parsing with zero model/browser calls. browsergym-miniwob 0.14.3 resolved successfully with wheel SHA e26de088...d999d0, and MiniWoB++ commit 7fd85d71...d049838 was fetched exactly. No current MiniWoB checkout or Chromium-1117 exists on 69, so a run-local materialization is required. The plan freezes environment truth, matched envelope intervention, null-history control, domain-alignment baseline plumbing, and anti-outcome probes before any evidence call.",
+        "checked_at": "2026-08-22T13:48:12+00:00",
+        "scientific_authority": false,
+        "harness_plan_sha256": "7d4f7f0bdeb8306bef6c9b97e6e5693edeba52d1d1bff7a9552a0b21348f7090",
+        "implementation_scope": "Materialize only the pinned browsergym-miniwob 0.14.3 backend, MiniWoB++ commit 7fd85d71a4b60325c6585396ec4f48377d049838, compatible run-local Playwright Chromium, BrowserGym native function-tool bridge, frozen envelope renderers/equivalence probe, environment-truth recorder, null-history arm, and same-information domain-alignment baseline plumbing. Run substrate-only smoke probes and emit a manifest/implementation receipt. Zero model calls, zero GPU, zero scientific outcome comparisons, no shared-runtime mutation.",
+        "budget_feasible": true
+      },
+      "harness_implementation": {
+        "harness_manifest_sha256": "516ae072515133e2cf18a45ecabd8a634efbe77ee9f90725884b2ddab3cfed9f",
+        "implementation_summary": "Run-local BrowserGym MiniWoB++ substrate is pinned and verified. Native OpenAI-format click/fill tool schemas round-trip through strict BrowserGym parsing; five frozen MiniWoB families reset with environment-owned truth fields; three syntactic envelope renderers preserve the exact semantic skill object; the domain-alignment baseline receives the same semantic objects; acquisition/evaluation seeds are disjoint; planned evidence remains 60 units and at most 180 model calls. No model call, GPU call, scientific action, or candidate-vs-baseline outcome comparison occurred during implementation.",
+        "sandboxed": true,
+        "probe_passed": true,
+        "budget_feasible": true,
+        "scientific_authority": false
+      },
+      "evidence_receipt": {
+        "outcome": "INCONCLUSIVE",
+        "qualified_units": 60,
+        "evidence_manifest_sha256": "c2783f6aa4f2c9880cc982266a3c33bf7190f3250c0bb29812d7752b3d38e3bc",
+        "metric_summary": "60/60 protocol-valid units, 0 execution errors, 120/180 provider POSTs. Success: single 10/15, varied 11/15, domain-alignment 11/15, null-history 9/15. 12/15 matched task×seed cells were arm-invariant. Varied vs single had 1 vs 0 discordant wins (paired exact p=1.0); varied vs domain had 1 vs 1 discordant wins (paired exact p=1.0). No frozen equivalence margin permits converting equal 11/15 point estimates into reduction support.",
+        "protocol_valid": true
+      },
+      "next_action": "stop-or-human-reformulation"
+    }
+  ],
+  "scientific_authority": false,
+  "authority": {
+    "scientific_claim": false,
+    "live_problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "p0": false,
+    "full_experiment": false
+  },
+  "source": "CANONICAL_PRE_F0_SUPPORT_HOLD",
+  "support_inventory_sha256": "7762e3c763d51988413e19913b087b11a3c2e7a494756afdf3be4bfbc5dab0e0",
+  "last_design_part": 1,
+  "research_memory_query_receipts": {
+    "evidence-design-p1": {
+      "purpose": "EXPERIMENT_DESIGN",
+      "wiki_sha256": "d2df154d3493e96da0e491c469302d3a32a022b8971fa231dcefda10525ce8ce",
+      "query_pack_sha256": "9836214d291ec45f004a02ed9e96460fc9af4a1bdbe9e5fdd5bdf92000331ad1",
+      "selected_memory_ids": [
+        "MEM-SEAR-d12c6b33551e19336e",
+        "MEM-SEAR-c397541f813c95baa1",
+        "MEM-SEAR-eca0cdefae1ce14d2a",
+        "MEM-FAIL-bc94aa353b90c69c53"
+      ],
+      "selected": 4,
+      "scientific_authority": false
+    },
+    "evidence-recompile-p1": {
+      "purpose": "EXPERIMENT_DESIGN",
+      "wiki_sha256": "d2df154d3493e96da0e491c469302d3a32a022b8971fa231dcefda10525ce8ce",
+      "query_pack_sha256": "9836214d291ec45f004a02ed9e96460fc9af4a1bdbe9e5fdd5bdf92000331ad1",
+      "selected_memory_ids": [
+        "MEM-SEAR-d12c6b33551e19336e",
+        "MEM-SEAR-c397541f813c95baa1",
+        "MEM-SEAR-eca0cdefae1ce14d2a",
+        "MEM-FAIL-bc94aa353b90c69c53"
+      ],
+      "selected": 4,
+      "scientific_authority": false
+    }
+  },
+  "last_operationalization_recompile_part": 1,
+  "last_review_part": 1
+}

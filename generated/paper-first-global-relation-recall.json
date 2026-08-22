@@ -1,7 +1,7 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-08-17T18:20:53+00:00",
-  "run_id": "20260817T182029Z",
+  "generated_at": "2026-08-22T09:24:11+00:00",
+  "run_id": "20260822T092344Z",
   "status": "GLOBAL_RELATION_RECALL_COMPLETE",
   "scientific_authority": false,
   "policy": {
@@ -44,102 +44,104 @@
   },
   "models": {
     "relation": "kimi-k3",
-    "lane_review": "glm-5.3",
+    "lane_review": "minimax-m3",
     "reduction": "deepseek-v4-pro"
   },
   "relation_coverage": {
-    "receipt_runs": 24,
-    "reviewed_receipt_sources": 233,
-    "possible_source_pairs": 27028,
-    "coobserved_source_pairs": 6770,
-    "pair_coverage_fraction": 0.2505,
-    "single_exposure_sources": 64,
-    "minimum_coobserved_neighbors": 31,
-    "median_coobserved_neighbors": 45,
+    "receipt_runs": 30,
+    "reviewed_receipt_sources": 254,
+    "possible_source_pairs": 32131,
+    "coobserved_source_pairs": 8531,
+    "pair_coverage_fraction": 0.2655,
+    "single_exposure_sources": 48,
+    "minimum_coobserved_neighbors": 9,
+    "median_coobserved_neighbors": 51,
     "maximum_coobserved_neighbors": 232,
     "pairwise_coobservation_complete": false,
     "relation_blind_spot_detected": true,
-    "relation_universe_digest": "c0b3fa88249144def5de80657f5ea7ca07b3414f00a7a8ea24b0a7160e25a23e",
+    "relation_universe_digest": "ec4ed1dd0a7b2e3b33e4da18d1fc0e3724ac0b672dc8c170109ae5cd21fbe75e",
     "search_control_only": true,
     "scientific_authority": false
   },
   "delta_scan": {
     "enabled": true,
-    "required_new_endpoint_count": 5,
-    "required_new_endpoint_digest": "f13432699ce9445a70db9d7e4b26d27b2d83d348c0bdc879899b11dbb1b61c77",
-    "prior_scan_run_id": "20260814T114756Z",
+    "required_new_endpoint_count": 21,
+    "required_new_endpoint_digest": "ec5c81c8e3b23071b5a019502031bb2ccef048014221eea7d6875b25bded1611",
+    "prior_scan_run_id": "20260817T182029Z",
     "scientific_authority": false
   },
   "raw_artifacts": {
     "relation": {
-      "sha256": "e0bdc50bb72166bffadbb6518cd68fa64d88d8b8c598786314bb0a2926c78a10",
+      "sha256": "29455de9ee8e9158cc1bc3b270268a628ad2ecb729815e631377147509b83e83",
       "requested_model": "kimi-k3",
       "resolved_model": "kimi-k3",
       "raw_replayed_without_provider": true,
       "provider_calls_executed": 0,
-      "origin_run_id": "20260817T173440Z",
-      "origin_raw_sha256": "e0bdc50bb72166bffadbb6518cd68fa64d88d8b8c598786314bb0a2926c78a10"
+      "origin_run_id": "20260822T091139Z",
+      "origin_raw_sha256": "29455de9ee8e9158cc1bc3b270268a628ad2ecb729815e631377147509b83e83"
+    },
+    "relation_repair": {
+      "schema_version": "1.0",
+      "run_id": "20260822T092344Z",
+      "status": "PARSE_REPAIRED_TRAILING_ROOT_CLOSURE_ZERO_AUTHORITY",
+      "resolved_model": "kimi-k3",
+      "raw_sha256": "29455de9ee8e9158cc1bc3b270268a628ad2ecb729815e631377147509b83e83",
+      "repaired_sha256": "0315fb460c30f2b7240430054bd18ca2e0a54a62d9f09731fb9a7f22cfd3a008",
+      "repair_type": "APPEND_ONE_ROOT_OBJECT_CLOSING_BRACE_AT_EOF",
+      "inserted_closing_brace_count": 1,
+      "insertion_offset": 8995,
+      "original_bytes_mutated": false,
+      "string_content_mutated": false,
+      "provider_calls_executed": 0,
+      "scientific_authority": false,
+      "authority": {
+        "problem_gate": false,
+        "method": false,
+        "experiment": false,
+        "p0": false,
+        "gpu": false
+      }
     },
     "lane_review_p1": {
-      "sha256": "4de4c781488d49fcae9f3415e9336dcbf77e98e16852fc103a2d5b359cc494a7",
-      "requested_model": "glm-5.3",
-      "resolved_model": "glm-5.3",
+      "sha256": "4f0ea9c3e0268f82e9815ea4e72a858de819220a2fbb25aa68c60095070c92eb",
+      "requested_model": "minimax-m3",
+      "resolved_model": "minimax-m3",
       "batch_index": 1,
       "proposal_ids": [
         "REL-CONTRADICTION-1",
         "REL-CONTRADICTION-2",
-        "REL-CONTRADICTION-3",
         "REL-CONVERGENT_FAILURE-1",
         "REL-CONVERGENT_FAILURE-2",
-        "REL-CONVERGENT_FAILURE-3"
+        "REL-CONVERGENT_FAILURE-3",
+        "REL-ASSUMPTION_BREAK-1"
       ],
-      "execution_contract_sha256": "22a1fd4dec9fba116dc0e24544cecd242db97dabad53e83d7eacc597666726f2"
+      "execution_contract_sha256": "b936e04bfc47daab2ef8b983a9835d042575c142f38bdd49e3a5215260685ec5"
     },
     "lane_review_p2": {
-      "sha256": "0bb5b9c75095080611bb1a00136ec66b290a8d1a2a592a1c25ec98361c128fea",
-      "requested_model": "glm-5.3",
-      "resolved_model": "glm-5.3",
+      "sha256": "b7342077e62b4751ba32a1fb287675c7a991e7ad954c455730f5ca3a384a26c7",
+      "requested_model": "minimax-m3",
+      "resolved_model": "minimax-m3",
       "batch_index": 2,
       "proposal_ids": [
-        "REL-CONVERGENT_FAILURE-4",
-        "REL-ASSUMPTION_BREAK-1",
         "REL-ASSUMPTION_BREAK-2",
         "REL-ASSUMPTION_BREAK-3",
-        "REL-ASSUMPTION_BREAK-4",
-        "REL-ASSUMPTION_BREAK-5"
-      ],
-      "execution_contract_sha256": "22a1fd4dec9fba116dc0e24544cecd242db97dabad53e83d7eacc597666726f2"
-    },
-    "lane_review_p3": {
-      "sha256": "f8042de699206c17c71f74983ef217a106602d2e209b7f911ef18ca7d7c604f8",
-      "requested_model": "glm-5.3",
-      "resolved_model": "glm-5.3",
-      "batch_index": 3,
-      "proposal_ids": [
         "REL-UNEXPLAINED_BOUNDARY-1",
         "REL-UNEXPLAINED_BOUNDARY-2",
-        "REL-UNEXPLAINED_BOUNDARY-3",
-        "REL-UNEXPLAINED_BOUNDARY-4",
-        "REL-UNEXPLAINED_BOUNDARY-5"
+        "REL-UNEXPLAINED_BOUNDARY-3"
       ],
-      "execution_contract_sha256": "22a1fd4dec9fba116dc0e24544cecd242db97dabad53e83d7eacc597666726f2"
+      "execution_contract_sha256": "b936e04bfc47daab2ef8b983a9835d042575c142f38bdd49e3a5215260685ec5"
     },
     "lane_review": {
-      "requested_model": "glm-5.3",
+      "requested_model": "minimax-m3",
       "resolved_models": [
-        "glm-5.3"
+        "minimax-m3"
       ],
-      "resolved_model": "glm-5.3",
-      "provider_calls_executed": 3,
-      "batches": 3,
+      "resolved_model": "minimax-m3",
+      "provider_calls_executed": 2,
+      "batches": 2,
       "batch_size": 6,
-      "execution_contract_sha256": "22a1fd4dec9fba116dc0e24544cecd242db97dabad53e83d7eacc597666726f2",
+      "execution_contract_sha256": "b936e04bfc47daab2ef8b983a9835d042575c142f38bdd49e3a5215260685ec5",
       "scientific_authority": false
-    },
-    "reduction_review": {
-      "sha256": "1af6fcd7ccfc052a4c43c0c843b666497c872c5dd5ea00c848416dfb7c9343bf",
-      "requested_model": "deepseek-v4-pro",
-      "resolved_model": "deepseek-v4-pro-260425"
     }
   },
   "proposals": [
@@ -147,10 +149,10 @@
       "proposal_id": "REL-CONTRADICTION-1",
       "lane": "CONTRADICTION",
       "source_refs": [
-        "arXiv:2608.14036",
-        "arXiv:2608.11888"
+        "arXiv:2608.15089",
+        "arXiv:2607.12227"
       ],
-      "previously_coobserved": true,
+      "previously_coobserved": false,
       "lane_verdict": "FAIL",
       "reduction_verdict": "",
       "matched_patterns": [],
@@ -161,24 +163,10 @@
       "proposal_id": "REL-CONTRADICTION-2",
       "lane": "CONTRADICTION",
       "source_refs": [
-        "arXiv:2608.14441",
-        "arXiv:2608.05810"
+        "arXiv:2608.15089",
+        "arXiv:2608.08466"
       ],
-      "previously_coobserved": false,
-      "lane_verdict": "FAIL",
-      "reduction_verdict": "",
-      "matched_patterns": [],
-      "focused_problem_generator_reopen_required": false,
-      "scientific_authority": false
-    },
-    {
-      "proposal_id": "REL-CONTRADICTION-3",
-      "lane": "CONTRADICTION",
-      "source_refs": [
-        "arXiv:2608.14270",
-        "arXiv:2608.09044"
-      ],
-      "previously_coobserved": false,
+      "previously_coobserved": true,
       "lane_verdict": "FAIL",
       "reduction_verdict": "",
       "matched_patterns": [],
@@ -189,16 +177,13 @@
       "proposal_id": "REL-CONVERGENT_FAILURE-1",
       "lane": "CONVERGENT_FAILURE",
       "source_refs": [
-        "arXiv:2608.14441",
-        "arXiv:2607.12227"
+        "arXiv:2608.14621",
+        "arXiv:2608.18066"
       ],
-      "previously_coobserved": true,
-      "lane_verdict": "PASS",
-      "reduction_verdict": "REDUCIBLE",
-      "matched_patterns": [
-        "persistent-update-vs-test-time-compute",
-        "self-generated-supervision-information-limit"
-      ],
+      "previously_coobserved": false,
+      "lane_verdict": "FAIL",
+      "reduction_verdict": "",
+      "matched_patterns": [],
       "focused_problem_generator_reopen_required": false,
       "scientific_authority": false
     },
@@ -206,10 +191,10 @@
       "proposal_id": "REL-CONVERGENT_FAILURE-2",
       "lane": "CONVERGENT_FAILURE",
       "source_refs": [
-        "arXiv:2608.14270",
-        "arXiv:2608.00155"
+        "arXiv:2608.15165",
+        "arXiv:2608.18066"
       ],
-      "previously_coobserved": false,
+      "previously_coobserved": true,
       "lane_verdict": "FAIL",
       "reduction_verdict": "",
       "matched_patterns": [],
@@ -220,27 +205,10 @@
       "proposal_id": "REL-CONVERGENT_FAILURE-3",
       "lane": "CONVERGENT_FAILURE",
       "source_refs": [
-        "arXiv:2608.14036",
-        "arXiv:2608.04828"
+        "arXiv:2608.16114",
+        "arXiv:2608.18066"
       ],
-      "previously_coobserved": false,
-      "lane_verdict": "PASS",
-      "reduction_verdict": "REDUCIBLE",
-      "matched_patterns": [
-        "artifact-uptake-after-retrieval",
-        "model-scaffold-enactability"
-      ],
-      "focused_problem_generator_reopen_required": false,
-      "scientific_authority": false
-    },
-    {
-      "proposal_id": "REL-CONVERGENT_FAILURE-4",
-      "lane": "CONVERGENT_FAILURE",
-      "source_refs": [
-        "arXiv:2608.13951",
-        "arXiv:2607.24300"
-      ],
-      "previously_coobserved": false,
+      "previously_coobserved": true,
       "lane_verdict": "FAIL",
       "reduction_verdict": "",
       "matched_patterns": [],
@@ -251,15 +219,13 @@
       "proposal_id": "REL-ASSUMPTION_BREAK-1",
       "lane": "ASSUMPTION_BREAK",
       "source_refs": [
-        "arXiv:2608.14036",
-        "arXiv:2608.03509"
+        "arXiv:2608.15071",
+        "arXiv:2608.18066"
       ],
-      "previously_coobserved": false,
-      "lane_verdict": "PASS",
-      "reduction_verdict": "REDUCIBLE",
-      "matched_patterns": [
-        "cross-layer-behavior-persistence"
-      ],
+      "previously_coobserved": true,
+      "lane_verdict": "FAIL",
+      "reduction_verdict": "",
+      "matched_patterns": [],
       "focused_problem_generator_reopen_required": false,
       "scientific_authority": false
     },
@@ -267,8 +233,8 @@
       "proposal_id": "REL-ASSUMPTION_BREAK-2",
       "lane": "ASSUMPTION_BREAK",
       "source_refs": [
-        "arXiv:2608.14270",
-        "arXiv:2608.07622"
+        "arXiv:2608.15591",
+        "arXiv:2608.18066"
       ],
       "previously_coobserved": false,
       "lane_verdict": "FAIL",
@@ -281,38 +247,10 @@
       "proposal_id": "REL-ASSUMPTION_BREAK-3",
       "lane": "ASSUMPTION_BREAK",
       "source_refs": [
-        "arXiv:2608.14441",
-        "arXiv:2608.00017"
-      ],
-      "previously_coobserved": false,
-      "lane_verdict": "FAIL",
-      "reduction_verdict": "",
-      "matched_patterns": [],
-      "focused_problem_generator_reopen_required": false,
-      "scientific_authority": false
-    },
-    {
-      "proposal_id": "REL-ASSUMPTION_BREAK-4",
-      "lane": "ASSUMPTION_BREAK",
-      "source_refs": [
-        "arXiv:2608.13951",
-        "arXiv:2607.13083"
+        "arXiv:2608.15763",
+        "arXiv:2608.18066"
       ],
       "previously_coobserved": true,
-      "lane_verdict": "FAIL",
-      "reduction_verdict": "",
-      "matched_patterns": [],
-      "focused_problem_generator_reopen_required": false,
-      "scientific_authority": false
-    },
-    {
-      "proposal_id": "REL-ASSUMPTION_BREAK-5",
-      "lane": "ASSUMPTION_BREAK",
-      "source_refs": [
-        "arXiv:2608.13833",
-        "arXiv:2608.05810"
-      ],
-      "previously_coobserved": false,
       "lane_verdict": "FAIL",
       "reduction_verdict": "",
       "matched_patterns": [],
@@ -323,10 +261,10 @@
       "proposal_id": "REL-UNEXPLAINED_BOUNDARY-1",
       "lane": "UNEXPLAINED_BOUNDARY",
       "source_refs": [
-        "arXiv:2608.14441",
-        "arXiv:2608.11350"
+        "arXiv:2608.14621",
+        "arXiv:2608.16114"
       ],
-      "previously_coobserved": false,
+      "previously_coobserved": true,
       "lane_verdict": "FAIL",
       "reduction_verdict": "",
       "matched_patterns": [],
@@ -337,10 +275,10 @@
       "proposal_id": "REL-UNEXPLAINED_BOUNDARY-2",
       "lane": "UNEXPLAINED_BOUNDARY",
       "source_refs": [
-        "arXiv:2608.14270",
-        "arXiv:2608.04746"
+        "arXiv:2608.15089",
+        "arXiv:2608.08466"
       ],
-      "previously_coobserved": false,
+      "previously_coobserved": true,
       "lane_verdict": "FAIL",
       "reduction_verdict": "",
       "matched_patterns": [],
@@ -351,36 +289,8 @@
       "proposal_id": "REL-UNEXPLAINED_BOUNDARY-3",
       "lane": "UNEXPLAINED_BOUNDARY",
       "source_refs": [
-        "arXiv:2608.14036",
-        "arXiv:2608.08453"
-      ],
-      "previously_coobserved": false,
-      "lane_verdict": "FAIL",
-      "reduction_verdict": "",
-      "matched_patterns": [],
-      "focused_problem_generator_reopen_required": false,
-      "scientific_authority": false
-    },
-    {
-      "proposal_id": "REL-UNEXPLAINED_BOUNDARY-4",
-      "lane": "UNEXPLAINED_BOUNDARY",
-      "source_refs": [
-        "arXiv:2608.13951",
-        "arXiv:2608.10178"
-      ],
-      "previously_coobserved": false,
-      "lane_verdict": "FAIL",
-      "reduction_verdict": "",
-      "matched_patterns": [],
-      "focused_problem_generator_reopen_required": false,
-      "scientific_authority": false
-    },
-    {
-      "proposal_id": "REL-UNEXPLAINED_BOUNDARY-5",
-      "lane": "UNEXPLAINED_BOUNDARY",
-      "source_refs": [
-        "arXiv:2608.13833",
-        "arXiv:2608.09044"
+        "arXiv:2608.16590",
+        "arXiv:2608.01428"
       ],
       "previously_coobserved": false,
       "lane_verdict": "FAIL",
@@ -391,68 +301,68 @@
     }
   ],
   "last_completed_scan": {
-    "run_id": "20260817T182029Z",
+    "run_id": "20260822T092344Z",
     "mode": "delta_only_new_endpoint",
-    "prior_scan_run_id": "20260814T114756Z",
-    "required_new_endpoint_count": 5,
-    "relation_universe_digest": "c0b3fa88249144def5de80657f5ea7ca07b3414f00a7a8ea24b0a7160e25a23e",
+    "prior_scan_run_id": "20260817T182029Z",
+    "required_new_endpoint_count": 21,
+    "relation_universe_digest": "ec4ed1dd0a7b2e3b33e4da18d1fc0e3724ac0b672dc8c170109ae5cd21fbe75e",
     "relation_coverage": {
-      "reviewed_receipt_sources": 233,
-      "possible_source_pairs": 27028,
-      "coobserved_source_pairs": 6770,
-      "pair_coverage_fraction": 0.2505
+      "reviewed_receipt_sources": 254,
+      "possible_source_pairs": 32131,
+      "coobserved_source_pairs": 8531,
+      "pair_coverage_fraction": 0.2655
     },
     "summary": {
-      "reviewed_receipt_sources": 233,
-      "cached_reviewed_sources": 233,
+      "reviewed_receipt_sources": 254,
+      "cached_reviewed_sources": 254,
       "cache_completeness_fraction": 1.0,
-      "possible_source_pairs": 27028,
-      "coobserved_source_pairs": 6770,
-      "pair_coverage_fraction": 0.2505,
+      "possible_source_pairs": 32131,
+      "coobserved_source_pairs": 8531,
+      "pair_coverage_fraction": 0.2655,
       "relation_blind_spot_detected": true,
-      "relation_universe_digest": "c0b3fa88249144def5de80657f5ea7ca07b3414f00a7a8ea24b0a7160e25a23e",
-      "relation_proposals": 17,
-      "unseen_relation_proposals": 14,
-      "lane_pass": 3,
-      "unseen_lane_pass": 2,
-      "reduction_reviewed": 3,
-      "reducible": 3,
+      "relation_universe_digest": "ec4ed1dd0a7b2e3b33e4da18d1fc0e3724ac0b672dc8c170109ae5cd21fbe75e",
+      "relation_proposals": 11,
+      "unseen_relation_proposals": 4,
+      "lane_pass": 0,
+      "unseen_lane_pass": 0,
+      "reduction_reviewed": 0,
+      "reducible": 0,
       "not_reduced": 0,
       "focused_problem_generator_reopen_required": false,
       "scientifically_authorized": 0
     },
     "models": {
       "relation": "kimi-k3",
-      "lane_review": "glm-5.3",
+      "lane_review": "minimax-m3",
       "reduction": "deepseek-v4-pro"
     },
     "scientific_authority": false
   },
   "lane_review_execution": {
     "version": "relation-lane-review-sharded-glm-compatible-v3",
-    "execution_contract_sha256": "22a1fd4dec9fba116dc0e24544cecd242db97dabad53e83d7eacc597666726f2",
+    "execution_contract_sha256": "b936e04bfc47daab2ef8b983a9835d042575c142f38bdd49e3a5215260685ec5",
     "batch_size": 6,
-    "batches_total": 3,
-    "batches_completed": 3,
+    "batches_total": 2,
+    "batches_completed": 2,
     "partial_batch_reviews_have_zero_lane_authority": true,
     "cards_scoped_to_batch_source_refs": true,
     "scientific_authority": false
   },
   "summary": {
-    "reviewed_receipt_sources": 233,
-    "cached_reviewed_sources": 233,
+    "reviewed_receipt_sources": 254,
+    "cached_reviewed_sources": 254,
     "cache_completeness_fraction": 1.0,
-    "possible_source_pairs": 27028,
-    "coobserved_source_pairs": 6770,
-    "pair_coverage_fraction": 0.2505,
+    "possible_source_pairs": 32131,
+    "coobserved_source_pairs": 8531,
+    "pair_coverage_fraction": 0.2655,
     "relation_blind_spot_detected": true,
-    "relation_universe_digest": "c0b3fa88249144def5de80657f5ea7ca07b3414f00a7a8ea24b0a7160e25a23e",
-    "relation_proposals": 17,
-    "unseen_relation_proposals": 14,
-    "lane_pass": 3,
-    "unseen_lane_pass": 2,
-    "reduction_reviewed": 3,
-    "reducible": 3,
+    "relation_universe_digest": "ec4ed1dd0a7b2e3b33e4da18d1fc0e3724ac0b672dc8c170109ae5cd21fbe75e",
+    "relation_proposals": 11,
+    "unseen_relation_proposals": 4,
+    "lane_pass": 0,
+    "unseen_lane_pass": 0,
+    "reduction_reviewed": 0,
+    "reducible": 0,
     "not_reduced": 0,
     "focused_problem_generator_reopen_required": false,
     "scientifically_authorized": 0
@@ -471,19 +381,19 @@
       "same_relation_universe_lane_review_retry_exhaustion_blocks_repeat_scan": true
     },
     "summary": {
-      "last_scanned_sources": 228,
-      "relation_lane_review_retry_exhausted": false,
-      "new_failure_sources": 5,
-      "checks": 16,
-      "current_reviewed_sources": 233,
       "passed": 16,
-      "manual_scan_eligible": true,
-      "new_boundary_sources": 2,
-      "new_reviewed_sources": 5,
       "automatic_model_scan_authorized": false,
-      "new_empirical_sources": 5,
-      "new_assumption_sources": 1,
-      "failed": 0
+      "failed": 0,
+      "new_failure_sources": 9,
+      "current_reviewed_sources": 254,
+      "new_assumption_sources": 2,
+      "new_boundary_sources": 6,
+      "manual_scan_eligible": true,
+      "checks": 16,
+      "new_empirical_sources": 16,
+      "new_reviewed_sources": 21,
+      "relation_lane_review_retry_exhausted": false,
+      "last_scanned_sources": 233
     },
     "failed_check_count": 0,
     "freshness_status": "STALE_RELATION_UNIVERSE",

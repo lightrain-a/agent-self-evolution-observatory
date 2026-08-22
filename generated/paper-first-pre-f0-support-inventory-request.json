@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0-pre-f0",
-  "generated_at": "2026-08-19T13:09:40+00:00",
-  "run_id": "20260818T164230Z-ingestion-replay",
+  "generated_at": "2026-08-22T12:07:36+00:00",
+  "run_id": "20260822T120628Z-ingestion-replay",
   "status": "PROBLEM_FALSIFIER_SUPPORT_INVENTORY_REQUEST_READY",
   "source": "CANONICAL_PRE_F0_QUEUE",
   "policy": {
@@ -30,8 +30,8 @@
     "automatic_gpu_authority": false
   },
   "summary": {
-    "queued": 2,
-    "inventory_requests": 2,
+    "queued": 1,
+    "inventory_requests": 1,
     "problem_gate_authorized": 0,
     "paper_design_authorized": 0,
     "method_authorized": 0,
@@ -41,42 +41,20 @@
   },
   "rows": [
     {
-      "candidate_id": "PORT-001",
+      "candidate_id": "PORT-013",
       "candidate_identity_version": "candidate-content-v1",
-      "candidate_snapshot_sha256": "9b255e3ac6e3896a155b185b507073e6e36c65761f9e99d4e9bb5a0b7004bdd4",
-      "title": "Rank-inverted skill harm across harnesses as a non-composability witness",
-      "discovery_lane": "ASSUMPTION_BREAK",
-      "source_branch_id": "ASSUMPTION_BREAK-P2-001-R1",
+      "candidate_snapshot_sha256": "eb5c3da354c9bafae9f6f80f68555444833cd7fbdeb1699d06a190017714781e",
+      "title": "Syntactic Interface Overfitting in Web Agents: Why do learned skills bind to literal text envelopes rather than semantic intents?",
+      "discovery_lane": "CONVERGENT_FAILURE",
+      "source_branch_id": "CONVERGENT_FAILURE-P2-006-R1",
       "primary_refs": [
-        "arXiv:2608.08303",
-        "arXiv:2608.14036"
+        "arXiv:2607.26809",
+        "arXiv:2608.17684"
       ],
-      "exact_prediction": "If a fixed TBA-poisoned library from arXiv:2608.08303 is evaluated on two harnesses (Codex, Gemini-CLI) with matched retrieval-hit-rate, context distribution, and invocation depth, the harm ranking of triggered tasks will either (a) remain stable, in which case the cross-harness divergence in arXiv:2608.14036 is a measurable interaction term, or (b) invert, in which case the joint object is non-composable and the separability assumption is empirically broken.",
-      "strongest_same_information_baseline": "A monotone composition function h(L, H) = f(L) + g(H) + α(L)·β(H) where f is library harm, g is harness baseline harm, and α·β is the interaction term, fit to the same matched-statistics data. If this baseline reproduces the observed cross-harness ranking, irreducibility is refuted.",
-      "falsifier_expression": "Take a frozen TBA-poisoned library from arXiv:2608.08303, instrument two harnesses (Codex, Gemini-CLI) to record retrieval-hit-rate, context distribution, and invocation depth, then evaluate the library on the same task suite with matched statistics. If the harm ranking is stable, irreducibility is refuted and the branch returns to 'measurable interaction term.' If the ranking inverts, the joint object is non-composable and the candidate survives.",
-      "endpoint_headroom_requirement": "Requires running a controlled matched-invocation experiment, which depends on access to both harnesses and the ability to instrument the retrieval-invocation boundary. This is non-trivial but within reach of the paper's authors if they have framework access.",
-      "support_inventory_question": "Determine whether primary/author-released artifacts directly expose the observational/interventional units and fields needed for this frozen Pre-F0 falsifier, or whether author-released first-party code / an existing provenance-audited substrate can materialize those units as independent truth under the frozen operationalization. Reconstructed support is admissible only after materialization and provenance hashing, without synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.",
-      "required_receipt_dispositions": [
-        "HOLD_SUPPORT_UNAVAILABLE",
-        "SUPPORT_QUALIFIED"
-      ],
-      "scientific_authority": false
-    },
-    {
-      "candidate_id": "PORT-003",
-      "candidate_identity_version": "candidate-content-v1",
-      "candidate_snapshot_sha256": "d15348638054d336246774f5f9410dcc33faccb4942b02ec842eb8c831fbf366",
-      "title": "Timescale-isolated ablation of action-frequency governance on a frozen skill set",
-      "discovery_lane": "ASSUMPTION_BREAK",
-      "source_branch_id": "ASSUMPTION_BREAK-P2-004-R1",
-      "primary_refs": [
-        "arXiv:2608.09096",
-        "arXiv:2608.16590"
-      ],
-      "exact_prediction": "On the released frozen GR00T + LIBERO-Pro + RoboCasa substrate with matched skill library, base policy, and compute, the C→D contribution will be ≥5pp macro-average success and will exceed the matched-frequency HRL baseline's C→D contribution by ≥2pp; if either inequality fails, the primitive claim is falsified.",
-      "strongest_same_information_baseline": "A hierarchical-RL controller with matched fast-timescale decision frequency, matched slow-timescale structure, matched skill library, matched base policy, and matched per-action compute, but no governance/closed-loop module — the strongest same-information baseline that does not implement the claimed primitive.",
-      "falsifier_expression": "Run the four-arm ablation (A, B, C, D) on the released GR00T + LIBERO-Pro subset (or a smaller frozen-skill frozen-base-policy subset thereof) with matched compute, matched skill library, and matched per-action re-ranking baseline. If C→D < 2pp or if the matched-frequency HRL baseline reproduces ≥90% of the C→D gap, the primitive claim is falsified. Estimated cost: small relative to full Zetta training because the base policy and skill library are frozen.",
-      "endpoint_headroom_requirement": "The C→D contribution must be measured on tasks where the full Zetta D has not yet saturated (e.g., tasks where D is in the 70–90% range), not on tasks where D is at ceiling; otherwise the gap is unmeasurable.",
+      "exact_prediction": "Skills acquired with varied syntactic envelopes (but same semantics) will show higher transfer utility to native function-calling executors than skills acquired with a single envelope, under matched semantic content and task distribution.",
+      "strongest_same_information_baseline": "Domain adaptation with distribution alignment.",
+      "falsifier_expression": "Run the AWM skill acquisition with varied syntactic envelopes (e.g., paraphrased WebArena envelopes) and test transfer utility to native function-calling executors. If utility remains low, the syntactic-binding hypothesis is falsified.",
+      "endpoint_headroom_requirement": "Utility must be significantly below 0.756 (the restored utility) when the envelope is mismatched, and significantly above 0.319 (the collapsed utility) when the envelope is varied during acquisition.",
       "support_inventory_question": "Determine whether primary/author-released artifacts directly expose the observational/interventional units and fields needed for this frozen Pre-F0 falsifier, or whether author-released first-party code / an existing provenance-audited substrate can materialize those units as independent truth under the frozen operationalization. Reconstructed support is admissible only after materialization and provenance hashing, without synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.",
       "required_receipt_dispositions": [
         "HOLD_SUPPORT_UNAVAILABLE",

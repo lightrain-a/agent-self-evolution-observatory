@@ -1,7 +1,7 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-08-22T14:50:54+00:00",
-  "source_revision": "cad2c1e6698bbda9696995b80041f2e17584b561",
+  "generated_at": "2026-08-22T15:18:18+00:00",
+  "source_revision": "3e49bd2b479e97616750ca534b8c2b89a672fe63",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -42,13 +42,14 @@
   "summary": {
     "papers": 5,
     "submission_ready": 5,
-    "gate_clean_submission_ready": 5,
-    "paper_preparation_failed": 0,
-    "immediate_submission_holds": 0,
-    "internal_action_required": 0,
-    "no_internal_action": 5,
+    "gate_clean_submission_ready": 4,
+    "paper_preparation_failed": 1,
+    "immediate_submission_holds": 1,
+    "internal_action_required": 1,
+    "no_internal_action": 4,
     "by_internal_action": {
-      "NO_INTERNAL_ACTION": 5
+      "NO_INTERNAL_ACTION": 4,
+      "PAPER_REPAIR_REQUIRED": 1
     },
     "scientific_holds": 0,
     "primary_paper": "STRI",
@@ -815,42 +816,47 @@
       "contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
       "scientific_status": "READY",
       "current_state": "SUBMISSION_READY",
-      "gate_clean_submission_ready": true,
-      "immediate_submission_hold": false,
+      "gate_clean_submission_ready": false,
+      "immediate_submission_hold": true,
       "primary_next_action": {
-        "action_class": "NO_INTERNAL_ACTION",
-        "action": "No additional autonomous research, experiment, or paper-repair action is required by the internal Research OS.",
-        "action_zh": "内部 Research OS 已无新增科研、实验或论文修复动作；保持冻结证据与主张边界即可。",
-        "blocking_on": "",
+        "action_class": "PAPER_REPAIR_REQUIRED",
+        "action": "Repair only the failed internal Paper Preparation gates, preserving the frozen scientific claim boundary.",
+        "action_zh": "只修复未通过的内部 Paper Preparation 门，同时保持冻结的科学主张边界不变。",
+        "blocking_on": "PAPER_PREPARATION_FAILED",
         "machine_actionable": false,
         "scientific_authority": false,
         "experiment_authority": false,
         "gpu_authority": false
       },
       "review_learning": {
-        "review_receipts": 2,
-        "decision_critical_objections": 6,
+        "review_receipts": 4,
+        "decision_critical_objections": 11,
         "category_counts": {
+          "clarity": 1,
           "empirical": 1,
-          "empirical-sufficiency": 1,
+          "empirical-sufficiency": 5,
           "experimental-design": 1,
+          "generalizability": 1,
           "infrastructure": 1,
           "methodology": 1,
-          "novelty": 1,
+          "novelty": 2,
           "reproducibility-feasibility": 1,
-          "scope": 1
+          "scope": 1,
+          "technical-quality": 1
         },
         "evidence_state_counts": {
-          "missing-decisive-evidence": 6,
+          "existing-evidence": 2,
+          "missing-decisive-evidence": 11,
           "requires-new-claim": 1,
-          "uncertain": 1
+          "uncertain": 2
         },
         "action_class_counts": {
-          "human-adjudication": 1,
+          "human-adjudication": 2,
+          "narrative-repair": 2,
           "preserve-limitation": 3,
-          "targeted-experiment": 4
+          "targeted-experiment": 9
         },
-        "targeted_experiment_proposals": 4,
+        "targeted_experiment_proposals": 9,
         "claim_expansion_requests_preserved_as_limitations": 3,
         "reviewer_prose_exposed": false,
         "scientific_authority": false,
@@ -869,16 +875,16 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 26,
+        "events": 32,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
-        "mock_reviews": 5,
+        "mock_reviews": 4,
         "claim_audit_receipts": 2,
-        "manuscript_ci_receipts": 1,
+        "manuscript_ci_receipts": 2,
         "prebuttal_receipts": 2,
         "paper_preparation_receipts": 2,
-        "submission_readiness_receipts": 2
+        "submission_readiness_receipts": 1
       },
       "latest_story_search": {
         "pass": true,
@@ -893,8 +899,8 @@
         "paper_design_review_lessons_selected": 0
       },
       "mock_pc_modes": {
-        "BLIND_MANUSCRIPT": "29cdb7faf01a55647b79b93883a792ecd2c756f6148a990f1cf25aac14ac885f",
-        "ARTIFACT_AWARE": "5d1cf4251bf0da590459a90e10779096c0092231bb2e0dd06794155ca0f70f50"
+        "BLIND_MANUSCRIPT": "2cc6f6570745f3cdae75a3c6988232bb7dfb307098dd4243963f2a4f4e92623f",
+        "ARTIFACT_AWARE": "d0a5647699c32697c9dd1249e0f56d72a80659b015efbf58beeef5cc95d303e1"
       },
       "latest_mock_review": {
         "mode": "FINAL_MULTI_REVIEW",
@@ -917,10 +923,8 @@
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "75126d4ecc8137792509116ba1ac543b5d19448488ee781345ca4333cec592d3",
-        "blockers": [],
-        "checks": 26,
-        "passed": 26
+        "claim_audit_sha256": "5801c794fe7d89031155121e3705c9262dada9a5f60f3c2d750506e1fff6963d",
+        "blockers": []
       },
       "latest_manuscript_ci": {
         "pass": true,
@@ -931,18 +935,34 @@
       },
       "latest_prebuttal": {
         "pass": true,
-        "decision_critical": 8,
-        "blockers": [],
-        "unresolved_decision_critical": 0
+        "decision_critical": 3,
+        "blockers": []
       },
       "latest_paper_preparation": {
-        "pass": true,
-        "protocol_version": "1.0+r5",
-        "receipt_sha256": "9ce5c1fe42949b3f90c0e1555f6737673f447b5015951b647f3a32299138d99a",
+        "pass": false,
+        "protocol_version": "1.0",
+        "receipt_sha256": "75c1837246794b067647d3093aca010d8f6edd354f724c56562fa650252104ec",
         "required_gates": 8,
-        "passed_gates": 8,
-        "gate_pass": {},
-        "blockers": []
+        "passed_gates": 5,
+        "gate_pass": {
+          "hierarchical-rubric": false,
+          "verification-refinement": false,
+          "citation-integrity": true,
+          "visual-story": true,
+          "reproducibility-bundle": true,
+          "agent-native-artifact": true,
+          "reader-simulation": false,
+          "submission-package": true
+        },
+        "blockers": [
+          "rubric-dimension-not-pass:claim-evidence",
+          "rubric-integrity-check-failed:evidence_sufficiency_review_pass",
+          "unresolved-critical-verification-issue:c3-primary-matched-gate-open",
+          "unresolved-critical-verification-issue:c3-procedure-family-concentration",
+          "unresolved-critical-verification-issue:c4-longitudinal-persistence-unexecuted",
+          "reader-mode-unresolved-critical:blind-manuscript:3",
+          "reader-mode-unresolved-critical:artifact-aware:2"
+        ]
       },
       "submission_readiness_context": {
         "artifact_submission_ready": true,

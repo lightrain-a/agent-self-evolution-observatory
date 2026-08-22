@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0-shadow-import",
-  "generated_at": "2026-08-18T07:47:30+00:00",
+  "generated_at": "2026-08-22T08:43:45+00:00",
   "status": "SHADOW_COUNTERFACTUAL_QUEUE",
   "historical_source_commit": "7b2a7260df3bae5d140cdc7f4d09a56dd898a72b",
   "summary": {
@@ -1372,9 +1372,9 @@
     "cannot_grant_live_paper_design_eligibility": true
   },
   "scientific_authority": false,
-  "latest_run_id": "shadow-auto-3eb8aa25b7961110",
+  "latest_run_id": "shadow-20260822-post-saturation-v18-r1",
   "latest_run": {
-    "run_id": "shadow-auto-3eb8aa25b7961110",
+    "run_id": "shadow-20260822-post-saturation-v18-r1",
     "status": "SHADOW_TERMINAL_COMPLETE",
     "summary": {
       "semantic_clear_before_current_source": 0,

@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-22T15:06:48+00:00",
+  "status": "EVIDENCE_WAIT_OR_HOLD",
+  "control_snapshot_sha256": "f21229a8c1101c7b60ee77fcbd7d0afe9fc008a0a7d65f326aa58adae90ba241",
+  "queue_sha256": "d84c6e73c4b925972b6a9d275fdc68d9812ab969be833a967e2eab3ed19491ae",
+  "support_preflight_sha256": "0eadef9a8ecf450c44f57340ee88033d299d72d8d0cc435e01aa80abe9fc36ac",
+  "support_inventory_sha256": "7762e3c763d51988413e19913b087b11a3c2e7a494756afdf3be4bfbc5dab0e0",
+  "plan_sha256": "0354f6d829906bb29a3012581f214984cd03e4fe3fb23e7457ecaa27ed2a8ce1",
+  "candidate_snapshot_sha256s": [
+    "eb5c3da354c9bafae9f6f80f68555444833cd7fbdeb1699d06a190017714781e"
+  ],
+  "policy": {
+    "scientific_authority": false,
+    "canonical_pre_f0_only": true,
+    "control_binds_queue_support_plan_and_candidate_snapshots": true,
+    "provider_raw_is_private_content_addressed": true,
+    "one_design_stage_per_input_control": true,
+    "design_model_call_has_zero_scientific_authority": true,
+    "design_cannot_authorize_execution": true,
+    "independent_review_required_before_substrate_preflight": true,
+    "support_hold_is_not_scientific_negative": true,
+    "first_party_design_must_preserve_frozen_prediction_baseline_and_falsifier": true,
+    "automatic_problem_gate_method_experiment_p0_gpu_authority": false
+  },
+  "summary": {
+    "provisional_problem_candidates": 1,
+    "design_selected": 1,
+    "design_pending": 0,
+    "design_invalid": 0,
+    "wait_primary_asset": 0,
+    "operationalization_recompile_pending": 0,
+    "operationalization_recompiled": 1,
+    "operationalization_intrinsic_source_specific": 0,
+    "review_pending": 0,
+    "review_clear": 1,
+    "review_revise": 0,
+    "review_blocked": 0,
+    "substrate_preflight_pending": 0,
+    "substrate_ready": 0,
+    "substrate_implementation_pending": 0,
+    "substrate_hold": 0,
+    "execution_ready": 0,
+    "execution_completed": 1,
+    "reduction_supported": 0,
+    "residual_survives": 0,
+    "inconclusive": 1,
+    "branch_repair_ready": 0,
+    "deferred_by_portfolio_budget": 0,
+    "paper_design_authorized": 0,
+    "method_authorized": 0,
+    "p0_authorized": 0,
+    "full_experiment_authorized": 0
+  },
+  "last_stage": {
+    "stage": "bounded-evidence-adjudication",
+    "candidate_ids": [
+      "PORT-013"
+    ],
+    "requested_model": "",
+    "resolved_model": "",
+    "raw_sha256": "c2783f6aa4f2c9880cc982266a3c33bf7190f3250c0bb29812d7752b3d38e3bc",
+    "provider_calls_executed": 0,
+    "research_memory_query_pack_sha256": "",
+    "scientific_authority": false
+  },
+  "scientific_authority": false,
+  "authority": {
+    "live_problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  },
+  "parent_control_snapshot_sha256": "a2537ef12b4e653b64892f8ababfc19af3a769eb9c86a6503adda9f22d5b42d8"
+}
