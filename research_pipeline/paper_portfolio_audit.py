@@ -15,6 +15,7 @@ from .venue_submission_receipt import validate_submission_receipt
 from .revision_impact_audit import audit_freeze_receipt
 from .rebuttal_protocol import validate_rebuttal_receipt, validate_review_set
 from .post_decision_learning import validate_learning_receipt, validate_rebuttal_skipped_by_venue_receipt, validate_venue_decision_receipt
+from .submission_attempt_lineage import public_attempt_summary, validate_attempt_ledger
 
 DEFAULT_ROOT = Path('/data/wyt/agent-self-evolution-observatory')
 
@@ -249,6 +250,33 @@ def learning_state(row: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
+def submission_attempt_state(root: Path, paper_id: str, paper_state: str) -> dict[str, Any]:
+    empty = {
+        'status': 'ATTEMPT_NOT_PLANNED' if paper_state == 'LEARN' else 'NOT_ELIGIBLE',
+        'attempts': 0,
+        'latest_attempt_id': '',
+        'latest_attempt_sha256': '',
+        'latest_attempt_type': '',
+        'target_venue': '',
+        'machine_preparation_eligible': False,
+        'requires_explicit_scientific_reopen': False,
+        'parent_submission_bytes_immutable': True,
+        'validation_errors': [],
+    }
+    path = root / 'paper-submission-attempts' / f'{paper_id}.json'
+    if not path.exists():
+        return empty
+    try:
+        row = json.loads(path.read_text(encoding='utf-8'))
+        errors = validate_attempt_ledger(row)
+        summary = public_attempt_summary(row)
+    except (OSError, json.JSONDecodeError, TypeError, ValueError):
+        return {**empty, 'status': 'ATTEMPT_LEDGER_INVALID', 'validation_errors': ['attempt-ledger-unreadable']}
+    if errors:
+        return {**empty, **summary, 'status': 'ATTEMPT_LEDGER_INVALID', 'validation_errors': errors}
+    return {**empty, **summary, 'status': str(summary.get('latest_status') or empty['status'])}
+
+
 def project(path: Path, root: Path) -> dict[str, Any]:
     row = json.loads(path.read_text(encoding='utf-8'))
     paper_id = str(row.get('paper_id') or path.stem)
@@ -304,9 +332,21 @@ def project(path: Path, root: Path) -> dict[str, Any]:
     if rebuttal['status'] in {'REBUTTAL_SKIPPED_TRANSITION_PENDING','REBUTTAL_SKIPPED_BY_VENUE'}:
         review_intake={**review_intake,'status':'REVIEW_NOT_REQUIRED_VENUE_TERMINAL','review_count':0,'errors':[]}
     learning=learning_state(row)
+    attempt=submission_attempt_state(root,paper_id,state)
     actions = next_actions(groups)
     if state == 'LEARN':
-        actions = ['post-decision learning is complete; reuse process lessons only within their declared scope, while scientific lessons remain diagnostic until independent evidence exists'] if learning['status']=='LEARN_COMPLETE' else ['LEARN state has invalid decision/learning lineage; stop reuse until repaired']
+        if learning['status']!='LEARN_COMPLETE':
+            actions=['LEARN state has invalid decision/learning lineage; stop reuse until repaired']
+        elif attempt['status']=='ATTEMPT_NOT_PLANNED':
+            actions=['post-decision learning is complete; plan any resubmission or camera-ready as a new immutable child attempt, never by editing the parent submission lineage']
+        elif attempt['status']=='ATTEMPT_LEDGER_INVALID':
+            actions=['submission-attempt lineage is invalid; stop child preparation until the append-only attempt ledger is repaired']
+        elif attempt['requires_explicit_scientific_reopen']:
+            actions=['the planned child attempt requests a scientific change; obtain explicit scientific reopen authority before any new claim, evidence, experiment, or GPU work']
+        elif attempt['machine_preparation_eligible']:
+            actions=['the child attempt is paper-side only and may enter a fresh preparation/freeze pipeline while the parent submitted bytes remain immutable']
+        else:
+            actions=['post-decision learning is complete; preserve parent submission immutability and inspect the latest child-attempt plan']
     elif state == 'REBUTTAL':
         if rebuttal['status']=='REBUTTAL_SKIPPED_BY_VENUE':
             actions=['venue provided no rebuttal window; do not fabricate reviews or a rebuttal, and proceed only with scoped post-decision learning'] if learning['status']=='POST_DECISION_LEARNING_PENDING' else ['venue-skipped rebuttal lineage is closed; advance to LEARN only after the scoped learning receipt passes']
@@ -391,6 +431,16 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         'post_decision_learning_sha256': learning['learning_receipt_sha256'],
         'post_decision_lessons': learning['lessons'],
         'post_decision_scientific_diagnostic_lessons': learning['scientific_diagnostic_only'],
+        'submission_attempt_status': attempt['status'],
+        'submission_attempt_count': attempt['attempts'],
+        'latest_submission_attempt_id': attempt['latest_attempt_id'],
+        'latest_submission_attempt_sha256': attempt['latest_attempt_sha256'],
+        'latest_submission_attempt_type': attempt['latest_attempt_type'],
+        'latest_submission_attempt_target_venue': attempt['target_venue'],
+        'submission_attempt_machine_preparation_eligible': attempt['machine_preparation_eligible'],
+        'submission_attempt_requires_scientific_reopen': attempt['requires_explicit_scientific_reopen'],
+        'parent_submission_bytes_immutable': attempt['parent_submission_bytes_immutable'],
+        'submission_attempt_errors': attempt['validation_errors'],
         'blocker_groups': groups,
         'blocker_count': len(blockers),
         'next_actions': actions,
@@ -402,7 +452,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
 
 def source_watermark(root: Path) -> str:
     timestamps: list[str] = []
-    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake'):
+    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts'):
         if not directory.exists():
             continue
         for path in sorted(directory.glob('*.json')):
@@ -450,6 +500,12 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'post_decision_learning_pending': sum(p['learning_status'] == 'POST_DECISION_LEARNING_PENDING' for p in papers),
             'learning_prepared': sum(p['learning_status'] == 'LEARNING_PREPARED_TRANSITION_PENDING' for p in papers),
             'learn_complete': sum(p['learning_status'] == 'LEARN_COMPLETE' for p in papers),
+            'submission_attempt_plans': sum(int(p['submission_attempt_count'] or 0) for p in papers),
+            'attempt_machine_preparation_eligible': sum(p['submission_attempt_machine_preparation_eligible'] for p in papers),
+            'attempts_requiring_scientific_reopen': sum(p['submission_attempt_requires_scientific_reopen'] for p in papers),
+            'resubmission_plans': sum(p['latest_submission_attempt_type'] == 'RESUBMISSION' for p in papers),
+            'camera_ready_plans': sum(p['latest_submission_attempt_type'] == 'CAMERA_READY' for p in papers),
+            'attempt_ledger_invalid': sum(p['submission_attempt_status'] == 'ATTEMPT_LEDGER_INVALID' for p in papers),
             'submission_freeze_eligible': sum(p['submission_freeze_eligible'] for p in papers),
             'ledger_replay_failures': sum(not p['ledger_replay_pass'] for p in papers),
             'contract_integrity_failures': sum(not p['contract_integrity_pass'] for p in papers),

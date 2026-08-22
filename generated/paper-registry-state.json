@@ -23,7 +23,12 @@
     "rebuttal_skipped_by_venue": 0,
     "final_decisions_recorded": 0,
     "learning_prepared": 0,
-    "learn_complete": 0
+    "learn_complete": 0,
+    "submission_attempt_plans": 0,
+    "attempt_machine_preparation_eligible": 0,
+    "attempts_requiring_scientific_reopen": 0,
+    "resubmission_plans": 0,
+    "camera_ready_plans": 0
   },
   "papers": [
     {
@@ -42,7 +47,8 @@
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
         "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
-        "post_submission": "NOT_ELIGIBLE"
+        "post_submission": "NOT_ELIGIBLE",
+        "next_attempt": "NOT_ELIGIBLE"
       },
       "gates": {
         "claim_audit": true,
@@ -177,6 +183,18 @@
         "new_experiment_authorized": false,
         "claim_expansion_authorized": false
       },
+      "submission_attempt": {
+        "status": "NOT_ELIGIBLE",
+        "attempts": 0,
+        "latest_attempt_id": "",
+        "latest_attempt_sha256": "",
+        "latest_attempt_type": "",
+        "target_venue": "",
+        "machine_preparation_eligible": false,
+        "requires_explicit_scientific_reopen": false,
+        "parent_submission_bytes_immutable": true,
+        "validation_errors": []
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
@@ -211,7 +229,8 @@
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
         "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
-        "post_submission": "NOT_ELIGIBLE"
+        "post_submission": "NOT_ELIGIBLE",
+        "next_attempt": "NOT_ELIGIBLE"
       },
       "gates": {
         "claim_audit": true,
@@ -358,6 +377,18 @@
         "new_experiment_authorized": false,
         "claim_expansion_authorized": false
       },
+      "submission_attempt": {
+        "status": "NOT_ELIGIBLE",
+        "attempts": 0,
+        "latest_attempt_id": "",
+        "latest_attempt_sha256": "",
+        "latest_attempt_type": "",
+        "target_venue": "",
+        "machine_preparation_eligible": false,
+        "requires_explicit_scientific_reopen": false,
+        "parent_submission_bytes_immutable": true,
+        "validation_errors": []
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 6,
@@ -392,7 +423,8 @@
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
         "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
-        "post_submission": "NOT_ELIGIBLE"
+        "post_submission": "NOT_ELIGIBLE",
+        "next_attempt": "NOT_ELIGIBLE"
       },
       "gates": {
         "claim_audit": true,
@@ -539,6 +571,18 @@
         "new_experiment_authorized": false,
         "claim_expansion_authorized": false
       },
+      "submission_attempt": {
+        "status": "NOT_ELIGIBLE",
+        "attempts": 0,
+        "latest_attempt_id": "",
+        "latest_attempt_sha256": "",
+        "latest_attempt_type": "",
+        "target_venue": "",
+        "machine_preparation_eligible": false,
+        "requires_explicit_scientific_reopen": false,
+        "parent_submission_bytes_immutable": true,
+        "validation_errors": []
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 4,
@@ -573,7 +617,8 @@
         "paper_quality": "PASS",
         "paper_preparation": "BLOCKED",
         "submission": "PREPARATION_BLOCKED",
-        "post_submission": "NOT_ELIGIBLE"
+        "post_submission": "NOT_ELIGIBLE",
+        "next_attempt": "NOT_ELIGIBLE"
       },
       "gates": {
         "claim_audit": true,
@@ -717,6 +762,18 @@
         "new_experiment_authorized": false,
         "claim_expansion_authorized": false
       },
+      "submission_attempt": {
+        "status": "NOT_ELIGIBLE",
+        "attempts": 0,
+        "latest_attempt_id": "",
+        "latest_attempt_sha256": "",
+        "latest_attempt_type": "",
+        "target_venue": "",
+        "machine_preparation_eligible": false,
+        "requires_explicit_scientific_reopen": false,
+        "parent_submission_bytes_immutable": true,
+        "validation_errors": []
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 5,
@@ -751,7 +808,8 @@
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
         "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
-        "post_submission": "NOT_ELIGIBLE"
+        "post_submission": "NOT_ELIGIBLE",
+        "next_attempt": "NOT_ELIGIBLE"
       },
       "gates": {
         "claim_audit": true,
@@ -892,6 +950,18 @@
         "new_experiment_authorized": false,
         "claim_expansion_authorized": false
       },
+      "submission_attempt": {
+        "status": "NOT_ELIGIBLE",
+        "attempts": 0,
+        "latest_attempt_id": "",
+        "latest_attempt_sha256": "",
+        "latest_attempt_type": "",
+        "target_venue": "",
+        "machine_preparation_eligible": false,
+        "requires_explicit_scientific_reopen": false,
+        "parent_submission_bytes_immutable": true,
+        "validation_errors": []
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
@@ -917,5 +987,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "33da38567d9962328f091ed8ae3fc1dfa0855cdaf7ea9af54aaf0e49f3147cc4"
+  "projection_sha256": "618dfe7a22db2f5132a19b023febd0f7e90c576a47e890872c8855b2c29875e8"
 }
