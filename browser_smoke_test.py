@@ -403,6 +403,7 @@ def main() -> None:
         require(bibliography["exports"] == 3, "bibliography exports are incomplete")
         require(bibliography["filters"] == 3, "bibliography select filters are incomplete")
         require(bibliography["analyses"] == 80 and bibliography["analysisFields"] == 480, "paper analyses are incomplete on the initial bibliography page")
+        require(bibliography["openAnalyses"] == 0, "bibliography paper details must stay collapsed by default")
         require(bibliography["designBreakdowns"] == 80 and bibliography["designFields"] == 400, "concrete paper-design breakdown is incomplete on the initial bibliography page")
         design_audit=bibliography["catalogDesignAudit"]
         require(design_audit["total"] >= 400 and design_audit["missing"] == 0 and design_audit["s2SignalLeak"] == 0, f"full currently loaded catalog concrete-design audit failed: {design_audit}")
@@ -465,7 +466,7 @@ def main() -> None:
               fields: card?.querySelectorAll('.paper-analysis-grid > div').length || 0
             };""",
         )
-        require(specific_analysis["found"] and specific_analysis["open"], "requested paper analysis did not open")
+        require(specific_analysis["found"] and not specific_analysis["open"], "requested paper should be located without auto-expanding its analysis")
         require(specific_analysis["fields"] == 6, "requested paper analysis is missing fields")
         require("curated six-part analysis" in specific_analysis["label"] or "人工核验六项分析" in specific_analysis["label"], "paper-specific six-part analysis is not rendered")
 

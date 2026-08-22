@@ -197,6 +197,10 @@ def main() -> None:
                 raise AssertionError(f"{page}: sidebar labels/targets differ from the canonical navigation: {current_sidebar}")
             if page not in {"paper-ideas", "selected-paper", "research-timeline", "research-map"} and 'id="page-framework"' not in dom:
                 raise AssertionError(f"{page}: page framework overview is missing")
+            if page == "bibliography":
+                paper_details = execute(session_id, """const rows=[...document.querySelectorAll('.reference-card .paper-analysis')]; const first=rows[0]||null; const before=rows.filter(x=>x.open).length; if(first) first.querySelector('summary')?.click(); return {total:rows.length,before,firstOpened:!!first?.open};""")
+                if paper_details.get("total") != 80 or paper_details.get("before") != 0 or not paper_details.get("firstOpened"):
+                    raise AssertionError(f"bibliography: paper details must all start collapsed and remain manually expandable: {paper_details}")
             if page == "research-map":
                 expected_toc = [f"#research-map-{letter}-heading" for letter in "abcdefg"] + ["#formal-publication-lineage-heading"]
                 actual_toc = execute(session_id, "return [...document.querySelectorAll('#page-toc .toc-level-3 > a')].map(a=>a.getAttribute('href')); ")
