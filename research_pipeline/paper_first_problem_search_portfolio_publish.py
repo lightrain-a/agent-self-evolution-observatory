@@ -38,6 +38,25 @@ def _artifact_provider_calls(payload:dict)->int:
     return max(0,int(payload.get("provider_calls_executed") or 0))
 
 
+def _error_provider_calls(payload:dict)->int:
+    """Count provider execution represented by an error receipt.
+
+    Parse errors necessarily follow a complete provider response and therefore count
+    as one provider call. Provider timeout/error receipts historically represent one
+    attempted call unless the receipt proves a local credential preflight failure,
+    which occurs before any provider request is sent. Newer receipts may record an
+    explicit provider_calls_executed value and that value always wins.
+    """
+    if "provider_calls_executed" in payload:
+        return max(0,int(payload.get("provider_calls_executed") or 0))
+    status=str(payload.get("status") or "")
+    if status=="PARSE_ERROR_ZERO_AUTHORITY":return 1
+    error=str(payload.get("error") or "").lower()
+    local_credential_failure=("api_key" in error or "api key" in error) and any(token in error for token in ("not_configured","not configured","missing"))
+    if local_credential_failure:return 0
+    return 1
+
+
 def _model_identity_receipts(root:Path)->dict:
     """Project provider-resolved model identities without inventing legacy aliases.
 
@@ -116,7 +135,7 @@ def _expansion_execution_accounting(root:Path)->dict:
     provider_failures=parse_failures=execution_failures=successful_shards=requested_raw_seeds=provider_calls=0
     for slot in slots.values():
         requested_raw_seeds+=max(slot['requested'] or [0])
-        provider_calls+=sum(_artifact_provider_calls(slot['success']) for _ in [0] if slot['success'] is not None)+len(slot['errors'])
+        provider_calls+=sum(_artifact_provider_calls(slot['success']) for _ in [0] if slot['success'] is not None)+sum(_error_provider_calls(error) for error in slot['errors'])
         if slot['success'] is not None:
             successful_shards+=1;continue
         execution_failures+=1;statuses={str(row.get('status') or '') for row in slot['errors']}
@@ -169,7 +188,7 @@ def _formulation_execution_accounting(root:Path,base:dict,evolved:list[dict])->d
         'successful_shards':sum(slot['success'] is not None for slot in by_part.values()),
         'provider_failures':provider_failures,'parse_failures':parse_failures,
         'requested_branches':requested_branches,'successful_branches':successful_branches,
-        'censored_branches':censored_branches,'attempt_calls':sum(_artifact_provider_calls(load(path)) for path in success_paths)+len(error_paths),
+        'censored_branches':censored_branches,'attempt_calls':sum(_artifact_provider_calls(load(path)) for path in success_paths)+sum(_error_provider_calls(load(path)) for path in error_paths),
     }
 
 
@@ -223,7 +242,7 @@ def _latest_shadow_run(root:Path)->dict:
     expansion_accounting=_expansion_execution_accounting(root);expansion_successful=expansion_accounting['successful_shards'];expansion_errors=expansion_accounting['execution_failures'];expansion_requested_shards=expansion_accounting['requested_shards']
     expansion_parse_failures=expansion_accounting['parse_failures'];expansion_provider_failures=expansion_accounting['provider_failures']
     evolution_paths=list(root.glob('evolve-*.json'));evolution_error_paths=list(root.glob('error-evolve-*.json'))
-    evolution_calls=sum(_artifact_provider_calls(load(path)) for path in evolution_paths)+len(evolution_error_paths)
+    evolution_calls=sum(_artifact_provider_calls(load(path)) for path in evolution_paths)+sum(_error_provider_calls(load(path)) for path in evolution_error_paths)
     evolution_by_generation={1:{'requested':0,'valid':0},2:{'requested':0,'valid':0}}
     for path in evolution_paths:
         payload=load(path);match=re.search(r'evolve-g(\d+)-p\d+',path.name)
@@ -236,7 +255,7 @@ def _latest_shadow_run(root:Path)->dict:
     formulation_calls=formulation_accounting['attempt_calls']
     expansion_calls=expansion_accounting['provider_calls']
     generator_calls=expansion_calls+evolution_calls+formulation_calls
-    reviewer_calls=len(list(root.glob('review-p*.json')))+len(list(root.glob('error-review-*.json')))
+    reviewer_calls=sum(_artifact_provider_calls(load(path)) for path in root.glob('review-p*.json'))+sum(_error_provider_calls(load(path)) for path in root.glob('error-review-*.json'))
     summary={
         'requested_raw_seeds':expansion_accounting['requested_raw_seeds'],
         'expansion_requested_shards':expansion_requested_shards,
