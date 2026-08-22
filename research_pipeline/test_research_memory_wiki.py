@@ -62,9 +62,18 @@ class ResearchMemoryWikiTest(unittest.TestCase):
         lesson=next(r for r in wiki["entries"] if r["kind"]=="REVIEW_LESSON")
         self.assertEqual(lesson["durability_class"],"recurring-systemic");self.assertTrue(lesson["prompt_eligible"]);self.assertFalse(lesson["scientific_authority"]);self.assertFalse(lesson["principle_update_allowed"])
         pack=compile_research_memory_query_pack(wiki,purpose="PAPER_DESIGN",context="artifact provenance empirical sufficiency")
-        self.assertIn(lesson["memory_id"],pack["selected_memory_ids"]);self.assertIn("artifact-provenance",pack["text"]);self.assertTrue(pack["policy"]["paper_review_pattern_cannot_authorize_experiments"])
+        self.assertIn(lesson["memory_id"],pack["selected_memory_ids"]);self.assertIn("artifact-provenance",pack["text"]);self.assertTrue(pack["policy"]["paper_review_pattern_cannot_authorize_experiments"]);self.assertGreaterEqual(pack["summary"]["review_lessons_selected"],1)
         serialized=str(lesson)
         self.assertNotIn("reviewer_text",serialized);self.assertNotIn("action_reason",serialized)
+
+    def test_paper_design_budget_reserves_review_lesson_before_high_overlap_science_memory(self):
+        s,f,m,p,i,g,c=base_inputs()
+        for index in range(8):
+            row=copy.deepcopy(s["shadow_search_memory"]["closed_objects"][0]);row["source_candidate_id"]=f"CLOSED-{index}";row["title"]="closed method matched simplification taxonomy representation skill invariance "*5;s["shadow_search_memory"]["closed_objects"].append(row)
+        paper_index={"summary":{"papers":1},"entries":[{"paper_id":"PAPER-X","review_learning":{"review_receipts":2,"decision_critical_objections":3,"category_counts":{"novelty":1,"empirical-sufficiency":2},"evidence_state_counts":{"existing-evidence":1,"missing-decisive-evidence":2},"action_class_counts":{"narrative-repair":1,"preserve-limitation":2}}}]}
+        wiki=build_research_memory_wiki(search_design_state=s,failure_asset_library=f,scientific_meta_trace=m,candidate_portfolio=p,experiment_iteration=i,generator_state=g,claim_ledger=c,paper_ledger_index=paper_index)
+        pack=compile_research_memory_query_pack(wiki,purpose="PAPER_DESIGN",context="closed method matched simplification taxonomy representation skill invariance",max_chars=1200,max_items=16)
+        self.assertGreaterEqual(pack["summary"]["review_lessons_selected"],1);self.assertEqual(pack["selected"][0]["kind"],"REVIEW_LESSON");self.assertTrue(pack["policy"]["paper_design_reserves_review_lesson_when_available"])
 
 
 if __name__=="__main__":unittest.main()

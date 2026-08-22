@@ -100,6 +100,13 @@ def validate_public_control_plane(
                 errors.append(f"Paper action mismatch:{paper_id}:{key}")
         if (registry_row.get("review_learning") or {}) != (ledger_row.get("review_learning") or {}):
             errors.append(f"Paper review-learning mismatch:{paper_id}")
+        registry_story = registry_row.get("latest_story_search") or {}
+        ledger_story = ledger_row.get("latest_story_search") or {}
+        for key in ("paper_design_memory_query_pack_sha256", "paper_design_memory_binding_sha256", "paper_design_memory_wiki_sha256", "paper_design_memory_selected", "paper_design_review_lessons_selected"):
+            if registry_story.get(key) != ledger_story.get(key):
+                errors.append(f"Paper Story Search memory projection mismatch:{paper_id}:{key}")
+        if registry_story.get("paper_design_memory_query_pack_sha256") and not registry_story.get("paper_design_memory_binding_sha256"):
+            errors.append(f"Paper Story Search memory binding missing:{paper_id}")
 
     dashboard_policy = research_dashboard.get("projection_policy") or {}
     if dashboard_policy.get("next_action_class_is_canonical_control_semantics") is not True:
@@ -148,7 +155,9 @@ def validate_public_control_plane(
         if dashboard_papers[paper_id].get("next_action_class") != (registry_by_public_id[paper_id].get("primary_next_action") or {}).get("action_class"):
             errors.append(f"ResearchDashboard paper action mismatch:{paper_id}")
 
-    review_lessons = [row for row in _rows(research_memory, "entries") if row.get("kind") == "REVIEW_LESSON"]
+    memory_entries = _rows(research_memory, "entries")
+    memory_by_id = {str(row.get("memory_id") or ""): row for row in memory_entries if str(row.get("memory_id") or "")}
+    review_lessons = [row for row in memory_entries if row.get("kind") == "REVIEW_LESSON"]
     lessons_by_paper = {str(row.get("candidate_id") or ""): row for row in review_lessons}
     expected_review_papers = {paper_id for paper_id, row in ledger_by_key.items() if int(((row.get("review_learning") or {}).get("review_receipts") or 0)) > 0}
     if set(lessons_by_paper) != expected_review_papers:
@@ -160,5 +169,27 @@ def validate_public_control_plane(
             errors.append(f"ResearchMemory review lesson authority leak:{paper_id}")
         if lesson.get("affected_layer") != "paper_review":
             errors.append(f"ResearchMemory review lesson layer mismatch:{paper_id}")
+
+    backlog = research_system.get("paper_first_paper_design_backlog") or {}
+    backlog_policy = backlog.get("policy") or {}
+    backlog_summary = backlog.get("summary") or {}
+    backlog_entries = _rows(backlog, "entries")
+    pending_backlog = [row for row in backlog_entries if row.get("status") == "AWAIT_HUMAN_PAPER_DESIGN_REVIEW"]
+    if backlog_policy.get("paper_design_memory_precheck_required_for_pending_entries") is not True or backlog_policy.get("paper_design_memory_precheck_is_zero_authority") is not True or backlog_policy.get("paper_review_memory_is_context_not_scientific_evidence") is not True:
+        errors.append("ResearchSystem Paper Design backlog must declare zero-authority Research Memory prechecks")
+    if int(backlog_summary.get("memory_prechecks") or 0) != sum(bool(row.get("paper_design_memory_precheck")) for row in backlog_entries):
+        errors.append("ResearchSystem Paper Design memory-precheck accounting drifted")
+    for row in pending_backlog:
+        precheck = row.get("paper_design_memory_precheck") or {}
+        selected_ids = [str(value) for value in precheck.get("selected_memory_ids") or []]
+        if precheck.get("purpose") != "PAPER_DESIGN" or precheck.get("scientific_authority") is not False:
+            errors.append(f"pending Paper Design entry has invalid memory-precheck semantics:{row.get('candidate_id')}")
+        if str(precheck.get("wiki_sha256") or "") != str(research_memory.get("wiki_sha256") or ""):
+            errors.append(f"pending Paper Design entry references a stale Research Memory Wiki:{row.get('candidate_id')}")
+        if not all(memory_id in memory_by_id for memory_id in selected_ids):
+            errors.append(f"pending Paper Design entry references unknown Research Memory IDs:{row.get('candidate_id')}")
+        selected_review_lessons = sum((memory_by_id.get(memory_id) or {}).get("kind") == "REVIEW_LESSON" for memory_id in selected_ids)
+        if int(precheck.get("review_lessons_selected") or 0) != selected_review_lessons:
+            errors.append(f"pending Paper Design review-lesson accounting drifted:{row.get('candidate_id')}")
 
     return sorted(set(errors))

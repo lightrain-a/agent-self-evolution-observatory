@@ -65,6 +65,33 @@ class PublicProjectionInvariantTest(unittest.TestCase):
         errors = self.validate(memory=memory)
         self.assertIn("ResearchMemory review lessons do not match reviewed PaperStates", errors)
 
+    def test_pending_paper_design_memory_precheck_drift_is_detected(self) -> None:
+        system = copy.deepcopy(self.system)
+        lesson = next(row for row in self.memory["entries"] if row.get("kind") == "REVIEW_LESSON")
+        system["paper_first_paper_design_backlog"] = {
+            "schema_version": "1.0",
+            "policy": {
+                "paper_design_memory_precheck_required_for_pending_entries": True,
+                "paper_design_memory_precheck_is_zero_authority": True,
+                "paper_review_memory_is_context_not_scientific_evidence": True,
+            },
+            "summary": {"entries": 1, "pending_human_paper_design": 1, "memory_prechecks": 1, "review_lessons_selected": 1},
+            "entries": [{
+                "candidate_id": "TEST-PAPER-DESIGN",
+                "status": "AWAIT_HUMAN_PAPER_DESIGN_REVIEW",
+                "paper_design_memory_precheck": {
+                    "purpose": "PAPER_DESIGN",
+                    "wiki_sha256": "0" * 64,
+                    "query_pack_sha256": "b" * 64,
+                    "selected_memory_ids": [lesson["memory_id"]],
+                    "review_lessons_selected": 1,
+                    "scientific_authority": False,
+                },
+            }],
+        }
+        errors = self.validate(system=system)
+        self.assertIn("pending Paper Design entry references a stale Research Memory Wiki:TEST-PAPER-DESIGN", errors)
+
     def test_paper_next_action_drift_is_detected(self) -> None:
         registry = copy.deepcopy(self.registry)
         temporal = next(row for row in registry["papers"] if row["paper_id"] == "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK")

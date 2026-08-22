@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-22T10:43:40+00:00",
+  "generated_at": "2026-08-22T12:48:30+00:00",
   "status": "MEMORY_COMPILED",
   "policy": {
     "schema_version": "1.1",
@@ -19,6 +19,7 @@
     "idea_search_experiment_design_and_paper_design_use_distinct_memory_priorities": true,
     "paper_review_patterns_are_prechecks_not_scientific_verdicts": true,
     "paper_review_memory_never_authorizes_new_experiments": true,
+    "paper_design_reserves_at_least_one_review_lesson_when_available": true,
     "reviewer_prose_and_rationale_are_excluded_from_memory_projection": true
   },
   "source_manifest": {
@@ -1797,7 +1798,7 @@
     "p0": false,
     "gpu": false
   },
-  "wiki_sha256": "edb72694efd0febed2f92e92d8eb39f0bb605be307fc6b4f6ecbd5fbe2d2857e",
+  "wiki_sha256": "9c4a5eb428d574ecebd17c4eb70818e92fd1675e89c5b94979170057a9c1ef76",
   "lint": {
     "schema_version": "1.1",
     "status": "PASS",

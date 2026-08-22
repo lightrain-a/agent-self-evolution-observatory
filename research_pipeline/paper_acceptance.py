@@ -79,6 +79,8 @@ POLICY: dict[str, Any] = {
     "causal_hold_blocks_post_evidence_advancement": True,
     "story_search_may_reframe_but_not_expand_supported_claims": True,
     "story_search_winner_required_for_manuscript": True,
+    "new_story_search_receipts_bind_paper_design_memory_precheck": True,
+    "paper_design_memory_precheck_is_context_not_authority": True,
     "blind_and_artifact_aware_review_are_distinct": True,
     "both_mock_pc_modes_required_for_targeted_repair": True,
     "review_to_action_is_advisory_only": True,

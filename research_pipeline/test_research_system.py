@@ -344,6 +344,8 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(self.state["paper_acceptance"]["summary"]["append_only_ledger"])
         self.assertEqual(self.state["paper_acceptance"]["temporal_keys"], [row["key"] for row in self.state["system_architecture"]["temporal_flow"][-12:]])
         self.assertTrue(self.state["paper_acceptance"]["policy"]["story_search_winner_required_for_manuscript"])
+        self.assertTrue(self.state["paper_acceptance"]["policy"]["new_story_search_receipts_bind_paper_design_memory_precheck"])
+        self.assertTrue(self.state["paper_acceptance"]["policy"]["paper_design_memory_precheck_is_context_not_authority"])
         self.assertTrue(self.state["paper_acceptance"]["policy"]["both_mock_pc_modes_required_for_targeted_repair"])
         self.assertTrue(self.state["paper_acceptance"]["policy"]["claim_audit_pass_required_for_pdf_qa"])
         self.assertTrue(self.state["paper_acceptance"]["policy"]["submitted_state_requires_external_human_submission_authority"])
@@ -902,9 +904,9 @@ class ResearchSystemTest(unittest.TestCase):
         state=copy.deepcopy(self.state)
         state["paper_first_paper_design_backlog"]={
             "schema_version":"1.0",
-            "policy":{"problem_gate_pass_is_durable_until_human_paper_design_resolution":True,"volatile_discovery_queue_cannot_erase_backlog":True,"paper_design_eligibility_is_not_method_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False,"automatic_gpu_authority":False},
-            "summary":{"entries":1,"pending_human_paper_design":1,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0,"gpu_authorized":0},
-            "entries":[{"backlog_id":"x","candidate_id":"LIVE-1","status":"AWAIT_HUMAN_PAPER_DESIGN_REVIEW","paper_design_eligible":True,"authority":{"paper_design_review":True,"method":False,"experiment":False,"p0":False,"gpu":False},"scientific_authority":False}],
+            "policy":{"problem_gate_pass_is_durable_until_human_paper_design_resolution":True,"volatile_discovery_queue_cannot_erase_backlog":True,"paper_design_eligibility_is_not_method_authority":True,"paper_design_memory_precheck_required_for_pending_entries":True,"paper_design_memory_precheck_is_zero_authority":True,"paper_review_memory_is_context_not_scientific_evidence":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False,"automatic_gpu_authority":False},
+            "summary":{"entries":1,"pending_human_paper_design":1,"memory_prechecks":1,"review_lessons_selected":1,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0,"gpu_authorized":0},
+            "entries":[{"backlog_id":"x","candidate_id":"LIVE-1","status":"AWAIT_HUMAN_PAPER_DESIGN_REVIEW","paper_design_eligible":True,"paper_design_memory_precheck":{"purpose":"PAPER_DESIGN","wiki_sha256":"a"*64,"query_pack_sha256":"b"*64,"selected_memory_ids":["MEM-REVIEW"],"selected":1,"review_lessons_selected":1,"scientific_authority":False,"method_authority":False,"experiment_authority":False,"p0_authority":False,"gpu_authority":False},"authority":{"paper_design_review":True,"method":False,"experiment":False,"p0":False,"gpu":False},"scientific_authority":False}],
             "scientific_authority":False,
         }
         self.assertEqual(validate_state(state),[])

@@ -6715,7 +6715,10 @@
     "paper_acceptance_registered_papers": 5,
     "paper_acceptance_ledger_submission_ready": 5,
     "paper_acceptance_gate_clean_submission_ready": 4,
-    "paper_acceptance_internal_action_required": 1
+    "paper_acceptance_internal_action_required": 1,
+    "paper_design_backlog_pending": 0,
+    "paper_design_memory_prechecks": 0,
+    "paper_design_review_lessons_selected": 0
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -41262,12 +41265,15 @@
   },
   "paper_first_paper_design_backlog": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-22T10:08:33+00:00",
+    "generated_at": "2026-08-22T12:31:01+00:00",
     "policy": {
       "problem_gate_pass_is_durable_until_human_paper_design_resolution": true,
       "volatile_discovery_queue_cannot_erase_backlog": true,
       "backlog_copies_only_problem_gate_passed_candidates": true,
       "paper_design_eligibility_is_not_method_authority": true,
+      "paper_design_memory_precheck_required_for_pending_entries": true,
+      "paper_design_memory_precheck_is_zero_authority": true,
+      "paper_review_memory_is_context_not_scientific_evidence": true,
       "automatic_method_authority": false,
       "automatic_experiment_authority": false,
       "automatic_p0_authority": false,
@@ -41276,6 +41282,8 @@
     "summary": {
       "entries": 0,
       "pending_human_paper_design": 0,
+      "memory_prechecks": 0,
+      "review_lessons_selected": 0,
       "method_authorized": 0,
       "experiment_authorized": 0,
       "p0_authorized": 0,
@@ -49073,7 +49081,7 @@
   },
   "research_memory_wiki": {
     "schema_version": "1.1",
-    "generated_at": "2026-08-22T10:43:40+00:00",
+    "generated_at": "2026-08-22T12:48:30+00:00",
     "status": "MEMORY_COMPILED",
     "policy": {
       "schema_version": "1.1",
@@ -49092,6 +49100,7 @@
       "idea_search_experiment_design_and_paper_design_use_distinct_memory_priorities": true,
       "paper_review_patterns_are_prechecks_not_scientific_verdicts": true,
       "paper_review_memory_never_authorizes_new_experiments": true,
+      "paper_design_reserves_at_least_one_review_lesson_when_available": true,
       "reviewer_prose_and_rationale_are_excluded_from_memory_projection": true
     },
     "source_manifest": {
@@ -50870,7 +50879,7 @@
       "p0": false,
       "gpu": false
     },
-    "wiki_sha256": "edb72694efd0febed2f92e92d8eb39f0bb605be307fc6b4f6ecbd5fbe2d2857e",
+    "wiki_sha256": "9c4a5eb428d574ecebd17c4eb70818e92fd1675e89c5b94979170057a9c1ef76",
     "lint": {
       "schema_version": "1.1",
       "status": "PASS",
@@ -51952,7 +51961,9 @@
       "submitted_state_requires_external_human_submission_authority": true,
       "submission_ready_papers_is_legacy_alias_for_ledger_submission_ready_papers": true,
       "gate_clean_submission_ready_is_latest_effective_internal_readiness": true,
-      "primary_next_action_is_internal_only_and_zero_authority": true
+      "primary_next_action_is_internal_only_and_zero_authority": true,
+      "new_story_search_receipts_bind_paper_design_memory_precheck": true,
+      "paper_design_memory_precheck_is_context_not_authority": true
     },
     "paper_states": [
       "PAPER_EVIDENCE",
@@ -52133,7 +52144,12 @@
             "selected_story_id": "S1-TEMPORAL-CERTIFICATE-CONTROL",
             "selected_story_title": "Static pass versus temporal certificate; same-schedule control localizes the finite update contrast",
             "story_search_sha256": "1be1539c1470d96055fc75b0cea13634ecb657a421ae3fd1d040d8154a62241e",
-            "valid_candidates": 3
+            "valid_candidates": 3,
+            "paper_design_memory_query_pack_sha256": "",
+            "paper_design_memory_binding_sha256": "",
+            "paper_design_memory_wiki_sha256": "",
+            "paper_design_memory_selected": 0,
+            "paper_design_review_lessons_selected": 0
           },
           "mock_pc_modes": {
             "BLIND_MANUSCRIPT": "6733b873c804c246a7f651286333fc83a89846d9e4ab6933339a5209be89ec58",
@@ -52300,7 +52316,12 @@
             "selected_story_id": "S1-CURRENT-CHAIN",
             "selected_story_title": "Current mechanism chain",
             "story_search_sha256": "e3123c9dfcf670e0fcab11859aaad3e4b302f4fd93b11e5b476e5133468e3702",
-            "valid_candidates": 3
+            "valid_candidates": 3,
+            "paper_design_memory_query_pack_sha256": "",
+            "paper_design_memory_binding_sha256": "",
+            "paper_design_memory_wiki_sha256": "",
+            "paper_design_memory_selected": 0,
+            "paper_design_review_lessons_selected": 0
           },
           "mock_pc_modes": {
             "BLIND_MANUSCRIPT": "25e8d2b0bb12e86cfc6dcaa1e9c958b220f00c2f2fe042a5f92dfb4dbb0e5c1f",
@@ -52461,7 +52482,12 @@
             "selected_story_id": "S1-CURRENT-CHAIN",
             "selected_story_title": "Current mechanism chain",
             "story_search_sha256": "32885d13b5eb44ae667cb046a46c4694acf25a128e3cfe5ed00855d6e2c090d0",
-            "valid_candidates": 3
+            "valid_candidates": 3,
+            "paper_design_memory_query_pack_sha256": "",
+            "paper_design_memory_binding_sha256": "",
+            "paper_design_memory_wiki_sha256": "",
+            "paper_design_memory_selected": 0,
+            "paper_design_review_lessons_selected": 0
           },
           "mock_pc_modes": {
             "BLIND_MANUSCRIPT": "d9d25dd35e9f58cba1154235620daea2c66b15b8846629874ebc0d5e8016bdf6",
@@ -52617,7 +52643,12 @@
             "selected_story_id": "S1-CURRENT-CHAIN",
             "selected_story_title": "Current mechanism chain",
             "story_search_sha256": "92856a345632fd19a6dd1bb513b4f0754cc3f2a97e7ccc5b4149f48e6e444615",
-            "valid_candidates": 3
+            "valid_candidates": 3,
+            "paper_design_memory_query_pack_sha256": "",
+            "paper_design_memory_binding_sha256": "",
+            "paper_design_memory_wiki_sha256": "",
+            "paper_design_memory_selected": 0,
+            "paper_design_review_lessons_selected": 0
           },
           "mock_pc_modes": {
             "BLIND_MANUSCRIPT": "29cdb7faf01a55647b79b93883a792ecd2c756f6148a990f1cf25aac14ac885f",
@@ -52812,7 +52843,12 @@
             "selected_story_id": "S1-INVARIANCE-BOUNDARY",
             "selected_story_title": "Representation invariance as the paper question; support geometry as the exact boundary",
             "story_search_sha256": "16261d97ee81c948133036eb04908f2cf19c94d2f392d56c5969e59b01e2b6e5",
-            "valid_candidates": 3
+            "valid_candidates": 3,
+            "paper_design_memory_query_pack_sha256": "",
+            "paper_design_memory_binding_sha256": "",
+            "paper_design_memory_wiki_sha256": "",
+            "paper_design_memory_selected": 0,
+            "paper_design_review_lessons_selected": 0
           },
           "mock_pc_modes": {
             "BLIND_MANUSCRIPT": "127d9c4ebb0e6563c0de3274df2941dd64df9dd4f1bfc159d0846fcc558fc876",
@@ -52896,7 +52932,7 @@
       "scientific_authority": false
     },
     "ledger_index_source": "canonical-append-only-paper-ledgers",
-    "control_plane_reconciled_at": "2026-08-22T10:43:40+00:00"
+    "control_plane_reconciled_at": "2026-08-22T12:48:30+00:00"
   },
   "human_terminal_ideas": {
     "schema_version": "1.0",

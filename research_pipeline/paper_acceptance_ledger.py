@@ -12,6 +12,7 @@ from .paper_acceptance import (
     build_story_search_receipt, build_submission_readiness_receipt, evaluate_manuscript_ci,
     evaluate_paper_transition, evaluate_prebuttal, paper_contract_digest, paper_contract_payload,
 )
+from .research_memory_wiki import compile_research_memory_query_pack, load_research_memory_wiki
 
 
 def _now() -> str:
@@ -304,7 +305,18 @@ def _receipt_hash_valid(receipt: Mapping[str, Any]) -> bool:
             "winner_valid": receipt.get("winner_valid"),
             "claim_expansion_authorized": receipt.get("claim_expansion_authorized"),
         }
-        return str(receipt.get("story_search_sha256") or "") == _digest(identity)
+        story_sha = str(receipt.get("story_search_sha256") or "")
+        if story_sha != _digest(identity):
+            return False
+        memory_receipt = receipt.get("paper_design_memory_query_receipt")
+        if memory_receipt is None:
+            return True
+        if not isinstance(memory_receipt, Mapping) or memory_receipt.get("purpose") != "PAPER_DESIGN" or memory_receipt.get("scientific_authority") is not False:
+            return False
+        if not re.fullmatch(r"[0-9a-f]{64}", str(memory_receipt.get("wiki_sha256") or "")) or not re.fullmatch(r"[0-9a-f]{64}", str(memory_receipt.get("query_pack_sha256") or "")):
+            return False
+        binding = {"story_search_sha256": story_sha, "paper_design_memory_query_receipt": dict(memory_receipt)}
+        return str(receipt.get("paper_design_memory_binding_sha256") or "") == _digest(binding)
     if receipt_type == "mock-pc-review":
         identity = {
             "paper_id": receipt.get("paper_id"),
@@ -397,8 +409,61 @@ def _append(root: Path, contract: PaperContract, actor: str, event: Mapping[str,
         _refresh(row); _atomic(path, row); return row
 
 
-def record_story_search(root: Path, contract: PaperContract, candidates: Sequence[StoryCandidate], actor: str = "story-search") -> dict[str, Any]:
-    return _append(root, contract, actor, {"event_type": "story-search", "receipt": build_story_search_receipt(contract, candidates)})
+def _paper_design_memory_pack(contract: PaperContract) -> dict[str, Any]:
+    return compile_research_memory_query_pack(
+        load_research_memory_wiki(),
+        purpose="PAPER_DESIGN",
+        context={
+            "paper_id": contract.paper_id,
+            "title": contract.title,
+            "central_question": contract.central_question,
+            "supported_claims": contract.supported_claims,
+            "active_unrefuted_claims": getattr(contract, "active_unrefuted_claims", {}),
+            "limitations": contract.limitations,
+        },
+        max_chars=4800,
+        max_items=16,
+    )
+
+
+def _paper_design_memory_receipt(pack: Mapping[str, Any]) -> dict[str, Any]:
+    if str(pack.get("purpose") or "") != "PAPER_DESIGN" or pack.get("scientific_authority") is not False:
+        raise ValueError("Story Search requires a zero-authority PAPER_DESIGN Research Memory query pack")
+    query_sha = str(pack.get("query_pack_sha256") or "")
+    wiki_sha = str(pack.get("wiki_sha256") or "")
+    if not re.fullmatch(r"[0-9a-f]{64}", query_sha) or not re.fullmatch(r"[0-9a-f]{64}", wiki_sha):
+        raise ValueError("Story Search Research Memory query pack must be content-addressed")
+    selected = [row for row in pack.get("selected") or [] if isinstance(row, Mapping)]
+    return {
+        "purpose": "PAPER_DESIGN",
+        "wiki_sha256": wiki_sha,
+        "query_pack_sha256": query_sha,
+        "selected_memory_ids": [str(value) for value in (pack.get("selected_memory_ids") or [])],
+        "selected": int((pack.get("summary") or {}).get("selected") or 0),
+        "review_lessons_selected": sum(str(row.get("kind") or "") == "REVIEW_LESSON" for row in selected),
+        "memory_is_context_not_scientific_verdict": True,
+        "paper_review_patterns_are_prechecks_not_verdicts": True,
+        "scientific_authority": False,
+        "method_authority": False,
+        "experiment_authority": False,
+        "gpu_authority": False,
+    }
+
+
+def record_story_search(
+    root: Path,
+    contract: PaperContract,
+    candidates: Sequence[StoryCandidate],
+    actor: str = "story-search",
+    *,
+    research_memory_query_pack: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    pack = dict(research_memory_query_pack) if research_memory_query_pack is not None else _paper_design_memory_pack(contract)
+    receipt = build_story_search_receipt(contract, candidates)
+    memory_receipt = _paper_design_memory_receipt(pack)
+    receipt["paper_design_memory_query_receipt"] = memory_receipt
+    receipt["paper_design_memory_binding_sha256"] = _digest({"story_search_sha256": receipt["story_search_sha256"], "paper_design_memory_query_receipt": memory_receipt})
+    return _append(root, contract, actor, {"event_type": "story-search", "receipt": receipt})
 
 
 def record_mock_review(root: Path, contract: PaperContract, mode: MockReviewMode,
@@ -685,6 +750,11 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
             "selected_story_title": str(latest_story.get("selected_story_title") or ""),
             "story_search_sha256": str(latest_story.get("story_search_sha256") or ""),
             "valid_candidates": int(latest_story.get("valid_candidates") or 0),
+            "paper_design_memory_query_pack_sha256": str((latest_story.get("paper_design_memory_query_receipt") or {}).get("query_pack_sha256") or ""),
+            "paper_design_memory_binding_sha256": str(latest_story.get("paper_design_memory_binding_sha256") or ""),
+            "paper_design_memory_wiki_sha256": str((latest_story.get("paper_design_memory_query_receipt") or {}).get("wiki_sha256") or ""),
+            "paper_design_memory_selected": int((latest_story.get("paper_design_memory_query_receipt") or {}).get("selected") or 0),
+            "paper_design_review_lessons_selected": int((latest_story.get("paper_design_memory_query_receipt") or {}).get("review_lessons_selected") or 0),
         },
         "mock_pc_modes": {mode.value: mock_modes.get(mode.value, "") for mode in MockReviewMode},
         "latest_mock_review": {

@@ -1,8 +1,8 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-08-22T10:43:41+00:00",
-  "source_revision": "32a5cf26be0b75dfd77fd23e1c3fba8f04c60cc9",
-  "projection_source": "canonical-append-only-paper-ledgers",
+  "generated_at": "2026-08-22T12:51:16+00:00",
+  "source_revision": "c03d4b5dd295f3322c80332904982e713cd40e64",
+  "projection_source": "generated/paper-registry.json",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
     "paper_registry_cannot_grant_research_or_experiment_authority": true,
@@ -35,7 +35,9 @@
     "scientific_contract_revision_requires_evidence_closure_at_paper_evidence": true,
     "submitted_state_requires_external_human_submission_authority": true,
     "submission_ready_papers_is_legacy_alias_for_ledger_submission_ready_papers": true,
-    "primary_next_action_is_internal_only_and_zero_authority": true
+    "primary_next_action_is_internal_only_and_zero_authority": true,
+    "new_story_search_receipts_bind_paper_design_memory_precheck": true,
+    "paper_design_memory_precheck_is_context_not_authority": true
   },
   "summary": {
     "papers": 5,
@@ -286,7 +288,12 @@
         "selected_story_id": "S1-INVARIANCE-BOUNDARY",
         "selected_story_title": "Representation invariance as the paper question; support geometry as the exact boundary",
         "story_search_sha256": "16261d97ee81c948133036eb04908f2cf19c94d2f392d56c5969e59b01e2b6e5",
-        "valid_candidates": 3
+        "valid_candidates": 3,
+        "paper_design_memory_query_pack_sha256": "",
+        "paper_design_memory_binding_sha256": "",
+        "paper_design_memory_wiki_sha256": "",
+        "paper_design_memory_selected": 0,
+        "paper_design_review_lessons_selected": 0
       },
       "mock_pc_modes": {
         "BLIND_MANUSCRIPT": "127d9c4ebb0e6563c0de3274df2941dd64df9dd4f1bfc159d0846fcc558fc876",
@@ -482,7 +489,12 @@
         "selected_story_id": "S1-TEMPORAL-CERTIFICATE-CONTROL",
         "selected_story_title": "Static pass versus temporal certificate; same-schedule control localizes the finite update contrast",
         "story_search_sha256": "1be1539c1470d96055fc75b0cea13634ecb657a421ae3fd1d040d8154a62241e",
-        "valid_candidates": 3
+        "valid_candidates": 3,
+        "paper_design_memory_query_pack_sha256": "",
+        "paper_design_memory_binding_sha256": "",
+        "paper_design_memory_wiki_sha256": "",
+        "paper_design_memory_selected": 0,
+        "paper_design_review_lessons_selected": 0
       },
       "mock_pc_modes": {
         "BLIND_MANUSCRIPT": "6733b873c804c246a7f651286333fc83a89846d9e4ab6933339a5209be89ec58",
@@ -676,7 +688,12 @@
         "selected_story_id": "S1-CURRENT-CHAIN",
         "selected_story_title": "Current mechanism chain",
         "story_search_sha256": "32885d13b5eb44ae667cb046a46c4694acf25a128e3cfe5ed00855d6e2c090d0",
-        "valid_candidates": 3
+        "valid_candidates": 3,
+        "paper_design_memory_query_pack_sha256": "",
+        "paper_design_memory_binding_sha256": "",
+        "paper_design_memory_wiki_sha256": "",
+        "paper_design_memory_selected": 0,
+        "paper_design_review_lessons_selected": 0
       },
       "mock_pc_modes": {
         "BLIND_MANUSCRIPT": "d9d25dd35e9f58cba1154235620daea2c66b15b8846629874ebc0d5e8016bdf6",
@@ -869,7 +886,12 @@
         "selected_story_id": "S1-CURRENT-CHAIN",
         "selected_story_title": "Current mechanism chain",
         "story_search_sha256": "92856a345632fd19a6dd1bb513b4f0754cc3f2a97e7ccc5b4149f48e6e444615",
-        "valid_candidates": 3
+        "valid_candidates": 3,
+        "paper_design_memory_query_pack_sha256": "",
+        "paper_design_memory_binding_sha256": "",
+        "paper_design_memory_wiki_sha256": "",
+        "paper_design_memory_selected": 0,
+        "paper_design_review_lessons_selected": 0
       },
       "mock_pc_modes": {
         "BLIND_MANUSCRIPT": "29cdb7faf01a55647b79b93883a792ecd2c756f6148a990f1cf25aac14ac885f",
@@ -1113,7 +1135,12 @@
         "selected_story_id": "S1-CURRENT-CHAIN",
         "selected_story_title": "Current mechanism chain",
         "story_search_sha256": "e3123c9dfcf670e0fcab11859aaad3e4b302f4fd93b11e5b476e5133468e3702",
-        "valid_candidates": 3
+        "valid_candidates": 3,
+        "paper_design_memory_query_pack_sha256": "",
+        "paper_design_memory_binding_sha256": "",
+        "paper_design_memory_wiki_sha256": "",
+        "paper_design_memory_selected": 0,
+        "paper_design_review_lessons_selected": 0
       },
       "mock_pc_modes": {
         "BLIND_MANUSCRIPT": "25e8d2b0bb12e86cfc6dcaa1e9c958b220f00c2f2fe042a5f92dfb4dbb0e5c1f",

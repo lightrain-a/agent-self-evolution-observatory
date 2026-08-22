@@ -22,6 +22,7 @@ POLICY={
  "query_pack_is_context_not_scientific_verdict":True,"query_pack_never_relaxes_downstream_gates":True,
  "query_pack_is_bounded_and_content_addressed":True,"idea_search_experiment_design_and_paper_design_use_distinct_memory_priorities":True,
  "paper_review_patterns_are_prechecks_not_scientific_verdicts":True,"paper_review_memory_never_authorizes_new_experiments":True,
+ "paper_design_reserves_at_least_one_review_lesson_when_available":True,
  "reviewer_prose_and_rationale_are_excluded_from_memory_projection":True,
 }
 
@@ -156,13 +157,17 @@ def compile_research_memory_query_pack(wiki:dict,*,purpose:str,context:Any=None,
   rt=_tokens({x:r.get(x) for x in ("title","summary","scope","affected_layer","reusable_precheck","reopen_condition","opposite_search_seed","source_refs")});score=w+8*len(ct&rt)+(12 if k=="FAILURE_ASSET" and int((r.get("reuse_effectiveness") or {}).get("helped_count") or 0)>0 else 0)
   rank.append((score,-i,r))
  rank.sort(reverse=True,key=lambda x:(x[0],x[1]));budget=max(1200,min(int(max_chars),16000));cap=max(1,min(int(max_items),64));selected=[];chunks=[];used=0
- for score,_,r in rank:
+ ordered=rank
+ if purpose=="PAPER_DESIGN":
+  review=next((item for item in rank if str(item[2].get("kind") or "")=="REVIEW_LESSON"),None)
+  if review is not None:ordered=[review]+[item for item in rank if item is not review]
+ for score,_,r in ordered:
   if len(selected)>=cap:break
   text=_render(r);extra=len(text)+(2 if chunks else 0)
   if chunks and used+extra>budget:continue
   if not chunks and extra>budget:text=text[:budget];extra=len(text)
   chunks.append(text);used+=extra;selected.append({"memory_id":r.get("memory_id"),"kind":r.get("kind"),"durability_class":r.get("durability_class"),"affected_layer":r.get("affected_layer"),"score":score})
- text="\n\n".join(chunks);out={"schema_version":SCHEMA_VERSION,"purpose":purpose,"wiki_sha256":str(wiki.get("wiki_sha256") or ""),"selected_memory_ids":[str(r.get("memory_id") or "") for r in selected],"selected":selected,"text":text,"summary":{"selected":len(selected),"available_prompt_eligible":sum(isinstance(r,dict) and r.get("prompt_eligible") is True and r.get("durability_class")!="transient" for r in wiki.get("entries") or []),"characters":len(text),"character_budget":budget,"transient_excluded":sum(isinstance(r,dict) and r.get("durability_class")=="transient" for r in wiki.get("entries") or [])},"policy":{"memory_is_context_not_scientific_verdict":True,"past_failure_is_not_automatic_veto":True,"past_success_is_not_automatic_generalization":True,"paper_review_pattern_is_precheck_not_verdict":True,"paper_review_pattern_cannot_authorize_experiments":True,"reopen_condition_requires_new_evidence":True,"transient_operational_noise_excluded":True,"downstream_scientific_gates_unchanged":True},"scientific_authority":False}
+ text="\n\n".join(chunks);out={"schema_version":SCHEMA_VERSION,"purpose":purpose,"wiki_sha256":str(wiki.get("wiki_sha256") or ""),"selected_memory_ids":[str(r.get("memory_id") or "") for r in selected],"selected":selected,"text":text,"summary":{"selected":len(selected),"review_lessons_selected":sum(str(r.get("kind") or "")=="REVIEW_LESSON" for r in selected),"available_prompt_eligible":sum(isinstance(r,dict) and r.get("prompt_eligible") is True and r.get("durability_class")!="transient" for r in wiki.get("entries") or []),"characters":len(text),"character_budget":budget,"transient_excluded":sum(isinstance(r,dict) and r.get("durability_class")=="transient" for r in wiki.get("entries") or [])},"policy":{"memory_is_context_not_scientific_verdict":True,"past_failure_is_not_automatic_veto":True,"past_success_is_not_automatic_generalization":True,"paper_review_pattern_is_precheck_not_verdict":True,"paper_review_pattern_cannot_authorize_experiments":True,"paper_design_reserves_review_lesson_when_available":purpose!="PAPER_DESIGN" or any(str(r.get("kind") or "")=="REVIEW_LESSON" for r in selected) or not any(isinstance(r,dict) and r.get("kind")=="REVIEW_LESSON" and r.get("prompt_eligible") is True and r.get("durability_class")!="transient" for r in wiki.get("entries") or []),"reopen_condition_requires_new_evidence":True,"transient_operational_noise_excluded":True,"downstream_scientific_gates_unchanged":True},"scientific_authority":False}
  out["query_pack_sha256"]=_sha({k:out[k] for k in ("schema_version","purpose","wiki_sha256","selected_memory_ids","text","policy")});return out
 
 def load_research_memory_wiki(path:Path=DEFAULT_JSON)->dict:

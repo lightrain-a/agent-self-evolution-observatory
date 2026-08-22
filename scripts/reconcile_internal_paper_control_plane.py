@@ -11,9 +11,11 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from research_pipeline.config import StorageSettings, resolve_experiment_data_root
+from research_pipeline.paper_acceptance import POLICY as PAPER_ACCEPTANCE_POLICY
 from research_pipeline.paper_acceptance_ledger import build_paper_ledger_index, build_portable_paper_ledger_index
 from research_pipeline.paper_first_fresh_phenomenon_portfolio import DEFAULT_JSON as FRESH_PHENOMENON_JSON, validate_fresh_phenomenon_portfolio
 from research_pipeline.paper_first_search_portfolio_design_adjudication import DEFAULT_JSON as SEARCH_DESIGN_JSON, validate_search_portfolio_design_adjudication
+from research_pipeline.paper_first_paper_design_backlog import DEFAULT_JSON as PAPER_DESIGN_BACKLOG_JSON, validate_paper_design_backlog
 from research_pipeline.research_memory_wiki import build_research_memory_wiki, write_research_memory_wiki
 
 GEN = ROOT / "generated"
@@ -74,6 +76,11 @@ def main() -> None:
     if fresh_errors:
         raise RuntimeError("refusing to embed invalid durable Fresh Phenomenon projection: " + "; ".join(fresh_errors))
 
+    paper_design_backlog = load_json(PAPER_DESIGN_BACKLOG_JSON)
+    backlog_errors = validate_paper_design_backlog(paper_design_backlog)
+    if backlog_errors:
+        raise RuntimeError("refusing to embed invalid Paper Design backlog: " + "; ".join(backlog_errors))
+
     data_root = resolve_experiment_data_root(StorageSettings.from_env())
     live_index = build_paper_ledger_index(data_root)
     live_summary = live_index.get("summary") or {}
@@ -105,6 +112,7 @@ def main() -> None:
         raise RuntimeError("refusing to publish invalid Research Memory")
     write_research_memory_wiki(memory)
 
+    state["paper_first_paper_design_backlog"] = paper_design_backlog
     paper_acceptance = state.setdefault("paper_acceptance", {})
     paper_acceptance["ledger_index"] = ledger_index
     paper_acceptance["ledger_index_source"] = ledger_index_source
@@ -122,6 +130,7 @@ def main() -> None:
         "invalid_ledgers": int(ledger_summary.get("invalid_ledgers") or 0),
     })
     paper_acceptance["control_plane_reconciled_at"] = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+    paper_acceptance.setdefault("policy", {}).update(PAPER_ACCEPTANCE_POLICY)
     paper_acceptance.setdefault("policy", {}).update({
         "submission_ready_papers_is_legacy_alias_for_ledger_submission_ready_papers": True,
         "gate_clean_submission_ready_is_latest_effective_internal_readiness": True,
@@ -138,6 +147,9 @@ def main() -> None:
         "paper_acceptance_ledger_submission_ready": int(ledger_summary.get("submission_ready") or 0),
         "paper_acceptance_gate_clean_submission_ready": int(ledger_summary.get("gate_clean_submission_ready") or 0),
         "paper_acceptance_internal_action_required": int(ledger_summary.get("internal_action_required") or 0),
+        "paper_design_backlog_pending": int((paper_design_backlog.get("summary") or {}).get("pending_human_paper_design") or 0),
+        "paper_design_memory_prechecks": int((paper_design_backlog.get("summary") or {}).get("memory_prechecks") or 0),
+        "paper_design_review_lessons_selected": int((paper_design_backlog.get("summary") or {}).get("review_lessons_selected") or 0),
     })
     update_component_evidence(
         state,

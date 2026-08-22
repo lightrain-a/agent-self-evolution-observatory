@@ -100,15 +100,19 @@ def main() -> None:
             paper: window.RESEARCH_SYSTEM_STATE?.paper_acceptance?.summary || {},
             source: window.RESEARCH_SYSTEM_STATE?.paper_acceptance?.ledger_index_source || '',
             memory: window.RESEARCH_SYSTEM_STATE?.research_memory_wiki?.summary || {},
+            backlog: window.RESEARCH_SYSTEM_STATE?.paper_first_paper_design_backlog?.summary || {},
             text: document.body.textContent || ''
           };
         """)
         paper = overview["paper"]
         memory = overview["memory"]
+        backlog = overview["backlog"]
         require(paper.get("ledger_submission_ready_papers") == 5 and paper.get("gate_clean_submission_ready_papers") == 4, f"ResearchSystem paper summary drifted: {paper}")
         require(paper.get("internal_action_required_papers") == 1 and paper.get("no_internal_action_papers") == 4, f"ResearchSystem internal-action split drifted: {paper}")
         require(memory.get("review_lessons") == 5, f"Research Memory review lessons drifted: {memory}")
+        require(backlog.get("pending_human_paper_design") == 0 and backlog.get("memory_prechecks") == 0 and backlog.get("review_lessons_selected") == 0, f"Paper Design backlog memory-precheck summary drifted: {backlog}")
         require("论文审查经验 5" in overview["text"] or "5 paper-review lessons" in overview["text"], "System Overview does not expose structured paper-review learning")
+        require("PAPER_DESIGN memory precheck=0" in overview["text"] or "PAPER_DESIGN memory prechecks=0" in overview["text"], "System Overview does not expose the Review Memory → Paper Design precheck wiring")
 
         navigate(session_id, "/research-map.html")
         research_map = execute(session_id, """

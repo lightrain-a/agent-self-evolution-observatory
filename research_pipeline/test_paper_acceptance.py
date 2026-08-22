@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import tempfile
 import unittest
 from pathlib import Path
@@ -246,6 +247,52 @@ class PaperAcceptanceTest(unittest.TestCase):
             advanced = advance_paper_ledger(root, revised, PaperState.PAPER_DESIGN)
             self.assertTrue(advanced["receipt"]["allowed"])
             self.assertEqual(validate_paper_ledger(advanced["ledger"]), [])
+
+    def test_new_story_search_binds_zero_authority_paper_design_memory_pack(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); contract = self.stri_contract()
+            initialize_paper_ledger(root, contract)
+            self.assertTrue(advance_paper_ledger(root, contract, PaperState.PAPER_DESIGN)["receipt"]["allowed"])
+            pack = {
+                "purpose": "PAPER_DESIGN",
+                "wiki_sha256": "a" * 64,
+                "query_pack_sha256": "b" * 64,
+                "selected_memory_ids": ["MEM-REVIEW"],
+                "selected": [{"memory_id": "MEM-REVIEW", "kind": "REVIEW_LESSON"}],
+                "summary": {"selected": 1},
+                "scientific_authority": False,
+            }
+            row = record_story_search(
+                root,
+                contract,
+                [StoryCandidate("story-a", "Certificate", "Exact certificate", ("C1", "C2"), ("C1", "C2"))],
+                research_memory_query_pack=pack,
+            )
+            receipt = next(event["receipt"] for event in row["events"] if event.get("event_type") == "story-search")
+            memory = receipt["paper_design_memory_query_receipt"]
+            self.assertEqual((memory["purpose"], memory["selected"], memory["review_lessons_selected"]), ("PAPER_DESIGN", 1, 1))
+            self.assertFalse(memory["scientific_authority"])
+            public = public_paper_ledger_summary(row)
+            self.assertEqual(public["latest_story_search"]["paper_design_memory_query_pack_sha256"], "b" * 64)
+            self.assertEqual(len(public["latest_story_search"]["paper_design_memory_binding_sha256"]), 64)
+            self.assertEqual(public["latest_story_search"]["paper_design_review_lessons_selected"], 1)
+            tampered = copy.deepcopy(row)
+            story_event = next(event for event in tampered["events"] if event.get("event_type") == "story-search")
+            story_event["receipt"]["paper_design_memory_query_receipt"]["selected_memory_ids"] = ["MEM-TAMPERED"]
+            self.assertIn("invalid-content-addressed-receipt:story-search", validate_paper_ledger(tampered))
+
+    def test_story_search_rejects_non_paper_design_or_authoritative_memory_pack(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); contract = self.stri_contract()
+            initialize_paper_ledger(root, contract)
+            self.assertTrue(advance_paper_ledger(root, contract, PaperState.PAPER_DESIGN)["receipt"]["allowed"])
+            story = [StoryCandidate("story-a", "Certificate", "Exact certificate", ("C1", "C2"), ("C1", "C2"))]
+            bad = {"purpose":"EXPERIMENT_DESIGN","wiki_sha256":"a"*64,"query_pack_sha256":"b"*64,"summary":{"selected":0},"selected":[],"selected_memory_ids":[],"scientific_authority":False}
+            with self.assertRaises(ValueError):
+                record_story_search(root, contract, story, research_memory_query_pack=bad)
+            bad["purpose"]="PAPER_DESIGN";bad["scientific_authority"]=True
+            with self.assertRaises(ValueError):
+                record_story_search(root, contract, story, research_memory_query_pack=bad)
 
     def test_scientific_contract_revision_cannot_drop_previous_claim_or_evidence(self) -> None:
         with tempfile.TemporaryDirectory() as td:
