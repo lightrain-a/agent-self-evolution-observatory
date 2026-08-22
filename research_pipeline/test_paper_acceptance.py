@@ -403,6 +403,31 @@ class PaperAcceptanceTest(unittest.TestCase):
         self.assertFalse(public["gate_clean_submission_ready"])
         self.assertEqual(public["submission_readiness_context"]["recommended_immediate_submission"], "HOLD_FOR_EVIDENCE")
         self.assertEqual(public["submission_readiness_context"]["support_blocker"], "EXTERNAL_EVIDENCE_MISSING")
+        self.assertEqual(public["primary_next_action"]["action_class"], "EXTERNAL_EVIDENCE_REQUIRED")
+        self.assertEqual(public["primary_next_action"]["blocking_on"], "EXTERNAL_EVIDENCE_MISSING")
+        self.assertFalse(public["primary_next_action"]["machine_actionable"])
+
+    def test_public_review_learning_keeps_only_structured_mock_pc_signals(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); contract = self.stri_contract()
+            initialize_paper_ledger(root, contract)
+            self.assertTrue(advance_paper_ledger(root, contract, PaperState.PAPER_DESIGN)["receipt"]["allowed"])
+            record_story_search(root, contract, [StoryCandidate("story-a", "Certificate", "Exact certificate", ("C1", "C2"), ("C1", "C2"))])
+            self.assertTrue(advance_paper_ledger(root, contract, PaperState.MANUSCRIPT)["receipt"]["allowed"])
+            self.assertTrue(advance_paper_ledger(root, contract, PaperState.MOCK_PC)["receipt"]["allowed"])
+            objection = ReviewerObjection("R-PRIVATE", "artifact provenance", "PRIVATE REVIEWER PROSE MUST NOT LEAK", True, ObjectionEvidenceState.EXISTING_EVIDENCE, ("C1",))
+            record_mock_review(root, contract, MockReviewMode.BLIND_MANUSCRIPT, [objection])
+            record_mock_review(root, contract, MockReviewMode.ARTIFACT_AWARE, [objection])
+            index = build_paper_ledger_index(root)
+            entry = index["entries"][0]
+            learning = entry["review_learning"]
+            self.assertEqual(learning["review_receipts"], 2)
+            self.assertEqual(learning["decision_critical_objections"], 2)
+            self.assertEqual(learning["category_counts"], {"artifact-provenance": 2})
+            self.assertEqual(learning["action_class_counts"], {"narrative-repair": 2})
+            self.assertFalse(learning["reviewer_prose_exposed"])
+            self.assertNotIn("PRIVATE REVIEWER PROSE MUST NOT LEAK", str(entry))
+            self.assertNotIn("Existing admissible evidence should be made legible", str(entry))
 
     def test_ledger_validator_detects_tampered_hard_gate_receipt(self) -> None:
         with tempfile.TemporaryDirectory() as td:

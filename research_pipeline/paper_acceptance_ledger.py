@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import fcntl, hashlib, json, os, re
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -175,6 +176,110 @@ def _latest(row: Mapping[str, Any], event_type: str) -> dict[str, Any]:
         if isinstance(event, dict) and event.get("event_type") == event_type:
             return event
     return {}
+
+
+def _review_key(value: Any) -> str:
+    value = re.sub(r"[^a-z0-9]+", "-", str(value or "").strip().lower()).strip("-")
+    return value[:120] or "unknown"
+
+
+def _public_review_learning_signals(row: Mapping[str, Any]) -> dict[str, Any]:
+    """Aggregate Mock-PC structure without exposing reviewer prose or rationale."""
+    category_counts: dict[str, int] = {}
+    evidence_state_counts: dict[str, int] = {}
+    action_class_counts: dict[str, int] = {}
+    review_receipts = decision_critical = targeted = preserved = 0
+    contract_sha256 = str(row.get("contract_sha256") or "")
+    for event in row.get("events") or []:
+        if not isinstance(event, dict) or event.get("event_type") != "mock-pc-review":
+            continue
+        receipt = event.get("receipt") or {}
+        if not isinstance(receipt, dict) or str(receipt.get("contract_sha256") or "") != contract_sha256 or not _receipt_hash_valid(receipt):
+            continue
+        review_receipts += 1
+        summary = receipt.get("summary") or {}
+        targeted += int(summary.get("targeted_experiment_proposals") or 0)
+        preserved += int(summary.get("claim_expansion_requests_preserved_as_limitations") or 0)
+        for objection in receipt.get("objections") or []:
+            if not isinstance(objection, dict):
+                continue
+            category = _review_key(objection.get("category"))
+            evidence_state = _review_key(objection.get("evidence_state"))
+            category_counts[category] = category_counts.get(category, 0) + 1
+            evidence_state_counts[evidence_state] = evidence_state_counts.get(evidence_state, 0) + 1
+            decision_critical += int(objection.get("decision_critical") is True)
+        for action in receipt.get("actions") or []:
+            if not isinstance(action, dict):
+                continue
+            action_class = _review_key(action.get("action_class"))
+            action_class_counts[action_class] = action_class_counts.get(action_class, 0) + 1
+    return {
+        "review_receipts": review_receipts,
+        "decision_critical_objections": decision_critical,
+        "category_counts": dict(sorted(category_counts.items())),
+        "evidence_state_counts": dict(sorted(evidence_state_counts.items())),
+        "action_class_counts": dict(sorted(action_class_counts.items())),
+        "targeted_experiment_proposals": targeted,
+        "claim_expansion_requests_preserved_as_limitations": preserved,
+        "reviewer_prose_exposed": False,
+        "scientific_authority": False,
+        "experiment_authority": False,
+        "gpu_authority": False,
+    }
+
+
+def _primary_internal_next_action(
+    row: Mapping[str, Any], *, latest_preparation: Mapping[str, Any], latest_readiness: Mapping[str, Any],
+    latest_submission_context: Mapping[str, Any], immediate_submission_hold: bool, gate_clean_submission_ready: bool,
+) -> dict[str, Any]:
+    scientific_status = str(row.get("scientific_status") or "")
+    current_state = str(row.get("current_state") or "")
+    support_blocker = str(latest_submission_context.get("support_blocker") or "").strip()
+    recommendation = str(latest_submission_context.get("recommended_immediate_submission") or "").strip()
+    preparation_recorded = bool(latest_preparation)
+    preparation_pass = latest_preparation.get("pass") is True
+    readiness_pass = latest_readiness.get("submission_ready") is True
+
+    if scientific_status != "READY":
+        action_class = "SCIENTIFIC_EVIDENCE_REQUIRED"
+        action = "Resolve the named scientific evidence hold before any further paper optimization."
+        action_zh = "先解决已命名的科学证据 HOLD；在此之前不继续论文优化。"
+        blocking_on = scientific_status or "SCIENTIFIC_STATUS_NOT_READY"
+    elif immediate_submission_hold and support_blocker:
+        action_class = "EXTERNAL_EVIDENCE_REQUIRED"
+        action = "Wait for or acquire the named external support asset, then rerun the same frozen internal readiness checks."
+        action_zh = "等待或取得已命名的外部支持资产，再按同一冻结规则重跑内部就绪检查。"
+        blocking_on = support_blocker
+    elif preparation_recorded and not preparation_pass:
+        action_class = "PAPER_REPAIR_REQUIRED"
+        action = "Repair only the failed internal Paper Preparation gates, preserving the frozen scientific claim boundary."
+        action_zh = "只修复未通过的内部 Paper Preparation 门，同时保持冻结的科学主张边界不变。"
+        blocking_on = "PAPER_PREPARATION_FAILED"
+    elif gate_clean_submission_ready:
+        action_class = "NO_INTERNAL_ACTION"
+        action = "No additional autonomous research, experiment, or paper-repair action is required by the internal Research OS."
+        action_zh = "内部 Research OS 已无新增科研、实验或论文修复动作；保持冻结证据与主张边界即可。"
+        blocking_on = ""
+    elif current_state != PaperState.SUBMISSION_READY.value or not readiness_pass:
+        action_class = "PAPER_WORKFLOW_CONTINUE"
+        action = "Continue only the next unmet internal Paper Acceptance gate; do not reopen science implicitly."
+        action_zh = "只继续下一个尚未完成的内部 Paper Acceptance 门；不得隐式重开科研主张。"
+        blocking_on = current_state or "PAPER_WORKFLOW_INCOMPLETE"
+    else:
+        action_class = "INTERNAL_GATE_REVIEW_REQUIRED"
+        action = "Reconcile the latest internal gate receipts before taking any new research action."
+        action_zh = "先核对最新内部门禁 receipt，再决定是否存在新的科研动作。"
+        blocking_on = recommendation or "READINESS_STATE_INCONSISTENT"
+    return {
+        "action_class": action_class,
+        "action": action,
+        "action_zh": action_zh,
+        "blocking_on": blocking_on,
+        "machine_actionable": False,
+        "scientific_authority": False,
+        "experiment_authority": False,
+        "gpu_authority": False,
+    }
 
 
 def _stage_events(row: Mapping[str, Any], state: PaperState) -> list[dict[str, Any]]:
@@ -541,6 +646,15 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
     immediate_recommendation = str(latest_submission_context.get("recommended_immediate_submission") or "")
     immediate_submission_hold = immediate_recommendation.startswith("HOLD") or (preparation_recorded and not preparation_pass)
     gate_clean_submission_ready = latest_readiness.get("submission_ready") is True and not immediate_submission_hold
+    primary_next_action = _primary_internal_next_action(
+        row,
+        latest_preparation=latest_preparation,
+        latest_readiness=latest_readiness,
+        latest_submission_context=latest_submission_context,
+        immediate_submission_hold=immediate_submission_hold,
+        gate_clean_submission_ready=gate_clean_submission_ready,
+    )
+    review_learning = _public_review_learning_signals(row)
     mock_modes = {}
     for event in row.get("events") or []:
         receipt = (event.get("receipt") or {}) if isinstance(event, dict) and event.get("event_type") == "mock-pc-review" else {}
@@ -557,6 +671,8 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
         "current_state": str(row.get("current_state") or ""),
         "gate_clean_submission_ready": gate_clean_submission_ready,
         "immediate_submission_hold": immediate_submission_hold,
+        "primary_next_action": primary_next_action,
+        "review_learning": review_learning,
         "supported_claims": len(contract.get("supported_claims") or {}),
         "active_unrefuted_claims": len(contract.get("active_unrefuted_claims") or {}),
         "unsupported_claims": len(contract.get("unsupported_claims") or {}),
@@ -682,6 +798,10 @@ def build_portable_paper_ledger_index(registry: Mapping[str, Any]) -> dict[str, 
             "ledger_projection_has_zero_authority": True,
             "portable_registry_fallback_requires_committed_ledger_projection": True,
             "empty_machine_local_ledger_does_not_erase_portable_state": True,
+            "submission_ready_is_historical_receipt_count": True,
+            "gate_clean_submission_ready_is_latest_effective_internal_readiness": True,
+            "primary_next_action_is_internal_only_and_zero_authority": True,
+            "review_learning_excludes_reviewer_prose_and_rationale": True,
         },
         "summary": {
             "papers": len(entries),
@@ -691,6 +811,9 @@ def build_portable_paper_ledger_index(registry: Mapping[str, Any]) -> dict[str, 
             "gate_clean_submission_ready": sum(row.get("gate_clean_submission_ready") is True for row in entries),
             "paper_preparation_failed": sum((row.get("latest_paper_preparation") or {}).get("required_gates", 0) > 0 and (row.get("latest_paper_preparation") or {}).get("pass") is not True for row in entries),
             "immediate_submission_holds": sum(row.get("immediate_submission_hold") is True for row in entries),
+            "internal_action_required": sum((row.get("primary_next_action") or {}).get("action_class") != "NO_INTERNAL_ACTION" for row in entries),
+            "no_internal_action": sum((row.get("primary_next_action") or {}).get("action_class") == "NO_INTERNAL_ACTION" for row in entries),
+            "by_internal_action": dict(sorted(Counter((row.get("primary_next_action") or {}).get("action_class") or "UNKNOWN" for row in entries).items())),
             "by_state": by_state,
         },
         "entries": entries,
@@ -730,6 +853,10 @@ def build_paper_ledger_index(root: Path) -> dict[str, Any]:
             "public_projection_excludes_filesystem_paths_and_actors": True,
             "invalid_ledgers_are_visible_and_never_silently_dropped": True,
             "ledger_projection_has_zero_authority": True,
+            "submission_ready_is_historical_receipt_count": True,
+            "gate_clean_submission_ready_is_latest_effective_internal_readiness": True,
+            "primary_next_action_is_internal_only_and_zero_authority": True,
+            "review_learning_excludes_reviewer_prose_and_rationale": True,
         },
         "summary": {
             "papers": len(entries),
@@ -739,6 +866,9 @@ def build_paper_ledger_index(root: Path) -> dict[str, Any]:
             "gate_clean_submission_ready": sum(row.get("gate_clean_submission_ready") is True for row in entries),
             "paper_preparation_failed": sum((row.get("latest_paper_preparation") or {}).get("required_gates", 0) > 0 and (row.get("latest_paper_preparation") or {}).get("pass") is not True for row in entries),
             "immediate_submission_holds": sum(row.get("immediate_submission_hold") is True for row in entries),
+            "internal_action_required": sum((row.get("primary_next_action") or {}).get("action_class") != "NO_INTERNAL_ACTION" for row in entries),
+            "no_internal_action": sum((row.get("primary_next_action") or {}).get("action_class") == "NO_INTERNAL_ACTION" for row in entries),
+            "by_internal_action": dict(sorted(Counter((row.get("primary_next_action") or {}).get("action_class") or "UNKNOWN" for row in entries).items())),
             "by_state": by_state,
         },
         "entries": entries,

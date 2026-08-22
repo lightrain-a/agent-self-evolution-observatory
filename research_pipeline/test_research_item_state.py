@@ -109,11 +109,17 @@ class ResearchItemStateTest(unittest.TestCase):
             self.assertEqual(self.registry["summary"]["gate_clean_submission_ready"], 4)
             self.assertEqual(self.registry["summary"]["paper_preparation_failed"], 1)
             self.assertEqual(self.registry["summary"]["immediate_submission_holds"], 1)
+            self.assertEqual(self.registry["summary"]["internal_action_required"], 1)
+            self.assertEqual(self.registry["summary"]["no_internal_action"], 4)
+            self.assertEqual(self.registry["summary"]["by_internal_action"], {"EXTERNAL_EVIDENCE_REQUIRED": 1, "NO_INTERNAL_ACTION": 4})
+            self.assertEqual(temporal["primary_next_action"]["action_class"], "EXTERNAL_EVIDENCE_REQUIRED")
+            self.assertEqual(temporal["primary_next_action"]["blocking_on"], "TIMESAGE_EVALUATED_FIRST_PARTY_ASSETS_NOT_PUBLIC")
             for paper_id, candidate in papers.items():
                 if paper_id == "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK":
                     continue
                 self.assertTrue(candidate["gate_clean_submission_ready"], paper_id)
                 self.assertTrue(candidate["latest_paper_preparation"]["pass"], paper_id)
+                self.assertEqual(candidate["primary_next_action"]["action_class"], "NO_INTERNAL_ACTION", paper_id)
             failure = papers["D2-PAPER-FAILURE-MEMORY-PROVENANCE"]
             self.assertEqual(failure["paper_stage"], "SUBMISSION_READY")
             self.assertEqual(failure["active_unrefuted_claims"], 2)

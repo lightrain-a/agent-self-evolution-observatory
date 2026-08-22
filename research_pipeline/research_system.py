@@ -273,12 +273,12 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"Advisor paper-first research contract", "component":{"en":"Paper novelty → method → experiment blueprint contract","zh":"论文 Novelty → 方法 → 实验蓝图合同"}, "status":"running", "evidence":{"en":f"{paper_first['paper_design_passed']}/{paper_first['cards']} live cards satisfy paper-first / visual portfolio {visual_evidence['planned_main_visualizations']} planned across {visual_evidence['paper_first_designs']} paper-first designs + {visual_evidence['stri_completed_main_visualizations']} STRI completed / post-C2: {paper_post_c2['decision']}","zh":f"当前 {paper_first['paper_design_passed']}/{paper_first['cards']} 份 live 卡满足 paper-first / 可视化组合：{visual_evidence['paper_first_designs']} 个 paper-first 设计共规划 {visual_evidence['planned_main_visualizations']} 张主图 + STRI 已完成 {visual_evidence['stri_completed_main_visualizations']} 张 / post-C2：{paper_post_c2['decision']}"}},
         {"source":"FirstResearch / Popper / Co-Scientist / RD-Agent", "component":{"en":"Principle Certificate + epistemic adjudicator","zh":"原理证书 + 认识论裁决器"}, "status":"running", "evidence":{"en":f"{principle['certificates_passed']}/{principle['cards']} principle certificates valid / {principle.get('registered_prediction_rejections_pending_counterexplanation',0)} prediction rejections awaiting counter-explanation / {principle.get('principle_dead_end_certifications',0)} certified principle dead ends","zh":f"{principle['certificates_passed']}/{principle['cards']} 份原理证书有效 / {principle.get('registered_prediction_rejections_pending_counterexplanation',0)} 个预测反证待反机制解释 / {principle.get('principle_dead_end_certifications',0)} 个原理级 Dead-End 已认证"}},
         {"source":"Qiushi / Kosmos / MLEvolve", "component":{"en":"Scientific Meta-Trace + cross-branch world state","zh":"Scientific Meta-Trace + 跨分支科研状态"}, "status":"running", "evidence":{"en":f"{meta_trace['principles']} principles / {meta_trace['unresolved_principles']} unresolved / {meta_trace['cross_branch_reference_edges']} cross-branch links","zh":f"{meta_trace['principles']} 个原理 / {meta_trace['unresolved_principles']} 个未决 / {meta_trace['cross_branch_reference_edges']} 条跨分支引用"}},
-        {"source":"ARIS research wiki pattern + local typed closure", "component":{"en":"Typed Scientific Research Graph","zh":"类型化科学研究图谱"}, "status":"running", "evidence":{"en":f"{research_graph['nodes']} graph nodes / {research_graph['edges']} edges; memory wiki {research_memory['entries']} entries / {research_memory['failure_assets']} failure / {research_memory['success_assets']} success / lint warnings {research_memory_lint['warnings']}","zh":f"研究图谱 {research_graph['nodes']} 个节点 / {research_graph['edges']} 条边；Memory Wiki {research_memory['entries']} 条 / 失败 {research_memory['failure_assets']} / 成功 {research_memory['success_assets']} / lint warning {research_memory_lint['warnings']}"}},
+        {"source":"ARIS research wiki pattern + local typed closure", "component":{"en":"Typed Scientific Research Graph","zh":"类型化科学研究图谱"}, "status":"running", "evidence":{"en":f"{research_graph['nodes']} graph nodes / {research_graph['edges']} edges; memory wiki {research_memory['entries']} entries / {research_memory['failure_assets']} failure / {research_memory['success_assets']} success / {research_memory.get('review_lessons',0)} paper-review lessons / lint warnings {research_memory_lint['warnings']}","zh":f"研究图谱 {research_graph['nodes']} 个节点 / {research_graph['edges']} 条边；Memory Wiki {research_memory['entries']} 条 / 失败 {research_memory['failure_assets']} / 成功 {research_memory['success_assets']} / 论文审查经验 {research_memory.get('review_lessons',0)} / lint warning {research_memory_lint['warnings']}"}},
         {"source":"MLEvolve / InternAgent / AutoResearchClaw", "component":{"en":"Failure Asset + dead-end memory","zh":"失败资产 + Dead-End 记忆库"}, "status":"running", "evidence":{"en":f"{failure_assets['assets']} failure assets / {failure_assets['unique_signatures']} reusable signatures / {failure_assets.get('experimental_stops_not_dead_ends',0)} experimental stops retained as diagnostics / {failure_assets.get('principle_dead_ends',0)} principle-certified dead ends","zh":f"{failure_assets['assets']} 条失败资产 / {failure_assets['unique_signatures']} 类可复用签名 / {failure_assets.get('experimental_stops_not_dead_ends',0)} 个实验 STOP 仅作诊断 / {failure_assets.get('principle_dead_ends',0)} 个原理认证 Dead-End"}},
         {"source":"Ai2 AutoDiscovery / MLEvolve / AI-Scientist-v2", "component":{"en":"Information-gain experiment portfolio scheduler","zh":"信息增益实验组合调度器"}, "status":"running", "evidence":{"en":f"{value_scheduler['candidates']} candidate tests / {value_scheduler['cross_branch_reference_edges']} cross-branch references / advisory only","zh":f"{value_scheduler['candidates']} 个候选实验 / {value_scheduler['cross_branch_reference_edges']} 条跨分支引用 / 仅建议不授权"}},
         {"source":"ResearchClawBench / HackDetect / ScienceAgentBench / AutoLabs", "component":{"en":"Protocol-validity auditor + research-system replay benchmark","zh":"协议有效性审计 + 科研系统回放基准"}, "status":"running", "evidence":{"en":f"protocol {pre_experiment['protocol_validity_pass']}/{pre_experiment['compiled_cards']} / replay {replay['passed']}/{replay['cases']}","zh":f"Protocol {pre_experiment['protocol_validity_pass']}/{pre_experiment['compiled_cards']} / 回放 {replay['passed']}/{replay['cases']}"}},
         {"source":"External-system intake registry", "component":{"en":"Continuous external research-system learning","zh":"持续外部科研系统学习"}, "status":"running", "evidence":{"en":f"{external_learning['systems_reviewed']} systems / {external_learning['adopted']} adopted / {external_learning['next_backlog']} next backlog","zh":f"已审 {external_learning['systems_reviewed']} 个系统 / {external_learning['adopted']} 个已吸收 / {external_learning['next_backlog']} 个下一批"}},
-        {"source":"ARIS / ResearchArena / AI-Scientist-v2 / reviewer-decision workflow", "component":{"en":"Paper acceptance closure and manuscript integrity","zh":"论文投稿闭环与成稿完整性"}, "status":"running", "evidence":{"en":f"{paper_acceptance['paper_states']} paper states / {paper_acceptance['registered_papers']} registered ledgers / {paper_acceptance['scientific_holds']} scientific holds / {paper_acceptance['mandatory_manuscript_ci_checks']} mandatory CI checks / zero automatic scientific authority","zh":f"{paper_acceptance['paper_states']} 个论文状态 / {paper_acceptance['registered_papers']} 个已注册 ledger / {paper_acceptance['scientific_holds']} 个科学 HOLD / {paper_acceptance['mandatory_manuscript_ci_checks']} 个强制 CI 检查 / 自动科学授权为 0"}},
+        {"source":"ARIS / ResearchArena / AI-Scientist-v2 / reviewer-decision workflow", "component":{"en":"Paper acceptance closure and manuscript integrity","zh":"论文验收闭环与成稿完整性"}, "status":"running", "evidence":{"en":f"{paper_acceptance['paper_states']} paper states / {paper_acceptance['registered_papers']} ledgers / {paper_acceptance['ledger_submission_ready_papers']} ledger-ready / {paper_acceptance['gate_clean_submission_ready_papers']} latest gate-clean / {paper_acceptance['internal_action_required_papers']} internal action required / zero automatic authority","zh":f"{paper_acceptance['paper_states']} 个论文状态 / {paper_acceptance['registered_papers']} 个 ledger / {paper_acceptance['ledger_submission_ready_papers']} 个历史 ready / {paper_acceptance['gate_clean_submission_ready_papers']} 个最新门禁 clean / {paper_acceptance['internal_action_required_papers']} 个仍需内部动作 / 自动权限为 0"}},
         {"source":"P0 retrospective economy review", "component":{"en":"Five-gate P0 Economy layer","zh":"P0 五门资源经济层"}, "status":"running", "evidence":{"en":f"{economy['matched_simplification_stops']} matched-simplification stops / {economy['substrate_stops']} substrate stops / {economy['economy_ready']} currently economy-ready","zh":f"{economy['matched_simplification_stops']} 个简化基线 STOP / {economy['substrate_stops']} 个底座 STOP / 当前 {economy['economy_ready']} 个 Economy-ready"}},
         {"source":"Web GPT + domestic-model independent consultation", "component":{"en":"Five-checkpoint AI consultation clinic","zh":"五节点 AI 会诊诊断层"}, "status":"running", "evidence":{"en":f"{ai_clinic['checkpoints']} checkpoints / {ai_clinic['pre_gpu_checkpoints']} before GPU / zero AI-authoritative checkpoints","zh":f"{ai_clinic['checkpoints']} 个会诊节点 / {ai_clinic['pre_gpu_checkpoints']} 个位于 GPU 前 / AI 直接授权节点为 0"}},
         {"source":"Content-addressed AI consultation automation", "component":{"en":"Automatic consultation trigger queue","zh":"AI 会诊自动触发队列"}, "status":"running", "evidence":{"en":f"baseline={ai_automation.get('baseline_initialized')} / {ai_automation.get('cases',0)} cases / {ai_automation.get('pending',0)} pending / {ai_automation.get('unresolved_high_risk',0)} unresolved high-risk","zh":f"baseline={ai_automation.get('baseline_initialized')} / {ai_automation.get('cases',0)} 个 case / {ai_automation.get('pending',0)} 个待执行 / {ai_automation.get('unresolved_high_risk',0)} 个未处置高风险"}},
@@ -339,6 +339,36 @@ def _load_shadow_search_portfolio_public() -> dict[str, Any]:
     except (OSError, json.JSONDecodeError):
         return {"schema_version":"1.0-shadow","status":"NOT_RUN","policy":{"shadow_only":True,"scientific_authority":False},"latest_run":{},"scientific_authority":False}
     return payload if isinstance(payload,dict) else {"schema_version":"1.0-shadow","status":"STATE_INVALID","policy":{"shadow_only":True,"scientific_authority":False},"latest_run":{},"scientific_authority":False}
+
+
+def _load_or_build_search_portfolio_design_adjudication() -> dict[str, Any]:
+    """Use the validated durable adjudication as the projection source.
+
+    The adjudication builder intentionally folds persistent search-memory provenance
+    into a new snapshot. Rebuilding it as a side effect of composing ResearchSystem
+    can therefore relabel an already-recorded closure as "new" versus "inherited"
+    even when the scientific object and decision are unchanged. ResearchSystem is a
+    read-only composition layer: prefer the durable zero-authority artifact, and only
+    rebuild when that artifact is absent or invalid.
+    """
+    try:
+        payload = json.loads(SEARCH_PORTFOLIO_DESIGN_JSON.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        payload = {}
+    if isinstance(payload, dict) and payload and not validate_search_portfolio_design_adjudication(payload):
+        return payload
+    return build_search_portfolio_design_adjudication()
+
+
+def _load_or_build_fresh_phenomenon_portfolio() -> dict[str, Any]:
+    """Project the validated durable fresh-phenomenon ledger without re-adjudicating it."""
+    try:
+        payload = json.loads(FRESH_PHENOMENON_PORTFOLIO_JSON.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        payload = {}
+    if isinstance(payload, dict) and payload and not validate_fresh_phenomenon_portfolio(payload):
+        return payload
+    return build_fresh_phenomenon_portfolio()
 
 
 def _load_ai_consultation_automation_public() -> dict[str, Any]:
@@ -407,7 +437,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_lane_search = paper_first_problem_generator.get("search_diagnostics") or {}
     paper_first_last_lane_search = paper_first_lane_search.get("last_completed_lane_search") or {}
     paper_first_problem_gate_queue = load_problem_gate_queue_state()
-    paper_first_search_portfolio_design = build_search_portfolio_design_adjudication()
+    paper_first_search_portfolio_design = _load_or_build_search_portfolio_design_adjudication()
     paper_first_support_release_watch = public_support_release_watch_summary(load_private_support_release_watch(storage=storage))
     paper_first_support_asset_recheck = public_support_asset_recheck_summary(load_private_support_asset_recheck_queue(storage=storage))
     paper_first_support_asset_recheck_handoff = public_support_asset_recheck_handoff_summary(load_private_support_asset_recheck_handoff(storage=storage))
@@ -452,7 +482,7 @@ def build_research_system_state() -> dict[str, Any]:
         discovery_frontier_state=paper_first_discovery_frontier,
         candidate_portfolio_state=research_candidate_portfolio,
     )
-    paper_first_fresh_phenomenon_portfolio = build_fresh_phenomenon_portfolio()
+    paper_first_fresh_phenomenon_portfolio = _load_or_build_fresh_phenomenon_portfolio()
     paper_first_shadow_latest = paper_first_problem_search_portfolio.get("latest_run") or {}
     paper_first_shadow_latest_summary = paper_first_shadow_latest.get("summary") or {}
     paper_first_post_c2 = build_post_c2_adjudication()
@@ -516,6 +546,23 @@ def build_research_system_state() -> dict[str, Any]:
     p0_decision_ledger_public = {"summary": p0_decision_ledger["summary"], "policy": p0_decision_ledger["policy"]}
     scientific_meta_trace = build_scientific_meta_trace(pre_experiment_compiler, principle_layer, experiment_iteration, p0_decision_ledger_public)
     failure_asset_library = build_failure_asset_library(experiment_iteration, p0_economy_public, paper_first_post_c2, paper_first_p0_f0, principle_layer)
+    live_ledger_index = build_paper_ledger_index(experiment_data_root)
+    live_ledger_summary = live_ledger_index.get("summary") or {}
+    paper_ledger_index = live_ledger_index
+    paper_ledger_source = "canonical-append-only-paper-ledgers"
+    # Automation/CI hosts may not mirror the research host's private append-only
+    # paper ledgers. An empty local directory is missing substrate, not evidence
+    # that a published PaperState disappeared. Invalid live ledgers stay fail-closed.
+    if int(live_ledger_summary.get("papers") or 0) == 0 and int(live_ledger_summary.get("invalid_ledgers") or 0) == 0:
+        try:
+            portable_registry = json.loads((PROJECT_ROOT / "generated" / "paper-registry.json").read_text(encoding="utf-8"))
+            portable_index = build_portable_paper_ledger_index(portable_registry)
+            portable_summary = portable_index.get("summary") or {}
+            if int(portable_summary.get("papers") or 0) > 0 or int(portable_summary.get("invalid_ledgers") or 0) > 0:
+                paper_ledger_index = portable_index
+                paper_ledger_source = "generated/paper-registry.json"
+        except (OSError, json.JSONDecodeError, TypeError, ValueError):
+            pass
     research_memory_wiki = build_research_memory_wiki(
         search_design_state=paper_first_search_portfolio_design,
         failure_asset_library=failure_asset_library,
@@ -523,6 +570,7 @@ def build_research_system_state() -> dict[str, Any]:
         candidate_portfolio=research_candidate_portfolio,
         experiment_iteration=experiment_iteration,
         generator_state=paper_first_problem_generator,
+        paper_ledger_index=paper_ledger_index,
     )
     scientific_research_graph = build_scientific_research_graph(
         evidence_graph=evidence_graph,
@@ -535,32 +583,20 @@ def build_research_system_state() -> dict[str, Any]:
     research_system_replay = build_research_system_replay(pre_experiment_compiler)
     external_system_learning = build_external_system_learning_state()
     paper_acceptance = build_paper_acceptance_system_state()
-    live_ledger_index = build_paper_ledger_index(experiment_data_root)
-    live_ledger_summary = live_ledger_index.get("summary") or {}
-    paper_ledger_index = live_ledger_index
-    paper_ledger_source = "canonical-append-only-paper-ledgers"
-    # The 52 automation/CI host intentionally does not mirror 69's private
-    # append-only paper ledgers. An empty local directory is absence of substrate,
-    # not evidence that published PaperState disappeared. Fall back only to the
-    # committed zero-authority PaperRegistry projection; any invalid live ledger
-    # remains authoritative and fail-closed rather than being hidden by fallback.
-    if int(live_ledger_summary.get("papers") or 0) == 0 and int(live_ledger_summary.get("invalid_ledgers") or 0) == 0:
-        try:
-            portable_registry = json.loads((PROJECT_ROOT / "generated" / "paper-registry.json").read_text(encoding="utf-8"))
-            portable_index = build_portable_paper_ledger_index(portable_registry)
-            portable_summary = portable_index.get("summary") or {}
-            if int(portable_summary.get("papers") or 0) > 0 or int(portable_summary.get("invalid_ledgers") or 0) > 0:
-                paper_ledger_index = portable_index
-                paper_ledger_source = "generated/paper-registry.json"
-        except (OSError, json.JSONDecodeError, TypeError, ValueError):
-            pass
     paper_acceptance["ledger_index"] = paper_ledger_index
     paper_acceptance["ledger_index_source"] = paper_ledger_source
+    paper_summary = paper_ledger_index.get("summary") or {}
     paper_acceptance["summary"].update({
-        "registered_papers": int((paper_ledger_index.get("summary") or {}).get("papers") or 0),
-        "scientific_holds": int((paper_ledger_index.get("summary") or {}).get("scientific_holds") or 0),
-        "submission_ready_papers": int((paper_ledger_index.get("summary") or {}).get("submission_ready") or 0),
-        "invalid_ledgers": int((paper_ledger_index.get("summary") or {}).get("invalid_ledgers") or 0),
+        "registered_papers": int(paper_summary.get("papers") or 0),
+        "scientific_holds": int(paper_summary.get("scientific_holds") or 0),
+        "ledger_submission_ready_papers": int(paper_summary.get("submission_ready") or 0),
+        "submission_ready_papers": int(paper_summary.get("submission_ready") or 0),
+        "gate_clean_submission_ready_papers": int(paper_summary.get("gate_clean_submission_ready") or 0),
+        "paper_preparation_failed_papers": int(paper_summary.get("paper_preparation_failed") or 0),
+        "immediate_submission_holds": int(paper_summary.get("immediate_submission_holds") or 0),
+        "internal_action_required_papers": int(paper_summary.get("internal_action_required") or 0),
+        "no_internal_action_papers": int(paper_summary.get("no_internal_action") or 0),
+        "invalid_ledgers": int(paper_summary.get("invalid_ledgers") or 0),
     })
     p0_offline_public = {"summary": p0_offline_qualification["summary"], "policy": p0_offline_qualification["policy"]}
     p0_realizability_public = {"summary": p0_realizability["summary"], "policy": p0_realizability["policy"]}
@@ -1974,7 +2010,18 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     ledger_index = paper_acceptance.get("ledger_index") or {}; ledger_policy = ledger_index.get("policy") or {}; ledger_summary = ledger_index.get("summary") or {}
     if ledger_index.get("scientific_authority") is not False or ledger_summary.get("invalid_ledgers") != 0: errors.append("Paper Acceptance ledger index must be valid and zero-authority")
     if ledger_policy.get("source_ledgers_are_append_only") is not True or ledger_policy.get("public_projection_excludes_raw_reviewer_prose") is not True or ledger_policy.get("public_projection_excludes_filesystem_paths_and_actors") is not True or ledger_policy.get("ledger_projection_has_zero_authority") is not True: errors.append("Paper Acceptance ledger public projection boundary is incomplete")
-    if pa_summary.get("registered_papers") != ledger_summary.get("papers") or pa_summary.get("scientific_holds") != ledger_summary.get("scientific_holds") or pa_summary.get("submission_ready_papers") != ledger_summary.get("submission_ready"): errors.append("Paper Acceptance ledger summary must match the canonical public index")
+    expected_paper_summary = {
+        "registered_papers": ledger_summary.get("papers"),
+        "scientific_holds": ledger_summary.get("scientific_holds"),
+        "ledger_submission_ready_papers": ledger_summary.get("submission_ready"),
+        "submission_ready_papers": ledger_summary.get("submission_ready"),
+        "gate_clean_submission_ready_papers": ledger_summary.get("gate_clean_submission_ready"),
+        "paper_preparation_failed_papers": ledger_summary.get("paper_preparation_failed"),
+        "immediate_submission_holds": ledger_summary.get("immediate_submission_holds"),
+        "internal_action_required_papers": ledger_summary.get("internal_action_required"),
+        "no_internal_action_papers": ledger_summary.get("no_internal_action"),
+    }
+    if any(pa_summary.get(key) != value for key, value in expected_paper_summary.items()): errors.append("Paper Acceptance ledger summary must match the canonical public index with explicit ledger/effective-readiness semantics")
     if not state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"]: errors.append("experiments must remain evidence about principles rather than votes on ideas")
     if not state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"]: errors.append("true negatives must not automatically falsify principles")
     if state["principle_layer"]["summary"]["certificates_passed"] != expected_pre_experiment_cards: errors.append(f"all {expected_pre_experiment_cards} current pre-experiment cards must have valid principle certificates")

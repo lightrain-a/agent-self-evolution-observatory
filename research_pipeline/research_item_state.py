@@ -489,10 +489,13 @@ def paper_acceptance_state():
     summary.update({
         "registered_papers": int(index_summary.get("papers") or 0),
         "scientific_holds": int(index_summary.get("scientific_holds") or 0),
+        "ledger_submission_ready_papers": int(index_summary.get("submission_ready") or 0),
         "submission_ready_papers": int(index_summary.get("submission_ready") or 0),
         "gate_clean_submission_ready_papers": int(index_summary.get("gate_clean_submission_ready") or 0),
         "paper_preparation_failed_papers": int(index_summary.get("paper_preparation_failed") or 0),
         "immediate_submission_holds": int(index_summary.get("immediate_submission_holds") or 0),
+        "internal_action_required_papers": int(index_summary.get("internal_action_required") or 0),
+        "no_internal_action_papers": int(index_summary.get("no_internal_action") or 0),
         "invalid_ledgers": int(index_summary.get("invalid_ledgers") or 0),
     })
     acceptance["summary"] = summary
@@ -630,7 +633,7 @@ def build_paper_registry(research_state=None):
     papers = [stri, safety, *sorted(d2_papers, key=lambda row: int(row.get("display_order") or 999))]
     stage_counts = dict(sorted(Counter(row.get("paper_stage") for row in papers).items()))
     return {
-        "schema_version": "1.2",
+        "schema_version": "1.3",
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "source_revision": git_head(),
         "projection_source": acceptance.get("projection_source") or "generated/research-system-state.json",
@@ -639,6 +642,9 @@ def build_paper_registry(research_state=None):
             "paper_registry_cannot_grant_research_or_experiment_authority": True,
             "paper_registry_cannot_grant_submission_authority": True,
             "paper_claims_must_reference_existing_research_evidence": True,
+            "submission_ready_is_historical_ledger_readiness": True,
+            "gate_clean_submission_ready_is_latest_effective_internal_readiness": True,
+            "primary_next_action_is_internal_only": True,
             "paper_first_discovery_papers_need_not_fake_research_item_parentage": True,
             **(acceptance.get("policy") or {}),
         },
@@ -648,6 +654,9 @@ def build_paper_registry(research_state=None):
             "gate_clean_submission_ready": sum(row.get("gate_clean_submission_ready") is True for row in papers),
             "paper_preparation_failed": sum((row.get("latest_paper_preparation") or {}).get("required_gates", 0) > 0 and (row.get("latest_paper_preparation") or {}).get("pass") is not True for row in papers),
             "immediate_submission_holds": sum(row.get("immediate_submission_hold") is True for row in papers),
+            "internal_action_required": sum((row.get("primary_next_action") or {}).get("action_class") != "NO_INTERNAL_ACTION" for row in papers),
+            "no_internal_action": sum((row.get("primary_next_action") or {}).get("action_class") == "NO_INTERNAL_ACTION" for row in papers),
+            "by_internal_action": dict(sorted(Counter((row.get("primary_next_action") or {}).get("action_class") or "UNKNOWN" for row in papers).items())),
             "scientific_holds": sum(str(row.get("scientific_status") or "") != "READY" for row in papers),
             "primary_paper": "STRI",
             "by_stage": stage_counts,
@@ -724,6 +733,11 @@ def validate_paper_registry(registry, research_state):
         errors.append("PaperRegistry submission-ready count must match canonical acceptance ledger index")
     if int(summary.get("scientific_holds") or 0) != int(expected_summary.get("scientific_holds") or 0):
         errors.append("PaperRegistry scientific-hold count must match canonical acceptance ledger index")
+    for registry_key, ledger_key in (("gate_clean_submission_ready","gate_clean_submission_ready"),("paper_preparation_failed","paper_preparation_failed"),("immediate_submission_holds","immediate_submission_holds"),("internal_action_required","internal_action_required"),("no_internal_action","no_internal_action")):
+        if int(summary.get(registry_key) or 0) != int(expected_summary.get(ledger_key) or 0):
+            errors.append(f"PaperRegistry {registry_key} count must match canonical acceptance ledger index")
+    if dict(summary.get("by_internal_action") or {}) != dict(expected_summary.get("by_internal_action") or {}):
+        errors.append("PaperRegistry internal next-action distribution must match canonical acceptance ledger index")
 
     research_codes = {r.get("code") for r in research_state.get("research_items") or []}
     for row in papers:

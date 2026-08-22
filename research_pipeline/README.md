@@ -21,8 +21,20 @@ The canonical order lives in `system_architecture.py::TEMPORAL_FLOW`:
 8  METHOD FREEZE        Freeze method hash + experiment-blueprint hash
 9  FULL EXPERIMENT      Main tables, replication, ablations, efficiency, generalization
 10 PAPER EVIDENCE       Chain-of-Evidence and claim closure
-11 LEARN                Rules, tests, Failure Assets, Meta-Trace, public snapshot
+11 PAPER DESIGN         Frozen Paper Contract + competing story candidates
+12 MANUSCRIPT           Evidence-bound manuscript construction
+13 MOCK PC              Blind-manuscript and artifact-aware internal review
+14 TARGETED REPAIR      Repair decision-critical issues without silently expanding science
+15 CLAIM AUDIT          Sentence/claim → frozen-evidence audit
+16 PDF QA               Rendered artifact and Manuscript CI
+17 PREBUTTAL            Internal stress test of decision-critical objections
+18 SUBMISSION READY     Final internal readiness receipt; zero submission authority
+19 SUBMITTED            External receipt-bound state; requires explicit human authority
+20 REBUTTAL             External review/response state; receipt-bound
+21 LEARN                Rules, tests, Failure Assets, review prechecks, Meta-Trace, public snapshot
 ```
+
+Stages 1–18 are the internal research-to-paper-readiness lifecycle. Stages 19–20 are external receipt-bound states and are not autonomous Research OS actions. This repository may represent those states for provenance, but no internal readiness result grants submission authority. Stage 21 turns scientific outcomes and privacy-safe structured internal-review patterns into reusable memory.
 
 A local pilot validates an already designed paper method. It does **not** discover the core method. If local evidence forces a core-method change, full-experiment authority is invalidated and the project returns to `NOVELTY → METHOD → EXPERIMENT BLUEPRINT`.
 
@@ -66,7 +78,9 @@ These controls inherit authority from their owner component. Their current state
 | Runtime orchestration | `experiment_orchestrator.py`, resource/authority lease modules |
 | Evidence graph / collision / lineage | `evidence_graph.py`, `idea_collision.py`, `idea_lineage.py` |
 | External paper bibliographic intake / official asset handoff | `paper_first_external_paper_identity.py`, `paper_first_external_asset_audit.py` |
-| Scientific memory | `scientific_meta_trace.py`, `failure_asset_library.py` |
+| Scientific memory | `scientific_meta_trace.py`, `failure_asset_library.py`, `research_memory_wiki.py` |
+| Paper Acceptance ledger / internal readiness | `paper_acceptance.py`, `paper_acceptance_ledger.py` |
+| ResearchItem / PaperRegistry projection | `research_item_state.py` |
 | Experiment value advisory | `experiment_value_scheduler.py` |
 | System replay / external learning | `research_system_replay.py`, `external_system_learning.py` |
 | Public system composition | `research_system.py` |
@@ -134,7 +148,7 @@ No AI reviewer, value scheduler, or generated plan can override a failed machine
 Problem → Substrate → F0 Identifiability → P0-Support → P0-Method → P1 Replication → Paper Experiment
 ```
 
-This seven-stage state machine is nested inside the 11-stage paper lifecycle. It is not a second top-level workflow.
+This seven-stage state machine is nested inside the canonical 21-stage lifecycle, primarily spanning the local scientific-validation portion. It is not a second top-level workflow.
 
 Core rules:
 
@@ -171,6 +185,10 @@ Three state types must remain separate:
 The Decision Ledger is the single current experiment-decision view; old planned states remain provenance only. Public generation never rewrites historical experiment evidence.
 
 Every publishable claim must close against a real artifact through Evidence Integrity / Chain-of-Evidence. Uncalibrated judges are not ground truth.
+
+Paper readiness uses two deliberately different quantities. `ledger_submission_ready` records that an append-only readiness receipt was reached historically; `gate_clean_submission_ready` asks whether the latest effective internal audit is still clean. A later failed Paper Preparation receipt never disappears behind an older state label. Every PaperState also exposes one zero-authority `primary_next_action`; a fully closed internal paper receives `NO_INTERNAL_ACTION`, while a named external support blocker remains `EXTERNAL_EVIDENCE_REQUIRED`.
+
+Mock-PC learning enters Research Memory only through structured aggregates such as objection category, evidence state, and action class. Reviewer prose and rationale remain private. These `REVIEW_LESSON` entries are reusable Paper Design prechecks only: they cannot update a scientific principle or authorize an experiment.
 
 ## 8. Automation boundary
 
