@@ -52,7 +52,7 @@ class PublicProjectionInvariantTest(unittest.TestCase):
 
     def test_system_readiness_alias_drift_is_detected(self) -> None:
         system = copy.deepcopy(self.system)
-        system["paper_acceptance"]["summary"]["gate_clean_submission_ready_papers"] = 5
+        system["paper_acceptance"]["summary"]["gate_clean_submission_ready_papers"] = 4
         errors = self.validate(system=system)
         self.assertIn("ResearchSystem Paper Acceptance summary mismatch:gate_clean_submission_ready_papers", errors)
 
@@ -95,7 +95,7 @@ class PublicProjectionInvariantTest(unittest.TestCase):
     def test_paper_next_action_drift_is_detected(self) -> None:
         registry = copy.deepcopy(self.registry)
         temporal = next(row for row in registry["papers"] if row["paper_id"] == "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK")
-        temporal["primary_next_action"]["action_class"] = "NO_INTERNAL_ACTION"
+        temporal["primary_next_action"]["action_class"] = "EXTERNAL_EVIDENCE_REQUIRED"
         errors = self.validate(registry=registry)
         self.assertIn("Paper action mismatch:D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK:action_class", errors)
 

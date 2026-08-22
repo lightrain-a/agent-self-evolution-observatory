@@ -67,19 +67,23 @@ def main() -> None:
         summary = selected["summary"]
         require(selected["cards"] == 5, f"PaperRegistry card count drifted: {selected['cards']}")
         require(summary.get("submission_ready") == 5, f"ledger readiness drifted: {summary}")
-        require(summary.get("gate_clean_submission_ready") == 4, f"gate-clean count drifted: {summary}")
-        require(summary.get("internal_action_required") == 1 and summary.get("no_internal_action") == 4, f"internal-action split drifted: {summary}")
-        require(summary.get("by_internal_action") == {"EXTERNAL_EVIDENCE_REQUIRED": 1, "NO_INTERNAL_ACTION": 4}, f"internal-action classes drifted: {summary}")
+        require(summary.get("gate_clean_submission_ready") == 5, f"gate-clean count drifted: {summary}")
+        require(summary.get("internal_action_required") == 0 and summary.get("no_internal_action") == 5, f"internal-action split drifted: {summary}")
+        require(summary.get("by_internal_action") == {"NO_INTERNAL_ACTION": 5}, f"internal-action classes drifted: {summary}")
         require(selected["noveltyPortfolio"] == 1 and selected["noveltyDetails"] == 5, "advisor novelty audit must remain visible for all five papers")
-        require(len(selected["acceptanceActionTexts"]) == 5 and sum("NO_INTERNAL_ACTION" in text for text in selected["acceptanceActionTexts"]) == 4 and sum("EXTERNAL_EVIDENCE_REQUIRED" in text for text in selected["acceptanceActionTexts"]) == 1, f"Paper Acceptance detail panels must render canonical primary actions only: {selected['acceptanceActionTexts']}")
-        require(selected["actions"].get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK") == "EXTERNAL_EVIDENCE_REQUIRED", f"Temporal-Skill action drifted: {selected['actions']}")
+        require(len(selected["acceptanceActionTexts"]) == 5 and all("NO_INTERNAL_ACTION" in text for text in selected["acceptanceActionTexts"]), f"Paper Acceptance detail panels must render canonical NO_INTERNAL_ACTION after r5 closure: {selected['acceptanceActionTexts']}")
+        require(selected["actions"].get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK") == "NO_INTERNAL_ACTION", f"Temporal-Skill action drifted: {selected['actions']}")
         require(selected["actions"].get("D2-PAPER-FAILURE-MEMORY-PROVENANCE") == "NO_INTERNAL_ACTION", f"Failure-Memory action drifted: {selected['actions']}")
         temporal = selected["temporal"]
-        require((temporal.get("primary_next_action") or {}).get("blocking_on") == "TIMESAGE_EVALUATED_FIRST_PARTY_ASSETS_NOT_PUBLIC", f"Temporal-Skill blocker drifted: {temporal}")
-        require((temporal.get("latest_paper_preparation") or {}).get("pass") is False, "Temporal-Skill latest Paper Preparation must remain failed")
+        require((temporal.get("primary_next_action") or {}).get("blocking_on") == "", f"Temporal-Skill blocker drifted: {temporal}")
+        require((temporal.get("latest_paper_preparation") or {}).get("pass") is True and ((temporal.get("latest_paper_preparation") or {}).get("passed_gates"),(temporal.get("latest_paper_preparation") or {}).get("required_gates")) == (8,8), "Temporal-Skill latest Paper Preparation must be r5 gate-clean")
+        require((temporal.get("submission_readiness_context") or {}).get("recommended_immediate_submission") == "READY_FOR_HUMAN_SUBMISSION", f"Temporal-Skill readiness action drifted: {temporal}")
+        require(((temporal.get("latest_mock_review") or {}).get("summary") or {}).get("scores") == [8,8,7], f"Temporal-Skill final Mock-PC drifted: {temporal}")
+        source_native = temporal.get("source_native_evidence") or {}
+        require((source_native.get("runtime_valid_rows"),source_native.get("distinct_endpoints"),source_native.get("institutional_systems")) == (1326,35,3), f"Temporal-Skill source-native evidence drifted: {source_native}")
         require(selected["failureMemory"].get("active_unrefuted_claims") == 2, f"Failure-Memory claim boundary drifted: {selected['failureMemory']}")
         has_next_label = "Research OS 下一步" in selected["text"] or "Research OS next action" in selected["text"]
-        has_internal_summary = ("内部已闭环=4" in selected["text"] and "仍有内部动作=1" in selected["text"]) or ("internally closed=4" in selected["text"] and "internal action required=1" in selected["text"])
+        has_internal_summary = ("内部已闭环=5" in selected["text"] and "仍有内部动作=0" in selected["text"]) or ("internally closed=5" in selected["text"] and "internal action required=0" in selected["text"])
         require(has_next_label and has_internal_summary, "PaperRegistry human-readable internal-action summary is missing")
 
         navigate(session_id, "/index.html")
@@ -107,8 +111,8 @@ def main() -> None:
         paper = overview["paper"]
         memory = overview["memory"]
         backlog = overview["backlog"]
-        require(paper.get("ledger_submission_ready_papers") == 5 and paper.get("gate_clean_submission_ready_papers") == 4, f"ResearchSystem paper summary drifted: {paper}")
-        require(paper.get("internal_action_required_papers") == 1 and paper.get("no_internal_action_papers") == 4, f"ResearchSystem internal-action split drifted: {paper}")
+        require(paper.get("ledger_submission_ready_papers") == 5 and paper.get("gate_clean_submission_ready_papers") == 5, f"ResearchSystem paper summary drifted: {paper}")
+        require(paper.get("internal_action_required_papers") == 0 and paper.get("no_internal_action_papers") == 5, f"ResearchSystem internal-action split drifted: {paper}")
         require(memory.get("review_lessons") == 5, f"Research Memory review lessons drifted: {memory}")
         require(backlog.get("pending_human_paper_design") == 0 and backlog.get("memory_prechecks") == 0 and backlog.get("review_lessons_selected") == 0, f"Paper Design backlog memory-precheck summary drifted: {backlog}")
         require("论文审查经验 5" in overview["text"] or "5 paper-review lessons" in overview["text"], "System Overview does not expose structured paper-review learning")
@@ -127,7 +131,7 @@ def main() -> None:
         require(research_summary.get("research_primary_next_action_counts") == {"MERGED_NO_STANDALONE_ACTION": 10, "NO_INTERNAL_ACTION": 71, "PAPERSTATE_HANDOFF": 1, "REOPEN_CONDITION_REQUIRED": 5}, f"ResearchItem action distribution drifted: {research_summary}")
         require(research_summary.get("machine_actionable_research_items") == 0 and research_summary.get("machine_actionable_attention") == 0, f"ResearchItem machine authority drifted: {research_summary}")
         require(research_summary.get("research_handoffs") == 1 and research_summary.get("research_waiting_reopen") == 5, f"Dashboard ResearchItem control split drifted: {research_summary}")
-        require(research_summary.get("paper_internal_action_required") == 1 and research_summary.get("paper_no_internal_action") == 4, f"Dashboard paper action split drifted: {research_summary}")
+        require(research_summary.get("paper_internal_action_required") == 0 and research_summary.get("paper_no_internal_action") == 5, f"Dashboard paper action split drifted: {research_summary}")
         require(research_map["actions"].get("E-7") == "PAPERSTATE_HANDOFF" and research_map["actions"].get("G-1") == "REOPEN_CONDITION_REQUIRED", f"Dashboard attention actions drifted: {research_map['actions']}")
         require("PAPERSTATE_HANDOFF" in research_map["text"] and "REOPEN_CONDITION_REQUIRED" in research_map["text"] and "machine-actionable=0" in research_map["text"], "Research Map does not expose tracked/waiting/machine-actionable ResearchItem control classes")
 
@@ -164,7 +168,7 @@ def main() -> None:
         require("下一步只剩人工作者责任确认" not in ideas["text"] and "only human author responsibility/signoff" not in ideas["text"], "Paper Ideas still frames real submission as an internal Research OS next action")
 
         print("PASS")
-        print("Public control plane verified in a real browser: ResearchItem 71/10/5/1 actions; PaperState 5/4/1; 5 review lessons")
+        print("Public control plane verified in a real browser: ResearchItem 71/10/5/1 actions; PaperState 5/5/0; 5 review lessons")
     finally:
         if session_id:
             try:

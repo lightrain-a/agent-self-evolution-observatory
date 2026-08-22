@@ -179,6 +179,45 @@ def _latest(row: Mapping[str, Any], event_type: str) -> dict[str, Any]:
     return {}
 
 
+def _latest_versioned(row: Mapping[str, Any], event_type: str) -> dict[str, Any]:
+    """Return the newest base or append-only ``-rN`` form of an event family."""
+    versioned = re.compile(rf"^{re.escape(event_type)}-r[1-9][0-9]*$")
+    for event in reversed(list(row.get("events") or [])):
+        kind = str(event.get("event_type") or "") if isinstance(event, dict) else ""
+        if kind == event_type or versioned.fullmatch(kind):
+            return event
+    return {}
+
+
+def _latest_regex(row: Mapping[str, Any], pattern: str) -> dict[str, Any]:
+    matcher = re.compile(pattern)
+    for event in reversed(list(row.get("events") or [])):
+        kind = str(event.get("event_type") or "") if isinstance(event, dict) else ""
+        if matcher.fullmatch(kind):
+            return event
+    return {}
+
+
+def _event_payload(event: Mapping[str, Any]) -> dict[str, Any]:
+    if not isinstance(event, Mapping):
+        return {}
+    receipt = event.get("receipt")
+    if isinstance(receipt, Mapping):
+        return dict(receipt)
+    result = event.get("result")
+    if isinstance(result, Mapping):
+        return dict(result)
+    return dict(event)
+
+
+def _artifact_digest(event: Mapping[str, Any]) -> str:
+    if not isinstance(event, Mapping):
+        return ""
+    ref = str(event.get("artifact_ref") or event.get("final_state_ref") or "")
+    prefix = "artifact:sha256:"
+    return ref[len(prefix):] if ref.startswith(prefix) else ""
+
+
 def _review_key(value: Any) -> str:
     value = re.sub(r"[^a-z0-9]+", "-", str(value or "").strip().lower()).strip("-")
     return value[:120] or "unknown"
@@ -700,22 +739,65 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
     contract = row.get("contract") or {}
     latest_story = _latest(row, "story-search").get("receipt") or {}
     latest_ci = _latest(row, "manuscript-ci").get("result") or {}
-    latest_prebuttal = _latest(row, "prebuttal").get("result") or {}
-    latest_preparation = _latest(row, "paper-preparation").get("receipt") or {}
-    latest_readiness = _latest(row, "submission-readiness").get("receipt") or {}
     latest_review = _latest(row, "mock-pc-review").get("receipt") or {}
-    latest_claim_audit = _latest(row, "claim-audit").get("receipt") or {}
-    latest_submission_context = _latest(row, "submission-readiness-context")
-    preparation_recorded = bool(latest_preparation)
+
+    latest_prebuttal_event = _latest_versioned(row, "prebuttal")
+    latest_prebuttal = _event_payload(latest_prebuttal_event)
+    latest_preparation_event = _latest_versioned(row, "paper-preparation")
+    latest_preparation = _event_payload(latest_preparation_event)
+    latest_readiness_event = _latest_versioned(row, "submission-readiness")
+    latest_readiness = _event_payload(latest_readiness_event)
+    latest_claim_audit_event = _latest_versioned(row, "claim-audit")
+    latest_claim_audit = _event_payload(latest_claim_audit_event)
+    latest_submission_context = _latest_versioned(row, "submission-readiness-context")
+    latest_final_review = _latest_regex(row, r"mock-pc-final-r[1-9][0-9]*")
+    latest_finalization = _latest_regex(row, r"source-native-r[1-9][0-9]*-finalization")
+
+    preparation_recorded = bool(latest_preparation_event)
     preparation_pass = latest_preparation.get("pass") is True
-    immediate_recommendation = str(latest_submission_context.get("recommended_immediate_submission") or "")
+    preparation_summary = latest_preparation.get("summary") or {}
+    preparation_required = int(preparation_summary.get("required_gates") or latest_preparation.get("required_gates") or 0)
+    preparation_passed = int(preparation_summary.get("passed_gates") or latest_preparation.get("passed_gates") or 0)
+    preparation_sha = str(latest_preparation.get("receipt_sha256") or _artifact_digest(latest_preparation_event))
+    preparation_protocol = str(latest_preparation.get("protocol_version") or "")
+    if not preparation_protocol:
+        revision = re.fullmatch(r"paper-preparation-(r[1-9][0-9]*)", str(latest_preparation_event.get("event_type") or ""))
+        preparation_protocol = f"1.0+{revision.group(1)}" if revision else ""
+
+    immediate_recommendation = str(
+        latest_submission_context.get("recommended_immediate_submission")
+        or latest_submission_context.get("recommended_immediate_action")
+        or ""
+    )
     immediate_submission_hold = immediate_recommendation.startswith("HOLD") or (preparation_recorded and not preparation_pass)
-    gate_clean_submission_ready = latest_readiness.get("submission_ready") is True and not immediate_submission_hold
+    context_submission_ready = (
+        latest_submission_context.get("artifact_submission_ready") is True
+        and str(row.get("current_state") or "") == PaperState.SUBMISSION_READY.value
+        and immediate_recommendation.startswith("READY")
+    )
+    effective_submission_ready = latest_readiness.get("submission_ready") is True or context_submission_ready
+    gate_clean_submission_ready = effective_submission_ready and not immediate_submission_hold
+    effective_readiness_payload = {**latest_readiness, "submission_ready": effective_submission_ready}
+
+    final_scores = [int(item) for item in (latest_final_review.get("scores") or [])]
+    final_recommendations = [str(item) for item in (latest_final_review.get("recommendations") or [])]
+    final_review_sha = _artifact_digest(latest_final_review)
+    claim_audit_sha = str(latest_claim_audit.get("claim_audit_sha256") or _artifact_digest(latest_claim_audit_event))
+    prebuttal_decision_critical = int(latest_prebuttal.get("decision_critical") or latest_prebuttal.get("decision_critical_objections") or 0)
+    readiness_sha = str(latest_readiness.get("receipt_sha256") or (_artifact_digest(latest_submission_context) if context_submission_ready else ""))
+    public_title = str(latest_finalization.get("title") or contract.get("title") or "")
+    claim_kind = str(latest_claim_audit_event.get("event_type") or "")
+    prebuttal_kind = str(latest_prebuttal_event.get("event_type") or "")
+    context_kind = str(latest_submission_context.get("event_type") or "")
+    claim_is_versioned = bool(claim_kind) and claim_kind != "claim-audit"
+    prebuttal_is_versioned = bool(prebuttal_kind) and prebuttal_kind != "prebuttal"
+    context_is_versioned = bool(context_kind) and context_kind != "submission-readiness-context"
+
     primary_next_action = _primary_internal_next_action(
         row,
         latest_preparation=latest_preparation,
-        latest_readiness=latest_readiness,
-        latest_submission_context=latest_submission_context,
+        latest_readiness=effective_readiness_payload,
+        latest_submission_context={**latest_submission_context, "recommended_immediate_submission": immediate_recommendation},
         immediate_submission_hold=immediate_submission_hold,
         gate_clean_submission_ready=gate_clean_submission_ready,
     )
@@ -729,7 +811,7 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
     latest_transition = _latest(row, "paper-transition")
     return {
         "paper_id": str(row.get("paper_id") or ""),
-        "title": str(contract.get("title") or ""),
+        "title": public_title,
         "central_question": str(contract.get("central_question") or ""),
         "contract_sha256": str(row.get("contract_sha256") or ""),
         "scientific_status": str(row.get("scientific_status") or ""),
@@ -758,14 +840,32 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
         },
         "mock_pc_modes": {mode.value: mock_modes.get(mode.value, "") for mode in MockReviewMode},
         "latest_mock_review": {
-            "mode": str(latest_review.get("mode") or ""),
-            "review_sha256": str(latest_review.get("review_sha256") or ""),
-            "summary": dict(latest_review.get("summary") or {}),
+            "mode": "FINAL_MULTI_REVIEW" if latest_final_review else str(latest_review.get("mode") or ""),
+            "review_sha256": final_review_sha if latest_final_review else str(latest_review.get("review_sha256") or ""),
+            "summary": (
+                {
+                    "scores": final_scores,
+                    "recommendations": final_recommendations,
+                    "mean_score": latest_final_review.get("mean_score"),
+                    "minimum_score": latest_final_review.get("minimum_score"),
+                    "decision_critical_blockers": int(latest_final_review.get("decision_critical_blockers") or 0),
+                }
+                if latest_final_review
+                else dict(latest_review.get("summary") or {})
+            ),
         },
         "latest_claim_audit": {
             "pass": latest_claim_audit.get("pass") is True,
-            "claim_audit_sha256": str(latest_claim_audit.get("claim_audit_sha256") or ""),
+            "claim_audit_sha256": claim_audit_sha,
             "blockers": list(latest_claim_audit.get("blockers") or []),
+            **(
+                {
+                    "checks": int(latest_claim_audit.get("checks") or 0),
+                    "passed": int(latest_claim_audit.get("passed") or 0),
+                }
+                if claim_is_versioned
+                else {}
+            ),
         },
         "latest_manuscript_ci": {
             "pass": latest_ci.get("pass") is True,
@@ -776,33 +876,63 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
         },
         "latest_prebuttal": {
             "pass": latest_prebuttal.get("pass") is True,
-            "decision_critical": int(latest_prebuttal.get("decision_critical") or 0),
+            "decision_critical": prebuttal_decision_critical,
             "blockers": list(latest_prebuttal.get("blockers") or []),
+            **(
+                {"unresolved_decision_critical": int(latest_prebuttal.get("unresolved_decision_critical") or 0)}
+                if prebuttal_is_versioned
+                else {}
+            ),
         },
         "latest_paper_preparation": {
             "pass": latest_preparation.get("pass") is True,
-            "protocol_version": str(latest_preparation.get("protocol_version") or ""),
-            "receipt_sha256": str(latest_preparation.get("receipt_sha256") or ""),
-            "required_gates": int((latest_preparation.get("summary") or {}).get("required_gates") or 0),
-            "passed_gates": int((latest_preparation.get("summary") or {}).get("passed_gates") or 0),
+            "protocol_version": preparation_protocol,
+            "receipt_sha256": preparation_sha,
+            "required_gates": preparation_required,
+            "passed_gates": preparation_passed,
             "gate_pass": {str(key): value is True for key, value in (latest_preparation.get("gate_pass") or {}).items()},
             "blockers": [str(item) for item in (latest_preparation.get("blockers") or [])],
         },
         "submission_readiness_context": {
             "artifact_submission_ready": latest_submission_context.get("artifact_submission_ready") is True,
-            "recommended_immediate_submission": str(latest_submission_context.get("recommended_immediate_submission") or ""),
+            "recommended_immediate_submission": immediate_recommendation,
             "scientific_status": str(latest_submission_context.get("scientific_status") or ""),
             "support_blocker": str(latest_submission_context.get("support_blocker") or ""),
-            "external_human_submission_authority_required_for_SUBMITTED": latest_submission_context.get("external_human_submission_authority_required_for_SUBMITTED") is True,
-            "c3_c4_evidence_state": str(latest_submission_context.get("c3_c4_evidence_state") or ""),
-            "post_repair_mock_pc_recommendations": [str(item) for item in (latest_submission_context.get("post_repair_mock_pc_recommendations") or [])],
-            "post_repair_mock_pc_scores": [int(item) for item in (latest_submission_context.get("post_repair_mock_pc_scores") or [])],
+            "external_human_submission_authority_required_for_SUBMITTED": (
+                latest_submission_context.get("external_human_submission_authority_required_for_SUBMITTED") is True
+                or (context_is_versioned and latest_submission_context.get("external_human_submission_authority_required") is True)
+            ),
+            "c3_c4_evidence_state": str(
+                latest_submission_context.get("c3_c4_evidence_state")
+                or ("SOURCE_NATIVE_EVIDENCE_BACKED_WITH_EXACT_TIMESAGE_EXTERNAL_REPLICATION_DEBT" if context_is_versioned and latest_submission_context.get("exact_timesage_replication_debt") else "")
+            ),
+            **(
+                {"exact_timesage_replication_debt": str(latest_submission_context.get("exact_timesage_replication_debt") or "")}
+                if context_is_versioned
+                else {}
+            ),
+            "post_repair_mock_pc_recommendations": [str(item) for item in (latest_submission_context.get("post_repair_mock_pc_recommendations") or (final_recommendations if context_is_versioned else []))],
+            "post_repair_mock_pc_scores": [int(item) for item in (latest_submission_context.get("post_repair_mock_pc_scores") or (final_scores if context_is_versioned else []))],
         },
         "latest_submission_readiness": {
-            "submission_ready": latest_readiness.get("submission_ready") is True,
-            "receipt_sha256": str(latest_readiness.get("receipt_sha256") or ""),
+            "submission_ready": effective_submission_ready,
+            "receipt_sha256": readiness_sha,
             "blockers": list(latest_readiness.get("blockers") or []),
         },
+        **(
+            {
+                "source_native_evidence": {
+                    "runtime_valid_rows": int(latest_finalization.get("source_native_runtime_valid_rows") or 0),
+                    "distinct_endpoints": int(latest_finalization.get("distinct_endpoints") or 0),
+                    "institutional_systems": int(latest_finalization.get("institutional_systems") or 0),
+                    "exact_timesage_replication_debt": str(latest_finalization.get("exact_timesage_replication_debt") or ""),
+                    "recommended_immediate_action": str(latest_finalization.get("recommended_immediate_action") or ""),
+                    "finalization_sha256": _artifact_digest(latest_finalization),
+                }
+            }
+            if latest_finalization
+            else {}
+        ),
         "latest_transition": {
             "from": str(latest_transition.get("from") or ""),
             "to": str(latest_transition.get("to") or ""),

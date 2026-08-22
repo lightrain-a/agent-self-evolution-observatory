@@ -120,6 +120,15 @@ def version_html_assets(html: str, build_sha: str) -> str:
 
 
 def build() -> Path:
+    # Refresh only the embedded Paper Acceptance public projection from the
+    # append-only canonical ledgers.  Rebuilding the entire Research System here
+    # would also recompile unrelated discovery state, which a frontend publish
+    # must never do.
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "refresh_paper_acceptance_projection.py")],
+        cwd=ROOT,
+        check=True,
+    )
     # Recompute the small public current-state ledger from authoritative generated artifacts
     # immediately before copying the site, so every publish uses the same backend truth.
     subprocess.run(

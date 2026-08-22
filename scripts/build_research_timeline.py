@@ -1238,15 +1238,18 @@ def build_dashboard(timeline: dict[str, Any]) -> dict[str, Any]:
     local_dates = [china_date(str(row.get("occurred_at"))) for row in events]
     local_dates = [value for value in local_dates if value]
     latest_date = max(local_dates, default="")
+    registry_date = str(registry.get("generated_at") or "")[:10]
+    research_date = str(research.get("generated_at") or "")[:10]
+    dashboard_date = max((value for value in (latest_date, registry_date, research_date) if value), default="")
     week_start = ""
     week_events: list[dict[str, Any]] = []
-    if latest_date:
-        latest_dt = datetime.strptime(latest_date, "%Y-%m-%d").date()
+    if dashboard_date:
+        latest_dt = datetime.strptime(dashboard_date, "%Y-%m-%d").date()
         start_dt = latest_dt - timedelta(days=latest_dt.weekday())
         week_start = start_dt.isoformat()
         week_events = [
             row for row in events
-            if week_start <= china_date(str(row.get("occurred_at"))) <= latest_date
+            if week_start <= china_date(str(row.get("occurred_at"))) <= dashboard_date
         ]
 
     week_classes = Counter(str(row.get("event_class") or "system") for row in week_events)
@@ -1330,7 +1333,7 @@ def build_dashboard(timeline: dict[str, Any]) -> dict[str, Any]:
     research_summary = research.get("summary") or {}
     dashboard = {
         "schema_version": "1.0",
-        "as_of_date": latest_date or str(research.get("generated_at") or "")[:10],
+        "as_of_date": dashboard_date,
         "projection_policy": {
             "read_only": True,
             "scientific_authority": False,
@@ -1364,7 +1367,7 @@ def build_dashboard(timeline: dict[str, Any]) -> dict[str, Any]:
         "papers": paper_rows,
         "week": {
             "start_date": week_start,
-            "end_date": latest_date,
+            "end_date": dashboard_date,
             "research_days": len(week_days),
             "events": len(week_events),
             "substantive_events": sum(count for cls, count in week_classes.items() if cls != "system"),

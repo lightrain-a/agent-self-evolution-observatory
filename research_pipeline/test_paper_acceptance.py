@@ -480,6 +480,46 @@ class PaperAcceptanceTest(unittest.TestCase):
             self.assertNotIn("PRIVATE REVIEWER PROSE MUST NOT LEAK", str(entry))
             self.assertNotIn("Existing admissible evidence should be made legible", str(entry))
 
+    def test_public_projection_prefers_later_versioned_finalization_receipts(self) -> None:
+        row = {
+            "paper_id": "PAPER-R5",
+            "contract_sha256": "contract-sha",
+            "scientific_status": ScientificPaperStatus.READY.value,
+            "current_state": PaperState.SUBMISSION_READY.value,
+            "contract": {
+                "title": "Old frozen contract title",
+                "central_question": "Can a later append-only repair supersede stale public readiness?",
+                "supported_claims": {"C1": "Supported."},
+                "active_unrefuted_claims": {"C2": "Exact external replication remains active."},
+                "unsupported_claims": {},
+                "limitations": [],
+                "reopen_conditions": [],
+            },
+            "events": [
+                {"event_type": "submission-readiness", "receipt": {"submission_ready": True, "receipt_sha256": "old-ready", "blockers": []}},
+                {"event_type": "paper-preparation", "receipt": {"pass": False, "protocol_version": "1.0", "receipt_sha256": "old-prep", "summary": {"required_gates": 8, "passed_gates": 1}, "gate_pass": {}, "blockers": ["old-blocker"]}},
+                {"event_type": "submission-readiness-context", "artifact_submission_ready": True, "recommended_immediate_submission": "HOLD_FOR_EVIDENCE", "scientific_status": "READY", "support_blocker": "OLD_EXTERNAL_SUPPORT", "external_human_submission_authority_required_for_SUBMITTED": True},
+                {"event_type": "source-native-r5-finalization", "title": "Current repaired manuscript title", "source_native_runtime_valid_rows": 1326, "distinct_endpoints": 35, "institutional_systems": 3, "exact_timesage_replication_debt": "ACTIVE_EXTERNAL_REPLICATION_DEBT_NOT_SUBSTITUTED", "recommended_immediate_action": "READY_FOR_HUMAN_SUBMISSION", "final_state_ref": "artifact:sha256:" + "1" * 64},
+                {"event_type": "claim-audit-r5", "pass": True, "checks": 26, "passed": 26, "artifact_ref": "artifact:sha256:" + "2" * 64},
+                {"event_type": "mock-pc-final-r5", "scores": [8, 8, 7], "recommendations": ["accept", "accept", "weak_accept"], "mean_score": 7.6666666667, "minimum_score": 7, "decision_critical_blockers": 0, "artifact_ref": "artifact:sha256:" + "3" * 64},
+                {"event_type": "paper-preparation-r5", "pass": True, "required_gates": 8, "passed_gates": 8, "blockers": [], "artifact_ref": "artifact:sha256:" + "4" * 64},
+                {"event_type": "prebuttal-r5", "pass": True, "decision_critical_objections": 8, "unresolved_decision_critical": 0, "artifact_ref": "artifact:sha256:" + "5" * 64},
+                {"event_type": "submission-readiness-context-r5", "artifact_submission_ready": True, "current_state": "SUBMISSION_READY", "scientific_status": "READY", "recommended_immediate_action": "READY_FOR_HUMAN_SUBMISSION", "external_human_submission_authority_required": True, "exact_timesage_replication_debt": "ACTIVE_EXTERNAL_REPLICATION_DEBT_NONBLOCKING_FOR_SOURCE_NATIVE_PAPER", "artifact_ref": "artifact:sha256:" + "6" * 64},
+            ],
+        }
+        public = public_paper_ledger_summary(row)
+        self.assertEqual(public["title"], "Current repaired manuscript title")
+        self.assertTrue(public["gate_clean_submission_ready"])
+        self.assertFalse(public["immediate_submission_hold"])
+        self.assertEqual((public["latest_paper_preparation"]["passed_gates"], public["latest_paper_preparation"]["required_gates"]), (8, 8))
+        self.assertEqual(public["latest_paper_preparation"]["protocol_version"], "1.0+r5")
+        self.assertEqual(public["latest_claim_audit"]["checks"], 26)
+        self.assertEqual(public["latest_mock_review"]["summary"]["scores"], [8, 8, 7])
+        self.assertEqual(public["submission_readiness_context"]["recommended_immediate_submission"], "READY_FOR_HUMAN_SUBMISSION")
+        self.assertEqual(public["submission_readiness_context"]["support_blocker"], "")
+        self.assertEqual(public["source_native_evidence"]["runtime_valid_rows"], 1326)
+        self.assertEqual(public["source_native_evidence"]["finalization_sha256"], "1" * 64)
+
     def test_ledger_validator_detects_tampered_hard_gate_receipt(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td); contract = self.stri_contract()

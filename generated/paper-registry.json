@@ -1,7 +1,7 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-08-22T12:52:42+00:00",
-  "source_revision": "07f3dc07f7ab4aeb94454bfe5c55732019325f38",
+  "generated_at": "2026-08-22T13:42:44+00:00",
+  "source_revision": "b42fcd34274a39e60dd9361c3751782adb6cf45a",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -42,14 +42,13 @@
   "summary": {
     "papers": 5,
     "submission_ready": 5,
-    "gate_clean_submission_ready": 4,
-    "paper_preparation_failed": 1,
-    "immediate_submission_holds": 1,
-    "internal_action_required": 1,
-    "no_internal_action": 4,
+    "gate_clean_submission_ready": 5,
+    "paper_preparation_failed": 0,
+    "immediate_submission_holds": 0,
+    "internal_action_required": 0,
+    "no_internal_action": 5,
     "by_internal_action": {
-      "EXTERNAL_EVIDENCE_REQUIRED": 1,
-      "NO_INTERNAL_ACTION": 4
+      "NO_INTERNAL_ACTION": 5
     },
     "scientific_holds": 0,
     "primary_paper": "STRI",
@@ -811,18 +810,18 @@
     },
     {
       "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
-      "title": "Temporal Skills Are a Causal Bottleneck in Evolving Time-Series Agents",
+      "title": "When Reusable Temporal Skills Become Causal Bottlenecks in Evolving Time-Series Agents",
       "central_question": "Are recurring temporal-validity and exogenous-context failures caused by missing reusable procedures that targeted skills can repair beyond generic skill assistance?",
       "contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
       "scientific_status": "READY",
       "current_state": "SUBMISSION_READY",
-      "gate_clean_submission_ready": false,
-      "immediate_submission_hold": true,
+      "gate_clean_submission_ready": true,
+      "immediate_submission_hold": false,
       "primary_next_action": {
-        "action_class": "EXTERNAL_EVIDENCE_REQUIRED",
-        "action": "Wait for or acquire the named external support asset, then rerun the same frozen internal readiness checks.",
-        "action_zh": "等待或取得已命名的外部支持资产，再按同一冻结规则重跑内部就绪检查。",
-        "blocking_on": "TIMESAGE_EVALUATED_FIRST_PARTY_ASSETS_NOT_PUBLIC",
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "No additional autonomous research, experiment, or paper-repair action is required by the internal Research OS.",
+        "action_zh": "内部 Research OS 已无新增科研、实验或论文修复动作；保持冻结证据与主张边界即可。",
+        "blocking_on": "",
         "machine_actionable": false,
         "scientific_authority": false,
         "experiment_authority": false,
@@ -898,19 +897,30 @@
         "ARTIFACT_AWARE": "5d1cf4251bf0da590459a90e10779096c0092231bb2e0dd06794155ca0f70f50"
       },
       "latest_mock_review": {
-        "mode": "ARTIFACT_AWARE",
-        "review_sha256": "5d1cf4251bf0da590459a90e10779096c0092231bb2e0dd06794155ca0f70f50",
+        "mode": "FINAL_MULTI_REVIEW",
+        "review_sha256": "3336ed824c9c398a56bf8396c869771577131827c30204505683d9a19087b671",
         "summary": {
-          "objections": 5,
-          "decision_critical": 3,
-          "targeted_experiment_proposals": 4,
-          "claim_expansion_requests_preserved_as_limitations": 0
+          "scores": [
+            8,
+            8,
+            7
+          ],
+          "recommendations": [
+            "accept",
+            "accept",
+            "weak_accept"
+          ],
+          "mean_score": 7.666666666666667,
+          "minimum_score": 7,
+          "decision_critical_blockers": 0
         }
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "013d75566cfc13cdf21404bb3c208c9288629ed585af2aaf4c363cc482e6797c",
-        "blockers": []
+        "claim_audit_sha256": "75126d4ecc8137792509116ba1ac543b5d19448488ee781345ca4333cec592d3",
+        "blockers": [],
+        "checks": 26,
+        "passed": 26
       },
       "latest_manuscript_ci": {
         "pass": true,
@@ -921,82 +931,50 @@
       },
       "latest_prebuttal": {
         "pass": true,
-        "decision_critical": 6,
-        "blockers": []
+        "decision_critical": 8,
+        "blockers": [],
+        "unresolved_decision_critical": 0
       },
       "latest_paper_preparation": {
-        "pass": false,
-        "protocol_version": "1.0",
-        "receipt_sha256": "81fbaada572e1766c6c06cfefcc879c4f5e222d7a02169da54f900d67728f8bb",
+        "pass": true,
+        "protocol_version": "1.0+r5",
+        "receipt_sha256": "9ce5c1fe42949b3f90c0e1555f6737673f447b5015951b647f3a32299138d99a",
         "required_gates": 8,
-        "passed_gates": 1,
-        "gate_pass": {
-          "hierarchical-rubric": false,
-          "verification-refinement": false,
-          "citation-integrity": true,
-          "visual-story": false,
-          "reproducibility-bundle": false,
-          "agent-native-artifact": false,
-          "reader-simulation": false,
-          "submission-package": false
-        },
-        "blockers": [
-          "rubric-dimension-not-pass:claim-evidence",
-          "rubric-dimension-not-pass:method-experiment",
-          "rubric-dimension-not-pass:statistics-uncertainty",
-          "rubric-dimension-not-pass:visual-evidence",
-          "rubric-dimension-not-pass:reproducibility",
-          "rubric-dimension-not-pass:venue-compliance",
-          "rubric-integrity-check-failed:plan_execution_parity_pass",
-          "rubric-integrity-check-failed:evidence_sufficiency_review_pass",
-          "unresolved-critical-verification-issue:c3-targeted-intervention-missing",
-          "unresolved-critical-verification-issue:c4-transfer-evidence-missing",
-          "unresolved-critical-verification-issue:first-party-evaluated-snapshot-unavailable",
-          "visual-story-check-failed:each_core_claim_has_main_visual",
-          "visual-story-check-failed:persistent_visual_contract_present",
-          "reproducibility-check-failed:self_contained_source_bundle",
-          "reproducibility-check-failed:clean_environment_compile_pass",
-          "reproducibility-check-failed:reproduction_entrypoint_present",
-          "reproducibility-check-failed:dependency_environment_manifest_present",
-          "reproducibility-check-failed:evaluation_code_and_protocol_bound",
-          "reproducibility-check-failed:artifact_hash_manifest_present",
-          "reproducibility-check-failed:numeric_claim_recompute_pass",
-          "reproducibility-check-failed:independent_reproduction_check_pass",
-          "agent-native-layer-incomplete:claim-evidence-grounding",
-          "claim-raw-output-roundtrip-failed",
-          "reader-mode-incomplete:figure-first-skimmer",
-          "reader-mode-unresolved-critical:figure-first-skimmer:1",
-          "reader-mode-incomplete:reproducibility-reviewer",
-          "reader-mode-unresolved-critical:reproducibility-reviewer:1",
-          "reader-paper-side-findings-not-closed",
-          "submission-package-check-failed:supplement_and_main_artifact_consistency_pass",
-          "submission-package-check-failed:fresh_directory_source_compile_pass",
-          "submission-package-check-failed:ai_use_disclosure_decision_recorded",
-          "submission-package-check-failed:authorship_and_conflict_checklist_recorded",
-          "submission-package-check-failed:venue_policy_snapshot_current",
-          "submission-package-check-failed:human_only_requirements_recorded"
-        ]
+        "passed_gates": 8,
+        "gate_pass": {},
+        "blockers": []
       },
       "submission_readiness_context": {
         "artifact_submission_ready": true,
-        "recommended_immediate_submission": "HOLD_FOR_EVIDENCE",
+        "recommended_immediate_submission": "READY_FOR_HUMAN_SUBMISSION",
         "scientific_status": "READY",
-        "support_blocker": "TIMESAGE_EVALUATED_FIRST_PARTY_ASSETS_NOT_PUBLIC",
+        "support_blocker": "",
         "external_human_submission_authority_required_for_SUBMITTED": true,
-        "c3_c4_evidence_state": "ACTIVE_UNREFUTED_DATA_PENDING_EXTERNAL_SUPPORT",
+        "c3_c4_evidence_state": "SOURCE_NATIVE_EVIDENCE_BACKED_WITH_EXACT_TIMESAGE_EXTERNAL_REPLICATION_DEBT",
+        "exact_timesage_replication_debt": "ACTIVE_EXTERNAL_REPLICATION_DEBT_NONBLOCKING_FOR_SOURCE_NATIVE_PAPER",
         "post_repair_mock_pc_recommendations": [
-          "reject",
-          "weak_reject"
+          "accept",
+          "accept",
+          "weak_accept"
         ],
         "post_repair_mock_pc_scores": [
-          3,
-          4
+          8,
+          8,
+          7
         ]
       },
       "latest_submission_readiness": {
         "submission_ready": true,
         "receipt_sha256": "86b5b9bc1a3ce36b3481346c26f5c1620338484b1b70b8cdecc465f55c32fd80",
         "blockers": []
+      },
+      "source_native_evidence": {
+        "runtime_valid_rows": 1326,
+        "distinct_endpoints": 35,
+        "institutional_systems": 3,
+        "exact_timesage_replication_debt": "ACTIVE_EXTERNAL_REPLICATION_DEBT_NOT_SUBSTITUTED",
+        "recommended_immediate_action": "READY_FOR_HUMAN_SUBMISSION",
+        "finalization_sha256": "1c4fc383929d6d07a259ffa99cf18c2ba82c51eca7339aa788fb210a308888c5"
       },
       "latest_transition": {
         "from": "PREBUTTAL",
