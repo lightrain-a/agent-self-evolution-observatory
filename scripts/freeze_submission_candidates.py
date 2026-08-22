@@ -1,6 +1,8 @@
 from __future__ import annotations
-import json, shutil
+import json, shutil, sys
 from pathlib import Path
+PROJECT_ROOT=Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:sys.path.insert(0,str(PROJECT_ROOT))
 from research_pipeline.paper_anonymity_audit import validate_anonymity_audit_receipt
 from research_pipeline.paper_portfolio_audit import build as build_audit
 from research_pipeline.presubmission_freeze import ROOT, artifact, build_freeze, digest, publish_freeze, validate_freeze
