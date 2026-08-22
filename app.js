@@ -1523,7 +1523,7 @@ function renderFieldDenseDetail(item, index) {
   return `<details class="field-dense-detail" id="${esc(item.anchor)}"><summary><em>${String(index+1).padStart(2,"0")}</em><div><b>${item.title}</b><small>${item.subtitle}</small></div><div class="field-detail-summary-cols">${columns}</div></summary><div class="field-dense-detail-body">${renderFieldSourceSections(item.sourceId)}</div></details>`;
 }
 function renderFieldAtlasBridge(active="matrix") {
-  return `<nav class="field-atlas-bridge" aria-label="${language === "zh" ? "领域图谱入口" : "Field atlas navigation"}"><a class="${active==="landscape"?"active":""}" href="research-directions.html"><span>01</span><div><b>${language === "zh" ? "领域全景 · 历史与问题" : "Field landscape · history & problems"}</b><small>${language === "zh" ? "领域怎么形成，D1–D10 在问什么" : "How the field formed and what D1–D10 asks"}</small></div></a><a class="${active==="matrix"?"active":""}" href="mechanisms.html"><span>02</span><div><b>${language === "zh" ? "领域矩阵 · 机制 × 场景 × 评测" : "Field matrix · mechanism × domain × evidence"}</b><small>${language === "zh" ? "改什么、在哪里改、怎么证明" : "What changes, where, and how it is proven"}</small></div></a></nav>`;
+  return `<nav class="field-atlas-bridge" aria-label="${language === "zh" ? "领域图谱入口" : "Field atlas navigation"}"><a class="${active==="definition"?"active":""}" href="foundations.html"><span>01</span><div><b>${language === "zh" ? "定义与边界 · 什么是 Agent 自进化" : "Definition & boundary · what is self-evolution?"}</b><small>${language === "zh" ? "先区分持久学习与重试、自纠错、临时上下文" : "Separate persistent learning from retrying and temporary adaptation"}</small></div></a><a class="${active==="landscape"?"active":""}" href="research-directions.html"><span>02</span><div><b>${language === "zh" ? "领域全景 · 历史与问题" : "Field landscape · history & problems"}</b><small>${language === "zh" ? "领域怎么形成，D1–D10 在问什么" : "How the field formed and what D1–D10 asks"}</small></div></a><a class="${active==="matrix"?"active":""}" href="mechanisms.html"><span>03</span><div><b>${language === "zh" ? "领域矩阵 · 机制 × 场景 × 评测" : "Field matrix · mechanism × domain × evidence"}</b><small>${language === "zh" ? "改什么、在哪里改、怎么证明" : "What changes, where, and how it is proven"}</small></div></a></nav>`;
 }
 function renderFieldCrossMatrix() {
   const headers = language === "zh" ? ["更新对象","持久产物","回滚 / 成本","场景敏感点","最少要补的纵向证据","典型风险"] : ["Update surface","Persistent artifact","Rollback / cost","Domain sensitivity","Minimum longitudinal evidence","Typical risk"];
@@ -1618,7 +1618,8 @@ function renderFieldMatrixHub(config) {
 function renderMergedHub(config) {
   const chapters = config.chapters || [];
   const fallbackOverview = !chapters.some((chapter) => chapter.includeOverview) && config.overviewFigure ? renderOverviewFigure(config) : "";
-  return `${pageHeader(config)}${renderFieldAxisSwitcher()}${renderFieldAxisPrimer()}${renderArchitectureOverview()}${fallbackOverview}${chapters.map((chapter, index) => renderPageChapter(chapter, index, config)).join("")}`;
+  const fieldBridge = pageId === "foundations" ? renderFieldAtlasBridge("definition") : "";
+  return `${pageHeader(config)}${fieldBridge}${renderFieldAxisSwitcher()}${renderFieldAxisPrimer()}${renderArchitectureOverview()}${fallbackOverview}${chapters.map((chapter, index) => renderPageChapter(chapter, index, config)).join("")}`;
 }
 function renderOverviewFigure(config, altText = "Agent self-evolution research map") {
   if (!config?.overviewFigure) return "";

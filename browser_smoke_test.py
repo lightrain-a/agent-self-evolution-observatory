@@ -537,7 +537,7 @@ def main() -> None:
           overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2,
           text:document.body.textContent||''
         };""")
-        require(field_matrix["bridge"] == 2 and field_matrix["chapters"] == 3 and field_matrix["crossRows"] == 5, f"unified field matrix shell is incomplete: {field_matrix}")
+        require(field_matrix["bridge"] == 3 and field_matrix["chapters"] == 3 and field_matrix["crossRows"] == 5, f"unified field matrix shell is incomplete: {field_matrix}")
         require(field_matrix["denseDetails"] == 8 and field_matrix["openDetails"] == 0 and field_matrix["evidenceSteps"] == 7 and field_matrix["evidenceResources"] == 3, f"mechanism/domain/evidence detail inventory is incomplete: {field_matrix}")
         require(field_matrix["resourceCards"] == 0 and field_matrix["sourceSections"] >= 50 and not field_matrix["overflow"], f"field atlas must retain detailed source notes without duplicating bibliography resource cards: {field_matrix}")
         require(all(marker in field_matrix["text"] for marker in ("Model parameters","GUI / Web","Embodied / robotics","Future gain","Rollback & recovery","Filter in bibliography")), "unified field matrix is missing one or more mechanism/domain/evidence anchors")
@@ -563,7 +563,7 @@ def main() -> None:
           overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2,
           text:document.body.textContent||''
         };""")
-        require(direction_map["bridge"] == 2 and direction_map["chapters"] == 3 and direction_map["historySpine"] == 6 and direction_map["macroCards"] == 4, f"compact field-landscape spine is incomplete: {direction_map}")
+        require(direction_map["bridge"] == 3 and direction_map["chapters"] == 3 and direction_map["historySpine"] == 6 and direction_map["macroCards"] == 4, f"compact field-landscape spine is incomplete: {direction_map}")
         require(direction_map["atlasRows"] == 10 and direction_map["details"] == 10 and direction_map["openDetails"] == 0, f"D1-D10 must render as one table plus ten collapsed details: {direction_map}")
         require(direction_map["chips"] == 34 and direction_map["evidenceSections"] == 10 and direction_map["evidencePapers"] >= 30, f"collapsed direction dossiers lost literature or historical lineage: {direction_map}")
         require(direction_map["historyAudit"] == 1 and direction_map["historyAuditOpen"] == 0 and direction_map["migrationRows"] == 10 and direction_map["agendaOpen"] == 0, f"history/migration audit layers are incomplete or too expanded: {direction_map}")

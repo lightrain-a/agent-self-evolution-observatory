@@ -22,7 +22,7 @@
   }));
 
   pages.foundations = {
-    eyebrow:{en:"Start Here · Definition",zh:"开始阅读 · 定义与边界"},
+    eyebrow:{en:"Field Atlas · Definition & Boundary",zh:"领域图谱 · 定义与边界"},
     title:{en:"What is agent self-evolution?",zh:"什么是 Agent 自进化？"},
     lead:{en:"Start here. This page does one job: separate persistent self-evolution from retrying, one-off self-correction, and temporary context adaptation, then give a compact vocabulary and four questions for classifying any system.",zh:"第一次看这个方向从这里开始。本页只做一件事：把“持久自进化”和重试、一次性自纠错、临时上下文适应分开，再给出一套核心名词和四个可以直接判断任何系统的问题。"},
     callout:{en:"A better answer after another retry is evidence of search, not evolution. The change must survive the current task boundary and alter later behavior before it enters the self-evolution map.",zh:"多重试一次得到更好答案，只能证明搜索更充分；只有变化跨过当前任务边界仍被保留，并继续改变后续行为，才进入自进化的讨论范围。"},

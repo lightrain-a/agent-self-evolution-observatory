@@ -1,9 +1,9 @@
 window.NAV_GROUPS = [
   { title:{en:"Start Here",zh:"开始阅读"}, open:true, pages:[
     ["index.html",{en:"Observatory Home",zh:"研究站首页"}],
-    ["foundations.html",{en:"What Is Agent Self-Evolution?",zh:"什么是 Agent 自进化"}],
   ]},
   { title:{en:"Field Atlas",zh:"领域图谱"}, open:true, pages:[
+    ["foundations.html",{en:"Definition & Boundary · What Is Self-Evolution?",zh:"定义与边界 · 什么是 Agent 自进化"}],
     ["research-directions.html",{en:"Field Landscape · History & Problems",zh:"领域全景 · 历史与问题"}],
     ["mechanisms.html",{en:"Field Matrix · Mechanism × Domain × Evidence",zh:"领域矩阵 · 机制 × 场景 × 评测"}],
   ]},
