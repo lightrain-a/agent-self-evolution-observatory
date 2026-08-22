@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-22T12:48:30+00:00",
+  "generated_at": "2026-08-22T16:57:35+00:00",
   "status": "MEMORY_COMPILED",
   "policy": {
     "schema_version": "1.1",
@@ -26,9 +26,9 @@
     "search_memory_closed_objects": 42,
     "search_memory_hold_objects": 9,
     "failure_assets": 6,
-    "candidate_portfolio_visible": 2,
+    "candidate_portfolio_visible": 1,
     "unresolved_principles": 2,
-    "generator_blocked_attempts": 13,
+    "generator_blocked_attempts": 14,
     "paper_review_ledgers": 5
   },
   "summary": {
@@ -389,12 +389,12 @@
       "scientific_authority": false
     },
     {
-      "memory_id": "MEM-REPE-5a5845fc268f5a9ad9",
+      "memory_id": "MEM-REPE-bf948a9d2b0add0251",
       "kind": "REPEATED_REVIEW_BLOCK",
       "title": "Repeated reviewer-reduction basin: procedural-memory-nonmonotonicity",
-      "summary": "7 blocked attempts concentrate in this basin; search outside it before another jury call.",
+      "summary": "8 blocked attempts concentrate in this basin; search outside it before another jury call.",
       "candidate_id": "",
-      "scope": "{\"ASSUMPTION_BREAK\": 9, \"CONTRADICTION\": 1, \"CONVERGENT_FAILURE\": 1, \"UNEXPLAINED_BOUNDARY\": 2}",
+      "scope": "{\"ASSUMPTION_BREAK\": 9, \"CONTRADICTION\": 1, \"CONVERGENT_FAILURE\": 1, \"UNEXPLAINED_BOUNDARY\": 3}",
       "affected_layer": "search_control",
       "memory_class": "REPEATED_REVIEW_BLOCK",
       "durability_class": "recurring-systemic",
@@ -407,8 +407,62 @@
       "reusable_precheck": "Mechanically reject pure renamings of the repeated reduction basin before review.",
       "source_refs": [],
       "source_artifact": "problem_generator.blocked_problem_memory",
-      "occurrences": 7,
+      "occurrences": 8,
       "reuse_effectiveness": {},
+      "scientific_authority": false
+    },
+    {
+      "memory_id": "MEM-REVI-b547c392e363d886c2",
+      "kind": "REVIEW_LESSON",
+      "title": "Paper review pattern: D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "summary": "4 structured Mock-PC receipts contain 11 decision-critical objections. Categories={\"clarity\": 1, \"empirical\": 1, \"empirical-sufficiency\": 5, \"experimental-design\": 1, \"generalizability\": 1, \"infrastructure\": 1, \"methodology\": 1, \"novelty\": 2, \"reproducibility-feasibility\": 1, \"scope\": 1, \"technical-quality\": 1}; evidence_states={\"existing-evidence\": 2, \"missing-decisive-evidence\": 11, \"requires-new-claim\": 1, \"uncertain\": 2}; action_classes={\"human-adjudication\": 2, \"narrative-repair\": 2, \"preserve-limitation\": 3, \"targeted-experiment\": 9}.",
+      "candidate_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "scope": "paper-design-and-internal-review",
+      "affected_layer": "paper_review",
+      "memory_class": "PAPER_REVIEW_PATTERN",
+      "durability_class": "recurring-systemic",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "Before Paper Design and Mock PC, explicitly check recurring objection categories and evidence states from prior papers. Treat the pattern as a precheck, never as scientific evidence or experiment authorization.",
+      "source_refs": [
+        "paper-ledger:D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK:mock-pc"
+      ],
+      "source_artifact": "paper_acceptance_ledger.review_learning",
+      "occurrences": 4,
+      "review_learning": {
+        "decision_critical_objections": 11,
+        "category_counts": {
+          "clarity": 1,
+          "empirical": 1,
+          "empirical-sufficiency": 5,
+          "experimental-design": 1,
+          "generalizability": 1,
+          "infrastructure": 1,
+          "methodology": 1,
+          "novelty": 2,
+          "reproducibility-feasibility": 1,
+          "scope": 1,
+          "technical-quality": 1
+        },
+        "evidence_state_counts": {
+          "existing-evidence": 2,
+          "missing-decisive-evidence": 11,
+          "requires-new-claim": 1,
+          "uncertain": 2
+        },
+        "action_class_counts": {
+          "human-adjudication": 2,
+          "narrative-repair": 2,
+          "preserve-limitation": 3,
+          "targeted-experiment": 9
+        },
+        "targeted_experiment_proposals": 9,
+        "claim_expansion_requests_preserved_as_limitations": 3
+      },
       "scientific_authority": false
     },
     {
@@ -619,55 +673,6 @@
         },
         "targeted_experiment_proposals": 9,
         "claim_expansion_requests_preserved_as_limitations": 6
-      },
-      "scientific_authority": false
-    },
-    {
-      "memory_id": "MEM-REVI-fbfa7ebaa5fcde8c64",
-      "kind": "REVIEW_LESSON",
-      "title": "Paper review pattern: D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
-      "summary": "2 structured Mock-PC receipts contain 6 decision-critical objections. Categories={\"empirical\": 1, \"empirical-sufficiency\": 1, \"experimental-design\": 1, \"infrastructure\": 1, \"methodology\": 1, \"novelty\": 1, \"reproducibility-feasibility\": 1, \"scope\": 1}; evidence_states={\"missing-decisive-evidence\": 6, \"requires-new-claim\": 1, \"uncertain\": 1}; action_classes={\"human-adjudication\": 1, \"preserve-limitation\": 3, \"targeted-experiment\": 4}.",
-      "candidate_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
-      "scope": "paper-design-and-internal-review",
-      "affected_layer": "paper_review",
-      "memory_class": "PAPER_REVIEW_PATTERN",
-      "durability_class": "recurring-systemic",
-      "prompt_eligible": true,
-      "search_closure_certified": false,
-      "scientific_dead_end_certified": false,
-      "principle_update_allowed": false,
-      "reopen_condition": "",
-      "opposite_search_seed": "",
-      "reusable_precheck": "Before Paper Design and Mock PC, explicitly check recurring objection categories and evidence states from prior papers. Treat the pattern as a precheck, never as scientific evidence or experiment authorization.",
-      "source_refs": [
-        "paper-ledger:D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK:mock-pc"
-      ],
-      "source_artifact": "paper_acceptance_ledger.review_learning",
-      "occurrences": 2,
-      "review_learning": {
-        "decision_critical_objections": 6,
-        "category_counts": {
-          "empirical": 1,
-          "empirical-sufficiency": 1,
-          "experimental-design": 1,
-          "infrastructure": 1,
-          "methodology": 1,
-          "novelty": 1,
-          "reproducibility-feasibility": 1,
-          "scope": 1
-        },
-        "evidence_state_counts": {
-          "missing-decisive-evidence": 6,
-          "requires-new-claim": 1,
-          "uncertain": 1
-        },
-        "action_class_counts": {
-          "human-adjudication": 1,
-          "preserve-limitation": 3,
-          "targeted-experiment": 4
-        },
-        "targeted_experiment_proposals": 4,
-        "claim_expansion_requests_preserved_as_limitations": 3
       },
       "scientific_authority": false
     },
@@ -1798,7 +1803,7 @@
     "p0": false,
     "gpu": false
   },
-  "wiki_sha256": "9c4a5eb428d574ecebd17c4eb70818e92fd1675e89c5b94979170057a9c1ef76",
+  "wiki_sha256": "6dd0658f5be81a15e53cd887b966e02ebae385c6a1e155881575ae64f525296b",
   "lint": {
     "schema_version": "1.1",
     "status": "PASS",
