@@ -200,9 +200,11 @@ window.PAGE_CONTENT = {
 
     {href:"research-timeline.html",paper:true,title:{en:"Research Timeline",zh:"研究时间轴"},desc:{en:"A read-only chronological view of how ideas, experiments, closures, paper states, and research-system decisions changed over time.",zh:"按时间查看 Idea、实验、关闭裁决、论文状态与科研系统决策怎样变化；时间轴只负责复盘，不新增科研权限。"}},
 
-    {href:"selected-paper.html",paper:true,title:{en:"Papers · Registry",zh:"论文 · PaperRegistry"},desc:{en:"Canonical PaperRegistry for research that has entered writing: current Paper Acceptance stage, claim–evidence state, manuscript repair, QA, prebuttal, and submission readiness.",zh:"已经进入论文阶段的 canonical PaperRegistry：统一查看当前 Paper Acceptance 阶段、主张—证据状态、文稿修复、QA、Prebuttal 与真正投稿就绪状态。"}},
+    {href:"selected-paper.html",paper:true,title:{en:"Papers · PaperRegistry",zh:"论文 · PaperRegistry"},desc:{en:"Canonical PaperRegistry for research that has entered writing: current Paper Acceptance stage, claim–evidence state, manuscript repair, QA, prebuttal, and submission readiness.",zh:"已经进入论文阶段的 canonical PaperRegistry：统一查看当前 Paper Acceptance 阶段、主张—证据状态、文稿修复、QA、Prebuttal 与真正投稿就绪状态。"}},
 
-    {href:"bibliography.html",title:{en:"Literature Library · Spine & Idea Gaps",zh:"文献库 · 主线与研究空白"},desc:{en:"Builds the peer-reviewed spine, compares concrete baselines and mechanisms, turns covered territory and repeated failures into an idea-mining gap registry, then opens the preprint-inclusive corpus for fresh collision checks.",zh:"先用正式发表论文建立领域主线，比较简单方法与新增机制，再把已覆盖主线、反复失败和接口断层整理成 Research Gap Mining 空白表，最后进入含预印本的完整语料做最新碰撞检索。"}},
+
+    {href:"bibliography.html",title:{en:"Literature Library · Spine & Research Gaps",zh:"文献库 · 主线与研究空白"},desc:{en:"Builds the peer-reviewed spine, compares concrete baselines and mechanisms, turns covered territory and repeated failures into a research-gap registry, then opens the preprint-inclusive corpus for fresh collision checks.",zh:"先用正式发表论文建立领域主线，比较简单方法与新增机制，再把已覆盖主线、反复失败和接口断层整理成 Research Gap Mining 空白表，最后进入含预印本的完整语料做最新碰撞检索。"}},
+
 
 
   ],

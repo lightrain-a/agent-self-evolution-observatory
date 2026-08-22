@@ -175,7 +175,7 @@ def main() -> None:
                     count(dom, "toc-level-3"),
                     count(dom, "toc-level-4"),
                 )
-                needs_framework = page not in {"paper-ideas", "selected-paper", "research-timeline", "research-map"}
+                needs_framework = page not in {"index", "paper-ideas", "selected-paper", "research-timeline", "research-map"}
                 if actual == expected and (not needs_framework or 'id="page-framework"' in dom):
                     break
                 time.sleep(0.5)
@@ -195,8 +195,12 @@ def main() -> None:
                 sidebar_signature = current_sidebar
             elif current_sidebar != sidebar_signature:
                 raise AssertionError(f"{page}: sidebar labels/targets differ from the canonical navigation: {current_sidebar}")
-            if page not in {"paper-ideas", "selected-paper", "research-timeline", "research-map"} and 'id="page-framework"' not in dom:
+            if page not in {"index", "paper-ideas", "selected-paper", "research-timeline", "research-map"} and 'id="page-framework"' not in dom:
                 raise AssertionError(f"{page}: page framework overview is missing")
+            if page == "index":
+                home = execute(session_id, """return {hero:document.querySelectorAll('.home-hero').length,ruleSteps:document.querySelectorAll('.home-rule-flow>div').length,heroActions:document.querySelectorAll('.home-hero-actions a').length,heroStats:document.querySelectorAll('.home-hero-stats .stat').length,portalGroups:document.querySelectorAll('.home-route-section').length,routeCards:document.querySelectorAll('.home-route-card').length,legacyFramework:document.querySelectorAll('.page-architecture,.project-status-strip').length,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2};""")
+                if home != {"hero":1,"ruleSteps":4,"heroActions":4,"heroStats":4,"portalGroups":3,"routeCards":11,"legacyFramework":0,"overflow":False}:
+                    raise AssertionError(f"index: compact home portal contract failed: {home}")
             if page == "bibliography":
                 paper_details = execute(session_id, """const rows=[...document.querySelectorAll('.reference-card .paper-analysis')]; const first=rows[0]||null; const before=rows.filter(x=>x.open).length; if(first) first.querySelector('summary')?.click(); return {total:rows.length,before,firstOpened:!!first?.open};""")
                 if paper_details.get("total") != 80 or paper_details.get("before") != 0 or not paper_details.get("firstOpened"):
@@ -213,8 +217,14 @@ def main() -> None:
             if any(re.search(r'<h2(?:\s|>)', header) for header in group_headers):
                 raise AssertionError(f"{page}: merged group is still rendered as H2")
             print(f"{page}: chapters={actual[0]}, toc={actual[1]}/{actual[2]}/{actual[3]}")
+        request("POST", f"/session/{session_id}/window/rect", {"width": 500, "height": 844, "x": 0, "y": 0})
+        request("POST", f"/session/{session_id}/url", {"url": f"{base}/index.html?mobile-layout-audit=1"})
+        time.sleep(1)
+        mobile_home = execute(session_id, """return {heroHeight:Math.round(document.querySelector('.home-hero')?.getBoundingClientRect().height||0),overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2,actions:document.querySelectorAll('.home-hero-actions a').length,routeCards:document.querySelectorAll('.home-route-card').length};""")
+        if mobile_home.get("overflow") or mobile_home.get("heroHeight", 9999) > 780 or mobile_home.get("actions") != 4 or mobile_home.get("routeCards") != 11:
+            raise AssertionError(f"index: mobile home portal is too tall, overflowing, or incomplete: {mobile_home}")
         print("PASS")
-        print("Thirteen canonical pages have page-specific hierarchy, with the read-only timeline intentionally using no chapter/TOC headings")
+        print("Thirteen canonical pages have page-specific hierarchy; the home page also passes compact mobile-portal layout checks")
     finally:
         if session_id:
             try:

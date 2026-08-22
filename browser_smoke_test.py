@@ -165,6 +165,11 @@ def main() -> None:
               nav: document.querySelectorAll('.nav-level2').length,
               stats: document.querySelectorAll('.stat').length,
               routeCards: document.querySelectorAll('.page-chapter .framework-card').length,
+              hero: document.querySelectorAll('.home-hero').length,
+              heroActions: document.querySelectorAll('.home-hero-actions a').length,
+              ruleSteps: document.querySelectorAll('.home-rule-flow > div').length,
+              routeGroups: document.querySelectorAll('.home-route-section').length,
+              legacyFramework: document.querySelectorAll('.page-architecture,.project-status-strip').length,
               figure: !!document.querySelector('.overview-figure img'),
               distribution: document.querySelectorAll('.distribution-row').length,
               missing: document.querySelectorAll('.citation-missing').length,
@@ -180,7 +185,7 @@ def main() -> None:
             };""",
         )
         require(home["nav"] == 12, f"expected 12 primary navigation targets across Start Here, Field Atlas, Current Research, and Literature, got {home['nav']}")
-        require(home["stats"] == 4 and home["routeCards"] == 11, f"home should stay lightweight with four status metrics and eleven route cards, got {home}")
+        require(home["stats"] == 4 and home["routeCards"] == 11 and home["hero"] == 1 and home["heroActions"] == 4 and home["ruleSteps"] == 4 and home["routeGroups"] == 3 and home["legacyFramework"] == 0, f"home compact portal layout is incomplete or duplicated: {home}")
         require(not home["figure"] and home["distribution"] == 0, "home should route readers instead of duplicating the field-history figure or literature distribution")
         require(home["missing"] == 0, "home contains unresolved citations")
         require(home["corpus"] >= 100, "curated literature snapshot did not load")
