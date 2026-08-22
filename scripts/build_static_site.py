@@ -131,6 +131,14 @@ def build() -> Path:
         cwd=ROOT,
         check=True,
     )
+    # Join the curated literature-gap registry with the freshly projected
+    # ResearchItem ledger. This bundle is read-only input for future idea
+    # collision/generation and never promotes a gap or authorizes experiments.
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "build_literature_idea_mining_input.py")],
+        cwd=ROOT,
+        check=True,
+    )
     # Rebuild the read-only timeline after current-state projection. On GitHub
     # runners the server-side Research Memory DB is absent, so the timeline
     # builder preserves the last committed zero-authority runtime snapshot.
@@ -207,6 +215,8 @@ def build() -> Path:
         OUTPUT / "research-map-view.js",
         OUTPUT / "research-landscape-data.js",
         OUTPUT / "generated" / "research-items.js",
+        OUTPUT / "generated" / "literature-idea-mining-input.json",
+        OUTPUT / "generated" / "literature-idea-mining-collision.js",
         OUTPUT / "generated" / "paper-registry.js",
         OUTPUT / "research-directions.html",
         OUTPUT / "research-timeline.css",

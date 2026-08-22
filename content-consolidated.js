@@ -60,9 +60,9 @@
   if (sources.bibliography) {
     pages.bibliography = Object.assign({}, sources.bibliography, {
       eyebrow:{en:"Literature · Evidence Library",zh:"文献 · 证据库"},
-      title:{en:"Literature library: published spine, method comparison, and full corpus",zh:"文献库 · 正式发表主线、方法比较与完整语料"},
-      lead:{en:"Read the peer-reviewed spine first: start from the four lifecycle questions, see how concrete simple baselines evolved, compare published papers within the same problem, then use the full maps and searchable corpus for the preprint frontier. Corpus provenance and coverage remain auditable at the end.",zh:"建议先用正式发表论文把领域读懂：从四个自进化生命周期问题进入，看简单方法怎样逐步演化，再在同一研究问题下横向比较正式论文；之后才把预印本前沿放回来，看完整领域地图与可检索语料。语料来源、覆盖协议和可信度审计保留在页面最后。"},
-      callout:{en:"Formal publication is the evidence spine, not a synonym for direct self-evolution. The page therefore separates must-read mainline work, direct related publications, and adjacent/foundation papers; every published-paper deep read makes the previous simple method explicit and leaves unchecked result-table numbers unfilled.",zh:"正式发表是证据主线，但不等于每篇论文都是 Agent 自进化核心工作。因此页面把正式论文再分成“主线必读、直接相关、邻接／历史基础”；单篇深读必须把以前最简单的方法具体写清楚，没有逐表核验过的实验数字明确留空，不用自动生成数字补齐。"},
+      title:{en:"Literature library: published spine, idea-mining gaps, and full corpus",zh:"文献库 · 正式发表主线、研究空白与完整语料"},
+      lead:{en:"Read the peer-reviewed spine first: start from the four lifecycle questions, see how concrete simple baselines evolved, compare published papers within the same problem, then convert covered territory, repeated failures, and interface gaps into an idea-mining search space. Only after that bring the preprint frontier back through the full maps and searchable corpus.",zh:"建议先用正式发表论文把领域读懂：从四个自进化生命周期问题进入，看简单方法怎样逐步演化，再在同一研究问题下横向比较正式论文；第三步把“已经做掉的主线、反复失败点、成熟方向之间的接口断层”整理成后续找新研究问题的搜索空间；最后才把预印本前沿放回来做最新碰撞检索。"},
+      callout:{en:"A literature gap is not automatically an idea. The idea-mining layer first marks crowded motifs as exclusions, then records surviving failures, nearest published work, search terms, and a seven-field candidate contract. Nothing in this page can promote a gap into ResearchItem without the normal novelty and evidence gates.",zh:"文献空白不会自动升级成候选研究问题。Research Gap Mining 层先把已经拥挤的套路标成排除项，再记录真正还没解决的失败、最近正式工作、后续检索关键词和 7 项候选合同；它只负责缩小搜索空间，不会绕过正常 novelty / evidence gate 自动生成或晋级 ResearchItem。"},
       groupsBefore:[group("coverage-method")]
     });
   }

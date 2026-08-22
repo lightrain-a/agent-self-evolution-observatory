@@ -1,0 +1,2988 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-22T06:40:02+00:00",
+  "projection_policy": {
+    "read_only": true,
+    "scientific_authority": false,
+    "experiment_authority": false,
+    "promotion_authority": false,
+    "gap_is_not_an_idea": true,
+    "candidate_must_pass_normal_novelty_and_evidence_gates": true,
+    "stopped_or_merged_work_must_not_be_revived_without_reopen_evidence": true
+  },
+  "sources": {
+    "literature_gap_registry": "literature-idea-mining-data.json",
+    "research_item_ledger": "generated/research-items.json",
+    "research_item_schema_version": "1.0",
+    "research_item_source_revision": "5345ba8447c681482d7900424c0798e0398f7f8e"
+  },
+  "basis": {
+    "zh": "以当前正式发表主线为第一层证据。这里的“拥挤/机会”只表示当前文献库中的碰撞风险，不是最终 novelty 判决；候选生成后仍必须补最新预印本检索、原文核验和 strongest-baseline 对齐。",
+    "en": "The peer-reviewed spine is the first evidence layer. Crowding/opportunity describes collision risk in the current corpus, not a final novelty judgment; candidates still need fresh preprint search, primary-source verification, and strongest-baseline matching."
+  },
+  "principles": [
+    {
+      "title": {
+        "zh": "先找反复失败的地方",
+        "en": "Start from repeated failures"
+      },
+      "body": {
+        "zh": "优先找多篇论文共同暴露、却没有稳定解决的失败：负迁移、评价器漂移、污染传播、适用范围错误、版本回退或验证预算失控。",
+        "en": "Prefer failures repeatedly exposed across papers but not robustly solved: negative transfer, evaluator drift, contamination propagation, scope errors, regressions, or validation-budget blowups."
+      }
+    },
+    {
+      "title": {
+        "zh": "把成熟套路当排除项",
+        "en": "Treat mature motifs as exclusions"
+      },
+      "body": {
+        "zh": "“更好的 memory retrieval”“LLM 自动生成 skill”“再搜索一次 workflow”“再做一个 critic”“再做自适应 curriculum”默认高碰撞，除非科学对象、可识别量或失败机制发生实质变化。",
+        "en": "A better retriever, LLM-authored skill, another workflow search, another critic, or another adaptive curriculum is presumed high-collision unless the scientific object, estimand, or failure mechanism materially changes."
+      }
+    },
+    {
+      "title": {
+        "zh": "优先找成熟主线之间的接口断层",
+        "en": "Mine interfaces between mature lines"
+      },
+      "body": {
+        "zh": "很多新问题出现在模块交接处：经验写入记忆之前、记忆编译成技能之后、workflow 更新提交之前、评价信号反过来改变课程之后。",
+        "en": "Many open problems sit at interfaces: before experience enters memory, after memory becomes a skill, before workflow changes are committed, or after evaluation signals reshape the curriculum."
+      }
+    },
+    {
+      "title": {
+        "zh": "候选研究问题必须带能杀死自己的局部实验",
+        "en": "Every idea needs a local falsifier"
+      },
+      "body": {
+        "zh": "文献缺口本身不是论文。候选必须同时给出 strongest simple baseline、区分性预测、最小实验单元和明确 STOP 条件。",
+        "en": "A literature gap is not yet a paper. A candidate needs a strongest simple baseline, discriminating prediction, minimum experimental unit, and explicit STOP condition."
+      }
+    }
+  ],
+  "research_items": {
+    "A-1": {
+      "code": "A-1",
+      "category": "A",
+      "title": {
+        "zh": "面向离散智能体更新的冻结非参数行为散度信赖域",
+        "en": "Frozen Non-Parametric Behavioral-Divergence Trust Region for Discrete Agent Updates"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "通过预先预测有害的行为分布漂移来决定接纳哪些候选智能体更新，使用简单、冻结、非参数的行为散度门控，而非学习型或多组件信赖域。",
+        "en": "Decide which candidate agent updates to admit by predicting harmful behavioral distribution shifts before they cause downstream regressions, using a simple, frozen, non-parametric behavioral-divergence gate rather than a learned or multi-component trust region."
+      },
+      "reopen_condition": {
+        "zh": "merge/drop review; no GPU rerun",
+        "en": "merge/drop review; no GPU rerun"
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "A-2": {
+      "code": "A-2",
+      "category": "A",
+      "title": {
+        "zh": "预算感知进化控制器",
+        "en": "Budgeted Evolution Controller"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "固定反思和更新轮数会在简单任务浪费调用，在困难任务过早停止。",
+        "en": "Fixed evolution rounds waste calls on easy tasks and stop too early on difficult ones."
+      },
+      "reopen_condition": {
+        "zh": "merge/drop review; no GPU rerun",
+        "en": "merge/drop review; no GPU rerun"
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "A-3": {
+      "code": "A-3",
+      "category": "A",
+      "title": {
+        "zh": "预算校准的预测性回归面板",
+        "en": "Budget-Calibrated Predictive Regression Panel"
+      },
+      "scientific_state": "HOLD",
+      "problem": {
+        "zh": "预提交 gate 已经成为自进化 Agent 的直接研究对象；剩下的问题不是再叠一个 critic，而是在固定很小的 Probe 预算下，哪些 Probe 真能预测隐藏原任务回退，以及它们何时应该退役。",
+        "en": "Pre-commit gating is now a direct research topic in self-evolving agents. The remaining problem is not adding another critic, but learning which probes actually predict hidden original-task regression under a fixed small budget and when those probes should retire."
+      },
+      "reopen_condition": {
+        "zh": "Stop GPU work on this prompt-patch P0 instance. Reopen A-3 only with a newly qualified update substrate/action stream and a newly frozen fresh-candidate validation; otherwise send the direction to human pivot/drop review.",
+        "en": "Stop GPU work on this prompt-patch P0 instance. Reopen A-3 only with a newly qualified update substrate/action stream and a newly frozen fresh-candidate validation; otherwise send the direction to human pivot/drop review."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "A-4": {
+      "code": "A-4",
+      "category": "A",
+      "title": {
+        "zh": "组合更新兼容性：冻结更新表面、预注册N=12更新与架构匹配消融",
+        "en": "Compositional Update Compatibility with Frozen Update Surface, Preregistered N=12 Updates, and Architecture-Matched Ablation"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "解决两个单独有用的更新在组合时可能相互干扰的问题，且个体回归测试无法预测组合结果。",
+        "en": "Address the problem that two individually useful updates can interfere when composed, and individual regression tests cannot predict composition outcomes."
+      },
+      "reopen_condition": {
+        "zh": "Merge A-4 into a direct ordered-composition risk/repair baseline; the typed registry adds no held-out prediction or repair value.",
+        "en": "Merge A-4 into a direct ordered-composition risk/repair baseline; the typed registry adds no held-out prediction or repair value."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "A-5": {
+      "code": "A-5",
+      "category": "A",
+      "title": {
+        "zh": "回滚等价的更新历史压缩",
+        "en": "Rollback-Equivalent Update-History Compaction"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "版本化 rollback 已出现更直接的 Agent memory 系统，OS 层也已有高效增量 checkpoint/rollback；当前版本不再具备直接进入 P0 的新颖性边界。只有证明跨异构更新表面的固定存储预算行为等价压缩不能被 snapshot/delta checkpoint 解决，才值得复活。",
+        "en": "Direct agent-memory version control and efficient incremental checkpoint/rollback now exist. The current version is no longer P0-ready and is revivable only if cross-surface behavioral-equivalent compaction under a fixed storage budget cannot be solved by snapshot/delta checkpointing."
+      },
+      "reopen_condition": {
+        "zh": "Merge A-5 into generic version/history infrastructure; do not spend GPU on a standalone semantic-compaction method.",
+        "en": "Merge A-5 into generic version/history infrastructure; do not spend GPU on a standalone semantic-compaction method."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "A-6": {
+      "code": "A-6",
+      "category": "A",
+      "title": {
+        "zh": "主动因果最小回滚",
+        "en": "Active Causal Minimal Rollback"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "",
+        "en": ""
+      },
+      "reopen_condition": {
+        "zh": "Stop standalone A-6; the current active query policy is exactly reproduced by non-learning binary group testing under the same sparse-fault prior.",
+        "en": "Stop standalone A-6; the current active query policy is exactly reproduced by non-learning binary group testing under the same sparse-fault prior."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "A-7": {
+      "code": "A-7",
+      "category": "A",
+      "title": {
+        "zh": "反事实进化决策控制器",
+        "en": "Counterfactual Evolution Decision Controller"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "",
+        "en": ""
+      },
+      "reopen_condition": {
+        "zh": "Merge A-7 into A-2 as a simple same-state counterfactual decision rule; do not spend GPU on a standalone learned-controller paper.",
+        "en": "Merge A-7 into A-2 as a simple same-state counterfactual decision rule; do not spend GPU on a standalone learned-controller paper."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "A-8": {
+      "code": "A-8",
+      "category": "A",
+      "title": {
+        "zh": "固定进化器下的未来可学习性审计",
+        "en": "Future-Learnability Audit under a Frozen Evolver"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "当前收益和旧能力保持都正常的持久更新，仍可能降低 Agent 下一次适应新任务的学习斜率/样本效率。",
+        "en": "当前收益和旧能力保持都正常的持久更新，仍可能降低 Agent 下一次适应新任务的学习斜率/样本效率。"
+      },
+      "reopen_condition": {
+        "zh": "Archive PF-1 standalone. Continue paper-first review with unresolved PF-3/PF-5/PF-7 rather than attempting another PF-1 terminology or substrate rescue.",
+        "en": "Archive PF-1 standalone. Continue paper-first review with unresolved PF-3/PF-5/PF-7 rather than attempting another PF-1 terminology or substrate rescue."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "A-9": {
+      "code": "A-9",
+      "category": "A",
+      "title": {
+        "zh": "更新后的诊断通道保持",
+        "en": "Post-Update Diagnostic-Channel Preservation"
+      },
+      "scientific_state": "MERGED",
+      "problem": {
+        "zh": "更新可以提高 task success，却让未来失败更难定位：trace 区分度下降、错误信号被吞掉或 provenance 不足。",
+        "en": "更新可以提高 task success，却让未来失败更难定位：trace 区分度下降、错误信号被吞掉或 provenance 不足。"
+      },
+      "reopen_condition": {
+        "zh": "Merge the invariant into PF-2 paper design. Reopen standalone only if a later collision review identifies an irreducible diagnostic-channel mechanism beyond generic constrained gating.",
+        "en": "Merge the invariant into PF-2 paper design. Reopen standalone only if a later collision review identifies an irreducible diagnostic-channel mechanism beyond generic constrained gating."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "A-10": {
+      "code": "A-10",
+      "category": "A",
+      "title": {
+        "zh": "更新差异驱动的验证",
+        "en": "Update-Difference-Guided Verification"
+      },
+      "scientific_state": "MERGED",
+      "problem": {
+        "zh": "固定 regression suite 测旧行为，但候选自更新会产生 candidate-specific 行为变化；是否应从 incumbent↔candidate divergence 自动生成新验证义务？",
+        "en": "固定 regression suite 测旧行为，但候选自更新会产生 candidate-specific 行为变化；是否应从 incumbent↔candidate divergence 自动生成新验证义务？"
+      },
+      "reopen_condition": {
+        "zh": "differential-verification: use update-induced behavior divergence to prioritize verification budget when useful, but treat it as an engineering component subordinate to independent truth and endpoint-headroom rules.",
+        "en": "differential-verification: use update-induced behavior divergence to prioritize verification budget when useful, but treat it as an engineering component subordinate to independent truth and endpoint-headroom rules."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "A-11": {
+      "code": "A-11",
+      "category": "A",
+      "title": {
+        "zh": "自进化后的失败风险迁移",
+        "en": "Failure-Risk Transport under Self-Evolution"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "总成功率上升时，剩余失败可能迁向更 silent、更 severe 或更难恢复的类别；aggregate metric 会把这种 harmful substitution 藏起来。",
+        "en": "总成功率上升时，剩余失败可能迁向更 silent、更 severe 或更难恢复的类别；aggregate metric 会把这种 harmful substitution 藏起来。"
+      },
+      "reopen_condition": {
+        "zh": "Stop standalone paper development. Preserve failure transport as a secondary analysis and require a future standalone revival to prove decision value beyond class-marginal risk.",
+        "en": "Stop standalone paper development. Preserve failure transport as a secondary analysis and require a future standalone revival to prove decision value beyond class-marginal risk."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "A-12": {
+      "code": "A-12",
+      "category": "A",
+      "title": {
+        "zh": "更新影响范围的证据重验证",
+        "en": "Update-Impact-Aware Evidence Revalidation"
+      },
+      "scientific_state": "MERGED",
+      "problem": {
+        "zh": "更新后部分旧证据仍有效，依赖已改变行为路径的证据则失效；全部重跑太贵，全部相信不安全。",
+        "en": "更新后部分旧证据仍有效，依赖已改变行为路径的证据则失效；全部重跑太贵，全部相信不安全。"
+      },
+      "reopen_condition": {
+        "zh": "evidence-impact-revalidation: maintain dependency scope and selectively invalidate/revalidate affected evidence as a runtime/governance optimization, not a standalone paper thesis.",
+        "en": "evidence-impact-revalidation: maintain dependency scope and selectively invalidate/revalidate affected evidence as a runtime/governance optimization, not a standalone paper thesis."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-1": {
+      "code": "B-1",
+      "category": "B",
+      "title": {
+        "zh": "跨过程验证经验蒸馏",
+        "en": "Cross-Process Validated Experience Distillation"
+      },
+      "scientific_state": "MERGED",
+      "problem": {
+        "zh": "多条成功轨迹做交集、共识或 contrast 已经不足以形成新方法；真正的问题是：同一成功结果可由不同有效过程获得时，哪条经验在改变未来行为后仍跨过程稳定有益。",
+        "en": "Intersection, consensus, or contrast over multiple successful trajectories is no longer enough. The real problem is identifying lessons whose behavioral intervention remains beneficial across distinct valid processes that reach the same successful outcome."
+      },
+      "reopen_condition": {
+        "zh": "Only new matched primary evidence that overturns the current conclusion may reopen this direction.",
+        "en": "Only new matched primary evidence that overturns the current conclusion may reopen this direction."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-2": {
+      "code": "B-2",
+      "category": "B",
+      "title": {
+        "zh": "固定容量下基于交叉删除干预的保留矛盾记忆巩固",
+        "en": "Contradiction-Preserving Memory Consolidation under Fixed Capacity with Crossed Deletion Interventions"
+      },
+      "scientific_state": "HOLD",
+      "problem": {
+        "zh": "解决记忆巩固只保留共识摘要、丢弃可推翻规则的稀有反证的问题：在固定容量下检验“显式保留最小结论改变集”是否比非学习的矛盾感知保留或效用保留更能降低过泛化与后续负迁移。",
+        "en": "Address the problem that memory consolidation keeps consensus summaries and drops rare counterevidence that can overturn a rule: test, under fixed capacity, whether explicitly retaining a minimal conclusion-changing set reduces overgeneralization and later negative transfer more than non-learned contradiction-aware or utility-based retention."
+      },
+      "reopen_condition": {
+        "zh": "Do not open hidden E_orig or train a B-2 selector on this table. Reopen only with a fresh dedicated deletion-sensitivity collection that independently supplies >=30 reproducible conclusion-change cases; otherwise send B-2 to human pivot/drop review.",
+        "en": "Do not open hidden E_orig or train a B-2 selector on this table. Reopen only with a fresh dedicated deletion-sensitivity collection that independently supplies >=30 reproducible conclusion-change cases; otherwise send B-2 to human pivot/drop review."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-3": {
+      "code": "B-3",
+      "category": "B",
+      "title": {
+        "zh": "共检索交互排斥图",
+        "en": "Co-Retrieval Interaction Exclusion Graph"
+      },
+      "scientific_state": "HOLD",
+      "problem": {
+        "zh": "单条 memory 的 causal usefulness 已有直接方法；剩下的真实失败是两条单独无害/有益的 memory 同时被检索后相互误导，而 per-item score 看不见这种 interaction。",
+        "en": "Direct methods already estimate causal usefulness of individual memories. The remaining failure is interaction: two memories may each be harmless or useful alone yet become harmful when co-retrieved, which per-item scores cannot detect."
+      },
+      "reopen_condition": {
+        "zh": "Stop the current ALFWorld B-3 instance and send it to human pivot/drop review; reopen only on a fresh co-retrieval substrate with at least six independent unseen pair-target units.",
+        "en": "Stop the current ALFWorld B-3 instance and send it to human pivot/drop review; reopen only on a fresh co-retrieval substrate with at least six independent unseen pair-target units."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-4": {
+      "code": "B-4",
+      "category": "B",
+      "title": {
+        "zh": "影响范围路由的经验准入",
+        "en": "Influence-Routed Experience Admission"
+      },
+      "scientific_state": "MERGED",
+      "problem": {
+        "zh": "generic pre-commit gate 已经有直接工作；memory-specific 方向只剩一个更窄问题：在完全固定的 Probe 数量下，能否利用 lesson 的触发条件与适用范围，把有限 sentinel 预算更准确地分给真正可能受影响的任务。",
+        "en": "Generic pre-commit gates now have direct prior work. The memory-specific question that remains is whether lesson triggers and applicability scope can route a strictly fixed sentinel budget toward tasks actually likely to be affected."
+      },
+      "reopen_condition": {
+        "zh": "Only new matched primary evidence that overturns the current conclusion may reopen this direction.",
+        "en": "Only new matched primary evidence that overturns the current conclusion may reopen this direction."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-5": {
+      "code": "B-5",
+      "category": "B",
+      "title": {
+        "zh": "最小单调适用边界修复",
+        "en": "Minimal Monotone Applicability Repair"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "遇到反例时整条删除或重写 procedural memory 会损失仍然有效的主体；但 counterexample-driven skill refinement 已有工作，因此新变量必须是‘skill body 完全冻结，只允许 external applicability gate 最小且单调地收缩’。",
+        "en": "Deleting or rewriting a procedural memory after a counterexample destroys still-valid content. Because counterexample-driven skill refinement already exists, the new variable must be a fully frozen skill body with only a minimally and monotonically shrinking external applicability gate."
+      },
+      "reopen_condition": {
+        "zh": "Merge B-5 into a standard compact precondition/ILP learner; monotone counterexample specialization adds no independent boundary-generalization value.",
+        "en": "Merge B-5 into a standard compact precondition/ILP learner; monotone counterexample specialization adds no independent boundary-generalization value."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-6": {
+      "code": "B-6",
+      "category": "B",
+      "title": {
+        "zh": "复用机会驱动的记忆效用复验",
+        "en": "Reuse-Opportunity Memory Utility Revalidation"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "stale memory、utility refinement 和 shift recovery 都已有直接工作；剩下的问题不是‘会不会过期’，而是在固定审计预算下，何时值得重新做一次 memory-on/off 干预来确认局部效用已经漂移。",
+        "en": "Stale memory, utility refinement, and shift recovery now have direct prior work. The remaining problem is not whether memory becomes stale, but when a fixed audit budget should trigger a new memory-on/off intervention because local utility has drifted."
+      },
+      "reopen_condition": {
+        "zh": "Retain only a simple cache/revalidation policy; the learned utility-hazard model adds no future-reuse decision value.",
+        "en": "Retain only a simple cache/revalidation policy; the learned utility-hazard model adds no future-reuse decision value."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-7": {
+      "code": "B-7",
+      "category": "B",
+      "title": {
+        "zh": "带适用边界的经验学习",
+        "en": "Applicability-Bounded Lesson Learning"
+      },
+      "scientific_state": "MERGED",
+      "problem": {
+        "zh": "自然语言经验被过度泛化到表面相似但约束不同的状态。",
+        "en": "Natural-language lessons are overgeneralized to superficially similar states with different constraints."
+      },
+      "reopen_condition": {
+        "zh": "Only new matched primary evidence that overturns the current conclusion may reopen this direction.",
+        "en": "Only new matched primary evidence that overturns the current conclusion may reopen this direction."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-8": {
+      "code": "B-8",
+      "category": "B",
+      "title": {
+        "zh": "重复效应记忆门控",
+        "en": "Replicated-Effect Memory Gate"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "",
+        "en": ""
+      },
+      "reopen_condition": {
+        "zh": "Continue only under the already frozen P0/rerun contract.",
+        "en": "Continue only under the already frozen P0/rerun contract."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-9": {
+      "code": "B-9",
+      "category": "B",
+      "title": {
+        "zh": "跨任务效应迁移证书",
+        "en": "Cross-Task Effect Transport Certificate"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "",
+        "en": ""
+      },
+      "reopen_condition": {
+        "zh": "Continue only under the already frozen P0/rerun contract.",
+        "en": "Continue only under the already frozen P0/rerun contract."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-10": {
+      "code": "B-10",
+      "category": "B",
+      "title": {
+        "zh": "约束完备的类型化记忆顺序逻辑",
+        "en": "Constraint-Complete Typed Memory-Order Logic"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "解决智能体记忆检索中的真实问题：当多个类型化记忆（异常、策略、安全约束、工具模式、观察）被共同检索时，其合法执行顺序取决于高阶、上下文相关的约束，而非简单成对偏好。目标是判断一种持久化的符号约束表征能否在未见过的类型组合上实现系统性泛化，以及编译后的免搜索解码能否在保持精度的同时降低推理成本。",
+        "en": "Addresses the real problem of ordering co-retrieved typed memories (exceptions, policies, safety constraints, tool schemas, observations) in agents, where legal execution order depends on higher-order, context-dependent constraints rather than simple pairwise preferences. The goal is to determine whether a persistent symbolic constraint representation yields systematic generalization to unseen type compositions, and whether a compiled search-free decoder preserves accuracy at lower inference cost."
+      },
+      "reopen_condition": {
+        "zh": "Stop standalone B-10 and do not spend GPU; retain this P0 as the matched-simplification falsifier and return the drop/merge decision to human review.",
+        "en": "Stop standalone B-10 and do not spend GPU; retain this P0 as the matched-simplification falsifier and return the drop/merge decision to human review."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-11": {
+      "code": "B-11",
+      "category": "B",
+      "title": {
+        "zh": "决策保持的经验压缩生命周期",
+        "en": "Decision-Preserving Experience Compression Lifecycle"
+      },
+      "scientific_state": "MERGED",
+      "problem": {
+        "zh": "外部 memory/skill 可回滚但占 context；rule/adapter/weights 更便宜却可能丢失稀有策略。真正问题是何时值得向更高压缩层固化。",
+        "en": "外部 memory/skill 可回滚但占 context；rule/adapter/weights 更便宜却可能丢失稀有策略。真正问题是何时值得向更高压缩层固化。"
+      },
+      "reopen_condition": {
+        "zh": "compression-lifecycle-control: keep reversible representations until decision-relevant distinctions are certified safe to compress; use as systems policy, not a standalone paper claim.",
+        "en": "compression-lifecycle-control: keep reversible representations until decision-relevant distinctions are certified safe to compress; use as systems policy, not a standalone paper claim."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-14": {
+      "code": "B-14",
+      "category": "B",
+      "title": {
+        "zh": "MetaSkill ALFWorld +1.92 residual is already explained by the source's own component ablations",
+        "en": "MetaSkill ALFWorld +1.92 residual is already explained by the source's own component ablations"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "MetaSkill ALFWorld +1.92 residual is already explained by the source's own component ablations",
+        "en": "MetaSkill ALFWorld +1.92 residual is already explained by the source's own component ablations"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with new primary or provenance-audited first-party evidence that holds the frozen Gemma executor, ALFWorld task/evaluation protocol, task-skill state, rollout budget, and evaluation information comparable while independently matching or intervening on cross-branch retrieval, slow-loop meta-updates, and edit-proposal-policy behavior, and still finds a replicated held-out gain or sign change not expressed by those source-identified components or ordinary ceiling/finite-sample effects.",
+        "en": "Reopen only with new primary or provenance-audited first-party evidence that holds the frozen Gemma executor, ALFWorld task/evaluation protocol, task-skill state, rollout budget, and evaluation information comparable while independently matching or intervening on cross-branch retrieval, slow-loop meta-updates, and edit-proposal-policy behavior, and still finds a replicated held-out gain or sign change not expressed by those source-identified components or ordinary ceiling/finite-sample effects."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-15": {
+      "code": "B-15",
+      "category": "B",
+      "title": {
+        "zh": "LOPD latent-token and retrieval-count plateaus reduce to capacity saturation and marginal-information redundancy",
+        "en": "LOPD latent-token and retrieval-count plateaus reduce to capacity saturation and marginal-information redundancy"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "LOPD latent-token and retrieval-count plateaus reduce to capacity saturation and marginal-information redundancy",
+        "en": "LOPD latent-token and retrieval-count plateaus reduce to capacity saturation and marginal-information redundancy"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only if a source-faithful or independently reviewed experiment fixes total latent information/context budget and frozen retrieval support, independently changes the experience-count versus per-experience-capacity decomposition, matches compute and update information, and yields a repeatable held-out residual beyond rate-distortion, marginal-information, redundancy/correlation, retrieval-rank, and context-budget baselines.",
+        "en": "Reopen only if a source-faithful or independently reviewed experiment fixes total latent information/context budget and frozen retrieval support, independently changes the experience-count versus per-experience-capacity decomposition, matches compute and update information, and yields a repeatable held-out residual beyond rate-distortion, marginal-information, redundancy/correlation, retrieval-rank, and context-budget baselines."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-16": {
+      "code": "B-16",
+      "category": "B",
+      "title": {
+        "zh": "Relevance-conditioned evidence debt under selective evidence access",
+        "en": "Relevance-conditioned evidence debt under selective evidence access"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Relevance-conditioned evidence debt under selective evidence access",
+        "en": "Relevance-conditioned evidence debt under selective evidence access"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with provenance-audited matched states that are equivalent under DocAtlas-style found/evidence/plan, mutable search/index state, explored-page history, and budget, but have different counterfactual answer-change risk and different optimal answer-versus-continue actions; the residual must also survive generic value-of-information/active sequential testing under the same information.",
+        "en": "Reopen only with provenance-audited matched states that are equivalent under DocAtlas-style found/evidence/plan, mutable search/index state, explored-page history, and budget, but have different counterfactual answer-change risk and different optimal answer-versus-continue actions; the residual must also survive generic value-of-information/active sequential testing under the same information."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-17": {
+      "code": "B-17",
+      "category": "B",
+      "title": {
+        "zh": "Executable treatment semantics/version as a standalone persistent-memory causal object",
+        "en": "Executable treatment semantics/version as a standalone persistent-memory causal object"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Executable treatment semantics/version as a standalone persistent-memory causal object",
+        "en": "Executable treatment semantics/version as a standalone persistent-memory causal object"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only if new primary evidence supports a preregistered structural constraint for self-modifying persistent treatments and, under identical pre-outcome information including the full executable treatment map/version state, a matched versioned/nonstationary treatment or dynamic policy-regime baseline makes a different ex-ante prediction and fails an exact reduction test. A renamed mapping feature, extra representation, new version label, new K-step/window schedule, or withholding information from the baseline is insufficient.",
+        "en": "Reopen only if new primary evidence supports a preregistered structural constraint for self-modifying persistent treatments and, under identical pre-outcome information including the full executable treatment map/version state, a matched versioned/nonstationary treatment or dynamic policy-regime baseline makes a different ex-ante prediction and fails an exact reduction test. A renamed mapping feature, extra representation, new version label, new K-step/window schedule, or withholding information from the baseline is insufficient."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-18": {
+      "code": "B-18",
+      "category": "B",
+      "title": {
+        "zh": "SEED on-policy and hindsight-SFT ablation drops reduce to occupancy matching and cold-start capability",
+        "en": "SEED on-policy and hindsight-SFT ablation drops reduce to occupancy matching and cold-start capability"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "SEED on-policy and hindsight-SFT ablation drops reduce to occupancy matching and cold-start capability",
+        "en": "SEED on-policy and hindsight-SFT ablation drops reduce to occupancy matching and cold-start capability"
+      },
+      "reopen_condition": {
+        "zh": "Reopen the on-policy residual only with occupancy/support/skill-quality/size and information matched between on-policy and offline libraries; reopen the SFT residual only with initial trajectory-analysis competence, supervised information budget, and downstream optimization budget matched. In either case require a repeatable held-out difference beyond distribution shift, stale supervision, cold-start initialization, and optimization-path dependence.",
+        "en": "Reopen the on-policy residual only with occupancy/support/skill-quality/size and information matched between on-policy and offline libraries; reopen the SFT residual only with initial trajectory-analysis competence, supervised information budget, and downstream optimization budget matched. In either case require a repeatable held-out difference beyond distribution shift, stale supervision, cold-start initialization, and optimization-path dependence."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-19": {
+      "code": "B-19",
+      "category": "B",
+      "title": {
+        "zh": "Temporally distributed persistent-memory exposure as a standalone causal mechanism",
+        "en": "Temporally distributed persistent-memory exposure as a standalone causal mechanism"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Temporally distributed persistent-memory exposure as a standalone causal mechanism",
+        "en": "Temporally distributed persistent-memory exposure as a standalone causal mechanism"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only if a preregistered case matches the full pre-outcome history and nominal exposure schedule yet changes the executable semantics/version of the persistent artifact, yields a distinct ex-ante prediction, and an explicit same-information nonstationary/versioned-treatment or policy-regime model given the same observable version signal cannot express that prediction. A new timing window, longer exposure, cumulative-dose statistic, K-step label, or memory terminology is insufficient.",
+        "en": "Reopen only if a preregistered case matches the full pre-outcome history and nominal exposure schedule yet changes the executable semantics/version of the persistent artifact, yields a distinct ex-ante prediction, and an explicit same-information nonstationary/versioned-treatment or policy-regime model given the same observable version signal cannot express that prediction. A new timing window, longer exposure, cumulative-dose statistic, K-step label, or memory terminology is insufficient."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-20": {
+      "code": "B-20",
+      "category": "B",
+      "title": {
+        "zh": "The reported ~20% MindMemOS dreaming compression is not an independently identified compression plateau",
+        "en": "The reported ~20% MindMemOS dreaming compression is not an independently identified compression plateau"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "The reported ~20% MindMemOS dreaming compression is not an independently identified compression plateau",
+        "en": "The reported ~20% MindMemOS dreaming compression is not an independently identified compression plateau"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only when a source-faithful or independently validated substrate supports an intervention that separates compression quantity from conflict-resolution semantics: either vary AMCR while matching which answer-critical conflict paths are resolved/preserved, or vary conflict-resolution quality at matched AMCR. The strongest conflict-aware selective-forgetting/rate-distortion baseline must receive the same memory provenance, temporal order, retrieval state, and query information and still make a distinct ex-ante prediction.",
+        "en": "Reopen only when a source-faithful or independently validated substrate supports an intervention that separates compression quantity from conflict-resolution semantics: either vary AMCR while matching which answer-critical conflict paths are resolved/preserved, or vary conflict-resolution quality at matched AMCR. The strongest conflict-aware selective-forgetting/rate-distortion baseline must receive the same memory provenance, temporal order, retrieval state, and query information and still make a distinct ex-ante prediction."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "B-21": {
+      "code": "B-21",
+      "category": "B",
+      "title": {
+        "zh": "Nonmonotonic skill-pool scaling with irreversible contamination collapse",
+        "en": "Nonmonotonic skill-pool scaling with irreversible contamination collapse"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Nonmonotonic skill-pool scaling with irreversible contamination collapse",
+        "en": "Nonmonotonic skill-pool scaling with irreversible contamination collapse"
+      },
+      "reopen_condition": {
+        "zh": "New primary evidence supplies an ex-ante same-information prediction that the recorded current-source reduction cannot express under matched information, budget, and operational scope; renaming components, changing application domain, or proposing an unexecuted ablation does not reopen the basin.",
+        "en": "New primary evidence supplies an ex-ante same-information prediction that the recorded current-source reduction cannot express under matched information, budget, and operational scope; renaming components, changing application domain, or proposing an unexecuted ablation does not reopen the basin."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "C-1": {
+      "code": "C-1",
+      "category": "C",
+      "title": {
+        "zh": "谱系去相关的自标注准入",
+        "en": "Lineage-Decorrelation for Self-Label Admission"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "multi-agent agreement、pairwise validator 和 uncertainty-aware self-labeling 已经能提高单轮伪标签质量；剩下的问题是跨轮自进化时，同一个早期错误经同源 evaluator/父标签反复派生后被当成多份独立证据。",
+        "en": "Multi-agent agreement, pairwise validators, and uncertainty-aware labeling can improve one-round pseudo-label quality. The remaining problem is cross-round dependence: one early error can spawn many descendant labels through the same evaluator lineage and be mistakenly counted as independent evidence."
+      },
+      "reopen_condition": {
+        "zh": "Do not open a method GPU run under the current F0 decision.",
+        "en": "Do not open a method GPU run under the current F0 decision."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "C-2": {
+      "code": "C-2",
+      "category": "C",
+      "title": {
+        "zh": "跨版本 Rubric 干预修复",
+        "en": "Cross-Version Rubric Intervention Repair"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "policy 与 internal reward 共进化已经有直接方法；真正难的是 reward 上升时判断究竟是 actor 变好，还是 evaluator/rubric 自己漂向 actor 的捷径。",
+        "en": "Direct methods already co-evolve policy and internal reward. The unresolved problem is attribution: when reward rises, did the actor improve or did the evaluator/rubric drift toward the actor's shortcut?"
+      },
+      "reopen_condition": {
+        "zh": "Keep cross-version matrices only as diagnostics; merge evaluator repair into simple frozen-anchor calibration and do not spend GPU on standalone C-2.",
+        "en": "Keep cross-version matrices only as diagnostics; merge evaluator repair into simple frozen-anchor calibration and do not spend GPU on standalone C-2."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "C-3": {
+      "code": "C-3",
+      "category": "C",
+      "title": {
+        "zh": "奖励不变性审计",
+        "en": "Reward Invariance Audit"
+      },
+      "scientific_state": "MERGED",
+      "problem": {
+        "zh": "Reward 对语义无关格式、背景或表述敏感时，Agent 会优化捷径。",
+        "en": "Agents exploit shortcuts when rewards respond to semantically irrelevant format, background, or phrasing."
+      },
+      "reopen_condition": {
+        "zh": "Only new matched primary evidence that overturns the current conclusion may reopen this direction.",
+        "en": "Only new matched primary evidence that overturns the current conclusion may reopen this direction."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "C-4": {
+      "code": "C-4",
+      "category": "C",
+      "title": {
+        "zh": "自纠正坍塌检测",
+        "en": "Self-Correction Collapse Detector"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "模型可能学会频繁改答案、偏好格式或迎合 Reward，而不是真正纠错。",
+        "en": "A model may learn to change answers, prefer a format, or please a reward without genuinely correcting errors."
+      },
+      "reopen_condition": {
+        "zh": "Do not open a method GPU run under the current F0 decision.",
+        "en": "Do not open a method GPU run under the current F0 decision."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "C-5": {
+      "code": "C-5",
+      "category": "C",
+      "title": {
+        "zh": "干预验证自纠正",
+        "en": "Intervention-Validated Self-Correction"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Critique 可能只是事后合理化，修复其声称的变量并不会按预期改变答案。",
+        "en": "A critique may be post-hoc rationalization: fixing the claimed variable may not change the answer as predicted."
+      },
+      "reopen_condition": {
+        "zh": "Do not open a method GPU run under the current F0 decision.",
+        "en": "Do not open a method GPU run under the current F0 decision."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "C-6": {
+      "code": "C-6",
+      "category": "C",
+      "title": {
+        "zh": "纠正策略信用分配",
+        "en": "Correction Policy Credit Assignment"
+      },
+      "scientific_state": "MERGED",
+      "problem": {
+        "zh": "多轮纠正中无法判断哪次 critique 或修复动作真正带来提升。",
+        "en": "Multi-round correction does not reveal which critique or repair action caused improvement."
+      },
+      "reopen_condition": {
+        "zh": "Only new matched primary evidence that overturns the current conclusion may reopen this direction.",
+        "en": "Only new matched primary evidence that overturns the current conclusion may reopen this direction."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "C-7": {
+      "code": "C-7",
+      "category": "C",
+      "title": {
+        "zh": "自写验证器漂移",
+        "en": "Self-Authored Verifier Drift"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Agent 同时修改 policy 与负责评价 policy 的 tests/verifier 时，可能出现自评分上升而真实部署退化。",
+        "en": "Agent 同时修改 policy 与负责评价 policy 的 tests/verifier 时，可能出现自评分上升而真实部署退化。"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with a new irreducible decision object beyond the matched baseline.",
+        "en": "Reopen only with a new irreducible decision object beyond the matched baseline."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "C-8": {
+      "code": "C-8",
+      "category": "C",
+      "title": {
+        "zh": "Local skill-validation ranking versus shifted deployment is a model-selection-under-distribution-shift object unless a skill-specific structural residual survives",
+        "en": "Local skill-validation ranking versus shifted deployment is a model-selection-under-distribution-shift object unless a skill-specific structural residual survives"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Local skill-validation ranking versus shifted deployment is a model-selection-under-distribution-shift object unless a skill-specific structural residual survives",
+        "en": "Local skill-validation ranking versus shifted deployment is a model-selection-under-distribution-shift object unless a skill-specific structural residual survives"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with a preregistered same-information residual in which the candidate and the strongest distribution-shift/domain-generalization selector receive identical T1-T3 outcomes, family and role observables, representation metadata, target-shift descriptors available before T4-T6 outcomes, model, execution order, calls/tokens, and compute, yet a skill-specific structural variable forces different ex-ante arm-selection predictions and the difference is validated by an intervention or independent executable truth. Ranking inversion, selector regret, seed replication, global-arm controls, or changing the backbone without such a structural residual is insufficient.",
+        "en": "Reopen only with a preregistered same-information residual in which the candidate and the strongest distribution-shift/domain-generalization selector receive identical T1-T3 outcomes, family and role observables, representation metadata, target-shift descriptors available before T4-T6 outcomes, model, execution order, calls/tokens, and compute, yet a skill-specific structural variable forces different ex-ante arm-selection predictions and the difference is validated by an intervention or independent executable truth. Ranking inversion, selector regret, seed replication, global-arm controls, or changing the backbone without such a structural residual is insufficient."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "C-9": {
+      "code": "C-9",
+      "category": "C",
+      "title": {
+        "zh": "Actor-drift evaluator cliffs are not irreducible when the same-information stale-supervisor baseline observes the same current outputs and drift state",
+        "en": "Actor-drift evaluator cliffs are not irreducible when the same-information stale-supervisor baseline observes the same current outputs and drift state"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Actor-drift evaluator cliffs are not irreducible when the same-information stale-supervisor baseline observes the same current outputs and drift state",
+        "en": "Actor-drift evaluator cliffs are not irreducible when the same-information stale-supervisor baseline observes the same current outputs and drift state"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only if new primary/first-party evidence supports a preregistered structural constraint and a matched comparison where the candidate and the strongest nonstationary/covariate-shift/online-adaptation baseline receive identical pre-outcome current-output information, drift state, candidate metrics, update history, and compute, yet make different ex-ante evaluator-selection predictions. A new drift metric, threshold estimator, refresh heuristic, longer run, more seeds, or withholding current-output information from the baseline is insufficient.",
+        "en": "Reopen only if new primary/first-party evidence supports a preregistered structural constraint and a matched comparison where the candidate and the strongest nonstationary/covariate-shift/online-adaptation baseline receive identical pre-outcome current-output information, drift state, candidate metrics, update history, and compute, yet make different ex-ante evaluator-selection predictions. A new drift metric, threshold estimator, refresh heuristic, longer run, more seeds, or withholding current-output information from the baseline is insufficient."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "C-10": {
+      "code": "C-10",
+      "category": "C",
+      "title": {
+        "zh": "Cross-regime static-procedural sign contradiction collapses because the two papers intervene on different causal surfaces",
+        "en": "Cross-regime static-procedural sign contradiction collapses because the two papers intervene on different causal surfaces"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Cross-regime static-procedural sign contradiction collapses because the two papers intervene on different causal surfaces",
+        "en": "Cross-regime static-procedural sign contradiction collapses because the two papers intervene on different causal surfaces"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with primary or first-party evidence containing at least two regimes that share an identical static-procedural-artifact intervention on the same frozen executor, identical no-artifact comparator, endpoint, rollout/compute budget, and treatment timing; base/headroom must be matched within sampling error and the within-regime treatment deltas must have reproducibly opposite signs. Any residual sign predictor must then beat a same-information conditional-treatment/domain-shift baseline using only pre-deployment observables.",
+        "en": "Reopen only with primary or first-party evidence containing at least two regimes that share an identical static-procedural-artifact intervention on the same frozen executor, identical no-artifact comparator, endpoint, rollout/compute budget, and treatment timing; base/headroom must be matched within sampling error and the within-regime treatment deltas must have reproducibly opposite signs. Any residual sign predictor must then beat a same-information conditional-treatment/domain-shift baseline using only pre-deployment observables."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "D-1": {
+      "code": "D-1",
+      "category": "D",
+      "title": {
+        "zh": "1-Minimal 边界反例课程",
+        "en": "1-Minimal Boundary-Counterexample Curriculum"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "counterexample-guided learning、formal counterexample generation 和 CEDAR 已经证明 verifier 反例能驱动学习；剩下的问题只是在完全相同 verifier/训练预算下，1-minimality 本身是否让课程更高信息、更少 shortcut。",
+        "en": "Counterexample-guided learning, formal counterexample generation, and CEDAR already show verifier counterexamples can drive learning. The remaining question is whether 1-minimality itself creates a more informative, less shortcut-prone curriculum under identical verifier/training budget."
+      },
+      "reopen_condition": {
+        "zh": "Keep verifier counterexamples but drop per-example 1-minimality as a standalone curriculum variable; merge into generic counterexample learning.",
+        "en": "Keep verifier counterexamples but drop per-example 1-minimality as a standalone curriculum variable; merge into generic counterexample learning."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "D-2": {
+      "code": "D-2",
+      "category": "D",
+      "title": {
+        "zh": "失败前沿课程",
+        "en": "Failure-Frontier Curriculum"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "失败生成课程容易重复旧失败或制造超出当前学习能力的无效难题。",
+        "en": "Failure-generated curricula duplicate old failures or create tasks beyond the useful learning frontier."
+      },
+      "reopen_condition": {
+        "zh": "Merge into direct mutation-yield prediction.",
+        "en": "Merge into direct mutation-yield prediction."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "D-3": {
+      "code": "D-3",
+      "category": "D",
+      "title": {
+        "zh": "课程漂移控制器",
+        "en": "Curriculum Drift Controller"
+      },
+      "scientific_state": "MERGED",
+      "problem": {
+        "zh": "在线课程改变策略分布，旧 Reward 和任务生成器随迭代失配。",
+        "en": "Online curricula shift policy distributions, making rewards and task generators stale."
+      },
+      "reopen_condition": {
+        "zh": "Only new matched primary evidence that overturns the current conclusion may reopen this direction.",
+        "en": "Only new matched primary evidence that overturns the current conclusion may reopen this direction."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-1": {
+      "code": "E-1",
+      "category": "E",
+      "title": {
+        "zh": "条件编辑排序工作流策略",
+        "en": "Conditional Edit-Ranking Workflow Policy"
+      },
+      "scientific_state": "HOLD",
+      "problem": {
+        "zh": "WorkflowPerturb、Agentic Predictor、FLORA 已覆盖 workflow 扰动/性能预测，CE-Graph 也已根据 failure distribution 做 targeted graph edits；因此不能再做 certificate。剩下的问题是：能否从历史 before/after 编辑试验中学出一个冻结后可跨 workflow 直接选 edit 的持久 update policy。",
+        "en": "WorkflowPerturb, Agentic Predictor, and FLORA cover workflow perturbation/performance prediction, while CE-Graph already applies failure-driven targeted graph edits. A certificate is no longer enough. The remaining question is whether paired before/after edit interventions can train a persistent update policy that directly chooses edits on unseen workflows after freezing."
+      },
+      "reopen_condition": {
+        "zh": "Do not open hidden workflows or train the E-1 ranker on this table. Reopen only after a newly frozen paired intervention table has genuine non-tied edit effects at the preregistered source gate; otherwise send E-1 to human pivot/drop review.",
+        "en": "Do not open hidden workflows or train the E-1 ranker on this table. Reopen only after a newly frozen paired intervention table has genuine non-tied edit effects at the preregistered source gate; otherwise send E-1 to human pivot/drop review."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-2": {
+      "code": "E-2",
+      "category": "E",
+      "title": {
+        "zh": "故障模式因果重写语法",
+        "en": "Failure-Motif Causal Rewrite Grammar"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "CE-Graph 已经会从 failure distribution 定位 recurring mode 并 propose-and-verify graph edit，因此单纯 branch credit 不足。剩余问题是：能否用少量 group intervention 找到真正致因子图，并把跨 workflow 重复的 cause→rewrite 编译成冻结 grammar，后续不再搜索。",
+        "en": "CE-Graph already identifies recurring failure modes and propose-and-verifies graph edits, so branch credit alone is insufficient. The remaining problem is whether sparse group interventions can identify causal subgraphs and compile recurring cause→rewrite mappings into a frozen grammar reusable without search."
+      },
+      "reopen_condition": {
+        "zh": "Merge E-2 motif context into E-1/CE-Graph-style editing; do not spend GPU on a standalone causal-rewrite paper.",
+        "en": "Merge E-2 motif context into E-1/CE-Graph-style editing; do not spend GPU on a standalone causal-rewrite paper."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-3": {
+      "code": "E-3",
+      "category": "E",
+      "title": {
+        "zh": "限探针 API 转移算子",
+        "en": "Bounded-Probe API Transition Operator"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "在 API 迁移中，名称与模式相似的调用仍可能在前置条件、状态副作用与错误恢复语义上存在差异，导致主流程可运行而恢复分支静默失效。本想法旨在以固定的 N 次目标 API 探针预算，将源工作流可靠迁移到未见过的新 API，并重点保护恢复分支语义。",
+        "en": "Across API migrations, calls with similar names and schemas can still differ in preconditions, state effects, and error-recovery semantics, so the main workflow may execute while recovery branches silently break. This idea aims to migrate a source workflow to an unseen target API under a fixed budget of N target probes, with emphasis on preserving recovery-branch semantics."
+      },
+      "reopen_condition": {
+        "zh": "Return E-3 to human DROP/merge review; deterministic isomorphic P/E/X matches hidden state-changing effects and recovery under the same six-probe budget.",
+        "en": "Return E-3 to human DROP/merge review; deterministic isomorphic P/E/X matches hidden state-changing effects and recovery under the same six-probe budget."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-4": {
+      "code": "E-4",
+      "category": "E",
+      "title": {
+        "zh": "固定上限下的干预式权限重授权筛选",
+        "en": "Interventional Permission Triage Under a Fixed Ceiling"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "在代理更新后，全量重授权成本高昂，而声明式差异可能遗漏那些表面未变但可达行为已改变的权限。目标是在绝不扩大现有权限上限的前提下，减少重授权工作量。",
+        "en": "After an agent update, full reauthorization is costly, while declared diffs can miss permissions whose reachable behavior changed despite an unchanged surface. The goal is to reduce reauthorization work without ever expanding the existing authority ceiling."
+      },
+      "reopen_condition": {
+        "zh": "Return E-4 to human DROP/merge review; the matched non-learning Boolean rule is equivalent or the safe-workload gate failed.",
+        "en": "Return E-4 to human DROP/merge review; the matched non-learning Boolean rule is equivalent or the safe-workload gate failed."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-5": {
+      "code": "E-5",
+      "category": "E",
+      "title": {
+        "zh": "持久更新的修复表面可辨识性",
+        "en": "Repair-Surface Identifiability under Persistent Updates"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "同一个失败可能通过 prompt/memory、skill/workflow、tool/code 或 weights 修复；现有方法多预先固定更新表面，缺少跨表面的 repair ownership。",
+        "en": "同一个失败可能通过 prompt/memory、skill/workflow、tool/code 或 weights 修复；现有方法多预先固定更新表面，缺少跨表面的 repair ownership。"
+      },
+      "reopen_condition": {
+        "zh": "Archive PF-2 current method thesis and move paper-first effort to the next unresolved problem boundary. PF-1 evolvability-debt is next; no PF-2 experiment blueprint or local validation may be compiled.",
+        "en": "Archive PF-2 current method thesis and move paper-first effort to the next unresolved problem boundary. PF-1 evolvability-debt is next; no PF-2 experiment blueprint or local validation may be compiled."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-6": {
+      "code": "E-6",
+      "category": "E",
+      "title": {
+        "zh": "更新后的决策上下文有效性",
+        "en": "Post-Update Decision-Context Validity"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "在 pre-update/base 轨迹上验证过的 correction、skill 或 memory effect，更新后可能因策略改变自身后续访问分布而不再遇到同一决策上下文，或遇到后不执行预期干预。",
+        "en": "在 pre-update/base 轨迹上验证过的 correction、skill 或 memory effect，更新后可能因策略改变自身后续访问分布而不再遇到同一决策上下文，或遇到后不执行预期干预。"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with a new irreducible decision object beyond the matched baseline.",
+        "en": "Reopen only with a new irreducible decision object beyond the matched baseline."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-7": {
+      "code": "E-7",
+      "category": "E",
+      "title": {
+        "zh": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
+        "en": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance"
+      },
+      "scientific_state": "PAPER_READY",
+      "problem": {
+        "zh": "Agent 自进化的结论不应依赖技能库被人为拆成多少条技能；技能表示变化若改变检索与执行行为，就是需要控制的结构变量。",
+        "en": "Self-evolution conclusions should not depend on an arbitrary partition of the skill library; representation changes that alter retrieval and execution are a scientific variable."
+      },
+      "reopen_condition": {
+        "zh": "The narrow paper needs no new experiment; reopen research only under a separately authorized claim-expanding contract.",
+        "en": "The narrow paper needs no new experiment; reopen research only under a separately authorized claim-expanding contract."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": {
+        "paper_id": "STRI",
+        "acceptance_paper_id": "STRI-ICLR2027",
+        "status": "SUBMISSION_READY",
+        "scientific_status": "READY"
+      }
+    },
+    "E-8": {
+      "code": "E-8",
+      "category": "E",
+      "title": {
+        "zh": "SHADOW-P09-C01",
+        "en": "SHADOW-P09-C01"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "SHADOW-P09-C01",
+        "en": "SHADOW-P09-C01"
+      },
+      "reopen_condition": {
+        "zh": "New primary evidence supports an ex-ante same-information prediction about access-mediated debt that a SkillOps-style technical-debt/maintenance model with the same artifact validity, retrieval, composition, execution, and maintenance observations cannot express; a two-axis relabeling alone does not reopen the basin.",
+        "en": "New primary evidence supports an ex-ante same-information prediction about access-mediated debt that a SkillOps-style technical-debt/maintenance model with the same artifact validity, retrieval, composition, execution, and maintenance observations cannot express; a two-axis relabeling alone does not reopen the basin."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-9": {
+      "code": "E-9",
+      "category": "E",
+      "title": {
+        "zh": "SHADOW-P12-C02",
+        "en": "SHADOW-P12-C02"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "SHADOW-P12-C02",
+        "en": "SHADOW-P12-C02"
+      },
+      "reopen_condition": {
+        "zh": "New primary evidence demonstrates a contamination-induced non-identifiability residual that persists after matching test budget, using a specification-independent or externally grounded test generator, and controlling evaluator ancestry; the residual must not reduce to buggy-artifact test misguidance, in-band self-evaluation bias, verifier exogeneity, or generic active-testing partial identification.",
+        "en": "New primary evidence demonstrates a contamination-induced non-identifiability residual that persists after matching test budget, using a specification-independent or externally grounded test generator, and controlling evaluator ancestry; the residual must not reduce to buggy-artifact test misguidance, in-band self-evaluation bias, verifier exogeneity, or generic active-testing partial identification."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-10": {
+      "code": "E-10",
+      "category": "E",
+      "title": {
+        "zh": "SHADOW-P05-C01",
+        "en": "SHADOW-P05-C01"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "SHADOW-P05-C01",
+        "en": "SHADOW-P05-C01"
+      },
+      "reopen_condition": {
+        "zh": "A new agent-specific primary phenomenon yields an ex-ante prediction under identical treatment, monitoring, state, task-distribution, and trace-availability information that cannot be expressed by treatment-induced confounding, joint treatment-monitoring interventions, informative monitoring/missingness, or performative/adaptive data-collection models; textual-policy terminology alone does not reopen the basin.",
+        "en": "A new agent-specific primary phenomenon yields an ex-ante prediction under identical treatment, monitoring, state, task-distribution, and trace-availability information that cannot be expressed by treatment-induced confounding, joint treatment-monitoring interventions, informative monitoring/missingness, or performative/adaptive data-collection models; textual-policy terminology alone does not reopen the basin."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-11": {
+      "code": "E-11",
+      "category": "E",
+      "title": {
+        "zh": "Memory-monotonicity assumption break collapses under the source framework's own conflict limitation",
+        "en": "Memory-monotonicity assumption break collapses under the source framework's own conflict limitation"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Memory-monotonicity assumption break collapses under the source framework's own conflict limitation",
+        "en": "Memory-monotonicity assumption break collapses under the source framework's own conflict limitation"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with primary or first-party evidence that independently manipulates retention/compression quantity while matching conflict-resolution semantics, answer-critical evidence identity, temporal order, provenance, retrieval state, model, query set, and budget, or independently manipulates conflict-resolution quality at matched retained volume. The resulting ex-ante utility prediction must survive a same-information conflict-aware selective-forgetting, belief-revision, and rate-distortion baseline; a natural consolidation ratio or another duplicate/conflict merge is insufficient.",
+        "en": "Reopen only with primary or first-party evidence that independently manipulates retention/compression quantity while matching conflict-resolution semantics, answer-critical evidence identity, temporal order, provenance, retrieval state, model, query set, and budget, or independently manipulates conflict-resolution quality at matched retained volume. The resulting ex-ante utility prediction must survive a same-information conflict-aware selective-forgetting, belief-revision, and rate-distortion baseline; a natural consolidation ratio or another duplicate/conflict merge is insufficient."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-12": {
+      "code": "E-12",
+      "category": "E",
+      "title": {
+        "zh": "Skill-SP bootstrap recovery currently changes generation responsibility, not an identified self-evolution reproduction threshold",
+        "en": "Skill-SP bootstrap recovery currently changes generation responsibility, not an identified self-evolution reproduction threshold"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Skill-SP bootstrap recovery currently changes generation responsibility, not an identified self-evolution reproduction threshold",
+        "en": "Skill-SP bootstrap recovery currently changes generation responsibility, not an identified self-evolution reproduction threshold"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only if a preregistered comparison equalizes domain/verifier information, compiler/constraint-satisfaction computation, output responsibility, proposal count, validation/rejection budget, learner snapshot, and decoding, yet exhibits a reproducible ex-ante extinction-versus-sustained-learning-signal boundary that the strongest recursive-self-training-collapse, curriculum-coverage/active-learning, rejection-yield, and model-scaffold-compatibility baselines cannot predict. The comparison must measure independently valid frontier-task reproduction before using downstream training gains as evidence.",
+        "en": "Reopen only if a preregistered comparison equalizes domain/verifier information, compiler/constraint-satisfaction computation, output responsibility, proposal count, validation/rejection budget, learner snapshot, and decoding, yet exhibits a reproducible ex-ante extinction-versus-sustained-learning-signal boundary that the strongest recursive-self-training-collapse, curriculum-coverage/active-learning, rejection-yield, and model-scaffold-compatibility baselines cannot predict. The comparison must measure independently valid frontier-task reproduction before using downstream training gains as evidence."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-13": {
+      "code": "E-13",
+      "category": "E",
+      "title": {
+        "zh": "Uniform-routing and frozen-skill drops do not identify a new co-evolution interaction",
+        "en": "Uniform-routing and frozen-skill drops do not identify a new co-evolution interaction"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Uniform-routing and frozen-skill drops do not identify a new co-evolution interaction",
+        "en": "Uniform-routing and frozen-skill drops do not identify a new co-evolution interaction"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with a preregistered matched factorial comparison that independently varies skill/library evolution and routing/allocation under comparable task distribution, backbone, candidate-set information, training/evaluation budget, and supervision, and shows a repeatable non-additive held-out interaction that same-information expert-set quality, contextual routing, mixture-of-experts gating, curriculum allocation, and selector-regret models cannot express.",
+        "en": "Reopen only with a preregistered matched factorial comparison that independently varies skill/library evolution and routing/allocation under comparable task distribution, backbone, candidate-set information, training/evaluation budget, and supervision, and shows a repeatable non-additive held-out interaction that same-information expert-set quality, contextual routing, mixture-of-experts gating, curriculum allocation, and selector-regret models cannot express."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-14": {
+      "code": "E-14",
+      "category": "E",
+      "title": {
+        "zh": "Surface-conditioned mechanism/program redesign identifiability reduces to generic feedback-guided program synthesis under the same information",
+        "en": "Surface-conditioned mechanism/program redesign identifiability reduces to generic feedback-guided program synthesis under the same information"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Surface-conditioned mechanism/program redesign identifiability reduces to generic feedback-guided program synthesis under the same information",
+        "en": "Surface-conditioned mechanism/program redesign identifiability reduces to generic feedback-guided program synthesis under the same information"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only if first-party or independently verified PACE evidence supplies matched states with the same known repair surface, target specification, complete pre-outcome verifier transcript, candidate-program/refinement history, generator capability, and remaining budget, yet a preregistered physics/program structural variable forces a different ex-ante next-repair or success/reachability prediction that generic CEGIS/version-space, REx-style search allocation, and standard program-repair models with the same information cannot express.",
+        "en": "Reopen only if first-party or independently verified PACE evidence supplies matched states with the same known repair surface, target specification, complete pre-outcome verifier transcript, candidate-program/refinement history, generator capability, and remaining budget, yet a preregistered physics/program structural variable forces a different ex-ante next-repair or success/reachability prediction that generic CEGIS/version-space, REx-style search allocation, and standard program-repair models with the same information cannot express."
+      },
+      "principle_dead_end_certified": true,
+      "paper_transition": null
+    },
+    "E-15": {
+      "code": "E-15",
+      "category": "E",
+      "title": {
+        "zh": "SkillCoach distractor boundaries reduce to frozen selector capacity under candidate-space confusability",
+        "en": "SkillCoach distractor boundaries reduce to frozen selector capacity under candidate-space confusability"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "SkillCoach distractor boundaries reduce to frozen selector capacity under candidate-space confusability",
+        "en": "SkillCoach distractor boundaries reduce to frozen selector capacity under candidate-space confusability"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with new primary or provenance-audited first-party evidence that matches candidate count, semantic-overlap or confusability distribution, gold-skill support, query distribution, browser/search interface and budget, frozen model, and evaluation metric, yet shows a reproducible boundary shift attributable to an artifact-evolution or self-evolution state that remains unexplained by same-information retrieval/ranking margin, candidate-confusability, selector-capacity, or ordinary distribution-shift baselines.",
+        "en": "Reopen only with new primary or provenance-audited first-party evidence that matches candidate count, semantic-overlap or confusability distribution, gold-skill support, query distribution, browser/search interface and budget, frozen model, and evaluation metric, yet shows a reproducible boundary shift attributable to an artifact-evolution or self-evolution state that remains unexplained by same-information retrieval/ranking margin, candidate-confusability, selector-capacity, or ordinary distribution-shift baselines."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-16": {
+      "code": "E-16",
+      "category": "E",
+      "title": {
+        "zh": "Repeated accept/reject feedback from a fixed development split is adaptive validation, not a new self-evolution primitive",
+        "en": "Repeated accept/reject feedback from a fixed development split is adaptive validation, not a new self-evolution primitive"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Repeated accept/reject feedback from a fixed development split is adaptive validation, not a new self-evolution primitive",
+        "en": "Repeated accept/reject feedback from a fixed development split is adaptive validation, not a new self-evolution primitive"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with a preregistered matched comparison that equalizes the full validation feedback transcript/information budget, dev sample size, proposal/update capacity, iteration count, and compute, yet two self-evolution structures make different fresh-test generalization predictions that a same-information adaptive-validation/reusable-holdout model cannot express. More iterations, a different score threshold, binary-versus-real-valued feedback, or a new agent domain alone is insufficient.",
+        "en": "Reopen only with a preregistered matched comparison that equalizes the full validation feedback transcript/information budget, dev sample size, proposal/update capacity, iteration count, and compute, yet two self-evolution structures make different fresh-test generalization predictions that a same-information adaptive-validation/reusable-holdout model cannot express. More iterations, a different score threshold, binary-versus-real-valued feedback, or a new agent domain alone is insufficient."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-17": {
+      "code": "E-17",
+      "category": "E",
+      "title": {
+        "zh": "HarnessBank arXiv:2607.13683v2, specifically the current standalone PA-03 inference from the GDPval aggregate train/test ranking reversal and the TB2 post-convergence phantom-progress ablation. This closure does not claim that all future harness-selection transport questions reduce to winner's curse.",
+        "en": "HarnessBank arXiv:2607.13683v2, specifically the current standalone PA-03 inference from the GDPval aggregate train/test ranking reversal and the TB2 post-convergence phantom-progress ablation. This closure does not claim that all future harness-selection transport questions reduce to winner's curse."
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "HarnessBank arXiv:2607.13683v2, specifically the current standalone PA-03 inference from the GDPval aggregate train/test ranking reversal and the TB2 post-convergence phantom-progress ablation. This closure does not claim that all future harness-selection transport questions reduce to winner's curse.",
+        "en": "HarnessBank arXiv:2607.13683v2, specifically the current standalone PA-03 inference from the GDPval aggregate train/test ranking reversal and the TB2 post-convergence phantom-progress ablation. This closure does not claim that all future harness-selection transport questions reduce to winner's curse."
+      },
+      "reopen_condition": {
+        "zh": "Reopen only if a first-party release provides replayable paired selected-versus-rejected gene histories and downstream outcomes sufficient to match candidate count, selection pressure, train sample size, adaptive search depth, verification rule, and deployment sample size, and a preregistered harness-specific structural variable yields replicated residual ranking inversion or deployment regret beyond a strongest selection-aware/winner's-curse baseline.",
+        "en": "Reopen only if a first-party release provides replayable paired selected-versus-rejected gene histories and downstream outcomes sufficient to match candidate count, selection pressure, train sample size, adaptive search depth, verification rule, and deployment sample size, and a preregistered harness-specific structural variable yields replicated residual ranking inversion or deployment regret beyond a strongest selection-aware/winner's-curse baseline."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-18": {
+      "code": "E-18",
+      "category": "E",
+      "title": {
+        "zh": "PosterBench calibration cannot drift through an optimization loop that does not consume PosterBench",
+        "en": "PosterBench calibration cannot drift through an optimization loop that does not consume PosterBench"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "PosterBench calibration cannot drift through an optimization loop that does not consume PosterBench",
+        "en": "PosterBench calibration cannot drift through an optimization loop that does not consume PosterBench"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only if first-party evidence shows PosterBench or an equivalent frozen final benchmark score is actually consumed by a later AutoDesign update, gate, rollback, synthesis, or selection transition. Merely evaluating more checkpoints on PosterBench after optimization is insufficient.",
+        "en": "Reopen only if first-party evidence shows PosterBench or an equivalent frozen final benchmark score is actually consumed by a later AutoDesign update, gate, rollback, synthesis, or selection transition. Merely evaluating more checkpoints on PosterBench after optimization is insufficient."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-19": {
+      "code": "E-19",
+      "category": "E",
+      "title": {
+        "zh": "Large skill-evolution and router ablation drops do not identify a co-evolution interaction",
+        "en": "Large skill-evolution and router ablation drops do not identify a co-evolution interaction"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Large skill-evolution and router ablation drops do not identify a co-evolution interaction",
+        "en": "Large skill-evolution and router ablation drops do not identify a co-evolution interaction"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with a preregistered matched factorial comparison that holds query/task distribution, final skill candidates/content, rollout and judge information, compute, and selector candidate set comparable while independently varying skill evolution and router adaptation, and shows a repeatable non-additive held-out interaction that same-information contextual routing, mixture-of-experts gating, selector-regret, and nonstationary expert-set models cannot express. Separate large ablation drops or router-lag anecdotes are insufficient.",
+        "en": "Reopen only with a preregistered matched factorial comparison that holds query/task distribution, final skill candidates/content, rollout and judge information, compute, and selector candidate set comparable while independently varying skill evolution and router adaptation, and shows a repeatable non-additive held-out interaction that same-information contextual routing, mixture-of-experts gating, selector-regret, and nonstationary expert-set models cannot express. Separate large ablation drops or router-lag anecdotes are insufficient."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-20": {
+      "code": "E-20",
+      "category": "E",
+      "title": {
+        "zh": "Frozen no-skill anchors make reciprocal metric-skill coevolution observationally indistinguishable from one-way metric-to-skill coupling",
+        "en": "Frozen no-skill anchors make reciprocal metric-skill coevolution observationally indistinguishable from one-way metric-to-skill coupling"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Frozen no-skill anchors make reciprocal metric-skill coevolution observationally indistinguishable from one-way metric-to-skill coupling",
+        "en": "Frozen no-skill anchors make reciprocal metric-skill coevolution observationally indistinguishable from one-way metric-to-skill coupling"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with a preregistered downstream consequence of the missing reciprocal edge, such as held-out evaluator selection/regret under actor-induced distribution shift, and require the effect to survive a same-information generic distribution-shift/online-adaptation baseline and a matched compute budget.",
+        "en": "Reopen only with a preregistered downstream consequence of the missing reciprocal edge, such as held-out evaluator selection/regret under actor-induced distribution shift, and require the effect to survive a same-information generic distribution-shift/online-adaptation baseline and a matched compute budget."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-21": {
+      "code": "E-21",
+      "category": "E",
+      "title": {
+        "zh": "Coverage-note starvation under selective evidence access in document agents",
+        "en": "Coverage-note starvation under selective evidence access in document agents"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Coverage-note starvation under selective evidence access in document agents",
+        "en": "Coverage-note starvation under selective evidence access in document agents"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with a preregistered treatment that exposes or preserves relevance-conditioned evidence debt without using benchmark answer/evidence truth at decision time, and show a selective held-out gap effect beyond the strongest same-information uncertainty/conservatism baseline under matched retrieval and context budget.",
+        "en": "Reopen only with a preregistered treatment that exposes or preserves relevance-conditioned evidence debt without using benchmark answer/evidence truth at decision time, and show a selective held-out gap effect beyond the strongest same-information uncertainty/conservatism baseline under matched retrieval and context budget."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-22": {
+      "code": "E-22",
+      "category": "E",
+      "title": {
+        "zh": "Double Ratchet weak-metric robustness and locked-reference validity are already explained by richer feedback and the source paper's own validity distinction",
+        "en": "Double Ratchet weak-metric robustness and locked-reference validity are already explained by richer feedback and the source paper's own validity distinction"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Double Ratchet weak-metric robustness and locked-reference validity are already explained by richer feedback and the source paper's own validity distinction",
+        "en": "Double Ratchet weak-metric robustness and locked-reference validity are already explained by richer feedback and the source paper's own validity distinction"
+      },
+      "reopen_condition": {
+        "zh": "Reopen the weak-metric object only with coarse-metric quality and rich error-feedback availability independently varied under matched tasks, skill synthesis budget, and information, with a residual beyond multi-channel redundancy. Reopen evaluator-validity only with a genuinely new operational condition and independent truth that makes a distinct ex-ante prediction from Double Ratchet's locked-reference validity framework.",
+        "en": "Reopen the weak-metric object only with coarse-metric quality and rich error-feedback availability independently varied under matched tasks, skill synthesis budget, and information, with a residual beyond multi-channel redundancy. Reopen evaluator-validity only with a genuinely new operational condition and independent truth that makes a distinct ex-ante prediction from Double Ratchet's locked-reference validity framework."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-23": {
+      "code": "E-23",
+      "category": "E",
+      "title": {
+        "zh": "Top-k retrieval degradation is a marginal-information trade-off, not a new self-evolution primitive",
+        "en": "Top-k retrieval degradation is a marginal-information trade-off, not a new self-evolution primitive"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Top-k retrieval degradation is a marginal-information trade-off, not a new self-evolution primitive",
+        "en": "Top-k retrieval degradation is a marginal-information trade-off, not a new self-evolution primitive"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only if a preregistered matched comparison equalizes retrieved-skill count, relevance/score profile, context/token budget, pairwise redundancy/complementarity, planner/backbone, and observable retrieval-utilization information, yet a self-evolution-specific structural variable produces a distinct ex-ante trajectory-quality or task-utility prediction that same-information redundancy/correlation, submodular-diversity, negative-transfer, and retrieval-utilization models cannot express. A new k, threshold, domain, or retrieval curve is insufficient.",
+        "en": "Reopen only if a preregistered matched comparison equalizes retrieved-skill count, relevance/score profile, context/token budget, pairwise redundancy/complementarity, planner/backbone, and observable retrieval-utilization information, yet a self-evolution-specific structural variable produces a distinct ex-ante trajectory-quality or task-utility prediction that same-information redundancy/correlation, submodular-diversity, negative-transfer, and retrieval-utilization models cannot express. A new k, threshold, domain, or retrieval curve is insufficient."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "E-24": {
+      "code": "E-24",
+      "category": "E",
+      "title": {
+        "zh": "ComfyClaw prompt-only repair gap reduces to richer workflow interventions plus localized verifier feedback",
+        "en": "ComfyClaw prompt-only repair gap reduces to richer workflow interventions plus localized verifier feedback"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "ComfyClaw prompt-only repair gap reduces to richer workflow interventions plus localized verifier feedback",
+        "en": "ComfyClaw prompt-only repair gap reduces to richer workflow interventions plus localized verifier feedback"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with new primary or provenance-audited first-party evidence matching graph-edit action space, LoRA/regional/mask/hyperparameter operations, verifier feedback, iteration and render budget, best-so-far retention, image backbone, agent model, prompt difficulty and evaluation information, while varying an evolution-specific state/mechanism and showing a replicated repair residual beyond ordinary feedback-control and action-space-capability explanations.",
+        "en": "Reopen only with new primary or provenance-audited first-party evidence matching graph-edit action space, LoRA/regional/mask/hyperparameter operations, verifier feedback, iteration and render budget, best-so-far retention, image backbone, agent model, prompt difficulty and evaluation information, while varying an evolution-specific state/mechanism and showing a replicated repair residual beyond ordinary feedback-control and action-space-capability explanations."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "F-1": {
+      "code": "F-1",
+      "category": "F",
+      "title": {
+        "zh": "决策翻转驱动的转移准入",
+        "en": "Decision-Switch Transition Admission"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "AAWM 已经把 world-model supervision 改成 policy decision needs，因此不能再主张‘decision-aware world model target’。剩下的问题是更新预算：真实 transition 很多时，哪些 transition 值得被持久写入/训练，才能以更少更新改变后续决策。",
+        "en": "AAWM already makes world-model supervision decision-oriented, so 'decision-aware world-model targets' are no longer enough. The remaining problem is update budgeting: among many real transitions, which ones deserve persistent storage/training because correcting them would change later decisions?"
+      },
+      "reopen_condition": {
+        "zh": "Merge F-1 admission into direct action-disagreement/value-aware selection.",
+        "en": "Merge F-1 admission into direct action-disagreement/value-aware selection."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "F-2": {
+      "code": "F-2",
+      "category": "F",
+      "title": {
+        "zh": "可验证不可逆效应条款记忆",
+        "en": "Verified Irreversibility-Clause Memory"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "test-time counterfactual planning、act/refuse safety 和 recovery 已经有大量工作；真正可能形成持续学习的是把少量可验证的‘状态条件 + 动作 → 不可逆效应’编译成跨 episode 复用的条款，从而后续无需重复模拟就能提前排除风险动作。",
+        "en": "Test-time counterfactual planning, act/refuse safety, and recovery already have substantial prior work. A plausible persistent-learning problem is compiling a small set of verified 'state condition + action → irreversible effect' clauses that can be reused across episodes to prune risky actions without repeated simulation."
+      },
+      "reopen_condition": {
+        "zh": "Merge into generic shielding.",
+        "en": "Merge into generic shielding."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "F-3": {
+      "code": "F-3",
+      "category": "F",
+      "title": {
+        "zh": "残余状态效应驱动的经验准入",
+        "en": "Residual-State Effect Admission"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "最终任务成功是一个很粗的标签：它会把‘干净完成’和‘勉强补救后完成’都记成 success。长期自进化却会把成功轨迹写成可复用经验；如果补救轨迹虽然完成目标，却仍留下抽屉未复位、工具被占用、权限/资源状态异常等残余状态，反复学习就可能把这些异常行为固化。真正要验证的问题是：这类 success+残余状态是否会被误写成正经验，并在未来复用时造成伤害。",
+        "en": "Final task success is a coarse label: it treats clean completion and barely recovered completion as the same success. Long-term self-evolution may persist successful trajectories as reusable experience; if a recovered trajectory completes the goal but leaves residual state such as an unrestored drawer, occupied tool, or abnormal permission/resource state, repeated learning may entrench that behavior. The concrete question is whether success-with-residual-state is admitted as positive experience and later causes harm when reused."
+      },
+      "reopen_condition": {
+        "zh": "Merge into direct recovery policy.",
+        "en": "Merge into direct recovery policy."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "F-4": {
+      "code": "F-4",
+      "category": "F",
+      "title": {
+        "zh": "Block7 rule persistence does not identify failed skill transfer when repair feasibility changes with geometry and coupled constraints",
+        "en": "Block7 rule persistence does not identify failed skill transfer when repair feasibility changes with geometry and coupled constraints"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Block7 rule persistence does not identify failed skill transfer when repair feasibility changes with geometry and coupled constraints",
+        "en": "Block7 rule persistence does not identify failed skill transfer when repair feasibility changes with geometry and coupled constraints"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with provenance-audited matched units where rule identity, local geometry and neighboring-constraint context, crop/decomposition coverage, observable repair information, candidate operation support, and independent feasibility are comparable, and where a legal repair with nonpositive global violation debt exists. Require a repeatable held-out difference attributable to evolved skill/policy state beyond constrained optimization, geometric feasibility, and repair-debt baselines.",
+        "en": "Reopen only with provenance-audited matched units where rule identity, local geometry and neighboring-constraint context, crop/decomposition coverage, observable repair information, candidate operation support, and independent feasibility are comparable, and where a legal repair with nonpositive global violation debt exists. Require a repeatable held-out difference attributable to evolved skill/policy state beyond constrained optimization, geometric feasibility, and repair-debt baselines."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "F-5": {
+      "code": "F-5",
+      "category": "F",
+      "title": {
+        "zh": "DocAtlas image and tree ablation drops identify information availability and indexing value, not a new self-evolution mechanism",
+        "en": "DocAtlas image and tree ablation drops identify information availability and indexing value, not a new self-evolution mechanism"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "DocAtlas image and tree ablation drops identify information availability and indexing value, not a new self-evolution mechanism",
+        "en": "DocAtlas image and tree ablation drops identify information availability and indexing value, not a new self-evolution mechanism"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with a same-information, matched-search-budget comparison that holds document/visual evidence and candidate support fixed while varying the evolving memory/index representation, and yields a repeatable held-out residual beyond information sufficiency, observability, retrieval/index quality, and active-search baselines.",
+        "en": "Reopen only with a same-information, matched-search-budget comparison that holds document/visual evidence and candidate support fixed while varying the evolving memory/index representation, and yields a repeatable held-out residual beyond information sufficiency, observability, retrieval/index quality, and active-search baselines."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "F-6": {
+      "code": "F-6",
+      "category": "F",
+      "title": {
+        "zh": "High-TRS spatial-memory failures do not establish a procedure-compatibility mechanism",
+        "en": "High-TRS spatial-memory failures do not establish a procedure-compatibility mechanism"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "High-TRS spatial-memory failures do not establish a procedure-compatibility mechanism",
+        "en": "High-TRS spatial-memory failures do not establish a procedure-compatibility mechanism"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with provenance-audited query-level matched units that hold visual-grounding correctness, query/image evidence, base model, retrieval budget, semantic relevance, and TRS information fixed while retrieved procedures differ in an independently defined executable-compatibility variable, and that variable predicts a downstream residual not absorbed by same-information grounding, retrieval-quality, or ordinary execution-mismatch baselines.",
+        "en": "Reopen only with provenance-audited query-level matched units that hold visual-grounding correctness, query/image evidence, base model, retrieval budget, semantic relevance, and TRS information fixed while retrieved procedures differ in an independently defined executable-compatibility variable, and that variable predicts a downstream residual not absorbed by same-information grounding, retrieval-quality, or ordinary execution-mismatch baselines."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "G-1": {
+      "code": "G-1",
+      "category": "G",
+      "title": {
+        "zh": "历史条件下的未来首次违规风险",
+        "en": "History-Conditioned Future First-Violation Risk"
+      },
+      "scientific_state": "HOLD",
+      "problem": {
+        "zh": "The hazard function λ(s) = lim_{dt→0} P(T ∈ [t, t+dt) | T ≥ t, S_t = s) where T is the first-safety-violation time under a fixed benign future update distribution, and S_t is the persistent agent state (experience bank + skill library) at time t, restricted to states that currently pass a frozen safety evaluation. The scientific object is whether λ varies as a function of the specific persistent state identity beyond what is predictable from current safety score, update count, pool size, and distribution-shift statistics.",
+        "en": "The hazard function λ(s) = lim_{dt→0} P(T ∈ [t, t+dt) | T ≥ t, S_t = s) where T is the first-safety-violation time under a fixed benign future update distribution, and S_t is the persistent agent state (experience bank + skill library) at time t, restricted to states that currently pass a frozen safety evaluation. The scientific object is whether λ varies as a function of the specific persistent state identity beyond what is predictable from current safety score, update count, pool size, and distribution-shift statistics."
+      },
+      "reopen_condition": {
+        "zh": "Use a fresh preregistered backbone/runtime and obtain enough frozen currently-safe states before touching held-out future probes.",
+        "en": "Use a fresh preregistered backbone/runtime and obtain enough frozen currently-safe states before touching held-out future probes."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": {
+        "paper_id": "AGENT-SAFETY-R9",
+        "acceptance_paper_id": "AGENT-SAFETY-R9",
+        "status": "SUBMISSION_READY",
+        "scientific_status": "READY",
+        "blocked": false
+      }
+    },
+    "G-2": {
+      "code": "G-2",
+      "category": "G",
+      "title": {
+        "zh": "技能—任务兼容性下的执行伤害",
+        "en": "Execution Harm under Skill–Task Compatibility"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "High topical relevance plus skill-induced implementation faults does not identify a new over-utilization primitive",
+        "en": "High topical relevance plus skill-induced implementation faults does not identify a new over-utilization primitive"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with provenance-audited matched units that oracle-load the same candidate skill, independently verify task-requirement-level compatibility and absence of conflicting/missing skill guidance, match executor, budget, generic instruction-following difficulty, and observable action-level uptake, and still expose a preregistered procedural-structure variable that predicts functional failure beyond same-information compatibility, negative-transfer, retrieval-utilization, and instruction-following baselines. A topical-relevance score, ground-truth skill label, aggregate TIF count, or retrieval-precision/success decoupling is insufficient.",
+        "en": "Reopen only with provenance-audited matched units that oracle-load the same candidate skill, independently verify task-requirement-level compatibility and absence of conflicting/missing skill guidance, match executor, budget, generic instruction-following difficulty, and observable action-level uptake, and still expose a preregistered procedural-structure variable that predicts functional failure beyond same-information compatibility, negative-transfer, retrieval-utilization, and instruction-following baselines. A topical-relevance score, ground-truth skill label, aggregate TIF count, or retrieval-precision/success decoupling is insufficient."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "G-3": {
+      "code": "G-3",
+      "category": "G",
+      "title": {
+        "zh": "上下文条件化技能采用与新会话伤害",
+        "en": "Context-Conditioned Skill Uptake and Fresh-Session Harm"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Selective fresh-session harm from one frozen skill library does not by itself identify a latent carryover-activation mechanism",
+        "en": "Selective fresh-session harm from one frozen skill library does not by itself identify a latent carryover-activation mechanism"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with provenance-audited matched units that hold the frozen library, task-artifact compatibility, and observable action-level uptake fixed yet show different fresh-session harm, or with harm that persists despite absence of corresponding artifact uptake, and show that same-information retrieval-utilization/instruction-following plus task-conditioned effect-heterogeneity baselines cannot express the residual.",
+        "en": "Reopen only with provenance-audited matched units that hold the frozen library, task-artifact compatibility, and observable action-level uptake fixed yet show different fresh-session harm, or with harm that persists despite absence of corresponding artifact uptake, and show that same-information retrieval-utilization/instruction-following plus task-conditioned effect-heterogeneity baselines cannot express the residual."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "G-4": {
+      "code": "G-4",
+      "category": "G",
+      "title": {
+        "zh": "双自进化回路的可写支持交互",
+        "en": "Writable-Support Interaction between Self-Evolution Loops"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Writable-support overlap is not an independently manipulable composition variable for a fixed pair of self-evolution loops",
+        "en": "Writable-support overlap is not an independently manipulable composition variable for a fixed pair of self-evolution loops"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only after reformulating the object around a pre-composition structural variable that admits an explicit intervention while the exact component update operators, support identities, independently validated behaviors, information, and budgets remain fixed; or after making an exchangeability/symmetry construction an explicit part of a new scientific object and independently validating that support identity is outcome-invariant. Another support-overlap statistic, finer matching, more seeds, outcome-selected masks, or a symmetry-enforced toy substrate does not reopen the current rho-critical formulation.",
+        "en": "Reopen only after reformulating the object around a pre-composition structural variable that admits an explicit intervention while the exact component update operators, support identities, independently validated behaviors, information, and budgets remain fixed; or after making an exchangeability/symmetry construction an explicit part of a new scientific object and independently validating that support identity is outcome-invariant. Another support-overlap statistic, finer matching, more seeds, outcome-selected masks, or a symmetry-enforced toy substrate does not reopen the current rho-critical formulation."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "G-5": {
+      "code": "G-5",
+      "category": "G",
+      "title": {
+        "zh": "技能提取后的检测器稳健性",
+        "en": "Detector Robustness after Skill Extraction"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Skill-extraction detector-general whitewashing does not survive attack-framing-matched detection control",
+        "en": "Skill-extraction detector-general whitewashing does not survive attack-framing-matched detection control"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with fresh preregistered evidence, not threshold changes or post-hoc subgroups: on a new holdout with attack-framing-matched detector training/support, at least two independent competent detector families must show a statistically supported and practically large extraction-specific binary detection drop that exceeds the matched framing-shift control, or a new pre-outcome structural variable must force such a prediction under matched information.",
+        "en": "Reopen only with fresh preregistered evidence, not threshold changes or post-hoc subgroups: on a new holdout with attack-framing-matched detector training/support, at least two independent competent detector families must show a statistically supported and practically large extraction-specific binary detection drop that exceeds the matched framing-shift control, or a new pre-outcome structural variable must force such a prediction under matched information."
+      },
+      "principle_dead_end_certified": true,
+      "paper_transition": null
+    },
+    "G-6": {
+      "code": "G-6",
+      "category": "G",
+      "title": {
+        "zh": "SP-09",
+        "en": "SP-09"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "SP-09",
+        "en": "SP-09"
+      },
+      "reopen_condition": {
+        "zh": "Current primary evidence supports an ex-ante non-separability or impossibility prediction for the same skill under identical model/trigger/workflow/security/utility information that generic contextual governance cannot express.",
+        "en": "Current primary evidence supports an ex-ante non-separability or impossibility prediction for the same skill under identical model/trigger/workflow/security/utility information that generic contextual governance cannot express."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "G-7": {
+      "code": "G-7",
+      "category": "G",
+      "title": {
+        "zh": "Evidence Echo does not survive a same-information redundant-context reduction",
+        "en": "Evidence Echo does not survive a same-information redundant-context reduction"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Evidence Echo does not survive a same-information redundant-context reduction",
+        "en": "Evidence Echo does not survive a same-information redundant-context reduction"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with a preregistered matched intervention that holds evidence content, repetition count, token budget, ordering, and generic instruction/prompt perturbation fixed while changing only the hypothesized evidence representation, and shows a replicated decision residual plus a mechanism-specific recovery not reproduced by ordinary repetition/salience baselines.",
+        "en": "Reopen only with a preregistered matched intervention that holds evidence content, repetition count, token budget, ordering, and generic instruction/prompt perturbation fixed while changing only the hypothesized evidence representation, and shows a replicated decision residual plus a mechanism-specific recovery not reproduced by ordinary repetition/salience baselines."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "G-8": {
+      "code": "G-8",
+      "category": "G",
+      "title": {
+        "zh": "The reported cross-level scaling reversal disappears under matched local baselines",
+        "en": "The reported cross-level scaling reversal disappears under matched local baselines"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "The reported cross-level scaling reversal disappears under matched local baselines",
+        "en": "The reported cross-level scaling reversal disappears under matched local baselines"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only if new primary or first-party evidence supplies a matched factorial/paired test where MG-Select/VOTE or an equivalent scaling intervention is held definitionally fixed across scaffold levels, all local unscaled controls are present, and the within-level scaling deltas have opposite reproducible signs under matched candidate count, rollout/compute budget, task split, executor, and selection information. Crossed absolute scores are insufficient.",
+        "en": "Reopen only if new primary or first-party evidence supplies a matched factorial/paired test where MG-Select/VOTE or an equivalent scaling intervention is held definitionally fixed across scaffold levels, all local unscaled controls are present, and the within-level scaling deltas have opposite reproducible signs under matched candidate count, rollout/compute budget, task split, executor, and selection information. Crossed absolute scores are insufficient."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "G-9": {
+      "code": "G-9",
+      "category": "G",
+      "title": {
+        "zh": "Initial-skill harm followed by evolved-skill gains is corrective adaptation, not a new self-evolution primitive",
+        "en": "Initial-skill harm followed by evolved-skill gains is corrective adaptation, not a new self-evolution primitive"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Initial-skill harm followed by evolved-skill gains is corrective adaptation, not a new self-evolution primitive",
+        "en": "Initial-skill harm followed by evolved-skill gains is corrective adaptation, not a new self-evolution primitive"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only if a preregistered matched comparison equalizes task-skill compatibility, initial skill content, executor, failed/successful trajectory evidence, task-score information, edit/token budget, update count, and held-out evaluation, yet a self-evolution-specific structural variable yields a distinct ex-ante task-level sign-flip prediction that generic prompt/skill optimization, corrective learning, rule specialization, and nonmonotonic rule revision cannot express. More iterations, a different skill seed, a larger skill, or another negative-to-positive aggregate result is insufficient.",
+        "en": "Reopen only if a preregistered matched comparison equalizes task-skill compatibility, initial skill content, executor, failed/successful trajectory evidence, task-score information, edit/token budget, update count, and held-out evaluation, yet a self-evolution-specific structural variable yields a distinct ex-ante task-level sign-flip prediction that generic prompt/skill optimization, corrective learning, rule specialization, and nonmonotonic rule revision cannot express. More iterations, a different skill seed, a larger skill, or another negative-to-positive aggregate result is insufficient."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "G-10": {
+      "code": "G-10",
+      "category": "G",
+      "title": {
+        "zh": "Connectivity-admissible repair history is not a new persistent-credit primitive",
+        "en": "Connectivity-admissible repair history is not a new persistent-credit primitive"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Connectivity-admissible repair history is not a new persistent-credit primitive",
+        "en": "Connectivity-admissible repair history is not a new persistent-credit primitive"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only on a preregistered unit-matched substrate where feasibility/admissibility, local causal utility polarity, and the persisted semantic record are all independently observed; require a later persistent-skill harm/benefit residual among units matched on local causal utility and admissibility that survives a same-information causal-utility/difference-reward baseline.",
+        "en": "Reopen only on a preregistered unit-matched substrate where feasibility/admissibility, local causal utility polarity, and the persisted semantic record are all independently observed; require a later persistent-skill harm/benefit residual among units matched on local causal utility and admissibility that survives a same-information causal-utility/difference-reward baseline."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "G-11": {
+      "code": "G-11",
+      "category": "G",
+      "title": {
+        "zh": "Formal memory coverage monotonicity and skill-induced execution harm live on different operational surfaces",
+        "en": "Formal memory coverage monotonicity and skill-induced execution harm live on different operational surfaces"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Formal memory coverage monotonicity and skill-induced execution harm live on different operational surfaces",
+        "en": "Formal memory coverage monotonicity and skill-induced execution harm live on different operational surfaces"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only with primary or provenance-audited first-party evidence that either (a) directly measures the formal answerability/coverage utility and shows it decreases for a strict stored-event superset under the same generation operator, query distribution, conflict/correctness semantics, executor, and budget, or (b) for procedural skills, matches task-requirement-level compatibility/conflict, exact skill content, realized action-level uptake, executor, budget, and generic instruction-following difficulty yet finds a preregistered retraction feature with residual predictive power beyond same-information negative-transfer/compatibility baselines. Another aggregate or paired skill-harm count is insufficient.",
+        "en": "Reopen only with primary or provenance-audited first-party evidence that either (a) directly measures the formal answerability/coverage utility and shows it decreases for a strict stored-event superset under the same generation operator, query distribution, conflict/correctness semantics, executor, and budget, or (b) for procedural skills, matches task-requirement-level compatibility/conflict, exact skill content, realized action-level uptake, executor, budget, and generic instruction-following difficulty yet finds a preregistered retraction feature with residual predictive power beyond same-information negative-transfer/compatibility baselines. Another aggregate or paired skill-harm count is insufficient."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "G-12": {
+      "code": "G-12",
+      "category": "G",
+      "title": {
+        "zh": "Reused Locked-Set Agreement Cannot Identify Metric Validity after Anchor-Guard Removal",
+        "en": "Reused Locked-Set Agreement Cannot Identify Metric Validity after Anchor-Guard Removal"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Reused Locked-Set Agreement Cannot Identify Metric Validity after Anchor-Guard Removal",
+        "en": "Reused Locked-Set Agreement Cannot Identify Metric Validity after Anchor-Guard Removal"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only for a system or explicitly modeled outer loop where a reused evaluation signal is demonstrably consumed by a later selection/update transition, with the feedback edge frozen before outcomes and a same-information rotating/fresh-probe control.",
+        "en": "Reopen only for a system or explicitly modeled outer loop where a reused evaluation signal is demonstrably consumed by a later selection/update transition, with the feedback edge frozen before outcomes and a same-information rotating/fresh-probe control."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    },
+    "G-13": {
+      "code": "G-13",
+      "category": "G",
+      "title": {
+        "zh": "Backbone-dependent overrestriction is a security-utility operating point, not a new self-evolution cliff",
+        "en": "Backbone-dependent overrestriction is a security-utility operating point, not a new self-evolution cliff"
+      },
+      "scientific_state": "STOPPED",
+      "problem": {
+        "zh": "Backbone-dependent overrestriction is a security-utility operating point, not a new self-evolution cliff",
+        "en": "Backbone-dependent overrestriction is a security-utility operating point, not a new self-evolution cliff"
+      },
+      "reopen_condition": {
+        "zh": "Reopen only if a preregistered matched experiment holds the execution agent, attack/benign task mix, security and utility evaluators, pre-update performance, feedback information, update budget, and objective weights/information fixed, while a self-evolution-specific structural variable yields a different ex-ante security-utility outcome that the strongest same-information Pareto/constrained-optimization, calibration, and overblocking baselines cannot express. A different evolution backbone, another extreme UA value, or a new scalarization is insufficient.",
+        "en": "Reopen only if a preregistered matched experiment holds the execution agent, attack/benign task mix, security and utility evaluators, pre-update performance, feedback information, update budget, and objective weights/information fixed, while a self-evolution-specific structural variable yields a different ex-ante security-utility outcome that the strongest same-information Pareto/constrained-optimization, calibration, and overblocking baselines cannot express. A different evolution backbone, another extreme UA value, or a new scalarization is insufficient."
+      },
+      "principle_dead_end_certified": false,
+      "paper_transition": null
+    }
+  },
+  "directions": {
+    "D1": {
+      "gap": {
+        "opportunity": "high",
+        "label": {
+          "zh": "优先挖掘 · 避开普通 reflection",
+          "en": "High opportunity · avoid generic reflection"
+        },
+        "covered": {
+          "zh": "正式文献已覆盖重试、自我反馈、语言反思和 reward 学习 retrospective feedback。",
+          "en": "Published work already covers retries, self-feedback, verbal reflection, and reward-trained retrospective feedback."
+        },
+        "collision": {
+          "zh": "如果只是“失败后生成更好的 reflection/lesson，再写回上下文”，与 Reflexion、Self-Refine、Retroformer 高度碰撞。",
+          "en": "Failure → better reflection/lesson → reuse in context is highly collisional with Reflexion, Self-Refine, and Retroformer."
+        },
+        "failure": {
+          "zh": "多数结果只证明下一次尝试变好，较少证明经验为何有效、在哪些 future context 仍有效、何时作用符号反转。",
+          "en": "Most gains show the next attempt improves; much less is established about why experience works, where it transports, or when its effect reverses."
+        },
+        "open": {
+          "zh": "更值得找经验准入与作用边界：识别 trajectory 中真正产生效应的部分，区分短期修复与可迁移经验，在写入长期状态前预测跨任务收益/伤害。",
+          "en": "More promising seams concern admission and scope: identify causal parts of a trajectory, separate episodic repair from transferable experience, and predict cross-task benefit or harm before persistence."
+        },
+        "seedQuestions": [
+          "一次经验在 source task 有正效应，什么条件下会迁移到 target context？",
+          "能否在不跑完整未来任务集时识别“应该写入”与“只适合本次修复”的经验？",
+          "同一条 memory/lesson 的效应符号为什么会随 downstream context 反转？"
+        ],
+        "searchTerms": "persistent experience admission causal effect transport negative transfer context-conditioned reflection trajectory intervention",
+        "nearest": [
+          "Retroformer: Retrospective Large Language Agents with Policy Gradient Optimization",
+          "Reflexion: Language Agents with Verbal Reinforcement Learning",
+          "Self-Refine: Iterative Refinement with Self-Feedback"
+        ]
+      },
+      "current_categories": [
+        "A",
+        "B",
+        "D"
+      ],
+      "current_research_item_codes": [
+        "A-1",
+        "A-2",
+        "A-3",
+        "A-4",
+        "A-5",
+        "A-6",
+        "A-7",
+        "A-8",
+        "A-9",
+        "A-10",
+        "A-11",
+        "A-12",
+        "B-1",
+        "B-2",
+        "B-3",
+        "B-4",
+        "B-5",
+        "B-6",
+        "B-7",
+        "B-8",
+        "B-9",
+        "B-10",
+        "B-11",
+        "B-14",
+        "B-15",
+        "B-16",
+        "B-17",
+        "B-18",
+        "B-19",
+        "B-20",
+        "B-21",
+        "D-1",
+        "D-2",
+        "D-3"
+      ],
+      "active_or_reopenable_codes": [
+        "A-3",
+        "B-2",
+        "B-3"
+      ],
+      "terminal_history_codes": [
+        "A-1",
+        "A-2",
+        "A-4",
+        "A-5",
+        "A-6",
+        "A-7",
+        "A-8",
+        "A-9",
+        "A-10",
+        "A-11",
+        "A-12",
+        "B-1",
+        "B-4",
+        "B-5",
+        "B-6",
+        "B-7",
+        "B-8",
+        "B-9",
+        "B-10",
+        "B-11",
+        "B-14",
+        "B-15",
+        "B-16",
+        "B-17",
+        "B-18",
+        "B-19",
+        "B-20",
+        "B-21",
+        "D-1",
+        "D-2",
+        "D-3"
+      ],
+      "collision_summary": {
+        "mapped_research_items": 34,
+        "active_or_reopenable": 3,
+        "terminal_history": 31,
+        "nearest_published": 3
+      }
+    },
+    "D2": {
+      "gap": {
+        "opportunity": "medium-high",
+        "label": {
+          "zh": "有明显缺口 · retrieval/结构本身已拥挤",
+          "en": "Good seams · retrieval/structure is crowded"
+        },
+        "covered": {
+          "zh": "正式文献已覆盖情景记忆、长时记忆、结构化/图记忆、多模态记忆、检索与部分遗忘机制。",
+          "en": "Published work covers episodic and long-term memory, structured/graph memory, multimodal memory, retrieval, and some forgetting."
+        },
+        "collision": {
+          "zh": "“Top-K 换成图/超图/更强 retriever”“增加 summary/consolidation”本身已经拥挤。",
+          "en": "Replacing Top-K with graph/hypergraph/retrieval upgrades or adding summary/consolidation is already crowded."
+        },
+        "failure": {
+          "zh": "过期、冲突、噪声和遗忘反复出现，但多数系统仍用 retrieval quality 或 endpoint accuracy 间接判断 memory 是否真的有因果价值。",
+          "en": "Staleness, conflict, noise, and forgetting recur, yet many systems infer memory value indirectly from retrieval quality or endpoint accuracy."
+        },
+        "open": {
+          "zh": "优先看生命周期而不是存储结构：适用条件、负迁移、相互干扰、何时巩固/删除、删除后派生产物，以及长期重复更新后的非单调行为。",
+          "en": "Prioritize lifecycle over storage structure: applicability, negative transfer, interference, consolidation/deletion timing, descendants after deletion, and non-monotonic repeated updates."
+        },
+        "seedQuestions": [
+          "memory 被检索出来不等于它造成结果变化，怎样测 causal usefulness？",
+          "多条单独有益的 memory 为什么组合后会产生非单调退化？",
+          "memory 应该何时巩固成 skill/parametric state，何时衰减或删除？"
+        ],
+        "searchTerms": "agent memory lifecycle causal usefulness negative transfer interference consolidation forgetting stale memory repeated updates",
+        "nearest": [
+          "Reflexion: Language Agents with Verbal Reinforcement Learning",
+          "EvoGraph-R1: Self-Evolving Multimodal Knowledge Hypergraphs for Agentic Retrieval",
+          "From Recall to Forgetting: Benchmarking Long-Term Memory for Personalized Agents"
+        ]
+      },
+      "current_categories": [
+        "B"
+      ],
+      "current_research_item_codes": [
+        "B-1",
+        "B-2",
+        "B-3",
+        "B-4",
+        "B-5",
+        "B-6",
+        "B-7",
+        "B-8",
+        "B-9",
+        "B-10",
+        "B-11",
+        "B-14",
+        "B-15",
+        "B-16",
+        "B-17",
+        "B-18",
+        "B-19",
+        "B-20",
+        "B-21"
+      ],
+      "active_or_reopenable_codes": [
+        "B-2",
+        "B-3"
+      ],
+      "terminal_history_codes": [
+        "B-1",
+        "B-4",
+        "B-5",
+        "B-6",
+        "B-7",
+        "B-8",
+        "B-9",
+        "B-10",
+        "B-11",
+        "B-14",
+        "B-15",
+        "B-16",
+        "B-17",
+        "B-18",
+        "B-19",
+        "B-20",
+        "B-21"
+      ],
+      "collision_summary": {
+        "mapped_research_items": 19,
+        "active_or_reopenable": 2,
+        "terminal_history": 17,
+        "nearest_published": 3
+      }
+    },
+    "D3": {
+      "gap": {
+        "opportunity": "medium",
+        "label": {
+          "zh": "技能生成已拥挤 · 生命周期仍有窄缝",
+          "en": "Skill generation crowded · lifecycle seams remain"
+        },
+        "covered": {
+          "zh": "正式文献已覆盖固定工具、自生成/积累技能、视觉工具更新、domain skill learning 与工具轨迹适配。",
+          "en": "Published work covers fixed tools, generated/accumulated skills, visual tool updates, domain-skill learning, and trajectory adaptation."
+        },
+        "collision": {
+          "zh": "“从成功轨迹抽 skill 放进 library”“让 LLM 自动写工具/API”已经不是新对象。",
+          "en": "Extract a skill from successful trajectories and store it, or have an LLM author tools/APIs, is no longer a new object."
+        },
+        "failure": {
+          "zh": "薄弱处在生产后的维护：错误 skill 如何定位、版本兼容、适用条件、权限边界、旧 skill 退役和多个 skill 组合冲突。",
+          "en": "The weak point is post-creation maintenance: fault localization, compatibility, applicability, permissions, retirement, and composition conflicts."
+        },
+        "open": {
+          "zh": "把 skill 当长期软件资产：update gate、regression test、provenance、rollback、composition semantics 和跨任务 transfer certificate。",
+          "en": "Treat skills as long-lived software assets: update gates, regression tests, provenance, rollback, composition semantics, and cross-task transfer certificates."
+        },
+        "seedQuestions": [
+          "skill 失败来自规则错，还是 Agent 没正确调用它？",
+          "一个 skill 更新后怎样用少量 probe 发现旧任务回退？",
+          "多个独立有效 skill 组合时，什么结构会产生冲突或污染？"
+        ],
+        "searchTerms": "agent skill lifecycle versioning regression applicability provenance rollback composition conflict tool evolution",
+        "nearest": [
+          "Voyager: An Open-Ended Embodied Agent with Large Language Models",
+          "CLOVA: A Closed-Loop Visual Assistant with Tool Usage and Update",
+          "META: Meta Evolution of Tool Trajectory Adaptation for Long-Video Understanding",
+          "SkillGen: Learning Domain Skills for In-Context Sequential Decision Making"
+        ]
+      },
+      "current_categories": [
+        "E",
+        "G"
+      ],
+      "current_research_item_codes": [
+        "E-1",
+        "E-2",
+        "E-3",
+        "E-4",
+        "E-5",
+        "E-6",
+        "E-7",
+        "E-8",
+        "E-9",
+        "E-10",
+        "E-11",
+        "E-12",
+        "E-13",
+        "E-14",
+        "E-15",
+        "E-16",
+        "E-17",
+        "E-18",
+        "E-19",
+        "E-20",
+        "E-21",
+        "E-22",
+        "E-23",
+        "E-24",
+        "G-1",
+        "G-2",
+        "G-3",
+        "G-4",
+        "G-5",
+        "G-6",
+        "G-7",
+        "G-8",
+        "G-9",
+        "G-10",
+        "G-11",
+        "G-12",
+        "G-13"
+      ],
+      "active_or_reopenable_codes": [
+        "E-1",
+        "E-7",
+        "G-1"
+      ],
+      "terminal_history_codes": [
+        "E-2",
+        "E-3",
+        "E-4",
+        "E-5",
+        "E-6",
+        "E-8",
+        "E-9",
+        "E-10",
+        "E-11",
+        "E-12",
+        "E-13",
+        "E-14",
+        "E-15",
+        "E-16",
+        "E-17",
+        "E-18",
+        "E-19",
+        "E-20",
+        "E-21",
+        "E-22",
+        "E-23",
+        "E-24",
+        "G-2",
+        "G-3",
+        "G-4",
+        "G-5",
+        "G-6",
+        "G-7",
+        "G-8",
+        "G-9",
+        "G-10",
+        "G-11",
+        "G-12",
+        "G-13"
+      ],
+      "collision_summary": {
+        "mapped_research_items": 37,
+        "active_or_reopenable": 3,
+        "terminal_history": 34,
+        "nearest_published": 4
+      }
+    },
+    "D4": {
+      "gap": {
+        "opportunity": "crowded",
+        "label": {
+          "zh": "高度拥挤 · 除非改变科学对象",
+          "en": "Highly crowded · require a different scientific object"
+        },
+        "covered": {
+          "zh": "正式主线已覆盖 program/graph search、自动 workflow generation、自适应 operator、supernet 和深层结构探索。",
+          "en": "The published line spans program/graph search, automated workflow generation, adaptive operators, supernets, and deeper structural exploration."
+        },
+        "collision": {
+          "zh": "“LLM mutation + execution score + 保留最好 workflow”“换一种搜索算法找更好的 Agent graph”默认高碰撞。",
+          "en": "LLM mutation + execution score + keep the best workflow, or another graph-search algorithm, is high-collision by default."
+        },
+        "failure": {
+          "zh": "多数工作优化最终 task score，较少回答结构修改为何有效、哪个节点造成回退、改动是否跨任务稳定，以及 search 是否在 evaluator/benchmark 上过拟合。",
+          "en": "Most work optimizes task score but says less about why a structural change works, which node caused regression, whether gains transport, or whether search overfits an evaluator/benchmark."
+        },
+        "open": {
+          "zh": "如果继续做 D4，最好转向结构因果、release engineering 或可识别性：edit credit、提交前回归、跨任务 transport、搜索过拟合、版本回滚与最小安全修改。",
+          "en": "Further D4 work should shift toward structural causality, release engineering, or identifiability: edit credit, pre-commit regression, transport, search overfitting, rollback, and minimal safe changes."
+        },
+        "seedQuestions": [
+          "workflow 得分提升时怎样识别是哪条结构编辑造成收益/伤害？",
+          "能否在完整执行前预测 workflow edit 会不会破坏旧能力？",
+          "自动 workflow search 何时只是对开发 benchmark/evaluator 过拟合？"
+        ],
+        "searchTerms": "agent workflow evolution causal credit regression release engineering overfitting rollback structural edit transport",
+        "nearest": [
+          "Automated Design of Agentic Systems",
+          "AFlow: Automating Agentic Workflow Generation",
+          "A²Flow: Automating Agentic Workflow Generation via Self-Adaptive Abstraction Operators",
+          "FusionFlow: Enabling Deep Structural Exploration for Automated Agentic Workflow Generation"
+        ]
+      },
+      "current_categories": [
+        "A",
+        "E"
+      ],
+      "current_research_item_codes": [
+        "A-1",
+        "A-2",
+        "A-3",
+        "A-4",
+        "A-5",
+        "A-6",
+        "A-7",
+        "A-8",
+        "A-9",
+        "A-10",
+        "A-11",
+        "A-12",
+        "E-1",
+        "E-2",
+        "E-3",
+        "E-4",
+        "E-5",
+        "E-6",
+        "E-7",
+        "E-8",
+        "E-9",
+        "E-10",
+        "E-11",
+        "E-12",
+        "E-13",
+        "E-14",
+        "E-15",
+        "E-16",
+        "E-17",
+        "E-18",
+        "E-19",
+        "E-20",
+        "E-21",
+        "E-22",
+        "E-23",
+        "E-24"
+      ],
+      "active_or_reopenable_codes": [
+        "A-3",
+        "E-1",
+        "E-7"
+      ],
+      "terminal_history_codes": [
+        "A-1",
+        "A-2",
+        "A-4",
+        "A-5",
+        "A-6",
+        "A-7",
+        "A-8",
+        "A-9",
+        "A-10",
+        "A-11",
+        "A-12",
+        "E-2",
+        "E-3",
+        "E-4",
+        "E-5",
+        "E-6",
+        "E-8",
+        "E-9",
+        "E-10",
+        "E-11",
+        "E-12",
+        "E-13",
+        "E-14",
+        "E-15",
+        "E-16",
+        "E-17",
+        "E-18",
+        "E-19",
+        "E-20",
+        "E-21",
+        "E-22",
+        "E-23",
+        "E-24"
+      ],
+      "collision_summary": {
+        "mapped_research_items": 36,
+        "active_or_reopenable": 3,
+        "terminal_history": 33,
+        "nearest_published": 4
+      }
+    },
+    "D5": {
+      "gap": {
+        "opportunity": "medium-high",
+        "label": {
+          "zh": "有机会 · 重点在变化识别而非再加 world model",
+          "en": "Good opportunity · diagnose change, not another world model"
+        },
+        "covered": {
+          "zh": "正式文献已覆盖文本 world simulator、world-model planning、具身反思、导航经验积累和环境适应。",
+          "en": "Published work covers text world simulators, world-model planning, embodied reflection, navigation experience, and environment adaptation."
+        },
+        "collision": {
+          "zh": "“给 Agent 加 world model 再 lookahead”“用历史 trajectory 帮助规划”已经有大量邻近工作。",
+          "en": "Add a world model for lookahead or reuse historical trajectories for planning is heavily covered."
+        },
+        "failure": {
+          "zh": "失败后系统常把“策略错了”“观测不完整”“环境变了”“world model 错了”混在一起，因此可能把错误解释写进长期状态。",
+          "en": "After failure, systems often conflate policy error, partial observation, environment change, and world-model error, risking the wrong persistent update."
+        },
+        "open": {
+          "zh": "更值得研究变化归因：外部环境变化与内部策略错误的可识别性、world-model residual 是否真的改变决策、哪些世界知识需要局部修复而不是整体重学。",
+          "en": "More promising seams are change attribution: identifiability of external shift vs policy error, decision-changing residuals, and local repair rather than wholesale relearning."
+        },
+        "seedQuestions": [
+          "同一个失败轨迹，怎样判断应该修 policy、memory 还是 world model？",
+          "world-model prediction error 多大才真正改变下一步 action？",
+          "环境变化后，旧经验的哪一部分仍能安全迁移？"
+        ],
+        "searchTerms": "agent world model environment shift policy error diagnosis decision-changing residual local repair transfer",
+        "nearest": [
+          "Can Language Models Serve as Text-Based World Simulators?",
+          "Phoenix: A Motion-based Self-Reflection Framework for Fine-grained Robotic Action Correction",
+          "History to Future: Evolving Agent with Experience and Thought for Zero-shot Vision-and-Language Navigation",
+          "Learning to Adapt: Self-Improving Web Agent via Cognitive-Aware Exploration"
+        ]
+      },
+      "current_categories": [
+        "F"
+      ],
+      "current_research_item_codes": [
+        "F-1",
+        "F-2",
+        "F-3",
+        "F-4",
+        "F-5",
+        "F-6"
+      ],
+      "active_or_reopenable_codes": [],
+      "terminal_history_codes": [
+        "F-1",
+        "F-2",
+        "F-3",
+        "F-4",
+        "F-5",
+        "F-6"
+      ],
+      "collision_summary": {
+        "mapped_research_items": 6,
+        "active_or_reopenable": 0,
+        "terminal_history": 6,
+        "nearest_published": 4
+      }
+    },
+    "D6": {
+      "gap": {
+        "opportunity": "medium-high",
+        "label": {
+          "zh": "评测很拥挤 · 纵向回退与归因仍有空间",
+          "en": "Evaluation crowded · longitudinal regression/attribution remain open"
+        },
+        "covered": {
+          "zh": "正式文献已覆盖 self-correction、fine-grained critic、视觉错误定位、RAG critic、长期记忆 benchmark 和大量 Agent benchmark。",
+          "en": "Published work covers self-correction, fine-grained critics, visual error localization, RAG critics, long-term-memory benchmarks, and many agent benchmarks."
+        },
+        "collision": {
+          "zh": "“再做一个 benchmark”“再训练一个 critic/evaluator”“只报告平均 accuracy/success 提升”都属于高碰撞形态。",
+          "en": "Another benchmark, another critic/evaluator, or another average accuracy/success gain is high-collision."
+        },
+        "failure": {
+          "zh": "主要缺口是 update-level 和 longitudinal：平均分会掩盖 individual flip；评价器可能自己漂移；最终 endpoint 无法解释哪次更新导致未来首次违规或能力丢失。",
+          "en": "The main gap is update-level and longitudinal: averages hide individual flips, evaluators drift, and endpoints do not identify which update caused future first violations or capability loss."
+        },
+        "open": {
+          "zh": "把评价从“当前版本得多少分”推进到“哪次持久更新造成什么后果”：版本级 regression、first-violation hazard、评价器漂移、step/update attribution 与可恢复性。",
+          "en": "Move from current-version score to consequences of persistent updates: version-level regression, first-violation hazard, evaluator drift, step/update attribution, and recoverability."
+        },
+        "seedQuestions": [
+          "平均分上涨时怎样提前发现少数旧任务从 success 翻成 failure？",
+          "如果 evaluator 自己变化，怎样区分 Agent 改进与尺子漂移？",
+          "未来第一次严重失败能否追溯到更早的某次持久更新？"
+        ],
+        "searchTerms": "agent longitudinal regression first violation hazard evaluator drift update attribution hidden forgetting counterfactual audit",
+        "nearest": [
+          "VISCO: Benchmarking Fine-Grained Critique and Correction towards Self-Improvement in Visual Reasoning",
+          "Critic-V: VLM Critics Help Catch VLM Errors in Multimodal Reasoning",
+          "From Recall to Forgetting: Benchmarking Long-Term Memory for Personalized Agents",
+          "RAG-Critic: Leveraging Automated Critic-Guided Agentic Workflow for Retrieval Augmented Generation"
+        ]
+      },
+      "current_categories": [
+        "C",
+        "G"
+      ],
+      "current_research_item_codes": [
+        "C-1",
+        "C-2",
+        "C-3",
+        "C-4",
+        "C-5",
+        "C-6",
+        "C-7",
+        "C-8",
+        "C-9",
+        "C-10",
+        "G-1",
+        "G-2",
+        "G-3",
+        "G-4",
+        "G-5",
+        "G-6",
+        "G-7",
+        "G-8",
+        "G-9",
+        "G-10",
+        "G-11",
+        "G-12",
+        "G-13"
+      ],
+      "active_or_reopenable_codes": [
+        "G-1"
+      ],
+      "terminal_history_codes": [
+        "C-1",
+        "C-2",
+        "C-3",
+        "C-4",
+        "C-5",
+        "C-6",
+        "C-7",
+        "C-8",
+        "C-9",
+        "C-10",
+        "G-2",
+        "G-3",
+        "G-4",
+        "G-5",
+        "G-6",
+        "G-7",
+        "G-8",
+        "G-9",
+        "G-10",
+        "G-11",
+        "G-12",
+        "G-13"
+      ],
+      "collision_summary": {
+        "mapped_research_items": 23,
+        "active_or_reopenable": 1,
+        "terminal_history": 22,
+        "nearest_published": 4
+      }
+    },
+    "D7": {
+      "gap": {
+        "opportunity": "high",
+        "label": {
+          "zh": "正式主线稀疏 · 高价值补缺",
+          "en": "Sparse published line · high-value gap"
+        },
+        "covered": {
+          "zh": "已有正式工作主要覆盖 Agent 风险 benchmark、sandbox 安全评估和部分工具/网页安全问题。",
+          "en": "Published work mainly covers agent-risk benchmarks, sandbox safety evaluation, and parts of tool/web safety."
+        },
+        "collision": {
+          "zh": "只做“输入前加安全过滤”或“发现坏 memory 后删除这一条”解决不了持久状态的派生传播。",
+          "en": "A pre-input safety filter or deleting one bad memory does not address propagation through persistent descendants."
+        },
+        "failure": {
+          "zh": "长期 Agent 的状态会从 experience 派生出 memory、skill、workflow 和后代版本，但正式文献对 lineage 污染传播、精确撤销和 provenance 绑定仍明显不足。",
+          "en": "Experience can derive memory, skills, workflows, and descendant versions, while peer-reviewed work on lineage-aware contamination, precise revocation, and provenance binding remains thin."
+        },
+        "open": {
+          "zh": "值得优先搜索 persistent-state security，而不是普通 prompt injection：污染跨表示层传播、最小 rollback set、证据链完整性、更新权限与 descendant quarantine。",
+          "en": "Prioritize persistent-state security rather than generic prompt injection: cross-representation propagation, minimal rollback sets, evidence-chain integrity, authorization, and descendant quarantine."
+        },
+        "seedQuestions": [
+          "删除原始坏 memory 后，哪些派生 skill/workflow 仍保留污染？",
+          "怎样计算一次错误更新的最小完整 rollback closure？",
+          "不同来源证据合并成同一持久状态后，怎样保留可审计 provenance？"
+        ],
+        "searchTerms": "persistent agent state provenance contamination propagation rollback descendant memory skill workflow security",
+        "nearest": [
+          "ST-WebAgentBench: A Benchmark for Evaluating Safety and Trustworthiness in Web Agents",
+          "Identifying the Risks of LM Agents with an LM-Emulated Sandbox"
+        ]
+      },
+      "current_categories": [
+        "A",
+        "G"
+      ],
+      "current_research_item_codes": [
+        "A-1",
+        "A-2",
+        "A-3",
+        "A-4",
+        "A-5",
+        "A-6",
+        "A-7",
+        "A-8",
+        "A-9",
+        "A-10",
+        "A-11",
+        "A-12",
+        "G-1",
+        "G-2",
+        "G-3",
+        "G-4",
+        "G-5",
+        "G-6",
+        "G-7",
+        "G-8",
+        "G-9",
+        "G-10",
+        "G-11",
+        "G-12",
+        "G-13"
+      ],
+      "active_or_reopenable_codes": [
+        "A-3",
+        "G-1"
+      ],
+      "terminal_history_codes": [
+        "A-1",
+        "A-2",
+        "A-4",
+        "A-5",
+        "A-6",
+        "A-7",
+        "A-8",
+        "A-9",
+        "A-10",
+        "A-11",
+        "A-12",
+        "G-2",
+        "G-3",
+        "G-4",
+        "G-5",
+        "G-6",
+        "G-7",
+        "G-8",
+        "G-9",
+        "G-10",
+        "G-11",
+        "G-12",
+        "G-13"
+      ],
+      "collision_summary": {
+        "mapped_research_items": 25,
+        "active_or_reopenable": 2,
+        "terminal_history": 23,
+        "nearest_published": 2
+      }
+    },
+    "D8": {
+      "gap": {
+        "opportunity": "high",
+        "label": {
+          "zh": "直接正式论文很少 · 适合从控制层找问题",
+          "en": "Very sparse direct literature · mine the control layer"
+        },
+        "covered": {
+          "zh": "邻近工作会报告 token/cost、约束优化或训练效率，但很少把“是否允许这次自进化、应该花多少验证预算、何时停止”当独立科学对象。",
+          "en": "Adjacent work reports token/cost, constrained optimization, or training efficiency, but rarely treats whether an evolution step should run, how much evidence to buy, or when to stop as the scientific object."
+        },
+        "collision": {
+          "zh": "单纯“让 workflow 更省 token”“减少搜索成本”只是效率工程，不足以构成进化治理。",
+          "en": "Making a workflow cheaper or reducing search cost alone is efficiency engineering, not evolution governance."
+        },
+        "failure": {
+          "zh": "每次完整 replay 旧任务成本不可承受；固定少量检查又会在高风险 update 上漏检。现有方法很少联合建模信息价值、风险与验证预算。",
+          "en": "Full replay after every update is unaffordable, while fixed small checks miss risky updates; few methods jointly model information value, risk, and validation budget."
+        },
+        "open": {
+          "zh": "可搜索 evidence allocation / evolution control：哪一次 update 值得实验、先做哪个 probe、何时证据足以 STOP、什么风险必须升级为 full regression 或人工审核。",
+          "en": "Search evidence allocation/evolution control: which update deserves an experiment, which probe comes first, when evidence suffices to STOP, and which risk requires full regression or human review."
+        },
+        "seedQuestions": [
+          "能否根据 update 风险和预期信息增益，自适应分配 regression test 预算？",
+          "什么时候继续找证据只会重复已有结论，应该科学终止？",
+          "prompt/memory/skill/workflow 的验证预算是否应该不同？"
+        ],
+        "searchTerms": "agent self evolution governance evidence allocation adaptive validation budget stopping rule risk-aware regression",
+        "nearest": [
+          "AFlow: Automating Agentic Workflow Generation",
+          "A²Flow: Automating Agentic Workflow Generation via Self-Adaptive Abstraction Operators"
+        ]
+      },
+      "current_categories": [
+        "A",
+        "D",
+        "G"
+      ],
+      "current_research_item_codes": [
+        "A-1",
+        "A-2",
+        "A-3",
+        "A-4",
+        "A-5",
+        "A-6",
+        "A-7",
+        "A-8",
+        "A-9",
+        "A-10",
+        "A-11",
+        "A-12",
+        "D-1",
+        "D-2",
+        "D-3",
+        "G-1",
+        "G-2",
+        "G-3",
+        "G-4",
+        "G-5",
+        "G-6",
+        "G-7",
+        "G-8",
+        "G-9",
+        "G-10",
+        "G-11",
+        "G-12",
+        "G-13"
+      ],
+      "active_or_reopenable_codes": [
+        "A-3",
+        "G-1"
+      ],
+      "terminal_history_codes": [
+        "A-1",
+        "A-2",
+        "A-4",
+        "A-5",
+        "A-6",
+        "A-7",
+        "A-8",
+        "A-9",
+        "A-10",
+        "A-11",
+        "A-12",
+        "D-1",
+        "D-2",
+        "D-3",
+        "G-2",
+        "G-3",
+        "G-4",
+        "G-5",
+        "G-6",
+        "G-7",
+        "G-8",
+        "G-9",
+        "G-10",
+        "G-11",
+        "G-12",
+        "G-13"
+      ],
+      "collision_summary": {
+        "mapped_research_items": 28,
+        "active_or_reopenable": 2,
+        "terminal_history": 26,
+        "nearest_published": 2
+      }
+    },
+    "D9": {
+      "gap": {
+        "opportunity": "medium",
+        "label": {
+          "zh": "课程/自博弈已拥挤 · evaluator 互动仍值得看",
+          "en": "Curriculum/self-play crowded · evaluator interaction remains interesting"
+        },
+        "covered": {
+          "zh": "正式文献覆盖自生成训练数据、自奖励、在线 curriculum RL、视觉 self-play 与 preference optimization。",
+          "en": "Published work covers generated training data, self-reward, online curriculum RL, visual self-play, and preference optimization."
+        },
+        "collision": {
+          "zh": "“根据当前失败生成更难任务”“questioner-solver self-play”“reward-guided curriculum”已经是成熟套路。",
+          "en": "Generate harder tasks from failures, questioner-solver self-play, and reward-guided curricula are established motifs."
+        },
+        "failure": {
+          "zh": "课程与 reward/evaluator 相互依赖：Agent 会适应它看到的任务和分数，可能导致 curriculum collapse、reward hacking、局部难度饱和或评价分布漂移。",
+          "en": "Curricula and reward/evaluators co-adapt; agents can induce curriculum collapse, reward hacking, local saturation, or evaluation-distribution drift."
+        },
+        "open": {
+          "zh": "优先看“学习目标本身的稳定性”：错误 reward 如何改变后续数据分布、课程是否把能力推向错误方向、怎样检测自生成任务已经失去学习价值。",
+          "en": "Prioritize stability of the learning objective: how wrong rewards reshape future data, whether curricula push capability in the wrong direction, and how to detect when generated tasks stop being informative."
+        },
+        "seedQuestions": [
+          "self-evolving curriculum 什么时候会因为自己的 reward 偏差越走越偏？",
+          "怎样判断新生成任务是真正 frontier，还是 evaluator 的漏洞？",
+          "课程收益能否迁移到未参与生成的任务族？"
+        ],
+        "searchTerms": "self evolving curriculum reward drift evaluator coevolution reward hacking learning frontier task generation transfer",
+        "nearest": [
+          "WebRL: Training LLM Web Agents via Self-Evolving Online Curriculum Reinforcement Learning",
+          "VisPlay: Self-Evolving Vision-Language Models",
+          "Self-Rewarding Language Models"
+        ]
+      },
+      "current_categories": [
+        "B",
+        "C",
+        "D"
+      ],
+      "current_research_item_codes": [
+        "B-1",
+        "B-2",
+        "B-3",
+        "B-4",
+        "B-5",
+        "B-6",
+        "B-7",
+        "B-8",
+        "B-9",
+        "B-10",
+        "B-11",
+        "B-14",
+        "B-15",
+        "B-16",
+        "B-17",
+        "B-18",
+        "B-19",
+        "B-20",
+        "B-21",
+        "C-1",
+        "C-2",
+        "C-3",
+        "C-4",
+        "C-5",
+        "C-6",
+        "C-7",
+        "C-8",
+        "C-9",
+        "C-10",
+        "D-1",
+        "D-2",
+        "D-3"
+      ],
+      "active_or_reopenable_codes": [
+        "B-2",
+        "B-3"
+      ],
+      "terminal_history_codes": [
+        "B-1",
+        "B-4",
+        "B-5",
+        "B-6",
+        "B-7",
+        "B-8",
+        "B-9",
+        "B-10",
+        "B-11",
+        "B-14",
+        "B-15",
+        "B-16",
+        "B-17",
+        "B-18",
+        "B-19",
+        "B-20",
+        "B-21",
+        "C-1",
+        "C-2",
+        "C-3",
+        "C-4",
+        "C-5",
+        "C-6",
+        "C-7",
+        "C-8",
+        "C-9",
+        "C-10",
+        "D-1",
+        "D-2",
+        "D-3"
+      ],
+      "collision_summary": {
+        "mapped_research_items": 32,
+        "active_or_reopenable": 2,
+        "terminal_history": 30,
+        "nearest_published": 3
+      }
+    },
+    "D10": {
+      "gap": {
+        "opportunity": "medium",
+        "label": {
+          "zh": "拓扑搜索已有强工作 · 传播与异质性仍可挖",
+          "en": "Topology search established · propagation/heterogeneity remain"
+        },
+        "covered": {
+          "zh": "正式文献已覆盖 multi-agent topology search、open-ended opponent learning、固定团队通信与部分协作优化。",
+          "en": "Published work covers multi-agent topology search, open-ended opponent learning, fixed-team communication, and coordination optimization."
+        },
+        "collision": {
+          "zh": "“搜索更好的 multi-agent graph”“动态选择几个 Agent 来投票”本身容易撞 MaAS / topology-search 类工作。",
+          "en": "Search a better multi-agent graph or dynamically select agents to vote is collisional with MaAS/topology-search work."
+        },
+        "failure": {
+          "zh": "群体中的经验、错误与评价不是独立的：一个 Agent 的错误 memory/skill 可能被广播，强 Agent 可能压制专门化 Agent，固定共享机制会产生相关错误。",
+          "en": "Experience, errors, and evaluations are correlated across a population: bad memory/skills can be broadcast, strong agents can suppress specialists, and shared state creates correlated failures."
+        },
+        "open": {
+          "zh": "更值得看跨 Agent 状态传播与专门化：什么应该共享、什么必须隔离；错误怎样沿通信图放大；怎样评价独立证据而不是重复投票。",
+          "en": "Focus on cross-agent state propagation and specialization: what to share vs isolate, how errors amplify through communication, and how to count independent evidence rather than repeated votes."
+        },
+        "seedQuestions": [
+          "多个 Agent 都同意时，怎样判断是独立证据还是同一错误来源的重复传播？",
+          "一条 memory/skill 广播给群体前需要什么 transport/safety certificate？",
+          "什么时候共享经验提高群体能力，什么时候反而消灭有价值的专门化？"
+        ],
+        "searchTerms": "multi agent self evolution knowledge propagation correlated errors specialization provenance independent evidence topology",
+        "nearest": [
+          "Multi-agent Architecture Search via Agentic Supernet",
+          "An Open-Ended Learning Framework for Opponent Modeling"
+        ]
+      },
+      "current_categories": [
+        "A",
+        "B"
+      ],
+      "current_research_item_codes": [
+        "A-1",
+        "A-2",
+        "A-3",
+        "A-4",
+        "A-5",
+        "A-6",
+        "A-7",
+        "A-8",
+        "A-9",
+        "A-10",
+        "A-11",
+        "A-12",
+        "B-1",
+        "B-2",
+        "B-3",
+        "B-4",
+        "B-5",
+        "B-6",
+        "B-7",
+        "B-8",
+        "B-9",
+        "B-10",
+        "B-11",
+        "B-14",
+        "B-15",
+        "B-16",
+        "B-17",
+        "B-18",
+        "B-19",
+        "B-20",
+        "B-21"
+      ],
+      "active_or_reopenable_codes": [
+        "A-3",
+        "B-2",
+        "B-3"
+      ],
+      "terminal_history_codes": [
+        "A-1",
+        "A-2",
+        "A-4",
+        "A-5",
+        "A-6",
+        "A-7",
+        "A-8",
+        "A-9",
+        "A-10",
+        "A-11",
+        "A-12",
+        "B-1",
+        "B-4",
+        "B-5",
+        "B-6",
+        "B-7",
+        "B-8",
+        "B-9",
+        "B-10",
+        "B-11",
+        "B-14",
+        "B-15",
+        "B-16",
+        "B-17",
+        "B-18",
+        "B-19",
+        "B-20",
+        "B-21"
+      ],
+      "collision_summary": {
+        "mapped_research_items": 31,
+        "active_or_reopenable": 3,
+        "terminal_history": 28,
+        "nearest_published": 2
+      }
+    }
+  },
+  "intersections": [
+    {
+      "id": "X1",
+      "codes": [
+        "D1",
+        "D6"
+      ],
+      "title": {
+        "zh": "经验准入 × 版本回退",
+        "en": "Experience admission × regression"
+      },
+      "question": {
+        "zh": "“这次学到了东西”与“没有破坏旧能力”能否在提交前同时判断？",
+        "en": "Can we decide both that an update learned something and that it did not break old capability before commit?"
+      },
+      "why": {
+        "zh": "D1 多看后续尝试收益，D6 多在更新后测回退，两条线之间存在 pre-commit 断层。",
+        "en": "D1 often measures later-attempt gain and D6 post-update regression, leaving a pre-commit gap."
+      }
+    },
+    {
+      "id": "X2",
+      "codes": [
+        "D2",
+        "D7"
+      ],
+      "title": {
+        "zh": "记忆生命周期 × 污染谱系",
+        "en": "Memory lifecycle × contamination lineage"
+      },
+      "question": {
+        "zh": "坏经验被巩固、摘要或编译后，怎样追踪所有受影响后代并完整撤销？",
+        "en": "After bad experience is consolidated, summarized, or compiled, how do we trace and revoke all affected descendants?"
+      },
+      "why": {
+        "zh": "memory 系统越来越结构化，但安全删除往往仍停留在单条记录级。",
+        "en": "Memory systems are increasingly structured while safe deletion often remains record-local."
+      }
+    },
+    {
+      "id": "X3",
+      "codes": [
+        "D3",
+        "D6"
+      ],
+      "title": {
+        "zh": "技能进化 × 回归定位",
+        "en": "Skill evolution × regression localization"
+      },
+      "question": {
+        "zh": "skill 更新造成失败时，是规则错、调用错，还是与别的 skill 组合冲突？",
+        "en": "When a skill update fails, is the rule wrong, the invocation wrong, or the composition conflicting?"
+      },
+      "why": {
+        "zh": "自动 skill 生成成熟以后，维护与故障归因成为下一层瓶颈。",
+        "en": "As automatic skill generation matures, maintenance and fault attribution become the next bottleneck."
+      }
+    },
+    {
+      "id": "X4",
+      "codes": [
+        "D4",
+        "D6"
+      ],
+      "title": {
+        "zh": "Workflow 搜索 × 结构因果",
+        "en": "Workflow search × structural causality"
+      },
+      "question": {
+        "zh": "自动搜索找到高分 graph 后，怎样证明真正起作用的是哪条结构编辑？",
+        "en": "After search finds a high-scoring graph, which structural edit actually caused the gain?"
+      },
+      "why": {
+        "zh": "当前 workflow 线强在找更高分结构，对 edit-level causal credit 覆盖弱。",
+        "en": "Workflow search strongly covers finding better structures but less so edit-level causal credit."
+      }
+    },
+    {
+      "id": "X5",
+      "codes": [
+        "D5",
+        "D1"
+      ],
+      "title": {
+        "zh": "世界变化 × 学习归因",
+        "en": "World change × learning attribution"
+      },
+      "question": {
+        "zh": "失败意味着 Agent 应该学习，还是环境已经改变、旧经验不再适用？",
+        "en": "Does failure mean the agent should learn, or that the world changed and old experience no longer applies?"
+      },
+      "why": {
+        "zh": "错误归因会把环境变化误写成长期策略规则。",
+        "en": "Misattribution can turn environmental drift into a wrong persistent policy rule."
+      }
+    },
+    {
+      "id": "X6",
+      "codes": [
+        "D9",
+        "D6"
+      ],
+      "title": {
+        "zh": "课程进化 × 评价器漂移",
+        "en": "Curriculum evolution × evaluator drift"
+      },
+      "question": {
+        "zh": "训练任务和 evaluator 一起变化时，怎样知道 Agent 真进步而不是尺子被带偏？",
+        "en": "When tasks and evaluators co-evolve, how do we know the agent improved rather than the ruler drifting?"
+      },
+      "why": {
+        "zh": "自生成 curriculum 会反过来改变后续可见数据，形成闭环选择偏差。",
+        "en": "Self-generated curricula reshape future visible data and create closed-loop selection bias."
+      }
+    },
+    {
+      "id": "X7",
+      "codes": [
+        "D10",
+        "D7"
+      ],
+      "title": {
+        "zh": "群体共享 × 污染传播",
+        "en": "Population sharing × contamination propagation"
+      },
+      "question": {
+        "zh": "跨 Agent 广播经验时，怎样防止一次错误变成全群体相关失败？",
+        "en": "How do we stop one bad experience from becoming a population-wide correlated failure?"
+      },
+      "why": {
+        "zh": "群体方法重视共享收益，长期 provenance 与隔离边界仍薄弱。",
+        "en": "Population methods emphasize sharing gains while long-term provenance and isolation remain weak."
+      }
+    },
+    {
+      "id": "X8",
+      "codes": [
+        "D8",
+        "D1",
+        "D6"
+      ],
+      "title": {
+        "zh": "验证预算 × 信息价值",
+        "en": "Validation budget × information value"
+      },
+      "question": {
+        "zh": "面对候选更新，下一次最值得跑哪个 probe，什么时候证据已经足够 STOP？",
+        "en": "For a candidate update, which probe is most informative next, and when is there enough evidence to STOP?"
+      },
+      "why": {
+        "zh": "把“科研系统怎么分配实验预算”直接连接到 Agent 自进化控制。",
+        "en": "This connects research evidence allocation directly to control of agent evolution."
+      }
+    }
+  ],
+  "candidate_contract": [
+    {
+      "key": "object",
+      "zh": "科学对象：先写可观察现象/失败，不要先写方法名。",
+      "en": "Scientific object: name the observable phenomenon/failure before the method."
+    },
+    {
+      "key": "nearest",
+      "zh": "最近正式工作：至少列 2–4 篇，以及它们已证明到哪里。",
+      "en": "Nearest published work: list 2–4 closest papers and their claim boundaries."
+    },
+    {
+      "key": "baseline",
+      "zh": "最强简单对照：相同信息、相近预算时，最简单方法具体怎么做。",
+      "en": "Strongest simple baseline: the simplest method with matched information and similar budget."
+    },
+    {
+      "key": "prediction",
+      "zh": "区分性预测：什么结果只有候选解释成立时才应该出现。",
+      "en": "Discriminating prediction: an outcome expected only if the candidate explanation is right."
+    },
+    {
+      "key": "falsifier",
+      "zh": "局部 falsifier：最小 unit、指标和明确 STOP 结果。",
+      "en": "Local falsifier: minimum units, metric, and explicit STOP result."
+    },
+    {
+      "key": "collision",
+      "zh": "碰撞条件：最近工作加常规模块即可覆盖时，立即降级/终止。",
+      "en": "Collision rule: downgrade/stop if nearest work plus a routine module subsumes it."
+    },
+    {
+      "key": "substrate",
+      "zh": "实验基底：当前数据、环境、模型必须能观测目标现象。",
+      "en": "Experimental substrate: current data/environment/model must expose the target phenomenon."
+    }
+  ]
+}

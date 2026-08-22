@@ -334,6 +334,15 @@ def main() -> None:
               publishedAudit: window.publishedLiteratureAudit?.() || {published:0,byTier:{},byDirection:{},missingQuick:['audit missing'],missingMustReadEvidence:['audit missing']},
               publishedEvidenceSources: document.querySelectorAll('.published-evidence-source').length,
               publishedIntro: document.querySelector('.published-spine-intro')?.textContent || '',
+              ideaMiningDirections: document.querySelectorAll('.idea-mining-direction').length,
+              ideaMiningSections: document.querySelectorAll('.idea-mining-body > section').length,
+              ideaMiningInternal: document.querySelectorAll('.idea-mining-internal').length,
+              ideaMiningInternalLinks: document.querySelectorAll('.idea-mining-internal a').length,
+              ideaMiningIntersections: document.querySelectorAll('.idea-intersection-card').length,
+              ideaMiningContract: document.querySelectorAll('.idea-candidate-contract article').length,
+              ideaMiningPriority: document.querySelectorAll('.idea-mining-priority-strip > a').length,
+              ideaMiningAudit: window.literatureIdeaMiningAudit?.() || {directions:0,intersections:0,contract:0,missing:['audit missing'],high:[],crowded:[]},
+              ideaMiningText: document.querySelector('[data-chapter="idea-mining"]')?.textContent || '',
               mapGuideCards: document.querySelectorAll('.bibliography-map-guide-grid article').length,
               readingPathCards: document.querySelectorAll('.bibliography-reading-path-grid article').length,
               metaStats: document.querySelectorAll('.bibliography-meta-strip span').length,
@@ -369,7 +378,7 @@ def main() -> None:
               missing: document.querySelectorAll('.citation-missing').length
             };""",
         )
-        require(bibliography["chapters"] == ["published-spine","published-comparison","field-maps","search-corpus","coverage-protocol"], f"bibliography reading order is wrong: {bibliography['chapters']}")
+        require(bibliography["chapters"] == ["published-spine","published-comparison","idea-mining","field-maps","search-corpus","coverage-protocol"], f"bibliography reading order is wrong: {bibliography['chapters']}")
         require((bibliography["trustCards"],bibliography["refreshLogs"],bibliography["refreshMethods"],bibliography["refreshChips"],bibliography["mapGuideCards"],bibliography["metaStats"]) == (4,1,2,7,3,4), f"bibliography maps or refresh provenance are incomplete: {bibliography}")
         require(all(marker in bibliography["refreshText"] for marker in ("2026-08-22","+33 papers","Semantic Scholar + arXiv","RoMeRL","HarnessBank")), f"bibliography incremental API refresh provenance is incomplete: {bibliography['refreshText']}")
         require(bibliography["statusStrips"] == 0, "bibliography must not show current research-state status strips")
@@ -381,6 +390,13 @@ def main() -> None:
         require(bibliography["publishedQuickReads"] > 0 and bibliography["publishedQuickFields"] == bibliography["publishedQuickReads"] * 8, "published paper 30-second readouts are incomplete")
         require(bibliography["publishedEvidenceSources"] > 0, "visible A-tier paper cards must expose the source-grounded evidence note")
         require("published" in bibliography["publishedIntro"].lower() and str(published_audit["published"]) in bibliography["publishedIntro"], "published spine summary is missing its audited count")
+        idea_audit=bibliography["ideaMiningAudit"]
+        require((bibliography["ideaMiningDirections"],bibliography["ideaMiningSections"],bibliography["ideaMiningInternal"],bibliography["ideaMiningIntersections"],bibliography["ideaMiningContract"],bibliography["ideaMiningPriority"]) == (10,70,10,8,7,10), f"literature idea-mining UI is incomplete: {bibliography}")
+        require(bibliography["ideaMiningInternalLinks"] >= 8, "idea-mining directions must expose current in-house ResearchItem collision links")
+        require(idea_audit["directions"] == 10 and idea_audit["intersections"] == 8 and idea_audit["contract"] == 7 and not idea_audit["missing"], f"literature idea-mining audit failed: {idea_audit}")
+        require(idea_audit["researchItems"] >= 80 and idea_audit["activeCollisionRefs"] >= 8 and len(idea_audit["uniqueActiveResearchItems"]) >= 4 and idea_audit["terminalCollisionRefs"] >= 50, f"literature gap registry is not colliding against the canonical ResearchItem ledger: {idea_audit}")
+        require(set(idea_audit["high"]) == {"D1","D7","D8"} and idea_audit["crowded"] == ["D4"], f"idea opportunity prioritization drifted: {idea_audit}")
+        require(all(marker in bibliography["ideaMiningText"] for marker in ("High-collision exclusion","Repeated failure","Surviving opening","Questions to seed later API collisions")), "idea-mining search-space fields are not visible")
         require(bibliography["cards"] == 80, "bibliography initial pagination is not 80")
         require(bibliography["loadMore"], "bibliography load-more control is missing")
         require(bibliography["methodMap"] and bibliography["publicationMap"] and bibliography["signalMap"], "one or more bibliography maps are missing")

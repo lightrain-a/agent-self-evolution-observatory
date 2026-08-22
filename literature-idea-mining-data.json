@@ -1,0 +1,627 @@
+{
+  "schemaVersion": "1.0",
+  "basis": {
+    "zh": "以当前正式发表主线为第一层证据。这里的“拥挤/机会”只表示当前文献库中的碰撞风险，不是最终 novelty 判决；候选生成后仍必须补最新预印本检索、原文核验和 strongest-baseline 对齐。",
+    "en": "The peer-reviewed spine is the first evidence layer. Crowding/opportunity describes collision risk in the current corpus, not a final novelty judgment; candidates still need fresh preprint search, primary-source verification, and strongest-baseline matching."
+  },
+  "currentCategoryMap": {
+    "D1": [
+      "A",
+      "B",
+      "D"
+    ],
+    "D2": [
+      "B"
+    ],
+    "D3": [
+      "E",
+      "G"
+    ],
+    "D4": [
+      "A",
+      "E"
+    ],
+    "D5": [
+      "F"
+    ],
+    "D6": [
+      "C",
+      "G"
+    ],
+    "D7": [
+      "A",
+      "G"
+    ],
+    "D8": [
+      "A",
+      "D",
+      "G"
+    ],
+    "D9": [
+      "B",
+      "C",
+      "D"
+    ],
+    "D10": [
+      "A",
+      "B"
+    ]
+  },
+  "principles": [
+    {
+      "title": {
+        "zh": "先找反复失败的地方",
+        "en": "Start from repeated failures"
+      },
+      "body": {
+        "zh": "优先找多篇论文共同暴露、却没有稳定解决的失败：负迁移、评价器漂移、污染传播、适用范围错误、版本回退或验证预算失控。",
+        "en": "Prefer failures repeatedly exposed across papers but not robustly solved: negative transfer, evaluator drift, contamination propagation, scope errors, regressions, or validation-budget blowups."
+      }
+    },
+    {
+      "title": {
+        "zh": "把成熟套路当排除项",
+        "en": "Treat mature motifs as exclusions"
+      },
+      "body": {
+        "zh": "“更好的 memory retrieval”“LLM 自动生成 skill”“再搜索一次 workflow”“再做一个 critic”“再做自适应 curriculum”默认高碰撞，除非科学对象、可识别量或失败机制发生实质变化。",
+        "en": "A better retriever, LLM-authored skill, another workflow search, another critic, or another adaptive curriculum is presumed high-collision unless the scientific object, estimand, or failure mechanism materially changes."
+      }
+    },
+    {
+      "title": {
+        "zh": "优先找成熟主线之间的接口断层",
+        "en": "Mine interfaces between mature lines"
+      },
+      "body": {
+        "zh": "很多新问题出现在模块交接处：经验写入记忆之前、记忆编译成技能之后、workflow 更新提交之前、评价信号反过来改变课程之后。",
+        "en": "Many open problems sit at interfaces: before experience enters memory, after memory becomes a skill, before workflow changes are committed, or after evaluation signals reshape the curriculum."
+      }
+    },
+    {
+      "title": {
+        "zh": "候选研究问题必须带能杀死自己的局部实验",
+        "en": "Every idea needs a local falsifier"
+      },
+      "body": {
+        "zh": "文献缺口本身不是论文。候选必须同时给出 strongest simple baseline、区分性预测、最小实验单元和明确 STOP 条件。",
+        "en": "A literature gap is not yet a paper. A candidate needs a strongest simple baseline, discriminating prediction, minimum experimental unit, and explicit STOP condition."
+      }
+    }
+  ],
+  "directions": {
+    "D1": {
+      "opportunity": "high",
+      "label": {
+        "zh": "优先挖掘 · 避开普通 reflection",
+        "en": "High opportunity · avoid generic reflection"
+      },
+      "covered": {
+        "zh": "正式文献已覆盖重试、自我反馈、语言反思和 reward 学习 retrospective feedback。",
+        "en": "Published work already covers retries, self-feedback, verbal reflection, and reward-trained retrospective feedback."
+      },
+      "collision": {
+        "zh": "如果只是“失败后生成更好的 reflection/lesson，再写回上下文”，与 Reflexion、Self-Refine、Retroformer 高度碰撞。",
+        "en": "Failure → better reflection/lesson → reuse in context is highly collisional with Reflexion, Self-Refine, and Retroformer."
+      },
+      "failure": {
+        "zh": "多数结果只证明下一次尝试变好，较少证明经验为何有效、在哪些 future context 仍有效、何时作用符号反转。",
+        "en": "Most gains show the next attempt improves; much less is established about why experience works, where it transports, or when its effect reverses."
+      },
+      "open": {
+        "zh": "更值得找经验准入与作用边界：识别 trajectory 中真正产生效应的部分，区分短期修复与可迁移经验，在写入长期状态前预测跨任务收益/伤害。",
+        "en": "More promising seams concern admission and scope: identify causal parts of a trajectory, separate episodic repair from transferable experience, and predict cross-task benefit or harm before persistence."
+      },
+      "seedQuestions": [
+        "一次经验在 source task 有正效应，什么条件下会迁移到 target context？",
+        "能否在不跑完整未来任务集时识别“应该写入”与“只适合本次修复”的经验？",
+        "同一条 memory/lesson 的效应符号为什么会随 downstream context 反转？"
+      ],
+      "searchTerms": "persistent experience admission causal effect transport negative transfer context-conditioned reflection trajectory intervention",
+      "nearest": [
+        "Retroformer: Retrospective Large Language Agents with Policy Gradient Optimization",
+        "Reflexion: Language Agents with Verbal Reinforcement Learning",
+        "Self-Refine: Iterative Refinement with Self-Feedback"
+      ]
+    },
+    "D2": {
+      "opportunity": "medium-high",
+      "label": {
+        "zh": "有明显缺口 · retrieval/结构本身已拥挤",
+        "en": "Good seams · retrieval/structure is crowded"
+      },
+      "covered": {
+        "zh": "正式文献已覆盖情景记忆、长时记忆、结构化/图记忆、多模态记忆、检索与部分遗忘机制。",
+        "en": "Published work covers episodic and long-term memory, structured/graph memory, multimodal memory, retrieval, and some forgetting."
+      },
+      "collision": {
+        "zh": "“Top-K 换成图/超图/更强 retriever”“增加 summary/consolidation”本身已经拥挤。",
+        "en": "Replacing Top-K with graph/hypergraph/retrieval upgrades or adding summary/consolidation is already crowded."
+      },
+      "failure": {
+        "zh": "过期、冲突、噪声和遗忘反复出现，但多数系统仍用 retrieval quality 或 endpoint accuracy 间接判断 memory 是否真的有因果价值。",
+        "en": "Staleness, conflict, noise, and forgetting recur, yet many systems infer memory value indirectly from retrieval quality or endpoint accuracy."
+      },
+      "open": {
+        "zh": "优先看生命周期而不是存储结构：适用条件、负迁移、相互干扰、何时巩固/删除、删除后派生产物，以及长期重复更新后的非单调行为。",
+        "en": "Prioritize lifecycle over storage structure: applicability, negative transfer, interference, consolidation/deletion timing, descendants after deletion, and non-monotonic repeated updates."
+      },
+      "seedQuestions": [
+        "memory 被检索出来不等于它造成结果变化，怎样测 causal usefulness？",
+        "多条单独有益的 memory 为什么组合后会产生非单调退化？",
+        "memory 应该何时巩固成 skill/parametric state，何时衰减或删除？"
+      ],
+      "searchTerms": "agent memory lifecycle causal usefulness negative transfer interference consolidation forgetting stale memory repeated updates",
+      "nearest": [
+        "Reflexion: Language Agents with Verbal Reinforcement Learning",
+        "EvoGraph-R1: Self-Evolving Multimodal Knowledge Hypergraphs for Agentic Retrieval",
+        "From Recall to Forgetting: Benchmarking Long-Term Memory for Personalized Agents"
+      ]
+    },
+    "D3": {
+      "opportunity": "medium",
+      "label": {
+        "zh": "技能生成已拥挤 · 生命周期仍有窄缝",
+        "en": "Skill generation crowded · lifecycle seams remain"
+      },
+      "covered": {
+        "zh": "正式文献已覆盖固定工具、自生成/积累技能、视觉工具更新、domain skill learning 与工具轨迹适配。",
+        "en": "Published work covers fixed tools, generated/accumulated skills, visual tool updates, domain-skill learning, and trajectory adaptation."
+      },
+      "collision": {
+        "zh": "“从成功轨迹抽 skill 放进 library”“让 LLM 自动写工具/API”已经不是新对象。",
+        "en": "Extract a skill from successful trajectories and store it, or have an LLM author tools/APIs, is no longer a new object."
+      },
+      "failure": {
+        "zh": "薄弱处在生产后的维护：错误 skill 如何定位、版本兼容、适用条件、权限边界、旧 skill 退役和多个 skill 组合冲突。",
+        "en": "The weak point is post-creation maintenance: fault localization, compatibility, applicability, permissions, retirement, and composition conflicts."
+      },
+      "open": {
+        "zh": "把 skill 当长期软件资产：update gate、regression test、provenance、rollback、composition semantics 和跨任务 transfer certificate。",
+        "en": "Treat skills as long-lived software assets: update gates, regression tests, provenance, rollback, composition semantics, and cross-task transfer certificates."
+      },
+      "seedQuestions": [
+        "skill 失败来自规则错，还是 Agent 没正确调用它？",
+        "一个 skill 更新后怎样用少量 probe 发现旧任务回退？",
+        "多个独立有效 skill 组合时，什么结构会产生冲突或污染？"
+      ],
+      "searchTerms": "agent skill lifecycle versioning regression applicability provenance rollback composition conflict tool evolution",
+      "nearest": [
+        "Voyager: An Open-Ended Embodied Agent with Large Language Models",
+        "CLOVA: A Closed-Loop Visual Assistant with Tool Usage and Update",
+        "META: Meta Evolution of Tool Trajectory Adaptation for Long-Video Understanding",
+        "SkillGen: Learning Domain Skills for In-Context Sequential Decision Making"
+      ]
+    },
+    "D4": {
+      "opportunity": "crowded",
+      "label": {
+        "zh": "高度拥挤 · 除非改变科学对象",
+        "en": "Highly crowded · require a different scientific object"
+      },
+      "covered": {
+        "zh": "正式主线已覆盖 program/graph search、自动 workflow generation、自适应 operator、supernet 和深层结构探索。",
+        "en": "The published line spans program/graph search, automated workflow generation, adaptive operators, supernets, and deeper structural exploration."
+      },
+      "collision": {
+        "zh": "“LLM mutation + execution score + 保留最好 workflow”“换一种搜索算法找更好的 Agent graph”默认高碰撞。",
+        "en": "LLM mutation + execution score + keep the best workflow, or another graph-search algorithm, is high-collision by default."
+      },
+      "failure": {
+        "zh": "多数工作优化最终 task score，较少回答结构修改为何有效、哪个节点造成回退、改动是否跨任务稳定，以及 search 是否在 evaluator/benchmark 上过拟合。",
+        "en": "Most work optimizes task score but says less about why a structural change works, which node caused regression, whether gains transport, or whether search overfits an evaluator/benchmark."
+      },
+      "open": {
+        "zh": "如果继续做 D4，最好转向结构因果、release engineering 或可识别性：edit credit、提交前回归、跨任务 transport、搜索过拟合、版本回滚与最小安全修改。",
+        "en": "Further D4 work should shift toward structural causality, release engineering, or identifiability: edit credit, pre-commit regression, transport, search overfitting, rollback, and minimal safe changes."
+      },
+      "seedQuestions": [
+        "workflow 得分提升时怎样识别是哪条结构编辑造成收益/伤害？",
+        "能否在完整执行前预测 workflow edit 会不会破坏旧能力？",
+        "自动 workflow search 何时只是对开发 benchmark/evaluator 过拟合？"
+      ],
+      "searchTerms": "agent workflow evolution causal credit regression release engineering overfitting rollback structural edit transport",
+      "nearest": [
+        "Automated Design of Agentic Systems",
+        "AFlow: Automating Agentic Workflow Generation",
+        "A²Flow: Automating Agentic Workflow Generation via Self-Adaptive Abstraction Operators",
+        "FusionFlow: Enabling Deep Structural Exploration for Automated Agentic Workflow Generation"
+      ]
+    },
+    "D5": {
+      "opportunity": "medium-high",
+      "label": {
+        "zh": "有机会 · 重点在变化识别而非再加 world model",
+        "en": "Good opportunity · diagnose change, not another world model"
+      },
+      "covered": {
+        "zh": "正式文献已覆盖文本 world simulator、world-model planning、具身反思、导航经验积累和环境适应。",
+        "en": "Published work covers text world simulators, world-model planning, embodied reflection, navigation experience, and environment adaptation."
+      },
+      "collision": {
+        "zh": "“给 Agent 加 world model 再 lookahead”“用历史 trajectory 帮助规划”已经有大量邻近工作。",
+        "en": "Add a world model for lookahead or reuse historical trajectories for planning is heavily covered."
+      },
+      "failure": {
+        "zh": "失败后系统常把“策略错了”“观测不完整”“环境变了”“world model 错了”混在一起，因此可能把错误解释写进长期状态。",
+        "en": "After failure, systems often conflate policy error, partial observation, environment change, and world-model error, risking the wrong persistent update."
+      },
+      "open": {
+        "zh": "更值得研究变化归因：外部环境变化与内部策略错误的可识别性、world-model residual 是否真的改变决策、哪些世界知识需要局部修复而不是整体重学。",
+        "en": "More promising seams are change attribution: identifiability of external shift vs policy error, decision-changing residuals, and local repair rather than wholesale relearning."
+      },
+      "seedQuestions": [
+        "同一个失败轨迹，怎样判断应该修 policy、memory 还是 world model？",
+        "world-model prediction error 多大才真正改变下一步 action？",
+        "环境变化后，旧经验的哪一部分仍能安全迁移？"
+      ],
+      "searchTerms": "agent world model environment shift policy error diagnosis decision-changing residual local repair transfer",
+      "nearest": [
+        "Can Language Models Serve as Text-Based World Simulators?",
+        "Phoenix: A Motion-based Self-Reflection Framework for Fine-grained Robotic Action Correction",
+        "History to Future: Evolving Agent with Experience and Thought for Zero-shot Vision-and-Language Navigation",
+        "Learning to Adapt: Self-Improving Web Agent via Cognitive-Aware Exploration"
+      ]
+    },
+    "D6": {
+      "opportunity": "medium-high",
+      "label": {
+        "zh": "评测很拥挤 · 纵向回退与归因仍有空间",
+        "en": "Evaluation crowded · longitudinal regression/attribution remain open"
+      },
+      "covered": {
+        "zh": "正式文献已覆盖 self-correction、fine-grained critic、视觉错误定位、RAG critic、长期记忆 benchmark 和大量 Agent benchmark。",
+        "en": "Published work covers self-correction, fine-grained critics, visual error localization, RAG critics, long-term-memory benchmarks, and many agent benchmarks."
+      },
+      "collision": {
+        "zh": "“再做一个 benchmark”“再训练一个 critic/evaluator”“只报告平均 accuracy/success 提升”都属于高碰撞形态。",
+        "en": "Another benchmark, another critic/evaluator, or another average accuracy/success gain is high-collision."
+      },
+      "failure": {
+        "zh": "主要缺口是 update-level 和 longitudinal：平均分会掩盖 individual flip；评价器可能自己漂移；最终 endpoint 无法解释哪次更新导致未来首次违规或能力丢失。",
+        "en": "The main gap is update-level and longitudinal: averages hide individual flips, evaluators drift, and endpoints do not identify which update caused future first violations or capability loss."
+      },
+      "open": {
+        "zh": "把评价从“当前版本得多少分”推进到“哪次持久更新造成什么后果”：版本级 regression、first-violation hazard、评价器漂移、step/update attribution 与可恢复性。",
+        "en": "Move from current-version score to consequences of persistent updates: version-level regression, first-violation hazard, evaluator drift, step/update attribution, and recoverability."
+      },
+      "seedQuestions": [
+        "平均分上涨时怎样提前发现少数旧任务从 success 翻成 failure？",
+        "如果 evaluator 自己变化，怎样区分 Agent 改进与尺子漂移？",
+        "未来第一次严重失败能否追溯到更早的某次持久更新？"
+      ],
+      "searchTerms": "agent longitudinal regression first violation hazard evaluator drift update attribution hidden forgetting counterfactual audit",
+      "nearest": [
+        "VISCO: Benchmarking Fine-Grained Critique and Correction towards Self-Improvement in Visual Reasoning",
+        "Critic-V: VLM Critics Help Catch VLM Errors in Multimodal Reasoning",
+        "From Recall to Forgetting: Benchmarking Long-Term Memory for Personalized Agents",
+        "RAG-Critic: Leveraging Automated Critic-Guided Agentic Workflow for Retrieval Augmented Generation"
+      ]
+    },
+    "D7": {
+      "opportunity": "high",
+      "label": {
+        "zh": "正式主线稀疏 · 高价值补缺",
+        "en": "Sparse published line · high-value gap"
+      },
+      "covered": {
+        "zh": "已有正式工作主要覆盖 Agent 风险 benchmark、sandbox 安全评估和部分工具/网页安全问题。",
+        "en": "Published work mainly covers agent-risk benchmarks, sandbox safety evaluation, and parts of tool/web safety."
+      },
+      "collision": {
+        "zh": "只做“输入前加安全过滤”或“发现坏 memory 后删除这一条”解决不了持久状态的派生传播。",
+        "en": "A pre-input safety filter or deleting one bad memory does not address propagation through persistent descendants."
+      },
+      "failure": {
+        "zh": "长期 Agent 的状态会从 experience 派生出 memory、skill、workflow 和后代版本，但正式文献对 lineage 污染传播、精确撤销和 provenance 绑定仍明显不足。",
+        "en": "Experience can derive memory, skills, workflows, and descendant versions, while peer-reviewed work on lineage-aware contamination, precise revocation, and provenance binding remains thin."
+      },
+      "open": {
+        "zh": "值得优先搜索 persistent-state security，而不是普通 prompt injection：污染跨表示层传播、最小 rollback set、证据链完整性、更新权限与 descendant quarantine。",
+        "en": "Prioritize persistent-state security rather than generic prompt injection: cross-representation propagation, minimal rollback sets, evidence-chain integrity, authorization, and descendant quarantine."
+      },
+      "seedQuestions": [
+        "删除原始坏 memory 后，哪些派生 skill/workflow 仍保留污染？",
+        "怎样计算一次错误更新的最小完整 rollback closure？",
+        "不同来源证据合并成同一持久状态后，怎样保留可审计 provenance？"
+      ],
+      "searchTerms": "persistent agent state provenance contamination propagation rollback descendant memory skill workflow security",
+      "nearest": [
+        "ST-WebAgentBench: A Benchmark for Evaluating Safety and Trustworthiness in Web Agents",
+        "Identifying the Risks of LM Agents with an LM-Emulated Sandbox"
+      ]
+    },
+    "D8": {
+      "opportunity": "high",
+      "label": {
+        "zh": "直接正式论文很少 · 适合从控制层找问题",
+        "en": "Very sparse direct literature · mine the control layer"
+      },
+      "covered": {
+        "zh": "邻近工作会报告 token/cost、约束优化或训练效率，但很少把“是否允许这次自进化、应该花多少验证预算、何时停止”当独立科学对象。",
+        "en": "Adjacent work reports token/cost, constrained optimization, or training efficiency, but rarely treats whether an evolution step should run, how much evidence to buy, or when to stop as the scientific object."
+      },
+      "collision": {
+        "zh": "单纯“让 workflow 更省 token”“减少搜索成本”只是效率工程，不足以构成进化治理。",
+        "en": "Making a workflow cheaper or reducing search cost alone is efficiency engineering, not evolution governance."
+      },
+      "failure": {
+        "zh": "每次完整 replay 旧任务成本不可承受；固定少量检查又会在高风险 update 上漏检。现有方法很少联合建模信息价值、风险与验证预算。",
+        "en": "Full replay after every update is unaffordable, while fixed small checks miss risky updates; few methods jointly model information value, risk, and validation budget."
+      },
+      "open": {
+        "zh": "可搜索 evidence allocation / evolution control：哪一次 update 值得实验、先做哪个 probe、何时证据足以 STOP、什么风险必须升级为 full regression 或人工审核。",
+        "en": "Search evidence allocation/evolution control: which update deserves an experiment, which probe comes first, when evidence suffices to STOP, and which risk requires full regression or human review."
+      },
+      "seedQuestions": [
+        "能否根据 update 风险和预期信息增益，自适应分配 regression test 预算？",
+        "什么时候继续找证据只会重复已有结论，应该科学终止？",
+        "prompt/memory/skill/workflow 的验证预算是否应该不同？"
+      ],
+      "searchTerms": "agent self evolution governance evidence allocation adaptive validation budget stopping rule risk-aware regression",
+      "nearest": [
+        "AFlow: Automating Agentic Workflow Generation",
+        "A²Flow: Automating Agentic Workflow Generation via Self-Adaptive Abstraction Operators"
+      ]
+    },
+    "D9": {
+      "opportunity": "medium",
+      "label": {
+        "zh": "课程/自博弈已拥挤 · evaluator 互动仍值得看",
+        "en": "Curriculum/self-play crowded · evaluator interaction remains interesting"
+      },
+      "covered": {
+        "zh": "正式文献覆盖自生成训练数据、自奖励、在线 curriculum RL、视觉 self-play 与 preference optimization。",
+        "en": "Published work covers generated training data, self-reward, online curriculum RL, visual self-play, and preference optimization."
+      },
+      "collision": {
+        "zh": "“根据当前失败生成更难任务”“questioner-solver self-play”“reward-guided curriculum”已经是成熟套路。",
+        "en": "Generate harder tasks from failures, questioner-solver self-play, and reward-guided curricula are established motifs."
+      },
+      "failure": {
+        "zh": "课程与 reward/evaluator 相互依赖：Agent 会适应它看到的任务和分数，可能导致 curriculum collapse、reward hacking、局部难度饱和或评价分布漂移。",
+        "en": "Curricula and reward/evaluators co-adapt; agents can induce curriculum collapse, reward hacking, local saturation, or evaluation-distribution drift."
+      },
+      "open": {
+        "zh": "优先看“学习目标本身的稳定性”：错误 reward 如何改变后续数据分布、课程是否把能力推向错误方向、怎样检测自生成任务已经失去学习价值。",
+        "en": "Prioritize stability of the learning objective: how wrong rewards reshape future data, whether curricula push capability in the wrong direction, and how to detect when generated tasks stop being informative."
+      },
+      "seedQuestions": [
+        "self-evolving curriculum 什么时候会因为自己的 reward 偏差越走越偏？",
+        "怎样判断新生成任务是真正 frontier，还是 evaluator 的漏洞？",
+        "课程收益能否迁移到未参与生成的任务族？"
+      ],
+      "searchTerms": "self evolving curriculum reward drift evaluator coevolution reward hacking learning frontier task generation transfer",
+      "nearest": [
+        "WebRL: Training LLM Web Agents via Self-Evolving Online Curriculum Reinforcement Learning",
+        "VisPlay: Self-Evolving Vision-Language Models",
+        "Self-Rewarding Language Models"
+      ]
+    },
+    "D10": {
+      "opportunity": "medium",
+      "label": {
+        "zh": "拓扑搜索已有强工作 · 传播与异质性仍可挖",
+        "en": "Topology search established · propagation/heterogeneity remain"
+      },
+      "covered": {
+        "zh": "正式文献已覆盖 multi-agent topology search、open-ended opponent learning、固定团队通信与部分协作优化。",
+        "en": "Published work covers multi-agent topology search, open-ended opponent learning, fixed-team communication, and coordination optimization."
+      },
+      "collision": {
+        "zh": "“搜索更好的 multi-agent graph”“动态选择几个 Agent 来投票”本身容易撞 MaAS / topology-search 类工作。",
+        "en": "Search a better multi-agent graph or dynamically select agents to vote is collisional with MaAS/topology-search work."
+      },
+      "failure": {
+        "zh": "群体中的经验、错误与评价不是独立的：一个 Agent 的错误 memory/skill 可能被广播，强 Agent 可能压制专门化 Agent，固定共享机制会产生相关错误。",
+        "en": "Experience, errors, and evaluations are correlated across a population: bad memory/skills can be broadcast, strong agents can suppress specialists, and shared state creates correlated failures."
+      },
+      "open": {
+        "zh": "更值得看跨 Agent 状态传播与专门化：什么应该共享、什么必须隔离；错误怎样沿通信图放大；怎样评价独立证据而不是重复投票。",
+        "en": "Focus on cross-agent state propagation and specialization: what to share vs isolate, how errors amplify through communication, and how to count independent evidence rather than repeated votes."
+      },
+      "seedQuestions": [
+        "多个 Agent 都同意时，怎样判断是独立证据还是同一错误来源的重复传播？",
+        "一条 memory/skill 广播给群体前需要什么 transport/safety certificate？",
+        "什么时候共享经验提高群体能力，什么时候反而消灭有价值的专门化？"
+      ],
+      "searchTerms": "multi agent self evolution knowledge propagation correlated errors specialization provenance independent evidence topology",
+      "nearest": [
+        "Multi-agent Architecture Search via Agentic Supernet",
+        "An Open-Ended Learning Framework for Opponent Modeling"
+      ]
+    }
+  },
+  "intersections": [
+    {
+      "id": "X1",
+      "codes": [
+        "D1",
+        "D6"
+      ],
+      "title": {
+        "zh": "经验准入 × 版本回退",
+        "en": "Experience admission × regression"
+      },
+      "question": {
+        "zh": "“这次学到了东西”与“没有破坏旧能力”能否在提交前同时判断？",
+        "en": "Can we decide both that an update learned something and that it did not break old capability before commit?"
+      },
+      "why": {
+        "zh": "D1 多看后续尝试收益，D6 多在更新后测回退，两条线之间存在 pre-commit 断层。",
+        "en": "D1 often measures later-attempt gain and D6 post-update regression, leaving a pre-commit gap."
+      }
+    },
+    {
+      "id": "X2",
+      "codes": [
+        "D2",
+        "D7"
+      ],
+      "title": {
+        "zh": "记忆生命周期 × 污染谱系",
+        "en": "Memory lifecycle × contamination lineage"
+      },
+      "question": {
+        "zh": "坏经验被巩固、摘要或编译后，怎样追踪所有受影响后代并完整撤销？",
+        "en": "After bad experience is consolidated, summarized, or compiled, how do we trace and revoke all affected descendants?"
+      },
+      "why": {
+        "zh": "memory 系统越来越结构化，但安全删除往往仍停留在单条记录级。",
+        "en": "Memory systems are increasingly structured while safe deletion often remains record-local."
+      }
+    },
+    {
+      "id": "X3",
+      "codes": [
+        "D3",
+        "D6"
+      ],
+      "title": {
+        "zh": "技能进化 × 回归定位",
+        "en": "Skill evolution × regression localization"
+      },
+      "question": {
+        "zh": "skill 更新造成失败时，是规则错、调用错，还是与别的 skill 组合冲突？",
+        "en": "When a skill update fails, is the rule wrong, the invocation wrong, or the composition conflicting?"
+      },
+      "why": {
+        "zh": "自动 skill 生成成熟以后，维护与故障归因成为下一层瓶颈。",
+        "en": "As automatic skill generation matures, maintenance and fault attribution become the next bottleneck."
+      }
+    },
+    {
+      "id": "X4",
+      "codes": [
+        "D4",
+        "D6"
+      ],
+      "title": {
+        "zh": "Workflow 搜索 × 结构因果",
+        "en": "Workflow search × structural causality"
+      },
+      "question": {
+        "zh": "自动搜索找到高分 graph 后，怎样证明真正起作用的是哪条结构编辑？",
+        "en": "After search finds a high-scoring graph, which structural edit actually caused the gain?"
+      },
+      "why": {
+        "zh": "当前 workflow 线强在找更高分结构，对 edit-level causal credit 覆盖弱。",
+        "en": "Workflow search strongly covers finding better structures but less so edit-level causal credit."
+      }
+    },
+    {
+      "id": "X5",
+      "codes": [
+        "D5",
+        "D1"
+      ],
+      "title": {
+        "zh": "世界变化 × 学习归因",
+        "en": "World change × learning attribution"
+      },
+      "question": {
+        "zh": "失败意味着 Agent 应该学习，还是环境已经改变、旧经验不再适用？",
+        "en": "Does failure mean the agent should learn, or that the world changed and old experience no longer applies?"
+      },
+      "why": {
+        "zh": "错误归因会把环境变化误写成长期策略规则。",
+        "en": "Misattribution can turn environmental drift into a wrong persistent policy rule."
+      }
+    },
+    {
+      "id": "X6",
+      "codes": [
+        "D9",
+        "D6"
+      ],
+      "title": {
+        "zh": "课程进化 × 评价器漂移",
+        "en": "Curriculum evolution × evaluator drift"
+      },
+      "question": {
+        "zh": "训练任务和 evaluator 一起变化时，怎样知道 Agent 真进步而不是尺子被带偏？",
+        "en": "When tasks and evaluators co-evolve, how do we know the agent improved rather than the ruler drifting?"
+      },
+      "why": {
+        "zh": "自生成 curriculum 会反过来改变后续可见数据，形成闭环选择偏差。",
+        "en": "Self-generated curricula reshape future visible data and create closed-loop selection bias."
+      }
+    },
+    {
+      "id": "X7",
+      "codes": [
+        "D10",
+        "D7"
+      ],
+      "title": {
+        "zh": "群体共享 × 污染传播",
+        "en": "Population sharing × contamination propagation"
+      },
+      "question": {
+        "zh": "跨 Agent 广播经验时，怎样防止一次错误变成全群体相关失败？",
+        "en": "How do we stop one bad experience from becoming a population-wide correlated failure?"
+      },
+      "why": {
+        "zh": "群体方法重视共享收益，长期 provenance 与隔离边界仍薄弱。",
+        "en": "Population methods emphasize sharing gains while long-term provenance and isolation remain weak."
+      }
+    },
+    {
+      "id": "X8",
+      "codes": [
+        "D8",
+        "D1",
+        "D6"
+      ],
+      "title": {
+        "zh": "验证预算 × 信息价值",
+        "en": "Validation budget × information value"
+      },
+      "question": {
+        "zh": "面对候选更新，下一次最值得跑哪个 probe，什么时候证据已经足够 STOP？",
+        "en": "For a candidate update, which probe is most informative next, and when is there enough evidence to STOP?"
+      },
+      "why": {
+        "zh": "把“科研系统怎么分配实验预算”直接连接到 Agent 自进化控制。",
+        "en": "This connects research evidence allocation directly to control of agent evolution."
+      }
+    }
+  ],
+  "candidateContract": [
+    {
+      "key": "object",
+      "zh": "科学对象：先写可观察现象/失败，不要先写方法名。",
+      "en": "Scientific object: name the observable phenomenon/failure before the method."
+    },
+    {
+      "key": "nearest",
+      "zh": "最近正式工作：至少列 2–4 篇，以及它们已证明到哪里。",
+      "en": "Nearest published work: list 2–4 closest papers and their claim boundaries."
+    },
+    {
+      "key": "baseline",
+      "zh": "最强简单对照：相同信息、相近预算时，最简单方法具体怎么做。",
+      "en": "Strongest simple baseline: the simplest method with matched information and similar budget."
+    },
+    {
+      "key": "prediction",
+      "zh": "区分性预测：什么结果只有候选解释成立时才应该出现。",
+      "en": "Discriminating prediction: an outcome expected only if the candidate explanation is right."
+    },
+    {
+      "key": "falsifier",
+      "zh": "局部 falsifier：最小 unit、指标和明确 STOP 结果。",
+      "en": "Local falsifier: minimum units, metric, and explicit STOP result."
+    },
+    {
+      "key": "collision",
+      "zh": "碰撞条件：最近工作加常规模块即可覆盖时，立即降级/终止。",
+      "en": "Collision rule: downgrade/stop if nearest work plus a routine module subsumes it."
+    },
+    {
+      "key": "substrate",
+      "zh": "实验基底：当前数据、环境、模型必须能观测目标现象。",
+      "en": "Experimental substrate: current data/environment/model must expose the target phenomenon."
+    }
+  ]
+}

@@ -54,7 +54,8 @@ REQUIRED_STATIC = [
     "agent-self-evolution-history-en.svg", "agent-self-evolution-history-zh.svg",
     "portfolio-data.js", "direction-guide-data.js", "direction-literature-data.js", "page-architecture-data.js", "idea-explanations.js", "idea-comparisons.js",
     "paper-analysis-data.js", "top-paper-analysis-data.js", "published-literature-data.js", "citation-ranking-data.js", "paper-novelty-audit-data.js",
-    "history-figure-data.js", "catalog_audit.py", "build_citation_cache.py",
+    "literature-idea-mining-data-1.js", "literature-idea-mining-data-2.js", "literature-idea-mining-data-3.js", "literature-idea-mining-data.json",
+    "history-figure-data.js", "catalog_audit.py", "build_citation_cache.py", "scripts/build_literature_idea_mining_input.py",
     "browser_smoke_test.py", "hierarchy_smoke_test.py", "CHANGELOG.md",
     "content-review-external.js", "generated/iclr-external-reviews.json",
     "machine-school-ideas-view.js", "generated/machine-school-inspired-ideas.json",
@@ -364,7 +365,7 @@ def main() -> None:
         "research-map": ["layering", "coverage-gaps", "integrated-map", "handoff"],
         "paper-ideas": ["discussed-ideas", "new-ideas"],
         "selected-paper": ["problem-scope", "evidence-experiments", "narrative-execution", "review-gates"],
-        "bibliography": ["published-spine", "published-comparison", "field-maps", "search-corpus", "coverage-protocol"],
+        "bibliography": ["published-spine", "published-comparison", "idea-mining", "field-maps", "search-corpus", "coverage-protocol"],
     }
     for page_id, chapter_ids in expected_chapter_ids.items():
         for chapter_id in chapter_ids:
@@ -892,7 +893,7 @@ def main() -> None:
     if ranking_text.count("citationCount:") < 20 or "snapshotUpdatedAt:" not in ranking_text:
         fail("citation ranking config must contain a dated deployment snapshot for at least 20 core papers")
     bibliography_html = (ROOT / "bibliography.html").read_text(encoding="utf-8")
-    required_bibliography_scripts = ["citation-ranking-data.js", "paper-analysis-data.js", "top-paper-analysis-data.js", "published-literature-data.js", "published-paper-evidence-core1.js", "published-paper-evidence-core2.js", "published-paper-evidence-core3.js", "published-paper-evidence-core4.js", "app.js"]
+    required_bibliography_scripts = ["citation-ranking-data.js", "paper-analysis-data.js", "top-paper-analysis-data.js", "published-literature-data.js", "published-paper-evidence-core1.js", "published-paper-evidence-core2.js", "published-paper-evidence-core3.js", "published-paper-evidence-core4.js", "literature-idea-mining-data-1.js", "literature-idea-mining-data-2.js", "literature-idea-mining-data-3.js", "generated/literature-idea-mining-collision.js", "app.js"]
     script_positions = [bibliography_html.find(f'src="{name}"') for name in required_bibliography_scripts]
     if any(position < 0 for position in script_positions) or script_positions != sorted(script_positions):
         fail("bibliography must load ranking and analysis scripts before app.js")
@@ -921,6 +922,35 @@ def main() -> None:
     for marker in ["renderPublishedSpine", "renderPublishedComparisons", "renderPublishedQuickRead", "publishedLiteratureAudit", "publishedEvidenceOverride", "missingMustReadEvidence", "30 秒读懂这篇正式论文", "实验实际看到了什么"]:
         if marker not in app_text:
             fail(f"published-literature renderer is missing {marker}")
+    for marker in ["renderLiteratureIdeaMining", "literatureIdeaMiningAudit", "高碰撞排除项", "还值得继续挖的断层", "后续 API 碰撞优先问", "再撞我们自己当前 ResearchItem", "一个文献空白什么时候才值得升级成候选研究问题"]:
+        if marker not in app_text:
+            fail(f"literature idea-mining renderer is missing {marker}")
+    idea_mining_text = "\n".join((ROOT / f"literature-idea-mining-data-{i}.js").read_text(encoding="utf-8") for i in range(1,4))
+    for marker in ["D1:{opportunity", "D10:{opportunity", "X8", "persistent experience admission causal effect transport", "agent self evolution governance evidence allocation", "只有这 7 项"]:
+        if marker not in idea_mining_text and marker not in app_text:
+            fail(f"literature idea-mining data is missing: {marker}")
+    if sum(idea_mining_text.count(f"{code}:{{opportunity") for code in [f"D{i}" for i in range(1,11)]) != 10:
+        fail("literature idea-mining registry must contain exactly one D1-D10 opportunity record each")
+    idea_mining_json = json.loads((ROOT / "literature-idea-mining-data.json").read_text(encoding="utf-8"))
+    if idea_mining_json.get("schemaVersion") != "1.0" or list((idea_mining_json.get("directions") or {}).keys()) != [f"D{i}" for i in range(1,11)] or len(idea_mining_json.get("intersections") or []) != 8 or len(idea_mining_json.get("candidateContract") or []) != 7:
+        fail("machine-readable literature idea-mining registry is incomplete or out of sync")
+    expected_gap_category_map = {"D1":["A","B","D"],"D2":["B"],"D3":["E","G"],"D4":["A","E"],"D5":["F"],"D6":["C","G"],"D7":["A","G"],"D8":["A","D","G"],"D9":["B","C","D"],"D10":["A","B"]}
+    if idea_mining_json.get("currentCategoryMap") != expected_gap_category_map:
+        fail(f"literature gap registry current A-G collision map drifted: {idea_mining_json.get('currentCategoryMap')}")
+    idea_input = json.loads((ROOT / "generated/literature-idea-mining-input.json").read_text(encoding="utf-8"))
+    idea_policy = idea_input.get("projection_policy") or {}
+    if idea_input.get("schema_version") != "1.0" or len(idea_input.get("directions") or {}) != 10 or len(idea_input.get("intersections") or []) != 8 or len(idea_input.get("candidate_contract") or []) != 7:
+        fail("generated literature idea-mining input bundle is incomplete")
+    if idea_policy.get("read_only") is not True or any(idea_policy.get(key) is not False for key in ("scientific_authority","experiment_authority","promotion_authority")) or idea_policy.get("gap_is_not_an_idea") is not True:
+        fail(f"literature idea-mining input must remain a read-only zero-authority projection: {idea_policy}")
+    if (idea_input.get("directions") or {}).get("D7",{}).get("current_categories") != ["A","G"]:
+        fail("D7 idea-mining bundle must collide persistent-state security gaps against current A/G ResearchItems")
+    collision_text = (ROOT / "generated/literature-idea-mining-collision.js").read_text(encoding="utf-8")
+    if not collision_text.startswith("window.LITERATURE_IDEA_COLLISIONS = "):
+        fail("compact literature idea collision projection is missing")
+    collision_payload = json.loads(collision_text.split("=",1)[1].strip().rstrip(";"))
+    if int(collision_payload.get("research_items") or 0) < 80 or len(collision_payload.get("directions") or {}) != 10 or len(((collision_payload.get("directions") or {}).get("D7") or {}).get("active") or []) < 1:
+        fail(f"compact literature idea collision projection is incomplete: {collision_payload}")
     evidence_text = "\n".join((ROOT / f"published-paper-evidence-core{i}.js").read_text(encoding="utf-8") for i in range(1,5))
     if evidence_text.count("source:{zh:") != 22:
         fail("all 22 A-tier must-read publications need paper-specific source-grounded evidence")
