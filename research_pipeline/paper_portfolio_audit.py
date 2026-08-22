@@ -341,6 +341,10 @@ def scientific_reopen_state(root: Path, paper_id: str, attempt: Mapping[str, Any
         'authorization_sha256': '',
         'authorization_scope': '',
         'external_scientific_authority_confirmed': False,
+        'research_os_handoff_sha256': '',
+        'new_contract_seed_id': '',
+        'destination_gate': '',
+        'new_contract_creation_eligible': False,
         'new_scientific_contract_required': attempt.get('requires_explicit_scientific_reopen') is True,
         'existing_scientific_contract_immutable': True,
         'automatic_contract_creation_authorized': False,
@@ -438,7 +442,9 @@ def project(path: Path, root: Path) -> dict[str, Any]:
             elif scientific_reopen['status']=='SCIENTIFIC_REOPEN_PROPOSED_EXTERNAL_AUTHORITY_REQUIRED':
                 actions=['scientific reopen is proposed; await explicit external PI/human scientific authority. The old contract remains immutable and no experiment/GPU authority exists']
             elif scientific_reopen['status']=='EXTERNAL_SCIENTIFIC_REOPEN_CONFIRMED_NEW_CONTRACT_REQUIRED':
-                actions=['external scientific reopen authority is recorded only for creating a new scientific contract. Create that new Research OS contract before any new claim/evidence/experiment; the old attempt remains blocked']
+                actions=['external scientific reopen authority is recorded only for creating a new scientific contract. Compile the content-addressed Research OS handoff before contract creation; the old attempt remains blocked']
+            elif scientific_reopen['status']=='RESEARCH_OS_NEW_CONTRACT_HANDOFF_READY':
+                actions=['the approved reopen is compiled into a Research OS new-contract seed. Enter the scientific-contract creation gate next; method, P0, experiment, and GPU authority all remain false until the new contract independently passes downstream gates']
             else:
                 actions=['scientific-reopen ledger is invalid; stop scientific changes until the proposal/authorization lineage is repaired']
         elif attempt_workflow['status']=='ATTEMPT_POST_DECISION_LEARN_COMPLETE':
@@ -593,6 +599,10 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         'scientific_reopen_authorization_sha256': scientific_reopen['authorization_sha256'],
         'scientific_reopen_authorization_scope': scientific_reopen['authorization_scope'],
         'scientific_reopen_external_authority_confirmed': scientific_reopen['external_scientific_authority_confirmed'],
+        'scientific_reopen_research_os_handoff_sha256': scientific_reopen['research_os_handoff_sha256'],
+        'scientific_reopen_new_contract_seed_id': scientific_reopen['new_contract_seed_id'],
+        'scientific_reopen_destination_gate': scientific_reopen['destination_gate'],
+        'scientific_reopen_new_contract_creation_eligible': scientific_reopen['new_contract_creation_eligible'],
         'scientific_reopen_new_contract_required': scientific_reopen['new_scientific_contract_required'],
         'scientific_reopen_errors': scientific_reopen['validation_errors'],
         'blocker_groups': groups,
@@ -674,6 +684,7 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'attempt_rebuttal_skipped_by_venue': sum(int((p['submission_attempt_history'].get('summary') or {}).get('rebuttals_skipped_by_venue') or 0) for p in papers),
             'scientific_reopen_proposed': sum(p['scientific_reopen_status'] == 'SCIENTIFIC_REOPEN_PROPOSED_EXTERNAL_AUTHORITY_REQUIRED' for p in papers),
             'scientific_reopen_authorized_new_contract_required': sum(p['scientific_reopen_status'] == 'EXTERNAL_SCIENTIFIC_REOPEN_CONFIRMED_NEW_CONTRACT_REQUIRED' for p in papers),
+            'scientific_reopen_research_os_handoff_ready': sum(p['scientific_reopen_status'] == 'RESEARCH_OS_NEW_CONTRACT_HANDOFF_READY' for p in papers),
             'scientific_reopen_invalid': sum(p['scientific_reopen_status'] == 'SCIENTIFIC_REOPEN_LEDGER_INVALID' for p in papers),
             'submission_freeze_eligible': sum(p['submission_freeze_eligible'] for p in papers),
             'ledger_replay_failures': sum(not p['ledger_replay_pass'] for p in papers),

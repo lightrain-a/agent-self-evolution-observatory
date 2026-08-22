@@ -488,6 +488,10 @@ def scientific_reopen_state(paper_id: str, attempt: dict[str, Any], reopen_root:
         "authorization_sha256": "",
         "authorization_scope": "",
         "external_scientific_authority_confirmed": False,
+        "research_os_handoff_sha256": "",
+        "new_contract_seed_id": "",
+        "destination_gate": "",
+        "new_contract_creation_eligible": False,
         "new_scientific_contract_required": attempt.get("requires_explicit_scientific_reopen") is True,
         "existing_scientific_contract_immutable": True,
         "automatic_contract_creation_authorized": False,
@@ -671,6 +675,7 @@ def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Pat
         "attempt_rebuttal_skipped_by_venue": sum(int((p["submission_attempt_history"].get("summary") or {}).get("rebuttals_skipped_by_venue") or 0) for p in papers),
         "scientific_reopen_proposed": sum(p["scientific_reopen"].get("status") == "SCIENTIFIC_REOPEN_PROPOSED_EXTERNAL_AUTHORITY_REQUIRED" for p in papers),
         "scientific_reopen_authorized_new_contract_required": sum(p["scientific_reopen"].get("status") == "EXTERNAL_SCIENTIFIC_REOPEN_CONFIRMED_NEW_CONTRACT_REQUIRED" for p in papers),
+        "scientific_reopen_research_os_handoff_ready": sum(p["scientific_reopen"].get("status") == "RESEARCH_OS_NEW_CONTRACT_HANDOFF_READY" for p in papers),
         "scientific_reopen_invalid": sum(p["scientific_reopen"].get("status") == "SCIENTIFIC_REOPEN_LEDGER_INVALID" for p in papers),
     }
     payload = {

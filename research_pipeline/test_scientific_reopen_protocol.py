@@ -10,11 +10,15 @@ from .paper_preparation_protocol import PAPER_PREPARATION_PROTOCOL_VERSION
 from .scientific_reopen_protocol import (
     AUTHORIZATION_SCOPE,
     AUTHORIZED_STATUS,
+    HANDOFF_DESTINATION,
+    HANDOFF_STATUS,
     PROPOSAL_STATUS,
+    build_research_os_scientific_reopen_handoff,
     build_scientific_reopen_authorization,
     build_scientific_reopen_proposal,
     public_scientific_reopen_summary,
     publish_scientific_reopen_receipt,
+    validate_research_os_scientific_reopen_handoff,
     validate_scientific_reopen_authorization,
     validate_scientific_reopen_ledger,
     validate_scientific_reopen_proposal,
@@ -94,8 +98,10 @@ class ScientificReopenProtocolTest(unittest.TestCase):
                 publish_scientific_reopen_receipt(root, auth)
             publish_scientific_reopen_receipt(root, proposal)
             row = publish_scientific_reopen_receipt(root, auth)
+            row2 = publish_scientific_reopen_receipt(root, auth)
             self.assertEqual(len(row["events"]), 2)
-            self.assertEqual(validate_scientific_reopen_ledger(row), [])
+            self.assertEqual(len(row2["events"]), 2)
+            self.assertEqual(validate_scientific_reopen_ledger(row2), [])
             self.assertEqual(auth["status"], AUTHORIZED_STATUS)
             self.assertTrue(auth["external_scientific_authority_confirmed"])
             self.assertTrue(auth["new_scientific_contract_required"])
@@ -142,6 +148,113 @@ class ScientificReopenProtocolTest(unittest.TestCase):
             bad_auth = copy.deepcopy(auth)
             bad_auth["authorization_scope"] = "RUN_EXPERIMENT"
             self.assertFalse(validate_scientific_reopen_authorization(bad_auth))
+
+    def test_research_os_handoff_requires_authorization_and_grants_no_execution_authority(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            plan = self.scientific_plan(root)
+            paper = json.loads((root / "paper-acceptance" / f"{plan['paper_id']}.json").read_text())
+            proposal = build_scientific_reopen_proposal(plan)
+            auth = build_scientific_reopen_authorization(
+                proposal=proposal,
+                external_scientific_authority_ref="pi:approval",
+                authorized_at="2027-04-01T12:00:00+00:00",
+            )
+            handoff = build_research_os_scientific_reopen_handoff(
+                paper_ledger=paper,
+                attempt_plan=plan,
+                proposal=proposal,
+                authorization=auth,
+            )
+            self.assertTrue(validate_research_os_scientific_reopen_handoff(handoff))
+            self.assertEqual(handoff["status"], HANDOFF_STATUS)
+            self.assertEqual(handoff["destination_gate"], HANDOFF_DESTINATION)
+            self.assertTrue(handoff["new_contract_creation_eligible"])
+            self.assertTrue(handoff["new_scientific_contract_required"])
+            self.assertTrue(handoff["existing_scientific_contract_immutable"])
+            self.assertTrue(handoff["reviewer_feedback_is_diagnostic_context_not_scientific_evidence"])
+            self.assertFalse(handoff["automatic_contract_creation_authorized"])
+            self.assertFalse(handoff["problem_gate_authorized"])
+            self.assertFalse(handoff["method_design_authorized"])
+            self.assertFalse(handoff["experiment_blueprint_authorized"])
+            self.assertFalse(handoff["new_experiment_authorized"])
+            self.assertFalse(handoff["p0_authorized"])
+            self.assertFalse(handoff["gpu_execution_authorized"])
+            self.assertFalse(handoff["scientific_authority"])
+            self.assertFalse(handoff["experiment_authority"])
+            self.assertFalse(handoff["gpu_authority"])
+            self.assertEqual(handoff["requested_scientific_deltas"]["scientific_revision_categories"], ["EXPERIMENT", "SCIENTIFIC_EVIDENCE"])
+            self.assertTrue(handoff["requested_scientific_deltas"]["new_experiment_requested"])
+            self.assertTrue(handoff["requested_scientific_deltas"]["new_scientific_evidence_requested"])
+            with self.assertRaisesRegex(RuntimeError, "previously published scientific authorization"):
+                publish_scientific_reopen_receipt(root, handoff)
+            publish_scientific_reopen_receipt(root, proposal)
+            publish_scientific_reopen_receipt(root, auth)
+            row = publish_scientific_reopen_receipt(root, handoff)
+            row2 = publish_scientific_reopen_receipt(root, handoff)
+            self.assertEqual(len(row["events"]), 3)
+            self.assertEqual(len(row2["events"]), 3)
+            self.assertEqual(validate_scientific_reopen_ledger(row2), [])
+            self.assertFalse((root / "experiment-authority").exists())
+
+    def test_research_os_handoff_preserves_parent_contract_and_claim_state(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            plan = self.scientific_plan(root)
+            path = root / "paper-acceptance" / f"{plan['paper_id']}.json"
+            paper_before = json.loads(path.read_text())
+            proposal = build_scientific_reopen_proposal(plan)
+            publish_scientific_reopen_receipt(root, proposal)
+            auth = build_scientific_reopen_authorization(proposal=proposal, external_scientific_authority_ref="pi:approval", authorized_at="2027-04-01T12:00:00+00:00")
+            publish_scientific_reopen_receipt(root, auth)
+            handoff = build_research_os_scientific_reopen_handoff(paper_ledger=paper_before, attempt_plan=plan, proposal=proposal, authorization=auth)
+            publish_scientific_reopen_receipt(root, handoff)
+            paper_after = json.loads(path.read_text())
+            self.assertEqual(paper_after["current_state"], "LEARN")
+            self.assertEqual(paper_after["contract_sha256"], paper_before["contract_sha256"])
+            self.assertEqual(paper_after["contract"], paper_before["contract"])
+            self.assertEqual(handoff["source_contract_sha256"], paper_before["contract_sha256"])
+
+    def test_research_os_handoff_tamper_or_lineage_mismatch_is_detected(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            plan = self.scientific_plan(root)
+            paper = json.loads((root / "paper-acceptance" / f"{plan['paper_id']}.json").read_text())
+            proposal = build_scientific_reopen_proposal(plan)
+            auth = build_scientific_reopen_authorization(proposal=proposal, external_scientific_authority_ref="pi:approval", authorized_at="2027-04-01T12:00:00+00:00")
+            handoff = build_research_os_scientific_reopen_handoff(paper_ledger=paper, attempt_plan=plan, proposal=proposal, authorization=auth)
+            bad = copy.deepcopy(handoff)
+            bad["experiment_blueprint_authorized"] = True
+            self.assertFalse(validate_research_os_scientific_reopen_handoff(bad))
+            bad_auth = copy.deepcopy(auth)
+            bad_auth["attempt_sha256"] = "0" * 64
+            with self.assertRaisesRegex(RuntimeError, "authorization"):
+                build_research_os_scientific_reopen_handoff(paper_ledger=paper, attempt_plan=plan, proposal=proposal, authorization=bad_auth)
+
+    def test_public_summary_exposes_handoff_seed_without_private_authority_reference(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            plan = self.scientific_plan(root)
+            paper = json.loads((root / "paper-acceptance" / f"{plan['paper_id']}.json").read_text())
+            proposal = build_scientific_reopen_proposal(plan)
+            row = publish_scientific_reopen_receipt(root, proposal)
+            auth = build_scientific_reopen_authorization(
+                proposal=proposal,
+                external_scientific_authority_ref="pi:private-authority-reference",
+                authorized_at="2027-04-01T12:00:00+00:00",
+            )
+            row = publish_scientific_reopen_receipt(root, auth)
+            handoff = build_research_os_scientific_reopen_handoff(paper_ledger=paper, attempt_plan=plan, proposal=proposal, authorization=auth)
+            row = publish_scientific_reopen_receipt(root, handoff)
+            public = public_scientific_reopen_summary(row, plan["attempt_sha256"])
+            self.assertEqual(public["status"], HANDOFF_STATUS)
+            self.assertEqual(public["destination_gate"], HANDOFF_DESTINATION)
+            self.assertTrue(public["new_contract_creation_eligible"])
+            self.assertTrue(public["new_contract_seed_id"].startswith("scientific-reopen-"))
+            self.assertTrue(public["research_os_handoff_sha256"])
+            text = json.dumps(public, sort_keys=True)
+            self.assertNotIn("pi:private-authority-reference", text)
+            self.assertNotIn("external_scientific_authority_ref\"", text)
 
     def test_public_summary_redacts_external_authority_reference(self) -> None:
         with tempfile.TemporaryDirectory() as td:
