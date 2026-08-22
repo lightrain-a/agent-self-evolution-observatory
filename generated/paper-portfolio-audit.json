@@ -251,6 +251,25 @@
             "gpu": false,
             "submission": false
           }
+        },
+        "experiment_lease_request": {
+          "status": "EXPERIMENT_LEASE_REQUEST_REQUIRED",
+          "contract_id": "",
+          "lease_request_sha256": "",
+          "plan_hash": "",
+          "authorized_budget": {},
+          "experiment_authority_acquired": false,
+          "execution_authorized": false,
+          "single_writer_lease_required": true,
+          "authority": {
+            "scientific": false,
+            "method": false,
+            "local_validation": false,
+            "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
         }
       },
       "scientific_reopen_errors": [],
@@ -508,6 +527,25 @@
           "compiler_execution_ready": false,
           "effective_execution_authorized": false,
           "experiment_lease_required": true,
+          "authority": {
+            "scientific": false,
+            "method": false,
+            "local_validation": false,
+            "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
+        },
+        "experiment_lease_request": {
+          "status": "EXPERIMENT_LEASE_REQUEST_REQUIRED",
+          "contract_id": "",
+          "lease_request_sha256": "",
+          "plan_hash": "",
+          "authorized_budget": {},
+          "experiment_authority_acquired": false,
+          "execution_authorized": false,
+          "single_writer_lease_required": true,
           "authority": {
             "scientific": false,
             "method": false,
@@ -783,6 +821,25 @@
             "gpu": false,
             "submission": false
           }
+        },
+        "experiment_lease_request": {
+          "status": "EXPERIMENT_LEASE_REQUEST_REQUIRED",
+          "contract_id": "",
+          "lease_request_sha256": "",
+          "plan_hash": "",
+          "authorized_budget": {},
+          "experiment_authority_acquired": false,
+          "execution_authorized": false,
+          "single_writer_lease_required": true,
+          "authority": {
+            "scientific": false,
+            "method": false,
+            "local_validation": false,
+            "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
         }
       },
       "scientific_reopen_errors": [],
@@ -1040,6 +1097,25 @@
           "compiler_execution_ready": false,
           "effective_execution_authorized": false,
           "experiment_lease_required": true,
+          "authority": {
+            "scientific": false,
+            "method": false,
+            "local_validation": false,
+            "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
+        },
+        "experiment_lease_request": {
+          "status": "EXPERIMENT_LEASE_REQUEST_REQUIRED",
+          "contract_id": "",
+          "lease_request_sha256": "",
+          "plan_hash": "",
+          "authorized_budget": {},
+          "experiment_authority_acquired": false,
+          "execution_authorized": false,
+          "single_writer_lease_required": true,
           "authority": {
             "scientific": false,
             "method": false,
@@ -1331,6 +1407,25 @@
             "gpu": false,
             "submission": false
           }
+        },
+        "experiment_lease_request": {
+          "status": "EXPERIMENT_LEASE_REQUEST_REQUIRED",
+          "contract_id": "",
+          "lease_request_sha256": "",
+          "plan_hash": "",
+          "authorized_budget": {},
+          "experiment_authority_acquired": false,
+          "execution_authorized": false,
+          "single_writer_lease_required": true,
+          "authority": {
+            "scientific": false,
+            "method": false,
+            "local_validation": false,
+            "experiment": false,
+            "p0": false,
+            "gpu": false,
+            "submission": false
+          }
         }
       },
       "scientific_reopen_errors": [],
@@ -1416,6 +1511,9 @@
     "reopen_pre_experiment_blocked": 0,
     "reopen_pre_experiment_pass_lease_required": 0,
     "reopen_pre_experiment_invalid": 0,
+    "reopen_experiment_lease_request_required": 0,
+    "reopen_experiment_lease_request_ready": 0,
+    "reopen_experiment_lease_request_invalid": 0,
     "scientific_reopen_invalid": 0,
     "submission_freeze_eligible": 4,
     "ledger_replay_failures": 0,
@@ -1427,5 +1525,5 @@
     "gpu": false,
     "submission": false
   },
-  "audit_sha256": "293de5dd9f6e33f46f0f9e01188165020252414dba15129dc3989ec3d2cd79ff"
+  "audit_sha256": "8b1b11a1f4dad71d643da527a53fd8cf3c8235061f88d97095bff4c0ede8a1de"
 }

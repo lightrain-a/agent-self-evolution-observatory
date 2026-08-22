@@ -137,6 +137,7 @@ def build() -> Path:
     research_scientific_blueprint_root = os.environ.get("RESEARCH_SCIENTIFIC_BLUEPRINT_ROOT", "").strip()
     research_local_validation_auth_root = os.environ.get("RESEARCH_LOCAL_VALIDATION_AUTH_ROOT", "").strip()
     research_pre_experiment_adapter_root = os.environ.get("RESEARCH_PRE_EXPERIMENT_ADAPTER_ROOT", "").strip()
+    research_experiment_lease_request_root = os.environ.get("RESEARCH_EXPERIMENT_LEASE_REQUEST_ROOT", "").strip()
     research_scientific_contract_root = os.environ.get("RESEARCH_SCIENTIFIC_CONTRACT_ROOT", "").strip()
     research_scientific_problem_gate_root = os.environ.get("RESEARCH_SCIENTIFIC_PROBLEM_GATE_ROOT", "").strip()
     if paper_ledger_root:
@@ -184,6 +185,9 @@ def build() -> Path:
         pre_experiment_adapter_path = Path(research_pre_experiment_adapter_root).expanduser().resolve() if research_pre_experiment_adapter_root else audit_root / "scientific-contract-pre-experiment"
         if pre_experiment_adapter_path.is_dir():
             command.extend(["--pre-experiment-adapter-root", str(pre_experiment_adapter_path)])
+        experiment_lease_request_path = Path(research_experiment_lease_request_root).expanduser().resolve() if research_experiment_lease_request_root else audit_root / "scientific-contract-experiment-lease-requests"
+        if experiment_lease_request_path.is_dir():
+            command.extend(["--experiment-lease-request-root", str(experiment_lease_request_path)])
         scientific_contract_path = Path(research_scientific_contract_root).expanduser().resolve() if research_scientific_contract_root else audit_root / "scientific-contracts"
         if scientific_contract_path.is_dir():
             command.extend(["--scientific-contract-root", str(scientific_contract_path)])
