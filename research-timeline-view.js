@@ -15,6 +15,10 @@
   };
 
   const CHINA_TZ = "Asia/Shanghai";
+  const ICLR_2027_DEADLINES = [
+    {id:"abstract",labelZh:"Abstract 截止",labelEn:"Abstract deadline",aoe:"2026-09-18 23:59 AoE",china:"2026-09-19 19:59 北京时间",target:"2026-09-19T11:59:00Z"},
+    {id:"paper",labelZh:"Full Paper 截止",labelEn:"Full paper deadline",aoe:"2026-09-25 23:59 AoE（日末）",china:"2026-09-26 19:59 北京时间",target:"2026-09-26T11:59:00Z"},
+  ];
   const state = {importance:"all",type:"all",range:"all",research:"all",category:"all",query:"",order:"desc"};
   const dataset = () => window.RESEARCH_TIMELINE || {events:[],summary:{}};
   const initialParams = new URLSearchParams(window.location.search || "");
@@ -388,6 +392,35 @@
     return `<section class="rt-heatmap-panel"><div class="rt-heatmap-heading"><b>${pick("每日工作量概览","Daily workload overview")}</b><span>${pick("按月分开查看；颜色越深，当天记录的操作越多，点击日期可直接展开当天。","Split by month; darker cells mean more recorded activity, and clicking a date opens that day.")}</span></div><div class="rt-heat-months">${monthKeys.map(monthCalendar).join("")}</div></section>`;
   };
 
+  const countdownParts = (targetMs,nowMs=Date.now()) => {
+    const remaining=Math.max(0,targetMs-nowMs), totalSeconds=Math.floor(remaining/1000);
+    return {done:remaining<=0,days:Math.floor(totalSeconds/86400),hours:Math.floor((totalSeconds%86400)/3600),minutes:Math.floor((totalSeconds%3600)/60),seconds:totalSeconds%60};
+  };
+  const renderDeadlineCountdown = (deadline,nowMs=Date.now()) => {
+    const parts=countdownParts(Date.parse(deadline.target),nowMs);
+    const status=parts.done ? pick("已截止","closed") : pick("剩余","remaining");
+    return `<article class="rt-ddl-card" data-iclr-deadline="${deadline.id}" data-target="${esc(deadline.target)}"><header><span>${esc(language==="zh"?deadline.labelZh:deadline.labelEn)}</span><em>${status}</em></header><strong class="rt-ddl-countdown" data-iclr-countdown="${deadline.id}">${parts.done?pick("已截止","Closed"):`${parts.days}<small>${pick("天","d")}</small> ${String(parts.hours).padStart(2,"0")}<small>${pick("时","h")}</small> ${String(parts.minutes).padStart(2,"0")}<small>${pick("分","m")}</small> ${String(parts.seconds).padStart(2,"0")}<small>${pick("秒","s")}</small>`}</strong><div><span>${esc(deadline.aoe)}</span><span>${esc(deadline.china)}</span></div></article>`;
+  };
+  const iclrDeadlinePanel = () => {
+    const next=ICLR_2027_DEADLINES.find(d=>Date.parse(d.target)>Date.now()) || ICLR_2027_DEADLINES[ICLR_2027_DEADLINES.length-1];
+    return `<section class="rt-iclr-deadlines" id="iclr-2027-deadlines"><div class="rt-ddl-heading"><div><span>ICLR 2027 · DDL</span><b>${pick("投稿节点与实时倒计时","Submission deadlines & live countdown")}</b><p>${pick("官方 Author Guidelines / Call for Papers 当前日期：Abstract 9 月 18 日 AoE，Full Paper 9 月 25 日 AoE。北京时间按 UTC-12 的 AoE 日末换算；Full Paper 倒计时按 23:59 AoE 计算。","Current official Author Guidelines / CFP dates: abstract Sep 18 AoE and full paper Sep 25 AoE. China times convert from UTC-12; the full-paper countdown uses end-of-day 23:59 AoE.")}</p></div><a href="https://iclr.cc/Conferences/2027/AuthorGuidelines" target="_blank" rel="noopener">${pick("官方日期 ↗","Official dates ↗")}</a></div><div class="rt-ddl-next"><span>${pick("最近节点","Next deadline")}</span><b>${esc(language==="zh"?next.labelZh:next.labelEn)}</b></div><div class="rt-ddl-grid">${ICLR_2027_DEADLINES.map(d=>renderDeadlineCountdown(d)).join("")}</div><small>${pick("日期核验：2026-08-22。此卡仅用于时间提醒，不授予投稿权限，也不改变 PaperState。","Dates verified 2026-08-22. This reminder grants no submission authority and does not change PaperState.")}</small></section>`;
+  };
+  const updateIclrCountdown = () => {
+    ICLR_2027_DEADLINES.forEach(deadline=>{
+      const node=document.querySelector(`[data-iclr-countdown="${deadline.id}"]`);
+      const card=document.querySelector(`[data-iclr-deadline="${deadline.id}"]`);
+      if(!node)return;
+      const parts=countdownParts(Date.parse(deadline.target));
+      node.innerHTML=parts.done?pick("已截止","Closed"):`${parts.days}<small>${pick("天","d")}</small> ${String(parts.hours).padStart(2,"0")}<small>${pick("时","h")}</small> ${String(parts.minutes).padStart(2,"0")}<small>${pick("分","m")}</small> ${String(parts.seconds).padStart(2,"0")}<small>${pick("秒","s")}</small>`;
+      const status=card?.querySelector("header em"); if(status)status.textContent=parts.done?pick("已截止","closed"):pick("剩余","remaining");
+    });
+  };
+  const startIclrCountdown = () => {
+    if(window.__ICLR_2027_COUNTDOWN_TIMER__) clearInterval(window.__ICLR_2027_COUNTDOWN_TIMER__);
+    updateIclrCountdown();
+    window.__ICLR_2027_COUNTDOWN_TIMER__=setInterval(updateIclrCountdown,1000);
+  };
+
   const compactHeader = (events) => {
     const days = new Set(events.map(e=>chinaDateKey(e.occurred_at))).size;
     const ideas = events.filter(e=>e.event_class === "idea").length;
@@ -399,7 +432,7 @@
 
   window.renderResearchTimeline = function(){
     const events=visible();
-    return `<div id="research-timeline-summary">${compactHeader(events)}</div><div id="research-timeline-heatmap">${activityHeatmap(events)}</div><div id="research-timeline-controls">${controls()}</div><div id="research-timeline-feed" class="rt-feed">${feed(events)}</div><section class="rt-policy-note"><b>${pick("读取规则","Reading rule")}</b><span>${pick("① 月历仍按两个月一行，用于快速定位工作量高峰；② 月度明细表改为单列，8 月完整展示后再接 7 月；③ 每周每日记录结束后，在进入上一周前插入周总结；④ 点开当天后，事件严格按时间从早到晚排列；⑤ 无法可靠回填具体时刻的记录仍标记为日期精度，系统工程与追溯记录不会因此获得科研权限。","Calendars remain paired for workload scanning, while monthly detail tables are single-column and newest-first. A weekly summary is inserted at each week boundary before the previous week begins; expanded events remain chronological and date-only precision stays explicit.")}</span></section>`;
+    return `<div id="research-timeline-summary">${compactHeader(events)}</div>${iclrDeadlinePanel()}<div id="research-timeline-heatmap">${activityHeatmap(events)}</div><div id="research-timeline-controls">${controls()}</div><div id="research-timeline-feed" class="rt-feed">${feed(events)}</div><section class="rt-policy-note"><b>${pick("读取规则","Reading rule")}</b><span>${pick("① 月历仍按两个月一行，用于快速定位工作量高峰；② 月度明细表改为单列，8 月完整展示后再接 7 月；③ 每周每日记录结束后，在进入上一周前插入周总结；④ 点开当天后，事件严格按时间从早到晚排列；⑤ 无法可靠回填具体时刻的记录仍标记为日期精度，系统工程与追溯记录不会因此获得科研权限。","Calendars remain paired for workload scanning, while monthly detail tables are single-column and newest-first. A weekly summary is inserted at each week boundary before the previous week begins; expanded events remain chronological and date-only precision stays explicit.")}</span></section>`;
   };
 
   const rerender = () => {
@@ -454,6 +487,6 @@
     document.getElementById("timeline-category")?.addEventListener("change",e=>{state.category=e.target.value;syncUrl();rerender();});
     document.getElementById("timeline-research")?.addEventListener("change",e=>{state.research=e.target.value;syncUrl();rerender();});
   };
-  window.bindResearchTimelineEvents = function(){bindControls();};
+  window.bindResearchTimelineEvents = function(){bindControls();startIclrCountdown();};
   window.applyResearchTimelineFilters = function(query){state.query=raw(query);rerender();};
 })();
