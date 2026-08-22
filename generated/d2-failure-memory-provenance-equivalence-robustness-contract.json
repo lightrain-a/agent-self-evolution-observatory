@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "D2-C01-R4-INFORMATION-EQUIVALENCE-ROBUSTNESS",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "status": "FROZEN_POSTHOC_DIAGNOSTIC_BEFORE_REVIEWER_CALLS",
+  "purpose": "Post-hoc robustness audit of the already frozen R2 information-equivalence judgments. This audit cannot add or remove primary downstream pairs, change the cosine threshold, alter the R4 effect estimate, or authorize a new scientific claim.",
+  "source_artifacts": {
+    "r2_memories_sha256": "02623a2fdad5c87e17ecf175afe26df1d64cb8ac06a623ed3f1da99d1da15bf3",
+    "r2_information_equivalence_sha256": "a436c47c4a65435126d2f4dab02cdcf237109a67f941add674d401dd09af7e23",
+    "r4_result_sha256": "9a4d7ea1431dfd18951bf0ad4202e1f35795d1ba676089de60956f989e07f4c8"
+  },
+  "pair_ids": ["385", "387", "167", "23", "388", "164"],
+  "primary_pair_ids_immutable": ["387", "167", "23", "388"],
+  "original_gate": {
+    "embedding_cosine_minimum": 0.75,
+    "verifier_model": "llama2-chinese:13b",
+    "required_verdict": {
+      "actionable_guidance_equivalent": true,
+      "unique_task_solving_fact_in_either": false
+    },
+    "literal_reference_leakage_excludes_pair": true
+  },
+  "new_blinded_reviewers": ["deepseek-v4-pro-260425", "kimi-k3"],
+  "review_prompt_policy": {
+    "memory_order": "A=success-written, B=failure-written for all pairs; reviewer is not told this mapping",
+    "task_prompt_hidden": true,
+    "reference_answers_hidden": true,
+    "downstream_answers_hidden": true,
+    "downstream_scores_hidden": true,
+    "r4_effect_hidden": true,
+    "requested_fields": [
+      "actionable_guidance_equivalent",
+      "unique_task_solving_fact_in_either",
+      "residual_asymmetry",
+      "reason"
+    ]
+  },
+  "diagnostic_outputs": {
+    "raw_agreement_rate": true,
+    "unanimous_primary_pair_count": true,
+    "cosine_threshold_margin_analysis": true,
+    "primary_pair_membership_must_remain_unchanged": true
+  },
+  "forbidden": [
+    "change primary pair membership from this diagnostic",
+    "change 0.75 cosine threshold",
+    "recompute or reinterpret the R4 primary p-value",
+    "use reviewer disagreement to replace a pair post outcome",
+    "claim confirmation of C4 from this diagnostic"
+  ],
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}
