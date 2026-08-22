@@ -60,9 +60,9 @@
   if (sources.bibliography) {
     pages.bibliography = Object.assign({}, sources.bibliography, {
       eyebrow:{en:"Literature · Evidence Library",zh:"文献 · 证据库"},
-      title:{en:"Literature library: coverage, field maps, and reading guide",zh:"文献库 · 覆盖、领域地图与阅读指南"},
-      lead:{en:"Use this page in four steps: first understand where the corpus comes from and which layers are manually verified; then inspect field density; next choose a reading path; only then search, filter, compare, cite, or export individual records.",zh:"建议按四步使用这页：先看文献从哪里来、哪些层级经过人工核验；再看领域文献分布；然后决定先读哪些论文；最后才进入单篇检索、筛选、比较、引用和导出。"},
-      callout:{en:"Publication status, citation count, automatic taxonomy, and paper-specific analysis answer different questions. Published/preprint describes bibliographic status, citations describe historical visibility, automatic tags support navigation, and only source-grounded paper analysis should be used for scientific claims.",zh:"发表状态、引用量、自动分类和单篇论文梳理回答的是四个不同问题：正式发表／预印本只表示书目状态；引用量主要反映历史可见度；自动标签只用于导航；真正写进科研主张的内容仍应回到原文和可核验的一手来源。"},
+      title:{en:"Literature library: published spine, method comparison, and full corpus",zh:"文献库 · 正式发表主线、方法比较与完整语料"},
+      lead:{en:"Read the peer-reviewed spine first: start from the four lifecycle questions, see how concrete simple baselines evolved, compare published papers within the same problem, then use the full maps and searchable corpus for the preprint frontier. Corpus provenance and coverage remain auditable at the end.",zh:"建议先用正式发表论文把领域读懂：从四个自进化生命周期问题进入，看简单方法怎样逐步演化，再在同一研究问题下横向比较正式论文；之后才把预印本前沿放回来，看完整领域地图与可检索语料。语料来源、覆盖协议和可信度审计保留在页面最后。"},
+      callout:{en:"Formal publication is the evidence spine, not a synonym for direct self-evolution. The page therefore separates must-read mainline work, direct related publications, and adjacent/foundation papers; every published-paper deep read makes the previous simple method explicit and leaves unchecked result-table numbers unfilled.",zh:"正式发表是证据主线，但不等于每篇论文都是 Agent 自进化核心工作。因此页面把正式论文再分成“主线必读、直接相关、邻接／历史基础”；单篇深读必须把以前最简单的方法具体写清楚，没有逐表核验过的实验数字明确留空，不用自动生成数字补齐。"},
       groupsBefore:[group("coverage-method")]
     });
   }

@@ -326,6 +326,13 @@ def main() -> None:
               statusStrips: document.querySelectorAll('.project-status-strip,.field-current-status-strip').length,
               pageOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
               denseReadingLayout: document.querySelectorAll('.bibliography-reading-analysis-grid').length,
+              publishedQuestionCards: document.querySelectorAll('.published-question-card').length,
+              publishedStories: document.querySelectorAll('.published-direction-story').length,
+              publishedComparisonSections: document.querySelectorAll('.published-comparison-section').length,
+              publishedQuickReads: document.querySelectorAll('.published-paper-quickread').length,
+              publishedQuickFields: document.querySelectorAll('.published-paper-quickread-grid > div').length,
+              publishedAudit: window.publishedLiteratureAudit?.() || {published:0,byTier:{},byDirection:{},missingQuick:['audit missing']},
+              publishedIntro: document.querySelector('.published-spine-intro')?.textContent || '',
               mapGuideCards: document.querySelectorAll('.bibliography-map-guide-grid article').length,
               readingPathCards: document.querySelectorAll('.bibliography-reading-path-grid article').length,
               metaStats: document.querySelectorAll('.bibliography-meta-strip span').length,
@@ -361,11 +368,16 @@ def main() -> None:
               missing: document.querySelectorAll('.citation-missing').length
             };""",
         )
-        require(bibliography["chapters"] == ["coverage-protocol","field-maps","ranking-reading","search-corpus"], f"bibliography reading order is wrong: {bibliography['chapters']}")
-        require((bibliography["trustCards"],bibliography["refreshLogs"],bibliography["refreshMethods"],bibliography["refreshChips"],bibliography["mapGuideCards"],bibliography["readingPathCards"],bibliography["metaStats"]) == (4,1,2,7,3,3,4), f"bibliography human-first guides or refresh provenance are incomplete: {bibliography}")
+        require(bibliography["chapters"] == ["published-spine","published-comparison","field-maps","search-corpus","coverage-protocol"], f"bibliography reading order is wrong: {bibliography['chapters']}")
+        require((bibliography["trustCards"],bibliography["refreshLogs"],bibliography["refreshMethods"],bibliography["refreshChips"],bibliography["mapGuideCards"],bibliography["metaStats"]) == (4,1,2,7,3,4), f"bibliography maps or refresh provenance are incomplete: {bibliography}")
         require(all(marker in bibliography["refreshText"] for marker in ("2026-08-22","+33 papers","Semantic Scholar + arXiv","RoMeRL","HarnessBank")), f"bibliography incremental API refresh provenance is incomplete: {bibliography['refreshText']}")
         require(bibliography["statusStrips"] == 0, "bibliography must not show current research-state status strips")
-        require(bibliography["denseReadingLayout"] == 1 and not bibliography["pageOverflow"], "bibliography compact reading layout is missing or overflows horizontally")
+        require(not bibliography["pageOverflow"], "bibliography published-first layout overflows horizontally")
+        require((bibliography["publishedQuestionCards"],bibliography["publishedStories"],bibliography["publishedComparisonSections"]) == (4,10,10), f"published literature spine is incomplete: {bibliography}")
+        published_audit=bibliography["publishedAudit"]
+        require(published_audit["published"] >= 60 and not published_audit["missingQuick"] and published_audit["byTier"].get("A",0) >= 15, f"published literature audit failed: {published_audit}")
+        require(bibliography["publishedQuickReads"] > 0 and bibliography["publishedQuickFields"] == bibliography["publishedQuickReads"] * 8, "published paper 30-second readouts are incomplete")
+        require("published" in bibliography["publishedIntro"].lower() and str(published_audit["published"]) in bibliography["publishedIntro"], "published spine summary is missing its audited count")
         require(bibliography["cards"] == 80, "bibliography initial pagination is not 80")
         require(bibliography["loadMore"], "bibliography load-more control is missing")
         require(bibliography["methodMap"] and bibliography["publicationMap"] and bibliography["signalMap"], "one or more bibliography maps are missing")

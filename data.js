@@ -17,7 +17,7 @@ window.NAV_GROUPS = [
     ["selected-paper.html",{en:"Papers · Registry",zh:"论文 · PaperRegistry"}],
   ]},
   { title:{en:"Literature",zh:"文献"}, pages:[
-    ["bibliography.html",{en:"Literature Library · Coverage & Reading",zh:"文献库 · 覆盖与阅读"}],
+    ["bibliography.html",{en:"Literature Library · Published Spine",zh:"文献库 · 正式发表主线"}],
   ]},
 ];
 
@@ -202,7 +202,7 @@ window.PAGE_CONTENT = {
 
     {href:"selected-paper.html",paper:true,title:{en:"Papers · Registry",zh:"论文 · PaperRegistry"},desc:{en:"Canonical PaperRegistry for research that has entered writing: current Paper Acceptance stage, claim–evidence state, manuscript repair, QA, prebuttal, and submission readiness.",zh:"已经进入论文阶段的 canonical PaperRegistry：统一查看当前 Paper Acceptance 阶段、主张—证据状态、文稿修复、QA、Prebuttal 与真正投稿就绪状态。"}},
 
-    {href:"bibliography.html",title:{en:"Literature Library · Coverage & Reading",zh:"文献库 · 覆盖与阅读"},desc:{en:"Explains provenance and trust layers first, then maps field density, recommends what to read, and finally provides search, comparison, citation, and export over the deduplicated corpus.",zh:"先解释文献来源与可信度层级，再看领域分布、推荐阅读顺序，最后提供去重语料的检索、比较、引用与导出。"}},
+    {href:"bibliography.html",title:{en:"Literature Library · Published Spine",zh:"文献库 · 正式发表主线"},desc:{en:"Builds the field spine from peer-reviewed work first, compares concrete simple baselines with added mechanisms, then opens the full preprint-inclusive corpus, maps, search, citation, and provenance audit.",zh:"先用正式发表论文建立领域主线，具体比较简单方法与论文新增机制，再进入包含预印本的完整语料、地图、检索、引用和覆盖审计。"}},
 
   ],
   sections:[

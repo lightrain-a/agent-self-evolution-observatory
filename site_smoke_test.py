@@ -53,7 +53,7 @@ REQUIRED_STATIC = [
     "agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg",
     "agent-self-evolution-history-en.svg", "agent-self-evolution-history-zh.svg",
     "portfolio-data.js", "direction-guide-data.js", "direction-literature-data.js", "page-architecture-data.js", "idea-explanations.js", "idea-comparisons.js",
-    "paper-analysis-data.js", "top-paper-analysis-data.js", "citation-ranking-data.js",
+    "paper-analysis-data.js", "top-paper-analysis-data.js", "published-literature-data.js", "citation-ranking-data.js",
     "history-figure-data.js", "catalog_audit.py", "build_citation_cache.py",
     "browser_smoke_test.py", "hierarchy_smoke_test.py", "CHANGELOG.md",
     "content-review-external.js", "generated/iclr-external-reviews.json",
@@ -352,7 +352,7 @@ def main() -> None:
         "research-map": ["layering", "coverage-gaps", "integrated-map", "handoff"],
         "paper-ideas": ["discussed-ideas", "new-ideas"],
         "selected-paper": ["problem-scope", "evidence-experiments", "narrative-execution", "review-gates"],
-        "bibliography": ["coverage-protocol", "field-maps", "ranking-reading", "search-corpus"],
+        "bibliography": ["published-spine", "published-comparison", "field-maps", "search-corpus", "coverage-protocol"],
     }
     for page_id, chapter_ids in expected_chapter_ids.items():
         for chapter_id in chapter_ids:
@@ -880,7 +880,7 @@ def main() -> None:
     if ranking_text.count("citationCount:") < 20 or "snapshotUpdatedAt:" not in ranking_text:
         fail("citation ranking config must contain a dated deployment snapshot for at least 20 core papers")
     bibliography_html = (ROOT / "bibliography.html").read_text(encoding="utf-8")
-    required_bibliography_scripts = ["citation-ranking-data.js", "paper-analysis-data.js", "top-paper-analysis-data.js", "app.js"]
+    required_bibliography_scripts = ["citation-ranking-data.js", "paper-analysis-data.js", "top-paper-analysis-data.js", "published-literature-data.js", "app.js"]
     script_positions = [bibliography_html.find(f'src="{name}"') for name in required_bibliography_scripts]
     if any(position < 0 for position in script_positions) or script_positions != sorted(script_positions):
         fail("bibliography must load ranking and analysis scripts before app.js")
@@ -902,6 +902,13 @@ def main() -> None:
     for marker in ["paperConcreteDesign", "paperSpecificFlow", "Concrete design: how the paper actually works", "designComponents", "designInputs", "designLoop", "designArtifact", "designAcceptance"]:
         if marker not in app_text:
             fail(f"paper-card concrete implementation breakdown is missing {marker}")
+    published_text = (ROOT / "published-literature-data.js").read_text(encoding="utf-8")
+    for marker in ["Agent 到底应该学什么？", "经验应该变成什么？", "D1", "D10", "全部追加 + Top-K 相似度检索", "固定工具/API", "固定训练集 + 固定 reward"]:
+        if marker not in published_text:
+            fail(f"published-literature reading spine is missing concrete baseline marker: {marker}")
+    for marker in ["renderPublishedSpine", "renderPublishedComparisons", "renderPublishedQuickRead", "publishedLiteratureAudit", "30 秒读懂这篇正式论文", "实验实际看到了什么"]:
+        if marker not in app_text:
+            fail(f"published-literature renderer is missing {marker}")
     if "Semantic Scholar retrieval" not in (ROOT / "generated/s2-literature.js").read_text(encoding="utf-8") or "semantic scholar retrieval" not in app_text.lower():
         fail("Semantic Scholar retrieval provenance must remain present in the raw snapshot and explicitly handled by the analysis layer")
     for marker in ["sortBibliographyRecords", "publicationTier", "readingRoleInfo", "renderRecommendedPaperGroups", "bibliography-sort", "citation-ranking-status", "citationCount"]:
