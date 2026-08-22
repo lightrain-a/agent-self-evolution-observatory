@@ -9,11 +9,11 @@
     "preparation_pass": 4,
     "preparation_blocked": 1,
     "legacy_ready_needs_preparation_migration": 0,
-    "machine_frozen_candidates": 0,
+    "machine_frozen_candidates": 4,
     "machine_freeze_stale": 0,
-    "machine_handoff_ready": 0,
-    "machine_handoff_stale": 4,
-    "human_submission_signoff_pending": 0,
+    "machine_handoff_ready": 4,
+    "machine_handoff_stale": 0,
+    "human_submission_signoff_pending": 4,
     "human_signoff_complete": 0,
     "human_signoff_stale": 0,
     "submitted": 0,
@@ -67,6 +67,9 @@
     "reopen_experiment_lease_request_required": 0,
     "reopen_experiment_lease_request_ready": 0,
     "reopen_experiment_lease_request_invalid": 0,
+    "reopen_experiment_lease_active_run_not_started": 0,
+    "reopen_experiment_lease_stale_or_released": 0,
+    "reopen_experiment_lease_invalid": 0,
     "scientific_reopen_invalid": 0
   },
   "papers": [
@@ -85,7 +88,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_HANDOFF_STALE",
+        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
         "post_submission": "NOT_ELIGIBLE",
         "next_attempt": "NOT_ELIGIBLE"
       },
@@ -114,15 +117,15 @@
         "human_submission_signoff_pending": true
       },
       "submission_freeze": {
-        "status": "MACHINE_FREEZE_PENDING",
-        "freeze_sha256": "",
-        "venue_policy_snapshot_sha256": "",
-        "human_signoff_status": "",
-        "frozen_artifacts": 0,
-        "integrity_pass": false,
+        "status": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING",
+        "freeze_sha256": "211d7e0608ec326b405bc83dd2deea49f79cbf380484e2232839065c13a941ae",
+        "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
+        "human_signoff_status": "PENDING_HUMAN",
+        "frozen_artifacts": 2,
+        "integrity_pass": true,
         "drift_errors": [],
         "revision_impact": {
-          "status": "NOT_AVAILABLE",
+          "status": "NO_CHANGE",
           "impact_classes": [],
           "minimum_rerun_paper_preparation_gates": [],
           "minimum_rerun_paper_acceptance_checks": [],
@@ -131,7 +134,7 @@
         "external_human_submission_authority_required": true
       },
       "submission_handoff": {
-        "status": "MACHINE_HANDOFF_STALE",
+        "status": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
         "handoff_sha256": "0a736c22afec337d0c98a674357511057e35afacad246c80854449f56faa1d2d",
         "freeze_sha256": "211d7e0608ec326b405bc83dd2deea49f79cbf380484e2232839065c13a941ae",
         "venue": "ICLR 2027",
@@ -168,12 +171,12 @@
         ],
         "must_not_submit_if_hash_mismatch": true,
         "must_not_submit_if_freeze_stale": true,
-        "integrity_pass": false,
+        "integrity_pass": true,
         "errors": [],
         "external_human_submission_authority_required": true
       },
       "human_signoff": {
-        "status": "NOT_ELIGIBLE",
+        "status": "PENDING_HUMAN_CONFIRMATION",
         "signoff_sha256": "",
         "integrity_pass": false,
         "errors": [],
@@ -453,6 +456,25 @@
               "gpu": false,
               "submission": false
             }
+          },
+          "experiment_lease": {
+            "status": "EXPERIMENT_LEASE_ACQUIRE_REQUIRED",
+            "contract_id": "",
+            "lease_acquisition_sha256": "",
+            "experiment_authority_id": "",
+            "run_id": "",
+            "authority_epoch": 0,
+            "experiment_authority_acquired": false,
+            "execution_authorized": false,
+            "execution_started": false,
+            "gpu_allocated": false,
+            "authority": {
+              "experiment": false,
+              "gpu": false,
+              "scientific": false,
+              "p0": false,
+              "submission": false
+            }
           }
         }
       },
@@ -489,7 +511,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_HANDOFF_STALE",
+        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
         "post_submission": "NOT_ELIGIBLE",
         "next_attempt": "NOT_ELIGIBLE"
       },
@@ -518,15 +540,15 @@
         "human_submission_signoff_pending": true
       },
       "submission_freeze": {
-        "status": "MACHINE_FREEZE_PENDING",
-        "freeze_sha256": "",
-        "venue_policy_snapshot_sha256": "",
-        "human_signoff_status": "",
-        "frozen_artifacts": 0,
-        "integrity_pass": false,
+        "status": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING",
+        "freeze_sha256": "e6842fe4d97c11683710b0b8834e33a06ec5e7a1328f5a6ea2e6a52510d180a6",
+        "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
+        "human_signoff_status": "PENDING_HUMAN",
+        "frozen_artifacts": 4,
+        "integrity_pass": true,
         "drift_errors": [],
         "revision_impact": {
-          "status": "NOT_AVAILABLE",
+          "status": "NO_CHANGE",
           "impact_classes": [],
           "minimum_rerun_paper_preparation_gates": [],
           "minimum_rerun_paper_acceptance_checks": [],
@@ -535,7 +557,7 @@
         "external_human_submission_authority_required": true
       },
       "submission_handoff": {
-        "status": "MACHINE_HANDOFF_STALE",
+        "status": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
         "handoff_sha256": "0821eb8c269dcf05e65884ff0a8063eab7b6be00c189f658586212070b5121e0",
         "freeze_sha256": "e6842fe4d97c11683710b0b8834e33a06ec5e7a1328f5a6ea2e6a52510d180a6",
         "venue": "ICLR 2027",
@@ -584,12 +606,12 @@
         ],
         "must_not_submit_if_hash_mismatch": true,
         "must_not_submit_if_freeze_stale": true,
-        "integrity_pass": false,
+        "integrity_pass": true,
         "errors": [],
         "external_human_submission_authority_required": true
       },
       "human_signoff": {
-        "status": "NOT_ELIGIBLE",
+        "status": "PENDING_HUMAN_CONFIRMATION",
         "signoff_sha256": "",
         "integrity_pass": false,
         "errors": [],
@@ -869,6 +891,25 @@
               "gpu": false,
               "submission": false
             }
+          },
+          "experiment_lease": {
+            "status": "EXPERIMENT_LEASE_ACQUIRE_REQUIRED",
+            "contract_id": "",
+            "lease_acquisition_sha256": "",
+            "experiment_authority_id": "",
+            "run_id": "",
+            "authority_epoch": 0,
+            "experiment_authority_acquired": false,
+            "execution_authorized": false,
+            "execution_started": false,
+            "gpu_allocated": false,
+            "authority": {
+              "experiment": false,
+              "gpu": false,
+              "scientific": false,
+              "p0": false,
+              "submission": false
+            }
           }
         }
       },
@@ -905,7 +946,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_HANDOFF_STALE",
+        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
         "post_submission": "NOT_ELIGIBLE",
         "next_attempt": "NOT_ELIGIBLE"
       },
@@ -934,15 +975,15 @@
         "human_submission_signoff_pending": true
       },
       "submission_freeze": {
-        "status": "MACHINE_FREEZE_PENDING",
-        "freeze_sha256": "",
-        "venue_policy_snapshot_sha256": "",
-        "human_signoff_status": "",
-        "frozen_artifacts": 0,
-        "integrity_pass": false,
+        "status": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING",
+        "freeze_sha256": "55785374bc82630f11a8195751c37b3995194375cf37d63e9a364f404b0622de",
+        "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
+        "human_signoff_status": "PENDING_HUMAN",
+        "frozen_artifacts": 4,
+        "integrity_pass": true,
         "drift_errors": [],
         "revision_impact": {
-          "status": "NOT_AVAILABLE",
+          "status": "NO_CHANGE",
           "impact_classes": [],
           "minimum_rerun_paper_preparation_gates": [],
           "minimum_rerun_paper_acceptance_checks": [],
@@ -951,7 +992,7 @@
         "external_human_submission_authority_required": true
       },
       "submission_handoff": {
-        "status": "MACHINE_HANDOFF_STALE",
+        "status": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
         "handoff_sha256": "c0efeabfa71bc1645ea44523f721e0acbbb609e838b76f2ceefd3372d80f7328",
         "freeze_sha256": "55785374bc82630f11a8195751c37b3995194375cf37d63e9a364f404b0622de",
         "venue": "ICLR 2027",
@@ -1000,12 +1041,12 @@
         ],
         "must_not_submit_if_hash_mismatch": true,
         "must_not_submit_if_freeze_stale": true,
-        "integrity_pass": false,
+        "integrity_pass": true,
         "errors": [],
         "external_human_submission_authority_required": true
       },
       "human_signoff": {
-        "status": "NOT_ELIGIBLE",
+        "status": "PENDING_HUMAN_CONFIRMATION",
         "signoff_sha256": "",
         "integrity_pass": false,
         "errors": [],
@@ -1283,6 +1324,25 @@
               "experiment": false,
               "p0": false,
               "gpu": false,
+              "submission": false
+            }
+          },
+          "experiment_lease": {
+            "status": "EXPERIMENT_LEASE_ACQUIRE_REQUIRED",
+            "contract_id": "",
+            "lease_acquisition_sha256": "",
+            "experiment_authority_id": "",
+            "run_id": "",
+            "authority_epoch": 0,
+            "experiment_authority_acquired": false,
+            "execution_authorized": false,
+            "execution_started": false,
+            "gpu_allocated": false,
+            "authority": {
+              "experiment": false,
+              "gpu": false,
+              "scientific": false,
+              "p0": false,
               "submission": false
             }
           }
@@ -1698,6 +1758,25 @@
               "gpu": false,
               "submission": false
             }
+          },
+          "experiment_lease": {
+            "status": "EXPERIMENT_LEASE_ACQUIRE_REQUIRED",
+            "contract_id": "",
+            "lease_acquisition_sha256": "",
+            "experiment_authority_id": "",
+            "run_id": "",
+            "authority_epoch": 0,
+            "experiment_authority_acquired": false,
+            "execution_authorized": false,
+            "execution_started": false,
+            "gpu_allocated": false,
+            "authority": {
+              "experiment": false,
+              "gpu": false,
+              "scientific": false,
+              "p0": false,
+              "submission": false
+            }
           }
         }
       },
@@ -1734,7 +1813,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_HANDOFF_STALE",
+        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
         "post_submission": "NOT_ELIGIBLE",
         "next_attempt": "NOT_ELIGIBLE"
       },
@@ -1763,15 +1842,15 @@
         "human_submission_signoff_pending": true
       },
       "submission_freeze": {
-        "status": "MACHINE_FREEZE_PENDING",
-        "freeze_sha256": "",
-        "venue_policy_snapshot_sha256": "",
-        "human_signoff_status": "",
-        "frozen_artifacts": 0,
-        "integrity_pass": false,
+        "status": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING",
+        "freeze_sha256": "5c065d826ecae0b8db5620f039fa30e0df4759e28a7e6dc2c7ec7f70a0d306f1",
+        "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
+        "human_signoff_status": "PENDING_HUMAN",
+        "frozen_artifacts": 3,
+        "integrity_pass": true,
         "drift_errors": [],
         "revision_impact": {
-          "status": "NOT_AVAILABLE",
+          "status": "NO_CHANGE",
           "impact_classes": [],
           "minimum_rerun_paper_preparation_gates": [],
           "minimum_rerun_paper_acceptance_checks": [],
@@ -1780,7 +1859,7 @@
         "external_human_submission_authority_required": true
       },
       "submission_handoff": {
-        "status": "MACHINE_HANDOFF_STALE",
+        "status": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
         "handoff_sha256": "372fa5012a514ad53c2ec58fca54f1a30974182c49f9ff8bfe696500210fe665",
         "freeze_sha256": "5c065d826ecae0b8db5620f039fa30e0df4759e28a7e6dc2c7ec7f70a0d306f1",
         "venue": "ICLR 2027",
@@ -1823,12 +1902,12 @@
         ],
         "must_not_submit_if_hash_mismatch": true,
         "must_not_submit_if_freeze_stale": true,
-        "integrity_pass": false,
+        "integrity_pass": true,
         "errors": [],
         "external_human_submission_authority_required": true
       },
       "human_signoff": {
-        "status": "NOT_ELIGIBLE",
+        "status": "PENDING_HUMAN_CONFIRMATION",
         "signoff_sha256": "",
         "integrity_pass": false,
         "errors": [],
@@ -2108,6 +2187,25 @@
               "gpu": false,
               "submission": false
             }
+          },
+          "experiment_lease": {
+            "status": "EXPERIMENT_LEASE_ACQUIRE_REQUIRED",
+            "contract_id": "",
+            "lease_acquisition_sha256": "",
+            "experiment_authority_id": "",
+            "run_id": "",
+            "authority_epoch": 0,
+            "experiment_authority_acquired": false,
+            "execution_authorized": false,
+            "execution_started": false,
+            "gpu_allocated": false,
+            "authority": {
+              "experiment": false,
+              "gpu": false,
+              "scientific": false,
+              "p0": false,
+              "submission": false
+            }
           }
         }
       },
@@ -2136,5 +2234,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "9a64e5a0ab614ff942dfbe9dfed96d5519fa87ebc3948a1789917851a4c3b548"
+  "projection_sha256": "7a2d591051d08595c02c96b6c6de19d2c7b8693f7a4cfd043338ba2f8f7c57cc"
 }

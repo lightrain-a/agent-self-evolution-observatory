@@ -138,6 +138,8 @@ def build() -> Path:
     research_local_validation_auth_root = os.environ.get("RESEARCH_LOCAL_VALIDATION_AUTH_ROOT", "").strip()
     research_pre_experiment_adapter_root = os.environ.get("RESEARCH_PRE_EXPERIMENT_ADAPTER_ROOT", "").strip()
     research_experiment_lease_request_root = os.environ.get("RESEARCH_EXPERIMENT_LEASE_REQUEST_ROOT", "").strip()
+    research_experiment_lease_root = os.environ.get("RESEARCH_EXPERIMENT_LEASE_ROOT", "").strip()
+    research_experiment_authority_root = os.environ.get("RESEARCH_EXPERIMENT_AUTHORITY_ROOT", "").strip()
     research_scientific_contract_root = os.environ.get("RESEARCH_SCIENTIFIC_CONTRACT_ROOT", "").strip()
     research_scientific_problem_gate_root = os.environ.get("RESEARCH_SCIENTIFIC_PROBLEM_GATE_ROOT", "").strip()
     if paper_ledger_root:
@@ -188,6 +190,11 @@ def build() -> Path:
         experiment_lease_request_path = Path(research_experiment_lease_request_root).expanduser().resolve() if research_experiment_lease_request_root else audit_root / "scientific-contract-experiment-lease-requests"
         if experiment_lease_request_path.is_dir():
             command.extend(["--experiment-lease-request-root", str(experiment_lease_request_path)])
+        experiment_lease_path = Path(research_experiment_lease_root).expanduser().resolve() if research_experiment_lease_root else audit_root / "scientific-contract-experiment-leases"
+        if experiment_lease_path.is_dir():
+            command.extend(["--experiment-lease-root", str(experiment_lease_path)])
+        experiment_authority_path = Path(research_experiment_authority_root).expanduser().resolve() if research_experiment_authority_root else audit_root
+        command.extend(["--experiment-authority-root", str(experiment_authority_path)])
         scientific_contract_path = Path(research_scientific_contract_root).expanduser().resolve() if research_scientific_contract_root else audit_root / "scientific-contracts"
         if scientific_contract_path.is_dir():
             command.extend(["--scientific-contract-root", str(scientific_contract_path)])
