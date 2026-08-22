@@ -318,6 +318,9 @@ def main() -> None:
               refreshMethods: document.querySelectorAll('.bibliography-refresh-methods article').length,
               refreshChips: document.querySelectorAll('.bibliography-refresh-chips span').length,
               refreshText: document.querySelector('.bibliography-refresh-log')?.textContent || '',
+              statusStrips: document.querySelectorAll('.project-status-strip,.field-current-status-strip').length,
+              pageOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
+              denseReadingLayout: document.querySelectorAll('.bibliography-reading-analysis-grid').length,
               mapGuideCards: document.querySelectorAll('.bibliography-map-guide-grid article').length,
               readingPathCards: document.querySelectorAll('.bibliography-reading-path-grid article').length,
               metaStats: document.querySelectorAll('.bibliography-meta-strip span').length,
@@ -352,7 +355,9 @@ def main() -> None:
         )
         require(bibliography["chapters"] == ["coverage-protocol","field-maps","ranking-reading","search-corpus"], f"bibliography reading order is wrong: {bibliography['chapters']}")
         require((bibliography["trustCards"],bibliography["refreshLogs"],bibliography["refreshMethods"],bibliography["refreshChips"],bibliography["mapGuideCards"],bibliography["readingPathCards"],bibliography["metaStats"]) == (4,1,2,7,3,3,4), f"bibliography human-first guides or refresh provenance are incomplete: {bibliography}")
-        require(all(marker in bibliography["refreshText"] for marker in ("2026-08-22","33 papers added","Semantic Scholar + arXiv","RoMeRL","HarnessBank")), f"bibliography incremental API refresh provenance is incomplete: {bibliography['refreshText']}")
+        require(all(marker in bibliography["refreshText"] for marker in ("2026-08-22","+33 papers","Semantic Scholar + arXiv","RoMeRL","HarnessBank")), f"bibliography incremental API refresh provenance is incomplete: {bibliography['refreshText']}")
+        require(bibliography["statusStrips"] == 0, "bibliography must not show current research-state status strips")
+        require(bibliography["denseReadingLayout"] == 1 and not bibliography["pageOverflow"], "bibliography compact reading layout is missing or overflows horizontally")
         require(bibliography["cards"] == 80, "bibliography initial pagination is not 80")
         require(bibliography["loadMore"], "bibliography load-more control is missing")
         require(bibliography["methodMap"] and bibliography["publicationMap"] and bibliography["signalMap"], "one or more bibliography maps are missing")
@@ -683,7 +688,7 @@ def main() -> None:
 
         navigate("/bibliography.html", 8)
         bibliography_zh = execute(session_id, "return document.body.textContent || ''")
-        require(all(marker in bibliography_zh for marker in ("正式发表","预印本","代码仓库","博客/报告","Agent 组件","模型参数","工具/技能","工作流/脚手架","批评/评测","环境交互","最近一次增量核验","本轮新增 33 篇","API key 不进入网页产物")), "Bibliography filters/maps/cards or incremental refresh provenance are not localized to Chinese display labels")
+        require(all(marker in bibliography_zh for marker in ("正式发表","预印本","代码仓库","博客/报告","Agent 组件","模型参数","工具/技能","工作流/脚手架","批评/评测","环境交互","最近增量核验","+33 篇","key 不进入网页")), "Bibliography filters/maps/cards or incremental refresh provenance are not localized to Chinese display labels")
 
         navigate("/evaluation.html", 4)
         evaluation_zh = execute(session_id, "return document.body.textContent || ''")

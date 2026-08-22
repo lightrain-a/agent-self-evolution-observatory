@@ -887,7 +887,7 @@ def main() -> None:
             fail(f"{filename} must load citation-ranking-data.js before app.js for stable reference numbering")
 
     app_text = (ROOT / "app.js").read_text(encoding="utf-8")
-    if "bibliography-refresh-log" not in app_text or "LATEST INCREMENTAL VERIFICATION" not in app_text or "Semantic Scholar + arXiv" not in app_text:
+    if "bibliography-refresh-log" not in app_text or "LATEST VERIFIED DELTA" not in app_text or "Semantic Scholar + arXiv" not in app_text:
         fail("bibliography must render the latest incremental literature-refresh provenance before the bulk Semantic Scholar snapshot")
     for marker in ["Problem motivation", "Comparative advantage", "Core intuition", "Why it should work", "Method flow", "Experimental validation"]:
         if marker not in app_text:
