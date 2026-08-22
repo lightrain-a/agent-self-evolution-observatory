@@ -74,6 +74,12 @@
     "reopen_local_f0_run_active": 0,
     "reopen_local_f0_run_stale_or_released": 0,
     "reopen_local_f0_run_invalid": 0,
+    "reopen_local_f0_completion_pending_adjudication": 0,
+    "reopen_local_f0_completion_protocol_hold": 0,
+    "reopen_local_f0_signal_p0_review": 0,
+    "reopen_local_f0_valid_no_signal": 0,
+    "reopen_local_f0_typed_stop_or_inconclusive": 0,
+    "reopen_local_f0_completion_invalid": 0,
     "scientific_reopen_invalid": 0
   },
   "papers": [
@@ -494,6 +500,21 @@
             "execution_started": false,
             "model_loaded": false,
             "gpu_allocated": false,
+            "authority": {
+              "scientific": false,
+              "p0": false,
+              "full_experiment": false,
+              "submission": false
+            }
+          },
+          "local_f0_completion": {
+            "status": "LOCAL_F0_COMPLETION_REQUIRED",
+            "completion_sha256": "",
+            "evidence_adjudication_sha256": "",
+            "typed_execution_outcome": "",
+            "p0_authorization_review_eligible": false,
+            "artifact_count": 0,
+            "failed_checks": [],
             "authority": {
               "scientific": false,
               "p0": false,
@@ -956,6 +977,21 @@
               "full_experiment": false,
               "submission": false
             }
+          },
+          "local_f0_completion": {
+            "status": "LOCAL_F0_COMPLETION_REQUIRED",
+            "completion_sha256": "",
+            "evidence_adjudication_sha256": "",
+            "typed_execution_outcome": "",
+            "p0_authorization_review_eligible": false,
+            "artifact_count": 0,
+            "failed_checks": [],
+            "authority": {
+              "scientific": false,
+              "p0": false,
+              "full_experiment": false,
+              "submission": false
+            }
           }
         }
       },
@@ -1406,6 +1442,21 @@
             "execution_started": false,
             "model_loaded": false,
             "gpu_allocated": false,
+            "authority": {
+              "scientific": false,
+              "p0": false,
+              "full_experiment": false,
+              "submission": false
+            }
+          },
+          "local_f0_completion": {
+            "status": "LOCAL_F0_COMPLETION_REQUIRED",
+            "completion_sha256": "",
+            "evidence_adjudication_sha256": "",
+            "typed_execution_outcome": "",
+            "p0_authorization_review_eligible": false,
+            "artifact_count": 0,
+            "failed_checks": [],
             "authority": {
               "scientific": false,
               "p0": false,
@@ -1865,6 +1916,21 @@
               "full_experiment": false,
               "submission": false
             }
+          },
+          "local_f0_completion": {
+            "status": "LOCAL_F0_COMPLETION_REQUIRED",
+            "completion_sha256": "",
+            "evidence_adjudication_sha256": "",
+            "typed_execution_outcome": "",
+            "p0_authorization_review_eligible": false,
+            "artifact_count": 0,
+            "failed_checks": [],
+            "authority": {
+              "scientific": false,
+              "p0": false,
+              "full_experiment": false,
+              "submission": false
+            }
           }
         }
       },
@@ -2315,6 +2381,21 @@
               "full_experiment": false,
               "submission": false
             }
+          },
+          "local_f0_completion": {
+            "status": "LOCAL_F0_COMPLETION_REQUIRED",
+            "completion_sha256": "",
+            "evidence_adjudication_sha256": "",
+            "typed_execution_outcome": "",
+            "p0_authorization_review_eligible": false,
+            "artifact_count": 0,
+            "failed_checks": [],
+            "authority": {
+              "scientific": false,
+              "p0": false,
+              "full_experiment": false,
+              "submission": false
+            }
           }
         }
       },
@@ -2343,5 +2424,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "5c3a9002777d1735031084f82e09c1494c9a790cf7c3c8f0944aa667a25009b1"
+  "projection_sha256": "74990d6fb5fb3f0771f02c44db8ecbba0e2d93f9750a95e9c4536f562b4a4727"
 }

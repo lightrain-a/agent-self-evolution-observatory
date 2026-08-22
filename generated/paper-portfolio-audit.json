@@ -310,6 +310,21 @@
             "full_experiment": false,
             "submission": false
           }
+        },
+        "local_f0_completion": {
+          "status": "LOCAL_F0_COMPLETION_REQUIRED",
+          "completion_sha256": "",
+          "evidence_adjudication_sha256": "",
+          "typed_execution_outcome": "",
+          "p0_authorization_review_eligible": false,
+          "artifact_count": 0,
+          "failed_checks": [],
+          "authority": {
+            "scientific": false,
+            "p0": false,
+            "full_experiment": false,
+            "submission": false
+          }
         }
       },
       "scientific_reopen_errors": [],
@@ -629,6 +644,21 @@
           "execution_started": false,
           "model_loaded": false,
           "gpu_allocated": false,
+          "authority": {
+            "scientific": false,
+            "p0": false,
+            "full_experiment": false,
+            "submission": false
+          }
+        },
+        "local_f0_completion": {
+          "status": "LOCAL_F0_COMPLETION_REQUIRED",
+          "completion_sha256": "",
+          "evidence_adjudication_sha256": "",
+          "typed_execution_outcome": "",
+          "p0_authorization_review_eligible": false,
+          "artifact_count": 0,
+          "failed_checks": [],
           "authority": {
             "scientific": false,
             "p0": false,
@@ -960,6 +990,21 @@
             "full_experiment": false,
             "submission": false
           }
+        },
+        "local_f0_completion": {
+          "status": "LOCAL_F0_COMPLETION_REQUIRED",
+          "completion_sha256": "",
+          "evidence_adjudication_sha256": "",
+          "typed_execution_outcome": "",
+          "p0_authorization_review_eligible": false,
+          "artifact_count": 0,
+          "failed_checks": [],
+          "authority": {
+            "scientific": false,
+            "p0": false,
+            "full_experiment": false,
+            "submission": false
+          }
         }
       },
       "scientific_reopen_errors": [],
@@ -1279,6 +1324,21 @@
           "execution_started": false,
           "model_loaded": false,
           "gpu_allocated": false,
+          "authority": {
+            "scientific": false,
+            "p0": false,
+            "full_experiment": false,
+            "submission": false
+          }
+        },
+        "local_f0_completion": {
+          "status": "LOCAL_F0_COMPLETION_REQUIRED",
+          "completion_sha256": "",
+          "evidence_adjudication_sha256": "",
+          "typed_execution_outcome": "",
+          "p0_authorization_review_eligible": false,
+          "artifact_count": 0,
+          "failed_checks": [],
           "authority": {
             "scientific": false,
             "p0": false,
@@ -1626,6 +1686,21 @@
             "full_experiment": false,
             "submission": false
           }
+        },
+        "local_f0_completion": {
+          "status": "LOCAL_F0_COMPLETION_REQUIRED",
+          "completion_sha256": "",
+          "evidence_adjudication_sha256": "",
+          "typed_execution_outcome": "",
+          "p0_authorization_review_eligible": false,
+          "artifact_count": 0,
+          "failed_checks": [],
+          "authority": {
+            "scientific": false,
+            "p0": false,
+            "full_experiment": false,
+            "submission": false
+          }
         }
       },
       "scientific_reopen_errors": [],
@@ -1721,6 +1796,12 @@
     "reopen_local_f0_run_active": 0,
     "reopen_local_f0_run_stale_or_released": 0,
     "reopen_local_f0_run_invalid": 0,
+    "reopen_local_f0_completion_pending_adjudication": 0,
+    "reopen_local_f0_completion_protocol_hold": 0,
+    "reopen_local_f0_signal_p0_review": 0,
+    "reopen_local_f0_valid_no_signal": 0,
+    "reopen_local_f0_typed_stop_or_inconclusive": 0,
+    "reopen_local_f0_completion_invalid": 0,
     "scientific_reopen_invalid": 0,
     "submission_freeze_eligible": 4,
     "ledger_replay_failures": 0,
@@ -1732,5 +1813,5 @@
     "gpu": false,
     "submission": false
   },
-  "audit_sha256": "7d38aebcc502067772edf441dd1b9862981e07dd2a8a287d3867dcc15731fe90"
+  "audit_sha256": "4f20bb96e294419fd64ea68d5c5228bff3748001c3efbcb33f5ef6fc0b37a7f5"
 }
