@@ -4,6 +4,8 @@ import hashlib
 import json
 from typing import Any, Mapping
 
+from .paper_anonymity_audit import SCHEMA_VERSION as ANONYMITY_AUDIT_VERSION, validate_anonymity_audit_receipt
+
 
 PAPER_PREPARATION_PROTOCOL_VERSION = "1.0"
 
@@ -57,6 +59,9 @@ POLICY: dict[str, Any] = {
     "agent_native_artifact_preserves_failures_and_claim_grounding": True,
     "reader_simulation_uses_multiple_reading_modes": True,
     "submission_package_is_venue_specific_and_self_contained": True,
+    "double_blind_leakage_audit_is_content_addressed_when_opted_in": True,
+    "legacy_submission_package_receipts_remain_replayable_without_retroactive_anonymity_schema": True,
+    "revised_or_new_submission_packages_should_bind_double_blind_audit_v1": True,
     "ai_use_disclosure_decision_is_recorded_but_venue_policy_controls_wording": True,
     "human_submission_authority_remains_external": True,
 }
@@ -289,7 +294,21 @@ def evaluate_submission_package(section: Mapping[str, Any]) -> dict[str, Any]:
             blockers.append(f"submission-package-check-failed:{key}")
     if row.get("external_human_submit_required") is not True:
         blockers.append("external-human-submit-boundary-missing")
-    return _gate_result("submission-package", blockers, {"venue": _text(row.get("venue"))})
+    anonymity_version = _text(row.get("anonymity_audit_version"))
+    anonymity_receipt = _mapping(row.get("double_blind_audit_receipt"))
+    if anonymity_version or anonymity_receipt:
+        if anonymity_version != ANONYMITY_AUDIT_VERSION:
+            blockers.append("double-blind-audit-version-missing-or-stale")
+        if not anonymity_receipt or not validate_anonymity_audit_receipt(anonymity_receipt):
+            blockers.append("double-blind-audit-receipt-invalid")
+        else:
+            declared_sha = _text(row.get("anonymity_audit_sha256"))
+            actual_sha = _text(anonymity_receipt.get("anonymity_audit_sha256"))
+            if not declared_sha or declared_sha != actual_sha:
+                blockers.append("double-blind-audit-sha-binding-mismatch")
+            if anonymity_receipt.get("pass") is not True:
+                blockers.append("double-blind-leakage-audit-blocked")
+    return _gate_result("submission-package", blockers, {"venue": _text(row.get("venue")), "double_blind_audit_bound": bool(anonymity_version or anonymity_receipt)})
 
 
 _GATE_EVALUATORS = {

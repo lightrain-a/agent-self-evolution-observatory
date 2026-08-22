@@ -21,6 +21,7 @@ from .paper_acceptance import (
     paper_contract_digest,
     paper_contract_payload,
 )
+from .paper_anonymity_audit import audit_double_blind_bundle
 from .paper_acceptance_ledger import (
     advance_paper_ledger,
     initialize_paper_ledger,
@@ -166,6 +167,42 @@ class PaperPreparationProtocolTest(unittest.TestCase):
         self.assertEqual(result["summary"]["required_gates"], 8)
         self.assertEqual(result["summary"]["passed_gates"], 8)
         self.assertEqual(result["blockers"], [])
+
+    def test_legacy_submission_package_without_deep_anonymity_receipt_remains_replayable(self) -> None:
+        packet = passing_packet()
+        self.assertNotIn("anonymity_audit_version", packet["gates"]["submission-package"])
+        result = evaluate_paper_preparation(packet)
+        self.assertTrue(result["pass"])
+
+    def test_opt_in_double_blind_audit_pass_is_bound_by_sha(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            source = Path(td) / "source.txt"; source.write_text("anonymous submission", encoding="utf-8")
+            audit = audit_double_blind_bundle(artifacts=[{"label": "source", "path": str(source)}])
+            packet = passing_packet(); section = packet["gates"]["submission-package"]
+            section.update(anonymity_audit_version="1.0", double_blind_audit_receipt=audit, anonymity_audit_sha256=audit["anonymity_audit_sha256"])
+            result = evaluate_paper_preparation(packet)
+            self.assertTrue(result["pass"])
+            self.assertTrue(result["gates"]["submission-package"]["detail"]["double_blind_audit_bound"])
+
+    def test_opt_in_double_blind_audit_is_fail_closed_on_leak_tamper_or_missing_sha(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            source = Path(td) / "source.txt"; source.write_text("contact alice@example.edu", encoding="utf-8")
+            audit = audit_double_blind_bundle(artifacts=[{"label": "source", "path": str(source)}])
+            packet = passing_packet(); section = packet["gates"]["submission-package"]
+            section.update(anonymity_audit_version="1.0", double_blind_audit_receipt=audit, anonymity_audit_sha256=audit["anonymity_audit_sha256"])
+            result = evaluate_paper_preparation(packet)
+            self.assertFalse(result["pass"]); self.assertIn("double-blind-leakage-audit-blocked", result["blockers"])
+            packet = passing_packet(); section = packet["gates"]["submission-package"]
+            clean_path = Path(td) / "clean.txt"; clean_path.write_text("anonymous", encoding="utf-8")
+            clean = audit_double_blind_bundle(artifacts=[{"label": "source", "path": str(clean_path)}])
+            section.update(anonymity_audit_version="1.0", double_blind_audit_receipt=clean, anonymity_audit_sha256="0" * 64)
+            result = evaluate_paper_preparation(packet)
+            self.assertFalse(result["pass"]); self.assertIn("double-blind-audit-sha-binding-mismatch", result["blockers"])
+            bad = dict(clean); bad["submission_authority"] = True
+            packet = passing_packet(); section = packet["gates"]["submission-package"]
+            section.update(anonymity_audit_version="1.0", double_blind_audit_receipt=bad, anonymity_audit_sha256=clean["anonymity_audit_sha256"])
+            result = evaluate_paper_preparation(packet)
+            self.assertFalse(result["pass"]); self.assertIn("double-blind-audit-receipt-invalid", result["blockers"])
 
     def test_citation_and_agent_native_gaps_fail_closed(self) -> None:
         packet = passing_packet()
