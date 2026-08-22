@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0",
-  "generated_at": "2026-08-22T06:13:10+00:00",
-  "canonical_ledger_root": "/data/wyt/agent-self-evolution-observatory/paper-acceptance",
+  "schema_version": "1.1",
+  "generated_at": "2026-08-22T06:46:16+00:00",
+  "source": "canonical_paper_acceptance_ledger",
   "summary": {
     "papers": 5,
     "submission_ready": 4,
@@ -43,6 +43,7 @@
         "blockers": [],
         "human_submission_signoff_pending": true
       },
+      "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
         "claim_audit_receipts": 1,
@@ -96,6 +97,7 @@
         "blockers": [],
         "human_submission_signoff_pending": true
       },
+      "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 4,
         "claim_audit_receipts": 1,
@@ -140,6 +142,7 @@
         "blockers": [],
         "human_submission_signoff_pending": true
       },
+      "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
         "claim_audit_receipts": 1,
@@ -184,6 +187,7 @@
         "blockers": [],
         "human_submission_signoff_pending": true
       },
+      "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
         "claim_audit_receipts": 1,
@@ -202,7 +206,7 @@
       "central_question": "Does failure-derived trajectory provenance causally sustain future error when future task difficulty and actionable memory guidance are matched?",
       "current_state": "TARGETED_REPAIR",
       "contract_sha256": "582a203818f9f590d601b5ea9d3a3ecdc08acb3e34d3b1d9f190e17a2d1dcc25",
-      "ledger_events": 18,
+      "ledger_events": 22,
       "supported_claims": 3,
       "active_unrefuted_claims": 2,
       "unsupported_claims": 2,
@@ -228,6 +232,53 @@
         "blockers": [],
         "human_submission_signoff_pending": false
       },
+      "targeted_repair_boundary": {
+        "scheduler_state": "HOLD_SUPPORT_AND_IDENTIFICATION",
+        "scientific_decision": "KEEP_ACTIVE_UNREFUTED; NOT SUPPORTED; NOT REFUTED",
+        "primary_result": {
+          "success_minus_failure": 0.166667,
+          "effect_floor": 0.15,
+          "permutation_p_success_greater": 0.07853921460785392,
+          "p_threshold": 0.05,
+          "support_gate_pass": false,
+          "counterevidence_gate_pass": false,
+          "verdict": "INCONCLUSIVE_NO_THRESHOLD_CHANGE"
+        },
+        "power": {
+          "four_pair_power_range": [
+            0.280479,
+            0.351994
+          ],
+          "independent_pairs_for_80pct_power_range": [
+            18,
+            22
+          ]
+        },
+        "identification": {
+          "primary_pairs": 4,
+          "original_verifier_strict_pass": 4,
+          "deepseek_strict_pass": 0,
+          "kimi_strict_pass": 1,
+          "three_reviewer_unanimous_strict_pass": 0,
+          "minimum_embedding_cosine": 0.901925
+        },
+        "independent_confirmation": {
+          "fresh_same_release_qualified_tasks": 0,
+          "same_release_confirmation_available": false
+        },
+        "reopen_conditions": [
+          "First-party financial per-query ReasoningBank artifacts become available, or auditable exact access to qwen3.7-flash-2026-07-15 plus qwen3.7-text-embedding enables source-faithful reconstruction.",
+          "An independently frozen support population supplies roughly 18-22 or more eligible matched pairs under a multi-reviewer information-equivalence gate, with a fully disjoint future evaluation set."
+        ],
+        "forbidden_repairs": [
+          "do not add seeds to the same four R4 pairs to rescue p<0.05",
+          "do not drop or replace R4 pairs based on post-hoc verifier disagreement",
+          "do not lower the 0.15 effect floor or raise the 0.05 p threshold",
+          "do not relax the original task structural qualification after observing R4 outcomes",
+          "do not substitute a different embedding or executor and call it source-faithful financial replication",
+          "do not reinterpret identification failure as scientific counterevidence to C4"
+        ]
+      },
       "ledger_summary": {
         "mock_reviews": 4,
         "claim_audit_receipts": 0,
@@ -247,5 +298,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "da23f9488e0b7af1d3d056b1f5e541fc0fdf68e32558aa0cf15f8801987eaef3"
+  "projection_sha256": "63fe92fe297f7555dcc83c748e7e1c28c62aabfafeea78524a84a76c928d176f"
 }

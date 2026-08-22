@@ -123,12 +123,22 @@ def build() -> Path:
         check=True,
     )
     # PaperRegistry is a separate projection of the append-only Paper Acceptance
-    # ledgers. Rebuild it at publish time so the frontend cannot lag canonical paper state.
-    subprocess.run(
-        [sys.executable, str(ROOT / "scripts" / "build_paper_registry.py")],
-        cwd=ROOT,
-        check=True,
-    )
+    # ledgers. Rebuild it when the deployment environment supplies the canonical
+    # ledger root; otherwise publish the checked-in, content-addressed snapshot.
+    paper_ledger_root = os.environ.get("PAPER_ACCEPTANCE_ROOT", "").strip()
+    paper_artifact_root = os.environ.get("PAPER_ACCEPTANCE_ARTIFACT_ROOT", "").strip()
+    if paper_ledger_root:
+        command = [
+            sys.executable,
+            str(ROOT / "scripts" / "build_paper_registry.py"),
+            "--ledger-root",
+            paper_ledger_root,
+        ]
+        if paper_artifact_root:
+            command.extend(["--artifact-root", paper_artifact_root])
+        subprocess.run(command, cwd=ROOT, check=True)
+    elif not (ROOT / "generated" / "paper-registry-state.json").is_file():
+        raise RuntimeError("PaperRegistry snapshot missing and PAPER_ACCEPTANCE_ROOT is not configured")
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     OUTPUT.mkdir(parents=True)

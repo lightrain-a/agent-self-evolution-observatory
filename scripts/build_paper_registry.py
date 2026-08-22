@@ -1,24 +1,28 @@
 #!/usr/bin/env python3
 """Project canonical Paper Acceptance ledgers into a frontend PaperRegistry snapshot.
 
-The projection has zero scientific/submission authority. Canonical truth remains under
-/data/.../paper-acceptance. Preparation receipts are displayed independently from the
-legacy SUBMISSION_READY state so older ledgers are not silently rewritten.
+The projection has zero scientific/submission authority. Canonical truth remains in
+the append-only Paper Acceptance ledger. Preparation receipts are displayed independently
+from the legacy SUBMISSION_READY state so older ledgers are not silently rewritten.
 """
 from __future__ import annotations
 
 import argparse
 import hashlib
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_LEDGER_ROOT = Path("/data/wyt/agent-self-evolution-observatory/paper-acceptance")
-DEFAULT_ARTIFACT_ROOT = Path("/data/wyt/agent-self-evolution-observatory/paper-acceptance-artifacts")
+DEFAULT_LEDGER_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ROOT") else None
+DEFAULT_ARTIFACT_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ARTIFACT_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ARTIFACT_ROOT") else None
 DEFAULT_JSON = ROOT / "generated/paper-registry-state.json"
 DEFAULT_JS = ROOT / "generated/paper-registry-state.js"
+C01_ID = "D2-PAPER-FAILURE-MEMORY-PROVENANCE"
+C01_ADJUDICATION = ROOT / "generated/d2-failure-memory-provenance-targeted-repair-adjudication-20260822.json"
+D2_SCHEDULER = ROOT / "generated/d2-active-paper-reopen-scheduler.json"
 
 
 def digest(payload: Any) -> str:
@@ -39,9 +43,72 @@ def event_payload(row: dict[str, Any], event_type: str) -> dict[str, Any]:
     return payload if isinstance(payload, dict) else {}
 
 
-def paper_preparation(row: dict[str, Any], artifact_root: Path) -> dict[str, Any]:
+def targeted_repair_boundary(paper_id: str) -> dict[str, Any]:
+    """Return public-safe decision boundaries for a paper still in targeted repair.
+
+    This projection intentionally carries only scientific decision summaries. It omits
+    execution hosts, filesystem locations, provider response identifiers, and raw prompts.
+    """
+    if paper_id != C01_ID or not C01_ADJUDICATION.exists():
+        return {}
+    try:
+        adjudication = _load_json(C01_ADJUDICATION)
+    except (OSError, json.JSONDecodeError):
+        return {}
+    scheduler_state = "HOLD_SUPPORT_AND_IDENTIFICATION"
+    if D2_SCHEDULER.exists():
+        try:
+            scheduler = _load_json(D2_SCHEDULER)
+            match = next((entry for entry in scheduler.get("entries") or [] if entry.get("paper_id") == paper_id), {})
+            scheduler_state = str(match.get("scheduler_state") or scheduler_state)
+        except (OSError, json.JSONDecodeError):
+            pass
+    r4 = adjudication.get("r4_primary_result") or {}
+    power = adjudication.get("power_audit") or {}
+    ident = adjudication.get("identification_audit") or {}
+    confirm = adjudication.get("independent_confirmation_support") or {}
+    decision = adjudication.get("scientific_decision") or {}
+    return {
+        "scheduler_state": scheduler_state,
+        "scientific_decision": str(decision.get("C4") or ""),
+        "primary_result": {
+            "success_minus_failure": r4.get("mean_success_minus_failure_terminal_rate"),
+            "effect_floor": r4.get("support_effect_floor"),
+            "permutation_p_success_greater": r4.get("permutation_p_success_greater"),
+            "p_threshold": r4.get("p_threshold"),
+            "support_gate_pass": r4.get("support_gate_pass") is True,
+            "counterevidence_gate_pass": r4.get("counterevidence_gate_pass") is True,
+            "verdict": str(r4.get("verdict") or ""),
+        },
+        "power": {
+            "four_pair_power_range": list(power.get("approx_power_at_four_pairs_range") or []),
+            "independent_pairs_for_80pct_power_range": list(power.get("approx_independent_pairs_for_80pct_power_range") or []),
+        },
+        "identification": {
+            "primary_pairs": int(ident.get("primary_pairs") or 0),
+            "original_verifier_strict_pass": int(ident.get("original_verifier_strict_pass") or 0),
+            "deepseek_strict_pass": int(ident.get("deepseek_strict_pass") or 0),
+            "kimi_strict_pass": int(ident.get("kimi_strict_pass") or 0),
+            "three_reviewer_unanimous_strict_pass": int(ident.get("three_reviewer_unanimous_strict_pass") or 0),
+            "minimum_embedding_cosine": ident.get("minimum_primary_embedding_cosine"),
+        },
+        "independent_confirmation": {
+            "fresh_same_release_qualified_tasks": int(confirm.get("fresh_qualified_task_count") or 0),
+            "same_release_confirmation_available": confirm.get("same_release_confirmation_available") is True,
+        },
+        "reopen_conditions": list(adjudication.get("reopen_conditions") or []),
+        "forbidden_repairs": list(adjudication.get("forbidden_repairs") or []),
+    }
+
+
+def _load_json(path: Path) -> dict[str, Any]:
+    loaded = json.loads(path.read_text(encoding="utf-8"))
+    return loaded if isinstance(loaded, dict) else {}
+
+
+def paper_preparation(row: dict[str, Any], artifact_root: Path | None) -> dict[str, Any]:
     receipt = event_payload(row, "paper-preparation")
-    if not receipt:
+    if not receipt and artifact_root is not None:
         p = artifact_root / str(row.get("paper_id") or "") / "paper-preparation-receipt.json"
         if p.exists():
             try:
@@ -68,7 +135,7 @@ def paper_preparation(row: dict[str, Any], artifact_root: Path) -> dict[str, Any
     }
 
 
-def project_paper(path: Path, artifact_root: Path) -> dict[str, Any]:
+def project_paper(path: Path, artifact_root: Path | None) -> dict[str, Any]:
     row = json.loads(path.read_text(encoding="utf-8"))
     contract = row.get("contract") or {}
     summary = row.get("summary") or {}
@@ -114,6 +181,7 @@ def project_paper(path: Path, artifact_root: Path) -> dict[str, Any]:
             "submission_readiness": readiness.get("submission_ready") is True,
         },
         "paper_preparation": preparation,
+        "targeted_repair_boundary": targeted_repair_boundary(paper_id) if state == "TARGETED_REPAIR" else {},
         "ledger_summary": {
             "mock_reviews": int(summary.get("mock_reviews") or 0),
             "claim_audit_receipts": int(summary.get("claim_audit_receipts") or 0),
@@ -128,7 +196,7 @@ def project_paper(path: Path, artifact_root: Path) -> dict[str, Any]:
     }
 
 
-def build(ledger_root: Path, artifact_root: Path) -> dict[str, Any]:
+def build(ledger_root: Path, artifact_root: Path | None = None) -> dict[str, Any]:
     papers = [project_paper(path, artifact_root) for path in sorted(ledger_root.glob("*.json"))]
     order = {"SUBMISSION_READY": 0, "PREBUTTAL": 1, "PDF_QA": 2, "CLAIM_AUDIT": 3, "TARGETED_REPAIR": 4, "MOCK_PC": 5, "MANUSCRIPT": 6, "PAPER_DESIGN": 7, "PAPER_EVIDENCE": 8}
     papers.sort(key=lambda p: (order.get(p["current_state"], 99), p["paper_id"]))
@@ -141,9 +209,9 @@ def build(ledger_root: Path, artifact_root: Path) -> dict[str, Any]:
         "human_submission_signoff_pending": sum(p["current_state"] == "SUBMISSION_READY" for p in papers),
     }
     payload = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "canonical_ledger_root": str(ledger_root),
+        "source": "canonical_paper_acceptance_ledger",
         "summary": summary,
         "papers": papers,
         "authority": {"scientific": False, "experiment": False, "gpu": False, "submission": False},
@@ -154,11 +222,13 @@ def build(ledger_root: Path, artifact_root: Path) -> dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--ledger-root", type=Path, default=DEFAULT_LEDGER_ROOT)
-    parser.add_argument("--artifact-root", type=Path, default=DEFAULT_ARTIFACT_ROOT)
+    parser.add_argument("--ledger-root", type=Path, default=DEFAULT_LEDGER_ROOT, help="Canonical Paper Acceptance ledger root; may also be supplied via PAPER_ACCEPTANCE_ROOT.")
+    parser.add_argument("--artifact-root", type=Path, default=DEFAULT_ARTIFACT_ROOT, help="Optional paper-preparation artifact root; may also be supplied via PAPER_ACCEPTANCE_ARTIFACT_ROOT.")
     parser.add_argument("--json-output", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--js-output", type=Path, default=DEFAULT_JS)
     args = parser.parse_args()
+    if args.ledger_root is None:
+        parser.error("canonical ledger root is required via --ledger-root or PAPER_ACCEPTANCE_ROOT")
     state = build(args.ledger_root, args.artifact_root)
     args.json_output.parent.mkdir(parents=True, exist_ok=True)
     args.json_output.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
