@@ -27,7 +27,7 @@ _STAGE_PRIORITIES: Final[dict[str, tuple[str, ...]]] = {
     "evidence_recompile": ("kimi-k3", "glm-5.3", "minimax-m3", "deepseek-v4-pro"),
     "evidence_review": ("deepseek-v4-pro", "minimax-m3", "kimi-k3", "glm-5.3"),
     "relation_mining": ("kimi-k3", "glm-5.3", "minimax-m3", "deepseek-v4-pro"),
-    "relation_lane_review": ("deepseek-v4-pro", "kimi-k3", "glm-5.3", "minimax-m3"),
+    "relation_lane_review": ("glm-5.3", "minimax-m3", "deepseek-v4-pro", "kimi-k3"),
     "relation_reduction_review": ("deepseek-v4-pro", "minimax-m3", "kimi-k3", "glm-5.3"),
     "paper_design": ("kimi-k3", "deepseek-v4-pro", "glm-5.3", "minimax-m3"),
     "method_synthesis": ("kimi-k3", "deepseek-v4-pro", "glm-5.3", "minimax-m3"),
