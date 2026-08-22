@@ -33,7 +33,7 @@ EXPECTATIONS = {
     "research-directions": (3, 4, 1, 0),
     "paper-ideas": (0, 3, 7, 0),
     "experiments": (3, 4, 3, 0),
-    "selected-paper": (4, 5, 22, 0),
+    "selected-paper": (4, 5, 27, 0),
     "bibliography": (6, 7, 8, 0),
 }
 

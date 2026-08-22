@@ -55,7 +55,7 @@ REQUIRED_STATIC = [
     "agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg",
     "agent-self-evolution-history-en.svg", "agent-self-evolution-history-zh.svg",
     "portfolio-data.js", "direction-guide-data.js", "direction-literature-data.js", "page-architecture-data.js", "idea-explanations.js", "idea-comparisons.js",
-    "paper-analysis-data.js", "top-paper-analysis-data.js", "published-literature-data.js", "citation-ranking-data.js", "paper-novelty-audit-data.js",
+    "paper-analysis-data.js", "top-paper-analysis-data.js", "published-literature-data.js", "citation-ranking-data.js", "paper-novelty-audit-data.js", "paper-external-review-data.js",
     "literature-idea-mining-data-1.js", "literature-idea-mining-data-2.js", "literature-idea-mining-data-3.js", "literature-idea-mining-data.json",
     "history-figure-data.js", "catalog_audit.py", "build_citation_cache.py", "scripts/build_literature_idea_mining_input.py",
     "browser_smoke_test.py", "hierarchy_smoke_test.py", "CHANGELOG.md",
@@ -154,16 +154,16 @@ def main() -> None:
     temporal_context = d2_temporal.get("submission_readiness_context") or {}
     temporal_evidence = d2_temporal.get("source_native_evidence") or {}
     temporal_review = (d2_temporal.get("latest_mock_review") or {}).get("summary") or {}
-    if d2_temporal.get("paper_stage") != "SUBMISSION_READY" or d2_temporal.get("submission_ready") is not True or d2_temporal.get("gate_clean_submission_ready") is not True or d2_temporal.get("immediate_submission_hold") is not False or d2_temporal.get("source_kind") != "paper-first-discovery-candidate" or d2_temporal.get("source_research_item") is not None or d2_temporal.get("source_candidates") != ["D2-C06"] or temporal_prep.get("pass") is not True or (temporal_prep.get("passed_gates"), temporal_prep.get("required_gates")) != (8, 8) or temporal_context.get("recommended_immediate_submission") != "READY_FOR_HUMAN_SUBMISSION" or temporal_context.get("support_blocker") != "" or (temporal_evidence.get("runtime_valid_rows"), temporal_evidence.get("distinct_endpoints"), temporal_evidence.get("institutional_systems")) != (1326, 35, 3) or temporal_review.get("scores") != [8, 8, 7] or temporal_review.get("decision_critical_blockers") != 0:
-        fail(f"Temporal Skill D2 PaperState must project the r5 gate-clean source-native closure while preserving exact TimeSage replication debt: {d2_temporal}")
+    if d2_temporal.get("paper_stage") != "SUBMISSION_READY" or d2_temporal.get("submission_ready") is not True or d2_temporal.get("gate_clean_submission_ready") is not False or d2_temporal.get("immediate_submission_hold") is not True or (d2_temporal.get("primary_next_action") or {}).get("action_class") != "PAPER_REPAIR_REQUIRED" or d2_temporal.get("source_kind") != "paper-first-discovery-candidate" or d2_temporal.get("source_research_item") is not None or d2_temporal.get("source_candidates") != ["D2-C06"] or temporal_prep.get("pass") is not False or (temporal_prep.get("passed_gates"), temporal_prep.get("required_gates")) != (5, 8) or temporal_context.get("recommended_immediate_submission") != "READY_FOR_HUMAN_SUBMISSION" or temporal_context.get("support_blocker") != "" or (temporal_evidence.get("runtime_valid_rows"), temporal_evidence.get("distinct_endpoints"), temporal_evidence.get("institutional_systems")) != (1326, 35, 3) or temporal_review.get("scores") != [8, 8, 7] or temporal_review.get("decision_critical_blockers") != 0:
+        fail(f"Temporal Skill D2 PaperState must preserve historical SUBMISSION_READY while exposing the latest 5/8 Paper Preparation repair hold and source-native evidence: {d2_temporal}")
     if d2_proxy.get("paper_stage") != "SUBMISSION_READY" or d2_proxy.get("submission_ready") is not True or d2_proxy.get("gate_clean_submission_ready") is not True or (d2_proxy.get("latest_paper_preparation") or {}).get("pass") is not True or d2_proxy.get("source_kind") != "paper-first-discovery-candidate":
         fail(f"Proxy Reward D2 PaperState must remain ledger-ready and latest-gate-clean with paper-first provenance: {d2_proxy}")
     if d2_failure.get("paper_stage") != "SUBMISSION_READY" or d2_failure.get("submission_ready") is not True or d2_failure.get("gate_clean_submission_ready") is not True or (d2_failure.get("latest_paper_preparation") or {}).get("pass") is not True or d2_failure.get("active_unrefuted_claims") != 2 or d2_failure.get("source_kind") != "paper-first-discovery-candidate" or (d2_failure.get("acceptance_authority") or {}).get("submission") is not False:
         fail(f"Failure-Memory D2 PaperState must match its canonical SUBMISSION_READY ledger while retaining active-unrefuted claims and zero submission authority: {d2_failure}")
     registry_summary = paper_registry.get("summary") or {}
     expected_stage_counts = dict(sorted(__import__("collections").Counter(row.get("paper_stage") for row in papers).items()))
-    if registry_summary.get("papers") != len(papers) or registry_summary.get("submission_ready") != 5 or registry_summary.get("gate_clean_submission_ready") != 5 or registry_summary.get("paper_preparation_failed") != 0 or registry_summary.get("immediate_submission_holds") != 0 or registry_summary.get("by_stage") != expected_stage_counts or registry_summary.get("scientific_holds") != 0:
-        fail(f"PaperRegistry canonical five ledger-ready / five gate-clean / zero-hold summary is stale: {registry_summary}")
+    if registry_summary.get("papers") != len(papers) or registry_summary.get("submission_ready") != 5 or registry_summary.get("gate_clean_submission_ready") != 4 or registry_summary.get("paper_preparation_failed") != 1 or registry_summary.get("immediate_submission_holds") != 1 or registry_summary.get("internal_action_required") != 1 or registry_summary.get("no_internal_action") != 4 or registry_summary.get("by_stage") != expected_stage_counts or registry_summary.get("scientific_holds") != 0:
+        fail(f"PaperRegistry must preserve five historical ledger-ready papers while exposing the latest four gate-clean / one repair-hold boundary: {registry_summary}")
     timeline_summary = research_timeline.get("summary") or {}
     timeline_policy = research_timeline.get("projection_policy") or {}
     timeline_events = research_timeline.get("events") or []
@@ -337,6 +337,8 @@ def main() -> None:
         fail("selected-paper must load the unified current-paper renderer")
     if "paper-novelty-audit-data.js" not in selected_html or selected_scripts_list.index("paper-novelty-audit-data.js") > selected_scripts_list.index("current-research-status-view.js"):
         fail("selected-paper must load the advisor-facing novelty audit before the current-paper renderer")
+    if "paper-external-review-data.js" not in selected_html or selected_scripts_list.index("paper-external-review-data.js") > selected_scripts_list.index("current-research-status-view.js"):
+        fail("selected-paper must load the external-review repair overlay before the current-paper renderer")
     novelty_source = (ROOT / "paper-novelty-audit-data.js").read_text(encoding="utf-8")
     novelty_ids = ("STRI", "AGENT-SAFETY-R9", "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE", "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK", "D2-PAPER-FAILURE-MEMORY-PROVENANCE")
     if not all(f'\"{paper_id}\"' in novelty_source for paper_id in novelty_ids) or "scientific_authority:false" not in novelty_source or "cannot_change_paper_state:true" not in novelty_source:
@@ -344,9 +346,20 @@ def main() -> None:
     for marker in ("Demystifying Agent Skills", "Remembering More, Risking More", "Memory Reward Inflation", "Not All Skills Help", "Memory Provenance Laundering"):
         if marker not in novelty_source:
             fail(f"paper novelty audit is missing nearest-work evidence: {marker}")
+    external_review_source = (ROOT / "paper-external-review-data.js").read_text(encoding="utf-8")
+    if not all(f'\"{paper_id}\"' in external_review_source for paper_id in novelty_ids) or "read_only_external_review_overlay:true" not in external_review_source or "cannot_change_paper_state:true" not in external_review_source or "score_is_not_official_iclr_score:true" not in external_review_source:
+        fail("external paper review overlay must cover all five PaperStates and remain read-only / non-official")
+    for marker in ("5.8", "6.5", "6.7", "5.6", "Weak Accept", "Weak Reject", "Lean Accept", "Borderline Reject"):
+        if marker not in external_review_source:
+            fail(f"external paper review overlay is missing score/recommendation evidence: {marker}")
+    for secret_marker in ("598666122", "rrPkIBax5D", "QUnnU4wFKS", "DqW1VNWgFx", "_Q3_zdvJNr", "e2EhqrGLn2"):
+        if secret_marker in external_review_source or secret_marker in selected_html:
+            fail("public external-review overlay leaked a private email or review token")
     current_view_source = (ROOT / "current-research-status-view.js").read_text(encoding="utf-8")
     if "paper-novelty-portfolio" not in current_view_source or "paper-novelty-detail" not in current_view_source or "Decision needed" not in current_view_source:
         fail("selected-paper must render both portfolio-level and per-paper novelty decisions")
+    if "paper-external-review-portfolio" not in current_view_source or "paper-external-review-detail" not in current_view_source or "targeted repair plan" not in current_view_source.lower():
+        fail("selected-paper must render portfolio-level and per-paper external review / repair plans")
 
     stale_markers = (
         "Selected ICLR Paper Workspace", "选中 ICLR 论文工作区",
