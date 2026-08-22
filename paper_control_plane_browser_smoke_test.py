@@ -58,6 +58,12 @@ def main() -> None:
             actions: Object.fromEntries([...document.querySelectorAll('.paper-registry-card')].map(x => [x.dataset.paperId || '', x.dataset.nextAction || ''])),
             noveltyPortfolio: document.querySelectorAll('#paper-novelty-portfolio').length,
             noveltyDetails: document.querySelectorAll('.paper-novelty-detail').length,
+            readerPortfolio: document.querySelectorAll('#paper-reader-portfolio').length,
+            readerBriefs: document.querySelectorAll('.paper-reader-brief').length,
+            readerEvidenceCards: document.querySelectorAll('.paper-reader-evidence-card').length,
+            readerBriefText: Object.fromEntries([...document.querySelectorAll('.paper-detail-section[data-paper-toc-root]')].map(section => [section.id || '', section.querySelector('.paper-reader-brief')?.textContent || ''])),
+            auditFolds: document.querySelectorAll('.paper-reader-audit-fold').length,
+            openAuditFolds: document.querySelectorAll('.paper-reader-audit-fold[open]').length,
             acceptanceActionTexts: [...document.querySelectorAll('.paper-acceptance-workflow .current-status-rule')].map(x => (x.textContent || '').trim()),
             temporal: papers.find(x => x.paper_id === 'D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK') || {},
             failureMemory: papers.find(x => x.paper_id === 'D2-PAPER-FAILURE-MEMORY-PROVENANCE') || {},
@@ -70,7 +76,13 @@ def main() -> None:
         require(summary.get("gate_clean_submission_ready") == 5, f"gate-clean count drifted: {summary}")
         require(summary.get("internal_action_required") == 0 and summary.get("no_internal_action") == 5, f"internal-action split drifted: {summary}")
         require(summary.get("by_internal_action") == {"NO_INTERNAL_ACTION": 5}, f"internal-action classes drifted: {summary}")
-        require(selected["noveltyPortfolio"] == 1 and selected["noveltyDetails"] == 5, "advisor novelty audit must remain visible for all five papers")
+        require(selected["noveltyPortfolio"] == 1 and selected["noveltyDetails"] == 5, "advisor novelty audit must remain preserved for all five papers")
+        require(selected["readerPortfolio"] == 1 and selected["readerBriefs"] == 5 and selected["readerEvidenceCards"] >= 15, f"reader-first paper layer is incomplete: {selected}")
+        briefs=selected["readerBriefText"]
+        require(all(marker in briefs.get("paper-d2-paper-temporal-skill-causal-bottleneck","") for marker in ("100% vs 70% / 47.5%","p=0.0156","cross-domain grounding")), f"Temporal reader brief lost its load-bearing effect or negative boundary: {briefs.get('paper-d2-paper-temporal-skill-causal-bottleneck','')}")
+        require(all(marker in briefs.get("paper-d2-paper-failure-memory-provenance","") for marker in ("0.931 vs 0.647","p=.0785","p=.0792","causal sign")), f"Failure-Memory reader brief must expose association and unresolved causal sign: {briefs.get('paper-d2-paper-failure-memory-provenance','')}")
+        require(all(marker in briefs.get("paper-d2-paper-proxy-reward-memory-variance","") for marker in ("4/4","0.735","downstream")), f"Reward-Memory reader brief must distinguish the write channel from unproven downstream effects: {briefs.get('paper-d2-paper-proxy-reward-memory-variance','')}")
+        require(selected["auditFolds"] >= 7 and selected["openAuditFolds"] == 0, f"machine audit layers must be present but collapsed by default: {selected}")
         require(len(selected["acceptanceActionTexts"]) == 5 and all("NO_INTERNAL_ACTION" in text for text in selected["acceptanceActionTexts"]), f"Paper Acceptance detail panels must render canonical NO_INTERNAL_ACTION after r5 closure: {selected['acceptanceActionTexts']}")
         require(selected["actions"].get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK") == "NO_INTERNAL_ACTION", f"Temporal-Skill action drifted: {selected['actions']}")
         require(selected["actions"].get("D2-PAPER-FAILURE-MEMORY-PROVENANCE") == "NO_INTERNAL_ACTION", f"Failure-Memory action drifted: {selected['actions']}")
