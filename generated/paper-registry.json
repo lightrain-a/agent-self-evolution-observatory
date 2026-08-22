@@ -1,7 +1,7 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-08-22T17:08:24+00:00",
-  "source_revision": "5b8303e093c69a45cca48855172cd4e1a60521e5",
+  "generated_at": "2026-08-22T17:23:12+00:00",
+  "source_revision": "646b8e3736f9536e4932696e640809239c570e41",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -271,16 +271,16 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 17,
+        "events": 25,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
         "mock_reviews": 2,
         "claim_audit_receipts": 1,
-        "manuscript_ci_receipts": 1,
+        "manuscript_ci_receipts": 2,
         "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 1,
-        "submission_readiness_receipts": 1
+        "submission_readiness_receipts": 1,
+        "contract_revisions": 0
       },
       "latest_story_search": {
         "pass": true,
@@ -299,19 +299,30 @@
         "ARTIFACT_AWARE": "ad986f64fae97ab9612e9d144f7e52f536545cf1998ef1999755157b72f159c7"
       },
       "latest_mock_review": {
-        "mode": "ARTIFACT_AWARE",
-        "review_sha256": "ad986f64fae97ab9612e9d144f7e52f536545cf1998ef1999755157b72f159c7",
+        "mode": "FINAL_MULTI_REVIEW",
+        "review_sha256": "73808cf1fc538392be17734b6dd1afc50469bbe615599a82cfa38d8ae5e2d004",
         "summary": {
-          "objections": 5,
-          "decision_critical": 5,
-          "targeted_experiment_proposals": 0,
-          "claim_expansion_requests_preserved_as_limitations": 1
+          "scores": [
+            7,
+            8,
+            7
+          ],
+          "recommendations": [
+            "weak_accept",
+            "accept",
+            "weak_accept"
+          ],
+          "mean_score": 7.333333333333333,
+          "minimum_score": 7,
+          "decision_critical_blockers": 0
         }
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "bb9e0397f72e31bddfb36948d83af5c33a09e142d71e5932b72005c011ee430f",
-        "blockers": []
+        "claim_audit_sha256": "3150e82177748aac53585a054385c751c8bfc42d9c37b9ed668f3b842a5c0690",
+        "blockers": [],
+        "checks": 20,
+        "passed": 20
       },
       "latest_manuscript_ci": {
         "pass": true,
@@ -322,40 +333,50 @@
       },
       "latest_prebuttal": {
         "pass": true,
-        "decision_critical": 10,
-        "blockers": []
+        "decision_critical": 5,
+        "blockers": [],
+        "unresolved_decision_critical": 0
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0",
-        "receipt_sha256": "f7ede3c2ec09d7774d2e480d01888b79dae166a9a9c9a46965b4fa50a4f43acf",
+        "protocol_version": "1.0+r2",
+        "receipt_sha256": "eca030a59b30fac4fcf0fb5e9a3e170b143cb6163ec1a7072163db0715c94cdd",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
-          "hierarchical-rubric": true,
-          "verification-refinement": true,
-          "citation-integrity": true,
-          "visual-story": true,
-          "reproducibility-bundle": true,
           "agent-native-artifact": true,
+          "citation-integrity": true,
+          "hierarchical-rubric": true,
           "reader-simulation": true,
-          "submission-package": true
+          "reproducibility-bundle": true,
+          "submission-package": true,
+          "verification-refinement": true,
+          "visual-story": true
         },
         "blockers": []
       },
       "submission_readiness_context": {
-        "artifact_submission_ready": false,
-        "recommended_immediate_submission": "",
-        "scientific_status": "",
+        "artifact_submission_ready": true,
+        "recommended_immediate_submission": "READY_FOR_HUMAN_SUBMISSION",
+        "scientific_status": "READY",
         "support_blocker": "",
-        "external_human_submission_authority_required_for_SUBMITTED": false,
+        "external_human_submission_authority_required_for_SUBMITTED": true,
         "c3_c4_evidence_state": "",
-        "post_repair_mock_pc_recommendations": [],
-        "post_repair_mock_pc_scores": []
+        "exact_timesage_replication_debt": "",
+        "post_repair_mock_pc_recommendations": [
+          "weak_accept",
+          "accept",
+          "weak_accept"
+        ],
+        "post_repair_mock_pc_scores": [
+          7,
+          8,
+          7
+        ]
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "a1320fe924ef06a5f4d34a53f8fe4d5c50242fcc032c50fe15dcc0745f24da5a",
+        "receipt_sha256": "7cc3c6be104b6adb5dc9a1d64b39872d5002ee6b995c7f27b12f8fa1804fdc94",
         "blockers": []
       },
       "latest_transition": {

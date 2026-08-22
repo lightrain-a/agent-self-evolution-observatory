@@ -33,7 +33,7 @@ EXPECTATIONS = {
     "research-directions": (3, 4, 1, 0),
     "paper-ideas": (0, 3, 7, 0),
     "experiments": (3, 4, 3, 0),
-    "selected-paper": (4, 5, 27, 0),
+    "selected-paper": (4, 5, 32, 0),
     "bibliography": (6, 7, 8, 0),
 }
 
@@ -212,6 +212,10 @@ def main() -> None:
                 expected_toc = ["当前需要看什么","A–G 研究组合","更新可靠性与回归控制","记忆、经验与持久知识","评价器、奖励与自纠正","任务生成与课程","工作流与结构演化","世界模型与具身适应","Agent 自进化安全与未来风险","审计与历史"]
                 if portfolio.get("console") != 1 or portfolio.get("currentCards") != 6 or portfolio.get("categories") != 7 or portfolio.get("currentLanes") != 7 or portfolio.get("concludedOpen") != 0 or portfolio.get("assetsOpen") != 0 or portfolio.get("mementoOpen") or portfolio.get("safetyOpen") or portfolio.get("auditOpen") or portfolio.get("toc") != expected_toc or portfolio.get("scrollHeight",99999) > 7500 or portfolio.get("overflow"):
                     raise AssertionError(f"paper-ideas: decision-first portfolio contract failed: {portfolio}")
+            if page == "selected-paper":
+                paper_toc = execute(session_id, """const hrefs=[...document.querySelectorAll('#page-toc .toc-level-3 > a')].map(a=>a.getAttribute('href')||''); return {count:hrefs.length,unique:new Set(hrefs).size,argumentFirst:hrefs.filter(x=>x.startsWith('#paper-')&&x.endsWith('-section-1')).length,acceptance:hrefs.filter(x=>x.endsWith('-paper-acceptance')||x==='#stri-paper-acceptance'||x==='#agent-safety-paper-acceptance').length};""")
+                if paper_toc != {"count":32,"unique":32,"argumentFirst":5,"acceptance":5}:
+                    raise AssertionError(f"selected-paper: argument-first PaperRegistry TOC contract failed: {paper_toc}")
             if page == "bibliography":
                 paper_details = execute(session_id, """const rows=[...document.querySelectorAll('.reference-card .paper-analysis')]; const first=rows[0]||null; const before=rows.filter(x=>x.open).length; if(first) first.querySelector('summary')?.click(); return {total:rows.length,before,firstOpened:!!first?.open};""")
                 if paper_details.get("total") != 80 or paper_details.get("before") != 0 or not paper_details.get("firstOpened"):

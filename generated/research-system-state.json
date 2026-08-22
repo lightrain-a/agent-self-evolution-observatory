@@ -51771,15 +51771,13 @@
     },
     "scientific_authority": false,
     "ledger_index": {
-      "schema_version": "1.0-portable-registry",
+      "schema_version": "1.0",
       "policy": {
         "source_ledgers_are_append_only": true,
         "public_projection_excludes_raw_reviewer_prose": true,
         "public_projection_excludes_filesystem_paths_and_actors": true,
         "invalid_ledgers_are_visible_and_never_silently_dropped": true,
         "ledger_projection_has_zero_authority": true,
-        "portable_registry_fallback_requires_committed_ledger_projection": true,
-        "empty_machine_local_ledger_does_not_erase_portable_state": true,
         "submission_ready_is_historical_receipt_count": true,
         "gate_clean_submission_ready_is_latest_effective_internal_readiness": true,
         "primary_next_action_is_internal_only_and_zero_authority": true,
@@ -51803,361 +51801,6 @@
         }
       },
       "entries": [
-        {
-          "paper_id": "STRI-ICLR2027",
-          "candidate_id": "skill-taxonomy-representation-invariance",
-          "title": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
-          "status": "READY_NARROW_ICLR",
-          "submission_status": "SUBMISSION_READY",
-          "claims": {
-            "N1": {
-              "status": "SUPPORTED",
-              "object": "Released skill controllers can assign different semantic control solely because equivalent implementation content is represented by different package identities; in one bounded frozen AutoSkill substrate, that representation change propagates to executed behavior.",
-              "forbidden": "bounded AutoSkill P19 behavior consequence only; no task utility, longitudinal regret, or general AutoSkill safety claim"
-            },
-            "N2": {
-              "status": "SUPPORTED",
-              "object": "Exact-refinement STRI is equivalent to quotient factorization of semantic-class mass; R*(A;q) exactly decides target realizability by package-first mass, while a semantic-first row-stochastic implementation factorization realizes any covered target after changing the action basis.",
-              "forbidden": "no LP computational novelty claim"
-            },
-            "N3": {
-              "status": "SUPPORTED",
-              "object": "STRI has two separable boundaries: identity-local normalization violates exact-refinement invariance, while after quotienting the neutral residual is not determined by overlap count alone and is exactly characterized by target realizability in the package support cone.",
-              "forbidden": "do not generalize equalizability beyond audited support matrices"
-            }
-          },
-          "stage": "PASS_MANUSCRIPT_EVIDENCE",
-          "track": "ASSET_FIRST_PAPER_READY",
-          "claims_supported": 3,
-          "claims_total": 3,
-          "qa_passed": 60,
-          "qa_total": 60,
-          "official_qa_passed": 60,
-          "official_qa_total": 60,
-          "main_text_pages": 9,
-          "main_text_page_limit": 9,
-          "supplement_ready": true,
-          "supplement_unit_tests": "29/29 PASS",
-          "human_signoff_pending": true,
-          "new_gpu_evidence_required": false,
-          "paper_quality_v2_passed": true,
-          "paper_quality_content_addressed_completion": true,
-          "paper_quality_content_addressed_files": 29,
-          "paper_quality_evidence_debt": 0,
-          "paper_quality_missing_ids": [],
-          "paper_quality_schema_version": "2.1",
-          "paper_quality_visualizations": 4,
-          "paper_quality_main_visualizations": 4,
-          "paper_quality_main_visual_roles": [
-            "ablation",
-            "boundary",
-            "failure",
-            "main_comparison",
-            "mechanism",
-            "overview",
-            "sensitivity",
-            "traceability",
-            "uncertainty"
-          ],
-          "paper_visual_figure_qa": "PASS",
-          "paper_visual_new_result_figure": "stri-ablation-robustness",
-          "paper_quality_interpretation": "Manuscript QA and venue-format QA remain valid mechanical checks, but they cannot establish top-tier scientific completeness. The CPU evidence suite supplies taxonomy perturbation, ruling-out, failure, sensitivity, and finite-snapshot uncertainty analyses; Paper Quality v2.1 passes only when the manuscript itself consumes those artifacts as explicit baseline/ablation/failure/sensitivity evidence and binds reviewer-question-driven visualizations to versioned data, scripts, figures, and captions.",
-          "cheap_first": "Prefer CPU/released-artifact taxonomy perturbation, reduction ablations, uncertainty, and sensitivity before reopening any dynamic GPU lane.",
-          "scientific_authority": false,
-          "canonical_problem_gate_added": 0,
-          "downloads": {
-            "tex": "downloads/STRI-ICLR2027.tex",
-            "pdf": "downloads/STRI-ICLR2027.pdf",
-            "source_zip": "downloads/STRI-ICLR2027-source.zip"
-          },
-          "deadline_status": "AUTHOR_SUBMISSION_SOURCES_ALIGNED",
-          "official_source_conflict": false,
-          "operational_safe_abstract_deadline_aoe": "2026-09-18",
-          "operational_safe_full_paper_deadline_aoe": "2026-09-25",
-          "recorded_author_guide_abstract_deadline_aoe": "2026-09-18",
-          "recorded_author_guide_full_paper_deadline_aoe": "2026-09-25",
-          "author_membership_freezes_at_abstract_deadline": true,
-          "title_freezes_at_full_paper_deadline": true,
-          "prior_mechanical_submission_state": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
-          "next_action": "Human authors review and accept responsibility for the final manuscript and AI-use disclosure, freeze the complete author list before the ICLR abstract deadline, complete the OpenReview signoff checklist, then submit the genuine abstract by 2026-09-18 AoE and the paper plus anonymous supplement by 2026-09-25 AoE. Do not reopen dynamic P0 or broaden N1-N3 unless independently qualified new evidence appears.",
-          "claim_boundary": {
-            "dynamic_p0": "Qwen3 qualification failure is excluded from narrow evidence; the separate SkillRL P0-E fixed-policy bridge is a qualified C4 realization STOP only",
-            "skillrl_p0e": {
-              "experimental_realization": "STOP_FIXED_POLICY_DYNAMIC_BRIDGE",
-              "principle_disposition": "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED",
-              "persistent_principle_dead_end_certified": false,
-              "stage2_locked": true,
-              "new_gpu_authorized": false,
-              "broader_n1_n2_n3_unchanged": true
-            },
-            "autoskill_p19": {
-              "decision": "GO_STAGE3_DYNAMIC_BEHAVIORAL_PROPAGATION",
-              "groups": {
-                "A_original": {
-                  "valid_runs": 6,
-                  "total_runs": 6,
-                  "destructive_signature_positive": 6
-                },
-                "B_split4": {
-                  "valid_runs": 6,
-                  "total_runs": 6,
-                  "destructive_signature_positive": 0
-                },
-                "C_id_placebo": {
-                  "valid_runs": 3,
-                  "total_runs": 3,
-                  "destructive_signature_positive": 3
-                },
-                "D_quotient_control": {
-                  "valid_runs": 3,
-                  "total_runs": 3,
-                  "destructive_signature_positive": 3
-                }
-              },
-              "fisher_exact_p": 0.0010822510822510823,
-              "claim_boundary": "Single archived P19 behavioral-harm substrate. Supports a representation-to-retrieval-to-executed-behavior consequence under the frozen AutoSkill top-k operationalization; does not establish task-utility effects, general AutoSkill safety, or automatic full-paper authority.",
-              "mediator_isolation": {
-                "decision": "GO_MEDIATOR_ISOLATION_P19",
-                "groups": {
-                  "E_post_addback": {
-                    "valid_runs": 3,
-                    "positive": 3
-                  },
-                  "F_cleanup_control": {
-                    "valid_runs": 3,
-                    "positive": 0
-                  }
-                },
-                "statistics": {
-                  "alternative": "greater",
-                  "exact_fraction": "1/20",
-                  "exact_decimal": 0.05,
-                  "scipy_float_audit": 0.05000000000000001,
-                  "frozen_gate_p_le": "1/20",
-                  "gate_pass_exact": true
-                },
-                "all_executions_valid": true,
-                "judge_calls": 0,
-                "claim_boundary": "Specific mediator attribution on one archived P19 substrate only. This strengthens the representation-to-retrieval-to-executed-behavior chain but does not establish task utility, longitudinal regret, end-to-end AutoSkill behavior, or general AutoSkill safety.",
-                "measurement_repair": {
-                  "stage3_replay_agreement": "18/18",
-                  "sequence_aware_replay_sha256": "1b6c001d2be1441a83d773ac9ca20613547b9cb4b222fd9f6dab8a93fa67f5c8",
-                  "v1_runs_excluded_from_v2_inference": true
-                }
-              },
-              "task_utility_claim_authorized": false,
-              "generalization_claim_authorized": false
-            },
-            "downstream_utility": "AutoSkill P19 supports one bounded executed-behavior consequence; task utility, longitudinal regret, and general AutoSkill safety are not claimed, and the SkillRL endpoint STOP is not a population-level no-effect theorem",
-            "solver_novelty": "STRI-Cert is not claimed as a computationally novel LP solver",
-            "repair_method": "no claim that Support-Quotient Control has been empirically validated"
-          },
-          "post_isolation_review": {
-            "decision": "FREEZE_NARROW_SUBMISSION_NO_FURTHER_EXPERIMENT_SCORE_CHASING",
-            "deepseek_pre_score": 4,
-            "deepseek_post_score": 6,
-            "deepseek_post_recommendation": "borderline",
-            "deepseek_post_submission_advice": "minor_revision",
-            "fatal_flaws": 0,
-            "no_more_experiment_score_chasing": true
-          },
-          "central_question": "Should semantically equivalent skill-package representations change a self-evolution control surface?",
-          "contract_sha256": "30ba1a82ae4547d8e3385f514352da55415b31dcf83b8dabab1f756af34309ad",
-          "scientific_status": "READY",
-          "current_state": "SUBMISSION_READY",
-          "gate_clean_submission_ready": true,
-          "immediate_submission_hold": false,
-          "primary_next_action": {
-            "action_class": "NO_INTERNAL_ACTION",
-            "action": "No additional autonomous research, experiment, or paper-repair action is required by the internal Research OS.",
-            "action_zh": "内部 Research OS 已无新增科研、实验或论文修复动作；保持冻结证据与主张边界即可。",
-            "blocking_on": "",
-            "machine_actionable": false,
-            "scientific_authority": false,
-            "experiment_authority": false,
-            "gpu_authority": false
-          },
-          "review_learning": {
-            "review_receipts": 2,
-            "decision_critical_objections": 10,
-            "category_counts": {
-              "artifact-baseline": 1,
-              "artifact-negative-control": 1,
-              "artifact-provenance": 1,
-              "artifact-qualification": 1,
-              "artifact-scope": 1,
-              "evidence": 1,
-              "mechanism": 1,
-              "novelty": 1,
-              "significance": 1,
-              "technical-scope": 1
-            },
-            "evidence_state_counts": {
-              "existing-evidence": 8,
-              "requires-new-claim": 2
-            },
-            "action_class_counts": {
-              "narrative-repair": 8,
-              "preserve-limitation": 2
-            },
-            "targeted_experiment_proposals": 0,
-            "claim_expansion_requests_preserved_as_limitations": 2,
-            "reviewer_prose_exposed": false,
-            "scientific_authority": false,
-            "experiment_authority": false,
-            "gpu_authority": false
-          },
-          "supported_claims": 3,
-          "active_unrefuted_claims": 0,
-          "unsupported_claims": 3,
-          "limitations": [
-            "The frozen paper claim is primarily a static representation-invariance certificate rather than a downstream utility theorem.",
-            "The Qwen3 dynamic pilot failed its preregistered proposer qualification gate and contributes no dynamic scientific update.",
-            "The qualified SkillRL fixed-task bridge cannot be upgraded into a population-level no-effect conclusion because no equivalence margin or task-cluster power analysis was preregistered."
-          ],
-          "reopen_conditions": [],
-          "summary": {
-            "events": 17,
-            "allowed_transitions": 8,
-            "blocked_transitions": 0,
-            "story_search_receipts": 1,
-            "mock_reviews": 2,
-            "claim_audit_receipts": 1,
-            "manuscript_ci_receipts": 1,
-            "prebuttal_receipts": 1,
-            "paper_preparation_receipts": 1,
-            "submission_readiness_receipts": 1
-          },
-          "latest_story_search": {
-            "pass": true,
-            "selected_story_id": "S1-INVARIANCE-BOUNDARY",
-            "selected_story_title": "Representation invariance as the paper question; support geometry as the exact boundary",
-            "story_search_sha256": "16261d97ee81c948133036eb04908f2cf19c94d2f392d56c5969e59b01e2b6e5",
-            "valid_candidates": 3,
-            "paper_design_memory_query_pack_sha256": "",
-            "paper_design_memory_binding_sha256": "",
-            "paper_design_memory_wiki_sha256": "",
-            "paper_design_memory_selected": 0,
-            "paper_design_review_lessons_selected": 0
-          },
-          "mock_pc_modes": {
-            "BLIND_MANUSCRIPT": "127d9c4ebb0e6563c0de3274df2941dd64df9dd4f1bfc159d0846fcc558fc876",
-            "ARTIFACT_AWARE": "ad986f64fae97ab9612e9d144f7e52f536545cf1998ef1999755157b72f159c7"
-          },
-          "latest_mock_review": {
-            "mode": "ARTIFACT_AWARE",
-            "review_sha256": "ad986f64fae97ab9612e9d144f7e52f536545cf1998ef1999755157b72f159c7",
-            "summary": {
-              "objections": 5,
-              "decision_critical": 5,
-              "targeted_experiment_proposals": 0,
-              "claim_expansion_requests_preserved_as_limitations": 1
-            }
-          },
-          "latest_claim_audit": {
-            "pass": true,
-            "claim_audit_sha256": "bb9e0397f72e31bddfb36948d83af5c33a09e142d71e5932b72005c011ee430f",
-            "blockers": []
-          },
-          "latest_manuscript_ci": {
-            "pass": true,
-            "required": 9,
-            "passed": 9,
-            "missing": [],
-            "failed": []
-          },
-          "latest_prebuttal": {
-            "pass": true,
-            "decision_critical": 10,
-            "blockers": []
-          },
-          "latest_paper_preparation": {
-            "pass": true,
-            "protocol_version": "1.0",
-            "receipt_sha256": "f7ede3c2ec09d7774d2e480d01888b79dae166a9a9c9a46965b4fa50a4f43acf",
-            "required_gates": 8,
-            "passed_gates": 8,
-            "gate_pass": {
-              "hierarchical-rubric": true,
-              "verification-refinement": true,
-              "citation-integrity": true,
-              "visual-story": true,
-              "reproducibility-bundle": true,
-              "agent-native-artifact": true,
-              "reader-simulation": true,
-              "submission-package": true
-            },
-            "blockers": []
-          },
-          "submission_readiness_context": {
-            "artifact_submission_ready": false,
-            "recommended_immediate_submission": "",
-            "scientific_status": "",
-            "support_blocker": "",
-            "external_human_submission_authority_required_for_SUBMITTED": false,
-            "c3_c4_evidence_state": "",
-            "post_repair_mock_pc_recommendations": [],
-            "post_repair_mock_pc_scores": []
-          },
-          "latest_submission_readiness": {
-            "submission_ready": true,
-            "receipt_sha256": "a1320fe924ef06a5f4d34a53f8fe4d5c50242fcc032c50fe15dcc0745f24da5a",
-            "blockers": []
-          },
-          "latest_transition": {
-            "from": "PREBUTTAL",
-            "to": "SUBMISSION_READY",
-            "allowed": true,
-            "blockers": []
-          },
-          "authority": {
-            "scientific": false,
-            "experiment": false,
-            "gpu": false,
-            "submission": false
-          },
-          "acceptance_paper_id": "STRI-ICLR2027",
-          "entity_type": "PaperState",
-          "source_kind": "research-item",
-          "source_research_item": "E-7",
-          "source_research_item_id": "skill-taxonomy-representation-invariance",
-          "source_research_object": "E-7",
-          "source_candidates": [],
-          "paper_stage": "SUBMISSION_READY",
-          "legacy_submission_status": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
-          "submission_ready": true,
-          "experiment_refs": [
-            "STRI-AUTOSKILL-P19",
-            "STRI-P0A",
-            "STRI-P0E"
-          ],
-          "research_authority": {
-            "method": false,
-            "experiment": false,
-            "p0": false,
-            "gpu": false
-          },
-          "acceptance_authority": {
-            "scientific": false,
-            "experiment": false,
-            "gpu": false,
-            "submission": false
-          },
-          "provenance_refs": [
-            {
-              "path": "canonical-paper-acceptance-ledger",
-              "role": "STRI-ICLR2027"
-            },
-            {
-              "path": "generated/current-research-status.json",
-              "role": "legacy_paper_quality_projection"
-            },
-            {
-              "path": "generated/research-items.json",
-              "role": "source_research_item"
-            }
-          ]
-        },
         {
           "paper_id": "AGENT-SAFETY-R9",
           "title": "A Static Safety Pass Is Not a Temporal Certificate: Controlled First-Violation Evidence in a Persistent Web Agent",
@@ -52316,40 +51959,179 @@
             "experiment": false,
             "gpu": false,
             "submission": false
+          }
+        },
+        {
+          "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+          "title": "Failure Memories Are Not Neutral: Causal Provenance Effects in Self-Evolving Agents",
+          "central_question": "Does failure-derived trajectory provenance causally sustain future error when future task difficulty and actionable memory guidance are matched?",
+          "contract_sha256": "582a203818f9f590d601b5ea9d3a3ecdc08acb3e34d3b1d9f190e17a2d1dcc25",
+          "scientific_status": "READY",
+          "current_state": "SUBMISSION_READY",
+          "gate_clean_submission_ready": true,
+          "immediate_submission_hold": false,
+          "primary_next_action": {
+            "action_class": "NO_INTERNAL_ACTION",
+            "action": "No additional autonomous research, experiment, or paper-repair action is required by the internal Research OS.",
+            "action_zh": "内部 Research OS 已无新增科研、实验或论文修复动作；保持冻结证据与主张边界即可。",
+            "blocking_on": "",
+            "machine_actionable": false,
+            "scientific_authority": false,
+            "experiment_authority": false,
+            "gpu_authority": false
           },
-          "acceptance_paper_id": "AGENT-SAFETY-R9",
-          "entity_type": "PaperState",
-          "source_kind": "research-item",
-          "source_research_item": "G-1",
-          "source_research_item_id": "AGENT-SAFETY-R9",
-          "source_research_object": "G-1",
-          "source_candidates": [],
-          "paper_stage": "SUBMISSION_READY",
-          "submission_status": "SUBMISSION_READY",
-          "submission_ready": true,
-          "experiment_refs": [],
-          "research_authority": {
-            "method": false,
-            "experiment": false,
-            "p0": false,
-            "gpu": false
+          "review_learning": {
+            "review_receipts": 6,
+            "decision_critical_objections": 14,
+            "category_counts": {
+              "confound-control": 1,
+              "confound-residual": 1,
+              "design": 1,
+              "design-operationalization": 1,
+              "empirical": 1,
+              "empirical-sufficiency": 2,
+              "empirical-support": 1,
+              "external-validity": 3,
+              "insufficient-empirical-contribution": 1,
+              "measurement": 2,
+              "measurement-validity": 1,
+              "missing-decisive-evidence": 1,
+              "missing-experiments": 1,
+              "novelty-and-incremental-contribution": 1,
+              "novelty-vs-source": 1,
+              "sample-size": 1,
+              "scope-of-claims": 1,
+              "small-sample-robustness": 1
+            },
+            "evidence_state_counts": {
+              "existing-evidence": 8,
+              "missing-decisive-evidence": 12,
+              "uncertain": 2
+            },
+            "action_class_counts": {
+              "human-adjudication": 1,
+              "narrative-repair": 6,
+              "preserve-limitation": 6,
+              "targeted-experiment": 9
+            },
+            "targeted_experiment_proposals": 9,
+            "claim_expansion_requests_preserved_as_limitations": 6,
+            "reviewer_prose_exposed": false,
+            "scientific_authority": false,
+            "experiment_authority": false,
+            "gpu_authority": false
           },
-          "acceptance_authority": {
+          "supported_claims": 3,
+          "active_unrefuted_claims": 2,
+          "unsupported_claims": 2,
+          "limitations": [
+            "The current public financial-agent release provides aggregate provenance counts and transition statistics. The matched provenance swap requires the first-party per-query memory artifacts or a faithful reconstruction of the audited ReasoningBank runs. Those artifacts are announced for release upon publication and are currently experiment debt.",
+            "The reported provenance accuracies are rounded to three decimals. The integer correct counts used in our decomposition are the unique counts consistent with the reported support sizes and rounded accuracies. The transition allocation beyond the ten W$\\rightarrow$W cases is therefore a derived arithmetic decomposition from public aggregate statistics.",
+            "Semantic matching between failure-derived memory and success-derived memory is an experimental design challenge. A pair can preserve procedural content while differing in wording. We therefore require an information-equivalence audit before the swap. Pair construction and verifier agreement remain experiment debt until the first-party memory artifacts are available.",
+            "The causal claim concerns future persistence under matched memory information. The existing audit supports the provenance-conditioned association and identifies task difficulty as a confound. Direct causal effect size remains experiment debt for the swap experiment in Section~\\ref{sec:intervention}.",
+            "The empirical source is a financial AgentDojo setting with ReasoningBank. Replication in web agents and other external-memory architectures remains experiment debt for a broader cross-domain claim."
+          ],
+          "reopen_conditions": [],
+          "summary": {
+            "events": 33,
+            "allowed_transitions": 8,
+            "blocked_transitions": 0,
+            "story_search_receipts": 1,
+            "mock_reviews": 6,
+            "claim_audit_receipts": 1,
+            "manuscript_ci_receipts": 1,
+            "prebuttal_receipts": 1,
+            "paper_preparation_receipts": 1,
+            "submission_readiness_receipts": 1
+          },
+          "latest_story_search": {
+            "pass": true,
+            "selected_story_id": "S1-CURRENT-CHAIN",
+            "selected_story_title": "Current mechanism chain",
+            "story_search_sha256": "e3123c9dfcf670e0fcab11859aaad3e4b302f4fd93b11e5b476e5133468e3702",
+            "valid_candidates": 3,
+            "paper_design_memory_query_pack_sha256": "",
+            "paper_design_memory_binding_sha256": "",
+            "paper_design_memory_wiki_sha256": "",
+            "paper_design_memory_selected": 0,
+            "paper_design_review_lessons_selected": 0
+          },
+          "mock_pc_modes": {
+            "BLIND_MANUSCRIPT": "25e8d2b0bb12e86cfc6dcaa1e9c958b220f00c2f2fe042a5f92dfb4dbb0e5c1f",
+            "ARTIFACT_AWARE": "f22fc74d24ff63d07970b34d2ef8b5da130ff695fc5bcae456d4d0b6fd01e19b"
+          },
+          "latest_mock_review": {
+            "mode": "ARTIFACT_AWARE",
+            "review_sha256": "f22fc74d24ff63d07970b34d2ef8b5da130ff695fc5bcae456d4d0b6fd01e19b",
+            "summary": {
+              "objections": 3,
+              "decision_critical": 3,
+              "targeted_experiment_proposals": 2,
+              "claim_expansion_requests_preserved_as_limitations": 0
+            }
+          },
+          "latest_claim_audit": {
+            "pass": true,
+            "claim_audit_sha256": "c408858760b77679464534e75089444284baa7c026f04b5ba9531151b9a27d28",
+            "blockers": []
+          },
+          "latest_manuscript_ci": {
+            "pass": true,
+            "required": 9,
+            "passed": 9,
+            "missing": [],
+            "failed": []
+          },
+          "latest_prebuttal": {
+            "pass": true,
+            "decision_critical": 6,
+            "blockers": []
+          },
+          "latest_paper_preparation": {
+            "pass": true,
+            "protocol_version": "1.0",
+            "receipt_sha256": "c7700fda1cccec6c585876da3bb124b8fff35967506d4e5878f9730c2464b54a",
+            "required_gates": 8,
+            "passed_gates": 8,
+            "gate_pass": {
+              "hierarchical-rubric": true,
+              "verification-refinement": true,
+              "citation-integrity": true,
+              "visual-story": true,
+              "reproducibility-bundle": true,
+              "agent-native-artifact": true,
+              "reader-simulation": true,
+              "submission-package": true
+            },
+            "blockers": []
+          },
+          "submission_readiness_context": {
+            "artifact_submission_ready": false,
+            "recommended_immediate_submission": "",
+            "scientific_status": "",
+            "support_blocker": "",
+            "external_human_submission_authority_required_for_SUBMITTED": false,
+            "c3_c4_evidence_state": "",
+            "post_repair_mock_pc_recommendations": [],
+            "post_repair_mock_pc_scores": []
+          },
+          "latest_submission_readiness": {
+            "submission_ready": true,
+            "receipt_sha256": "c69c35dfbadff125d551822613053f7752d90b411788ee33edbfce0efdf67712",
+            "blockers": []
+          },
+          "latest_transition": {
+            "from": "PREBUTTAL",
+            "to": "SUBMISSION_READY",
+            "allowed": true,
+            "blockers": []
+          },
+          "authority": {
             "scientific": false,
             "experiment": false,
             "gpu": false,
             "submission": false
-          },
-          "provenance_refs": [
-            {
-              "path": "canonical-paper-acceptance-ledger",
-              "role": "AGENT-SAFETY-R9"
-            },
-            {
-              "path": "generated/research-items.json",
-              "role": "source_research_item"
-            }
-          ]
+          }
         },
         {
           "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
@@ -52536,44 +52318,7 @@
             "experiment": false,
             "gpu": false,
             "submission": false
-          },
-          "acceptance_paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-          "entity_type": "PaperState",
-          "source_kind": "paper-first-discovery-candidate",
-          "source_research_item": null,
-          "source_research_item_id": null,
-          "source_research_object": "D2-PROXY-REWARD-MEMORY-VARIANCE",
-          "source_candidates": [
-            "D2-C02",
-            "D2-C05"
-          ],
-          "paper_stage": "SUBMISSION_READY",
-          "submission_status": "SUBMISSION_READY",
-          "submission_ready": true,
-          "experiment_refs": [],
-          "research_authority": {
-            "method": false,
-            "experiment": false,
-            "p0": false,
-            "gpu": false
-          },
-          "acceptance_authority": {
-            "scientific": false,
-            "experiment": false,
-            "gpu": false,
-            "submission": false
-          },
-          "display_order": 30,
-          "provenance_refs": [
-            {
-              "path": "canonical-paper-acceptance-ledger",
-              "role": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE"
-            },
-            {
-              "path": "paper-first-discovery-candidates",
-              "role": "D2-C02,D2-C05"
-            }
-          ]
+          }
         },
         {
           "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
@@ -52768,49 +52513,13 @@
             "experiment": false,
             "gpu": false,
             "submission": false
-          },
-          "acceptance_paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
-          "entity_type": "PaperState",
-          "source_kind": "paper-first-discovery-candidate",
-          "source_research_item": null,
-          "source_research_item_id": null,
-          "source_research_object": "D2-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
-          "source_candidates": [
-            "D2-C06"
-          ],
-          "paper_stage": "SUBMISSION_READY",
-          "submission_status": "SUBMISSION_READY",
-          "submission_ready": true,
-          "experiment_refs": [],
-          "research_authority": {
-            "method": false,
-            "experiment": false,
-            "p0": false,
-            "gpu": false
-          },
-          "acceptance_authority": {
-            "scientific": false,
-            "experiment": false,
-            "gpu": false,
-            "submission": false
-          },
-          "display_order": 31,
-          "provenance_refs": [
-            {
-              "path": "canonical-paper-acceptance-ledger",
-              "role": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK"
-            },
-            {
-              "path": "paper-first-discovery-candidates",
-              "role": "D2-C06"
-            }
-          ]
+          }
         },
         {
-          "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
-          "title": "Failure Memories Are Not Neutral: Causal Provenance Effects in Self-Evolving Agents",
-          "central_question": "Does failure-derived trajectory provenance causally sustain future error when future task difficulty and actionable memory guidance are matched?",
-          "contract_sha256": "582a203818f9f590d601b5ea9d3a3ecdc08acb3e34d3b1d9f190e17a2d1dcc25",
+          "paper_id": "STRI-ICLR2027",
+          "title": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
+          "central_question": "Should semantically equivalent skill-package representations change a self-evolution control surface?",
+          "contract_sha256": "30ba1a82ae4547d8e3385f514352da55415b31dcf83b8dabab1f756af34309ad",
           "scientific_status": "READY",
           "current_state": "SUBMISSION_READY",
           "gate_clean_submission_ready": true,
@@ -52826,74 +52535,61 @@
             "gpu_authority": false
           },
           "review_learning": {
-            "review_receipts": 6,
-            "decision_critical_objections": 14,
+            "review_receipts": 2,
+            "decision_critical_objections": 10,
             "category_counts": {
-              "confound-control": 1,
-              "confound-residual": 1,
-              "design": 1,
-              "design-operationalization": 1,
-              "empirical": 1,
-              "empirical-sufficiency": 2,
-              "empirical-support": 1,
-              "external-validity": 3,
-              "insufficient-empirical-contribution": 1,
-              "measurement": 2,
-              "measurement-validity": 1,
-              "missing-decisive-evidence": 1,
-              "missing-experiments": 1,
-              "novelty-and-incremental-contribution": 1,
-              "novelty-vs-source": 1,
-              "sample-size": 1,
-              "scope-of-claims": 1,
-              "small-sample-robustness": 1
+              "artifact-baseline": 1,
+              "artifact-negative-control": 1,
+              "artifact-provenance": 1,
+              "artifact-qualification": 1,
+              "artifact-scope": 1,
+              "evidence": 1,
+              "mechanism": 1,
+              "novelty": 1,
+              "significance": 1,
+              "technical-scope": 1
             },
             "evidence_state_counts": {
               "existing-evidence": 8,
-              "missing-decisive-evidence": 12,
-              "uncertain": 2
+              "requires-new-claim": 2
             },
             "action_class_counts": {
-              "human-adjudication": 1,
-              "narrative-repair": 6,
-              "preserve-limitation": 6,
-              "targeted-experiment": 9
+              "narrative-repair": 8,
+              "preserve-limitation": 2
             },
-            "targeted_experiment_proposals": 9,
-            "claim_expansion_requests_preserved_as_limitations": 6,
+            "targeted_experiment_proposals": 0,
+            "claim_expansion_requests_preserved_as_limitations": 2,
             "reviewer_prose_exposed": false,
             "scientific_authority": false,
             "experiment_authority": false,
             "gpu_authority": false
           },
           "supported_claims": 3,
-          "active_unrefuted_claims": 2,
-          "unsupported_claims": 2,
+          "active_unrefuted_claims": 0,
+          "unsupported_claims": 3,
           "limitations": [
-            "The current public financial-agent release provides aggregate provenance counts and transition statistics. The matched provenance swap requires the first-party per-query memory artifacts or a faithful reconstruction of the audited ReasoningBank runs. Those artifacts are announced for release upon publication and are currently experiment debt.",
-            "The reported provenance accuracies are rounded to three decimals. The integer correct counts used in our decomposition are the unique counts consistent with the reported support sizes and rounded accuracies. The transition allocation beyond the ten W$\\rightarrow$W cases is therefore a derived arithmetic decomposition from public aggregate statistics.",
-            "Semantic matching between failure-derived memory and success-derived memory is an experimental design challenge. A pair can preserve procedural content while differing in wording. We therefore require an information-equivalence audit before the swap. Pair construction and verifier agreement remain experiment debt until the first-party memory artifacts are available.",
-            "The causal claim concerns future persistence under matched memory information. The existing audit supports the provenance-conditioned association and identifies task difficulty as a confound. Direct causal effect size remains experiment debt for the swap experiment in Section~\\ref{sec:intervention}.",
-            "The empirical source is a financial AgentDojo setting with ReasoningBank. Replication in web agents and other external-memory architectures remains experiment debt for a broader cross-domain claim."
+            "The frozen paper claim is primarily a static representation-invariance certificate rather than a downstream utility theorem.",
+            "The Qwen3 dynamic pilot failed its preregistered proposer qualification gate and contributes no dynamic scientific update.",
+            "The qualified SkillRL fixed-task bridge cannot be upgraded into a population-level no-effect conclusion because no equivalence margin or task-cluster power analysis was preregistered."
           ],
           "reopen_conditions": [],
           "summary": {
-            "events": 33,
+            "events": 25,
             "allowed_transitions": 8,
             "blocked_transitions": 0,
             "story_search_receipts": 1,
-            "mock_reviews": 6,
+            "mock_reviews": 2,
             "claim_audit_receipts": 1,
-            "manuscript_ci_receipts": 1,
+            "manuscript_ci_receipts": 2,
             "prebuttal_receipts": 1,
-            "paper_preparation_receipts": 1,
-            "submission_readiness_receipts": 1
+            "submission_readiness_receipts": 1,
+            "contract_revisions": 0
           },
           "latest_story_search": {
             "pass": true,
-            "selected_story_id": "S1-CURRENT-CHAIN",
-            "selected_story_title": "Current mechanism chain",
-            "story_search_sha256": "e3123c9dfcf670e0fcab11859aaad3e4b302f4fd93b11e5b476e5133468e3702",
+            "selected_story_id": "S1-INVARIANCE-BOUNDARY",
+            "selected_story_title": "Representation invariance as the paper question; support geometry as the exact boundary",
+            "story_search_sha256": "16261d97ee81c948133036eb04908f2cf19c94d2f392d56c5969e59b01e2b6e5",
             "valid_candidates": 3,
             "paper_design_memory_query_pack_sha256": "",
             "paper_design_memory_binding_sha256": "",
@@ -52902,23 +52598,34 @@
             "paper_design_review_lessons_selected": 0
           },
           "mock_pc_modes": {
-            "BLIND_MANUSCRIPT": "25e8d2b0bb12e86cfc6dcaa1e9c958b220f00c2f2fe042a5f92dfb4dbb0e5c1f",
-            "ARTIFACT_AWARE": "f22fc74d24ff63d07970b34d2ef8b5da130ff695fc5bcae456d4d0b6fd01e19b"
+            "BLIND_MANUSCRIPT": "127d9c4ebb0e6563c0de3274df2941dd64df9dd4f1bfc159d0846fcc558fc876",
+            "ARTIFACT_AWARE": "ad986f64fae97ab9612e9d144f7e52f536545cf1998ef1999755157b72f159c7"
           },
           "latest_mock_review": {
-            "mode": "ARTIFACT_AWARE",
-            "review_sha256": "f22fc74d24ff63d07970b34d2ef8b5da130ff695fc5bcae456d4d0b6fd01e19b",
+            "mode": "FINAL_MULTI_REVIEW",
+            "review_sha256": "73808cf1fc538392be17734b6dd1afc50469bbe615599a82cfa38d8ae5e2d004",
             "summary": {
-              "objections": 3,
-              "decision_critical": 3,
-              "targeted_experiment_proposals": 2,
-              "claim_expansion_requests_preserved_as_limitations": 0
+              "scores": [
+                7,
+                8,
+                7
+              ],
+              "recommendations": [
+                "weak_accept",
+                "accept",
+                "weak_accept"
+              ],
+              "mean_score": 7.333333333333333,
+              "minimum_score": 7,
+              "decision_critical_blockers": 0
             }
           },
           "latest_claim_audit": {
             "pass": true,
-            "claim_audit_sha256": "c408858760b77679464534e75089444284baa7c026f04b5ba9531151b9a27d28",
-            "blockers": []
+            "claim_audit_sha256": "3150e82177748aac53585a054385c751c8bfc42d9c37b9ed668f3b842a5c0690",
+            "blockers": [],
+            "checks": 20,
+            "passed": 20
           },
           "latest_manuscript_ci": {
             "pass": true,
@@ -52929,40 +52636,50 @@
           },
           "latest_prebuttal": {
             "pass": true,
-            "decision_critical": 6,
-            "blockers": []
+            "decision_critical": 5,
+            "blockers": [],
+            "unresolved_decision_critical": 0
           },
           "latest_paper_preparation": {
             "pass": true,
-            "protocol_version": "1.0",
-            "receipt_sha256": "c7700fda1cccec6c585876da3bb124b8fff35967506d4e5878f9730c2464b54a",
+            "protocol_version": "1.0+r2",
+            "receipt_sha256": "eca030a59b30fac4fcf0fb5e9a3e170b143cb6163ec1a7072163db0715c94cdd",
             "required_gates": 8,
             "passed_gates": 8,
             "gate_pass": {
-              "hierarchical-rubric": true,
-              "verification-refinement": true,
-              "citation-integrity": true,
-              "visual-story": true,
-              "reproducibility-bundle": true,
               "agent-native-artifact": true,
+              "citation-integrity": true,
+              "hierarchical-rubric": true,
               "reader-simulation": true,
-              "submission-package": true
+              "reproducibility-bundle": true,
+              "submission-package": true,
+              "verification-refinement": true,
+              "visual-story": true
             },
             "blockers": []
           },
           "submission_readiness_context": {
-            "artifact_submission_ready": false,
-            "recommended_immediate_submission": "",
-            "scientific_status": "",
+            "artifact_submission_ready": true,
+            "recommended_immediate_submission": "READY_FOR_HUMAN_SUBMISSION",
+            "scientific_status": "READY",
             "support_blocker": "",
-            "external_human_submission_authority_required_for_SUBMITTED": false,
+            "external_human_submission_authority_required_for_SUBMITTED": true,
             "c3_c4_evidence_state": "",
-            "post_repair_mock_pc_recommendations": [],
-            "post_repair_mock_pc_scores": []
+            "exact_timesage_replication_debt": "",
+            "post_repair_mock_pc_recommendations": [
+              "weak_accept",
+              "accept",
+              "weak_accept"
+            ],
+            "post_repair_mock_pc_scores": [
+              7,
+              8,
+              7
+            ]
           },
           "latest_submission_readiness": {
             "submission_ready": true,
-            "receipt_sha256": "c69c35dfbadff125d551822613053f7752d90b411788ee33edbfce0efdf67712",
+            "receipt_sha256": "7cc3c6be104b6adb5dc9a1d64b39872d5002ee6b995c7f27b12f8fa1804fdc94",
             "blockers": []
           },
           "latest_transition": {
@@ -52976,50 +52693,13 @@
             "experiment": false,
             "gpu": false,
             "submission": false
-          },
-          "acceptance_paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
-          "entity_type": "PaperState",
-          "source_kind": "paper-first-discovery-candidate",
-          "source_research_item": null,
-          "source_research_item_id": null,
-          "source_research_object": "D2-FAILURE-MEMORY-PROVENANCE",
-          "source_candidates": [
-            "D2-C01",
-            "D2-C04"
-          ],
-          "paper_stage": "SUBMISSION_READY",
-          "submission_status": "SUBMISSION_READY",
-          "submission_ready": true,
-          "experiment_refs": [],
-          "research_authority": {
-            "method": false,
-            "experiment": false,
-            "p0": false,
-            "gpu": false
-          },
-          "acceptance_authority": {
-            "scientific": false,
-            "experiment": false,
-            "gpu": false,
-            "submission": false
-          },
-          "display_order": 32,
-          "provenance_refs": [
-            {
-              "path": "canonical-paper-acceptance-ledger",
-              "role": "D2-PAPER-FAILURE-MEMORY-PROVENANCE"
-            },
-            {
-              "path": "paper-first-discovery-candidates",
-              "role": "D2-C01,D2-C04"
-            }
-          ]
+          }
         }
       ],
       "invalid": [],
       "scientific_authority": false
     },
-    "ledger_index_source": "generated/paper-registry.json",
+    "ledger_index_source": "canonical-append-only-paper-ledgers",
     "control_plane_reconciled_at": "2026-08-22T16:57:35+00:00"
   },
   "human_terminal_ideas": {
