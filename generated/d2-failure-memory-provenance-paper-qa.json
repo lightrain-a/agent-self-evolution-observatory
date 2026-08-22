@@ -4,11 +4,11 @@
   "status": "PASS",
   "paper_dir": "paper_drafts/d2-failure-memory-provenance-iclr2027",
   "summary": {
-    "checks": 39,
-    "passed": 39,
+    "checks": 57,
+    "passed": 57,
     "pages": 8,
-    "pdf_sha256": "3907bf36d22fe56d816422633b4b04f74d090eed1418f7bdc64e5ca0f0a37fae",
-    "pdf_bytes": 156436,
+    "pdf_sha256": "a1c4eb3088749dcdb488d0a2f22f366d82499484e2d29e4fbf3a41d68c797239",
+    "pdf_bytes": 174585,
     "active_unrefuted_claims": [
       "C4",
       "C5"
@@ -91,7 +91,17 @@
       "detail": null
     },
     {
-      "name": "pdf_fragment:48 completed requests",
+      "name": "pdf_fragment:144 requested calls",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.000",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:48 downstream requests",
       "pass": true,
       "detail": null
     },
@@ -106,17 +116,17 @@
       "detail": null
     },
     {
-      "name": "pdf_fragment:0.15",
+      "name": "pdf_fragment:DeepSeek",
       "pass": true,
       "detail": null
     },
     {
-      "name": "pdf_fragment:144 calls",
+      "name": "pdf_fragment:Kimi",
       "pass": true,
       "detail": null
     },
     {
-      "name": "pdf_fragment:0.000",
+      "name": "pdf_fragment:unanimous strict approval",
       "pass": true,
       "detail": null
     },
@@ -154,6 +164,46 @@
       "name": "claim_ledger_has_claims",
       "pass": true,
       "detail": 5
+    },
+    {
+      "name": "artifact:summary.active_unrefuted_hypotheses",
+      "pass": true,
+      "detail": {
+        "actual": 3,
+        "expected": 3
+      }
+    },
+    {
+      "name": "artifact:status",
+      "pass": true,
+      "detail": {
+        "actual": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS",
+        "expected": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS"
+      }
+    },
+    {
+      "name": "artifact:summary.complete_calls",
+      "pass": true,
+      "detail": {
+        "actual": 144,
+        "expected": 144
+      }
+    },
+    {
+      "name": "artifact:summary.mean_success_minus_failure_terminal_rate",
+      "pass": true,
+      "detail": {
+        "actual": 0.0,
+        "expected": 0.0
+      }
+    },
+    {
+      "name": "artifact:decision",
+      "pass": true,
+      "detail": {
+        "actual": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+        "expected": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY"
+      }
     },
     {
       "name": "artifact:candidate_pairs.gate_pass",
@@ -228,19 +278,107 @@
       }
     },
     {
-      "name": "artifact:summary.complete_calls",
+      "name": "artifact:status",
       "pass": true,
       "detail": {
-        "actual": 144,
-        "expected": 144
+        "actual": "POSTHOC_DESIGN_POWER_DIAGNOSTIC",
+        "expected": "POSTHOC_DESIGN_POWER_DIAGNOSTIC"
       }
     },
     {
-      "name": "artifact:decision",
+      "name": "artifact:frozen_primary_design.eligible_pairs",
       "pass": true,
       "detail": {
-        "actual": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
-        "expected": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY"
+        "actual": 4,
+        "expected": 4
+      }
+    },
+    {
+      "name": "artifact:anti_rescue.same_pair_seed_extension_is_confirmatory",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:status",
+      "pass": true,
+      "detail": {
+        "actual": "COMPLETE_DIAGNOSTIC_IDENTIFICATION_NOT_ROBUST",
+        "expected": "COMPLETE_DIAGNOSTIC_IDENTIFICATION_NOT_ROBUST"
+      }
+    },
+    {
+      "name": "artifact:summary.original_verifier_primary_strict_pass",
+      "pass": true,
+      "detail": {
+        "actual": 4,
+        "expected": 4
+      }
+    },
+    {
+      "name": "artifact:summary.deepseek_primary_strict_pass",
+      "pass": true,
+      "detail": {
+        "actual": 0,
+        "expected": 0
+      }
+    },
+    {
+      "name": "artifact:summary.kimi_primary_strict_pass",
+      "pass": true,
+      "detail": {
+        "actual": 1,
+        "expected": 1
+      }
+    },
+    {
+      "name": "artifact:summary.three_reviewer_unanimous_primary_strict_pass",
+      "pass": true,
+      "detail": {
+        "actual": 0,
+        "expected": 0
+      }
+    },
+    {
+      "name": "artifact:summary.semantic_verifier_is_identification_bottleneck",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
+    },
+    {
+      "name": "artifact:claim_effect.C4_status",
+      "pass": true,
+      "detail": {
+        "actual": "ACTIVE_UNREFUTED_BUT_NOT_IDENTIFIED_BY_R4",
+        "expected": "ACTIVE_UNREFUTED_BUT_NOT_IDENTIFIED_BY_R4"
+      }
+    },
+    {
+      "name": "artifact:status",
+      "pass": true,
+      "detail": {
+        "actual": "TARGETED_REPAIR_TERMINAL_CURRENT_SUPPORT_NO_SUBMISSION_READY",
+        "expected": "TARGETED_REPAIR_TERMINAL_CURRENT_SUPPORT_NO_SUBMISSION_READY"
+      }
+    },
+    {
+      "name": "artifact:scientific_decision.paper_submission_ready",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:independent_confirmation_support.fresh_qualified_task_count",
+      "pass": true,
+      "detail": {
+        "actual": 0,
+        "expected": 0
       }
     }
   ],
@@ -276,6 +414,41 @@
     "violations": []
   },
   "artifact_checks": [
+    {
+      "path": "generated/discovery-engine-terminal-replication-source-audit-20260821.json",
+      "key": "summary.active_unrefuted_hypotheses",
+      "actual": 3,
+      "expected": 3,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-faithful-reconstruction-preflight.json",
+      "key": "status",
+      "actual": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS",
+      "expected": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS",
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-bridge.json",
+      "key": "summary.complete_calls",
+      "actual": 144,
+      "expected": 144,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-bridge.json",
+      "key": "summary.mean_success_minus_failure_terminal_rate",
+      "actual": 0.0,
+      "expected": 0.0,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-bridge.json",
+      "key": "decision",
+      "actual": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+      "expected": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+      "pass": true
+    },
     {
       "path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json",
       "key": "candidate_pairs.gate_pass",
@@ -340,17 +513,94 @@
       "pass": true
     },
     {
-      "path": "generated/d2-failure-memory-provenance-bridge.json",
-      "key": "summary.complete_calls",
-      "actual": 144,
-      "expected": 144,
+      "path": "generated/d2-failure-memory-provenance-r4-power-audit.json",
+      "key": "status",
+      "actual": "POSTHOC_DESIGN_POWER_DIAGNOSTIC",
+      "expected": "POSTHOC_DESIGN_POWER_DIAGNOSTIC",
       "pass": true
     },
     {
-      "path": "generated/d2-failure-memory-provenance-bridge.json",
-      "key": "decision",
-      "actual": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
-      "expected": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+      "path": "generated/d2-failure-memory-provenance-r4-power-audit.json",
+      "key": "frozen_primary_design.eligible_pairs",
+      "actual": 4,
+      "expected": 4,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-r4-power-audit.json",
+      "key": "anti_rescue.same_pair_seed_extension_is_confirmatory",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-equivalence-robustness.json",
+      "key": "status",
+      "actual": "COMPLETE_DIAGNOSTIC_IDENTIFICATION_NOT_ROBUST",
+      "expected": "COMPLETE_DIAGNOSTIC_IDENTIFICATION_NOT_ROBUST",
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-equivalence-robustness.json",
+      "key": "summary.original_verifier_primary_strict_pass",
+      "actual": 4,
+      "expected": 4,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-equivalence-robustness.json",
+      "key": "summary.deepseek_primary_strict_pass",
+      "actual": 0,
+      "expected": 0,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-equivalence-robustness.json",
+      "key": "summary.kimi_primary_strict_pass",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-equivalence-robustness.json",
+      "key": "summary.three_reviewer_unanimous_primary_strict_pass",
+      "actual": 0,
+      "expected": 0,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-equivalence-robustness.json",
+      "key": "summary.semantic_verifier_is_identification_bottleneck",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-equivalence-robustness.json",
+      "key": "claim_effect.C4_status",
+      "actual": "ACTIVE_UNREFUTED_BUT_NOT_IDENTIFIED_BY_R4",
+      "expected": "ACTIVE_UNREFUTED_BUT_NOT_IDENTIFIED_BY_R4",
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-targeted-repair-adjudication-20260822.json",
+      "key": "status",
+      "actual": "TARGETED_REPAIR_TERMINAL_CURRENT_SUPPORT_NO_SUBMISSION_READY",
+      "expected": "TARGETED_REPAIR_TERMINAL_CURRENT_SUPPORT_NO_SUBMISSION_READY",
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-targeted-repair-adjudication-20260822.json",
+      "key": "scientific_decision.paper_submission_ready",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-failure-memory-provenance-targeted-repair-adjudication-20260822.json",
+      "key": "independent_confirmation_support.fresh_qualified_task_count",
+      "actual": 0,
+      "expected": 0,
       "pass": true
     }
   ],
@@ -385,7 +635,7 @@
     },
     {
       "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/06_limitations_conclusion.tex",
-      "sha256": "7551c71d1d40763cc2337b07c28e53471b21b1f72ccd620e96b74da1cd89ebca"
+      "sha256": "ce606a7a8875d2a420238530b4da8628c6ff3e757c381eb722b529950dbed6f8"
     },
     {
       "path": "paper_drafts/d2-failure-memory-provenance-iclr2027/sections/07_appendix.tex",
@@ -398,7 +648,7 @@
   ],
   "claim_ledger": {
     "path": "generated/d2-failure-memory-provenance-claim-ledger.json",
-    "sha256": "5936e30b06af41502e2a9fb809abeb8365a62222ff014e68336ad824f048f758"
+    "sha256": "8bc412767f9437afccc70978acde49cac75bce4d5357ecabf08c561926b73013"
   },
   "scientific_authority": false
 }

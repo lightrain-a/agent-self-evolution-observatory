@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "adjudication_id": "D2-C01-TARGETED-REPAIR-ADJUDICATION-20260822",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "status": "TARGETED_REPAIR_TERMINAL_CURRENT_SUPPORT_NO_SUBMISSION_READY",
+  "paper_acceptance_state": "TARGETED_REPAIR",
+  "central_claim": "C4 remains active and unrefuted: failure-derived memory provenance may causally sustain future error beyond task difficulty and matched actionable guidance.",
+  "r4_primary_result": {
+    "artifact": "generated/d2-failure-memory-provenance-r4-controlled-swap.json",
+    "mean_success_minus_failure_terminal_rate": 0.166667,
+    "support_effect_floor": 0.15,
+    "permutation_p_success_greater": 0.07853921460785392,
+    "p_threshold": 0.05,
+    "support_gate_pass": false,
+    "counterevidence_gate_pass": false,
+    "verdict": "INCONCLUSIVE_NO_THRESHOLD_CHANGE"
+  },
+  "power_audit": {
+    "artifact": "generated/d2-failure-memory-provenance-r4-power-audit.json",
+    "approx_power_at_four_pairs_range": [0.280479, 0.351994],
+    "approx_independent_pairs_for_80pct_power_range": [18, 22],
+    "same_pair_seed_extension_authorized": false
+  },
+  "identification_audit": {
+    "artifact": "generated/d2-failure-memory-provenance-equivalence-robustness.json",
+    "primary_pairs": 4,
+    "original_verifier_strict_pass": 4,
+    "deepseek_strict_pass": 0,
+    "kimi_strict_pass": 1,
+    "three_reviewer_unanimous_strict_pass": 0,
+    "minimum_primary_embedding_cosine": 0.901925,
+    "all_primary_pairs_survive_cosine_threshold_0_90": true,
+    "conclusion": "Semantic information-equivalence, not embedding cosine, is the dominant identification weakness. R4 cannot robustly isolate provenance beyond residual actionable-content differences."
+  },
+  "independent_confirmation_support": {
+    "same_release_rescan_rule": "Apply the R2 static structural qualification to all frozen WebArena parquet shards while excluding all C01 task IDs exposed by prior bridge and R2/R4 experiments.",
+    "fresh_qualified_task_count": 0,
+    "outcome_fields_used_for_selection": false,
+    "same_release_confirmation_available": false
+  },
+  "source_faithful_support": {
+    "status": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS",
+    "preflight": "generated/d2-failure-memory-provenance-faithful-reconstruction-preflight.json",
+    "execution_hosts_checked": ["69 canonical host", "52 authorized execution host"],
+    "exact_qwen3_7_flash_access_available": false,
+    "qwen3_7_text_embedding_access_available": false,
+    "first_party_per_query_financial_artifacts_available_in_audited_support_set": false
+  },
+  "scientific_decision": {
+    "C4": "KEEP_ACTIVE_UNREFUTED; NOT SUPPORTED; NOT REFUTED",
+    "C5": "KEEP_AS_DESIGN_IMPLICATION; NOT EMPIRICALLY_VALIDATED",
+    "r4_primary_result": "PRESERVE_DIRECTIONAL_INCONCLUSIVE_RESULT",
+    "paper_submission_ready": false,
+    "reason": "The preregistered statistical support gate remains closed and the information-equivalence identification gate is not robust across blinded reviewers. No independent fresh confirmation pool or source-faithful financial execution path is currently available."
+  },
+  "forbidden_repairs": [
+    "do not add seeds to the same four R4 pairs to rescue p<0.05",
+    "do not drop or replace R4 pairs based on post-hoc verifier disagreement",
+    "do not lower the 0.15 effect floor or raise the 0.05 p threshold",
+    "do not relax the original task structural qualification after observing R4 outcomes",
+    "do not substitute a different embedding or executor and call it source-faithful financial replication",
+    "do not reinterpret identification failure as scientific counterevidence to C4"
+  ],
+  "reopen_conditions": [
+    "First-party financial per-query ReasoningBank artifacts become available, or auditable exact access to qwen3.7-flash-2026-07-15 plus qwen3.7-text-embedding enables source-faithful reconstruction.",
+    "An independently frozen support population supplies roughly 18-22 or more eligible matched pairs under a multi-reviewer information-equivalence gate, with a fully disjoint future evaluation set."
+  ],
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

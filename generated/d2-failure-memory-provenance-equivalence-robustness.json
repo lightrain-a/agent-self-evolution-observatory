@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "D2-C01-R4-INFORMATION-EQUIVALENCE-ROBUSTNESS",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "status": "COMPLETE_DIAGNOSTIC_IDENTIFICATION_NOT_ROBUST",
+  "contract": "generated/d2-failure-memory-provenance-equivalence-robustness-contract.json",
+  "contract_sha256": "4c655c476baea960abb71d28ae91306ff64fd1458842ef67941c2e9f59aa3e2e",
+  "private_run_artifact_sha256": "68f9262cf6c1e7fa7c25fd95abe40caeec9b9cc5e839522379bcd717af4d3ac2",
+  "source_artifacts": {
+    "r2_memories_sha256": "02623a2fdad5c87e17ecf175afe26df1d64cb8ac06a623ed3f1da99d1da15bf3",
+    "r2_information_equivalence_sha256": "a436c47c4a65435126d2f4dab02cdcf237109a67f941add674d401dd09af7e23",
+    "r4_result_sha256": "9a4d7ea1431dfd18951bf0ad4202e1f35795d1ba676089de60956f989e07f4c8"
+  },
+  "primary_pair_ids_immutable": ["387", "167", "23", "388"],
+  "original_gate_rows": [
+    {"pair_id": "385", "embedding_cosine": 0.913742, "original_verifier_strict_pass": true, "literal_reference_leakage": ["Cally"], "primary_eligible": false},
+    {"pair_id": "387", "embedding_cosine": 0.931334, "original_verifier_strict_pass": true, "literal_reference_leakage": [], "primary_eligible": true},
+    {"pair_id": "167", "embedding_cosine": 0.901925, "original_verifier_strict_pass": true, "literal_reference_leakage": [], "primary_eligible": true},
+    {"pair_id": "23", "embedding_cosine": 0.905883, "original_verifier_strict_pass": true, "literal_reference_leakage": [], "primary_eligible": true},
+    {"pair_id": "388", "embedding_cosine": 0.904356, "original_verifier_strict_pass": true, "literal_reference_leakage": [], "primary_eligible": true},
+    {"pair_id": "164", "embedding_cosine": 0.972261, "original_verifier_strict_pass": true, "literal_reference_leakage": ["Dry", "Uneven color"], "primary_eligible": false}
+  ],
+  "new_blinded_reviewer_results": [
+    {"pair_id": "385", "reviewer": "deepseek-v4-pro-260425", "actionable_guidance_equivalent": false, "unique_task_solving_fact_in_either": true, "residual_asymmetry": "material", "strict_pass": false},
+    {"pair_id": "385", "reviewer": "kimi-k3", "actionable_guidance_equivalent": false, "unique_task_solving_fact_in_either": true, "residual_asymmetry": "material", "strict_pass": false},
+    {"pair_id": "387", "reviewer": "deepseek-v4-pro-260425", "actionable_guidance_equivalent": false, "unique_task_solving_fact_in_either": true, "residual_asymmetry": "material", "strict_pass": false, "preflight_preserved_without_duplicate_post": true},
+    {"pair_id": "387", "reviewer": "kimi-k3", "actionable_guidance_equivalent": true, "unique_task_solving_fact_in_either": false, "residual_asymmetry": "minor", "strict_pass": true},
+    {"pair_id": "167", "reviewer": "deepseek-v4-pro-260425", "actionable_guidance_equivalent": false, "unique_task_solving_fact_in_either": true, "residual_asymmetry": "material", "strict_pass": false},
+    {"pair_id": "167", "reviewer": "kimi-k3", "actionable_guidance_equivalent": false, "unique_task_solving_fact_in_either": true, "residual_asymmetry": "material", "strict_pass": false},
+    {"pair_id": "23", "reviewer": "deepseek-v4-pro-260425", "actionable_guidance_equivalent": false, "unique_task_solving_fact_in_either": true, "residual_asymmetry": "material", "strict_pass": false},
+    {"pair_id": "23", "reviewer": "kimi-k3", "actionable_guidance_equivalent": false, "unique_task_solving_fact_in_either": true, "residual_asymmetry": "material", "strict_pass": false},
+    {"pair_id": "388", "reviewer": "deepseek-v4-pro-260425", "actionable_guidance_equivalent": false, "unique_task_solving_fact_in_either": true, "residual_asymmetry": "material", "strict_pass": false},
+    {"pair_id": "388", "reviewer": "kimi-k3", "actionable_guidance_equivalent": false, "unique_task_solving_fact_in_either": true, "residual_asymmetry": "material", "strict_pass": false},
+    {"pair_id": "164", "reviewer": "deepseek-v4-pro-260425", "actionable_guidance_equivalent": false, "unique_task_solving_fact_in_either": true, "residual_asymmetry": "material", "strict_pass": false},
+    {"pair_id": "164", "reviewer": "kimi-k3", "actionable_guidance_equivalent": true, "unique_task_solving_fact_in_either": true, "residual_asymmetry": "minor", "strict_pass": false}
+  ],
+  "summary": {
+    "reviewer_calls_or_preserved_preflight_judgments": 12,
+    "support_failures": 0,
+    "primary_pairs": 4,
+    "original_verifier_primary_strict_pass": 4,
+    "deepseek_primary_strict_pass": 0,
+    "kimi_primary_strict_pass": 1,
+    "three_reviewer_unanimous_primary_strict_pass": 0,
+    "deepseek_kimi_primary_strict_agreement_rate": 0.75,
+    "original_deepseek_primary_strict_agreement_rate": 0.0,
+    "original_kimi_primary_strict_agreement_rate": 0.25,
+    "minimum_primary_cosine": 0.901925,
+    "maximum_primary_cosine": 0.931334,
+    "all_primary_pairs_survive_cosine_threshold_0_90": true,
+    "semantic_verifier_is_identification_bottleneck": true
+  },
+  "interpretation": "The R4 primary pair membership is immutable and the R4 p-value is not recomputed. The post-hoc diagnostic shows that high embedding cosine is robust but semantic information-equivalence is not. Two stronger blinded reviewer models reject most or all primary pairs under the same strict criterion, and no primary pair receives unanimous strict approval across the original verifier plus both new reviewers. R4 therefore remains a directional controlled content/provenance-writing result, but it does not robustly isolate provenance beyond matched actionable content.",
+  "claim_effect": {
+    "C4_status": "ACTIVE_UNREFUTED_BUT_NOT_IDENTIFIED_BY_R4",
+    "C5_status": "DESIGN_IMPLICATION_ONLY_NOT_EMPIRICALLY_VALIDATED",
+    "r4_primary_verdict_unchanged": "INCONCLUSIVE_NO_THRESHOLD_CHANGE",
+    "scientific_counterevidence_to_C4": false,
+    "identification_failure": true
+  },
+  "anti_outcome_shopping": {
+    "primary_pair_membership_changed": false,
+    "cosine_threshold_changed": false,
+    "r4_effect_or_p_recomputed": false,
+    "posthoc_pair_replacement_authorized": false,
+    "reviewer_disagreement_can_trigger_pair_replacement": false
+  },
+  "scientific_authority": false,
+  "experiment_authority": false
+}

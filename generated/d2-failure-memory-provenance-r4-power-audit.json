@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "D2-C01-R4-POWER-AUDIT",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "status": "POSTHOC_DESIGN_POWER_DIAGNOSTIC",
+  "source_r4_artifact": "generated/d2-failure-memory-provenance-r4-controlled-swap.json",
+  "source_r4_sha256": "9a4d7ea1431dfd18951bf0ad4202e1f35795d1ba676089de60956f989e07f4c8",
+  "frozen_primary_design": {
+    "eligible_pairs": 4,
+    "rollouts_per_condition_per_pair": 6,
+    "support_effect_floor": 0.15,
+    "one_sided_alpha": 0.05,
+    "observed_mean_success_minus_failure": 0.166667,
+    "observed_permutation_p": 0.07853921460785392
+  },
+  "approximation": {
+    "method": "Normal approximation for a mean of independent pair-level differences in two six-rollout Bernoulli rates. For a planning baseline p0 and minimum effect delta=0.15, Var(pair difference) = [p0(1-p0) + (p0+delta)(1-p0-delta)] / 6. Required pair count uses one-sided z_alpha plus z_0.8.",
+    "target_power": 0.8,
+    "z_alpha_one_sided_0_05": 1.6448536269514722,
+    "z_power_0_8": 0.8416212335729143,
+    "scenarios": [
+      {"failure_memory_rate": 0.2, "success_memory_rate": 0.35, "required_pairs_80pct_power": 18, "approx_power_at_4_pairs": 0.321192, "approx_power_at_20_pairs": 0.840082, "approx_power_at_24_pairs": 0.893753},
+      {"failure_memory_rate": 0.35, "success_memory_rate": 0.5, "required_pairs_80pct_power": 22, "approx_power_at_4_pairs": 0.280479, "approx_power_at_20_pairs": 0.768238, "approx_power_at_24_pairs": 0.831476},
+      {"failure_memory_rate": 0.5, "success_memory_rate": 0.65, "required_pairs_80pct_power": 22, "approx_power_at_4_pairs": 0.280479, "approx_power_at_20_pairs": 0.768238, "approx_power_at_24_pairs": 0.831476},
+      {"failure_memory_rate": 0.65, "success_memory_rate": 0.8, "required_pairs_80pct_power": 18, "approx_power_at_4_pairs": 0.321192, "approx_power_at_20_pairs": 0.840082, "approx_power_at_24_pairs": 0.893753},
+      {"failure_memory_rate": 0.7, "success_memory_rate": 0.85, "required_pairs_80pct_power": 16, "approx_power_at_4_pairs": 0.351994, "approx_power_at_20_pairs": 0.881709, "approx_power_at_24_pairs": 0.926962}
+    ]
+  },
+  "interpretation": "With four eligible independent pairs, the R4 design had only about 0.28-0.35 planning power for the preregistered 0.15 effect floor under representative baseline rates. Increasing seeds on the same four pairs does not solve the effective-unit bottleneck. A genuinely independent confirmation should target roughly 18-22 eligible pairs, with 24 providing useful margin under the central scenarios.",
+  "anti_rescue": {
+    "same_pair_seed_extension_is_confirmatory": false,
+    "same_pair_p_value_rescue_authorized": false,
+    "independent_pair_pool_required": true,
+    "r4_primary_p_value_unchanged": true
+  },
+  "scientific_authority": false,
+  "experiment_authority": false
+}

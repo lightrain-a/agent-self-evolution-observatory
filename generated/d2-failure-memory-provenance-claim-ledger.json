@@ -42,14 +42,16 @@
       "claim_id": "C4",
       "claim": "Failure-derived memory provenance causally sustains future error beyond task difficulty and matched semantic guidance.",
       "verdict": "ACTIVE_UNREFUTED_HYPOTHESIS",
-      "evidence_state": "CONTROLLED_MATCHED_PROVENANCE_SWAP_EXECUTED_INCONCLUSIVE_SOURCE_FAITHFUL_FINANCIAL_REPLICATION_PENDING",
+      "evidence_state": "R4_DIRECTIONAL_INCONCLUSIVE_INFORMATION_EQUIVALENCE_NOT_ROBUST_SOURCE_FAITHFUL_REPLICATION_PENDING",
       "closure_authority": "",
       "retain_in_manuscript": true,
       "claim_narrowing_required": false,
       "evidence_refs": [
         "generated/d2-failure-memory-provenance-faithful-reconstruction-preflight.json",
         "generated/d2-failure-memory-provenance-bridge.json",
-        "generated/d2-failure-memory-provenance-r4-controlled-swap.json"
+        "generated/d2-failure-memory-provenance-r4-controlled-swap.json",
+        "generated/d2-failure-memory-provenance-r4-power-audit.json",
+        "generated/d2-failure-memory-provenance-equivalence-robustness.json"
       ],
       "support_state": {
         "source_faithful_reconstruction": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS",
@@ -65,7 +67,14 @@
         "controlled_matched_swap_support_effect_floor": 0.15,
         "controlled_matched_swap_support_gate_pass": false,
         "controlled_matched_swap_counterevidence_gate_pass": false,
-        "claim_update": "KEEP_ACTIVE_UNREFUTED_HYPOTHESIS_NO_THRESHOLD_CHANGE"
+        "r4_design_power_at_four_pairs_approx_range": [0.280479, 0.351994],
+        "independent_pairs_for_80pct_power_approx_range": [18, 22],
+        "equivalence_robustness_original_verifier_primary_pass": 4,
+        "equivalence_robustness_deepseek_primary_pass": 0,
+        "equivalence_robustness_kimi_primary_pass": 1,
+        "equivalence_robustness_three_reviewer_unanimous_primary_pass": 0,
+        "identification_gate_robust": false,
+        "claim_update": "KEEP_ACTIVE_UNREFUTED_HYPOTHESIS; R4_NOT_DECISIVE_DUE_STATISTICAL_AND_IDENTIFICATION_GATES"
       },
       "experiment_debt": [
         "source-faithful financial AgentDojo matched provenance replication",
@@ -76,7 +85,7 @@
       "claim_id": "C5",
       "claim": "Memory provenance should be retained as structured evidence for future memory trust and reuse decisions.",
       "verdict": "ACTIVE_UNREFUTED_HYPOTHESIS",
-      "evidence_state": "DESIGN_IMPLICATION_SUPPORTED_BY_C1_TO_C4",
+      "evidence_state": "DESIGN_IMPLICATION_ACTIVE_NOT_EMPIRICALLY_VALIDATED",
       "closure_authority": "",
       "retain_in_manuscript": true,
       "claim_narrowing_required": false

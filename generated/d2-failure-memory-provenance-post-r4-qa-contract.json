@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "papers": [
+    {
+      "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+      "paper_dir": "paper_drafts/d2-failure-memory-provenance-iclr2027",
+      "claim_ledger": "generated/d2-failure-memory-provenance-claim-ledger.json",
+      "output": "generated/d2-failure-memory-provenance-paper-qa.json",
+      "title_fragments": [
+        "failure memories are not neutral",
+        "causal provenance effects"
+      ],
+      "required_pdf_fragments": [
+        "0.931",
+        "101 cases",
+        "0.647",
+        "34 cases",
+        "persistent failures",
+        "144 requested calls",
+        "0.000",
+        "48 downstream requests",
+        "0.1667",
+        "0.0785",
+        "DeepSeek",
+        "Kimi",
+        "unanimous strict approval"
+      ],
+      "max_pages": 9,
+      "artifact_checks": [
+        {"path": "generated/discovery-engine-terminal-replication-source-audit-20260821.json", "key": "summary.active_unrefuted_hypotheses", "equals": 3},
+        {"path": "generated/d2-failure-memory-provenance-faithful-reconstruction-preflight.json", "key": "status", "equals": "SUPPORT_HOLD_EXACT_PROVIDER_AND_EMBEDDING_ACCESS"},
+        {"path": "generated/d2-failure-memory-provenance-bridge.json", "key": "summary.complete_calls", "equals": 144},
+        {"path": "generated/d2-failure-memory-provenance-bridge.json", "key": "summary.mean_success_minus_failure_terminal_rate", "equals": 0.0},
+        {"path": "generated/d2-failure-memory-provenance-bridge.json", "key": "decision", "equals": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY"},
+        {"path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json", "key": "candidate_pairs.gate_pass", "equals": true},
+        {"path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json", "key": "candidate_pairs.minimum_eligible_pairs", "equals": 4},
+        {"path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json", "key": "execution.requests_complete", "equals": 48},
+        {"path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json", "key": "execution.support_failures", "equals": 0},
+        {"path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json", "key": "summary.mean_success_minus_failure_terminal_rate", "equals": 0.166667},
+        {"path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json", "key": "summary.permutation_p_success_greater", "equals": 0.07853921460785392},
+        {"path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json", "key": "summary.support_gate_pass", "equals": false},
+        {"path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json", "key": "summary.counterevidence_gate_pass", "equals": false},
+        {"path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json", "key": "summary.verdict", "equals": "INCONCLUSIVE_NO_THRESHOLD_CHANGE"},
+        {"path": "generated/d2-failure-memory-provenance-r4-power-audit.json", "key": "status", "equals": "POSTHOC_DESIGN_POWER_DIAGNOSTIC"},
+        {"path": "generated/d2-failure-memory-provenance-r4-power-audit.json", "key": "frozen_primary_design.eligible_pairs", "equals": 4},
+        {"path": "generated/d2-failure-memory-provenance-r4-power-audit.json", "key": "anti_rescue.same_pair_seed_extension_is_confirmatory", "equals": false},
+        {"path": "generated/d2-failure-memory-provenance-equivalence-robustness.json", "key": "status", "equals": "COMPLETE_DIAGNOSTIC_IDENTIFICATION_NOT_ROBUST"},
+        {"path": "generated/d2-failure-memory-provenance-equivalence-robustness.json", "key": "summary.original_verifier_primary_strict_pass", "equals": 4},
+        {"path": "generated/d2-failure-memory-provenance-equivalence-robustness.json", "key": "summary.deepseek_primary_strict_pass", "equals": 0},
+        {"path": "generated/d2-failure-memory-provenance-equivalence-robustness.json", "key": "summary.kimi_primary_strict_pass", "equals": 1},
+        {"path": "generated/d2-failure-memory-provenance-equivalence-robustness.json", "key": "summary.three_reviewer_unanimous_primary_strict_pass", "equals": 0},
+        {"path": "generated/d2-failure-memory-provenance-equivalence-robustness.json", "key": "summary.semantic_verifier_is_identification_bottleneck", "equals": true},
+        {"path": "generated/d2-failure-memory-provenance-equivalence-robustness.json", "key": "claim_effect.C4_status", "equals": "ACTIVE_UNREFUTED_BUT_NOT_IDENTIFIED_BY_R4"},
+        {"path": "generated/d2-failure-memory-provenance-targeted-repair-adjudication-20260822.json", "key": "status", "equals": "TARGETED_REPAIR_TERMINAL_CURRENT_SUPPORT_NO_SUBMISSION_READY"},
+        {"path": "generated/d2-failure-memory-provenance-targeted-repair-adjudication-20260822.json", "key": "scientific_decision.paper_submission_ready", "equals": false},
+        {"path": "generated/d2-failure-memory-provenance-targeted-repair-adjudication-20260822.json", "key": "independent_confirmation_support.fresh_qualified_task_count", "equals": 0}
+      ]
+    }
+  ]
+}
