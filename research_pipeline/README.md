@@ -188,7 +188,9 @@ Every publishable claim must close against a real artifact through Evidence Inte
 
 Paper readiness uses two deliberately different quantities. `ledger_submission_ready` records that an append-only readiness receipt was reached historically; `gate_clean_submission_ready` asks whether the latest effective internal audit is still clean. A later failed Paper Preparation receipt never disappears behind an older state label. Every PaperState also exposes one zero-authority `primary_next_action`; a fully closed internal paper receives `NO_INTERNAL_ACTION`, while a named external support blocker remains `EXTERNAL_EVIDENCE_REQUIRED`.
 
-Mock-PC learning enters Research Memory only through structured aggregates such as objection category, evidence state, and action class. Reviewer prose and rationale remain private. These `REVIEW_LESSON` entries are reusable Paper Design prechecks only: they cannot update a scientific principle or authorize an experiment.
+Every ResearchItem now exposes the same single-action control-plane shape without creating execution authority. `STOPPED → NO_INTERNAL_ACTION`, `MERGED → MERGED_NO_STANDALONE_ACTION`, `HOLD → REOPEN_CONDITION_REQUIRED`, and `PAPER_READY → PAPERSTATE_HANDOFF`. These are derived read-only instructions over canonical state; `machine_actionable_research_items` must remain zero unless a future, separately authorized execution contract changes that rule.
+
+Mock-PC learning enters Research Memory only through structured aggregates such as objection category, evidence state, and action class. Reviewer prose and rationale remain private. These `REVIEW_LESSON` entries are reusable Paper Design prechecks only: they cannot update a scientific principle or authorize an experiment. `public_projection_invariants.py` cross-checks ResearchItem, PaperRegistry, ResearchSystem, ResearchDashboard, and ResearchMemory so a daily projection cannot silently change one layer without the others failing validation.
 
 ## 8. Automation boundary
 
@@ -246,6 +248,7 @@ python site_smoke_test.py
 python hierarchy_smoke_test.py
 SYSTEM_OVERVIEW_ONLY=1 python browser_smoke_test.py
 python paper_control_plane_browser_smoke_test.py
+python scripts/build_research_timeline.py --dashboard-only  # refresh the current control plane without rewriting timeline history
 python scripts/build_static_site.py
 SYSTEM_OVERVIEW_ONLY=1 python idea_browser_smoke_test.py
 ```

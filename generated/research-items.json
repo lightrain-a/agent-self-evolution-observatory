@@ -1,13 +1,15 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-22T10:43:41+00:00",
-  "source_revision": "32a5cf26be0b75dfd77fd23e1c3fba8f04c60cc9",
+  "generated_at": "2026-08-22T11:08:27+00:00",
+  "source_revision": "f8a7062a251c23035b1664e16b3319dc3dc1431a",
   "policy": {
     "research_item_is_primary_scientific_entity": true,
     "experiment_is_evidence_event_not_parallel_current_state": true,
     "paper_is_research_output_entity": true,
     "projection_is_read_only": true,
     "projection_cannot_grant_scientific_authority": true,
+    "primary_next_action_is_derived_zero_authority_projection": true,
+    "exactly_one_primary_next_action_per_research_item": true,
     "execution_protocol_support_and_scientific_failure_remain_distinct": true,
     "historical_p0_does_not_imply_current_execution_authority": true,
     "only_explicit_core_principle_closure_may_certify_scientific_dead_end": true
@@ -132,6 +134,13 @@
       "MERGED": 6,
       "STOPPED": 16
     },
+    "primary_next_action_counts": {
+      "MERGED_NO_STANDALONE_ACTION": 10,
+      "NO_INTERNAL_ACTION": 71,
+      "PAPERSTATE_HANDOFF": 1,
+      "REOPEN_CONDITION_REQUIRED": 5
+    },
+    "machine_actionable_research_items": 0,
     "current_formal_experiment_authority": 0
   },
   "research_items": [
@@ -212,7 +221,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "budgeted-evolution-controller",
@@ -291,7 +314,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "regression-gated-self-evolution",
@@ -372,7 +409,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "REOPEN_CONDITION_REQUIRED",
+        "action": "Keep the item on HOLD; return to scientific review only after the recorded reopen condition is satisfied.",
+        "action_zh": "保持 HOLD；只有满足已记录的重开条件后，才重新进入科学评审。",
+        "blocking_on": "REOPEN_CONDITION",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "compositional-update-compatibility",
@@ -455,7 +506,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "lineage-aware-rollback",
@@ -536,7 +601,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "active-causal-minimal-rollback",
@@ -611,7 +690,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "counterfactual-evolution-decision-controller",
@@ -686,7 +779,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "PF-1",
@@ -759,7 +866,21 @@
           "path": "generated/paper-first-pf1-problem-adjudication.json",
           "role": "latest_scientific_decision"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "PF-4",
@@ -832,7 +953,21 @@
           "path": "generated/paper-first-design-adjudication.json",
           "role": "latest_scientific_decision"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "MERGED_NO_STANDALONE_ACTION",
+        "action": "Do not advance this as a standalone line; reuse it only inside its merged parent unless the standalone reopen condition is met.",
+        "action_zh": "不再作为独立研究线推进；仅在已合并的上位方向中复用，除非满足独立重开条件。",
+        "blocking_on": "MERGED_PARENT_OR_REOPEN_CONDITION",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "PF-5",
@@ -905,7 +1040,21 @@
           "path": "generated/paper-first-pf357-problem-adjudication.json",
           "role": "latest_scientific_decision"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "MERGED_NO_STANDALONE_ACTION",
+        "action": "Do not advance this as a standalone line; reuse it only inside its merged parent unless the standalone reopen condition is met.",
+        "action_zh": "不再作为独立研究线推进；仅在已合并的上位方向中复用，除非满足独立重开条件。",
+        "blocking_on": "MERGED_PARENT_OR_REOPEN_CONDITION",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "PF-6",
@@ -978,7 +1127,21 @@
           "path": "generated/paper-first-design-adjudication.json",
           "role": "latest_scientific_decision"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "PF-7",
@@ -1051,7 +1214,21 @@
           "path": "generated/paper-first-pf357-problem-adjudication.json",
           "role": "latest_scientific_decision"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "MERGED_NO_STANDALONE_ACTION",
+        "action": "Do not advance this as a standalone line; reuse it only inside its merged parent unless the standalone reopen condition is met.",
+        "action_zh": "不再作为独立研究线推进；仅在已合并的上位方向中复用，除非满足独立重开条件。",
+        "blocking_on": "MERGED_PARENT_OR_REOPEN_CONDITION",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "outcome-equivalent-trajectory-contrast",
@@ -1128,7 +1305,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "MERGED_NO_STANDALONE_ACTION",
+        "action": "Do not advance this as a standalone line; reuse it only inside its merged parent unless the standalone reopen condition is met.",
+        "action_zh": "不再作为独立研究线推进；仅在已合并的上位方向中复用，除非满足独立重开条件。",
+        "blocking_on": "MERGED_PARENT_OR_REOPEN_CONDITION",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "contradiction-preserving-consolidation",
@@ -1207,7 +1398,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "REOPEN_CONDITION_REQUIRED",
+        "action": "Keep the item on HOLD; return to scientific review only after the recorded reopen condition is satisfied.",
+        "action_zh": "保持 HOLD；只有满足已记录的重开条件后，才重新进入科学评审。",
+        "blocking_on": "REOPEN_CONDITION",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "retrieval-interference-auditor",
@@ -1289,7 +1494,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "REOPEN_CONDITION_REQUIRED",
+        "action": "Keep the item on HOLD; return to scientific review only after the recorded reopen condition is satisfied.",
+        "action_zh": "保持 HOLD；只有满足已记录的重开条件后，才重新进入科学评审。",
+        "blocking_on": "REOPEN_CONDITION",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "causally-verified-experience-admission",
@@ -1366,7 +1585,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "MERGED_NO_STANDALONE_ACTION",
+        "action": "Do not advance this as a standalone line; reuse it only inside its merged parent unless the standalone reopen condition is met.",
+        "action_zh": "不再作为独立研究线推进；仅在已合并的上位方向中复用，除非满足独立重开条件。",
+        "blocking_on": "MERGED_PARENT_OR_REOPEN_CONDITION",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "local-counterexample-memory-repair",
@@ -1448,7 +1681,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "memory-half-life",
@@ -1527,7 +1774,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "applicability-bounded-lessons",
@@ -1604,7 +1865,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "MERGED_NO_STANDALONE_ACTION",
+        "action": "Do not advance this as a standalone line; reuse it only inside its merged parent unless the standalone reopen condition is met.",
+        "action_zh": "不再作为独立研究线推进；仅在已合并的上位方向中复用，除非满足独立重开条件。",
+        "blocking_on": "MERGED_PARENT_OR_REOPEN_CONDITION",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "replicated-effect-memory-gate",
@@ -1679,7 +1954,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "cross-task-effect-transport-certificate",
@@ -1754,7 +2043,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "constraint-complete-typed-memory-order-logic",
@@ -1829,7 +2132,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "PF-3",
@@ -1902,7 +2219,21 @@
           "path": "generated/paper-first-pf357-problem-adjudication.json",
           "role": "latest_scientific_decision"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "MERGED_NO_STANDALONE_ACTION",
+        "action": "Do not advance this as a standalone line; reuse it only inside its merged parent unless the standalone reopen condition is met.",
+        "action_zh": "不再作为独立研究线推进；仅在已合并的上位方向中复用，除非满足独立重开条件。",
+        "blocking_on": "MERGED_PARENT_OR_REOPEN_CONDITION",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "METASKILL-ALFWORLD-SLOW-LOOP-RESIDUAL",
@@ -1977,6 +2308,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -2052,6 +2397,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -2127,6 +2486,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -2202,6 +2575,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -2277,6 +2664,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -2352,6 +2753,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -2427,6 +2842,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -2502,6 +2931,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "PROBLEM_NOVELTY_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -2581,7 +3024,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "evaluator-coadaptation-guard",
@@ -2664,7 +3121,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "reward-invariance-audit",
@@ -2741,7 +3212,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "MERGED_NO_STANDALONE_ACTION",
+        "action": "Do not advance this as a standalone line; reuse it only inside its merged parent unless the standalone reopen condition is met.",
+        "action_zh": "不再作为独立研究线推进；仅在已合并的上位方向中复用，除非满足独立重开条件。",
+        "blocking_on": "MERGED_PARENT_OR_REOPEN_CONDITION",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "self-correction-collapse-detector",
@@ -2820,7 +3305,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "intervention-validated-self-correction",
@@ -2899,7 +3398,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "correction-policy-credit",
@@ -2978,7 +3491,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "MERGED_NO_STANDALONE_ACTION",
+        "action": "Do not advance this as a standalone line; reuse it only inside its merged parent unless the standalone reopen condition is met.",
+        "action_zh": "不再作为独立研究线推进；仅在已合并的上位方向中复用，除非满足独立重开条件。",
+        "blocking_on": "MERGED_PARENT_OR_REOPEN_CONDITION",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "PF-8",
@@ -3051,7 +3578,21 @@
           "path": "generated/paper-first-idea-incubation.json",
           "role": "latest_scientific_decision"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "PA-05-SKILL-VALIDATION-TRANSFER",
@@ -3126,6 +3667,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -3201,6 +3756,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -3276,6 +3845,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "ASSUMPTION_SCOPE_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -3355,7 +3938,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "failure-frontier-curriculum",
@@ -3434,7 +4031,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "curriculum-drift-controller",
@@ -3511,7 +4122,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "MERGED_NO_STANDALONE_ACTION",
+        "action": "Do not advance this as a standalone line; reuse it only inside its merged parent unless the standalone reopen condition is met.",
+        "action_zh": "不再作为独立研究线推进；仅在已合并的上位方向中复用，除非满足独立重开条件。",
+        "blocking_on": "MERGED_PARENT_OR_REOPEN_CONDITION",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "workflow-generalization-certificate",
@@ -3590,7 +4215,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "REOPEN_CONDITION_REQUIRED",
+        "action": "Keep the item on HOLD; return to scientific review only after the recorded reopen condition is satisfied.",
+        "action_zh": "保持 HOLD；只有满足已记录的重开条件后，才重新进入科学评审。",
+        "blocking_on": "REOPEN_CONDITION",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "workflow-branch-credit",
@@ -3673,7 +4312,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "bounded-probe-api-transition-operator",
@@ -3748,7 +4401,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "interventional-permission-triage-under-ceiling",
@@ -3823,7 +4490,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "PF-2",
@@ -3896,7 +4577,21 @@
           "path": "generated/paper-first-pf2-method-adjudication.json",
           "role": "latest_scientific_decision"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "PF-9",
@@ -3969,7 +4664,21 @@
           "path": "generated/paper-first-idea-incubation.json",
           "role": "latest_scientific_decision"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "skill-taxonomy-representation-invariance",
@@ -4040,7 +4749,17 @@
         "paper_id": "STRI",
         "acceptance_paper_id": "STRI-ICLR2027",
         "status": "SUBMISSION_READY",
-        "scientific_status": "READY"
+        "scientific_status": "READY",
+        "primary_next_action": {
+          "action_class": "NO_INTERNAL_ACTION",
+          "action": "No additional autonomous research, experiment, or paper-repair action is required by the internal Research OS.",
+          "action_zh": "内部 Research OS 已无新增科研、实验或论文修复动作；保持冻结证据与主张边界即可。",
+          "blocking_on": "",
+          "machine_actionable": false,
+          "scientific_authority": false,
+          "experiment_authority": false,
+          "gpu_authority": false
+        }
       },
       "provenance_refs": [
         {
@@ -4051,7 +4770,21 @@
           "path": "generated/asset-first-stri-iclr2027-final-state-20260816.json",
           "role": "paper_source_state"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "PAPERSTATE_HANDOFF",
+        "action": "The research object has handed off to STRI; the ResearchItem does not launch further experiments itself.",
+        "action_zh": "科研对象已交给 STRI；ResearchItem 不再自行启动实验。",
+        "blocking_on": "STRI",
+        "reopen_condition_present": true,
+        "paper_id": "STRI",
+        "paper_next_action_class": "NO_INTERNAL_ACTION",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "SHADOW-P09-C01",
@@ -4126,6 +4859,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "PROBLEM_NOVELTY_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -4201,6 +4948,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "PROBLEM_NOVELTY_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -4276,6 +5037,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "PROBLEM_NOVELTY_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -4351,6 +5126,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -4426,6 +5215,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -4501,6 +5304,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -4576,6 +5393,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "CORE_PRINCIPLE_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -4651,6 +5482,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -4726,6 +5571,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -4801,6 +5660,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -4876,6 +5749,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "EXPERIMENT_IDENTIFIABILITY_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -4951,6 +5838,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -5026,6 +5927,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "OPERATIONALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -5101,6 +6016,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "OPERATIONALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -5176,6 +6105,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -5251,6 +6194,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -5326,6 +6283,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -5405,7 +6376,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "irreversible-action-counterfactuals",
@@ -5484,7 +6469,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "recovery-conditioned-experience",
@@ -5563,7 +6562,21 @@
           "path": "generated/p0-admission-state.json",
           "role": "experiment_contract"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "EVODRC-BLOCK7-STALL",
@@ -5638,6 +6651,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "ASSUMPTION_SCOPE_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -5713,6 +6740,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -5788,6 +6829,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -5856,14 +6911,38 @@
         "acceptance_paper_id": "AGENT-SAFETY-R9",
         "status": "SUBMISSION_READY",
         "scientific_status": "READY",
-        "blocked": false
+        "blocked": false,
+        "primary_next_action": {
+          "action_class": "NO_INTERNAL_ACTION",
+          "action": "No additional autonomous research, experiment, or paper-repair action is required by the internal Research OS.",
+          "action_zh": "内部 Research OS 已无新增科研、实验或论文修复动作；保持冻结证据与主张边界即可。",
+          "blocking_on": "",
+          "machine_actionable": false,
+          "scientific_authority": false,
+          "experiment_authority": false,
+          "gpu_authority": false
+        }
       },
       "provenance_refs": [
         {
           "path": "generated/agent-safety-program-state.json",
           "role": "safety_program_authority"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "REOPEN_CONDITION_REQUIRED",
+        "action": "Keep the item on HOLD; return to scientific review only after the recorded reopen condition is satisfied.",
+        "action_zh": "保持 HOLD；只有满足已记录的重开条件后，才重新进入科学评审。",
+        "blocking_on": "REOPEN_CONDITION",
+        "reopen_condition_present": true,
+        "paper_id": "AGENT-SAFETY-R9",
+        "paper_next_action_class": "NO_INTERNAL_ACTION",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "AUTO-1-RELEVANT-SKILL-MISEXECUTION",
@@ -5936,7 +7015,21 @@
           "path": "generated/current-research-status.json",
           "role": "merged_shadow_closure"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "P03-AUTOSKILL-CONTEXT-UPTAKE",
@@ -6009,7 +7102,21 @@
           "path": "generated/current-research-status.json",
           "role": "merged_shadow_closure"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "AGENT-SAFETY-DUAL-LOOP-RHO-CRITICAL",
@@ -6078,7 +7185,21 @@
           "path": "generated/agent-safety-program-state.json",
           "role": "typed_safety_closure"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "PORT-010",
@@ -6151,7 +7272,21 @@
           "path": "generated/current-research-status.json",
           "role": "merged_shadow_closure"
         }
-      ]
+      ],
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
+      }
     },
     {
       "id": "SP-09",
@@ -6226,6 +7361,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "PROBLEM_NOVELTY_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -6301,6 +7450,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -6376,6 +7539,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "OPERATIONALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -6451,6 +7628,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -6526,6 +7717,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -6601,6 +7806,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -6676,6 +7895,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "EXPERIMENT_IDENTIFIABILITY_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     },
     {
@@ -6751,6 +7984,20 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "METHOD_REALIZATION_STOP"
+      },
+      "primary_next_action": {
+        "action_class": "NO_INTERNAL_ACTION",
+        "action": "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition.",
+        "action_zh": "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。",
+        "blocking_on": "",
+        "reopen_condition_present": true,
+        "paper_id": "",
+        "paper_next_action_class": "",
+        "machine_actionable": false,
+        "scientific_authority": false,
+        "experiment_authority": false,
+        "p0_authority": false,
+        "gpu_authority": false
       }
     }
   ],

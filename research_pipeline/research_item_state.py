@@ -82,6 +82,56 @@ def authority(**kwargs: bool) -> dict[str, bool]:
     return {key: bool(kwargs.get(key, False)) for key in ("method", "experiment", "p0", "gpu")}
 
 
+def _research_item_next_action(row: dict[str, Any]) -> dict[str, Any]:
+    """Derive exactly one zero-authority next action from canonical ResearchItem state."""
+    state = str(row.get("scientific_state") or "")
+    reopen = bi(row.get("reopen_condition") or row.get("reopen_only_if") or "")
+    paper = row.get("paper_transition") or {}
+    paper_id = str(paper.get("paper_id") or "")
+    paper_action = paper.get("primary_next_action") or {}
+
+    if state == "PAPER_READY":
+        action_class = "PAPERSTATE_HANDOFF"
+        action_zh = f"科研对象已交给 {paper_id or 'PaperState'}；ResearchItem 不再自行启动实验。"
+        action_en = f"The research object has handed off to {paper_id or 'PaperState'}; the ResearchItem does not launch further experiments itself."
+        blocking_on = paper_id or "PAPERSTATE_HANDOFF"
+    elif state == "HOLD":
+        action_class = "REOPEN_CONDITION_REQUIRED"
+        action_zh = "保持 HOLD；只有满足已记录的重开条件后，才重新进入科学评审。"
+        action_en = "Keep the item on HOLD; return to scientific review only after the recorded reopen condition is satisfied."
+        blocking_on = "REOPEN_CONDITION" if (reopen.get("zh") or reopen.get("en")) else "REOPEN_CONDITION_MISSING"
+    elif state == "MERGED":
+        action_class = "MERGED_NO_STANDALONE_ACTION"
+        action_zh = "不再作为独立研究线推进；仅在已合并的上位方向中复用，除非满足独立重开条件。"
+        action_en = "Do not advance this as a standalone line; reuse it only inside its merged parent unless the standalone reopen condition is met."
+        blocking_on = "MERGED_PARENT_OR_REOPEN_CONDITION" if (reopen.get("zh") or reopen.get("en")) else "MERGED_PARENT"
+    elif state == "STOPPED":
+        action_class = "NO_INTERNAL_ACTION"
+        action_zh = "当前没有独立内部动作；不要重跑或改写结论，只有新证据满足重开条件时才重新评审。"
+        action_en = "There is no current standalone internal action; do not rerun or rewrite the decision unless new evidence satisfies the reopen condition."
+        blocking_on = ""
+    else:
+        action_class = "INTERNAL_REVIEW_REQUIRED"
+        action_zh = "当前状态无法映射到已知动作类；先进行人工状态核对，不得自动执行。"
+        action_en = "The current state does not map to a known action class; require human state review and do not auto-execute."
+        blocking_on = state or "UNKNOWN_RESEARCH_STATE"
+
+    return {
+        "action_class": action_class,
+        "action": action_en,
+        "action_zh": action_zh,
+        "blocking_on": blocking_on,
+        "reopen_condition_present": bool(reopen.get("zh") or reopen.get("en")),
+        "paper_id": paper_id,
+        "paper_next_action_class": str(paper_action.get("action_class") or ""),
+        "machine_actionable": False,
+        "scientific_authority": False,
+        "experiment_authority": False,
+        "p0_authority": False,
+        "gpu_authority": False,
+    }
+
+
 def decision_state(decision: str, merged: bool = False) -> str:
     if merged:
         return "MERGED"
@@ -513,10 +563,12 @@ def build_research_item_state():
     for row in items:
         if row.get("code") == "E-7" and acceptance_by_id.get("STRI-ICLR2027"):
             accepted = acceptance_by_id["STRI-ICLR2027"]
-            row["paper_transition"] = {"paper_id": "STRI", "acceptance_paper_id": "STRI-ICLR2027", "status": accepted.get("current_state"), "scientific_status": accepted.get("scientific_status")}
+            row["paper_transition"] = {"paper_id": "STRI", "acceptance_paper_id": "STRI-ICLR2027", "status": accepted.get("current_state"), "scientific_status": accepted.get("scientific_status"), "primary_next_action": dict(accepted.get("primary_next_action") or {})}
         elif row.get("code") == "G-1" and acceptance_by_id.get("AGENT-SAFETY-R9"):
             accepted = acceptance_by_id["AGENT-SAFETY-R9"]
-            row["paper_transition"] = {"paper_id": "AGENT-SAFETY-R9", "acceptance_paper_id": "AGENT-SAFETY-R9", "status": accepted.get("current_state"), "scientific_status": accepted.get("scientific_status"), "blocked": accepted.get("scientific_status") == "CAUSAL_HOLD"}
+            row["paper_transition"] = {"paper_id": "AGENT-SAFETY-R9", "acceptance_paper_id": "AGENT-SAFETY-R9", "status": accepted.get("current_state"), "scientific_status": accepted.get("scientific_status"), "blocked": accepted.get("scientific_status") == "CAUSAL_HOLD", "primary_next_action": dict(accepted.get("primary_next_action") or {})}
+    for row in items:
+        row["primary_next_action"] = _research_item_next_action(row)
     items.sort(key=lambda r: (r["category"], int(str(r["code"]).split("-",1)[1]) if str(r["code"]).split("-",1)[1].isdigit() else 999, r["code"]))
     experiments = [*build_p0_experiment_records(admissions, terminal, batch), *build_stri_experiment_records(current)]; contexts = build_evidence_contexts(current)
     by_category = {}
@@ -526,13 +578,14 @@ def build_research_item_state():
         ec = sum(bool(r.get("portfolio_context")) and r["category"] == category for r in contexts)
         by_category[category] = {"research_items": ri, "experiment_contexts": ex, "evidence_contexts": ec, "portfolio_total": ri+ex+ec}
     portfolio_experiments = [r for r in experiments if r.get("portfolio_context")]
+    action_counts = dict(sorted(Counter((r.get("primary_next_action") or {}).get("action_class") or "UNKNOWN" for r in items).items()))
     return {
         "schema_version": "1.0", "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "source_revision": git_head(),
-        "policy": {"research_item_is_primary_scientific_entity": True, "experiment_is_evidence_event_not_parallel_current_state": True, "paper_is_research_output_entity": True, "projection_is_read_only": True, "projection_cannot_grant_scientific_authority": True, "execution_protocol_support_and_scientific_failure_remain_distinct": True, "historical_p0_does_not_imply_current_execution_authority": True, "only_explicit_core_principle_closure_may_certify_scientific_dead_end": True},
+        "policy": {"research_item_is_primary_scientific_entity": True, "experiment_is_evidence_event_not_parallel_current_state": True, "paper_is_research_output_entity": True, "projection_is_read_only": True, "projection_cannot_grant_scientific_authority": True, "primary_next_action_is_derived_zero_authority_projection": True, "exactly_one_primary_next_action_per_research_item": True, "execution_protocol_support_and_scientific_failure_remain_distinct": True, "historical_p0_does_not_imply_current_execution_authority": True, "only_explicit_core_principle_closure_may_certify_scientific_dead_end": True},
         "categories": [{"id": k, **v} for k,v in CATEGORY_DEFINITIONS.items()],
         "summary": {"research_items": len(items), "experiment_records": len(experiments), "portfolio_experiment_contexts": len(portfolio_experiments), "evidence_contexts": len(contexts), "portfolio_objects": len(items)+len(portfolio_experiments)+len(contexts),
                     "source_kind_counts": dict(sorted(Counter(r.get("source_kind") for r in items).items())), "scientific_state_counts": dict(sorted(Counter(r.get("scientific_state") for r in items).items())), "by_category": by_category,
-                    "parent_scientific_states": dict(sorted(Counter(r["scientific_state"] for r in items if r["source_kind"] == "parent").items())), "current_formal_experiment_authority": int((current.get("headline") or {}).get("launchable_formal_experiments") or 0)},
+                    "parent_scientific_states": dict(sorted(Counter(r["scientific_state"] for r in items if r["source_kind"] == "parent").items())), "primary_next_action_counts": action_counts, "machine_actionable_research_items": sum((r.get("primary_next_action") or {}).get("machine_actionable") is True for r in items), "current_formal_experiment_authority": int((current.get("headline") or {}).get("launchable_formal_experiments") or 0)},
         "research_items": items, "experiment_records": experiments, "evidence_contexts": contexts,
         "provenance": {"canonical_inputs": ["generated/human-terminal-idea-state.json", "generated/iclr-low-resource-ideas.json", "generated/current-final-ideas.json", "generated/p0-admission-state.json", "generated/p0-revived-batch-f0.json", "generated/paper-first-idea-incubation.json", "generated/current-research-status.json", "generated/paper-first-search-portfolio-design-adjudication.json#shadow_search_memory.closed_objects", "generated/agent-safety-program-state.json", "generated/research-system-state.json#paper_acceptance.ledger_index"]},
     }
@@ -687,6 +740,16 @@ def validate_research_item_state(state):
     actual = {k:int((summary.get("by_category",{}).get(k) or {}).get("portfolio_total") or 0) for k in expected}
     if actual != expected: errors.append(f"category totals drifted: expected={expected}, actual={actual}")
     if summary.get("parent_scientific_states") != {"HOLD":4,"MERGED":6,"STOPPED":16}: errors.append(f"parent state split drifted: {summary.get('parent_scientific_states')}")
+    expected_actions = {"PAPER_READY":"PAPERSTATE_HANDOFF","HOLD":"REOPEN_CONDITION_REQUIRED","MERGED":"MERGED_NO_STANDALONE_ACTION","STOPPED":"NO_INTERNAL_ACTION"}
+    action_counts = Counter((r.get("primary_next_action") or {}).get("action_class") or "UNKNOWN" for r in items)
+    if dict(sorted(action_counts.items())) != dict(summary.get("primary_next_action_counts") or {}): errors.append("ResearchItem primary-next-action summary drifted from item-level projections")
+    if int(summary.get("machine_actionable_research_items") or 0) != 0: errors.append("ResearchItem next-action projection cannot expose machine-actionable research work")
+    for row in items:
+        action = row.get("primary_next_action") or {}; expected_action = expected_actions.get(str(row.get("scientific_state") or ""), "INTERNAL_REVIEW_REQUIRED")
+        if action.get("action_class") != expected_action: errors.append(f"ResearchItem primary next action drifted:{row.get('code')}:{row.get('scientific_state')}->{action.get('action_class')}")
+        if action.get("machine_actionable") is not False or any(action.get(key) is not False for key in ("scientific_authority","experiment_authority","p0_authority","gpu_authority")): errors.append(f"ResearchItem next action leaked authority:{row.get('code')}")
+        if row.get("scientific_state") == "HOLD" and (not action.get("blocking_on") or action.get("reopen_condition_present") is not True): errors.append(f"HOLD ResearchItem missing explicit reopen condition:{row.get('code')}")
+        if row.get("scientific_state") == "PAPER_READY" and not action.get("paper_id"): errors.append(f"PAPER_READY ResearchItem missing PaperState handoff:{row.get('code')}")
     by_code = {r.get("code"):r for r in items}
     for code in ("A-3","B-2","B-3","E-1"):
         if by_code.get(code,{}).get("scientific_state") != "HOLD": errors.append(f"{code} must be HOLD, not scientific failure")

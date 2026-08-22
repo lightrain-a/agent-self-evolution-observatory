@@ -7,10 +7,23 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
-from .automation_cycle import _advisory_step, _run_discovery_frontier_control, _run_external_system_learning_review, _run_global_relation_control, _run_shadow_continuation_frontier_control, _run_shadow_search_admission_control, _step, _sync_literature, cycle_lock, run_cycle
+from .automation_cycle import _advisory_step, _run_discovery_frontier_control, _run_external_system_learning_review, _run_global_relation_control, _run_public_projection_invariants, _run_shadow_continuation_frontier_control, _run_shadow_search_admission_control, _step, _sync_literature, cycle_lock, run_cycle
 
 
 class AutomationCycleAIConsultationTest(unittest.TestCase):
+    def test_public_projection_invariant_gate_passes_current_generated_state(self) -> None:
+        result = _run_public_projection_invariants()
+        self.assertEqual(result["status"], "PUBLIC_CONTROL_PLANE_CONSISTENT")
+        self.assertEqual(result["summary"]["machine_actionable_research_items"], 0)
+        self.assertEqual(result["summary"]["paper_internal_action_required"], 1)
+        self.assertEqual(result["summary"]["review_lessons"], 5)
+        self.assertFalse(result["publication_authority"])
+
+    def test_public_projection_invariant_gate_fails_closed(self) -> None:
+        with patch("research_pipeline.automation_cycle.validate_public_control_plane", return_value=["forced-drift"]):
+            with self.assertRaisesRegex(RuntimeError, "forced-drift"):
+                _run_public_projection_invariants()
+
     def test_orphan_pid_cycle_lock_is_reclaimed_immediately(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             lock=Path(td)/"cycle.lock"; lock.write_text(json.dumps({"pid":12345,"started_at":"old"}),encoding="utf-8")

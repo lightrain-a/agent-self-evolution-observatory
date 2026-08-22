@@ -56,6 +56,26 @@ class ResearchItemStateTest(unittest.TestCase):
             {"A": 12, "B": 21, "C": 10, "D": 3, "E": 27, "F": 6, "G": 13},
         )
 
+    def test_every_research_item_has_one_zero_authority_next_action(self) -> None:
+        expected = {
+            "STOPPED": "NO_INTERNAL_ACTION",
+            "MERGED": "MERGED_NO_STANDALONE_ACTION",
+            "HOLD": "REOPEN_CONDITION_REQUIRED",
+            "PAPER_READY": "PAPERSTATE_HANDOFF",
+        }
+        counts = {}
+        for row in self.state["research_items"]:
+            action = row["primary_next_action"]
+            self.assertEqual(action["action_class"], expected[row["scientific_state"]], row["code"])
+            self.assertFalse(action["machine_actionable"], row["code"])
+            self.assertFalse(any(action[key] for key in ("scientific_authority", "experiment_authority", "p0_authority", "gpu_authority")), row["code"])
+            counts[action["action_class"]] = counts.get(action["action_class"], 0) + 1
+        self.assertEqual(counts, {"NO_INTERNAL_ACTION": 71, "MERGED_NO_STANDALONE_ACTION": 10, "REOPEN_CONDITION_REQUIRED": 5, "PAPERSTATE_HANDOFF": 1})
+        self.assertEqual(self.state["summary"]["primary_next_action_counts"], counts)
+        self.assertEqual(self.state["summary"]["machine_actionable_research_items"], 0)
+        self.assertEqual(self.by_code["E-7"]["primary_next_action"]["paper_id"], "STRI")
+        self.assertEqual(self.by_code["E-7"]["primary_next_action"]["paper_next_action_class"], "NO_INTERNAL_ACTION")
+
     def test_latest_shadow_search_memory_closure_is_projected(self) -> None:
         p04 = next(row for row in self.state["research_items"] if row["id"] == "SHADOW-P04-C01")
         self.assertEqual((p04["code"], p04["category"], p04["source_kind"]), ("B-21", "B", "shadow_closed"))

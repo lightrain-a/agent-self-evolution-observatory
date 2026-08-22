@@ -76,6 +76,7 @@ from .paper_first_support_release_watch import load_private_support_release_watc
 from .paper_first_support_asset_recheck import load_private_support_asset_recheck_queue, public_support_asset_recheck_summary, write_private_support_asset_recheck_queue
 from .paper_first_support_asset_recheck_handoff import load_private_support_asset_recheck_handoff, public_support_asset_recheck_handoff_summary, write_private_support_asset_recheck_handoff
 from .research_system import write_research_system_state
+from .public_projection_invariants import validate_public_control_plane
 from .publication import PUBLICATION_OK_STATES, publish_generated_state
 
 
@@ -418,23 +419,34 @@ def run_cycle(
         report["steps"].append(timeline_publication)
         if timeline_publication["status"] != "pass":
             report["status"] = "degraded"
+        projection_gate = _step("public-control-plane-invariants-before-publish", _run_public_projection_invariants)
+        report["steps"].append(projection_gate)
+        failed_prerequisites = [step["name"] for step in (research_item_publication, timeline_publication, projection_gate) if step["status"] != "pass"]
         publication_started = time.time()
-        try:
-            publication_result = publish_generated_state(mode=mode)
-            publication_status = "pass" if publication_result.get("status") in PUBLICATION_OK_STATES else "fail"
-            publication = {
-                "name": "publish-generated-state",
-                "status": publication_status,
-                "duration_seconds": round(time.time() - publication_started, 3),
-                "summary": publication_result,
-            }
-        except Exception as error:
+        if failed_prerequisites:
             publication = {
                 "name": "publish-generated-state",
                 "status": "fail",
                 "duration_seconds": round(time.time() - publication_started, 3),
-                "error": f"{type(error).__name__}: {error}",
+                "summary": {"status": "SKIPPED_PUBLICATION_GATE_FAILED", "failed_prerequisites": failed_prerequisites},
             }
+        else:
+            try:
+                publication_result = publish_generated_state(mode=mode)
+                publication_status = "pass" if publication_result.get("status") in PUBLICATION_OK_STATES else "fail"
+                publication = {
+                    "name": "publish-generated-state",
+                    "status": publication_status,
+                    "duration_seconds": round(time.time() - publication_started, 3),
+                    "summary": publication_result,
+                }
+            except Exception as error:
+                publication = {
+                    "name": "publish-generated-state",
+                    "status": "fail",
+                    "duration_seconds": round(time.time() - publication_started, 3),
+                    "error": f"{type(error).__name__}: {error}",
+                }
         report["steps"].append(publication)
         if publication["status"] != "pass":
             report["status"] = "degraded"
@@ -542,6 +554,42 @@ def _run_research_timeline_projection() -> dict[str, Any]:
         "status": "PROJECTED_READ_ONLY",
         "scientific_authority": False,
         "summary": payload.get("summary", {}),
+    }
+
+
+def _run_public_projection_invariants() -> dict[str, Any]:
+    generated = PROJECT_ROOT / "generated"
+    def load(name: str) -> dict[str, Any]:
+        payload = json.loads((generated / name).read_text(encoding="utf-8"))
+        if not isinstance(payload, dict):
+            raise RuntimeError(f"public projection is not a JSON object:{name}")
+        return payload
+
+    research = load("research-items.json")
+    registry = load("paper-registry.json")
+    system = load("research-system-state.json")
+    dashboard = load("research-dashboard.json")
+    memory = load("research-memory-wiki.json")
+    errors = validate_public_control_plane(
+        research_state=research,
+        paper_registry=registry,
+        research_system=system,
+        research_dashboard=dashboard,
+        research_memory=memory,
+    )
+    if errors:
+        raise RuntimeError("public control-plane projection invariant failure: " + "; ".join(errors))
+    return {
+        "status": "PUBLIC_CONTROL_PLANE_CONSISTENT",
+        "scientific_authority": False,
+        "publication_authority": False,
+        "summary": {
+            "research_items": int((research.get("summary") or {}).get("research_items") or 0),
+            "machine_actionable_research_items": int((research.get("summary") or {}).get("machine_actionable_research_items") or 0),
+            "papers": int((registry.get("summary") or {}).get("papers") or 0),
+            "paper_internal_action_required": int((registry.get("summary") or {}).get("internal_action_required") or 0),
+            "review_lessons": int((memory.get("summary") or {}).get("review_lessons") or 0),
+        },
     }
 
 

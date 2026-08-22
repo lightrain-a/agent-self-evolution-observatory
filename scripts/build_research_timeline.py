@@ -1174,6 +1174,8 @@ def build_dashboard(timeline: dict[str, Any]) -> dict[str, Any]:
         code = str(row.get("code") or "")
         paper = papers_by_source.get(code) or {}
         paper_stage = str(paper.get("paper_stage") or paper.get("current_state") or "")
+        row_action = dict(row.get("primary_next_action") or {})
+        paper_action = dict(paper.get("primary_next_action") or {})
         row_briefing_zh = briefing_zh.get(code, _compact_public(row.get("decision_reason"), 180))
         row_briefing_en = briefing_en.get(code, _compact_public(row.get("decision_reason"), 180))
         row_next_zh = next_step_zh.get(code, _compact_public(row.get("reopen_condition"), 180))
@@ -1181,8 +1183,8 @@ def build_dashboard(timeline: dict[str, Any]) -> dict[str, Any]:
         if code == "E-7" and paper_stage == "SUBMISSION_READY" and paper.get("submission_ready") is True:
             row_briefing_zh = "3/3 条窄主张已有对应证据，Story Search、双 Mock PC、Claim Audit、Manuscript CI、PDF QA 与 Prebuttal 已闭环；STRI 已达到 canonical Submission Ready。"
             row_briefing_en = "All 3/3 narrow claims are evidence-backed and Story Search, both Mock PC modes, Claim Audit, Manuscript CI, PDF QA, and Prebuttal are closed; STRI is canonically Submission Ready."
-            row_next_zh = "论文侧硬门已经闭环；下一步由人工完成作者责任确认、OpenReview 账号/元数据核验与真实提交。系统 submission authority 仍为 0。"
-            row_next_en = "The paper-side hard gates are closed. Next comes human author responsibility/signoff, OpenReview account/metadata verification, and real submission; system submission authority remains zero."
+            row_next_zh = str(paper_action.get("action_zh") or row_action.get("action_zh") or "内部 Research OS 已无新增科研、实验或论文修复动作；保持冻结证据与主张边界即可。")
+            row_next_en = str(paper_action.get("action") or row_action.get("action") or "No further internal research, experiment, or paper-repair action is required; keep the frozen evidence and claim boundary.")
         attention_rows.append({
             "code": code,
             "category": str(row.get("category") or ""),
@@ -1193,6 +1195,9 @@ def build_dashboard(timeline: dict[str, Any]) -> dict[str, Any]:
             "briefing_en": row_briefing_en,
             "next_step_zh": row_next_zh,
             "next_step_en": row_next_en,
+            "primary_next_action": row_action,
+            "next_action_class": str(row_action.get("action_class") or ""),
+            "paper_next_action_class": str(paper_action.get("action_class") or ""),
             "current_reason_zh": _compact_public(row.get("decision_reason"), 230),
             "reopen_condition_zh": _compact_public(row.get("reopen_condition"), 210),
             "paper_id": str(paper.get("paper_id") or ""),
@@ -1218,6 +1223,8 @@ def build_dashboard(timeline: dict[str, Any]) -> dict[str, Any]:
             "ledger_submission_ready": bool(row.get("submission_ready")),
             "gate_clean_submission_ready": bool(row.get("gate_clean_submission_ready", row.get("submission_ready"))),
             "immediate_submission_hold": bool(row.get("immediate_submission_hold")),
+            "primary_next_action": dict(row.get("primary_next_action") or {}),
+            "next_action_class": str((row.get("primary_next_action") or {}).get("action_class") or ""),
             "next_action": _compact_public(row.get("next_action"), 240),
             "paper_href": f"selected-paper.html?paper={row.get('paper_id')}",
             "timeline_href": _dashboard_href(paper_id=str(row.get("paper_id") or "")),
@@ -1339,6 +1346,10 @@ def build_dashboard(timeline: dict[str, Any]) -> dict[str, Any]:
             "submission_ready": sum(bool(row.get("gate_clean_submission_ready")) for row in paper_rows),
             "ledger_submission_ready": sum(bool(row.get("ledger_submission_ready")) for row in paper_rows),
             "immediate_submission_holds": sum(bool(row.get("immediate_submission_hold")) for row in paper_rows),
+            "paper_internal_action_required": sum(row.get("next_action_class") != "NO_INTERNAL_ACTION" for row in paper_rows),
+            "paper_no_internal_action": sum(row.get("next_action_class") == "NO_INTERNAL_ACTION" for row in paper_rows),
+            "research_primary_next_action_counts": dict(research_summary.get("primary_next_action_counts") or {}),
+            "machine_actionable_research_items": int(research_summary.get("machine_actionable_research_items") or 0),
         },
         "attention": attention_rows,
         "papers": paper_rows,
@@ -1368,8 +1379,14 @@ def validate_dashboard(payload: dict[str, Any]) -> None:
     codes = [row.get("code") for row in attention]
     assert len(codes) == len(set(codes))
     assert all(row.get("scientific_state") in {"PAPER_READY", "HOLD"} for row in attention)
+    expected_attention_action = {"PAPER_READY": "PAPERSTATE_HANDOFF", "HOLD": "REOPEN_CONDITION_REQUIRED"}
+    assert all(row.get("next_action_class") == expected_attention_action.get(row.get("scientific_state")) for row in attention)
+    assert all((row.get("primary_next_action") or {}).get("machine_actionable") is False for row in attention)
     assert payload.get("summary", {}).get("current_attention") == len(attention)
     assert payload.get("summary", {}).get("papers") == len(payload.get("papers") or [])
+    assert payload.get("summary", {}).get("paper_internal_action_required") == sum(row.get("next_action_class") != "NO_INTERNAL_ACTION" for row in payload.get("papers") or [])
+    assert payload.get("summary", {}).get("paper_no_internal_action") == sum(row.get("next_action_class") == "NO_INTERNAL_ACTION" for row in payload.get("papers") or [])
+    assert payload.get("summary", {}).get("machine_actionable_research_items") == 0
 
 
 def validate(payload: dict[str, Any]) -> None:
@@ -1396,12 +1413,17 @@ def validate(payload: dict[str, Any]) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--memory-db", type=Path, default=DEFAULT_DB)
+    parser.add_argument("--dashboard-only", action="store_true", help="Rebuild only the read-only dashboard from the committed timeline projection.")
     args = parser.parse_args()
-    payload = build(args.memory_db)
-    validate(payload)
-    json_path, js_path = GEN/"research-timeline.json", GEN/"research-timeline.js"
-    json_path.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    js_path.write_text("window.RESEARCH_TIMELINE = "+json.dumps(payload,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
+    if args.dashboard_only:
+        payload = load(GEN / "research-timeline.json")
+        validate(payload)
+    else:
+        payload = build(args.memory_db)
+        validate(payload)
+        json_path, js_path = GEN/"research-timeline.json", GEN/"research-timeline.js"
+        json_path.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+        js_path.write_text("window.RESEARCH_TIMELINE = "+json.dumps(payload,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
     dashboard = build_dashboard(payload)
     validate_dashboard(dashboard)
     (GEN/"research-dashboard.json").write_text(json.dumps(dashboard,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")

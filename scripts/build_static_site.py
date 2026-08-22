@@ -11,6 +11,11 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from research_pipeline.public_projection_invariants import validate_public_control_plane
+
 OUTPUT = ROOT / "_site"
 
 ROOT_PATTERNS = (
@@ -139,14 +144,24 @@ def build() -> Path:
         cwd=ROOT,
         check=True,
     )
-    # Rebuild the read-only timeline after current-state projection. On GitHub
-    # runners the server-side Research Memory DB is absent, so the timeline
-    # builder preserves the last committed zero-authority runtime snapshot.
+    # Timeline history is authored by the research host, not reconstructed on
+    # a GitHub runner that lacks the server-side Research Memory DB. Rebuild
+    # only the current dashboard from the committed read-only timeline.
     subprocess.run(
-        [sys.executable, str(ROOT / "scripts" / "build_research_timeline.py")],
+        [sys.executable, str(ROOT / "scripts" / "build_research_timeline.py"), "--dashboard-only"],
         cwd=ROOT,
         check=True,
     )
+    generated = ROOT / "generated"
+    projection_errors = validate_public_control_plane(
+        research_state=json.loads((generated / "research-items.json").read_text(encoding="utf-8")),
+        paper_registry=json.loads((generated / "paper-registry.json").read_text(encoding="utf-8")),
+        research_system=json.loads((generated / "research-system-state.json").read_text(encoding="utf-8")),
+        research_dashboard=json.loads((generated / "research-dashboard.json").read_text(encoding="utf-8")),
+        research_memory=json.loads((generated / "research-memory-wiki.json").read_text(encoding="utf-8")),
+    )
+    if projection_errors:
+        raise RuntimeError("public control-plane projection invariant failure before static-site copy: " + "; ".join(projection_errors))
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     OUTPUT.mkdir(parents=True)

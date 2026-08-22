@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fast real-browser audit for PaperRegistry internal control-plane invariants."""
+"""Fast real-browser audit for ResearchItem/PaperRegistry public control-plane invariants."""
 from __future__ import annotations
 
 import subprocess
@@ -96,8 +96,24 @@ def main() -> None:
         require(memory.get("review_lessons") == 5, f"Research Memory review lessons drifted: {memory}")
         require("论文审查经验 5" in overview["text"] or "5 paper-review lessons" in overview["text"], "System Overview does not expose structured paper-review learning")
 
+        navigate(session_id, "/research-map.html")
+        research_map = execute(session_id, """
+          const d = window.RESEARCH_DASHBOARD || {};
+          return {
+            summary: d.summary || {},
+            actions: Object.fromEntries((d.attention || []).map(x => [x.code || '', x.next_action_class || ''])),
+            text: document.body.textContent || ''
+          };
+        """)
+        research_summary = research_map["summary"]
+        require(research_summary.get("research_primary_next_action_counts") == {"MERGED_NO_STANDALONE_ACTION": 10, "NO_INTERNAL_ACTION": 71, "PAPERSTATE_HANDOFF": 1, "REOPEN_CONDITION_REQUIRED": 5}, f"ResearchItem action distribution drifted: {research_summary}")
+        require(research_summary.get("machine_actionable_research_items") == 0, f"ResearchItem machine authority drifted: {research_summary}")
+        require(research_summary.get("paper_internal_action_required") == 1 and research_summary.get("paper_no_internal_action") == 4, f"Dashboard paper action split drifted: {research_summary}")
+        require(research_map["actions"].get("E-7") == "PAPERSTATE_HANDOFF" and research_map["actions"].get("G-1") == "REOPEN_CONDITION_REQUIRED", f"Dashboard attention actions drifted: {research_map['actions']}")
+        require("PAPERSTATE_HANDOFF" in research_map["text"] and "REOPEN_CONDITION_REQUIRED" in research_map["text"], "Research Map does not expose human-readable ResearchItem action classes")
+
         print("PASS")
-        print("Paper control plane verified in a real browser: 5 ledger-ready / 4 gate-clean / 1 internal action / 5 review lessons")
+        print("Public control plane verified in a real browser: ResearchItem 71/10/5/1 actions; PaperState 5/4/1; 5 review lessons")
     finally:
         if session_id:
             try:

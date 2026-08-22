@@ -8,6 +8,8 @@ import subprocess
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+from research_pipeline.public_projection_invariants import validate_public_control_plane
+
 ROOT = Path(__file__).resolve().parent
 CANONICAL_PAGES = {
     "index.html": "home",
@@ -98,6 +100,9 @@ def main() -> None:
     research_items = json.loads((ROOT / "generated" / "research-items.json").read_text(encoding="utf-8"))
     paper_registry = json.loads((ROOT / "generated" / "paper-registry.json").read_text(encoding="utf-8"))
     research_dashboard = json.loads((ROOT / "generated" / "research-dashboard.json").read_text(encoding="utf-8"))
+    projection_errors = validate_public_control_plane(research_state=research_items, paper_registry=paper_registry, research_system=research_system, research_dashboard=research_dashboard, research_memory=research_memory)
+    if projection_errors:
+        fail("public control-plane projection invariants failed: " + "; ".join(projection_errors))
     ri_summary = research_items.get("summary") or {}
     if (int(ri_summary.get("research_items") or 0), int(ri_summary.get("experiment_records") or 0), int(ri_summary.get("portfolio_experiment_contexts") or 0), int(ri_summary.get("evidence_contexts") or 0), int(ri_summary.get("portfolio_objects") or 0)) != (87, 30, 3, 2, 92):
         fail(f"canonical ResearchItem projection counts drifted: {ri_summary}")
