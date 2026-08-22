@@ -28,6 +28,7 @@ from research_pipeline.post_decision_learning import validate_learning_receipt, 
 from research_pipeline.submission_attempt_history import build_attempt_history
 from research_pipeline.submission_attempt_lineage import public_attempt_summary, validate_attempt_ledger
 from research_pipeline.submission_attempt_workflow import current_attempt_workflow_summary, validate_attempt_workflow_ledger
+from research_pipeline.scientific_reopen_protocol import public_scientific_reopen_summary, validate_scientific_reopen_ledger
 DEFAULT_LEDGER_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ROOT") else None
 DEFAULT_ARTIFACT_ROOT = Path(os.environ["PAPER_ACCEPTANCE_ARTIFACT_ROOT"]).expanduser() if os.environ.get("PAPER_ACCEPTANCE_ARTIFACT_ROOT") else None
 DEFAULT_FREEZE_ROOT = Path(os.environ["PAPER_SUBMISSION_FREEZE_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_FREEZE_ROOT") else None
@@ -35,6 +36,7 @@ DEFAULT_HANDOFF_ROOT = Path(os.environ["PAPER_SUBMISSION_HANDOFF_ROOT"]).expandu
 DEFAULT_SIGNOFF_ROOT = Path(os.environ["PAPER_HUMAN_SIGNOFF_ROOT"]).expanduser() if os.environ.get("PAPER_HUMAN_SIGNOFF_ROOT") else None
 DEFAULT_ATTEMPT_ROOT = Path(os.environ["PAPER_SUBMISSION_ATTEMPT_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_ATTEMPT_ROOT") else None
 DEFAULT_ATTEMPT_WORKFLOW_ROOT = Path(os.environ["PAPER_SUBMISSION_ATTEMPT_WORKFLOW_ROOT"]).expanduser() if os.environ.get("PAPER_SUBMISSION_ATTEMPT_WORKFLOW_ROOT") else None
+DEFAULT_SCIENTIFIC_REOPEN_ROOT = Path(os.environ["PAPER_SCIENTIFIC_REOPEN_ROOT"]).expanduser() if os.environ.get("PAPER_SCIENTIFIC_REOPEN_ROOT") else None
 DEFAULT_JSON = ROOT / "generated/paper-registry-state.json"
 DEFAULT_JS = ROOT / "generated/paper-registry-state.js"
 C01_ID = "D2-PAPER-FAILURE-MEMORY-PROVENANCE"
@@ -478,7 +480,39 @@ def submission_attempt_workflow_state(attempt: dict[str, Any], workflow_root: Pa
     return {**empty, **summary}
 
 
-def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None) -> dict[str, Any]:
+def scientific_reopen_state(paper_id: str, attempt: dict[str, Any], reopen_root: Path | None) -> dict[str, Any]:
+    empty = {
+        "status": "SCIENTIFIC_REOPEN_PROPOSAL_REQUIRED" if attempt.get("requires_explicit_scientific_reopen") is True else "NOT_ELIGIBLE",
+        "attempt_sha256": str(attempt.get("latest_attempt_sha256") or ""),
+        "proposal_sha256": "",
+        "authorization_sha256": "",
+        "authorization_scope": "",
+        "external_scientific_authority_confirmed": False,
+        "new_scientific_contract_required": attempt.get("requires_explicit_scientific_reopen") is True,
+        "existing_scientific_contract_immutable": True,
+        "automatic_contract_creation_authorized": False,
+        "claim_expansion_authorized": False,
+        "new_experiment_authorized": False,
+        "gpu_execution_authorized": False,
+        "validation_errors": [],
+    }
+    if attempt.get("requires_explicit_scientific_reopen") is not True or reopen_root is None:
+        return empty
+    path = reopen_root / f"{paper_id}.json"
+    if not path.exists():
+        return empty
+    try:
+        row = _load_json(path)
+        errors = validate_scientific_reopen_ledger(row)
+        summary = public_scientific_reopen_summary(row, str(attempt.get("latest_attempt_sha256") or ""))
+    except Exception:
+        return {**empty, "status": "SCIENTIFIC_REOPEN_LEDGER_INVALID", "validation_errors": ["scientific-reopen-ledger-unreadable"]}
+    if errors:
+        return {**empty, **summary, "status": "SCIENTIFIC_REOPEN_LEDGER_INVALID", "validation_errors": errors}
+    return {**empty, **summary}
+
+
+def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None, scientific_reopen_root: Path | None = None) -> dict[str, Any]:
     row = json.loads(path.read_text(encoding="utf-8"))
     contract = row.get("contract") or {}
     summary = row.get("summary") or {}
@@ -507,6 +541,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
     attempt = submission_attempt_state(paper_id, state, attempt_root)
     attempt_workflow = submission_attempt_workflow_state(attempt, attempt_workflow_root)
     attempt_history = build_attempt_history(paper_id, attempt_root, attempt_workflow_root)
+    scientific_reopen = scientific_reopen_state(paper_id, attempt, scientific_reopen_root)
     scientific_layer = "SUPPORTED_AND_AUDITED" if claim_audit.get("pass") is True else ("ACTIVE_REPAIR" if state == "TARGETED_REPAIR" else "PRE_AUDIT")
     paper_quality_layer = "PASS" if manuscript_ci.get("pass") is True and prebuttal.get("pass") is True else ("IN_PROGRESS" if state not in {"PAPER_EVIDENCE", "PAPER_DESIGN"} else "NOT_STARTED")
     return {
@@ -526,7 +561,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
             "paper_preparation": preparation["status"],
             "submission": submission["status"] if submission["status"] != "NOT_SUBMITTED" else (signoff["status"] if signoff["status"] != "PENDING_HUMAN_CONFIRMATION" and signoff["status"] != "NOT_ELIGIBLE" else handoff["status"]),
             "post_submission": learning["status"] if learning["status"] != "NOT_ELIGIBLE" else rebuttal["status"],
-            "next_attempt": attempt_workflow["status"] if attempt_workflow["status"] != "NOT_ELIGIBLE" else attempt["status"],
+            "next_attempt": scientific_reopen["status"] if attempt.get("requires_explicit_scientific_reopen") is True else (attempt_workflow["status"] if attempt_workflow["status"] != "NOT_ELIGIBLE" else attempt["status"]),
         },
         "gates": {
             "claim_audit": claim_audit.get("pass") is True,
@@ -544,6 +579,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
         "submission_attempt": attempt,
         "submission_attempt_workflow": attempt_workflow,
         "submission_attempt_history": attempt_history,
+        "scientific_reopen": scientific_reopen,
         "targeted_repair_boundary": targeted_repair_boundary(paper_id) if state == "TARGETED_REPAIR" else {},
         "ledger_summary": {
             "mock_reviews": int(summary.get("mock_reviews") or 0),
@@ -564,7 +600,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
     }
 
 
-def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None) -> str:
+def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None, scientific_reopen_root: Path | None = None) -> str:
     timestamps: list[str] = []
     for path in sorted(ledger_root.glob("*.json")):
         try:
@@ -574,7 +610,7 @@ def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff
         updated = str(payload.get("updated_at") or "")
         if updated:
             timestamps.append(updated)
-    for extra_root in (freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root):
+    for extra_root in (freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root):
         if extra_root is None or not extra_root.exists():
             continue
         for path in sorted(extra_root.glob("*.json")):
@@ -590,8 +626,8 @@ def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff
     return max(timestamps) if timestamps else "1970-01-01T00:00:00+00:00"
 
 
-def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None) -> dict[str, Any]:
-    papers = [project_paper(path, artifact_root, freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root) for path in sorted(ledger_root.glob("*.json"))]
+def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Path | None = None, handoff_root: Path | None = None, signoff_root: Path | None = None, attempt_root: Path | None = None, attempt_workflow_root: Path | None = None, scientific_reopen_root: Path | None = None) -> dict[str, Any]:
+    papers = [project_paper(path, artifact_root, freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root) for path in sorted(ledger_root.glob("*.json"))]
     order = {"LEARN": -3, "REBUTTAL": -2, "SUBMITTED": -1, "SUBMISSION_READY": 0, "PREBUTTAL": 1, "PDF_QA": 2, "CLAIM_AUDIT": 3, "TARGETED_REPAIR": 4, "MOCK_PC": 5, "MANUSCRIPT": 6, "PAPER_DESIGN": 7, "PAPER_EVIDENCE": 8}
     papers.sort(key=lambda p: (order.get(p["current_state"], 99), p["paper_id"]))
     summary = {
@@ -633,10 +669,13 @@ def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Pat
         "attempt_final_decisions_recorded": sum(int((p["submission_attempt_history"].get("summary") or {}).get("final_decisions") or 0) for p in papers),
         "attempt_post_decision_learning_complete": sum(int((p["submission_attempt_history"].get("summary") or {}).get("post_decision_learn_complete") or 0) for p in papers),
         "attempt_rebuttal_skipped_by_venue": sum(int((p["submission_attempt_history"].get("summary") or {}).get("rebuttals_skipped_by_venue") or 0) for p in papers),
+        "scientific_reopen_proposed": sum(p["scientific_reopen"].get("status") == "SCIENTIFIC_REOPEN_PROPOSED_EXTERNAL_AUTHORITY_REQUIRED" for p in papers),
+        "scientific_reopen_authorized_new_contract_required": sum(p["scientific_reopen"].get("status") == "EXTERNAL_SCIENTIFIC_REOPEN_CONFIRMED_NEW_CONTRACT_REQUIRED" for p in papers),
+        "scientific_reopen_invalid": sum(p["scientific_reopen"].get("status") == "SCIENTIFIC_REOPEN_LEDGER_INVALID" for p in papers),
     }
     payload = {
         "schema_version": "1.1",
-        "generated_at": source_watermark(ledger_root, freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root),
+        "generated_at": source_watermark(ledger_root, freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root),
         "source": "canonical_paper_acceptance_ledger",
         "summary": summary,
         "papers": papers,
@@ -655,6 +694,7 @@ def main() -> None:
     parser.add_argument("--signoff-root", type=Path, default=DEFAULT_SIGNOFF_ROOT, help="Optional human signoff ledger root; may also be supplied via PAPER_HUMAN_SIGNOFF_ROOT.")
     parser.add_argument("--attempt-root", type=Path, default=DEFAULT_ATTEMPT_ROOT, help="Optional resubmission/camera-ready attempt ledger root; may also be supplied via PAPER_SUBMISSION_ATTEMPT_ROOT.")
     parser.add_argument("--attempt-workflow-root", type=Path, default=DEFAULT_ATTEMPT_WORKFLOW_ROOT, help="Optional attempt-scoped Preparation/Freeze/Handoff workflow root; may also be supplied via PAPER_SUBMISSION_ATTEMPT_WORKFLOW_ROOT.")
+    parser.add_argument("--scientific-reopen-root", type=Path, default=DEFAULT_SCIENTIFIC_REOPEN_ROOT, help="Optional scientific-reopen proposal/authorization ledger root; may also be supplied via PAPER_SCIENTIFIC_REOPEN_ROOT.")
     parser.add_argument("--json-output", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--js-output", type=Path, default=DEFAULT_JS)
     args = parser.parse_args()
@@ -676,7 +716,11 @@ def main() -> None:
     if attempt_workflow_root is None:
         candidate = args.ledger_root.parent / "paper-submission-attempt-workflows"
         attempt_workflow_root = candidate if candidate.is_dir() else None
-    state = build(args.ledger_root, args.artifact_root, args.freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root)
+    scientific_reopen_root = args.scientific_reopen_root
+    if scientific_reopen_root is None:
+        candidate = args.ledger_root.parent / "paper-scientific-reopen"
+        scientific_reopen_root = candidate if candidate.is_dir() else None
+    state = build(args.ledger_root, args.artifact_root, args.freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root)
     args.json_output.parent.mkdir(parents=True, exist_ok=True)
     args.json_output.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     args.js_output.write_text("window.PAPER_REGISTRY_STATE = " + json.dumps(state, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")

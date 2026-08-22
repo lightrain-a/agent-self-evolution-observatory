@@ -124,6 +124,13 @@
         },
         "history_sha256": "199e20b29ead2c23f096d96813bdee54e3420ef1ff77b1c54cff6554f342b161"
       },
+      "scientific_reopen_status": "NOT_ELIGIBLE",
+      "scientific_reopen_proposal_sha256": "",
+      "scientific_reopen_authorization_sha256": "",
+      "scientific_reopen_authorization_scope": "",
+      "scientific_reopen_external_authority_confirmed": false,
+      "scientific_reopen_new_contract_required": false,
+      "scientific_reopen_errors": [],
       "blocker_groups": [],
       "blocker_count": 0,
       "next_actions": [
@@ -260,6 +267,13 @@
         },
         "history_sha256": "3fe039568ca4fd78b386d832d05d1a23c79edbe5a82f015361c6a579bada142d"
       },
+      "scientific_reopen_status": "NOT_ELIGIBLE",
+      "scientific_reopen_proposal_sha256": "",
+      "scientific_reopen_authorization_sha256": "",
+      "scientific_reopen_authorization_scope": "",
+      "scientific_reopen_external_authority_confirmed": false,
+      "scientific_reopen_new_contract_required": false,
+      "scientific_reopen_errors": [],
       "blocker_groups": [],
       "blocker_count": 0,
       "next_actions": [
@@ -396,6 +410,13 @@
         },
         "history_sha256": "298cd39338be9958bffde8e9a4abced7ea262fbfde8d6cff1d18506daa4ff3e0"
       },
+      "scientific_reopen_status": "NOT_ELIGIBLE",
+      "scientific_reopen_proposal_sha256": "",
+      "scientific_reopen_authorization_sha256": "",
+      "scientific_reopen_authorization_scope": "",
+      "scientific_reopen_external_authority_confirmed": false,
+      "scientific_reopen_new_contract_required": false,
+      "scientific_reopen_errors": [],
       "blocker_groups": [],
       "blocker_count": 0,
       "next_actions": [
@@ -532,6 +553,13 @@
         },
         "history_sha256": "cf3004a11842425a5dd28599bcc22f6cb25ee5b7c854e22e7b48d6ccb866ce98"
       },
+      "scientific_reopen_status": "NOT_ELIGIBLE",
+      "scientific_reopen_proposal_sha256": "",
+      "scientific_reopen_authorization_sha256": "",
+      "scientific_reopen_authorization_scope": "",
+      "scientific_reopen_external_authority_confirmed": false,
+      "scientific_reopen_new_contract_required": false,
+      "scientific_reopen_errors": [],
       "blocker_groups": [
         "DECISIVE_EVIDENCE",
         "STATISTICS_UNCERTAINTY",
@@ -684,6 +712,13 @@
         },
         "history_sha256": "26754163cd15aa0cb1a0c3aed5efaf90d60959e60c0c3635dc1cfb92cf10bf70"
       },
+      "scientific_reopen_status": "NOT_ELIGIBLE",
+      "scientific_reopen_proposal_sha256": "",
+      "scientific_reopen_authorization_sha256": "",
+      "scientific_reopen_authorization_scope": "",
+      "scientific_reopen_external_authority_confirmed": false,
+      "scientific_reopen_new_contract_required": false,
+      "scientific_reopen_errors": [],
       "blocker_groups": [],
       "blocker_count": 0,
       "next_actions": [
@@ -743,6 +778,9 @@
     "attempt_final_decisions_recorded": 0,
     "attempt_post_decision_learning_complete": 0,
     "attempt_rebuttal_skipped_by_venue": 0,
+    "scientific_reopen_proposed": 0,
+    "scientific_reopen_authorized_new_contract_required": 0,
+    "scientific_reopen_invalid": 0,
     "submission_freeze_eligible": 4,
     "ledger_replay_failures": 0,
     "contract_integrity_failures": 0
@@ -753,5 +791,5 @@
     "gpu": false,
     "submission": false
   },
-  "audit_sha256": "168e74f7b45498b2c40353fd88e2b25f2918f00a72dfdb62ce551d6c5b880b52"
+  "audit_sha256": "841349ded18a56295e5f7ed56b179587fa8d07456cde6d7e601430004df8ead8"
 }

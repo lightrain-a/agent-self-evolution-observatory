@@ -18,6 +18,7 @@ from .post_decision_learning import validate_learning_receipt, validate_rebuttal
 from .submission_attempt_history import build_attempt_history
 from .submission_attempt_lineage import public_attempt_summary, validate_attempt_ledger
 from .submission_attempt_workflow import current_attempt_workflow_summary, validate_attempt_workflow_ledger
+from .scientific_reopen_protocol import public_scientific_reopen_summary, validate_scientific_reopen_ledger
 
 DEFAULT_ROOT = Path('/data/wyt/agent-self-evolution-observatory')
 
@@ -332,6 +333,38 @@ def submission_attempt_workflow_state(root: Path, attempt: Mapping[str, Any]) ->
     return {**empty, **summary}
 
 
+def scientific_reopen_state(root: Path, paper_id: str, attempt: Mapping[str, Any]) -> dict[str, Any]:
+    empty = {
+        'status': 'SCIENTIFIC_REOPEN_PROPOSAL_REQUIRED' if attempt.get('requires_explicit_scientific_reopen') is True else 'NOT_ELIGIBLE',
+        'attempt_sha256': str(attempt.get('latest_attempt_sha256') or ''),
+        'proposal_sha256': '',
+        'authorization_sha256': '',
+        'authorization_scope': '',
+        'external_scientific_authority_confirmed': False,
+        'new_scientific_contract_required': attempt.get('requires_explicit_scientific_reopen') is True,
+        'existing_scientific_contract_immutable': True,
+        'automatic_contract_creation_authorized': False,
+        'claim_expansion_authorized': False,
+        'new_experiment_authorized': False,
+        'gpu_execution_authorized': False,
+        'validation_errors': [],
+    }
+    if attempt.get('requires_explicit_scientific_reopen') is not True:
+        return empty
+    path = root / 'paper-scientific-reopen' / f'{paper_id}.json'
+    if not path.exists():
+        return empty
+    try:
+        row = json.loads(path.read_text(encoding='utf-8'))
+        errors = validate_scientific_reopen_ledger(row)
+        summary = public_scientific_reopen_summary(row, str(attempt.get('latest_attempt_sha256') or ''))
+    except (OSError, json.JSONDecodeError, TypeError, ValueError):
+        return {**empty, 'status': 'SCIENTIFIC_REOPEN_LEDGER_INVALID', 'validation_errors': ['scientific-reopen-ledger-unreadable']}
+    if errors:
+        return {**empty, **summary, 'status': 'SCIENTIFIC_REOPEN_LEDGER_INVALID', 'validation_errors': errors}
+    return {**empty, **summary}
+
+
 def project(path: Path, root: Path) -> dict[str, Any]:
     row = json.loads(path.read_text(encoding='utf-8'))
     paper_id = str(row.get('paper_id') or path.stem)
@@ -390,6 +423,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
     attempt=submission_attempt_state(root,paper_id,state)
     attempt_workflow=submission_attempt_workflow_state(root,attempt)
     attempt_history=build_attempt_history(paper_id,root/'paper-submission-attempts',root/'paper-submission-attempt-workflows')
+    scientific_reopen=scientific_reopen_state(root,paper_id,attempt)
     actions = next_actions(groups)
     if state == 'LEARN':
         if learning['status']!='LEARN_COMPLETE':
@@ -399,7 +433,14 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         elif attempt['status']=='ATTEMPT_LEDGER_INVALID':
             actions=['submission-attempt lineage is invalid; stop child preparation until the append-only attempt ledger is repaired']
         elif attempt['requires_explicit_scientific_reopen']:
-            actions=['the planned child attempt requests a scientific change; obtain explicit scientific reopen authority before any new claim, evidence, experiment, or GPU work']
+            if scientific_reopen['status']=='SCIENTIFIC_REOPEN_PROPOSAL_REQUIRED':
+                actions=['the child attempt requests a scientific change; record a scientific-reopen proposal bound to the old contract and child lineage, without authorizing experiments or GPU work']
+            elif scientific_reopen['status']=='SCIENTIFIC_REOPEN_PROPOSED_EXTERNAL_AUTHORITY_REQUIRED':
+                actions=['scientific reopen is proposed; await explicit external PI/human scientific authority. The old contract remains immutable and no experiment/GPU authority exists']
+            elif scientific_reopen['status']=='EXTERNAL_SCIENTIFIC_REOPEN_CONFIRMED_NEW_CONTRACT_REQUIRED':
+                actions=['external scientific reopen authority is recorded only for creating a new scientific contract. Create that new Research OS contract before any new claim/evidence/experiment; the old attempt remains blocked']
+            else:
+                actions=['scientific-reopen ledger is invalid; stop scientific changes until the proposal/authorization lineage is repaired']
         elif attempt_workflow['status']=='ATTEMPT_POST_DECISION_LEARN_COMPLETE':
             actions=['the child attempt outcome is closed; any further submission must create a new child attempt bound to this child submission/decision/learning lineage']
         elif attempt_workflow['status']=='ATTEMPT_FINAL_DECISION_LEARNING_PENDING':
@@ -547,6 +588,13 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         'submission_attempt_workflow_errors': attempt_workflow['validation_errors'],
         'submission_attempt_human_confirmation_status': attempt_workflow['human_confirmation_status'],
         'submission_attempt_history': attempt_history,
+        'scientific_reopen_status': scientific_reopen['status'],
+        'scientific_reopen_proposal_sha256': scientific_reopen['proposal_sha256'],
+        'scientific_reopen_authorization_sha256': scientific_reopen['authorization_sha256'],
+        'scientific_reopen_authorization_scope': scientific_reopen['authorization_scope'],
+        'scientific_reopen_external_authority_confirmed': scientific_reopen['external_scientific_authority_confirmed'],
+        'scientific_reopen_new_contract_required': scientific_reopen['new_scientific_contract_required'],
+        'scientific_reopen_errors': scientific_reopen['validation_errors'],
         'blocker_groups': groups,
         'blocker_count': len(blockers),
         'next_actions': actions,
@@ -558,7 +606,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
 
 def source_watermark(root: Path) -> str:
     timestamps: list[str] = []
-    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts', root / 'paper-submission-attempt-workflows'):
+    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts', root / 'paper-submission-attempt-workflows', root / 'paper-scientific-reopen'):
         if not directory.exists():
             continue
         for path in sorted(directory.glob('*.json')):
@@ -624,6 +672,9 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'attempt_final_decisions_recorded': sum(int((p['submission_attempt_history'].get('summary') or {}).get('final_decisions') or 0) for p in papers),
             'attempt_post_decision_learning_complete': sum(int((p['submission_attempt_history'].get('summary') or {}).get('post_decision_learn_complete') or 0) for p in papers),
             'attempt_rebuttal_skipped_by_venue': sum(int((p['submission_attempt_history'].get('summary') or {}).get('rebuttals_skipped_by_venue') or 0) for p in papers),
+            'scientific_reopen_proposed': sum(p['scientific_reopen_status'] == 'SCIENTIFIC_REOPEN_PROPOSED_EXTERNAL_AUTHORITY_REQUIRED' for p in papers),
+            'scientific_reopen_authorized_new_contract_required': sum(p['scientific_reopen_status'] == 'EXTERNAL_SCIENTIFIC_REOPEN_CONFIRMED_NEW_CONTRACT_REQUIRED' for p in papers),
+            'scientific_reopen_invalid': sum(p['scientific_reopen_status'] == 'SCIENTIFIC_REOPEN_LEDGER_INVALID' for p in papers),
             'submission_freeze_eligible': sum(p['submission_freeze_eligible'] for p in papers),
             'ledger_replay_failures': sum(not p['ledger_replay_pass'] for p in papers),
             'contract_integrity_failures': sum(not p['contract_integrity_pass'] for p in papers),

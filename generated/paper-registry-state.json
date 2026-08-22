@@ -40,7 +40,10 @@
     "attempt_rebuttals_prepared": 0,
     "attempt_final_decisions_recorded": 0,
     "attempt_post_decision_learning_complete": 0,
-    "attempt_rebuttal_skipped_by_venue": 0
+    "attempt_rebuttal_skipped_by_venue": 0,
+    "scientific_reopen_proposed": 0,
+    "scientific_reopen_authorized_new_contract_required": 0,
+    "scientific_reopen_invalid": 0
   },
   "papers": [
     {
@@ -271,6 +274,21 @@
           "submission": false
         },
         "history_sha256": "199e20b29ead2c23f096d96813bdee54e3420ef1ff77b1c54cff6554f342b161"
+      },
+      "scientific_reopen": {
+        "status": "NOT_ELIGIBLE",
+        "attempt_sha256": "",
+        "proposal_sha256": "",
+        "authorization_sha256": "",
+        "authorization_scope": "",
+        "external_scientific_authority_confirmed": false,
+        "new_scientific_contract_required": false,
+        "existing_scientific_contract_immutable": true,
+        "automatic_contract_creation_authorized": false,
+        "claim_expansion_authorized": false,
+        "new_experiment_authorized": false,
+        "gpu_execution_authorized": false,
+        "validation_errors": []
       },
       "targeted_repair_boundary": {},
       "ledger_summary": {
@@ -531,6 +549,21 @@
         },
         "history_sha256": "3fe039568ca4fd78b386d832d05d1a23c79edbe5a82f015361c6a579bada142d"
       },
+      "scientific_reopen": {
+        "status": "NOT_ELIGIBLE",
+        "attempt_sha256": "",
+        "proposal_sha256": "",
+        "authorization_sha256": "",
+        "authorization_scope": "",
+        "external_scientific_authority_confirmed": false,
+        "new_scientific_contract_required": false,
+        "existing_scientific_contract_immutable": true,
+        "automatic_contract_creation_authorized": false,
+        "claim_expansion_authorized": false,
+        "new_experiment_authorized": false,
+        "gpu_execution_authorized": false,
+        "validation_errors": []
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 6,
@@ -790,6 +823,21 @@
         },
         "history_sha256": "298cd39338be9958bffde8e9a4abced7ea262fbfde8d6cff1d18506daa4ff3e0"
       },
+      "scientific_reopen": {
+        "status": "NOT_ELIGIBLE",
+        "attempt_sha256": "",
+        "proposal_sha256": "",
+        "authorization_sha256": "",
+        "authorization_scope": "",
+        "external_scientific_authority_confirmed": false,
+        "new_scientific_contract_required": false,
+        "existing_scientific_contract_immutable": true,
+        "automatic_contract_creation_authorized": false,
+        "claim_expansion_authorized": false,
+        "new_experiment_authorized": false,
+        "gpu_execution_authorized": false,
+        "validation_errors": []
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 4,
@@ -1046,6 +1094,21 @@
         },
         "history_sha256": "cf3004a11842425a5dd28599bcc22f6cb25ee5b7c854e22e7b48d6ccb866ce98"
       },
+      "scientific_reopen": {
+        "status": "NOT_ELIGIBLE",
+        "attempt_sha256": "",
+        "proposal_sha256": "",
+        "authorization_sha256": "",
+        "authorization_scope": "",
+        "external_scientific_authority_confirmed": false,
+        "new_scientific_contract_required": false,
+        "existing_scientific_contract_immutable": true,
+        "automatic_contract_creation_authorized": false,
+        "claim_expansion_authorized": false,
+        "new_experiment_authorized": false,
+        "gpu_execution_authorized": false,
+        "validation_errors": []
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 5,
@@ -1299,6 +1362,21 @@
         },
         "history_sha256": "26754163cd15aa0cb1a0c3aed5efaf90d60959e60c0c3635dc1cfb92cf10bf70"
       },
+      "scientific_reopen": {
+        "status": "NOT_ELIGIBLE",
+        "attempt_sha256": "",
+        "proposal_sha256": "",
+        "authorization_sha256": "",
+        "authorization_scope": "",
+        "external_scientific_authority_confirmed": false,
+        "new_scientific_contract_required": false,
+        "existing_scientific_contract_immutable": true,
+        "automatic_contract_creation_authorized": false,
+        "claim_expansion_authorized": false,
+        "new_experiment_authorized": false,
+        "gpu_execution_authorized": false,
+        "validation_errors": []
+      },
       "targeted_repair_boundary": {},
       "ledger_summary": {
         "mock_reviews": 2,
@@ -1324,5 +1402,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "1403c9f6dfb37596681d3b5a7127f120a54289237de37066c10cd5d8c6fbd586"
+  "projection_sha256": "a7aa893222c7bb83aa4ebdcd4ebc01a2c06e23945ae9fd8f11516a8d99118d21"
 }
