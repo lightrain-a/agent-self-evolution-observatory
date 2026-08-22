@@ -170,10 +170,12 @@ def main() -> None:
     if {"content-review.js", "content-review-external.js"} & selected_scripts:
         fail("selected-paper must not load stale review overrides")
     selected_html = (ROOT / "selected-paper.html").read_text(encoding="utf-8")
-    if "Selected ICLR Paper · STRI" not in selected_html:
-        fail("selected-paper must be explicitly labeled as the current STRI workspace")
+    if "PaperRegistry" not in selected_html:
+        fail("selected-paper must be explicitly labeled as PaperRegistry")
+    if "generated/paper-registry-state.js" not in selected_html or "paper-registry-view.js" not in selected_html:
+        fail("selected-paper must load the canonical PaperRegistry projection and renderer")
     if "current-research-status-view.js" not in selected_html:
-        fail("selected-paper must load the unified current-paper renderer")
+        fail("selected-paper must preserve the detailed current-paper renderer for STRI and archive content")
 
     stale_markers = (
         "Selected ICLR Paper Workspace", "选中 ICLR 论文工作区",

@@ -122,6 +122,13 @@ def build() -> Path:
         cwd=ROOT,
         check=True,
     )
+    # PaperRegistry is a separate projection of the append-only Paper Acceptance
+    # ledgers. Rebuild it at publish time so the frontend cannot lag canonical paper state.
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "build_paper_registry.py")],
+        cwd=ROOT,
+        check=True,
+    )
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     OUTPUT.mkdir(parents=True)

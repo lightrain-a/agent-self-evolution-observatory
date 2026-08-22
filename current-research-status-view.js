@@ -423,6 +423,7 @@
     const currentChapter = chapters[0] ? renderCustomChapter(chapters[0], 0, currentBody) : currentBody;
     const archiveIntro = `<section class="panel historical-paper-archive-intro" id="historical-paper-archive"><div class="eyebrow">${pick("历史归档", "HISTORICAL ARCHIVE")}</div><h2 data-toc="false">${pick("旧 Regression-Gated Self-Evolution 工作区","Former Regression-Gated Self-Evolution workspace")}</h2><p class="section-intro">${pick("下面四章只回答历史问题：以前为什么想做 Regression-Gated、原来计划跑什么、后来哪条证据让它停止、系统因此增加了什么检查。这里没有任何当前待运行实验。","The four chapters below answer historical questions only: why Regression-Gated was proposed, what it planned to run, which later evidence stopped it, and which checks the system added afterward. Nothing in this archive is a current experiment to run.")}</p></section>`;
     const historical = chapters.slice(1).map((chapter,index) => renderPageChapter(chapter,index + 1,config)).join("");
-    return `${pageHeader(config)}${renderArchitectureOverview(architecture)}${currentChapter}${archiveIntro}${historical}`;
+    const registry = window.renderPaperRegistryOverview ? window.renderPaperRegistryOverview() : "";
+    return `${pageHeader(config)}${registry}${renderArchitectureOverview(architecture)}${currentChapter}${archiveIntro}${historical}`;
   };
 })();

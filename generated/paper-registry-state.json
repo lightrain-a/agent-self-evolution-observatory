@@ -1,0 +1,251 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-22T06:13:10+00:00",
+  "canonical_ledger_root": "/data/wyt/agent-self-evolution-observatory/paper-acceptance",
+  "summary": {
+    "papers": 5,
+    "submission_ready": 4,
+    "targeted_repair": 1,
+    "preparation_pass": 1,
+    "legacy_ready_needs_preparation_migration": 3,
+    "human_submission_signoff_pending": 4
+  },
+  "papers": [
+    {
+      "paper_id": "AGENT-SAFETY-R9",
+      "title": "A Static Safety Pass Is Not a Temporal Certificate: Controlled First-Violation Evidence in a Persistent Web Agent",
+      "central_question": "After a persistent web agent passes a frozen current-safety panel, does that pass certify a declared future, and does a same-schedule no-update control leave a finite update-associated first-violation contrast?",
+      "current_state": "SUBMISSION_READY",
+      "contract_sha256": "9c7ce06d4e29894c93ce6f153570c8f37882801eb28bdbf8b9aecb3f2b603e89",
+      "ledger_events": 18,
+      "supported_claims": 3,
+      "active_unrefuted_claims": 0,
+      "unsupported_claims": 7,
+      "limitations": 4,
+      "layers": {
+        "scientific": "SUPPORTED_AND_AUDITED",
+        "paper_quality": "PASS",
+        "paper_preparation": "LEGACY_READY_NEEDS_PREPARATION_MIGRATION",
+        "submission": "HUMAN_HANDOFF_PENDING"
+      },
+      "gates": {
+        "claim_audit": true,
+        "manuscript_ci": true,
+        "prebuttal": true,
+        "submission_readiness": true
+      },
+      "paper_preparation": {
+        "status": "LEGACY_READY_NEEDS_PREPARATION_MIGRATION",
+        "pass": false,
+        "protocol_version": "",
+        "receipt_sha256": "",
+        "gate_pass": {},
+        "blockers": [],
+        "human_submission_signoff_pending": true
+      },
+      "ledger_summary": {
+        "mock_reviews": 2,
+        "claim_audit_receipts": 1,
+        "manuscript_ci_receipts": 1,
+        "prebuttal_receipts": 1,
+        "paper_preparation_receipts": 0
+      },
+      "scientific_authority": false,
+      "experiment_authority": false,
+      "gpu_authority": false,
+      "submission_authority": false
+    },
+    {
+      "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+      "title": "Noisy Rewards Write Noisy Memories: Reward Error as a Variance Amplifier in Self-Improving Agents",
+      "central_question": "Can an erroneous reward label become persistent agent state by changing the memory written from an otherwise identical trajectory, and does that perturbation reach later behavior?",
+      "current_state": "SUBMISSION_READY",
+      "contract_sha256": "ff6edaa9d93fe289bb84e74937cece3176329925435de8b0c03649f239623ccb",
+      "ledger_events": 20,
+      "supported_claims": 4,
+      "active_unrefuted_claims": 1,
+      "unsupported_claims": 2,
+      "limitations": 6,
+      "layers": {
+        "scientific": "SUPPORTED_AND_AUDITED",
+        "paper_quality": "PASS",
+        "paper_preparation": "PASS",
+        "submission": "HUMAN_HANDOFF_PENDING"
+      },
+      "gates": {
+        "claim_audit": true,
+        "manuscript_ci": true,
+        "prebuttal": true,
+        "submission_readiness": true
+      },
+      "paper_preparation": {
+        "status": "PASS",
+        "pass": true,
+        "protocol_version": "1.0",
+        "receipt_sha256": "bf4cd503cb810877e432db173a8566017d0d24e482c84f7fc41130c3514cb933",
+        "gate_pass": {
+          "hierarchical-rubric": true,
+          "verification-refinement": true,
+          "citation-integrity": true,
+          "visual-story": true,
+          "reproducibility-bundle": true,
+          "agent-native-artifact": true,
+          "reader-simulation": true,
+          "submission-package": true
+        },
+        "blockers": [],
+        "human_submission_signoff_pending": true
+      },
+      "ledger_summary": {
+        "mock_reviews": 4,
+        "claim_audit_receipts": 1,
+        "manuscript_ci_receipts": 1,
+        "prebuttal_receipts": 1,
+        "paper_preparation_receipts": 1
+      },
+      "scientific_authority": false,
+      "experiment_authority": false,
+      "gpu_authority": false,
+      "submission_authority": false
+    },
+    {
+      "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "title": "Temporal Skills Are a Causal Bottleneck in Evolving Time-Series Agents",
+      "central_question": "Are recurring temporal-validity and exogenous-context failures caused by missing reusable procedures that targeted skills can repair beyond generic skill assistance?",
+      "current_state": "SUBMISSION_READY",
+      "contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
+      "ledger_events": 19,
+      "supported_claims": 2,
+      "active_unrefuted_claims": 2,
+      "unsupported_claims": 2,
+      "limitations": 5,
+      "layers": {
+        "scientific": "SUPPORTED_AND_AUDITED",
+        "paper_quality": "PASS",
+        "paper_preparation": "LEGACY_READY_NEEDS_PREPARATION_MIGRATION",
+        "submission": "HUMAN_HANDOFF_PENDING"
+      },
+      "gates": {
+        "claim_audit": true,
+        "manuscript_ci": true,
+        "prebuttal": true,
+        "submission_readiness": true
+      },
+      "paper_preparation": {
+        "status": "LEGACY_READY_NEEDS_PREPARATION_MIGRATION",
+        "pass": false,
+        "protocol_version": "",
+        "receipt_sha256": "",
+        "gate_pass": {},
+        "blockers": [],
+        "human_submission_signoff_pending": true
+      },
+      "ledger_summary": {
+        "mock_reviews": 2,
+        "claim_audit_receipts": 1,
+        "manuscript_ci_receipts": 1,
+        "prebuttal_receipts": 1,
+        "paper_preparation_receipts": 0
+      },
+      "scientific_authority": false,
+      "experiment_authority": false,
+      "gpu_authority": false,
+      "submission_authority": false
+    },
+    {
+      "paper_id": "STRI-ICLR2027",
+      "title": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
+      "central_question": "Should semantically equivalent skill-package representations change a self-evolution control surface?",
+      "current_state": "SUBMISSION_READY",
+      "contract_sha256": "30ba1a82ae4547d8e3385f514352da55415b31dcf83b8dabab1f756af34309ad",
+      "ledger_events": 16,
+      "supported_claims": 3,
+      "active_unrefuted_claims": 0,
+      "unsupported_claims": 3,
+      "limitations": 3,
+      "layers": {
+        "scientific": "SUPPORTED_AND_AUDITED",
+        "paper_quality": "PASS",
+        "paper_preparation": "LEGACY_READY_NEEDS_PREPARATION_MIGRATION",
+        "submission": "HUMAN_HANDOFF_PENDING"
+      },
+      "gates": {
+        "claim_audit": true,
+        "manuscript_ci": true,
+        "prebuttal": true,
+        "submission_readiness": true
+      },
+      "paper_preparation": {
+        "status": "LEGACY_READY_NEEDS_PREPARATION_MIGRATION",
+        "pass": false,
+        "protocol_version": "",
+        "receipt_sha256": "",
+        "gate_pass": {},
+        "blockers": [],
+        "human_submission_signoff_pending": true
+      },
+      "ledger_summary": {
+        "mock_reviews": 2,
+        "claim_audit_receipts": 1,
+        "manuscript_ci_receipts": 1,
+        "prebuttal_receipts": 1,
+        "paper_preparation_receipts": 0
+      },
+      "scientific_authority": false,
+      "experiment_authority": false,
+      "gpu_authority": false,
+      "submission_authority": false
+    },
+    {
+      "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+      "title": "Failure Memories Are Not Neutral: Causal Provenance Effects in Self-Evolving Agents",
+      "central_question": "Does failure-derived trajectory provenance causally sustain future error when future task difficulty and actionable memory guidance are matched?",
+      "current_state": "TARGETED_REPAIR",
+      "contract_sha256": "582a203818f9f590d601b5ea9d3a3ecdc08acb3e34d3b1d9f190e17a2d1dcc25",
+      "ledger_events": 18,
+      "supported_claims": 3,
+      "active_unrefuted_claims": 2,
+      "unsupported_claims": 2,
+      "limitations": 5,
+      "layers": {
+        "scientific": "ACTIVE_REPAIR",
+        "paper_quality": "IN_PROGRESS",
+        "paper_preparation": "NOT_YET_ELIGIBLE",
+        "submission": "NOT_READY_FOR_HUMAN_SUBMISSION"
+      },
+      "gates": {
+        "claim_audit": false,
+        "manuscript_ci": false,
+        "prebuttal": false,
+        "submission_readiness": false
+      },
+      "paper_preparation": {
+        "status": "NOT_YET_ELIGIBLE",
+        "pass": false,
+        "protocol_version": "",
+        "receipt_sha256": "",
+        "gate_pass": {},
+        "blockers": [],
+        "human_submission_signoff_pending": false
+      },
+      "ledger_summary": {
+        "mock_reviews": 4,
+        "claim_audit_receipts": 0,
+        "manuscript_ci_receipts": 0,
+        "prebuttal_receipts": 0,
+        "paper_preparation_receipts": 0
+      },
+      "scientific_authority": false,
+      "experiment_authority": false,
+      "gpu_authority": false,
+      "submission_authority": false
+    }
+  ],
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "gpu": false,
+    "submission": false
+  },
+  "projection_sha256": "da23f9488e0b7af1d3d056b1f5e541fc0fdf68e32558aa0cf15f8801987eaef3"
+}

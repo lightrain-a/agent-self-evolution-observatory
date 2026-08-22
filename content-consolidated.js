@@ -84,10 +84,10 @@
   }
 
   pages["selected-paper"] = {
-    eyebrow:{en:"Selected ICLR Paper · STRI",zh:"当前选中 ICLR 论文 · STRI"},
-    title:{en:"STRI: Self-Evolution Should Not Depend on How Skills Are Split",zh:"STRI：技能如何拆分不应影响自进化（Self-Evolution Should Not Depend on How Skills Are Split）"},
-    lead:{en:"This page answers the submission question directly: what STRI claims, which experiments support each claim, which broader claims are excluded, whether the manuscript and supplement pass checks, which files are ready to download, and what the authors still need to verify before uploading to OpenReview. The older Regression-Gated project is shown only as history below.",zh:"本页直接回答投稿前最需要确认的问题：STRI 到底主张什么、每条主张由哪些实验支持、哪些更宽的结论明确不说、正文和补充材料是否检查通过、哪些文件已经可以下载，以及作者上传 OpenReview 前还要人工确认什么。旧 Regression-Gated 项目只在下方作为历史记录保留。"},
-    callout:{en:"Submission status: all three STRI claims are supported, the evidence checklist has no remaining debt, the main text is within the 9-page limit, and the anonymous supplement is ready. The remaining work is human author/signoff and deadline/account verification before OpenReview submission; no new experiment is required for the current narrow paper.",zh:"投稿状态：STRI 的 3 条主张都有对应证据，证据清单没有未完成项，正文符合 9 页限制，匿名补充材料也已就绪。当前剩余工作是作者责任确认、截止日期和 OpenReview 账号等人工核验；这篇窄范围论文不需要再补新的实验。"},
+    eyebrow:{en:"PaperRegistry · Paper Acceptance",zh:"PaperRegistry · 论文状态与投稿门禁"},
+    title:{en:"PaperRegistry: current papers, evidence, reviews, and submission gates",zh:"PaperRegistry：当前论文状态、证据、审稿与投稿门禁"},
+    lead:{en:"This page projects every canonical Paper Acceptance ledger instead of treating one paper as the whole portfolio. Read each paper in four layers: scientific evidence, manuscript quality, the eight-gate Paper Preparation Protocol, and human submission handoff. STRI retains its detailed worked example below; historical Regression-Gated material remains archive-only.",zh:"本页直接投影全部 canonical Paper Acceptance ledger，不再把某一篇论文当成整个论文组合。每篇论文分四层查看：科学证据、文稿质量、8 门 Paper Preparation Protocol，以及人工投稿交接。STRI 的详细实例仍保留在下方；旧 Regression-Gated 内容继续只作为历史归档。"},
+    callout:{en:"Canonical snapshot: four papers are SUBMISSION_READY and one is in TARGETED_REPAIR. Paper Preparation is tracked independently: a legacy-ready paper that has not yet been migrated is not a failed paper, and migration cannot expand claims or authorize new experiments.",zh:"Canonical 快照：当前 4 篇论文为 SUBMISSION_READY，1 篇处于 TARGETED_REPAIR。Paper Preparation 独立记账：旧论文尚未迁移新协议不等于论文失败，迁移也不能扩大主张或授权新实验。"},
     renderMode:"selected-paper-current",
     chapters:chaptersFor("selected-paper")
   };
