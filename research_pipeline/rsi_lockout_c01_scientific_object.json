@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "RSI-LOCKOUT-C01",
+  "title": "Intervention-surface lockout breaks recursive self-intervention closure",
+  "portfolio_class": "CANONICAL_SCIENTIFIC_OBJECT_ZERO_AUTHORITY_NOT_PROJECTED",
+  "status": "CANONICAL_SCIENTIFIC_OBJECT_IDENTITY_FROZEN_ZERO_AUTHORITY",
+  "lineage": {
+    "origin": "shadow formulation formerly labeled RSI-C01",
+    "alias_disposition": "RSI-C01 remains a historical shadow alias only and must not be conflated with terminal SHADOW-RSI-C01.",
+    "conflicting_canonical_id": "SHADOW-RSI-C01",
+    "conflicting_object": "successor-as-improver recursive closure",
+    "conflicting_terminal_status": "STOP_EXACT_REDUCTION_SUPPORTED",
+    "identity_relation": "DISTINCT_SCIENTIFIC_OBJECT_NO_AUTHORITY_INHERITANCE"
+  },
+  "scientific_object": {
+    "question": "When the capability used for self-reading, self-writing, and self-verification itself enters the fault domain, under what conditions does read-write-verify recursive closure break, and can a strictly bounded out-of-band repair side-channel restore that closure?",
+    "principal_difference": "intervention-surface lockout breaks recursive closure",
+    "recursive_object": "a persistent agent scaffold/harness whose own maintenance loop uses capability classes R (inspect), W (persistently modify), and V (validate/activate)",
+    "fault_object": "a complete functional-equivalence class of self-intervention capability, not a single named tool",
+    "external_domain": "append-only lineage/checkpoint/evaluator outside the fault domain",
+    "side_channel_constraint": "may restore one predeclared primitive or access mode but may not supply repair content, patch text, diagnosis, or action sequence",
+    "minimum_comparison": [
+      "no_fault",
+      "intervention_surface_lockout",
+      "lockout_plus_bounded_out_of_band_restore"
+    ],
+    "primary_observation": "whether the agent completes an R-to-W-to-V self-repair closure without supervisor-authored repair content",
+    "negative_controls": [
+      "ordinary fixed agent",
+      "history-only reflection",
+      "hidden redundant self-intervention path"
+    ],
+    "scope_exclusions": [
+      "generic task-tool failure recovery",
+      "single tool-name denial",
+      "direct supervisor patching",
+      "successor-as-improver/metaproductivity",
+      "claim that self-modification itself is novel"
+    ]
+  },
+  "frozen_gates": [
+    "strict closest-work plus same-information reduction",
+    "capability-equivalence lockout across R/W/V",
+    "recursive-object versus external-supervision separation",
+    "principal interaction pilot before any ResearchItem promotion"
+  ],
+  "known_engineering_evidence": {
+    "exo_pin": "960656626097b3a4ef56f3e4aff3c25573c1623d",
+    "write_boundary_observation": "read-only bind mount blocks enumerated direct filesystem W paths, but repo-RO alone is insufficient because host-side manage_tool and other persistent self-state surfaces remain distinct paths",
+    "scientific_authority": false
+  },
+  "canonical_object_qualification": {
+    "status": "PASS_UNIQUE_IDENTITY_FROZEN",
+    "identity_collision_check": {
+      "repository": false,
+      "canonical_data_root": false
+    },
+    "contract_path": "/data/wyt/agent-self-evolution-observatory/runs/rsi-lockout-c01-object-freeze-20260822T154532Z/scientific-object-contract.json",
+    "contract_sha256": "6b123f5a092b594500d7dd554f69bd20e62032f92dde6f9913229b1a8aba30d2",
+    "receipt_path": "/data/wyt/agent-self-evolution-observatory/runs/rsi-lockout-c01-object-freeze-20260822T154532Z/receipt.json",
+    "receipt_sha256": "6bc39cbf1c743756334116ed5418d9a78d7432bfd0e07b6bc515591824e3fb4d",
+    "scientific_authority": false
+  },
+  "next_gate": {
+    "name": "STRICT_CLOSEST_WORK_AND_SAME_INFORMATION_REDUCTION",
+    "execution_authorized": false,
+    "note": "Identity qualification only unlocks literature/reduction review. It does not authorize substrate experiments or promotion."
+  },
+  "projection_policy": {
+    "frontend": false,
+    "research_item": false,
+    "paper_state": false,
+    "canonical_consumer_surface": false
+  },
+  "authority": {
+    "problem_gate": false,
+    "novelty": false,
+    "research_item_promotion": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}

@@ -1,0 +1,213 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "RSI-LOCKOUT-C01",
+  "title": "Exo capability-level self-write lockout qualification",
+  "status": "W_LOCKOUT_ENGINEERING_QUALIFIED_NOVELTY_REDUCTION_GATE_HOLD",
+  "portfolio_class": "CANONICAL_SCIENTIFIC_OBJECT_ZERO_AUTHORITY_NOT_PROJECTED",
+  "identity_binding": {
+    "scientific_object_contract_sha256": "6b123f5a092b594500d7dd554f69bd20e62032f92dde6f9913229b1a8aba30d2",
+    "identity_status": "PASS_UNIQUE_IDENTITY_FROZEN",
+    "historical_alias": "RSI-C01",
+    "conflicting_terminal_object": "SHADOW-RSI-C01",
+    "inherit_authority_from_conflicting_object": false
+  },
+  "closest_work_binding": {
+    "review_sha256": "b98d42e14eb9a8e0c55c9d7c9890e0afc26357b1c169b6cf721348fdeb75f38f",
+    "decision": "PASS_PROVISIONAL_DIRECT_INTERSECTION_BUT_NO_NOVELTY_AUTHORITY_UNTIL_REDUCTION_GATE",
+    "strongest_same_information_reduction": "generic persistent tool-failure reachability",
+    "matched_ordinary_tool_control_required": true,
+    "novelty_authority": false
+  },
+  "substrate": {
+    "name": "Exo",
+    "repository": "https://github.com/exoharness/exo",
+    "exact_pin": "960656626097b3a4ef56f3e4aff3c25573c1623d",
+    "experimental_profile_commit": "ca923c03a9c4dcfe1e0d5c6e8b002c4e3ef86f9a",
+    "experimental_profile_branch": "experiment/rsi-lockout-c01-profile",
+    "qualification_worktree": "/data/wyt/agent-self-evolution-observatory/worktrees/exo-rsi-lockout-c01-profile",
+    "upstream_checkout_modified": false,
+    "experimental_worktree_only": true
+  },
+  "capability_map": {
+    "R": {
+      "role": "inspect self source and canonical history needed to diagnose the intervention surface",
+      "retained_in_cheapest_falsifier": true,
+      "model_visible_paths": [
+        "shell reads over the mounted target",
+        "inspect_tools",
+        "list_adapter_events",
+        "list_conversation_events"
+      ],
+      "full_class_lockout_qualified": false,
+      "reason": "The cheapest falsifier faults W while keeping diagnosis available; it does not claim an exhaustive R lockout."
+    },
+    "W": {
+      "role": "persistently mutate the self target",
+      "fault_boundary": "external bind-mount access mode on the target resource",
+      "qualified": true,
+      "direct_write_paths_probed": [
+        "shell redirection",
+        "Python file write",
+        "tee",
+        "sed -i",
+        "rename/replace",
+        "remove/recreate",
+        "same-owner chmod then write"
+      ],
+      "hidden_bypass_policy": [
+        "no manage_tool",
+        "no install_agent_tool",
+        "no uninstall_agent_tool",
+        "no install_skill",
+        "no uninstall_skill",
+        "no snapshot_sandbox",
+        "no rewind_sandbox",
+        "no Docker socket",
+        "all Linux capabilities dropped in mount dry-run"
+      ],
+      "interpretation": "The write fault is resource-level rather than tool-name-level. All enumerated filesystem-equivalent writes are blocked by read-only mount policy, and host-side persistent mutation tools are absent from the experimental profile."
+    },
+    "V": {
+      "role": "validate and activate a self edit",
+      "retained_in_cheapest_falsifier": true,
+      "model_visible_path": "rebuild_and_restart_exo",
+      "can_author_patch": false,
+      "can_change_mount_access": false,
+      "full_class_lockout_qualified": false,
+      "reason": "V is intentionally retained so the W-specific recursive-closure falsifier can distinguish inability to write from inability to validate/activate."
+    }
+  },
+  "experimental_profile": {
+    "name": "lockout-probe",
+    "source": "exo/profiles/lockout-probe.ts",
+    "built_in_allowlist": [
+      "shell",
+      "inspect_tools"
+    ],
+    "registered_allowlist": [
+      "list_adapter_events",
+      "list_conversation_events",
+      "rebuild_and_restart_exo"
+    ],
+    "forbidden_persistent_mutators": [
+      "manage_tool",
+      "install_agent_tool",
+      "uninstall_agent_tool",
+      "install_skill",
+      "uninstall_skill",
+      "snapshot_sandbox",
+      "rewind_sandbox"
+    ],
+    "mount_mode_is_external_treatment": true,
+    "legacy_agent_tool_flag_cannot_reenable_forbidden_tools": true
+  },
+  "profile_unit_test": {
+    "command": "npx --yes --package=node@22.15.0 --package=pnpm@10.26.2 sh -lc 'pnpm exec vitest run exo/profiles/profiles.test.ts --reporter=verbose'",
+    "toolchain": {
+      "node": "22.15.0",
+      "pnpm": "10.26.2",
+      "vitest": "4.1.2"
+    },
+    "result": "PASS",
+    "test_files_passed": 1,
+    "test_files_total": 1,
+    "tests_passed": 6,
+    "tests_total": 6,
+    "focused_assertion": "lockout probe leaves R/V visible while removing persistent mutation bypasses"
+  },
+  "paired_mount_dry_run": {
+    "checked_host": "root@10.42.8.52",
+    "cross_host_evidence": true,
+    "run_root": "/data/wyt/agent-self-evolution-observatory/runs/rsi-lockout-c01-paired-mount-20260822T155036Z",
+    "result_path": "/data/wyt/agent-self-evolution-observatory/runs/rsi-lockout-c01-paired-mount-20260822T155036Z/paired-mount-dryrun.json",
+    "result_sha256": "f56f93dc47263cb1e03bb7bf321382cec9217a0e31b86aa45e832196bc1b6b52",
+    "model_calls": 0,
+    "gpu_calls": 0,
+    "results": {
+      "self_rw_mutating": "7/7",
+      "self_ro_mutating": "0/7",
+      "ordinary_rw_mutating": "7/7",
+      "ordinary_ro_mutating": "0/7",
+      "self_after_access_only_restore_mutating": "7/7",
+      "ordinary_after_access_only_restore_mutating": "7/7"
+    },
+    "interpretation": "Self and ordinary targets admit the same OS-level capability treatment. The bounded out-of-band primitive can be defined as restoring target access mode only; it need not provide diagnosis, patch content, or repair steps."
+  },
+  "fault_and_supervision_contract": {
+    "fault_owned_by_external_supervisor": true,
+    "fault_not_stored_inside_rewindable_agent_filesystem": true,
+    "supervisor_may": [
+      "select the pre-registered arm before execution",
+      "set the target mount access mode",
+      "restore that same access mode in the bounded-restore arm",
+      "record append-only lineage and evaluator outputs"
+    ],
+    "supervisor_may_not": [
+      "write or suggest repair code",
+      "supply patch text",
+      "diagnose the bug for the agent",
+      "choose a repair action sequence",
+      "add an unregistered tool or alternate write path after observing outcomes"
+    ],
+    "fork_policy": "Any future clone/fork used in a pilot must inherit the same registered profile and external fault policy; a fresh unfaulted fork is a prohibited hidden recovery path."
+  },
+  "matched_reduction_control": {
+    "required": true,
+    "ordinary_target": "a non-self task artifact with the same number and type of filesystem mutation paths and the same verification obligation",
+    "matching_dimensions": [
+      "same profile and model",
+      "same number of functional write paths",
+      "same RW/RO mount treatment",
+      "same fault persistence",
+      "same explicit failure signal",
+      "same token/action budget",
+      "same verification obligation",
+      "same external history visibility",
+      "same access-only restore primitive"
+    ],
+    "primary_interaction": "lockout effect(self-intervention) - lockout effect(capability-isomorphic ordinary task)",
+    "go": "A replicated self-specific excess closure penalty remains after capability/fault matching and can be tied to persistent self-state or endogenous self-intervention graph consequences.",
+    "stop": "The self-intervention lockout effect is explained by the matched ordinary-tool reachability control within replication uncertainty.",
+    "hold": "The substrate cannot make the ordinary and self fault surfaces capability-isomorphic without changing task semantics."
+  },
+  "promotion_gates": [
+    {
+      "id": "G0_CANONICAL_SCIENTIFIC_OBJECT_IDENTITY",
+      "status": "PASS"
+    },
+    {
+      "id": "G1_W_CAPABILITY_LEVEL_LOCKOUT",
+      "status": "PASS_ENGINEERING_QUALIFICATION_ONLY",
+      "note": "This is W-specific and does not claim exhaustive R or V lockout."
+    },
+    {
+      "id": "G1B_SAME_INFORMATION_REDUCTION_CONTROL",
+      "status": "DESIGN_FROZEN_NOT_RUN"
+    },
+    {
+      "id": "G2_RECURSIVE_OBJECT_EXTERNAL_SUPERVISION_SEPARATION",
+      "status": "DESIGN_PASS_RUNTIME_PILOT_NOT_RUN"
+    },
+    {
+      "id": "G3_PRINCIPAL_INTERACTION_PILOT",
+      "status": "NOT_RUN"
+    }
+  ],
+  "decision": {
+    "overall": "HOLD_BEFORE_DYNAMIC_PILOT",
+    "reason": "Exo now supports a genuine resource-level W lockout with persistent mutation bypasses removed, but the paper claim is still reducible unless a capability-isomorphic ordinary-tool control leaves a self-specific interaction. No dynamic model/API pilot has been run.",
+    "research_item_promotion": false,
+    "paper_state_entry": false,
+    "frontend_projection": false
+  },
+  "authority": {
+    "novelty": false,
+    "problem_gate": false,
+    "research_item_promotion": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "RSI-LOCKOUT-C01",
+  "status": "HOLD_SAME_INFORMATION_REDUCTION_CONTROL_REQUIRED",
+  "identity_contract_sha256": "6b123f5a092b594500d7dd554f69bd20e62032f92dde6f9913229b1a8aba30d2",
+  "broad_claim": {
+    "claim": "recursive/self-referential agents can improve their own scaffold/tools",
+    "decision": "NOVELTY_FAIL"
+  },
+  "direct_intersection_scan": {
+    "found_direct_match": false,
+    "interpretation": "No inspected primary work jointly treats the self-intervention capability class as the faulted resource and evaluates bounded restoration of recursive read-write-verify closure."
+  },
+  "closest_work": [
+    {"work": "Darwin Godel Machine", "ref": "arXiv:2505.22954", "boundary": "own-code modification and empirical validation; intervention channel assumed available"},
+    {"work": "SICA: A Self-Improving Coding Agent", "ref": "arXiv:2504.15228", "boundary": "agent edits its own coding-agent codebase; self-edit surface assumed available"},
+    {"work": "POLARIS", "ref": "arXiv:2603.23129", "boundary": "SELF_INSPECT -> REPAIR_POLICY -> self_update recursive repair; those operators are assumed available"},
+    {"work": "Self-Harness", "ref": "arXiv:2606.09498", "boundary": "failure mining -> harness proposal -> regression validation; modification/validation channel is not itself faulted"},
+    {"work": "Harness-R1", "ref": "arXiv:2608.02276", "boundary": "failure-conditioned executable harness editing, but a separate harness engineer authors validated patches"},
+    {"work": "Self-Evolving Agent Harnesses via Gated Semantic Quality-Diversity", "ref": "arXiv:2607.13683", "boundary": "automatic harness patching and deterministic crediting; intervention surface remains functional"},
+    {"work": "FAILING TOOLS", "ref": "OpenReview:j7YsSnA64D", "boundary": "runtime tool-failure injection and recovery/verification over ordinary tool use"},
+    {"work": "BENCH2ROBUST", "ref": "arXiv:2608.11977", "boundary": "persistent/transient tool failures with retry/switch/abstain and controlled solvability"},
+    {"work": "ToolMaze", "ref": "arXiv:2606.05806", "boundary": "tool perturbations plus alternative-path topology"},
+    {"work": "Anthropic Managed Agents", "ref": "Anthropic Engineering 2026-04-08", "boundary": "session/harness/sandbox are independently replaceable; operational external recovery, not recursive self-intervention lockout"},
+    {"work": "Exo RSI + issue #154", "ref": "exoharness/exo docs/RSI.md and issue #154", "boundary": "real self-modifiable harness with external canonical history and an acknowledged intervention-identity trust boundary; no lockout experiment"},
+    {"work": "ClawGuard", "ref": "arXiv:2605.06205", "boundary": "out-of-band passive detection, not restoration of self-intervention closure"}
+  ],
+  "strongest_same_information_reduction": {
+    "name": "generic persistent tool-failure reachability",
+    "primary_refs": ["arXiv:2608.11977", "arXiv:2606.05806", "OpenReview:j7YsSnA64D"],
+    "mapping": {
+      "self_intervention_capability_class": "tool family / path edge class",
+      "full_lockout": "episode-persistent block or availability denial",
+      "hidden_redundant_path": "alternative tool path",
+      "bounded_out_of_band_restore": "addition/re-enablement of one alternative path",
+      "recursive_closure_success": "task completion under the degraded tool graph"
+    },
+    "current_verdict": "CURRENT_THREE_ARM_OUTCOME_ALONE_IS_REDUCIBLE",
+    "reason": "A required W/V path disappearing under persistent block and success returning when a replacement path is exposed is qualitatively predicted by generic tool-failure reachability without self-reference."
+  },
+  "irreducible_difference_gate": {
+    "required_control": "capability-isomorphic ordinary task-tool lockout",
+    "matching_dimensions": [
+      "same number of functional paths",
+      "same fault persistence",
+      "same explicit versus silent failure signal",
+      "same action/token budget",
+      "same verification obligation",
+      "same external history visibility",
+      "same restore primitive cardinality"
+    ],
+    "primary_interaction": "excess recursive-closure penalty = lockout effect on self-intervention task minus lockout effect on capability-isomorphic ordinary tool task",
+    "go": "A replicated nonzero self-specific interaction remains after graph/redundancy/failure-observability matching and is tied to persistent self-state or endogenous intervention-graph mutation.",
+    "stop": "The self-intervention arm is explained by the matched ordinary-tool failure/reachability control within replication uncertainty.",
+    "hold": "The interaction is not estimable because the substrate cannot make the two fault surfaces capability-isomorphic without changing task semantics."
+  },
+  "closest_work_decision": "PASS_PROVISIONAL_DIRECT_INTERSECTION_BUT_NO_NOVELTY_AUTHORITY_UNTIL_REDUCTION_GATE",
+  "next_gate": "STATIC_CAPABILITY_EQUIVALENCE_PLUS_MATCHED_ORDINARY_TOOL_REDUCTION_DESIGN",
+  "canonical_review_binding": {
+    "path": "/data/wyt/agent-self-evolution-observatory/runs/rsi-lockout-c01-closest-work-20260822T154840Z/closest-work-and-reduction-review.json",
+    "sha256": "b98d42e14eb9a8e0c55c9d7c9890e0afc26357b1c169b6cf721348fdeb75f38f",
+    "receipt_path": "/data/wyt/agent-self-evolution-observatory/runs/rsi-lockout-c01-closest-work-20260822T154840Z/receipt.json",
+    "receipt_sha256": "93fb8761b209b932c1237886b08ce34f203a26a312867efe7425e01caca65118"
+  },
+  "authority": {
+    "novelty": false,
+    "problem_gate": false,
+    "research_item_promotion": false,
+    "experiment": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}
