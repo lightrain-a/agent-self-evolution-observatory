@@ -21,6 +21,14 @@ window.NAV_GROUPS = [
   ]},
 ];
 
+window.LITERATURE_REFRESH_META = {
+  verified_at:"2026-08-22",
+  openalex_arxiv:{added:27,method:"OpenAlex discovery + arXiv metadata/abstract verification"},
+  semantic_scholar_arxiv:{added:6,updated:1,method:"Authenticated Semantic Scholar Academic Graph + arXiv cross-check",updated_paper:"HarnessBank: Semantic Gene-Bank Search with Gated Verification for Agent-Harness Self-Evolution"},
+  note:{zh:"2026-08-22 的两轮增量核验共新增 33 篇；第二轮 authenticated Semantic Scholar 另外确认 1 篇既有 arXiv 条目的标题/版本更新。该增量日志与下方批量 S2 snapshot 分开记录，API key 不进入网页产物。",en:"Two incremental verification passes on 2026-08-22 added 33 papers in total; the authenticated Semantic Scholar pass also confirmed one title/version update for an existing arXiv record. This curated delta log is tracked separately from the bulk S2 snapshot below, and the API key is never shipped in web artifacts."},
+  key_deltas:["RoMeRL","FORGE","Who Grades the Grader?","Robo-Cortex","EmbodiSkill","SpaceMind","HarnessBank"]
+};
+
 window.SUPPLEMENTAL_PAPERS = [
   {year:2026,title:"Zetta $ζ$: An Efficient Closed-Loop Embodied Harness for Self-Evolving Physical Intelligence",venue:"arXiv",url:"https://arxiv.org/abs/2608.16590",category:"Embodied",subcategory:"Closed-loop embodied harness evolution",updateTarget:"workflow/scaffold",signal:"online critic-recovery feedback and validation-gated skill updates",vision:true,source:"curated-openalex-arxiv-20260822",summary:"Introduces a closed-loop embodied harness that evolves runtime critics and recovery skills online while keeping the base policy frozen.",summaryZh:"提出闭环具身 harness：冻结基础策略，在执行过程中在线进化 runtime critic 与恢复技能，并用验证门控决定是否提交更新。"},
   {year:2026,title:"HyperSkill: Self-Evolving LLM Agents via Hypergraph-Structured Skill Memory",venue:"arXiv",url:"https://arxiv.org/abs/2608.16114",category:"Memory",subcategory:"Hypergraph-structured skill memory",updateTarget:"memory",signal:"outcome-calibrated hypergraph structure induction",vision:false,source:"curated-openalex-arxiv-20260822",summary:"Represents trajectories, subtasks, and reusable skills in a hypergraph so retrieval and periodic memory evolution can exploit compositional structure.",summaryZh:"把轨迹、子任务与可复用技能组织成超图，让检索和周期性记忆进化利用技能之间的组合结构。"},

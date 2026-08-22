@@ -271,6 +271,11 @@ def main() -> None:
     landscape_source = (ROOT / "research-landscape-data.js").read_text(encoding="utf-8")
     if "formal_papers:" not in landscape_source or "formalPublicationTimeline" not in map_view_source or "formalPublishedPapers" not in map_view_source or "frontierPapersForGroup" not in map_view_source:
         fail("research-map must prioritize formally published conference/journal literature and keep preprints as a separate frontier supplement")
+    boundary_block = landscape_source.split("frontier_boundaries:", 1)[1].split("formal_papers:", 1)[0] if "frontier_boundaries:" in landscape_source else ""
+    if len(re.findall(r'^    [A-G]:\{zh:"[^"]+",en:"[^"]+"\}', boundary_block, re.MULTILINE)) != 7 or not all(title in boundary_block for title in ("HarnessBank", "RoMeRL", "Who Grades the Grader?", "EmbodiSkill", "Robo-Cortex", "SpaceMind")):
+        fail("research-map must carry seven bilingual latest-literature boundary notes grounded in the authenticated S2 refresh")
+    if "frontierBoundary" not in map_view_source or "ResearchItem scientific state" not in map_view_source:
+        fail("latest-literature boundary notes must remain a read-only nearest-work overlay and explicitly preserve ResearchItem authority")
     if "row.source_kind!==\"shadow_closed\"" not in map_view_source or "primaryLedger" not in map_view_source or "attentionCard" not in map_view_source or "formalCategoryList" not in map_view_source:
         fail("research-map must list every reader-facing internal research line, expand active/hold evidence, and give the wider literature column a year-grouped formal-paper view")
     directions_scripts = canonical_scripts.get("research-directions.html", [])
@@ -861,6 +866,8 @@ def main() -> None:
     script_positions = [bibliography_html.find(f'src="{name}"') for name in required_bibliography_scripts]
     if any(position < 0 for position in script_positions) or script_positions != sorted(script_positions):
         fail("bibliography must load ranking and analysis scripts before app.js")
+    if "window.LITERATURE_REFRESH_META" not in data_text or not all(marker in data_text for marker in ("verified_at:\"2026-08-22\"", "added:27", "added:6", "updated:1", "Authenticated Semantic Scholar Academic Graph", "API key 不进入网页产物")):
+        fail("bibliography must publish the 2026-08-22 incremental literature-refresh provenance without exposing the Semantic Scholar API key")
     for filename in CANONICAL_PAGES:
         if filename == "research-timeline.html":
             continue
@@ -869,6 +876,8 @@ def main() -> None:
             fail(f"{filename} must load citation-ranking-data.js before app.js for stable reference numbering")
 
     app_text = (ROOT / "app.js").read_text(encoding="utf-8")
+    if "bibliography-refresh-log" not in app_text or "LATEST INCREMENTAL VERIFICATION" not in app_text or "Semantic Scholar + arXiv" not in app_text:
+        fail("bibliography must render the latest incremental literature-refresh provenance before the bulk Semantic Scholar snapshot")
     for marker in ["Problem motivation", "Comparative advantage", "Core intuition", "Why it should work", "Method flow", "Experimental validation"]:
         if marker not in app_text:
             fail(f"paper-card analysis renderer is missing {marker}")

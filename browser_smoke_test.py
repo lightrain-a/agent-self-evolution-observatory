@@ -314,6 +314,10 @@ def main() -> None:
             """return {
               chapters: [...document.querySelectorAll('.page-chapter')].map(x=>x.dataset.chapter||''),
               trustCards: document.querySelectorAll('.bibliography-trust-grid article').length,
+              refreshLogs: document.querySelectorAll('.bibliography-refresh-log').length,
+              refreshMethods: document.querySelectorAll('.bibliography-refresh-methods article').length,
+              refreshChips: document.querySelectorAll('.bibliography-refresh-chips span').length,
+              refreshText: document.querySelector('.bibliography-refresh-log')?.textContent || '',
               mapGuideCards: document.querySelectorAll('.bibliography-map-guide-grid article').length,
               readingPathCards: document.querySelectorAll('.bibliography-reading-path-grid article').length,
               metaStats: document.querySelectorAll('.bibliography-meta-strip span').length,
@@ -343,7 +347,8 @@ def main() -> None:
             };""",
         )
         require(bibliography["chapters"] == ["coverage-protocol","field-maps","ranking-reading","search-corpus"], f"bibliography reading order is wrong: {bibliography['chapters']}")
-        require((bibliography["trustCards"],bibliography["mapGuideCards"],bibliography["readingPathCards"],bibliography["metaStats"]) == (4,3,3,4), f"bibliography human-first guides are incomplete: {bibliography}")
+        require((bibliography["trustCards"],bibliography["refreshLogs"],bibliography["refreshMethods"],bibliography["refreshChips"],bibliography["mapGuideCards"],bibliography["readingPathCards"],bibliography["metaStats"]) == (4,1,2,7,3,3,4), f"bibliography human-first guides or refresh provenance are incomplete: {bibliography}")
+        require(all(marker in bibliography["refreshText"] for marker in ("2026-08-22","33 papers added","Semantic Scholar + arXiv","RoMeRL","HarnessBank")), f"bibliography incremental API refresh provenance is incomplete: {bibliography['refreshText']}")
         require(bibliography["cards"] == 80, "bibliography initial pagination is not 80")
         require(bibliography["loadMore"], "bibliography load-more control is missing")
         require(bibliography["methodMap"] and bibliography["publicationMap"] and bibliography["signalMap"], "one or more bibliography maps are missing")
@@ -517,6 +522,7 @@ def main() -> None:
           bridgeLinks:document.querySelectorAll('.rpm-bridge-grid a').length,
           categories:document.querySelectorAll('.rpm-category').length,
           overviewCards:document.querySelectorAll('.rpm-overview-card').length,
+          frontierBoundaries:document.querySelectorAll('.rpm-frontier-boundary').length,
           graphAppendix:document.querySelectorAll('.rpm-graph-schema').length,
           controlBoard:document.querySelectorAll('.rpm-control-board').length,
           controlCodes:[...document.querySelectorAll('.rpm-control-board [data-dashboard-research]')].map(x=>x.dataset.dashboardResearch||''),
@@ -527,7 +533,8 @@ def main() -> None:
           pageOverflow:document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
           text:document.body.textContent||''
         };""")
-        require((research_map["chapters"],research_map["toc2"],research_map["bridgeLinks"],research_map["categories"],research_map["overviewCards"],research_map["graphAppendix"]) == (4,5,3,7,7,1), f"current research map hierarchy is incomplete: {research_map}")
+        require((research_map["chapters"],research_map["toc2"],research_map["bridgeLinks"],research_map["categories"],research_map["overviewCards"],research_map["frontierBoundaries"],research_map["graphAppendix"]) == (4,5,3,7,7,7,1), f"current research map hierarchy/latest-literature boundary layer is incomplete: {research_map}")
+        require(all(marker in research_map["text"] for marker in ("最新文献把边界推到哪里","HarnessBank","RoMeRL","Who Grades the Grader?","EmbodiSkill","Robo-Cortex","SpaceMind","不自动改变 ResearchItem")), f"authenticated S2 boundary interpretation is missing from the current research map: {research_map}")
         require(research_map["controlBoard"] == 1 and research_map["controlRows"] == 5 and set(research_map["controlCodes"]) == {"E-7","G-1","A-3","B-2","B-3","E-1"} and research_map["controlHighlights"] >= 3, f"current research map must begin with the same six-object action queue as home: {research_map}")
         require(research_map["dashboardSummary"].get("launchable_formal_experiments") == 0 and "research-timeline.html?research=A-3" in research_map["controlLinks"] and "selected-paper.html?paper=STRI" in research_map["controlLinks"], f"research-map control board must preserve zero experiment authority and direct provenance links: {research_map}")
         require(not research_map["pageOverflow"], "current research map causes page-level horizontal overflow")
@@ -665,7 +672,7 @@ def main() -> None:
 
         navigate("/bibliography.html", 8)
         bibliography_zh = execute(session_id, "return document.body.textContent || ''")
-        require(all(marker in bibliography_zh for marker in ("正式发表","预印本","代码仓库","博客/报告","Agent 组件","模型参数","工具/技能","工作流/脚手架","批评/评测","环境交互")), "Bibliography filters/maps/cards are not localized to Chinese display labels")
+        require(all(marker in bibliography_zh for marker in ("正式发表","预印本","代码仓库","博客/报告","Agent 组件","模型参数","工具/技能","工作流/脚手架","批评/评测","环境交互","最近一次增量核验","本轮新增 33 篇","API key 不进入网页产物")), "Bibliography filters/maps/cards or incremental refresh provenance are not localized to Chinese display labels")
 
         navigate("/evaluation.html", 4)
         evaluation_zh = execute(session_id, "return document.body.textContent || ''")
