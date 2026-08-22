@@ -134,6 +134,7 @@ def build() -> Path:
     paper_attempt_workflow_root = os.environ.get("PAPER_SUBMISSION_ATTEMPT_WORKFLOW_ROOT", "").strip()
     paper_scientific_reopen_root = os.environ.get("PAPER_SCIENTIFIC_REOPEN_ROOT", "").strip()
     research_scientific_method_root = os.environ.get("RESEARCH_SCIENTIFIC_METHOD_ROOT", "").strip()
+    research_scientific_blueprint_root = os.environ.get("RESEARCH_SCIENTIFIC_BLUEPRINT_ROOT", "").strip()
     research_scientific_contract_root = os.environ.get("RESEARCH_SCIENTIFIC_CONTRACT_ROOT", "").strip()
     research_scientific_problem_gate_root = os.environ.get("RESEARCH_SCIENTIFIC_PROBLEM_GATE_ROOT", "").strip()
     if paper_ledger_root:
@@ -172,6 +173,9 @@ def build() -> Path:
         scientific_method_path = Path(research_scientific_method_root).expanduser().resolve() if research_scientific_method_root else audit_root / "scientific-contract-method-design"
         if scientific_method_path.is_dir():
             command.extend(["--scientific-method-root", str(scientific_method_path)])
+        scientific_blueprint_path = Path(research_scientific_blueprint_root).expanduser().resolve() if research_scientific_blueprint_root else audit_root / "scientific-contract-experiment-blueprints"
+        if scientific_blueprint_path.is_dir():
+            command.extend(["--scientific-blueprint-root", str(scientific_blueprint_path)])
         scientific_contract_path = Path(research_scientific_contract_root).expanduser().resolve() if research_scientific_contract_root else audit_root / "scientific-contracts"
         if scientific_contract_path.is_dir():
             command.extend(["--scientific-contract-root", str(scientific_contract_path)])

@@ -53,6 +53,11 @@
     "reopen_method_review_pass": 0,
     "reopen_method_review_blocked": 0,
     "reopen_method_invalid": 0,
+    "reopen_blueprint_required": 0,
+    "reopen_blueprint_awaiting_review": 0,
+    "reopen_blueprint_review_pass": 0,
+    "reopen_blueprint_review_blocked": 0,
+    "reopen_blueprint_invalid": 0,
     "scientific_reopen_invalid": 0
   },
   "papers": [
@@ -353,6 +358,27 @@
               "experiment_blueprint": false,
               "experiment": false,
               "local_validation": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
+          },
+          "experiment_blueprint": {
+            "status": "REOPEN_EXPERIMENT_BLUEPRINT_REQUIRED",
+            "contract_id": "",
+            "blueprint_sha256": "",
+            "blueprint_review_sha256": "",
+            "local_validation_authorization_review_eligible": false,
+            "pre_experiment_compiler_input_eligible": false,
+            "execution_authorized": false,
+            "failed_checks": [],
+            "validation_errors": [],
+            "authority": {
+              "scientific": false,
+              "method": false,
+              "experiment_blueprint": false,
+              "local_validation": false,
+              "experiment": false,
               "p0": false,
               "gpu": false,
               "submission": false
@@ -691,6 +717,27 @@
               "gpu": false,
               "submission": false
             }
+          },
+          "experiment_blueprint": {
+            "status": "REOPEN_EXPERIMENT_BLUEPRINT_REQUIRED",
+            "contract_id": "",
+            "blueprint_sha256": "",
+            "blueprint_review_sha256": "",
+            "local_validation_authorization_review_eligible": false,
+            "pre_experiment_compiler_input_eligible": false,
+            "execution_authorized": false,
+            "failed_checks": [],
+            "validation_errors": [],
+            "authority": {
+              "scientific": false,
+              "method": false,
+              "experiment_blueprint": false,
+              "local_validation": false,
+              "experiment": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
           }
         }
       },
@@ -1021,6 +1068,27 @@
               "experiment_blueprint": false,
               "experiment": false,
               "local_validation": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
+          },
+          "experiment_blueprint": {
+            "status": "REOPEN_EXPERIMENT_BLUEPRINT_REQUIRED",
+            "contract_id": "",
+            "blueprint_sha256": "",
+            "blueprint_review_sha256": "",
+            "local_validation_authorization_review_eligible": false,
+            "pre_experiment_compiler_input_eligible": false,
+            "execution_authorized": false,
+            "failed_checks": [],
+            "validation_errors": [],
+            "authority": {
+              "scientific": false,
+              "method": false,
+              "experiment_blueprint": false,
+              "local_validation": false,
+              "experiment": false,
               "p0": false,
               "gpu": false,
               "submission": false
@@ -1356,6 +1424,27 @@
               "gpu": false,
               "submission": false
             }
+          },
+          "experiment_blueprint": {
+            "status": "REOPEN_EXPERIMENT_BLUEPRINT_REQUIRED",
+            "contract_id": "",
+            "blueprint_sha256": "",
+            "blueprint_review_sha256": "",
+            "local_validation_authorization_review_eligible": false,
+            "pre_experiment_compiler_input_eligible": false,
+            "execution_authorized": false,
+            "failed_checks": [],
+            "validation_errors": [],
+            "authority": {
+              "scientific": false,
+              "method": false,
+              "experiment_blueprint": false,
+              "local_validation": false,
+              "experiment": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
           }
         }
       },
@@ -1684,6 +1773,27 @@
               "gpu": false,
               "submission": false
             }
+          },
+          "experiment_blueprint": {
+            "status": "REOPEN_EXPERIMENT_BLUEPRINT_REQUIRED",
+            "contract_id": "",
+            "blueprint_sha256": "",
+            "blueprint_review_sha256": "",
+            "local_validation_authorization_review_eligible": false,
+            "pre_experiment_compiler_input_eligible": false,
+            "execution_authorized": false,
+            "failed_checks": [],
+            "validation_errors": [],
+            "authority": {
+              "scientific": false,
+              "method": false,
+              "experiment_blueprint": false,
+              "local_validation": false,
+              "experiment": false,
+              "p0": false,
+              "gpu": false,
+              "submission": false
+            }
           }
         }
       },
@@ -1712,5 +1822,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "ef55d9a2fde74191d0a7120cbfb69dc2b08cdb13c6ff424bbdbecc15fc6ae981"
+  "projection_sha256": "0986bfbea7c49f4e8396bf0354f855b7468f7dcb4d58b7267ad766cc94a61a76"
 }
