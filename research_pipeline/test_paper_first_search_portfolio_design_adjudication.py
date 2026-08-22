@@ -155,9 +155,9 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
 
     def test_current_closed_basins_are_typed_by_actual_failure_layer(self) -> None:
         memory = self.state["shadow_search_memory"]
-        self.assertEqual(memory["closed_basin_count"], 41)
+        self.assertEqual(memory["closed_basin_count"], 42)
         self.assertEqual(memory["closure_layer_counts"], {
-            "problem_novelty": 4,
+            "problem_novelty": 5,
             "execution": 0,
             "experiment_identifiability": 2,
             "optimization": 0,
@@ -200,6 +200,12 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertIn("framing", port010["counter_explanation"]["statement"].lower())
         sp09 = next(row for row in memory["closed_objects"] if row.get("source_candidate_id") == "SP-09")
         self.assertEqual(sp09["memory_class"], "PROBLEM_NOVELTY_STOP")
+        p04 = next(row for row in memory["closed_objects"] if row.get("source_candidate_id") == "SHADOW-P04-C01")
+        self.assertEqual(p04["memory_class"], "PROBLEM_NOVELTY_STOP")
+        self.assertEqual(p04["failure_layer"], None)
+        self.assertFalse(p04["principle_update_allowed"])
+        self.assertFalse(p04["dead_end_certified"])
+        self.assertEqual(p04["current_source_refs"], ["arXiv:2608.05810"])
 
     def test_shadow_counterfactual_pass_does_not_leak_downstream_authority(self) -> None:
         self.assertTrue(self.state["policy"]["source_is_shadow_search_portfolio"])

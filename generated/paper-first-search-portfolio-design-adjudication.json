@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-19T05:53:50+00:00",
+  "generated_at": "2026-08-22T05:46:42+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -197,8 +197,8 @@
       "persistent_dead_end_requires_positive_counter_explanation": true,
       "canonical_generator_and_queue_untouched": true
     },
-    "last_ingested_run_id": "shadow-auto-3eb8aa25b7961110",
-    "last_ingested_stage_manifest_sha256": "134455840dda0adb81570843095a0c5e4325d1b0412a68afc4265b49fc000c97",
+    "last_ingested_run_id": "shadow-p04-exact-reduction-memory-20260822",
+    "last_ingested_stage_manifest_sha256": "feb545d3853c2b73b38e098065fd615e8e6fbfc999e8716b9daf55f913902c41",
     "receipts": [
       {
         "run_id": "shadow-auto-3eb8aa25b7961110",
@@ -208,6 +208,16 @@
         "semantic_blocker_added": 0,
         "semantic_hold_added": 0,
         "support_hold_added": 2,
+        "scientific_authority": false
+      },
+      {
+        "run_id": "shadow-p04-exact-reduction-memory-20260822",
+        "stage_manifest_sha256": "feb545d3853c2b73b38e098065fd615e8e6fbfc999e8716b9daf55f913902c41",
+        "terminal_generated_at": "2026-08-22T05:37:45+00:00",
+        "hard_veto_added": 1,
+        "semantic_blocker_added": 0,
+        "semantic_hold_added": 0,
+        "support_hold_added": 0,
         "scientific_authority": false
       }
     ],
@@ -548,6 +558,57 @@
           "reopen_condition": "Current primary evidence supports an ex-ante non-separability or impossibility prediction for the same skill under identical model/trigger/workflow/security/utility information that generic contextual governance cannot express."
         },
         "reopen_only_if": "Current primary evidence supports an ex-ante non-separability or impossibility prediction for the same skill under identical model/trigger/workflow/security/utility information that generic contextual governance cannot express.",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P04-C01",
+        "basin": "current-source-hard-veto-e712dd049f0c5398",
+        "search_primitive": "LONGITUDINAL_EMERGENCE",
+        "avoid": [
+          "paraphrase-only variants of: Nonmonotonic skill-pool scaling with irreversible contamination collapse",
+          "problem formulations exactly reducible to: arXiv:2608.05810 already claims the same inverted-U skill-pool tipping point together with weak source-only rollback and descendant-lineage irreversibility.",
+          "domain- or terminology-swapped variants that do not add an ex-ante same-information residual beyond the recorded current-source reduction"
+        ],
+        "strongest_reduction": "arXiv:2608.05810 already claims the same inverted-U skill-pool tipping point together with weak source-only rollback and descendant-lineage irreversibility.",
+        "current_source_refs": [
+          "arXiv:2608.05810"
+        ],
+        "reason": "Independent exact-reduction review found no surviving frozen residual: the closest primary source already states, formalizes, and tests nonmonotonic scaling, a contamination tipping point, weak recovery after source-only removal, and irreversible descendant-lineage propagation. Additional cross-substrate replication cannot rescue the frozen claim because universality is not part of P04.",
+        "reopen_only_if": "New primary evidence supplies an ex-ante same-information prediction that the recorded current-source reduction cannot express under matched information, budget, and operational scope; renaming components, changing application domain, or proposing an unexecuted ablation does not reopen the basin.",
+        "search_closure_certified": true,
+        "dead_end_certified": false,
+        "closure_layer": "problem_novelty",
+        "failure_layer": null,
+        "memory_class": "PROBLEM_NOVELTY_STOP",
+        "principle_update_allowed": false,
+        "broader_core_principle_falsified": false,
+        "source_stop_class": "PROBLEM_NOVELTY_STOP",
+        "failure_layer_reason": "The exact paper-problem formulation stops before method/experiment scale-up because current primary work or mature theory already expresses the claimed object under matched information/scope.",
+        "failure_layer_review_basis": "current-primary-collision-re-review-2026-08-18",
+        "experiment_run_for_this_readjudication": false,
+        "experiment_alone_authorizes_closure": false,
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "arXiv:2608.05810 already claims the same inverted-U skill-pool tipping point together with weak source-only rollback and descendant-lineage irreversibility.",
+          "opposite_prediction": "Under matched information, budget, and operational scope, the cited current-source mechanism explains the proposed prediction without the candidate's standalone principle.",
+          "opposite_principle": "The cited same-information mechanism is sufficient on this bounded formulation.",
+          "opposite_search_seed": "Search for a bounded condition where the cited mechanism receives identical information but makes a distinct falsifiable prediction from the candidate mechanism.",
+          "scope": "the bounded candidate problem formulation and current-source collision review",
+          "same_information_or_scope_matched": true,
+          "evidence_refs": [
+            "arXiv:2608.05810"
+          ],
+          "alternative_explanations_ruled_out": [
+            "missing execution support",
+            "provider/runtime failure",
+            "mere terminology or application-domain change"
+          ],
+          "positive_support": true,
+          "same_information_reduction_verified": true,
+          "reopen_condition": "New primary evidence supplies an ex-ante same-information prediction that the recorded current-source reduction cannot express under matched information, budget, and operational scope."
+        },
+        "source_run_id": "shadow-p04-exact-reduction-memory-20260822",
+        "source_stage_manifest_sha256": "feb545d3853c2b73b38e098065fd615e8e6fbfc999e8716b9daf55f913902c41",
         "scientific_authority": false
       },
       {
@@ -3507,9 +3568,9 @@
         "scientific_authority": false
       }
     ],
-    "closed_basin_count": 41,
+    "closed_basin_count": 42,
     "closure_layer_counts": {
-      "problem_novelty": 4,
+      "problem_novelty": 5,
       "execution": 0,
       "experiment_identifiability": 2,
       "optimization": 0,
@@ -3527,7 +3588,7 @@
       "assumption_scope": 2,
       "core_principle": 2
     },
-    "problem_novelty_stop_count": 4,
+    "problem_novelty_stop_count": 5,
     "execution_stop_count": 0,
     "experiment_identifiability_stop_count": 2,
     "optimization_stop_count": 0,
@@ -3698,9 +3759,9 @@
     "positive_residual_search_active_count": 0,
     "positive_residual_asset_registry_id": "positive-residual-search-assets-v4",
     "hold_object_count": 9,
-    "current_source_hard_veto_count": 0,
+    "current_source_hard_veto_count": 1,
     "current_source_hard_veto_added_from_latest_run": 0,
-    "current_source_hard_veto_added_from_terminal_run": 0,
+    "current_source_hard_veto_added_from_terminal_run": 1,
     "current_source_hard_veto_inherited": 0,
     "semantic_blocker_count": 0,
     "semantic_hold_count": 1,
@@ -3715,7 +3776,7 @@
     "near_miss_base_preflight_count": 4,
     "near_miss_terminal_support_hold_count": 3,
     "search_control_only": true,
-    "closed_object_count": 41
+    "closed_object_count": 42
   },
   "shadow_dead_end_memory": {
     "memory_id": "shadow-paper-design-core-principle-dead-end-memory-20260818-v1",
@@ -3920,10 +3981,10 @@
     "stop_standalone": 1,
     "support_inventory_required": 1,
     "shadow_dead_end_objects": 2,
-    "shadow_closed_basins": 41,
+    "shadow_closed_basins": 42,
     "principle_readjudication_dead_ends": 2,
     "principle_readjudication_closed_basins": 37,
-    "problem_novelty_stops": 4,
+    "problem_novelty_stops": 5,
     "execution_stops": 0,
     "experiment_identifiability_stops": 2,
     "optimization_stops": 0,
@@ -3934,9 +3995,9 @@
     "broader_core_principle_falsifications": 0,
     "core_principle_dead_ends": 2,
     "shadow_hold_objects": 9,
-    "current_source_hard_veto_dead_ends": 0,
+    "current_source_hard_veto_dead_ends": 1,
     "current_source_hard_veto_added_from_latest_run": 0,
-    "current_source_hard_veto_added_from_terminal_run": 0,
+    "current_source_hard_veto_added_from_terminal_run": 1,
     "current_source_hard_veto_inherited": 0,
     "semantic_blocker_dead_ends": 0,
     "semantic_hold_objects": 1,
