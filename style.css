@@ -224,11 +224,13 @@ body[data-page="bibliography"] .published-comparison-scroll th:first-child,body[
 body[data-page="bibliography"] .published-comparison-scroll td:first-child b,body[data-page="bibliography"] .published-comparison-scroll td:first-child small{display:block}
 body[data-page="bibliography"] .published-comparison-scroll td:first-child b{color:#2f4057;font-size:9.5px;line-height:1.35}
 body[data-page="bibliography"] .published-comparison-scroll td:first-child small{margin-top:3px;color:#87909d;font-size:8px}
+body[data-page="bibliography"] .published-comparison-scroll td .published-comparison-source{display:block;margin-top:6px;padding-top:5px;border-top:1px dashed #d9e2ee;color:#60728c;font-size:8px;font-weight:600;line-height:1.35}
 body[data-page="bibliography"] .published-paper-quickread{margin:8px;border:1px solid #d9e3f0;border-radius:10px;background:#f8fbff;overflow:hidden}
 body[data-page="bibliography"] .published-paper-quickread>header{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 10px;background:#edf4ff;border-bottom:1px solid #d9e3f0}
 body[data-page="bibliography"] .published-paper-quickread>header b,body[data-page="bibliography"] .published-paper-quickread>header span{display:block}
 body[data-page="bibliography"] .published-paper-quickread>header b{color:#274268;font-size:10.5px}
 body[data-page="bibliography"] .published-paper-quickread>header span{margin-top:2px;color:#60728c;font-size:8.5px}
+body[data-page="bibliography"] .published-paper-quickread>header .published-evidence-source{display:block;margin-top:4px;color:#728197;font-size:8px;font-weight:600;line-height:1.35}
 body[data-page="bibliography"] .published-paper-quickread>header strong{max-width:390px;text-align:right;color:#3156a6;font-size:8.5px;line-height:1.4}
 body[data-page="bibliography"] .published-paper-quickread-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:8px}
 body[data-page="bibliography"] .published-paper-quickread-grid>div{padding:8px;border:1px solid #e3eaf3;border-radius:8px;background:#fff}

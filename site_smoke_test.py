@@ -880,7 +880,7 @@ def main() -> None:
     if ranking_text.count("citationCount:") < 20 or "snapshotUpdatedAt:" not in ranking_text:
         fail("citation ranking config must contain a dated deployment snapshot for at least 20 core papers")
     bibliography_html = (ROOT / "bibliography.html").read_text(encoding="utf-8")
-    required_bibliography_scripts = ["citation-ranking-data.js", "paper-analysis-data.js", "top-paper-analysis-data.js", "published-literature-data.js", "app.js"]
+    required_bibliography_scripts = ["citation-ranking-data.js", "paper-analysis-data.js", "top-paper-analysis-data.js", "published-literature-data.js", "published-paper-evidence-core1.js", "published-paper-evidence-core2.js", "published-paper-evidence-core3.js", "published-paper-evidence-core4.js", "app.js"]
     script_positions = [bibliography_html.find(f'src="{name}"') for name in required_bibliography_scripts]
     if any(position < 0 for position in script_positions) or script_positions != sorted(script_positions):
         fail("bibliography must load ranking and analysis scripts before app.js")
@@ -906,9 +906,15 @@ def main() -> None:
     for marker in ["Agent 到底应该学什么？", "经验应该变成什么？", "D1", "D10", "全部追加 + Top-K 相似度检索", "固定工具/API", "固定训练集 + 固定 reward"]:
         if marker not in published_text:
             fail(f"published-literature reading spine is missing concrete baseline marker: {marker}")
-    for marker in ["renderPublishedSpine", "renderPublishedComparisons", "renderPublishedQuickRead", "publishedLiteratureAudit", "30 秒读懂这篇正式论文", "实验实际看到了什么"]:
+    for marker in ["renderPublishedSpine", "renderPublishedComparisons", "renderPublishedQuickRead", "publishedLiteratureAudit", "publishedEvidenceOverride", "missingMustReadEvidence", "30 秒读懂这篇正式论文", "实验实际看到了什么"]:
         if marker not in app_text:
             fail(f"published-literature renderer is missing {marker}")
+    evidence_text = "\n".join((ROOT / f"published-paper-evidence-core{i}.js").read_text(encoding="utf-8") for i in range(1,5))
+    if evidence_text.count("source:{zh:") != 22:
+        fail("all 22 A-tier must-read publications need paper-specific source-grounded evidence")
+    for marker in ["HumanEval pass@1 = 91%", "4.8% 提到 42.4%", "平均比当时 SOTA 自动工作流方法高 5.7%", "general benchmark 平均 +2.4%", "57.8%", "正式摘要没有给一个可安全概括的统一平均百分点"]:
+        if marker not in evidence_text:
+            fail(f"paper-specific published evidence is missing concrete result marker: {marker}")
     if "Semantic Scholar retrieval" not in (ROOT / "generated/s2-literature.js").read_text(encoding="utf-8") or "semantic scholar retrieval" not in app_text.lower():
         fail("Semantic Scholar retrieval provenance must remain present in the raw snapshot and explicitly handled by the analysis layer")
     for marker in ["sortBibliographyRecords", "publicationTier", "readingRoleInfo", "renderRecommendedPaperGroups", "bibliography-sort", "citation-ranking-status", "citationCount"]:

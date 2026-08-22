@@ -331,7 +331,8 @@ def main() -> None:
               publishedComparisonSections: document.querySelectorAll('.published-comparison-section').length,
               publishedQuickReads: document.querySelectorAll('.published-paper-quickread').length,
               publishedQuickFields: document.querySelectorAll('.published-paper-quickread-grid > div').length,
-              publishedAudit: window.publishedLiteratureAudit?.() || {published:0,byTier:{},byDirection:{},missingQuick:['audit missing']},
+              publishedAudit: window.publishedLiteratureAudit?.() || {published:0,byTier:{},byDirection:{},missingQuick:['audit missing'],missingMustReadEvidence:['audit missing']},
+              publishedEvidenceSources: document.querySelectorAll('.published-evidence-source').length,
               publishedIntro: document.querySelector('.published-spine-intro')?.textContent || '',
               mapGuideCards: document.querySelectorAll('.bibliography-map-guide-grid article').length,
               readingPathCards: document.querySelectorAll('.bibliography-reading-path-grid article').length,
@@ -376,7 +377,9 @@ def main() -> None:
         require((bibliography["publishedQuestionCards"],bibliography["publishedStories"],bibliography["publishedComparisonSections"]) == (4,10,10), f"published literature spine is incomplete: {bibliography}")
         published_audit=bibliography["publishedAudit"]
         require(published_audit["published"] >= 60 and not published_audit["missingQuick"] and published_audit["byTier"].get("A",0) >= 15, f"published literature audit failed: {published_audit}")
+        require(published_audit["mustRead"] == 22 and published_audit["paperSpecificEvidence"] == 22 and not published_audit["missingMustReadEvidence"] and published_audit["numericEvidence"] >= 15, f"A-tier paper-specific evidence is incomplete: {published_audit}")
         require(bibliography["publishedQuickReads"] > 0 and bibliography["publishedQuickFields"] == bibliography["publishedQuickReads"] * 8, "published paper 30-second readouts are incomplete")
+        require(bibliography["publishedEvidenceSources"] > 0, "visible A-tier paper cards must expose the source-grounded evidence note")
         require("published" in bibliography["publishedIntro"].lower() and str(published_audit["published"]) in bibliography["publishedIntro"], "published spine summary is missing its audited count")
         require(bibliography["cards"] == 80, "bibliography initial pagination is not 80")
         require(bibliography["loadMore"], "bibliography load-more control is missing")

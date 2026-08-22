@@ -3735,6 +3735,12 @@ function publishedTierLabel(record){
   const tier=publishedReadingTier(record), label=publishedReadingConfig().relationLabels?.[tier];
   return textOf(label || {zh:tier,en:tier});
 }
+function publishedEvidenceOverride(record){
+  const evidence=window.PUBLISHED_PAPER_EVIDENCE || {};
+  if(evidence[record.title]) return evidence[record.title];
+  const key=publishedTitleKey(record.title);
+  return Object.entries(evidence).find(([title])=>publishedTitleKey(title)===key)?.[1] || null;
+}
 function publishedEvidenceSummary(record){
   const zh=String(record.summaryZh||"").trim(), en=String(record.summary||"").trim();
   const pick=(text,pattern)=>String(text||"").split(/(?<=[.!?。！？])\s+/).find(sentence=>pattern.test(sentence)) || "";
@@ -3754,17 +3760,19 @@ function publishedPaperReadout(record, analysis=paperAnalysis(record), design=pa
   const relation=code==="FOUNDATION"
     ? (language==="zh"?"历史前置：解释后续 Agent 自进化能力从哪里来，但不把它误算成直接自进化方法。":"Historical precursor: enables later self-evolution but is not counted as a direct self-evolution method.")
     : (language==="zh"?`${code} · ${textOf(meta?.title||{})} · ${publishedTierLabel(record)}`:`${code} · ${textOf(meta?.title||{})} · ${publishedTierLabel(record)}`);
-  const simple=meta ? textOf(meta.baseline) : (language==="zh"?"把当前任务直接交给固定 Agent 运行，不在任务之间提交持久更新。":"Run a fixed agent without committing persistent cross-task updates.");
-  const why=meta ? textOf(meta.gap) : (language==="zh"?"这种做法不能形成可持续、可审计的跨任务学习闭环。":"This does not form a durable, auditable cross-task learning loop.");
+  const evidence=publishedEvidenceOverride(record);
+  const simple=evidence?.simple ? textOf(evidence.simple) : (meta ? textOf(meta.baseline) : (language==="zh"?"把当前任务直接交给固定 Agent 运行，不在任务之间提交持久更新。":"Run a fixed agent without committing persistent cross-task updates."));
+  const why=evidence?.why ? textOf(evidence.why) : (meta ? textOf(meta.gap) : (language==="zh"?"这种做法不能形成可持续、可审计的跨任务学习闭环。":"This does not form a durable, auditable cross-task learning loop."));
   return {
     code,tier:publishedReadingTier(record),venueBand:publishedVenueBand(record),
-    scenario:analysis.purpose,
+    scenario:evidence?.scenario ? textOf(evidence.scenario) : analysis.purpose,
     simple,why,
-    method:design.loop,
-    difference:analysis.advantage,
-    observed:publishedEvidenceSummary(record),
-    proved:language==="zh"?`论文在自己的实验设置中按“${analysis.validation}”建立证据，因此可以把结论限定在该任务、模型与评测协议覆盖的范围内。`:`Within its own experimental setting, the paper uses the following validation path: ${analysis.validation}`,
-    notProved:language==="zh"?"不能仅凭这篇论文推出：同一机制换模型、换任务分布、长期连续更新后仍保持同样收益，也不能把单次平均提升自动解释为没有旧能力回退。":"This alone does not establish the same gain across models, task distributions, or long update streams, nor does an average gain rule out regressions.",
+    method:evidence?.method ? textOf(evidence.method) : design.loop,
+    difference:evidence?.difference ? textOf(evidence.difference) : analysis.advantage,
+    observed:evidence?.observed ? textOf(evidence.observed) : publishedEvidenceSummary(record),
+    proved:evidence?.proved ? textOf(evidence.proved) : (language==="zh"?`论文在自己的实验设置中按“${analysis.validation}”建立证据，因此可以把结论限定在该任务、模型与评测协议覆盖的范围内。`:`Within its own experimental setting, the paper uses the following validation path: ${analysis.validation}`),
+    notProved:evidence?.notProved ? textOf(evidence.notProved) : (language==="zh"?"不能仅凭这篇论文推出：同一机制换模型、换任务分布、长期连续更新后仍保持同样收益，也不能把单次平均提升自动解释为没有旧能力回退。":"This alone does not establish the same gain across models, task distributions, or long update streams, nor does an average gain rule out regressions."),
+    source:evidence?.source ? textOf(evidence.source) : "",
     relation
   };
 }
@@ -3780,7 +3788,7 @@ function renderPublishedQuickRead(record, analysis, design){
     [language==="zh"?"7 · 真正能证明到哪里":"7 · What the evidence supports",read.proved],
     [language==="zh"?"8 · 还不能证明什么":"8 · What remains unproven",read.notProved]
   ];
-  return `<section class="published-paper-quickread"><header><div><b>${language==="zh"?"30 秒读懂这篇正式论文":"30-second reading of this publication"}</b><span>${esc(publishedTierLabel(record))} · ${esc(textOf(read.venueBand.label))}</span></div><strong>${esc(read.relation)}</strong></header><div class="published-paper-quickread-grid">${cells.map(([label,value])=>`<div><b>${esc(label)}</b><p>${esc(value||"")}</p></div>`).join("")}</div></section>`;
+  return `<section class="published-paper-quickread"><header><div><b>${language==="zh"?"30 秒读懂这篇正式论文":"30-second reading of this publication"}</b><span>${esc(publishedTierLabel(record))} · ${esc(textOf(read.venueBand.label))}</span>${read.source?`<small class="published-evidence-source">${esc(read.source)}</small>`:""}</div><strong>${esc(read.relation)}</strong></header><div class="published-paper-quickread-grid">${cells.map(([label,value])=>`<div><b>${esc(label)}</b><p>${esc(value||"")}</p></div>`).join("")}</div></section>`;
 }
 function publishedPapers(){ return catalog.filter(isFormallyPublishedRecord); }
 function publishedDirectionPapers(code){
@@ -3810,15 +3818,19 @@ function renderPublishedComparisons(){
   const sections=Object.entries(cfg.directions||{}).map(([code,meta])=>{
     const papers=publishedDirectionPapers(code).filter(p=>publishedReadingTier(p)!=="C").slice(0,8);
     if(!papers.length) return `<section class="panel published-comparison-section"><header><div><span>${code}</span><h3 data-toc="false">${textOf(meta.title)}</h3></div><strong>${language==="zh"?"正式主线仍稀疏":"peer-reviewed gap"}</strong></header><p class="section-intro">${textOf(meta.gap)}</p></section>`;
-    const body=papers.map(p=>{const a=paperAnalysis(p),d=paperConcreteDesign(p,a),r=publishedPaperReadout(p,a,d);return `<tr><td><a href="${directionPaperHref(p.title)}"><b>${esc(p.title)}</b></a><small>${p.year||""} · ${esc(p.venue||"")} · ${esc(publishedTierLabel(p))}</small></td><td>${esc(r.simple)}</td><td>${esc(r.difference)}</td><td>${esc(r.observed)}</td><td>${esc(r.relation)}</td></tr>`;}).join("");
+    const body=papers.map(p=>{const a=paperAnalysis(p),d=paperConcreteDesign(p,a),r=publishedPaperReadout(p,a,d);return `<tr><td><a href="${directionPaperHref(p.title)}"><b>${esc(p.title)}</b></a><small>${p.year||""} · ${esc(p.venue||"")} · ${esc(publishedTierLabel(p))}</small></td><td>${esc(r.simple)}</td><td>${esc(r.difference)}</td><td>${esc(r.observed)}${r.source?`<small class="published-comparison-source">${esc(r.source)}</small>`:""}</td><td>${esc(r.relation)}</td></tr>`;}).join("");
     return `<section class="panel published-comparison-section"><header><div><span>${code}</span><h3 data-toc="false">${textOf(meta.title)}</h3></div><strong>${papers.length} ${language==="zh"?"篇重点比较":"compared"}</strong></header><p class="published-comparison-baseline"><b>${language==="zh"?"共同的简单起点":"Shared simple baseline"}</b>${textOf(meta.baseline)}</p><div class="published-comparison-scroll"><table><thead><tr><th>${language==="zh"?"论文":"Paper"}</th><th>${language==="zh"?"简单方法怎么做":"Simple method"}</th><th>${language==="zh"?"本文具体多了什么":"What the paper adds"}</th><th>${language==="zh"?"实验实际看到了什么":"Observed evidence"}</th><th>${language==="zh"?"与我们的关系":"Relation"}</th></tr></thead><tbody>${body}</tbody></table></div></section>`;
   }).join("");
-  return `<section class="panel published-comparison-intro"><h3 data-toc="false">${language==="zh"?"不要逐篇孤立读：先看同一问题下，论文到底比简单方法多做了什么":"Compare papers within the same problem, not in isolation"}</h3><p>${language==="zh"?"横向表固定保留“简单方法怎么做”和“本文具体多了什么”。实验列只展示当前摘要/人工梳理能支持的内容；没有逐表核过的数字明确写成待核验，不用自动生成数字填空。":"The comparison fixes a concrete simple baseline and the added mechanism. Result cells only show evidence currently supported by the curated record; unchecked result-table numbers remain explicitly unfilled."}</p></section>${sections}`;
+  return `<section class="panel published-comparison-intro"><h3 data-toc="false">${language==="zh"?"不要逐篇孤立读：先看同一问题下，论文到底比简单方法多做了什么":"Compare papers within the same problem, not in isolation"}</h3><p>${language==="zh"?"横向表固定保留“简单方法怎么做”和“本文具体多了什么”。A 档主线论文优先使用逐篇核过的正式论文/项目页证据；正式来源没有一个统一汇总数字时就明确写出来，不用自动生成数字填空。":"The comparison fixes a concrete simple baseline and the added mechanism. A-tier papers prefer paper-specific source-grounded evidence; when the formal source exposes no single aggregate margin, the table says so instead of fabricating one."}</p></section>${sections}`;
 }
 window.publishedLiteratureAudit=function(){
   const rows=publishedPapers(), byTier={A:0,B:0,C:0}, byDirection={}, missingQuick=[];
   rows.forEach(p=>{const tier=publishedReadingTier(p),code=publishedDirectionCode(p);byTier[tier]++;byDirection[code]=(byDirection[code]||0)+1;const a=paperAnalysis(p),d=paperConcreteDesign(p,a),r=publishedPaperReadout(p,a,d);if(!r||![r.scenario,r.simple,r.why,r.method,r.difference,r.observed,r.proved,r.notProved,r.relation].every(v=>String(v||"").trim()))missingQuick.push(p.title);});
-  return {published:rows.length,byTier,byDirection,missingQuick,workshopFindings:rows.filter(p=>publishedVenueBand(p).id==="workshop").length,mainVenue:rows.filter(p=>publishedVenueBand(p).id==="main").length};
+  const cfg=publishedReadingConfig(), evidence=window.PUBLISHED_PAPER_EVIDENCE||{}, mustRead=cfg.mustRead||[];
+  const missingMustReadEvidence=mustRead.filter(title=>!publishedEvidenceOverride({title}));
+  const paperSpecificEvidence=mustRead.filter(title=>publishedEvidenceOverride({title})).length;
+  const numericEvidence=Object.values(evidence).filter(row=>/\d/.test(`${textOf(row.observed||{})}`)).length;
+  return {published:rows.length,byTier,byDirection,missingQuick,workshopFindings:rows.filter(p=>publishedVenueBand(p).id==="workshop").length,mainVenue:rows.filter(p=>publishedVenueBand(p).id==="main").length,mustRead:mustRead.length,paperSpecificEvidence,numericEvidence,missingMustReadEvidence};
 };
 function paperAnalysis(record) {
   const kind = paperKind(record);
