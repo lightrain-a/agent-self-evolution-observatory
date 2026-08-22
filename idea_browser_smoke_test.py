@@ -401,7 +401,7 @@ def main() -> None:
           bridgeText: document.querySelector('.historical-taxonomy-migration')?.textContent || '',
           hrefs: [...document.querySelectorAll('.taxonomy-current-link')].map(x=>x.getAttribute('href')||'')
         };""")
-        require(directions_bridge["directions"] == directions_bridge["bridges"] == 10 and directions_bridge["currentLinks"] == directions_bridge["migrationLinks"] == 21, f"all D1-D10 directions must expose the many-to-many canonical A-G bridge, including the reconstructed D curriculum lineage: {directions_bridge}")
+        require(directions_bridge["directions"] == 0 and directions_bridge["bridges"] == 10 and directions_bridge["currentLinks"] == directions_bridge["migrationLinks"] == 21, f"the dense Field Atlas must remove legacy direction cards while preserving all 10 D1-D10 bridge rows and 21 many-to-many canonical A-G links: {directions_bridge}")
         require((directions_bridge["canonicalSummary"].get("portfolio_objects"), (directions_bridge["canonicalSummary"].get("by_category") or {}).get("A",{}).get("portfolio_total"), (directions_bridge["canonicalSummary"].get("by_category") or {}).get("B",{}).get("portfolio_total")) == (expected_research_summary.get("portfolio_objects"), expected_category_totals[0], expected_category_totals[1]) and f"{expected_category_totals[0]} 个对象" in directions_bridge["bridgeText"] and f"{expected_category_totals[1]} 个对象" in directions_bridge["bridgeText"] and any("canonical-group-a" in href for href in directions_bridge["hrefs"]), f"Field Atlas must read current counts from canonical ResearchItemState rather than static labels: {directions_bridge}")
 
         navigate("/paper-ideas.html", 6)
