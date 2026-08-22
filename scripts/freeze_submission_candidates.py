@@ -1,5 +1,5 @@
 from __future__ import annotations
-import json, shutil, sys
+import argparse, json, shutil, sys
 from pathlib import Path
 PROJECT_ROOT=Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:sys.path.insert(0,str(PROJECT_ROOT))
@@ -7,7 +7,7 @@ from research_pipeline.paper_anonymity_audit import validate_anonymity_audit_rec
 from research_pipeline.paper_portfolio_audit import build as build_audit
 from research_pipeline.presubmission_freeze import ROOT, artifact, build_freeze, digest, publish_freeze, validate_freeze
 
-POLICY=Path('generated/venue-policy-iclr2027-current.json')
+POLICY=PROJECT_ROOT/'generated'/'venue-policy-iclr2027-current.json'
 PROFILES={
  'AGENT-SAFETY-R9':[
   ('paper_pdf','submission-packages/agent-safety-r9-paper-prep-v2-20260822/agent-safety-r9-iclr2027.pdf'),
@@ -55,15 +55,25 @@ def verify_freeze_artifacts_are_anonymity_audited(pid,arts,audit):
  missing=[a['label'] for a in arts if (Path(str(a.get('path') or '')).name,str(a.get('sha256') or '')) not in covered]
  if missing:raise RuntimeError(f'{pid} freeze artifacts not covered by current deep-anonymity audit: {missing}')
 
-def main():
- policy=json.loads(POLICY.read_text());fd=ROOT/'paper-submission-freezes';fd.mkdir(parents=True,exist_ok=True);shutil.copy2(POLICY,fd/'venue-policy-iclr2027-20260822.json')
- audit=build_audit(ROOT);by={p['paper_id']:p for p in audit['papers']};results=[]
+def run(root:Path,policy_path:Path,validate_only:bool=False):
+ global ROOT
+ ROOT=Path(root).resolve();policy_path=Path(policy_path).resolve();policy=json.loads(policy_path.read_text());fd=ROOT/'paper-submission-freezes';results=[]
+ if not validate_only:
+  fd.mkdir(parents=True,exist_ok=True);shutil.copy2(policy_path,fd/'venue-policy-iclr2027-20260822.json')
+ audit=build_audit(ROOT);by={p['paper_id']:p for p in audit['papers']}
  for pid,p in by.items():
   if not p['submission_freeze_eligible']:
    results.append({'paper_id':pid,'status':'SKIPPED_NOT_ELIGIBLE','paper_preparation_status':p['paper_preparation_status'],'blocker_groups':p['blocker_groups']});continue
   if pid not in PROFILES:raise RuntimeError(f'eligible paper lacks freeze profile: {pid}')
-  anon=deep_anonymity_binding(pid);arts=[artifact(label,ROOT/rel) for label,rel in PROFILES[pid]];verify_freeze_artifacts_are_anonymity_audited(pid,arts,anon);receipt=build_freeze(pid,arts,policy,ROOT);row=publish_freeze(receipt,ROOT);errors=validate_freeze(row)
-  results.append({'paper_id':pid,'status':receipt['status'],'freeze_sha256':receipt['freeze_sha256'],'events':len(row['events']),'deep_anonymity_audit_sha256':anon['anonymity_audit_sha256'],'deep_anonymity_warning_count':int(anon.get('warning_count') or 0),'ledger_validation_errors':errors})
- index={'schema_version':'1.0','venue_policy_snapshot_sha256':policy['snapshot_sha256'],'results':results,'authority':{'scientific':False,'experiment':False,'gpu':False,'submission':False}}
- (fd/'current-freeze-index.json').write_text(json.dumps(index,ensure_ascii=False,indent=2)+'\n');print(json.dumps(index,ensure_ascii=False,indent=2))
+  anon=deep_anonymity_binding(pid);arts=[artifact(label,ROOT/rel) for label,rel in PROFILES[pid]];verify_freeze_artifacts_are_anonymity_audited(pid,arts,anon);receipt=build_freeze(pid,arts,policy,ROOT)
+  if validate_only:
+   results.append({'paper_id':pid,'status':'PASS_VALIDATE_ONLY','freeze_sha256':receipt['freeze_sha256'],'deep_anonymity_audit_sha256':anon['anonymity_audit_sha256'],'deep_anonymity_warning_count':int(anon.get('warning_count') or 0),'ledger_validation_errors':[]});continue
+  row=publish_freeze(receipt,ROOT);errors=validate_freeze(row);results.append({'paper_id':pid,'status':receipt['status'],'freeze_sha256':receipt['freeze_sha256'],'events':len(row['events']),'deep_anonymity_audit_sha256':anon['anonymity_audit_sha256'],'deep_anonymity_warning_count':int(anon.get('warning_count') or 0),'ledger_validation_errors':errors})
+ index={'schema_version':'1.0','mode':'VALIDATE_ONLY' if validate_only else 'PUBLISH','venue_policy_snapshot_sha256':policy['snapshot_sha256'],'results':results,'authority':{'scientific':False,'experiment':False,'gpu':False,'submission':False}}
+ if not validate_only:(fd/'current-freeze-index.json').write_text(json.dumps(index,ensure_ascii=False,indent=2)+'\n')
+ return index
+
+def main():
+ parser=argparse.ArgumentParser(description='Freeze current submission-ready paper artifacts only after the latest Paper Preparation packet binds a PASS deep-anonymity audit covering every artifact SHA.')
+ parser.add_argument('--root',type=Path,default=ROOT);parser.add_argument('--venue-policy',type=Path,default=POLICY);parser.add_argument('--validate-only',action='store_true');args=parser.parse_args();print(json.dumps(run(args.root,args.venue_policy,args.validate_only),ensure_ascii=False,indent=2))
 if __name__=='__main__':main()
