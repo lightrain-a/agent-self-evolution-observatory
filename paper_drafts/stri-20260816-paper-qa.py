@@ -93,7 +93,7 @@ ledger_keys = {str(e["key"]) for e in sources.get("entries", [])}
 check("all_cites_in_bib", cite_keys <= bib_keys, str(sorted(cite_keys - bib_keys)))
 check("all_cites_in_ledger", cite_keys <= ledger_keys, str(sorted(cite_keys - ledger_keys)))
 check("bib_entries_have_ledger", bib_keys <= ledger_keys, str(sorted(bib_keys - ledger_keys)))
-check("all_16_entries_cited", len(cite_keys) == 16 and cite_keys == bib_keys, f"cites={len(cite_keys)} bib={len(bib_keys)}")
+check("all_current_entries_cited", len(cite_keys) == 18 and cite_keys == bib_keys, f"cites={len(cite_keys)} bib={len(bib_keys)}")
 check("ledger_zero_authority", sources.get("scientific_authority") is False)
 
 # Build health.

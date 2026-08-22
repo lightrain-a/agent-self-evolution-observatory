@@ -179,6 +179,29 @@
       "url": "https://doi.org/10.1109/TNET.2007.896231",
       "metadata_provenance": ["IEEE primary publication metadata"],
       "paper_role": "classical optimization context: max-min and min-max fairness"
+    },
+    {
+      "key": "singh2018fairness",
+      "title": "Fairness of Exposure in Rankings",
+      "authors": ["Ashudeep Singh", "Thorsten Joachims"],
+      "year": 2018,
+      "venue": "Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining",
+      "pages": "2219--2228",
+      "doi": "10.1145/3219819.3220088",
+      "url": "https://www.kdd.org/kdd2018/accepted-papers/view/fairness-of-exposure-in-rankings",
+      "metadata_provenance": ["KDD 2018 official accepted-paper page", "DBLP DOI metadata"],
+      "paper_role": "adjacent exposure-allocation literature: ranking fairness under exposure constraints"
+    },
+    {
+      "key": "boyd2004convex",
+      "title": "Convex Optimization",
+      "authors": ["Stephen Boyd", "Lieven Vandenberghe"],
+      "year": 2004,
+      "venue": "Cambridge University Press",
+      "doi": "10.1017/CBO9780511804441",
+      "url": "https://www.cambridge.org/highereducation/books/convexoptimization/17D2FAA54F641A2F62C7CCD01DFA97C4",
+      "metadata_provenance": ["Cambridge University Press book metadata", "authors' official book page"],
+      "paper_role": "classical convex-cone feasibility and LP duality context; not a claimed algorithmic contribution"
     }
   ],
   "scientific_authority": false
