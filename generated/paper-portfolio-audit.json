@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-22T09:14:11.712168+00:00",
+  "generated_at": "2026-08-22T15:13:18+00:00",
   "papers": [
     {
       "paper_id": "AGENT-SAFETY-R9",
@@ -1030,9 +1030,9 @@
       "ledger_replay_pass": true,
       "ledger_errors": [],
       "paper_preparation_status": "BLOCKED",
-      "paper_preparation_passed_gates": 1,
+      "paper_preparation_passed_gates": 5,
       "paper_preparation_required_gates": 8,
-      "paper_preparation_receipt_sha256": "81fbaada572e1766c6c06cfefcc879c4f5e222d7a02169da54f900d67728f8bb",
+      "paper_preparation_receipt_sha256": "75c1837246794b067647d3093aca010d8f6edd354f724c56562fa650252104ec",
       "freeze_status": "PREPARATION_BLOCKED",
       "freeze_integrity_pass": false,
       "freeze_sha256": "",
@@ -1349,25 +1349,11 @@
       },
       "scientific_reopen_errors": [],
       "blocker_groups": [
-        "DECISIVE_EVIDENCE",
-        "STATISTICS_UNCERTAINTY",
-        "VISUAL_CONTRACT",
-        "REPRODUCIBILITY",
-        "VENUE_HANDOFF",
-        "PLAN_EXECUTION_PARITY",
-        "CLAIM_RAW_GROUNDING",
-        "READER_SIMULATION"
+        "DECISIVE_EVIDENCE"
       ],
-      "blocker_count": 34,
+      "blocker_count": 7,
       "next_actions": [
-        "close decision-critical claim-evidence gaps; support unavailability is support debt, not scientific counterevidence",
-        "complete the uncertainty/sensitivity analysis required by the retained claims",
-        "bind each core claim/boundary to a main-text visual contract",
-        "build a self-contained source/reproduction bundle and pass clean-room compile/recompute",
-        "complete venue policy, AI-use/authorship checklist, supplement consistency, and fresh-source compile",
-        "close the gap between the frozen paper plan and the evidence actually executed",
-        "close claim-to-raw-evidence roundtrip in the agent-native artifact",
-        "complete figure-first and reproducibility readers and close critical objections"
+        "close decision-critical claim-evidence gaps; support unavailability is support debt, not scientific counterevidence"
       ],
       "human_handoff_ready": false,
       "submission_freeze_eligible": false,
@@ -1809,6 +1795,9 @@
     "reopen_p0_pre_experiment_blocked": 0,
     "reopen_p0_pre_experiment_pass": 0,
     "reopen_p0_pre_experiment_invalid": 0,
+    "reopen_p0_lease_request_required": 0,
+    "reopen_p0_lease_request_ready": 0,
+    "reopen_p0_lease_request_invalid": 0,
     "scientific_reopen_invalid": 0,
     "submission_freeze_eligible": 4,
     "ledger_replay_failures": 0,
@@ -1820,5 +1809,5 @@
     "gpu": false,
     "submission": false
   },
-  "audit_sha256": "8d5fb002b3e42baf20ce52774fc16f9364c013587a2154a22b49124cd7abd9d1"
+  "audit_sha256": "598f2f4a72f1548b3c27d3193ebc8a68a3e509f7182f0ac0cd81803b22ef8c42"
 }

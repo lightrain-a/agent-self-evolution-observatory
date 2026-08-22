@@ -146,6 +146,7 @@ def build() -> Path:
     research_p0_auth_root = os.environ.get("RESEARCH_P0_AUTH_ROOT", "").strip()
     research_p0_plan_root = os.environ.get("RESEARCH_P0_PLAN_ROOT", "").strip()
     research_p0_pre_experiment_root = os.environ.get("RESEARCH_P0_PRE_EXPERIMENT_ROOT", "").strip()
+    research_p0_lease_request_root = os.environ.get("RESEARCH_P0_LEASE_REQUEST_ROOT", "").strip()
     research_scientific_contract_root = os.environ.get("RESEARCH_SCIENTIFIC_CONTRACT_ROOT", "").strip()
     research_scientific_problem_gate_root = os.environ.get("RESEARCH_SCIENTIFIC_PROBLEM_GATE_ROOT", "").strip()
     if paper_ledger_root:
@@ -218,6 +219,9 @@ def build() -> Path:
         p0_pre_experiment_path = Path(research_p0_pre_experiment_root).expanduser().resolve() if research_p0_pre_experiment_root else audit_root / "scientific-contract-p0-pre-experiment"
         if p0_pre_experiment_path.is_dir():
             command.extend(["--p0-pre-experiment-root", str(p0_pre_experiment_path)])
+        p0_lease_request_path = Path(research_p0_lease_request_root).expanduser().resolve() if research_p0_lease_request_root else audit_root / "scientific-contract-p0-lease-requests"
+        if p0_lease_request_path.is_dir():
+            command.extend(["--p0-lease-request-root", str(p0_lease_request_path)])
         scientific_contract_path = Path(research_scientific_contract_root).expanduser().resolve() if research_scientific_contract_root else audit_root / "scientific-contracts"
         if scientific_contract_path.is_dir():
             command.extend(["--scientific-contract-root", str(scientific_contract_path)])
