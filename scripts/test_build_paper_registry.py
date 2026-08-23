@@ -52,6 +52,9 @@ class PaperRegistryProjectionTest(unittest.TestCase):
         self.assertEqual(summary["preparation_blocked"], sum(p["paper_preparation"]["status"] == "BLOCKED" for p in papers))
         self.assertEqual(summary["machine_frozen_candidates"], sum(p["submission_freeze"]["status"] == "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING" for p in papers))
         self.assertEqual(summary["machine_freeze_stale"], sum(p["submission_freeze"]["status"] == "MACHINE_FREEZE_STALE" for p in papers))
+        self.assertEqual(summary["venue_form_pending"], sum(p["venue_form_consistency"]["status"] == "PENDING_FORM_SNAPSHOT_AND_AUDIT" for p in papers))
+        self.assertEqual(summary["venue_form_pass"], sum(p["venue_form_consistency"]["status"] == "PASS_VENUE_FORM_CONSISTENCY_AUDIT" for p in papers))
+        self.assertEqual(summary["human_signoff_locked_by_venue_form"], sum(p["submission_handoff"]["status"] == "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED" and p["venue_form_consistency"]["status"] != "PASS_VENUE_FORM_CONSISTENCY_AUDIT" for p in papers))
         c01 = next(row for row in papers if row["paper_id"] == registry.C01_ID)
         if c01["current_state"] == "TARGETED_REPAIR":
             self.assertEqual(c01["targeted_repair_boundary"]["scheduler_state"], "HOLD_SUPPORT_AND_IDENTIFICATION")
@@ -67,7 +70,10 @@ class PaperRegistryProjectionTest(unittest.TestCase):
         papers = state["papers"]
         summary = state["summary"]
         self.assertEqual(summary["papers"], len(papers))
-        self.assertEqual(summary["human_submission_signoff_pending"], summary["machine_frozen_candidates"])
+        self.assertEqual(summary["venue_form_pending"], summary["machine_handoff_ready"])
+        self.assertEqual(summary["venue_form_pass"], 0)
+        self.assertEqual(summary["human_signoff_locked_by_venue_form"], summary["machine_handoff_ready"])
+        self.assertEqual(summary["human_submission_signoff_pending"], 0)
         temporal = next(row for row in papers if row["paper_id"] == "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK")
         self.assertEqual(temporal["paper_preparation"]["status"], "BLOCKED")
         self.assertEqual(temporal["submission_freeze"]["status"], "PREPARATION_BLOCKED")

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-08-23 · Venue-form consistency and submission-metadata fail-closed gate
+
+- Added `Venue Form Consistency Audit v1.0` between machine handoff and Human Signoff. A real final OpenReview form snapshot must match the current frozen title, abstract, keywords contract, reviewer-anonymous author visibility, AI-use disclosure, and supplement declaration/artifact hashes; missing snapshots remain `PENDING_FORM_SNAPSHOT_AND_AUDIT` rather than receiving a synthetic PASS.
+- Bound new Human Signoff and actual-submission receipts to the current venue-form audit SHA while preserving replay validation for historical v1.0 signoff/submission receipts. PaperState remains unchanged: this is an operational submission lane, not a new scientific state or source of scientific/experiment/GPU/submission authority.
+- The new gate exposed a real Proxy-Reward packaging defect: its frozen source/PDF lacked the ICLR-required in-paper AI-use statement. Repaired only the anonymous submission projection with a deterministic content-addressed source transform, retained canonical scientific artifacts/claims/evidence unchanged, passed deep-anonymity audit with zero blockers/warnings, and rebuilt the 9-page PDF, freeze, and machine handoff.
+- Current portfolio projection is 5 papers seen / 4 machine handoffs current / 4 venue-form snapshots pending / 0 venue-form PASS / 4 Human Signoffs locked by the form audit / 0 actionable Human Signoff / 0 submitted. Temporal Skill remains blocked by decisive scientific evidence and is not made submission-eligible by packaging work.
+- PaperRegistry now exposes the form-snapshot/audit stage explicitly, including pending/blocked/stale/PASS states and form-audit-bound Human Signoff. Public projections and current handoffs remain free of backend paths and server identifiers.
+
 ## 2026-08-21 · Terminal paper-yield replication and three D2 papers
 
 - Completed the frozen D5-vs-D2 terminal paper-yield replication with six candidates per engine on the same evidence snapshot. Kimi K3 and GLM-5.3 transport failures were archived with zero scientific authority; the successful generation fallback used Doubao Seed 2.0 Mini in two three-candidate shards per engine.

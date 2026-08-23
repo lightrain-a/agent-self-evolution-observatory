@@ -11,6 +11,7 @@ from .paper_preparation_protocol import validate_paper_preparation_receipt
 from .presubmission_freeze import validate_freeze, verify_current_frozen_artifacts
 from .submission_handoff import validate_handoff_ledger, validate_handoff_receipt
 from .human_submission_signoff import validate_signoff_ledger, verify_current_signoff
+from .venue_form_consistency import validate_venue_form_audit_ledger, verify_current_venue_form_audit
 from .venue_submission_receipt import validate_submission_receipt
 from .revision_impact_audit import audit_freeze_receipt
 from .rebuttal_protocol import validate_rebuttal_receipt, validate_review_set
@@ -166,6 +167,41 @@ def revision_impact_state(root: Path, paper_id: str, freeze_status: str) -> dict
     return result
 
 
+def venue_form_audit_state(root: Path, paper_id: str, machine_handoff_status: str) -> dict[str, Any]:
+    if machine_handoff_status != 'MACHINE_HANDOFF_CURRENT':
+        return {'status': 'NOT_ELIGIBLE', 'integrity_pass': False, 'errors': [], 'venue_form_audit_sha256': '', 'blockers': []}
+    path = root / 'paper-venue-form-audits' / f'{paper_id}.json'
+    if not path.exists():
+        return {'status': 'PENDING_FORM_SNAPSHOT_AND_AUDIT', 'integrity_pass': False, 'errors': [], 'venue_form_audit_sha256': '', 'blockers': []}
+    handoff_path = root / 'paper-submission-handoffs' / f'{paper_id}.json'
+    freeze_path = root / 'paper-submission-freezes' / f'{paper_id}.json'
+    try:
+        audit = json.loads(path.read_text(encoding='utf-8'))
+        handoff = json.loads(handoff_path.read_text(encoding='utf-8'))
+        freeze = json.loads(freeze_path.read_text(encoding='utf-8'))
+    except (OSError, json.JSONDecodeError):
+        return {'status': 'VENUE_FORM_AUDIT_STALE', 'integrity_pass': False, 'errors': ['venue-form-audit-ledger-unreadable'], 'venue_form_audit_sha256': '', 'blockers': []}
+    errors = list(validate_venue_form_audit_ledger(audit))
+    errors.extend(verify_current_venue_form_audit(audit, handoff, freeze))
+    errors = list(dict.fromkeys(errors))
+    event = latest(audit, 'venue-form-consistency-audit')
+    receipt = event.get('receipt') if isinstance(event.get('receipt'), dict) else {}
+    blockers = [str(item) for item in receipt.get('blockers') or []]
+    if not errors and receipt.get('pass') is True:
+        status = 'PASS_VENUE_FORM_CONSISTENCY_AUDIT'
+    elif receipt and receipt.get('pass') is False and not any('stale' in err or 'missing' in err for err in errors):
+        status = 'VENUE_FORM_AUDIT_BLOCKED'
+    else:
+        status = 'VENUE_FORM_AUDIT_STALE'
+    return {
+        'status': status,
+        'integrity_pass': not errors and receipt.get('pass') is True,
+        'errors': errors,
+        'venue_form_audit_sha256': str(receipt.get('venue_form_audit_sha256') or ''),
+        'blockers': blockers,
+    }
+
+
 def human_signoff_state(root: Path, paper_id: str, machine_handoff_status: str) -> dict[str, Any]:
     if machine_handoff_status != 'MACHINE_HANDOFF_CURRENT':
         return {'status': 'NOT_ELIGIBLE', 'integrity_pass': False, 'errors': [], 'signoff_sha256': ''}
@@ -174,14 +210,16 @@ def human_signoff_state(root: Path, paper_id: str, machine_handoff_status: str) 
         return {'status': 'PENDING_HUMAN_CONFIRMATION', 'integrity_pass': False, 'errors': [], 'signoff_sha256': ''}
     handoff_path = root / 'paper-submission-handoffs' / f'{paper_id}.json'
     freeze_path = root / 'paper-submission-freezes' / f'{paper_id}.json'
+    venue_form_path = root / 'paper-venue-form-audits' / f'{paper_id}.json'
     try:
         signoff = json.loads(signoff_path.read_text(encoding='utf-8'))
         handoff = json.loads(handoff_path.read_text(encoding='utf-8'))
         freeze = json.loads(freeze_path.read_text(encoding='utf-8'))
+        venue_form = json.loads(venue_form_path.read_text(encoding='utf-8')) if venue_form_path.exists() else None
     except (OSError, json.JSONDecodeError):
         return {'status': 'HUMAN_SIGNOFF_STALE', 'integrity_pass': False, 'errors': ['human-signoff-ledger-unreadable'], 'signoff_sha256': ''}
     errors = list(validate_signoff_ledger(signoff))
-    errors.extend(verify_current_signoff(signoff, handoff, freeze))
+    errors.extend(verify_current_signoff(signoff, handoff, freeze, venue_form))
     errors = list(dict.fromkeys(errors))
     event = latest(signoff, 'human-submission-signoff')
     receipt = event.get('receipt') if isinstance(event.get('receipt'), dict) else {}
@@ -471,6 +509,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         }
     handoff = machine_handoff['status'] == 'MACHINE_HANDOFF_CURRENT'
     impact = revision_impact_state(root, paper_id, freeze['status']) if lineage_ready else {'status': 'NOT_AVAILABLE', 'impact_classes': [], 'minimum_rerun_paper_preparation_gates': [], 'minimum_rerun_paper_acceptance_checks': []}
+    venue_form_audit = venue_form_audit_state(root, paper_id, machine_handoff['status'])
     human_signoff = human_signoff_state(root, paper_id, machine_handoff['status'])
     actual_event = latest(row, 'actual-submission')
     actual_receipt = actual_event.get('receipt') if isinstance(actual_event.get('receipt'), dict) else {}
@@ -613,8 +652,14 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         actions = ['build the machine submission handoff packet from the current freeze before author confirmation']
     elif base_ready and machine_handoff['status'] == 'MACHINE_HANDOFF_STALE':
         actions = ['rebuild the machine submission handoff packet from the current freeze before author confirmation']
+    elif venue_form_audit['status'] == 'PENDING_FORM_SNAPSHOT_AND_AUDIT':
+        actions = ['capture the final OpenReview form snapshot and audit title, abstract, keywords, author visibility, AI-use disclosure, and supplement fields against the current frozen package before human signoff']
+    elif venue_form_audit['status'] == 'VENUE_FORM_AUDIT_BLOCKED':
+        actions = ['repair the mismatched OpenReview form field(s), recapture the final form snapshot, and rerun the venue-form consistency audit before human signoff']
+    elif venue_form_audit['status'] == 'VENUE_FORM_AUDIT_STALE':
+        actions = ['the venue-form audit is stale relative to the current freeze/handoff; recapture and re-audit the final OpenReview form before human signoff']
     elif human_signoff['status'] == 'PENDING_HUMAN_CONFIRMATION':
-        actions = ['collect explicit human confirmations bound to the current handoff SHA; actual submission remains a separate action']
+        actions = ['collect explicit human confirmations bound to the current handoff SHA and PASS venue-form audit SHA; actual submission remains a separate action']
     elif human_signoff['status'] == 'HUMAN_SIGNOFF_STALE':
         actions = ['repeat human signoff against the current freeze and handoff before any upload']
     elif human_signoff['status'] == 'HUMAN_SIGNOFF_COMPLETE_ACTUAL_SUBMISSION_PENDING':
@@ -646,6 +691,11 @@ def project(path: Path, root: Path) -> dict[str, Any]:
         'machine_handoff_integrity_pass': machine_handoff['integrity_pass'],
         'machine_handoff_sha256': machine_handoff['handoff_sha256'],
         'machine_handoff_errors': machine_handoff['errors'],
+        'venue_form_audit_status': venue_form_audit['status'],
+        'venue_form_audit_integrity_pass': venue_form_audit['integrity_pass'],
+        'venue_form_audit_sha256': venue_form_audit['venue_form_audit_sha256'],
+        'venue_form_audit_blockers': venue_form_audit['blockers'],
+        'venue_form_audit_errors': venue_form_audit['errors'],
         'human_signoff_status': human_signoff['status'],
         'human_signoff_integrity_pass': human_signoff['integrity_pass'],
         'human_signoff_sha256': human_signoff['signoff_sha256'],
@@ -736,7 +786,7 @@ def project(path: Path, root: Path) -> dict[str, Any]:
 
 def source_watermark(root: Path) -> str:
     timestamps: list[str] = []
-    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts', root / 'paper-submission-attempt-workflows', root / 'paper-scientific-reopen', root / 'scientific-contracts', root / 'scientific-contract-problem-gates', root / 'scientific-contract-method-design', root / 'scientific-contract-experiment-blueprints', root / 'scientific-contract-local-validation-authority', root / 'scientific-contract-pre-experiment', root / 'scientific-contract-experiment-lease-requests', root / 'scientific-contract-experiment-leases', root / 'scientific-contract-run-starts', root / 'scientific-contract-run-completions', root / 'scientific-contract-p0-authority', root / 'scientific-contract-p0-plans', root / 'scientific-contract-p0-pre-experiment', root / 'scientific-contract-p0-lease-requests', root / 'experiment-authority', root / 'resource-leases'):
+    for directory in (root / 'paper-acceptance', root / 'paper-submission-freezes', root / 'paper-submission-handoffs', root / 'paper-venue-form-audits', root / 'paper-human-signoffs', root / 'paper-review-intake', root / 'paper-submission-attempts', root / 'paper-submission-attempt-workflows', root / 'paper-scientific-reopen', root / 'scientific-contracts', root / 'scientific-contract-problem-gates', root / 'scientific-contract-method-design', root / 'scientific-contract-experiment-blueprints', root / 'scientific-contract-local-validation-authority', root / 'scientific-contract-pre-experiment', root / 'scientific-contract-experiment-lease-requests', root / 'scientific-contract-experiment-leases', root / 'scientific-contract-run-starts', root / 'scientific-contract-run-completions', root / 'scientific-contract-p0-authority', root / 'scientific-contract-p0-plans', root / 'scientific-contract-p0-pre-experiment', root / 'scientific-contract-p0-lease-requests', root / 'experiment-authority', root / 'resource-leases'):
         if not directory.exists():
             continue
         for path in sorted(directory.glob('*.json')):
@@ -769,7 +819,11 @@ def build(root: Path = DEFAULT_ROOT) -> dict[str, Any]:
             'machine_handoff_current': sum(p['machine_handoff_status'] == 'MACHINE_HANDOFF_CURRENT' for p in papers),
             'machine_handoff_stale': sum(p['machine_handoff_status'] == 'MACHINE_HANDOFF_STALE' for p in papers),
             'human_handoff_ready': sum(p['human_handoff_ready'] for p in papers),
-            'human_signoff_pending': sum(p['human_signoff_status'] == 'PENDING_HUMAN_CONFIRMATION' for p in papers),
+            'venue_form_pending': sum(p['venue_form_audit_status'] == 'PENDING_FORM_SNAPSHOT_AND_AUDIT' for p in papers),
+            'venue_form_pass': sum(p['venue_form_audit_status'] == 'PASS_VENUE_FORM_CONSISTENCY_AUDIT' for p in papers),
+            'venue_form_blocked_or_stale': sum(p['venue_form_audit_status'] in {'VENUE_FORM_AUDIT_BLOCKED', 'VENUE_FORM_AUDIT_STALE'} for p in papers),
+            'human_signoff_locked_by_venue_form': sum(p['machine_handoff_status'] == 'MACHINE_HANDOFF_CURRENT' and p['venue_form_audit_status'] != 'PASS_VENUE_FORM_CONSISTENCY_AUDIT' for p in papers),
+            'human_signoff_pending': sum(p['venue_form_audit_status'] == 'PASS_VENUE_FORM_CONSISTENCY_AUDIT' and p['human_signoff_status'] == 'PENDING_HUMAN_CONFIRMATION' for p in papers),
             'human_signoff_complete': sum(p['human_signoff_status'] == 'HUMAN_SIGNOFF_COMPLETE_ACTUAL_SUBMISSION_PENDING' for p in papers),
             'human_signoff_stale': sum(p['human_signoff_status'] == 'HUMAN_SIGNOFF_STALE' for p in papers),
             'submitted': sum(p['paper_state'] == 'SUBMITTED' for p in papers),

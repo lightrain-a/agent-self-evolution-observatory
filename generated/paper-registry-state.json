@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-22T15:13:18+00:00",
+  "generated_at": "2026-08-23T04:46:57+00:00",
   "source": "canonical_paper_acceptance_ledger",
   "summary": {
     "papers": 5,
@@ -13,7 +13,11 @@
     "machine_freeze_stale": 0,
     "machine_handoff_ready": 4,
     "machine_handoff_stale": 0,
-    "human_submission_signoff_pending": 4,
+    "venue_form_pending": 4,
+    "venue_form_pass": 0,
+    "venue_form_blocked_or_stale": 0,
+    "human_signoff_locked_by_venue_form": 4,
+    "human_submission_signoff_pending": 0,
     "human_signoff_complete": 0,
     "human_signoff_stale": 0,
     "submitted": 0,
@@ -99,7 +103,7 @@
       "central_question": "After a persistent web agent passes a frozen current-safety panel, does that pass certify a declared future, and does a same-schedule no-update control leave a finite update-associated first-violation contrast?",
       "current_state": "SUBMISSION_READY",
       "contract_sha256": "9c7ce06d4e29894c93ce6f153570c8f37882801eb28bdbf8b9aecb3f2b603e89",
-      "ledger_events": 19,
+      "ledger_events": 20,
       "supported_claims": 3,
       "active_unrefuted_claims": 0,
       "unsupported_claims": 7,
@@ -108,7 +112,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "submission": "PENDING_FORM_SNAPSHOT_AND_AUDIT",
         "post_submission": "NOT_ELIGIBLE",
         "next_attempt": "NOT_ELIGIBLE"
       },
@@ -122,7 +126,7 @@
         "status": "PASS",
         "pass": true,
         "protocol_version": "1.0",
-        "receipt_sha256": "ff96d1d4e6f62cd54c02435eedbeea97643098afa2df5bf48be6eb8afd1c3b7a",
+        "receipt_sha256": "b3ae673f30d1689e6aeb66d7592e12a88a6e086aaba81212a67930b3a893183c",
         "gate_pass": {
           "hierarchical-rubric": true,
           "verification-refinement": true,
@@ -138,7 +142,7 @@
       },
       "submission_freeze": {
         "status": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING",
-        "freeze_sha256": "211d7e0608ec326b405bc83dd2deea49f79cbf380484e2232839065c13a941ae",
+        "freeze_sha256": "f53784ad53897953e8df4d0df794d69acec60ed6cab7ddd0c60a52c460fa9ece",
         "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
         "human_signoff_status": "PENDING_HUMAN",
         "frozen_artifacts": 2,
@@ -155,8 +159,8 @@
       },
       "submission_handoff": {
         "status": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
-        "handoff_sha256": "0a736c22afec337d0c98a674357511057e35afacad246c80854449f56faa1d2d",
-        "freeze_sha256": "211d7e0608ec326b405bc83dd2deea49f79cbf380484e2232839065c13a941ae",
+        "handoff_sha256": "6703c24b17208ae9cde6b77e2c647bde0e96493414a14488af3c456d30eaf139",
+        "freeze_sha256": "f53784ad53897953e8df4d0df794d69acec60ed6cab7ddd0c60a52c460fa9ece",
         "venue": "ICLR 2027",
         "deadlines_aoe": {
           "abstract": "2026-09-18",
@@ -173,9 +177,9 @@
           },
           {
             "label": "submission_bundle",
-            "filename": "agent-safety-r9-paper-prep-v2-20260822.zip",
-            "sha256": "06972cc5486e7d2c772fd76b17b711dd4340ed3e6195676db1aa4c724626614e",
-            "bytes": 803930
+            "filename": "agent-safety-r9-paper-prep-v3-anonymized-20260823.zip",
+            "sha256": "932a6c7199cf6f50ceb21feecd4d5d9da00413e9a30402dd76bc2303e04e02cd",
+            "bytes": 799283
           }
         ],
         "human_checklist": [
@@ -187,13 +191,22 @@
           "verify final PDF/source/supplement hashes immediately before upload",
           "confirm title and abstract used for reviewer bidding are the intended final submission metadata",
           "confirm every author accepts responsibility for the final manuscript and AI-assisted artifacts",
-          "recompute and compare every frozen artifact SHA256 immediately before upload"
+          "capture final OpenReview form snapshot and pass venue-form consistency audit",
+          "recompute and compare every frozen artifact SHA256 immediately before upload",
+          "confirm bound Double-Blind Leakage Audit SHA256 c3eb819fdc6a26316003b036d66314e988fb94303dce6a6437560cb296cc435d remains current for every frozen artifact"
         ],
         "must_not_submit_if_hash_mismatch": true,
         "must_not_submit_if_freeze_stale": true,
         "integrity_pass": true,
         "errors": [],
         "external_human_submission_authority_required": true
+      },
+      "venue_form_consistency": {
+        "status": "PENDING_FORM_SNAPSHOT_AND_AUDIT",
+        "venue_form_audit_sha256": "",
+        "integrity_pass": false,
+        "errors": [],
+        "blockers": []
       },
       "human_signoff": {
         "status": "PENDING_HUMAN_CONFIRMATION",
@@ -540,7 +553,7 @@
         "claim_audit_receipts": 1,
         "manuscript_ci_receipts": 1,
         "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 1,
+        "paper_preparation_receipts": 2,
         "actual_submission_receipts": 0,
         "rebuttal_preparation_receipts": 0,
         "rebuttal_skipped_receipts": 0,
@@ -558,7 +571,7 @@
       "central_question": "Does failure-derived trajectory provenance causally sustain future error when future task difficulty and actionable memory guidance are matched?",
       "current_state": "SUBMISSION_READY",
       "contract_sha256": "582a203818f9f590d601b5ea9d3a3ecdc08acb3e34d3b1d9f190e17a2d1dcc25",
-      "ledger_events": 33,
+      "ledger_events": 35,
       "supported_claims": 3,
       "active_unrefuted_claims": 2,
       "unsupported_claims": 2,
@@ -567,7 +580,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "submission": "PENDING_FORM_SNAPSHOT_AND_AUDIT",
         "post_submission": "NOT_ELIGIBLE",
         "next_attempt": "NOT_ELIGIBLE"
       },
@@ -581,7 +594,7 @@
         "status": "PASS",
         "pass": true,
         "protocol_version": "1.0",
-        "receipt_sha256": "c7700fda1cccec6c585876da3bb124b8fff35967506d4e5878f9730c2464b54a",
+        "receipt_sha256": "8b973ca1caabdeb071acac9920bf905f74942638b2cf7920eae33e0521785be4",
         "gate_pass": {
           "hierarchical-rubric": true,
           "verification-refinement": true,
@@ -597,7 +610,7 @@
       },
       "submission_freeze": {
         "status": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING",
-        "freeze_sha256": "e6842fe4d97c11683710b0b8834e33a06ec5e7a1328f5a6ea2e6a52510d180a6",
+        "freeze_sha256": "16ccadd9bb990f226d73c0b17a8ecf5a0bfd9055604770d1b8857f44e18ac34e",
         "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
         "human_signoff_status": "PENDING_HUMAN",
         "frozen_artifacts": 4,
@@ -614,8 +627,8 @@
       },
       "submission_handoff": {
         "status": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
-        "handoff_sha256": "0821eb8c269dcf05e65884ff0a8063eab7b6be00c189f658586212070b5121e0",
-        "freeze_sha256": "e6842fe4d97c11683710b0b8834e33a06ec5e7a1328f5a6ea2e6a52510d180a6",
+        "handoff_sha256": "3e85f268279afe7863a5275434ec490dc4a9a5cfd72e73b3eceb429134821722",
+        "freeze_sha256": "16ccadd9bb990f226d73c0b17a8ecf5a0bfd9055604770d1b8857f44e18ac34e",
         "venue": "ICLR 2027",
         "deadlines_aoe": {
           "abstract": "2026-09-18",
@@ -658,13 +671,22 @@
           "verify final PDF/source/supplement hashes immediately before upload",
           "confirm title and abstract used for reviewer bidding are the intended final submission metadata",
           "confirm every author accepts responsibility for the final manuscript and AI-assisted artifacts",
-          "recompute and compare every frozen artifact SHA256 immediately before upload"
+          "capture final OpenReview form snapshot and pass venue-form consistency audit",
+          "recompute and compare every frozen artifact SHA256 immediately before upload",
+          "confirm bound Double-Blind Leakage Audit SHA256 e5bdb3985f4c285c510002409c75e47d383c1854bbdd5faace18ee0b93398efb remains current for every frozen artifact"
         ],
         "must_not_submit_if_hash_mismatch": true,
         "must_not_submit_if_freeze_stale": true,
         "integrity_pass": true,
         "errors": [],
         "external_human_submission_authority_required": true
+      },
+      "venue_form_consistency": {
+        "status": "PENDING_FORM_SNAPSHOT_AND_AUDIT",
+        "venue_form_audit_sha256": "",
+        "integrity_pass": false,
+        "errors": [],
+        "blockers": []
       },
       "human_signoff": {
         "status": "PENDING_HUMAN_CONFIRMATION",
@@ -1011,7 +1033,7 @@
         "claim_audit_receipts": 1,
         "manuscript_ci_receipts": 1,
         "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 1,
+        "paper_preparation_receipts": 3,
         "actual_submission_receipts": 0,
         "rebuttal_preparation_receipts": 0,
         "rebuttal_skipped_receipts": 0,
@@ -1029,7 +1051,7 @@
       "central_question": "Can an erroneous reward label become persistent agent state by changing the memory written from an otherwise identical trajectory, and does that perturbation reach later behavior?",
       "current_state": "SUBMISSION_READY",
       "contract_sha256": "ff6edaa9d93fe289bb84e74937cece3176329925435de8b0c03649f239623ccb",
-      "ledger_events": 20,
+      "ledger_events": 30,
       "supported_claims": 4,
       "active_unrefuted_claims": 1,
       "unsupported_claims": 2,
@@ -1038,7 +1060,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "submission": "PENDING_FORM_SNAPSHOT_AND_AUDIT",
         "post_submission": "NOT_ELIGIBLE",
         "next_attempt": "NOT_ELIGIBLE"
       },
@@ -1052,7 +1074,7 @@
         "status": "PASS",
         "pass": true,
         "protocol_version": "1.0",
-        "receipt_sha256": "bf4cd503cb810877e432db173a8566017d0d24e482c84f7fc41130c3514cb933",
+        "receipt_sha256": "c546c0fef886f0b7a7cfed96e4a74e6bd306959bff92f8bac8e38bb682e86128",
         "gate_pass": {
           "hierarchical-rubric": true,
           "verification-refinement": true,
@@ -1068,7 +1090,7 @@
       },
       "submission_freeze": {
         "status": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING",
-        "freeze_sha256": "55785374bc82630f11a8195751c37b3995194375cf37d63e9a364f404b0622de",
+        "freeze_sha256": "0ffb45a7c273fe7f1416dcf7ba88a867326566f8744fbcd8bdf6e285ebc83ec4",
         "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
         "human_signoff_status": "PENDING_HUMAN",
         "frozen_artifacts": 4,
@@ -1085,8 +1107,8 @@
       },
       "submission_handoff": {
         "status": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
-        "handoff_sha256": "c0efeabfa71bc1645ea44523f721e0acbbb609e838b76f2ceefd3372d80f7328",
-        "freeze_sha256": "55785374bc82630f11a8195751c37b3995194375cf37d63e9a364f404b0622de",
+        "handoff_sha256": "0ffa244feb10345e4780d9f07693fc21c2d0dafc0a2ea20ca2b723d80bbfb523",
+        "freeze_sha256": "0ffb45a7c273fe7f1416dcf7ba88a867326566f8744fbcd8bdf6e285ebc83ec4",
         "venue": "ICLR 2027",
         "deadlines_aoe": {
           "abstract": "2026-09-18",
@@ -1098,26 +1120,26 @@
           {
             "label": "paper_pdf",
             "filename": "main.pdf",
-            "sha256": "fb5df60ac2da35d61fb2d0be8450c79469a8ec63228c09183fcce42674f7ff22",
-            "bytes": 281896
+            "sha256": "449faa893f01e55b625a9f68827dac1599f1f0be74a8e08cd7a9cbfd7adb0df3",
+            "bytes": 282456
           },
           {
             "label": "source_zip",
             "filename": "source.zip",
-            "sha256": "1e90eb5ece9e59d5a03eb7e2981e7dcaf93a464ff33653f5e53699b0098c4b06",
-            "bytes": 239533
+            "sha256": "1b76c8cf1be302bf19ccb0ddc3865148603d58e7f4532f2714899e133e9f8f0d",
+            "bytes": 241306
           },
           {
             "label": "supplement_zip",
             "filename": "supplement.zip",
-            "sha256": "8a0ab8ef07cca59205f4de0bf63e33618e8730c4d67cb7bc0152088a27b3c860",
-            "bytes": 117928
+            "sha256": "8bbb87906f8a4f0551cec9d3d1d5a666110ff40f5030c4eeb74f1f3a49991a69",
+            "bytes": 117578
           },
           {
             "label": "package_manifest",
             "filename": "package-manifest.json",
-            "sha256": "e5c73b2dd0cfecd7245b637f62c1fdbc4cb0cfbfb138a63c94a9d9ad7893a840",
-            "bytes": 741
+            "sha256": "d7eb51ca8b5dc0f269bb656fdd6ebed1f92bf7f07daf04f3ff7831f1add2c508",
+            "bytes": 1641
           }
         ],
         "human_checklist": [
@@ -1129,13 +1151,22 @@
           "verify final PDF/source/supplement hashes immediately before upload",
           "confirm title and abstract used for reviewer bidding are the intended final submission metadata",
           "confirm every author accepts responsibility for the final manuscript and AI-assisted artifacts",
-          "recompute and compare every frozen artifact SHA256 immediately before upload"
+          "capture final OpenReview form snapshot and pass venue-form consistency audit",
+          "recompute and compare every frozen artifact SHA256 immediately before upload",
+          "confirm bound Double-Blind Leakage Audit SHA256 8d7b8cc8ff7ce439bace33ed807fc8588322e14e0579e2226d643f6c6e05ef4d remains current for every frozen artifact"
         ],
         "must_not_submit_if_hash_mismatch": true,
         "must_not_submit_if_freeze_stale": true,
         "integrity_pass": true,
         "errors": [],
         "external_human_submission_authority_required": true
+      },
+      "venue_form_consistency": {
+        "status": "PENDING_FORM_SNAPSHOT_AND_AUDIT",
+        "venue_form_audit_sha256": "",
+        "integrity_pass": false,
+        "errors": [],
+        "blockers": []
       },
       "human_signoff": {
         "status": "PENDING_HUMAN_CONFIRMATION",
@@ -1480,9 +1511,9 @@
       "ledger_summary": {
         "mock_reviews": 4,
         "claim_audit_receipts": 1,
-        "manuscript_ci_receipts": 1,
+        "manuscript_ci_receipts": 2,
         "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 1,
+        "paper_preparation_receipts": 3,
         "actual_submission_receipts": 0,
         "rebuttal_preparation_receipts": 0,
         "rebuttal_skipped_receipts": 0,
@@ -1500,7 +1531,7 @@
       "central_question": "Are recurring temporal-validity and exogenous-context failures caused by missing reusable procedures that targeted skills can repair beyond generic skill assistance?",
       "current_state": "SUBMISSION_READY",
       "contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
-      "ledger_events": 32,
+      "ledger_events": 41,
       "supported_claims": 2,
       "active_unrefuted_claims": 2,
       "unsupported_claims": 2,
@@ -1577,6 +1608,13 @@
         "integrity_pass": false,
         "errors": [],
         "external_human_submission_authority_required": true
+      },
+      "venue_form_consistency": {
+        "status": "NOT_ELIGIBLE",
+        "venue_form_audit_sha256": "",
+        "integrity_pass": false,
+        "errors": [],
+        "blockers": []
       },
       "human_signoff": {
         "status": "NOT_ELIGIBLE",
@@ -1921,9 +1959,9 @@
       "ledger_summary": {
         "mock_reviews": 4,
         "claim_audit_receipts": 2,
-        "manuscript_ci_receipts": 2,
+        "manuscript_ci_receipts": 3,
         "prebuttal_receipts": 2,
-        "paper_preparation_receipts": 2,
+        "paper_preparation_receipts": 0,
         "actual_submission_receipts": 0,
         "rebuttal_preparation_receipts": 0,
         "rebuttal_skipped_receipts": 0,
@@ -1941,7 +1979,7 @@
       "central_question": "Should semantically equivalent skill-package representations change a self-evolution control surface?",
       "current_state": "SUBMISSION_READY",
       "contract_sha256": "30ba1a82ae4547d8e3385f514352da55415b31dcf83b8dabab1f756af34309ad",
-      "ledger_events": 17,
+      "ledger_events": 26,
       "supported_claims": 3,
       "active_unrefuted_claims": 0,
       "unsupported_claims": 3,
@@ -1950,7 +1988,7 @@
         "scientific": "SUPPORTED_AND_AUDITED",
         "paper_quality": "PASS",
         "paper_preparation": "PASS",
-        "submission": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
+        "submission": "PENDING_FORM_SNAPSHOT_AND_AUDIT",
         "post_submission": "NOT_ELIGIBLE",
         "next_attempt": "NOT_ELIGIBLE"
       },
@@ -1964,7 +2002,7 @@
         "status": "PASS",
         "pass": true,
         "protocol_version": "1.0",
-        "receipt_sha256": "f7ede3c2ec09d7774d2e480d01888b79dae166a9a9c9a46965b4fa50a4f43acf",
+        "receipt_sha256": "988d26dcf8d4aecfd41bdd55913e7de9d9c4d7231be05d3bdf0e20b18ab70339",
         "gate_pass": {
           "hierarchical-rubric": true,
           "verification-refinement": true,
@@ -1980,7 +2018,7 @@
       },
       "submission_freeze": {
         "status": "MACHINE_FROZEN_HUMAN_SIGNOFF_PENDING",
-        "freeze_sha256": "5c065d826ecae0b8db5620f039fa30e0df4759e28a7e6dc2c7ec7f70a0d306f1",
+        "freeze_sha256": "5d06402865405da484d0909c9b2dcda5bfb364857d07659e3ca17b188c3af3e8",
         "venue_policy_snapshot_sha256": "ae84ba164d85d3d08e5c44f72e534c7085ac6cd3d7eaebad587e8d13b4a1bd11",
         "human_signoff_status": "PENDING_HUMAN",
         "frozen_artifacts": 3,
@@ -1997,8 +2035,8 @@
       },
       "submission_handoff": {
         "status": "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED",
-        "handoff_sha256": "372fa5012a514ad53c2ec58fca54f1a30974182c49f9ff8bfe696500210fe665",
-        "freeze_sha256": "5c065d826ecae0b8db5620f039fa30e0df4759e28a7e6dc2c7ec7f70a0d306f1",
+        "handoff_sha256": "3487aeb7029d2de265da3b4064793c9af8ba2e623b89149f1eddd83c3e718a6a",
+        "freeze_sha256": "5d06402865405da484d0909c9b2dcda5bfb364857d07659e3ca17b188c3af3e8",
         "venue": "ICLR 2027",
         "deadlines_aoe": {
           "abstract": "2026-09-18",
@@ -2035,13 +2073,23 @@
           "verify final PDF/source/supplement hashes immediately before upload",
           "confirm title and abstract used for reviewer bidding are the intended final submission metadata",
           "confirm every author accepts responsibility for the final manuscript and AI-assisted artifacts",
-          "recompute and compare every frozen artifact SHA256 immediately before upload"
+          "capture final OpenReview form snapshot and pass venue-form consistency audit",
+          "recompute and compare every frozen artifact SHA256 immediately before upload",
+          "confirm bound Double-Blind Leakage Audit SHA256 e358f0af2834798f95921d52b11537010f223a89c4f2662409e56cea66dd4940 remains current for every frozen artifact",
+          "review 6 double-blind repository-link warning(s) and confirm every linked repository is third-party/public or otherwise safe for anonymous review"
         ],
         "must_not_submit_if_hash_mismatch": true,
         "must_not_submit_if_freeze_stale": true,
         "integrity_pass": true,
         "errors": [],
         "external_human_submission_authority_required": true
+      },
+      "venue_form_consistency": {
+        "status": "PENDING_FORM_SNAPSHOT_AND_AUDIT",
+        "venue_form_audit_sha256": "",
+        "integrity_pass": false,
+        "errors": [],
+        "blockers": []
       },
       "human_signoff": {
         "status": "PENDING_HUMAN_CONFIRMATION",
@@ -2386,9 +2434,9 @@
       "ledger_summary": {
         "mock_reviews": 2,
         "claim_audit_receipts": 1,
-        "manuscript_ci_receipts": 1,
+        "manuscript_ci_receipts": 2,
         "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 1,
+        "paper_preparation_receipts": 2,
         "actual_submission_receipts": 0,
         "rebuttal_preparation_receipts": 0,
         "rebuttal_skipped_receipts": 0,
@@ -2407,5 +2455,5 @@
     "gpu": false,
     "submission": false
   },
-  "projection_sha256": "cad39588f394e90f0e66d4056bc9acec70a2e610629777ff2e7ee631e5c43905"
+  "projection_sha256": "79b781c92e7633c8fce39906b5e7f9cd8e8d7165dd7dcef330e5fc38b5b357b0"
 }

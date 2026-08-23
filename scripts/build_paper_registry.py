@@ -21,6 +21,7 @@ if str(ROOT) not in sys.path:
 from research_pipeline.presubmission_freeze import verify_frozen_artifacts
 from research_pipeline.submission_handoff import validate_handoff_ledger, validate_handoff_receipt
 from research_pipeline.human_submission_signoff import validate_signoff_ledger, verify_current_signoff
+from research_pipeline.venue_form_consistency import validate_venue_form_audit_ledger, verify_current_venue_form_audit
 from research_pipeline.venue_submission_receipt import validate_submission_receipt
 from research_pipeline.revision_impact_audit import audit_freeze_receipt
 from research_pipeline.rebuttal_protocol import validate_rebuttal_receipt
@@ -300,6 +301,41 @@ def submission_handoff(paper_id: str, freeze: dict[str, Any], handoff_root: Path
     }
 
 
+def venue_form_consistency(paper_id: str, handoff: dict[str, Any], freeze_root: Path | None, handoff_root: Path | None, signoff_root: Path | None) -> dict[str, Any]:
+    if handoff.get("status") != "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED":
+        return {"status": "NOT_ELIGIBLE", "venue_form_audit_sha256": "", "integrity_pass": False, "errors": [], "blockers": []}
+    if freeze_root is None or handoff_root is None:
+        return {"status": "VENUE_FORM_AUDIT_STALE", "venue_form_audit_sha256": "", "integrity_pass": False, "errors": ["venue-form-currentness-roots-missing"], "blockers": []}
+    base = signoff_root.parent if signoff_root is not None else freeze_root.parent
+    path = base / "paper-venue-form-audits" / f"{paper_id}.json"
+    if not path.exists():
+        return {"status": "PENDING_FORM_SNAPSHOT_AND_AUDIT", "venue_form_audit_sha256": "", "integrity_pass": False, "errors": [], "blockers": []}
+    try:
+        row = _load_json(path)
+        freeze_ledger = _load_json(freeze_root / f"{paper_id}.json")
+        handoff_ledger = _load_json(handoff_root / f"{paper_id}.json")
+        errors = list(validate_venue_form_audit_ledger(row))
+        errors.extend(verify_current_venue_form_audit(row, handoff_ledger, freeze_ledger))
+        errors = list(dict.fromkeys(errors))
+        event = latest_event(row, "venue-form-consistency-audit")
+        receipt = event.get("receipt") or {}
+    except Exception:
+        return {"status": "VENUE_FORM_AUDIT_STALE", "venue_form_audit_sha256": "", "integrity_pass": False, "errors": ["venue-form-audit-ledger-unreadable"], "blockers": []}
+    if not errors and receipt.get("pass") is True:
+        status = "PASS_VENUE_FORM_CONSISTENCY_AUDIT"
+    elif receipt and receipt.get("pass") is False and not any("stale" in err or "missing" in err for err in errors):
+        status = "VENUE_FORM_AUDIT_BLOCKED"
+    else:
+        status = "VENUE_FORM_AUDIT_STALE"
+    return {
+        "status": status,
+        "venue_form_audit_sha256": str(receipt.get("venue_form_audit_sha256") or ""),
+        "integrity_pass": not errors and receipt.get("pass") is True,
+        "errors": errors,
+        "blockers": [str(item) for item in receipt.get("blockers") or []],
+    }
+
+
 def human_signoff(paper_id: str, handoff: dict[str, Any], freeze_root: Path | None, handoff_root: Path | None, signoff_root: Path | None) -> dict[str, Any]:
     if handoff.get("status") != "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED":
         return {"status": "NOT_ELIGIBLE", "signoff_sha256": "", "integrity_pass": False, "errors": [], "actual_submission_status": "NOT_SUBMITTED"}
@@ -318,7 +354,9 @@ def human_signoff(paper_id: str, handoff: dict[str, Any], freeze_root: Path | No
         else:
             freeze_ledger = _load_json(freeze_root / f"{paper_id}.json")
             handoff_ledger = _load_json(handoff_root / f"{paper_id}.json")
-            errors.extend(verify_current_signoff(row, handoff_ledger, freeze_ledger))
+            venue_form_path = signoff_root.parent / "paper-venue-form-audits" / f"{paper_id}.json"
+            venue_form_ledger = _load_json(venue_form_path) if venue_form_path.exists() else None
+            errors.extend(verify_current_signoff(row, handoff_ledger, freeze_ledger, venue_form_ledger))
         errors = list(dict.fromkeys(errors))
     except Exception:
         return {"status": "HUMAN_SIGNOFF_STALE", "signoff_sha256": "", "integrity_pass": False, "errors": ["human-signoff-ledger-unreadable"], "actual_submission_status": "NOT_SUBMITTED"}
@@ -625,6 +663,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
     paper_id = str(row.get("paper_id") or contract.get("paper_id") or path.stem)
     freeze = submission_freeze(paper_id, preparation, freeze_root)
     handoff = submission_handoff(paper_id, freeze, handoff_root)
+    venue_form = venue_form_consistency(paper_id, handoff, freeze_root, handoff_root, signoff_root)
     signoff = human_signoff(paper_id, handoff, freeze_root, handoff_root, signoff_root)
     submission = actual_submission(row)
     rebuttal = rebuttal_state(row)
@@ -651,7 +690,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
             "scientific": scientific_layer,
             "paper_quality": paper_quality_layer,
             "paper_preparation": preparation["status"],
-            "submission": submission["status"] if submission["status"] != "NOT_SUBMITTED" else (signoff["status"] if signoff["status"] != "PENDING_HUMAN_CONFIRMATION" and signoff["status"] != "NOT_ELIGIBLE" else handoff["status"]),
+            "submission": submission["status"] if submission["status"] != "NOT_SUBMITTED" else (signoff["status"] if signoff["status"] not in {"PENDING_HUMAN_CONFIRMATION", "NOT_ELIGIBLE"} else (venue_form["status"] if venue_form["status"] not in {"PASS_VENUE_FORM_CONSISTENCY_AUDIT", "NOT_ELIGIBLE"} else handoff["status"])),
             "post_submission": learning["status"] if learning["status"] != "NOT_ELIGIBLE" else rebuttal["status"],
             "next_attempt": scientific_reopen["status"] if attempt.get("requires_explicit_scientific_reopen") is True else (attempt_workflow["status"] if attempt_workflow["status"] != "NOT_ELIGIBLE" else attempt["status"]),
         },
@@ -664,6 +703,7 @@ def project_paper(path: Path, artifact_root: Path | None, freeze_root: Path | No
         "paper_preparation": preparation,
         "submission_freeze": freeze,
         "submission_handoff": handoff,
+        "venue_form_consistency": venue_form,
         "human_signoff": signoff,
         "actual_submission": submission,
         "rebuttal": rebuttal,
@@ -704,7 +744,8 @@ def source_watermark(ledger_root: Path, freeze_root: Path | None = None, handoff
             timestamps.append(updated)
     authority_dir = (experiment_authority_root / "experiment-authority") if experiment_authority_root is not None else None
     resource_dir = (resource_lease_root / "resource-leases") if resource_lease_root is not None else None
-    for extra_root in (freeze_root, handoff_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root, scientific_contract_root, scientific_problem_gate_root, scientific_method_root, scientific_blueprint_root, local_validation_auth_root, pre_experiment_adapter_root, experiment_lease_request_root, experiment_lease_root, run_start_root, run_completion_root, p0_auth_root, p0_plan_root, p0_pre_experiment_root, p0_lease_request_root, authority_dir, resource_dir):
+    venue_form_root = (signoff_root.parent / "paper-venue-form-audits") if signoff_root is not None else (ledger_root.parent / "paper-venue-form-audits")
+    for extra_root in (freeze_root, handoff_root, venue_form_root, signoff_root, attempt_root, attempt_workflow_root, scientific_reopen_root, scientific_contract_root, scientific_problem_gate_root, scientific_method_root, scientific_blueprint_root, local_validation_auth_root, pre_experiment_adapter_root, experiment_lease_request_root, experiment_lease_root, run_start_root, run_completion_root, p0_auth_root, p0_plan_root, p0_pre_experiment_root, p0_lease_request_root, authority_dir, resource_dir):
         if extra_root is None or not extra_root.exists():
             continue
         for path in sorted(extra_root.glob("*.json")):
@@ -735,7 +776,11 @@ def build(ledger_root: Path, artifact_root: Path | None = None, freeze_root: Pat
         "machine_freeze_stale": sum(p["submission_freeze"]["status"] == "MACHINE_FREEZE_STALE" for p in papers),
         "machine_handoff_ready": sum(p["submission_handoff"]["status"] == "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED" for p in papers),
         "machine_handoff_stale": sum(p["submission_handoff"]["status"] == "MACHINE_HANDOFF_STALE" for p in papers),
-        "human_submission_signoff_pending": sum(p["submission_handoff"]["status"] == "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED" and p["human_signoff"]["status"] == "PENDING_HUMAN_CONFIRMATION" for p in papers),
+        "venue_form_pending": sum(p["venue_form_consistency"]["status"] == "PENDING_FORM_SNAPSHOT_AND_AUDIT" for p in papers),
+        "venue_form_pass": sum(p["venue_form_consistency"]["status"] == "PASS_VENUE_FORM_CONSISTENCY_AUDIT" for p in papers),
+        "venue_form_blocked_or_stale": sum(p["venue_form_consistency"]["status"] in {"VENUE_FORM_AUDIT_BLOCKED", "VENUE_FORM_AUDIT_STALE"} for p in papers),
+        "human_signoff_locked_by_venue_form": sum(p["submission_handoff"]["status"] == "MACHINE_HANDOFF_READY_HUMAN_CONFIRMATION_REQUIRED" and p["venue_form_consistency"]["status"] != "PASS_VENUE_FORM_CONSISTENCY_AUDIT" for p in papers),
+        "human_submission_signoff_pending": sum(p["venue_form_consistency"]["status"] == "PASS_VENUE_FORM_CONSISTENCY_AUDIT" and p["human_signoff"]["status"] == "PENDING_HUMAN_CONFIRMATION" for p in papers),
         "human_signoff_complete": sum(p["human_signoff"]["status"] == "HUMAN_SIGNOFF_COMPLETE_ACTUAL_SUBMISSION_PENDING" for p in papers),
         "human_signoff_stale": sum(p["human_signoff"]["status"] == "HUMAN_SIGNOFF_STALE" for p in papers),
         "submitted": sum(p["current_state"] == "SUBMITTED" for p in papers),
