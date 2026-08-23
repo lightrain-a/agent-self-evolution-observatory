@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0-v19r003-provenance-supersession-audit",
+  "generated_at": "2026-08-23T13:54:30+00:00",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "candidate_snapshot_sha256": "47ea60fb13e3ec723d2a871b58ab1a3c6e9e565eea01e1cd838c67f9f2b39777",
+  "scientific_object_changed": false,
+  "intervention_contract_changed": false,
+  "scientific_outcomes_read": false,
+  "provider_calls_executed": 0,
+  "gpu_calls_executed": 0,
+  "reason": "The first shadow harness manifest stored an internal manifest_sha256 that did not match the content-addressed core manifest reconstructed from the frozen manifest fields. File-level SHA references were valid, but the internal identity field was not. R2 preserves the scientific/harness content, corrects the core digest, and clarifies that the post-lock-in arm is prospective rather than source-executed.",
+  "superseded": {
+    "manifest_path": "generated/v19r003-forced-switch-pre-f0-harness-manifest-20260823.json",
+    "manifest_file_sha256": "efa8191c70a116029de7f5111023f9211e9359da58fdc4870f44c5610efe70bd",
+    "stored_internal_manifest_sha256": "cd04f4dcc23ee42da1b80ea945208c102f43d560f1014396ed6e4ba6f9fbd3e1",
+    "preflight_path": "generated/v19r003-forced-switch-pre-f0-substrate-preflight-20260823.json",
+    "preflight_file_sha256": "d85b1cbba44403c21f5ec39854fcbe3839fb0a1dd25beff7b7e35759dee29871",
+    "disposition": "ARCHIVE_PROVENANCE_HASH_MISMATCH_NOT_IDENTITY_AUTHORITY"
+  },
+  "replacement": {
+    "manifest_path": "generated/v19r003-forced-switch-pre-f0-harness-manifest-r2-20260823.json",
+    "manifest_file_sha256": "c2b6d76561e0865f768a5458cc5bb83b12f33599c669ef19cdd7bcce3a7d96c4",
+    "manifest_core_sha256": "13e31ed297f7520b26c8151e26f82a9b02fc593876df4a95dd6def048ebeb053",
+    "preflight_path": "generated/v19r003-forced-switch-pre-f0-substrate-preflight-r2-20260823.json",
+    "preflight_file_sha256": "28a05344bd205361f070b7043615c08423334a01dbdc87a9f3a1cb5dca013bdf",
+    "disposition": "CURRENT_ZERO_AUTHORITY_PREFLIGHT_ARTIFACT"
+  },
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false,
+    "full_experiment": false
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0-shadow-v19r003-pre-f0-substrate-preflight",
+  "generated_at": "2026-08-23T21:25:00+08:00",
+  "artifact_kind": "V19R003_PRE_F0_SUBSTRATE_PREFLIGHT_RECEIPT",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "candidate_snapshot_sha256": "47ea60fb13e3ec723d2a871b58ab1a3c6e9e565eea01e1cd838c67f9f2b39777",
+  "canonical_projection": false,
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false,
+    "full_experiment": false
+  },
+  "source_grounding": {
+    "ref": "arXiv:2608.19072",
+    "source_tar_sha256": "784fa05bdc7b1e8adfe05759eb821a2b6d4b2a66a9edc2f86271ff581118a8a7",
+    "experiment_tex_sha256": "c4288ce9fec547f571ef3f5ac6068d48b9b7f906df3ab0c5c68e385bfecfc358",
+    "appendix_tex_sha256": "343fd1fd8ee0365b985fa024f2ef15453230e0971a64cf347ae245c04c9d4b36",
+    "discussion_tex_sha256": "57587d9bfdca3df43fb8083ebb1c61dade40826d8e67491173237cafcf194c29",
+    "source_defined_strategy_state": [
+      "training_paradigm",
+      "data_source_type",
+      "stage_structure"
+    ],
+    "source_controlled_hardware": "4 x NVIDIA A800, 10-hour budget, three independent runs per configuration",
+    "source_controlled_task": "AIME 2025 for human-guidance intervention",
+    "source_controlled_model": "Qwen3-1.7B-Base",
+    "source_controlled_agent": "Claude Code with Opus 4.6",
+    "source_intervention_boundary": "before training begins versus after the first verified training experiment / parameter update",
+    "source_scope_gap": "The paper states that its intervention tests initial plan revision only and does not test ongoing human guidance; the experience-driven controlled-intervention implementation is not released in the arXiv source bundle."
+  },
+  "public_substrate": {
+    "repo": "aisa-group/PostTrainBench",
+    "commit": "3ed1d32ff1ec1f41282be6f8ebbcec07b19fc3d1",
+    "repo_status_clean": true,
+    "run_task_sha256": "2911a14e10dd4276e91867888eb49fe182fb80f50190b35266719d53b140aa76",
+    "claude_non_api_solve_sha256": "54113b3cb7c768e0ba74e6c6436a89d54130aaf21de8d6fa17739850848dbfc2",
+    "claude_non_api_api_keys_sha256": "336c529d612f5fe00f8f2c852715dee8451f85b00bf174b4c257cd6d67eaa0ca",
+    "aime2025_evaluator_sha256": "cc9415b6c0392e430d3cffdb2ff9b9a005d0614c762b9339aeaf3a3df90b3876",
+    "trace_parser_sha256": "09fe68ae0f0c84eefb70928dccd6cd288fe67f0ccba6e8cb8ac8872e8e068895",
+    "interface_audit": {
+      "checks": {
+        "copies_agent_solve_sh": true,
+        "passes_prompt": true,
+        "passes_agent_config": true,
+        "executes_copied_agent_solve": true,
+        "parses_trace": true,
+        "copies_task_evaluator": true
+      },
+      "probe_passed": true,
+      "scientific_authority": false
+    },
+    "credential_files_present_in_public_cache": false,
+    "credential_policy": "Execution host must provide Claude OAuth token out-of-band; no secret is copied into this research branch."
+  },
+  "harness": {
+    "manifest_path": "generated/v19r003-forced-switch-pre-f0-harness-manifest-20260823.json",
+    "manifest_file_sha256": "efa8191c70a116029de7f5111023f9211e9359da58fdc4870f44c5610efe70bd",
+    "module_sha256": "6d721573963d7c124611e175e155464027d2e4a3e0f2f4e363e7956a60df6c1f",
+    "adapter_sha256": "e665f4bf1fdf3272cdb00b8a7cfc8ed4b545fb1b1ac5add26652787a199fe43f",
+    "test_sha256": "a44c71bd1601a6e5f44514513890bd7ddb0e842dda27f46439195b07c89619d9",
+    "unit_tests": "8/8 PASS",
+    "gpu_calls_executed": 0,
+    "scientific_outcome_calls_executed": 0,
+    "interface_probe_passed": true,
+    "self_contained_single_file_overlay_verified": true
+  },
+  "execution_tiers": {
+    "tier_a_exact_source_controlled": {
+      "status": "HOLD_SOURCE_IMPLEMENTATION_AND_HARDWARE_UNAVAILABLE",
+      "required": "source experience-driven framework + Qwen3-1.7B-Base + AIME 2025 + Claude Code Opus 4.6 + 4 x NVIDIA A800 + same evaluator/budget"
+    },
+    "tier_b_public_posttrainbench_equivalent": {
+      "status": "HARNESS_INTERFACE_READY_EXECUTION_HOST_REQUIRED",
+      "required": "official PostTrainBench pinned commit + Qwen/Qwen3-1.7B-Base + aime2025 + claude_non_api/Opus4.6 + declared PostTrainBench-compatible H100 host + out-of-band OAuth token",
+      "interpretation": "bounded first-party pre-F0 evidence only; cannot be relabeled as an exact reproduction of the source controlled framework"
+    },
+    "current_host_interface_only": {
+      "status": "NO_SCIENTIFIC_EXECUTION",
+      "observed_gpu": "1 x NVIDIA A100-SXM4-80GB",
+      "reason": "hardware differs from both the source-controlled 4 x A800 setup and the official public PTB H100 setting; known 222.20.126.60/52 hosts are not accessible from current credentials"
+    }
+  },
+  "pre_f0_disposition": "HARNESS_INTERFACE_READY_SCIENTIFIC_HOST_REQUIRED",
+  "problem_gate_status": "BLOCKED_EXACT_REDUCTION_PENDING",
+  "next_valid_action": "Run the frozen four-arm bounded pre-F0 protocol on an accessible declared-hardware host; verify the first successful parameter-update boundary from trace before reading outcomes. If Tier B is used, retain the equivalent-substrate qualifier.",
+  "no_canonical_mutation": true
+}
