@@ -6,6 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from .iclr_agent_paper_template import TEMPLATE_ID, TEMPLATE_VERSION
 from .paper_design_contract import audit_paper_design_contract
 from .paper_quality_gate import audit_manuscript_evidence_completion, audit_paper_evidence_plan
 
@@ -86,6 +87,11 @@ def completed_quality(quality: dict) -> dict:
 
 def development_quality() -> dict:
     return {
+        "manuscript_template": {
+            "template_id": TEMPLATE_ID,
+            "template_version": TEMPLATE_VERSION,
+            "experiment_lane_plan": {f"E{i}": {"status": "PLANNED"} for i in range(1, 7)},
+        },
         "problem_related_work": {
             "necessity_argument": "important recurring failure with concrete consequences",
             "challenge_statement": "the problem is hard because the relevant variable is only partially observable",
@@ -220,6 +226,22 @@ class PaperQualityGateTest(unittest.TestCase):
         repaired = audit_paper_design_contract(config)
         self.assertTrue(repaired["passed"], repaired["blockers"]);self.assertTrue(repaired["development_quality"]["passed"])
         self.assertEqual(repaired["summary"]["paper_development_dimensions_passed"],4)
+        self.assertEqual(repaired["development_quality"]["template_binding"]["status"], "ICLR_TEMPLATE_BOUND")
+
+    def test_schema_2_4_development_contract_requires_iclr_template_lanes(self) -> None:
+        config = paper_design_with_quality();config["schema_version"]="2.4"
+        dev = development_quality();dev.pop("manuscript_template")
+        config["pre_experiment"]["paper_design"]["development_quality"] = dev
+        missing = audit_paper_design_contract(config)
+        self.assertFalse(missing["passed"]);self.assertIn("iclr-template-id-missing-or-stale", missing["blockers"])
+        dev = development_quality();dev["manuscript_template"]["experiment_lane_plan"].pop("E3")
+        config["pre_experiment"]["paper_design"]["development_quality"] = dev
+        missing_lane = audit_paper_design_contract(config)
+        self.assertFalse(missing_lane["passed"]);self.assertIn("iclr-template-experiment-lane-unbound:E3", missing_lane["blockers"])
+        dev = development_quality();dev["manuscript_template"]["experiment_lane_plan"]["E3"] = {"status": "NOT_APPLICABLE_WITH_ARCHETYPE_REASON", "reason": "theory certificate uses exact negative control instead"}
+        config["pre_experiment"]["paper_design"]["development_quality"] = dev
+        allowed_na = audit_paper_design_contract(config)
+        self.assertTrue(allowed_na["passed"], allowed_na["blockers"])
 
     def test_manuscript_ready_requires_completed_artifacts(self) -> None:
         quality = method_quality()

@@ -101,7 +101,7 @@ class ResearchMemoryWikiTest(unittest.TestCase):
         backlog=(row.get("guidance") or {}).get("paper_development_backlog") or [];self.assertEqual(len(backlog),5);self.assertTrue(all(x.get("maturity")=="INITIAL_DRAFT_NEEDS_DEEPENING" and x.get("paper_only_work_allowed") is True and x.get("may_execute_new_experiments") is False for x in backlog))
         pack=compile_research_memory_query_pack(wiki,purpose="PAPER_DESIGN",context="method related work experiment clarity",max_chars=1800,max_items=8)
         self.assertEqual(pack["selected"][0]["kind"],"PAPER_DEVELOPMENT_GUIDANCE");self.assertIn(row["memory_id"],pack["selected_memory_ids"]);self.assertTrue(pack["policy"]["paper_development_guidance_cannot_authorize_experiments"])
-        self.assertIn("initial drafts",pack["text"].lower())
+        self.assertIn("initial drafts",pack["text"].lower());self.assertIn("ICLR-AGENT-SELF-EVOLUTION-MANUSCRIPT-V1",pack["text"]);self.assertIn("E1-E6",pack["text"])
 
 
 if __name__=="__main__":unittest.main()

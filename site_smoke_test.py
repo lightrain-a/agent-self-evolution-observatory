@@ -822,6 +822,7 @@ def main() -> None:
         "generated/s2-literature.js",
         "generated/research-system-state.js",
         "generated/research-memory-wiki.js",
+        "generated/iclr-agent-paper-template.js",
         "content-system-overview.js",
         "page-architecture-data.js",
         "system-overview-core.js",
@@ -848,9 +849,21 @@ def main() -> None:
         fail("Senior paper-development guidance must bind four dimensions and five paper-only initial-draft backlog rows")
     if any((guidance.get("authority") or {}).get(key) is not False for key in ("scientific","method","experiment","gpu","submission")):
         fail("Paper-development guidance must remain zero authority")
+    template_path = ROOT / "generated" / "iclr-agent-paper-template.json"
+    template = json.loads(template_path.read_text(encoding="utf-8"))
+    template_js = (ROOT / "generated" / "iclr-agent-paper-template.js").read_text(encoding="utf-8")
+    expected_template_js = "window.ICLR_AGENT_PAPER_TEMPLATE = " + json.dumps(template, ensure_ascii=False, separators=(",", ":")) + ";\n"
+    if template_js != expected_template_js:
+        fail("ICLR Agent Paper Template JSON/JS projections are not byte-consistent")
+    if len(template.get("derived_from") or []) != 8 or len(template.get("experiment_lanes") or []) != 7 or sum(row.get("required") is True for row in template.get("experiment_lanes") or []) != 6 or abs(sum(float(row.get("pages") or 0) for row in template.get("page_budget_main_body") or []) - 9.0) > 1e-9:
+        fail("ICLR Agent Paper Template must bind 8 exemplars, 7 lanes / 6 required, and a 9-page main-body budget")
+    if any((template.get("authority") or {}).get(key) is not False for key in ("scientific","method","experiment","gpu","submission")):
+        fail("ICLR Agent Paper Template must remain zero authority")
+    if (guidance.get("manuscript_template") or {}).get("template_id") != template.get("template_id") or any((row.get("manuscript_template_id") != template.get("template_id") or row.get("template_binding_required_on_next_material_revision") is not True) for row in backlog):
+        fail("Senior paper-development backlog must bind the current ICLR manuscript template on the next material revision")
     system_files = ["system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-methodology.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-reader.js", "system-overview-governance-v2.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js"]
     system_text = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in system_files)
-    for marker in ("READ THIS PAGE IN 10 CHAPTERS", "ONE AUTHORITY MODEL", "DECIDE WHETHER A NEW PROBLEM EXISTS", "DESIGN THE SCIENTIFIC CONTRIBUTION BEFORE CODING", "CHECK THE SMALLEST TEST BEFORE GPU", "RUN SMALL, DIAGNOSE, THEN DECIDE WHETHER TO SCALE", "CHECK THAT EVERY CLAIM HAS EVIDENCE", "SEARCH THE STORY, THEN BUILD THE MANUSCRIPT", "SIMULATE REJECTION RISK AND REPAIR WITHIN THE EVIDENCE BOUNDARY", "CLOSE PREBUTTAL, SUBMISSION AUTHORITY, AND REAL REVIEW IN THE SAME LEDGER", "REMEMBER WHY WE CONTINUED, STOPPED, ACCEPTED, OR WERE REJECTED", "TERMINATION & MEMORY AUTHORITY", "WHO OWNS EACH BACKEND JOB", "CROSS-CUTTING METHODOLOGY CONTROLS", "Are candidate problems too similar?", "Search-Time Contamination", "Can another person rerun the key result from scratch?",  "21 BACKEND STEPS FROM LITERATURE TO SUBMISSION LEARNING", "system-layer-list", "P0 ECONOMY", "PRE-EXPERIMENT COMPILER", "8 / 8", "CAN THE EXPERIMENT DISTINGUISH THE MECHANISM?", "10 / 10", "SHADOW SEARCH LAB", "v2.9 · MACHINE-ENFORCED", "LOCAL VALIDATION SUB-MACHINE · P0-SYSTEM v2", "system-failure-layer", "How long experiments are launched safely and resumed after disconnects", "CURRENT DECISION → CAUSE → NEXT-RUN RULE", "PAPER DEVELOPMENT QUALITY V1", "Scientific closure is not the same as manuscript maturity", "Writing requirement: make the paper easy to understand"):
+    for marker in ("READ THIS PAGE IN 10 CHAPTERS", "ONE AUTHORITY MODEL", "DECIDE WHETHER A NEW PROBLEM EXISTS", "DESIGN THE SCIENTIFIC CONTRIBUTION BEFORE CODING", "CHECK THE SMALLEST TEST BEFORE GPU", "RUN SMALL, DIAGNOSE, THEN DECIDE WHETHER TO SCALE", "CHECK THAT EVERY CLAIM HAS EVIDENCE", "SEARCH THE STORY, THEN BUILD THE MANUSCRIPT", "SIMULATE REJECTION RISK AND REPAIR WITHIN THE EVIDENCE BOUNDARY", "CLOSE PREBUTTAL, SUBMISSION AUTHORITY, AND REAL REVIEW IN THE SAME LEDGER", "REMEMBER WHY WE CONTINUED, STOPPED, ACCEPTED, OR WERE REJECTED", "TERMINATION & MEMORY AUTHORITY", "WHO OWNS EACH BACKEND JOB", "CROSS-CUTTING METHODOLOGY CONTROLS", "Are candidate problems too similar?", "Search-Time Contamination", "Can another person rerun the key result from scratch?",  "21 BACKEND STEPS FROM LITERATURE TO SUBMISSION LEARNING", "system-layer-list", "P0 ECONOMY", "PRE-EXPERIMENT COMPILER", "8 / 8", "CAN THE EXPERIMENT DISTINGUISH THE MECHANISM?", "10 / 10", "SHADOW SEARCH LAB", "v2.9 · MACHINE-ENFORCED", "LOCAL VALIDATION SUB-MACHINE · P0-SYSTEM v2", "system-failure-layer", "How long experiments are launched safely and resumed after disconnects", "CURRENT DECISION → CAUSE → NEXT-RUN RULE", "PAPER DEVELOPMENT QUALITY V1", "Scientific closure is not the same as manuscript maturity", "Writing requirement: make the paper easy to understand", "ICLR PAPER TEMPLATE V1", "E1–E6 are planning slots"):
         if marker not in system_text:
             fail(f"system overview implementation is missing {marker}")
     shadow_portfolio = json.loads((ROOT / "generated" / "paper-first-problem-search-portfolio-state.json").read_text(encoding="utf-8"))

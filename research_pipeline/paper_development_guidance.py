@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from .iclr_agent_paper_template import TEMPLATE_ID as ICLR_TEMPLATE_ID, TEMPLATE_VERSION as ICLR_TEMPLATE_VERSION, audit_template_binding
+
 
 SCHEMA_VERSION = "1.0"
 GUIDANCE_ID = "SENIOR-PAPER-DEVELOPMENT-GUIDANCE-20260823"
@@ -19,6 +21,8 @@ POLICY: dict[str, Any] = {
     "method_exposition_must_explain_intuition_design_principles_and_stepwise_details": True,
     "experiment_program_must_use_both_prior_work_protocols_and_method_specific_tests": True,
     "writing_must_prefer_clear_direct_concrete_language": True,
+    "next_material_revision_should_bind_iclr_agent_paper_template_v1": True,
+    "iclr_template_experiment_lane_planning_does_not_authorize_execution": True,
 }
 
 CURRENT_PAPER_IDS = (
@@ -165,9 +169,19 @@ def guidance_payload() -> dict[str, Any]:
                 "may_execute_new_experiments": False,
                 "may_use_new_model_or_gpu_calls": False,
                 "new_execution_requires_separate_scientific_reopen": True,
+                "manuscript_template_id": ICLR_TEMPLATE_ID,
+                "manuscript_template_version": ICLR_TEMPLATE_VERSION,
+                "template_binding_required_on_next_material_revision": True,
             }
             for paper_id in CURRENT_PAPER_IDS
         ],
+        "manuscript_template": {
+            "template_id": ICLR_TEMPLATE_ID,
+            "template_version": ICLR_TEMPLATE_VERSION,
+            "generated_ref": "generated/iclr-agent-paper-template.json",
+            "binding_required_on_next_material_revision": True,
+            "experiment_lane_planning_is_not_execution": True,
+        },
         "advisor_assessment": {
             "problem_value": "WORTH_PURSUING",
             "method_direction": "PLAUSIBLE_FOR_THE_STATED_PROBLEM",
@@ -194,6 +208,7 @@ def audit_development_quality(value: Any, *, required: bool) -> dict[str, Any]:
     contract = value if isinstance(value, dict) else {}
     blockers: list[str] = []
     dimension_status: dict[str, Any] = {}
+    template_audit = audit_template_binding(contract.get("manuscript_template"), required=required)
     for spec in DIMENSIONS:
         key = str(spec["key"])
         row = contract.get(key) if isinstance(contract.get(key), dict) else {}
@@ -206,6 +221,8 @@ def audit_development_quality(value: Any, *, required: bool) -> dict[str, Any]:
         }
         if required:
             blockers.extend(f"paper-development-field-missing:{key}:{field}" for field in missing)
+    if required and not template_audit.get("passed"):
+        blockers.extend(str(item) for item in template_audit.get("blockers") or [])
     if not required and not contract:
         return {
             "schema_version": SCHEMA_VERSION,
@@ -215,6 +232,7 @@ def audit_development_quality(value: Any, *, required: bool) -> dict[str, Any]:
             "blockers": [],
             "warnings": ["paper-development-quality-guidance-should-be-bound-on-next-material-paper-design-or-manuscript-revision"],
             "dimensions": dimension_status,
+            "template_binding": template_audit,
             "policy": dict(POLICY),
             "scientific_authority": False,
         }
@@ -227,6 +245,7 @@ def audit_development_quality(value: Any, *, required: bool) -> dict[str, Any]:
         "blockers": sorted(set(blockers)),
         "warnings": [],
         "dimensions": dimension_status,
+        "template_binding": template_audit,
         "policy": dict(POLICY),
         "scientific_authority": False,
     }
@@ -258,7 +277,7 @@ def research_memory_entry() -> dict[str, Any]:
         "principle_update_allowed": False,
         "reopen_condition": "",
         "opposite_search_seed": "",
-        "reusable_precheck": "Before Paper Design, manuscript revision, or Mock PC, verify four separate dimensions: problem necessity/challenge and related-work map; method intuition/design principles/load-bearing details; experiments inspired by both closest-work protocols and method-specific predictions; and plain, direct, reader-comprehensible writing. Treat missing depth as manuscript-development debt, not a scientific STOP or automatic experiment authorization.",
+        "reusable_precheck": f"Bind {ICLR_TEMPLATE_ID} v{ICLR_TEMPLATE_VERSION} on the next material revision and fill E1-E6 as experiment-planning slots (or archetype-justified N/A); planning never authorizes execution. Then verify four dimensions: problem necessity/challenge and related-work map; method intuition/design principles/load-bearing details; experiments inspired by closest-work protocols and method-specific predictions; and plain, direct, reader-comprehensible writing. Treat missing depth as manuscript-development debt, not a scientific STOP.",
         "source_refs": ["human-advisor-guidance:2026-08-23"],
         "source_artifact": GUIDANCE_ID,
         "guidance": payload,

@@ -100,6 +100,16 @@ The next material Paper Design or manuscript revision should cover four independ
 
 The current five-paper backlog is therefore `INITIAL_DRAFT_NEEDS_DEEPENING`: paper-only development on the frozen scientific base is human-approved, while claim expansion, new model calls, new experiments, and GPU work remain separately gated.
 
+### 4.1 Fixed ICLR manuscript / experiment scaffold
+
+The next material revision also binds **`ICLR-AGENT-SELF-EVOLUTION-MANUSCRIPT-V1`**, generated at `generated/iclr-agent-paper-template.json/js` and documented in `ICLR_AGENT_PAPER_TEMPLATE.md`. The template is distilled from accepted ICLR agent, memory, self-improvement, workflow-search, retrieval, and evaluation papers; it is a writing/experiment-design scaffold, not a scientific source of truth.
+
+The default main-body jobs are budgeted across roughly nine pages: Abstract+Introduction (1.5), Problem Setup+Related Work (1.0), Method/Protocol (2.0), Experimental Setup (0.8), Main Results (1.3), Analysis (1.6), and Discussion+Limitations+Conclusion (0.8). Venue constraints may shift fractions, but the jobs cannot disappear merely to fit formatting.
+
+The experiment program has six required planning lanes: **E1 main comparison; E2 component/simplification ablation; E3 mechanism-aligned analysis; E4 robustness/transfer/boundary; E5 negative/failure cases; E6 efficiency/cost/scale**. E7 is an optional trace/case study. An archetype may mark a required lane `NOT_APPLICABLE_WITH_ARCHETYPE_REASON` only when its scientific object genuinely replaces that lane—for example, an exact certificate may replace a conventional empirical mechanism ablation. Planning a lane is never execution authority.
+
+The fixed result-paragraph order is **answer → evidence → interpretation → boundary**. The Method component contract asks six questions: exact input, operation, state/object read or changed, scientific necessity, measurable removal/replacement signature, and simplest alternative/container-independent claim. These are forward requirements for material revisions; historical manuscripts are not retroactively demoted.
+
 ## 5. Writing rules
 
 **Concrete before abstract.** If a real task, environment, model, agent, or failure artifact exists, name it. Do not replace the scene with a term such as “memory provenance” or “representation invariance.” If the experiment was not run, say that it was not run; never fabricate an example for readability.

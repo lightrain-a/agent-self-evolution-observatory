@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-23T16:06:29+00:00",
+  "generated_at": "2026-08-23T16:14:46+00:00",
   "status": "MEMORY_COMPILED",
   "policy": {
     "schema_version": "1.1",
@@ -914,7 +914,7 @@
       "principle_update_allowed": false,
       "reopen_condition": "",
       "opposite_search_seed": "",
-      "reusable_precheck": "Before Paper Design, manuscript revision, or Mock PC, verify four separate dimensions: problem necessity/challenge and related-work map; method intuition/design principles/load-bearing details; experiments inspired by both closest-work protocols and method-specific predictions; and plain, direct, reader-comprehensible writing. Treat missing depth as manuscript-development debt, not a scientific STOP or automatic experiment authorization.",
+      "reusable_precheck": "Bind ICLR-AGENT-SELF-EVOLUTION-MANUSCRIPT-V1 v1.0 on the next material revision and fill E1-E6 as experiment-planning slots (or archetype-justified N/A); planning never authorizes execution. Then verify four dimensions: problem necessity/challenge and related-work map; method intuition/design principles/load-bearing details; experiments inspired by closest-work protocols and method-specific predictions; and plain, direct, reader-comprehensible writing. Treat missing depth as manuscript-development debt, not a scientific STOP.",
       "source_refs": [
         "human-advisor-guidance:2026-08-23"
       ],
@@ -948,7 +948,10 @@
             "may_change_supported_claims": false,
             "may_execute_new_experiments": false,
             "may_use_new_model_or_gpu_calls": false,
-            "new_execution_requires_separate_scientific_reopen": true
+            "new_execution_requires_separate_scientific_reopen": true,
+            "manuscript_template_id": "ICLR-AGENT-SELF-EVOLUTION-MANUSCRIPT-V1",
+            "manuscript_template_version": "1.0",
+            "template_binding_required_on_next_material_revision": true
           },
           {
             "paper_id": "AGENT-SAFETY-R9",
@@ -962,7 +965,10 @@
             "may_change_supported_claims": false,
             "may_execute_new_experiments": false,
             "may_use_new_model_or_gpu_calls": false,
-            "new_execution_requires_separate_scientific_reopen": true
+            "new_execution_requires_separate_scientific_reopen": true,
+            "manuscript_template_id": "ICLR-AGENT-SELF-EVOLUTION-MANUSCRIPT-V1",
+            "manuscript_template_version": "1.0",
+            "template_binding_required_on_next_material_revision": true
           },
           {
             "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
@@ -976,7 +982,10 @@
             "may_change_supported_claims": false,
             "may_execute_new_experiments": false,
             "may_use_new_model_or_gpu_calls": false,
-            "new_execution_requires_separate_scientific_reopen": true
+            "new_execution_requires_separate_scientific_reopen": true,
+            "manuscript_template_id": "ICLR-AGENT-SELF-EVOLUTION-MANUSCRIPT-V1",
+            "manuscript_template_version": "1.0",
+            "template_binding_required_on_next_material_revision": true
           },
           {
             "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
@@ -990,7 +999,10 @@
             "may_change_supported_claims": false,
             "may_execute_new_experiments": false,
             "may_use_new_model_or_gpu_calls": false,
-            "new_execution_requires_separate_scientific_reopen": true
+            "new_execution_requires_separate_scientific_reopen": true,
+            "manuscript_template_id": "ICLR-AGENT-SELF-EVOLUTION-MANUSCRIPT-V1",
+            "manuscript_template_version": "1.0",
+            "template_binding_required_on_next_material_revision": true
           },
           {
             "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
@@ -1004,9 +1016,19 @@
             "may_change_supported_claims": false,
             "may_execute_new_experiments": false,
             "may_use_new_model_or_gpu_calls": false,
-            "new_execution_requires_separate_scientific_reopen": true
+            "new_execution_requires_separate_scientific_reopen": true,
+            "manuscript_template_id": "ICLR-AGENT-SELF-EVOLUTION-MANUSCRIPT-V1",
+            "manuscript_template_version": "1.0",
+            "template_binding_required_on_next_material_revision": true
           }
         ],
+        "manuscript_template": {
+          "template_id": "ICLR-AGENT-SELF-EVOLUTION-MANUSCRIPT-V1",
+          "template_version": "1.0",
+          "generated_ref": "generated/iclr-agent-paper-template.json",
+          "binding_required_on_next_material_revision": true,
+          "experiment_lane_planning_is_not_execution": true
+        },
         "advisor_assessment": {
           "problem_value": "WORTH_PURSUING",
           "method_direction": "PLAUSIBLE_FOR_THE_STATED_PROBLEM",
@@ -1138,7 +1160,9 @@
           "related_work_must_establish_problem_necessity_and_challenge_not_only_citations": true,
           "method_exposition_must_explain_intuition_design_principles_and_stepwise_details": true,
           "experiment_program_must_use_both_prior_work_protocols_and_method_specific_tests": true,
-          "writing_must_prefer_clear_direct_concrete_language": true
+          "writing_must_prefer_clear_direct_concrete_language": true,
+          "next_material_revision_should_bind_iclr_agent_paper_template_v1": true,
+          "iclr_template_experiment_lane_planning_does_not_authorize_execution": true
         },
         "authority": {
           "scientific": false,
@@ -2592,7 +2616,7 @@
     "p0": false,
     "gpu": false
   },
-  "wiki_sha256": "69ebf1d0dced21ebb37e080c47a482ed6a6dc639c06d0a10b429ad5270e743f2",
+  "wiki_sha256": "3aedcf86974faf7a08ace0a8bbd4d2932f0f149e82d1f19006e6bda4257a7190",
   "lint": {
     "schema_version": "1.1",
     "status": "PASS",
