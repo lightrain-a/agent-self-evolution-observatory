@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-23T16:06:00+00:00",
+  "generated_at": "2026-08-23T17:29:25+00:00",
   "status": "RECORDED_ZERO_SURVIVOR_FAILURE_MEMORY_AND_NEXT_DISCOVERY_POLICY",
   "strategy_version": "failure-race-debate-v1",
   "policy": {
@@ -12,7 +12,9 @@
     "debate_cannot_grant_problem_gate": true,
     "support_failure_is_not_scientific_failure": true,
     "problem_gate_remains_mandatory": true,
-    "active_researchitem_zero_is_valid": true
+    "active_researchitem_zero_is_valid": true,
+    "descendant_closure_required_before_mutation_ranking": true,
+    "terminal_or_absorbed_lineages_cannot_reenter_via_stale_ancestor": true
   },
   "transaction_receipts": {
     "independent_double_funnel": {
@@ -144,147 +146,1904 @@
       "pending": 20,
       "revise": 56
     },
+    "lineage_closure": {
+      "policy": {
+        "terminal_human_state_is_source_of_truth": true,
+        "absorbed_children_cannot_reenter_mutation_tournament": true,
+        "reviewed_descendants_supersede_stale_parent_vectors": true,
+        "only_current_historical_failure_leaves_may_enter_tournament": true,
+        "closure_does_not_grant_scientific_authority": true
+      },
+      "terminal_parent_count": 26,
+      "terminal_independent_count": 7,
+      "absorbed_child_count": 17,
+      "status_counts": {
+        "CURRENT_HISTORICAL_LEAF": 46,
+        "DESCENDANT_TERMINALIZED_OR_ABSORBED": 25,
+        "DIRECT_ABSORBED_CHILD": 14,
+        "DIRECT_HUMAN_TERMINAL_INDEPENDENT": 7,
+        "SUPERSEDED_BY_REVIEWED_DESCENDANT": 27
+      },
+      "current_historical_leaves": 46,
+      "records": [
+        {
+          "candidate_id": "active-causal-minimal-rollback",
+          "status": "DIRECT_HUMAN_TERMINAL_INDEPENDENT",
+          "parent_ids": [
+            "lineage-aware-rollback"
+          ],
+          "closure_target": "active-causal-minimal-rollback",
+          "reviewed_leaf_descendants": [
+            "certified-out-of-span-interaction-inverter-v53",
+            "residual-composition-normal-form-operator",
+            "restoration-clause-induction-v5"
+          ],
+          "replacement_failure_leaves": [
+            "residual-composition-normal-form-operator"
+          ],
+          "terminal_or_absorbed_descendants": [
+            "certified-out-of-span-interaction-inverter-v53",
+            "restoration-clause-induction-v5",
+            "update-composition-repair-compiler"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "future-reuse-harm-predictor",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "recovery-conditioned-experience"
+          ],
+          "closure_target": "nested-pathway-memory-repair",
+          "reviewed_leaf_descendants": [
+            "nested-pathway-memory-repair",
+            "randomized-memory-action-policy"
+          ],
+          "replacement_failure_leaves": [
+            "randomized-memory-action-policy"
+          ],
+          "terminal_or_absorbed_descendants": [
+            "nested-pathway-memory-repair"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "replicated-effect-memory-gate",
+          "status": "DIRECT_HUMAN_TERMINAL_INDEPENDENT",
+          "parent_ids": [
+            "retrieval-interference-auditor"
+          ],
+          "closure_target": "replicated-effect-memory-gate",
+          "reviewed_leaf_descendants": [
+            "placebo-calibrated-memory-effects"
+          ],
+          "replacement_failure_leaves": [
+            "placebo-calibrated-memory-effects"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "version-differential-active-diagnosis",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "version-differential-failure-localization"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "cross-task-effect-transport-certificate",
+          "status": "DIRECT_HUMAN_TERMINAL_INDEPENDENT",
+          "parent_ids": [
+            "causally-verified-experience-admission"
+          ],
+          "closure_target": "cross-task-effect-transport-certificate",
+          "reviewed_leaf_descendants": [
+            "effect-transport-lesson-specializer-v5"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "precommit-workflow-transfer-certificate",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "workflow-generalization-certificate"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "simulator-distilled-risk-memory",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "irreversible-action-counterfactuals"
+          ],
+          "closure_target": "simulator-free-risk-program-distillation",
+          "reviewed_leaf_descendants": [
+            "simulator-free-risk-program-distillation",
+            "verified-risk-predicate-grammar"
+          ],
+          "replacement_failure_leaves": [
+            "simulator-free-risk-program-distillation",
+            "verified-risk-predicate-grammar"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "actor-evaluator-residual-gate",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "evaluator-coadaptation-guard"
+          ],
+          "closure_target": "filtered-chronological-evaluator-state-v53",
+          "reviewed_leaf_descendants": [
+            "anchor-conditioned-crossed-judge-residual",
+            "filtered-chronological-evaluator-state-v53"
+          ],
+          "replacement_failure_leaves": [
+            "anchor-conditioned-crossed-judge-residual"
+          ],
+          "terminal_or_absorbed_descendants": [
+            "filtered-chronological-evaluator-state-v53"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "asset-level-model-swap-certificate",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "model-swap-compatibility-certificate"
+          ],
+          "closure_target": "compiler-residual-contract-editor-v53",
+          "reviewed_leaf_descendants": [
+            "compiler-residual-contract-editor-v53",
+            "cross-model-memory-translation-operator"
+          ],
+          "replacement_failure_leaves": [
+            "cross-model-memory-translation-operator"
+          ],
+          "terminal_or_absorbed_descendants": [
+            "compiler-residual-contract-editor-v53"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "counterfactual-evolution-decision-controller",
+          "status": "DIRECT_HUMAN_TERMINAL_INDEPENDENT",
+          "parent_ids": [
+            "budgeted-evolution-controller"
+          ],
+          "closure_target": "counterfactual-evolution-decision-controller",
+          "reviewed_leaf_descendants": [
+            "paired-regret-update-policy"
+          ],
+          "replacement_failure_leaves": [
+            "paired-regret-update-policy"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "monotone-applicability-specializer",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "local-counterexample-memory-repair"
+          ],
+          "closure_target": "monotone-applicability-specializer-v4",
+          "reviewed_leaf_descendants": [
+            "monotone-applicability-specializer-v4"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "monotone-applicability-specializer-v4"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "update-permission-impact-model",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "update-aware-permission-downgrade"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "intervention-certified-reward-update",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "reward-invariance-audit"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "adjacent-checkpoint-discrimination-curriculum",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "failure-frontier-curriculum"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "restoration-clause-learning",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "active-causal-minimal-rollback"
+          ],
+          "closure_target": "restoration-clause-induction-v5",
+          "reviewed_leaf_descendants": [
+            "restoration-clause-induction-v5"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "restoration-clause-induction-v5",
+            "update-composition-repair-compiler"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "randomized-memory-action-policy",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "future-reuse-harm-predictor"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "placebo-calibrated-memory-effects",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "replicated-effect-memory-gate"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "conformal-effect-transport-gate",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "cross-task-effect-transport-certificate"
+          ],
+          "closure_target": "effect-transport-lesson-specializer-v5",
+          "reviewed_leaf_descendants": [
+            "effect-transport-lesson-specializer-v5"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "verified-risk-predicate-grammar",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "simulator-distilled-risk-memory"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "paired-regret-update-policy",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "counterfactual-evolution-decision-controller"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "correction-action-causal-compiler",
+          "status": "DIRECT_ABSORBED_CHILD",
+          "parent_ids": [
+            "correction-policy-credit",
+            "failure-localization-before-reflection"
+          ],
+          "closure_target": "correction-policy-credit",
+          "reviewed_leaf_descendants": [
+            "counterfactual-correction-production-grammar"
+          ],
+          "replacement_failure_leaves": [
+            "counterfactual-correction-production-grammar"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "counterfactual-rubric-rewrite",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "evaluator-coadaptation-guard",
+            "reward-invariance-audit"
+          ],
+          "closure_target": "rubric-intervention-sparse-solver",
+          "reviewed_leaf_descendants": [
+            "rubric-intervention-sparse-solver"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "rubric-intervention-sparse-solver"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "memory-interaction-clause-learner",
+          "status": "DIRECT_ABSORBED_CHILD",
+          "parent_ids": [
+            "compositional-update-compatibility",
+            "contradiction-preserving-consolidation"
+          ],
+          "closure_target": "retrieval-interference-auditor",
+          "reviewed_leaf_descendants": [
+            "constraint-complete-typed-memory-order-logic"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "constraint-complete-typed-memory-order-logic"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "minimal-stabilizing-patch-search",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "active-causal-minimal-rollback",
+            "agent-update-trust-region"
+          ],
+          "closure_target": "residual-composition-normal-form-operator",
+          "reviewed_leaf_descendants": [
+            "residual-composition-normal-form-operator"
+          ],
+          "replacement_failure_leaves": [
+            "residual-composition-normal-form-operator"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "probe-mutation-retirement-policy",
+          "status": "DIRECT_ABSORBED_CHILD",
+          "parent_ids": [
+            "change-triggered-regression-exams",
+            "regression-probe-half-life"
+          ],
+          "closure_target": "regression-gated-self-evolution",
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "update-composition-repair-compiler",
+          "status": "DIRECT_ABSORBED_CHILD",
+          "parent_ids": [
+            "compositional-update-compatibility",
+            "restoration-clause-learning"
+          ],
+          "closure_target": "compositional-update-compatibility",
+          "reviewed_leaf_descendants": [
+            "restoration-clause-induction-v5"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "restoration-clause-induction-v5"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "update-conditioned-permission-lease",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "behavior-triggered-privilege-lease",
+            "update-aware-permission-downgrade"
+          ],
+          "closure_target": "interventional-permission-triage-under-ceiling",
+          "reviewed_leaf_descendants": [
+            "interventional-permission-triage-under-ceiling"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "interventional-permission-triage-under-ceiling"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "api-semantic-workflow-compiler",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "model-swap-compatibility-certificate",
+            "workflow-generalization-certificate"
+          ],
+          "closure_target": "api-error-semantic-adapter",
+          "reviewed_leaf_descendants": [
+            "bounded-probe-api-transition-operator"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "api-error-semantic-adapter",
+            "bounded-probe-api-transition-operator"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "cross-model-memory-translation-operator",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "asset-level-model-swap-certificate",
+            "model-swap-compatibility-certificate"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "evaluator-anchor-residual-corrector",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "actor-evaluator-residual-gate",
+            "evaluator-coadaptation-guard"
+          ],
+          "closure_target": "filtered-chronological-evaluator-state-v53",
+          "reviewed_leaf_descendants": [
+            "anchor-conditioned-crossed-judge-residual",
+            "filtered-chronological-evaluator-state-v53"
+          ],
+          "replacement_failure_leaves": [
+            "anchor-conditioned-crossed-judge-residual"
+          ],
+          "terminal_or_absorbed_descendants": [
+            "filtered-chronological-evaluator-state-v53"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "retrieval-mediated-memory-harm-decomposer",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "future-reuse-harm-predictor",
+            "retrieval-interference-auditor"
+          ],
+          "closure_target": "nested-pathway-memory-repair",
+          "reviewed_leaf_descendants": [
+            "nested-pathway-memory-repair"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "nested-pathway-memory-repair"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "simulator-free-risk-program-distillation",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "irreversible-action-counterfactuals",
+            "simulator-distilled-risk-memory"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "workflow-failure-motif-rewriter",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "workflow-branch-credit",
+            "workflow-generalization-certificate"
+          ],
+          "closure_target": "workflow-repair-grammar-v5",
+          "reviewed_leaf_descendants": [
+            "workflow-repair-grammar-v5"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "workflow-repair-grammar-v5"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "checkpoint-discriminative-curriculum-learner",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "failure-frontier-curriculum",
+            "regression-probe-half-life"
+          ],
+          "closure_target": "operator-heldout-marginal-gain-transport",
+          "reviewed_leaf_descendants": [
+            "operator-heldout-marginal-gain-transport"
+          ],
+          "replacement_failure_leaves": [
+            "operator-heldout-marginal-gain-transport"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "monotone-applicability-specializer-v4",
+          "status": "DIRECT_ABSORBED_CHILD",
+          "parent_ids": [
+            "local-counterexample-memory-repair",
+            "monotone-applicability-specializer"
+          ],
+          "closure_target": "local-counterexample-memory-repair",
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "typed-correction-skill-grammar",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "correction-action-causal-compiler",
+            "correction-policy-credit"
+          ],
+          "closure_target": "counterfactual-correction-production-grammar",
+          "reviewed_leaf_descendants": [
+            "counterfactual-correction-production-grammar"
+          ],
+          "replacement_failure_leaves": [
+            "counterfactual-correction-production-grammar"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "workflow-branch-responsibility-rewriter",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "workflow-branch-credit",
+            "workflow-failure-motif-rewriter"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "asset-transformation-compiler",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "asset-level-model-swap-certificate",
+            "cross-model-memory-translation-operator"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "intervention-certified-reward-repair",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "counterfactual-rubric-rewrite",
+            "reward-invariance-audit"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "restoration-clause-induction",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "active-causal-minimal-rollback",
+            "restoration-clause-learning"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "transport-calibrated-lesson-specializer",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "applicability-bounded-lessons",
+            "cross-task-effect-transport-certificate"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "randomized-retrieval-mediated-memory-policy",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "future-reuse-harm-predictor",
+            "randomized-memory-action-policy"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "process-sensitive-experience-admission",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "causally-verified-experience-admission",
+            "outcome-equivalent-trajectory-contrast"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "diff-conditioned-regression-test-generator",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "change-triggered-regression-exams",
+            "probe-mutation-retirement-policy"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "budgeted-evolution-tournament-controller",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "budgeted-evolution-controller",
+            "open-coscientist-tournament"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "curriculum-drift-repair-controller",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "checkpoint-discriminative-curriculum-learner",
+            "curriculum-drift-controller"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "contradiction-triggered-experience-splitter",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "applicability-bounded-lessons",
+            "contradiction-preserving-consolidation"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "multi-surface-update-program-synthesis",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "update-composition-repair-compiler",
+            "update-surface-router"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "api-error-semantic-adapter",
+          "status": "DIRECT_ABSORBED_CHILD",
+          "parent_ids": [
+            "api-semantic-workflow-compiler"
+          ],
+          "closure_target": "bounded-probe-api-transition-operator",
+          "reviewed_leaf_descendants": [
+            "bounded-probe-api-transition-operator"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "bounded-probe-api-transition-operator"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "causal-update-garbage-collector",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "lineage-aware-rollback",
+            "memory-half-life"
+          ],
+          "closure_target": "sparse-set-effect-update-collector",
+          "reviewed_leaf_descendants": [
+            "sparse-set-effect-update-collector"
+          ],
+          "replacement_failure_leaves": [
+            "sparse-set-effect-update-collector"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "multi-agent-message-graph-evolver",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "workflow-generalization-certificate"
+          ],
+          "closure_target": "collaboration-topology-regression-guard",
+          "reviewed_leaf_descendants": [
+            "collaboration-topology-regression-guard",
+            "frozen-compositional-role-contract-clauses-v53",
+            "nonadditive-message-effect-field"
+          ],
+          "replacement_failure_leaves": [
+            "collaboration-topology-regression-guard",
+            "frozen-compositional-role-contract-clauses-v53",
+            "nonadditive-message-effect-field"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "residual-patch-transfer-operator",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "minimal-stabilizing-patch-search"
+          ],
+          "closure_target": "residual-composition-normal-form-operator",
+          "reviewed_leaf_descendants": [
+            "residual-composition-normal-form-operator"
+          ],
+          "replacement_failure_leaves": [
+            "residual-composition-normal-form-operator"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "skill-interface-contract-compiler",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "compositional-update-compatibility"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "tool-contract-effect-learner",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "workflow-generalization-certificate"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "workflow-repair-grammar-v5",
+          "status": "DIRECT_ABSORBED_CHILD",
+          "parent_ids": [
+            "workflow-failure-motif-rewriter"
+          ],
+          "closure_target": "workflow-branch-credit",
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "checkpoint-training-curriculum-selector",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "checkpoint-discriminative-curriculum-learner"
+          ],
+          "closure_target": "operator-heldout-marginal-gain-transport",
+          "reviewed_leaf_descendants": [
+            "operator-heldout-marginal-gain-transport"
+          ],
+          "replacement_failure_leaves": [
+            "operator-heldout-marginal-gain-transport"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "collaboration-topology-regression-guard",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "multi-agent-message-graph-evolver",
+            "regression-gated-self-evolution"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "cross-surface-update-transpiler",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "update-surface-router"
+          ],
+          "closure_target": "budget-split-contract-router-transpiler",
+          "reviewed_leaf_descendants": [
+            "budget-split-contract-router-transpiler",
+            "heldout-directed-effect-latent-translation"
+          ],
+          "replacement_failure_leaves": [
+            "budget-split-contract-router-transpiler",
+            "heldout-directed-effect-latent-translation"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "effect-bifurcation-memory-learner",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "contradiction-preserving-memory-consolidation"
+          ],
+          "closure_target": "counterfactual-descendant-memory-transformer",
+          "reviewed_leaf_descendants": [
+            "counterfactual-descendant-memory-transformer"
+          ],
+          "replacement_failure_leaves": [
+            "counterfactual-descendant-memory-transformer"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "effect-equivalence-memory-compactor",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "contradiction-preserving-memory-consolidation"
+          ],
+          "closure_target": "typed-interaction-signature-quotient-transfer",
+          "reviewed_leaf_descendants": [
+            "typed-interaction-signature-quotient-transfer"
+          ],
+          "replacement_failure_leaves": [
+            "typed-interaction-signature-quotient-transfer"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "evaluator-longitudinal-drift-corrector",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "evaluator-anchor-residual-corrector"
+          ],
+          "closure_target": "filtered-chronological-evaluator-state-v53",
+          "reviewed_leaf_descendants": [
+            "anchor-conditioned-crossed-judge-residual",
+            "filtered-chronological-evaluator-state-v53"
+          ],
+          "replacement_failure_leaves": [
+            "anchor-conditioned-crossed-judge-residual"
+          ],
+          "terminal_or_absorbed_descendants": [
+            "filtered-chronological-evaluator-state-v53"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "failure-frontier-training-generator",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "counterexample-generating-curriculum"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "retrieval-order-clause-learner",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "memory-interaction-clause-learner"
+          ],
+          "closure_target": "constraint-complete-typed-memory-order-logic",
+          "reviewed_leaf_descendants": [
+            "constraint-complete-typed-memory-order-logic"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "constraint-complete-typed-memory-order-logic"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "reward-anchor-counterexample-trainer",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "reward-invariance-audit"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "role-specialization-compiler",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "multi-agent-message-graph-evolver"
+          ],
+          "closure_target": "frozen-compositional-role-contract-clauses-v53",
+          "reviewed_leaf_descendants": [
+            "frozen-compositional-role-contract-clauses-v53"
+          ],
+          "replacement_failure_leaves": [
+            "frozen-compositional-role-contract-clauses-v53"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "rollback-conditioned-update-inverter",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "active-causal-minimal-rollback"
+          ],
+          "closure_target": "certified-out-of-span-interaction-inverter-v53",
+          "reviewed_leaf_descendants": [
+            "certified-out-of-span-interaction-inverter-v53"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "certified-out-of-span-interaction-inverter-v53"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "rubric-intervention-sparse-solver",
+          "status": "DIRECT_ABSORBED_CHILD",
+          "parent_ids": [
+            "counterfactual-rubric-rewrite"
+          ],
+          "closure_target": "evaluator-coadaptation-guard",
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "update-aware-challenge-generator",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "change-triggered-regression-exams"
+          ],
+          "closure_target": "structural-equivariant-diff-failure-prior",
+          "reviewed_leaf_descendants": [
+            "structural-equivariant-diff-failure-prior"
+          ],
+          "replacement_failure_leaves": [
+            "structural-equivariant-diff-failure-prior"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "update-history-semantic-compactor",
+          "status": "DIRECT_ABSORBED_CHILD",
+          "parent_ids": [
+            "compositional-update-compatibility"
+          ],
+          "closure_target": "lineage-aware-rollback",
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "workflow-counterexample-template-miner",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "failure-localization-before-reflection"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "cross-surface-model-swap-rewriter",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "cross-surface-update-transpiler",
+            "model-swap-compatibility-certificate"
+          ],
+          "closure_target": "budget-split-contract-router-transpiler",
+          "reviewed_leaf_descendants": [
+            "budget-split-contract-router-transpiler"
+          ],
+          "replacement_failure_leaves": [
+            "budget-split-contract-router-transpiler"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "structured-memory-model-swap-translator",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "asset-level-model-swap-certificate"
+          ],
+          "closure_target": "compiler-residual-contract-editor-v53",
+          "reviewed_leaf_descendants": [
+            "compiler-residual-contract-editor-v53"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "compiler-residual-contract-editor-v53"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "restoration-clause-induction-v5",
+          "status": "DIRECT_ABSORBED_CHILD",
+          "parent_ids": [
+            "restoration-clause-learning",
+            "update-composition-repair-compiler"
+          ],
+          "closure_target": "compositional-update-compatibility",
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "typed-correction-skill-grammar-v5",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "correction-action-causal-compiler",
+            "typed-correction-skill-grammar"
+          ],
+          "closure_target": "counterfactual-correction-production-grammar",
+          "reviewed_leaf_descendants": [
+            "counterfactual-correction-production-grammar"
+          ],
+          "replacement_failure_leaves": [
+            "counterfactual-correction-production-grammar"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "api-semantic-workflow-ir-v5",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "api-error-semantic-adapter",
+            "api-semantic-workflow-compiler"
+          ],
+          "closure_target": "bounded-probe-api-transition-operator",
+          "reviewed_leaf_descendants": [
+            "bounded-probe-api-transition-operator"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "bounded-probe-api-transition-operator"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "curriculum-drift-training-controller",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "checkpoint-training-curriculum-selector",
+            "curriculum-drift-controller"
+          ],
+          "closure_target": "operator-heldout-marginal-gain-transport",
+          "reviewed_leaf_descendants": [
+            "operator-heldout-marginal-gain-transport"
+          ],
+          "replacement_failure_leaves": [
+            "operator-heldout-marginal-gain-transport"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "evaluator-residual-policy-corrector-v5",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "evaluator-anchor-residual-corrector",
+            "evaluator-longitudinal-drift-corrector"
+          ],
+          "closure_target": "anchor-conditioned-crossed-judge-residual",
+          "reviewed_leaf_descendants": [
+            "anchor-conditioned-crossed-judge-residual"
+          ],
+          "replacement_failure_leaves": [
+            "anchor-conditioned-crossed-judge-residual"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "permission-diff-causal-reauthorizer",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "update-conditioned-permission-lease"
+          ],
+          "closure_target": "interventional-permission-triage-under-ceiling",
+          "reviewed_leaf_descendants": [
+            "interventional-permission-triage-under-ceiling"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "interventional-permission-triage-under-ceiling"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "retrieval-mediated-harm-factorial-repair-v5",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "retrieval-mediated-memory-harm-decomposer"
+          ],
+          "closure_target": "nested-pathway-memory-repair",
+          "reviewed_leaf_descendants": [
+            "nested-pathway-memory-repair"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "nested-pathway-memory-repair"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "effect-transport-lesson-specializer-v5",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "conformal-effect-transport-gate",
+            "cross-task-effect-transport-certificate"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "multi-surface-repair-program-synthesizer",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "update-composition-repair-compiler",
+            "update-surface-router"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "strategy-diversity-consolidator",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "contradiction-preserving-memory-consolidation"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "contradiction-lineage-splitter",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "contradiction-preserving-memory-consolidation",
+            "effect-bifurcation-memory-learner"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "surface-effect-translation-graph",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "cross-surface-update-transpiler",
+            "multi-surface-repair-program-synthesizer"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "bounded-probe-api-transition-operator",
+          "status": "DIRECT_HUMAN_TERMINAL_INDEPENDENT",
+          "parent_ids": [
+            "api-semantic-workflow-ir-v5"
+          ],
+          "closure_target": "bounded-probe-api-transition-operator",
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "interventional-permission-triage-under-ceiling",
+          "status": "DIRECT_HUMAN_TERMINAL_INDEPENDENT",
+          "parent_ids": [
+            "permission-diff-causal-reauthorizer"
+          ],
+          "closure_target": "interventional-permission-triage-under-ceiling",
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "nested-pathway-memory-repair",
+          "status": "DIRECT_ABSORBED_CHILD",
+          "parent_ids": [
+            "retrieval-mediated-harm-factorial-repair-v5"
+          ],
+          "closure_target": "retrieval-interference-auditor",
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "behavior-preserving-residual-patch-algebra",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "residual-patch-transfer-operator"
+          ],
+          "closure_target": "residual-composition-normal-form-operator",
+          "reviewed_leaf_descendants": [
+            "residual-composition-normal-form-operator"
+          ],
+          "replacement_failure_leaves": [
+            "residual-composition-normal-form-operator"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "budgeted-contract-surface-router-transpiler",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "cross-surface-model-swap-rewriter"
+          ],
+          "closure_target": "budget-split-contract-router-transpiler",
+          "reviewed_leaf_descendants": [
+            "budget-split-contract-router-transpiler"
+          ],
+          "replacement_failure_leaves": [
+            "budget-split-contract-router-transpiler"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "executable-role-contract-library",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "role-specialization-compiler"
+          ],
+          "closure_target": "frozen-compositional-role-contract-clauses-v53",
+          "reviewed_leaf_descendants": [
+            "frozen-compositional-role-contract-clauses-v53"
+          ],
+          "replacement_failure_leaves": [
+            "frozen-compositional-role-contract-clauses-v53"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "frozen-diff-to-failure-family-policy",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "update-aware-challenge-generator"
+          ],
+          "closure_target": "structural-equivariant-diff-failure-prior",
+          "reviewed_leaf_descendants": [
+            "structural-equivariant-diff-failure-prior"
+          ],
+          "replacement_failure_leaves": [
+            "structural-equivariant-diff-failure-prior"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "higher-order-typed-memory-order-logic",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "retrieval-order-clause-learner"
+          ],
+          "closure_target": "constraint-complete-typed-memory-order-logic",
+          "reviewed_leaf_descendants": [
+            "constraint-complete-typed-memory-order-logic"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "constraint-complete-typed-memory-order-logic"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "interaction-conditioned-nonlinear-update-inverter",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "rollback-conditioned-update-inverter"
+          ],
+          "closure_target": "certified-out-of-span-interaction-inverter-v53",
+          "reviewed_leaf_descendants": [
+            "certified-out-of-span-interaction-inverter-v53"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "certified-out-of-span-interaction-inverter-v53"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "interaction-effect-memory-quotient",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "effect-equivalence-memory-compactor"
+          ],
+          "closure_target": "typed-interaction-signature-quotient-transfer",
+          "reviewed_leaf_descendants": [
+            "typed-interaction-signature-quotient-transfer"
+          ],
+          "replacement_failure_leaves": [
+            "typed-interaction-signature-quotient-transfer"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "interventional-message-effect-transfer",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "multi-agent-message-graph-evolver"
+          ],
+          "closure_target": "nonadditive-message-effect-field",
+          "reviewed_leaf_descendants": [
+            "nonadditive-message-effect-field"
+          ],
+          "replacement_failure_leaves": [
+            "nonadditive-message-effect-field"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "latent-effect-cross-surface-translator",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "cross-surface-update-transpiler"
+          ],
+          "closure_target": "heldout-directed-effect-latent-translation",
+          "reviewed_leaf_descendants": [
+            "heldout-directed-effect-latent-translation"
+          ],
+          "replacement_failure_leaves": [
+            "heldout-directed-effect-latent-translation"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "randomized-next-unit-curriculum-gain",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "curriculum-drift-training-controller"
+          ],
+          "closure_target": "operator-heldout-marginal-gain-transport",
+          "reviewed_leaf_descendants": [
+            "operator-heldout-marginal-gain-transport"
+          ],
+          "replacement_failure_leaves": [
+            "operator-heldout-marginal-gain-transport"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "typed-contract-memory-translator",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "structured-memory-model-swap-translator"
+          ],
+          "closure_target": "compiler-residual-contract-editor-v53",
+          "reviewed_leaf_descendants": [
+            "compiler-residual-contract-editor-v53"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "compiler-residual-contract-editor-v53"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "zero-anchor-evaluator-state-extrapolator",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "evaluator-longitudinal-drift-corrector"
+          ],
+          "closure_target": "filtered-chronological-evaluator-state-v53",
+          "reviewed_leaf_descendants": [
+            "filtered-chronological-evaluator-state-v53"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "filtered-chronological-evaluator-state-v53"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "anchor-conditioned-crossed-judge-residual",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "evaluator-residual-policy-corrector-v5"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "counterfactual-correction-production-grammar",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "typed-correction-skill-grammar-v5"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "counterfactual-descendant-memory-transformer",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "effect-bifurcation-memory-learner"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "sparse-set-effect-update-collector",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "causal-update-garbage-collector"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "constraint-complete-typed-memory-order-logic",
+          "status": "DIRECT_HUMAN_TERMINAL_INDEPENDENT",
+          "parent_ids": [
+            "higher-order-typed-memory-order-logic"
+          ],
+          "closure_target": "constraint-complete-typed-memory-order-logic",
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "certified-out-of-span-interaction-inverter",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "interaction-conditioned-nonlinear-update-inverter"
+          ],
+          "closure_target": "certified-out-of-span-interaction-inverter-v53",
+          "reviewed_leaf_descendants": [
+            "certified-out-of-span-interaction-inverter-v53"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "certified-out-of-span-interaction-inverter-v53"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "compiler-residual-contract-editor",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "typed-contract-memory-translator"
+          ],
+          "closure_target": "compiler-residual-contract-editor-v53",
+          "reviewed_leaf_descendants": [
+            "compiler-residual-contract-editor-v53"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "compiler-residual-contract-editor-v53"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "filtered-chronological-evaluator-state",
+          "status": "DESCENDANT_TERMINALIZED_OR_ABSORBED",
+          "parent_ids": [
+            "zero-anchor-evaluator-state-extrapolator"
+          ],
+          "closure_target": "filtered-chronological-evaluator-state-v53",
+          "reviewed_leaf_descendants": [
+            "filtered-chronological-evaluator-state-v53"
+          ],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [
+            "filtered-chronological-evaluator-state-v53"
+          ],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "frozen-compositional-role-contract-clauses",
+          "status": "SUPERSEDED_BY_REVIEWED_DESCENDANT",
+          "parent_ids": [
+            "executable-role-contract-library"
+          ],
+          "closure_target": "frozen-compositional-role-contract-clauses-v53",
+          "reviewed_leaf_descendants": [
+            "frozen-compositional-role-contract-clauses-v53"
+          ],
+          "replacement_failure_leaves": [
+            "frozen-compositional-role-contract-clauses-v53"
+          ],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "heldout-directed-effect-latent-translation",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "latent-effect-cross-surface-translator"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "nonadditive-message-effect-field",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "interventional-message-effect-transfer"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "structural-equivariant-diff-failure-prior",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "frozen-diff-to-failure-family-policy"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "typed-interaction-signature-quotient-transfer",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "interaction-effect-memory-quotient"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "budget-split-contract-router-transpiler",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "budgeted-contract-surface-router-transpiler"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "operator-heldout-marginal-gain-transport",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "randomized-next-unit-curriculum-gain"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "residual-composition-normal-form-operator",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "behavior-preserving-residual-patch-algebra"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "certified-out-of-span-interaction-inverter-v53",
+          "status": "DIRECT_ABSORBED_CHILD",
+          "parent_ids": [
+            "certified-out-of-span-interaction-inverter"
+          ],
+          "closure_target": "compositional-update-compatibility",
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "compiler-residual-contract-editor-v53",
+          "status": "DIRECT_ABSORBED_CHILD",
+          "parent_ids": [
+            "compiler-residual-contract-editor"
+          ],
+          "closure_target": "workflow-branch-credit",
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "filtered-chronological-evaluator-state-v53",
+          "status": "DIRECT_ABSORBED_CHILD",
+          "parent_ids": [
+            "filtered-chronological-evaluator-state"
+          ],
+          "closure_target": "evaluator-coadaptation-guard",
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": false,
+          "scientific_authority": false
+        },
+        {
+          "candidate_id": "frozen-compositional-role-contract-clauses-v53",
+          "status": "CURRENT_HISTORICAL_LEAF",
+          "parent_ids": [
+            "frozen-compositional-role-contract-clauses"
+          ],
+          "closure_target": null,
+          "reviewed_leaf_descendants": [],
+          "replacement_failure_leaves": [],
+          "terminal_or_absorbed_descendants": [],
+          "mutation_parent_eligible": true,
+          "scientific_authority": false
+        }
+      ],
+      "scientific_authority": false
+    },
     "horse_race": {
-      "mode": "all-vs-all-pairwise-failure-lineage-mutation-tournament",
+      "mode": "descendant-closed-pairwise-failure-lineage-mutation-tournament",
       "uses_all_historical_generation_records": true,
       "pairwise_tournament_precedent": "idea-discovery-v4",
       "old_winner_selection_is_forbidden": true,
       "baseline_only_repairs_do_not_enter_structural_tournament": true,
-      "purpose": "select material mutation parents and reviewer vectors, not promote historical ideas",
-      "eligible_failure_lineages": 53,
-      "structural_mutation_lineages": 21,
-      "experiment_or_baseline_repair_lineages": 17,
-      "pairwise_matches": 210,
+      "reviewed_descendants_supersede_stale_parent_vectors": true,
+      "terminal_or_absorbed_lineages_cannot_reenter_via_ancestor": true,
+      "purpose": "select current unresolved material mutation leaves and reviewer vectors, not promote historical ideas",
+      "preclosure_eligible_failure_lineages": 53,
+      "eligible_failure_lineages": 16,
+      "structural_mutation_lineages": 9,
+      "experiment_or_baseline_repair_lineages": 2,
+      "pairwise_matches": 36,
       "tournament_top8": [
         {
           "round": "v5",
-          "candidate_id": "typed-correction-skill-grammar-v5",
-          "title": "Typed Correction Skill Grammar v5",
-          "external_verdict": "revise",
-          "target_relevance_hits": 3,
-          "historical_mean_score": 4.833,
-          "collision_status": "partial",
-          "review_vector_present": true,
-          "required_action": "Center the method on causal slot/action identification rather than generic grammar composition. Define the intervention matrix, the counterfactual criterion for a necessary correction action, and a typed precondition/effect representation; then require factorial failure-composition transfer where an NSI/SkillGraph-style program composer plus the same induced slot labels cannot match the frozen grammar.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 1,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 49.833,
-          "scientific_authority": false,
-          "pairwise_wins": 19,
-          "pairwise_ties": 1,
-          "pairwise_losses": 0,
-          "pairwise_points": 19.5,
-          "tournament_rank": 1
-        },
-        {
-          "round": "v3.1",
-          "candidate_id": "restoration-clause-learning",
-          "title": "Restoration-Clause Learning",
-          "external_verdict": "revise",
-          "target_relevance_hits": 3,
-          "historical_mean_score": 4.5,
-          "collision_status": "partial",
-          "review_vector_present": true,
-          "required_action": "Replace the informal minimal-unsatisfied-core compilation with an explicit probabilistic clause-induction objective over a fixed typed descriptor language, including posterior updates, clause confidence and expiry, false-block control, and a comparison against a direct posterior-risk gate trained from exactly the same intervention history.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 2,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 53.5,
-          "scientific_authority": false,
-          "pairwise_wins": 16,
-          "pairwise_ties": 4,
-          "pairwise_losses": 0,
-          "pairwise_points": 18.0,
-          "tournament_rank": 2
-        },
-        {
-          "round": "v5",
-          "candidate_id": "rollback-conditioned-update-inverter",
-          "title": "Rollback-Conditioned Update Inverter",
-          "external_verdict": "revise",
-          "target_relevance_hits": 2,
-          "historical_mean_score": 4.667,
-          "collision_status": "partial",
-          "review_vector_present": true,
-          "required_action": "Change the target regime from separable reversible atoms to coupled or non-additive updates. Define an inverter that must synthesize or condition an inverse patch from interaction evidence, and explicitly test cases where oracle subset rollback over all stored atom deltas is insufficient.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 2,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 50.667,
-          "scientific_authority": false,
-          "pairwise_wins": 15,
-          "pairwise_ties": 4,
-          "pairwise_losses": 1,
-          "pairwise_points": 17.0,
-          "tournament_rank": 3
-        },
-        {
-          "round": "v5",
-          "candidate_id": "causal-update-garbage-collector",
-          "title": "Causal Update Garbage Collector",
-          "external_verdict": "revise",
-          "target_relevance_hits": 2,
-          "historical_mean_score": 4.833,
-          "collision_status": "partial",
-          "review_vector_present": true,
-          "required_action": "Replace single-update marginal testing with an explicitly interaction-aware deletion objective, for example a sparse dependency/hypergraph or learned set-effect model inferred from budgeted disable interventions. The method must predict deletion sets and then freeze those predictions before independent future-version evaluation; the certificate should remain a safety gate rather than being counted as a separate novelty component.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 1,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 46.833,
-          "scientific_authority": false,
-          "pairwise_wins": 16,
-          "pairwise_ties": 2,
-          "pairwise_losses": 2,
-          "pairwise_points": 17.0,
-          "tournament_rank": 4
-        },
-        {
-          "round": "v5",
-          "candidate_id": "multi-agent-message-graph-evolver",
-          "title": "Multi-Agent Message-Graph Evolver",
-          "external_verdict": "revise",
-          "target_relevance_hits": 2,
-          "historical_mean_score": 4.833,
-          "collision_status": "direct",
-          "review_vector_present": true,
-          "required_action": "Change the persistent learned object to a motif-conditioned edge-effect or edge-interaction predictor trained from controlled interventions, and use that frozen predictor to construct graphs for completely unseen tasks. Do not claim novelty from add/remove/redirect graph edits themselves. Compare directly against GPTSwarm, AgentPrune, and an Adaptive-Graph-Pruning-style predictor with matched graph evaluations and token budgets.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 2,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 42.833,
-          "scientific_authority": false,
-          "pairwise_wins": 15,
-          "pairwise_ties": 3,
-          "pairwise_losses": 2,
-          "pairwise_points": 16.5,
-          "tournament_rank": 5
-        },
-        {
-          "round": "v5",
-          "candidate_id": "permission-diff-causal-reauthorizer",
-          "title": "Update-Diff Causal Reauthorizer",
-          "external_verdict": "revise",
-          "target_relevance_hits": 4,
-          "historical_mean_score": 4.667,
-          "collision_status": "direct",
-          "review_vector_present": true,
-          "required_action": "Reframe the method as a learned cost-reduction layer inside state-bound authorization rather than a new authorization-continuity framework. Keep an immutable effect ceiling, obtain causal supervision from randomized permission interventions, keep canary generation/scoring independent, and compare learned triage against deterministic manifest/effect-diff triage, Progent-style policies, and full reauthorization.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 1,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 44.667,
-          "scientific_authority": false,
-          "pairwise_wins": 14,
-          "pairwise_ties": 2,
-          "pairwise_losses": 4,
-          "pairwise_points": 15.0,
-          "tournament_rank": 6
-        },
-        {
-          "round": "v5",
           "candidate_id": "failure-frontier-training-generator",
+          "parent_ids": [
+            "counterexample-generating-curriculum"
+          ],
           "title": "Failure-Frontier Training Generator",
           "external_verdict": "block",
           "target_relevance_hits": 3,
@@ -297,227 +2056,20 @@
           "baseline_only_signal_count": 0,
           "mutation_score": 37.667,
           "scientific_authority": false,
-          "pairwise_wins": 13,
-          "pairwise_ties": 4,
-          "pairwise_losses": 3,
-          "pairwise_points": 15.0,
-          "tournament_rank": 7
-        },
-        {
-          "round": "v5",
-          "candidate_id": "evaluator-longitudinal-drift-corrector",
-          "title": "Evaluator Longitudinal Drift Corrector",
-          "external_verdict": "revise",
-          "target_relevance_hits": 2,
-          "historical_mean_score": 4.667,
-          "collision_status": "partial",
-          "review_vector_present": true,
-          "required_action": "Separate zero-anchor and few-anchor future-version regimes. For zero-anchor transfer, learn a low-rank temporal/version-state representation from observable evaluator fingerprints available before ground truth and forbid any held-out-version labels. For few-anchor transfer, give exactly the same anchors to a static calibration baseline and show that historical cross-version dynamics provide additional predictive value.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 1,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 46.667,
-          "scientific_authority": false,
-          "pairwise_wins": 13,
-          "pairwise_ties": 2,
-          "pairwise_losses": 5,
-          "pairwise_points": 14.0,
-          "tournament_rank": 8
-        }
-      ],
-      "top_mutation_parents": [
-        {
-          "round": "v5",
-          "candidate_id": "typed-correction-skill-grammar-v5",
-          "title": "Typed Correction Skill Grammar v5",
-          "external_verdict": "revise",
-          "target_relevance_hits": 3,
-          "historical_mean_score": 4.833,
-          "collision_status": "partial",
-          "review_vector_present": true,
-          "required_action": "Center the method on causal slot/action identification rather than generic grammar composition. Define the intervention matrix, the counterfactual criterion for a necessary correction action, and a typed precondition/effect representation; then require factorial failure-composition transfer where an NSI/SkillGraph-style program composer plus the same induced slot labels cannot match the frozen grammar.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 1,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 49.833,
-          "scientific_authority": false,
-          "pairwise_wins": 19,
-          "pairwise_ties": 1,
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
+          "pairwise_wins": 8,
+          "pairwise_ties": 0,
           "pairwise_losses": 0,
-          "pairwise_points": 19.5,
+          "pairwise_points": 8.0,
           "tournament_rank": 1
-        },
-        {
-          "round": "v3.1",
-          "candidate_id": "restoration-clause-learning",
-          "title": "Restoration-Clause Learning",
-          "external_verdict": "revise",
-          "target_relevance_hits": 3,
-          "historical_mean_score": 4.5,
-          "collision_status": "partial",
-          "review_vector_present": true,
-          "required_action": "Replace the informal minimal-unsatisfied-core compilation with an explicit probabilistic clause-induction objective over a fixed typed descriptor language, including posterior updates, clause confidence and expiry, false-block control, and a comparison against a direct posterior-risk gate trained from exactly the same intervention history.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 2,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 53.5,
-          "scientific_authority": false,
-          "pairwise_wins": 16,
-          "pairwise_ties": 4,
-          "pairwise_losses": 0,
-          "pairwise_points": 18.0,
-          "tournament_rank": 2
-        },
-        {
-          "round": "v5",
-          "candidate_id": "rollback-conditioned-update-inverter",
-          "title": "Rollback-Conditioned Update Inverter",
-          "external_verdict": "revise",
-          "target_relevance_hits": 2,
-          "historical_mean_score": 4.667,
-          "collision_status": "partial",
-          "review_vector_present": true,
-          "required_action": "Change the target regime from separable reversible atoms to coupled or non-additive updates. Define an inverter that must synthesize or condition an inverse patch from interaction evidence, and explicitly test cases where oracle subset rollback over all stored atom deltas is insufficient.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 2,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 50.667,
-          "scientific_authority": false,
-          "pairwise_wins": 15,
-          "pairwise_ties": 4,
-          "pairwise_losses": 1,
-          "pairwise_points": 17.0,
-          "tournament_rank": 3
-        },
-        {
-          "round": "v5",
-          "candidate_id": "causal-update-garbage-collector",
-          "title": "Causal Update Garbage Collector",
-          "external_verdict": "revise",
-          "target_relevance_hits": 2,
-          "historical_mean_score": 4.833,
-          "collision_status": "partial",
-          "review_vector_present": true,
-          "required_action": "Replace single-update marginal testing with an explicitly interaction-aware deletion objective, for example a sparse dependency/hypergraph or learned set-effect model inferred from budgeted disable interventions. The method must predict deletion sets and then freeze those predictions before independent future-version evaluation; the certificate should remain a safety gate rather than being counted as a separate novelty component.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 1,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 46.833,
-          "scientific_authority": false,
-          "pairwise_wins": 16,
-          "pairwise_ties": 2,
-          "pairwise_losses": 2,
-          "pairwise_points": 17.0,
-          "tournament_rank": 4
-        },
-        {
-          "round": "v5",
-          "candidate_id": "multi-agent-message-graph-evolver",
-          "title": "Multi-Agent Message-Graph Evolver",
-          "external_verdict": "revise",
-          "target_relevance_hits": 2,
-          "historical_mean_score": 4.833,
-          "collision_status": "direct",
-          "review_vector_present": true,
-          "required_action": "Change the persistent learned object to a motif-conditioned edge-effect or edge-interaction predictor trained from controlled interventions, and use that frozen predictor to construct graphs for completely unseen tasks. Do not claim novelty from add/remove/redirect graph edits themselves. Compare directly against GPTSwarm, AgentPrune, and an Adaptive-Graph-Pruning-style predictor with matched graph evaluations and token budgets.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 2,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 42.833,
-          "scientific_authority": false,
-          "pairwise_wins": 15,
-          "pairwise_ties": 3,
-          "pairwise_losses": 2,
-          "pairwise_points": 16.5,
-          "tournament_rank": 5
-        },
-        {
-          "round": "v5",
-          "candidate_id": "permission-diff-causal-reauthorizer",
-          "title": "Update-Diff Causal Reauthorizer",
-          "external_verdict": "revise",
-          "target_relevance_hits": 4,
-          "historical_mean_score": 4.667,
-          "collision_status": "direct",
-          "review_vector_present": true,
-          "required_action": "Reframe the method as a learned cost-reduction layer inside state-bound authorization rather than a new authorization-continuity framework. Keep an immutable effect ceiling, obtain causal supervision from randomized permission interventions, keep canary generation/scoring independent, and compare learned triage against deterministic manifest/effect-diff triage, Progent-style policies, and full reauthorization.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 1,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 44.667,
-          "scientific_authority": false,
-          "pairwise_wins": 14,
-          "pairwise_ties": 2,
-          "pairwise_losses": 4,
-          "pairwise_points": 15.0,
-          "tournament_rank": 6
-        },
-        {
-          "round": "v5",
-          "candidate_id": "failure-frontier-training-generator",
-          "title": "Failure-Frontier Training Generator",
-          "external_verdict": "block",
-          "target_relevance_hits": 3,
-          "historical_mean_score": 4.667,
-          "collision_status": "direct",
-          "review_vector_present": true,
-          "required_action": "Do not pursue generic frontier generation as a standalone thesis. A viable revival must pivot to a specifically version-contrastive learning-progress object that predicts transferable improvement or regression directions beyond raw adjacent-version disagreement and beyond PROPEL-style frontier scoring, with a causal training intervention showing that this learned object changes the next frozen model.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 3,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 37.667,
-          "scientific_authority": false,
-          "pairwise_wins": 13,
-          "pairwise_ties": 4,
-          "pairwise_losses": 3,
-          "pairwise_points": 15.0,
-          "tournament_rank": 7
-        },
-        {
-          "round": "v5",
-          "candidate_id": "evaluator-longitudinal-drift-corrector",
-          "title": "Evaluator Longitudinal Drift Corrector",
-          "external_verdict": "revise",
-          "target_relevance_hits": 2,
-          "historical_mean_score": 4.667,
-          "collision_status": "partial",
-          "review_vector_present": true,
-          "required_action": "Separate zero-anchor and few-anchor future-version regimes. For zero-anchor transfer, learn a low-rank temporal/version-state representation from observable evaluator fingerprints available before ground truth and forbid any held-out-version labels. For few-anchor transfer, give exactly the same anchors to a static calibration baseline and show that historical cross-version dynamics provide additional predictive value.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 1,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 46.667,
-          "scientific_authority": false,
-          "pairwise_wins": 13,
-          "pairwise_ties": 2,
-          "pairwise_losses": 5,
-          "pairwise_points": 14.0,
-          "tournament_rank": 8
-        },
-        {
-          "round": "v5",
-          "candidate_id": "structured-memory-model-swap-translator",
-          "title": "Structured-Memory Model-Swap Translator",
-          "external_verdict": "revise",
-          "target_relevance_hits": 2,
-          "historical_mean_score": 4.5,
-          "collision_status": "partial",
-          "review_vector_present": true,
-          "required_action": "Sharpen the learned object from a generic structured-memory translator into a typed invariant-preserving translator, preferably under joint model plus harness/tool-schema swaps. Define explicit type/consistency constraints for preconditions, programs, retrieval edges, and execution constraints, and train/evaluate the translator so those relations—not merely text similarity or target success—are preserved. The main comparison must give MASA-style monolithic rewriting, PromptBridge-style mapping, and target-model rewrite-from-scratch exactly the same source/target traces, model calls, tokens, and optimization budget.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 1,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 46.5,
-          "scientific_authority": false,
-          "pairwise_wins": 10,
-          "pairwise_ties": 2,
-          "pairwise_losses": 8,
-          "pairwise_points": 11.0,
-          "tournament_rank": 9
         },
         {
           "round": "v3.1",
           "candidate_id": "verified-risk-predicate-grammar",
+          "parent_ids": [
+            "simulator-distilled-risk-memory"
+          ],
           "title": "Verifier-Constrained Risk-Predicate Grammar",
           "external_verdict": "block",
           "target_relevance_hits": 3,
@@ -530,36 +2082,20 @@
           "baseline_only_signal_count": 0,
           "mutation_score": 33.5,
           "scientific_authority": false,
-          "pairwise_wins": 10,
-          "pairwise_ties": 2,
-          "pairwise_losses": 8,
-          "pairwise_points": 11.0,
-          "tournament_rank": 10
-        },
-        {
-          "round": "v5",
-          "candidate_id": "curriculum-drift-training-controller",
-          "title": "Curriculum-Drift Training Controller",
-          "external_verdict": "revise",
-          "target_relevance_hits": 2,
-          "historical_mean_score": 4.667,
-          "collision_status": "direct",
-          "review_vector_present": true,
-          "required_action": "Replace observational marginal-gain estimation with an intervention-grounded estimator: reserve randomized micro-allocations or logged exploration probabilities at every reallocation, estimate causal marginal utility with uncertainty, and make version-conditioned causal gain rather than generic learning progress the controller's distinctive learned object.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 1,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 38.667,
-          "scientific_authority": false,
-          "pairwise_wins": 5,
-          "pairwise_ties": 7,
-          "pairwise_losses": 8,
-          "pairwise_points": 8.5,
-          "tournament_rank": 11
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
+          "pairwise_wins": 7,
+          "pairwise_ties": 0,
+          "pairwise_losses": 1,
+          "pairwise_points": 7.0,
+          "tournament_rank": 2
         },
         {
           "round": "v3",
           "candidate_id": "version-differential-active-diagnosis",
+          "parent_ids": [
+            "version-differential-failure-localization"
+          ],
           "title": "Version-Differential Active Diagnosis",
           "external_verdict": "block",
           "target_relevance_hits": 4,
@@ -572,57 +2108,20 @@
           "baseline_only_signal_count": 0,
           "mutation_score": 32.333,
           "scientific_authority": false,
-          "pairwise_wins": 6,
-          "pairwise_ties": 3,
-          "pairwise_losses": 11,
-          "pairwise_points": 7.5,
-          "tournament_rank": 12
-        },
-        {
-          "round": "v5.1",
-          "candidate_id": "interaction-effect-memory-quotient",
-          "title": "Interaction-Effect Memory Quotient",
-          "external_verdict": "revise",
-          "target_relevance_hits": 2,
-          "historical_mean_score": 0.0,
-          "collision_status": "partial",
-          "review_vector_present": true,
-          "required_action": "Define the transfer mechanism for unseen identities explicitly, for example a frozen type-conditioned interaction-signature predictor whose inputs do not contain identity-specific training labels. Then compare the quotient hypergraph against an interaction-aware veto table/classifier using exactly the same pair/triple interventions, storage budget, and compression target. The quotient claim survives only if its typed interaction structure generalizes to new identities/compositions or yields a better compression-preservation frontier than the simpler veto.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 1,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 42.0,
-          "scientific_authority": false,
-          "pairwise_wins": 4,
-          "pairwise_ties": 6,
-          "pairwise_losses": 10,
-          "pairwise_points": 7.0,
-          "tournament_rank": 13
-        },
-        {
-          "round": "v5.1",
-          "candidate_id": "zero-anchor-evaluator-state-extrapolator",
-          "title": "Zero-Anchor Evaluator-State Extrapolator",
-          "external_verdict": "revise",
-          "target_relevance_hits": 2,
-          "historical_mean_score": 0.0,
-          "collision_status": "partial",
-          "review_vector_present": true,
-          "required_action": "Make the chronological operator causally necessary and test it against a genuinely equivalent non-state alternative. Specify an explicit inference equation, for example a state-space filter in which the previous inferred state predicts a prior for z_new and the new fingerprint supplies an observation update; clarify exactly where the transition affects the corrected score. Then replace the weak static-only control with a capacity- and budget-matched direct history-aware predictor that receives the same ordered fingerprint history, current fingerprint, timestamps, actor descriptors, and historical supervision but predicts the future evaluator residual directly with no latent transition. Use rolling-origin held-out evaluator versions and require the transition method to beat both the current-fingerprint static model and this history-aware direct predictor; chronology permutation must destroy the claimed advantage.",
-          "mutation_class": "STRUCTURAL_MUTATION",
-          "material_signal_count": 1,
-          "baseline_only_signal_count": 0,
-          "mutation_score": 42.0,
-          "scientific_authority": false,
-          "pairwise_wins": 4,
-          "pairwise_ties": 6,
-          "pairwise_losses": 10,
-          "pairwise_points": 7.0,
-          "tournament_rank": 14
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
+          "pairwise_wins": 5,
+          "pairwise_ties": 1,
+          "pairwise_losses": 2,
+          "pairwise_points": 5.5,
+          "tournament_rank": 3
         },
         {
           "round": "v5.1",
           "candidate_id": "counterfactual-correction-production-grammar",
+          "parent_ids": [
+            "typed-correction-skill-grammar-v5"
+          ],
           "title": "Counterfactual Correction Production Grammar",
           "external_verdict": "block",
           "target_relevance_hits": 3,
@@ -635,15 +2134,20 @@
           "baseline_only_signal_count": 0,
           "mutation_score": 33.0,
           "scientific_authority": false,
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
           "pairwise_wins": 4,
-          "pairwise_ties": 5,
-          "pairwise_losses": 11,
-          "pairwise_points": 6.5,
-          "tournament_rank": 15
+          "pairwise_ties": 1,
+          "pairwise_losses": 3,
+          "pairwise_points": 4.5,
+          "tournament_rank": 4
         },
         {
           "round": "v5.2",
           "candidate_id": "operator-heldout-marginal-gain-transport",
+          "parent_ids": [
+            "randomized-next-unit-curriculum-gain"
+          ],
           "title": "Held-Out Version-Operator Marginal-Gain Transport",
           "external_verdict": "block",
           "target_relevance_hits": 3,
@@ -656,11 +2160,327 @@
           "baseline_only_signal_count": 0,
           "mutation_score": 33.0,
           "scientific_authority": false,
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
           "pairwise_wins": 4,
-          "pairwise_ties": 5,
-          "pairwise_losses": 11,
-          "pairwise_points": 6.5,
-          "tournament_rank": 16
+          "pairwise_ties": 1,
+          "pairwise_losses": 3,
+          "pairwise_points": 4.5,
+          "tournament_rank": 5
+        },
+        {
+          "round": "v5",
+          "candidate_id": "skill-interface-contract-compiler",
+          "parent_ids": [
+            "compositional-update-compatibility"
+          ],
+          "title": "Skill Interface Contract Compiler",
+          "external_verdict": "block",
+          "target_relevance_hits": 2,
+          "historical_mean_score": 4.833,
+          "collision_status": "direct",
+          "review_vector_present": true,
+          "required_action": "Do not pursue the current formulation as a standalone method. Retain it as a component or baseline unless the learned object is materially changed beyond SkillOps, for example toward a probabilistic relational state-transition contract that predicts latent cross-skill side effects unavailable from typed input/output compatibility and whose learned uncertainty directly controls composition.",
+          "mutation_class": "STRUCTURAL_MUTATION",
+          "material_signal_count": 1,
+          "baseline_only_signal_count": 0,
+          "mutation_score": 26.833,
+          "scientific_authority": false,
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
+          "pairwise_wins": 1,
+          "pairwise_ties": 3,
+          "pairwise_losses": 4,
+          "pairwise_points": 2.5,
+          "tournament_rank": 6
+        },
+        {
+          "round": "v5.2",
+          "candidate_id": "budget-split-contract-router-transpiler",
+          "parent_ids": [
+            "budgeted-contract-surface-router-transpiler"
+          ],
+          "title": "Ledger-Separated Contract Router and Transpiler",
+          "external_verdict": "block",
+          "target_relevance_hits": 2,
+          "historical_mean_score": 0.0,
+          "collision_status": "partial",
+          "review_vector_present": true,
+          "required_action": "Do not repair this by adding another module. A revival must change the learned object itself: for example, a single budget-conditioned contract policy whose sequential probe allocation, stopping, surface choice, and emitted repair jointly alter the set of repairs reachable under M. Compare it against a capacity-matched generic policy given the same diagnostics, contract, action space, calls, and supervision. Alternatively, provide a formally restricted contract-routing algebra that yields decisions a generic three-way classifier with identical inputs cannot reproduce.",
+          "mutation_class": "STRUCTURAL_MUTATION",
+          "material_signal_count": 3,
+          "baseline_only_signal_count": 1,
+          "mutation_score": 36.0,
+          "scientific_authority": false,
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
+          "pairwise_wins": 0,
+          "pairwise_ties": 3,
+          "pairwise_losses": 5,
+          "pairwise_points": 1.5,
+          "tournament_rank": 7
+        },
+        {
+          "round": "v5.1",
+          "candidate_id": "sparse-set-effect-update-collector",
+          "parent_ids": [
+            "causal-update-garbage-collector"
+          ],
+          "title": "Sparse Set-Effect Update Collector",
+          "external_verdict": "block",
+          "target_relevance_hits": 3,
+          "historical_mean_score": 0.0,
+          "collision_status": "partial",
+          "review_vector_present": true,
+          "required_action": "Do not continue the hypergraph formulation as a standalone mechanism. A revival would need a learned object that cannot be represented by ordinary low-order sparse interaction regression under the same interventions—for example, a demonstrably transferable structured interaction law tied to update semantics—and must compare against descriptor-conditioned L1/elastic-net quadratic and cubic set-function regressors with the identical optimization stage.",
+          "mutation_class": "STRUCTURAL_MUTATION",
+          "material_signal_count": 1,
+          "baseline_only_signal_count": 1,
+          "mutation_score": 31.0,
+          "scientific_authority": false,
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
+          "pairwise_wins": 0,
+          "pairwise_ties": 3,
+          "pairwise_losses": 5,
+          "pairwise_points": 1.5,
+          "tournament_rank": 8
+        }
+      ],
+      "top_mutation_parents": [
+        {
+          "round": "v5",
+          "candidate_id": "failure-frontier-training-generator",
+          "parent_ids": [
+            "counterexample-generating-curriculum"
+          ],
+          "title": "Failure-Frontier Training Generator",
+          "external_verdict": "block",
+          "target_relevance_hits": 3,
+          "historical_mean_score": 4.667,
+          "collision_status": "direct",
+          "review_vector_present": true,
+          "required_action": "Do not pursue generic frontier generation as a standalone thesis. A viable revival must pivot to a specifically version-contrastive learning-progress object that predicts transferable improvement or regression directions beyond raw adjacent-version disagreement and beyond PROPEL-style frontier scoring, with a causal training intervention showing that this learned object changes the next frozen model.",
+          "mutation_class": "STRUCTURAL_MUTATION",
+          "material_signal_count": 3,
+          "baseline_only_signal_count": 0,
+          "mutation_score": 37.667,
+          "scientific_authority": false,
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
+          "pairwise_wins": 8,
+          "pairwise_ties": 0,
+          "pairwise_losses": 0,
+          "pairwise_points": 8.0,
+          "tournament_rank": 1
+        },
+        {
+          "round": "v3.1",
+          "candidate_id": "verified-risk-predicate-grammar",
+          "parent_ids": [
+            "simulator-distilled-risk-memory"
+          ],
+          "title": "Verifier-Constrained Risk-Predicate Grammar",
+          "external_verdict": "block",
+          "target_relevance_hits": 3,
+          "historical_mean_score": 4.5,
+          "collision_status": "direct",
+          "review_vector_present": true,
+          "required_action": "Replace the learned object or supervision loop with a mechanism that cannot be reduced to verified rule induction, and evaluate it using a separate transition oracle that is never used for candidate generation or acceptance.",
+          "mutation_class": "STRUCTURAL_MUTATION",
+          "material_signal_count": 2,
+          "baseline_only_signal_count": 0,
+          "mutation_score": 33.5,
+          "scientific_authority": false,
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
+          "pairwise_wins": 7,
+          "pairwise_ties": 0,
+          "pairwise_losses": 1,
+          "pairwise_points": 7.0,
+          "tournament_rank": 2
+        },
+        {
+          "round": "v3",
+          "candidate_id": "version-differential-active-diagnosis",
+          "parent_ids": [
+            "version-differential-failure-localization"
+          ],
+          "title": "Version-Differential Active Diagnosis",
+          "external_verdict": "block",
+          "target_relevance_hits": 4,
+          "historical_mean_score": 4.333,
+          "collision_status": "direct",
+          "review_vector_present": true,
+          "required_action": "Abandon learned query ordering as the thesis and introduce a persistent intervention-derived repair or rollback representation whose deployed state changes after diagnosis and whose benefit cannot be reproduced by seeding ProbDD/PMA with the same historical faults; otherwise treat this child as an evaluation study, not an ICLR method.",
+          "mutation_class": "STRUCTURAL_MUTATION",
+          "material_signal_count": 1,
+          "baseline_only_signal_count": 0,
+          "mutation_score": 32.333,
+          "scientific_authority": false,
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
+          "pairwise_wins": 5,
+          "pairwise_ties": 1,
+          "pairwise_losses": 2,
+          "pairwise_points": 5.5,
+          "tournament_rank": 3
+        },
+        {
+          "round": "v5.1",
+          "candidate_id": "counterfactual-correction-production-grammar",
+          "parent_ids": [
+            "typed-correction-skill-grammar-v5"
+          ],
+          "title": "Counterfactual Correction Production Grammar",
+          "external_verdict": "block",
+          "target_relevance_hits": 3,
+          "historical_mean_score": 0.0,
+          "collision_status": "partial",
+          "review_vector_present": true,
+          "required_action": "A revival needs a learned object that cannot be produced by independently identifying minimal repairs and then composing them with an existing symbolic skill system. One viable scientific target would be causal interaction among corrections themselves: jointly necessary, antagonistic, or order-sensitive productions identified through multi-action interventions, where marginal single-action necessity is insufficient. The pilot would then need to beat CausalFlow-derived repairs composed by NSI/SkillGraph under identical intervention budgets.",
+          "mutation_class": "STRUCTURAL_MUTATION",
+          "material_signal_count": 1,
+          "baseline_only_signal_count": 0,
+          "mutation_score": 33.0,
+          "scientific_authority": false,
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
+          "pairwise_wins": 4,
+          "pairwise_ties": 1,
+          "pairwise_losses": 3,
+          "pairwise_points": 4.5,
+          "tournament_rank": 4
+        },
+        {
+          "round": "v5.2",
+          "candidate_id": "operator-heldout-marginal-gain-transport",
+          "parent_ids": [
+            "randomized-next-unit-curriculum-gain"
+          ],
+          "title": "Held-Out Version-Operator Marginal-Gain Transport",
+          "external_verdict": "block",
+          "target_relevance_hits": 3,
+          "historical_mean_score": 0.0,
+          "collision_status": "partial",
+          "review_vector_present": true,
+          "required_action": "Do not repair this by adding another estimator baseline. A future child would need to change the learned scientific object itself—for example, an identifiable operator-level transformation or counterfactual structure that cannot be represented as the same conditional next-unit response function. Otherwise recast the contribution as an evaluation protocol for curriculum transport rather than a new marginal-gain mechanism.",
+          "mutation_class": "STRUCTURAL_MUTATION",
+          "material_signal_count": 1,
+          "baseline_only_signal_count": 0,
+          "mutation_score": 33.0,
+          "scientific_authority": false,
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
+          "pairwise_wins": 4,
+          "pairwise_ties": 1,
+          "pairwise_losses": 3,
+          "pairwise_points": 4.5,
+          "tournament_rank": 5
+        },
+        {
+          "round": "v5",
+          "candidate_id": "skill-interface-contract-compiler",
+          "parent_ids": [
+            "compositional-update-compatibility"
+          ],
+          "title": "Skill Interface Contract Compiler",
+          "external_verdict": "block",
+          "target_relevance_hits": 2,
+          "historical_mean_score": 4.833,
+          "collision_status": "direct",
+          "review_vector_present": true,
+          "required_action": "Do not pursue the current formulation as a standalone method. Retain it as a component or baseline unless the learned object is materially changed beyond SkillOps, for example toward a probabilistic relational state-transition contract that predicts latent cross-skill side effects unavailable from typed input/output compatibility and whose learned uncertainty directly controls composition.",
+          "mutation_class": "STRUCTURAL_MUTATION",
+          "material_signal_count": 1,
+          "baseline_only_signal_count": 0,
+          "mutation_score": 26.833,
+          "scientific_authority": false,
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
+          "pairwise_wins": 1,
+          "pairwise_ties": 3,
+          "pairwise_losses": 4,
+          "pairwise_points": 2.5,
+          "tournament_rank": 6
+        },
+        {
+          "round": "v5.2",
+          "candidate_id": "budget-split-contract-router-transpiler",
+          "parent_ids": [
+            "budgeted-contract-surface-router-transpiler"
+          ],
+          "title": "Ledger-Separated Contract Router and Transpiler",
+          "external_verdict": "block",
+          "target_relevance_hits": 2,
+          "historical_mean_score": 0.0,
+          "collision_status": "partial",
+          "review_vector_present": true,
+          "required_action": "Do not repair this by adding another module. A revival must change the learned object itself: for example, a single budget-conditioned contract policy whose sequential probe allocation, stopping, surface choice, and emitted repair jointly alter the set of repairs reachable under M. Compare it against a capacity-matched generic policy given the same diagnostics, contract, action space, calls, and supervision. Alternatively, provide a formally restricted contract-routing algebra that yields decisions a generic three-way classifier with identical inputs cannot reproduce.",
+          "mutation_class": "STRUCTURAL_MUTATION",
+          "material_signal_count": 3,
+          "baseline_only_signal_count": 1,
+          "mutation_score": 36.0,
+          "scientific_authority": false,
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
+          "pairwise_wins": 0,
+          "pairwise_ties": 3,
+          "pairwise_losses": 5,
+          "pairwise_points": 1.5,
+          "tournament_rank": 7
+        },
+        {
+          "round": "v5.1",
+          "candidate_id": "sparse-set-effect-update-collector",
+          "parent_ids": [
+            "causal-update-garbage-collector"
+          ],
+          "title": "Sparse Set-Effect Update Collector",
+          "external_verdict": "block",
+          "target_relevance_hits": 3,
+          "historical_mean_score": 0.0,
+          "collision_status": "partial",
+          "review_vector_present": true,
+          "required_action": "Do not continue the hypergraph formulation as a standalone mechanism. A revival would need a learned object that cannot be represented by ordinary low-order sparse interaction regression under the same interventions—for example, a demonstrably transferable structured interaction law tied to update semantics—and must compare against descriptor-conditioned L1/elastic-net quadratic and cubic set-function regressors with the identical optimization stage.",
+          "mutation_class": "STRUCTURAL_MUTATION",
+          "material_signal_count": 1,
+          "baseline_only_signal_count": 1,
+          "mutation_score": 31.0,
+          "scientific_authority": false,
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
+          "pairwise_wins": 0,
+          "pairwise_ties": 3,
+          "pairwise_losses": 5,
+          "pairwise_points": 1.5,
+          "tournament_rank": 8
+        },
+        {
+          "round": "v3.1",
+          "candidate_id": "randomized-memory-action-policy",
+          "parent_ids": [
+            "future-reuse-harm-predictor"
+          ],
+          "title": "Randomized Memory-Action Policy",
+          "external_verdict": "block",
+          "target_relevance_hits": 2,
+          "historical_mean_score": 4.0,
+          "collision_status": "direct",
+          "review_vector_present": true,
+          "required_action": "Replace the generic bandit formulation with a memory-specific causal mechanism that identifies retrieval-mediated delayed effects and interference among entries, and demonstrate an estimator or learning rule that cannot be reduced to a standard doubly robust contextual-bandit learner on the same randomized logs.",
+          "mutation_class": "STRUCTURAL_MUTATION",
+          "material_signal_count": 1,
+          "baseline_only_signal_count": 0,
+          "mutation_score": 26.0,
+          "scientific_authority": false,
+          "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+          "replacement_failure_leaves": [],
+          "pairwise_wins": 0,
+          "pairwise_ties": 2,
+          "pairwise_losses": 6,
+          "pairwise_points": 1.0,
+          "tournament_rank": 9
         }
       ],
       "scientific_authority": false
@@ -1050,7 +2870,7 @@
   "next_cycle": {
     "canonical_state": "HOLD_CANONICAL_DISCOVERY_TRANSACTION_OPEN",
     "prepared_actions": [
-      "race 119 historical lineages for mutation potential",
+      "descendant-close 119 historical records, then race only current unresolved failure leaves",
       "mutate only material reviewer-vector/reopen-condition failures",
       "record proposer-critic-rebuttal-judge debate before ProblemGate",
       "resume only support-censored anchored lanes when provider support exists"
@@ -1080,7 +2900,7 @@
     "experiment": false,
     "gpu": false
   },
-  "cycle_sha256": "261fb7a44e7361ef91623d15337d9186d9029c4785cd1075b16ce03e561d7489",
+  "cycle_sha256": "42987914623461a4c7f58f6a7c625280537d864e75b45d608e2d25ba2e01675a",
   "lint": {
     "status": "PASS",
     "errors": [],
