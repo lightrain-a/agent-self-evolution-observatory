@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.2",
+  "receipt_type": "temporal-r11-stanford-template-repair-verifier",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "display_code": "E2",
+  "revision": "r11",
+  "date": "2026-08-24",
+  "title": "When Reusable Temporal Skills Become Causal Bottlenecks",
+  "bindings": {
+    "pdf_sha256": "1e4483647c3d26622d427e4cbe4e90eb32cb53ae09db20aeba97e41414f91d6b",
+    "source_zip_sha256": "75f949c7d89d748526c9ac8b2e02cb73493b72938c2f626b3de1262a1601ad91",
+    "stanford_closure_sha256": "c6149377fddb8cdc860da8a75e3783732974a5a60d2c8881fd8e0ec70659b8ea",
+    "claim_audit_sha256": "7ea7b8ca13aa5f59548692926759c307a821a15197591aee5d5583f6198fe410",
+    "r9_invocation_order_diagnostic_sha256": "13f349de1bf5bab575a8b8436bee97e8b3d7824ed55894056f800045aacd0eeb",
+    "r10_iso_date_audit_sha256": "452051e3a3f7e309c1682f00dbe28f5b3766a4899df5bd2bfc9f6cc669485bcd"
+  },
+  "checks": {
+    "iclr_template_story_structure": true,
+    "three_related_work_families": true,
+    "three_arm_formal_estimand": true,
+    "false_positive_T_gt_G_T_eq_N_foregrounded": true,
+    "endpoint_unit_and_inference_contract_explicit": true,
+    "resource_parity_lane_explicit": true,
+    "main_body_conclusion_page_9": true,
+    "references_start_page_10": true,
+    "total_pages_13": true,
+    "undefined_citations": 0,
+    "undefined_references": 0,
+    "overfull_boxes": 0,
+    "raster_border_clipping_flags": 0,
+    "r9_invocation_rate_audit_preserved": true,
+    "r9_condition_position_audit_preserved": true,
+    "r9_prompt_length_audit_preserved": true,
+    "r10_iso_date_audit_preserved": true,
+    "second_behavior_neutral_generic_unexecuted": true,
+    "equivalent_retrieval_side_temporal_treatment_unexecuted": true,
+    "container_superiority_not_claimed": true,
+    "cross_domain_and_ceiling_nulls_retained": true,
+    "zero_new_model_provider_gpu_calls": true,
+    "source_zip_independent_rebuild_pass": true,
+    "raster_pages_checked": 13,
+    "all_pdf_fonts_embedded": true,
+    "iclr_template_unit_tests": "4/4 PASS"
+  },
+  "remaining_scientific_reopen": [
+    "TEMP-O4",
+    "TEMP-O5"
+  ],
+  "permanent_claim_boundary": [
+    "TEMP-O6"
+  ],
+  "pass": true,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

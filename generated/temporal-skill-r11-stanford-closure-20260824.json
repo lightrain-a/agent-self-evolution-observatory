@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.1",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "display_code": "E2",
+  "revision": "r11",
+  "date": "2026-08-24",
+  "title": "When Reusable Temporal Skills Become Causal Bottlenecks",
+  "source_review_matrix": "generated/stanford-r2-objection-matrix.json",
+  "review_round": 2,
+  "policy": {
+    "historical_review_artifact_modified": false,
+    "new_scientific_execution": false,
+    "new_model_calls": 0,
+    "claim_upgrade_from_unexecuted_treatments": false
+  },
+  "objections": [
+    {
+      "id": "TEMP-O1",
+      "disposition": "RESOLVED",
+      "r11_closure": "Novelty is procedure-bottleneck identification; skill attribution, reusable-skill learning, and temporal retrieval are explicitly conceded as prior art. No skill-container superiority is claimed.",
+      "manuscript_locations": [
+        "sections/01_intro.tex",
+        "sections/05_related.tex",
+        "sections/04_targeted_intervention.tex"
+      ]
+    },
+    {
+      "id": "TEMP-O2",
+      "disposition": "RESOLVED",
+      "r11_closure": "The false-positive case is foregrounded and the existing zero-call audit preserves equal forced helper execution, condition-position diagnostics, and prompt-length diagnostics.",
+      "evidence": "targeted/generic 442/442 forced once; no-skill 0/442; condition-position p>.65; targeted prompts 18.85 input tokens shorter on average",
+      "manuscript_locations": [
+        "sections/04_targeted_intervention.tex",
+        "sections/05_results.tex",
+        "sections/07_appendix.tex"
+      ]
+    },
+    {
+      "id": "TEMP-O3",
+      "disposition": "RESOLVED",
+      "r11_closure": "The ISO-date audit remains a reproducibility/sensitivity diagnostic and is not promoted into a new scientific result.",
+      "evidence": "88/88 observed T1 serialized ISO-date comparisons agree with parsed-calendar ordering",
+      "manuscript_locations": [
+        "sections/06_limitations_conclusion.tex",
+        "sections/07_appendix.tex"
+      ]
+    },
+    {
+      "id": "TEMP-O4",
+      "disposition": "REQUIRES_SCIENTIFIC_REOPEN",
+      "r11_closure": "Not executed. The manuscript states that the matched generic is target-blind but not guaranteed behaviorally neutral; a second neutral generic is a new treatment.",
+      "manuscript_locations": [
+        "sections/01_intro.tex",
+        "sections/05_related.tex",
+        "sections/06_limitations_conclusion.tex"
+      ]
+    },
+    {
+      "id": "TEMP-O5",
+      "disposition": "REQUIRES_SCIENTIFIC_REOPEN",
+      "r11_closure": "Not executed. Operation value is separated from container comparison; no claim is made that callable skill state beats an equivalent retrieval-side temporal treatment.",
+      "manuscript_locations": [
+        "sections/01_intro.tex",
+        "sections/05_related.tex",
+        "sections/04_targeted_intervention.tex",
+        "sections/06_limitations_conclusion.tex"
+      ]
+    },
+    {
+      "id": "TEMP-O6",
+      "disposition": "PERMANENT_CLAIM_BOUNDARY",
+      "r11_closure": "Abstract/results/limitations/conclusion restrict the claim to conditional procedure-by-model-by-task regimes; small endpoint cells, ceiling cases, and cross-domain grounding nulls remain visible.",
+      "manuscript_locations": [
+        "sections/00_abstract.tex",
+        "sections/05_results.tex",
+        "sections/06_limitations_conclusion.tex"
+      ]
+    },
+    {
+      "id": "TEMP-O7",
+      "disposition": "RESOLVED",
+      "r11_closure": "Controlled exposure is explicitly distinguished from endogenous skill selection; the paper estimates forced procedure exposure, not autonomous call propensity.",
+      "manuscript_locations": [
+        "sections/04_targeted_intervention.tex",
+        "sections/05_results.tex",
+        "sections/07_appendix.tex"
+      ]
+    }
+  ],
+  "remaining_scientific_reopen": [
+    "TEMP-O4",
+    "TEMP-O5"
+  ],
+  "permanent_claim_boundary": [
+    "TEMP-O6"
+  ]
+}

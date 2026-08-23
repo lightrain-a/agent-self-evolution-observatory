@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "display_code": "E2",
+  "revision": "r11",
+  "date": "2026-08-24",
+  "title": "When Reusable Temporal Skills Become Causal Bottlenecks",
+  "artifacts": {
+    "pdf": {
+      "path": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-template-r11-20260824.pdf",
+      "sha256": "1e4483647c3d26622d427e4cbe4e90eb32cb53ae09db20aeba97e41414f91d6b"
+    },
+    "source_zip": {
+      "path": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-template-r11-20260824-source.zip",
+      "sha256": "75f949c7d89d748526c9ac8b2e02cb73493b72938c2f626b3de1262a1601ad91"
+    },
+    "supplement_zip": {
+      "path": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-template-r11-20260824-supplement.zip",
+      "sha256": "03c05b93e68a8d761d164792d5298667473fc58c079c7a38513f90247094c94d"
+    },
+    "claim_audit": {
+      "path": "generated/temporal-skill-r11-claim-audit-20260824.json",
+      "sha256": "7ea7b8ca13aa5f59548692926759c307a821a15197591aee5d5583f6198fe410"
+    },
+    "stanford_closure": {
+      "path": "generated/temporal-skill-r11-stanford-closure-20260824.json",
+      "sha256": "c6149377fddb8cdc860da8a75e3783732974a5a60d2c8881fd8e0ec70659b8ea"
+    },
+    "verification": {
+      "path": "generated/temporal-skill-r11-verification-20260824.json",
+      "sha256": "440b196661487c5c15d7234c66f1ad8d8d1e613acd3bb926d6f6983c312b3bd8"
+    }
+  },
+  "stable_aliases_modified": false,
+  "new_scientific_execution": false,
+  "new_model_calls": 0,
+  "verification_summary": {
+    "iclr_template_unit_tests": "4/4 PASS",
+    "source_zip_rebuild": "PASS",
+    "pdf_pages": 13,
+    "main_body_conclusion_page": 9,
+    "references_start_page": 10,
+    "raster_pages_checked": 13,
+    "raster_border_clipping_flags": 0,
+    "fonts_embedded": true,
+    "undefined_citations": 0,
+    "undefined_references": 0,
+    "overfull_boxes": 0
+  },
+  "revision_aliases": {
+    "pdf": "downloads/E2-Temporal-Skill-r11-20260824.pdf",
+    "source_zip": "downloads/E2-Temporal-Skill-r11-20260824-source.zip",
+    "supplement_zip": "downloads/E2-Temporal-Skill-r11-20260824-supplement.zip",
+    "byte_identical_to_named_package": true
+  }
+}

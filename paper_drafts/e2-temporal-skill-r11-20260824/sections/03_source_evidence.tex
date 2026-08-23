@@ -1,0 +1,18 @@
+\section{Experimental Setup: Source-Native Replay}
+\label{sec:evidence}
+TimeSage-EV motivates the three recurring mechanism families---cutoff validity, release alignment, and exogenous grounding---and exposes persistent skills to later periods~\citep{yao2026timesage}. Our experiment is not an exact rerun of its unavailable evaluated snapshot. Instead, we reconstruct content-addressed endpoints directly from first-party institutional release histories and intervene on the same reusable operations.
+
+\subsection{Frozen endpoints and scorers}
+The initial replay contains 23 endpoints from BEA GDP releases and NOAA-CPC ENSO Diagnostic Discussions~\citep{bea2026archive,noaa2026enso}: twelve pre-April endpoints form C3-R and eleven April--May endpoints form held-out C4-R. Raw pages are SHA-256 bound, evidence identifiers are opaque, and grounding exposes the full content-region sentence pool rather than a gold-only candidate set. Family scorers are deterministic and frozen before model outcomes; a pre-execution self-test gives 23/23 success on gold outputs and 0/23 on constructed negatives.
+
+A post-review validation adds 12 EIA Weekly Petroleum Status Report cutoff endpoints from a third institutional system~\citep{eia2026wpsrarchive}. EIA is chosen by a structural compatibility rule---recurring first-party releases, explicit publication dates, represented data-ending weeks, and compatibility with the already frozen cutoff interface---before any EIA model outcome is opened. Four endpoints form an earlier diagnostic split and eight April--May endpoints form held-out validation. T1 and G1 are reused byte-for-byte; source manifest, endpoints, scorer, harness, and condition order are frozen before execution. This is informed post-review validation, not an independently preregistered confirmation.
+
+\subsection{Questions and inference contract}
+RQ1 asks whether adding the no-skill anchor changes a verdict that would look positive under targeted-versus-generic comparison alone. RQ2 asks whether targeted procedures beat both controls specifically in non-ceiling model--task cells. RQ3 asks whether byte-identical procedures retain direction on compatible held-out releases while preserving ceiling and incompatible-domain nulls.
+
+The endpoint is the independent scientific unit. Repeats characterize execution robustness and are averaged within endpoint; they are never counted as additional tasks. For non-ceiling cells we report endpoint win/tie/loss patterns, percentile bootstrap intervals over endpoints, and exact two-sided sign tests over non-ties when resolution permits. Two- and three-endpoint cells are explicitly descriptive. We do not pool heterogeneous procedures, models, or domains into an omnibus skill-effect statistic.
+
+\subsection{Evidence layers and parity}
+DeepSeek-V4-Pro is the registered primary track with five repeats. A pre-outcome support rule selects Kimi-K3 as a separately labeled replication; a later hash audit removes one overwritten repeat block without replacement, leaving four provenance-clean repeats. Doubao-Seed-2.0-Mini is an exploratory capacity stress. The EIA layer evaluates DeepSeek and the mini model. In total, the retained source-native evidence contains 1,326 runtime-valid rows over 35 distinct endpoints from BEA, NOAA, and EIA.
+
+Every targeted skill has a family-matched generic helper with the same callable signature, identical Python lexical-token count and AST-node count, and equal external tool-call budget. Static audits reject generic helpers that access the target temporal operation. Full execution chronology, provenance bindings, and the failed local-secondary runtime gate are reported in Appendix~A.

@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.1",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "display_code": "E2",
+  "revision": "r11",
+  "date": "2026-08-24",
+  "title": "When Reusable Temporal Skills Become Causal Bottlenecks",
+  "checks": {
+    "memorable_short_title_retained": true,
+    "abstract_setting_gap_method_result_boundary": true,
+    "concrete_false_positive_on_first_page": true,
+    "three_arm_estimand_formalized": true,
+    "targeted_must_beat_generic_and_no_skill": true,
+    "endpoint_is_independent_unit": true,
+    "repeats_not_counted_as_independent_tasks": true,
+    "related_work_has_three_mechanism_families": true,
+    "closest_work_overlap_conceded": true,
+    "method_design_requirements_precede_components": true,
+    "overview_figure_early": true,
+    "resource_parity_lane_explicit": true,
+    "temporal_rag_adjacent_work_acknowledged": true,
+    "skill_container_superiority_not_claimed": true,
+    "second_behavior_neutral_generic_not_claimed_executed": true,
+    "equivalent_retrieval_side_treatment_not_claimed_executed": true,
+    "cross_domain_grounding_null_retained": true,
+    "ceiling_cells_retained": true,
+    "small_alignment_grounding_cells_marked_low_resolution": true,
+    "timesage_source_native_replay_not_misrepresented_as_exact_replication": true,
+    "r9_invocation_order_length_audit_preserved": true,
+    "r10_iso_date_audit_preserved": true
+  },
+  "template_lanes": {
+    "E1_main_comparison": "COMPLETE_three_arm_T_vs_G_and_N",
+    "E2_component_simplification": "COMPLETE_for_executed_target_blind_generic_plus_no_skill; second_behavior_neutral_generic_remains_reopen",
+    "E3_mechanism_aligned_analysis": "COMPLETE_false_positive_and_ceiling_predictions",
+    "E4_robustness_transfer_boundary": "COMPLETE_future_release_ceiling_cross_domain_null",
+    "E5_negative_failure_cases": "COMPLETE_T_gt_G_T_eq_N_plus_null_and_ceiling",
+    "E6_efficiency_cost_scale": "PARITY_ONLY_equal_helper_call_budget_and_matched_complexity; no_latency_or_cost_speedup_claim",
+    "E7_case_study_optional": "COMPLETE_cutoff_false_positive_case"
+  },
+  "headline_evidence": {
+    "false_positive_cutoff_deepseek": {
+      "N": 100,
+      "G": 72,
+      "T": 100,
+      "verdict": "NO_REPAIR"
+    },
+    "grounding_deepseek_acquisition": {
+      "N": 20,
+      "G": 20,
+      "T": 60
+    },
+    "eia_cutoff_deepseek_heldout": {
+      "N": 47.5,
+      "G": 70,
+      "T": 100,
+      "T_minus_N_sign_test_p": 0.0156
+    },
+    "alignment_kimi_heldout": {
+      "N": "7/12",
+      "G": "4/12",
+      "T": "12/12",
+      "independent_endpoints": 3
+    },
+    "eia_mini_no_skill_ceiling": "40/40",
+    "cross_domain_grounding": "NULL"
+  },
+  "build_contract": {
+    "main_body_conclusion_page": 9,
+    "reproducibility_statement_starts_page": 9,
+    "references_start_page": 10,
+    "total_pages_including_references_and_appendix": 13,
+    "undefined_citations": 0,
+    "undefined_references": 0,
+    "overfull_boxes": 0,
+    "raster_pages_checked": 13,
+    "raster_border_clipping_flags": 0,
+    "source_zip_independent_rebuild_pass": true,
+    "all_pdf_fonts_embedded": true
+  },
+  "claim_ladder": {
+    "observed": "In selected non-ceiling frozen model-task cells, targeted temporal procedures improve the registered family outcome over both no-skill and matched-generic controls.",
+    "supported_interpretation": "A reusable operation can be an intervention-defined binding repair in a conditional procedure-by-model-by-task regime.",
+    "not_claimed": [
+      "universal temporal-skill gain",
+      "model-invariant or general cross-domain transfer",
+      "unique causal explanation of the original failure",
+      "autonomous endogenous tool-use benefit",
+      "callable-skill superiority over a behaviorally equivalent retrieval-side temporal implementation"
+    ]
+  }
+}
