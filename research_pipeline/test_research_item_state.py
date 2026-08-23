@@ -191,21 +191,23 @@ class ResearchItemStateTest(unittest.TestCase):
         self.assertEqual((future["code"], future["category_zh"], future["pdf"]), ("E3", "技能", "downloads/E3-Future-Skill.pdf"))
 
     def test_discovery_aliases_separate_historical_candidate_ids_from_public_categories(self) -> None:
-        self.assertEqual(discovery_candidate_alias("D2-C02"), "DISC2-02")
-        self.assertEqual(discovery_candidate_alias("D2-C6"), "DISC2-06")
+        self.assertEqual(discovery_candidate_alias("D2-C02"), "DI2-02")
+        self.assertEqual(discovery_candidate_alias("D2-C6"), "DI2-06")
         with self.assertRaises(ValueError):
             discovery_candidate_alias("PF-2")
         papers = {row["paper_id"]: row for row in self.registry["papers"]}
         proxy = papers["D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE"]
         temporal = papers["D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK"]
         failure = papers["D2-PAPER-FAILURE-MEMORY-PROVENANCE"]
-        self.assertEqual(proxy["discovery_provenance"]["candidate_aliases"], ["DISC2-02", "DISC2-05"])
-        self.assertEqual(temporal["discovery_provenance"]["candidate_aliases"], ["DISC2-06"])
-        self.assertEqual(failure["discovery_provenance"]["candidate_aliases"], ["DISC2-01", "DISC2-04"])
+        self.assertEqual(proxy["discovery_provenance"]["candidate_aliases"], ["DI2-02", "DI2-05"])
+        self.assertEqual(temporal["discovery_provenance"]["candidate_aliases"], ["DI2-06"])
+        self.assertEqual(failure["discovery_provenance"]["candidate_aliases"], ["DI2-01", "DI2-04"])
         self.assertEqual(temporal["discovery_provenance"]["historical_candidate_ids"], ["D2-C06"])
         self.assertTrue(temporal["discovery_provenance"]["historical_ids_hidden_by_default"])
-        self.assertEqual(self.registry["summary"]["discovery_aliases"], ["DISC2-02", "DISC2-05", "DISC2-06", "DISC2-01", "DISC2-04"])
-        self.assertEqual(build_discovery_provenance(["D2-C06"])["campaign_en"], "Paper-first Discovery Round 2")
+        self.assertEqual(self.registry["summary"]["discovery_aliases"], ["DI2-02", "DI2-05", "DI2-06", "DI2-01", "DI2-04"])
+        self.assertTrue(self.registry["policy"]["reader_facing_discovery_aliases_use_di_namespace"])
+        self.assertEqual(build_discovery_provenance(["D2-C06"])["campaign_alias"], "DI2")
+        self.assertEqual(build_discovery_provenance(["D2-C06"])["campaign_en"], "Paper-first Idea Discovery Round 2")
         broken = json.loads(json.dumps(self.registry))
         broken_temporal = next(row for row in broken["papers"] if row["paper_id"] == "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK")
         broken_temporal["discovery_provenance"]["candidate_aliases"] = ["E2"]

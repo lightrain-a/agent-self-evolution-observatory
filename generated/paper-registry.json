@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.5",
-  "generated_at": "2026-08-23T12:40:30+00:00",
-  "source_revision": "a414668820573a7fc050924aa7131cb8b4eaf8f6",
+  "schema_version": "1.6",
+  "generated_at": "2026-08-23T12:49:27+00:00",
+  "source_revision": "06b14a0cce5bcf7c8ff6334bfb24807a82aba146",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -43,7 +43,8 @@
     "historical_discovery_ids_are_preserved_for_exact_provenance": true,
     "reader_facing_discovery_aliases_do_not_reuse_ag_category_letters": true,
     "reader_facing_discovery_aliases_do_not_reuse_pf_idea_ids": true,
-    "historical_discovery_ids_are_hidden_by_default_in_reader_views": true
+    "historical_discovery_ids_are_hidden_by_default_in_reader_views": true,
+    "reader_facing_discovery_aliases_use_di_namespace": true
   },
   "summary": {
     "papers": 5,
@@ -75,11 +76,11 @@
       "G": 1
     },
     "discovery_aliases": [
-      "DISC2-02",
-      "DISC2-05",
-      "DISC2-06",
-      "DISC2-01",
-      "DISC2-04"
+      "DI2-02",
+      "DI2-05",
+      "DI2-06",
+      "DI2-01",
+      "DI2-04"
     ]
   },
   "papers": [
@@ -952,20 +953,20 @@
         "pdf": "downloads/C1-Proxy-Reward.pdf"
       },
       "discovery_provenance": {
-        "campaign_alias": "DISC2",
-        "campaign_zh": "Paper-first 发现第 2 轮",
-        "campaign_en": "Paper-first Discovery Round 2",
+        "campaign_alias": "DI2",
+        "campaign_zh": "Paper-first Idea Discovery 第 2 轮",
+        "campaign_en": "Paper-first Idea Discovery Round 2",
         "candidate_aliases": [
-          "DISC2-02",
-          "DISC2-05"
+          "DI2-02",
+          "DI2-05"
         ],
-        "primary_candidate_alias": "DISC2-02",
+        "primary_candidate_alias": "DI2-02",
         "historical_candidate_ids": [
           "D2-C02",
           "D2-C05"
         ],
         "historical_ids_hidden_by_default": true,
-        "reader_label": "DISC2-02 + DISC2-05"
+        "reader_label": "DI2-02 + DI2-05"
       }
     },
     {
@@ -1219,18 +1220,18 @@
         "pdf": "downloads/E2-Temporal-Skill.pdf"
       },
       "discovery_provenance": {
-        "campaign_alias": "DISC2",
-        "campaign_zh": "Paper-first 发现第 2 轮",
-        "campaign_en": "Paper-first Discovery Round 2",
+        "campaign_alias": "DI2",
+        "campaign_zh": "Paper-first Idea Discovery 第 2 轮",
+        "campaign_en": "Paper-first Idea Discovery Round 2",
         "candidate_aliases": [
-          "DISC2-06"
+          "DI2-06"
         ],
-        "primary_candidate_alias": "DISC2-06",
+        "primary_candidate_alias": "DI2-06",
         "historical_candidate_ids": [
           "D2-C06"
         ],
         "historical_ids_hidden_by_default": true,
-        "reader_label": "DISC2-06"
+        "reader_label": "DI2-06"
       }
     },
     {
@@ -1466,20 +1467,20 @@
         "pdf": "downloads/B1-Failure-Memory.pdf"
       },
       "discovery_provenance": {
-        "campaign_alias": "DISC2",
-        "campaign_zh": "Paper-first 发现第 2 轮",
-        "campaign_en": "Paper-first Discovery Round 2",
+        "campaign_alias": "DI2",
+        "campaign_zh": "Paper-first Idea Discovery 第 2 轮",
+        "campaign_en": "Paper-first Idea Discovery Round 2",
         "candidate_aliases": [
-          "DISC2-01",
-          "DISC2-04"
+          "DI2-01",
+          "DI2-04"
         ],
-        "primary_candidate_alias": "DISC2-01",
+        "primary_candidate_alias": "DI2-01",
         "historical_candidate_ids": [
           "D2-C01",
           "D2-C04"
         ],
         "historical_ids_hidden_by_default": true,
-        "reader_label": "DISC2-01 + DISC2-04"
+        "reader_label": "DI2-01 + DI2-04"
       }
     }
   ]

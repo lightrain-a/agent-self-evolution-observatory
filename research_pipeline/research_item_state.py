@@ -50,7 +50,8 @@ PUBLICATION_PAPER_REGISTRATIONS = [
 # Historical discovery IDs such as D2-C06 predate the A–G publication
 # taxonomy. In those IDs, D means discovery batch and C means candidate; they
 # are not A–G categories. Reader-facing provenance therefore uses an explicit
-# DISC alias while retaining the original IDs unchanged for exact replay.
+# DI (Discovery Idea) alias while retaining the original IDs unchanged for
+# exact replay. DI is intentionally distinct from both A–G and PF-* IDs.
 DISCOVERY_CANDIDATE_PATTERN = re.compile(r"^D(?P<batch>[1-9][0-9]*)-C(?P<candidate>[0-9]+)$")
 
 
@@ -61,7 +62,7 @@ def discovery_candidate_alias(candidate_id: str) -> str:
         raise ValueError(f"unsupported historical discovery candidate id:{raw}")
     batch = int(match.group("batch"))
     candidate = int(match.group("candidate"))
-    return f"DISC{batch}-{candidate:02d}"
+    return f"DI{batch}-{candidate:02d}"
 
 
 def build_discovery_provenance(candidate_ids: list[str]) -> dict[str, Any]:
@@ -72,9 +73,9 @@ def build_discovery_provenance(candidate_ids: list[str]) -> dict[str, Any]:
         raise ValueError(f"mixed discovery batches are not reader-displayable:{historical}")
     batch = next(iter(batches))
     return {
-        "campaign_alias": f"DISC{batch}",
-        "campaign_zh": f"Paper-first 发现第 {batch} 轮",
-        "campaign_en": f"Paper-first Discovery Round {batch}",
+        "campaign_alias": f"DI{batch}",
+        "campaign_zh": f"Paper-first Idea Discovery 第 {batch} 轮",
+        "campaign_en": f"Paper-first Idea Discovery Round {batch}",
         "candidate_aliases": aliases,
         "primary_candidate_alias": aliases[0],
         "historical_candidate_ids": historical,
@@ -796,7 +797,7 @@ def build_paper_registry(research_state=None):
     papers = [stri, safety, *sorted(d2_papers, key=lambda row: int(row.get("display_order") or 999))]
     stage_counts = dict(sorted(Counter(row.get("paper_stage") for row in papers).items()))
     return {
-        "schema_version": "1.5",
+        "schema_version": "1.6",
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "source_revision": git_head(),
         "projection_source": acceptance.get("projection_source") or "generated/research-system-state.json",
@@ -816,6 +817,7 @@ def build_paper_registry(research_state=None):
             "historical_discovery_ids_are_preserved_for_exact_provenance": True,
             "reader_facing_discovery_aliases_do_not_reuse_ag_category_letters": True,
             "reader_facing_discovery_aliases_do_not_reuse_pf_idea_ids": True,
+            "reader_facing_discovery_aliases_use_di_namespace": True,
             "historical_discovery_ids_are_hidden_by_default_in_reader_views": True,
             **(acceptance.get("policy") or {}),
         },
@@ -944,7 +946,7 @@ def validate_paper_registry(registry, research_state):
             errors.append(f"discovery provenance must retain exact historical ids:{row.get('paper_id')}")
         if provenance.get("historical_ids_hidden_by_default") is not True:
             errors.append(f"historical discovery ids must be hidden by default:{row.get('paper_id')}")
-        if any(not re.fullmatch(r"DISC[1-9][0-9]*-[0-9]{2,}", alias) for alias in aliases):
+        if any(not re.fullmatch(r"DI[1-9][0-9]*-[0-9]{2,}", alias) for alias in aliases):
             errors.append(f"invalid reader discovery alias:{row.get('paper_id')}:{aliases}")
         if any(alias.startswith("PF") or re.fullmatch(r"[A-G][1-9][0-9]*", alias) for alias in aliases):
             errors.append(f"reader discovery alias collides with PF/A-G namespaces:{row.get('paper_id')}:{aliases}")
