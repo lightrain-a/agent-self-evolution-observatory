@@ -6,9 +6,11 @@ from unittest.mock import patch
 
 from research_pipeline.research_item_state import (
     PUBLICATION_PAPER_REGISTRATIONS,
+    build_discovery_provenance,
     build_paper_registry,
     build_publication_identities,
     build_research_item_state,
+    discovery_candidate_alias,
     paper_acceptance_state,
     validate_paper_registry,
     validate_research_item_state,
@@ -187,6 +189,27 @@ class ResearchItemStateTest(unittest.TestCase):
         with patch("research_pipeline.research_item_state.PUBLICATION_PAPER_REGISTRATIONS", appended):
             future = build_publication_identities()["FUTURE-E"]
         self.assertEqual((future["code"], future["category_zh"], future["pdf"]), ("E3", "技能", "downloads/E3-Future-Skill.pdf"))
+
+    def test_discovery_aliases_separate_historical_candidate_ids_from_public_categories(self) -> None:
+        self.assertEqual(discovery_candidate_alias("D2-C02"), "DISC2-02")
+        self.assertEqual(discovery_candidate_alias("D2-C6"), "DISC2-06")
+        with self.assertRaises(ValueError):
+            discovery_candidate_alias("PF-2")
+        papers = {row["paper_id"]: row for row in self.registry["papers"]}
+        proxy = papers["D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE"]
+        temporal = papers["D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK"]
+        failure = papers["D2-PAPER-FAILURE-MEMORY-PROVENANCE"]
+        self.assertEqual(proxy["discovery_provenance"]["candidate_aliases"], ["DISC2-02", "DISC2-05"])
+        self.assertEqual(temporal["discovery_provenance"]["candidate_aliases"], ["DISC2-06"])
+        self.assertEqual(failure["discovery_provenance"]["candidate_aliases"], ["DISC2-01", "DISC2-04"])
+        self.assertEqual(temporal["discovery_provenance"]["historical_candidate_ids"], ["D2-C06"])
+        self.assertTrue(temporal["discovery_provenance"]["historical_ids_hidden_by_default"])
+        self.assertEqual(self.registry["summary"]["discovery_aliases"], ["DISC2-02", "DISC2-05", "DISC2-06", "DISC2-01", "DISC2-04"])
+        self.assertEqual(build_discovery_provenance(["D2-C06"])["campaign_en"], "Paper-first Discovery Round 2")
+        broken = json.loads(json.dumps(self.registry))
+        broken_temporal = next(row for row in broken["papers"] if row["paper_id"] == "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK")
+        broken_temporal["discovery_provenance"]["candidate_aliases"] = ["E2"]
+        self.assertTrue(any("discovery provenance alias drifted" in error or "reader discovery alias collides" in error for error in validate_paper_registry(broken, self.state)))
 
     def test_experiments_are_zero_authority_evidence_events(self) -> None:
         self.assertTrue(all(row["scientific_authority"] is False for row in self.state["experiment_records"]))

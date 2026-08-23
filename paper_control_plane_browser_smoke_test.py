@@ -56,6 +56,10 @@ def main() -> None:
             summary: window.PAPER_REGISTRY?.summary || {},
             cards: document.querySelectorAll('.paper-registry-card').length,
             actions: Object.fromEntries([...document.querySelectorAll('.paper-registry-card')].map(x => [x.dataset.paperId || '', x.dataset.nextAction || ''])),
+            registryHeaderLabels: [...document.querySelectorAll('.paper-registry-card header div > span')].map(x => (x.textContent || '').trim()),
+            registryProvenanceLines: [...document.querySelectorAll('.paper-registry-card > div > p:first-child')].map(x => (x.textContent || '').trim()),
+            discoveryDetailHeaders: [...document.querySelectorAll('.paper-detail-d2 > .paper-detail-header')].map(x => (x.textContent || '').trim()),
+            discoveryAuditHistoricalIds: [...document.querySelectorAll('.paper-detail-d2 .paper-reader-paper-detail-audit small')].map(x => (x.textContent || '').trim()).filter(x => x.includes('D2-C')), 
             gateCleanCount: [...document.querySelectorAll('.paper-registry-card')].filter(x => x.dataset.gateClean === 'true').length,
             noveltyPortfolio: document.querySelectorAll('#paper-novelty-portfolio').length,
             noveltyDetails: document.querySelectorAll('.paper-novelty-detail').length,
@@ -99,6 +103,7 @@ def main() -> None:
             temporal: papers.find(x => x.paper_id === 'D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK') || {},
             failureMemory: papers.find(x => x.paper_id === 'D2-PAPER-FAILURE-MEMORY-PROVENANCE') || {},
             publicationIdentities: Object.fromEntries(papers.map(x => [x.paper_id || '', x.publication_identity || {}])),
+            discoveryProvenance: Object.fromEntries(papers.map(x => [x.paper_id || '', x.discovery_provenance || {}])),
             text: document.body.textContent || ''
           };
         """)
@@ -119,6 +124,14 @@ def main() -> None:
         publication_identities = selected.get("publicationIdentities") or {}
         require({k: (publication_identities.get(k) or {}).get("code") for k in ("STRI","AGENT-SAFETY-R9","D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE","D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK","D2-PAPER-FAILURE-MEMORY-PROVENANCE")} == {"STRI":"E1","AGENT-SAFETY-R9":"G1","D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE":"C1","D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK":"E2","D2-PAPER-FAILURE-MEMORY-PROVENANCE":"B1"}, f"PaperRegistry publication identities drifted: {publication_identities}")
         require(all((publication_identities.get(k) or {}).get("category_zh") for k in publication_identities), f"Publication category names must be explicit beside letter codes: {publication_identities}")
+        discovery_provenance = selected.get("discoveryProvenance") or {}
+        require(summary.get("discovery_aliases") == ["DISC2-02","DISC2-05","DISC2-06","DISC2-01","DISC2-04"], f"Reader discovery aliases drifted: {summary}")
+        require((discovery_provenance.get("D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE") or {}).get("candidate_aliases") == ["DISC2-02","DISC2-05"], f"Proxy Reward discovery aliases drifted: {discovery_provenance}")
+        require((discovery_provenance.get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK") or {}).get("candidate_aliases") == ["DISC2-06"], f"Temporal Skill discovery alias drifted: {discovery_provenance}")
+        require((discovery_provenance.get("D2-PAPER-FAILURE-MEMORY-PROVENANCE") or {}).get("candidate_aliases") == ["DISC2-01","DISC2-04"], f"Failure Memory discovery aliases drifted: {discovery_provenance}")
+        require(all("D2-C" not in text for text in selected["registryHeaderLabels"] + selected["registryProvenanceLines"] + selected["discoveryDetailHeaders"]), f"Historical D2-C candidate IDs leaked into the default reader layer: {selected['registryHeaderLabels']} / {selected['registryProvenanceLines']} / {selected['discoveryDetailHeaders']}")
+        require(all(alias in " | ".join(selected["registryProvenanceLines"] + selected["discoveryDetailHeaders"]) for alias in ("DISC2-01","DISC2-02","DISC2-04","DISC2-05","DISC2-06")), f"Reader-facing DISC aliases are incomplete: {selected['registryProvenanceLines']} / {selected['discoveryDetailHeaders']}")
+        require(any("D2-C06" in text for text in selected["discoveryAuditHistoricalIds"]), f"Exact historical candidate IDs must remain available inside collapsed audit provenance: {selected['discoveryAuditHistoricalIds']}")
         figures=selected["readerFigureText"]
         require(all(marker in figures.get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK","") for marker in ("47.5%","70%","100%","cross-domain grounding")), f"Temporal evidence figure lost the three-arm contrast or negative boundary: {figures.get('D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK','')}")
         require(all(marker in figures.get("D2-PAPER-FAILURE-MEMORY-PROVENANCE","") for marker in ("0.931","0.647","p=.0785","p=.0792","opposite sign")), f"Failure-Memory evidence figure must distinguish association from unresolved causal tests: {figures.get('D2-PAPER-FAILURE-MEMORY-PROVENANCE','')}")

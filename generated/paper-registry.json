@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.4",
-  "generated_at": "2026-08-23T12:20:49+00:00",
-  "source_revision": "ea654fe7b151cb8112f9ad39fca3cce4b1e85cc8",
+  "schema_version": "1.5",
+  "generated_at": "2026-08-23T12:32:54+00:00",
+  "source_revision": "5f00cd99659d85071dbab12f4bf3f9a0d42ea6a4",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -39,7 +39,11 @@
     "submitted_state_requires_external_human_submission_authority": true,
     "publication_identity_is_reader_facing_only": true,
     "publication_codes_are_category_local_append_order": true,
-    "publication_identity_does_not_replace_internal_provenance": true
+    "publication_identity_does_not_replace_internal_provenance": true,
+    "historical_discovery_ids_are_preserved_for_exact_provenance": true,
+    "reader_facing_discovery_aliases_do_not_reuse_ag_category_letters": true,
+    "reader_facing_discovery_aliases_do_not_reuse_pf_idea_ids": true,
+    "historical_discovery_ids_are_hidden_by_default_in_reader_views": true
   },
   "summary": {
     "papers": 5,
@@ -69,7 +73,14 @@
       "C": 1,
       "E": 2,
       "G": 1
-    }
+    },
+    "discovery_aliases": [
+      "DISC2-02",
+      "DISC2-05",
+      "DISC2-06",
+      "DISC2-01",
+      "DISC2-04"
+    ]
   },
   "papers": [
     {
@@ -939,6 +950,22 @@
         "label_zh": "C1 评估 · Proxy Reward · 奖励误差写入长期记忆",
         "label_en": "C1 Evaluation · Proxy Reward · Reward errors become persistent memory state",
         "pdf": "downloads/C1-Proxy-Reward.pdf"
+      },
+      "discovery_provenance": {
+        "campaign_alias": "DISC2",
+        "campaign_zh": "Paper-first 发现第 2 轮",
+        "campaign_en": "Paper-first Discovery Round 2",
+        "candidate_aliases": [
+          "DISC2-02",
+          "DISC2-05"
+        ],
+        "primary_candidate_alias": "DISC2-02",
+        "historical_candidate_ids": [
+          "D2-C02",
+          "D2-C05"
+        ],
+        "historical_ids_hidden_by_default": true,
+        "reader_label": "DISC2-02 + DISC2-05"
       }
     },
     {
@@ -1189,6 +1216,20 @@
         "label_zh": "E2 技能 · Temporal Skill · 可复用技能的因果瓶颈",
         "label_en": "E2 Skills · Temporal Skill · Reusable skills as causal bottlenecks",
         "pdf": "downloads/E2-Temporal-Skill.pdf"
+      },
+      "discovery_provenance": {
+        "campaign_alias": "DISC2",
+        "campaign_zh": "Paper-first 发现第 2 轮",
+        "campaign_en": "Paper-first Discovery Round 2",
+        "candidate_aliases": [
+          "DISC2-06"
+        ],
+        "primary_candidate_alias": "DISC2-06",
+        "historical_candidate_ids": [
+          "D2-C06"
+        ],
+        "historical_ids_hidden_by_default": true,
+        "reader_label": "DISC2-06"
       }
     },
     {
@@ -1422,6 +1463,22 @@
         "label_zh": "B1 记忆 · Provenance Ladder · 失败记忆来源的因果识别",
         "label_en": "B1 Memory · Provenance Ladder · Causal identification of failure-memory provenance",
         "pdf": "downloads/B1-Failure-Memory.pdf"
+      },
+      "discovery_provenance": {
+        "campaign_alias": "DISC2",
+        "campaign_zh": "Paper-first 发现第 2 轮",
+        "campaign_en": "Paper-first Discovery Round 2",
+        "candidate_aliases": [
+          "DISC2-01",
+          "DISC2-04"
+        ],
+        "primary_candidate_alias": "DISC2-01",
+        "historical_candidate_ids": [
+          "D2-C01",
+          "D2-C04"
+        ],
+        "historical_ids_hidden_by_default": true,
+        "reader_label": "DISC2-01 + DISC2-04"
       }
     }
   ]

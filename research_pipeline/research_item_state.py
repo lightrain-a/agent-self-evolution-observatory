@@ -47,6 +47,41 @@ PUBLICATION_PAPER_REGISTRATIONS = [
     {"paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE", "category": "B", "method": "Provenance Ladder", "pdf_slug": "Failure-Memory", "idea": {"zh": "失败记忆来源的因果识别", "en": "Causal identification of failure-memory provenance"}},
 ]
 
+# Historical discovery IDs such as D2-C06 predate the A–G publication
+# taxonomy. In those IDs, D means discovery batch and C means candidate; they
+# are not A–G categories. Reader-facing provenance therefore uses an explicit
+# DISC alias while retaining the original IDs unchanged for exact replay.
+DISCOVERY_CANDIDATE_PATTERN = re.compile(r"^D(?P<batch>[1-9][0-9]*)-C(?P<candidate>[0-9]+)$")
+
+
+def discovery_candidate_alias(candidate_id: str) -> str:
+    raw = str(candidate_id or "").strip()
+    match = DISCOVERY_CANDIDATE_PATTERN.fullmatch(raw)
+    if not match:
+        raise ValueError(f"unsupported historical discovery candidate id:{raw}")
+    batch = int(match.group("batch"))
+    candidate = int(match.group("candidate"))
+    return f"DISC{batch}-{candidate:02d}"
+
+
+def build_discovery_provenance(candidate_ids: list[str]) -> dict[str, Any]:
+    historical = [str(candidate_id) for candidate_id in candidate_ids]
+    aliases = [discovery_candidate_alias(candidate_id) for candidate_id in historical]
+    batches = {int(DISCOVERY_CANDIDATE_PATTERN.fullmatch(candidate_id).group("batch")) for candidate_id in historical}
+    if len(batches) != 1:
+        raise ValueError(f"mixed discovery batches are not reader-displayable:{historical}")
+    batch = next(iter(batches))
+    return {
+        "campaign_alias": f"DISC{batch}",
+        "campaign_zh": f"Paper-first 发现第 {batch} 轮",
+        "campaign_en": f"Paper-first Discovery Round {batch}",
+        "candidate_aliases": aliases,
+        "primary_candidate_alias": aliases[0],
+        "historical_candidate_ids": historical,
+        "historical_ids_hidden_by_default": True,
+        "reader_label": " + ".join(aliases),
+    }
+
 
 def build_publication_identities() -> dict[str, dict[str, Any]]:
     counters: Counter[str] = Counter()
@@ -734,6 +769,7 @@ def build_paper_registry(research_state=None):
         accepted = dict(acceptance_by_id.get(paper_id) or {})
         if not accepted:
             continue
+        discovery_provenance = build_discovery_provenance(list(meta["source_candidates"]))
         d2_papers.append({
             **accepted,
             "paper_id": paper_id,
@@ -744,6 +780,7 @@ def build_paper_registry(research_state=None):
             "source_research_item_id": None,
             "source_research_object": meta["source_research_object"],
             "source_candidates": list(meta["source_candidates"]),
+            "discovery_provenance": discovery_provenance,
             "paper_stage": accepted.get("current_state") or "PAPER_EVIDENCE",
             "submission_status": accepted.get("current_state") or "PAPER_EVIDENCE",
             "submission_ready": bool((accepted.get("latest_submission_readiness") or {}).get("submission_ready")),
@@ -759,7 +796,7 @@ def build_paper_registry(research_state=None):
     papers = [stri, safety, *sorted(d2_papers, key=lambda row: int(row.get("display_order") or 999))]
     stage_counts = dict(sorted(Counter(row.get("paper_stage") for row in papers).items()))
     return {
-        "schema_version": "1.4",
+        "schema_version": "1.5",
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "source_revision": git_head(),
         "projection_source": acceptance.get("projection_source") or "generated/research-system-state.json",
@@ -776,6 +813,10 @@ def build_paper_registry(research_state=None):
             "publication_identity_is_reader_facing_only": True,
             "publication_codes_are_category_local_append_order": True,
             "publication_identity_does_not_replace_internal_provenance": True,
+            "historical_discovery_ids_are_preserved_for_exact_provenance": True,
+            "reader_facing_discovery_aliases_do_not_reuse_ag_category_letters": True,
+            "reader_facing_discovery_aliases_do_not_reuse_pf_idea_ids": True,
+            "historical_discovery_ids_are_hidden_by_default_in_reader_views": True,
             **(acceptance.get("policy") or {}),
         },
         "summary": {
@@ -791,6 +832,7 @@ def build_paper_registry(research_state=None):
             "primary_paper": "STRI",
             "publication_codes": [row["publication_identity"]["code"] for row in papers],
             "by_publication_category": dict(sorted(Counter(row["publication_identity"]["category"] for row in papers).items())),
+            "discovery_aliases": [alias for row in papers for alias in (row.get("discovery_provenance") or {}).get("candidate_aliases", [])],
             "by_stage": stage_counts,
         },
         "papers": papers,
@@ -887,6 +929,27 @@ def validate_paper_registry(registry, research_state):
     actual_category_counts = dict(sorted(Counter((row.get("publication_identity") or {}).get("category") for row in papers).items()))
     if dict((registry.get("summary") or {}).get("by_publication_category") or {}) != actual_category_counts:
         errors.append("PaperRegistry publication category summary drifted")
+    expected_discovery_aliases = []
+    for row in papers:
+        if str(row.get("source_kind") or "") != "paper-first-discovery-candidate":
+            continue
+        source_candidates = list(row.get("source_candidates") or [])
+        provenance = row.get("discovery_provenance") or {}
+        expected_provenance = build_discovery_provenance(source_candidates)
+        if provenance != expected_provenance:
+            errors.append(f"discovery provenance alias drifted:{row.get('paper_id')}:{provenance}")
+        aliases = list(provenance.get("candidate_aliases") or [])
+        expected_discovery_aliases.extend(aliases)
+        if list(provenance.get("historical_candidate_ids") or []) != source_candidates:
+            errors.append(f"discovery provenance must retain exact historical ids:{row.get('paper_id')}")
+        if provenance.get("historical_ids_hidden_by_default") is not True:
+            errors.append(f"historical discovery ids must be hidden by default:{row.get('paper_id')}")
+        if any(not re.fullmatch(r"DISC[1-9][0-9]*-[0-9]{2,}", alias) for alias in aliases):
+            errors.append(f"invalid reader discovery alias:{row.get('paper_id')}:{aliases}")
+        if any(alias.startswith("PF") or re.fullmatch(r"[A-G][1-9][0-9]*", alias) for alias in aliases):
+            errors.append(f"reader discovery alias collides with PF/A-G namespaces:{row.get('paper_id')}:{aliases}")
+    if list((registry.get("summary") or {}).get("discovery_aliases") or []) != expected_discovery_aliases:
+        errors.append("PaperRegistry discovery-alias summary drifted")
     paper = by_id.get("STRI") or {}
     safety = by_id.get("AGENT-SAFETY-R9") or {}
     if paper.get("source_research_item") != "E-7" or paper.get("acceptance_paper_id") != "STRI-ICLR2027":
