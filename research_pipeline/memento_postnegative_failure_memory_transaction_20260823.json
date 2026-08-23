@@ -210,7 +210,8 @@
       "research_system_state_update_scope": [
         "embedded research_memory_wiki",
         "research-memory-wiki health detail",
-        "scientific-research-graph component evidence string only"
+        "scientific-research-graph component evidence string only",
+        "summary.research_memory_entries"
       ]
     },
     "memory_behavior_verification": {
@@ -249,7 +250,11 @@
       "git_diff_check": "PASS",
       "dynamic_research_system_validate_errors": 0,
       "site_smoke": "PASS",
-      "browser_smoke": "PASS"
+      "browser_smoke": "PASS",
+      "post_integration_unit_tests": 74,
+      "post_integration_unit_status": "PASS",
+      "summary_memory_count_consistency": "PASS_88_EQUALS_88",
+      "historical_discovery_lesson_floor": "PASS_AT_LEAST_19"
     },
     "bindings": [
       {
@@ -266,15 +271,15 @@
       },
       {
         "path": "generated/research-system-state.json",
-        "sha256": "f3561427c53e955e73039f90580a9de79a91e4b03791ffee8d7200952a31e839"
+        "sha256": "0915a10d3c23d55395f0b6fe50f6565ef339b349ead1f73d92dbe56a5db48cfa"
       },
       {
         "path": "site_smoke_test.py",
-        "sha256": "2d8f9aad09dbf9c56660a595789e1d6137ff48ca86cbaa460b305769bea4f91c"
+        "sha256": "839eca72d1e278f8555d1ea4a32eb865e30d2ab40afbfbd13f2d3eaff8fa5968"
       },
       {
         "path": "browser_smoke_test.py",
-        "sha256": "272101d26e2424496a42292f9d5d0212e365662caa1837cbc266fb18e7da636e"
+        "sha256": "e02bf4245dfe6b4df6b3a7d04cc4b1e2a8e5c3eaeedb4da0ae52c5414520d21d"
       },
       {
         "path": "research_pipeline/memento_deepseek_aux_postnegative_diagnosis_20260823.json",

@@ -221,6 +221,8 @@ def main() -> None:
     embedded_memory = research_system.get("research_memory_wiki") or {}
     if research_memory.get("wiki_sha256") != embedded_memory.get("wiki_sha256") or (research_memory.get("summary") or {}) != (embedded_memory.get("summary") or {}) or (research_memory.get("lint") or {}) != (embedded_memory.get("lint") or {}):
         fail("research memory wiki is stale versus embedded research-system state")
+    if int((research_system.get("summary") or {}).get("research_memory_entries") or 0) != int((research_memory.get("summary") or {}).get("entries") or 0):
+        fail(f"research-system summary memory count is stale: system={(research_system.get('summary') or {}).get('research_memory_entries')} memory={(research_memory.get('summary') or {}).get('entries')}")
     if research_memory.get("scientific_authority") is not False or int(((research_memory.get("lint") or {}).get("summary") or {}).get("errors") or 0) != 0:
         fail("research memory wiki must remain zero-authority with zero hard lint errors")
     if any(row.get("durability_class") == "transient" and row.get("prompt_eligible") is True for row in research_memory.get("entries") or [] if isinstance(row, dict)):
@@ -228,7 +230,7 @@ def main() -> None:
     discovery_lessons = [row for row in research_memory.get("entries") or [] if isinstance(row, dict) and row.get("kind") == "DISCOVERY_LESSON"]
     discovery_cycle = json.loads((ROOT / "generated" / "longitudinal-safety-discovery-cycle-20260823.json").read_text(encoding="utf-8"))
     expected_discovery_lessons = int((discovery_cycle.get("summary") or {}).get("failure_lessons") or 0)
-    if expected_discovery_lessons < 1 or int((research_memory.get("summary") or {}).get("discovery_lessons") or 0) != expected_discovery_lessons or len(discovery_lessons) != expected_discovery_lessons:
+    if expected_discovery_lessons < 19 or int((research_memory.get("summary") or {}).get("discovery_lessons") or 0) != expected_discovery_lessons or len(discovery_lessons) != expected_discovery_lessons:
         fail(f"Research Memory must expose all canonical longitudinal discovery lessons: expected={expected_discovery_lessons} summary={(research_memory.get('summary') or {}).get('discovery_lessons')} rows={len(discovery_lessons)}")
     if any(row.get("scientific_authority") is not False or row.get("principle_update_allowed") is not False for row in discovery_lessons):
         fail("Discovery Lessons must remain retrieval/precheck memory with zero scientific or principle-update authority")
