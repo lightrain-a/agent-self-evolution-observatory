@@ -86,6 +86,8 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertIn('scientific agent',joined)
         self.assertIn('embodied agent',joined)
         self.assertIn('agent memory',joined)
+        self.assertIn('world model',joined)
+        self.assertIn('post-training',joined)
         self.assertIn('safety',joined)
 
     def test_world_model_and_parametric_state_are_scientific_object_lanes(self) -> None:
@@ -95,6 +97,30 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertIn("world_model",_paper_object_lane_keys(world))
         self.assertIn("parametric_model_state",_paper_object_lane_keys(param))
         self.assertNotIn("parametric_model_state",_paper_object_lane_keys(frozen))
+
+    def test_agent_context_plus_preregistered_object_lane_is_relevance_eligible(self) -> None:
+        paper={
+            "paper_id":"strategy-post-train",
+            "title":"What Is Missing from AI Post-Training AI: An Empirical Analysis",
+            "abstract":"LLM agents can post-train a model end-to-end, but the strategy remains fixed during execution.",
+            "year":2026,
+            "metadata":{"externalIds":{"ArXiv":"2608.19072"},"publicationDate":"2026-08-19","citationCount":0,"retrievalScore":0.0,"matches":[{"route":"arxiv-fallback"}]},
+        }
+        selected=select_primary_candidates({"papers":[paper]},max_papers=1,lane_floor=0,now=datetime(2026,8,23,tzinfo=timezone.utc))
+        self.assertEqual([row["paper_id"] for row in selected],["strategy-post-train"])
+        self.assertIn("parametric_model_state",_paper_object_lane_keys(paper))
+
+    def test_object_term_without_agent_context_does_not_bypass_relevance(self) -> None:
+        paper={
+            "paper_id":"generic-post-train",
+            "title":"Post-Training Language Models for Mathematical Reasoning",
+            "abstract":"We study supervised post-training and preference optimization for theorem proving and mathematical reasoning.",
+            "year":2026,
+            "metadata":{"externalIds":{"ArXiv":"2608.99001"},"publicationDate":"2026-08-19","citationCount":0,"retrievalScore":0.0,"matches":[{"route":"arxiv-fallback"}]},
+        }
+        self.assertIn("parametric_model_state",_paper_object_lane_keys(paper))
+        selected=select_primary_candidates({"papers":[paper]},max_papers=1,lane_floor=0,now=datetime(2026,8,23,tzinfo=timezone.utc))
+        self.assertEqual(selected,[])
 
     def test_source_scheduler_prefers_object_grounded_exploration_over_context_only(self) -> None:
         papers=[

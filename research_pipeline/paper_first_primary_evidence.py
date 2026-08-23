@@ -66,6 +66,8 @@ DEFAULT_ARXIV_QUERIES = (
     'all:"agent evolution" AND all:LLM',
     '(all:"agent skill" OR all:harness) AND all:evolution',
     '(all:"agent memory" OR all:"continual agent") AND (all:evolution OR all:"self-improving")',
+    'all:"world model" AND all:agent AND (all:evolution OR all:"self-improving" OR all:"continual")',
+    '(all:"post-training" OR all:"post-train" OR all:"weight update" OR all:"parameter update") AND all:agent',
     'all:"embodied agent" AND (all:evolution OR all:"self-improving")',
     '(all:"multi-agent" OR all:"collaborative agent") AND (all:evolution OR all:"self-improving")',
     '(all:"scientific agent" OR all:"research agent" OR all:"symbolic regression") AND (all:evolution OR all:"self-evolving")',
@@ -386,6 +388,18 @@ def _relevance_score(paper: dict[str, Any]) -> int:
     matches = (paper.get("metadata") or {}).get("matches") or []
     if any(str(row.get("route") or "") in {"seed", "mechanism", "failure", "topic"} for row in matches if isinstance(row, dict)):
         score += 1
+    # A preregistered scientific-object match is part of relevance, but never on
+    # its own: broad terms such as "post-training" or "world model" also occur
+    # outside agent self-evolution.  Require an explicit agent/AI-for-AI context
+    # before giving the object lane the minimum two relevance points needed by
+    # the selector.  This keeps the source-coverage scheduler inside the same
+    # relevance gate while allowing newly discovered lane-grounded agent work to
+    # reopen a saturated search transaction as the published policy requires.
+    agent_context = any(term in haystack for term in (
+        "agent", "agentic", "ai-for-ai", "ai4ai", "self-improv", "self improv", "self-evol", "self evol",
+    ))
+    if agent_context and _paper_keys_for_registry(paper, PRIMARY_EVIDENCE_OBJECT_LANES):
+        score = max(score, 2)
     return score
 
 
