@@ -95,6 +95,7 @@ from .research_candidate_portfolio import build_research_candidate_portfolio
 from .research_harness_assurance import build_research_harness_assurance
 from .research_memory_wiki import build_research_memory_wiki, write_research_memory_wiki
 from .longitudinal_safety_discovery_cycle import load_discovery_cycle
+from .longitudinal_safety_post_race_triage import load_post_race_triage, validate_post_race_triage, write_post_race_triage
 from .search_funnel_telemetry import build_search_funnel_telemetry
 from .premium_model_policy import policy_summary as premium_model_policy_summary
 from .public_state_redaction import redact_private_paths
@@ -734,6 +735,7 @@ def build_research_system_state() -> dict[str, Any]:
         except (OSError, json.JSONDecodeError, TypeError, ValueError):
             pass
     longitudinal_safety_discovery_cycle = load_discovery_cycle()
+    longitudinal_safety_post_race_triage = load_post_race_triage()
     research_memory_wiki = build_research_memory_wiki(
         search_design_state=paper_first_search_portfolio_design,
         failure_asset_library=failure_asset_library,
@@ -1109,6 +1111,13 @@ def build_research_system_state() -> dict[str, Any]:
             "scientific_research_graph_edges":scientific_research_graph["summary"]["edges"],
             "research_memory_entries":research_memory_wiki["summary"]["entries"],
             "research_memory_lint_warnings":research_memory_wiki["lint"]["summary"]["warnings"],
+            "post_race_ranked_failure_leaves":int((longitudinal_safety_post_race_triage.get("summary") or {}).get("ranked_failure_leaves") or 0),
+            "post_race_current_survivors":int((longitudinal_safety_post_race_triage.get("summary") or {}).get("current_post_race_survivors") or 0),
+            "post_race_material_child_required":int((longitudinal_safety_post_race_triage.get("summary") or {}).get("material_child_required") or 0),
+            "post_race_deferred_to_existing_object":int((longitudinal_safety_post_race_triage.get("summary") or {}).get("deferred_to_existing_object") or 0),
+            "post_race_stopped_by_mature_reduction":int((longitudinal_safety_post_race_triage.get("summary") or {}).get("stopped_by_mature_reduction") or 0),
+            "post_race_problem_gate_eligible":int((longitudinal_safety_post_race_triage.get("summary") or {}).get("problem_gate_eligible") or 0),
+            "post_race_provider_calls_authorized":int((longitudinal_safety_post_race_triage.get("summary") or {}).get("provider_calls_authorized") or 0),
             "failure_assets":failure_asset_library["summary"]["assets"],
             "value_scheduler_candidates":experiment_value_scheduler["summary"]["candidates"],
             "research_replay_passed":research_system_replay["summary"]["passed"],
@@ -1269,6 +1278,7 @@ def build_research_system_state() -> dict[str, Any]:
         "scientific_meta_trace":scientific_meta_trace,
         "scientific_research_graph":scientific_research_graph,
         "research_memory_wiki":research_memory_wiki,
+        "longitudinal_safety_post_race_triage":longitudinal_safety_post_race_triage,
         "failure_asset_library":failure_asset_library,
         "experiment_value_scheduler":experiment_value_scheduler,
         "research_system_replay":research_system_replay,
@@ -1655,6 +1665,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"paper-first-premature-method-diagnostics", "pass":state["paper_first_premature_method_diagnostics"]["summary"].get("directions") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("completed_diagnostics") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("same_information_reducibility_findings") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("scientifically_authorized") == 0 and state["paper_first_premature_method_diagnostics"]["summary"].get("p0_lifecycle_mutations") == 0 and state["paper_first_premature_method_diagnostics"]["authority"].get("cannot_retroactively_authorize") is True, "detail":state["paper_first_premature_method_diagnostics"]["summary"]},
         {"key":"research-learning-loop", "pass":state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"] and state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"] and state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"] and state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"] and state["research_system_replay"]["summary"]["failed"] == 0 and state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"], "detail":{"meta":state["scientific_meta_trace"]["summary"],"failure_assets":state["failure_asset_library"]["summary"],"scheduler":state["experiment_value_scheduler"]["summary"],"replay":state["research_system_replay"]["summary"],"external":state["external_system_learning"]["summary"]}},
         {"key":"research-memory-wiki", "pass":state["research_memory_wiki"].get("status")=="MEMORY_COMPILED" and state["research_memory_wiki"].get("scientific_authority") is False and int(((state["research_memory_wiki"].get("lint") or {}).get("summary") or {}).get("errors") or 0)==0 and (state["research_memory_wiki"].get("policy") or {}).get("transient_operational_noise_is_not_prompt_eligible") is True and (state["research_memory_wiki"].get("policy") or {}).get("query_pack_never_relaxes_downstream_gates") is True and (state["research_memory_wiki"].get("policy") or {}).get("paper_design_reserves_at_least_one_review_lesson_when_available") is True, "detail":{"summary":state["research_memory_wiki"].get("summary"),"lint":(state["research_memory_wiki"].get("lint") or {}).get("summary")}}, 
+        {"key":"longitudinal-post-race-triage", "pass":not validate_post_race_triage(state.get("longitudinal_safety_post_race_triage") or {}) and int(((state.get("longitudinal_safety_post_race_triage") or {}).get("summary") or {}).get("current_post_race_survivors") or 0)==0 and int(((state.get("longitudinal_safety_post_race_triage") or {}).get("summary") or {}).get("problem_gate_eligible") or 0)==0 and int(((state.get("longitudinal_safety_post_race_triage") or {}).get("summary") or {}).get("provider_calls_authorized") or 0)==0 and (state.get("longitudinal_safety_post_race_triage") or {}).get("scientific_authority") is False, "detail":{"status":(state.get("longitudinal_safety_post_race_triage") or {}).get("status"),"summary":(state.get("longitudinal_safety_post_race_triage") or {}).get("summary")}},
         {"key":"aris-harness-alignment", "pass":state["research_harness_assurance"].get("status")=="PASS_HARNESS_ASSURANCE" and int((state["research_harness_assurance"].get("summary") or {}).get("failed") or 0)==0 and state["research_candidate_portfolio"].get("scientific_authority") is False and int((state["research_candidate_portfolio"].get("summary") or {}).get("automatic_promotions") or 0)==0 and state["search_funnel_telemetry"].get("scientific_authority") is False and state["scientific_research_graph"].get("scientific_authority") is False and (state["scientific_research_graph"].get("policy") or {}).get("experiment_failure_edge_cannot_close_core_principle") is True, "detail":{"assurance":state["research_harness_assurance"].get("summary"),"portfolio":state["research_candidate_portfolio"].get("summary"),"funnel":state["search_funnel_telemetry"].get("summary"),"graph":state["scientific_research_graph"].get("summary")}},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
@@ -2276,6 +2287,12 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if memory_wiki.get("status")!="MEMORY_COMPILED" or memory_wiki.get("scientific_authority") is not False or int((memory_lint.get("summary") or {}).get("errors") or 0)!=0: errors.append("research memory wiki must compile with zero lint errors and zero scientific authority")
     if memory_policy.get("wiki_is_compiled_from_canonical_artifacts_not_a_second_source_of_truth") is not True or memory_policy.get("transient_operational_noise_is_not_prompt_eligible") is not True or memory_policy.get("query_pack_never_relaxes_downstream_gates") is not True or memory_policy.get("paper_design_reserves_at_least_one_review_lesson_when_available") is not True: errors.append("research memory wiki must remain a derived zero-authority query-pack layer with a bounded Paper Design reviewer-memory reserve")
     if int(memory_summary.get("search_closures") or 0)+int(memory_summary.get("scientific_closures") or 0)!=len((((state.get("paper_first_search_portfolio_design_adjudication") or {}).get("shadow_search_memory") or {}).get("closed_objects") or [])): errors.append("research memory closure accounting must match canonical shadow search memory")
+    post_race_triage=state.get("longitudinal_safety_post_race_triage") or {};post_race_summary=post_race_triage.get("summary") or {}
+    post_race_errors=validate_post_race_triage(post_race_triage)
+    if post_race_errors: errors.append("longitudinal post-race triage invalid:"+";".join(post_race_errors))
+    if int(post_race_summary.get("ranked_failure_leaves") or 0)!=9 or int(post_race_summary.get("triaged") or 0)!=9: errors.append("post-race triage must cover all nine current ranked failure leaves")
+    if int(post_race_summary.get("current_post_race_survivors") or 0)!=0 or int(post_race_summary.get("problem_gate_eligible") or 0)!=0 or int(post_race_summary.get("research_item_eligible") or 0)!=0: errors.append("post-race triage cannot promote historical leaves")
+    if int(post_race_summary.get("provider_calls_authorized") or 0)!=0 or int(post_race_summary.get("gpu_authorized") or 0)!=0: errors.append("post-race triage cannot authorize provider or GPU execution")
     if not state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"]: errors.append("experiment value scheduler must remain advisory")
     if state["research_system_replay"]["summary"].get("failed") != 0: errors.append("research-system replay benchmark has failing epistemic cases")
     if not state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"]: errors.append("external system designs require a local gap test before adoption")
@@ -2350,6 +2367,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_pf2_method_adjudication()
     write_pf357_problem_adjudication()
     write_fresh_saturation_state()
+    write_post_race_triage()
     write_skill_validation_transfer_scout()
     # Persistent search memory must be rebuilt before the fresh portfolio because
     # the latter content-addresses the former. Reversing this order guarantees a

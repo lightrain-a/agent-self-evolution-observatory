@@ -6750,7 +6750,14 @@
     "paper_acceptance_internal_action_required": 0,
     "paper_design_backlog_pending": 0,
     "paper_design_memory_prechecks": 0,
-    "paper_design_review_lessons_selected": 0
+    "paper_design_review_lessons_selected": 0,
+    "post_race_ranked_failure_leaves": 9,
+    "post_race_current_survivors": 0,
+    "post_race_material_child_required": 3,
+    "post_race_deferred_to_existing_object": 3,
+    "post_race_stopped_by_mature_reduction": 3,
+    "post_race_problem_gate_eligible": 0,
+    "post_race_provider_calls_authorized": 0
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -52202,6 +52209,425 @@
       },
       "scientific_authority": false
     }
+  },
+  "longitudinal_safety_post_race_triage": {
+    "schema_version": "1.0",
+    "generated_at": "2026-08-23T18:15:13+00:00",
+    "status": "POST_RACE_REDUCTION_TRIAGE_COMPLETE",
+    "source_cycle_sha256": "42987914623461a4c7f58f6a7c625280537d864e75b45d608e2d25ba2e01675a",
+    "policy": {
+      "tournament_rank_is_attention_priority_not_scientific_qualification": true,
+      "descendant_closure_precedes_cross_lineage_reduction": true,
+      "cross_lineage_same_information_reduction_precedes_child_generation": true,
+      "manual_scientific_mapping_required": true,
+      "keyword_or_pattern_match_alone_cannot_stop_candidate": true,
+      "mature_reduction_pattern_requires_concrete_candidate_level_argument": true,
+      "existing_support_hold_cannot_be_relabelled_as_method_failure": true,
+      "material_child_must_be_a_new_scientific_object_not_a_rename": true,
+      "zero_survivors_is_valid": true
+    },
+    "summary": {
+      "ranked_failure_leaves": 9,
+      "triaged": 9,
+      "disposition_counts": {
+        "DEFER_TO_EXISTING_OBJECT": 3,
+        "MATERIAL_CHILD_REQUIRED": 3,
+        "STOP_MATURE_REDUCTION": 3
+      },
+      "current_post_race_survivors": 0,
+      "material_child_required": 3,
+      "deferred_to_existing_object": 3,
+      "stopped_by_mature_reduction": 3,
+      "untriaged_fail_closed": 0,
+      "problem_gate_eligible": 0,
+      "research_item_eligible": 0,
+      "provider_calls_authorized": 0,
+      "gpu_authorized": 0
+    },
+    "current_post_race_survivors": [],
+    "rows": [
+      {
+        "candidate_id": "failure-frontier-training-generator",
+        "title": "Failure-Frontier Training Generator",
+        "tournament_rank": 1,
+        "source_round": "v5",
+        "source_verdict": "block",
+        "source_required_action": "Do not pursue generic frontier generation as a standalone thesis. A viable revival must pivot to a specifically version-contrastive learning-progress object that predicts transferable improvement or regression directions beyond raw adjacent-version disagreement and beyond PROPEL-style frontier scoring, with a causal training intervention showing that this learned object changes the next frozen model.",
+        "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+        "disposition": "DEFER_TO_EXISTING_OBJECT",
+        "reason": "The requested revival is already the D-2 scientific carrier: a cross-version, failure-conditioned mutation policy evaluated by held-out-version training utility against a same-feature direct mutation-yield predictor. A new frontier generator would duplicate that object rather than create a new mutation child.",
+        "canonical_reducers": [
+          {
+            "idea_id": "failure-frontier-curriculum",
+            "code": "D-2",
+            "terminal_state": "p0",
+            "strongest_baseline": {
+              "en": "Uniform fuzzing, failure-frequency, uncertainty sampling, D-1 verifier-filtered generation, and a same-feature direct mutation-yield predictor."
+            },
+            "exact_stop": {
+              "en": "Merge into D-1/ordinary curriculum if uniform, uncertainty, or direct-yield selection is equivalent or gains come only from more samples."
+            },
+            "current_fact": null
+          }
+        ],
+        "mature_reduction_patterns": [],
+        "reopen_condition": "Only reopen as a distinct child if a frozen version-contrastive state or operator law forces a held-out next-version utility prediction that D-2's same-feature direct mutation-yield predictor and frozen mutation selector cannot express under matched operators, verifier truth, train tokens, and target-version budget.",
+        "problem_gate_eligible": false,
+        "research_item_eligible": false,
+        "provider_calls_authorized": 0,
+        "gpu_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "candidate_id": "verified-risk-predicate-grammar",
+        "title": "Verifier-Constrained Risk-Predicate Grammar",
+        "tournament_rank": 2,
+        "source_round": "v3.1",
+        "source_verdict": "block",
+        "source_required_action": "Replace the learned object or supervision loop with a mechanism that cannot be reduced to verified rule induction, and evaluate it using a separate transition oracle that is never used for candidate generation or acceptance.",
+        "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+        "disposition": "MATERIAL_CHILD_REQUIRED",
+        "reason": "The current leaf remains verified rule induction. F-2 already compiles counterfactual failure evidence into persistent precondition/forbidden-action clauses and requires a same-label capacity-matched direct risk shield. The review vector itself says the next object must stop being rule induction, so no current scientific object survives yet.",
+        "canonical_reducers": [
+          {
+            "idea_id": "irreversible-action-counterfactuals",
+            "code": "F-2",
+            "terminal_state": "p0",
+            "strongest_baseline": {
+              "en": "Same-label capacity-matched direct risk classifier/shield, hand irreversible mask, and nearest failed-trajectory memory with equal simulator calls and runtime checks."
+            },
+            "exact_stop": {
+              "en": "Stop/merge into generic shielding if the same-capacity direct shield matches the held-out safety/false-block frontier or clauses require a stronger runtime oracle."
+            },
+            "current_fact": null
+          }
+        ],
+        "mature_reduction_patterns": [],
+        "reopen_condition": "Materialize a different learned object with an independent transition oracle that is never used for generation or acceptance, then give the same oracle labels, state information, capacity, simulator calls, and runtime checks to F-2/direct-shield controls. A held-out decision residual must survive before ProblemGate.",
+        "problem_gate_eligible": false,
+        "research_item_eligible": false,
+        "provider_calls_authorized": 0,
+        "gpu_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "candidate_id": "version-differential-active-diagnosis",
+        "title": "Version-Differential Active Diagnosis",
+        "tournament_rank": 3,
+        "source_round": "v3",
+        "source_verdict": "block",
+        "source_required_action": "Abandon learned query ordering as the thesis and introduce a persistent intervention-derived repair or rollback representation whose deployed state changes after diagnosis and whose benefit cannot be reproduced by seeding ProbDD/PMA with the same historical faults; otherwise treat this child as an evaluation study, not an ICLR method.",
+        "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+        "disposition": "MATERIAL_CHILD_REQUIRED",
+        "reason": "Learned query ordering is already rejected by the leaf's own review. The proposed escape is not yet instantiated: a persistent intervention-derived repair/rollback representation. Its nearest canonical simplifications already cover generic state-diff rollback (A-5), sparse-fault group-testing rollback (A-6), and intervention-backed failure-motif rewrite reuse (E-2). Diagnosis alone therefore cannot re-enter as a standalone object.",
+        "canonical_reducers": [
+          {
+            "idea_id": "lineage-aware-rollback",
+            "code": "A-5",
+            "terminal_state": "p0",
+            "strongest_baseline": {
+              "zh": "相同 storage/replay budget 的 periodic checkpoints。",
+              "en": "Periodic checkpoints at matched storage/replay budget."
+            },
+            "exact_stop": {
+              "zh": "periodic checkpoint 同预算达到相同 rollback fidelity，或需要接近 full history 才能正确 rollback，则停止。",
+              "en": "Stop if matched-budget periodic checkpoints reach the same rollback fidelity or near-full history is required for correct rollback."
+            },
+            "current_fact": {
+              "zh": "A-5 CPU P0 已触发 matched-simplification STOP：40 个 sequential updates、12 个冻结 rollback queries 上，semantic compactor 与 query-matched generic state-diff 都为 12/12 rollback fidelity=1.0、平均 replay 段数同为 6.5；generic 不使用 Prompt/Memory/Workflow 语义，只需 38 storage cells，而 semantic compactor 需 73。相同约 72-cell 预算的 periodic checkpoint 同样 12/12，平均只 replay 2.25 updates。Agent-specific semantic history compaction 没有独立优势，建议并回通用版本/状态差分基础设施，等待人工确认 merge/drop。",
+              "en": "A-5 CPU P0 fired a matched-simplification STOP. Across 40 sequential updates and 12 frozen rollback queries, the semantic compactor and a query-matched generic state-diff baseline both achieve 12/12 rollback fidelity=1.0 with identical 6.5 mean replay segments. The generic baseline uses no Prompt/Memory/Workflow semantics and needs only 38 storage cells versus 73 for semantic compaction. A periodic-checkpoint baseline at roughly the same 72-cell budget also achieves 12/12 and replays only 2.25 updates on average. Agent-specific semantic history compaction has no standalone advantage and should merge into generic version/state-diff infrastructure pending human merge/drop review."
+            }
+          },
+          {
+            "idea_id": "active-causal-minimal-rollback",
+            "code": "A-6",
+            "terminal_state": "p0",
+            "strongest_baseline": null,
+            "exact_stop": null,
+            "current_fact": {
+              "zh": "CPU P0 已触发 matched-simplification STOP：24 个冻结 4–8-update 稀疏故障案例上，active-causal 与非学习 binary group testing 均 100% 找到最小故障集，平均测试次数逐 case 完全一致（5.708 vs 5.708，paired p=1.0）。相对 ddmin 的 62% 节省来自换成了更适合稀疏故障的标准 group testing，而不是独立学习机制；不建议再耗真实序列/GPU，等待人工确认 DROP/merge。",
+              "en": "CPU P0 fired a matched-simplification STOP. Across 24 frozen 4–8-update sparse-fault cases, active-causal and non-learning binary group testing both recover the exact minimal fault set on 100% of cases with identical per-case intervention counts (5.708 vs 5.708 mean tests, paired p=1.0). The apparent 62% saving over ddmin comes from switching to standard sparse group testing rather than a distinct learned mechanism; no real-sequence/GPU expansion is recommended, pending human DROP/merge review."
+            }
+          },
+          {
+            "idea_id": "workflow-branch-credit",
+            "code": "E-2",
+            "terminal_state": "p0",
+            "strongest_baseline": {
+              "zh": "E-1 one-shot paired edit-effect policy + CE-Graph-style editor，matched calls。",
+              "en": "E-1 one-shot paired edit-effect policy plus a CE-Graph-style editor at matched calls."
+            },
+            "exact_stop": {
+              "zh": "E-1/CE-Graph 等效则 merge into E-1/drop；规则只记 node/API name 也停止独立 E-2。",
+              "en": "If E-1/CE-Graph is equivalent, merge into E-1/drop; also stop standalone E-2 if rules memorize node/API names."
+            },
+            "current_fact": {
+              "zh": "E-2 CPU P0 已触发 matched-simplification STOP：16 个 source workflows 覆盖 4 类 failure motif，每类 4 次；causal grammar 与 E-1-style typed paired edit-effect baseline 都严格使用 32 个 source calls。冻结后在 8 个 API/identity-disjoint hidden workflows 上，两者均 8/8 success、0 harmful rewrite、0 hidden search，且 8/8 选择完全相同的 rewrite。结构 credit/group intervention 没有产生超出直接 paired edit-effect reuse 的独立价值，建议并回 E-1/CE-Graph，等待人工确认 merge/drop。",
+              "en": "E-2 CPU P0 fired a matched-simplification STOP. Sixteen source workflows cover four failure motifs with four repetitions each; the causal grammar and an E-1-style typed paired edit-effect baseline both use exactly 32 source calls. After freezing, both achieve 8/8 success, zero harmful rewrites, zero hidden search, and identical rewrites on all eight API/identity-disjoint hidden workflows. Structural credit/group intervention adds no value beyond direct paired edit-effect reuse, so E-2 should merge back into E-1/CE-Graph pending human merge/drop review."
+            }
+          }
+        ],
+        "mature_reduction_patterns": [],
+        "reopen_condition": "Define and freeze the persistent post-diagnosis repair/rollback representation, then beat query-seeded ProbDD/PMA plus A-5 state-diff, A-6 group testing, and E-2 paired edit-effect reuse using identical historical faults, intervention budget, observable state, and repair action support. The residual must be in the representation's executable future behavior, not query order or diagnostic accuracy.",
+        "problem_gate_eligible": false,
+        "research_item_eligible": false,
+        "provider_calls_authorized": 0,
+        "gpu_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "candidate_id": "counterfactual-correction-production-grammar",
+        "title": "Counterfactual Correction Production Grammar",
+        "tournament_rank": 4,
+        "source_round": "v5.1",
+        "source_verdict": "block",
+        "source_required_action": "A revival needs a learned object that cannot be produced by independently identifying minimal repairs and then composing them with an existing symbolic skill system. One viable scientific target would be causal interaction among corrections themselves: jointly necessary, antagonistic, or order-sensitive productions identified through multi-action interventions, where marginal single-action necessity is insufficient. The pilot would then need to beat CausalFlow-derived repairs composed by NSI/SkillGraph under identical intervention budgets.",
+        "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+        "disposition": "MATERIAL_CHILD_REQUIRED",
+        "reason": "The review already rejects marginal repair identification plus symbolic composition. Its suggested escape is causal interaction among corrections. Canonical A-4 already tests typed pair/order interaction rules against same-information order-aware risk plus equal-budget constrained repair, while C-5 already treats intervention-certified correction commitment as a separate persistent object. No correction-specific interaction variable has yet been defined that escapes those controls.",
+        "canonical_reducers": [
+          {
+            "idea_id": "compositional-update-compatibility",
+            "code": "A-4",
+            "terminal_state": "p0",
+            "strongest_baseline": {
+              "zh": "set-conditioned order-aware risk model + equal-budget constrained repair search。",
+              "en": "Set-conditioned order-aware risk model plus equal-budget constrained repair search."
+            },
+            "exact_stop": {
+              "zh": "直接 order-aware risk model 或等预算 repair search 追平，或规则只记 identity/template，则停止独立方法。",
+              "en": "Stop if the direct order-aware risk model or equal-budget repair search ties it, or rules memorize identities/templates."
+            },
+            "current_fact": {
+              "zh": "A-4 CPU P0 已触发 frozen matched-simplification STOP：用同一 15 条 typed pair/order intervention table，registry 编译 no-good / precedence / compatibility clauses；matched baseline 只存 ordered descriptor pair 风险表，并在 hidden triple 上做 equal-budget local constrained repair。20 个 held-out triples、全部 update identities 未见，双方 prediction accuracy=1.0、repair success=1.0、逐 case repair agreement=1.0，candidate checks 49 vs 49。typed registry 没有提供超出 direct order-aware risk + repair 的独立价值，建议 merge/drop，等待人工确认。",
+              "en": "A-4 CPU P0 fired the frozen matched-simplification STOP. From the same 15 typed pair/order intervention rows, the registry compiles no-good/precedence/compatibility clauses while the matched baseline stores only an ordered descriptor-pair risk table and performs equal-budget local constrained repair on hidden triples. Across 20 held-out triples with entirely unseen update identities, both reach prediction accuracy=1.0, repair success=1.0, exact per-case repair agreement=1.0, and 49 vs 49 candidate checks. The typed registry adds no standalone value beyond direct order-aware risk plus repair; recommend merge/drop pending human review."
+            }
+          },
+          {
+            "idea_id": "intervention-validated-self-correction",
+            "code": "C-5",
+            "terminal_state": "p0",
+            "strongest_baseline": {
+              "en": "A-3 regression panel, current gain, success-only admission, and simple thresholds using identical necessity/sufficiency features at matched calls and accepted count."
+            },
+            "exact_stop": {
+              "en": "Merge into A-3 if A-3 or a same-feature threshold is equivalent, or stop if intervention signatures do not predict future commit utility."
+            },
+            "current_fact": null
+          }
+        ],
+        "mature_reduction_patterns": [],
+        "reopen_condition": "Materialize a preregistered multi-correction interaction state (joint necessity, antagonism, or order dependence) with independent intervention truth, and require a held-out prediction or repair that survives A-4's same-information order-aware risk plus equal-budget repair as well as CausalFlow-derived repairs composed by NSI/SkillGraph under the same intervention budget.",
+        "problem_gate_eligible": false,
+        "research_item_eligible": false,
+        "provider_calls_authorized": 0,
+        "gpu_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "candidate_id": "operator-heldout-marginal-gain-transport",
+        "title": "Held-Out Version-Operator Marginal-Gain Transport",
+        "tournament_rank": 5,
+        "source_round": "v5.2",
+        "source_verdict": "block",
+        "source_required_action": "Do not repair this by adding another estimator baseline. A future child would need to change the learned scientific object itself—for example, an identifiable operator-level transformation or counterfactual structure that cannot be represented as the same conditional next-unit response function. Otherwise recast the contribution as an evaluation protocol for curriculum transport rather than a new marginal-gain mechanism.",
+        "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+        "disposition": "DEFER_TO_EXISTING_OBJECT",
+        "reason": "The requested operator-level held-out version transport is already within D-2's frozen cross-version mutation-selector object and its same-feature direct mutation-yield baseline. Renaming the response target as marginal-gain transport does not create a separate carrier.",
+        "canonical_reducers": [
+          {
+            "idea_id": "failure-frontier-curriculum",
+            "code": "D-2",
+            "terminal_state": "p0",
+            "strongest_baseline": {
+              "en": "Uniform fuzzing, failure-frequency, uncertainty sampling, D-1 verifier-filtered generation, and a same-feature direct mutation-yield predictor."
+            },
+            "exact_stop": {
+              "en": "Merge into D-1/ordinary curriculum if uniform, uncertainty, or direct-yield selection is equivalent or gains come only from more samples."
+            },
+            "current_fact": null
+          }
+        ],
+        "mature_reduction_patterns": [],
+        "reopen_condition": "Require an identifiable operator transformation or counterfactual invariant that makes a different held-out-version next-training-utility prediction from D-2's direct mutation-yield model when both receive identical operator descriptors, source-version outcomes, verifier truth, task family, and train-token budget.",
+        "problem_gate_eligible": false,
+        "research_item_eligible": false,
+        "provider_calls_authorized": 0,
+        "gpu_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "candidate_id": "skill-interface-contract-compiler",
+        "title": "Skill Interface Contract Compiler",
+        "tournament_rank": 6,
+        "source_round": "v5",
+        "source_verdict": "block",
+        "source_required_action": "Do not pursue the current formulation as a standalone method. Retain it as a component or baseline unless the learned object is materially changed beyond SkillOps, for example toward a probabilistic relational state-transition contract that predicts latent cross-skill side effects unavailable from typed input/output compatibility and whose learned uncertainty directly controls composition.",
+        "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+        "disposition": "STOP_MATURE_REDUCTION",
+        "reason": "A probabilistic relational contract over cross-skill side effects is a typed update-interaction model. A-4 already gives the direct set/order-aware risk model identical interaction evidence and equal-budget repair search, and its CPU P0 found exact prediction/repair equivalence. Interface typing or contract serialization therefore cannot be the standalone mechanism.",
+        "canonical_reducers": [
+          {
+            "idea_id": "compositional-update-compatibility",
+            "code": "A-4",
+            "terminal_state": "p0",
+            "strongest_baseline": {
+              "zh": "set-conditioned order-aware risk model + equal-budget constrained repair search。",
+              "en": "Set-conditioned order-aware risk model plus equal-budget constrained repair search."
+            },
+            "exact_stop": {
+              "zh": "直接 order-aware risk model 或等预算 repair search 追平，或规则只记 identity/template，则停止独立方法。",
+              "en": "Stop if the direct order-aware risk model or equal-budget repair search ties it, or rules memorize identities/templates."
+            },
+            "current_fact": {
+              "zh": "A-4 CPU P0 已触发 frozen matched-simplification STOP：用同一 15 条 typed pair/order intervention table，registry 编译 no-good / precedence / compatibility clauses；matched baseline 只存 ordered descriptor pair 风险表，并在 hidden triple 上做 equal-budget local constrained repair。20 个 held-out triples、全部 update identities 未见，双方 prediction accuracy=1.0、repair success=1.0、逐 case repair agreement=1.0，candidate checks 49 vs 49。typed registry 没有提供超出 direct order-aware risk + repair 的独立价值，建议 merge/drop，等待人工确认。",
+              "en": "A-4 CPU P0 fired the frozen matched-simplification STOP. From the same 15 typed pair/order intervention rows, the registry compiles no-good/precedence/compatibility clauses while the matched baseline stores only an ordered descriptor-pair risk table and performs equal-budget local constrained repair on hidden triples. Across 20 held-out triples with entirely unseen update identities, both reach prediction accuracy=1.0, repair success=1.0, exact per-case repair agreement=1.0, and 49 vs 49 candidate checks. The typed registry adds no standalone value beyond direct order-aware risk plus repair; recommend merge/drop pending human review."
+            }
+          }
+        ],
+        "mature_reduction_patterns": [],
+        "reopen_condition": "Only reopen with an independently observable latent side-effect state whose held-out composition prediction differs from a capacity-matched direct set/order-aware risk model given the same skill interfaces, interaction interventions, uncertainty targets, update identities, and repair budget.",
+        "problem_gate_eligible": false,
+        "research_item_eligible": false,
+        "provider_calls_authorized": 0,
+        "gpu_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "candidate_id": "budget-split-contract-router-transpiler",
+        "title": "Ledger-Separated Contract Router and Transpiler",
+        "tournament_rank": 7,
+        "source_round": "v5.2",
+        "source_verdict": "block",
+        "source_required_action": "Do not repair this by adding another module. A revival must change the learned object itself: for example, a single budget-conditioned contract policy whose sequential probe allocation, stopping, surface choice, and emitted repair jointly alter the set of repairs reachable under M. Compare it against a capacity-matched generic policy given the same diagnostics, contract, action space, calls, and supervision. Alternatively, provide a formally restricted contract-routing algebra that yields decisions a generic three-way classifier with identical inputs cannot reproduce.",
+        "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+        "disposition": "STOP_MATURE_REDUCTION",
+        "reason": "The review's proposed escape claims that a single budget-conditioned policy changes the set of repairs reachable under M while the strongest comparator receives the same diagnostics, contract, action space, calls, and supervision. With the same transition/action graph, a policy can change visitation or selection but not operator support/reachability. Canonical fresh saturation already records operator-closure reachability as a hard mature reduction, and A-2 shows the matched-budget adaptive-control comparison required after support is fixed.",
+        "canonical_reducers": [
+          {
+            "idea_id": "budgeted-evolution-controller",
+            "code": "A-2",
+            "terminal_state": "p0",
+            "strongest_baseline": {
+              "zh": "同成功容差下的 fixed-1/fixed-2/fixed-4 与 tuned heuristic。",
+              "en": "Fixed-1/fixed-2/fixed-4 and tuned heuristic under the same success tolerance."
+            },
+            "exact_stop": {
+              "zh": "合格基座下仍无可识别最优轮次变化，或简单策略同预算等效，则停止控制器机制主张。",
+              "en": "Stop the controller claim if qualified substrates still show no identifiable optimal-round variation or matched simple policies are equivalent."
+            },
+            "current_fact": {
+              "zh": "A-2 已从“控制 update round”修到“控制 evidence acquisition depth”并完成 CPU repair F0。development-only 搜索得到 per-target-family horizon 策略，在 development 达到 5/6=83.3% nonzero recall、34.3% cost；但冻结 future_eval 上只剩 2/5=40% recall、734/2813=26.1% cost。继续穷举事前可见 conditioning 后，target-family/source-family/source→target relation 三种 adaptive policy 在 future 都只有 2/5=40% recall，成本分别 26.1%/36.9%/43.9%；完全不自适应的 fixed h=1 同样 2/5=40% recall，却只需 624/2813=22.2% cost，逐项严格支配。决定 STOP_REPAIR_FIXED_HORIZON_DOMINATES：evidence-depth scheduling 并入 A-1/系统 soft audit，不启动 A-2 controller GPU training。",
+              "en": "A-2 was repaired from controlling update rounds to controlling evidence-acquisition depth and completed a CPU repair F0. A development-only per-target-family horizon search reaches 5/6 (83.3%) nonzero recall at 34.3% cost on development, but on frozen future_eval it falls to 2/5 (40%) recall at 734/2813 steps (26.1%). Exhausting the pre-observable conditioning choices does not rescue it: target-family, source-family, and source-to-target-relation adaptive policies all reach only 2/5 (40%) future recall at 26.1%, 36.9%, and 43.9% cost respectively. A non-adaptive fixed h=1 reaches the same 2/5 (40%) future recall at only 624/2813 steps (22.2%), strictly dominating every adaptive variant. Decision: STOP_REPAIR_FIXED_HORIZON_DOMINATES. Merge evidence-depth scheduling into A-1/system soft audit and do not launch A-2 controller GPU training."
+            }
+          }
+        ],
+        "mature_reduction_patterns": [
+          {
+            "key": "operator-closure-reachability",
+            "audit_class": "VALID_HARD_VETO",
+            "mature_theories": [
+              "automata reachability",
+              "typed operator algebra",
+              "self-modifying program semantics"
+            ],
+            "veto": "Versioned agent-resource operator closure is not novel when the protocol already defines the state/operator algebra.",
+            "automatic_veto": false
+          }
+        ],
+        "reopen_condition": "Reopen only if a frozen contract policy introduces a formally specified transition/operator constraint that changes reachable support without giving the candidate a larger action space, or forces a different finite-budget repair decision from a capacity-matched generic policy with identical diagnostics, action graph, calls, supervision, stopping authority, and generator.",
+        "problem_gate_eligible": false,
+        "research_item_eligible": false,
+        "provider_calls_authorized": 0,
+        "gpu_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "candidate_id": "sparse-set-effect-update-collector",
+        "title": "Sparse Set-Effect Update Collector",
+        "tournament_rank": 8,
+        "source_round": "v5.1",
+        "source_verdict": "block",
+        "source_required_action": "Do not continue the hypergraph formulation as a standalone mechanism. A revival would need a learned object that cannot be represented by ordinary low-order sparse interaction regression under the same interventions—for example, a demonstrably transferable structured interaction law tied to update semantics—and must compare against descriptor-conditioned L1/elastic-net quadratic and cubic set-function regressors with the identical optimization stage.",
+        "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+        "disposition": "STOP_MATURE_REDUCTION",
+        "reason": "The leaf's own review reduces sparse set effects to ordinary low-order interaction regression. A-4 is the same canonical interaction-control problem and has already tied a typed registry with a direct order-aware risk table plus equal-budget repair on unseen identities/triples. A new hypergraph/set-effect storage form is therefore not a surviving mechanism.",
+        "canonical_reducers": [
+          {
+            "idea_id": "compositional-update-compatibility",
+            "code": "A-4",
+            "terminal_state": "p0",
+            "strongest_baseline": {
+              "zh": "set-conditioned order-aware risk model + equal-budget constrained repair search。",
+              "en": "Set-conditioned order-aware risk model plus equal-budget constrained repair search."
+            },
+            "exact_stop": {
+              "zh": "直接 order-aware risk model 或等预算 repair search 追平，或规则只记 identity/template，则停止独立方法。",
+              "en": "Stop if the direct order-aware risk model or equal-budget repair search ties it, or rules memorize identities/templates."
+            },
+            "current_fact": {
+              "zh": "A-4 CPU P0 已触发 frozen matched-simplification STOP：用同一 15 条 typed pair/order intervention table，registry 编译 no-good / precedence / compatibility clauses；matched baseline 只存 ordered descriptor pair 风险表，并在 hidden triple 上做 equal-budget local constrained repair。20 个 held-out triples、全部 update identities 未见，双方 prediction accuracy=1.0、repair success=1.0、逐 case repair agreement=1.0，candidate checks 49 vs 49。typed registry 没有提供超出 direct order-aware risk + repair 的独立价值，建议 merge/drop，等待人工确认。",
+              "en": "A-4 CPU P0 fired the frozen matched-simplification STOP. From the same 15 typed pair/order intervention rows, the registry compiles no-good/precedence/compatibility clauses while the matched baseline stores only an ordered descriptor-pair risk table and performs equal-budget local constrained repair on hidden triples. Across 20 held-out triples with entirely unseen update identities, both reach prediction accuracy=1.0, repair success=1.0, exact per-case repair agreement=1.0, and 49 vs 49 candidate checks. The typed registry adds no standalone value beyond direct order-aware risk plus repair; recommend merge/drop pending human review."
+            }
+          }
+        ],
+        "mature_reduction_patterns": [],
+        "reopen_condition": "Require a transferable update-semantic interaction law that makes an ex-ante held-out prediction unavailable to descriptor-conditioned quadratic/cubic sparse regressors and A-4 direct set/order-aware risk, all trained on the same interventions and given the same repair optimizer.",
+        "problem_gate_eligible": false,
+        "research_item_eligible": false,
+        "provider_calls_authorized": 0,
+        "gpu_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "candidate_id": "randomized-memory-action-policy",
+        "title": "Randomized Memory-Action Policy",
+        "tournament_rank": 9,
+        "source_round": "v3.1",
+        "source_verdict": "block",
+        "source_required_action": "Replace the generic bandit formulation with a memory-specific causal mechanism that identifies retrieval-mediated delayed effects and interference among entries, and demonstrate an estimator or learning rule that cannot be reduced to a standard doubly robust contextual-bandit learner on the same randomized logs.",
+        "lineage_closure_status": "CURRENT_HISTORICAL_LEAF",
+        "disposition": "DEFER_TO_EXISTING_OBJECT",
+        "reason": "The review asks for exactly the memory-specific carrier already represented by B-3: retrieval-mediated delayed effects and interference among memory entries, identified by nested retrieval/content/rank/co-retrieval interventions and followed by persistent repair. B-3 is currently support-censored rather than scientifically failed, so a renamed randomized memory-action policy would duplicate an unresolved canonical object.",
+        "canonical_reducers": [
+          {
+            "idea_id": "retrieval-interference-auditor",
+            "code": "B-3",
+            "terminal_state": "p0",
+            "strongest_baseline": {
+              "zh": "per-item causal selector + simple co-occurrence exclusion，matched audit cost。",
+              "en": "Per-item causal selector plus simple co-occurrence exclusion at matched audit cost."
+            },
+            "exact_stop": {
+              "zh": "路径分解不优于 matched per-item/co-occurrence baseline 则停止路径机制主张。",
+              "en": "Stop the pathway claim if decomposition does not beat matched per-item/co-occurrence controls."
+            },
+            "current_fact": {
+              "zh": "B-3 synthetic matched-cost screening 曾给出 pathway signal，但真实 fresh reality gate 的 substrate support 不足：先前 v1 的 6 targets 中 5/6 与旧 Memory full-support target scenarios 重叠，已标 INVALID_TARGET_OVERLAP_DEVELOPMENT_ONLY 并停止；按严格 fresh contract 排除 source scenarios、全部旧 target scenarios 与重复 target 后，四个 source family 仅剩 0/3/1/1，共 5 个 executable fresh scenarios < 冻结 6-pair gate。触发 STOP_CURRENT_SUBSTRATE_FRESH_CINTERACTION_SUPPORT_INSUFFICIENT；不授权 B-3 方法 FAIL。",
+              "en": "B-3 synthetic matched-cost screening produced a pathway signal, but the real fresh-reality substrate lacks support. Five of six targets in the first v1 run overlapped prior Memory full-support target scenarios, so that run was marked INVALID_TARGET_OVERLAP_DEVELOPMENT_ONLY and stopped. Under the strict fresh contract excluding source scenarios, all prior target scenarios, and duplicate targets, the four source families expose only 0/3/1/1 = 5 executable fresh scenarios, below the frozen six-pair gate. STOP_CURRENT_SUBSTRATE_FRESH_CINTERACTION_SUPPORT_INSUFFICIENT fires; a B-3 method failure is not authorized."
+            }
+          }
+        ],
+        "mature_reduction_patterns": [],
+        "reopen_condition": "Resume through B-3 when fresh interaction support satisfies its frozen substrate gate. A separate child is allowed only if it names a different estimand and produces a same-log decision residual beyond B-3 pathway controls and a standard doubly robust contextual-bandit learner given identical randomized logs, memory actions, delayed outcomes, and support constraints.",
+        "problem_gate_eligible": false,
+        "research_item_eligible": false,
+        "provider_calls_authorized": 0,
+        "gpu_authorized": false,
+        "scientific_authority": false
+      }
+    ],
+    "next_action": "Do not resurrect any of the nine ranked historical leaves as a current ResearchItem. Use the three MATERIAL_CHILD_REQUIRED reviewer vectors only as mutation prompts; any child must change the scientific object and pass its listed same-information reductions before debate or ProblemGate. Resume DEFER rows only through their existing canonical object.",
+    "scientific_authority": false,
+    "authority": {
+      "problem_gate": false,
+      "research_item": false,
+      "method": false,
+      "experiment": false,
+      "provider": false,
+      "gpu": false
+    },
+    "triage_sha256": "1e9ffc851e58d6366b4b36ee6be5aa8936c5be2a7e7ba53d0ceab37e55082a3d"
   },
   "failure_asset_library": {
     "schema_version": "1.1",

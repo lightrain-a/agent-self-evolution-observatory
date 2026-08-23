@@ -46,6 +46,24 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(self.state["target_venue"], "ICLR")
         self.assertEqual(validate_state(self.state), [])
 
+    def test_post_race_triage_is_embedded_zero_authority_and_fail_closed(self) -> None:
+        triage=self.state["longitudinal_safety_post_race_triage"]
+        summary=triage["summary"]
+        self.assertEqual(summary["ranked_failure_leaves"],9)
+        self.assertEqual(summary["triaged"],9)
+        self.assertEqual(summary["current_post_race_survivors"],0)
+        self.assertEqual(summary["material_child_required"],3)
+        self.assertEqual(summary["deferred_to_existing_object"],3)
+        self.assertEqual(summary["stopped_by_mature_reduction"],3)
+        self.assertEqual(summary["problem_gate_eligible"],0)
+        self.assertEqual(summary["research_item_eligible"],0)
+        self.assertEqual(summary["provider_calls_authorized"],0)
+        self.assertEqual(summary["gpu_authorized"],0)
+        self.assertFalse(triage["scientific_authority"])
+        broken=copy.deepcopy(self.state)
+        broken["longitudinal_safety_post_race_triage"]["summary"]["problem_gate_eligible"]=1
+        self.assertTrue(any("post-race triage" in error for error in validate_state(broken)))
+
     def test_zero_authority_maintenance_projection_prefers_newer_public_without_hiding_invalid_local_state(self) -> None:
         previous={"status":"SUPPORT_RELEASE_WATCH_COMPLETE","generated_at":"2026-08-22T14:00:00+00:00","scientific_authority":False,"summary":{"support_holds":7}}
         self.assertEqual(_prefer_newer_zero_authority_public_projection({"status":"NOT_RUN","scientific_authority":False},previous),previous)
