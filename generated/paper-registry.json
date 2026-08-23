@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.3",
-  "generated_at": "2026-08-23T09:46:03+00:00",
-  "source_revision": "9b81defd242051b75e1442cd5935821d36ba7e8d",
+  "schema_version": "1.4",
+  "generated_at": "2026-08-23T09:49:27+00:00",
+  "source_revision": "2285b4002e1a458225a5866e50b5072fc3d3e74f",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -36,7 +36,10 @@
     "blocked_transitions_are_recorded": true,
     "ledger_contract_digest_is_immutable_between_scientific_revisions": true,
     "scientific_contract_revision_requires_evidence_closure_at_paper_evidence": true,
-    "submitted_state_requires_external_human_submission_authority": true
+    "submitted_state_requires_external_human_submission_authority": true,
+    "publication_identity_is_reader_facing_only": true,
+    "publication_codes_are_category_local_append_order": true,
+    "publication_identity_does_not_replace_internal_provenance": true
   },
   "summary": {
     "papers": 5,
@@ -53,6 +56,19 @@
     "primary_paper": "STRI",
     "by_stage": {
       "SUBMISSION_READY": 5
+    },
+    "publication_codes": [
+      "E1",
+      "G1",
+      "C1",
+      "E2",
+      "B1"
+    ],
+    "by_publication_category": {
+      "B": 1,
+      "C": 1,
+      "E": 2,
+      "G": 1
     }
   },
   "papers": [
@@ -433,7 +449,22 @@
           "path": "generated/research-items.json",
           "role": "source_research_item"
         }
-      ]
+      ],
+      "publication_identity": {
+        "code": "E1",
+        "category": "E",
+        "ordinal": 1,
+        "category_zh": "技能",
+        "category_en": "Skills",
+        "method": "STRI",
+        "idea": {
+          "zh": "技能分类表示不变性",
+          "en": "Skill-taxonomy representation invariance"
+        },
+        "label_zh": "E1 技能 · STRI · 技能分类表示不变性",
+        "label_en": "E1 Skills · STRI · Skill-taxonomy representation invariance",
+        "pdf": "downloads/E1-STRI.pdf"
+      }
     },
     {
       "paper_id": "AGENT-SAFETY-R9",
@@ -648,7 +679,22 @@
           "path": "generated/research-items.json",
           "role": "source_research_item"
         }
-      ]
+      ],
+      "publication_identity": {
+        "code": "G1",
+        "category": "G",
+        "ordinal": 1,
+        "category_zh": "安全",
+        "category_en": "Safety",
+        "method": "R9",
+        "idea": {
+          "zh": "静态安全不等于未来安全",
+          "en": "A static safety pass is not future safety"
+        },
+        "label_zh": "G1 安全 · R9 · 静态安全不等于未来安全",
+        "label_en": "G1 Safety · R9 · A static safety pass is not future safety",
+        "pdf": "downloads/G1-Agent-Safety-R9.pdf"
+      }
     },
     {
       "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
@@ -876,7 +922,22 @@
           "path": "paper-first-discovery-candidates",
           "role": "D2-C02,D2-C05"
         }
-      ]
+      ],
+      "publication_identity": {
+        "code": "C1",
+        "category": "C",
+        "ordinal": 1,
+        "category_zh": "评估",
+        "category_en": "Evaluation",
+        "method": "Proxy Reward",
+        "idea": {
+          "zh": "奖励误差写入长期记忆",
+          "en": "Reward errors become persistent memory state"
+        },
+        "label_zh": "C1 评估 · Proxy Reward · 奖励误差写入长期记忆",
+        "label_en": "C1 Evaluation · Proxy Reward · Reward errors become persistent memory state",
+        "pdf": "downloads/C1-Proxy-Reward.pdf"
+      }
     },
     {
       "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
@@ -1111,7 +1172,22 @@
           "path": "paper-first-discovery-candidates",
           "role": "D2-C06"
         }
-      ]
+      ],
+      "publication_identity": {
+        "code": "E2",
+        "category": "E",
+        "ordinal": 2,
+        "category_zh": "技能",
+        "category_en": "Skills",
+        "method": "Temporal Skill",
+        "idea": {
+          "zh": "可复用技能的因果瓶颈",
+          "en": "Reusable skills as causal bottlenecks"
+        },
+        "label_zh": "E2 技能 · Temporal Skill · 可复用技能的因果瓶颈",
+        "label_en": "E2 Skills · Temporal Skill · Reusable skills as causal bottlenecks",
+        "pdf": "downloads/E2-Temporal-Skill.pdf"
+      }
     },
     {
       "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
@@ -1329,7 +1405,22 @@
           "path": "paper-first-discovery-candidates",
           "role": "D2-C01,D2-C04"
         }
-      ]
+      ],
+      "publication_identity": {
+        "code": "B1",
+        "category": "B",
+        "ordinal": 1,
+        "category_zh": "记忆",
+        "category_en": "Memory",
+        "method": "Provenance Ladder",
+        "idea": {
+          "zh": "失败记忆来源的因果识别",
+          "en": "Causal identification of failure-memory provenance"
+        },
+        "label_zh": "B1 记忆 · Provenance Ladder · 失败记忆来源的因果识别",
+        "label_en": "B1 Memory · Provenance Ladder · Causal identification of failure-memory provenance",
+        "pdf": "downloads/B1-Failure-Memory.pdf"
+      }
     }
   ]
 }

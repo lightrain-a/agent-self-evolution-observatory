@@ -24,6 +24,61 @@ CATEGORY_DEFINITIONS = {
     "G": {"title": {"zh": "Agent 自进化安全与未来风险", "en": "Safety and future risk in agent self-evolution"}},
 }
 
+# Reader-facing paper identifiers deliberately live beside the PaperRegistry
+# projection rather than in scientific ResearchItem IDs. Registrations are
+# append-only: once a paper category is declared, its category-local ordinal
+# is allocated from registration order (E1, E2, ...). Adding a future paper
+# therefore requires only an explicit category/method/idea registration; it
+# must never reuse or renumber an existing publication code.
+PUBLICATION_CATEGORY_LABELS = {
+    "A": {"zh": "治理", "en": "Governance"},
+    "B": {"zh": "记忆", "en": "Memory"},
+    "C": {"zh": "评估", "en": "Evaluation"},
+    "D": {"zh": "课程", "en": "Curriculum"},
+    "E": {"zh": "技能", "en": "Skills"},
+    "F": {"zh": "世界模型", "en": "World Models"},
+    "G": {"zh": "安全", "en": "Safety"},
+}
+PUBLICATION_PAPER_REGISTRATIONS = [
+    {"paper_id": "STRI", "category": "E", "method": "STRI", "pdf_slug": "STRI", "idea": {"zh": "技能分类表示不变性", "en": "Skill-taxonomy representation invariance"}},
+    {"paper_id": "AGENT-SAFETY-R9", "category": "G", "method": "R9", "pdf_slug": "Agent-Safety-R9", "idea": {"zh": "静态安全不等于未来安全", "en": "A static safety pass is not future safety"}},
+    {"paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE", "category": "C", "method": "Proxy Reward", "pdf_slug": "Proxy-Reward", "idea": {"zh": "奖励误差写入长期记忆", "en": "Reward errors become persistent memory state"}},
+    {"paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK", "category": "E", "method": "Temporal Skill", "pdf_slug": "Temporal-Skill", "idea": {"zh": "可复用技能的因果瓶颈", "en": "Reusable skills as causal bottlenecks"}},
+    {"paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE", "category": "B", "method": "Provenance Ladder", "pdf_slug": "Failure-Memory", "idea": {"zh": "失败记忆来源的因果识别", "en": "Causal identification of failure-memory provenance"}},
+]
+
+
+def build_publication_identities() -> dict[str, dict[str, Any]]:
+    counters: Counter[str] = Counter()
+    identities: dict[str, dict[str, Any]] = {}
+    for registration in PUBLICATION_PAPER_REGISTRATIONS:
+        paper_id = str(registration.get("paper_id") or "")
+        category = str(registration.get("category") or "")
+        if not paper_id or paper_id in identities:
+            raise ValueError(f"duplicate or empty publication paper id:{paper_id}")
+        if category not in PUBLICATION_CATEGORY_LABELS:
+            raise ValueError(f"unknown publication category:{paper_id}:{category}")
+        counters[category] += 1
+        ordinal = counters[category]
+        code = f"{category}{ordinal}"
+        category_label = dict(PUBLICATION_CATEGORY_LABELS[category])
+        idea = bi(registration.get("idea") or {})
+        method = str(registration.get("method") or "").strip()
+        pdf_slug = str(registration.get("pdf_slug") or method or paper_id).strip()
+        identities[paper_id] = {
+            "code": code,
+            "category": category,
+            "ordinal": ordinal,
+            "category_zh": category_label["zh"],
+            "category_en": category_label["en"],
+            "method": method,
+            "idea": idea,
+            "label_zh": f"{code} {category_label['zh']} · {method} · {idea['zh']}",
+            "label_en": f"{code} {category_label['en']} · {method} · {idea['en']}",
+            "pdf": f"downloads/{code}-{pdf_slug}.pdf",
+        }
+    return identities
+
 PF_CANONICAL = {
     "PF-1": ("A-8", "固定进化器下的未来可学习性审计", "Future-Learnability Audit under a Frozen Evolver"),
     "PF-4": ("A-9", "更新后的诊断通道保持", "Post-Update Diagnostic-Channel Preservation"),
@@ -600,16 +655,16 @@ def build_paper_registry(research_state=None):
     by_code = {row.get("code"): row for row in research_state.get("research_items") or []}
     stri_acceptance = dict(acceptance_by_id.get("STRI-ICLR2027") or {})
     safety_acceptance = dict(acceptance_by_id.get("AGENT-SAFETY-R9") or {})
-    # Publication-facing paper numbers are category-local among public papers.
-    # They intentionally do not replace ResearchItem codes (for example E-7/G-1)
-    # or paper-first D2 provenance. Legacy download aliases remain shipped by the
-    # static-site builder so previously shared URLs keep working.
+    publication_identities = build_publication_identities()
+    # Source/supplement aliases retain their canonical artifact names; only the
+    # public PDF alias is derived from publication_identity. Legacy PDF names
+    # remain shipped by the static builder for backwards-compatible links.
     public_downloads = {
-        "STRI": {"pdf": "downloads/E1-STRI.pdf", "source_zip": "downloads/STRI-ICLR2027-source.zip"},
-        "AGENT-SAFETY-R9": {"pdf": "downloads/G1-Agent-Safety-R9.pdf", "source_zip": "downloads/Agent-Safety-R9-source.zip", "supplement_zip": "downloads/Agent-Safety-R9-supplement.zip"},
-        "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE": {"pdf": "downloads/C1-Proxy-Reward.pdf", "source_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip"},
-        "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK": {"pdf": "downloads/E2-Temporal-Skill.pdf", "source_zip": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip"},
-        "D2-PAPER-FAILURE-MEMORY-PROVENANCE": {"pdf": "downloads/B1-Failure-Memory.pdf", "source_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip", "supplement_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-supplement.zip"},
+        "STRI": {"pdf": publication_identities["STRI"]["pdf"], "source_zip": "downloads/STRI-ICLR2027-source.zip"},
+        "AGENT-SAFETY-R9": {"pdf": publication_identities["AGENT-SAFETY-R9"]["pdf"], "source_zip": "downloads/Agent-Safety-R9-source.zip", "supplement_zip": "downloads/Agent-Safety-R9-supplement.zip"},
+        "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE": {"pdf": publication_identities["D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE"]["pdf"], "source_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip"},
+        "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK": {"pdf": publication_identities["D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK"]["pdf"], "source_zip": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip"},
+        "D2-PAPER-FAILURE-MEMORY-PROVENANCE": {"pdf": publication_identities["D2-PAPER-FAILURE-MEMORY-PROVENANCE"]["pdf"], "source_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip", "supplement_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-supplement.zip"},
     }
     stri = {
         **legacy_stri,
@@ -627,6 +682,7 @@ def build_paper_registry(research_state=None):
         "legacy_submission_status": legacy_stri.get("submission_status"),
         "submission_ready": bool((stri_acceptance.get("latest_submission_readiness") or {}).get("submission_ready")),
         "downloads": dict(public_downloads["STRI"]),
+        "publication_identity": dict(publication_identities["STRI"]),
         "experiment_refs": list((by_code.get("E-7") or {}).get("experiment_refs") or []),
         "research_authority": authority(),
         "acceptance_authority": stri_acceptance.get("authority") or {},
@@ -646,6 +702,7 @@ def build_paper_registry(research_state=None):
         "submission_status": safety_acceptance.get("current_state") or "PAPER_EVIDENCE",
         "submission_ready": bool((safety_acceptance.get("latest_submission_readiness") or {}).get("submission_ready")),
         "downloads": dict(public_downloads["AGENT-SAFETY-R9"]),
+        "publication_identity": dict(publication_identities["AGENT-SAFETY-R9"]),
         "experiment_refs": list((by_code.get("G-1") or {}).get("experiment_refs") or []),
         "research_authority": authority(),
         "acceptance_authority": safety_acceptance.get("authority") or {},
@@ -691,6 +748,7 @@ def build_paper_registry(research_state=None):
             "submission_status": accepted.get("current_state") or "PAPER_EVIDENCE",
             "submission_ready": bool((accepted.get("latest_submission_readiness") or {}).get("submission_ready")),
             "downloads": dict(public_downloads[paper_id]),
+            "publication_identity": dict(publication_identities[paper_id]),
             "experiment_refs": [],
             "research_authority": authority(),
             "acceptance_authority": accepted.get("authority") or {},
@@ -701,7 +759,7 @@ def build_paper_registry(research_state=None):
     papers = [stri, safety, *sorted(d2_papers, key=lambda row: int(row.get("display_order") or 999))]
     stage_counts = dict(sorted(Counter(row.get("paper_stage") for row in papers).items()))
     return {
-        "schema_version": "1.3",
+        "schema_version": "1.4",
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "source_revision": git_head(),
         "projection_source": acceptance.get("projection_source") or "generated/research-system-state.json",
@@ -715,6 +773,9 @@ def build_paper_registry(research_state=None):
             "primary_next_action_is_internal_only": True,
             "paper_first_discovery_papers_need_not_fake_research_item_parentage": True,
             "paper_downloads_are_zero_authority_public_artifact_links": True,
+            "publication_identity_is_reader_facing_only": True,
+            "publication_codes_are_category_local_append_order": True,
+            "publication_identity_does_not_replace_internal_provenance": True,
             **(acceptance.get("policy") or {}),
         },
         "summary": {
@@ -728,6 +789,8 @@ def build_paper_registry(research_state=None):
             "by_internal_action": dict(sorted(Counter((row.get("primary_next_action") or {}).get("action_class") or "UNKNOWN" for row in papers).items())),
             "scientific_holds": sum(str(row.get("scientific_status") or "") != "READY" for row in papers),
             "primary_paper": "STRI",
+            "publication_codes": [row["publication_identity"]["code"] for row in papers],
+            "by_publication_category": dict(sorted(Counter(row["publication_identity"]["category"] for row in papers).items())),
             "by_stage": stage_counts,
         },
         "papers": papers,
@@ -795,6 +858,35 @@ def validate_paper_registry(registry, research_state):
     if actual_ids != expected_ids:
         errors.append(f"PaperRegistry must project every canonical acceptance ledger: expected={sorted(expected_ids)}, actual={sorted(str(x) for x in actual_ids)}")
     by_id = {row.get("paper_id"): row for row in papers}
+    publication_identities = build_publication_identities()
+    if set(publication_identities) != actual_ids:
+        errors.append(f"Every PaperRegistry paper must have one append-only publication registration: registered={sorted(publication_identities)}, actual={sorted(str(x) for x in actual_ids)}")
+    publication_codes = []
+    for row in papers:
+        paper_id = str(row.get("paper_id") or "")
+        identity = row.get("publication_identity") or {}
+        expected_identity = publication_identities.get(paper_id) or {}
+        code = str(identity.get("code") or "")
+        category = str(identity.get("category") or "")
+        ordinal = int(identity.get("ordinal") or 0)
+        publication_codes.append(code)
+        if identity != expected_identity:
+            errors.append(f"publication identity drifted:{paper_id}:{identity}")
+        if category not in PUBLICATION_CATEGORY_LABELS or not re.fullmatch(r"[A-G][1-9][0-9]*", code) or code != f"{category}{ordinal}":
+            errors.append(f"invalid publication code/category:{paper_id}:{code}:{category}:{ordinal}")
+        if identity.get("category_zh") != (PUBLICATION_CATEGORY_LABELS.get(category) or {}).get("zh") or identity.get("category_en") != (PUBLICATION_CATEGORY_LABELS.get(category) or {}).get("en"):
+            errors.append(f"publication category label drifted:{paper_id}:{identity}")
+        if not str(identity.get("method") or "").strip() or not str((identity.get("idea") or {}).get("zh") or "").strip() or not str((identity.get("idea") or {}).get("en") or "").strip():
+            errors.append(f"publication identity missing method/idea:{paper_id}")
+        if (row.get("downloads") or {}).get("pdf") != identity.get("pdf"):
+            errors.append(f"publication PDF alias must match PaperRegistry download:{paper_id}")
+    if len(publication_codes) != len(set(publication_codes)):
+        errors.append(f"publication codes must be unique:{publication_codes}")
+    if list((registry.get("summary") or {}).get("publication_codes") or []) != publication_codes:
+        errors.append("PaperRegistry publication-code summary must follow paper display order")
+    actual_category_counts = dict(sorted(Counter((row.get("publication_identity") or {}).get("category") for row in papers).items()))
+    if dict((registry.get("summary") or {}).get("by_publication_category") or {}) != actual_category_counts:
+        errors.append("PaperRegistry publication category summary drifted")
     paper = by_id.get("STRI") or {}
     safety = by_id.get("AGENT-SAFETY-R9") or {}
     if paper.get("source_research_item") != "E-7" or paper.get("acceptance_paper_id") != "STRI-ICLR2027":

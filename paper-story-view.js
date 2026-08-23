@@ -3,12 +3,12 @@
   const pick=(zh,en)=>language==="zh"?zh:en;
   const text=v=>v&&typeof v==="object"?(language==="zh"?(v.zh||v.en||""):(v.en||v.zh||"")):String(v??"");
   const paper=row=>(store().papers||{})[row.paper_id]||null;
-  const display=row=>(window.PAPER_DISPLAY_DATA?.papers||{})[row?.paper_id]||{};
+  const display=row=>row?.publication_identity||{};
   const archetype=id=>(store().blueprint?.archetypes||[]).find(x=>x.id===id)||{};
   const localizedList=(rows=[])=>rows.map(x=>esc(text(x))).filter(Boolean).map(x=>`<li>${x}</li>`).join("");
   const contractValue=(obj,keyZh,keyEn)=>esc(pick(obj?.[keyZh]||"",obj?.[keyEn]||""));
   const downloadButtons=(row)=>{
-    const meta=display(row), d={...(row?.downloads||{}),...(meta.pdf?{pdf:meta.pdf}:{})}, links=[];
+    const d={...(row?.downloads||{})}, links=[];
     if(d.pdf) links.push(`<a class="link-btn paper-story-download-pdf" href="${esc(d.pdf)}" download>${pick("下载论文 PDF","Download paper PDF")}</a>`);
     if(d.source_zip) links.push(`<a class="link-btn repo paper-story-download-zip" href="${esc(d.source_zip)}" download>${pick("下载源码 ZIP","Download source ZIP")}</a>`);
     if(d.supplement_zip) links.push(`<a class="link-btn repo paper-story-download-supplement" href="${esc(d.supplement_zip)}" download>${pick("下载补充材料 ZIP","Download supplement ZIP")}</a>`);

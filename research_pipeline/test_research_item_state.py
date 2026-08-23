@@ -5,7 +5,9 @@ import unittest
 from unittest.mock import patch
 
 from research_pipeline.research_item_state import (
+    PUBLICATION_PAPER_REGISTRATIONS,
     build_paper_registry,
+    build_publication_identities,
     build_research_item_state,
     paper_acceptance_state,
     validate_paper_registry,
@@ -152,6 +154,39 @@ class ResearchItemStateTest(unittest.TestCase):
             serialized = json.dumps(self.registry, ensure_ascii=False)
             for private_marker in ("/home/wyt", "/data/wyt", "10.42.8.52", "222.20.126.69"):
                 self.assertNotIn(private_marker, serialized)
+
+    def test_publication_identity_is_category_local_and_does_not_replace_provenance(self) -> None:
+        self.assertEqual(validate_paper_registry(self.registry, self.state), [])
+        papers = {row["paper_id"]: row for row in self.registry["papers"]}
+        expected_codes = {
+            "STRI": "E1",
+            "AGENT-SAFETY-R9": "G1",
+            "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE": "C1",
+            "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK": "E2",
+            "D2-PAPER-FAILURE-MEMORY-PROVENANCE": "B1",
+        }
+        self.assertEqual({paper_id: row["publication_identity"]["code"] for paper_id, row in papers.items()}, expected_codes)
+        self.assertEqual(self.registry["summary"]["publication_codes"], ["E1", "G1", "C1", "E2", "B1"])
+        self.assertEqual(self.registry["summary"]["by_publication_category"], {"B": 1, "C": 1, "E": 2, "G": 1})
+        self.assertEqual(papers["STRI"]["source_research_item"], "E-7")
+        self.assertEqual(papers["AGENT-SAFETY-R9"]["source_research_item"], "G-1")
+        for paper_id, row in papers.items():
+            identity = row["publication_identity"]
+            self.assertEqual(row["downloads"]["pdf"], identity["pdf"], paper_id)
+            self.assertNotIn("-", identity["code"], paper_id)
+            self.assertTrue(identity["label_zh"].startswith(f"{identity['code']} {identity['category_zh']} · "), paper_id)
+            self.assertTrue(identity["label_en"].startswith(f"{identity['code']} {identity['category_en']} · "), paper_id)
+
+        broken = json.loads(json.dumps(self.registry))
+        broken["papers"][0]["publication_identity"]["code"] = "E7"
+        self.assertTrue(any("publication identity drifted:STRI" in error or "invalid publication code/category:STRI" in error for error in validate_paper_registry(broken, self.state)))
+        identities = build_publication_identities()
+        self.assertEqual(identities["STRI"]["ordinal"], 1)
+        self.assertEqual(identities["D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK"]["ordinal"], 2)
+        appended = [*PUBLICATION_PAPER_REGISTRATIONS, {"paper_id": "FUTURE-E", "category": "E", "method": "Future Skill", "pdf_slug": "Future-Skill", "idea": {"zh": "未来技能论文", "en": "Future skill paper"}}]
+        with patch("research_pipeline.research_item_state.PUBLICATION_PAPER_REGISTRATIONS", appended):
+            future = build_publication_identities()["FUTURE-E"]
+        self.assertEqual((future["code"], future["category_zh"], future["pdf"]), ("E3", "技能", "downloads/E3-Future-Skill.pdf"))
 
     def test_experiments_are_zero_authority_evidence_events(self) -> None:
         self.assertTrue(all(row["scientific_authority"] is False for row in self.state["experiment_records"]))
