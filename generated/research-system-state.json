@@ -6624,11 +6624,11 @@
     "principle_falsifications": 0,
     "protocol_validity_pass": 4,
     "meta_trace_unresolved": 2,
-    "scientific_research_graph_nodes": 697,
-    "scientific_research_graph_edges": 1044,
-    "research_memory_entries": 86,
+    "scientific_research_graph_nodes": 699,
+    "scientific_research_graph_edges": 1045,
+    "research_memory_entries": 87,
     "research_memory_lint_warnings": 6,
-    "failure_assets": 6,
+    "failure_assets": 7,
     "value_scheduler_candidates": 0,
     "research_replay_passed": 8,
     "external_systems_reviewed": 32,
@@ -48140,8 +48140,8 @@
       "referenced_not_duplicated": true
     },
     "summary": {
-      "nodes": 697,
-      "edges": 1044,
+      "nodes": 699,
+      "edges": 1045,
       "node_kinds": {
         "candidate_problem": 1,
         "claim": 87,
@@ -48149,8 +48149,8 @@
         "dataset": 15,
         "domain": 13,
         "experiment": 78,
-        "failure_asset": 6,
-        "idea": 57,
+        "failure_asset": 7,
+        "idea": 58,
         "model": 6,
         "paper": 334,
         "paper-alias": 64,
@@ -48161,7 +48161,7 @@
         "belongs-to": 29,
         "citation": 44,
         "covers-domain": 72,
-        "diagnoses": 6,
+        "diagnoses": 7,
         "evaluates-on": 77,
         "nearest-work": 88,
         "principle_for": 2,
@@ -48176,22 +48176,22 @@
       },
       "base_nodes": 582,
       "base_edges": 958,
-      "overlay_nodes": 115,
-      "new_overlay_nodes": 115,
-      "overlay_edges": 86,
+      "overlay_nodes": 117,
+      "new_overlay_nodes": 117,
+      "overlay_edges": 87,
       "candidate_nodes": 1,
       "experiment_nodes": 78,
       "principle_nodes": 2,
-      "failure_asset_nodes": 6,
+      "failure_asset_nodes": 7,
       "scientific_closure_nodes": 0,
       "principle_closure_edges": 0
     },
     "overlay_nodes": [
       {
-        "id": "candidate:PORT-013",
+        "id": "candidate:PORT-017",
         "kind": "candidate_problem",
-        "label": "Syntactic Interface Overfitting in Web Agents: Why do learned skills bind to literal text envelopes rather than semantic intents?",
-        "candidate_id": "PORT-013",
+        "label": "The Intervention Knowledge Bottleneck: Convergent Failure at Entity-Level Modification Knowledge",
+        "candidate_id": "PORT-017",
         "stage": "PRE_F0_EVIDENCE_ACQUISITION",
         "portfolio_state": "SEARCH_HOLD",
         "source": "research_candidate_portfolio",
@@ -48849,6 +48849,15 @@
         "scientific_authority": false
       },
       {
+        "id": "failure:47015a4d499b6cd9",
+        "kind": "failure_asset",
+        "label": "experiment_identifiability:composition-constituent-reference-instability",
+        "affected_layer": "experiment_identifiability",
+        "does_not_imply": "DeepSeek incapability, absence of all composition effects, memory-coordination failure, or core-principle failure",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
         "id": "failure:475ab7f33b9304e7",
         "kind": "failure_asset",
         "label": "execution:infrastructure-error",
@@ -48874,6 +48883,12 @@
         "does_not_imply": "P0 support PASS/HOLD, method failure, principle failure, or any retrospective scientific authority from the executed rows",
         "source": "failure_asset_library",
         "scientific_authority": false
+      },
+      {
+        "id": "idea:MEMENTO-JOINT-BOUNDARY-CONTROL-ARK-DEEPSEEK-AUX",
+        "kind": "idea",
+        "label": "MEMENTO-JOINT-BOUNDARY-CONTROL-ARK-DEEPSEEK-AUX",
+        "source": "failure_asset_library"
       },
       {
         "id": "idea:applicability-bounded-lessons",
@@ -49488,13 +49503,18 @@
         "source": "failure:f18861b827d51b20",
         "target": "idea:paper-first-p0-20260812-premature-local-validation",
         "relation": "diagnoses"
+      },
+      {
+        "source": "failure:47015a4d499b6cd9",
+        "target": "idea:MEMENTO-JOINT-BOUNDARY-CONTROL-ARK-DEEPSEEK-AUX",
+        "relation": "diagnoses"
       }
     ],
     "scientific_authority": false
   },
   "research_memory_wiki": {
     "schema_version": "1.1",
-    "generated_at": "2026-08-23T15:41:37+00:00",
+    "generated_at": "2026-08-23T16:06:29+00:00",
     "status": "MEMORY_COMPILED",
     "policy": {
       "schema_version": "1.1",
@@ -49514,6 +49534,7 @@
       "paper_review_patterns_are_prechecks_not_scientific_verdicts": true,
       "paper_review_memory_never_authorizes_new_experiments": true,
       "paper_design_reserves_at_least_one_review_lesson_when_available": true,
+      "idea_search_reserves_one_context_matched_failure_lesson_when_available": true,
       "reviewer_prose_and_rationale_are_excluded_from_memory_projection": true,
       "human_advisor_paper_development_guidance_is_structured_not_raw_prose": true,
       "paper_design_reserves_paper_development_guidance_when_available": true,
@@ -49522,7 +49543,7 @@
     "source_manifest": {
       "search_memory_closed_objects": 43,
       "search_memory_hold_objects": 9,
-      "failure_assets": 6,
+      "failure_assets": 7,
       "candidate_portfolio_visible": 1,
       "unresolved_principles": 2,
       "generator_blocked_attempts": 15,
@@ -49530,21 +49551,21 @@
       "discovery_failure_lessons": 19
     },
     "summary": {
-      "entries": 86,
+      "entries": 87,
       "search_closures": 41,
       "scientific_closures": 2,
       "holds": 9,
-      "failure_assets": 3,
+      "failure_assets": 4,
       "success_assets": 3,
       "open_questions": 2,
       "repeated_review_blocks": 1,
       "discovery_lessons": 19,
       "review_lessons": 5,
       "paper_development_guidance": 1,
-      "prompt_eligible": 86,
+      "prompt_eligible": 87,
       "transient": 0,
       "recurring_systemic": 14,
-      "scientific": 72
+      "scientific": 73
     },
     "entries": [
       {
@@ -50101,6 +50122,36 @@
         "source_artifact": "failure_asset_library",
         "occurrences": 4,
         "last_revalidated": "",
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0
+        },
+        "scientific_authority": false
+      },
+      {
+        "memory_id": "MEM-FAIL-ff81c1bc68d6be7004",
+        "kind": "FAILURE_ASSET",
+        "title": "experiment_identifiability:composition-constituent-reference-instability",
+        "summary": "DeepSeek incapability, absence of all composition effects, memory-coordination failure, or core-principle failure",
+        "candidate_id": "",
+        "scope": "{\"ideas\": [\"MEMENTO-JOINT-BOUNDARY-CONTROL-ARK-DEEPSEEK-AUX\"], \"reuse_scope\": {\"affected_layer\": \"experiment_identifiability\", \"diagnosis\": \"composition-constituent-reference-instability\", \"environment_family\": \"embodied-agent task composition\", \"measurement\": \"constituent-matched composition residual\"}}",
+        "affected_layer": "experiment_identifiability",
+        "memory_class": "FAILURE_ASSET",
+        "durability_class": "scientific",
+        "prompt_eligible": true,
+        "search_closure_certified": false,
+        "scientific_dead_end_certified": false,
+        "principle_update_allowed": false,
+        "reopen_condition": "",
+        "opposite_search_seed": "",
+        "reusable_precheck": "Before interpreting an average composition penalty, verify constituent-reference stability and endpoint alignment; preserve every frozen unit; audit proposition-weighted versus equal-weight constituent semantics before outcomes; compare against classical positive/negative subgoal interaction, resource/horizon complexity, shared-state reuse, and generic ex-ante task-difficulty reducers. A mixed-sign HOLD is not evidence of model incapability or core-principle failure.",
+        "source_refs": [
+          "private-data://runs/memento-joint-id-f0-runtime/ark-deepseek-aux-f0-result.json#sha256=4db1eb67d2b1a72e619e2452f245c4b23a5cc85198a23abe6fb11a6ee7025b4b"
+        ],
+        "source_artifact": "failure_asset_library",
+        "occurrences": 1,
+        "last_revalidated": "2026-08-23",
         "reuse_effectiveness": {
           "reuse_count": 0,
           "helped_count": 0,
@@ -52055,7 +52106,7 @@
       "p0": false,
       "gpu": false
     },
-    "wiki_sha256": "7b3b430fccc5de837130c4c6b02dbe529ce8a05cd1b8e69faab7c7d970abec01",
+    "wiki_sha256": "69ebf1d0dced21ebb37e080c47a482ed6a6dc639c06d0a10b429ad5270e743f2",
     "lint": {
       "schema_version": "1.1",
       "status": "PASS",
@@ -52070,6 +52121,11 @@
           "code": "durable-failure-memory-missing-revalidation-date",
           "memory_id": "MEM-FAIL-d2bcf0c820af363095",
           "detail": "execution:infrastructure-error"
+        },
+        {
+          "code": "failure-asset-not-yet-effectiveness-validated",
+          "memory_id": "MEM-FAIL-ff81c1bc68d6be7004",
+          "detail": "experiment_identifiability:composition-constituent-reference-instability"
         },
         {
           "code": "hold-missing-source-ref",
@@ -52090,8 +52146,8 @@
       ],
       "summary": {
         "errors": 0,
-        "warnings": 6,
-        "unconsumed_failure_assets": 1,
+        "warnings": 7,
+        "unconsumed_failure_assets": 2,
         "missing_revalidation_dates": 1
       },
       "scientific_authority": false
@@ -52132,8 +52188,8 @@
       }
     ],
     "summary": {
-      "assets": 6,
-      "unique_signatures": 3,
+      "assets": 7,
+      "unique_signatures": 4,
       "principle_dead_ends": 0,
       "economy_dead_ends": 0,
       "experimental_stops_not_dead_ends": 23
@@ -52284,6 +52340,33 @@
         "authority_status_at_execution": "NO_EXPLICIT_USER_P0_PROMOTION_AUTHORITY_AT_EXECUTION_TIME",
         "can_authorize_p0": false,
         "can_authorize_method_or_principle": false
+      },
+      {
+        "signature": "experiment_identifiability:composition-constituent-reference-instability",
+        "idea_id": "MEMENTO-JOINT-BOUNDARY-CONTROL-ARK-DEEPSEEK-AUX",
+        "diagnosis": "composition-constituent-reference-instability",
+        "affected_layer": "experiment_identifiability",
+        "reusable_precheck": "Before interpreting an average composition penalty, verify constituent-reference stability and endpoint alignment; preserve every frozen unit; audit proposition-weighted versus equal-weight constituent semantics before outcomes; compare against classical positive/negative subgoal interaction, resource/horizon complexity, shared-state reuse, and generic ex-ante task-difficulty reducers. A mixed-sign HOLD is not evidence of model incapability or core-principle failure.",
+        "evidence_ref": "private-data://runs/memento-joint-id-f0-runtime/ark-deepseek-aux-f0-result.json#sha256=4db1eb67d2b1a72e619e2452f245c4b23a5cc85198a23abe6fb11a6ee7025b4b",
+        "does_not_imply": "DeepSeek incapability, absence of all composition effects, memory-coordination failure, or core-principle failure",
+        "memory_scope": "institutional-research-memory",
+        "reuse_scope": {
+          "environment_family": "embodied-agent task composition",
+          "measurement": "constituent-matched composition residual",
+          "diagnosis": "composition-constituent-reference-instability",
+          "affected_layer": "experiment_identifiability"
+        },
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "superseded_by": "",
+        "last_revalidated": "2026-08-23",
+        "source_decision": "HOLD",
+        "external_memory_input": true,
+        "scientific_authority": false
       }
     ],
     "reusable_prechecks": [
@@ -52317,6 +52400,19 @@
         "signature": "authority-protocol:authority-provenance-mismatch",
         "affected_layer": "authority-protocol",
         "reusable_precheck": "require an external content-addressed human authority artifact before paper-first P0 lifecycle or local-validation transitions; a basis string or AI output has zero authority",
+        "occurrences": 1,
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "revalidation_required_after_scope_change": true
+      },
+      {
+        "signature": "experiment_identifiability:composition-constituent-reference-instability",
+        "affected_layer": "experiment_identifiability",
+        "reusable_precheck": "Before interpreting an average composition penalty, verify constituent-reference stability and endpoint alignment; preserve every frozen unit; audit proposition-weighted versus equal-weight constituent semantics before outcomes; compare against classical positive/negative subgoal interaction, resource/horizon complexity, shared-state reuse, and generic ex-ante task-difficulty reducers. A mixed-sign HOLD is not evidence of model incapability or core-principle failure.",
         "occurrences": 1,
         "reuse_effectiveness": {
           "reuse_count": 0,
@@ -84773,8 +84869,8 @@
       },
       "status": "running",
       "evidence": {
-        "en": "697 graph nodes / 1044 edges; memory wiki 86 entries / 3 failure / 3 success / 5 paper-review lessons / lint warnings 6",
-        "zh": "研究图谱 697 个节点 / 1044 条边；Memory Wiki 86 条 / 失败 3 / 成功 3 / 论文审查经验 5 / lint warning 6"
+        "en": "699 graph nodes / 1045 edges; memory wiki 87 entries / 4 failure / 3 success / 5 paper-review lessons / lint warnings 7",
+        "zh": "研究图谱 699 个节点 / 1045 条边；Memory Wiki 87 条 / 失败 4 / 成功 3 / 论文审查经验 5 / lint warning 7"
       },
       "key": "scientific-research-graph",
       "primary_layer": "memory-publication"
@@ -84787,8 +84883,8 @@
       },
       "status": "running",
       "evidence": {
-        "en": "6 failure assets / 3 reusable signatures / 23 experimental stops retained as diagnostics / 0 principle-certified dead ends",
-        "zh": "6 条失败资产 / 3 类可复用签名 / 23 个实验 STOP 仅作诊断 / 0 个原理认证 Dead-End"
+        "en": "7 failure assets / 4 reusable signatures / 23 experimental stops retained as diagnostics / 0 principle-certified dead ends",
+        "zh": "7 条失败资产 / 4 类可复用签名 / 23 个实验 STOP 仅作诊断 / 0 个原理认证 Dead-End"
       },
       "key": "failure-assets",
       "primary_layer": "memory-publication"
@@ -86829,8 +86925,8 @@
             "current_launchable": 0
           },
           "failure_assets": {
-            "assets": 6,
-            "unique_signatures": 3,
+            "assets": 7,
+            "unique_signatures": 4,
             "principle_dead_ends": 0,
             "economy_dead_ends": 0,
             "experimental_stops_not_dead_ends": 23
@@ -86860,24 +86956,26 @@
         "pass": true,
         "detail": {
           "summary": {
-            "entries": 66,
+            "entries": 87,
             "search_closures": 41,
             "scientific_closures": 2,
             "holds": 9,
-            "failure_assets": 3,
+            "failure_assets": 4,
             "success_assets": 3,
             "open_questions": 2,
             "repeated_review_blocks": 1,
+            "discovery_lessons": 19,
             "review_lessons": 5,
-            "prompt_eligible": 66,
+            "paper_development_guidance": 1,
+            "prompt_eligible": 87,
             "transient": 0,
-            "recurring_systemic": 8,
-            "scientific": 58
+            "recurring_systemic": 14,
+            "scientific": 73
           },
           "lint": {
             "errors": 0,
-            "warnings": 6,
-            "unconsumed_failure_assets": 1,
+            "warnings": 7,
+            "unconsumed_failure_assets": 2,
             "missing_revalidation_dates": 1
           }
         }
@@ -86914,8 +87012,8 @@
             "visible_candidates": 1
           },
           "graph": {
-            "nodes": 697,
-            "edges": 1044,
+            "nodes": 699,
+            "edges": 1045,
             "node_kinds": {
               "candidate_problem": 1,
               "claim": 87,
@@ -86923,8 +87021,8 @@
               "dataset": 15,
               "domain": 13,
               "experiment": 78,
-              "failure_asset": 6,
-              "idea": 57,
+              "failure_asset": 7,
+              "idea": 58,
               "model": 6,
               "paper": 334,
               "paper-alias": 64,
@@ -86935,7 +87033,7 @@
               "belongs-to": 29,
               "citation": 44,
               "covers-domain": 72,
-              "diagnoses": 6,
+              "diagnoses": 7,
               "evaluates-on": 77,
               "nearest-work": 88,
               "principle_for": 2,
@@ -86950,13 +87048,13 @@
             },
             "base_nodes": 582,
             "base_edges": 958,
-            "overlay_nodes": 115,
-            "new_overlay_nodes": 115,
-            "overlay_edges": 86,
+            "overlay_nodes": 117,
+            "new_overlay_nodes": 117,
+            "overlay_edges": 87,
             "candidate_nodes": 1,
             "experiment_nodes": 78,
             "principle_nodes": 2,
-            "failure_asset_nodes": 6,
+            "failure_asset_nodes": 7,
             "scientific_closure_nodes": 0,
             "principle_closure_edges": 0
           }

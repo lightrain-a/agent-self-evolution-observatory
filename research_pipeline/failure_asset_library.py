@@ -47,6 +47,7 @@ def build_failure_asset_library(
     post_c2_adjudication: dict[str, Any] | None = None,
     paper_first_p0_f0: dict[str, Any] | None = None,
     principle_layer: dict[str, Any] | None = None,
+    additional_assets: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     assets: list[dict[str, Any]] = []
     for node in experiment_iteration.get("nodes") or []:
@@ -123,6 +124,34 @@ def build_failure_asset_library(
             "authority_status_at_execution": pf0_authority.get("authority_status"),
             "can_authorize_p0": False,
             "can_authorize_method_or_principle": False,
+        })
+
+    for row in additional_assets or []:
+        if not isinstance(row, dict):
+            raise ValueError("additional failure assets must be JSON objects")
+        if row.get("scientific_authority") not in (None, False):
+            raise ValueError("additional failure assets must have zero scientific authority")
+        signature = str(row.get("signature") or "").strip()
+        layer = str(row.get("affected_layer") or "").strip()
+        precheck = str(row.get("reusable_precheck") or "").strip()
+        if not signature or not layer or not precheck:
+            raise ValueError("additional failure asset requires signature, affected_layer, and reusable_precheck")
+        assets.append({
+            "signature": signature,
+            "idea_id": str(row.get("idea_id") or ""),
+            "diagnosis": str(row.get("diagnosis") or "external-negative"),
+            "affected_layer": layer,
+            "reusable_precheck": precheck,
+            "evidence_ref": str(row.get("evidence_ref") or ""),
+            "does_not_imply": str(row.get("does_not_imply") or "core-principle failure"),
+            "memory_scope": str(row.get("memory_scope") or "institutional-research-memory"),
+            "reuse_scope": dict(row.get("reuse_scope") or {"affected_layer": layer}),
+            "reuse_effectiveness": dict(row.get("reuse_effectiveness") or {"reuse_count": 0, "helped_count": 0, "hurt_count": 0, "status": "not-yet-measured"}),
+            "superseded_by": str(row.get("superseded_by") or ""),
+            "last_revalidated": str(row.get("last_revalidated") or ""),
+            "source_decision": str(row.get("source_decision") or ""),
+            "external_memory_input": True,
+            "scientific_authority": False,
         })
 
     signature_counts = Counter(asset["signature"] for asset in assets)

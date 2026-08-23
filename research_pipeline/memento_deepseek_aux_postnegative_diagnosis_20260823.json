@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "MEMENTO-JOINT-BOUNDARY-CONTROL",
+  "evidence_track": "MEMENTO-JOINT-BOUNDARY-CONTROL-ARK-DEEPSEEK-AUX",
+  "artifact_kind": "independent-post-negative-hold-diagnosis",
+  "recorded_date": "2026-08-23",
+  "verdict": "CONFIRM_HOLD_DIAGNOSTIC_NOT_STOP",
+  "confidence": "high",
+  "qualified_execution": {
+    "formal_unique_arms": 36,
+    "frozen_units": 12,
+    "primary_metric": "task_percent_complete",
+    "mean_C": -0.021031746031746033,
+    "exact_paired_bootstrap95": [-0.1763888888888889, 0.12202380952380952],
+    "registered_margin": -0.05,
+    "registered_decision": "HOLD",
+    "source_result_sha256": "4db1eb67d2b1a72e619e2452f245c4b23a5cc85198a23abe6fb11a6ee7025b4b",
+    "source_decision_receipt_sha256": "e5e023d201ecbda31bb6d51fff178aa18d2457139832f5e1726250728268fdad",
+    "source_ref": "private-data://runs/memento-joint-id-f0-runtime/ark-deepseek-aux-f0-result.json"
+  },
+  "checks": {
+    "endpoint_supported": true,
+    "controls_runtime_matched_within_aux_track": true,
+    "all_frozen_units_retained": true,
+    "runtime_failures_not_imputed_as_scientific_zero": true,
+    "registered_gate_applied_without_threshold_tuning": true,
+    "core_principle_falsified": false,
+    "exact_gpt4o_track_satisfied": false
+  },
+  "failure_layer_diagnosis": {
+    "primary": "experiment_identifiability",
+    "secondary": ["assumption_scope", "operationalization"],
+    "primary_reason": "A single-rollout constituent reference is unstable enough that positive and negative unit effects mix ordinary composition burden with constituent execution noise and shared-state reuse; the registered 12-unit mean cannot identify a stable global composition penalty at the five-point margin.",
+    "assumption_scope_reason": "The data do not support treating composition cost as a homogeneous global scalar: five units are negative, three zero, and four positive, with large scene/task variation.",
+    "operationalization_risk": "The frozen simple mean of constituent PCs gives equal task weights even when constituent proposition counts differ, whereas the composed PC is evaluated on the proposition union. This is a diagnostic mismatch only and cannot be used to repair the completed F0 post hoc.",
+    "does_not_imply": "DeepSeek incapability, absence of all composition effects, memory-coordination failure, or core-principle failure."
+  },
+  "post_hoc_diagnostics_not_claims": {
+    "correlation_C_with_min_constituent_PC": -0.716,
+    "mechanism_decomposition": "C_u approximately equals negative serial-horizon/execution burden plus shared exploration/state-reuse benefit plus constituent-reference noise.",
+    "notable_terminal_pressure": "unit 10011 composed runtime was 1991.56 seconds under a frozen 2000-second episode cap and had C_u=-0.60.",
+    "diagnostic_only_rule": "These observations may seed new hypotheses but may not change the frozen MEMENTO estimator, threshold, units, or completed HOLD decision."
+  },
+  "current_object_route": {
+    "memento_status": "KEEP_HOLD",
+    "full_coordination_audit_authorized": false,
+    "additional_outcome_driven_reruns_authorized": false,
+    "model_swap_rescue_authorized": false,
+    "threshold_or_endpoint_rescue_authorized": false,
+    "principle_stop_authorized": false
+  },
+  "new_problem_review": {
+    "verdict": "NO_NEW_PROBLEM_CURRENT_REALIZATION",
+    "broad_problem": "Predict whether task composition hurts or helps an embodied agent from task topology before execution.",
+    "broad_problem_decision": "STOP_MATURE_THEORY_REDUCTION",
+    "strongest_reduction": "Classical positive/negative subgoal interaction and goal ordering, resource-bounded planning, modern ex-ante agent task-difficulty prediction, and graph/dependency-based agent planning already predict that composition structure and resource pressure change difficulty.",
+    "narrow_residual": "A targeted screen asked whether any prespecified executor-side pre-outcome observable remained after matching classical/symbolic goal interaction, resource-bounded planning, generic ex-ante difficulty and constituent-reference quality.",
+    "narrow_residual_decision": "STOP_CURRENT_REALIZATION_NO_IRREDUCIBLE_EXECUTOR_OBSERVABLE",
+    "screen_artifact": "research_pipeline/task_composition_residual_c01_novelty_screen.json",
+    "why_not_a_rescue": "The screen did not promote a new problem and did not inspect the fresh holdout outcomes. Context growth, task-state drift, grounding ambiguity and evaluation-budget pressure all reduced to mature neighboring objects rather than defining a new estimand.",
+    "reopen_condition": "Only a materially new executor-side observable or intervention, defined before fresh outcomes and not expressible by symbolic goal interaction, context/horizon/resource complexity, task-state management, grounding ambiguity, evaluation budget or generic task-difficulty models, may reopen a future realization."
+  },
+  "authority": {
+    "scientific": false,
+    "novelty": false,
+    "problem_gate": false,
+    "pre_researchitem_projection": false,
+    "research_item_promotion": false,
+    "method": false,
+    "experiment": false,
+    "provider_calls": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}

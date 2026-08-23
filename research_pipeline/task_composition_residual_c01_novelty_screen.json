@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0",
+  "screen_id": "TASK-COMPOSITION-RESIDUAL-C01",
+  "title": "Constituent-Matched Composition Residual in Embodied LLM Execution",
+  "status": "CLOSED_SEARCH_REALIZATION_MATURE_REDUCTION_NO_IRREDUCIBLE_EXECUTOR_OBSERVABLE",
+  "recorded_date": "2026-08-23",
+  "origin": {
+    "source_candidate": "MEMENTO-JOINT-BOUNDARY-CONTROL",
+    "source_evidence_track": "MEMENTO-JOINT-BOUNDARY-CONTROL-ARK-DEEPSEEK-AUX",
+    "source_decision": "HOLD",
+    "postnegative_artifact": "research_pipeline/memento_deepseek_aux_postnegative_diagnosis_20260823.json",
+    "rule": "Outcome-derived observations may generate a new hypothesis but cannot validate it or repair the parent F0."
+  },
+  "broad_object": {
+    "question": "Can task topology predict whether composing two embodied-agent tasks makes execution harder or easier?",
+    "decision": "STOP_MATURE_THEORY_REDUCTION",
+    "reason": "Positive/negative subgoal interaction and goal ordering are mature planning objects; resource-bounded planning already models horizon/resource pressure; recent agent work predicts task difficulty before rollouts and uses graph/dependency structure to characterize long-horizon difficulty.",
+    "not_a_new_primitive": [
+      "task graph complexity",
+      "goal-count difficulty",
+      "subgoal synergy/interference",
+      "shared exploration as generic planning reuse",
+      "time/horizon pressure as generic resource-bounded planning"
+    ]
+  },
+  "closest_work": [
+    {
+      "work": "Predicting Task Difficulty Without Rollouts",
+      "ref": "arXiv:2608.05797",
+      "boundary": "Already predicts ex-ante task difficulty from task descriptions and structural features across agentic benchmarks; therefore absolute pre-rollout difficulty prediction is not novel."
+    },
+    {
+      "work": "Agent Psychometrics",
+      "ref": "arXiv:2604.00594",
+      "boundary": "Already models task-level agent success/difficulty using task and environment features; therefore generic success prediction is not novel."
+    },
+    {
+      "work": "Toward Scalable Terminal Task Synthesis via Skill Graphs (SkillSynth)",
+      "ref": "arXiv:2604.25727",
+      "boundary": "Shows graph-guided skill composition and sequential dependencies change task difficulty relative to random multi-skill composition."
+    },
+    {
+      "work": "Graph-Structured Skill Compositions for LLM Agents (GraSP)",
+      "ref": "arXiv:2604.17870",
+      "boundary": "Uses typed precondition/effect/data/order DAGs for long-horizon skill composition; graph structure and dependency length are already established mechanisms."
+    },
+    {
+      "work": "Characterizing Subgoal Interactions for Planning",
+      "ref": "IJCAI 1993",
+      "boundary": "Classical planning already formalizes positive/negative subgoal interaction and serializability as determinants of combined-goal planning difficulty."
+    },
+    {
+      "work": "Planning-graph and goal-agenda heuristics",
+      "ref": "classical planning literature",
+      "boundary": "Combined conjunctive goals, positive/negative interactions, ordering and mergeability already have mature symbolic reductions."
+    },
+    {
+      "work": "resource-bounded planning",
+      "ref": "mature planning/control literature",
+      "boundary": "Time, execution horizon and shared resource constraints are mature explanations for bounded-agent performance and cannot be claimed as a new composition mechanism."
+    }
+  ],
+  "narrow_residual_screen": {
+    "question": "After a strongest same-information model is given constituent task difficulty, proposition-weighted constituent reference, symbolic goal interaction/ordering features, graph dependency structure, and resource/horizon descriptors available before execution, is there a reproducible LLM-executor-specific residual in realized composition performance?",
+    "status": "STOP_CURRENT_REALIZATION_NO_IRREDUCIBLE_EXECUTOR_OBSERVABLE",
+    "current_problem": "A targeted novelty search did not identify a specific executor-side pre-outcome observable that remains distinct from ordinary bounded rationality, context/horizon pressure, task-state management, grounding/ambiguity, evaluation-budget effects, execution error, model misspecification or another task-difficulty feature.",
+    "strongest_same_information_reducer": "A frozen model combining constituent difficulty, proposition counts, symbolic positive/negative goal interaction, room/receptacle/object overlap, dependency depth, estimated resource/horizon pressure and generic ex-ante task-difficulty features.",
+    "null_prediction": "Once these mature reducers receive the same pre-outcome information, any apparent topology-conditioned composition sign is fully explained; adding an unnamed executor-specific residual has no held-out value.",
+    "executor_observable_search": [
+      {"candidate": "context or prompt-state growth under composition", "decision": "REDUCED", "reduction": "long-horizon context bottlenecks and context-management/folding mechanisms are already explicit research objects", "refs": ["ICML 2026: Scaling Long-Horizon Agent via Context Folding", "ICML 2026: On Training Large Language Models for Long-Horizon Tasks"]},
+      {"candidate": "task-state drift or error propagation across composed subtasks", "decision": "REDUCED", "reduction": "explicit task-state management and audit loops already target propagation of incorrect state across long-horizon execution", "refs": ["arXiv:2608.01964 LongHorizon-Harness"]},
+      {"candidate": "referent/object ambiguity and fine-grained grounding burden", "decision": "REDUCED", "reduction": "embodied instruction ambiguity and perception-grounding failures are already established difficulty mechanisms", "refs": ["ACL 2025 AmbiK", "Seeing the details to plan ahead, 2026"]},
+      {"candidate": "shared fixed decision-call or evaluation budget under a composed task", "decision": "REDUCED", "reduction": "resource-bounded planning and budget-sensitive agent benchmark decisions are mature evaluation/planning objects", "refs": ["arXiv:2607.12338 How Many Tasks Are Enough for Agent Benchmark Decisions?"]}
+    ],
+    "required_to_reopen": "A future discovery must bring a materially new executor-side observable or intervention not expressible by the registered mature reducers. It must be defined before any fresh outcomes are inspected; merely renaming context length, grounding ambiguity, task-state drift, goal interaction, horizon/resource pressure or evaluation budget does not reopen this realization.",
+    "forbidden_reopen_evidence": [
+      "reusing units 10000-10011 as confirmatory data",
+      "training a predictor on outcome-derived subgroup labels and evaluating it on the same units",
+      "changing the parent MEMENTO F0 estimator or threshold",
+      "using a different model merely to obtain a favorable sign",
+      "claiming novelty from graph complexity, goal interaction, horizon pressure, or task difficulty alone"
+    ]
+  },
+  "local_memory_collision_audit": {
+    "closed_basins_checked": 43,
+    "closed_basin_identity_sha256": "20b644d901d7e8cd40e55025a9cae19643a59ea7673b4333d268ae5400f0496d",
+    "terminal_stops_checked": 72,
+    "terminal_stop_identity_sha256": "32a3295d6ce7d4e9fe8982fe98fa5bad957ed1a72905d48251ea35b9fc3d52a8",
+    "live_pre_researchitem_candidates": ["MEMENTO-JOINT-BOUNDARY-CONTROL"],
+    "exact_local_collision_found": false,
+    "external_mature_theory_reduction_found": true,
+    "decision": "NO_CANDIDATE_PROJECTION"
+  },
+  "next_action": "CLOSE_CURRENT_REALIZATION; RETAIN_FAILURE_MEMORY_AND_UNREAD_HOLDOUT_POOL; REOPEN_ONLY_ON_MATERIALLY_NEW_OBSERVABLE",
+  "authority": {
+    "scientific": false,
+    "novelty": false,
+    "problem_gate": false,
+    "pre_researchitem_projection": false,
+    "research_item_promotion": false,
+    "support_download": false,
+    "provider_calls": false,
+    "experiment": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}

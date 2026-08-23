@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "policy": {
+    "entries_are_zero_authority_institutional_memory_inputs": true,
+    "entries_cannot_create_or_promote_candidates": true,
+    "entries_cannot_authorize_problem_gate_method_experiment_provider_or_gpu": true,
+    "entries_must_be_scope_bound_and_layer_typed": true,
+    "external_or_auxiliary_negative_runs_may_enter_memory_without_mutating_active_scientific_state": true
+  },
+  "assets": [
+    {
+      "source_path": "research_pipeline/memento_composition_hold_failure_asset_20260823.json",
+      "source_key": "asset"
+    }
+  ],
+  "scientific_authority": false
+}
