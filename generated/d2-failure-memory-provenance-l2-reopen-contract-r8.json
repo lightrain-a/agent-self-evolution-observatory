@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "experiment_id": "D2-C45-R5-EXACT-INFORMATION-PROVENANCE",
+  "contract_id": "D2-C45-L2-FROZEN-REOPEN-CONTRACT-R8",
+  "status": "IDENTIFICATION_AND_SUPPORT_FROZEN_EXECUTION_BLOCKED",
+  "role": "PROSPECTIVE_PRE_OUTCOME_REOPEN_SPEC_NO_EXECUTION_AUTHORITY",
+  "identification_target": {
+    "estimand": "Delta_L(m,x') = E[Y | M=m, do(L=F), x', E] - E[Y | M=m, do(L=S), x', E]",
+    "actionable_memory": "M=m byte-identical across L_F and L_S",
+    "treatment": "visible provenance metadata only",
+    "independent_unit": "unique task",
+    "held_fixed": [
+      "future query x'",
+      "future evidence/state E",
+      "actionable memory bytes m",
+      "all non-provenance paired inputs"
+    ]
+  },
+  "support_contract": {
+    "manifest_reconstruction_id": "D2-C45-R5-L2-SUPPORT-RECONSTRUCTION-R8",
+    "source_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e",
+    "target_unique_tasks": 10,
+    "current_eligible_unique_tasks": 5,
+    "current_eligible_task_ids": [
+      "21",
+      "25",
+      "26",
+      "163",
+      "165"
+    ],
+    "current_support_gate_pass": false
+  },
+  "current_execution_gate": {
+    "model_calls_permitted": false,
+    "scientific_outcome_execution_permitted": false,
+    "current_model_call_budget": 0,
+    "l3_transition_permitted": false,
+    "blocking_reasons": [
+      "frozen support capacity 5 < target 10",
+      "no current scientific/model-call authority",
+      "archived R5 lacks complete runtime/statistical binding"
+    ]
+  },
+  "execution_bindings_still_required_before_any_future_call": [
+    "exact executor/model identity and version",
+    "exact L_F/L_S metadata serialization with no other byte changes",
+    "paired seed/repetition schedule and max request budget",
+    "terminal scorer/parser",
+    "task-level estimator and exact/randomization test",
+    "effect/significance decision rule",
+    "support-failure and no-post-outcome-replacement rule"
+  ],
+  "reopen_condition": {
+    "all_required": true,
+    "conditions": [
+      "new content-addressed pre-outcome asset gives >=10 unique eligible tasks under same rules",
+      "missing runtime/statistical bindings frozen pre-outcome",
+      "separate scientific authority reopens L2",
+      "separate experiment/model-call authority permits budget"
+    ],
+    "forbidden_repairs": [
+      "lower target",
+      "widen prompt family",
+      "relax reference contract",
+      "reuse prior D2 task IDs",
+      "count repeated runs as independent",
+      "use L1/R4/R6 outcomes to select L2 tasks"
+    ]
+  },
+  "scientific_values_changed": false,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

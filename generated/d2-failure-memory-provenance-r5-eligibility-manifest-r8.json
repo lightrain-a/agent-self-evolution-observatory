@@ -1,0 +1,283 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "experiment_id": "D2-C45-R5-EXACT-INFORMATION-PROVENANCE",
+  "reconstruction_id": "D2-C45-R5-L2-SUPPORT-RECONSTRUCTION-R8",
+  "status": "RECONSTRUCTED_AND_VERIFIED_SUPPORT_CAPACITY_STOP",
+  "reconstruction_role": "ENGINEERING_REPRODUCIBILITY_REPAIR_ONLY",
+  "historical_binding": {
+    "archive_commit": "a82901a9c29d59b0e9da2ae680fab30fa5e82d34",
+    "archived_receipts": {
+      "r5_capacity": {
+        "path": "generated/d2-failure-memory-provenance-r5-support-capacity.json",
+        "sha256": "1027c72993f7563c0e7494cec5560469d3eba7fa1891d5b5042ad73b7b9584dc"
+      },
+      "r4_terminal": {
+        "path": "generated/d2-failure-memory-provenance-r4-controlled-swap.json",
+        "sha256": "9a4d7ea1431dfd18951bf0ad4202e1f35795d1ba676089de60956f989e07f4c8",
+        "candidate_task_ids": [
+          "385",
+          "387",
+          "167",
+          "23",
+          "388",
+          "164"
+        ]
+      },
+      "bridge_support": {
+        "path": "generated/d2-failure-memory-provenance-bridge-support.json",
+        "sha256": "b7db0c347ad63fd7efc0cb76c26f4014303c0ccef62b2a3303b876c9089dfcb0",
+        "candidate_task_ids": [
+          "125",
+          "360",
+          "228",
+          "126",
+          "362",
+          "229"
+        ]
+      },
+      "r6_crosscheck": {
+        "path": "generated/d2-failure-memory-provenance-r6-early-action.json",
+        "sha256": "f3f55f07cad4c762b42727758aaa331848c654de7c32755d7ef563c96bca08e9"
+      }
+    },
+    "historical_candidate_task_ids": [
+      "21",
+      "25",
+      "26",
+      "163",
+      "165"
+    ],
+    "historical_maximum_possible_unique_tasks": 5,
+    "historical_model_requests_executed": 0
+  },
+  "source": {
+    "locator": "content-addressed-cache:wa_awm_shuffle1-shopping_run1.parquet",
+    "sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e",
+    "rows": 187
+  },
+  "eligibility_contract": {
+    "rule_provenance": "reconstructed from the historical R5 candidate set, archived appendix wording, exact released prompt inventory, and prior-D2 receipts; original regex text was not stored verbatim",
+    "historical_rule_text_was_not_stored_verbatim": true,
+    "selection_uses_outcome_fields": false,
+    "outcome_fields_used": [],
+    "prompt_rules": [
+      "^List out reviewers, if exist, who mention about .+$",
+      "What are the main criticisms of this product? Please extract the relevant sentences."
+    ],
+    "reference_answer_rule": "non-empty non-N/A checks.must_include",
+    "prior_d2_reuse_forbidden": true,
+    "prior_candidate_semantics": "R4 outcome-blind candidate IDs count as prior even when excluded before downstream outcomes; task 164 is therefore excluded",
+    "prior_d2_task_ids": [
+      "23",
+      "125",
+      "126",
+      "164",
+      "167",
+      "228",
+      "229",
+      "360",
+      "362",
+      "385",
+      "387",
+      "388"
+    ],
+    "unique_task_ids_only": true,
+    "repeated_runs_do_not_increase_capacity": true,
+    "target_unique_tasks": 10,
+    "post_audit_rule_widening_forbidden": true,
+    "post_audit_target_reduction_forbidden": true
+  },
+  "summary": {
+    "source_rows": 187,
+    "review_family_rows": 11,
+    "reference_contract_pass_rows": 8,
+    "prior_d2_exclusions_in_review_family": [
+      "23",
+      "164",
+      "167"
+    ],
+    "eligible_unique_tasks": 5,
+    "eligible_task_ids": [
+      "21",
+      "25",
+      "26",
+      "163",
+      "165"
+    ],
+    "target_unique_tasks": 10,
+    "support_gate_pass": false,
+    "model_requests_executed": 0,
+    "scientific_outcomes_opened": false
+  },
+  "review_family_manifest": [
+    {
+      "task_id": "21",
+      "prompt_family": "REVIEWER_MENTION_QUERY",
+      "task_prompt": "List out reviewers, if exist, who mention about ear cups being small",
+      "reference_contract": {
+        "pass": true,
+        "reference_count": 5,
+        "reference_fingerprint": "a328d8947d590a1c9da4b748880f54350e81b39dc2543d128e3c7007a756a03a"
+      },
+      "prior_d2_task_id": false,
+      "eligible": true,
+      "blockers": []
+    },
+    {
+      "task_id": "22",
+      "prompt_family": "REVIEWER_MENTION_QUERY",
+      "task_prompt": "List out reviewers, if exist, who mention about under water photo",
+      "reference_contract": {
+        "pass": false,
+        "reference_count": 0,
+        "reference_fingerprint": null
+      },
+      "prior_d2_task_id": false,
+      "eligible": false,
+      "blockers": [
+        "REFERENCE_ANSWER_CONTRACT_FAIL"
+      ]
+    },
+    {
+      "task_id": "23",
+      "prompt_family": "REVIEWER_MENTION_QUERY",
+      "task_prompt": "List out reviewers, if exist, who mention about good fingerprint resistant",
+      "reference_contract": {
+        "pass": true,
+        "reference_count": 2,
+        "reference_fingerprint": "f3d872c3ea2c5b7fd2fd466f65bfb9e4caf55e0b8a62bf90b7e3934ff48c39d1"
+      },
+      "prior_d2_task_id": true,
+      "eligible": false,
+      "blockers": [
+        "PRIOR_D2_TASK_ID_REUSE_FORBIDDEN"
+      ]
+    },
+    {
+      "task_id": "24",
+      "prompt_family": "REVIEWER_MENTION_QUERY",
+      "task_prompt": "List out reviewers, if exist, who mention about price being unfair",
+      "reference_contract": {
+        "pass": false,
+        "reference_count": 0,
+        "reference_fingerprint": null
+      },
+      "prior_d2_task_id": false,
+      "eligible": false,
+      "blockers": [
+        "REFERENCE_ANSWER_CONTRACT_FAIL"
+      ]
+    },
+    {
+      "task_id": "25",
+      "prompt_family": "REVIEWER_MENTION_QUERY",
+      "task_prompt": "List out reviewers, if exist, who mention about average print quality",
+      "reference_contract": {
+        "pass": true,
+        "reference_count": 2,
+        "reference_fingerprint": "d3926b6e54252ef124b8906b799c56af9f8ed56f145e3c1aff7e93c5f4a51646"
+      },
+      "prior_d2_task_id": false,
+      "eligible": true,
+      "blockers": []
+    },
+    {
+      "task_id": "26",
+      "prompt_family": "REVIEWER_MENTION_QUERY",
+      "task_prompt": "List out reviewers, if exist, who mention about complain of the customer service",
+      "reference_contract": {
+        "pass": true,
+        "reference_count": 2,
+        "reference_fingerprint": "04cd6486ac49af8bf88b0972f4e45611b6694267ad4323f1704e5b6861bc9c1b"
+      },
+      "prior_d2_task_id": false,
+      "eligible": true,
+      "blockers": []
+    },
+    {
+      "task_id": "163",
+      "prompt_family": "CRITICISM_SENTENCE_EXTRACTION",
+      "task_prompt": "What are the main criticisms of this product? Please extract the relevant sentences.",
+      "reference_contract": {
+        "pass": true,
+        "reference_count": 6,
+        "reference_fingerprint": "dca14aabb940c5fdd00401a3fdd694c880e189abcc0d643640f285d9153e78bb"
+      },
+      "prior_d2_task_id": false,
+      "eligible": true,
+      "blockers": []
+    },
+    {
+      "task_id": "164",
+      "prompt_family": "CRITICISM_SENTENCE_EXTRACTION",
+      "task_prompt": "What are the main criticisms of this product? Please extract the relevant sentences.",
+      "reference_contract": {
+        "pass": true,
+        "reference_count": 2,
+        "reference_fingerprint": "1a57e0240905a1d1cbe618dd193742494dc033bef2791336fe353d23dcb5591f"
+      },
+      "prior_d2_task_id": true,
+      "eligible": false,
+      "blockers": [
+        "PRIOR_D2_TASK_ID_REUSE_FORBIDDEN"
+      ]
+    },
+    {
+      "task_id": "165",
+      "prompt_family": "CRITICISM_SENTENCE_EXTRACTION",
+      "task_prompt": "What are the main criticisms of this product? Please extract the relevant sentences.",
+      "reference_contract": {
+        "pass": true,
+        "reference_count": 6,
+        "reference_fingerprint": "877f3945060ce5c31f088ebdd2571facde42d6ee7eb07894779838abd8ff8c70"
+      },
+      "prior_d2_task_id": false,
+      "eligible": true,
+      "blockers": []
+    },
+    {
+      "task_id": "166",
+      "prompt_family": "CRITICISM_SENTENCE_EXTRACTION",
+      "task_prompt": "What are the main criticisms of this product? Please extract the relevant sentences.",
+      "reference_contract": {
+        "pass": false,
+        "reference_count": 0,
+        "reference_fingerprint": null
+      },
+      "prior_d2_task_id": false,
+      "eligible": false,
+      "blockers": [
+        "REFERENCE_ANSWER_CONTRACT_FAIL"
+      ]
+    },
+    {
+      "task_id": "167",
+      "prompt_family": "CRITICISM_SENTENCE_EXTRACTION",
+      "task_prompt": "What are the main criticisms of this product? Please extract the relevant sentences.",
+      "reference_contract": {
+        "pass": true,
+        "reference_count": 6,
+        "reference_fingerprint": "5382be9aa21ef514770c86b7f30e227f5a892129ee08e9d203f6d612e244e19f"
+      },
+      "prior_d2_task_id": true,
+      "eligible": false,
+      "blockers": [
+        "PRIOR_D2_TASK_ID_REUSE_FORBIDDEN"
+      ]
+    }
+  ],
+  "adjudication": {
+    "scientific_verdict": "NO_VERDICT_SUPPORT_FAILURE",
+    "support_failure_is_scientific_failure": false,
+    "scientific_values_changed": false,
+    "historical_5_of_10_value_reproduced": true
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "gpu": false,
+    "model_calls": false,
+    "submission": false
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "gate_id": "D2-C45-L2-ANALYSIS-GATE-R8",
+  "status": "STOP_SUPPORT_CAPACITY_NO_EXECUTION",
+  "decision": "KEEP_L2_UNEXECUTED_AND_DO_NOT_ADVANCE_TO_L3_EXECUTION",
+  "inputs": {
+    "manifest_reconstruction_id": "D2-C45-R5-L2-SUPPORT-RECONSTRUCTION-R8",
+    "reopen_contract_id": "D2-C45-L2-FROZEN-REOPEN-CONTRACT-R8",
+    "source_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e"
+  },
+  "facts": {
+    "target_unique_tasks": 10,
+    "eligible_unique_tasks": 5,
+    "eligible_task_ids": [
+      "21",
+      "25",
+      "26",
+      "163",
+      "165"
+    ],
+    "support_gate_pass": false,
+    "model_requests_executed": 0,
+    "scientific_outcomes_opened": false
+  },
+  "interpretation": "The historical 5-of-10 support stop is independently reproducible from the exact released shopping parquet and archived prior-D2 receipts. This repairs evidence provenance only; it does not repair L2 scientifically.",
+  "l3_policy": "L3 source-faithful transport execution remains downstream debt and is not opened by an L2 support failure. Offline asset census is support work only.",
+  "scientific_verdict": "NO_VERDICT_SUPPORT_FAILURE",
+  "scientific_values_changed": false,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}
