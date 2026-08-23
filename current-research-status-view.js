@@ -35,9 +35,11 @@
     return `<span class="experiment-status-badge status-${tone(value)}">${esc(zh ? `${zh}（${rendered}）` : rendered)}</span>`;
   };
   const downloads = (paper) => {
-    const d = paper.downloads || {};
-    if (!(d.pdf && d.tex && d.source_zip)) return "";
-    return `<div class="links current-status-downloads"><a class="link-btn" href="${esc(d.pdf)}" download>${pick("下载 PDF", "Download PDF")}</a><a class="link-btn" href="${esc(d.tex)}" download>${pick("下载 TeX", "Download TeX")}</a><a class="link-btn repo" href="${esc(d.source_zip)}" download>${pick("完整源码 ZIP", "Full source ZIP")}</a></div>`;
+    const d = paper.downloads || {}, links=[];
+    if (d.pdf) links.push(`<a class="link-btn" href="${esc(d.pdf)}" download>${pick("下载 PDF", "Download PDF")}</a>`);
+    if (d.tex) links.push(`<a class="link-btn" href="${esc(d.tex)}" download>${pick("下载 TeX", "Download TeX")}</a>`);
+    if (d.source_zip) links.push(`<a class="link-btn repo" href="${esc(d.source_zip)}" download>${pick("完整源码 ZIP", "Full source ZIP")}</a>`);
+    return links.length ? `<div class="links current-status-downloads">${links.join("")}</div>` : "";
   };
   const paperAcceptanceState = () => window.RESEARCH_SYSTEM_STATE?.paper_acceptance || {};
   const paperAcceptanceEntry = (paperId = "STRI-ICLR2027") => (paperRegistry().papers || []).find(row => row.paper_id === paperId || row.acceptance_paper_id === paperId) || (paperAcceptanceState().ledger_index?.entries || []).find(row => row.paper_id === paperId) || {};
@@ -629,9 +631,9 @@
     const boundaryText = (value) => value && typeof value === "object" ? Object.entries(value).map(([key,item]) => `${key}=${String(item)}`).join(" · ") : String(value ?? "--");
     const boundaryRows = Object.entries(boundary).map(([key,value]) => `<tr><td><strong>${esc(language === "zh" ? (boundaryLabelZh[key] || key) : key)}</strong></td><td>${esc(language === "zh" ? boundaryZhText(key,value) : boundaryText(value))}</td></tr>`).join("");
     const canonicalReady = (paper.paper_stage || paper.current_state) === "SUBMISSION_READY" && paper.submission_ready === true && (paper.latest_submission_readiness || {}).submission_ready === true;
-    const activePaperDownloads = canonicalReady ? {pdf:"downloads/STRI-ICLR2027-submission-ready-20260821.pdf",tex:"downloads/STRI-ICLR2027-submission-ready-20260821.tex",source_zip:"downloads/STRI-ICLR2027-submission-ready-20260821-source.zip"} : (paper.downloads || {});
+    const activePaperDownloads = paper.downloads || {};
     const registry=paperRegistry(), registrySummary=registry.summary||{}, registryPapers=registry.papers||[];
-    const registryDownloadMap={STRI:{pdf:"downloads/STRI-ICLR2027-submission-ready-20260821.pdf",tex:"downloads/STRI-ICLR2027-submission-ready-20260821.tex",source_zip:"downloads/STRI-ICLR2027-submission-ready-20260821-source.zip"},"AGENT-SAFETY-R9":{pdf:"downloads/Agent-Safety-R9-submission-ready-20260822.pdf",tex:"downloads/Agent-Safety-R9-submission-ready-20260822.tex",source_zip:"downloads/Agent-Safety-R9-submission-ready-20260822-source.zip"}};
+    const registryDownloadMap=Object.fromEntries(registryPapers.map(row=>[row.paper_id,row.downloads||{}]));
     const registryCards=registryPapers.map(row=>{
       const supported=Number.isFinite(Number(row.supported_claims))?Number(row.supported_claims):Object.keys(row.supported_claims||{}).length;
       const active=Number.isFinite(Number(row.active_unrefuted_claims))?Number(row.active_unrefuted_claims):Object.keys(row.active_unrefuted_claims||{}).length;

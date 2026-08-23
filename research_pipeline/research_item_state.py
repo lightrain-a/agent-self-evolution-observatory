@@ -600,6 +600,13 @@ def build_paper_registry(research_state=None):
     by_code = {row.get("code"): row for row in research_state.get("research_items") or []}
     stri_acceptance = dict(acceptance_by_id.get("STRI-ICLR2027") or {})
     safety_acceptance = dict(acceptance_by_id.get("AGENT-SAFETY-R9") or {})
+    public_downloads = {
+        "STRI": {"pdf": "downloads/STRI-ICLR2027.pdf", "source_zip": "downloads/STRI-ICLR2027-source.zip"},
+        "AGENT-SAFETY-R9": {"pdf": "downloads/Agent-Safety-R9.pdf", "source_zip": "downloads/Agent-Safety-R9-source.zip"},
+        "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE": {"pdf": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE.pdf", "source_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip"},
+        "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK": {"pdf": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK.pdf", "source_zip": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip"},
+        "D2-PAPER-FAILURE-MEMORY-PROVENANCE": {"pdf": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf", "source_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip"},
+    }
     stri = {
         **legacy_stri,
         **stri_acceptance,
@@ -615,6 +622,7 @@ def build_paper_registry(research_state=None):
         "submission_status": stri_acceptance.get("current_state") or "PAPER_EVIDENCE",
         "legacy_submission_status": legacy_stri.get("submission_status"),
         "submission_ready": bool((stri_acceptance.get("latest_submission_readiness") or {}).get("submission_ready")),
+        "downloads": dict(public_downloads["STRI"]),
         "experiment_refs": list((by_code.get("E-7") or {}).get("experiment_refs") or []),
         "research_authority": authority(),
         "acceptance_authority": stri_acceptance.get("authority") or {},
@@ -633,6 +641,7 @@ def build_paper_registry(research_state=None):
         "paper_stage": safety_acceptance.get("current_state") or "PAPER_EVIDENCE",
         "submission_status": safety_acceptance.get("current_state") or "PAPER_EVIDENCE",
         "submission_ready": bool((safety_acceptance.get("latest_submission_readiness") or {}).get("submission_ready")),
+        "downloads": dict(public_downloads["AGENT-SAFETY-R9"]),
         "experiment_refs": list((by_code.get("G-1") or {}).get("experiment_refs") or []),
         "research_authority": authority(),
         "acceptance_authority": safety_acceptance.get("authority") or {},
@@ -677,6 +686,7 @@ def build_paper_registry(research_state=None):
             "paper_stage": accepted.get("current_state") or "PAPER_EVIDENCE",
             "submission_status": accepted.get("current_state") or "PAPER_EVIDENCE",
             "submission_ready": bool((accepted.get("latest_submission_readiness") or {}).get("submission_ready")),
+            "downloads": dict(public_downloads[paper_id]),
             "experiment_refs": [],
             "research_authority": authority(),
             "acceptance_authority": accepted.get("authority") or {},
@@ -700,6 +710,7 @@ def build_paper_registry(research_state=None):
             "gate_clean_submission_ready_is_latest_effective_internal_readiness": True,
             "primary_next_action_is_internal_only": True,
             "paper_first_discovery_papers_need_not_fake_research_item_parentage": True,
+            "paper_downloads_are_zero_authority_public_artifact_links": True,
             **(acceptance.get("policy") or {}),
         },
         "summary": {

@@ -1,8 +1,8 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-08-22T18:27:19+00:00",
-  "source_revision": "24bbed72666687b0cc8025fa663b94b4362f36cc",
-  "projection_source": "generated/research-system-state.json",
+  "generated_at": "2026-08-23T06:53:31+00:00",
+  "source_revision": "ad1ba4e1822edd37adfd097ed9626300fb390b8f",
+  "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
     "paper_registry_cannot_grant_research_or_experiment_authority": true,
@@ -12,6 +12,7 @@
     "gate_clean_submission_ready_is_latest_effective_internal_readiness": true,
     "primary_next_action_is_internal_only": true,
     "paper_first_discovery_papers_need_not_fake_research_item_parentage": true,
+    "paper_downloads_are_zero_authority_public_artifact_links": true,
     "schema_version": "1.0",
     "scientific_truth_precedes_paper_optimization": true,
     "paper_workflow_never_grants_scientific_authority": true,
@@ -80,6 +81,10 @@
       },
       "stage": "PASS_MANUSCRIPT_EVIDENCE",
       "track": "ASSET_FIRST_PAPER_READY",
+      "paper_lifecycle_source": "canonical-paper-acceptance",
+      "paper_acceptance_state": "SUBMISSION_READY",
+      "paper_acceptance_scientific_status": "READY",
+      "paper_acceptance_gate_clean": true,
       "claims_supported": 3,
       "claims_total": 3,
       "qa_passed": 60,
@@ -118,7 +123,6 @@
       "scientific_authority": false,
       "canonical_problem_gate_added": 0,
       "downloads": {
-        "tex": "downloads/STRI-ICLR2027.tex",
         "pdf": "downloads/STRI-ICLR2027.pdf",
         "source_zip": "downloads/STRI-ICLR2027-source.zip"
       },
@@ -269,13 +273,13 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 25,
+        "events": 34,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
         "mock_reviews": 2,
         "claim_audit_receipts": 1,
-        "manuscript_ci_receipts": 2,
+        "manuscript_ci_receipts": 3,
         "prebuttal_receipts": 1,
         "submission_readiness_receipts": 1,
         "contract_revisions": 0
@@ -317,7 +321,7 @@
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "3150e82177748aac53585a054385c751c8bfc42d9c37b9ed668f3b842a5c0690",
+        "claim_audit_sha256": "e7a01b12e997f531585654ab17df69593aab2660f3394ca5e4e1e8b123f5bd44",
         "blockers": [],
         "checks": 20,
         "passed": 20
@@ -337,19 +341,19 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r2",
-        "receipt_sha256": "eca030a59b30fac4fcf0fb5e9a3e170b143cb6163ec1a7072163db0715c94cdd",
+        "protocol_version": "1.0+r3-closest-work",
+        "receipt_sha256": "1f802625ca8dfb7b43d0aaf5a3bc985a7e450fa33657a255a05b94b4e39120df",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
-          "agent-native-artifact": true,
-          "citation-integrity": true,
           "hierarchical-rubric": true,
-          "reader-simulation": true,
-          "reproducibility-bundle": true,
-          "submission-package": true,
           "verification-refinement": true,
-          "visual-story": true
+          "citation-integrity": true,
+          "visual-story": true,
+          "reproducibility-bundle": true,
+          "agent-native-artifact": true,
+          "reader-simulation": true,
+          "submission-package": true
         },
         "blockers": []
       },
@@ -374,7 +378,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "7cc3c6be104b6adb5dc9a1d64b39872d5002ee6b995c7f27b12f8fa1804fdc94",
+        "receipt_sha256": "84ecbe9943bb8cf2906b9131b11c0e6e43f45454f9856a249eb98cc5a5678d1a",
         "blockers": []
       },
       "latest_transition": {
@@ -491,16 +495,16 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 19,
+        "events": 27,
         "allowed_transitions": 8,
         "blocked_transitions": 1,
         "story_search_receipts": 1,
         "mock_reviews": 2,
         "claim_audit_receipts": 1,
-        "manuscript_ci_receipts": 1,
+        "manuscript_ci_receipts": 2,
         "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 1,
-        "submission_readiness_receipts": 1
+        "submission_readiness_receipts": 1,
+        "contract_revisions": 1
       },
       "latest_story_search": {
         "pass": true,
@@ -530,8 +534,10 @@
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "942fe6857d8ed955fc4405e49a5fc763bc456ac153436cbdc2c1417979ee5e56",
-        "blockers": []
+        "claim_audit_sha256": "af4a26ed944bcf0e88069c27277250cb02cbdc56619feb8c795c32be40d5dab0",
+        "blockers": [],
+        "checks": 3,
+        "passed": 3
       },
       "latest_manuscript_ci": {
         "pass": true,
@@ -543,12 +549,13 @@
       "latest_prebuttal": {
         "pass": true,
         "decision_critical": 10,
-        "blockers": []
+        "blockers": [],
+        "unresolved_decision_critical": 0
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0",
-        "receipt_sha256": "ff96d1d4e6f62cd54c02435eedbeea97643098afa2df5bf48be6eb8afd1c3b7a",
+        "protocol_version": "1.0+r4-closest-work",
+        "receipt_sha256": "554d562bc630ba3377c0f3a5b973bb22fb8283453c458558cb9eaeea06ae9c13",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -564,18 +571,19 @@
         "blockers": []
       },
       "submission_readiness_context": {
-        "artifact_submission_ready": false,
-        "recommended_immediate_submission": "",
-        "scientific_status": "",
+        "artifact_submission_ready": true,
+        "recommended_immediate_submission": "READY_FOR_HUMAN_SUBMISSION",
+        "scientific_status": "READY",
         "support_blocker": "",
-        "external_human_submission_authority_required_for_SUBMITTED": false,
+        "external_human_submission_authority_required_for_SUBMITTED": true,
         "c3_c4_evidence_state": "",
+        "exact_timesage_replication_debt": "",
         "post_repair_mock_pc_recommendations": [],
         "post_repair_mock_pc_scores": []
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "0308664b4f224b9b8f8fc0e49d07bc764d2bf399a7d321be8394cbef1cde221b",
+        "receipt_sha256": "19ef44e10f5bf98caab2a818703f3cd1a22c48234eca26a3dc2fa9cdb6899b1c",
         "blockers": []
       },
       "latest_transition": {
@@ -600,6 +608,10 @@
       "paper_stage": "SUBMISSION_READY",
       "submission_status": "SUBMISSION_READY",
       "submission_ready": true,
+      "downloads": {
+        "pdf": "downloads/Agent-Safety-R9.pdf",
+        "source_zip": "downloads/Agent-Safety-R9-source.zip"
+      },
       "experiment_refs": [],
       "research_authority": {
         "method": false,
@@ -690,13 +702,13 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 28,
+        "events": 38,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
         "mock_reviews": 4,
         "claim_audit_receipts": 1,
-        "manuscript_ci_receipts": 2,
+        "manuscript_ci_receipts": 3,
         "prebuttal_receipts": 1,
         "submission_readiness_receipts": 1,
         "contract_revisions": 0
@@ -758,19 +770,19 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r2",
-        "receipt_sha256": "09aeabfebae9e31c82aeb8aee6bcb5c98e047d93d992f2c1b3e53ba097c1aa2d",
+        "protocol_version": "1.0+r3-closest-work",
+        "receipt_sha256": "b20b216c8eb372e1df894a0227c752b4ab5fb69b7a9403e5afc892e6587f8e28",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
-          "agent-native-artifact": true,
-          "citation-integrity": true,
           "hierarchical-rubric": true,
-          "reader-simulation": true,
-          "reproducibility-bundle": true,
-          "submission-package": true,
           "verification-refinement": true,
-          "visual-story": true
+          "citation-integrity": true,
+          "visual-story": true,
+          "reproducibility-bundle": true,
+          "agent-native-artifact": true,
+          "reader-simulation": true,
+          "submission-package": true
         },
         "blockers": []
       },
@@ -795,7 +807,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "fbb9444e49a7b13f294eb6eead8a4aafa0c8ac5fc8866f71d57b1238ce9410f9",
+        "receipt_sha256": "13eb4b34b144b51e98ff5038bf3ad18d062555926ccdf11b5c80698e42939797",
         "blockers": []
       },
       "latest_transition": {
@@ -823,6 +835,10 @@
       "paper_stage": "SUBMISSION_READY",
       "submission_status": "SUBMISSION_READY",
       "submission_ready": true,
+      "downloads": {
+        "pdf": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE.pdf",
+        "source_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip"
+      },
       "experiment_refs": [],
       "research_authority": {
         "method": false,
@@ -914,13 +930,13 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 41,
+        "events": 49,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
         "mock_reviews": 4,
         "claim_audit_receipts": 2,
-        "manuscript_ci_receipts": 3,
+        "manuscript_ci_receipts": 4,
         "prebuttal_receipts": 2,
         "submission_readiness_receipts": 1,
         "contract_revisions": 0
@@ -982,19 +998,19 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r6",
-        "receipt_sha256": "57bac5fd6b54b512a304aab80caef297b799d5bba08847cdbb51d63ebe1abf70",
+        "protocol_version": "1.0+r7-closest-work",
+        "receipt_sha256": "cd1314dadd17163a6b952a43787e56a3dd9675370ea4caab895ae0e2e6e9adde",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
-          "agent-native-artifact": true,
-          "citation-integrity": true,
           "hierarchical-rubric": true,
-          "reader-simulation": true,
-          "reproducibility-bundle": true,
-          "submission-package": true,
           "verification-refinement": true,
-          "visual-story": true
+          "citation-integrity": true,
+          "visual-story": true,
+          "reproducibility-bundle": true,
+          "agent-native-artifact": true,
+          "reader-simulation": true,
+          "submission-package": true
         },
         "blockers": []
       },
@@ -1004,8 +1020,8 @@
         "scientific_status": "READY",
         "support_blocker": "",
         "external_human_submission_authority_required_for_SUBMITTED": true,
-        "c3_c4_evidence_state": "SOURCE_NATIVE_EVIDENCE_BACKED_WITH_EXACT_TIMESAGE_EXTERNAL_REPLICATION_DEBT",
-        "exact_timesage_replication_debt": "ACTIVE_EXTERNAL_REPLICATION_DEBT_NONBLOCKING_FOR_SOURCE_NATIVE_PAPER",
+        "c3_c4_evidence_state": "",
+        "exact_timesage_replication_debt": "",
         "post_repair_mock_pc_recommendations": [
           "accept",
           "accept",
@@ -1019,7 +1035,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "93bfad461f0022523cd9175c059ca5e3351b0fd4ee8f366d96ebf3cbefe9f195",
+        "receipt_sha256": "097aca9ec348866ba1318a2b3521cc5d06e94a5dfc963b1b9244934df8d453c8",
         "blockers": []
       },
       "source_native_evidence": {
@@ -1054,6 +1070,10 @@
       "paper_stage": "SUBMISSION_READY",
       "submission_status": "SUBMISSION_READY",
       "submission_ready": true,
+      "downloads": {
+        "pdf": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK.pdf",
+        "source_zip": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip"
+      },
       "experiment_refs": [],
       "research_authority": {
         "method": false,
@@ -1151,16 +1171,16 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 33,
+        "events": 43,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
         "mock_reviews": 6,
         "claim_audit_receipts": 1,
-        "manuscript_ci_receipts": 1,
+        "manuscript_ci_receipts": 2,
         "prebuttal_receipts": 1,
-        "paper_preparation_receipts": 1,
-        "submission_readiness_receipts": 1
+        "submission_readiness_receipts": 1,
+        "contract_revisions": 0
       },
       "latest_story_search": {
         "pass": true,
@@ -1191,7 +1211,9 @@
       "latest_claim_audit": {
         "pass": true,
         "claim_audit_sha256": "c408858760b77679464534e75089444284baa7c026f04b5ba9531151b9a27d28",
-        "blockers": []
+        "blockers": [],
+        "checks": 5,
+        "passed": 5
       },
       "latest_manuscript_ci": {
         "pass": true,
@@ -1203,12 +1225,13 @@
       "latest_prebuttal": {
         "pass": true,
         "decision_critical": 6,
-        "blockers": []
+        "blockers": [],
+        "unresolved_decision_critical": 0
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0",
-        "receipt_sha256": "c7700fda1cccec6c585876da3bb124b8fff35967506d4e5878f9730c2464b54a",
+        "protocol_version": "1.0+r3-closest-work",
+        "receipt_sha256": "eacf098fdcc2ee05aecedbd15222a1582946030313c12fd1dffdfc46b34c7dec",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -1224,18 +1247,19 @@
         "blockers": []
       },
       "submission_readiness_context": {
-        "artifact_submission_ready": false,
-        "recommended_immediate_submission": "",
-        "scientific_status": "",
+        "artifact_submission_ready": true,
+        "recommended_immediate_submission": "READY_FOR_HUMAN_SUBMISSION",
+        "scientific_status": "READY",
         "support_blocker": "",
-        "external_human_submission_authority_required_for_SUBMITTED": false,
+        "external_human_submission_authority_required_for_SUBMITTED": true,
         "c3_c4_evidence_state": "",
+        "exact_timesage_replication_debt": "",
         "post_repair_mock_pc_recommendations": [],
         "post_repair_mock_pc_scores": []
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "c69c35dfbadff125d551822613053f7752d90b411788ee33edbfce0efdf67712",
+        "receipt_sha256": "e09890eb6340ff55fd0a3d674523f3c261f0d1bb91118e2c4c6548906b63990e",
         "blockers": []
       },
       "latest_transition": {
@@ -1263,6 +1287,10 @@
       "paper_stage": "SUBMISSION_READY",
       "submission_status": "SUBMISSION_READY",
       "submission_ready": true,
+      "downloads": {
+        "pdf": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf",
+        "source_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip"
+      },
       "experiment_refs": [],
       "research_authority": {
         "method": false,

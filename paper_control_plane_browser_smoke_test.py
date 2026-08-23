@@ -71,6 +71,9 @@ def main() -> None:
             openFullStoryContracts: document.querySelectorAll('.paper-story-v3-full-chain[open]').length,
             storyArchetypes: document.querySelectorAll('.paper-story-archetype-guide article').length,
             storyPapers: document.querySelectorAll('[data-paper-story]').length,
+            storyDownloadGroups: document.querySelectorAll('.paper-story-downloads').length,
+            storyDownloadPdfs: [...document.querySelectorAll('.paper-story-download-pdf')].map(x => x.getAttribute('href') || ''),
+            storyDownloadZips: [...document.querySelectorAll('.paper-story-download-zip')].map(x => x.getAttribute('href') || ''),
             storyClosestWorkFolds: document.querySelectorAll('.paper-story-closest-work').length,
             openStoryClosestWorkFolds: document.querySelectorAll('.paper-story-closest-work[open]').length,
             storyClosestWorkGroups: document.querySelectorAll('.paper-story-closest-group').length,
@@ -104,6 +107,9 @@ def main() -> None:
         require(selected["noveltyPortfolio"] == 1 and selected["noveltyDetails"] == 5, "advisor novelty audit must remain preserved for all five papers")
         require(selected["readerPortfolio"] == 1 and selected["readerBriefs"] == 5 and selected["readerFigures"] == 5, f"reader-first paper layer is incomplete: {selected}")
         require(selected["storyBlueprint"] == 1 and selected["storyPhases"] == 5 and selected["storyBlueprintSteps"] == 15 and selected["openFullStoryContracts"] == 0 and selected["storyArchetypes"] == 5 and selected["storyPapers"] == 5 and selected["storyClosestWorkFolds"] == 5 and selected["openStoryClosestWorkFolds"] == 0 and selected["storyClosestWorkGroups"] == 16 and selected["storyClosestWorkCards"] == 37 and len(selected["storyClosestWorkLinks"]) == 37 and all(link.startswith("https://") for link in selected["storyClosestWorkLinks"]) and selected["storyMissingObjects"] == 5 and selected["storyGapCards"] == 15 and selected["storyPredictions"] >= 15 and selected["storyAlternatives"] >= 15 and selected["storyContracts"] == 5 and selected["storyRQs"] >= 16 and selected["storyComponents"] >= 18 and selected["storyStressTests"] >= 15 and selected["storyMechanisms"] >= 14 and selected["storyCoE"] == 5 and selected["storyOutlineRows"] >= 35, f"Paper Story V3 argument-chain / closest-work layer is incomplete: {selected}")
+        expected_download_pdfs = {"downloads/STRI-ICLR2027.pdf", "downloads/Agent-Safety-R9.pdf", "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE.pdf", "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK.pdf", "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf"}
+        expected_download_zips = {"downloads/STRI-ICLR2027-source.zip", "downloads/Agent-Safety-R9-source.zip", "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip", "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip", "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip"}
+        require(selected["storyDownloadGroups"] == 5 and set(selected["storyDownloadPdfs"]) == expected_download_pdfs and set(selected["storyDownloadZips"]) == expected_download_zips, f"Every Paper Story must expose the current stable PDF + source ZIP pair: {selected}")
         figures=selected["readerFigureText"]
         require(all(marker in figures.get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK","") for marker in ("47.5%","70%","100%","cross-domain grounding")), f"Temporal evidence figure lost the three-arm contrast or negative boundary: {figures.get('D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK','')}")
         require(all(marker in figures.get("D2-PAPER-FAILURE-MEMORY-PROVENANCE","") for marker in ("0.931","0.647","p=.0785","p=.0792","opposite sign")), f"Failure-Memory evidence figure must distinguish association from unresolved causal tests: {figures.get('D2-PAPER-FAILURE-MEMORY-PROVENANCE','')}")
@@ -150,6 +156,8 @@ def main() -> None:
                 "Evo-Harness",
                 "SkillProx",
                 "HyperSkill",
+                "Download paper PDF",
+                "Download source ZIP",
             )
             require(all(marker in en_text for marker in en_markers), f"English closest-work argument map is incomplete: {[m for m in en_markers if m not in en_text]}")
             execute(session_id, "localStorage.setItem('agent-evolution-language','zh'); return true;")
@@ -180,10 +188,12 @@ def main() -> None:
                 "p=0.00074",
                 "no-skill anchor",
                 "causal sign unresolved",
+                "下载论文 PDF",
+                "下载源码 ZIP",
             )
             require(all(marker in zh_text for marker in zh_markers), f"Chinese paper-story chain is incomplete: {[m for m in zh_markers if m not in zh_text]}")
             print("PASS")
-            print("Selected-paper Paper Story V3 verified in EN+ZH: 5 papers / 15-step blueprint / 5 archetypes / 16 approach groups / 37 closest-work comparisons / missing-object / mechanism-prediction / evaluation-contract / stress-test / CoE / collapsed audit")
+            print("Selected-paper Paper Story V3 verified in EN+ZH: 5 papers / 10 stable PDF+ZIP download buttons / 15-step blueprint / 5 archetypes / 16 approach groups / 37 closest-work comparisons / missing-object / mechanism-prediction / evaluation-contract / stress-test / CoE / collapsed audit")
             return
 
         navigate(session_id, "/index.html")

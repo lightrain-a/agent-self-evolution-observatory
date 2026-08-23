@@ -240,6 +240,10 @@ def build() -> Path:
         "Agent-Safety-R9-submission-ready-20260822.tex",
         "Agent-Safety-R9-submission-ready-20260822.pdf",
         "Agent-Safety-R9-submission-ready-20260822-source.zip",
+        "Agent-Safety-R9.pdf", "Agent-Safety-R9-source.zip",
+        "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE.pdf", "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip",
+        "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK.pdf", "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip",
+        "D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf", "D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip",
     ):
         source = downloads_source / name
         if source.exists():
@@ -346,6 +350,14 @@ def build() -> Path:
         OUTPUT / "downloads" / "Agent-Safety-R9-submission-ready-20260822.tex",
         OUTPUT / "downloads" / "Agent-Safety-R9-submission-ready-20260822.pdf",
         OUTPUT / "downloads" / "Agent-Safety-R9-submission-ready-20260822-source.zip",
+        OUTPUT / "downloads" / "Agent-Safety-R9.pdf",
+        OUTPUT / "downloads" / "Agent-Safety-R9-source.zip",
+        OUTPUT / "downloads" / "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE.pdf",
+        OUTPUT / "downloads" / "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip",
+        OUTPUT / "downloads" / "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK.pdf",
+        OUTPUT / "downloads" / "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip",
+        OUTPUT / "downloads" / "D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf",
+        OUTPUT / "downloads" / "D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip",
     )
     missing = [str(path.relative_to(OUTPUT)) for path in required if not path.exists()]
     if missing:
