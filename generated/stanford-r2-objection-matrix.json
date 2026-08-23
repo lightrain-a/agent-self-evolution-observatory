@@ -555,12 +555,12 @@
         "verdict": "Weak Reject"
       },
       "read": {
-        "zh": "Round 2 已准确理解 L0–L3 与 causal sign unresolved；r7 已闭合所有现有证据可完成的 power / operational-equivalence 修复，同时进一步确认 L1 仍是 writer-bundle 而非 provenance-only。",
-        "en": "Round 2 correctly understands L0–L3 and the unresolved causal sign; r7 closes the power and operational-equivalence repairs available from existing evidence while further confirming that L1 remains a writer bundle rather than a provenance-only treatment."
+        "zh": "Round 2 已准确理解 L0–L3 与 causal sign unresolved；r7 闭合 power / operational-equivalence 的现有证据修复，r8 又把 L2/R5 的 5/10 support stop 独立复算并固化为零调用门禁。该修复提高可审计性，但不把 support failure 变成 causal verdict。",
+        "en": "Round 2 correctly understands L0–L3 and the unresolved causal sign. R7 closes the existing-evidence power and operational-equivalence repairs, and R8 independently reconstructs the L2/R5 5-of-10 support stop as a zero-call gate. This improves auditability without converting a support failure into a causal verdict."
       },
       "next": {
-        "zh": "O3/O4 已由 r7 闭合；剩余 acceptance 风险集中在 O5 的 L2 metadata-only execution 与 O6 的 L3 source-faithful transport，二者都必须 scientific reopen。",
-        "en": "R7 closes O3/O4; the remaining acceptance risk is concentrated in O5 L2 metadata-only execution and O6 source-faithful L3 transport, both of which require scientific reopen."
+        "zh": "O3/O4 已由 r7 闭合；O5 的工程可复现性已由 r8 闭合，但 scientific gap 仍未闭合：L2 仍只有 5/10 独立 eligible tasks、0 model calls。剩余 acceptance 风险因此仍是 O5 的真正 metadata-only execution 与 O6 的 source-faithful L3 transport，二者都必须 scientific reopen。",
+        "en": "R7 closes O3/O4. R8 closes the engineering reproducibility gap for O5, but not the scientific gap: L2 still has only 5/10 independent eligible tasks and zero model calls. The remaining acceptance risk is therefore still O5 true metadata-only execution and O6 source-faithful L3 transport, both requiring scientific reopen."
       },
       "objections": [
         {
@@ -631,14 +631,17 @@
           },
           "d": "REQUIRES_SCIENTIFIC_REOPEN",
           "why": {
-            "zh": "当前 support 只有 5 eligible vs target 10，0 model calls；这是核心 provenance-only missing scientific object。",
-            "en": "Current support is 5 eligible versus target 10 with zero model calls; this is the central missing provenance-only scientific object."
+            "zh": "r8 已从 frozen shopping parquet（SHA256 fc9b…387e）与 prior-D2 receipts 独立复算出同一结果：11 个 review-family tasks → 8 个 reference-contract pass → 排除 prior D2 的 23/164/167 → 仅 5 个独立 eligible tasks（21/25/26/163/165），对 frozen target 10 仍 support fail；0 model calls、无 scientific outcomes。它修复 provenance，不修复 provenance-only scientific object。",
+            "en": "R8 independently reproduces the same result from the frozen shopping parquet (SHA256 fc9b…387e) and prior-D2 receipts: 11 review-family tasks -> 8 reference-contract passes -> exclude prior-D2 tasks 23/164/167 -> only 5 independent eligible tasks (21/25/26/163/165) against the frozen target of 10. The support gate still fails with zero model calls and no scientific outcomes. This repairs provenance, not the missing provenance-only scientific object."
           },
           "reopen": {
             "zh": "找到 ≥10 合格独立 tasks，或新的 canonical substrate 暴露真正 metadata-only toggle，并重新通过 scientific/experiment gate。",
             "en": "Find at least 10 eligible independent tasks or a new canonical substrate exposing a true metadata-only toggle, then pass scientific/experiment gates."
           },
-          "action": "SCIENTIFIC_REOPEN_REQUIRED"
+          "action": "SCIENTIFIC_REOPEN_REQUIRED",
+          "e": "B1 r8 L2/R5 eligibility manifest + reopen contract + analysis gate; supplement verifier 34/34 PASS",
+          "engineering_reproducibility": "RESOLVED_R8",
+          "scientific_gap": "OPEN_SUPPORT_FAILURE_NO_VERDICT"
         },
         {
           "id": "FAILURE-O6",
