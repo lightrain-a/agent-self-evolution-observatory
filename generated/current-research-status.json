@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-22T16:05:23+00:00",
-  "source_revision": "96a2f8df0da9c809772eab6fcfb38eefce7966d1",
-  "as_of_date": "2026-08-22",
+  "generated_at": "2026-08-23T05:18:26+00:00",
+  "source_revision": "99e41a962c3482201fb99bc4d4395c224ead4325",
+  "as_of_date": "2026-08-23",
   "headline": {
     "paper_ready": 1,
     "paper_quality_hold": 0,
@@ -28,8 +28,8 @@
     "legacy_p0_method_stop": 1,
     "launchable_formal_experiments": 0,
     "shadow_dead_ends": 2,
-    "shadow_closed_basins": 42,
-    "shadow_problem_novelty_stops": 5,
+    "shadow_closed_basins": 43,
+    "shadow_problem_novelty_stops": 6,
     "shadow_execution_stops": 0,
     "shadow_experiment_identifiability_stops": 2,
     "shadow_optimization_stops": 0,
@@ -142,6 +142,10 @@
     },
     "stage": "PASS_MANUSCRIPT_EVIDENCE",
     "track": "ASSET_FIRST_PAPER_READY",
+    "paper_lifecycle_source": "canonical-paper-acceptance",
+    "paper_acceptance_state": "SUBMISSION_READY",
+    "paper_acceptance_scientific_status": "READY",
+    "paper_acceptance_gate_clean": true,
     "claims_supported": 3,
     "claims_total": 3,
     "qa_passed": 60,
@@ -630,8 +634,8 @@
     "revise_hold": 1,
     "stop_standalone": 1,
     "dead_end_objects": 2,
-    "closed_basins": 42,
-    "problem_novelty_stops": 5,
+    "closed_basins": 43,
+    "problem_novelty_stops": 6,
     "execution_stops": 0,
     "experiment_identifiability_stops": 2,
     "optimization_stops": 0,
@@ -749,6 +753,23 @@
         "principle_update_allowed": false,
         "broader_core_principle_falsified": false,
         "source_readjudication_artifact": null
+      },
+      {
+        "candidate_id": "RSI-LOCKOUT-C01",
+        "title": "Intervention-surface lockout breaks recursive self-intervention closure",
+        "closure_layer": "problem_novelty",
+        "failure_layer": null,
+        "memory_class": "PROBLEM_NOVELTY_STOP",
+        "source_stop_class": "PROBLEM_NOVELTY_STOP",
+        "paper_first_lifecycle": "CLOSED_PAPER_FIRST",
+        "reason": "The current realization stops before full scale-up because the strongest matched simplification structurally saturates the registered primary binary interaction and the bounded falsifier leaves no replicated self-specific residual.",
+        "strongest_reduction": "Under identical target bytes, W capability, persistent mount fault, failure signal, verification obligation, restore primitive, and budget, the frozen binary closure endpoint has no self-specific W-lockout residual: both SELF and capability-isomorphic ORDINARY require the same persistent write edge, both close in RW, and both fail in RO.",
+        "reopen_only_if": "Only a distinct scientific object may reopen this direction: pre-register a non-saturated post-activation outcome and timing that yields an ex-ante self-specific prediction under identical pre-treatment information and capability availability. More repetitions, larger models, extra R/V firewall work, or a new substrate do not reopen RSI-LOCKOUT-C01.",
+        "experiment_run_for_this_readjudication": true,
+        "experiment_alone_authorizes_closure": false,
+        "principle_update_allowed": false,
+        "broader_core_principle_falsified": false,
+        "source_readjudication_artifact": "generated/rsi-lockout-c01-matched-simplification-readjudication-20260822.json"
       },
       {
         "candidate_id": "PA-01-EVIDENCE-ECHO",
@@ -1431,6 +1452,13 @@
       "decision": "STOP_PF7_STANDALONE_MERGE_EVIDENCE_IMPACT_REVALIDATION_COMPONENT",
       "next_action": null,
       "survives_as": "evidence-impact-revalidation: maintain dependency scope and selectively invalidate/revalidate affected evidence as a runtime/governance optimization, not a standalone paper thesis."
+    },
+    {
+      "id": "RSI-LOCKOUT-C01",
+      "status": "CLOSED_PAPER_FIRST",
+      "decision": "PROBLEM_NOVELTY_STOP",
+      "next_action": "NO_INTERNAL_ACTION",
+      "survives_as": "Only a distinct scientific object may reopen this direction: pre-register a non-saturated post-activation outcome and timing that yields an ex-ante self-specific prediction under identical pre-treatment information and capability availability. More repetitions, larger models, extra R/V firewall work, or a new substrate do not reopen RSI-LOCKOUT-C01."
     }
   ],
   "interpretation": {

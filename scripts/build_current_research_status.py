@@ -21,6 +21,7 @@ from research_pipeline.pre_researchitem_candidate_registry import (
     build_pre_researchitem_candidate_registry,
     validate_pre_researchitem_candidate_registry,
 )
+from research_pipeline.research_item_state import paper_acceptance_state
 
 GEN = ROOT / "generated"
 
@@ -80,6 +81,22 @@ stri_errors = validate_asset_first_stri_public_status(sys_stri)
 if stri_errors:
     raise RuntimeError("invalid STRI public status:\n- " + "\n- ".join(stri_errors))
 stri_summary = sys_stri.get("summary", {})
+paper_acceptance, paper_acceptance_by_id = paper_acceptance_state()
+stri_paper_state = dict(paper_acceptance_by_id.get("STRI-ICLR2027") or {})
+stri_acceptance_ready = (
+    str(stri_paper_state.get("current_state") or "") == "SUBMISSION_READY"
+    and str(stri_paper_state.get("scientific_status") or "") == "READY"
+    and stri_paper_state.get("gate_clean_submission_ready") is True
+    and stri_paper_state.get("immediate_submission_hold") is False
+)
+stri_public_ready = bool(stri_summary.get("paper_ready")) or stri_acceptance_ready
+stri_public_status = "READY_NARROW_ICLR" if stri_acceptance_ready else sys_stri.get("status")
+stri_public_submission_status = (
+    "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW"
+    if stri_acceptance_ready
+    else sys_stri.get("submission_status")
+)
+stri_public_track = "ASSET_FIRST_PAPER_READY" if stri_acceptance_ready else sys_stri.get("track", "ASSET_FIRST_PAPER_QUALITY_REPAIR")
 queue_summary = problem_queue.get("summary", {})
 backlog_summary = paper_backlog.get("summary", {})
 p0_summary = p0_ledger.get("summary", {})
@@ -121,7 +138,7 @@ for row in (shadow_memory.get("closed_objects") or shadow_memory.get("blocked_ob
         "failure_layer": row.get("failure_layer"),
         "memory_class": row.get("memory_class"),
         "source_stop_class": row.get("source_stop_class"),
-        "paper_first_lifecycle": row.get("paper_first_lifecycle"),
+        **({"paper_first_lifecycle": row.get("paper_first_lifecycle")} if row.get("paper_first_lifecycle") else {}),
         "reason": row.get("reason"),
         "strongest_reduction": row.get("strongest_reduction"),
         "reopen_only_if": row.get("reopen_only_if"),
@@ -173,7 +190,7 @@ state = {
     "source_revision": git_head(),
     "as_of_date": datetime.now(timezone.utc).date().isoformat(),
     "headline": {
-        "paper_ready": int(bool(stri_summary.get("paper_ready"))),
+        "paper_ready": int(stri_public_ready),
         "paper_quality_hold": int(bool(sys_stri) and not bool(stri_summary.get("paper_quality_v2_passed", False))),
         "paper_quality_evidence_debt": int(stri_summary.get("paper_quality_evidence_debt", 0)),
         "canonical_live_ideas": int(queue_summary.get("paper_design_eligible", 0)),
@@ -234,11 +251,15 @@ state = {
         "paper_id": sys_stri.get("paper_id", "STRI"),
         "candidate_id": sys_stri.get("candidate_id", "skill-taxonomy-representation-invariance"),
         "title": sys_stri.get("title"),
-        "status": sys_stri.get("status"),
-        "submission_status": sys_stri.get("submission_status"),
+        "status": stri_public_status,
+        "submission_status": stri_public_submission_status,
         "claims": dict(sys_stri.get("claims") or {}),
         "stage": paper_quality.get("status"),
-        "track": sys_stri.get("track", "ASSET_FIRST_PAPER_QUALITY_REPAIR"),
+        "track": stri_public_track,
+        "paper_lifecycle_source": "canonical-paper-acceptance" if stri_acceptance_ready else "asset-first-stri",
+        "paper_acceptance_state": str(stri_paper_state.get("current_state") or ""),
+        "paper_acceptance_scientific_status": str(stri_paper_state.get("scientific_status") or ""),
+        "paper_acceptance_gate_clean": bool(stri_paper_state.get("gate_clean_submission_ready", False)),
         "claims_supported": int(stri_summary.get("claims_supported", 0)),
         "claims_total": int(stri_summary.get("claims_total", 0)),
         "qa_passed": int(stri_summary.get("qa_checks_passed", 0)),

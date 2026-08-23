@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-22T18:27:19+00:00",
-  "source_revision": "24bbed72666687b0cc8025fa663b94b4362f36cc",
+  "generated_at": "2026-08-23T05:18:26+00:00",
+  "source_revision": "99e41a962c3482201fb99bc4d4395c224ead4325",
   "policy": {
     "research_item_is_primary_scientific_entity": true,
     "experiment_is_evidence_event_not_parallel_current_state": true,
@@ -1272,6 +1272,7 @@
         "en": ""
       },
       "lifecycle_state": "CLOSED",
+      "paper_first_lifecycle": "CLOSED_PAPER_FIRST",
       "scientific_state": "STOPPED",
       "portfolio_disposition": "CONCLUDED",
       "decision_code": "PROBLEM_NOVELTY_STOP",
@@ -1298,8 +1299,8 @@
       "paper_transition": null,
       "provenance_refs": [
         {
-          "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-          "role": "append_only_shadow_search_memory_closure"
+          "path": "generated/current-research-status.json",
+          "role": "typed_shadow_closure"
         }
       ],
       "closure_metadata": {
@@ -1307,6 +1308,7 @@
         "experiment_alone_authorizes_closure": false,
         "broader_core_principle_falsified": false,
         "memory_class": "PROBLEM_NOVELTY_STOP",
+        "paper_first_lifecycle": "CLOSED_PAPER_FIRST",
         "closure_layer": "problem_novelty"
       },
       "primary_next_action": {
