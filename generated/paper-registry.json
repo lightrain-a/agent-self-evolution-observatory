@@ -1,7 +1,7 @@
 {
   "schema_version": "1.5",
-  "generated_at": "2026-08-23T12:32:54+00:00",
-  "source_revision": "5f00cd99659d85071dbab12f4bf3f9a0d42ea6a4",
+  "generated_at": "2026-08-23T12:40:30+00:00",
+  "source_revision": "a414668820573a7fc050924aa7131cb8b4eaf8f6",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -1034,13 +1034,13 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 56,
+        "events": 64,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
         "mock_reviews": 4,
         "claim_audit_receipts": 2,
-        "manuscript_ci_receipts": 5,
+        "manuscript_ci_receipts": 6,
         "prebuttal_receipts": 2,
         "submission_readiness_receipts": 1,
         "contract_revisions": 0
@@ -1082,10 +1082,10 @@
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "e7169884b4288d53b39397fade149b536284189e884c46f9e271fd3bb3a851e6",
+        "claim_audit_sha256": "acf07aba12fdef54e8706602933889e6ab749637a79394aced14add6ea7b5b5d",
         "blockers": [],
-        "checks": 30,
-        "passed": 30
+        "checks": 31,
+        "passed": 31
       },
       "latest_manuscript_ci": {
         "pass": true,
@@ -1102,8 +1102,8 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r8-novelty-attack",
-        "receipt_sha256": "8c2b065e12ed500bf268c2c4181dddfa16e5749b15f7388271eb3d9613f95106",
+        "protocol_version": "1.0+r9-zero-call-design-robustness",
+        "receipt_sha256": "0bc09fe07b9f944823c8acb580f47cef422384a964b914cdd3fbed428cd6a503",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -1139,7 +1139,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "2f4f8f938ab2756992551f5bb9d1f72079cc7a9ae3ea2e8d59663a1c69d3f51b",
+        "receipt_sha256": "14c6ba3e785439e63ad00e53f30d62d6e7784b06f95faea62004cfe6b60e616f",
         "blockers": []
       },
       "source_native_evidence": {
@@ -1148,7 +1148,7 @@
         "institutional_systems": 3,
         "exact_timesage_replication_debt": "ACTIVE_EXTERNAL_REPLICATION_DEBT_NOT_SUBSTITUTED",
         "recommended_immediate_action": "READY_FOR_HUMAN_SUBMISSION",
-        "finalization_sha256": "2a88b9a27757dbbce216d9c2206ed951da0cea24f912587130ea89dd94fd240e"
+        "finalization_sha256": "801abf245aa5280813a4f23fb45d50ac6b65ab2bc9e9eeb3446bf250cbb88b9b"
       },
       "latest_transition": {
         "from": "PREBUTTAL",
@@ -1176,7 +1176,8 @@
       "submission_ready": true,
       "downloads": {
         "pdf": "downloads/E2-Temporal-Skill.pdf",
-        "source_zip": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip"
+        "source_zip": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip",
+        "supplement_zip": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-supplement.zip"
       },
       "experiment_refs": [],
       "research_authority": {
