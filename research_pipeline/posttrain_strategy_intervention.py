@@ -86,6 +86,107 @@ class InterventionPrompts:
         }
 
 
+@dataclass(frozen=True)
+class TrajectorySignals:
+    """Outcome-free trajectory facts used by the pre-F0 adherence rubric.
+
+    The fields are deliberately evidence-level booleans.  Textual agreement with an
+    intervention is not enough: strategy or execution changes must be observed in the
+    subsequent trajectory before an arm can count as enacted.
+    """
+
+    instruction_delivered: bool
+    strategy_change_observed: bool = False
+    execution_parameter_change_observed: bool = False
+    reversion_or_mixing_observed: bool = False
+
+
+@dataclass(frozen=True)
+class StrategyAdherenceAssessment:
+    arm: str
+    status: str
+    rationale: str
+    scientific_authority: bool = False
+
+    def as_dict(self) -> dict[str, Any]:
+        return {
+            "arm": self.arm,
+            "status": self.status,
+            "rationale": self.rationale,
+            "scientific_authority": self.scientific_authority,
+        }
+
+
+def first_successful_parameter_update_index(events: list[dict[str, Any]]) -> int | None:
+    """Return the first semantically verified successful parameter-update event.
+
+    A training-looking command, zero exit code, or boundary marker alone is insufficient.
+    The producer of the structured event must independently verify ``parameter_update=True``
+    (for example from a checkpoint/parameter delta receipt).
+    """
+
+    for index, event in enumerate(events):
+        if not isinstance(event, dict):
+            continue
+        if event.get("exit_code") == 0 and event.get("parameter_update") is True:
+            return index
+    return None
+
+
+def assess_strategy_adherence(
+    arm: str,
+    signals: TrajectorySignals,
+    *,
+    pre_headroom_ok: bool | None = None,
+) -> StrategyAdherenceAssessment:
+    """Apply the frozen trajectory-level enactment rubric without reading final score."""
+
+    normalized = str(arm or "").strip().upper()
+    if normalized not in ARMS:
+        raise ValueError(f"unsupported intervention arm:{normalized}")
+    if not signals.instruction_delivered:
+        return StrategyAdherenceAssessment(normalized, "NO_EVIDENCE", "binding intervention was not delivered")
+
+    if normalized == ARM_POST_EXECUTION:
+        if signals.execution_parameter_change_observed:
+            return StrategyAdherenceAssessment(
+                normalized,
+                "ADHERED",
+                "the requested execution-level parameter change was observed after delivery",
+            )
+        return StrategyAdherenceAssessment(
+            normalized,
+            "NOT_ADHERED",
+            "no requested execution-level parameter change was observed after delivery",
+        )
+
+    if pre_headroom_ok is False:
+        return StrategyAdherenceAssessment(
+            normalized,
+            "NO_EVIDENCE",
+            "PRE_STRATEGY did not establish enactment headroom for strategy-level interpretation",
+        )
+    if not signals.strategy_change_observed:
+        return StrategyAdherenceAssessment(
+            normalized,
+            "NOT_ADHERED",
+            "no trajectory-level strategy change was observed after the binding instruction",
+        )
+    if signals.reversion_or_mixing_observed:
+        suffix = "_UNCALIBRATED" if pre_headroom_ok is None else ""
+        return StrategyAdherenceAssessment(
+            normalized,
+            "PARTIAL_OR_REVERTED" + suffix,
+            "the alternative strategy was initiated but later reverted or mixed with the prior strategy",
+        )
+    suffix = "_UNCALIBRATED" if pre_headroom_ok is None else ""
+    return StrategyAdherenceAssessment(
+        normalized,
+        "ADHERED" + suffix,
+        "the supplied strategy was observably enacted without detected reversion or mixing",
+    )
+
+
 def compose_segmented_prompts(
     *,
     base_prompt: str,

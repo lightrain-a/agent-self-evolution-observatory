@@ -1,0 +1,135 @@
+{
+  "artifact_kind": "V19R003_L1_REAL_METHOD_ZERO_API_PERSISTENT_RECEIPT",
+  "authority": {
+    "canonical_projection": false,
+    "paid_probe_authorized": false,
+    "problem_gate": false,
+    "research_item_created": false,
+    "scientific_arm_executed": false,
+    "scientific_authority": false
+  },
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "cost": {
+    "deepseek_calls": 0,
+    "external_api_calls": 0,
+    "reported_provider_output_tokens": 0
+  },
+  "created_at_utc": "2026-08-23T16:09:39Z",
+  "elapsed_sec": 112.373,
+  "evaluation_receipt": {
+    "capability_preflight_only": true,
+    "completed": true,
+    "deepseek_calls": 0,
+    "evaluated_current_checkpoint": true,
+    "evaluator_sha256": "cc9415b6c0392e430d3cffdb2ff9b9a005d0614c762b9339aeaf3a3df90b3876",
+    "external_api_calls": 0,
+    "metrics_keys": [
+      "accuracy",
+      "stderr"
+    ],
+    "metrics_sha256": "e34f16130fb471fcdb1fc839ab61a0cc3af462657f059a6be26e4850744351e9",
+    "model_ref": "checkpoint-02",
+    "paid_probe_authorized": false,
+    "receipt": "evaluator/run-01/metrics.json",
+    "runtime_mode": "PRESTARTED_LOCAL_VLLM_PLUS_OFFICIAL_PTB_INSPECT_SCORER",
+    "sample_limit": 1,
+    "scientific_authority": false,
+    "scientific_claim_use_forbidden": true,
+    "scientific_evaluation": false,
+    "template_sha256": "ddd80c7700049450b953ae6acffa1731d696c5df5b1fbfb2de7e4ead17d708c6"
+  },
+  "execution_level": "L1_REAL_METHOD_ZERO_API_CAPABILITY_PREFLIGHT",
+  "gates": {
+    "both_checkpoints_persisted": true,
+    "both_training_updates_verified": true,
+    "deepseek_calls_zero": true,
+    "external_api_calls_zero": true,
+    "loop_finished": true,
+    "loop_scientific_authority_false": true,
+    "official_evaluator_loaded_current_rl_checkpoint": true,
+    "phase1_blind_to_post_treatment_and_arm": true,
+    "post_strategy_injected_after_first_real_update": true,
+    "public_boundary_instruction_preserved": true,
+    "rl_continued_from_sft_checkpoint": true,
+    "scientific_evaluation_false": true,
+    "scripted_provider_only": true,
+    "two_real_training_methods_executed": true
+  },
+  "interpretation_boundary": "The scripted provider mechanically follows the injected strategy, so this is not evidence about autonomous agent strategy adherence. It proves only that a contamination-screened, persistent real SFT\u2192RL\u2192official-evaluator path exists on the A100 without external model APIs.",
+  "loop_summary": {
+    "boundary_reached": true,
+    "finished": true,
+    "phase2_injected": true,
+    "provider_calls": 4,
+    "reported_output_tokens": 0
+  },
+  "next_gate": "Freeze the paid PRE_STRATEGY contract separately: action-space bounds, compute/data budget, checkpoint semantics, and trajectory adherence extraction. Keep DeepSeek disabled until that contract is audited.",
+  "pass": true,
+  "provider_prompt_checks": [
+    {
+      "arm_identity_visible": false,
+      "boundary_marker_visible": true,
+      "prompt_sha256": "a60e2f03b19808308b13a8057e6fa9551a7cfccf2cd53dcd8eb8bc138acedc1b",
+      "strategy_visible": false
+    },
+    {
+      "arm_identity_visible": false,
+      "boundary_marker_visible": true,
+      "prompt_sha256": "e98328a2d90a9522565734f1e846575c7c4aafbc9ced6cc61e90843052e1369c",
+      "strategy_visible": true
+    },
+    {
+      "arm_identity_visible": false,
+      "boundary_marker_visible": true,
+      "prompt_sha256": "de438283405d2872e20177e4fdd7cd2678a85e1e497e511606dc6d4a5578387d",
+      "strategy_visible": true
+    },
+    {
+      "arm_identity_visible": false,
+      "boundary_marker_visible": true,
+      "prompt_sha256": "dde63a0d3e00a27499f794e629edc03b3a28575ebb5421b81eec24b79a122c62",
+      "strategy_visible": true
+    }
+  ],
+  "schema_version": "1.0",
+  "training_sequence": [
+    {
+      "capability_preflight_only": true,
+      "changed_probe_elements": 2,
+      "checkpoint_persisted": true,
+      "checkpoint_ref": "checkpoint-01",
+      "deepseek_calls": 0,
+      "exit_code": 0,
+      "external_api_calls": 0,
+      "input_checkpoint_ref": "base_model",
+      "method": "SFT",
+      "method_semantics": "TOKEN_RESPONSE_SUPERVISED_FINE_TUNING",
+      "paid_probe_authorized": false,
+      "parameter_update_verified": true,
+      "receipt": "receipts/real-training-01.json",
+      "receipt_sha256": "d2e1a55d82baccd36fa7142895bc1431d04dfa879aec33b144e5d1d96b002ad4",
+      "scientific_authority": false,
+      "stage": "initial-sft",
+      "training_data_sha256": "fa173edbc9f3083f1eae0468d309afb11d098b6f1077be71e32e57e173c2c097"
+    },
+    {
+      "capability_preflight_only": true,
+      "changed_probe_elements": 1,
+      "checkpoint_persisted": true,
+      "checkpoint_ref": "checkpoint-02",
+      "deepseek_calls": 0,
+      "exit_code": 0,
+      "external_api_calls": 0,
+      "input_checkpoint_ref": "checkpoint-01",
+      "method": "RL",
+      "method_semantics": "ON_POLICY_SAMPLED_REINFORCE_WITH_SCALAR_MATH_REWARD",
+      "paid_probe_authorized": false,
+      "parameter_update_verified": true,
+      "receipt": "receipts/real-training-02.json",
+      "receipt_sha256": "c339e4a7ed873648a3baba97e8c6e6507856f889bf9f686400be5c8b73c8e01c",
+      "scientific_authority": false,
+      "stage": "post-boundary-rl",
+      "training_data_sha256": "fa173edbc9f3083f1eae0468d309afb11d098b6f1077be71e32e57e173c2c097"
+    }
+  ]
+}

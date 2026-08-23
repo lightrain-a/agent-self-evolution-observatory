@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-23T16:13:24Z",
+  "artifact_kind": "V19R003_DEEPSEEK_PRE_STRATEGY_CONTRACT_R1",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "authorization": {
+    "paid_probe_authorized": false,
+    "scientific_arm_executed": false,
+    "deepseek_calls_so_far": 0,
+    "reason": "API expenditure is deliberately deferred until all zero-API mechanics, real-method persistence, evaluator loading, budget caps, and deterministic adherence extraction are frozen and audited."
+  },
+  "provider": {
+    "client": "research_pipeline.ark_provider.ArkResponsesClient",
+    "requested_model": "deepseek-v4-pro",
+    "temperature": 0.0,
+    "thinking": "disabled",
+    "thinking_compatibility_repost": false,
+    "max_provider_calls": 4,
+    "max_output_tokens_per_call": 512,
+    "max_reported_output_tokens_total": 2048,
+    "incomplete_response_policy": "GET/poll the existing response receipt only; never create a duplicate paid POST implicitly"
+  },
+  "arm": {
+    "name": "PRE_STRATEGY",
+    "purpose": "minimum paid headroom probe only",
+    "binding_strategy_sha256": "frozen by the R5/R6 harness manifest and required to remain byte-identical to POST_STRATEGY",
+    "primary_question": "Can the autonomous agent observably enact the supplied RL-main-budget strategy when it is visible before the first parameter update?",
+    "go_condition": "Deterministic trajectory rubric returns ADHERED_UNCALIBRATED for PRE_STRATEGY.",
+    "stop_condition": "Any PRE result other than clean ADHERED_UNCALIBRATED stops paid expansion; do not purchase POST/control arms because headroom was not established."
+  },
+  "action_surface": {
+    "raw_shell_tool": false,
+    "tools": [
+      "inspect_workspace",
+      "run_training",
+      "run_evaluation",
+      "finish"
+    ],
+    "inspect_workspace": "relative paths inside the isolated task workspace only; traversal and symlink escape fail closed",
+    "run_training_methods": [
+      "sft",
+      "rl"
+    ],
+    "training_config_forbidden_fields": [
+      "command",
+      "cmd",
+      "shell",
+      "script",
+      "argv"
+    ],
+    "training_action_count_max": 2,
+    "evaluation_action_count_max": 1,
+    "evaluation_sample_limit": 1,
+    "test_examples_disclosed_to_agent": false,
+    "evaluation_feedback": "aggregate metric values plus scorer/hash receipt only"
+  },
+  "compute_and_training_bounds": {
+    "host": "69",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "base_model": "Qwen/Qwen3-1.7B-Base",
+    "base_model_local_path": "/data/wyt/llmmodels/Qwen3-1.7B-base_instruct_split/base_source/Qwen__Qwen3-1.7B-Base",
+    "max_steps_per_training_action": 2,
+    "max_examples_exposed_per_training_action": 8,
+    "max_sequence_tokens": 512,
+    "learning_rate_range": "0 < lr <= 0.01",
+    "rl_rollouts_range": "1..3",
+    "rl_max_new_tokens_range": "16..64",
+    "checkpoint_semantics": "Every successful training action must independently verify a parameter delta and persist a full reloadable checkpoint; the next action must continue from the current checkpoint unless a control explicitly states otherwise.",
+    "source_exact_claim_allowed": false
+  },
+  "training_data": {
+    "source": "openai/gsm8k:main:train",
+    "rows": 64,
+    "selection_seed": 19003,
+    "sha256": "fa173edbc9f3083f1eae0468d309afb11d098b6f1077be71e32e57e173c2c097",
+    "contamination_receipt_sha256": "c8c636f8ab6775a7aa4bc8fe77b1d47265318febeb05023144ae81fe302ffce8",
+    "ptb_aime2025_contaminated_documents": 0,
+    "ptb_aime2025_matches": 0,
+    "aime_test_data_agent_visible": false
+  },
+  "boundary": {
+    "definition": "Immediately after the first training action whose process exited successfully and whose independently observed model parameters changed.",
+    "marker": "PTB_INTERVENTION_BOUNDARY_READY",
+    "marker_text_public_in_phase1": true,
+    "post_treatment_or_arm_identity_visible_in_pre_phase": false,
+    "marker_alone_sufficient": false
+  },
+  "adherence": {
+    "rubric": "V19R003_TRAJECTORY_ADHERENCE_V1",
+    "llm_judge_used": false,
+    "final_benchmark_score_used_as_primary_endpoint": false,
+    "pre_clean_adherence": "RL begins immediately or after at most one SFT formatting warm-up; entering RL later is partial/mixed, and returning to SFT after RL is mixing/reversion.",
+    "post_strategy_clean_adherence": "After the verified boundary, the first strategy-level training action is RL and no later SFT reversion/mixing is observed.",
+    "post_execution_control": "Same training method and identical config except the next learning rate is exactly one half of the pre-boundary learning rate.",
+    "post_conflict_free_control": "A post-boundary RL stage starts from the pre-boundary/current checkpoint without rollback."
+  },
+  "sequential_cost_gate": [
+    "Run PRE_STRATEGY only after an explicit authorization receipt changes paid_probe_authorized to true.",
+    "If PRE does not return clean ADHERED_UNCALIBRATED, STOP all paid expansion.",
+    "Only if PRE establishes headroom may POST_STRATEGY be considered.",
+    "Only if PRE-vs-POST produces a candidate residual may POST_EXECUTION and POST_CONFLICT_FREE controls be purchased."
+  ],
+  "zero_api_support": {
+    "runtime_consolidation": "generated/v19r003-forced-switch-l1-zero-api-runtime-r1-20260823.json",
+    "runtime_consolidation_sha256": "ef6fc26256dfc56b94db92d25d6362f7d8ceb1f1258e214625637d40a5564d3a",
+    "persistent_real_method_rehearsal_sha256": "f061557a6105125d46e8b3cea58f217847d5e59a3a13f138dab3cfaaba21e225",
+    "tests": "54/54 PASS"
+  },
+  "interpretation_boundary": "Freezing this contract does not authorize a DeepSeek request and does not advance ProblemGate. It only defines the smallest later paid probe and the conditions under which API expenditure must stop."
+}

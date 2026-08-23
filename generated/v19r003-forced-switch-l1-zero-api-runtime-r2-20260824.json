@@ -1,0 +1,134 @@
+{
+  "artifact_kind": "V19R003_L1_ZERO_API_RUNTIME_CONSOLIDATION_R2",
+  "authority": {
+    "canonical_projection": false,
+    "paid_probe_authorized": false,
+    "problem_gate": false,
+    "research_item_created": false,
+    "scientific_arm_executed": false,
+    "scientific_authority": false
+  },
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "cost": {
+    "deepseek_calls": 0,
+    "external_llm_api_calls": 0
+  },
+  "generated_at": "2026-08-23T16:31:42Z",
+  "host": {
+    "evidence_tier": "A100_EQUIVALENT_SUBSTRATE_NOT_SOURCE_EXACT",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_clean_after_validation": true,
+    "server": "69"
+  },
+  "interpretation": "All material execution mechanics that can be validated without a paid autonomous LLM have passed on server 69. No result here is evidence that an autonomous agent exhibits or overcomes post-lock-in strategy rigidity.",
+  "runtime_deviations_from_source_exact_ptb": {
+    "agent": "No autonomous LLM agent was executed in this consolidation",
+    "classification": "L1 equivalent-substrate capability evidence only, never source-exact reproduction",
+    "container": "No official PTB Apptainer container on server 69; L1 separates the pinned Inspect scorer overlay from an existing local vLLM runtime",
+    "gpu": "A100-SXM4-80GB instead of source 4xA800 / public PTB H100 reference",
+    "vllm": "0.20.0+cu129 local runtime instead of PTB pinned 0.11.0"
+  },
+  "schema_version": "1.0-v19r003-l1-zero-api-runtime-r2",
+  "software_receipts": {
+    "git_diff_check": "PASS",
+    "posttrain_strategy_adherence_sha256": "1f0f1b3e6c3e99ff5bb966c72592dafb5cc778b2c44fe60e130cd838433eb580",
+    "posttrain_strategy_deepseek_driver_sha256": "dcb6ade111e0bf828983b630877bb887eb6a39f41312793a952e303400015149",
+    "posttrain_strategy_intervention_sha256": "5a941a181aca4b229d136237422416cec7ae8dd3a622f786e6ee8bf20a33e376",
+    "posttrain_strategy_local_executor_sha256": "7664a121fdcdbab14a0057bff2ba2cf0be4bc901617e9c1df3b2ba365a3d185c",
+    "posttrain_strategy_real_training_worker_sha256": "e2a61b21448ca8d1ff1ab797f6f3f0314e3cdfa8ae1e1a21f7b13f2a370ebc97",
+    "tests": "45/45 PASS (15 intervention + 7 adherence + 11 driver + 12 local-executor)"
+  },
+  "superseded_r1_sha256": "ef6fc26256dfc56b94db92d25d6362f7d8ceb1f1258e214625637d40a5564d3a",
+  "supersedes": "generated/v19r003-forced-switch-l1-zero-api-runtime-r1-20260823.json",
+  "test_bookkeeping_correction": {
+    "corrected_claim": "45/45 PASS",
+    "historical_claim": "54/54 PASS",
+    "reason": "The prior consolidation double-counted an earlier 9-test subset when reporting the aggregate. The current four posttrain unittest modules contain 15 + 7 + 11 + 12 = 45 distinct tests.",
+    "scientific_or_runtime_gate_changed": false,
+    "verified_modules": {
+      "research_pipeline.test_posttrain_strategy_adherence": 7,
+      "research_pipeline.test_posttrain_strategy_deepseek_driver": 11,
+      "research_pipeline.test_posttrain_strategy_intervention": 15,
+      "research_pipeline.test_posttrain_strategy_local_executor": 12
+    }
+  },
+  "zero_api_gates": {
+    "l0_engineering": {
+      "adherence_primitives": true,
+      "boundary_wiring": true,
+      "four_arm_timing": true,
+      "real_a100_parameter_delta": true,
+      "receipt": "generated/v19r003-forced-switch-l0-zero-api-20260823/receipt.json",
+      "sha256": "f928542ae68e1b959035f28fd9673d753413a0a88822fe53211d4a85448aacc6",
+      "status": "PASS"
+    },
+    "l1_structured_tool_path": {
+      "official_ptb_evaluator_tool_completed": true,
+      "post_phase1_blind_to_treatment_and_arm": true,
+      "raw_shell_exposed_to_provider": false,
+      "receipt": "generated/v19r003-forced-switch-l1-zero-api-structured-20260823/receipt.json",
+      "sha256": "8e626af153ba538b797965d3634671b5eb65ab95b75b608f24921c2dad78b4b1",
+      "status": "PASS"
+    },
+    "persistent_real_method_rehearsal": {
+      "deepseek_calls": 0,
+      "elapsed_sec": 112.373,
+      "provider": "SCRIPTED_REAL_METHOD_ZERO_API_PROVIDER",
+      "provider_calls": 4,
+      "receipt": "generated/v19r003-forced-switch-l1-real-zero-api-persistent-20260823/receipt.json",
+      "sequence": [
+        "real persistent SFT from base",
+        "verified parameter-update boundary",
+        "POST_STRATEGY visibility begins",
+        "real persistent RL from SFT checkpoint",
+        "official PTB evaluator loads current RL checkpoint"
+      ],
+      "sha256": "f061557a6105125d46e8b3cea58f217847d5e59a3a13f138dab3cfaaba21e225",
+      "status": "PASS"
+    },
+    "real_rl_capability": {
+      "capability_reward_warning": "The one-step capability run obtained only the nonempty-output shaping reward (mean 0.02; exact numeric reward count 0). This validates the RL algorithm path, not RL effectiveness.",
+      "external_api_calls": 0,
+      "method_semantics": "ON_POLICY_SAMPLED_REINFORCE_WITH_SCALAR_MATH_REWARD",
+      "parameter_update_verified": true,
+      "persistent_checkpoint": true,
+      "receipt": "/data/wyt/agent-self-evolution-observatory/runs/v19r003-real-training-capability-20260823-r1/rl-receipt.json",
+      "sha256": "3a422fc68106afadfeb93a15596ae34dd89a4cdbd24e22b04af075b1761b0b94",
+      "status": "PASS"
+    },
+    "real_sft_capability": {
+      "external_api_calls": 0,
+      "method_semantics": "TOKEN_RESPONSE_SUPERVISED_FINE_TUNING",
+      "parameter_update_verified": true,
+      "persistent_checkpoint": true,
+      "receipt": "/data/wyt/agent-self-evolution-observatory/runs/v19r003-real-training-capability-20260823-r1/sft-receipt.json",
+      "sha256": "975b713126b47e5abc05b261cc52f845f0b125331195dfdf1923152dc01d0523",
+      "status": "PASS"
+    },
+    "rl_checkpoint_official_evaluator": {
+      "max_tokens": 96,
+      "official_evaluator_sha256": "cc9415b6c0392e430d3cffdb2ff9b9a005d0614c762b9339aeaf3a3df90b3876",
+      "official_qwen3_template_sha256": "ddd80c7700049450b953ae6acffa1731d696c5df5b1fbfb2de7e4ead17d708c6",
+      "receipt": "/data/wyt/agent-self-evolution-observatory/runs/v19r003-real-training-capability-20260823-r1/rl-evaluator-smoke/receipt.json",
+      "sample_limit": 1,
+      "scientific_evaluation": false,
+      "score_use_for_claims_forbidden": true,
+      "sha256": "fa9b99168d00554d8d7fd837bc4374d6c82fa48de72f8437ba7627cd0a355eb4",
+      "status": "PASS"
+    },
+    "training_data_contamination": {
+      "aime_reference_content_embedded_in_receipt": false,
+      "contaminated_documents": 0,
+      "documents_scanned": 64,
+      "matches": 0,
+      "ptb_checker_exit_code": 0,
+      "receipt": "/data/wyt/agent-self-evolution-observatory/cache/train-data/v19r003-gsm8k-v1/contamination-receipt.json",
+      "receipt_sha256": "c8c636f8ab6775a7aa4bc8fe77b1d47265318febeb05023144ae81fe302ffce8",
+      "rows": 64,
+      "selection_seed": 19003,
+      "source": "openai/gsm8k:main:train",
+      "status": "PASS",
+      "training_data_sha256": "fa173edbc9f3083f1eae0468d309afb11d098b6f1077be71e32e57e173c2c097"
+    }
+  }
+}

@@ -15,9 +15,12 @@ from .posttrain_strategy_intervention import (
     ARM_PRE_STRATEGY,
     ARMS,
     BOUNDARY_MARKER,
+    TrajectorySignals,
+    assess_strategy_adherence,
     audit_posttrainbench_run_task_surface,
     build_zero_authority_harness_manifest,
     compose_segmented_prompts,
+    first_successful_parameter_update_index,
     manifest_sha256,
     render_posttrainbench_self_contained_solve_sh,
     validate_zero_authority_harness_manifest,
@@ -86,6 +89,48 @@ class PostTrainStrategyInterventionTest(unittest.TestCase):
     def test_boundary_probe_fails_closed_without_training_candidate(self) -> None:
         probe = verify_phase1_boundary("evaluation only\n" + BOUNDARY_MARKER)
         self.assertFalse(probe["mechanical_probe_passed"])
+
+    def test_semantic_boundary_requires_verified_successful_parameter_delta(self) -> None:
+        events = [
+            {"kind": "train", "exit_code": 1, "parameter_update": False},
+            {"kind": "train", "exit_code": 0, "parameter_update": False},
+            {"kind": "train", "exit_code": 0, "parameter_update": True},
+            {"kind": "train", "exit_code": 0, "parameter_update": True},
+        ]
+        self.assertEqual(first_successful_parameter_update_index(events), 2)
+        self.assertIsNone(
+            first_successful_parameter_update_index(
+                [{"kind": "train", "exit_code": 0}, {"kind": "eval", "exit_code": 0, "parameter_update": False}]
+            )
+        )
+
+    def test_adherence_requires_observed_enactment_not_textual_acceptance(self) -> None:
+        accepted_only = TrajectorySignals(instruction_delivered=True)
+        post = assess_strategy_adherence(ARM_POST_STRATEGY, accepted_only, pre_headroom_ok=True)
+        self.assertEqual(post.status, "NOT_ADHERED")
+        execution = assess_strategy_adherence(ARM_POST_EXECUTION, accepted_only, pre_headroom_ok=True)
+        self.assertEqual(execution.status, "NOT_ADHERED")
+
+    def test_adherence_distinguishes_clean_enactment_from_reversion(self) -> None:
+        clean = TrajectorySignals(instruction_delivered=True, strategy_change_observed=True)
+        reverted = TrajectorySignals(
+            instruction_delivered=True,
+            strategy_change_observed=True,
+            reversion_or_mixing_observed=True,
+        )
+        self.assertEqual(assess_strategy_adherence(ARM_PRE_STRATEGY, clean).status, "ADHERED_UNCALIBRATED")
+        self.assertEqual(
+            assess_strategy_adherence(ARM_POST_STRATEGY, clean, pre_headroom_ok=True).status,
+            "ADHERED",
+        )
+        self.assertEqual(
+            assess_strategy_adherence(ARM_POST_STRATEGY, reverted, pre_headroom_ok=True).status,
+            "PARTIAL_OR_REVERTED",
+        )
+        self.assertEqual(
+            assess_strategy_adherence(ARM_POST_STRATEGY, clean, pre_headroom_ok=False).status,
+            "NO_EVIDENCE",
+        )
 
     def test_manifest_is_zero_authority_and_contains_all_reduction_arms(self) -> None:
         manifest = build_zero_authority_harness_manifest(

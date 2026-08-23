@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0-v19r003-current-adjudication-r6",
+  "generated_at": "2026-08-23T15:21:41Z",
+  "artifact_kind": "V19R003_PRE_F0_CURRENT_ADJUDICATION_R6",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "candidate_snapshot_sha256": "47ea60fb13e3ec723d2a871b58ab1a3c6e9e565eea01e1cd838c67f9f2b39777",
+  "branch": "research/v19r003-forced-switch-pre-f0-20260823",
+  "branch_head_before_l0_commit": "cab36bb89fffb63e0d0ee0af9cadcc805a2b3340",
+  "canonical_base": "2fedb56c2697503d606a7ccc5f084067b539e4fa",
+  "supersedes": "generated/v19r003-forced-switch-pre-f0-current-adjudication-r5-20260823.json",
+  "superseded_r5_sha256": "121df3738cd994a212cdab1e631512c4c24fdc411bc7b3fd8c946eb55947efb4",
+  "scientific_state": {
+    "closest_work": "arXiv:2608.19072",
+    "strongest_reduction": "source-authors missing-spontaneity-not-capability diagnosis",
+    "reduction_status": "NEEDS_EXACT_REDUCTION_TEST",
+    "problem_gate_pass": false,
+    "pre_f0_eligible": true,
+    "canonical_projection": false,
+    "canonical_researchitem_created": false,
+    "scientific_authority": false,
+    "scientific_arms_executed": 0
+  },
+  "frozen_pre_f0_protocol": {
+    "arms": [
+      "PRE_STRATEGY",
+      "POST_STRATEGY",
+      "POST_EXECUTION",
+      "POST_CONFLICT_FREE"
+    ],
+    "boundary": "immediately after the first independently verified successful model parameter update",
+    "same_strategy_payload_pre_vs_post": true,
+    "outcome_interpretation_requires_pre_headroom": true,
+    "final_score_alone_forbidden": true,
+    "trajectory_level_strategy_adherence_required": true,
+    "phase1_blind_to_post_payload_and_arm": true
+  },
+  "execution_level_policy": {
+    "L0": "zero-API engineering falsifier; validates mechanics only and has no scientific authority",
+    "L1": "A100 equivalent-substrate minimal scientific falsifier using the frozen task/model/evaluator semantics; official PTB container is not required but all deviations must be declared",
+    "L2": "official/source-aligned PostTrainBench reproduction; official PTB software/container and source-like hardware belong here",
+    "official_ptb_stack_is_pre_f0_blocker": false,
+    "official_ptb_stack_is_source_exactness_requirement": true
+  },
+  "l0_zero_api_result": {
+    "status": "PASS",
+    "receipt": "generated/v19r003-forced-switch-l0-zero-api-20260823/receipt.json",
+    "receipt_sha256": "f928542ae68e1b959035f28fd9673d753413a0a88822fe53211d4a85448aacc6",
+    "external_api_calls": 0,
+    "deepseek_calls": 0,
+    "real_local_parameter_update_on_a100": true,
+    "observed_changed_probe_elements": 947,
+    "parameter_update_learning_rate_engineering_smoke": 0.001,
+    "boundary_wiring_pass": true,
+    "four_arm_timing_pass": true,
+    "adherence_rubric_pass": true,
+    "pinned_aime_evaluator_surface_pass": true,
+    "scientific_evaluation_executed": false,
+    "scientific_arm_executed": false,
+    "interpretation": "A100 training capacity and frozen intervention mechanics are viable. This receipt contains no autonomous-agent scientific outcome."
+  },
+  "runtime_support": {
+    "host": "69",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_gate": "PASS_EQUIVALENT_SUBSTRATE_NOT_SOURCE_EXACT",
+    "gpu_free_after_l0": true,
+    "local_base_model": "/data/wyt/llmmodels/Qwen3-1.7B-base_instruct_split/base_source/Qwen__Qwen3-1.7B-Base",
+    "local_training_python": "/home/wyt/venv_qwen3_compat/bin/python",
+    "official_ptb_container": "UNAVAILABLE_ON_69_BUT_NOT_REQUIRED_FOR_L0_OR_DECLARED_L1",
+    "official_aime_evaluator_sha256": "cc9415b6c0392e430d3cffdb2ff9b9a005d0614c762b9339aeaf3a3df90b3876",
+    "official_qwen3_template_sha256": "ddd80c7700049450b953ae6acffa1731d696c5df5b1fbfb2de7e4ead17d708c6",
+    "aime_evaluator_dependencies": "inspect-ai/inspect-evals are not installed in the current lightweight training environment; defer installation or exact evaluator execution until L1 requires it",
+    "claude_auth": "IRRELEVANT_AFTER_AGENT_BACKBONE_CHANGE",
+    "landlock_native_gpu": "REJECTED_FOR_GPU_SEMANTICS; AUDIT_ONLY"
+  },
+  "agent_backbone_policy": {
+    "selected_future_api_family": "DeepSeek",
+    "selected_project_provider_model": "deepseek-v4-pro",
+    "provider_wrapper": "research_pipeline.ark_provider.ArkResponsesClient",
+    "api_cost_policy": "DEFER_REAL_API_UNTIL_ALL_ZERO_API_L1_DRY_GATES_PASS",
+    "real_api_call_authorized_now": false,
+    "reason": "The user explicitly requested minimizing API spend; remaining runner/tool-loop integration can be validated with deterministic fake responses first."
+  },
+  "code_receipts": {
+    "posttrain_strategy_intervention_sha256": "5a941a181aca4b229d136237422416cec7ae8dd3a622f786e6ee8bf20a33e376",
+    "posttrain_strategy_l0_zero_api_sha256": "87c9374b92e4e621d3cac66b3c04aca84d6508d63e401ec08b815343c606aa60",
+    "test_posttrain_strategy_intervention_sha256": "c299f76a8b23e0869a0376d25d0899dd5627af6302224e930c1c3f4123a99570",
+    "unit_tests": "15/15 PASS"
+  },
+  "current_status": "L0_ZERO_API_PASS_L1_ZERO_API_DRIVER_PREFLIGHT",
+  "next_valid_action": "Keep DeepSeek disabled. Build the L1 multi-turn tool-loop against ArkResponsesClient behind a fake provider, verify command execution confinement, continuation state, boundary-triggered intervention delivery, trace completeness, retry/no-duplicate-POST behavior, and cost caps. Only after those zero-API gates pass may one PRE_STRATEGY DeepSeek call sequence be authorized as the minimum paid headroom probe. ProblemGate remains blocked regardless of L0 success.",
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "full_experiment": false
+  }
+}

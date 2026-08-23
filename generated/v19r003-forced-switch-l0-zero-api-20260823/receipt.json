@@ -1,0 +1,246 @@
+{
+  "adherence_rubric_audit": {
+    "cases": {
+      "clean_post_strategy_enactment": {
+        "arm": "POST_STRATEGY",
+        "rationale": "the supplied strategy was observably enacted without detected reversion or mixing",
+        "scientific_authority": false,
+        "status": "ADHERED"
+      },
+      "execution_control_enacted": {
+        "arm": "POST_EXECUTION",
+        "rationale": "the requested execution-level parameter change was observed after delivery",
+        "scientific_authority": false,
+        "status": "ADHERED"
+      },
+      "post_strategy_reversion": {
+        "arm": "POST_STRATEGY",
+        "rationale": "the alternative strategy was initiated but later reverted or mixed with the prior strategy",
+        "scientific_authority": false,
+        "status": "PARTIAL_OR_REVERTED"
+      },
+      "post_without_pre_headroom": {
+        "arm": "POST_STRATEGY",
+        "rationale": "PRE_STRATEGY did not establish enactment headroom for strategy-level interpretation",
+        "scientific_authority": false,
+        "status": "NO_EVIDENCE"
+      },
+      "textual_acceptance_only": {
+        "arm": "POST_STRATEGY",
+        "rationale": "no trajectory-level strategy change was observed after the binding instruction",
+        "scientific_authority": false,
+        "status": "NOT_ADHERED"
+      }
+    },
+    "checks": {
+      "clean_post_strategy_enactment": true,
+      "execution_control_enacted": true,
+      "post_strategy_reversion": true,
+      "post_without_pre_headroom": true,
+      "textual_acceptance_only": true
+    },
+    "passed": true
+  },
+  "artifact_kind": "V19R003_L0_ZERO_API_ENGINEERING_RECEIPT",
+  "authority": {
+    "canonical_projection": false,
+    "problem_gate": false,
+    "research_item_created": false,
+    "scientific_arm_executed": false,
+    "scientific_authority": false
+  },
+  "boundary_audit": {
+    "checks": {
+      "failed_or_unverified_event_cannot_open_boundary": true,
+      "first_verified_update_index_is_training_event": true,
+      "mechanical_marker_and_training_candidate": true,
+      "semantic_parameter_update_required": true
+    },
+    "first_successful_parameter_update_index": 2,
+    "mechanical_probe": {
+      "candidate_training_commands": [
+        "Command: python train_sft.py --model Qwen3-1.7B-Base"
+      ],
+      "marker": "PTB_INTERVENTION_BOUNDARY_READY",
+      "marker_count": 1,
+      "mechanical_probe_passed": true,
+      "requires_semantic_parameter_update_verification": true,
+      "scientific_authority": false
+    },
+    "passed": true,
+    "structured_events": [
+      {
+        "exit_code": 0,
+        "kind": "setup",
+        "parameter_update": false
+      },
+      {
+        "exit_code": 0,
+        "kind": "evaluation",
+        "parameter_update": false
+      },
+      {
+        "exit_code": 0,
+        "kind": "first_training",
+        "parameter_update": true,
+        "verification_source": "local-A100-observed-parameter-delta"
+      }
+    ]
+  },
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "created_at_utc": "2026-08-23T15:18:36Z",
+  "evaluator_surface_audit": {
+    "checks": {
+      "aime_requires_no_external_grading_api": true,
+      "base_model_identifies_as_qwen": true,
+      "evaluator_uses_vllm_aime2025": true,
+      "pinned_aime_evaluator_present": true,
+      "qwen3_template_present": true
+    },
+    "dependency_install_deferred_to_l1": true,
+    "files": {
+      "evaluate.py": {
+        "path": "/data/wyt/agent-self-evolution-observatory/cache/substrates/PostTrainBench-official-v19r003/src/eval/tasks/aime2025/evaluate.py",
+        "sha256": "cc9415b6c0392e430d3cffdb2ff9b9a005d0614c762b9339aeaf3a3df90b3876"
+      },
+      "info.json": {
+        "path": "/data/wyt/agent-self-evolution-observatory/cache/substrates/PostTrainBench-official-v19r003/src/eval/tasks/aime2025/info.json",
+        "sha256": "f72451bbf6e5e95e72971d46ab1b5b2a162acc759ec4eecf192d05c5f89e6557"
+      },
+      "model_config.json": {
+        "path": "/data/wyt/llmmodels/Qwen3-1.7B-base_instruct_split/base_source/Qwen__Qwen3-1.7B-Base/config.json",
+        "sha256": "1bb33a92c3548fbc68b889b490e810440435253598835bd71dff0396060c12db"
+      },
+      "qwen3.jinja": {
+        "path": "/data/wyt/agent-self-evolution-observatory/cache/substrates/PostTrainBench-official-v19r003/src/eval/templates/qwen3.jinja",
+        "sha256": "ddd80c7700049450b953ae6acffa1731d696c5df5b1fbfb2de7e4ead17d708c6"
+      }
+    },
+    "passed": true,
+    "scientific_evaluation_executed": false
+  },
+  "execution_level": "L0_ZERO_API_ENGINEERING_FALSIFIER",
+  "four_arm_timing_audit": {
+    "checks": {
+      "all_phase1_prompts_require_boundary_marker": true,
+      "post_conflict_free_only_after_boundary": true,
+      "post_execution_only_after_boundary": true,
+      "post_strategy_only_after_boundary": true,
+      "pre_strategy_only_before_boundary": true,
+      "same_strategy_payload_pre_vs_post": true
+    },
+    "passed": true,
+    "phase_prompt_sha256": {
+      "POST_CONFLICT_FREE": {
+        "phase1": "a60e2f03b19808308b13a8057e6fa9551a7cfccf2cd53dcd8eb8bc138acedc1b",
+        "phase2": "e94589513f2afa3132bca014c09a54b0cdaf19f248b8c51b750e2ced57d81de7"
+      },
+      "POST_EXECUTION": {
+        "phase1": "a60e2f03b19808308b13a8057e6fa9551a7cfccf2cd53dcd8eb8bc138acedc1b",
+        "phase2": "5afa1d273ef5dc627fa9ec42e5f4f638d85af61502ad06c1b3f90150eefde429"
+      },
+      "POST_STRATEGY": {
+        "phase1": "a60e2f03b19808308b13a8057e6fa9551a7cfccf2cd53dcd8eb8bc138acedc1b",
+        "phase2": "9765a7fe6cdf5ed119ea6286d587906d19beaa658f3ceb5a1871265400eefe26"
+      },
+      "PRE_STRATEGY": {
+        "phase1": "8d64f808ac21c757ce2be21b9cfa48e20fd91751131be9d3a57085352114d906",
+        "phase2": "8a6799efa964389ea1b59daa6a74cf6482b784d1fbb1b78938b91b6a09bf10d7"
+      }
+    },
+    "strategy_instruction_sha256": "f4717c51cc24e71d76961e8acc6b76b31fa56d6f4aebb63b29c6d4eb55ee7c7d"
+  },
+  "gates": {
+    "adherence_rubric": true,
+    "boundary_wiring": true,
+    "four_arm_timing": true,
+    "pinned_aime_evaluator_surface": true,
+    "real_local_parameter_update_on_a100": true,
+    "zero_external_api_by_construction": true
+  },
+  "interpretation_boundary": "Engineering-only receipt. It validates A100 parameter-update capacity and frozen intervention mechanics; it contains no autonomous agent outcome and cannot support the candidate claim.",
+  "l0_pass": true,
+  "network_policy": {
+    "deepseek_calls": 0,
+    "external_api_calls": 0,
+    "huggingface_offline": true,
+    "provider_credentials_removed_from_process_environment": [
+      "ANTHROPIC_API_KEY",
+      "ANTHROPIC_AUTH_TOKEN",
+      "CLAUDE_CODE_OAUTH_TOKEN",
+      "OPENAI_API_KEY",
+      "DEEPSEEK_API_KEY",
+      "ARK_API_KEY",
+      "VOLCENGINE_API_KEY",
+      "GOOGLE_API_KEY",
+      "GEMINI_API_KEY"
+    ]
+  },
+  "next_cost_gate": "Keep API disabled. Build and run the native L1 task/training/evaluator dry path with a deterministic scripted agent before authorizing a single DeepSeek PRE_STRATEGY call.",
+  "parameter_update_smoke": {
+    "changed_elements_across_probes": 947,
+    "cuda_runtime": "12.1",
+    "device": "NVIDIA A100-SXM4-80GB",
+    "dtype": "bfloat16",
+    "elapsed_sec": 7.169,
+    "learning_rate": 0.001,
+    "loss": 5.802891731262207,
+    "model_path": "/data/wyt/llmmodels/Qwen3-1.7B-base_instruct_split/base_source/Qwen__Qwen3-1.7B-Base",
+    "parameter_update_verified": true,
+    "peak_gpu_allocated_gib": 7.593,
+    "probe_count": 6,
+    "probes": [
+      {
+        "abs_delta_sum": 8.225440979003906e-06,
+        "changed_elements": 3,
+        "grad_norm": 47.499813079833984,
+        "max_abs_delta": 7.62939453125e-06,
+        "name": "model.embed_tokens.weight"
+      },
+      {
+        "abs_delta_sum": 0.0020478814840316772,
+        "changed_elements": 258,
+        "grad_norm": 4.658357620239258,
+        "max_abs_delta": 6.103515625e-05,
+        "name": "model.layers.0.self_attn.q_proj.weight"
+      },
+      {
+        "abs_delta_sum": 0.00018614530563354492,
+        "changed_elements": 61,
+        "grad_norm": 4.90113639831543,
+        "max_abs_delta": 3.0517578125e-05,
+        "name": "model.layers.0.self_attn.k_proj.weight"
+      },
+      {
+        "abs_delta_sum": 0.006969660520553589,
+        "changed_elements": 309,
+        "grad_norm": 18.766157150268555,
+        "max_abs_delta": 0.0001220703125,
+        "name": "model.layers.0.self_attn.v_proj.weight"
+      },
+      {
+        "abs_delta_sum": 0.0034995824098587036,
+        "changed_elements": 270,
+        "grad_norm": 15.620387077331543,
+        "max_abs_delta": 6.103515625e-05,
+        "name": "model.layers.0.self_attn.o_proj.weight"
+      },
+      {
+        "abs_delta_sum": 0.00015819072723388672,
+        "changed_elements": 46,
+        "grad_norm": 7.243854999542236,
+        "max_abs_delta": 8.344650268554688e-06,
+        "name": "model.layers.0.mlp.gate_proj.weight"
+      }
+    ],
+    "sequence_tokens": 16,
+    "torch_version": "2.3.1+cu121"
+  },
+  "repo_head": "cab36bb89fffb63e0d0ee0af9cadcc805a2b3340",
+  "runtime": {
+    "platform": "Linux-6.11.0-17-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "python_executable": "/home/wyt/venv_qwen3_compat/bin/python"
+  },
+  "schema_version": "1.0"
+}

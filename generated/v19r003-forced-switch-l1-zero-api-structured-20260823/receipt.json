@@ -1,0 +1,101 @@
+{
+  "artifact_kind": "V19R003_L1_ZERO_API_STRUCTURED_TOOL_PATH_RECEIPT",
+  "authority": {
+    "canonical_projection": false,
+    "paid_probe_authorized": false,
+    "problem_gate": false,
+    "research_item_created": false,
+    "scientific_arm_executed": false,
+    "scientific_authority": false
+  },
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "cost": {
+    "deepseek_calls": 0,
+    "external_api_calls": 0,
+    "reported_provider_output_tokens": 0
+  },
+  "created_at_utc": "2026-08-23T15:55:40Z",
+  "elapsed_sec": 42.039,
+  "evaluation_tool_receipt": {
+    "completed": true,
+    "deepseek_calls": 0,
+    "evaluator_sha256": "cc9415b6c0392e430d3cffdb2ff9b9a005d0614c762b9339aeaf3a3df90b3876",
+    "external_api_calls": 0,
+    "metrics_keys": [
+      "accuracy",
+      "stderr"
+    ],
+    "metrics_sha256": "e34f16130fb471fcdb1fc839ab61a0cc3af462657f059a6be26e4850744351e9",
+    "model_ref": "base_model",
+    "receipt": "evaluator/run-01/metrics.json",
+    "runtime_mode": "PRESTARTED_LOCAL_VLLM_PLUS_OFFICIAL_PTB_INSPECT_SCORER",
+    "sample_limit": 1,
+    "scientific_claim_use_forbidden": true,
+    "scientific_evaluation": false,
+    "template_sha256": "ddd80c7700049450b953ae6acffa1731d696c5df5b1fbfb2de7e4ead17d708c6"
+  },
+  "execution_level": "L1_ZERO_API_ENGINEERING_STRUCTURED_TOOL_PATH",
+  "gates": {
+    "deepseek_calls_zero": true,
+    "engineering_executor_did_not_persist_checkpoint": true,
+    "external_api_calls_zero": true,
+    "loop_finished": true,
+    "loop_scientific_authority_false": true,
+    "official_evaluator_non_scientific": true,
+    "official_evaluator_tool_completed": true,
+    "phase1_keeps_public_boundary_marker_instruction": true,
+    "post_phase1_blind_to_treatment_and_arm": true,
+    "real_parameter_delta_opened_boundary": true,
+    "scripted_provider_only": true,
+    "treatment_visible_only_after_verified_boundary": true
+  },
+  "interpretation_boundary": "This proves the structured zero-API orchestration path only. The training executor is an explicit one-step SGD engineering surrogate and persists no checkpoint; it cannot support strategy-enactment science or a paid PRE probe.",
+  "l1_zero_api_pass": true,
+  "loop_summary": {
+    "boundary_reached": true,
+    "finished": true,
+    "phase2_injected": true,
+    "provider_calls": 3,
+    "reported_output_tokens": 0
+  },
+  "next_gate": "Implement a persistent real SFT/RL training executor with frozen compute/data semantics and checkpoint continuation. Keep DeepSeek disabled until that executor passes the same zero-API confinement/boundary/evaluator checks.",
+  "provider_prompt_checks": [
+    {
+      "arm_identity_visible": false,
+      "boundary_marker_visible": true,
+      "prompt_sha256": "a60e2f03b19808308b13a8057e6fa9551a7cfccf2cd53dcd8eb8bc138acedc1b",
+      "requested_model": "deepseek-v4-pro",
+      "strategy_visible": false
+    },
+    {
+      "arm_identity_visible": false,
+      "boundary_marker_visible": true,
+      "prompt_sha256": "386573d4d772ad53e2dfba63584494d69ae5bd04e9ecf25f4b808bb58770b487",
+      "requested_model": "deepseek-v4-pro",
+      "strategy_visible": true
+    },
+    {
+      "arm_identity_visible": false,
+      "boundary_marker_visible": true,
+      "prompt_sha256": "4e8fe08e6366eccca939dd576ac44670cb517a7f815b34f05b7659ee9e3f6869",
+      "requested_model": "deepseek-v4-pro",
+      "strategy_visible": true
+    }
+  ],
+  "schema_version": "1.0",
+  "training_tool_receipt": {
+    "changed_probe_elements": 281,
+    "checkpoint": null,
+    "checkpoint_persisted": false,
+    "deepseek_calls": 0,
+    "exit_code": 0,
+    "external_api_calls": 0,
+    "method_label": "sft",
+    "parameter_update_verified": true,
+    "receipt": "receipts/training-01.json",
+    "receipt_sha256": "ec6c57369f8ee3140eb555fe1a5872fa3a96c4adabad0accf3ca92f4d95bf3e4",
+    "scientific_use_forbidden": true,
+    "stage": "first-engineering-update",
+    "training_semantics": "ONE_STEP_SGD_ENGINEERING_SURROGATE_NOT_SFT_OR_RL"
+  }
+}
