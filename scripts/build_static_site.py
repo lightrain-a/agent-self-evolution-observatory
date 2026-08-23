@@ -179,9 +179,10 @@ def build() -> Path:
         check=True,
     )
     generated = ROOT / "generated"
+    paper_registry = json.loads((generated / "paper-registry.json").read_text(encoding="utf-8"))
     projection_errors = validate_public_control_plane(
         research_state=json.loads((generated / "research-items.json").read_text(encoding="utf-8")),
-        paper_registry=json.loads((generated / "paper-registry.json").read_text(encoding="utf-8")),
+        paper_registry=paper_registry,
         research_system=json.loads((generated / "research-system-state.json").read_text(encoding="utf-8")),
         research_dashboard=json.loads((generated / "research-dashboard.json").read_text(encoding="utf-8")),
         research_memory=json.loads((generated / "research-memory-wiki.json").read_text(encoding="utf-8")),
@@ -232,7 +233,17 @@ def build() -> Path:
 
     downloads_source = ROOT / "downloads"
     downloads_output = OUTPUT / "downloads"
-    for name in (
+    declared_download_names: set[str] = set()
+    for paper in paper_registry.get("papers") or []:
+        for ref in (paper.get("downloads") or {}).values():
+            if not ref:
+                continue
+            candidate = Path(str(ref))
+            if candidate.is_absolute() or len(candidate.parts) != 2 or candidate.parts[0] != "downloads" or candidate.name in {"", ".", ".."}:
+                raise RuntimeError(f"PaperRegistry contains an invalid public download path: {ref}")
+            declared_download_names.add(candidate.name)
+
+    legacy_download_names = (
         "STRI-ICLR2027.tex", "STRI-ICLR2027.pdf", "STRI-ICLR2027-source.zip",
         "STRI-ICLR2027-submission-ready-20260821.tex",
         "STRI-ICLR2027-submission-ready-20260821.pdf",
@@ -244,7 +255,8 @@ def build() -> Path:
         "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE.pdf", "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip",
         "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK.pdf", "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip",
         "D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf", "D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip",
-    ):
+    )
+    for name in sorted(set(legacy_download_names) | declared_download_names):
         source = downloads_source / name
         if source.exists():
             destination = downloads_output / name
@@ -359,6 +371,7 @@ def build() -> Path:
         OUTPUT / "downloads" / "D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf",
         OUTPUT / "downloads" / "D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip",
     )
+    required = required + tuple(OUTPUT / "downloads" / name for name in sorted(declared_download_names))
     missing = [str(path.relative_to(OUTPUT)) for path in required if not path.exists()]
     if missing:
         raise RuntimeError("Static site is missing required files: " + ", ".join(missing))
