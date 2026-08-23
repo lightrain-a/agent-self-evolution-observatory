@@ -189,5 +189,125 @@
       "gpu": false,
       "paper_state": false
     }
+  },
+  "discovery_lesson_reconciliation_20260824": {
+    "status": "SELECTIVE_DISCOVERY_LESSON_PROJECTION_COMPLETE_PARENT_HOLD_UNCHANGED",
+    "canonical_base_revision": "809734d8041e5e695626caaf5db01e707b61fcfb",
+    "source_branch_commit": "6c9b88f717ee49138edb314a78dc373ace37446b",
+    "lesson_id": "LS-MEMENTO-COMPOSITION-HOLD-ESCAPE",
+    "memory_id": "MEM-DISC-d9e51c627544b10c97",
+    "projection_delta": {
+      "discovery_lessons_before": 19,
+      "discovery_lessons_after": 20,
+      "research_memory_entries_before": 87,
+      "research_memory_entries_after": 88,
+      "existing_memory_entries_changed": 0,
+      "memory_entries_removed": 0,
+      "scientific_research_graph_changed": false,
+      "generated_longitudinal_discovery_cycle_rewritten": true,
+      "generated_research_memory_wiki_rewritten": true,
+      "generated_research_system_state_selectively_updated": true,
+      "research_system_state_update_scope": [
+        "embedded research_memory_wiki",
+        "research-memory-wiki health detail",
+        "scientific-research-graph component evidence string only"
+      ]
+    },
+    "memory_behavior_verification": {
+      "idea_search_query": "MEMENTO task composition mixed sign constituent reference task graph horizon context grounding shared state difficulty failure derived idea",
+      "idea_search_default_budget_chars": 8000,
+      "selected": true,
+      "selected_rank": 2,
+      "idea_search_query_pack_sha256": "5ccdefda0c807f700954d4e6a0861b2b6ea7958cf1e694bb8f2eb5e255e31dfa",
+      "reopen_condition_visible": true,
+      "reusable_precheck_visible": true,
+      "opposite_search_seed_visible": true,
+      "downstream_scientific_authority": false
+    },
+    "parent_and_holdout_invariants": {
+      "memento_parent_status": "KEEP_HOLD",
+      "memento_exact_runtime_gate": "HOLD_EXACT_MEMENTO_RUNTIME_ASSETS_MISSING",
+      "memento_research_item_promoted": false,
+      "full_coordination_audit_authorized": false,
+      "dormant_holdout_ids": "10012-10035",
+      "dormant_holdout_count": 24,
+      "fresh_outcomes_read_for_this_screen": false,
+      "fresh_deepseek_runs_executed": false,
+      "provider_calls_after_hold": 0,
+      "gpu_runs_after_hold": 0
+    },
+    "smoke_guard_repair": {
+      "reason": "Discovery Lesson count is append-only and must not be hard-coded to 19. Smoke tests now compare rendered/memory counts against the canonical discovery-cycle count.",
+      "site_smoke": "PASS",
+      "browser_smoke": "PASS",
+      "scientific_authority": false
+    },
+    "validation": {
+      "targeted_tests": 27,
+      "targeted_tests_status": "PASS",
+      "static_generated_research_system_validate_errors": 0,
+      "git_diff_check": "PASS",
+      "dynamic_research_system_validate_errors": 0,
+      "site_smoke": "PASS",
+      "browser_smoke": "PASS"
+    },
+    "bindings": [
+      {
+        "path": "research_pipeline/longitudinal_safety_discovery_lessons_20260823.json",
+        "sha256": "a09bc985a4c62295b7434dd7cb82ea1a40323aba0d6624caaf54df5ddae5db6d"
+      },
+      {
+        "path": "generated/longitudinal-safety-discovery-cycle-20260823.json",
+        "sha256": "360369a97e3ad0ef1dde655c64666417ede66563a0e7ee47dfd360a7f6feb39c"
+      },
+      {
+        "path": "generated/research-memory-wiki.json",
+        "sha256": "4c605560ed224982478aab3f6434a710a391ec36c6076a638882a1a23ac1a6ef"
+      },
+      {
+        "path": "generated/research-system-state.json",
+        "sha256": "f3561427c53e955e73039f90580a9de79a91e4b03791ffee8d7200952a31e839"
+      },
+      {
+        "path": "site_smoke_test.py",
+        "sha256": "2d8f9aad09dbf9c56660a595789e1d6137ff48ca86cbaa460b305769bea4f91c"
+      },
+      {
+        "path": "browser_smoke_test.py",
+        "sha256": "272101d26e2424496a42292f9d5d0212e365662caa1837cbc266fb18e7da636e"
+      },
+      {
+        "path": "research_pipeline/memento_deepseek_aux_postnegative_diagnosis_20260823.json",
+        "sha256": "c23f6cf37f4ae28abcfbd3041ebd81a173fdf37bf3ba1873157facf97f8baa27"
+      },
+      {
+        "path": "research_pipeline/task_composition_residual_c01_novelty_screen.json",
+        "sha256": "f08b9f802313966e93e1d89c6e3b431d5b3bbb1659e391f6489f303b8541b882"
+      },
+      {
+        "path": "research_pipeline/task_composition_residual_c01_holdout_support_inventory.json",
+        "sha256": "e3762b72df017d50378517b4becc80e22bbaa8a66946d9e9bc5b7cca8238f0ac"
+      }
+    ],
+    "non_mutations": [
+      "parent MEMENTO frozen estimator/threshold/units",
+      "exact GPT-4o reproduction track",
+      "ProblemGate",
+      "ResearchItem promotion",
+      "provider/GPU authority",
+      "24 sealed holdout outcomes",
+      "scientific graph semantics"
+    ],
+    "authority": {
+      "scientific": false,
+      "novelty": false,
+      "problem_gate": false,
+      "research_item_promotion": false,
+      "method": false,
+      "experiment": false,
+      "provider_calls": false,
+      "gpu": false,
+      "paper_state": false
+    }
   }
 }

@@ -49514,7 +49514,7 @@
   },
   "research_memory_wiki": {
     "schema_version": "1.1",
-    "generated_at": "2026-08-23T16:14:46+00:00",
+    "generated_at": "2026-08-23T16:39:34+00:00",
     "status": "MEMORY_COMPILED",
     "policy": {
       "schema_version": "1.1",
@@ -49548,10 +49548,10 @@
       "unresolved_principles": 2,
       "generator_blocked_attempts": 15,
       "paper_review_ledgers": 5,
-      "discovery_failure_lessons": 19
+      "discovery_failure_lessons": 20
     },
     "summary": {
-      "entries": 87,
+      "entries": 88,
       "search_closures": 41,
       "scientific_closures": 2,
       "holds": 9,
@@ -49559,13 +49559,13 @@
       "success_assets": 3,
       "open_questions": 2,
       "repeated_review_blocks": 1,
-      "discovery_lessons": 19,
+      "discovery_lessons": 20,
       "review_lessons": 5,
       "paper_development_guidance": 1,
-      "prompt_eligible": 87,
+      "prompt_eligible": 88,
       "transient": 0,
       "recurring_systemic": 14,
-      "scientific": 73
+      "scientific": 74
     },
     "entries": [
       {
@@ -49961,6 +49961,32 @@
         "source_refs": [
           "arXiv:2608.20318",
           "receipt:50f14215548d97f797116f32e067719a327b2b72a40602175e0d316b5460035b"
+        ],
+        "source_artifact": "longitudinal_safety_discovery_cycle",
+        "reuse_effectiveness": {},
+        "scientific_authority": false
+      },
+      {
+        "memory_id": "MEM-DISC-d9e51c627544b10c97",
+        "kind": "DISCOVERY_LESSON",
+        "title": "Mixed-sign composition HOLD must escape the mature planning/difficulty basin before becoming a new idea",
+        "summary": "A mixed-sign constituent-matched composition HOLD does not by itself identify a new task-graph, composition-cost, or executor-difficulty object. First verify constituent-reference stability and endpoint alignment. Then give same-information mature reducers the full pre-outcome structure: symbolic positive/negative subgoal interaction and ordering, graph dependencies, resource/horizon/context burden, task-state propagation, grounding ambiguity, shared-state reuse, generic ex-ante task difficulty, and evaluation-budget effects. In the MEMENTO-derived screen, every intuitive executor observable reduced to these existing objects, so the child realization was closed rather than rescued by model swaps, subgrouping, threshold changes, or fresh outcome inspection.",
+        "candidate_id": "TASK-COMPOSITION-RESIDUAL-C01",
+        "scope": "SCIENTIFIC_REDUCTION",
+        "affected_layer": "problem_novelty",
+        "memory_class": "SCIENTIFIC_REDUCTION",
+        "durability_class": "scientific",
+        "prompt_eligible": true,
+        "search_closure_certified": false,
+        "scientific_dead_end_certified": false,
+        "principle_update_allowed": false,
+        "reopen_condition": "Reopen only if a materially new executor-side pre-outcome observable or intervention is frozen before fresh outcomes, receives the same constituent/task information and resource budget as the strongest mature reducers, and forces a distinct falsifiable held-out prediction that symbolic goal interaction, generic task difficulty, graph dependency, resource/horizon/context burden, task-state management, grounding ambiguity, shared-state reuse, and evaluation-budget models cannot express. The dormant MEMENTO IDs 10012-10035 remain sealed until such an object exists.",
+        "opposite_search_seed": "Search outside the composition/difficulty basin for a different scientific carrier or for a pre-outcome executor variable that changes the predicted sign or magnitude of a constituent-matched composition residual while all mature symbolic, difficulty, graph, resource, context, state-management, grounding, reuse, and budget reducers receive identical information. Require an intervention or independent executable truth before ProblemGate.",
+        "reusable_precheck": "For a failure-derived composition idea: (1) preserve the parent decision and type the failure layer; (2) verify stable constituent references and endpoint semantics; (3) run the strongest same-information planning/difficulty/resource/context/grounding reductions before naming a child; (4) if no irreducible pre-outcome observable survives, STOP the child realization and search a different scientific carrier or estimand; (5) do not consume sealed holdouts, change backbone, tune thresholds, or mine favorable outcome subgroups as rescue.",
+        "source_refs": [
+          "repo://research_pipeline/memento_deepseek_aux_postnegative_diagnosis_20260823.json",
+          "repo://research_pipeline/task_composition_residual_c01_novelty_screen.json",
+          "private-data://runs/memento-joint-id-f0-runtime/ark-deepseek-aux-f0-result.json#sha256=4db1eb67d2b1a72e619e2452f245c4b23a5cc85198a23abe6fb11a6ee7025b4b"
         ],
         "source_artifact": "longitudinal_safety_discovery_cycle",
         "reuse_effectiveness": {},
@@ -52130,7 +52156,7 @@
       "p0": false,
       "gpu": false
     },
-    "wiki_sha256": "3aedcf86974faf7a08ace0a8bbd4d2932f0f149e82d1f19006e6bda4257a7190",
+    "wiki_sha256": "484a56a5ee5506499e9596e421ca3fb85e0146e8fbf7f845cbfaa9e39cdc251f",
     "lint": {
       "schema_version": "1.1",
       "status": "PASS",
@@ -84893,8 +84919,8 @@
       },
       "status": "running",
       "evidence": {
-        "en": "699 graph nodes / 1045 edges; memory wiki 87 entries / 4 failure / 3 success / 5 paper-review lessons / lint warnings 7",
-        "zh": "研究图谱 699 个节点 / 1045 条边；Memory Wiki 87 条 / 失败 4 / 成功 3 / 论文审查经验 5 / lint warning 7"
+        "en": "699 graph nodes / 1045 edges; memory wiki 88 entries / 4 failure / 3 success / 5 paper-review lessons / lint warnings 7",
+        "zh": "研究图谱 699 个节点 / 1045 条边；Memory Wiki 88 条 / 失败 4 / 成功 3 / 论文审查经验 5 / lint warning 7"
       },
       "key": "scientific-research-graph",
       "primary_layer": "memory-publication"
@@ -86980,7 +87006,7 @@
         "pass": true,
         "detail": {
           "summary": {
-            "entries": 87,
+            "entries": 88,
             "search_closures": 41,
             "scientific_closures": 2,
             "holds": 9,
@@ -86988,13 +87014,13 @@
             "success_assets": 3,
             "open_questions": 2,
             "repeated_review_blocks": 1,
-            "discovery_lessons": 19,
+            "discovery_lessons": 20,
             "review_lessons": 5,
             "paper_development_guidance": 1,
-            "prompt_eligible": 87,
+            "prompt_eligible": 88,
             "transient": 0,
             "recurring_systemic": 14,
-            "scientific": 73
+            "scientific": 74
           },
           "lint": {
             "errors": 0,
