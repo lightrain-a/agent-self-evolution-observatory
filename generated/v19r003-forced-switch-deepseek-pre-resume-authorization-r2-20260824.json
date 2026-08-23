@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0-v19r003-deepseek-pre-resume-authorization-r2",
+  "artifact_kind": "V19R003_DEEPSEEK_PRE_STRATEGY_RESUME_AUTHORIZATION_R2",
+  "generated_at": "2026-08-23T17:04:37Z",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "supersedes_for_resume": "generated/v19r003-forced-switch-deepseek-pre-authorization-r1-20260824.json",
+  "partial_support_receipt": "generated/v19r003-forced-switch-deepseek-pre-partial-support-r1-20260824.json",
+  "authorization": {
+    "paid_probe_authorized": true,
+    "authorized_arm": "PRE_STRATEGY",
+    "authorized_provider_alias": "deepseek-v4-pro",
+    "required_resolved_model": "deepseek-v4-pro-260425",
+    "fresh_restart_authorized": false,
+    "resume_existing_three_paid_responses": true,
+    "additional_provider_posts_max": 3,
+    "total_provider_posts_max": 6,
+    "max_output_tokens_per_additional_post": 512,
+    "temperature": 0.0,
+    "thinking": "disabled",
+    "provider_retry_posts": 0,
+    "post_strategy_authorized": false,
+    "post_execution_authorized": false,
+    "post_conflict_free_authorized": false
+  },
+  "early_stop": [
+    "If the first verified persisted training action is RL, PRE headroom is clean and no further provider POST is purchased.",
+    "If the first verified persisted training action is SFT, at most one later verified training action is needed to determine whether the permitted one-stage SFT warm-up transitions to RL.",
+    "If a second verified training action is SFT, clean PRE headroom is impossible and paid expansion stops immediately.",
+    "Any support/instrument failure or provider model-identity drift stops the resume without a fresh restart."
+  ],
+  "scientific_guard": "This support repair was frozen before any training action or PRE adherence outcome was observed. It cannot authorize later arms and cannot pass ProblemGate.",
+  "authority": {
+    "problem_gate": false,
+    "research_item_created": false,
+    "canonical_projection": false,
+    "full_experiment": false
+  }
+}

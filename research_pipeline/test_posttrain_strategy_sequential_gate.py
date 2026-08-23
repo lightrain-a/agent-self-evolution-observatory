@@ -19,7 +19,7 @@ class SequentialPaidGateTest(unittest.TestCase):
         self.assertFalse(d.problem_gate_pass)
 
     def test_failed_pre_stops_all_later_spend(self) -> None:
-        for status in ("NOT_ADHERED", "PARTIAL_OR_REVERTED", "NO_EVIDENCE", "ADHERED"):
+        for status in ("NOT_ADHERED", "PARTIAL_OR_REVERTED", "PARTIAL_OR_REVERTED_UNCALIBRATED", "NO_EVIDENCE", "ADHERED"):
             d = adjudicate_sequential_paid_gate(pre_strategy=status)
             self.assertEqual(d.decision, "STOP_PRE_HEADROOM_NOT_ESTABLISHED")
             self.assertTrue(d.stop_paid_expansion)

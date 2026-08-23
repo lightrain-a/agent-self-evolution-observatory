@@ -236,7 +236,9 @@ def main() -> int:
         status = str(adherence["assessment"]["status"])
         decision = adjudicate_sequential_paid_gate(pre_strategy=status)
         resolved_models = sorted({str(row.get("resolved_model") or "") for row in result["provider_receipts"]})
-        model_identity_ok = resolved_models == [MODEL]
+        model_identity_ok = len(resolved_models) == 1 and (
+            resolved_models[0] == MODEL or resolved_models[0].startswith(MODEL + "-")
+        )
         if not model_identity_ok:
             status = "NO_EVIDENCE"
             adherence["assessment"] = {

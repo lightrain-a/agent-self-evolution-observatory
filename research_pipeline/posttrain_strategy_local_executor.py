@@ -108,6 +108,27 @@ class EngineeringLocalToolExecutor:
 
     def _inspect_workspace(self, arguments: dict[str, Any]) -> dict[str, Any]:
         path = self._safe_workspace_file(str(arguments.get("path") or "").strip())
+        if path.is_dir():
+            entries = []
+            for child in sorted(path.iterdir(), key=lambda item: item.name)[:64]:
+                if child.is_symlink():
+                    kind = "symlink"
+                elif child.is_dir():
+                    kind = "directory"
+                elif child.is_file():
+                    kind = "file"
+                else:
+                    kind = "other"
+                entries.append({"name": child.name, "kind": kind})
+            return {
+                "path": "." if path == self.workspace_root else str(path.relative_to(self.workspace_root)),
+                "kind": "directory",
+                "entries": entries,
+                "entry_count_returned": len(entries),
+                "entry_cap": 64,
+                "executor_root_confined": True,
+                "scientific_authority": False,
+            }
         if not path.is_file():
             raise FileNotFoundError(path)
         size = path.stat().st_size
@@ -116,6 +137,7 @@ class EngineeringLocalToolExecutor:
         content = path.read_text(encoding="utf-8")
         return {
             "path": str(path.relative_to(self.workspace_root)),
+            "kind": "file",
             "size_bytes": size,
             "sha256": self._sha256(path),
             "content": content,

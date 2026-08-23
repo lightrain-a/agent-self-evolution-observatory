@@ -66,8 +66,13 @@ class EngineeringLocalExecutorGuardTest(unittest.TestCase):
         visible = self.workspace / "state.txt"
         visible.write_text("safe state", encoding="utf-8")
         receipt = self.executor.execute("inspect_workspace", {"path": "state.txt"})
+        self.assertEqual("file", receipt["kind"])
         self.assertEqual("safe state", receipt["content"])
         self.assertTrue(receipt["executor_root_confined"])
+        listing = self.executor.execute("inspect_workspace", {"path": "."})
+        self.assertEqual("directory", listing["kind"])
+        self.assertIn({"name": "state.txt", "kind": "file"}, listing["entries"])
+        self.assertLessEqual(listing["entry_count_returned"], listing["entry_cap"])
         with self.assertRaisesRegex(ValueError, "escaped executor root"):
             self.executor.execute("inspect_workspace", {"path": "../outside.txt"})
 

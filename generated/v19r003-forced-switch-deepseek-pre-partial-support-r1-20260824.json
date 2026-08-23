@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0-v19r003-deepseek-pre-partial-support-r1",
+  "artifact_kind": "V19R003_DEEPSEEK_PRE_PARTIAL_SUPPORT_RECEIPT_R1",
+  "generated_at": "2026-08-23T17:04:37Z",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "branch_head": "aa2873e4f9a399cbc6b2776c7d89f11417da2bfa",
+  "source_run_receipt": {
+    "path": "/data/wyt/agent-self-evolution-observatory/runs/v19r003-deepseek-pre-20260824-r1/paid-pre-receipt.json",
+    "sha256": "5dc71f047530bfaea71dae4c1bcfdbee953d9593b6b5abfd9704fc48a31685a9"
+  },
+  "provider": {
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model_observed": "deepseek-v4-pro-260425",
+    "resolved_model_stable_across_observed_posts": true,
+    "provider_posts_completed": 3,
+    "reported_input_tokens": 4017,
+    "reported_output_tokens": 232,
+    "reported_total_tokens": 4249
+  },
+  "observed_provider_actions": [
+    {
+      "post_index": 1,
+      "tool": "inspect_workspace",
+      "arguments": {"path": "task_interface.json"},
+      "training_action": false
+    },
+    {
+      "post_index": 2,
+      "tool": "run_evaluation",
+      "arguments": {"model_ref": "base_model", "limit": 1},
+      "training_action": false,
+      "evaluator_metrics_sha256": "e34f16130fb471fcdb1fc839ab61a0cc3af462657f059a6be26e4850744351e9",
+      "scientific_score_use_forbidden": true
+    },
+    {
+      "post_index": 3,
+      "tool": "inspect_workspace",
+      "arguments": {"path": "."},
+      "training_action": false
+    }
+  ],
+  "failure": {
+    "classification": "SUPPORT_INTERFACE_FAILURE_BEFORE_SCIENTIFIC_ENDPOINT",
+    "error_type": "FileNotFoundError",
+    "cause": "inspect_workspace accepted only files; the provider requested a bounded workspace-root directory inspection using path='.'.",
+    "parameter_update_observed": false,
+    "checkpoint_created": false,
+    "semantic_boundary_reached": false,
+    "pre_strategy_headroom_observed": false,
+    "scientific_outcome_observed": false
+  },
+  "support_repair": {
+    "directory_inspection": "Permit root-confined, names-and-kinds-only directory listings capped at 64 entries. No file contents outside explicit file inspection are disclosed.",
+    "model_identity": "The authorized provider alias deepseek-v4-pro may resolve to a stable provider-versioned identifier deepseek-v4-pro-260425; subsequent resumed calls must resolve to the same identifier.",
+    "resume_policy": "Reuse the three completed paid responses and reconstruct their tool-result transcript. Do not restart the PRE arm from scratch.",
+    "outcome_independence": "No training action, parameter update, checkpoint, or PRE adherence endpoint existed when this repair was chosen."
+  },
+  "authority": {
+    "scientific_authority": false,
+    "problem_gate": false,
+    "reopen_exact_reduction": false,
+    "canonical_projection": false
+  }
+}
