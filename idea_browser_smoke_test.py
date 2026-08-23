@@ -1085,7 +1085,7 @@ def main() -> None:
         require(not missing_dual_ready, f"PaperRegistry / dual submission-ready boundary or historical archive is missing: {missing_dual_ready}; Agent Safety card={selected['agentSafetyCardText']!r}")
         safety_dc=int(expected_safety_prebuttal.get("decision_critical") or 0)
         require(all(marker in selected["agentSafetyCardText"] for marker in ("关键因果对照","8/12","4/12","4 update-only / 0 control-only","CI=9/9",f"Prebuttal={safety_dc}/{safety_dc}")), f"Agent Safety PaperRegistry card is missing controlled evidence or current hard-gate results: {selected['agentSafetyCardText']!r}")
-        require(set(selected["submissionDownloads"]) == expected_stri_downloads and len(expected_stri_downloads) == 2, f"STRI public downloads must match the canonical PaperRegistry PDF + source ZIP handoff: rendered={selected['submissionDownloads']} expected={sorted(expected_stri_downloads)}")
+        require(set(selected["submissionDownloads"]) == expected_stri_downloads and expected_stri_downloads, f"STRI public downloads must match the canonical PaperRegistry download set: rendered={selected['submissionDownloads']} expected={sorted(expected_stri_downloads)}")
         require(set(selected["agentSafetyDownloads"]) == expected_safety_downloads and len(expected_safety_downloads) == 3, f"Agent Safety public downloads must match the canonical PaperRegistry PDF + source ZIP + supplement handoff: rendered={selected['agentSafetyDownloads']} expected={sorted(expected_safety_downloads)}")
 
         print("PASS")

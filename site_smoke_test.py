@@ -6,6 +6,7 @@ import json
 import re
 import subprocess
 import xml.etree.ElementTree as ET
+from collections import Counter
 from pathlib import Path
 
 from research_pipeline.public_projection_invariants import validate_public_control_plane
@@ -345,6 +346,8 @@ def main() -> None:
         fail("selected-paper must load the advisor-facing novelty audit before the current-paper renderer")
     if "paper-external-review-data.js" not in selected_html or selected_scripts_list.index("paper-external-review-data.js") > selected_scripts_list.index("current-research-status-view.js"):
         fail("selected-paper must load the external-review repair overlay before the current-paper renderer")
+    if "generated/stanford-r2-objection-matrix.js" not in selected_html or selected_scripts_list.index("generated/stanford-r2-objection-matrix.js") > selected_scripts_list.index("current-research-status-view.js"):
+        fail("selected-paper must load the Stanford Round-2 objection matrix before the current-paper renderer")
     paper_story_data_scripts = tuple(sorted(path.name for path in ROOT.glob("paper-story-*.js") if path.name not in {"paper-story-blueprint.js", "paper-story-view.js"}))
     paper_story_scripts = ("paper-story-blueprint.js",) + paper_story_data_scripts + ("paper-story-view.js",)
     if not all(name in selected_scripts_list for name in paper_story_scripts):
@@ -361,9 +364,30 @@ def main() -> None:
     external_review_source = (ROOT / "paper-external-review-data.js").read_text(encoding="utf-8")
     if not all(f'\"{paper_id}\"' in external_review_source for paper_id in novelty_ids) or "read_only_external_review_overlay:true" not in external_review_source or "cannot_change_paper_state:true" not in external_review_source or "score_is_not_official_iclr_score:true" not in external_review_source:
         fail("external paper review overlay must cover all five PaperStates and remain read-only / non-official")
-    for marker in ("5.8", "6.5", "6.7", "5.6", "Weak Accept", "Weak Reject", "Lean Accept", "Borderline Reject"):
+    for marker in ("review_round:2", "6.1", "6.3", "5.4", "Accept", "Weak Accept", "Weak Reject", "Borderline-leaning Reject", "Borderline Reject"):
         if marker not in external_review_source:
-            fail(f"external paper review overlay is missing score/recommendation evidence: {marker}")
+            fail(f"external paper review overlay is missing Round-2 score/recommendation evidence: {marker}")
+    objection_matrix_path = ROOT / "generated" / "stanford-r2-objection-matrix.json"
+    objection_matrix = json.loads(objection_matrix_path.read_text(encoding="utf-8"))
+    objection_matrix_js = (ROOT / "generated" / "stanford-r2-objection-matrix.js").read_text(encoding="utf-8")
+    expected_objection_js = "window.STANFORD_R2_OBJECTION_MATRIX = " + json.dumps(objection_matrix, ensure_ascii=False, separators=(",", ":")) + ";\n"
+    if objection_matrix_js != expected_objection_js:
+        fail("Stanford Round-2 objection matrix JSON/JS projections are not byte-consistent")
+    objection_rows = [row for paper in objection_matrix.get("papers", {}).values() for row in paper.get("objections", [])]
+    disposition_counts = Counter(row.get("d") for row in objection_rows)
+    expected_dispositions = {"RESOLVED":7,"EXISTING_EVIDENCE_ACTIONABLE":9,"REQUIRES_SCIENTIFIC_REOPEN":9,"PERMANENT_CLAIM_BOUNDARY":8}
+    if len(objection_matrix.get("papers", {})) != 5 or len(objection_rows) != 33 or disposition_counts != Counter(expected_dispositions):
+        fail(f"Stanford Round-2 objection matrix contract drifted: papers={len(objection_matrix.get('papers', {}))} objections={len(objection_rows)} counts={dict(disposition_counts)}")
+    if any(objection_matrix.get("policy", {}).get(key) is not False for key in ("scientific_authority","experiment_authority","gpu_authority","submission_authority")):
+        fail("Stanford Round-2 objection matrix must grant zero automatic scientific/experiment/GPU/submission authority")
+    if any(not row.get("e") or row.get("action") != "NONE" for row in objection_rows if row.get("d") == "RESOLVED"):
+        fail("Every RESOLVED Stanford objection must bind traceable evidence and require no action")
+    if any(row.get("action") != "OFFLINE_ANALYSIS_ONLY" for row in objection_rows if row.get("d") == "EXISTING_EVIDENCE_ACTIONABLE"):
+        fail("Existing-evidence Stanford objections must be limited to offline analysis/manuscript absorption")
+    if any(row.get("action") != "SCIENTIFIC_REOPEN_REQUIRED" or not row.get("reopen") for row in objection_rows if row.get("d") == "REQUIRES_SCIENTIFIC_REOPEN"):
+        fail("Scientific-reopen Stanford objections must carry an explicit reopen condition and cannot auto-execute")
+    if any(row.get("action") != "NONE" for row in objection_rows if row.get("d") == "PERMANENT_CLAIM_BOUNDARY"):
+        fail("Permanent Stanford claim boundaries must not create an execution action")
     for secret_marker in ("598666122", "rrPkIBax5D", "QUnnU4wFKS", "DqW1VNWgFx", "_Q3_zdvJNr", "e2EhqrGLn2"):
         if secret_marker in external_review_source or secret_marker in selected_html:
             fail("public external-review overlay leaked a private email or review token")
@@ -372,6 +396,8 @@ def main() -> None:
         fail("selected-paper must render both portfolio-level and per-paper novelty decisions")
     if "paper-external-review-portfolio" not in current_view_source or "paper-external-review-detail" not in current_view_source or "targeted repair plan" not in current_view_source.lower():
         fail("selected-paper must render portfolio-level and per-paper external review / repair plans")
+    if "stanford-r2-objection-matrix" not in current_view_source or "reviewer-objection-detail" not in current_view_source or "REQUIRES_SCIENTIFIC_REOPEN" not in current_view_source:
+        fail("selected-paper must render the portfolio and per-paper Stanford Round-2 objection disposition matrix")
 
     stale_markers = (
         "Selected ICLR Paper Workspace", "选中 ICLR 论文工作区",
