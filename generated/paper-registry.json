@@ -1,7 +1,7 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-08-23T09:28:16+00:00",
-  "source_revision": "4126809d7069e6fc5bc76e65f76dea76da7083a5",
+  "generated_at": "2026-08-23T09:46:03+00:00",
+  "source_revision": "9b81defd242051b75e1442cd5935821d36ba7e8d",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -495,13 +495,13 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 35,
+        "events": 44,
         "allowed_transitions": 8,
         "blocked_transitions": 1,
         "story_search_receipts": 1,
         "mock_reviews": 2,
         "claim_audit_receipts": 1,
-        "manuscript_ci_receipts": 3,
+        "manuscript_ci_receipts": 4,
         "prebuttal_receipts": 1,
         "submission_readiness_receipts": 1,
         "contract_revisions": 1
@@ -534,10 +534,10 @@
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "54758d2ffc1b5bc2d5f5215a9aff1fe3fc61c7cbb0ca8449a73d4e0cc6f3f7c1",
+        "claim_audit_sha256": "7b27b3be1b9f3ade710f9755d5217749b80adace28d072228c969fa1fe495ac1",
         "blockers": [],
-        "checks": 3,
-        "passed": 3
+        "checks": 8,
+        "passed": 8
       },
       "latest_manuscript_ci": {
         "pass": true,
@@ -548,25 +548,25 @@
       },
       "latest_prebuttal": {
         "pass": true,
-        "decision_critical": 10,
+        "decision_critical": 12,
         "blockers": [],
         "unresolved_decision_critical": 0
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r5-novelty-attack",
-        "receipt_sha256": "6d664b7fca05b367b939d8095b6c1b4e2ab919b5595cf7ee60a6e30bb1061d1e",
+        "protocol_version": "1.0+r6-measurement-source-recovered",
+        "receipt_sha256": "f6d1c27738ef1fe68a43f8a0aeafa3b48f46524e6d2afa7a9e65a09f2246e988",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
-          "hierarchical-rubric": true,
-          "verification-refinement": true,
-          "citation-integrity": true,
-          "visual-story": true,
-          "reproducibility-bundle": true,
           "agent-native-artifact": true,
+          "citation-integrity": true,
+          "hierarchical-rubric": true,
           "reader-simulation": true,
-          "submission-package": true
+          "reproducibility-bundle": true,
+          "submission-package": true,
+          "verification-refinement": true,
+          "visual-story": true
         },
         "blockers": []
       },
@@ -583,21 +583,21 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "c12c1c4326d06960e2ff5412f4300cb05bb05108e8b7df43e0df367fa26a5252",
+        "receipt_sha256": "3aa4a6fa2549b1eeff7d457c795fb2b76f959de0d6f9c2b0bb2ec6b378eb4d49",
         "blockers": []
       },
       "measurement_robustness": {
-        "source_retention_status": "EXACT_RUNTIME_JOURNAL_BYTES_NOT_MATERIALIZED_IN_AUDITED_SURFACES",
+        "source_retention_status": "EXACT_RUNTIME_JOURNAL_BYTES_RECOVERED_ON_ORIGINAL_EXECUTION_HOST_HASH_MATCH",
         "primary_endpoint_unchanged": true,
         "secondary_measurement_status": {
-          "posthoc_action_attempt_projection": "NOT_CANONICALIZABLE_SOURCE_BYTES_MISSING",
-          "human_semantic_spotcheck": "BLOCKED_EXACT_JOURNAL_RECOVERY_REQUIRED",
-          "threshold_sweep": "BLOCKED_NO_CONTINUOUS_SCORE_AND_WOULD_REQUIRE_NEW_EVALUATOR_EXECUTION"
+          "human_semantic_spotcheck": "PACKET_READY_BUT_UNLABELED_NOT_USED_BY_CLAIMS",
+          "posthoc_action_attempt_projection": "SOURCE_BOUND_POSTHOC_DIAGNOSTIC_6_OF_12_VS_3_OF_12_NOT_PRIMARY",
+          "threshold_sweep": "BLOCKED_NO_CONTINUOUS_SCORE_REQUIRES_NEW_EVALUATOR_EXECUTION"
         },
         "paper_invalidated": false,
         "new_behavior_execution": false,
         "new_evaluator_execution": false,
-        "reopen_condition": "Recover an archival or backup object whose bytes exactly match the three bound SHA256 values. After recovery, re-materialize the journals read-only, generate the deterministic blind human-audit packet, and bind any secondary measurement result into a fresh candidate package before Paper Preparation recheck."
+        "reopen_condition": "Optional future measurement strengthening may add independently blinded human labels or separately authorized evaluator/continuous-score evidence; none is used by current claims."
       },
       "latest_transition": {
         "from": "PREBUTTAL",
@@ -623,7 +623,8 @@
       "submission_ready": true,
       "downloads": {
         "pdf": "downloads/G1-Agent-Safety-R9.pdf",
-        "source_zip": "downloads/Agent-Safety-R9-source.zip"
+        "source_zip": "downloads/Agent-Safety-R9-source.zip",
+        "supplement_zip": "downloads/Agent-Safety-R9-supplement.zip"
       },
       "experiment_refs": [],
       "research_authority": {

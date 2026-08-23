@@ -606,7 +606,7 @@ def build_paper_registry(research_state=None):
     # static-site builder so previously shared URLs keep working.
     public_downloads = {
         "STRI": {"pdf": "downloads/E1-STRI.pdf", "source_zip": "downloads/STRI-ICLR2027-source.zip"},
-        "AGENT-SAFETY-R9": {"pdf": "downloads/G1-Agent-Safety-R9.pdf", "source_zip": "downloads/Agent-Safety-R9-source.zip"},
+        "AGENT-SAFETY-R9": {"pdf": "downloads/G1-Agent-Safety-R9.pdf", "source_zip": "downloads/Agent-Safety-R9-source.zip", "supplement_zip": "downloads/Agent-Safety-R9-supplement.zip"},
         "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE": {"pdf": "downloads/C1-Proxy-Reward.pdf", "source_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip"},
         "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK": {"pdf": "downloads/E2-Temporal-Skill.pdf", "source_zip": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip"},
         "D2-PAPER-FAILURE-MEMORY-PROVENANCE": {"pdf": "downloads/B1-Failure-Memory.pdf", "source_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip", "supplement_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-supplement.zip"},
