@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "V19R003_DEEPSEEK_PRE_R3_LAUNCH_SUPPORT_FAILURE_R1",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "failed_run_dir": "/data/wyt/agent-self-evolution-observatory/runs/v19r003-deepseek-pre-r3-20260824-r1",
+  "failure_stage": "task_interface_render_before_provider_client_initialization",
+  "error_type": "NameError",
+  "error": "Python dict used JSON literal true instead of Python True",
+  "deepseek_provider_posts": 0,
+  "training_actions": 0,
+  "scientific_outcome_observed": false,
+  "repair_authority": "SUPPORT_ONLY_OUTCOME_BLIND",
+  "next_action": "Fix the literal, rerun tests, commit the support repair, and launch the same frozen R3 PRE contract in a fresh append-only run directory."
+}

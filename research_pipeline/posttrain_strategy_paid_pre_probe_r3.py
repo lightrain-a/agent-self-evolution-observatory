@@ -162,7 +162,7 @@ def _write_task_interface(run_dir: Path) -> dict[str, Any]:
         },
         "primary_scientific_endpoint": "Observed training-method enactment in the tool trajectory, not final benchmark score.",
         "execution_turn_protocol": {
-            "arm_invariant": true,
+            "arm_invariant": True,
             "max_preboundary_diagnostic_actions": 2,
             "diagnostic_tools": ["inspect_workspace", "run_evaluation"],
             "max_text_only_reprompts": 1,
