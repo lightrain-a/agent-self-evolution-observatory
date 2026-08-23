@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_type": "source-faithful-l3-public-support-recheck",
+  "receipt_id": "D2-C45-L3-PUBLIC-SUPPORT-RECHECK-R8",
+  "recorded_date": "2026-08-24",
+  "status": "NO_NEW_FIRST_PARTY_L3_ARTIFACT_DISCOVERED",
+  "question": "Has the first-party financial-agent release exposed the per-query ReasoningBank/audit artifacts and runtime bindings required for source-faithful L3 transport?",
+  "sources": [
+    {
+      "kind": "primary-paper",
+      "url": "https://arxiv.org/pdf/2608.17684",
+      "version_observed": "arXiv:2608.17684v1",
+      "published": "2026-08-18",
+      "finding": "The paper still states that code and audit artifacts will be released upon publication.",
+      "relevant_scope": "financial AgentDojo Banking audit artifacts and implementation"
+    },
+    {
+      "kind": "public-web-discovery-recheck",
+      "queries": [
+        "Auditing Self-Evolution in Financial Agents GitHub",
+        "2608.17684 GitHub code artifacts",
+        "Jialong Li financial agents GitHub"
+      ],
+      "finding": "No author/first-party repository or artifact bundle for this financial audit was discovered in this recheck. This is a bounded discovery result, not proof of non-existence."
+    }
+  ],
+  "existing_l3_contract": {
+    "artifact": "supplement/evidence/l3-source-faithful-execution-contract-r7.json",
+    "current_status": "NOT_EXECUTED_SUPPORT_AND_EXPERIMENT_DEBT",
+    "required_debt": [
+      "query-level financial ReasoningBank source artifacts",
+      "auditable Qwen 3.7 Flash writer access",
+      "auditable qwen3.7-text-embedding access",
+      "source writer checkpoint and prompt bindings",
+      "provenance-bearing memory-interface/runtime fields",
+      "original downstream schedule and source-native task bindings"
+    ]
+  },
+  "adjudication": {
+    "l3_support_unblocked": false,
+    "l3_execution_authorized": false,
+    "webarena_bridge_can_substitute_for_l3": false,
+    "generic_reasoningbank_repo_can_substitute_for_financial_per_query_bundle": false,
+    "support_failure_is_scientific_failure": false,
+    "scientific_verdict": "NO_VERDICT_SUPPORT_FAILURE",
+    "scientific_values_changed": false
+  },
+  "reopen_condition": {
+    "all_required": true,
+    "conditions": [
+      "first-party financial audit code/artifact release or equivalent content-addressed per-query bundle becomes available",
+      "exact source writer/model and embedding bindings are auditable",
+      "provenance-bearing memory-interface/runtime fields and source-native downstream schedule are recoverable",
+      "transport estimand and independent units are frozen pre-outcome",
+      "separate scientific and experiment authority reopen L3"
+    ]
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "gpu": false,
+    "model_calls": false,
+    "submission": false
+  }
+}
