@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-23T18:16:17Z",
+  "artifact_kind": "V19R003_FAILURE_MEMORY_CANONICAL_RECONCILIATION_R1",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "canonical_base": "05493e6c1d04ecc6fcd0220c2f47de9cc780134e",
+  "source_branch": "origin/research/v19r003-forced-switch-pre-f0-20260823",
+  "source_branch_head": "e63699127896962497069407d048d65594c0a7cd",
+  "source_closure_commit": "dc48cd9",
+  "source_closure_sha256": "041e8049d1767dc9306c0493f36288fee97e178cd2c12483f44f1b213a22c334",
+  "reconciliation_strategy": "behavior-level selective projection onto the latest canonical external_failure_assets mechanism; no merge or cherry-pick of the divergent V19 branch",
+  "canonical_mechanism_reused": {
+    "index": "research_pipeline/external_failure_assets.json",
+    "loader": "research_pipeline.research_system._load_external_failure_assets",
+    "compiler_argument": "failure_asset_library.additional_assets",
+    "reason": "origin/main already has a stricter generic zero-authority external failure-memory path, so the older V19 institutional_failure_lessons ingestion implementation was not copied"
+  },
+  "projected_files": {
+    "asset_source": "research_pipeline/v19r003_forced_switch_failure_assets_20260824.json",
+    "asset_source_sha256": "b53148b9d1db44d41e44f3a38fbefe5e26024f40472e9fc808a99679204562d7",
+    "external_asset_index": "research_pipeline/external_failure_assets.json",
+    "external_asset_index_sha256": "dffa501f88f859024a781ca7367a53d50d786db6981e45491112709873ed0050",
+    "integration_test": "research_pipeline/test_research_learning_loop.py"
+  },
+  "compiled_failure_assets": [
+    {
+      "memory_id": "MEM-FAIL-899e4039e09381303a",
+      "signature": "operationalization:paid-agent-action-turn-nonexecution",
+      "source_stop_class": "PROTOCOL_STOP",
+      "prompt_eligible": true,
+      "scientific_authority": false
+    },
+    {
+      "memory_id": "MEM-FAIL-78733cb49dfe6297da",
+      "signature": "operationalization:semantic-action-observability",
+      "source_stop_class": "SUPPORT_STOP",
+      "prompt_eligible": true,
+      "scientific_authority": false
+    }
+  ],
+  "experiment_design_memory_check": {
+    "context": "paid agent causal intervention training semantic boundary action turn protocol tool execution",
+    "selected_rank_1": "MEM-FAIL-899e4039e09381303a",
+    "selected_rank_2": "MEM-FAIL-78733cb49dfe6297da",
+    "downstream_scientific_gates_unchanged": true,
+    "query_pack_scientific_authority": false
+  },
+  "validation": {
+    "research_system_validation_errors": 0,
+    "focused_tests": "33/33 PASS",
+    "git_diff_check": "PASS",
+    "problem_gate_authority_leak": false,
+    "paper_design_authority_leak": false,
+    "experiment_authority_leak": false,
+    "principle_update_authority_leak": false
+  },
+  "canonical_state_semantics": {
+    "v19r003_remains_closed_support_protocol_memory": true,
+    "researchitem_created": false,
+    "paper_created": false,
+    "problem_gate_pass": false,
+    "persistent_scientific_dead_end_created": false,
+    "reopen_condition_preserved_in_source_asset": true
+  },
+  "authority": {
+    "scientific_authority": false,
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

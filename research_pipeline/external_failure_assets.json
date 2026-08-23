@@ -11,6 +11,14 @@
     {
       "source_path": "research_pipeline/memento_composition_hold_failure_asset_20260823.json",
       "source_key": "asset"
+    },
+    {
+      "source_path": "research_pipeline/v19r003_forced_switch_failure_assets_20260824.json",
+      "source_key": "action_turn_asset"
+    },
+    {
+      "source_path": "research_pipeline/v19r003_forced_switch_failure_assets_20260824.json",
+      "source_key": "semantic_observability_asset"
     }
   ],
   "scientific_authority": false

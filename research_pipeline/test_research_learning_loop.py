@@ -174,6 +174,28 @@ class ResearchLearningLoopTest(unittest.TestCase):
         self.assertEqual(asset["affected_layer"], "experiment_identifiability")
         self.assertEqual(asset["reuse_scope"]["measurement"], "matched residual")
 
+    def test_canonical_external_failure_asset_index_includes_v19r003_prechecks(self) -> None:
+        from .research_system import _load_external_failure_assets
+
+        assets = _load_external_failure_assets()
+        by_signature = {row["signature"]: row for row in assets}
+        expected = {
+            "operationalization:paid-agent-action-turn-nonexecution",
+            "operationalization:semantic-action-observability",
+        }
+        self.assertTrue(expected.issubset(by_signature))
+        for signature in expected:
+            row = by_signature[signature]
+            self.assertFalse(row["scientific_authority"])
+            self.assertEqual(row["affected_layer"], "operationalization")
+            self.assertIn("V19R-003", row["idea_id"])
+            self.assertTrue(row["reusable_precheck"])
+        library = build_failure_asset_library({"nodes": []}, {"summary": {}}, additional_assets=assets)
+        compiled = {row["signature"]: row for row in library["assets"]}
+        self.assertTrue(expected.issubset(compiled))
+        self.assertTrue(all(compiled[signature]["external_memory_input"] for signature in expected))
+        self.assertTrue(all(compiled[signature]["scientific_authority"] is False for signature in expected))
+
     def test_scienceworld_scope_lesson_is_institutional_asset_not_parent_evidence(self) -> None:
         state = {"nodes": []}
         post_c2 = {
