@@ -64,6 +64,18 @@ class ResearchSystemTest(unittest.TestCase):
         broken["longitudinal_safety_post_race_triage"]["summary"]["problem_gate_eligible"]=1
         self.assertTrue(any("post-race triage" in error for error in validate_state(broken)))
 
+    def test_failure_memory_projection_drift_is_detected(self) -> None:
+        broken=copy.deepcopy(self.state)
+        library=broken["failure_asset_library"]
+        library["assets"]=[row for row in library["assets"] if row.get("signature")!="operationalization:paid-agent-action-turn-nonexecution"]
+        library["summary"]["assets"]-=1
+        library["summary"]["unique_signatures"]-=1
+        errors=validate_state(broken)
+        self.assertIn("failure asset projection must include every canonical external failure-memory input",errors)
+        stale=copy.deepcopy(self.state)
+        stale["summary"]["research_memory_entries"]-=1
+        self.assertIn("research-system memory-entry summary must match embedded research memory",validate_state(stale))
+
     def test_zero_authority_maintenance_projection_prefers_newer_public_without_hiding_invalid_local_state(self) -> None:
         previous={"status":"SUPPORT_RELEASE_WATCH_COMPLETE","generated_at":"2026-08-22T14:00:00+00:00","scientific_authority":False,"summary":{"support_holds":7}}
         self.assertEqual(_prefer_newer_zero_authority_public_projection({"status":"NOT_RUN","scientific_authority":False},previous),previous)
