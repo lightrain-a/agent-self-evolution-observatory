@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "artifact_type": "fresh-source-saturation-adjudication",
+  "private_adjudication_sha256": "f02f84ef3221df00f25bc5854d1b5effe5e67cd142711e0bce4df2e9d0f40a61",
+  "model_outcomes_observed_for_f12": 0,
+  "predeclared_minimum_fresh_task_pairs": 16,
+  "timesage_mt_l2": {
+    "source_population": 60,
+    "task_json_complete": 58,
+    "task_json_support_hold": 2,
+    "prior_f9_candidate_pool": 12,
+    "fresh_stl_candidates_after_excluding_f9_pool": 0,
+    "decision": "NO_GO_FRESH_STL"
+  },
+  "timesage_mt_l1": {
+    "source_population": 60,
+    "task_json_complete": 60,
+    "task_json_support_hold": 0,
+    "source_snapshot_sha256": "0344a59200e1e69b5b3d7410285304626e5c8dcba823a0afb0c0d887e533ce03",
+    "fresh_stl_candidates": 0,
+    "broad_strong_control_metadata_candidates": 12,
+    "broad_strong_control_target_families": {
+      "stationarity_test": 7,
+      "seasonality_detect": 2,
+      "acf_pacf": 2,
+      "cross_correlation": 1
+    },
+    "candidate_manifest_sha256": "adfba197008c3a3d27854e35ce996811924596e56a5d7f582177b28bcd635e60",
+    "decision": "NO_GO_BELOW_MINIMUM_FRESH_POPULATION"
+  },
+  "timesage_ev_public_support": {
+    "observed_date": "2026-08-23",
+    "official_github": "https://github.com/TimeSage-Series/TimeSage-EV",
+    "repository_state": "README_ONLY_UPCOMING",
+    "evaluated_period_sequential_snapshot_available": false,
+    "note": "The public repository currently exposes only a README saying Upcoming; the evaluated period-sequential assets needed for the frozen C4 replay are not publicly available in the audited support path."
+  },
+  "decision": "STOP_NEW_C06_EXPERIMENTS_CURRENT_SAME_SUBSTRATE_SOURCE_SATURATED",
+  "reason": "No fresh STL confirmation population exists in the unused L1/L2 source, and the largest fresh broad strong-control population has 12 task-level pairs, below the predeclared minimum of 16. TimeSage-EV longitudinal assets remain unavailable.",
+  "forbidden_repairs": [
+    "same-endpoint seed extension",
+    "endpoint reuse presented as independent confirmation",
+    "post-count relaxation of the minimum fresh-population threshold",
+    "deterministic-verifier relaxation after seeing source counts",
+    "multiple correlated turns from one task used to inflate effective n"
+  ],
+  "reopen_conditions": [
+    "first-party TimeSage-EV period-sequential evaluated assets become auditable",
+    "a genuinely independent skill-write-then-reuse substrate provides an adequate prospectively frozen matched population",
+    "a new non-overlapping TimeSage-MT release yields at least 16 measurement-valid fresh task-level pairs before new outcomes"
+  ],
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "submission_authority": false
+}

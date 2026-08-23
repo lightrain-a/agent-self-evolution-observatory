@@ -1,26 +1,36 @@
-\section{Targeted Skill Intervention}
+\section{Controlled Skill Intervention}
 \label{sec:intervention}
-The decisive experiment starts from endpoints with a documented recurring failure family. Each endpoint is replayed from the same frozen evidence package under three skill conditions.
+The experiment treats a skill as an intervention on the computation available to an agent. The primary question is local: does the procedure associated with a failure improve the same endpoint beyond a matched reusable control?
 
-The targeted condition injects a skill whose procedure matches the observed failure mechanism. The generic condition injects a reusable helper with similar code length and similar tool complexity. The baseline condition uses the same harness without the targeted procedure. Model configuration remains fixed across the three conditions. The evaluated period also remains fixed.
+\subsection{Freeze the endpoint before changing the skill}
+Each endpoint is fixed before arm outcomes are generated. Its benchmark record identifies the requested analytical operation. The same record supplies a deterministic finding verifier. For executable probes, the visible CSV must match its recorded SHA-256. The benchmark reference procedure must also run successfully in an isolated qualification environment. A failed candidate remains in the audit trail and is never replaced after outcomes begin.
 
-\subsection{Endpoint matching}
-A temporal-cutoff endpoint is paired with a skill that filters evidence by cutoff time. A release-alignment endpoint receives a date-to-period procedure. An exogenous-grounding endpoint receives a procedure that retrieves prior documentary evidence tied to the numerical change. Endpoint selection is frozen from source failure annotations before outcomes are inspected.
+\subsection{Hide the implementation behind one interface}
+The executable arms expose the same native tool definition:
+\begin{quote}
+\texttt{persistent\_skill(): Execute the registered reusable analysis procedure for the current task when it is useful.}
+\end{quote}
+The function name is shared across arms. Its description is shared as well. The JSON argument schema is identical. The model therefore chooses whether to call the tool without seeing which implementation is registered.
 
-\subsection{Primary outcome}
-The primary metric is correction of the matched failure. A temporal-validity error is corrected when the final answer uses only admissible evidence. A release-alignment error is corrected when the answer references the correct period. An exogenous-context error is corrected when the attribution is supported by cutoff-valid documentary evidence.
+When the targeted tool is called, the runner executes the benchmark-recorded procedure on the hash-verified visible data. The original matched control executes neutral schema work through the same tool surface. Its returned text has the same word count as the targeted result. The no-skill arm exposes no additional tool.
 
-The targeted-skill effect is
+The model receives the frozen dialogue through the current user turn. It may answer immediately or issue one native tool call. After the tool returns, the model produces the final answer. A second tool call is a protocol failure. We report tool invocation separately from task success so that an implementation effect cannot be confused with different call rates.
+
+\subsection{Measure the downstream endpoint}
+The final response is scored with the benchmark verifier that existed before our intervention. Keyword endpoints use the frozen benchmark phrases after deterministic normalization. Numerical endpoints require a response value inside the frozen benchmark range. The scorer never receives an arm label.
+
+Let $Y_i^T$ denote success for endpoint $i$ under the targeted implementation. Let $Y_i^G$ denote success under the matched control. The paired effect is
 \begin{equation}
-\Delta_{\mathrm{target}}=
-S_{\mathrm{target}}-S_{\mathrm{generic}},
+\widehat{\Delta}_{T-G}=\frac{1}{n}\sum_i (Y_i^T-Y_i^G).
 \end{equation}
-where $S$ is success on the matched failure criterion. The generic control absorbs the benefit of receiving a reusable helper. A positive effect identifies the mechanism-specific contribution.
+The primary test is an exact one-sided paired McNemar/binomial test over discordant endpoints. The preregistered gate requires $\widehat{\Delta}_{T-G}\geq0.20$. It also requires $p\leq0.05$. Targeted versus no skill is secondary. After execution begins, endpoint membership is fixed. The threshold is fixed as well. Repeated seeds on the same endpoints are not used to alter the primary decision.
 
-\subsection{Transfer test}
-A reusable procedure should generalize beyond the endpoint that motivated it. Each targeted skill is therefore evaluated on later periods from the same scenario and on compatible scenarios from another domain. The skill is accepted as a reusable mechanism when it improves matched failures without inserting scenario-specific facts.
+\subsection{A stronger control for procedure specificity}
+Neutral schema work controls the visible tool interface, yet it leaves a second question: perhaps any substantive analysis would help. We therefore add F6 as a stronger post-hoc diagnostic. F6 reuses the exact F3 targeted initial response for every endpoint. This preserves the model's original decision about whether to call \texttt{persistent\_skill}. No new initial model call is made.
 
-\subsection{Chronological deployment}
-The intervention respects the TimeSage chronological contract. A skill enters the library before the evaluated future period. It cannot modify the acquisition-period answer. This preserves the direction of self-evolution and prevents current-answer leakage.
+For each endpoint, the alternative implementation is another benchmark-recorded analytical procedure from the same TimeSage-MT task. The procedure must execute on the same hash-pinned CSV. Selection is deterministic before F6 continuations: the nearest different procedure in dialogue order is used. Its tool output is matched to the targeted output length. Verifier overlap is recorded and never used for selecting the control.
 
-The experiment turns a recurring error into a falsifiable memory hypothesis. If a targeted skill fails to outperform the generic control, the missing-procedure explanation loses support for that failure family. If the effect transfers to later periods, the skill becomes direct evidence that the recurring failure was caused by a missing reusable operation.
+This diagnostic changes the estimand from \emph{correct procedure versus neutral tool work} to \emph{correct procedure versus another substantive procedure}. Because F6 was designed after observing F3, it has identification value without primary-claim closure authority.
+
+\subsection{From local executable value to persistent state}
+The TimeSage-MT probes test whether the hidden implementation matters at a frozen endpoint. TimeSage-EV supplies the stronger temporal object. There, a skill must be written before a later release. Its implementation remains fixed when later endpoints arrive. C4 asks whether this state continues to help after the evidence changes. This chronological experiment is distinct from the local implementation swap evaluated here.

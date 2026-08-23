@@ -1,15 +1,148 @@
-\section{Targeted Skill Contracts}
-\subsection{Temporal cutoff contract}
-Input: target period and candidate evidence timestamps. Output: the subset that is admissible before the benchmark cutoff. The function also returns the cutoff timestamp used for filtering. The skill contains no scenario answer.
+\section{TimeSage-EV Skill Contracts}
+\label{app:contracts}
+\paragraph{Temporal cutoff.} The skill receives a target period and candidate evidence timestamps. It returns the evidence that is admissible under the declared cutoff. The procedure contains no scenario answer.
 
-\subsection{Release alignment contract}
-Input: publication date and source reporting metadata. Output: the benchmark period represented by the release. The procedure validates the selected time-series row against the normalized period key.
+\paragraph{Release alignment.} The skill receives source-release metadata and returns the analytical period represented by that release. It also checks the selected time-series row against the normalized period key.
 
-\subsection{Exogenous grounding contract}
-Input: target period and numerical change description. Output: cutoff-valid documentary evidence spans that can support attribution. The procedure returns evidence identifiers and short excerpts for later reasoning.
+\paragraph{Exogenous grounding.} The skill receives a target period and retrieves cutoff-valid documentary evidence for an attribution. It returns evidence identifiers for later reasoning.
 
-\subsection{Matched generic controls}
-Each targeted skill is paired with a generic helper that has comparable implementation complexity. The generic helper performs a useful operation that does not encode the target failure mechanism. This comparison estimates mechanism-specific benefit beyond the effect of receiving an additional callable tool.
+\paragraph{Matched callable control.} A faithful TimeSage-EV control uses the same function surface as the targeted skill. The execution budget is fixed before outcomes. The control cannot inspect the target failure label or a scenario-specific answer.
 
-\subsection{Frozen support state}
-The first-party TimeSage-EV GitHub repository was frozen locally at commit \texttt{e0ce94e498b1}. It currently contains the release README. The first-party dataset repository was frozen at commit \texttt{ea07f80bc681}. The evaluated dataset files are absent from the current public tree. Full commit hashes are recorded in the PaperState artifact.
+\section{Independent Probe Protocols}
+\label{app:probes}
+\subsection{F0 persistent-text probe}
+F0 contains 13 TimeSage-MT correction endpoints and 39 deterministic model calls. Endpoint identities are frozen before arm execution. Targeted succeeds on 11/13 endpoints. Generic succeeds on 10/13. No skill succeeds on 8/13. The targeted--generic paired difference is $1/13$ with one-sided exact $p=0.50$.
+
+\subsection{F1 reachability manipulation check}
+F1 contains 24 endpoints that are disjoint from F0. The targeted arm receives benchmark-recorded procedure output. The generic arm receives a length-matched metadata output. Three numeric anchors are frozen from the target output before arm execution. Reproducing two anchors counts as manipulation success. Targeted succeeds on 14/24 endpoints while generic succeeds on 1/24. This check verifies that procedure output reaches the response.
+
+A deterministic downstream diagnostic uses the benchmark finding metadata on the unchanged F1 responses. Thirteen endpoints have compatible keyword or numerical-range verifiers. Targeted succeeds on 6/13 and generic on 5/13, giving a +7.7-point difference with $p=0.50$.
+
+\subsection{F2 prospective output-injection probe}
+F2 freezes 20 new task-disjoint endpoints before model calls. The primary endpoint is the benchmark downstream finding. Targeted succeeds on 4/20. Generic succeeds on 5/20. No skill succeeds on 6/20. The targeted--generic difference is $-0.05$ with $p=0.875$. The frozen gate fails.
+
+\section{F3 Executable Skill-State Protocol}
+\label{app:f3}
+F3 begins from 25 unused TimeSage-MT tasks. Each candidate has one deterministic benchmark verifier and one recorded reference procedure from the allowed temporal-skill set. The earliest eligible turn is selected before any F3 model output.
+
+Execution qualification is performed before model evaluation. The public visible CSV must match the task's recorded SHA-256. The benchmark reference code must terminate successfully and emit a finite result. Nineteen tasks pass. Two tasks fail execution qualification. Four tasks have support failures. No failed task is replaced.
+
+The qualified set contains seven \texttt{stl\_decompose} endpoints. Four use \texttt{cross\_correlation}. Four use \texttt{rolling\_stat}. Four use \texttt{seasonality\_detect}. Eleven tasks are L3 and eight are L4.
+
+\subsection{Model-blind implementation swap}
+Targeted and generic arms expose this same native tool definition:
+\begin{quote}
+\texttt{persistent\_skill(): Execute the registered reusable analysis procedure for the current task when it is useful.}
+\end{quote}
+The function name is identical. The description is identical. The argument schema is identical. The model receives no arm label.
+
+The targeted implementation executes the frozen benchmark reference code on the hash-verified CSV at call time. Its returned result is capped at 80 words. The generic implementation reads the same CSV and performs neutral schema validation. It then returns neutral text with exactly the same word count as the targeted result. Frozen benchmark verifier keywords are absent from the generic output.
+
+The model first sees the frozen dialogue and the registered tool. It may answer directly or issue a native tool call. After one tool result, the model produces the final response. A second tool call is a protocol failure. Formal execution completes all 57 arm records with zero support failures and zero protocol failures.
+
+Targeted calls the tool on 17/19 endpoints. Generic also calls it on 17/19. Targeted succeeds on 6/19. Generic succeeds on 2/19. No skill succeeds on 0/19. The primary comparison has five targeted-only successes and one generic-only success. This gives $\widehat{\Delta}_{T-G}=4/19=0.2105$ and one-sided exact $p=0.109375$. The secondary no-skill comparison has six targeted-only successes and gives $p=0.015625$.
+
+The predeclared skill rows are descriptive. STL yields 5/7 targeted successes and 1/7 generic success. Rolling statistics yields 1/4 in both executable arms. The cross-correlation row has zero successes in all arms. The seasonality row also has zero successes in all arms.
+
+\section{F4 Cross-Model Executable Replication}
+\label{app:f4}
+F4 reuses the exact 19 F3 endpoints. The visible CSV hashes and reference-code outputs are requalified before any F4 model outcome; all 19 pass. The model changes to DeepSeek-v4-Pro. Temperature is fixed at zero. The tool definition and downstream verifier are unchanged from F3.
+
+Targeted succeeds on 5/19 endpoints. Generic succeeds on 3/19. No skill succeeds on 0/19. The targeted--generic comparison has three targeted-only successes and one generic-only success. Its paired difference is $2/19=0.1053$ with one-sided exact $p=0.3125$. The targeted--no-skill comparison has five targeted-only successes and gives $p=0.03125$. F4 is adjudicated independently from F3, and their $p$-values are never pooled.
+
+The targeted tool is called on 17/19 endpoints and the generic tool on 18/19. Three endpoints differ in invocation choice. The generic arm therefore receives at least as many observed tool invocations in aggregate. F4 preserves the positive targeted--generic direction without closing the primary matched gate.
+
+\section{F5 All-Remaining Public-Support Replication}
+\label{app:f5}
+F5 excludes every F0--F2 task and every task that appeared in the F3 pre-outcome candidate manifest. The remaining metadata scan freezes 24 candidate tasks before any F5 model output. Qualification admits every task whose public visible CSV can be hash-validated and whose benchmark reference code reproduces the recorded output. Seven tasks pass. Seventeen are recorded as support failures and no replacement task is added.
+
+The seven endpoints contain five STL-decomposition tasks and two stationarity-test tasks. All are L3 tasks. F5 uses the same Qwen2.5-32B tool surface and downstream verifier as F3. Targeted succeeds on 3/7 endpoints. Generic succeeds on 2/7. No skill succeeds on 0/7. The primary difference is $1/7=0.1429$ with one targeted-only discordance and exact $p=0.50$. The secondary targeted--no-skill difference is $3/7=0.4286$ with $p=0.125$.
+
+The first formal execution contains a local path error: both executable arms make the frozen initial tool-call decision, then fail before local tool execution because the mechanical F3 runner points at the wrong cache directory. It yields zero valid paired endpoints. Runtime repair R1 keeps the F5 contract unchanged. It reuses each original targeted or generic initial model response. The hash-bound tool then executes from the cache used during qualification. The repair sends only the required final continuation. Original no-skill responses are reused without a second model sample. The repair makes zero new initial model calls. All 21 repaired arm records complete with zero support failures and zero protocol failures.
+
+F5 is adjudicated independently. Its exact test is never pooled with F3 or F4. The 17 qualification support failures remain visible as support debt and have no scientific authority.
+
+\subsection{Support-recovered F5-R2 extension}
+A later support-only recovery revisits the same 17 frozen F5 support failures. Candidate membership is unchanged. Five exact visible CSVs are recovered from existing local cache by SHA-256; twelve candidates remain unavailable. The five recovered candidates are requalified with the original reference-code rule and all five pass. No new candidate is introduced.
+
+F5-R2 uses the unchanged Qwen tool protocol and is adjudicated separately. Targeted succeeds on 1/5 endpoints. Generic succeeds on 0/5. No skill succeeds on 1/5. The targeted--generic difference is $1/5=0.20$ with one discordant pair and exact $p=0.50$. Targeted versus no skill has zero paired difference. This extension is never pooled with F5 or the earlier executable probes.
+
+\section{F8 Deduplicated Frozen-Population Support Recovery}
+\label{app:f8}
+The original F5 candidate manifest contains 24 tasks and was frozen before any F5 model outcome. After F5-R2, twelve additional support-debt candidates become executable through exact-SHA recovery. The recovery adds no candidate and does not use model outcomes to determine membership. Reference code is replayed on each recovered CSV before arm execution. All twelve recovered candidates pass the original execution rule.
+
+Five of those twelve tasks had already been evaluated in F5-R2. They are \texttt{L3\_energy\_045}, \texttt{L3\_retail\_022}, \texttt{L4\_climate\_048}, \texttt{L4\_telecom\_036} and \texttt{L4\_telecom\_055}. Their repeated calls receive zero new scientific authority. F8 is defined on seven first-time tasks only. They are \texttt{L3\_climate\_018}, \texttt{L3\_finance\_052}, \texttt{L3\_healthcare\_049}, \texttt{L4\_climate\_020}, \texttt{L4\_climate\_053}, \texttt{L4\_finance\_002} and \texttt{L4\_healthcare\_044}.
+
+The seven first-time endpoints all use \texttt{stl\_decompose}. Targeted succeeds on 5/7. Matched generic succeeds on 0/7. No skill succeeds on 1/7. The primary targeted--generic comparison has five targeted-only successes and no generic-only success. This gives $\widehat{\Delta}_{T-G}=5/7=0.7143$ with one-sided exact $p=0.03125$. The frozen +0.20 and $p\leq0.05$ gate passes. The secondary targeted--no-skill comparison has four targeted-only successes and gives $p=0.0625$.
+
+The full twelve-endpoint rerun gives 6/12 targeted successes and 0/12 generic successes, yet five rows repeat F5-R2. That twelve-row statistic is retained only as a deterministic rerun diagnostic. A separate deduplication adjudication records the seven rows with first-time scientific authority.
+
+\subsection{First-observation completion of the frozen F5 population}
+A later support-only pass resolves additional exact-SHA inputs without adding candidates. One new endpoint, \texttt{L3\_healthcare\_010}, receives its first model evaluation. Twelve other newly called endpoints had already been evaluated in earlier F5-R2 or F8 tranches; those repeated calls carry zero new scientific authority.
+
+Using the first valid observation for each execution-qualified member of the original 24-task F5 manifest gives 20 endpoints. Targeted succeeds on 10/20. Generic succeeds on 2/20. No skill succeeds on 2/20. The targeted--generic comparison has eight targeted-only successes and no generic-only successes. This gives $\widehat{\Delta}_{T-G}=8/20=0.40$ with one-sided exact $p=0.00390625$. The targeted--no-skill comparison has the same paired difference and exact $p$-value.
+
+This 20-endpoint statistic is recorded as descriptive robustness evidence. It does not receive new formal closure authority because the support-completion operation occurs after partial F5 outcomes. One candidate remains support hold. Three recovered candidates fail reference execution or replay. None is replaced.
+
+\section{F6 Stronger Substantive-Control Diagnostic}
+\label{app:f6}
+F6 addresses the possibility that neutral schema validation is too weak a matched control. It reuses the exact 19 F3 endpoints. For each task, qualification searches only benchmark-recorded agent procedures from that same task. The nearest different procedure in dialogue order is selected deterministically. The alternative must execute on the same hash-pinned visible CSV. All 19 endpoints obtain a valid alternative procedure.
+
+F6 makes zero new initial model calls. It reuses the original F3 targeted initial response for each endpoint, including the original decision about whether to call \texttt{persistent\_skill}. Seventeen endpoints had called the tool and therefore receive one new final continuation after the alternative tool result. The two no-tool endpoints reuse their original final response. Tool-output word count is matched to the F3 targeted output. Verifier overlap is recorded and is never used to choose the alternative.
+
+The original correct F3 procedure succeeds on 6/19 endpoints. The substantive off-target procedure succeeds on 1/19. There are six targeted-only successes and one off-target-only success. The paired difference is $5/19=0.2632$ with one-sided exact $p=0.0625$. Because F6 was designed after observing F3, its result is a diagnostic of control strength and is excluded from primary C3 closure.
+
+\section{F9--F10 Non-STL Strong-Control Replication}
+\label{app:f9}
+F9 draws from a new TimeSage-MT L2 source population. All 60 L2 task IDs are frozen before any F9 model output. Fifty-eight task JSONs are retrieved and content-addressed under the bounded snapshot; two remain support hold. Candidate construction excludes basic profiling procedures as targets. A target must have benchmark reference code, finite reference output and a deterministic verifier that is satisfied by that reference output. Each task must also contain an earlier substantive benchmark procedure whose output does not satisfy the target verifier.
+
+Twelve tasks meet the metadata rule. Execution qualification requires both the target and off-target reference procedures to run on the same hash-verified visible CSV and reproduce their benchmark outputs. Nine tasks pass. One visible-data item remains support hold. Two tasks fail reference execution or replay. No replacement task is added. The qualified target procedures cover \texttt{ts\_forest\_regressor\_tsr}, \texttt{residual\_diagnostics}, \texttt{linear\_interpolation}, \texttt{model\_comparison} and \texttt{rocket\_classify}.
+
+Target and off-target arms expose the same \texttt{persistent\_skill} definition. The target implementation executes the qualified target procedure. The control executes the qualified prior procedure from the same task. Both tool outputs are truncated to the same pre-frozen word count. The no-skill arm has no registered tool. The target endpoint keeps its original benchmark verifier.
+
+F9 uses Qwen2.5-32B. One off-target response issues a forbidden second tool call after the first tool result, so that endpoint is invalid under the frozen protocol and is never retried. Eight paired endpoints remain. Targeted succeeds on 5/8. Off-target succeeds on 1/8. The primary comparison has four targeted-only successes and no off-target-only success, giving $\widehat{\Delta}=4/8=0.50$ and exact one-sided $p=0.0625$. No skill succeeds on 2/8.
+
+F10 repeats the exact nine-endpoint F9 contract with DeepSeek-v4-Pro. All 27 arm records are valid. Targeted succeeds on 5/9, off-target on 2/9 and no skill on 0/9. The targeted--off-target comparison has three targeted-only successes and no off-target-only success, giving $\widehat{\Delta}=3/9=0.3333$ with $p=0.125$. Targeted versus no skill gives $p=0.03125$. F9 and F10 are adjudicated separately; their $p$-values are never pooled.
+
+F9 candidate-manifest SHA-256 begins \texttt{0c76d3a010ac}. Its qualification begins \texttt{ecd8a136b69b}. The F9 contract begins \texttt{f813ba55292c}. Its runner begins \texttt{91578fa7b005}. Its result begins \texttt{6a84f84097e3}. The F10 contract begins \texttt{7bf59505d197}. Its runner begins \texttt{07fd1b1bc7eb}. Its result begins \texttt{979515627a1c}. Independent recomputation verifies all 27 raw files for each model and reports zero integrity issues.
+
+\section{F11 Blinded Semantic Measurement Audit}
+\label{app:f11}
+F11 audits every answer from the seven first-time F8 endpoints. All three arms are included, giving 21 answers. Arm labels are removed before review and answer order is deterministically shuffled. The reviewer sees the benchmark dialogue, key finding, deterministic verifier metadata, reference stdout and one anonymous answer at a time. The diagnostic success rule is strict semantic \textsc{Correct}; \textsc{Partial} does not count as success. The frozen F8 deterministic scores and gate are never changed by this audit.
+
+Two semantic reviewers are predeclared. DeepSeek-v4-Pro returns a complete 21-answer judgment set. It assigns strict correctness to 6/7 targeted answers, 2/7 generic answers and 0/7 no-skill answers. Five matched pairs favor targeted and one favors generic, so the targeted--generic semantic difference is $4/7=0.5714$ with one-sided exact $p=0.109375$. Counting \textsc{Partial} as correct in a sensitivity calculation gives 6/7 targeted and 3/7 generic, with $p=0.1875$.
+
+The second reviewer, Kimi-K3, returns malformed function arguments that cannot be parsed into a complete auditable judgment set. It is therefore nonvoting. No replacement reviewer is added after the DeepSeek labels are observed. F11 consequently cannot establish semantic robustness. It records that the frozen deterministic F8 gate pass is measurement-sensitive under the available blinded audit.
+
+The deterministic and semantic scorers disagree on several answers. DeepSeek semantically accepts two targeted answers that the deterministic verifier misses, rejects one targeted deterministic success, accepts two generic answers that the deterministic verifier misses and rejects the only deterministic no-skill success. These discrepancies motivate keeping the semantic measurement question open without changing the frozen benchmark score.
+
+\section{Reproducibility and Artifact Binding}
+\label{app:repro}
+The claim ledger binds the public probe-summary artifact by SHA-256. The numeric reproduction entrypoint is \texttt{reproduce\_d2\_temporal\_skill\_paper.py}. Passing \texttt{--figure} regenerates Figure~\ref{fig:independent-probes}.
+
+F1-v2 has contract SHA-256 \texttt{1c84fd55226b...3e2d6}. Its result SHA-256 is \texttt{ef37e518a2fc...febb1}. The final F2 contract SHA-256 is \texttt{6fc6e4d7b3a6...a59c6}. The F2 result SHA-256 is \texttt{4ab9ad27639f...dfb3}.
+
+F3 candidate manifest SHA-256 is \texttt{8619d4a099e6...b155d}. The qualification artifact SHA-256 is \texttt{37f8006794be...b9599}. The frozen F3 contract SHA-256 is \texttt{494636b47b48...74d7}. The runner SHA-256 is \texttt{ffd880180621...9444f}. The result SHA-256 is \texttt{ace9d116ce29...9fdb}. An independent recomputation reads all 57 F3 response files and verifies 57 unique raw hashes. It reproduces the arm counts and exact paired statistics.
+
+F4 requalification SHA-256 is \texttt{1c29758d4db4...878c}. The frozen F4 contract SHA-256 is \texttt{5cfeed24dea1...a873}. The runner SHA-256 is \texttt{3f010c126ad8...6668}. The result SHA-256 is \texttt{7419c59818b2...8851}. Its 57 response files have unique hashes, and independent recomputation reproduces the reported DeepSeek arm counts and exact tests.
+
+F5 candidate-manifest SHA-256 is \texttt{b49cd462bda8...c03e}. Qualification SHA-256 is \texttt{eb104c294d2f...163a1}. The frozen F5 contract SHA-256 is \texttt{c8ae6e0de7ae...6399}. The initial failed result SHA-256 is \texttt{0e0e5e49fb12...f02a}. Runtime-repair receipt SHA-256 is \texttt{5f1b0f64de03...c6bb}. The repaired result SHA-256 is \texttt{4a3456e952f2...6f9b}. Independent recomputation reads 21 repaired response records and reproduces the arm counts.
+
+F5 support-recovery SHA-256 is \texttt{a09e73b65a3c...7dee6}. F5-R2 requalification SHA-256 is \texttt{2a2e57d68fe1...9dc1}. Its frozen contract SHA-256 is \texttt{bcf53dc65276...ff75}; result SHA-256 is \texttt{afb8893d0507...3c10}.
+
+F8 uses the later exact-SHA recovery snapshot \texttt{c4ded18a4e7b...99bc8}. Its qualification SHA-256 begins \texttt{153ce397ef23}. The contract begins \texttt{5b7fdabfad11}. The runner begins \texttt{49614d390d58}. The twelve-row result begins \texttt{202ebeb90926}. Deduplication adjudication is published at \path{generated/d2-temporal-skill-f8-dedup-adjudication-20260822.json}. It assigns independent authority to seven first-time endpoints and zero new authority to the five repeated F5-R2 tasks.
+
+The later first-observation completion is published in the artifact bundle with SHA-256 prefix \texttt{953cd2b50ba6}. It adds one first-time endpoint and reports the 20-endpoint deduplicated robustness summary while preserving zero new authority for repeated R5 calls.
+
+F6 qualification SHA-256 is \texttt{f0c7cca0286c...8181}. The frozen diagnostic contract SHA-256 is \texttt{114b4d9a76d8...5e4a}. Runner SHA-256 is \texttt{e71504f5af5a...2d5}. Result SHA-256 is \texttt{aadd01dc7d0a...7db}. Independent recomputation reads all 19 F6 response files and reproduces the paired statistic.
+
+The public F11 artifact has SHA-256 prefix \texttt{e1c02b624344}. The frozen semantic-audit contract begins \texttt{2ba57d779f38}. The valid DeepSeek judgment receipt begins \texttt{95f84d7c4dc9}. The nonvoting Kimi parse-failure receipt begins \texttt{2751b39bb3fa}. No provider response identifier is published.
+
+F0--F3 use Qwen2.5-32B. F5, F6, F8 and F9 also use Qwen2.5-32B. F4 and F10 use DeepSeek-v4-Pro. F11 uses blinded semantic review and does not alter any model-arm output. The executable probes use temperature zero through a registered tool surface whose visible definition is matched within each experiment. The public artifact omits server paths and provider-local runtime details.
+
+\section{Fresh-Source Saturation and Frozen TimeSage-EV Support State}
+A final pre-outcome source audit asks whether another same-substrate confirmation experiment is justified. The GO rule requires at least 16 fresh measurement-valid task-level pairs before any new model outcome. In the unused L2 source, no fresh task supports an STL target with a self-consistent deterministic verifier after excluding the F9 candidate pool. In L1, all 60 task JSONs are content-addressed, yet only 12 task-level target/control pairs satisfy the metadata rule. They cover stationarity testing, seasonality detection, ACF/PACF and cross-correlation. The source count is below the frozen GO threshold, so no F12 model experiment is launched. The threshold is not relaxed after observing this count.
+
+The public source-saturation artifact has SHA-256 prefix \texttt{194a2e5a0621}. Its private adjudication begins \texttt{f02f84ef3221}. The L1 source snapshot begins \texttt{0344a59200e1}; its candidate manifest begins \texttt{adfba197008c}. The artifact forbids same-endpoint seed extension, endpoint reuse as independent confirmation and multiple correlated turns from one task used to inflate effective sample size.
+
+The locally audited TimeSage-EV first-party release does not contain the evaluated May 2026 period-sequential snapshot required for the faithful replay. As of August 23, 2026, the public \texttt{TimeSage-Series/TimeSage-EV} repository exposes a README marked ``Upcoming'' without the evaluated snapshot. This support state prevents the exact C4 test and carries no negative scientific authority. The TimeSage-MT probes remain separately identified from the TimeSage-EV longitudinal claim in the manuscript and claim ledger.

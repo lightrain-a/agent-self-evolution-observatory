@@ -1,0 +1,108 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "POST_F11_SEMANTIC_MEASUREMENT_REVISION",
+  "mode": "ARTIFACT_AWARE",
+  "requested_model": "kimi-k3",
+  "resolved_model": "kimi-k3",
+  "status": "completed",
+  "usage": {
+    "input_tokens": 39738,
+    "output_tokens": 1928,
+    "total_tokens": 41666,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "packet_sha256": "aab0c301b977bcc5b3d40366d99033baf898dd13aab2d88c8091b762c1d68c8a",
+  "paper_pdf_sha256": "58f887f77ff07e57e151d360b5b0ec19ff6e7e6bf4e4d3fdf2399a86a8e4920b",
+  "review": {
+    "clarity_1_to_5": 4,
+    "confidence_1_to_5": 4,
+    "decision_critical_objections": [
+      {
+        "category": "empirical_sufficiency",
+        "claim_ids": [
+          "C3"
+        ],
+        "decision_critical": true,
+        "objection_id": "O1",
+        "repair_type": "new_experiment",
+        "text": "The closure-bearing result is n=7, all STL decomposition, all successes on STL. The F8 extension was defined after original F5 outcomes were observed (support-recovery tranche), so even with frozen candidate membership and honest dedup adjudication, the gate pass rests on a post-hoc-defined 7-endpoint subset of a 24-task population whose other tranches (F5 3/7 vs 2/7; F5-R2 1/5 vs 0/5) do not pass. A preregistered fresh STL tranche of adequate size, or a first-observation completion with closure authority, is needed before the positive claim is more than suggestive."
+      },
+      {
+        "category": "measurement_validity",
+        "claim_ids": [
+          "C3"
+        ],
+        "decision_critical": true,
+        "objection_id": "O2",
+        "repair_type": "new_experiment",
+        "text": "The only valid blinded semantic reviewer does not reproduce the deterministic matched gate (6/7 vs 2/7, p=0.109375), and the deterministic-vs-semantic disagreement is bidirectional (semantic accepts answers the verifier misses and rejects one deterministic success). The disclosure is exemplary and the deterministic result is legitimately preserved, but the paper's only gate pass is measurement-sensitive under the available audit, and the second reviewer is nonvoting with no replacement. An independently valid second blinded reviewer (or equivalent non-outcome-selected audit) is decisive missing evidence for the empirical claim."
+      },
+      {
+        "category": "scope_overclaim",
+        "claim_ids": [
+          "C3",
+          "C4"
+        ],
+        "decision_critical": true,
+        "objection_id": "O3",
+        "repair_type": "manuscript",
+        "text": "The paper is framed and titled as an evaluation standard for identifying causal skill effects, but the demonstrated content is one small deterministic gate pass in a single procedure family, directional non-STL evidence with both gates open, and zero longitudinal persistence evidence (C4 has no experiment at all; TimeSage-EV snapshot unavailable). As an evaluation standard the work is under-validated: no evidence the protocol discriminates on other benchmarks, other skill types, or that the +20pp/p<=0.05 gate is calibrated. Reframe as a boundary/methods probe with a narrow positive STL finding, or add the missing evidence."
+      },
+      {
+        "category": "external_validity",
+        "claim_ids": [
+          "C3"
+        ],
+        "decision_critical": false,
+        "objection_id": "O4",
+        "repair_type": "new_experiment",
+        "text": "Two model families, one benchmark substrate (TimeSage-MT), benchmark-recorded reference procedures rather than agent-induced skills. The intervention estimates downstream value of a registered correct procedure, not the self-evolution pipeline the introduction motivates. This limits generality of the causal claim even where gates pass."
+      },
+      {
+        "category": "transparency",
+        "claim_ids": [],
+        "decision_critical": false,
+        "objection_id": "O5",
+        "repair_type": "none",
+        "text": "The lineage complexity (F5, F5-R1 repair, F5-R2, F8, first-observation completion, 12-endpoint rerun diagnostic) is handled with unusual discipline: repeated endpoints carry zero authority, no p-value pooling, no candidate replacement, support failures explicitly stripped of scientific authority. This is a strength, not an objection, but reviewers should note the gate-passing tranche is one of several post-hoc-defined subsets and multiplicity across tranches is not formally controlled."
+      }
+    ],
+    "empirical_sufficiency_1_to_5": 2,
+    "extra_experiment_needed_before_submission": true,
+    "highest_value_next_action": "Run a prospectively frozen, adequately powered fresh STL-decomposition tranche (and ideally a pre-registered non-STL tranche) with two independently valid blinded semantic reviewers, so the positive executable-state claim does not rest on a post-hoc-defined 7-endpoint support-recovery subset audited by a single voting reviewer.",
+    "novelty_1_to_5": 3,
+    "recommendation": "weak_reject",
+    "score_1_to_10": 4,
+    "significance_1_to_5": 3,
+    "strengths": [
+      "The core conceptual contribution is real and well-articulated: 'skill' conflates persistent text, supplied procedure output, and executable state, and the paper provides a clean matched-intervention design (identical visible tool interface, hidden implementation swap) that can in principle identify which surface carries an effect.",
+      "Exemplary inferential hygiene throughout: frozen endpoints before outcomes, exact paired tests, no cross-probe p-value pooling, repeated endpoints explicitly assigned zero new scientific authority, post-hoc diagnostics (F6) denied closure authority, support failures explicitly stripped of scientific authority, and negative/boundary results (F0 text, F2 output injection) reported plainly rather than hidden.",
+      "The F2 prospective output-injection negative result (4/20 vs 5/20) is a legitimate and useful boundary finding: placing correct procedure output in context does not yield matched downstream repair, and the F1 manipulation check is correctly treated as reachability-only, not downstream evidence.",
+      "The new L2 strong-control experiments (F9/F10) materially improve the causal control by using substantive task-local off-target procedures across five non-STL families on two model families, directly addressing the earlier 'STL-only' and 'neutral control too weak' concerns — even though both gates remain open.",
+      "The F11 blinded semantic audit is disclosed with unusual honesty: the deterministic gate is preserved while semantic non-reproduction (6/7 vs 2/7, p=0.109375, single voting reviewer) is stated in the abstract and limitations rather than buried.",
+      "Artifact binding (SHA-256 lineage for contracts, runners, results, independent recomputation) is well above the field norm for reproducibility."
+    ],
+    "strongest_reject_reason": "The paper's only closure-bearing positive result is a 7-endpoint, single-procedure-family (STL) deterministic gate pass whose tranche was defined after partial outcomes and whose matched effect is not reproduced by the only valid blinded semantic reviewer; everything broader is explicitly directional or absent (C4 has no longitudinal evidence at all). That is a valid, honestly reported boundary/directional result, but it does not yet support the title-level claim of an evaluation standard for causal skill effects at ICLR competitiveness.",
+    "submission_advice": "new_experiment",
+    "technical_quality_1_to_5": 4,
+    "weaknesses": [
+      "The single gate-passing result (F8: 5/7 vs 0/7, p=0.03125) rests on seven endpoints, all STL decomposition, defined as a support-recovery extension after original F5 outcomes were observed. Frozen candidate membership mitigates but does not eliminate the post-hoc subset-selection concern; the sibling tranches from the same frozen population (F5: 3/7 vs 2/7; F5-R2: 1/5 vs 0/5) do not pass, and the 20-endpoint completion (p=0.00390625) is correctly denied closure authority.",
+      "The deterministic verifier that carries the only gate pass is admittedly coarse (keyword/range checks), and the one valid blinded semantic reviewer does not reproduce the matched gate (p=0.109375), with bidirectional scorer disagreement. The disclosure resolves the integrity concern but materially weakens the empirical claim: the paper's strongest result is measurement-sensitive under the available audit.",
+      "Broader procedure-family generality remains unsupported: F9 (5/8 vs 1/8, p=0.0625) and F10 (5/9 vs 2/9, p=0.125) are positive in direction but both gates are open, and n=8/9 across five families means roughly one or two endpoints per family.",
+      "The longitudinal claim C4 — the motivating object of the paper (a skill written before a later release persists as state) — has zero experimental evidence; the TimeSage-EV evaluated snapshot is unavailable. Support failure has no scientific authority, but the absence of the decisive experiment leaves the paper's framing substantially ahead of its evidence.",
+      "The interventions use benchmark-recorded reference procedures, so the experiments estimate the downstream value of a correct registered procedure, not whether an agent can induce such a procedure from its own failures; the gap to the self-evolution motivation is acknowledged but remains large.",
+      "Multiplicity across the many tranches and diagnostics is handled by authority labels rather than any formal error control; the gate-passing tranche is one of several post-hoc-defined subsets of the same frozen population."
+    ]
+  },
+  "provider_response_id_archived_privately": true,
+  "provider_response_id_sha256": "0fbc97653488a029f0d9834fb37ecbc7d1a45c79b918f111f63ef1c7150cd64f",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "submission_authority": false
+}

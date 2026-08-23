@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "artifact_type": "f5-frozen-population-first-observation-completion",
+  "candidate_manifest_sha256": "b49cd462bda8921caa0be76f53b2cc331be17df97e309822b19550d50926c03e",
+  "candidate_population_frozen_before_original_f5_outcomes": true,
+  "support_completion_defined_after_partial_outcomes": true,
+  "new_candidates_added": 0,
+  "dedup_policy": "one first valid observation per endpoint; all later repeated endpoint calls have zero new scientific authority",
+  "source_tranches": [
+    {
+      "source": "f5_all_remaining_executable_replication",
+      "first_time_endpoints": 7,
+      "arms": {
+        "targeted": 3,
+        "generic": 2,
+        "no_skill": 0
+      },
+      "primary": {
+        "targeted_only": 1,
+        "generic_only": 0,
+        "discordant": 1
+      }
+    },
+    {
+      "source": "f5r2_support_recovered_extension",
+      "first_time_endpoints": 5,
+      "arms": {
+        "targeted": 1,
+        "generic": 0,
+        "no_skill": 1
+      },
+      "primary": {
+        "targeted_only": 1,
+        "generic_only": 0,
+        "discordant": 1
+      },
+      "secondary": {
+        "targeted_only": 0,
+        "no_skill_only": 0,
+        "discordant": 0
+      }
+    },
+    {
+      "source": "f8_frozen_population_support_recovery_extension_dedup",
+      "first_time_endpoints": 7,
+      "arms": {
+        "targeted": 5,
+        "generic": 0,
+        "no_skill": 1
+      },
+      "primary": {
+        "targeted_only": 5,
+        "generic_only": 0,
+        "discordant": 5
+      },
+      "secondary": {
+        "targeted_only": 4,
+        "no_skill_only": 0,
+        "discordant": 4
+      }
+    },
+    {
+      "source": "r5_new_first_observation_L3_healthcare_010",
+      "first_time_endpoints": 1,
+      "skill": "stl_decompose",
+      "arms": {
+        "targeted": 1,
+        "generic": 0,
+        "no_skill": 0
+      },
+      "primary": {
+        "targeted_only": 1,
+        "generic_only": 0,
+        "discordant": 1
+      },
+      "secondary": {
+        "targeted_only": 1,
+        "no_skill_only": 0,
+        "discordant": 1
+      },
+      "private_receipt_sha256": {
+        "targeted": "98b59479f41b125cc153dc668416b6aee11b5d747c3b35d4aed43c0df5c204a2",
+        "generic": "2df9700ca38ebbff5b5319e70259c3a157fb1f48872d45b38f8fa73613a01d96",
+        "no_skill": "07102b04983a23efac1791e54837b840816e62c3e7c46c1accf03cad755f7a9e"
+      },
+      "initial_prompt_parity_targeted_generic": true
+    }
+  ],
+  "first_observation_population": {
+    "available_endpoints": 20,
+    "frozen_candidates_total": 24,
+    "remaining_support_hold": 1,
+    "execution_fail": 3,
+    "arms": {
+      "targeted_executable_skill": {
+        "success": 10,
+        "n": 20,
+        "accuracy": 0.5
+      },
+      "matched_generic_executable_helper": {
+        "success": 2,
+        "n": 20,
+        "accuracy": 0.1
+      },
+      "no_skill": {
+        "success": 2,
+        "n": 20,
+        "accuracy": 0.1
+      }
+    },
+    "targeted_vs_generic": {
+      "paired_risk_difference": 0.4,
+      "targeted_only_success": 8,
+      "generic_only_success": 0,
+      "discordant": 8,
+      "one_sided_exact_p": 0.00390625
+    },
+    "targeted_vs_no_skill": {
+      "paired_risk_difference": 0.4,
+      "targeted_only_success": 8,
+      "no_skill_only_success": 0,
+      "discordant": 8,
+      "one_sided_exact_p": 0.00390625
+    },
+    "formal_closure_authority": false,
+    "reason_no_formal_closure_authority": "preserve the pre-existing F8 policy: post-outcome support-completion summaries are robustness evidence; only first-time tranche-level gates carry their originally adjudicated authority"
+  },
+  "r5_repeat_diagnostic": {
+    "population_closure_contract_sha256": "e07a8de7af31c5adab2f1f8a77e4edff79ac8f94624e0ac691d651b37853b4f4",
+    "qualification_sha256": "57ddfa10e8d8cfd901faf989943a9254deee3ee2d0cd0f24ca4ebf2fa6aa02e0",
+    "result_sha256": "5991064e93fc52ed1b1b2f77ab0b963a677b3e3eaf4e4fd894a8058823ae8530",
+    "newly_called_endpoints": 13,
+    "previously_executed_endpoints": 12,
+    "new_first_observation_endpoints": [
+      "L3_healthcare_010"
+    ],
+    "repeated_endpoint_calls_scientific_authority": false
+  },
+  "interpretation": "The pre-outcome frozen F5 population now has 20 execution-qualified endpoints with one deduplicated first observation each. The descriptive matched effect is +40 points with exact p=0.00390625. Existing F8 policy keeps this post-support-completion aggregate non-authoritative for formal C3 closure; independent F8 first-time evidence remains the closure-bearing tranche and broader procedure-family generality remains open.",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

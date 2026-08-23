@@ -1,0 +1,447 @@
+{
+  "schema_version": "1.0",
+  "status": "FROZEN_C06_FINAL_STOP_QA_CONTRACT",
+  "papers": [
+    {
+      "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "paper_dir": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027",
+      "claim_ledger": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+      "output": "generated/d2-temporal-skill-bottleneck-paper-qa-final-stop.json",
+      "title_fragments": [
+        "identifying causal skill effects",
+        "matched executable interventions",
+        "time-series agents"
+      ],
+      "required_pdf_fragments": [
+        "60 institutional scenarios",
+        "1,485",
+        "0.82",
+        "Persistent text",
+        "Supplied output",
+        "Executable state",
+        "Qwen2.5-32B",
+        "DeepSeek-v4-Pro",
+        "F8",
+        "5/7",
+        "0/7",
+        "71.4",
+        "0.03125",
+        "STL decomposition",
+        "zero new scientific authority",
+        "substantive off-target",
+        "0.0625",
+        "10/20",
+        "2/20",
+        "+40.0",
+        "0.00390625",
+        "one original candidate remains support hold",
+        "three recovered candidates fail",
+        "5/8",
+        "1/8",
+        "50.0",
+        "5/9",
+        "2/9",
+        "33.3",
+        "0.125",
+        "five non-STL",
+        "off-target procedure",
+        "broad non-STL gate",
+        "Matched Executable Interventions",
+        "6/7 targeted answers",
+        "2/7 generic answers",
+        "0.109375",
+        "semantic robustness",
+        "nonvoting after a parse failure",
+        "substantive off-target procedure",
+        "zero measurement-valid fresh STL",
+        "12 fresh task-level strong-control candidates",
+        "predeclared minimum of 16",
+        "No F12 model outcome"
+      ],
+      "max_main_pages": 9,
+      "artifact_checks": [
+        {
+          "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+          "key": "support_state.public_evaluated_snapshot_available",
+          "equals": false
+        },
+        {
+          "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+          "key": "independent_probe_state.f8_support_recovery_extension_gate_pass",
+          "equals": true
+        },
+        {
+          "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+          "key": "independent_probe_state.f8_targeted_vs_generic_one_sided_exact_p",
+          "equals": 0.03125
+        },
+        {
+          "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+          "key": "independent_probe_state.f8_endpoints",
+          "equals": 7
+        },
+        {
+          "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+          "key": "independent_probe_state.f8_repeated_endpoints_zero_authority",
+          "equals": 5
+        },
+        {
+          "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+          "key": "independent_probe_state.f8_family_generality_closed",
+          "equals": false
+        },
+        {
+          "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+          "key": "f8_frozen_population_support_recovery_extension.arms.targeted_executable_skill.success",
+          "equals": 5
+        },
+        {
+          "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+          "key": "f8_frozen_population_support_recovery_extension.arms.matched_generic_executable_helper.success",
+          "equals": 0
+        },
+        {
+          "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+          "key": "f8_frozen_population_support_recovery_extension.primary_targeted_vs_generic.paired_risk_difference",
+          "equals": 0.7142857142857143
+        },
+        {
+          "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+          "key": "f8_frozen_population_support_recovery_extension.primary_targeted_vs_generic.one_sided_exact_p",
+          "equals": 0.03125
+        },
+        {
+          "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+          "key": "f8_frozen_population_support_recovery_extension.frozen_gate.pass",
+          "equals": true
+        },
+        {
+          "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+          "key": "f8_frozen_population_support_recovery_extension.repeated_endpoint_count",
+          "equals": 5
+        },
+        {
+          "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+          "key": "f8_frozen_population_support_recovery_extension.repeated_endpoints_scientific_authority",
+          "equals": false
+        },
+        {
+          "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+          "key": "f8_frozen_population_support_recovery_extension.family_concentration.all_first_time_endpoints_stl_decompose",
+          "equals": true
+        },
+        {
+          "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+          "key": "f8_frozen_population_support_recovery_extension.full_12_endpoint_rerun_diagnostic.scientific_authority",
+          "equals": false
+        },
+        {
+          "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+          "key": "f6_strong_offtarget_control_diagnostic.diagnostic_only",
+          "equals": true
+        },
+        {
+          "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+          "key": "f6_strong_offtarget_control_diagnostic.primary_closure_authority",
+          "equals": false
+        },
+        {
+          "path": "generated/d2-temporal-skill-f8-dedup-adjudication-20260822.json",
+          "key": "first_time_endpoint_count",
+          "equals": 7
+        },
+        {
+          "path": "generated/d2-temporal-skill-f8-dedup-adjudication-20260822.json",
+          "key": "prior_f5r2_overlap_count",
+          "equals": 5
+        },
+        {
+          "path": "generated/d2-temporal-skill-f8-dedup-adjudication-20260822.json",
+          "key": "overlap_scientific_authority",
+          "equals": false
+        },
+        {
+          "path": "generated/d2-temporal-skill-f8-dedup-adjudication-20260822.json",
+          "key": "frozen_gate.pass",
+          "equals": true
+        },
+        {
+          "path": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+          "key": "first_observation_population.available_endpoints",
+          "equals": 20
+        },
+        {
+          "path": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+          "key": "first_observation_population.arms.targeted_executable_skill.success",
+          "equals": 10
+        },
+        {
+          "path": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+          "key": "first_observation_population.arms.matched_generic_executable_helper.success",
+          "equals": 2
+        },
+        {
+          "path": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+          "key": "first_observation_population.arms.no_skill.success",
+          "equals": 2
+        },
+        {
+          "path": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+          "key": "first_observation_population.targeted_vs_generic.one_sided_exact_p",
+          "equals": 0.00390625
+        },
+        {
+          "path": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+          "key": "first_observation_population.formal_closure_authority",
+          "equals": false
+        },
+        {
+          "path": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+          "key": "first_observation_population.remaining_support_hold",
+          "equals": 1
+        },
+        {
+          "path": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+          "key": "first_observation_population.execution_fail",
+          "equals": 3
+        },
+        {
+          "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+          "key": "f5_first_observation_population_completion_r5.formal_closure_authority",
+          "equals": false
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "source_population.task_ids",
+          "equals": 60
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "source_population.task_json_complete",
+          "equals": 58
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "source_population.metadata_candidates",
+          "equals": 12
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "source_population.execution_qualified",
+          "equals": 9
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "source_population.new_candidates_added",
+          "equals": 0
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "source_population.all_tasks_first_time_relative_to_F0_F8",
+          "equals": true
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "f9_qwen.valid_endpoints",
+          "equals": 8
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "f9_qwen.protocol_failures",
+          "equals": 1
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "f9_qwen.arms.targeted.success",
+          "equals": 5
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "f9_qwen.arms.substantive_offtarget.success",
+          "equals": 1
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "f9_qwen.primary.paired_risk_difference",
+          "equals": 0.5
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "f9_qwen.primary.one_sided_exact_p",
+          "equals": 0.0625
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "f9_qwen.primary.gate_pass",
+          "equals": false
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "f9_qwen.integrity.issues",
+          "equals": 0
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "f10_deepseek.valid_endpoints",
+          "equals": 9
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "f10_deepseek.protocol_failures",
+          "equals": 0
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "f10_deepseek.arms.targeted.success",
+          "equals": 5
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "f10_deepseek.arms.substantive_offtarget.success",
+          "equals": 2
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "f10_deepseek.primary.paired_risk_difference",
+          "equals": 0.3333333333333333
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "f10_deepseek.primary.one_sided_exact_p",
+          "equals": 0.125
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "f10_deepseek.primary.gate_pass",
+          "equals": false
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "f10_deepseek.integrity.issues",
+          "equals": 0
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "crossmodel_adjudication.pvalue_pooling",
+          "equals": false
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "crossmodel_adjudication.same_endpoint_and_control_contract",
+          "equals": true
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "crossmodel_adjudication.primary_direction_positive_both_models",
+          "equals": true
+        },
+        {
+          "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+          "key": "crossmodel_adjudication.primary_gate_pass_any_model",
+          "equals": false
+        },
+        {
+          "path": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+          "key": "reviewers_voting",
+          "equals": 1
+        },
+        {
+          "path": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+          "key": "reviewers.deepseek-v4-pro-260425.strict_correct.targeted_executable_skill",
+          "equals": 6
+        },
+        {
+          "path": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+          "key": "reviewers.deepseek-v4-pro-260425.strict_correct.matched_generic_executable_helper",
+          "equals": 2
+        },
+        {
+          "path": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+          "key": "reviewers.deepseek-v4-pro-260425.targeted_vs_generic.one_sided_exact_p",
+          "equals": 0.109375
+        },
+        {
+          "path": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+          "key": "reviewers.kimi-k3.status",
+          "equals": "NONVOTING_PROVIDER_OR_PARSE_FAILURE"
+        },
+        {
+          "path": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+          "key": "adjudication.deterministic_f8_gate_unchanged",
+          "equals": true
+        },
+        {
+          "path": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+          "key": "adjudication.semantic_gate_reproduced",
+          "equals": false
+        },
+        {
+          "path": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+          "key": "adjudication.semantic_robustness_established",
+          "equals": false
+        },
+        {
+          "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+          "key": "independent_probe_state.f11_semantic_audit_reviewers_voting",
+          "equals": 1
+        },
+        {
+          "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+          "key": "independent_probe_state.f11_semantic_targeted_vs_generic_one_sided_exact_p",
+          "equals": 0.109375
+        },
+        {
+          "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+          "key": "independent_probe_state.f11_semantic_robustness_established",
+          "equals": false
+        },
+        {
+          "path": "generated/d2-temporal-skill-source-saturation-20260823.json",
+          "key": "model_outcomes_observed_for_f12",
+          "equals": 0
+        },
+        {
+          "path": "generated/d2-temporal-skill-source-saturation-20260823.json",
+          "key": "predeclared_minimum_fresh_task_pairs",
+          "equals": 16
+        },
+        {
+          "path": "generated/d2-temporal-skill-source-saturation-20260823.json",
+          "key": "timesage_mt_l2.fresh_stl_candidates_after_excluding_f9_pool",
+          "equals": 0
+        },
+        {
+          "path": "generated/d2-temporal-skill-source-saturation-20260823.json",
+          "key": "timesage_mt_l1.broad_strong_control_metadata_candidates",
+          "equals": 12
+        },
+        {
+          "path": "generated/d2-temporal-skill-source-saturation-20260823.json",
+          "key": "decision",
+          "equals": "STOP_NEW_C06_EXPERIMENTS_CURRENT_SAME_SUBSTRATE_SOURCE_SATURATED"
+        },
+        {
+          "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+          "key": "independent_probe_state.f12_model_outcomes_observed",
+          "equals": 0
+        },
+        {
+          "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+          "key": "independent_probe_state.f12_new_experiment_authorized",
+          "equals": false
+        }
+      ]
+    }
+  ],
+  "scientific_authority": false,
+  "qa_contract_supersession": {
+    "reason": "POST_F10_CLARITY_REWRITE_REMOVED_LEGACY_MAIN-TEXT_GENEALOGY_STRINGS",
+    "removed_prose_only_assertions": [
+      "26.3",
+      "five previously evaluated tasks"
+    ],
+    "scientific_artifact_checks_changed": false,
+    "statistical_thresholds_changed": false,
+    "claim_scope_changed": false
+  }
+}

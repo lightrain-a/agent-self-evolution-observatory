@@ -1,0 +1,1549 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "status": "PASS",
+  "paper_dir": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027",
+  "summary": {
+    "checks": 137,
+    "passed": 137,
+    "pages": 16,
+    "pdf_sha256": "c784324dabd8696ce87d3c1c4bcbac70349fc0a0550484e47a233c39651e0610",
+    "pdf_bytes": 258882,
+    "active_unrefuted_claims": [
+      "C3",
+      "C4"
+    ]
+  },
+  "checks": [
+    {
+      "name": "pdf_not_older_than_sources",
+      "pass": true,
+      "detail": {
+        "pdf_mtime_ns": 1787461112893158640,
+        "newest_source": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/07_appendix.tex",
+        "newest_source_mtime_ns": 1787461075970162330
+      }
+    },
+    {
+      "name": "page_limit",
+      "pass": true,
+      "detail": {
+        "main_pages": 9,
+        "max_main_pages": 9,
+        "appendix_start_page": 10,
+        "total_pages": 16
+      }
+    },
+    {
+      "name": "anonymous_placeholder",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_author_email",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_internal_identity",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_undefined_citations",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_undefined_references",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no_overfull",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "manuscript_policy",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "title:identifying causal skill effects",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "title:matched executable interventions",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "title:time-series agents",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:60 institutional scenarios",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:1,485",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.82",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:Persistent text",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:Supplied output",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:Executable state",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:Qwen2.5-32B",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:DeepSeek-v4-Pro",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:F8",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:5/7",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0/7",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:71.4",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.03125",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:STL decomposition",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:zero new scientific authority",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:substantive off-target",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.0625",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:10/20",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:2/20",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:+40.0",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.00390625",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:one original candidate remains support hold",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:three recovered candidates fail",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:5/8",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:1/8",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:50.0",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:5/9",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:2/9",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:33.3",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.125",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:five non-STL",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:off-target procedure",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:broad non-STL gate",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:Matched Executable Interventions",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:6/7 targeted answers",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:2/7 generic answers",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:0.109375",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:semantic robustness",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:nonvoting after a parse failure",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:substantive off-target procedure",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:zero measurement-valid fresh STL",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:12 fresh task-level strong-control candidates",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:predeclared minimum of 16",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pdf_fragment:No F12 model outcome",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_retain:C3",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_no_auto_narrow:C3",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_no_closure:C3",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_retain:C4",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_no_auto_narrow:C4",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "active_no_closure:C4",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "claim_ledger_has_claims",
+      "pass": true,
+      "detail": 4
+    },
+    {
+      "name": "artifact:support_state.public_evaluated_snapshot_available",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:independent_probe_state.f8_support_recovery_extension_gate_pass",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
+    },
+    {
+      "name": "artifact:independent_probe_state.f8_targeted_vs_generic_one_sided_exact_p",
+      "pass": true,
+      "detail": {
+        "actual": 0.03125,
+        "expected": 0.03125
+      }
+    },
+    {
+      "name": "artifact:independent_probe_state.f8_endpoints",
+      "pass": true,
+      "detail": {
+        "actual": 7,
+        "expected": 7
+      }
+    },
+    {
+      "name": "artifact:independent_probe_state.f8_repeated_endpoints_zero_authority",
+      "pass": true,
+      "detail": {
+        "actual": 5,
+        "expected": 5
+      }
+    },
+    {
+      "name": "artifact:independent_probe_state.f8_family_generality_closed",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:f8_frozen_population_support_recovery_extension.arms.targeted_executable_skill.success",
+      "pass": true,
+      "detail": {
+        "actual": 5,
+        "expected": 5
+      }
+    },
+    {
+      "name": "artifact:f8_frozen_population_support_recovery_extension.arms.matched_generic_executable_helper.success",
+      "pass": true,
+      "detail": {
+        "actual": 0,
+        "expected": 0
+      }
+    },
+    {
+      "name": "artifact:f8_frozen_population_support_recovery_extension.primary_targeted_vs_generic.paired_risk_difference",
+      "pass": true,
+      "detail": {
+        "actual": 0.7142857142857143,
+        "expected": 0.7142857142857143
+      }
+    },
+    {
+      "name": "artifact:f8_frozen_population_support_recovery_extension.primary_targeted_vs_generic.one_sided_exact_p",
+      "pass": true,
+      "detail": {
+        "actual": 0.03125,
+        "expected": 0.03125
+      }
+    },
+    {
+      "name": "artifact:f8_frozen_population_support_recovery_extension.frozen_gate.pass",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
+    },
+    {
+      "name": "artifact:f8_frozen_population_support_recovery_extension.repeated_endpoint_count",
+      "pass": true,
+      "detail": {
+        "actual": 5,
+        "expected": 5
+      }
+    },
+    {
+      "name": "artifact:f8_frozen_population_support_recovery_extension.repeated_endpoints_scientific_authority",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:f8_frozen_population_support_recovery_extension.family_concentration.all_first_time_endpoints_stl_decompose",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
+    },
+    {
+      "name": "artifact:f8_frozen_population_support_recovery_extension.full_12_endpoint_rerun_diagnostic.scientific_authority",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:f6_strong_offtarget_control_diagnostic.diagnostic_only",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
+    },
+    {
+      "name": "artifact:f6_strong_offtarget_control_diagnostic.primary_closure_authority",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:first_time_endpoint_count",
+      "pass": true,
+      "detail": {
+        "actual": 7,
+        "expected": 7
+      }
+    },
+    {
+      "name": "artifact:prior_f5r2_overlap_count",
+      "pass": true,
+      "detail": {
+        "actual": 5,
+        "expected": 5
+      }
+    },
+    {
+      "name": "artifact:overlap_scientific_authority",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:frozen_gate.pass",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
+    },
+    {
+      "name": "artifact:first_observation_population.available_endpoints",
+      "pass": true,
+      "detail": {
+        "actual": 20,
+        "expected": 20
+      }
+    },
+    {
+      "name": "artifact:first_observation_population.arms.targeted_executable_skill.success",
+      "pass": true,
+      "detail": {
+        "actual": 10,
+        "expected": 10
+      }
+    },
+    {
+      "name": "artifact:first_observation_population.arms.matched_generic_executable_helper.success",
+      "pass": true,
+      "detail": {
+        "actual": 2,
+        "expected": 2
+      }
+    },
+    {
+      "name": "artifact:first_observation_population.arms.no_skill.success",
+      "pass": true,
+      "detail": {
+        "actual": 2,
+        "expected": 2
+      }
+    },
+    {
+      "name": "artifact:first_observation_population.targeted_vs_generic.one_sided_exact_p",
+      "pass": true,
+      "detail": {
+        "actual": 0.00390625,
+        "expected": 0.00390625
+      }
+    },
+    {
+      "name": "artifact:first_observation_population.formal_closure_authority",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:first_observation_population.remaining_support_hold",
+      "pass": true,
+      "detail": {
+        "actual": 1,
+        "expected": 1
+      }
+    },
+    {
+      "name": "artifact:first_observation_population.execution_fail",
+      "pass": true,
+      "detail": {
+        "actual": 3,
+        "expected": 3
+      }
+    },
+    {
+      "name": "artifact:f5_first_observation_population_completion_r5.formal_closure_authority",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:source_population.task_ids",
+      "pass": true,
+      "detail": {
+        "actual": 60,
+        "expected": 60
+      }
+    },
+    {
+      "name": "artifact:source_population.task_json_complete",
+      "pass": true,
+      "detail": {
+        "actual": 58,
+        "expected": 58
+      }
+    },
+    {
+      "name": "artifact:source_population.metadata_candidates",
+      "pass": true,
+      "detail": {
+        "actual": 12,
+        "expected": 12
+      }
+    },
+    {
+      "name": "artifact:source_population.execution_qualified",
+      "pass": true,
+      "detail": {
+        "actual": 9,
+        "expected": 9
+      }
+    },
+    {
+      "name": "artifact:source_population.new_candidates_added",
+      "pass": true,
+      "detail": {
+        "actual": 0,
+        "expected": 0
+      }
+    },
+    {
+      "name": "artifact:source_population.all_tasks_first_time_relative_to_F0_F8",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
+    },
+    {
+      "name": "artifact:f9_qwen.valid_endpoints",
+      "pass": true,
+      "detail": {
+        "actual": 8,
+        "expected": 8
+      }
+    },
+    {
+      "name": "artifact:f9_qwen.protocol_failures",
+      "pass": true,
+      "detail": {
+        "actual": 1,
+        "expected": 1
+      }
+    },
+    {
+      "name": "artifact:f9_qwen.arms.targeted.success",
+      "pass": true,
+      "detail": {
+        "actual": 5,
+        "expected": 5
+      }
+    },
+    {
+      "name": "artifact:f9_qwen.arms.substantive_offtarget.success",
+      "pass": true,
+      "detail": {
+        "actual": 1,
+        "expected": 1
+      }
+    },
+    {
+      "name": "artifact:f9_qwen.primary.paired_risk_difference",
+      "pass": true,
+      "detail": {
+        "actual": 0.5,
+        "expected": 0.5
+      }
+    },
+    {
+      "name": "artifact:f9_qwen.primary.one_sided_exact_p",
+      "pass": true,
+      "detail": {
+        "actual": 0.0625,
+        "expected": 0.0625
+      }
+    },
+    {
+      "name": "artifact:f9_qwen.primary.gate_pass",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:f9_qwen.integrity.issues",
+      "pass": true,
+      "detail": {
+        "actual": 0,
+        "expected": 0
+      }
+    },
+    {
+      "name": "artifact:f10_deepseek.valid_endpoints",
+      "pass": true,
+      "detail": {
+        "actual": 9,
+        "expected": 9
+      }
+    },
+    {
+      "name": "artifact:f10_deepseek.protocol_failures",
+      "pass": true,
+      "detail": {
+        "actual": 0,
+        "expected": 0
+      }
+    },
+    {
+      "name": "artifact:f10_deepseek.arms.targeted.success",
+      "pass": true,
+      "detail": {
+        "actual": 5,
+        "expected": 5
+      }
+    },
+    {
+      "name": "artifact:f10_deepseek.arms.substantive_offtarget.success",
+      "pass": true,
+      "detail": {
+        "actual": 2,
+        "expected": 2
+      }
+    },
+    {
+      "name": "artifact:f10_deepseek.primary.paired_risk_difference",
+      "pass": true,
+      "detail": {
+        "actual": 0.3333333333333333,
+        "expected": 0.3333333333333333
+      }
+    },
+    {
+      "name": "artifact:f10_deepseek.primary.one_sided_exact_p",
+      "pass": true,
+      "detail": {
+        "actual": 0.125,
+        "expected": 0.125
+      }
+    },
+    {
+      "name": "artifact:f10_deepseek.primary.gate_pass",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:f10_deepseek.integrity.issues",
+      "pass": true,
+      "detail": {
+        "actual": 0,
+        "expected": 0
+      }
+    },
+    {
+      "name": "artifact:crossmodel_adjudication.pvalue_pooling",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:crossmodel_adjudication.same_endpoint_and_control_contract",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
+    },
+    {
+      "name": "artifact:crossmodel_adjudication.primary_direction_positive_both_models",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
+    },
+    {
+      "name": "artifact:crossmodel_adjudication.primary_gate_pass_any_model",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:reviewers_voting",
+      "pass": true,
+      "detail": {
+        "actual": 1,
+        "expected": 1
+      }
+    },
+    {
+      "name": "artifact:reviewers.deepseek-v4-pro-260425.strict_correct.targeted_executable_skill",
+      "pass": true,
+      "detail": {
+        "actual": 6,
+        "expected": 6
+      }
+    },
+    {
+      "name": "artifact:reviewers.deepseek-v4-pro-260425.strict_correct.matched_generic_executable_helper",
+      "pass": true,
+      "detail": {
+        "actual": 2,
+        "expected": 2
+      }
+    },
+    {
+      "name": "artifact:reviewers.deepseek-v4-pro-260425.targeted_vs_generic.one_sided_exact_p",
+      "pass": true,
+      "detail": {
+        "actual": 0.109375,
+        "expected": 0.109375
+      }
+    },
+    {
+      "name": "artifact:reviewers.kimi-k3.status",
+      "pass": true,
+      "detail": {
+        "actual": "NONVOTING_PROVIDER_OR_PARSE_FAILURE",
+        "expected": "NONVOTING_PROVIDER_OR_PARSE_FAILURE"
+      }
+    },
+    {
+      "name": "artifact:adjudication.deterministic_f8_gate_unchanged",
+      "pass": true,
+      "detail": {
+        "actual": true,
+        "expected": true
+      }
+    },
+    {
+      "name": "artifact:adjudication.semantic_gate_reproduced",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:adjudication.semantic_robustness_established",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:independent_probe_state.f11_semantic_audit_reviewers_voting",
+      "pass": true,
+      "detail": {
+        "actual": 1,
+        "expected": 1
+      }
+    },
+    {
+      "name": "artifact:independent_probe_state.f11_semantic_targeted_vs_generic_one_sided_exact_p",
+      "pass": true,
+      "detail": {
+        "actual": 0.109375,
+        "expected": 0.109375
+      }
+    },
+    {
+      "name": "artifact:independent_probe_state.f11_semantic_robustness_established",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    },
+    {
+      "name": "artifact:model_outcomes_observed_for_f12",
+      "pass": true,
+      "detail": {
+        "actual": 0,
+        "expected": 0
+      }
+    },
+    {
+      "name": "artifact:predeclared_minimum_fresh_task_pairs",
+      "pass": true,
+      "detail": {
+        "actual": 16,
+        "expected": 16
+      }
+    },
+    {
+      "name": "artifact:timesage_mt_l2.fresh_stl_candidates_after_excluding_f9_pool",
+      "pass": true,
+      "detail": {
+        "actual": 0,
+        "expected": 0
+      }
+    },
+    {
+      "name": "artifact:timesage_mt_l1.broad_strong_control_metadata_candidates",
+      "pass": true,
+      "detail": {
+        "actual": 12,
+        "expected": 12
+      }
+    },
+    {
+      "name": "artifact:decision",
+      "pass": true,
+      "detail": {
+        "actual": "STOP_NEW_C06_EXPERIMENTS_CURRENT_SAME_SUBSTRATE_SOURCE_SATURATED",
+        "expected": "STOP_NEW_C06_EXPERIMENTS_CURRENT_SAME_SUBSTRATE_SOURCE_SATURATED"
+      }
+    },
+    {
+      "name": "artifact:independent_probe_state.f12_model_outcomes_observed",
+      "pass": true,
+      "detail": {
+        "actual": 0,
+        "expected": 0
+      }
+    },
+    {
+      "name": "artifact:independent_probe_state.f12_new_experiment_authorized",
+      "pass": true,
+      "detail": {
+        "actual": false,
+        "expected": false
+      }
+    }
+  ],
+  "style_audit": {
+    "schema_version": "1.0",
+    "policy": {
+      "schema_version": "1.0",
+      "draft_before_evidence_completion": true,
+      "unrefuted_hypothesis_stays_active": true,
+      "missing_evidence_creates_experiment_debt": true,
+      "missing_evidence_does_not_trigger_claim_narrowing": true,
+      "maximally_assertive_evidence_compatible_wording": true,
+      "scientific_evidence_state_is_separate_from_manuscript_stance": true,
+      "manuscript_completion_is_separate_from_evidence_completion": true,
+      "complete_paper_may_retain_experiment_debt": true,
+      "complete_paper_requires_claim_ledger": true,
+      "complete_paper_requires_manuscript_qa": true,
+      "refutation_requires_scientific_counterevidence": true,
+      "refutation_authorities": [
+        "direct_counterevidence",
+        "same_information_reduction",
+        "scope_matched_principle_counter_explanation"
+      ],
+      "single_limitations_section_required": true,
+      "distributed_limitation_language_forbidden": true,
+      "not_but_contrast_forbidden": true,
+      "rather_than_contrast_forbidden": true,
+      "serial_enumeration_sentence_forbidden": true
+    },
+    "limitations_source": "sections/06_limitations_conclusion.tex",
+    "sources_audited": 10,
+    "passed": true,
+    "violations": []
+  },
+  "artifact_checks": [
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+      "key": "support_state.public_evaluated_snapshot_available",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+      "key": "independent_probe_state.f8_support_recovery_extension_gate_pass",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+      "key": "independent_probe_state.f8_targeted_vs_generic_one_sided_exact_p",
+      "actual": 0.03125,
+      "expected": 0.03125,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+      "key": "independent_probe_state.f8_endpoints",
+      "actual": 7,
+      "expected": 7,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+      "key": "independent_probe_state.f8_repeated_endpoints_zero_authority",
+      "actual": 5,
+      "expected": 5,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+      "key": "independent_probe_state.f8_family_generality_closed",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+      "key": "f8_frozen_population_support_recovery_extension.arms.targeted_executable_skill.success",
+      "actual": 5,
+      "expected": 5,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+      "key": "f8_frozen_population_support_recovery_extension.arms.matched_generic_executable_helper.success",
+      "actual": 0,
+      "expected": 0,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+      "key": "f8_frozen_population_support_recovery_extension.primary_targeted_vs_generic.paired_risk_difference",
+      "actual": 0.7142857142857143,
+      "expected": 0.7142857142857143,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+      "key": "f8_frozen_population_support_recovery_extension.primary_targeted_vs_generic.one_sided_exact_p",
+      "actual": 0.03125,
+      "expected": 0.03125,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+      "key": "f8_frozen_population_support_recovery_extension.frozen_gate.pass",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+      "key": "f8_frozen_population_support_recovery_extension.repeated_endpoint_count",
+      "actual": 5,
+      "expected": 5,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+      "key": "f8_frozen_population_support_recovery_extension.repeated_endpoints_scientific_authority",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+      "key": "f8_frozen_population_support_recovery_extension.family_concentration.all_first_time_endpoints_stl_decompose",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+      "key": "f8_frozen_population_support_recovery_extension.full_12_endpoint_rerun_diagnostic.scientific_authority",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+      "key": "f6_strong_offtarget_control_diagnostic.diagnostic_only",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+      "key": "f6_strong_offtarget_control_diagnostic.primary_closure_authority",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f8-dedup-adjudication-20260822.json",
+      "key": "first_time_endpoint_count",
+      "actual": 7,
+      "expected": 7,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f8-dedup-adjudication-20260822.json",
+      "key": "prior_f5r2_overlap_count",
+      "actual": 5,
+      "expected": 5,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f8-dedup-adjudication-20260822.json",
+      "key": "overlap_scientific_authority",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f8-dedup-adjudication-20260822.json",
+      "key": "frozen_gate.pass",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+      "key": "first_observation_population.available_endpoints",
+      "actual": 20,
+      "expected": 20,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+      "key": "first_observation_population.arms.targeted_executable_skill.success",
+      "actual": 10,
+      "expected": 10,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+      "key": "first_observation_population.arms.matched_generic_executable_helper.success",
+      "actual": 2,
+      "expected": 2,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+      "key": "first_observation_population.arms.no_skill.success",
+      "actual": 2,
+      "expected": 2,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+      "key": "first_observation_population.targeted_vs_generic.one_sided_exact_p",
+      "actual": 0.00390625,
+      "expected": 0.00390625,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+      "key": "first_observation_population.formal_closure_authority",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+      "key": "first_observation_population.remaining_support_hold",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+      "key": "first_observation_population.execution_fail",
+      "actual": 3,
+      "expected": 3,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-independent-probes-20260822.json",
+      "key": "f5_first_observation_population_completion_r5.formal_closure_authority",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "source_population.task_ids",
+      "actual": 60,
+      "expected": 60,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "source_population.task_json_complete",
+      "actual": 58,
+      "expected": 58,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "source_population.metadata_candidates",
+      "actual": 12,
+      "expected": 12,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "source_population.execution_qualified",
+      "actual": 9,
+      "expected": 9,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "source_population.new_candidates_added",
+      "actual": 0,
+      "expected": 0,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "source_population.all_tasks_first_time_relative_to_F0_F8",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "f9_qwen.valid_endpoints",
+      "actual": 8,
+      "expected": 8,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "f9_qwen.protocol_failures",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "f9_qwen.arms.targeted.success",
+      "actual": 5,
+      "expected": 5,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "f9_qwen.arms.substantive_offtarget.success",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "f9_qwen.primary.paired_risk_difference",
+      "actual": 0.5,
+      "expected": 0.5,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "f9_qwen.primary.one_sided_exact_p",
+      "actual": 0.0625,
+      "expected": 0.0625,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "f9_qwen.primary.gate_pass",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "f9_qwen.integrity.issues",
+      "actual": 0,
+      "expected": 0,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "f10_deepseek.valid_endpoints",
+      "actual": 9,
+      "expected": 9,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "f10_deepseek.protocol_failures",
+      "actual": 0,
+      "expected": 0,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "f10_deepseek.arms.targeted.success",
+      "actual": 5,
+      "expected": 5,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "f10_deepseek.arms.substantive_offtarget.success",
+      "actual": 2,
+      "expected": 2,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "f10_deepseek.primary.paired_risk_difference",
+      "actual": 0.3333333333333333,
+      "expected": 0.3333333333333333,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "f10_deepseek.primary.one_sided_exact_p",
+      "actual": 0.125,
+      "expected": 0.125,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "f10_deepseek.primary.gate_pass",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "f10_deepseek.integrity.issues",
+      "actual": 0,
+      "expected": 0,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "crossmodel_adjudication.pvalue_pooling",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "crossmodel_adjudication.same_endpoint_and_control_contract",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "crossmodel_adjudication.primary_direction_positive_both_models",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+      "key": "crossmodel_adjudication.primary_gate_pass_any_model",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+      "key": "reviewers_voting",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+      "key": "reviewers.deepseek-v4-pro-260425.strict_correct.targeted_executable_skill",
+      "actual": 6,
+      "expected": 6,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+      "key": "reviewers.deepseek-v4-pro-260425.strict_correct.matched_generic_executable_helper",
+      "actual": 2,
+      "expected": 2,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+      "key": "reviewers.deepseek-v4-pro-260425.targeted_vs_generic.one_sided_exact_p",
+      "actual": 0.109375,
+      "expected": 0.109375,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+      "key": "reviewers.kimi-k3.status",
+      "actual": "NONVOTING_PROVIDER_OR_PARSE_FAILURE",
+      "expected": "NONVOTING_PROVIDER_OR_PARSE_FAILURE",
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+      "key": "adjudication.deterministic_f8_gate_unchanged",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+      "key": "adjudication.semantic_gate_reproduced",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+      "key": "adjudication.semantic_robustness_established",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+      "key": "independent_probe_state.f11_semantic_audit_reviewers_voting",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+      "key": "independent_probe_state.f11_semantic_targeted_vs_generic_one_sided_exact_p",
+      "actual": 0.109375,
+      "expected": 0.109375,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+      "key": "independent_probe_state.f11_semantic_robustness_established",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-source-saturation-20260823.json",
+      "key": "model_outcomes_observed_for_f12",
+      "actual": 0,
+      "expected": 0,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-source-saturation-20260823.json",
+      "key": "predeclared_minimum_fresh_task_pairs",
+      "actual": 16,
+      "expected": 16,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-source-saturation-20260823.json",
+      "key": "timesage_mt_l2.fresh_stl_candidates_after_excluding_f9_pool",
+      "actual": 0,
+      "expected": 0,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-source-saturation-20260823.json",
+      "key": "timesage_mt_l1.broad_strong_control_metadata_candidates",
+      "actual": 12,
+      "expected": 12,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-source-saturation-20260823.json",
+      "key": "decision",
+      "actual": "STOP_NEW_C06_EXPERIMENTS_CURRENT_SAME_SUBSTRATE_SOURCE_SATURATED",
+      "expected": "STOP_NEW_C06_EXPERIMENTS_CURRENT_SAME_SUBSTRATE_SOURCE_SATURATED",
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+      "key": "independent_probe_state.f12_model_outcomes_observed",
+      "actual": 0,
+      "expected": 0,
+      "pass": true
+    },
+    {
+      "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+      "key": "independent_probe_state.f12_new_experiment_authorized",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    }
+  ],
+  "manuscript_files": [
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/main.tex",
+      "sha256": "7382d5519337b4a540ded5a0274abfd44cf5e40df86a45384af9d773621d1609"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/00_abstract.tex",
+      "sha256": "9f63594b2e90631559c030f6d2166a5d748f8ba29df33db35ac21f629c25b65f"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/01_intro.tex",
+      "sha256": "7efc255ca24ebf77a80958886c9fe45dc8183a31166fce0ccecb76bf7d2252de"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/02_failure_mechanism.tex",
+      "sha256": "a7906296f930950e5363ee3129bcef0f74196369aa56c225672812072076e56b"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/03_source_evidence.tex",
+      "sha256": "897eb94741dc2bae84c44458dec5bc6333a1952664c01a7d322b9407461f0a60"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/04_targeted_intervention.tex",
+      "sha256": "81dbcbbb91b67fec4a57669ee5f6c5d0968d9dd8833d906eb96aef2d68cac124"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/05_independent_probes.tex",
+      "sha256": "f554ec099f2bd3fd14c360dd2a555b8c25e7d7d54fd2fe3560628200ccd39fb7"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/05_related.tex",
+      "sha256": "063841ff027bbd1084a03f048c0b73f176b68de68a5cedd12227bc2dd039e117"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/06_limitations_conclusion.tex",
+      "sha256": "99bcd07a3bcac035143fde769e2a8a7a572fb0250a47b40fbd780194533a2810"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/sections/07_appendix.tex",
+      "sha256": "88cfd66ba49854b964b02e08d24d8bd01d5b48236b6301329a8efa5bcfe81c34"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/references.bib",
+      "sha256": "918a1786d1077ebbe957d0b7d4a9a67beb6d4bce5455d1e1347b87c51725813b"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/figures/fig1_temporal_skill_causal.pdf",
+      "sha256": "f4cf4e88379330ce450e76a565ca26ad54802464652885329b393f3f34efb7e4"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/figures/fig2_source_skill_efficiency.pdf",
+      "sha256": "daad4964ae96b7ae3c0280cd335d1aee83745a4d8fee9c06b2a106eeb6e3b22c"
+    },
+    {
+      "path": "paper_drafts/d2-temporal-skill-bottleneck-iclr2027/figures/fig3_independent_probes.pdf",
+      "sha256": "3b8dbe27a13f24e3763539a23a87018e2aa4a60b9af20fbee95b4bfb576fdc6a"
+    }
+  ],
+  "claim_ledger": {
+    "path": "generated/d2-temporal-skill-bottleneck-claim-ledger.json",
+    "sha256": "14e2368f92d5ef8ce4d3934cf0c969677b09903174b98d415733a99349b75c06"
+  },
+  "scientific_authority": false
+}

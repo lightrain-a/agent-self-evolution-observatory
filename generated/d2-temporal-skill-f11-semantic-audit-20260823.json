@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "artifact_type": "blinded-semantic-measurement-audit",
+  "audit_id": "C06-F11-F8-BLINDED-SEMANTIC-MEASUREMENT-AUDIT",
+  "scope": "Post-hoc measurement robustness audit of all 21 existing answers from the seven first-time F8 endpoints. It does not change the frozen deterministic F8 score or gate.",
+  "contract_sha256": "2ba57d779f380aa991ce9cd2c16701dfd81fe3a7606068756940923d20e5ef26",
+  "runner_sha256": "79c536ab571c18601abe92e6fcc1dbaf90cb37934783b807a8d69dccd0f83f8a",
+  "reviewers_requested": 2,
+  "reviewers_voting": 1,
+  "arm_labels_hidden": true,
+  "all_f8_arms_audited": true,
+  "answers_total": 21,
+  "replacement_reviewer_after_observing_labels_forbidden": true,
+  "reviewers": {
+    "deepseek-v4-pro-260425": {
+      "status": "completed",
+      "receipt_sha256": "95f84d7c4dc9a08522d3591a012f7496896d7d7783d5638340e52bbed118c4fa",
+      "strict_correct": {
+        "targeted_executable_skill": 6,
+        "matched_generic_executable_helper": 2,
+        "no_skill": 0
+      },
+      "targeted_vs_generic": {
+        "paired_risk_difference": 0.5714285714285714,
+        "targeted_only_correct": 5,
+        "generic_only_correct": 1,
+        "discordant": 6,
+        "one_sided_exact_p": 0.109375
+      },
+      "targeted_vs_no_skill": {
+        "paired_risk_difference": 0.8571428571428571,
+        "targeted_only_correct": 6,
+        "no_skill_only_correct": 0,
+        "discordant": 6,
+        "one_sided_exact_p": 0.015625
+      },
+      "correct_or_partial_sensitivity": {
+        "targeted": 6,
+        "generic": 3,
+        "no_skill": 1,
+        "targeted_vs_generic_one_sided_exact_p": 0.1875
+      }
+    },
+    "kimi-k3": {
+      "status": "NONVOTING_PROVIDER_OR_PARSE_FAILURE",
+      "receipt_sha256": "2751b39bb3fad2073bf9c2afd12eddd61c74100f39758a7d01cc7fbb50a13274",
+      "error_class": "JSONDecodeError_UNTERMINATED_FUNCTION_ARGUMENTS",
+      "safe_repost_authorized": false
+    }
+  },
+  "deterministic_f8": {
+    "targeted_success": 5,
+    "generic_success": 0,
+    "no_skill_success": 1,
+    "targeted_vs_generic_one_sided_exact_p": 0.03125,
+    "frozen_gate_pass": true,
+    "scores_immutable": true
+  },
+  "measurement_disagreement": {
+    "targeted": {
+      "deterministic_false_semantic_correct": 2,
+      "deterministic_true_semantic_incorrect": 1
+    },
+    "generic": {
+      "deterministic_false_semantic_correct": 2,
+      "deterministic_true_semantic_incorrect": 0
+    },
+    "no_skill": {
+      "deterministic_false_semantic_correct": 0,
+      "deterministic_true_semantic_incorrect": 1
+    }
+  },
+  "adjudication": {
+    "deterministic_f8_gate_unchanged": true,
+    "semantic_gate_reproduced": false,
+    "semantic_robustness_established": false,
+    "reason": "Only one predeclared reviewer produced a valid judgment set, and that reviewer gives 6/7 targeted versus 2/7 generic strict semantic correctness with p=0.109375. The second reviewer is nonvoting due to a parse failure and is not replaced after observing labels.",
+    "scientific_interpretation": "F8 remains a valid frozen deterministic-verifier result, but its matched gate is not robustly confirmed under the available blinded semantic audit. Measurement validity remains an open C3 evidence debt."
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

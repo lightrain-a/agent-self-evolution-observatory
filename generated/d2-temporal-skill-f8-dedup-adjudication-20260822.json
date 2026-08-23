@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "adjudication_id": "C06-F8-DEDUPE-FIRST-TIME-SUPPORT-RECOVERY-ENDPOINTS",
+  "private_adjudication_sha256": "f7d5b4a8f2b5e5a977574b65641691dd0dbf00439c0d4061d505e17e51ca57ad",
+  "source_f5r2_contract_sha256": "5b7fdabfad111d271788282abd5e65d0ac837a0074820d6ebf25443371f677fd",
+  "source_f5r2_result_sha256": "202ebeb909264d63cb7b20f64dd2cb3c283d09e8f38d11e6f11b194581f80167",
+  "source_prior_f5r2_recovery_sha256": "a09e73b65a3cff9e268b9e3a1b9f8ea48d01ea14514eeb1a0b210b0f2817dee6",
+  "executed_endpoints": 12,
+  "prior_f5r2_overlap_endpoints": [
+    "L3_energy_045",
+    "L3_retail_022",
+    "L4_climate_048",
+    "L4_telecom_036",
+    "L4_telecom_055"
+  ],
+  "prior_f5r2_overlap_count": 5,
+  "overlap_scientific_authority": false,
+  "first_time_endpoint_ids": [
+    "L3_climate_018",
+    "L3_finance_052",
+    "L3_healthcare_049",
+    "L4_climate_020",
+    "L4_climate_053",
+    "L4_finance_002",
+    "L4_healthcare_044"
+  ],
+  "first_time_endpoint_count": 7,
+  "first_time_arms": {
+    "targeted_executable_skill": {
+      "success": 5,
+      "n": 7,
+      "accuracy": 0.7142857142857143
+    },
+    "matched_generic_executable_helper": {
+      "success": 0,
+      "n": 7,
+      "accuracy": 0.0
+    },
+    "no_skill": {
+      "success": 1,
+      "n": 7,
+      "accuracy": 0.14285714285714285
+    }
+  },
+  "first_time_primary_targeted_vs_generic": {
+    "paired_risk_difference": 0.7142857142857143,
+    "targeted_only_success": 5,
+    "generic_only_success": 0,
+    "discordant": 5,
+    "one_sided_exact_p": 0.03125
+  },
+  "first_time_secondary_targeted_vs_no_skill": {
+    "paired_risk_difference": 0.5714285714285714,
+    "targeted_only_success": 4,
+    "no_skill_only_success": 0,
+    "discordant": 4,
+    "one_sided_exact_p": 0.0625
+  },
+  "frozen_gate": {
+    "effect_floor_risk_difference": 0.2,
+    "alpha": 0.05,
+    "pass": true
+  },
+  "family_concentration": {
+    "skill": "stl_decompose",
+    "targeted_success": 5,
+    "generic_success": 0,
+    "no_skill_success": 1,
+    "n": 7,
+    "all_first_time_endpoints_same_family": true
+  },
+  "repeated_overlap_rerun_diagnostic": {
+    "targeted": "1/5",
+    "generic": "0/5",
+    "no_skill": "1/5",
+    "scientific_authority": false
+  },
+  "interpretation": "Only seven endpoints were first-time executions relative to the legacy F5-R2 tranche. Those seven independently pass the frozen matched-executable gate. All are STL-decomposition endpoints, so broader procedure-family generality remains open.",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

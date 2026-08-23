@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "artifact_type": "independent-nonstl-strong-control-crossmodel-summary",
+  "source_substrate": "TimeSage-MT L2",
+  "source_population": {
+    "task_ids": 60,
+    "task_json_complete": 58,
+    "task_json_support_hold": 2,
+    "metadata_candidates": 12,
+    "execution_qualified": 9,
+    "execution_support_hold": 1,
+    "execution_fail": 2,
+    "new_candidates_added": 0,
+    "all_tasks_first_time_relative_to_F0_F8": true
+  },
+  "f9_qwen": {
+    "candidate_manifest_sha256": "0c76d3a010aca853e4701ea6d2de4edb34dff9d6ad6d37a0ce51dec1439a6fb4",
+    "qualification_sha256": "ecd8a136b69b7723aed826042b117b09bac5fdeb16c3be98d907d4da9accb9bc",
+    "contract_sha256": "f813ba55292cd0874221d6404ef9397f30c021abb501e5100816277f4ffbcf13",
+    "runner_sha256": "91578fa7b0057dec25950849cd6a762bb4f0cf7202846dbec7d1536ec68654a9",
+    "result_sha256": "6a84f84097e308d4285018ce875dfdfd2cccca229c4e62ccf15d9552baefc20f",
+    "requested_endpoints": 9,
+    "valid_endpoints": 8,
+    "support_failures": 0,
+    "protocol_failures": 1,
+    "protocol_failure": "one substantive-offtarget arm issued a forbidden second tool call; no retry",
+    "arms": {
+      "targeted": {
+        "success": 5,
+        "n": 8,
+        "accuracy": 0.625
+      },
+      "substantive_offtarget": {
+        "success": 1,
+        "n": 8,
+        "accuracy": 0.125
+      },
+      "no_skill": {
+        "success": 2,
+        "n": 8,
+        "accuracy": 0.25
+      }
+    },
+    "primary": {
+      "paired_risk_difference": 0.5,
+      "targeted_only": 4,
+      "offtarget_only": 0,
+      "discordant": 4,
+      "one_sided_exact_p": 0.0625,
+      "magnitude_floor_met": true,
+      "gate_pass": false
+    },
+    "secondary": {
+      "paired_risk_difference": 0.375,
+      "targeted_only": 3,
+      "no_skill_only": 0,
+      "discordant": 3,
+      "one_sided_exact_p": 0.125
+    },
+    "target_families": [
+      "linear_interpolation",
+      "model_comparison",
+      "residual_diagnostics",
+      "rocket_classify",
+      "ts_forest_regressor_tsr"
+    ],
+    "integrity": {
+      "raw_files": 27,
+      "unique_raw_hashes": 27,
+      "issues": 0
+    }
+  },
+  "f10_deepseek": {
+    "contract_sha256": "7bf59505d197637949af09272102e995a6989ec2fc9d2da397c99765283ba445",
+    "runner_sha256": "07fd1b1bc7eb9a8db8f6ac42cad7a7e778149a855e60c608c2b5393dfe67353b",
+    "result_sha256": "979515627a1c02a767d1626d556c0668f6962e3b5ea678d984d8fc642b05dab3",
+    "replication_of_f9_contract_sha256": "f813ba55292cd0874221d6404ef9397f30c021abb501e5100816277f4ffbcf13",
+    "requested_endpoints": 9,
+    "valid_endpoints": 9,
+    "support_failures": 0,
+    "protocol_failures": 0,
+    "arms": {
+      "targeted": {
+        "success": 5,
+        "n": 9,
+        "accuracy": 0.5555555555555556
+      },
+      "substantive_offtarget": {
+        "success": 2,
+        "n": 9,
+        "accuracy": 0.2222222222222222
+      },
+      "no_skill": {
+        "success": 0,
+        "n": 9,
+        "accuracy": 0.0
+      }
+    },
+    "primary": {
+      "paired_risk_difference": 0.3333333333333333,
+      "targeted_only": 3,
+      "offtarget_only": 0,
+      "discordant": 3,
+      "one_sided_exact_p": 0.125,
+      "magnitude_floor_met": true,
+      "gate_pass": false
+    },
+    "secondary": {
+      "paired_risk_difference": 0.5555555555555556,
+      "targeted_only": 5,
+      "no_skill_only": 0,
+      "discordant": 5,
+      "one_sided_exact_p": 0.03125
+    },
+    "target_families": [
+      "linear_interpolation",
+      "model_comparison",
+      "residual_diagnostics",
+      "rocket_classify",
+      "ts_forest_regressor_tsr"
+    ],
+    "integrity": {
+      "raw_files": 27,
+      "unique_raw_hashes": 27,
+      "issues": 0
+    }
+  },
+  "crossmodel_adjudication": {
+    "pvalue_pooling": false,
+    "same_endpoint_and_control_contract": true,
+    "primary_direction_positive_both_models": true,
+    "primary_gate_pass_any_model": false,
+    "interpretation": "The non-STL strong-control population shows a large positive targeted-minus-substantive-offtarget direction on Qwen and a positive replication on DeepSeek. Neither independent matched gate closes, so this is directional generality evidence rather than broad C3 closure."
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "gpu": false,
+    "submission": false
+  }
+}

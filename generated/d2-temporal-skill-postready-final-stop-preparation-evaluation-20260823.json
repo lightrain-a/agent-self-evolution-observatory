@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "pass": false,
+  "blockers": [
+    "rubric-dimension-not-pass:claim-evidence",
+    "rubric-integrity-check-failed:evidence_sufficiency_review_pass",
+    "unresolved-critical-verification-issue:c3-broad-family-matched-gates-open",
+    "unresolved-critical-verification-issue:c3-f8-semantic-measurement-robustness-open",
+    "unresolved-critical-verification-issue:c4-longitudinal-persistence-unexecuted",
+    "reader-mode-unresolved-critical:blind-manuscript:3",
+    "reader-mode-unresolved-critical:artifact-aware:3"
+  ],
+  "gates": {
+    "hierarchical-rubric": {
+      "gate": "hierarchical-rubric",
+      "pass": false,
+      "blockers": [
+        "rubric-dimension-not-pass:claim-evidence",
+        "rubric-integrity-check-failed:evidence_sufficiency_review_pass"
+      ],
+      "detail": {
+        "dimensions": 9
+      },
+      "scientific_authority": false
+    },
+    "verification-refinement": {
+      "gate": "verification-refinement",
+      "pass": false,
+      "blockers": [
+        "unresolved-critical-verification-issue:c3-broad-family-matched-gates-open",
+        "unresolved-critical-verification-issue:c3-f8-semantic-measurement-robustness-open",
+        "unresolved-critical-verification-issue:c4-longitudinal-persistence-unexecuted"
+      ],
+      "detail": {
+        "issues": 8,
+        "critical": 8,
+        "resolved": 5
+      },
+      "scientific_authority": false
+    },
+    "citation-integrity": {
+      "gate": "citation-integrity",
+      "pass": true,
+      "blockers": [],
+      "detail": {
+        "citations_total": 7,
+        "citations_verified": 7
+      },
+      "scientific_authority": false
+    },
+    "visual-story": {
+      "gate": "visual-story",
+      "pass": true,
+      "blockers": [],
+      "detail": {
+        "main_visuals": 3
+      },
+      "scientific_authority": false
+    },
+    "reproducibility-bundle": {
+      "gate": "reproducibility-bundle",
+      "pass": true,
+      "blockers": [],
+      "detail": {},
+      "scientific_authority": false
+    },
+    "agent-native-artifact": {
+      "gate": "agent-native-artifact",
+      "pass": true,
+      "blockers": [],
+      "detail": {
+        "layers": 4
+      },
+      "scientific_authority": false
+    },
+    "reader-simulation": {
+      "gate": "reader-simulation",
+      "pass": false,
+      "blockers": [
+        "reader-mode-unresolved-critical:blind-manuscript:3",
+        "reader-mode-unresolved-critical:artifact-aware:3"
+      ],
+      "detail": {
+        "modes": 4
+      },
+      "scientific_authority": false
+    },
+    "submission-package": {
+      "gate": "submission-package",
+      "pass": true,
+      "blockers": [],
+      "detail": {
+        "venue": "ICLR 2027"
+      },
+      "scientific_authority": false
+    }
+  },
+  "summary": {
+    "required_gates": 8,
+    "passed_gates": 5
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

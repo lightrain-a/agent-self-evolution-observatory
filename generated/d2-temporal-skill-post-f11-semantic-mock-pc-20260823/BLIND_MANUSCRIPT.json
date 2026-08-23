@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "POST_F11_SEMANTIC_MEASUREMENT_REVISION",
+  "mode": "BLIND_MANUSCRIPT",
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-260425",
+  "status": "completed",
+  "usage": {
+    "input_tokens": 15318,
+    "output_tokens": 1234,
+    "total_tokens": 16552,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "packet_sha256": "e872602fa1ecf0fa292dcd8486cda38e63ee6e9a21a441357c09967c9653bd8b",
+  "paper_pdf_sha256": "58f887f77ff07e57e151d360b5b0ec19ff6e7e6bf4e4d3fdf2399a86a8e4920b",
+  "review": {
+    "recommendation": "weak_reject",
+    "score_1_to_10": 4,
+    "confidence_1_to_5": 3,
+    "novelty_1_to_5": 3,
+    "significance_1_to_5": 2,
+    "technical_quality_1_to_5": 3,
+    "empirical_sufficiency_1_to_5": 2,
+    "clarity_1_to_5": 3,
+    "strengths": [
+      "Addresses a genuinely important methodological question: what component of a stored 'skill' actually drives downstream improvement in agent systems.",
+      "The matched-intervention framework separating persistent text, supplied output, and executable state is a sensible conceptual decomposition.",
+      "Preregistration and frozen-endpoint protocols are stated, and the authors attempt exact paired statistical tests rather than asymptotic approximations.",
+      "Effort to include semantic measurement audit (F11) and to report its failure to reproduce the deterministic gate is a rare and commendable transparency move.",
+      "The non-STL strong-control experiments (F9/F10) take a step toward broader procedure-family generality and use two model families."
+    ],
+    "weaknesses": [
+      "The central positive claim rests on a single frozen gate pass (F8: 5/7 vs 0/7, STL decomposition only) drawn from a support-recovery process where endpoints were not available at the original preregistration time. This is a dangerously thin empirical basis for a competitive ICLR contribution.",
+      "The semantic measurement audit (F11) fails to reproduce the inferential gate (p=0.109), and the second predeclared reviewer is nonvoting. The authors acknowledge this but do not resolve it, leaving the primary result measurement-dependent.",
+      "No longitudinal (TimeSage-EV C4) experiment is executed. The paper's title promises 'temporal skill effects' and the introduction motivates period-to-period transfer, but the actual evidence is entirely cross-sectional endpoint swaps on TimeSage-MT. This is a major gap between the claimed contribution and delivered evidence.",
+      "The non-STL strong-control experiments (F9/F10) do not close their matched gates (p=0.0625, p=0.125). The authors treat 'positive direction' as supportive, but with N=8 and N=9, these are underpowered and cannot distinguish a small effect from noise.",
+      "The manuscript is dense and difficult to follow. Key experimental details (support recovery, deduplication adjudication, the provenance of F8 endpoints) are buried in appendices, and the main text uses opaque notation (F0-F11) that requires cross-referencing.",
+      "The strongest claim (F8 gate pass) emerges from a support-recovery population that was not available at the original preregistration boundary. The dedication of 'first-time' endpoints is post-hoc, and the 20-endpoint first-observation completion explicitly 'does not create a second closure test.' This weakens the inferential status of the only positive result."
+    ],
+    "decision_critical_objections": [
+      {
+        "objection_id": "O1",
+        "category": "empirical_sufficiency",
+        "text": "The paper's only frozen gate pass (F8: 5/7 vs 0/7, p=0.03125) comes from a support-recovery process on seven STL-decomposition endpoints that were not available at the original preregistration. The semantic audit (F11) fails to confirm this result (p=0.109) with the only valid reviewer. This is insufficient evidence for a competitive ICLR claim about causal skill effects.",
+        "decision_critical": true,
+        "claim_ids": [
+          "C3_frozen_gate",
+          "C1_executable_value"
+        ],
+        "repair_type": "new_experiment"
+      },
+      {
+        "objection_id": "O2",
+        "category": "scope_of_claims",
+        "text": "The title and introduction frame the contribution around temporal skill effects and longitudinal transfer, but no period-to-period experiment (C4/TimeSage-EV) is executed. All evidence comes from cross-sectional endpoint swaps on TimeSage-MT. The paper's framing does not match its empirical content.",
+        "decision_critical": true,
+        "claim_ids": [
+          "C4_longitudinal",
+          "title_temporal"
+        ],
+        "repair_type": "new_experiment"
+      },
+      {
+        "objection_id": "O3",
+        "category": "empirical_sufficiency",
+        "text": "The non-STL strong-control experiments (F9: N=8, p=0.0625; F10: N=9, p=0.125) are presented as directional evidence for broader procedure-family generality, but neither closes its gate. With such small samples, the absence of a significant result is uninformative and does not support the claimed generality.",
+        "decision_critical": true,
+        "claim_ids": [
+          "C3_broad_generality"
+        ],
+        "repair_type": "new_experiment"
+      }
+    ],
+    "strongest_reject_reason": "The paper's only positive inferential result (F8 STL gate pass) is thin (7 endpoints), unreplicated by semantic audit, and emerges from post-hoc support recovery. The central longitudinal claim is entirely undemonstrated. The empirical contribution is not yet at the standard for ICLR acceptance.",
+    "highest_value_next_action": "Execute the TimeSage-EV longitudinal experiment (C4) with auditable period-sequential artifacts, and expand the non-STL strong-control population to achieve adequate statistical power. Otherwise, reframe the paper as a methods proposal with preliminary boundary evidence rather than a completed causal identification study.",
+    "extra_experiment_needed_before_submission": true,
+    "submission_advice": "major_revision"
+  },
+  "provider_response_id_archived_privately": true,
+  "provider_response_id_sha256": "33ed53a9bb6613b1b1905586f4e1f485671bf304d16d6d7a5dffe25e72fa7bf1",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "submission_authority": false
+}

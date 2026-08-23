@@ -59,9 +59,41 @@ def audit_paper(spec: dict[str, Any]) -> dict[str, Any]:
     logtext = log.read_text(encoding="utf-8", errors="ignore")
     ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
     style = audit_manuscript_directory(paper_dir)
+    manuscript_sources = sorted(paper_dir.rglob("*.tex")) + [paper_dir / "references.bib"]
+    figure_sources = sorted((paper_dir / "figures").rglob("*.pdf")) if (paper_dir / "figures").exists() else []
+    freshness_sources = manuscript_sources + figure_sources
+    existing_sources = [path for path in freshness_sources if path.exists()]
 
     checks: list[dict[str, Any]] = []
-    checks.append(_check("page_limit", 0 < pages <= int(spec.get("max_pages") or 9), pages))
+    newest_source = max(existing_sources, key=lambda path: path.stat().st_mtime_ns) if existing_sources else None
+    checks.append(_check(
+        "pdf_not_older_than_sources",
+        newest_source is None or pdf.stat().st_mtime_ns >= newest_source.stat().st_mtime_ns,
+        {
+            "pdf_mtime_ns": pdf.stat().st_mtime_ns,
+            "newest_source": str(newest_source) if newest_source else None,
+            "newest_source_mtime_ns": newest_source.stat().st_mtime_ns if newest_source else None,
+        },
+    ))
+    max_main_pages = spec.get("max_main_pages")
+    if max_main_pages is not None:
+        aux = paper_dir / "main.aux"
+        appendix_start_page = None
+        if aux.exists():
+            auxtext = aux.read_text(encoding="utf-8", errors="ignore")
+            matches = [int(x) for x in re.findall(r"\\newlabel\{app:[^}]+\}\{\{[^}]*\}\{(\d+)\}", auxtext)]
+            if matches:
+                appendix_start_page = min(matches)
+        main_pages = (appendix_start_page - 1) if appendix_start_page else pages
+        checks.append(_check(
+            "page_limit",
+            0 < main_pages <= int(max_main_pages),
+            {"main_pages": main_pages, "max_main_pages": int(max_main_pages), "appendix_start_page": appendix_start_page, "total_pages": pages},
+        ))
+        if spec.get("max_total_pages") is not None:
+            checks.append(_check("total_page_limit", 0 < pages <= int(spec["max_total_pages"]), pages))
+    else:
+        checks.append(_check("page_limit", 0 < pages <= int(spec.get("max_pages") or 9), pages))
     checks.append(_check("anonymous_placeholder", "anonymous authors" in pdftext.lower()))
     checks.append(_check("no_author_email", re.search(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", pdftext) is None))
     checks.append(_check("no_internal_identity", all(token not in pdftext.lower() for token in ("/home/wyt", "222.20.126.69", "lightrain"))))
@@ -80,7 +112,7 @@ def audit_paper(spec: dict[str, Any]) -> dict[str, Any]:
     active_claims = []
     for row in ledger.get("claims") or []:
         verdict = str(row.get("verdict") or "")
-        if verdict == "ACTIVE_UNREFUTED_HYPOTHESIS":
+        if verdict.startswith("ACTIVE_UNREFUTED"):
             active_claims.append(str(row.get("claim_id") or ""))
             checks.append(_check(f"active_retain:{row.get('claim_id')}", row.get("retain_in_manuscript") is True))
             checks.append(_check(f"active_no_auto_narrow:{row.get('claim_id')}", row.get("claim_narrowing_required") is False))
@@ -96,7 +128,7 @@ def audit_paper(spec: dict[str, Any]) -> dict[str, Any]:
         artifact_results.append({"path": rule["path"], "key": rule["key"], "actual": actual, "expected": expected, "pass": passed})
         checks.append(_check(f"artifact:{rule['key']}", passed, {"actual": actual, "expected": expected}))
 
-    sources = sorted(paper_dir.rglob("*.tex")) + [paper_dir / "references.bib"]
+    sources = manuscript_sources + figure_sources
     passed = all(row["pass"] for row in checks)
     return {
         "schema_version": "1.0",

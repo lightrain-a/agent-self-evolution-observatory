@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "adjudication_id": "C06-POSTREADY-CONTROLLED-INTERVENTION-TERMINAL-20260823",
+  "current_controlled_manuscript_title": "Identifying Causal Skill Effects: Matched Executable Interventions in Time-Series Agents",
+  "current_controlled_manuscript_pdf_sha256": "c784324dabd8696ce87d3c1c4bcbac70349fc0a0550484e47a233c39651e0610",
+  "current_controlled_manuscript_qa_pass": true,
+  "current_controlled_manuscript_qa_checks": 137,
+  "latest_controlled_mock_pc": {
+    "blind": {
+      "recommendation": "weak_reject",
+      "score": 4
+    },
+    "artifact_aware": {
+      "recommendation": "weak_reject",
+      "score": 4
+    }
+  },
+  "paper_preparation_pass": false,
+  "paper_preparation_passed_gates": 5,
+  "paper_preparation_required_gates": 8,
+  "paper_preparation_blockers": [
+    "rubric-dimension-not-pass:claim-evidence",
+    "rubric-integrity-check-failed:evidence_sufficiency_review_pass",
+    "unresolved-critical-verification-issue:c3-broad-family-matched-gates-open",
+    "unresolved-critical-verification-issue:c3-f8-semantic-measurement-robustness-open",
+    "unresolved-critical-verification-issue:c4-longitudinal-persistence-unexecuted",
+    "reader-mode-unresolved-critical:blind-manuscript:3",
+    "reader-mode-unresolved-critical:artifact-aware:3"
+  ],
+  "controlled_manuscript_submission_freeze_eligible": false,
+  "same_substrate_experiment_expansion_authorized": false,
+  "source_saturation": "STOP_NEW_C06_EXPERIMENTS_CURRENT_SAME_SUBSTRATE_SOURCE_SATURATED",
+  "semantic_robustness_established": false,
+  "remaining_scientific_debt": {
+    "C3": [
+      "fresh adequately powered prospective matched evidence is unavailable on the current TimeSage-MT source under the frozen >=16 pair GO rule",
+      "F8 deterministic gate is not reproduced by the only valid blinded semantic reviewer"
+    ],
+    "C4": [
+      "first-party TimeSage-EV period-sequential evaluated assets or an equivalent independent skill-write-then-reuse substrate"
+    ]
+  },
+  "canonical_ledger_current_state": "SUBMISSION_READY",
+  "canonical_r6_publication_artifact": {
+    "paper_pdf_sha256": "7f0d52f564428993aef0c131b1ef94525d7f7bc6e4447ae4a62ef80b44fa6676",
+    "artifact_submission_ready": true,
+    "recommended_immediate_action": "READY_FOR_HUMAN_SUBMISSION",
+    "post_repair_mock_pc_scores": [
+      8,
+      8,
+      7
+    ],
+    "post_repair_mock_pc_recommendations": [
+      "accept",
+      "accept",
+      "weak_accept"
+    ]
+  },
+  "publication_artifact_decision": "KEEP_R6_AS_CANONICAL_SUBMISSION_ARTIFACT",
+  "controlled_quality_loop_decision": "TERMINAL_HOLD_CURRENT_SUPPORT_DO_NOT_SUPERSEDE_R6",
+  "reason": "The post-ready controlled-intervention manuscript improves causal auditing and exposes new measurement boundaries, but its latest reader simulations remain weak-reject and Paper Preparation fails on unresolved scientific evidence. The canonical R6 source-native artifact has a distinct byte identity and an existing 8/8 preparation pass with 8/8/7 Mock-PC scores. Preserve R6 as the submission artifact and retain this controlled manuscript as append-only research memory until an explicit reopen condition is met.",
+  "reopen_conditions": [
+    "first-party TimeSage-EV period-sequential evaluated assets become auditable",
+    "a genuinely independent skill-write-then-reuse substrate provides an adequate prospectively frozen matched population",
+    "a new non-overlapping TimeSage-MT release yields at least 16 measurement-valid fresh task-level pairs before new outcomes"
+  ],
+  "canonical_ledger_modified_by_this_adjudication": false,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "submission_authority": false
+}

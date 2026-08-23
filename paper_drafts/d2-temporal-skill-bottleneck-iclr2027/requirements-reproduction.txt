@@ -1,0 +1,3 @@
+# Python dependencies for numeric/figure reproduction only.
+# Manuscript compilation additionally requires a LaTeX distribution with latexmk.
+matplotlib>=3.7

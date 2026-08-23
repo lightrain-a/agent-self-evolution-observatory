@@ -1,16 +1,35 @@
 \section{Introduction}
-Evolving time-series analysis requires an agent to revisit the same scenario as new releases arrive. The evidence cutoff changes every period. Historical documents remain useful, yet later information must stay hidden. TimeSage-EV formalizes this setting across 60 institutional scenarios and 1,485 scenario-period questions \citep{yao2026timesage}.
+Suppose an agent analyzes a monthly energy series. In March it learns that a publication date must be aligned with the period represented by the report. The same operation is needed again in April after new evidence arrives. Calling the March experience a \emph{skill} leaves an important ambiguity. The agent may store a sentence that reminds it what to do. It may store the March computation result. It may instead store an executable procedure that runs on the April evidence.
 
-The benchmark reveals recurring failures that have a procedural character. Agents misuse temporal cutoffs. They struggle to align releases with the correct period. They also miss relevant exogenous context when numerical changes need documentary explanation. These errors recur across release periods even though the required procedure is reusable.
+These objects can all change behavior, yet they support different causal claims. A reminder changes the language seen by the model. A supplied result changes the information placed in context. Executable state changes which computation becomes available after the model decides to call a tool. Aggregate before--after accuracy cannot identify which object carried the gain.
 
-TimeSage-1.0 provides evidence that reusable procedures matter. It augments the aligned baseline harness with a self-evolving skill library. A saved skill becomes callable from the next period. The source paper reports higher overall performance with reusable skills. The largest gains appear on medium and hard scenarios. Skill-enabled evaluation also reduces token cost to 0.82$\times$ the reference condition \citep{yao2026timesage}.
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{5pt}
+\caption{Three intervention surfaces commonly called a ``skill.''}
+\label{tab:surfaces}
+\begin{tabular}{lll}
+\toprule
+Surface & What changes & Matched comparison \\
+\midrule
+Persistent text & instruction in context & targeted vs. generic text \\
+Supplied output & result placed in context & target vs. matched helper output \\
+Executable state & hidden tool implementation & correct vs. matched procedure \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-Aggregate skill gains leave the mechanism unresolved. A generic skill library can help through many routes. It can reduce repeated coding effort. It can also stabilize formatting. Our target is narrower and more causal: recurring temporal failures arise because the agent lacks a reusable procedure that encodes the required temporal operation.
+TimeSage-EV makes this distinction concrete. It evaluates 60 institutional scenarios over 1,485 scenario-period questions under changing evidence cutoffs \citep{yao2026timesage}. Its TimeSage-1.0 harness stores procedures that can become callable in later periods. The source paper reports higher aggregate performance with this skill library and a token-cost ratio of 0.82$\times$ the reference condition. This establishes that persistent assistance can matter. It does not identify the causal object inside the library.
 
-This hypothesis yields a direct intervention. Identify an endpoint that exhibits a temporal or exogenous-context failure. Construct a targeted skill that implements the missing procedure. Re-evaluate the same endpoint with the same evidence. Compare against a generic reusable skill that carries similar implementation complexity without encoding the target mechanism. A no-skill condition anchors the baseline.
+TimeSage-MT provides a complementary intervention substrate \citep{kong2026timesagemt}. Its task records contain visible data, benchmark procedures and pre-existing downstream verifiers. We use those records to change one skill surface at a time while keeping the benchmark request fixed.
 
-The TimeSage harness makes this intervention unusually clean. Its Appendix defines an \texttt{induct\_skill} interface for saving a reusable Python function. It also defines \texttt{retrieve\_skill} for inspecting saved code. Accepted skills become live tools only in the next period. This chronological rule lets us inject a procedure before a future endpoint without changing the current-period answer.
+Throughout the paper, an \emph{endpoint} means one frozen benchmark turn together with its pre-existing verifier. A \emph{matched control} receives the same visible tool interface as the targeted arm. Only the hidden implementation changes. The \emph{primary gate} requires a paired risk-difference of at least +20 percentage points and one-sided exact $p\leq0.05$. A support failure means that an experiment could not be executed; it carries no negative scientific authority.
 
-We develop this design for three recurring mechanism families. One family enforces the information cutoff. Another aligns release dates to analytical periods. The third integrates exogenous events into evidence-grounded reasoning. The paper asks whether targeted procedures causally remove their matched failure modes.
+The evidence ladder first tests weaker objects. Persistent targeted text gives 11/13 successes, compared with 10/13 for matched generic text. Prospective procedure-output injection gives 4/20 targeted successes and 5/20 matched-control successes. These results show that prompt persistence and answer-bearing context should not be counted as evidence for executable skill repair.
 
-The contribution is a mechanism-specific evaluation of self-evolving skills. TimeSage-EV establishes that reusable skills help in aggregate. We turn the skill library into a causal intervention surface and define matched controls that distinguish targeted mechanism repair from generic assistance. This approach supports a stronger claim about self-evolution: a recurring failure can reveal a missing reusable procedure that should become explicit agent state.
+We next hide the intervention behind one native tool surface. The model sees the same function name, description and argument schema in both executable arms. The targeted implementation executes the benchmark-recorded procedure on hash-verified data, while the matched implementation changes only the hidden computation. On the initial Qwen executable set, targeted succeeds on 6/19 endpoints while a content-light matched helper succeeds on 2/19. A later first-time STL-decomposition tranche gives 5/7 targeted successes and 0/7 matched-helper successes, passing the frozen deterministic matched gate with exact $p=0.03125$. A subsequent arm-blinded semantic measurement audit does not reproduce that inferential gate with its only valid reviewer: semantic correctness is 6/7 targeted versus 2/7 generic, with $p=0.109375$. The second predeclared reviewer is nonvoting after a parse failure and is not replaced after labels are observed. We therefore preserve the frozen deterministic result while treating semantic measurement robustness as open.
+
+The STL result raises a sharper question: does executable implementation value survive beyond one procedure family and a content-light control? We therefore construct a new population from TimeSage-MT L2 tasks that never entered any earlier candidate pool. The control now executes a different substantive benchmark procedure from the same task. Target and off-target outputs are word-count matched before model evaluation. Nine endpoints pass execution qualification and span five non-STL target procedure families. On Qwen2.5-32B, 8 endpoints are valid after one frozen protocol failure; targeted succeeds on 5/8 and off-target on 1/8, giving +50.0 points with $p=0.0625$. The exact same nine-endpoint contract on DeepSeek-v4-Pro gives 5/9 versus 2/9, or +33.3 points with $p=0.125$. The primary matched direction is positive in both model families, while neither broad non-STL gate closes.
+
+Our contribution is therefore a matched-intervention evaluation standard for reusable skills together with a concrete empirical boundary. Executable implementation value has a frozen deterministic gate pass within STL decomposition, but semantic robustness of that pass remains unresolved. Stronger controls across five additional procedure families give positive directions on two model families without closing their matched gates. The remaining TimeSage-EV experiment adds chronology by writing a procedure before a later release and keeping that state fixed when future endpoints decide whether to call it.

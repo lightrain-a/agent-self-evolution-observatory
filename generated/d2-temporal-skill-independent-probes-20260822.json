@@ -1,0 +1,821 @@
+{
+  "schema_version": "1.4",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "artifact_type": "independent-mechanism-probe-summary",
+  "source_substrate": "TimeSage-Series/TimeSage-MT",
+  "scope_boundary": "Independent TimeSage-MT mechanism evidence only. These probes are not a TimeSage-EV faithful period-sequential replication and cannot establish C4 cross-period persistence.",
+  "f0_text_skill_card": {
+    "role": "persistent-text boundary test",
+    "contract_sha256": "c363d4975a94c2e24ed34aa72b423b610f131c4becebc4369890e6efec4cdb08",
+    "runner_sha256": "ad466749576cf1d320e3b08fdd2d2f63fb9dc4c4ac6714d677e9b9e4665ac109",
+    "result_sha256": "1517f4675431d1cc09765f399727738593e67dab92088f6499943de93cf9e0bc",
+    "requested_endpoints": 13,
+    "requested_calls": 39,
+    "support_failures": 0,
+    "arms": {
+      "targeted_skill": {
+        "correct": 11,
+        "n": 13,
+        "accuracy": 0.8461538461538461
+      },
+      "matched_generic_skill": {
+        "correct": 10,
+        "n": 13,
+        "accuracy": 0.7692307692307693
+      },
+      "no_skill": {
+        "correct": 8,
+        "n": 13,
+        "accuracy": 0.6153846153846154
+      }
+    },
+    "primary_targeted_vs_generic": {
+      "paired_risk_difference": 0.07692307692307693,
+      "targeted_only_correct": 1,
+      "generic_only_correct": 0,
+      "discordant": 1,
+      "one_sided_exact_p": 0.5
+    },
+    "secondary_targeted_vs_no_skill": {
+      "paired_risk_difference": 0.23076923076923078,
+      "targeted_only_correct": 3,
+      "no_skill_only_correct": 0,
+      "discordant": 3,
+      "one_sided_exact_p": 0.125
+    },
+    "frozen_gate": {
+      "effect_floor_risk_difference": 0.2,
+      "alpha": 0.05,
+      "pass": false
+    },
+    "interpretation": "A targeted persistent text card did not decisively outperform a matched generic persistent helper under the frozen primary gate."
+  },
+  "f1_callable_output_manipulation_check": {
+    "role": "procedure-output reachability manipulation check",
+    "contract_sha256": "1c84fd55226b63e2d06beea5c8847f412ca7017cbce96cb51ebe994e4bc3e2d6",
+    "runner_sha256": "0358d53bbc196dbaba1da6ca529bba6cba8cf8a4bbe8faf93f7418cbca36f806",
+    "result_sha256": "ef37e518a2fc80f9ca83bf231bba03b96a1273beb8e3f340799df9e8751febb1",
+    "requested_endpoints": 24,
+    "requested_calls": 72,
+    "support_failures": 0,
+    "task_disjoint_from_f0": true,
+    "endpoint_definition": "Response reproduces at least two of three pre-frozen numeric anchors contained in the benchmark-recorded callable output.",
+    "arms": {
+      "targeted_callable_skill": {
+        "success": 14,
+        "n": 24,
+        "accuracy": 0.5833333333333334
+      },
+      "matched_generic_helper": {
+        "success": 1,
+        "n": 24,
+        "accuracy": 0.041666666666666664
+      },
+      "no_skill": {
+        "success": 1,
+        "n": 24,
+        "accuracy": 0.041666666666666664
+      }
+    },
+    "primary_targeted_vs_generic": {
+      "paired_risk_difference": 0.5416666666666666,
+      "targeted_only_success": 13,
+      "generic_only_success": 0,
+      "discordant": 13,
+      "one_sided_exact_p": 0.0001220703125
+    },
+    "frozen_gate": {
+      "effect_floor_risk_difference": 0.2,
+      "alpha": 0.05,
+      "pass": true
+    },
+    "interpretation": "The targeted callable output strongly increases reproduction of numeric values carried by that same output. This verifies intervention reachability and is not treated as an independent downstream-correctness test."
+  },
+  "f1_downstream_finding_diagnostic": {
+    "role": "post-hoc scorer-independence diagnostic on the unchanged 72 F1 responses",
+    "new_model_calls": 0,
+    "eligible_endpoints": 13,
+    "eligibility": "Only TimeSage-MT finding_verify types with deterministic keyword or numerical-range checks.",
+    "arms": {
+      "targeted_callable_skill": {
+        "success": 6,
+        "n": 13,
+        "accuracy": 0.46153846153846156
+      },
+      "matched_generic_helper": {
+        "success": 5,
+        "n": 13,
+        "accuracy": 0.38461538461538464
+      },
+      "no_skill": {
+        "success": 3,
+        "n": 13,
+        "accuracy": 0.23076923076923078
+      }
+    },
+    "primary_targeted_vs_generic": {
+      "paired_risk_difference": 0.07692307692307693,
+      "targeted_only_success": 3,
+      "generic_only_success": 2,
+      "discordant": 5,
+      "one_sided_exact_p": 0.5
+    },
+    "secondary_targeted_vs_no_skill": {
+      "paired_risk_difference": 0.23076923076923078,
+      "targeted_only_success": 3,
+      "no_skill_only_success": 0,
+      "discordant": 3,
+      "one_sided_exact_p": 0.125
+    },
+    "scientific_authority": false,
+    "interpretation": "The large F1 numeric-reproduction advantage does not carry over decisively to the benchmark's downstream finding checks."
+  },
+  "f2_downstream_finding_confirmatory": {
+    "role": "prospectively frozen task-disjoint downstream-finding test",
+    "contract_file_sha256": "6fc6e4d7b3a6809b12e61179dfcbcd2763493d921250461bc5c8fbfab55a59c6",
+    "runner_sha256": "c6196593a1dfc7f3ad0fbe95495bd250c5bc99e564806cb333bdd25547cef4a2",
+    "result_sha256": "4ab9ad27639f3bfaf62c7d3036ccd337b99d5cc1ca3fd2ef360740e142d9dfb3",
+    "requested_endpoints": 20,
+    "requested_calls": 60,
+    "completed_valid_endpoints": 20,
+    "support_failures": 0,
+    "task_disjoint_from_f0_and_f1": true,
+    "selection_frozen_before_model_outcomes": true,
+    "endpoint_definition": "All pre-frozen TimeSage-MT finding_verify keywords must occur in the downstream response after fixed normalization.",
+    "generic_helper_word_count_matched": true,
+    "generic_helper_verifier_keyword_leakage": 0,
+    "keyword_overlap_with_target_stdout": {
+      "zero": 8,
+      "one": 9,
+      "two": 2,
+      "three": 1
+    },
+    "arms": {
+      "targeted_callable_skill": {
+        "success": 4,
+        "n": 20,
+        "accuracy": 0.2
+      },
+      "matched_generic_helper": {
+        "success": 5,
+        "n": 20,
+        "accuracy": 0.25
+      },
+      "no_skill": {
+        "success": 6,
+        "n": 20,
+        "accuracy": 0.3
+      }
+    },
+    "primary_targeted_vs_generic": {
+      "paired_risk_difference": -0.05,
+      "targeted_only_success": 1,
+      "generic_only_success": 2,
+      "discordant": 3,
+      "one_sided_exact_p": 0.875
+    },
+    "secondary_targeted_vs_no_skill": {
+      "paired_risk_difference": -0.1,
+      "targeted_only_success": 1,
+      "no_skill_only_success": 3,
+      "discordant": 4,
+      "one_sided_exact_p": 0.9375
+    },
+    "predeclared_groups": {
+      "trend_stationarity": {
+        "targeted": {
+          "success": 0,
+          "n": 8
+        },
+        "generic": {
+          "success": 2,
+          "n": 8
+        },
+        "no_skill": {
+          "success": 2,
+          "n": 8
+        }
+      },
+      "temporal_alignment": {
+        "targeted": {
+          "success": 2,
+          "n": 8
+        },
+        "generic": {
+          "success": 1,
+          "n": 8
+        },
+        "no_skill": {
+          "success": 1,
+          "n": 8
+        }
+      },
+      "regime_driver": {
+        "targeted": {
+          "success": 2,
+          "n": 4
+        },
+        "generic": {
+          "success": 2,
+          "n": 4
+        },
+        "no_skill": {
+          "success": 3,
+          "n": 4
+        }
+      }
+    },
+    "frozen_gate": {
+      "effect_floor_risk_difference": 0.2,
+      "alpha": 0.05,
+      "pass": false
+    },
+    "independent_recompute": {
+      "raw_files": 60,
+      "unique_raw_file_hashes": 60,
+      "contract_hash_match": true,
+      "runner_result_match": true,
+      "word_count_matching_issues": 0,
+      "generic_keyword_leakage_issues": 0
+    },
+    "interpretation": "Providing benchmark-recorded procedure output does not improve the prospectively frozen downstream finding endpoint over the matched generic helper. This is negative evidence for the output-injection realization of C3."
+  },
+  "claim_update": {
+    "C3": "ACTIVE_UNREFUTED_HYPOTHESIS_WITH_INDEPENDENT_EXECUTABLE_SUPPORT; F8_DEDUP_MATCHED_GATE_PASS_P_0.03125; PROCEDURE_FAMILY_GENERALITY_AND_TIMESAGE_EV_FAITHFUL_CONFIRMATION_PENDING",
+    "C4": "ACTIVE_UNREFUTED_HYPOTHESIS; TIMESAGE_EV_PERIOD_SEQUENTIAL_PERSISTENCE_AND_TRANSFER_PENDING"
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "gpu": false,
+    "submission": false
+  },
+  "f3_executable_skill_state": {
+    "role": "prospectively frozen executable-skill-state test with model-blind implementation swap",
+    "candidate_manifest_sha256": "8619d4a099e6640e06d8153874ff4c7bb860d52a7fab67915441c45b397b155d",
+    "qualification_sha256": "37f8006794be0bd0428ab9b1f26c666581026dbf02ba833415a76aa445cb9599",
+    "contract_file_sha256": "494636b47b48ec42ffa66ce031bf2d7ea34ec15964d27835764b4d27265374d7",
+    "runner_sha256": "ffd880180621a248273048c45270fca023e36b0e0c862c8a8c928b5667b9444f",
+    "result_sha256": "ace9d116ce298888b92bff23c4d05430b3d06f5e9cfae5cc09367bdae1e09fdb",
+    "qualification": {
+      "candidate_tasks": 25,
+      "passed": 19,
+      "failed_execution": 2,
+      "failed_support": 4,
+      "replacement_tasks": 0
+    },
+    "requested_endpoints": 19,
+    "requested_arm_records": 57,
+    "actual_model_calls": 91,
+    "formal_support_failures": 0,
+    "formal_protocol_failures": 0,
+    "task_disjoint_from_f0_f1_f2": true,
+    "tool_surface": {
+      "targeted_and_generic_same_name": true,
+      "same_description": true,
+      "same_json_schema": true,
+      "model_blind_to_implementation": true,
+      "targeted_tool_call_rate": "17/19",
+      "generic_tool_call_rate": "17/19"
+    },
+    "arms": {
+      "targeted_executable_skill": {
+        "success": 6,
+        "n": 19,
+        "accuracy": 0.3157894736842105
+      },
+      "matched_generic_executable_helper": {
+        "success": 2,
+        "n": 19,
+        "accuracy": 0.10526315789473684
+      },
+      "no_skill": {
+        "success": 0,
+        "n": 19,
+        "accuracy": 0.0
+      }
+    },
+    "primary_targeted_vs_generic": {
+      "paired_risk_difference": 0.21052631578947367,
+      "targeted_only_success": 5,
+      "generic_only_success": 1,
+      "discordant": 6,
+      "one_sided_exact_p": 0.109375
+    },
+    "secondary_targeted_vs_no_skill": {
+      "paired_risk_difference": 0.3157894736842105,
+      "targeted_only_success": 6,
+      "no_skill_only_success": 0,
+      "discordant": 6,
+      "one_sided_exact_p": 0.015625
+    },
+    "skill_descriptives": {
+      "stl_decompose": {
+        "targeted": "5/7",
+        "generic": "1/7",
+        "no_skill": "0/7"
+      },
+      "rolling_stat": {
+        "targeted": "1/4",
+        "generic": "1/4",
+        "no_skill": "0/4"
+      },
+      "cross_correlation": {
+        "targeted": "0/4",
+        "generic": "0/4",
+        "no_skill": "0/4"
+      },
+      "seasonality_detect": {
+        "targeted": "0/4",
+        "generic": "0/4",
+        "no_skill": "0/4"
+      }
+    },
+    "frozen_gate": {
+      "effect_floor_risk_difference": 0.2,
+      "alpha": 0.05,
+      "magnitude_floor_met": true,
+      "pass": false
+    },
+    "independent_recompute": {
+      "raw_files": 57,
+      "unique_raw_file_hashes": 57,
+      "contract_hash_match": true,
+      "runner_result_match": true
+    },
+    "interpretation": "The executable targeted implementation produces a +21.1-point paired advantage over an identical-interface generic executable helper while both arms call the tool on 17/19 endpoints. The magnitude floor is met; the primary exact test remains above alpha. Against no skill, the paired advantage is +31.6 points with p=0.015625.",
+    "scope_boundary": "Independent executable-skill-state evidence for C3 on TimeSage-MT. This probe does not establish TimeSage-EV period-sequential persistence and gives no C4 authority."
+  },
+  "f4_crossmodel_executable_replication": {
+    "role": "cross-model replication of the exact F3 executable-skill implementation swap",
+    "replication_of_f3_contract_sha256": "494636b47b48ec42ffa66ce031bf2d7ea34ec15964d27835764b4d27265374d7",
+    "synthetic_toolloop_preflight_sha256": "148c23468a35b5789eb1628476367de5cc4cdaee7bc7afc504a0116d1c9c76ad",
+    "preoutcome_requalification_sha256": "1c29758d4db4fe9f858c674a7c77efa700dafcfa11e1ceff8b15680f19a0878c",
+    "contract_file_sha256": "5cfeed24dea1b50a49672c7dfaa2d1cae252ffdebef84ae39297dbb4ba5aa873",
+    "runner_sha256": "3f010c126ad8ac60816484774e7807544f810fd399a367b69df509ea0dae6668",
+    "result_sha256": "7419c59818b2620f66cd2aa9a9e57f0f26e2aac1476e2ee38e5719578cb98851",
+    "model": "deepseek-v4-pro-260425",
+    "temperature": 0.0,
+    "requested_endpoints": 19,
+    "raw_records": 57,
+    "support_failures": 0,
+    "protocol_failures": 0,
+    "same_endpoints_as_f3": true,
+    "p_values_pooled_with_f3": false,
+    "arms": {
+      "targeted_executable_skill": {
+        "success": 5,
+        "n": 19,
+        "accuracy": 0.2631578947368421,
+        "tool_called": 17
+      },
+      "matched_generic_executable_helper": {
+        "success": 3,
+        "n": 19,
+        "accuracy": 0.15789473684210525,
+        "tool_called": 18
+      },
+      "no_skill": {
+        "success": 0,
+        "n": 19,
+        "accuracy": 0.0,
+        "tool_called": 0
+      }
+    },
+    "primary_targeted_vs_generic": {
+      "paired_risk_difference": 0.10526315789473684,
+      "targeted_only_success": 3,
+      "generic_only_success": 1,
+      "discordant": 4,
+      "one_sided_exact_p": 0.3125
+    },
+    "secondary_targeted_vs_no_skill": {
+      "paired_risk_difference": 0.2631578947368421,
+      "targeted_only_success": 5,
+      "no_skill_only_success": 0,
+      "discordant": 5,
+      "one_sided_exact_p": 0.03125
+    },
+    "frozen_gate": {
+      "effect_floor_risk_difference": 0.2,
+      "alpha": 0.05,
+      "magnitude_floor_met": false,
+      "pass": false
+    },
+    "tool_call_diagnostic": {
+      "targeted": "17/19",
+      "generic": "18/19",
+      "parity_disagreements": 3,
+      "generic_called_at_least_as_often_as_targeted": true
+    },
+    "independent_recompute": {
+      "raw_files": 57,
+      "unique_raw_file_hashes": 57,
+      "contract_hash_match": true,
+      "runner_result_match": true,
+      "generic_word_count_issues": 0,
+      "generic_keyword_leakage_issues": 0,
+      "resolved_model": "deepseek-v4-pro-260425"
+    },
+    "interpretation": "The executable targeted arm retains a positive matched-generic direction on a second model family, while the frozen primary gate remains open. The targeted arm again beats no skill under the frozen secondary comparison. F4 is an independent replication and is never pooled with F3.",
+    "scope_boundary": "Cross-model evidence for the executable-skill realization of C3 on the same TimeSage-MT endpoints. No C4 longitudinal authority."
+  },
+  "f5_all_remaining_executable_replication": {
+    "role": "independent all-remaining-public-support executable-skill replication on task-disjoint TimeSage-MT tasks",
+    "candidate_manifest_sha256": "b49cd462bda8921caa0be76f53b2cc331be17df97e309822b19550d50926c03e",
+    "qualification_sha256": "eb104c294d2f62ebb7a03153e4ba37ce789a87b0507cf4e2e1c7ffc3418163a1",
+    "contract_file_sha256": "c8ae6e0de7ae524a686128887c4974b09a8533dbdf4dc53876bc8d9d8d226399",
+    "initial_failed_result_sha256": "0e0e5e49fb12860b98fb4cbed3d8e53be31f36b74024a155fc7498de5d4ef02a",
+    "runtime_repair_receipt_sha256": "5f1b0f64de03097b219172d7ad27878e29443bf5b39abf2abee3cd74b9f7c6bb",
+    "runtime_repair_runner_sha256": "95b6a393c8df357031729a676f7f9693632b876c3dbf02312faa66bd74204a36",
+    "final_result_sha256": "4a3456e952f27f46edb8825cba7e478ea7f6b63a72ecd96e660d2526bb4d6f9b",
+    "candidate_tasks": 24,
+    "qualification": {
+      "passed": 7,
+      "failed_support": 17,
+      "failed_execution": 0,
+      "replacement_tasks": 0
+    },
+    "task_disjoint_from_f0_f1_f2_and_all_f3_candidates": true,
+    "runtime_repair": {
+      "reason": "local visible-cache path bug after initial tool-call decision",
+      "original_valid_endpoints": 0,
+      "new_initial_model_calls": 0,
+      "reused_original_no_skill_responses": 7,
+      "final_support_failures": 0,
+      "final_protocol_failures": 0
+    },
+    "arms": {
+      "targeted_executable_skill": {
+        "success": 3,
+        "n": 7,
+        "accuracy": 0.42857142857142855
+      },
+      "matched_generic_executable_helper": {
+        "success": 2,
+        "n": 7,
+        "accuracy": 0.2857142857142857
+      },
+      "no_skill": {
+        "success": 0,
+        "n": 7,
+        "accuracy": 0.0
+      }
+    },
+    "primary_targeted_vs_generic": {
+      "paired_risk_difference": 0.14285714285714285,
+      "targeted_only_success": 1,
+      "generic_only_success": 0,
+      "discordant": 1,
+      "one_sided_exact_p": 0.5
+    },
+    "secondary_targeted_vs_no_skill": {
+      "paired_risk_difference": 0.42857142857142855,
+      "targeted_only_success": 3,
+      "no_skill_only_success": 0,
+      "discordant": 3,
+      "one_sided_exact_p": 0.125
+    },
+    "frozen_gate": {
+      "effect_floor_risk_difference": 0.2,
+      "alpha": 0.05,
+      "pass": false
+    },
+    "independent_recompute": {
+      "raw_files": 21,
+      "unique_raw_file_hashes": 21,
+      "contract_hash_match": true,
+      "integrity_issues": 0
+    },
+    "pvalue_pooling_with_f3_or_f4": false,
+    "interpretation": "The all-remaining public-support expansion remains directionally positive for targeted versus matched generic executable skill, but only seven new tasks are executable under the frozen public-support boundary and the independent primary gate remains open.",
+    "scope_boundary": "Independent TimeSage-MT executable-skill evidence for C3 only. Support failures have no scientific authority. F5 gives no C4 longitudinal authority."
+  },
+  "f5r2_support_recovered_extension": {
+    "role": "independent support-recovered extension on five exact candidates from the pre-outcome F5 population",
+    "support_recovery_sha256": "a09e73b65a3cff9e268b9e3a1b9f8ea48d01ea14514eeb1a0b210b0f2817dee6",
+    "requalification_sha256": "2a2e57d68fe13e3e4516e1a8b1e42251f0931cd06d20f349429d2c135fa39dc1",
+    "contract_file_sha256": "bcf53dc65276e68928f45b6698a549745bb6277ee92cc2546014d4d1b71eff75",
+    "runner_sha256": "49614d390d589dcf932710d319c1518b1fd1090504912375b3161b18e75ba523",
+    "result_sha256": "afb8893d0507d985f447707d54947af364aa7408c71b57f7792e7c26e9bf3c10",
+    "frozen_f5_candidates_recovered": 5,
+    "still_support_hold": 12,
+    "new_candidates_added": 0,
+    "requalified_pass": 5,
+    "arms": {
+      "targeted_executable_skill": {
+        "success": 1,
+        "n": 5,
+        "accuracy": 0.2
+      },
+      "matched_generic_executable_helper": {
+        "success": 0,
+        "n": 5,
+        "accuracy": 0.0
+      },
+      "no_skill": {
+        "success": 1,
+        "n": 5,
+        "accuracy": 0.2
+      }
+    },
+    "primary_targeted_vs_generic": {
+      "paired_risk_difference": 0.2,
+      "targeted_only_success": 1,
+      "generic_only_success": 0,
+      "discordant": 1,
+      "one_sided_exact_p": 0.5
+    },
+    "secondary_targeted_vs_no_skill": {
+      "paired_risk_difference": 0.0,
+      "targeted_only_success": 0,
+      "no_skill_only_success": 0,
+      "discordant": 0,
+      "one_sided_exact_p": 1.0
+    },
+    "frozen_gate": {
+      "effect_floor_risk_difference": 0.2,
+      "alpha": 0.05,
+      "pass": false
+    },
+    "pvalue_pooled_with_f3_f4_or_f5": false,
+    "interpretation": "Support recovery adds five exact pre-frozen F5 candidates. The matched direction remains positive but uninformative (one discordant pair); no-skill matches targeted on the only success. This extension does not change C3 closure.",
+    "scope_boundary": "Support-recovery extension only; no new candidate selection, no primary closure authority, no C4 authority."
+  },
+  "f6_strong_offtarget_control_diagnostic": {
+    "role": "post-hoc stronger-control causal-identification diagnostic on exact F3 endpoints",
+    "qualification_sha256": "f0c7cca0286c905d1e05d0a68b1f54bf2a76a45f723edbb1dd4394c0f6838181",
+    "contract_file_sha256": "114b4d9a76d8f2b2ff1ed942bf082a5649d1a371f80e09daa22cb5748a905e4a",
+    "runner_sha256": "e71504f5af5aa201fd3827327885f143054d434e129f970661efc1befe4bd2d5",
+    "result_sha256": "aadd01dc7d0aa930d74f8d689562cc1c8427051193f25d05c2484ef0a67bb7db",
+    "diagnostic_only": true,
+    "primary_closure_authority": false,
+    "endpoints": 19,
+    "qualification_passed": 19,
+    "new_initial_model_calls": 0,
+    "new_final_continuations": 17,
+    "support_failures": 0,
+    "protocol_failures": 0,
+    "control_definition": "Reuse each F3 targeted initial tool-call decision; swap only the hidden implementation for the nearest different benchmark-recorded procedure from the same task that executes on the same hash-pinned visible CSV. Match tool-output word count exactly. Verifier overlap is recorded and never used for selection.",
+    "targeted_f3": {
+      "success": 6,
+      "n": 19,
+      "accuracy": 0.3157894736842105
+    },
+    "offtarget_executable_control": {
+      "success": 1,
+      "n": 19,
+      "accuracy": 0.05263157894736842
+    },
+    "targeted_vs_offtarget": {
+      "paired_risk_difference": 0.2631578947368421,
+      "targeted_only_success": 6,
+      "offtarget_only_success": 1,
+      "discordant": 7,
+      "one_sided_exact_p": 0.0625
+    },
+    "interpretation": "Correct benchmark procedure state outperforms another substantive benchmark procedure under the exact same frozen initial tool-call decision. The diagnostic reduces the neutral-control confound, while its post-hoc status and p=0.0625 prohibit primary-claim closure.",
+    "scope_boundary": "Causal-identification diagnostic only; no C3 closure and no C4 authority."
+  },
+  "f7_measurement_audit_support": {
+    "role": "post-hoc blinded semantic robustness audit of the seven unique F3/F6 discordant endpoints",
+    "packet_sha256": "fcffed55f04a709c4e2ed870ca4dd239b6058aba7c679a5e6f0e84eee227bbc5",
+    "contract_sha256": "b5173e59f7d1f62c85b67cb7c398f3b332037384dd8ee06edc5d32fbf74f81c1",
+    "predeclared_judges": [
+      "deepseek-v4-pro",
+      "kimi-k3"
+    ],
+    "valid_judges": 0,
+    "deepseek": {
+      "status": "NONVOTING_PROVIDER_INCOMPLETE",
+      "receipt_sha256": "070720f45c7780466f1a578327bcd86bb1bd9937ee55c53b67432e32310cb72c",
+      "response_id_sha256": "0698bb4e9e405d7b490c21fd2ab73f02effd8463f825590e27d02e36ef917653",
+      "repost_forbidden": true
+    },
+    "kimi": {
+      "status": "NONVOTING_PROVIDER_INCOMPLETE",
+      "receipt_sha256": "f349a3aa97a06fe2e46fff796329ba23a894b5cc121573ab39237bb6b33633c9",
+      "response_id_sha256": "d796350bbce94723eb15d5b628259cbcccdb963c7d17c34e9f834bcb6f9d1412",
+      "get_recheck_status": "INCOMPLETE_NO_CALL",
+      "repost_forbidden": true
+    },
+    "original_deterministic_scores_immutable": true,
+    "scientific_authority": false,
+    "interpretation": "The planned semantic robustness audit produced zero voting judgments because both frozen provider calls were incomplete. This is support debt only and leaves the deterministic verifier outcomes unchanged."
+  },
+  "f8_frozen_population_support_recovery_extension": {
+    "role": "support-recovery extension over 12 additional exact-SHA candidates from the original pre-outcome F5 population",
+    "lineage_note": "Append-only after the earlier five-endpoint object already named f5r2; this evidence is labeled F8 to avoid overwriting that lineage.",
+    "original_f5_candidate_population": 24,
+    "original_f5_interim_endpoints": 7,
+    "support_debt_candidates": 17,
+    "support_recovery_snapshot": {
+      "recovered_exact_sha": 12,
+      "still_support_hold": 5,
+      "support_recovery_r4_sha256": "c4ded18a4e7be69f0ab2a5463b8bbc0fa2fb63b323293ae2952744f7c9099bc8",
+      "new_candidates_added": 0,
+      "model_calls_during_recovery": 0
+    },
+    "qualification_sha256": "153ce397ef23d2a7c8e180ff7c0bd36e027ac1fc273b38bddd9f85e19478c4e7",
+    "contract_file_sha256": "5b7fdabfad111d271788282abd5e65d0ac837a0074820d6ebf25443371f677fd",
+    "runner_sha256": "49614d390d589dcf932710d319c1518b1fd1090504912375b3161b18e75ba523",
+    "result_sha256": "202ebeb909264d63cb7b20f64dd2cb3c283d09e8f38d11e6f11b194581f80167",
+    "candidate_membership_frozen_before_original_f5_outcomes": true,
+    "support_recovery_extension_defined_after_original_f5_outcomes": true,
+    "outcomes_do_not_control_membership": true,
+    "requested_endpoints": 7,
+    "requested_arm_records": 36,
+    "support_failures": 0,
+    "protocol_failures": 0,
+    "arms": {
+      "targeted_executable_skill": {
+        "success": 5,
+        "n": 7,
+        "accuracy": 0.7142857142857143
+      },
+      "matched_generic_executable_helper": {
+        "success": 0,
+        "n": 7,
+        "accuracy": 0.0
+      },
+      "no_skill": {
+        "success": 1,
+        "n": 7,
+        "accuracy": 0.14285714285714285
+      }
+    },
+    "primary_targeted_vs_generic": {
+      "paired_risk_difference": 0.7142857142857143,
+      "targeted_only_success": 5,
+      "generic_only_success": 0,
+      "discordant": 5,
+      "one_sided_exact_p": 0.03125
+    },
+    "secondary_targeted_vs_no_skill": {
+      "paired_risk_difference": 0.5714285714285714,
+      "targeted_only_success": 4,
+      "no_skill_only_success": 0,
+      "discordant": 4,
+      "one_sided_exact_p": 0.0625
+    },
+    "frozen_gate": {
+      "effect_floor_risk_difference": 0.2,
+      "alpha": 0.05,
+      "pass": true
+    },
+    "skill_descriptives": {
+      "stl_decompose": {
+        "targeted": "5/7",
+        "generic": "0/7",
+        "no_skill": "1/7"
+      }
+    },
+    "family_concentration": {
+      "all_first_time_endpoints_stl_decompose": true,
+      "stl_targeted_successes": 5,
+      "total_targeted_successes": 5
+    },
+    "combined_available_frozen_population_summary": {
+      "role": "descriptive support-recovery completion summary; not used as a new preregistered primary closure test",
+      "available_endpoints": 19,
+      "frozen_candidates_total": 24,
+      "remaining_support_hold": 5,
+      "arms": {
+        "targeted_executable_skill": {
+          "success": 9,
+          "n": 19,
+          "accuracy": 0.47368421052631576
+        },
+        "matched_generic_executable_helper": {
+          "success": 2,
+          "n": 19,
+          "accuracy": 0.10526315789473684
+        },
+        "no_skill": {
+          "success": 2,
+          "n": 19,
+          "accuracy": 0.10526315789473684
+        }
+      },
+      "targeted_vs_generic": {
+        "paired_risk_difference": 0.3684210526315789,
+        "targeted_only_success": 7,
+        "generic_only_success": 0,
+        "discordant": 7,
+        "one_sided_exact_p": 0.0078125
+      },
+      "targeted_vs_no_skill": {
+        "paired_risk_difference": 0.3684210526315789,
+        "targeted_only_success": 7,
+        "no_skill_only_success": 0,
+        "discordant": 7,
+        "one_sided_exact_p": 0.0078125
+      },
+      "formal_closure_authority": false
+    },
+    "remaining_support_hold_tasks": [
+      "L3_energy_046",
+      "L3_healthcare_010",
+      "L3_manufacturing_030",
+      "L4_healthcare_047",
+      "L4_manufacturing_059"
+    ],
+    "independent_recompute": {
+      "raw_files": 36,
+      "unique_raw_file_hashes": 36,
+      "contract_hash_match": true,
+      "runner_result_match": true,
+      "integrity_issues": 0
+    },
+    "interpretation": "After removing five endpoints already executed in the legacy F5-R2 tranche, seven first-time support-recovered endpoints remain. They yield 5/7 targeted versus 0/7 matched-generic successes (+71.4 points; exact p=0.03125), so the frozen extension gate passes on genuinely new endpoints. Every first-time endpoint is STL decomposition, leaving broader procedure-family generality open.",
+    "scope_boundary": "Independent first-time support-recovered STL-decomposition evidence for the executable-state component of C3. Repeated endpoints have zero new scientific authority. No C4 authority.",
+    "dedup_adjudication": "generated/d2-temporal-skill-f8-dedup-adjudication-20260822.json",
+    "dedup_adjudication_private_sha256": "f7d5b4a8f2b5e5a977574b65641691dd0dbf00439c0d4061d505e17e51ca57ad",
+    "executed_endpoints_total": 12,
+    "repeated_prior_f5r2_endpoints": [
+      "L3_energy_045",
+      "L3_retail_022",
+      "L4_climate_048",
+      "L4_telecom_036",
+      "L4_telecom_055"
+    ],
+    "repeated_endpoint_count": 5,
+    "repeated_endpoints_scientific_authority": false,
+    "requested_arm_records_with_independent_authority": 21,
+    "full_12_endpoint_rerun_diagnostic": {
+      "role": "contains five deterministic repeated endpoints from legacy F5-R2; no independent closure authority",
+      "targeted": "6/12",
+      "generic": "0/12",
+      "no_skill": "2/12",
+      "paired_risk_difference": 0.5,
+      "one_sided_exact_p": 0.015625,
+      "scientific_authority": false
+    }
+  },
+  "f5_first_observation_population_completion_r5": {
+    "artifact": "generated/d2-temporal-skill-f5-first-observation-population-completion-20260823.json",
+    "artifact_sha256": "953cd2b50ba670e7b0b55a59550ff805387c57f9d329b366e4d39d05f844ceb8",
+    "available_endpoints": 20,
+    "targeted": "10/20",
+    "generic": "2/20",
+    "no_skill": "2/20",
+    "paired_risk_difference": 0.4,
+    "one_sided_exact_p": 0.00390625,
+    "formal_closure_authority": false,
+    "new_first_observation_endpoint": "L3_healthcare_010",
+    "repeated_r5_endpoint_calls_scientific_authority": false,
+    "broader_procedure_family_generality_open": true
+  },
+  "f9_f10_nonstl_strong_control_crossmodel": {
+    "artifact": "generated/d2-temporal-skill-f9f10-strong-control-20260823.json",
+    "artifact_sha256": "2ad627f898fac9dc164d46ef38edfb2a644dfa78fc353e8440a1c972b503e735",
+    "qwen_targeted_vs_offtarget": "+50.0 pp, p=0.0625, 5/8 vs 1/8",
+    "deepseek_targeted_vs_offtarget": "+33.3 pp, p=0.125, 5/9 vs 2/9",
+    "procedure_families": [
+      "linear_interpolation",
+      "model_comparison",
+      "residual_diagnostics",
+      "rocket_classify",
+      "ts_forest_regressor_tsr"
+    ],
+    "primary_direction_positive_both_models": true,
+    "primary_gate_pass_any_model": false,
+    "pvalue_pooling": false,
+    "scope": "broader non-STL strong-control directional evidence only; no C4 authority"
+  },
+  "f11_f8_semantic_measurement_audit": {
+    "artifact": "generated/d2-temporal-skill-f11-semantic-audit-20260823.json",
+    "artifact_sha256": "e1c02b624344f00fff6a7acf8008b67029065caa004595f0dfc1809c8349b909",
+    "reviewers_requested": 2,
+    "reviewers_voting": 1,
+    "deepseek_strict_correct": {
+      "targeted": 6,
+      "generic": 2,
+      "no_skill": 0
+    },
+    "deepseek_targeted_vs_generic": {
+      "paired_risk_difference": 0.5714285714285714,
+      "targeted_only_correct": 5,
+      "generic_only_correct": 1,
+      "discordant": 6,
+      "one_sided_exact_p": 0.109375
+    },
+    "kimi_status": "NONVOTING_PROVIDER_OR_PARSE_FAILURE",
+    "deterministic_f8_gate_unchanged": true,
+    "semantic_gate_reproduced": false,
+    "semantic_robustness_established": false,
+    "replacement_reviewer_after_observing_labels_forbidden": true,
+    "interpretation": "The frozen deterministic F8 gate remains unchanged, but the only valid blinded semantic reviewer gives 6/7 targeted versus 2/7 generic strict correctness (p=0.109375). Measurement robustness is therefore not established."
+  },
+  "f12_fresh_source_saturation": {
+    "artifact": "generated/d2-temporal-skill-source-saturation-20260823.json",
+    "artifact_sha256": "194a2e5a06219378f88e4b5ad6961aba36729b67f14240d09ca59ba08b1a988c",
+    "model_outcomes_observed": 0,
+    "minimum_fresh_pairs_go": 16,
+    "l2_fresh_stl_candidates": 0,
+    "l1_broad_candidates": 12,
+    "timesage_ev_snapshot_available": false,
+    "decision": "STOP_NEW_C06_EXPERIMENTS_CURRENT_SAME_SUBSTRATE_SOURCE_SATURATED",
+    "interpretation": "A pre-outcome source audit finds no fresh STL confirmation population and only 12 fresh L1 strong-control pairs, below the predeclared GO threshold of 16. No F12 model experiment is launched."
+  }
+}

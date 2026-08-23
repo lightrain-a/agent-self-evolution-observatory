@@ -1,0 +1,262 @@
+{
+  "protocol_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "packet_role": "post-ready controlled-intervention quality-loop terminal dry-run; does not supersede canonical R6 publication artifact",
+  "claim_expansion_authorized": false,
+  "new_experiment_authorized": false,
+  "gates": {
+    "hierarchical-rubric": {
+      "hierarchical_decomposition": true,
+      "single_overall_score_is_non_authoritative": true,
+      "plan_execution_parity_pass": true,
+      "fabricated_result_scan_pass": true,
+      "evidence_sufficiency_review_pass": false,
+      "dimensions": {
+        "claim-evidence": {
+          "pass": false,
+          "evidence_refs": [
+            "artifact:sha256:14e2368f92d5ef8ce4d3934cf0c969677b09903174b98d415733a99349b75c06",
+            "artifact:sha256:52656043f737db33933f270d9086bff70c451075efc15fea00d1c71d67b19d28",
+            "artifact:sha256:e1c02b624344f00fff6a7acf8008b67029065caa004595f0dfc1809c8349b909",
+            "artifact:sha256:a6cfc7d45dd2dca460cc0b50abf530754e7e25bb7e9fd93db102b3004df3248b"
+          ]
+        },
+        "novelty-positioning": {
+          "pass": true,
+          "evidence_refs": [
+            "artifact:sha256:c784324dabd8696ce87d3c1c4bcbac70349fc0a0550484e47a233c39651e0610",
+            "artifact:sha256:a6cfc7d45dd2dca460cc0b50abf530754e7e25bb7e9fd93db102b3004df3248b"
+          ]
+        },
+        "method-experiment": {
+          "pass": true,
+          "evidence_refs": [
+            "artifact:sha256:c784324dabd8696ce87d3c1c4bcbac70349fc0a0550484e47a233c39651e0610",
+            "artifact:sha256:52656043f737db33933f270d9086bff70c451075efc15fea00d1c71d67b19d28"
+          ]
+        },
+        "statistics-uncertainty": {
+          "pass": true,
+          "evidence_refs": [
+            "artifact:sha256:c784324dabd8696ce87d3c1c4bcbac70349fc0a0550484e47a233c39651e0610",
+            "artifact:sha256:52656043f737db33933f270d9086bff70c451075efc15fea00d1c71d67b19d28",
+            "artifact:sha256:e1c02b624344f00fff6a7acf8008b67029065caa004595f0dfc1809c8349b909"
+          ]
+        },
+        "visual-evidence": {
+          "pass": true,
+          "evidence_refs": [
+            "artifact:sha256:c784324dabd8696ce87d3c1c4bcbac70349fc0a0550484e47a233c39651e0610",
+            "artifact:sha256:c05de13c3b383204cf050cea62b6d5a15ea1c1ea7a101fe47662ceaf08e88024"
+          ]
+        },
+        "limitations-scope": {
+          "pass": true,
+          "evidence_refs": [
+            "artifact:sha256:c784324dabd8696ce87d3c1c4bcbac70349fc0a0550484e47a233c39651e0610",
+            "artifact:sha256:14e2368f92d5ef8ce4d3934cf0c969677b09903174b98d415733a99349b75c06",
+            "artifact:sha256:194a2e5a06219378f88e4b5ad6961aba36729b67f14240d09ca59ba08b1a988c"
+          ]
+        },
+        "reproducibility": {
+          "pass": true,
+          "evidence_refs": [
+            "artifact:sha256:c05de13c3b383204cf050cea62b6d5a15ea1c1ea7a101fe47662ceaf08e88024",
+            "artifact:sha256:27725a44bbbdbecbf66cdeb5e12c133bc46f88021b596832ea30c3542b845f18"
+          ]
+        },
+        "citation-integrity": {
+          "pass": true,
+          "evidence_refs": [
+            "artifact:sha256:c05de13c3b383204cf050cea62b6d5a15ea1c1ea7a101fe47662ceaf08e88024"
+          ]
+        },
+        "venue-compliance": {
+          "pass": true,
+          "evidence_refs": [
+            "artifact:sha256:c05de13c3b383204cf050cea62b6d5a15ea1c1ea7a101fe47662ceaf08e88024",
+            "artifact:sha256:c784324dabd8696ce87d3c1c4bcbac70349fc0a0550484e47a233c39651e0610"
+          ]
+        }
+      }
+    },
+    "verification-refinement": {
+      "verifier_separate_from_refiner": true,
+      "verification_against_frozen_contract": true,
+      "issues": [
+        {
+          "issue_id": "c3-f8-semantic-measurement-robustness-open",
+          "decision_critical": true
+        },
+        {
+          "issue_id": "c3-broad-family-matched-gates-open",
+          "decision_critical": true
+        },
+        {
+          "issue_id": "c4-longitudinal-persistence-unexecuted",
+          "decision_critical": true
+        },
+        {
+          "issue_id": "neutral-generic-control-too-weak",
+          "decision_critical": true
+        },
+        {
+          "issue_id": "single-model-generality",
+          "decision_critical": true
+        },
+        {
+          "issue_id": "source-pdf-drift",
+          "decision_critical": true
+        },
+        {
+          "issue_id": "title-scope-overreach",
+          "decision_critical": true
+        },
+        {
+          "issue_id": "same-substrate-experiment-loop-risk",
+          "decision_critical": true
+        }
+      ],
+      "resolved_issue_ids": [
+        "neutral-generic-control-too-weak",
+        "single-model-generality",
+        "source-pdf-drift",
+        "title-scope-overreach",
+        "same-substrate-experiment-loop-risk"
+      ],
+      "revision_deltas": [
+        {
+          "issue_id": "neutral-generic-control-too-weak",
+          "artifact_ref": "artifact:sha256:52656043f737db33933f270d9086bff70c451075efc15fea00d1c71d67b19d28"
+        },
+        {
+          "issue_id": "single-model-generality",
+          "artifact_ref": "artifact:sha256:52656043f737db33933f270d9086bff70c451075efc15fea00d1c71d67b19d28"
+        },
+        {
+          "issue_id": "source-pdf-drift",
+          "artifact_ref": "artifact:sha256:c05de13c3b383204cf050cea62b6d5a15ea1c1ea7a101fe47662ceaf08e88024"
+        },
+        {
+          "issue_id": "title-scope-overreach",
+          "artifact_ref": "artifact:sha256:c784324dabd8696ce87d3c1c4bcbac70349fc0a0550484e47a233c39651e0610"
+        },
+        {
+          "issue_id": "same-substrate-experiment-loop-risk",
+          "artifact_ref": "artifact:sha256:194a2e5a06219378f88e4b5ad6961aba36729b67f14240d09ca59ba08b1a988c"
+        }
+      ],
+      "non_improving_revision_reverted": true
+    },
+    "citation-integrity": {
+      "citations_total": 7,
+      "citations_verified": 7,
+      "claim_citations_total": 7,
+      "claim_citations_primary_source_verified": 7,
+      "duplicate_citations_absent": true,
+      "orphan_bib_entries_absent": true,
+      "citation_placement_review_pass": true,
+      "citation_claim_entailment_review_pass": true,
+      "hallucinated_citations": 0
+    },
+    "visual-story": {
+      "main_visuals": 3,
+      "each_core_claim_has_main_visual": true,
+      "figure_caption_reference_review_pass": true,
+      "figure_text_callout_consistency_pass": true,
+      "quantitative_visual_source_binding_pass": true,
+      "negative_or_boundary_evidence_visible": true,
+      "labels_legible_at_final_pdf_scale": true,
+      "persistent_visual_contract_present": true,
+      "registered_visuals_match_sections": true
+    },
+    "reproducibility-bundle": {
+      "self_contained_source_bundle": true,
+      "clean_environment_compile_pass": true,
+      "reproduction_entrypoint_present": true,
+      "dependency_environment_manifest_present": true,
+      "data_model_provenance_present": true,
+      "random_seed_and_nondeterminism_documented": true,
+      "evaluation_code_and_protocol_bound": true,
+      "artifact_hash_manifest_present": true,
+      "numeric_claim_recompute_pass": true,
+      "independent_reproduction_check_pass": true,
+      "secret_scan_pass": true,
+      "source_manifest_ref": "artifact:sha256:27725a44bbbdbecbf66cdeb5e12c133bc46f88021b596832ea30c3542b845f18"
+    },
+    "agent-native-artifact": {
+      "layers": {
+        "scientific-logic": {
+          "complete": true,
+          "artifact_refs": [
+            "artifact:sha256:14e2368f92d5ef8ce4d3934cf0c969677b09903174b98d415733a99349b75c06",
+            "artifact:sha256:52656043f737db33933f270d9086bff70c451075efc15fea00d1c71d67b19d28"
+          ]
+        },
+        "executable-specification": {
+          "complete": true,
+          "artifact_refs": [
+            "artifact:sha256:52656043f737db33933f270d9086bff70c451075efc15fea00d1c71d67b19d28",
+            "artifact:sha256:27725a44bbbdbecbf66cdeb5e12c133bc46f88021b596832ea30c3542b845f18"
+          ]
+        },
+        "exploration-graph": {
+          "complete": true,
+          "artifact_refs": [
+            "artifact:sha256:90e7f5fa366c5e3171f279fdb962f88107ecd43c8510f18ab7cb58dcf278afca",
+            "artifact:sha256:a6cfc7d45dd2dca460cc0b50abf530754e7e25bb7e9fd93db102b3004df3248b",
+            "artifact:sha256:194a2e5a06219378f88e4b5ad6961aba36729b67f14240d09ca59ba08b1a988c"
+          ]
+        },
+        "claim-evidence-grounding": {
+          "complete": true,
+          "artifact_refs": [
+            "artifact:sha256:14e2368f92d5ef8ce4d3934cf0c969677b09903174b98d415733a99349b75c06",
+            "artifact:sha256:52656043f737db33933f270d9086bff70c451075efc15fea00d1c71d67b19d28",
+            "artifact:sha256:e1c02b624344f00fff6a7acf8008b67029065caa004595f0dfc1809c8349b909",
+            "artifact:sha256:c05de13c3b383204cf050cea62b6d5a15ea1c1ea7a101fe47662ceaf08e88024"
+          ]
+        }
+      },
+      "failed_and_rejected_branches_preserved": true,
+      "claim_to_raw_output_roundtrip_pass": true
+    },
+    "reader-simulation": {
+      "modes": {
+        "blind-manuscript": {
+          "completed": true,
+          "unresolved_decision_critical": 3
+        },
+        "artifact-aware": {
+          "completed": true,
+          "unresolved_decision_critical": 3
+        },
+        "figure-first-skimmer": {
+          "completed": true,
+          "unresolved_decision_critical": 0
+        },
+        "reproducibility-reviewer": {
+          "completed": true,
+          "unresolved_decision_critical": 0
+        }
+      },
+      "paper_side_findings_resolved_or_explicitly_accepted": true,
+      "review_score_is_not_a_hard_gate": true
+    },
+    "submission-package": {
+      "venue": "ICLR 2027",
+      "venue_template_and_page_rules_pass": true,
+      "anonymous_source_and_pdf_pass": true,
+      "metadata_matches_manuscript": true,
+      "supplement_and_main_artifact_consistency_pass": true,
+      "fresh_directory_source_compile_pass": true,
+      "file_size_and_upload_constraints_pass": true,
+      "ai_use_disclosure_decision_recorded": true,
+      "authorship_and_conflict_checklist_recorded": true,
+      "venue_policy_snapshot_current": true,
+      "human_only_requirements_recorded": true,
+      "external_human_submit_required": true,
+      "human_submission_status": "NOT_REQUESTED"
+    }
+  }
+}
