@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0-v19r003-deepseek-pre-result-r1",
+  "artifact_kind": "V19R003_DEEPSEEK_PRE_STRATEGY_RESULT_R1",
+  "generated_at": "2026-08-23T17:09:04Z",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "branch_head": "7fa39f3d08624d8f0241e4890831ceebb39a4eba",
+  "run_receipts": {
+    "initial": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/v19r003-deepseek-pre-20260824-r1/paid-pre-receipt.json",
+      "sha256": "5dc71f047530bfaea71dae4c1bcfdbee953d9593b6b5abfd9704fc48a31685a9"
+    },
+    "resumed": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/v19r003-deepseek-pre-20260824-r1/resume-receipt-r2.json",
+      "sha256": "32c4c39f62d3046dd58ee87df9f65994a1d8537ff3e93af10f9e2d3a116dd36a"
+    }
+  },
+  "provider": {
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-260425",
+    "stable_model_identity": true,
+    "provider_posts_total": 5,
+    "fresh_restart_after_support_failure": false,
+    "reported_input_tokens": 7942,
+    "reported_output_tokens": 460,
+    "reported_total_tokens": 8402
+  },
+  "observed_action_sequence": [
+    "inspect task_interface.json",
+    "run one-sample base-model evaluator",
+    "inspect workspace root",
+    "inspect receipts and evaluator directories",
+    "emit text-only plan to continue evaluator inspection without a function call"
+  ],
+  "training_endpoint": {
+    "run_training_calls": 0,
+    "verified_parameter_updates": 0,
+    "persistent_checkpoints_created": 0,
+    "semantic_boundary_reached": false,
+    "verified_training_methods": []
+  },
+  "adherence": {
+    "rubric": "V19R003_TRAJECTORY_ADHERENCE_V2",
+    "status": "NO_EVIDENCE",
+    "rationale": "No verified persisted training action occurred, so the semantic boundary and PRE strategy-enactment endpoint were never reached. The final provider turn contained only a textual intention to keep inspecting rather than a function call.",
+    "pre_headroom_established": false
+  },
+  "failure_classification": {
+    "primary": "PROTOCOL_NONEXECUTION_BEFORE_SCIENTIFIC_ENDPOINT",
+    "scientific_failure": false,
+    "support_failure": true,
+    "method_failure": false,
+    "principle_failure": false,
+    "interpretation": "This run cannot show that the forced RL-main-budget strategy is or is not enactable. It shows that the bounded autonomous tool protocol did not elicit any training action within five paid turns."
+  },
+  "sequential_gate": {
+    "decision": "STOP_PRE_HEADROOM_NOT_ESTABLISHED",
+    "next_arm": null,
+    "stop_paid_expansion": true,
+    "post_strategy_authorized": false,
+    "post_execution_authorized": false,
+    "post_conflict_free_authorized": false,
+    "reopen_exact_reduction_adjudication": false,
+    "problem_gate_pass": false
+  },
+  "cost_policy": {
+    "unused_authorized_resume_post_not_spent": true,
+    "reason": "The resume runner stopped on a text-only provider response with no training endpoint rather than purchasing the sixth permitted provider POST.",
+    "no_further_paid_calls_under_current_protocol": true
+  },
+  "reopen_condition": "A future PRE support unit must be separately preregistered before any new API call and must resolve the tool-turn protocol ambiguity in a general, arm-invariant way (for example, an explicit action-turn contract that prose-only planning does not terminate the segment). It must not reuse outcome knowledge to select a favorable task or strategy, and it must remain PRE-only until clean headroom is established.",
+  "authority": {
+    "pre_f0_scientific_evidence": false,
+    "problem_gate": false,
+    "research_item_created": false,
+    "canonical_projection": false,
+    "paper_design": false,
+    "source_exact": false
+  }
+}

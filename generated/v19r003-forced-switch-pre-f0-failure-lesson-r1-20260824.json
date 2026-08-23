@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "DISCOVERY_LESSON",
+  "generated_at": "2026-08-23T17:09:04Z",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "lesson_kind": "PAID_AGENT_PROTOCOL_SUPPORT_FAILURE",
+  "lesson": "A bounded paid-agent experiment needs an explicit action-turn contract in addition to tool schemas. A model can spend multiple turns on diagnostics and then emit prose-only planning without invoking the training tool; treating that as scientific non-adherence confounds protocol nonexecution with the target causal endpoint.",
+  "evidence": {
+    "provider": "deepseek-v4-pro -> deepseek-v4-pro-260425",
+    "provider_posts": 5,
+    "reported_total_tokens": 8402,
+    "training_function_calls": 0,
+    "verified_parameter_updates": 0,
+    "semantic_boundary_reached": false,
+    "final_state": "NO_EVIDENCE"
+  },
+  "design_rule": "Before a future paid PRE unit, preregister a general arm-invariant turn protocol specifying whether each nonterminal provider response must issue a tool call, how prose-only planning is fed back, and the maximum diagnostic-turn budget. Freeze this before any new outcome and apply it identically to PRE/POST/control arms.",
+  "anti_overfit_rule": "Do not repair by task hopping, exposing hidden test examples, forcing the desired RL action, or selecting a new prompt after seeing which strategy would make the candidate succeed.",
+  "scientific_authority": false
+}

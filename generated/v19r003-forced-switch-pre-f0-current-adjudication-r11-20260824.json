@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0-v19r003-current-adjudication-r11",
+  "artifact_kind": "V19R003_PRE_F0_CURRENT_ADJUDICATION_R11",
+  "generated_at": "2026-08-23T17:09:04Z",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "supersedes": "generated/v19r003-forced-switch-pre-f0-current-adjudication-r10-20260824.json",
+  "superseded_r10_sha256": "383f477c6925da65c5c3660d959162b281a9a51a3fcba43dda29b6d480c8f2d2",
+  "current_status": "PRE_F0_PAID_PRE_NO_EVIDENCE_PROTOCOL_NONEXECUTION_STOP",
+  "paid_pre_result": {
+    "artifact": "generated/v19r003-forced-switch-deepseek-pre-result-r1-20260824.json",
+    "sha256": "34fc94c1e33c88434055113e93c55981fc1c3bdbd4d744857a0b3bae6de65871",
+    "provider_alias": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-260425",
+    "provider_posts": 5,
+    "reported_total_tokens": 8402,
+    "verified_training_actions": 0,
+    "semantic_boundary_reached": false,
+    "adherence_status": "NO_EVIDENCE",
+    "pre_headroom_established": false
+  },
+  "scientific_state": {
+    "closest_work": "arXiv:2608.19072",
+    "strongest_reduction": "source-authors missing-spontaneity-not-capability diagnosis",
+    "reduction_status": "NEEDS_EXACT_REDUCTION_TEST_BUT_CURRENT_PRE_SUPPORT_UNIT_NONEXECUTABLE",
+    "problem_gate_pass": false,
+    "pre_f0_eligible_in_principle": true,
+    "current_paid_protocol_expansion_allowed": false,
+    "canonical_projection": false,
+    "canonical_researchitem_created": false
+  },
+  "failure_adjudication": {
+    "classification": "PROTOCOL_NONEXECUTION_BEFORE_SCIENTIFIC_ENDPOINT",
+    "support_failure_not_scientific_failure": true,
+    "why": "The autonomous DeepSeek agent consumed its bounded turns on interface inspection and one baseline evaluation, then produced a prose-only continuation plan without issuing a training function call. No parameter update or strategy-enactment boundary was observed.",
+    "forbidden_interpretation": "Do not count this as evidence that post-training strategy headroom is absent, that PRE_STRATEGY failed scientifically, or that the lock-in hypothesis is supported."
+  },
+  "sequential_paid_gate": {
+    "decision": "STOP_PRE_HEADROOM_NOT_ESTABLISHED",
+    "post_strategy_authorized": false,
+    "post_execution_authorized": false,
+    "post_conflict_free_authorized": false,
+    "unused_sixth_provider_post_spent": false,
+    "automatic_retry_or_fresh_restart": false
+  },
+  "next_valid_action": "Do not purchase POST or any further API call under the current paid protocol. A new PRE-only support unit may be considered only after an append-only preregistration freezes a general arm-invariant tool-turn contract that prevents prose-only planning from being mistaken for terminal execution. That new support unit must preserve the same task/model/data/strategy payload and must not task-hop or outcome-select. Until then, ProblemGate remains blocked.",
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "full_experiment": false
+  }
+}
