@@ -38,9 +38,17 @@
   },
   "requested_reopen_gate": {
     "default": "KEEP_STOP",
-    "required_for_reopen": "A pre-outcome observable or residual produced under a controlled path/order intervention that remains unexplained after a path-integrated continual-learning baseline is given the same ordered-history information.",
+    "required_for_reopen": "A pre-outcome uptake/state/decision observable defined without using the final outcome, measured under a fixed-support/content order/path intervention, with a stable residual after the strongest path-integrated continual-learning baseline receives the same ordered-history, retrieval/content, task, and lineage information.",
     "same_task_multiset_path_dependence_alone_is_sufficient": false,
-    "denser_outcome_trajectory_measurement_alone_is_sufficient": false
+    "denser_outcome_trajectory_measurement_alone_is_sufficient": false,
+    "same_task_set_ranking_reversal": "CLOSURE_SUPPORT_ONLY",
+    "probe_trajectory": "CLOSURE_SUPPORT_ONLY",
+    "selective_experience_use": "CLOSURE_SUPPORT_ONLY"
+  },
+  "experiment_budget_policy": {
+    "pathbench_specific_new_experiments": "DO_NOT_RUN",
+    "reason": "PATH-Bench does not satisfy the reopen gate and therefore does not justify additional P15 execution budget. Reconsider execution only after an external or newly designed study first supplies the required outcome-independent pre-outcome observable and same-information residual contract.",
+    "proxy_substitution_allowed": false
   },
   "protocol_level_comparison": [
     {
@@ -55,14 +63,14 @@
       "pathbench_definition": "Repeated probes are evaluated after controlled positive/negative history intervals; controlled-transition effects are expressed as differences between successive probe-performance measurements such as p_probe_2 - p_probe_1 and p_probe_3 - p_probe_2.",
       "timing_class": "OUTCOME_DELTA",
       "p15_mapping": "Makes path dependence more longitudinal and causally organized than a single endpoint comparison, but still measures downstream performance changes rather than a pre-outcome residual.",
-      "reopen_value": "NONE"
+      "reopen_value": "CLOSURE_SUPPORT_ONLY"
     },
     {
       "pathbench_object": "Same-task-set path sensitivity motivation experiment",
       "pathbench_definition": "A common set of 50 tasks is evaluated under two different task paths; agent rankings in AP/FWT/BWT/FGT change between the two paths.",
       "timing_class": "OUTCOME_RANKING_AND_DERIVED_LIFELONG_METRICS",
       "p15_mapping": "This is strong evidence that order/path matters even when the task set is held fixed. Under the requested gate, this strengthens the old closure/motivation rather than creating a new scientific object.",
-      "reopen_value": "STRENGTHENS_CLOSURE"
+      "reopen_value": "CLOSURE_SUPPORT_ONLY"
     },
     {
       "pathbench_object": "External learning state",
@@ -76,7 +84,7 @@
       "pathbench_definition": "Between native retrieval and inference, each retrieved experience is classified for preserve, abstract, or ignore before the task response is produced.",
       "timing_class": "PRE_OUTCOME_CONTROL_ACTION",
       "p15_mapping": "SEU is genuinely pre-outcome, but it is an intervention/control policy, not evidence that holding experience content fixed and changing only order yields an independently audited uptake residual. The reported evidence evaluates whether SEU improves AP/FWT/BWT/FGT, again using downstream outcomes.",
-      "reopen_value": "INSUFFICIENT"
+      "reopen_value": "CLOSURE_SUPPORT_ONLY"
     },
     {
       "pathbench_object": "Task-relation / transfer structure",
