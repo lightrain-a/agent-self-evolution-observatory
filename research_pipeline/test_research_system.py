@@ -615,13 +615,13 @@ class ResearchSystemTest(unittest.TestCase):
         disabled = [item for item in self.state["components"] if item["status"] == "intentionally-disabled"]
         self.assertEqual(len(disabled), 1)
 
-    def test_asset_first_stri_quality_ready_is_separate_from_canonical_problem_gate(self) -> None:
+    def test_asset_first_stri_legacy_hold_cannot_roll_back_canonical_paper_state(self) -> None:
         stri=self.state["asset_first_stri_paper_ready"]
-        self.assertEqual(stri["status"],"READY_NARROW_ICLR")
-        self.assertEqual((stri.get("summary") or {}).get("paper_ready"),1)
+        self.assertEqual(stri["status"],"HOLD_ASSET_FIRST_PAPER_NOT_READY")
+        self.assertEqual((stri.get("summary") or {}).get("paper_ready"),0)
         self.assertEqual(((stri.get("summary") or {}).get("claims_supported"),(stri.get("summary") or {}).get("claims_total")),(3,3))
         self.assertEqual((stri.get("summary") or {}).get("qa_checks_passed"),(stri.get("summary") or {}).get("qa_checks_total"))
-        self.assertEqual(stri.get("submission_status"),"READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW")
+        self.assertEqual(stri.get("submission_status"),"HOLD_PAPER_QUALITY_V2")
         self.assertEqual((stri.get("summary") or {}).get("official_qa_checks_passed"),(stri.get("summary") or {}).get("official_qa_checks_total"))
         self.assertEqual(((stri.get("summary") or {}).get("main_text_pages"),(stri.get("summary") or {}).get("main_text_page_limit")),(9,9))
         self.assertEqual((stri.get("summary") or {}).get("supplement_ready"),1)
@@ -637,8 +637,15 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual((stri.get("summary") or {}).get("canonical_problem_gate_pass_added"),0)
         self.assertFalse(stri["scientific_authority"])
         self.assertTrue(all(value is False for value in (stri.get("authority") or {}).values()))
-        self.assertEqual(self.state["summary"]["asset_first_stri_paper_ready"],1)
-        self.assertEqual(self.state["summary"]["asset_first_stri_submission_status"],"READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW")
+        self.assertEqual(self.state["summary"]["asset_first_stri_paper_ready"],0)
+        self.assertEqual(self.state["summary"]["asset_first_stri_submission_status"],"HOLD_PAPER_QUALITY_V2")
+        acceptance=self.state["paper_acceptance"]["summary"]
+        self.assertEqual(acceptance["registered_papers"],5)
+        self.assertEqual(acceptance["scientific_holds"],0)
+        self.assertEqual(acceptance["submission_ready_papers"],5)
+        self.assertEqual(acceptance["gate_clean_submission_ready_papers"],5)
+        self.assertEqual(acceptance["internal_action_required_papers"],0)
+        self.assertEqual(acceptance["no_internal_action_papers"],5)
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_v2_passed"],1)
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_source_binding"],1)
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_content_addressed_completion"],1)

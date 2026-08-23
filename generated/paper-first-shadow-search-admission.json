@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "status": "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL",
-  "reason": "The current canonical source transaction already has a terminal shadow search result under the current discovery operator; repeating model calls would be redundant.",
+  "status": "HOLD_CANONICAL_DISCOVERY_TRANSACTION_OPEN",
+  "reason": "Canonical Primary -> Generator -> Queue is not a closed, internally consistent zero-authority discovery transaction.",
   "policy": {
     "scientific_authority": false,
     "admission_is_deterministic_search_control_only": true,
@@ -13,10 +13,10 @@
   },
   "summary": {
     "primary_records": 32,
-    "canonical_transaction_closed": true,
+    "canonical_transaction_closed": false,
     "latest_shadow_present": true,
     "latest_shadow_terminal": true,
-    "same_source_transaction": true,
+    "same_source_transaction": false,
     "current_discovery_operator_version": "double-funnel-paperability-evolution-v18-memory-wiki",
     "latest_discovery_operator_version": "double-funnel-paperability-evolution-v18-memory-wiki",
     "same_discovery_operator_version": true,
@@ -25,13 +25,13 @@
     "qualification_allowed": false,
     "automatic_provider_calls_authorized": 0,
     "checks": 14,
-    "passed_checks": 14,
-    "failed_checks": 0
+    "passed_checks": 13,
+    "failed_checks": 1
   },
   "source_identity": {
-    "current_source_generated_at": "2026-08-21T18:07:24+00:00",
-    "current_source_set_sha256": "3185936481b2c7ace129ccd86f73e06552a5c999c0db3ec7524202ff6d66784c",
-    "current_primary_content_sha256": "bb81cad361ee733be077b483540e1fc564ae73c51eb637470960cacb0edc0f29",
+    "current_source_generated_at": "2026-08-23T06:29:46+00:00",
+    "current_source_set_sha256": "1568656aeb0ba4dc419eea40dc89e521c257dac14c619f90d5d89db9211ec505",
+    "current_primary_content_sha256": "f3578224d317972d28a23eacd75599225e844d5e249409f5a05fdcc629a5f711",
     "latest_run_id": "shadow-20260822-post-saturation-v18-r1",
     "latest_status": "SHADOW_TERMINAL_COMPLETE",
     "latest_source_generated_at": "2026-08-21T18:07:24+00:00",

@@ -15,7 +15,8 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
         result = _run_public_projection_invariants()
         self.assertEqual(result["status"], "PUBLIC_CONTROL_PLANE_CONSISTENT")
         self.assertEqual(result["summary"]["machine_actionable_research_items"], 0)
-        self.assertEqual(result["summary"]["paper_internal_action_required"], 1)
+        self.assertEqual(result["summary"]["paper_internal_action_required"], 0)
+        self.assertEqual(result["summary"]["papers"], 5)
         self.assertEqual(result["summary"]["review_lessons"], 5)
         self.assertFalse(result["publication_authority"])
 
