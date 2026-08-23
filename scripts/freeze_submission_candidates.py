@@ -20,10 +20,10 @@ PROFILES={
   ('package_manifest','submission-packages/d2-failure-memory-provenance-submission-ready-20260822-0281fc40/package-manifest.json'),
  ],
  'D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE':[
-  ('paper_pdf','submission-packages/d2-proxy-reward-memory-variance-anonymized-20260823/main.pdf'),
-  ('source_zip','submission-packages/d2-proxy-reward-memory-variance-anonymized-20260823/source.zip'),
-  ('supplement_zip','submission-packages/d2-proxy-reward-memory-variance-anonymized-20260823/supplement.zip'),
-  ('package_manifest','submission-packages/d2-proxy-reward-memory-variance-anonymized-20260823/package-manifest.json'),
+  ('paper_pdf','submission-packages/d2-proxy-reward-memory-variance-venue-compliance-v1-20260823/main.pdf'),
+  ('source_zip','submission-packages/d2-proxy-reward-memory-variance-venue-compliance-v1-20260823/source.zip'),
+  ('supplement_zip','submission-packages/d2-proxy-reward-memory-variance-venue-compliance-v1-20260823/supplement.zip'),
+  ('package_manifest','submission-packages/d2-proxy-reward-memory-variance-venue-compliance-v1-20260823/package-manifest.json'),
  ],
  'STRI-ICLR2027':[
   ('paper_pdf','submission-packages/STRI-ICLR2027-20260816.pdf'),
