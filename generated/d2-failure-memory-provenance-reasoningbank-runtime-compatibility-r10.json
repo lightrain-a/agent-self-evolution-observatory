@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "audit_id": "D2-C45-REASONINGBANK-RUNTIME-COMPATIBILITY-R10",
+  "recorded_date": "2026-08-24",
+  "status": "DECLARED_PY313_RUNTIME_NOT_DIRECTLY_MATERIALIZABLE_PY312_WEBARENA_COMPATIBILITY_PATH_VERIFIED",
+  "role": "ZERO_MODEL_ZERO_BROWSER_TASK_RUNTIME_SUPPORT_AUDIT",
+  "first_party_runtime": {
+    "repository": "https://github.com/google-research/reasoning-bank.git",
+    "commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "pyproject_sha256": "8d2b9f61b5cae47ed7a83e61e4893f9c0a2c1035fe37ef64006748ab4934cfbe",
+    "uv_lock_sha256": "6835cc5149faf4ddd573cae98851bbd5db6844a1bed567fe8a85525d862d77fa",
+    "resolved_dependency_facts": {
+      "requires_python": ">=3.13",
+      "uv_lock_requires_python": ">=3.13",
+      "browsergym_core": "0.14.1",
+      "playwright": "1.44.0",
+      "greenlet": "3.0.3",
+      "greenlet_wheel_urls_in_lock": [],
+      "greenlet_sdist_sha256": "43374442353259554ce33599da8b692d5aa96f8976d567d4badf263371fbe491",
+      "greenlet_cp313_wheels_in_lock": 0
+    },
+    "static_incompatibility_signal": "The first-party project and lock require Python>=3.13 while the locked WebArena path resolves BrowserGym Core 0.14.1 -> Playwright 1.44.0 -> greenlet 3.0.3, with no cp313 greenlet wheel in the lock."
+  },
+  "python313_materialization_attempt": {
+    "path_role": "support-side isolated Python-3.13 install attempt log",
+    "sha256": "19d81f2ca7c419e3a2e420f4608f8fc1281a021352aa2acbf097ad6852dd9d98",
+    "exit_code": 1,
+    "target": "greenlet==3.0.3",
+    "markers": {
+      "failed_building_greenlet_wheel": true,
+      "failed_wheel_build": true,
+      "py_build_core_error": true,
+      "py_cframe_error": true
+    },
+    "scientific_outcome": false
+  },
+  "python312_compatibility_runtime": {
+    "environment_role": "minimal WebArena-component compatibility environment; not the first-party declared Python>=3.13 environment",
+    "environment_path": "/data/wyt/agent-self-evolution-observatory/runtimes/b1-reasoningbank-l2b-r10-py312-bg0141",
+    "python": "3.12.13",
+    "versions": {
+      "browsergym": "0.14.1",
+      "browsergym-core": "0.14.1",
+      "browsergym-experiments": "0.14.1",
+      "browsergym-webarena": "0.14.1",
+      "playwright": "1.44.0",
+      "greenlet": "3.0.3",
+      "libwebarena": "0.0.4"
+    },
+    "core_experiments_playwright_imports": true,
+    "core_import_error": null,
+    "webarena_spec": "/data/wyt/agent-self-evolution-observatory/runtimes/b1-reasoningbank-l2b-r10-py312-bg0141/lib/python3.12/site-packages/browsergym/webarena/__init__.py",
+    "webarena_import_completed": true,
+    "webarena_import_error": null,
+    "webarena_registered_task_ids": 812,
+    "private_nltk_data": "/home/wyt/.local/share/b1-reasoningbank-l2b-r10-nltk",
+    "punkt_tab_files": 77,
+    "playwright_chromium_revision": "1117",
+    "playwright_chromium_version": "125.0.6422.26",
+    "matching_default_chromium_cache_found": false,
+    "available_default_chromium_caches": [
+      "chromium-1084",
+      "chromium-1140"
+    ],
+    "webarena_site_env_configured": {
+      "REDDIT": "",
+      "SHOPPING": "",
+      "SHOPPING_ADMIN": "",
+      "GITLAB": "",
+      "WIKIPEDIA": "",
+      "MAP": "",
+      "HOMEPAGE": ""
+    },
+    "webarena_all_required_site_envs_present": false,
+    "webarena_like_docker_containers": [],
+    "live_webarena_deployment_detected": false,
+    "full_browsergym_meta_dependency_closure": false,
+    "missing_meta_extras_are_outside_planned_webarena_path": [
+      "browsergym-assistantbench",
+      "browsergym-miniwob",
+      "browsergym-visualwebarena",
+      "browsergym-workarena",
+      "weblinx-browsergym"
+    ],
+    "browser_task_started": false
+  },
+  "adjudication": {
+    "exact_declared_python313_runtime_materialized": false,
+    "exact_declared_runtime_support_failure": true,
+    "support_failure_is_scientific_failure": false,
+    "python312_browsergym0141_component_path_materialized": true,
+    "python312_webarena_import_verified": true,
+    "python312_live_browser_revision_ready": false,
+    "python312_live_webarena_site_deployment_ready": false,
+    "python312_path_is_source_faithful_as_declared": false,
+    "python312_path_may_be_silently_promoted_to_exact_runtime": false,
+    "browsergym_or_playwright_may_be_silently_upgraded": false,
+    "preferred_compatibility_deviation_if_l2_reopens": "Keep BrowserGym Core/Experiments/WebArena 0.14.1 and Playwright 1.44.0 fixed, use Python 3.12 only under an explicit compatibility-deviation label plus a pre-outcome live-runtime/evaluator fidelity gate. The interpreter deviation is shared across treatment arms, so it changes transport/runtime fidelity rather than the L2 within-runtime treatment definition.",
+    "alternative_exact_reopen": "Obtain a first-party corrected lock/runtime receipt that is actually installable under Python>=3.13.",
+    "l3_financial_transport_unblocked": false,
+    "scientific_verdict": "NO_VERDICT_RUNTIME_SUPPORT_FAILURE"
+  },
+  "remaining_pre_execution_gates": [
+    "choose and freeze exact-declared versus explicit Python-3.12 compatibility runtime policy",
+    "if compatibility runtime is used, acquire the exact Playwright Chromium revision 1117 and configure/deploy all seven WebArena site URLs before a source-native evaluator/reset smoke; private punkt_tab and WebArena import are already verified",
+    "bind source-memory generation/fixed selection",
+    "bind executor/model/version/paired rollout count and maximum request budget",
+    "bind L2-specific variance/noise source and final paired randomization implementation",
+    "obtain scientific and experiment/model-call authority"
+  ],
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "model_calls": false,
+    "browser_tasks": false,
+    "gpu": false,
+    "submission": false
+  },
+  "strongest_allowed_current_statement": "The pinned first-party ReasoningBank dependency declaration is not directly materializable on Linux/Python 3.13 as resolved: its locked BrowserGym 0.14.1 path fixes Playwright 1.44.0 and greenlet 3.0.3, whose source build fails against Python 3.13. A Python 3.12.13 environment with the same BrowserGym WebArena components, Playwright, and greenlet versions installs and imports WebArena, registering 812 tasks, establishing a compatibility path but not an exact-as-declared runtime. No browser task or model call was executed."
+}

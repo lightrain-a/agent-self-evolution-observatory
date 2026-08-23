@@ -555,12 +555,12 @@
         "verdict": "Weak Reject"
       },
       "read": {
-        "zh": "Round 2 已准确理解 L0–L3 与 causal sign unresolved。r7/r8 已闭合 paper-only、power/operational-equivalence 与 R5 provenance repair；r9 又在 pinned first-party ReasoningBank WebArena commit 中确认 source outcome 原生以 status=success/fail 独立于 memory_items 保存，只是默认 recall serialization 不把 status 暴露给 agent。",
-        "en": "Round 2 correctly understands L0–L3 and the unresolved causal sign. R7/r8 close the paper-only, power/operational-equivalence, and R5 provenance repairs; R9 additionally verifies at a pinned first-party ReasoningBank WebArena commit that source outcome is natively stored as status=success/fail separately from memory_items, but default recall serialization does not expose status to the agent."
+        "zh": "Round 2 已准确理解 L0–L3 与 causal sign unresolved。r9 已确认 first-party ReasoningBank 原生保存 source-outcome status，并冻结 36-unit fresh L2B cohort；r10 进一步完成 runtime compatibility audit：first-party lock 的 Python>=3.13 + BrowserGym 0.14.1 + Playwright 1.44 + greenlet 3.0.3 组合无法按标准构建直接物化，而 Python 3.12.13 保持相同 WebArena/Playwright 组件版本可以安装并导入 WebArena（812 tasks）。这属于 runtime support diagnosis，不是科学结果。",
+        "en": "Round 2 correctly understands L0–L3 and the unresolved causal sign. R9 verifies the first-party ReasoningBank native source-outcome status field and freezes a fresh 36-unit L2B cohort. R10 adds a runtime compatibility audit: the first-party lock combining Python>=3.13, BrowserGym 0.14.1, Playwright 1.44, and greenlet 3.0.3 is not directly materializable through the standard build path, while Python 3.12.13 with the same WebArena/Playwright component versions installs and imports WebArena (812 tasks). This is runtime-support diagnosis, not a scientific result."
       },
       "next": {
-        "zh": "O5 的最佳路线已切到 first-party ReasoningBank status adapter：36 个 template-independent fresh downstream units、two-sided |Δ|≥.15 / task-level randomization sensitivity 与 fail-closed adapter skeleton 都已 pre-outcome 冻结。当前剩余门是 exact BrowserGym 0.14.1/Python>=3.13 runtime、L2-specific variance/noise source与paired rollout假设、source-memory generation/fixed-selection binding、executor/model/request budget，以及 scientific/experiment authority。O6 financial L3 仍独立 support-blocked。",
-        "en": "The best O5 path is now a first-party ReasoningBank status adapter: 36 template-independent fresh downstream units, the two-sided |Δ|≥.15 task-level randomization sensitivity, and a fail-closed adapter skeleton are frozen pre-outcome. Remaining gates are the exact BrowserGym 0.14.1/Python>=3.13 runtime, an L2-specific variance/noise source and paired-rollout assumptions, source-memory generation/fixed-selection binding, executor/model/request budget, and scientific/experiment authority. O6 financial L3 remains independently support-blocked."
+        "zh": "O5 的 runtime policy 已 pre-outcome 冻结为显式 Python 3.12 compatibility deviation；不得冒充 exact-as-declared 或 L3 transport。package/import 层已解锁，live 层仍缺 Playwright Chromium revision 1117 与七个 WebArena site deployment/URL bindings；其后还要做 0-model reset/evaluator smoke，并冻结 source-memory generation、executor/model/request budget、L2-specific variance/noise 与 paired-rollout assumptions。scientific/experiment authority 仍为 false。O6 financial L3 完全独立且仍 support-blocked。",
+        "en": "O5 now has a pre-outcome runtime policy selecting an explicit Python 3.12 compatibility deviation; it must not be represented as exact-as-declared runtime or L3 transport. Package/import support is unlocked, while the live layer still lacks Playwright Chromium revision 1117 and the seven WebArena site deployments/URL bindings. A zero-model reset/evaluator smoke must then pass, followed by frozen source-memory generation, executor/model/request budget, and L2-specific variance/noise plus paired-rollout assumptions. Scientific and experiment authority remain false. O6 financial L3 is independent and remains support-blocked."
       },
       "objections": [
         {
@@ -631,17 +631,17 @@
           },
           "d": "REQUIRES_SCIENTIFIC_REOPEN",
           "why": {
-            "zh": "历史事实保持不变：R5 exact-information L2 仍是 frozen 5/10 support stop、0 model calls；6-task/144-call generic explicit-cue bridge 仍是 Δ=0、p=1 的 INCONCLUSIVE auxiliary evidence，二者禁止拼接。r9 新增的是独立 reopen object：在 first-party ReasoningBank commit ed806117… 上，writer 将 source trajectory reward 映射为 status=success/fail，并把 status 与 memory_items 分字段保存；select_memory 返回完整 record，而默认 run.py 只序列化 memory_items，因此 status 是 source-native 但 executor-hidden 的 process-provenance field。对 frozen 187-task shopping asset 排除全部 prior-D2 downstream IDs，并限制每个 intent template 只取一个 fresh downstream unit 后，得到 36 个 template-independent official-evaluator units；selection 不读取 downstream/source outcome，source assignment 固定后才读取 native status，最终 source provenance 自然为 15 success / 21 fail。这个结果解除“support capacity dead-end”，但没有产生任何 scientific outcome。",
-            "en": "Historical facts remain unchanged: R5 exact-information L2 is still a frozen 5-of-10 support stop with zero model calls; the six-task/144-call generic explicit-cue bridge remains INCONCLUSIVE with delta=0 and p=1, and the two cannot be pooled. R9 adds a separate prospective reopen object: at first-party ReasoningBank commit ed806117…, the writer maps source-trajectory reward to status=success/fail and stores status separately from memory_items; select_memory returns the full record, while default run.py serializes only memory_items, making status a source-native but executor-hidden process-provenance field. On the frozen 187-task shopping asset, after excluding every prior-D2 downstream ID and allowing at most one fresh downstream unit per intent template, a deterministic zero-call census yields 36 template-independent units with official evaluators. Selection reads neither downstream nor source outcomes; native source status is read only after source assignment, yielding an incidental 15 success / 21 fail provenance split. This removes the support-capacity dead end but produces no scientific outcome."
+            "zh": "历史 R5 5/10 zero-call support stop 与 6-task/144-call generic explicit-cue bridge 的裁决均不变，也禁止与 r9/r10 拼接。r9 已证明 first-party ReasoningBank commit ed806117… 原生以 status=success/fail 独立保存 source trajectory outcome，并冻结 36 个 template-independent fresh downstream units。r10 对其 first-party runtime 做 content-pinned 审计：pyproject/uv.lock 要求 Python>=3.13，并解析为 BrowserGym Core 0.14.1 → Playwright 1.44.0 → greenlet 3.0.3；greenlet 3.0.3 在隔离 Python 3.13.15 环境标准构建实测失败（Py_BUILD_CORE/_PyCFrame），因此 exact declared runtime 当前 support-fail。对照的 Python 3.12.13 环境保持 BrowserGym Core/Experiments/WebArena 0.14.1、Playwright 1.44.0、greenlet 3.0.3、libwebarena 0.0.4，已安装并成功 import WebArena、注册 812 tasks，0 browser task/0 model call。该 compatibility path 只能作为两个 metadata arms 共用的 evaluated substrate；不能提升为 exact runtime 或 financial L3。live WebArena 仍缺 Chromium revision 1117，七个 site URL 均未配置且未检测到对应 deployment。",
+            "en": "Historical R5 (5/10, zero calls) and the six-task/144-call generic explicit-cue bridge remain unchanged and may not be pooled with R9/R10. R9 shows that first-party ReasoningBank commit ed806117… natively stores source-trajectory outcome as a separate status=success/fail field and freezes 36 template-independent fresh downstream units. R10 content-pins the first-party runtime: pyproject/uv.lock require Python>=3.13 and resolve BrowserGym Core 0.14.1 -> Playwright 1.44.0 -> greenlet 3.0.3; the standard greenlet 3.0.3 build reproducibly fails in an isolated Python 3.13.15 environment (Py_BUILD_CORE/_PyCFrame), so the exact declared runtime is currently a support failure. A comparison Python 3.12.13 environment keeps BrowserGym Core/Experiments/WebArena 0.14.1, Playwright 1.44.0, greenlet 3.0.3, and libwebarena 0.0.4, installs successfully, imports WebArena, and registers 812 tasks with zero browser tasks and zero model calls. This compatibility path can only be the shared evaluated substrate for both metadata arms; it cannot be promoted to an exact runtime or financial L3 claim. Live WebArena still lacks Chromium revision 1117, all seven site URLs are unset, and no corresponding deployment is detected."
           },
           "reopen": {
-            "zh": "保持 R5 永久冻结，不做 5/10 rescue。新的 L2B/R9 已冻结 36-unit cohort、native status channel、two-sided primary direction 和 full-cohort/no-replacement 规则。下一步只允许：1) 物化 exact Python>=3.13 + BrowserGym/WebArena 0.14.1 runtime；2) 在任何 outcome 前冻结 L2-specific variance/noise source、paired rollout/seed 数、source-memory generation/fixed selection、executor/model/request budget、missingness/retry 与最终 randomization implementation；3) 获得独立 scientific + experiment/model-call authority。只有全部通过后才执行。",
-            "en": "Keep historical R5 frozen; do not rescue 5/10. The new L2B/R9 object already freezes the 36-unit cohort, native status channel, two-sided primary direction, and full-cohort/no-replacement rules. The only allowed next steps are: (1) materialize the exact Python>=3.13 + BrowserGym/WebArena 0.14.1 runtime; (2) before any outcome, freeze an L2-specific variance/noise source, paired rollout/seed count, source-memory generation/fixed selection, executor/model/request budget, missingness/retry policy, and final randomization implementation; and (3) obtain separate scientific and experiment/model-call authority. Execute only after all gates pass."
+            "zh": "保持 R5 永久冻结。新的 L2B/R10 已冻结 runtime policy 为 `PY312_BG0141_EXPLICIT_COMPATIBILITY_DEVIATION`：两个 arm 必须共用 Python 3.12.13 + BrowserGym Core/Experiments/WebArena 0.14.1 + Playwright 1.44.0 + greenlet 3.0.3 + libwebarena 0.0.4，ReasoningBank source commit、36-unit cohort、status renderer、two-sided primary 均保持不变。下一步只允许 support-side 恢复 Chromium 1117 与七站点 deployment/URL，跑 0-model reset/evaluator smoke；随后冻结 source-memory generation/fixed selection、executor/model/request budget、L2-specific variance/noise 与 paired rollout/seed、missingness/retry 和最终 randomization implementation。全部通过且获得 scientific + experiment/model-call authority 后才执行。",
+            "en": "Keep R5 permanently frozen. The new L2B/R10 object freezes runtime policy as `PY312_BG0141_EXPLICIT_COMPATIBILITY_DEVIATION`: both arms must share Python 3.12.13 + BrowserGym Core/Experiments/WebArena 0.14.1 + Playwright 1.44.0 + greenlet 3.0.3 + libwebarena 0.0.4, while the ReasoningBank source commit, 36-unit cohort, status renderer, and two-sided primary remain unchanged. The only allowed next support steps are recovering Chromium 1117 and the seven-site deployment/URL bindings, then passing a zero-model reset/evaluator smoke. After that, freeze source-memory generation/fixed selection, executor/model/request budget, L2-specific variance/noise and paired rollout/seed assumptions, missingness/retry policy, and final randomization implementation. Execute only after all gates pass and separate scientific plus experiment/model-call authority is granted."
           },
           "action": "SCIENTIFIC_REOPEN_REQUIRED",
-          "e": "B1 r9 first-party ReasoningBank status preflight: pinned ed806117, 36 template-independent fresh units, 0 calls; plus r8 R5/bridge reconciliation",
-          "engineering_reproducibility": "RESOLVED_R9_NATIVE_FIELD_AND_FRESH_COHORT",
-          "scientific_gap": "OPEN_RUNTIME_SOURCE_MEMORY_EXECUTOR_VARIANCE_AND_AUTHORITY_NO_VERDICT",
+          "e": "B1 r10 runtime compatibility audit + runtime addendum; r9 native status / 36-unit L2B preflight; historical R5/bridge unchanged",
+          "engineering_reproducibility": "RESOLVED_R10_NATIVE_FIELD_COHORT_AND_RUNTIME_COMPATIBILITY_DIAGNOSIS",
+          "scientific_gap": "OPEN_LIVE_WEBARENA_DEPLOYMENT_SOURCE_MEMORY_EXECUTOR_VARIANCE_AND_AUTHORITY_NO_VERDICT",
           "historical_auxiliary_bridge": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY_6_TASKS_144_CALLS_DELTA_0_UNCHANGED",
           "r5_execution": "UNEXECUTED_SUPPORT_FAILURE_5_OF_10_UNCHANGED",
           "pooling": "FORBIDDEN_R5_BRIDGE_R9_ARE_SEPARATE_OBJECTS",
@@ -678,6 +678,38 @@
             "primary_test": "two-sided task-level paired randomization/sign-flip test",
             "full_36_cohort_required": true,
             "unconditional_80pct_power_claim": false
+          },
+          "reasoningbank_runtime_r10": {
+            "audit_status": "DECLARED_PY313_RUNTIME_NOT_DIRECTLY_MATERIALIZABLE_PY312_WEBARENA_COMPATIBILITY_PATH_VERIFIED",
+            "audit_receipt": "generated/d2-failure-memory-provenance-reasoningbank-runtime-compatibility-r10.json",
+            "runtime_addendum_status": "PY312_BG0141_COMPATIBILITY_RUNTIME_SELECTED_PREOUTCOME_LIVE_DEPLOYMENT_BLOCKED",
+            "runtime_addendum_receipt": "generated/d2-failure-memory-provenance-l2b-runtime-addendum-r10.json",
+            "selected_runtime_label": "PY312_BG0141_EXPLICIT_COMPATIBILITY_DEVIATION",
+            "python": "3.12.13",
+            "browsergym_webarena": "0.14.1",
+            "playwright": "1.44.0",
+            "greenlet": "3.0.3",
+            "libwebarena": "0.0.4",
+            "webarena_import_verified": true,
+            "registered_webarena_task_ids": 812,
+            "expected_chromium_revision": "1117",
+            "matching_chromium_cache_found": false,
+            "required_site_envs": [
+              "REDDIT",
+              "SHOPPING",
+              "SHOPPING_ADMIN",
+              "GITLAB",
+              "WIKIPEDIA",
+              "MAP",
+              "HOMEPAGE"
+            ],
+            "live_webarena_deployment_detected": false,
+            "exact_as_declared_claim_allowed": false,
+            "o6_l3_unblocked": false,
+            "scientific_authority": false,
+            "experiment_authority": false,
+            "model_calls": false,
+            "browser_tasks": false
           }
         },
         {
