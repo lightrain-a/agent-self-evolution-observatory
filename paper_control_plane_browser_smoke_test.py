@@ -59,6 +59,8 @@ def main() -> None:
             gateCleanCount: [...document.querySelectorAll('.paper-registry-card')].filter(x => x.dataset.gateClean === 'true').length,
             noveltyPortfolio: document.querySelectorAll('#paper-novelty-portfolio').length,
             noveltyDetails: document.querySelectorAll('.paper-novelty-detail').length,
+            noveltyAttackCards: document.querySelectorAll('[data-reviewer-novelty-attack]').length,
+            noveltyAttackText: [...document.querySelectorAll('[data-reviewer-novelty-attack]')].map(x => x.textContent || '').join(' | '),
             readerPortfolio: document.querySelectorAll('#paper-reader-portfolio').length,
             readerBriefs: document.querySelectorAll('.paper-reader-brief').length,
             readerEvidenceCards: document.querySelectorAll('.paper-reader-evidence-card').length,
@@ -106,9 +108,10 @@ def main() -> None:
         expected_internal = sum(action != "NO_INTERNAL_ACTION" for action in selected["actions"].values())
         require(summary.get("gate_clean_submission_ready") == selected["gateCleanCount"], f"gate-clean count must be derived from current paper rows: {summary}")
         require(summary.get("internal_action_required") == expected_internal and summary.get("no_internal_action") == 5 - expected_internal, f"internal-action split must follow current paper rows: {summary}")
-        require(selected["noveltyPortfolio"] == 1 and selected["noveltyDetails"] == 5, "advisor novelty audit must remain preserved for all five papers")
+        require(selected["noveltyPortfolio"] == 1 and selected["noveltyDetails"] == 5 and selected["noveltyAttackCards"] == 5, "advisor novelty audit and reviewer-attack layer must cover all five papers")
+        require(all(marker in selected["noveltyAttackText"] for marker in ("Mem-α", "AttriMem", "Anything2Skill", "MutMem", "Experiential Reflective Learning", "unresolved")), f"reviewer novelty attack is missing decision-critical pressure works or boundaries: {selected['noveltyAttackText'][:2500]}")
         require(selected["readerPortfolio"] == 1 and selected["readerBriefs"] == 5 and selected["readerFigures"] == 5, f"reader-first paper layer is incomplete: {selected}")
-        require(selected["storyBlueprint"] == 1 and selected["storyPhases"] == 5 and selected["storyBlueprintSteps"] == 15 and selected["openFullStoryContracts"] == 0 and selected["storyArchetypes"] == 5 and selected["storyPapers"] == 5 and selected["storyClosestWorkFolds"] == 5 and selected["openStoryClosestWorkFolds"] == 0 and selected["storyClosestWorkGroups"] == 16 and selected["storyClosestWorkCards"] == 37 and len(selected["storyClosestWorkLinks"]) == 37 and all(link.startswith("https://") for link in selected["storyClosestWorkLinks"]) and selected["storyMissingObjects"] == 5 and selected["storyGapCards"] == 15 and selected["storyPredictions"] >= 15 and selected["storyAlternatives"] >= 15 and selected["storyContracts"] == 5 and selected["storyRQs"] >= 16 and selected["storyComponents"] >= 18 and selected["storyStressTests"] >= 15 and selected["storyMechanisms"] >= 14 and selected["storyCoE"] == 5 and selected["storyOutlineRows"] >= 35, f"Paper Story V3 argument-chain / closest-work layer is incomplete: {selected}")
+        require(selected["storyBlueprint"] == 1 and selected["storyPhases"] == 5 and selected["storyBlueprintSteps"] == 15 and selected["openFullStoryContracts"] == 0 and selected["storyArchetypes"] == 5 and selected["storyPapers"] == 5 and selected["storyClosestWorkFolds"] == 5 and selected["openStoryClosestWorkFolds"] == 0 and selected["storyClosestWorkGroups"] == 16 and selected["storyClosestWorkCards"] == 42 and len(selected["storyClosestWorkLinks"]) == 42 and all(link.startswith("https://") for link in selected["storyClosestWorkLinks"]) and selected["storyMissingObjects"] == 5 and selected["storyGapCards"] == 15 and selected["storyPredictions"] >= 15 and selected["storyAlternatives"] >= 15 and selected["storyContracts"] == 5 and selected["storyRQs"] >= 16 and selected["storyComponents"] >= 18 and selected["storyStressTests"] >= 15 and selected["storyMechanisms"] >= 14 and selected["storyCoE"] == 5 and selected["storyOutlineRows"] >= 35, f"Paper Story V3 argument-chain / closest-work layer is incomplete: {selected}")
         expected_download_pdfs = {"downloads/E1-STRI.pdf", "downloads/G1-Agent-Safety-R9.pdf", "downloads/C1-Proxy-Reward.pdf", "downloads/E2-Temporal-Skill.pdf", "downloads/B1-Failure-Memory.pdf"}
         expected_download_zips = {"downloads/STRI-ICLR2027-source.zip", "downloads/Agent-Safety-R9-source.zip", "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip", "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip", "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip"}
         expected_download_supplements = {"downloads/Agent-Safety-R9-supplement.zip", "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-supplement.zip"}
@@ -193,7 +196,9 @@ def main() -> None:
                 "256 rollout",
                 "p=0.00074",
                 "no-skill anchor",
-                "causal sign unresolved",
+                "L0–L3",
+                "5/10",
+                "0 calls",
                 "下载论文 PDF",
                 "下载源码 ZIP",
                 "E1 技能 · STRI · 技能分类表示不变性",
@@ -204,7 +209,7 @@ def main() -> None:
             )
             require(all(marker in zh_text for marker in zh_markers), f"Chinese paper-story chain is incomplete: {[m for m in zh_markers if m not in zh_text]}")
             print("PASS")
-            print("Selected-paper Paper Story V3 verified in EN+ZH: 5 papers / 10 stable PDF+ZIP download buttons / 15-step blueprint / 5 archetypes / 16 approach groups / 37 closest-work comparisons / missing-object / mechanism-prediction / evaluation-contract / stress-test / CoE / collapsed audit")
+            print("Selected-paper Paper Story V3 verified in EN+ZH: 5 papers / 10 stable PDF+ZIP download buttons / 15-step blueprint / 5 archetypes / 16 approach groups / 42 closest-work comparisons / 5 reviewer novelty attacks / missing-object / mechanism-prediction / evaluation-contract / stress-test / CoE / collapsed audit")
             return
 
         navigate(session_id, "/index.html")

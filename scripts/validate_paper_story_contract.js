@@ -62,6 +62,7 @@ for (const [paperId, story] of Object.entries(stories)) {
   }
   arrayMin(story, "approaches", 2);
   const closestWorkUrls = new Set();
+  const closestWorkTitles = new Set();
   for (const approach of story.approaches || []) {
     if (!String(approach.name || "").trim()) errors.push(`${paperId}:approach missing name`);
     if (!nonempty({ zh: approach.how_zh, en: approach.how_en })) errors.push(`${paperId}:${approach.name || "approach"} missing how-it-works explanation`);
@@ -82,6 +83,7 @@ for (const [paperId, story] of Object.entries(stories)) {
       for (const key of ["what","solves","overlap","missing","boundary"]) {
         if (!nonempty(work[key])) errors.push(`${paperId}:${approach.name || "approach"}:${title || "closest work"} missing ${key}`);
       }
+      if (title) closestWorkTitles.add(title);
       if (url) {
         if (withinApproach.has(url)) errors.push(`${paperId}:${approach.name || "approach"} duplicates closest-work URL:${url}`);
         withinApproach.add(url);
@@ -92,6 +94,16 @@ for (const [paperId, story] of Object.entries(stories)) {
   for (const nearest of noveltyPapers[paperId]?.nearest || []) {
     const url = String(nearest.u || "").trim();
     if (url && !closestWorkUrls.has(url)) errors.push(`${paperId}:decision-critical novelty work is missing from approaches[].closest_work:${url}`);
+  }
+  const noveltyAttack = noveltyPapers[paperId]?.reviewer_attack || {};
+  for (const field of ["strongest_attack","surrender","defended_residual","manuscript_action"]) {
+    if (!nonempty(noveltyAttack[field])) errors.push(`${paperId}:reviewer novelty attack missing ${field}`);
+  }
+  if (!String(noveltyAttack.verdict || "").trim()) errors.push(`${paperId}:reviewer novelty attack missing verdict`);
+  if (!Array.isArray(noveltyAttack.pressure_titles) || noveltyAttack.pressure_titles.length < 2) {
+    errors.push(`${paperId}:reviewer novelty attack must cite at least two pressure works`);
+  } else {
+    for (const title of noveltyAttack.pressure_titles) if (!closestWorkTitles.has(String(title))) errors.push(`${paperId}:reviewer novelty pressure work is missing from approaches[].closest_work:${title}`);
   }
   arrayMin(story, "gaps", 2);
   arrayMin(story, "design_requirements", 2);
