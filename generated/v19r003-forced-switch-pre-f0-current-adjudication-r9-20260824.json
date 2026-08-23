@@ -1,0 +1,106 @@
+{
+  "artifact_kind": "V19R003_PRE_F0_CURRENT_ADJUDICATION_R9",
+  "authority": {
+    "experiment": false,
+    "full_experiment": false,
+    "method": false,
+    "p0": false,
+    "paper_design": false,
+    "problem_gate": false
+  },
+  "bookkeeping_correction": {
+    "correction": "54/54 was a bookkeeping overcount; exact current aggregate is 45/45 distinct tests.",
+    "deepseek_calls": 0,
+    "external_llm_api_calls": 0,
+    "historical_artifacts_preserved": [
+      "generated/v19r003-forced-switch-l1-zero-api-runtime-r1-20260823.json",
+      "generated/v19r003-forced-switch-pre-f0-current-adjudication-r7-20260823.json"
+    ],
+    "paid_api_state_changed": false,
+    "scientific_state_changed": false
+  },
+  "branch": "research/v19r003-forced-switch-pre-f0-20260823",
+  "branch_head_before_r9_commit": "78fea0f",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "candidate_snapshot_sha256": "47ea60fb13e3ec723d2a871b58ab1a3c6e9e565eea01e1cd838c67f9f2b39777",
+  "canonical_base": "2fedb56c2697503d606a7ccc5f084067b539e4fa",
+  "current_status": "L1_ZERO_API_COMPLETE_SEQUENTIAL_PAID_GATE_FROZEN_UNAUTHORIZED",
+  "frozen_primary_endpoint": {
+    "final_benchmark_score_as_primary_endpoint": false,
+    "llm_judge": false,
+    "post_conflict_free": "post-boundary RL must continue from the current pre-boundary checkpoint without rollback",
+    "post_execution": "same method/config with learning rate exactly halved",
+    "post_strategy": "post-boundary strategy enactment requires real RL; SFT before RL or later SFT is partial/mixed",
+    "pre": "RL starts immediately or after at most one SFT warm-up; extra SFT delay or return to SFT is mixing/reversion",
+    "rubric": "V19R003_TRAJECTORY_ADHERENCE_V1"
+  },
+  "generated_at": "2026-08-23T16:34:33Z",
+  "next_valid_action": "Keep DeepSeek disabled per cost policy. No additional API-free execution prerequisite remains for the bounded L1 falsifier. If paid evidence is opened later, authorize PRE_STRATEGY only; after each arm, apply the frozen sequential table and stop immediately when a reduction dominates. Even the strongest four-arm residual only reopens exact-reduction adjudication and does not pass ProblemGate.",
+  "paid_pre_strategy_contract": {
+    "artifact": "generated/v19r003-forced-switch-deepseek-pre-contract-r1-20260823.json",
+    "evaluation_action_cap": 1,
+    "first_paid_gate": "PRE_STRATEGY only",
+    "first_paid_go": "deterministic adherence status ADHERED_UNCALIBRATED",
+    "first_paid_stop": "any PRE result other than clean ADHERED_UNCALIBRATED; do not purchase POST/control arms",
+    "paid_probe_authorized": false,
+    "provider_call_cap": 4,
+    "provider_model": "deepseek-v4-pro",
+    "provider_output_token_cap_total": 2048,
+    "sha256": "a3f5957bf29d0bf3ffc028288089be85ec44501c3f4150de55a4db9f72a3d2ef",
+    "status": "FROZEN_UNAUTHORIZED",
+    "training_action_cap": 2
+  },
+  "runtime_support": {
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_clean_after_validation": true,
+    "gpu_gate": "PASS_EQUIVALENT_SUBSTRATE_NOT_SOURCE_EXACT",
+    "host": "69",
+    "official_ptb_container_required_for_current_l1": false,
+    "official_ptb_container_required_for_source_exact_l2": true,
+    "source_exact_claim_allowed": false
+  },
+  "schema_version": "1.0-v19r003-current-adjudication-r9",
+  "scientific_state": {
+    "canonical_projection": false,
+    "canonical_researchitem_created": false,
+    "closest_work": "arXiv:2608.19072",
+    "pre_f0_eligible": true,
+    "problem_gate_pass": false,
+    "reduction_status": "NEEDS_EXACT_REDUCTION_TEST",
+    "scientific_arms_executed": 0,
+    "scientific_authority": false,
+    "strongest_reduction": "source-authors missing-spontaneity-not-capability diagnosis"
+  },
+  "sequential_paid_gate": {
+    "artifact": "generated/v19r003-forced-switch-sequential-paid-decision-prereg-r1-20260824.json",
+    "deepseek_calls": 0,
+    "external_llm_api_calls": 0,
+    "parallel_arm_purchase_forbidden": true,
+    "problem_gate_can_be_passed_by_table": false,
+    "sha256": "a64c0f9b6c24d6236538b46918cb4993e6cf46dec967faa62fd9381d27cd5123",
+    "status": "FROZEN_UNAUTHORIZED"
+  },
+  "superseded_r6_sha256": "d6cb6801b1de31f414cc705614cc25f5d2030535d6c61415d8b9a0c1f7ffb187",
+  "superseded_r7_sha256": "ef30924496805bd61973b3e2cccde2b225884793b9c563ae580e2f384eb536ba",
+  "superseded_r8_sha256": "7f426a70aa4fe25257785e516f8cdb990c3efa2d82b590e820f74698052d45b3",
+  "supersedes": "generated/v19r003-forced-switch-pre-f0-current-adjudication-r8-20260824.json",
+  "zero_api_execution_state": {
+    "deepseek_calls": 0,
+    "deterministic_trajectory_adherence_rubric": "PASS",
+    "external_llm_api_calls": 0,
+    "git_diff_check": "PASS",
+    "gsm8k_training_data_ptb_contamination_check": "PASS_0_OF_64",
+    "l0_a100_parameter_update": "PASS",
+    "phase1_blinding": "PASS",
+    "ptb_official_aime_evaluator_runtime": "PASS",
+    "real_rl_persistent_checkpoint": "PASS_CAPABILITY_ONLY_REWARD_EFFECTIVENESS_UNESTABLISHED",
+    "real_sft_persistent_checkpoint": "PASS",
+    "rl_checkpoint_official_evaluator_reload": "PASS",
+    "runtime_consolidation": "generated/v19r003-forced-switch-l1-zero-api-runtime-r2-20260824.json",
+    "runtime_consolidation_sha256": "c538240c3c292be8f4681f1011436b87903b02f7269f4017cdcf30b19676a007",
+    "scripted_sft_boundary_rl_evaluator_rehearsal": "PASS",
+    "status": "PASS",
+    "structured_tool_loop": "PASS",
+    "unit_tests": "55/55 PASS (45 prior distinct tests + 10 sequential decision-gate tests)"
+  }
+}
