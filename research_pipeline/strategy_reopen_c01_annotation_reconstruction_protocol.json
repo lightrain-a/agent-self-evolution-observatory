@@ -1,0 +1,166 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "STRATEGY-REOPEN-C01",
+  "title": "Frozen independent reconstruction protocol for PostTrainBench strategy state",
+  "status": "FROZEN_BEFORE_TRAJECTORY_PAYLOAD_ACCESS_ZERO_AUTHORITY",
+  "recorded_date": "2026-08-23",
+  "source_definition": {
+    "paper": "arXiv:2608.19072v1",
+    "sections": [
+      "2.2 Annotation Protocol",
+      "Appendix A.2 Strategy Annotation",
+      "Appendix A.3 Metrics Definition",
+      "Appendix A.4 Audit of Strategy-Changing Trajectories"
+    ],
+    "source_state": "s=(k,d,g)",
+    "k": "training objective/update family",
+    "d": "data-source type",
+    "g": "stage structure"
+  },
+  "reconstruction_role": "This protocol creates independently reconstructed labels on a pinned official PostTrainBench-Trajectories revision. The labels must never be represented as source-author labels and the resulting realization must never be described as reproducing the paper's exact 1,338-trajectory corpus unless a later authoritative snapshot binding is obtained.",
+  "training_experiment_gate": {
+    "positive_rule": "Count an experiment only when an executed command starts a model parameter update.",
+    "explicit_non_experiments": [
+      "writing or editing a training script without launching parameter updates",
+      "data preparation or cleaning",
+      "package installation",
+      "checkpoint evaluation",
+      "adapter merge",
+      "checkpoint save/copy without a new update"
+    ],
+    "required_evidence": [
+      "executed command",
+      "trainer/update mechanism evidence from the command, script/config referenced by the command, loss/objective strings, or retained trace evidence"
+    ],
+    "ambiguous_rule": "If a parameter update cannot be established from source-visible evidence, mark NOT_VERIFIED_TRAINING_EXPERIMENT; never infer it from a later score improvement."
+  },
+  "k_training_family": {
+    "labels": [
+      {
+        "label": "FULL_SFT",
+        "rule": "Likelihood/supervised training that updates all model parameters."
+      },
+      {
+        "label": "PEFT",
+        "rule": "Likelihood/supervised training through LoRA, QLoRA, or another adapter/parameter-efficient mechanism."
+      },
+      {
+        "label": "RL",
+        "rule": "Sampled model outputs optimized with a reward signal, including PPO/GRPO-style objectives."
+      },
+      {
+        "label": "PREFERENCE_OPTIMIZATION",
+        "rule": "Preferred/rejected response training, including DPO-style objectives."
+      },
+      {
+        "label": "DISTILLATION",
+        "rule": "Training on supervision or outputs produced by a teacher model."
+      },
+      {
+        "label": "UNRESOLVED_K",
+        "rule": "Source-visible evidence is insufficient or conflicting; never impute from agent identity, benchmark, final model name, or downstream score."
+      }
+    ],
+    "within_family_non_changes": [
+      "learning-rate change",
+      "batch-size change",
+      "epoch/count change",
+      "reward shaping that remains within the same RL objective family",
+      "format/template adjustment",
+      "checkpoint selection",
+      "implementation repair"
+    ]
+  },
+  "d_data_source": {
+    "labels": [
+      "CURATED",
+      "SELF_GENERATED",
+      "MIXED",
+      "UNRESOLVED_D"
+    ],
+    "evidence_rule": "Use file provenance plus executed commands that construct or consume the training data.",
+    "rl_on_policy_rule": "On-policy rollouts used by RL are part of the RL objective and are not counted again as a data-source change.",
+    "missing_rule": "Missing data-source labels are never imputed."
+  },
+  "g_stage_structure": {
+    "new_stage_rule": "Count a stage-structure change only when the trace intentionally begins a new training stage initialized from an in-run checkpoint/model produced by an earlier stage.",
+    "non_stage_changes": [
+      "ordinary continuation from the same stage",
+      "restart after crash without a changed stage objective",
+      "new learning rate or optimizer setting within the same stage",
+      "checkpoint evaluation/selection",
+      "adapter merge by itself"
+    ],
+    "ambiguous_label": "UNRESOLVED_G"
+  },
+  "annotation_evidence_window": {
+    "experiment_record": "Use source-visible events from the end of the prior verified training experiment through the current training launch and its immediately associated source-visible configuration/script references. Later benchmark outcomes may not be used to infer k, d, or g.",
+    "transition_record": "Compare two adjacent verified experiment records using only their frozen reconstructed states and transition-local source-visible commands/context.",
+    "continuation_endpoint": "For an F0 continuation, annotate the next committed high-level training action from its executed/committed command and source-visible configuration. Hide arm identity, treatment wording, and downstream performance from the endpoint annotator."
+  },
+  "strategy_transition_rule": {
+    "positive": "STRATEGY_CHANGE if a source-visible executed/committed next action changes any confidently reconstructed component among k, d, or g.",
+    "negative": "NO_STRATEGY_CHANGE only when the next committed training action is confidently classifiable and remains within the current frozen strategy family; hyperparameter/local execution edits are zero.",
+    "censor": "UNRESOLVED_TRANSITION if the relevant component cannot be established without inference from downstream outcome or hidden state.",
+    "no_imputation": true
+  },
+  "annotation_pipeline": [
+    {
+      "stage": "P0_DETERMINISTIC_EVIDENCE_EXTRACTION",
+      "rule": "Extract training-launch commands, referenced trainer/config/loss strings, data-provenance commands/paths, checkpoint lineage, and stage-initialization evidence without assigning a strategy label."
+    },
+    {
+      "stage": "P1_BLINDED_ANNOTATOR_A",
+      "rule": "Annotate verified experiment status, k, d, g, evidence spans, and confidence from the frozen schema; no trajectory ID metadata that reveals another label or treatment arm."
+    },
+    {
+      "stage": "P2_BLINDED_ANNOTATOR_B",
+      "rule": "Independently repeat P1 with the same frozen schema and evidence but without seeing Annotator A."
+    },
+    {
+      "stage": "P3_RULE_BASED_ADJUDICATION",
+      "rule": "Disagreements are resolved only by the frozen evidence hierarchy and schema. If evidence remains ambiguous, output UNRESOLVED rather than forcing agreement."
+    }
+  ],
+  "reliability_gate_before_unit_selection": {
+    "calibration_sample": "Freeze an outcome-blind sample of at least 50 verified training-experiment records spanning at least three benchmark families and at least two agent/scaffold families from the pinned revision before F0 unit selection.",
+    "minimum_exact_agreement_k": 0.9,
+    "minimum_exact_agreement_transition_class": 0.9,
+    "maximum_forced_adjudication_rate": 0.1,
+    "public_anchor_checks": [
+      "The five Appendix A.4 public objective-family examples 3fd3ea0b, c92715d6, 50c64287, 860ceacd, and 8226f786 must reconstruct an SFT-to-preference/RL objective-family change consistent with the paper's described transition.",
+      "Hyperparameter-only and implementation-repair examples in the calibration sample must remain execution-level rather than strategy changes."
+    ],
+    "on_fail": "HOLD_ANNOTATION_RECONSTRUCTION_NOT_RELIABLE",
+    "threshold_tuning_after_labels": false
+  },
+  "f0_endpoint_constraints": {
+    "primary_endpoint": "next committed high-level action crosses the frozen reconstructed k/d/g strategy boundary",
+    "annotator_blind_to_arm": true,
+    "annotator_blind_to_downstream_score": true,
+    "unresolved_is_censored_not_zero": true,
+    "no_unit_replacement_after_any_scored_continuation": true,
+    "same_protocol_for_positive_and_adversarial_negative_units": true
+  },
+  "forbidden_inference": [
+    "infer strategy from final benchmark score",
+    "infer strategy from agent/scaffold identity or its modal default",
+    "infer missing data provenance from a filename alone when the source-visible creation/consumption path is unresolved",
+    "count script writing or a planned strategy as an executed strategy change",
+    "count writing a GRPO/DPO script as a strategy change if no corresponding training action is committed/executed",
+    "reinterpret the labels after observing which F0 arm performs better",
+    "represent independently reconstructed labels as author-reviewed source labels"
+  ],
+  "authority": {
+    "scientific": false,
+    "novelty": false,
+    "problem_gate": false,
+    "pre_researchitem_projection": false,
+    "research_item_promotion": false,
+    "support_download": false,
+    "provider_calls": false,
+    "experiment": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}

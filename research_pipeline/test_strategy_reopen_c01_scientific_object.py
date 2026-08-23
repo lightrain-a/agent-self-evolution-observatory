@@ -15,6 +15,8 @@ EXCLUSION = PIPELINE / "strategy_reopen_c01_exclusion_audit.json"
 SAME_SUBSTRATE = PIPELINE / "strategy_reopen_c01_same_substrate_qualification.json"
 S0 = PIPELINE / "strategy_reopen_c01_s0_metadata_inventory.json"
 S0_RECHECK = PIPELINE / "strategy_reopen_c01_s0_public_provenance_recheck.json"
+ANNOTATION_PROTOCOL = PIPELINE / "strategy_reopen_c01_annotation_reconstruction_protocol.json"
+S0_RELEASE = PIPELINE / "strategy_reopen_c01_s0_independent_reconstruction_release.json"
 F0 = PIPELINE / "strategy_reopen_c01_bounded_falsifier_design.json"
 TRANSACTION = PIPELINE / "strategy_reopen_c01_candidate_replenishment_transaction.json"
 
@@ -160,6 +162,26 @@ class StrategyReopenC01ScientificObjectTest(unittest.TestCase):
         self.assertFalse(s0["decision"]["prefix_materialization_authorized"])
         self.assertFalse(s0["decision"]["provider_calls_authorized"])
         self.assertFalse(any(s0["authority"].values()))
+
+    def test_independent_annotation_protocol_closes_s0_definition_without_authorizing_s1(self) -> None:
+        protocol = load(ANNOTATION_PROTOCOL)
+        release = load(S0_RELEASE)
+        self.assertEqual(protocol["status"], "FROZEN_BEFORE_TRAJECTORY_PAYLOAD_ACCESS_ZERO_AUTHORITY")
+        self.assertEqual(protocol["source_definition"]["source_state"], "s=(k,d,g)")
+        self.assertEqual([row["label"] for row in protocol["k_training_family"]["labels"][:5]], ["FULL_SFT", "PEFT", "RL", "PREFERENCE_OPTIMIZATION", "DISTILLATION"])
+        self.assertTrue(protocol["d_data_source"]["missing_rule"].endswith("never imputed."))
+        self.assertTrue(protocol["strategy_transition_rule"]["no_imputation"])
+        self.assertGreaterEqual(protocol["reliability_gate_before_unit_selection"]["minimum_exact_agreement_k"], 0.9)
+        self.assertTrue(protocol["f0_endpoint_constraints"]["annotator_blind_to_arm"])
+        self.assertFalse(any(protocol["authority"].values()))
+        self.assertEqual(release["status"], "PASS_S0_INDEPENDENT_RECONSTRUCTION_REALIZATION_FROZEN_S1_AUTHORITY_HOLD")
+        self.assertFalse(release["paper_reproduction_claim"])
+        self.assertEqual(release["independent_realization"]["pinned_revision"], "39d3fcd794df51c062c8bd3b7f8523ba707aaeb3")
+        self.assertEqual(release["independent_realization"]["annotation_protocol_sha256"], hashlib.sha256(ANNOTATION_PROTOCOL.read_bytes()).hexdigest())
+        self.assertEqual(release["decision"]["overall"], "S0_COMPLETE_VIA_INDEPENDENT_RECONSTRUCTION_PATH")
+        self.assertEqual(release["decision"]["support_state"], "HOLD_S1_EXPLICIT_SUPPORT_DOWNLOAD_AUTHORITY")
+        self.assertFalse(release["next_gate"]["currently_authorized"])
+        self.assertFalse(any(release["authority"].values()))
 
     def test_replenishment_transaction_binds_strict_zero_authority_gate_artifacts(self) -> None:
         tx = load(TRANSACTION)

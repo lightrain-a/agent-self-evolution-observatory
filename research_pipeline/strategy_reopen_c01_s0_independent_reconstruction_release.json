@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "STRATEGY-REOPEN-C01",
+  "stage": "S0_INDEPENDENT_RECONSTRUCTION_RELEASE",
+  "status": "PASS_S0_INDEPENDENT_RECONSTRUCTION_REALIZATION_FROZEN_S1_AUTHORITY_HOLD",
+  "recorded_date": "2026-08-23",
+  "supersedes_for_routing_only": [
+    "research_pipeline/strategy_reopen_c01_s0_metadata_inventory.json#decision",
+    "research_pipeline/strategy_reopen_c01_s0_public_provenance_recheck.json#decision"
+  ],
+  "scientific_conclusion_changed": false,
+  "paper_reproduction_claim": false,
+  "independent_realization": {
+    "dataset": "aisa-group/PostTrainBench-Trajectories",
+    "pinned_revision": "39d3fcd794df51c062c8bd3b7f8523ba707aaeb3",
+    "revision_role": "official public source-native trajectory substrate for a new independently reconstructed realization, not the asserted revision of the paper's 1,338-trajectory corpus",
+    "paper_corpus_cardinality_assumed": false,
+    "source_authored_strategy_labels_assumed": false,
+    "annotation_protocol": "research_pipeline/strategy_reopen_c01_annotation_reconstruction_protocol.json",
+    "annotation_protocol_sha256": "320ca9705bee8b03ca60af4ceb048b189505ce2a04d55bf2c8b8c2e68b115e5d",
+    "annotation_role": "independently reconstructed labels under a frozen Appendix-A.2/A.4-compatible protocol"
+  },
+  "s0_reassessment": [
+    {
+      "gate": "PUBLIC_SOURCE_SUBSTRATE",
+      "status": "PASS",
+      "reason": "An official PostTrainBench-Trajectories content-addressed revision is pinned before any trajectory payload is read."
+    },
+    {
+      "gate": "PAPER_EXACT_CORPUS_REPRODUCTION",
+      "status": "NOT_REQUIRED_FOR_INDEPENDENT_REALIZATION",
+      "reason": "The realization is explicitly not represented as reproducing the paper's exact 1,338-trajectory corpus."
+    },
+    {
+      "gate": "STRATEGY_ANNOTATION_DEFINITION",
+      "status": "PASS_PROTOCOL_FROZEN",
+      "reason": "A conservative k/d/g reconstruction protocol, missing-label policy, blinding rule, reliability gate, and endpoint annotation contract are frozen before payload access."
+    },
+    {
+      "gate": "STRATEGY_ANNOTATION_RELIABILITY",
+      "status": "NOT_YET_RUN",
+      "reason": "Reliability requires a bounded payload-bearing calibration sample and therefore belongs after S1 support-download authorization."
+    },
+    {
+      "gate": "SOURCE_NATIVE_RUNTIME_REPLAY",
+      "status": "NOT_YET_RUN",
+      "reason": "Runtime/model/interface replay remains S2 and no provider/runtime call is authorized by this release."
+    }
+  ],
+  "next_gate": {
+    "name": "S1_PREFIX_MATERIALIZATION_SUPPORT_AUTHORITY",
+    "path": "research_pipeline/strategy_reopen_c01_same_substrate_qualification.json",
+    "allowed_scope_if_separately_authorized": "Download/materialize only a bounded, outcome-blind calibration/prefix subset from pinned revision 39d3fcd794df51c062c8bd3b7f8523ba707aaeb3 sufficient to run the frozen annotation reliability gate and prefix provenance audit. Full-corpus download remains forbidden.",
+    "currently_authorized": false
+  },
+  "canonical_projection": {
+    "pre_researchitem": false,
+    "research_item": false,
+    "active_slot": false,
+    "paper_state": false,
+    "reason": "Passing S0 definition/provenance for an independent realization is support-routing progress only; ProblemGate and S1/S2 support qualification remain unpassed."
+  },
+  "decision": {
+    "overall": "S0_COMPLETE_VIA_INDEPENDENT_RECONSTRUCTION_PATH",
+    "support_state": "HOLD_S1_EXPLICIT_SUPPORT_DOWNLOAD_AUTHORITY",
+    "scientific_failure": false,
+    "problem_gate_passed": false,
+    "provider_calls_authorized": false,
+    "gpu_authorized": false,
+    "bulk_download_authorized": false,
+    "s1_materialization_authorized": false
+  },
+  "authority": {
+    "scientific": false,
+    "novelty": false,
+    "problem_gate": false,
+    "pre_researchitem_projection": false,
+    "research_item_promotion": false,
+    "support_download": false,
+    "provider_calls": false,
+    "experiment": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}
