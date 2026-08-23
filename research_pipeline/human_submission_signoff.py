@@ -9,8 +9,9 @@ from typing import Any, Mapping, Sequence
 
 from .presubmission_freeze import validate_freeze, verify_current_frozen_artifacts
 from .submission_handoff import validate_handoff_ledger, validate_handoff_receipt
+from .venue_form_consistency import validate_venue_form_audit_ledger, verify_current_venue_form_audit
 
-SIGNOFF_SCHEMA_VERSION = "1.0"
+SIGNOFF_SCHEMA_VERSION = "1.1"
 SIGNOFF_STATUS = "HUMAN_SIGNOFF_COMPLETE_ACTUAL_SUBMISSION_PENDING"
 AUTHORITY = {"scientific": False, "experiment": False, "gpu": False, "submission": False}
 
@@ -23,6 +24,7 @@ KNOWN_CHECK_IDS = {
     "verify final PDF/source/supplement hashes immediately before upload": "FINAL_UPLOAD_HASH_CHECK",
     "confirm title and abstract used for reviewer bidding are the intended final submission metadata": "TITLE_ABSTRACT_METADATA_APPROVAL",
     "confirm every author accepts responsibility for the final manuscript and AI-assisted artifacts": "AUTHOR_RESPONSIBILITY_ACKNOWLEDGEMENT",
+    "capture final OpenReview form snapshot and pass venue-form consistency audit": "VENUE_FORM_CONSISTENCY_AUDIT",
     "recompute and compare every frozen artifact SHA256 immediately before upload": "FINAL_HASH_RECOMPUTE",
 }
 
@@ -65,13 +67,27 @@ def checklist_items(handoff_receipt: Mapping[str, Any]) -> list[dict[str, str]]:
     return rows
 
 
-def build_signoff_template(handoff_ledger: Mapping[str, Any]) -> dict[str, Any]:
+def build_signoff_template(handoff_ledger: Mapping[str, Any], venue_form_audit_ledger: Mapping[str, Any] | None = None) -> dict[str, Any]:
     errors = validate_handoff_ledger(handoff_ledger)
     if errors:
         raise RuntimeError(f"handoff ledger invalid: {errors}")
     handoff = _handoff_receipt(handoff_ledger)
     if not handoff or not validate_handoff_receipt(handoff):
         raise RuntimeError("current handoff receipt invalid")
+    venue_form_status = "PENDING_FORM_SNAPSHOT_AND_AUDIT"
+    if venue_form_audit_ledger is not None:
+        audit_errors = validate_venue_form_audit_ledger(venue_form_audit_ledger)
+        audit_event = _latest(venue_form_audit_ledger, "venue-form-consistency-audit")
+        audit_receipt = audit_event.get("receipt") if isinstance(audit_event.get("receipt"), Mapping) else {}
+        if (
+            not audit_errors
+            and audit_receipt.get("pass") is True
+            and audit_receipt.get("handoff_sha256") == handoff.get("handoff_sha256")
+            and audit_receipt.get("freeze_sha256") == handoff.get("freeze_sha256")
+        ):
+            venue_form_status = "PASS_BOUND_TO_CURRENT_HANDOFF"
+        else:
+            venue_form_status = "AUDIT_PRESENT_NOT_CURRENT_OR_NOT_PASS"
     template = {
         "schema_version": SIGNOFF_SCHEMA_VERSION,
         "paper_id": str(handoff.get("paper_id") or ""),
@@ -82,10 +98,12 @@ def build_signoff_template(handoff_ledger: Mapping[str, Any]) -> dict[str, Any]:
         "required_explicit_inputs": [
             "external_human_confirmation_ref",
             "confirmed_at",
+            "venue_form_audit_sha256 from a current PASS venue-form audit",
             "all required confirmation IDs",
             "acknowledge_current_artifact_hashes=true",
             "acknowledge_actual_submission_not_performed=true",
         ],
+        "venue_form_audit_status": venue_form_status,
         "submission_authority": False,
     }
     template["template_sha256"] = _digest(template)
@@ -93,7 +111,7 @@ def build_signoff_template(handoff_ledger: Mapping[str, Any]) -> dict[str, Any]:
 
 
 def signoff_identity(receipt: Mapping[str, Any]) -> dict[str, Any]:
-    return {
+    identity = {
         "paper_id": receipt.get("paper_id"),
         "handoff_sha256": receipt.get("handoff_sha256"),
         "freeze_sha256": receipt.get("freeze_sha256"),
@@ -104,12 +122,16 @@ def signoff_identity(receipt: Mapping[str, Any]) -> dict[str, Any]:
         "acknowledge_actual_submission_not_performed": receipt.get("acknowledge_actual_submission_not_performed"),
         "status": receipt.get("status"),
     }
+    if str(receipt.get("schema_version") or "1.0") != "1.0":
+        identity["venue_form_audit_sha256"] = receipt.get("venue_form_audit_sha256")
+    return identity
 
 
 def build_signoff_receipt(
     *,
     handoff_ledger: Mapping[str, Any],
     freeze_ledger: Mapping[str, Any],
+    venue_form_audit_ledger: Mapping[str, Any],
     confirmed_check_ids: Sequence[str],
     external_human_confirmation_ref: str,
     confirmed_at: str,
@@ -125,6 +147,9 @@ def build_signoff_receipt(
     artifact_errors = verify_current_frozen_artifacts(freeze_ledger)
     if artifact_errors:
         raise RuntimeError(f"frozen artifacts are stale: {artifact_errors}")
+    venue_form_errors = verify_current_venue_form_audit(venue_form_audit_ledger, handoff_ledger, freeze_ledger)
+    if venue_form_errors:
+        raise RuntimeError(f"venue form audit is missing, failed, or stale: {venue_form_errors}")
     handoff = _handoff_receipt(handoff_ledger)
     freeze = _freeze_receipt(freeze_ledger)
     if not handoff or not validate_handoff_receipt(handoff):
@@ -147,12 +172,15 @@ def build_signoff_receipt(
         raise RuntimeError("human must acknowledge current frozen artifact hashes")
     if acknowledge_actual_submission_not_performed is not True:
         raise RuntimeError("human must acknowledge that actual submission is a separate action")
+    venue_form_event = _latest(venue_form_audit_ledger, "venue-form-consistency-audit")
+    venue_form_receipt = venue_form_event.get("receipt") if isinstance(venue_form_event.get("receipt"), Mapping) else {}
     receipt: dict[str, Any] = {
         "schema_version": SIGNOFF_SCHEMA_VERSION,
         "receipt_type": "human-submission-signoff",
         "paper_id": str(handoff.get("paper_id") or ""),
         "handoff_sha256": str(handoff.get("handoff_sha256") or ""),
         "freeze_sha256": str(handoff.get("freeze_sha256") or ""),
+        "venue_form_audit_sha256": str(venue_form_receipt.get("venue_form_audit_sha256") or ""),
         "confirmed_check_ids": required,
         "external_human_confirmation_ref": str(external_human_confirmation_ref).strip(),
         "confirmed_at": str(confirmed_at).strip(),
@@ -172,6 +200,10 @@ def build_signoff_receipt(
 
 def validate_signoff_receipt(receipt: Mapping[str, Any]) -> bool:
     if receipt.get("receipt_type") != "human-submission-signoff" or receipt.get("status") != SIGNOFF_STATUS:
+        return False
+    if str(receipt.get("schema_version") or "1.0") not in {"1.0", SIGNOFF_SCHEMA_VERSION}:
+        return False
+    if str(receipt.get("schema_version") or "1.0") != "1.0" and not str(receipt.get("venue_form_audit_sha256") or ""):
         return False
     if receipt.get("actual_submission_status") != "NOT_SUBMITTED":
         return False
@@ -232,7 +264,7 @@ def validate_signoff_ledger(row: Mapping[str, Any]) -> list[str]:
     return list(dict.fromkeys(errors))
 
 
-def verify_current_signoff(signoff_ledger: Mapping[str, Any], handoff_ledger: Mapping[str, Any], freeze_ledger: Mapping[str, Any]) -> list[str]:
+def verify_current_signoff(signoff_ledger: Mapping[str, Any], handoff_ledger: Mapping[str, Any], freeze_ledger: Mapping[str, Any], venue_form_audit_ledger: Mapping[str, Any] | None = None) -> list[str]:
     errors = list(validate_signoff_ledger(signoff_ledger))
     latest_signoff = _latest(signoff_ledger, "human-submission-signoff")
     signoff = latest_signoff.get("receipt") if isinstance(latest_signoff.get("receipt"), Mapping) else {}
@@ -245,5 +277,15 @@ def verify_current_signoff(signoff_ledger: Mapping[str, Any], handoff_ledger: Ma
         errors.append("human-signoff-handoff-stale")
     if signoff.get("freeze_sha256") != freeze.get("freeze_sha256"):
         errors.append("human-signoff-freeze-stale")
+    if str(signoff.get("schema_version") or "1.0") != "1.0":
+        if venue_form_audit_ledger is None:
+            errors.append("human-signoff-venue-form-audit-ledger-missing")
+        else:
+            venue_errors = verify_current_venue_form_audit(venue_form_audit_ledger, handoff_ledger, freeze_ledger)
+            errors.extend(venue_errors)
+            venue_event = _latest(venue_form_audit_ledger, "venue-form-consistency-audit")
+            venue_receipt = venue_event.get("receipt") if isinstance(venue_event.get("receipt"), Mapping) else {}
+            if signoff.get("venue_form_audit_sha256") != venue_receipt.get("venue_form_audit_sha256"):
+                errors.append("human-signoff-venue-form-audit-stale")
     errors.extend(verify_current_frozen_artifacts(freeze_ledger))
     return list(dict.fromkeys(errors))

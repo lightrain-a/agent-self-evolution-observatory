@@ -26,12 +26,13 @@ from .venue_submission_receipt import build_submission_receipt, external_transit
 class RebuttalProtocolTest(unittest.TestCase):
     def submitted_fixture(self, root: Path):
         helper = VenueSubmissionReceiptTest(methodName="test_submission_receipt_tamper_is_detected")
-        contract, paper_ledger, freeze_ledger, handoff_ledger, signoff_ledger, uploaded, _ = helper.fixture(root)
+        contract, paper_ledger, freeze_ledger, handoff_ledger, signoff_ledger, form_ledger, uploaded, _ = helper.fixture(root)
         actual = build_submission_receipt(
             paper_ledger=paper_ledger,
             freeze_ledger=freeze_ledger,
             handoff_ledger=handoff_ledger,
             signoff_ledger=signoff_ledger,
+            venue_form_audit_ledger=form_ledger,
             venue_submission_id="TEST-2027-REBUTTAL",
             venue_forum_ref="forum:test-rebuttal",
             uploaded_artifact_sha256=uploaded,

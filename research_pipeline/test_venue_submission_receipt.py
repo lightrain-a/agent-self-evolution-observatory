@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 from .human_submission_signoff import append_signoff, build_signoff_receipt, build_signoff_template
@@ -18,9 +20,11 @@ from .paper_acceptance_ledger import (
 from .presubmission_freeze import artifact, build_freeze, digest, publish_freeze
 from .submission_handoff import append_handoff, build_handoff_receipt
 from .test_presubmission_freeze import PreSubmissionFreezeTest
+from .venue_form_consistency import append_venue_form_audit, build_form_contract_template, build_venue_form_audit_receipt
 from .venue_submission_receipt import (
     build_submission_receipt,
     external_transition_authority_ref,
+    submission_receipt_identity,
     validate_submission_receipt,
 )
 
@@ -32,11 +36,16 @@ class VenueSubmissionReceiptTest(unittest.TestCase):
         paper = root / "paper.pdf"
         source = root / "source.zip"
         paper.write_bytes(b"paper-bytes")
-        source.write_bytes(b"source-bytes")
+        with zipfile.ZipFile(source, "w") as archive:
+            archive.writestr(
+                "main.tex",
+                "\\title{Freeze paper}\n\\begin{document}\n\\begin{abstract}Frozen abstract for venue receipt tests.\\end{abstract}\n\\section*{AI Use Statement}AI tools assisted editing.\n\\end{document}\n",
+            )
         policy = {
             "schema_version": "1.0",
             "venue": "TEST 2027",
             "deadlines_aoe": {"abstract": "2026-09-18", "full_paper": "2026-09-25"},
+            "paper_rules": {"ai_use_statement_required": True, "double_blind": True},
             "human_only_confirmation_required": True,
             "scientific_authority": False,
             "submission_authority": False,
@@ -56,11 +65,39 @@ class VenueSubmissionReceiptTest(unittest.TestCase):
             venue_policy=policy,
         )
         handoff_ledger = append_handoff(root, handoff_receipt)
-        template = build_signoff_template(handoff_ledger)
+        form_contract = build_form_contract_template(
+            paper_ledger=paper_ledger,
+            freeze_ledger=freeze_ledger,
+            handoff_ledger=handoff_ledger,
+            venue_policy=policy,
+        )
+        form_contract["expected_fields"]["keywords"] = ["agents", "memory"]
+        form_contract["expected_fields"]["ai_use_disclosure"] = {"used": True, "summary": "AI tools assisted editing."}
+        expected = form_contract["expected_fields"]
+        form_snapshot = {
+            "schema_version": "1.0",
+            "paper_id": form_contract["paper_id"],
+            "venue": form_contract["venue"],
+            "capture_method": "OPENREVIEW_FINAL_FORM_EXPORT",
+            "captured_at": "2026-09-24T11:00:00+00:00",
+            "fields": {
+                "title": expected["title"],
+                "abstract": expected["abstract"],
+                "keywords": expected["keywords"],
+                "author_visibility": expected["author_visibility"],
+                "ai_use_disclosure": expected["ai_use_disclosure"],
+                "supplement_declared": expected["supplement_declared"],
+                "supplement_artifacts": expected["supplement_artifacts"],
+            },
+        }
+        form_receipt = build_venue_form_audit_receipt(form_contract=form_contract, form_snapshot=form_snapshot)
+        form_ledger = append_venue_form_audit(root, form_receipt)
+        template = build_signoff_template(handoff_ledger, form_ledger)
         ids = [row["check_id"] for row in template["required_confirmations"]]
         signoff_receipt = build_signoff_receipt(
             handoff_ledger=handoff_ledger,
             freeze_ledger=freeze_ledger,
+            venue_form_audit_ledger=form_ledger,
             confirmed_check_ids=ids,
             external_human_confirmation_ref="human-confirmation:test-only",
             confirmed_at="2026-08-22T12:00:00+00:00",
@@ -72,12 +109,12 @@ class VenueSubmissionReceiptTest(unittest.TestCase):
             str(row["label"]): str(row["sha256"])
             for row in freeze_receipt["frozen_artifacts"]
         }
-        return contract, paper_ledger, freeze_ledger, handoff_ledger, signoff_ledger, uploaded, paper
+        return contract, paper_ledger, freeze_ledger, handoff_ledger, signoff_ledger, form_ledger, uploaded, paper
 
     def test_actual_receipt_is_required_and_exactly_binds_submitted_transition(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
-            contract, paper_ledger, freeze_ledger, handoff_ledger, signoff_ledger, uploaded, _ = self.fixture(root)
+            contract, paper_ledger, freeze_ledger, handoff_ledger, signoff_ledger, form_ledger, uploaded, _ = self.fixture(root)
 
             arbitrary = advance_paper_ledger(
                 root,
@@ -93,6 +130,7 @@ class VenueSubmissionReceiptTest(unittest.TestCase):
                 freeze_ledger=freeze_ledger,
                 handoff_ledger=handoff_ledger,
                 signoff_ledger=signoff_ledger,
+                venue_form_audit_ledger=form_ledger,
                 venue_submission_id="TEST-2027-0042",
                 venue_forum_ref="forum:test-0042",
                 uploaded_artifact_sha256=uploaded,
@@ -136,12 +174,13 @@ class VenueSubmissionReceiptTest(unittest.TestCase):
     def test_legacy_frozen_contract_submission_path_is_idempotent(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
-            contract, paper_ledger, freeze_ledger, handoff_ledger, signoff_ledger, uploaded, _ = self.fixture(root)
+            contract, paper_ledger, freeze_ledger, handoff_ledger, signoff_ledger, form_ledger, uploaded, _ = self.fixture(root)
             receipt = build_submission_receipt(
                 paper_ledger=paper_ledger,
                 freeze_ledger=freeze_ledger,
                 handoff_ledger=handoff_ledger,
                 signoff_ledger=signoff_ledger,
+                venue_form_audit_ledger=form_ledger,
                 venue_submission_id="TEST-2027-0043",
                 venue_forum_ref="forum:test-0043",
                 uploaded_artifact_sha256=uploaded,
@@ -170,7 +209,7 @@ class VenueSubmissionReceiptTest(unittest.TestCase):
     def test_hash_mismatch_or_stale_bytes_block_actual_submission_receipt(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
-            _, paper_ledger, freeze_ledger, handoff_ledger, signoff_ledger, uploaded, paper = self.fixture(root)
+            _, paper_ledger, freeze_ledger, handoff_ledger, signoff_ledger, form_ledger, uploaded, paper = self.fixture(root)
             bad_uploaded = dict(uploaded)
             bad_uploaded["paper_pdf"] = "0" * 64
             with self.assertRaisesRegex(RuntimeError, "uploaded artifact hashes do not exactly match current freeze"):
@@ -179,6 +218,7 @@ class VenueSubmissionReceiptTest(unittest.TestCase):
                     freeze_ledger=freeze_ledger,
                     handoff_ledger=handoff_ledger,
                     signoff_ledger=signoff_ledger,
+                    venue_form_audit_ledger=form_ledger,
                     venue_submission_id="TEST-2027-0042",
                     venue_forum_ref="forum:test-0042",
                     uploaded_artifact_sha256=bad_uploaded,
@@ -192,6 +232,7 @@ class VenueSubmissionReceiptTest(unittest.TestCase):
                     freeze_ledger=freeze_ledger,
                     handoff_ledger=handoff_ledger,
                     signoff_ledger=signoff_ledger,
+                    venue_form_audit_ledger=form_ledger,
                     venue_submission_id="TEST-2027-0042",
                     venue_forum_ref="forum:test-0042",
                     uploaded_artifact_sha256=uploaded,
@@ -202,7 +243,7 @@ class VenueSubmissionReceiptTest(unittest.TestCase):
     def test_missing_or_stale_human_signoff_blocks_receipt(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
-            _, paper_ledger, freeze_ledger, handoff_ledger, _, uploaded, _ = self.fixture(root)
+            _, paper_ledger, freeze_ledger, handoff_ledger, _, form_ledger, uploaded, _ = self.fixture(root)
             empty_signoff = {"schema_version": "1.0", "paper_id": "FREEZE-PAPER", "events": [], "authority": {"scientific": False, "experiment": False, "gpu": False, "submission": False}}
             with self.assertRaisesRegex(RuntimeError, "human signoff is missing or stale"):
                 build_submission_receipt(
@@ -210,6 +251,7 @@ class VenueSubmissionReceiptTest(unittest.TestCase):
                     freeze_ledger=freeze_ledger,
                     handoff_ledger=handoff_ledger,
                     signoff_ledger=empty_signoff,
+                    venue_form_audit_ledger=form_ledger,
                     venue_submission_id="TEST-2027-0042",
                     venue_forum_ref="forum:test-0042",
                     uploaded_artifact_sha256=uploaded,
@@ -217,15 +259,39 @@ class VenueSubmissionReceiptTest(unittest.TestCase):
                     external_human_submission_authority_ref="human-submit:test-only",
                 )
 
-    def test_submission_receipt_tamper_is_detected(self) -> None:
+    def test_legacy_v1_submission_receipt_remains_replayable(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
-            _, paper_ledger, freeze_ledger, handoff_ledger, signoff_ledger, uploaded, _ = self.fixture(root)
+            _, paper_ledger, freeze_ledger, handoff_ledger, signoff_ledger, form_ledger, uploaded, _ = self.fixture(root)
             receipt = build_submission_receipt(
                 paper_ledger=paper_ledger,
                 freeze_ledger=freeze_ledger,
                 handoff_ledger=handoff_ledger,
                 signoff_ledger=signoff_ledger,
+                venue_form_audit_ledger=form_ledger,
+                venue_submission_id="TEST-2027-LEGACY",
+                venue_forum_ref="forum:test-legacy",
+                uploaded_artifact_sha256=uploaded,
+                submitted_at="2026-08-22T12:05:00+00:00",
+                external_human_submission_authority_ref="human-submit:legacy-replay",
+            )
+            legacy = copy.deepcopy(receipt)
+            legacy["schema_version"] = "1.0"
+            legacy.pop("venue_form_audit_sha256", None)
+            raw = json.dumps(submission_receipt_identity(legacy), ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
+            legacy["submission_receipt_sha256"] = hashlib.sha256(raw).hexdigest()
+            self.assertTrue(validate_submission_receipt(legacy))
+
+    def test_submission_receipt_tamper_is_detected(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            _, paper_ledger, freeze_ledger, handoff_ledger, signoff_ledger, form_ledger, uploaded, _ = self.fixture(root)
+            receipt = build_submission_receipt(
+                paper_ledger=paper_ledger,
+                freeze_ledger=freeze_ledger,
+                handoff_ledger=handoff_ledger,
+                signoff_ledger=signoff_ledger,
+                venue_form_audit_ledger=form_ledger,
                 venue_submission_id="TEST-2027-0042",
                 venue_forum_ref="forum:test-0042",
                 uploaded_artifact_sha256=uploaded,

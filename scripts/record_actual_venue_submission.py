@@ -62,9 +62,13 @@ def main() -> None:
     freeze = load(root / "paper-submission-freezes" / f"{args.paper_id}.json")
     handoff = load(root / "paper-submission-handoffs" / f"{args.paper_id}.json")
     signoff_path = root / "paper-human-signoffs" / f"{args.paper_id}.json"
+    venue_form_path = root / "paper-venue-form-audits" / f"{args.paper_id}.json"
     if not signoff_path.exists():
         parser.error("current Human Signoff ledger is required before actual venue submission can be recorded")
+    if not venue_form_path.exists():
+        parser.error("current PASS venue-form consistency audit ledger is required before actual venue submission can be recorded")
     signoff = load(signoff_path)
+    venue_form = load(venue_form_path)
     uploaded = parse_uploaded(args.uploaded)
     if not uploaded:
         parser.error("at least one --uploaded label=sha256 binding is required; hashes must describe the files actually uploaded")
@@ -74,6 +78,7 @@ def main() -> None:
         freeze_ledger=freeze,
         handoff_ledger=handoff,
         signoff_ledger=signoff,
+        venue_form_audit_ledger=venue_form,
         venue_submission_id=args.venue_submission_id,
         venue_forum_ref=args.venue_forum_ref,
         uploaded_artifact_sha256=uploaded,
@@ -99,6 +104,7 @@ def main() -> None:
         "venue_submission_id": receipt["venue_submission_id"],
         "venue_forum_ref": receipt["venue_forum_ref"],
         "submission_receipt_sha256": receipt["submission_receipt_sha256"],
+        "venue_form_audit_sha256": receipt["venue_form_audit_sha256"],
         "transition_authority_ref": transition_ref,
         "current_state": result["ledger"]["current_state"],
         "submission_authority": False,

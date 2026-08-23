@@ -105,6 +105,7 @@ def build_handoff_receipt(
         *[str(x) for x in freeze.get("human_checklist") or [] if str(x)],
         "confirm title and abstract used for reviewer bidding are the intended final submission metadata",
         "confirm every author accepts responsibility for the final manuscript and AI-assisted artifacts",
+        "capture final OpenReview form snapshot and pass venue-form consistency audit",
         "recompute and compare every frozen artifact SHA256 immediately before upload",
     ]))
     receipt: dict[str, Any] = {
@@ -126,6 +127,7 @@ def build_handoff_receipt(
             "freeze_artifact_bytes_current": True,
             "venue_policy_snapshot_bound": True,
             "ai_use_disclosure_decision_recorded_by_preparation_gate": True,
+            "venue_form_consistency_audit_required_before_human_signoff": True,
         },
         "human_checklist": checklist,
         "human_confirmation_status": "PENDING_HUMAN",
@@ -220,6 +222,7 @@ def render_handoff_markdown(receipt: Mapping[str, Any]) -> str:
         "verify final PDF/source/supplement hashes immediately before upload": "上传前最后一次核对 PDF / source / supplement 的 SHA256。",
         "confirm title and abstract used for reviewer bidding are the intended final submission metadata": "确认用于 reviewer bidding 的标题与摘要就是计划提交的正式 metadata。",
         "confirm every author accepts responsibility for the final manuscript and AI-assisted artifacts": "确认每位作者对最终稿及 AI-assisted artifacts 承担责任。",
+        "capture final OpenReview form snapshot and pass venue-form consistency audit": "保存最终 OpenReview 表单快照，并通过 title / abstract / keywords / author visibility / AI-use disclosure / supplement 的逐字段一致性审计。",
         "recompute and compare every frozen artifact SHA256 immediately before upload": "真实上传前重新计算并逐项比对所有冻结工件 SHA256。",
     }
     lines = [

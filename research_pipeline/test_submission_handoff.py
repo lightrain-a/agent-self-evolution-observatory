@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 from .presubmission_freeze import artifact, build_freeze, digest, publish_freeze
@@ -23,7 +24,11 @@ class SubmissionHandoffTest(unittest.TestCase):
         paper = root / "paper.pdf"
         source = root / "source.zip"
         paper.write_bytes(b"paper-bytes")
-        source.write_bytes(b"source-bytes")
+        with zipfile.ZipFile(source, "w") as archive:
+            archive.writestr(
+                "main.tex",
+                "\\title{Freeze paper}\n\\begin{document}\n\\begin{abstract}Frozen abstract for handoff tests.\\end{abstract}\n\\section*{AI Use Statement}AI tools assisted editing.\n\\end{document}\n",
+            )
         policy = {
             "schema_version": "1.0",
             "venue": "TEST 2027",

@@ -33,6 +33,7 @@ def main() -> None:
     parser.add_argument("--confirm", action="append", default=[], help="Required confirmation ID; repeat for every item in the template.")
     parser.add_argument("--external-human-confirmation-ref")
     parser.add_argument("--confirmed-at", help="Human-provided ISO-8601 confirmation time.")
+    parser.add_argument("--venue-form-audit-sha256", help="SHA256 of the current PASS venue-form consistency audit receipt.")
     parser.add_argument("--acknowledge-current-artifact-hashes", action="store_true")
     parser.add_argument("--acknowledge-actual-submission-not-performed", action="store_true")
     parser.add_argument("--show-template", action="store_true")
@@ -44,17 +45,29 @@ def main() -> None:
         parser.error("current machine handoff and freeze ledgers are both required")
     handoff_ledger = load(handoff_path)
     freeze_ledger = load(freeze_path)
-    template = build_signoff_template(handoff_ledger)
+    venue_form_path = args.root / "paper-venue-form-audits" / f"{args.paper_id}.json"
+    venue_form_ledger = load(venue_form_path) if venue_form_path.exists() else None
+    template = build_signoff_template(handoff_ledger, venue_form_ledger)
     if args.show_template:
         print(json.dumps(template, ensure_ascii=False, indent=2))
         return
-    if not args.handoff_sha256 or not args.external_human_confirmation_ref or not args.confirmed_at:
-        parser.error("recording signoff requires --handoff-sha256, --external-human-confirmation-ref, and --confirmed-at")
+    if not args.handoff_sha256 or not args.external_human_confirmation_ref or not args.confirmed_at or not args.venue_form_audit_sha256:
+        parser.error("recording signoff requires --handoff-sha256, --venue-form-audit-sha256, --external-human-confirmation-ref, and --confirmed-at")
+    if venue_form_ledger is None:
+        parser.error("current PASS venue-form consistency audit ledger is required before human signoff")
+    current_venue_sha = ""
+    for event in reversed(venue_form_ledger.get("events") or []):
+        if isinstance(event, dict) and event.get("event_type") == "venue-form-consistency-audit" and isinstance(event.get("receipt"), dict):
+            current_venue_sha = str(event["receipt"].get("venue_form_audit_sha256") or "")
+            break
+    if current_venue_sha != args.venue_form_audit_sha256:
+        parser.error("provided venue-form audit SHA256 does not match the current audit; recapture/re-audit the final form before confirming")
     if str(template.get("handoff_sha256") or "") != args.handoff_sha256:
         parser.error("provided handoff SHA256 does not match the current handoff; refresh the handoff before confirming")
     receipt = build_signoff_receipt(
         handoff_ledger=handoff_ledger,
         freeze_ledger=freeze_ledger,
+        venue_form_audit_ledger=venue_form_ledger,
         confirmed_check_ids=args.confirm,
         external_human_confirmation_ref=args.external_human_confirmation_ref,
         confirmed_at=args.confirmed_at,
@@ -70,6 +83,7 @@ def main() -> None:
         "paper_id": args.paper_id,
         "signoff_sha256": receipt["signoff_sha256"],
         "handoff_sha256": receipt["handoff_sha256"],
+        "venue_form_audit_sha256": receipt["venue_form_audit_sha256"],
         "actual_submission_status": receipt["actual_submission_status"],
         "submission_authority": False,
         "ledger_events": len(row.get("events") or []),

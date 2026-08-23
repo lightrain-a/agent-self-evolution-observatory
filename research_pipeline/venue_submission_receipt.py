@@ -7,8 +7,9 @@ from typing import Any, Mapping
 from .human_submission_signoff import verify_current_signoff
 from .presubmission_freeze import validate_freeze, verify_current_frozen_artifacts
 from .submission_handoff import validate_handoff_ledger
+from .venue_form_consistency import verify_current_venue_form_audit
 
-RECEIPT_SCHEMA_VERSION = "1.0"
+RECEIPT_SCHEMA_VERSION = "1.1"
 RECEIPT_STATUS = "VENUE_SUBMISSION_CONFIRMED"
 
 
@@ -30,7 +31,7 @@ def _receipt(row: Mapping[str, Any], event_type: str) -> dict[str, Any]:
 
 
 def submission_receipt_identity(receipt: Mapping[str, Any]) -> dict[str, Any]:
-    return {
+    identity = {
         "paper_id": receipt.get("paper_id"),
         "contract_sha256": receipt.get("contract_sha256"),
         "human_signoff_sha256": receipt.get("human_signoff_sha256"),
@@ -45,6 +46,9 @@ def submission_receipt_identity(receipt: Mapping[str, Any]) -> dict[str, Any]:
         "status": receipt.get("status"),
         "actual_submission_status": receipt.get("actual_submission_status"),
     }
+    if str(receipt.get("schema_version") or "1.0") != "1.0":
+        identity["venue_form_audit_sha256"] = receipt.get("venue_form_audit_sha256")
+    return identity
 
 
 def build_submission_receipt(
@@ -53,6 +57,7 @@ def build_submission_receipt(
     freeze_ledger: Mapping[str, Any],
     handoff_ledger: Mapping[str, Any],
     signoff_ledger: Mapping[str, Any],
+    venue_form_audit_ledger: Mapping[str, Any],
     venue_submission_id: str,
     venue_forum_ref: str,
     uploaded_artifact_sha256: Mapping[str, str],
@@ -73,13 +78,19 @@ def build_submission_receipt(
     handoff_errors = validate_handoff_ledger(handoff_ledger)
     if handoff_errors:
         raise RuntimeError(f"handoff ledger invalid: {handoff_errors}")
-    signoff_errors = verify_current_signoff(signoff_ledger, handoff_ledger, freeze_ledger)
+    venue_form_errors = verify_current_venue_form_audit(venue_form_audit_ledger, handoff_ledger, freeze_ledger)
+    if venue_form_errors:
+        raise RuntimeError(f"venue form audit is missing, failed, or stale: {venue_form_errors}")
+    signoff_errors = verify_current_signoff(signoff_ledger, handoff_ledger, freeze_ledger, venue_form_audit_ledger)
     if signoff_errors:
         raise RuntimeError(f"human signoff is missing or stale: {signoff_errors}")
     freeze = _receipt(freeze_ledger, "pre-submission-freeze")
     handoff = _receipt(handoff_ledger, "machine-submission-handoff")
     signoff = _receipt(signoff_ledger, "human-submission-signoff")
-    if str(freeze_ledger.get("paper_id") or "") != paper_id or str(handoff_ledger.get("paper_id") or "") != paper_id or str(signoff_ledger.get("paper_id") or "") != paper_id:
+    venue_form = _receipt(venue_form_audit_ledger, "venue-form-consistency-audit")
+    if str(signoff.get("schema_version") or "1.0") == "1.0":
+        raise RuntimeError("actual submission requires v1.1 human signoff bound to a PASS venue-form audit")
+    if str(freeze_ledger.get("paper_id") or "") != paper_id or str(handoff_ledger.get("paper_id") or "") != paper_id or str(signoff_ledger.get("paper_id") or "") != paper_id or str(venue_form_audit_ledger.get("paper_id") or "") != paper_id:
         raise RuntimeError("submission lineage paper id mismatch")
     expected = {str(item.get("label") or ""): str(item.get("sha256") or "") for item in freeze.get("frozen_artifacts") or [] if isinstance(item, Mapping)}
     uploaded = {str(k): str(v) for k, v in uploaded_artifact_sha256.items()}
@@ -101,6 +112,7 @@ def build_submission_receipt(
         "human_signoff_sha256": str(signoff.get("signoff_sha256") or ""),
         "handoff_sha256": str(handoff.get("handoff_sha256") or ""),
         "freeze_sha256": str(freeze.get("freeze_sha256") or ""),
+        "venue_form_audit_sha256": str(venue_form.get("venue_form_audit_sha256") or ""),
         "venue": str(handoff.get("venue") or ""),
         "venue_submission_id": str(venue_submission_id).strip(),
         "venue_forum_ref": str(venue_forum_ref).strip(),
@@ -120,6 +132,10 @@ def build_submission_receipt(
 
 def validate_submission_receipt(receipt: Mapping[str, Any]) -> bool:
     if receipt.get("receipt_type") != "actual-venue-submission" or receipt.get("status") != RECEIPT_STATUS:
+        return False
+    if str(receipt.get("schema_version") or "1.0") not in {"1.0", RECEIPT_SCHEMA_VERSION}:
+        return False
+    if str(receipt.get("schema_version") or "1.0") != "1.0" and not str(receipt.get("venue_form_audit_sha256") or ""):
         return False
     if receipt.get("actual_submission_status") != "SUBMITTED":
         return False
