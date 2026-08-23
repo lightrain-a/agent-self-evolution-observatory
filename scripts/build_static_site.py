@@ -255,6 +255,7 @@ def build() -> Path:
         "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE.pdf", "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip",
         "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK.pdf", "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip",
         "D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf", "D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip",
+        "Agent-Self-Evolution-Observatory-Five-Papers.zip",
     )
     for name in sorted(set(legacy_download_names) | declared_download_names):
         source = downloads_source / name
