@@ -1,0 +1,435 @@
+{
+  "analysis_id": "D2-PROXY-REWARD-STANFORD-R3-EXISTING-EVIDENCE-DIAGNOSTICS",
+  "analysis_scope": "Post-ready diagnostic analysis over already frozen F0, F0C, and F2R1 artifacts plus released WebArena task metadata. No provider calls, no new rollouts, no new cells, no claim expansion.",
+  "claim_boundary": {
+    "cross_model_claim_supported": false,
+    "large_effect_predictor_claim_supported": false,
+    "live_loop_claim_supported": false,
+    "no_memory_claim_supported": false,
+    "provider_missingness_resolved": false,
+    "semantic_embedding_claim_supported": false
+  },
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "source_bindings": {
+    "f0_write_channel_sha256": "f2e4f3424faf1e3a9ec7aba7958e538eac457e89308552ef7a9c3d69c6a914f9",
+    "f0c_prompt_control_sha256": "760a6b9e9d7135e2c44a3aa011616f4ad06bb1088462a484fbf38321a43c2402",
+    "f2r1_confirmatory_sha256": "04db52a9c2a1eac28df4213e5041e2f20e8e4b3591d5941f9e6d889a8b8dc2e9",
+    "f2r1_heterogeneity_sha256": "28c28638abf73ab444ecb06b16310439f266964a926e2195b8c34709c34c47fb",
+    "webarena_test_raw_sha256": "7b50386fd69163dbc05d615d834df4c6ed2c35596e97a1b10d17451c02537652"
+  },
+  "status": "EXISTING_EVIDENCE_DIAGNOSTICS_COMPLETE",
+  "strategy_prompt_control": {
+    "interpretation": "The same fixed operation-slot taxonomy shows larger average structural separation across reward modes than under semantic-preserving same-mode rewordings. This is descriptive and not an embedding-semantic equivalence test.",
+    "mean_between_minus_within_slot_distance": 0.309077,
+    "mean_between_reward_modes_slot_distance": 0.555655,
+    "mean_within_mode_rewording_slot_distance": 0.246578,
+    "negative_excess_tasks": 1,
+    "positive_excess_tasks": 5,
+    "rows": [
+      {
+        "between_minus_within_slot_distance": 0.308333,
+        "between_reward_modes_slot_distance": 0.6,
+        "task_id": "26",
+        "within_failure_rewording_slot_distance": 0.25,
+        "within_mode_mean_slot_distance": 0.291667,
+        "within_success_rewording_slot_distance": 0.333333
+      },
+      {
+        "between_minus_within_slot_distance": 0.0,
+        "between_reward_modes_slot_distance": 0.5,
+        "task_id": "50",
+        "within_failure_rewording_slot_distance": 0.666667,
+        "within_mode_mean_slot_distance": 0.5,
+        "within_success_rewording_slot_distance": 0.333333
+      },
+      {
+        "between_minus_within_slot_distance": 0.75,
+        "between_reward_modes_slot_distance": 0.75,
+        "task_id": "51",
+        "within_failure_rewording_slot_distance": 0.0,
+        "within_mode_mean_slot_distance": 0.0,
+        "within_success_rewording_slot_distance": 0.0
+      },
+      {
+        "between_minus_within_slot_distance": 0.75,
+        "between_reward_modes_slot_distance": 1.0,
+        "task_id": "96",
+        "within_failure_rewording_slot_distance": 0.5,
+        "within_mode_mean_slot_distance": 0.25,
+        "within_success_rewording_slot_distance": 0.0
+      },
+      {
+        "between_minus_within_slot_distance": 0.5,
+        "between_reward_modes_slot_distance": 0.666667,
+        "task_id": "48",
+        "within_failure_rewording_slot_distance": 0.0,
+        "within_mode_mean_slot_distance": 0.166667,
+        "within_success_rewording_slot_distance": 0.333333
+      },
+      {
+        "between_minus_within_slot_distance": -0.085714,
+        "between_reward_modes_slot_distance": 0.428571,
+        "task_id": "49",
+        "within_failure_rewording_slot_distance": 0.6,
+        "within_mode_mean_slot_distance": 0.514286,
+        "within_success_rewording_slot_distance": 0.428571
+      },
+      {
+        "between_minus_within_slot_distance": 0.0,
+        "between_reward_modes_slot_distance": 0.0,
+        "task_id": "117",
+        "within_failure_rewording_slot_distance": 0.0,
+        "within_mode_mean_slot_distance": 0.0,
+        "within_success_rewording_slot_distance": 0.0
+      },
+      {
+        "between_minus_within_slot_distance": 0.25,
+        "between_reward_modes_slot_distance": 0.5,
+        "task_id": "126",
+        "within_failure_rewording_slot_distance": 0.5,
+        "within_mode_mean_slot_distance": 0.25,
+        "within_success_rewording_slot_distance": 0.0
+      }
+    ],
+    "tasks": 8,
+    "taxonomy_reused_without_change_from_stanford_r2": true,
+    "tie_tasks": 2
+  },
+  "submission_authority": false,
+  "terminal_heterogeneity": {
+    "cells": 16,
+    "future_task_breakdown": [
+      {
+        "all_cells_joint_ceiling": true,
+        "answer_cardinality": 2,
+        "eval_types": [
+          "string_match"
+        ],
+        "intent": "What are the main criticisms of this product? Please extract the relevant sentences.",
+        "mean_absolute_effect": 0.0,
+        "share_of_squared_effect_mass": 0.0,
+        "signed_effects_by_source": {
+          "21": 0.0,
+          "22": 0.0,
+          "23": 0.0,
+          "25": 0.0
+        },
+        "squared_effect_mass": 0.0,
+        "start_context": "product_page",
+        "task_id": "164"
+      },
+      {
+        "all_cells_joint_ceiling": false,
+        "answer_cardinality": 8,
+        "eval_types": [
+          "string_match"
+        ],
+        "intent": "List the customer names who thinks EYZUTAK phone cases are of good looking",
+        "mean_absolute_effect": 0.09375,
+        "share_of_squared_effect_mass": 0.064103,
+        "signed_effects_by_source": {
+          "21": 0.25,
+          "22": 0.125,
+          "23": 0.0,
+          "25": 0.0
+        },
+        "squared_effect_mass": 0.078125,
+        "start_context": "shopping_home",
+        "task_id": "385"
+      },
+      {
+        "all_cells_joint_ceiling": false,
+        "answer_cardinality": 6,
+        "eval_types": [
+          "string_match"
+        ],
+        "intent": "Who gave 4 or 5 stars for phone cases from EYZUTAK",
+        "mean_absolute_effect": 0.25,
+        "share_of_squared_effect_mass": 0.358974,
+        "signed_effects_by_source": {
+          "21": 0.125,
+          "22": -0.125,
+          "23": 0.125,
+          "25": 0.625
+        },
+        "squared_effect_mass": 0.4375,
+        "start_context": "shopping_home",
+        "task_id": "387"
+      },
+      {
+        "all_cells_joint_ceiling": false,
+        "answer_cardinality": 2,
+        "eval_types": [
+          "string_match"
+        ],
+        "intent": "Who gave 1 or 2 stars for phone cases from EYZUTAK",
+        "mean_absolute_effect": 0.28125,
+        "share_of_squared_effect_mass": 0.576923,
+        "signed_effects_by_source": {
+          "21": -0.375,
+          "22": 0.75,
+          "23": 0.0,
+          "25": 0.0
+        },
+        "squared_effect_mass": 0.703125,
+        "start_context": "shopping_home",
+        "task_id": "388"
+      }
+    ],
+    "interaction_examples": {
+      "future_387_signed_effects": {
+        "21": 0.125,
+        "22": -0.125,
+        "23": 0.125,
+        "25": 0.625
+      },
+      "future_388_signed_effects": {
+        "21": -0.375,
+        "22": 0.75,
+        "23": 0.0,
+        "25": 0.0
+      },
+      "same_source_opposite_signs": [
+        "21",
+        "22"
+      ]
+    },
+    "interpretation": "Effect magnitude and sign are primarily source-by-future-cell specific in this frozen matrix. Source-only and future-only additive summaries leave most centered signed-effect variation in the interaction residual. Future task 164 is a joint 1.0/1.0 ceiling in all four cells; all observed squared-effect mass lies in the three non-ceiling future tasks. These are descriptive attributes, not a learned predictor of transfer.",
+    "mean_absolute_effect": 0.15625,
+    "mean_squared_effect": 0.076172,
+    "negative_failure_minus_success_cells": 2,
+    "positive_failure_minus_success_cells": 6,
+    "source_memory_breakdown": [
+      {
+        "contains_both_nonzero_signs": true,
+        "mean_absolute_effect": 0.1875,
+        "mean_signed_effect": 0.0,
+        "share_of_squared_effect_mass": 0.179487,
+        "signed_effects_by_future": {
+          "164": 0.0,
+          "385": 0.25,
+          "387": 0.125,
+          "388": -0.375
+        },
+        "source_memory_task": "21",
+        "squared_effect_mass": 0.21875
+      },
+      {
+        "contains_both_nonzero_signs": true,
+        "mean_absolute_effect": 0.25,
+        "mean_signed_effect": 0.1875,
+        "share_of_squared_effect_mass": 0.487179,
+        "signed_effects_by_future": {
+          "164": 0.0,
+          "385": 0.125,
+          "387": -0.125,
+          "388": 0.75
+        },
+        "source_memory_task": "22",
+        "squared_effect_mass": 0.59375
+      },
+      {
+        "contains_both_nonzero_signs": false,
+        "mean_absolute_effect": 0.03125,
+        "mean_signed_effect": 0.03125,
+        "share_of_squared_effect_mass": 0.012821,
+        "signed_effects_by_future": {
+          "164": 0.0,
+          "385": 0.0,
+          "387": 0.125,
+          "388": 0.0
+        },
+        "source_memory_task": "23",
+        "squared_effect_mass": 0.015625
+      },
+      {
+        "contains_both_nonzero_signs": false,
+        "mean_absolute_effect": 0.15625,
+        "mean_signed_effect": 0.15625,
+        "share_of_squared_effect_mass": 0.320513,
+        "signed_effects_by_future": {
+          "164": 0.0,
+          "385": 0.0,
+          "387": 0.625,
+          "388": 0.0
+        },
+        "source_memory_task": "25",
+        "squared_effect_mass": 0.390625
+      }
+    ],
+    "top_two_share_of_squared_effect_mass": 0.782051,
+    "two_way_centered_effect_decomposition": {
+      "future_main_share": 0.065217,
+      "grand_mean_signed_effect": 0.09375,
+      "note": "Descriptive finite 4x4 decomposition of centered signed effects; no inferential ANOVA claim is made.",
+      "source_future_interaction_share": 0.84058,
+      "source_main_share": 0.094203,
+      "ss_future_main": 0.070312,
+      "ss_source_future_interaction": 0.90625,
+      "ss_source_main": 0.101562,
+      "ss_total": 1.078125
+    },
+    "zero_effect_cells": 8
+  },
+  "writer_structure": {
+    "complete_pairs": 4,
+    "failure_only_slot_pair_counts": {
+      "query_expansion": 1,
+      "semantic_matching": 1,
+      "verification_completeness": 3
+    },
+    "failure_only_verification_completeness_pairs": 3,
+    "mean_strategy_slot_jaccard_distance": 0.492857,
+    "mean_token_jaccard_distance": 0.734789,
+    "pair_rows": [
+      {
+        "failure_only_slots": [
+          "semantic_matching",
+          "verification_completeness"
+        ],
+        "failure_slots": [
+          "extraction",
+          "pagination_coverage",
+          "query_expansion",
+          "semantic_matching",
+          "verification_completeness"
+        ],
+        "slot_jaccard_distance": 0.571429,
+        "success_only_slots": [
+          "evidence_capture",
+          "navigation"
+        ],
+        "success_slots": [
+          "evidence_capture",
+          "extraction",
+          "navigation",
+          "pagination_coverage",
+          "query_expansion"
+        ],
+        "task_id": "21"
+      },
+      {
+        "failure_only_slots": [
+          "verification_completeness"
+        ],
+        "failure_slots": [
+          "extraction",
+          "navigation",
+          "pagination_coverage",
+          "verification_completeness"
+        ],
+        "slot_jaccard_distance": 0.4,
+        "success_only_slots": [
+          "query_expansion"
+        ],
+        "success_slots": [
+          "extraction",
+          "navigation",
+          "pagination_coverage",
+          "query_expansion"
+        ],
+        "task_id": "22"
+      },
+      {
+        "failure_only_slots": [
+          "query_expansion"
+        ],
+        "failure_slots": [
+          "pagination_coverage",
+          "query_expansion",
+          "verification_completeness"
+        ],
+        "slot_jaccard_distance": 0.5,
+        "success_only_slots": [
+          "evidence_capture"
+        ],
+        "success_slots": [
+          "evidence_capture",
+          "pagination_coverage",
+          "verification_completeness"
+        ],
+        "task_id": "23"
+      },
+      {
+        "failure_only_slots": [
+          "verification_completeness"
+        ],
+        "failure_slots": [
+          "extraction",
+          "pagination_coverage",
+          "semantic_matching",
+          "verification_completeness"
+        ],
+        "slot_jaccard_distance": 0.5,
+        "success_only_slots": [
+          "navigation",
+          "query_expansion"
+        ],
+        "success_slots": [
+          "extraction",
+          "navigation",
+          "pagination_coverage",
+          "query_expansion",
+          "semantic_matching"
+        ],
+        "task_id": "25"
+      }
+    ],
+    "strategy_slot_set_change_rate": 1.0,
+    "success_only_evidence_navigation_or_query_pairs": 4,
+    "success_only_slot_pair_counts": {
+      "evidence_capture": 2,
+      "navigation": 2,
+      "query_expansion": 2
+    },
+    "writer_output_length": {
+      "failure_longer_output_pairs": 4,
+      "failure_longer_reasoning_pairs": 4,
+      "interpretation": "Descriptive response-structure asymmetry only; token length is not a semantic-quality metric.",
+      "mean_failure_minus_success_output_tokens": 266.5,
+      "mean_failure_minus_success_reasoning_tokens": 268.0,
+      "rows": [
+        {
+          "failure_minus_success_output_tokens": 134,
+          "failure_minus_success_reasoning_tokens": 171,
+          "failure_output_tokens": 1113,
+          "failure_reasoning_tokens": 876,
+          "success_output_tokens": 979,
+          "success_reasoning_tokens": 705,
+          "task_id": "21"
+        },
+        {
+          "failure_minus_success_output_tokens": 715,
+          "failure_minus_success_reasoning_tokens": 700,
+          "failure_output_tokens": 1296,
+          "failure_reasoning_tokens": 1013,
+          "success_output_tokens": 581,
+          "success_reasoning_tokens": 313,
+          "task_id": "22"
+        },
+        {
+          "failure_minus_success_output_tokens": 65,
+          "failure_minus_success_reasoning_tokens": 43,
+          "failure_output_tokens": 852,
+          "failure_reasoning_tokens": 580,
+          "success_output_tokens": 787,
+          "success_reasoning_tokens": 537,
+          "task_id": "23"
+        },
+        {
+          "failure_minus_success_output_tokens": 152,
+          "failure_minus_success_reasoning_tokens": 158,
+          "failure_output_tokens": 777,
+          "failure_reasoning_tokens": 516,
+          "success_output_tokens": 625,
+          "success_reasoning_tokens": 358,
+          "task_id": "25"
+        }
+      ]
+    }
+  }
+}

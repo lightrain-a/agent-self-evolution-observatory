@@ -1,0 +1,83 @@
+{
+  "artifact_bindings": {
+    "diagnostic_sha256": "66e0bbb386c3050ea1f3260a9f48de27a6b8e1509425916e2e09055dbd3f5d22",
+    "manuscript_qa_sha256": "4c98789abc38a093443f7c25768e4641aeaf7a2f540cd76960e3f8fe70066e48",
+    "paper_pdf_sha256": "6814438ddbe5037c8e4baddaa81c320b93b1aab429d236862ed862ecf4a905af"
+  },
+  "base_review": "STANFORD-R2-OBJECTION-MATRIX-20260823",
+  "claim_expansion": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "new_experiment": false,
+  "new_provider_calls": 0,
+  "new_rollouts": 0,
+  "objections": {
+    "PROXY-O1": {
+      "action": "No novelty expansion; keep the identical-trajectory reward-conditioned writer-branch boundary.",
+      "original_disposition": "RESOLVED",
+      "revision_status": "PRESERVED_RESOLVED"
+    },
+    "PROXY-O2": {
+      "boundary": "Structural/operation-slot evidence only; no embedding-semantic equivalence claim.",
+      "evidence": {
+        "f0_mean_slot_jaccard_distance": 0.492857,
+        "f0_operation_slot_change_rate": 1.0,
+        "f0c_between_reward_modes_slot_distance": 0.555655,
+        "f0c_structural_excess": 0.309077,
+        "f0c_within_mode_rewording_slot_distance": 0.246578
+      },
+      "original_disposition": "EXISTING_EVIDENCE_ACTIONABLE",
+      "revision_status": "ADDRESSED_WITH_EXISTING_EVIDENCE"
+    },
+    "PROXY-O3": {
+      "action": "No re-POST, no imputation; 4/4 claims remain conditional on paired completion.",
+      "original_disposition": "PERMANENT_CLAIM_BOUNDARY",
+      "revision_status": "PRESERVED_PERMANENT_CLAIM_BOUNDARY"
+    },
+    "PROXY-O4": {
+      "boundary": "Finite 4x4 descriptive decomposition only; no general predictor of transfer-effect magnitude.",
+      "evidence": {
+        "future_main_share": 0.065217,
+        "future_task_164_joint_ceiling": true,
+        "source_future_interaction_share": 0.84058,
+        "source_main_share": 0.094203,
+        "top_two_squared_effect_mass_share": 0.782051,
+        "zero_effect_cells": 8
+      },
+      "original_disposition": "EXISTING_EVIDENCE_ACTIONABLE",
+      "revision_status": "ADDRESSED_WITH_EXISTING_EVIDENCE"
+    },
+    "PROXY-O5": {
+      "action": "No no-memory terminal arm added; current estimand remains failure-conditioned versus success-conditioned memory.",
+      "original_disposition": "REQUIRES_SCIENTIFIC_REOPEN",
+      "revision_status": "DEFERRED_SCIENTIFIC_REOPEN_REQUIRED"
+    },
+    "PROXY-O6": {
+      "action": "No cross-model, live-loop, or corruption-sweep execution added.",
+      "original_disposition": "REQUIRES_SCIENTIFIC_REOPEN",
+      "revision_status": "DEFERRED_SCIENTIFIC_REOPEN_REQUIRED"
+    }
+  },
+  "paper_code": "C1",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "paper_only_revision": true,
+  "receipt_type": "paper-only-stanford-r3-revision",
+  "revision": "STANFORD-R3-EXISTING-EVIDENCE-20260824",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "stanford_r2_score": 6.3,
+  "stanford_r2_verdict": "Weak Accept",
+  "submission_authority": false,
+  "system_paper_requirements": {
+    "abstract_words_approx": 198,
+    "execution_accounting_added": true,
+    "experimental_setup_section_added": true,
+    "failure_and_scope_boundaries_preserved": true,
+    "heterogeneity_diagnostic_added": true,
+    "main_text_pages": 8,
+    "manuscript_qa_status": "PASS",
+    "mechanism_diagnostic_added": true,
+    "related_work_moved_before_method_results": true,
+    "strongest_simple_control_explicit": true
+  }
+}

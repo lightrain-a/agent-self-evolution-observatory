@@ -1,0 +1,141 @@
+\section{F0 Reproduction Details}
+\subsection{Released trajectory sample}
+The F0 sample uses six task IDs from the released AWM shuffle-seed-42 Shopping parquet: 21 through 25, plus 47. The deterministic sampler selects the lowest task IDs with parseable trajectory records within each original-outcome stratum. Original failures are 21 through 22 plus 24. Original successes are 23 plus 25 and 47.
+
+\subsection{Memory construction intervention}
+Each released trajectory is summarized into an action trace. The same trace is inserted into two prompts. One prompt contains the released ReasoningBank success-reflection system instruction. The paired prompt contains the released failure-reflection system instruction. The task prompt stays fixed. The writer model stays fixed. Temperature stays at zero. The raw provider output is archived before metric computation.
+
+\subsection{Pair-level F0 results}
+\begin{table}[h]
+\centering
+\caption{Complete paired interventions.}
+\small
+\begin{tabular}{lccc}
+\toprule
+Task & Original outcome & Content changed & Token distance \\
+\midrule
+21 & failure & yes & 0.691489 \\
+22 & failure & yes & 0.708108 \\
+23 & success & yes & 0.769953 \\
+25 & success & yes & 0.769608 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The extracted memory-item title set changes for every complete pair. The mean token-set Jaccard distance is 0.734789. A deterministic post-ready strategy-slot audit maps the frozen titles into navigation, pagination/coverage, query expansion, semantic matching, evidence capture, extraction, and verification/completeness. All four complete pairs change their slot set. The slot-set Jaccard distances are 0.571, 0.400, 0.500, and 0.500 for tasks 21, 22, 23, and 25, respectively, with mean 0.493. This is a structural diagnostic over frozen titles, not an embedding-based semantic claim.
+
+Provider failures for task 24 and task 47 are excluded from the paired analysis. Both are failure-label calls with \texttt{ArkResponseStateError}; neither produces assistant text or a raw memory SHA. Private response identifiers are retained and GET-only recovery finds no text. The four completed failure-label calls produce 777, 852, 1,113, and 1,296 output tokens. These receipts distinguish provider response-state failures from a later memory-parser rejection, while leaving arm-dependent completion bias unresolved.
+
+\section{Prompt-Perturbation Control Details}
+The control set is disjoint from the F0 requests. Each fresh trajectory is written under both released reward modes. One semantic-preserving rewording is also evaluated within each mode. Table~\ref{tab:prompt-control-full} reports the paired distances used in the frozen sign-flip test.
+
+\begin{table}[h]
+\centering
+\caption{Full fresh prompt-perturbation control. Between is the released success-versus-failure memory distance; Within averages the two same-mode rewording distances.}
+\label{tab:prompt-control-full}
+\scriptsize
+\begin{tabular}{lcrrr}
+\toprule
+Task & Original outcome & Between & Within & $B_i-W_i$ \\
+\midrule
+26  & failure & 0.726 & 0.662 & 0.065 \\
+50  & failure & 0.668 & 0.599 & 0.069 \\
+51  & failure & 0.776 & 0.534 & 0.242 \\
+96  & failure & 0.682 & 0.549 & 0.134 \\
+48  & success & 0.716 & 0.656 & 0.059 \\
+49  & success & 0.573 & 0.594 & -0.022 \\
+117 & success & 0.703 & 0.593 & 0.110 \\
+126 & success & 0.755 & 0.572 & 0.182 \\
+\midrule
+Mean & & 0.700 & 0.595 & 0.105 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Downstream Confirmatory Details}
+\subsection{Fixed-state action distributions}
+The distributional action stress test retains all four intervention states from the action-reach experiment and uses eight rollouts per memory condition. The per-state success-memory versus failure-memory TV distances are 0.625 for task 22 and 0.375 for task 23. They are 0.125 for task 24 and 0.250 for task 26. Their mean is 0.34375. The frozen 100,000-draw permutation audit gives $p=0.310527$.
+
+\subsection{Frozen terminal matrix}
+The terminal confirmatory experiment reuses every complete F0 pair and every future task frozen for the earlier fixed-evidence run. Source-memory tasks form $\{21,22,23,25\}$. Future tasks form $\{164,385,387,388\}$. The design therefore contains 16 source--future cells. Each cell receives eight fresh success-memory rollouts and eight fresh failure-memory rollouts. The policy model is Doubao Seed 2.0 Mini at temperature 0.2. All 256 requested calls complete with zero provider failures.
+
+The primary statistic is the mean across cells of the absolute difference between success-memory and failure-memory terminal benchmark success rates. The support gate is frozen before calls at an effect floor of 0.15 together with a within-cell permutation $p<0.05$. The permutation audit uses 100,000 draws with seed 20260822. The observed statistic is 0.15625 and the audit gives $p=0.00074$.
+
+\begin{table}[h]
+\centering
+\caption{F2R1 confirmatory terminal success rates. S denotes success-label memory and F denotes failure-label memory.}
+\label{tab:f2r1-cells}
+\scriptsize
+\begin{tabular}{ccccc}
+\toprule
+Source & Future & S rate & F rate & $|\Delta|$ \\
+\midrule
+21 & 164 & 1.000 & 1.000 & 0.000 \\
+21 & 385 & 0.000 & 0.250 & 0.250 \\
+21 & 387 & 0.125 & 0.250 & 0.125 \\
+21 & 388 & 1.000 & 0.625 & 0.375 \\
+22 & 164 & 1.000 & 1.000 & 0.000 \\
+22 & 385 & 0.000 & 0.125 & 0.125 \\
+22 & 387 & 0.125 & 0.000 & 0.125 \\
+22 & 388 & 0.250 & 1.000 & 0.750 \\
+23 & 164 & 1.000 & 1.000 & 0.000 \\
+23 & 385 & 0.000 & 0.000 & 0.000 \\
+23 & 387 & 0.125 & 0.250 & 0.125 \\
+23 & 388 & 1.000 & 1.000 & 0.000 \\
+25 & 164 & 1.000 & 1.000 & 0.000 \\
+25 & 385 & 0.000 & 0.000 & 0.000 \\
+25 & 387 & 0.125 & 0.750 & 0.625 \\
+25 & 388 & 1.000 & 1.000 & 0.000 \\
+\midrule
+\multicolumn{4}{r}{Mean absolute difference} & 0.15625 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Heterogeneity and corruption-rate decomposition}
+For each frozen cell, the confirmatory run estimates paired conditional success probabilities. Eight of the 16 cells have zero observed success-rate contrast. Six have positive failure-memory minus success-memory effects and two have negative effects. The largest squared effects occur at source/future pairs 22/388 and 25/387; together they contribute 78.2051\% of the total squared-effect mass. This sign and magnitude heterogeneity is why the paper treats the result as a variance channel instead of a uniform directional harm effect.
+
+If reward-label corruption selects the failure-conditioned memory with probability $q$, the induced between-memory variance equals $q(1-q)\Delta_c^2$ in cell $c$. The exact mean squared conditional effect across all 16 cells is 0.076172. Averaging over cells gives the curve $0.076172q(1-q)$, with value 0.006855 at $q=0.1$, value 0.014282 at $q=0.25$, and value 0.019043 at $q=0.5$.
+
+For finite-cell sensitivity, we run a fixed-seed nonparametric bootstrap with 100,000 repetitions, resampling 16 source--future cells with replacement. The percentile 95\% interval for mean absolute effect is $[0.054688,0.273438]$. The corresponding interval for mean squared effect is $[0.010742,0.164062]$, which maps to $[0.002686,0.041016]$ for $V(0.5)$. This bootstrap is descriptive sensitivity to the observed cell composition. The preregistered within-cell permutation test on the 256 confirmatory rollouts supplies the primary significance result.
+
+\subsection{Post-ready structural diagnostic}
+The Stanford-targeted diagnostic reuses the exact operation-slot taxonomy already frozen for the F0 title audit; it does not add a learned semantic judge. Applied to the eight disjoint F0C trajectories, the mean slot-set distance between released reward modes is 0.555655, whereas the mean distance induced by semantic-preserving rewording within the same mode is 0.246578. The mean between-minus-within structural excess is 0.309077; five tasks are positive, two tie, and one is negative. This is descriptive supporting evidence rather than a second hypothesis test. On the four complete F0 pairs, success-only operation slots include at least one of evidence capture, navigation, or query expansion in all four pairs, while verification/completeness is failure-only in three pairs. Provider receipts also show longer failure-mode responses in all four complete pairs (mean output-token difference +266.5; mean reasoning-token difference +268.0), which we report only as response-structure asymmetry, not as semantic quality.
+
+\subsection{Post-ready source--future interaction diagnostic}
+A two-way additive decomposition of the centered signed F2R1 cell effects is shown below. It is a finite-matrix description, not inferential ANOVA.
+\begin{table}[h]
+\centering
+\small
+\caption{Descriptive decomposition of centered signed terminal effects.}
+\begin{tabular}{lrr}
+\toprule
+Component & Sum of squares & Share \\
+\midrule
+Source-memory main effect & 0.101562 & 9.4\% \\
+Future-task main effect & 0.070312 & 6.5\% \\
+Source $\times$ future interaction residual & 0.906250 & 84.1\% \\
+\midrule
+Total & 1.078125 & 100\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The source and future marginals therefore summarize little of the signed effect structure. Source 21 is positive on future tasks 385 and 387 but negative on 388; source 22 is positive on 385 and 388 but negative on 387. Future tasks 387 and 388 likewise change sign across source memories. Table~\ref{tab:future-task-heterogeneity} adds benchmark-observable future-task attributes.
+\begin{table}[h]
+\centering
+\small
+\caption{Future-task attributes and concentration of the frozen terminal effect. ``Home'' means the task starts at the Shopping root rather than a product page.}
+\label{tab:future-task-heterogeneity}
+\begin{tabular}{lrrrr}
+\toprule
+Task & Start & Ref. items & Mean $|\Delta|$ & Squared-mass share \\
+\midrule
+164 & Product & 2 & 0.00000 & 0.0\% \\
+385 & Home & 8 & 0.09375 & 6.4\% \\
+387 & Home & 6 & 0.25000 & 35.9\% \\
+388 & Home & 2 & 0.28125 & 57.7\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+Future task 164 is at a joint 1.0/1.0 terminal ceiling for every source pair, so it has no observable binary-outcome headroom and contributes zero effect mass. The other three tasks contain all observed squared-effect mass. With only four future tasks, start context, task identity, and outcome headroom are confounded; these rows characterize where the frozen effect occurred but do not define a general transfer predictor.
