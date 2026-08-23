@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0-v19r003-harness-blinding-audit",
+  "generated_at": "2026-08-23T14:05:49+00:00",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "candidate_snapshot_sha256": "47ea60fb13e3ec723d2a871b58ab1a3c6e9e565eea01e1cd838c67f9f2b39777",
+  "audit_status": "BLINDING_REPAIR_PASS_ZERO_OUTCOME",
+  "discovered_issue": {
+    "affected_version": "R2 self-contained overlay",
+    "issue": "The initial renderer exported PTB_INTERVENTION_ARM and payload file paths into the phase-1 child environment, and the copied solve script contained encoded future payloads. A phase-1 agent that inspected its environment or harness file could therefore learn future treatment assignment before the boundary.",
+    "scientific_runs_executed_under_affected_version": 0,
+    "scientific_outcomes_read_under_affected_version": false,
+    "disposition": "SUPERSEDED_BEFORE_SCIENTIFIC_EXECUTION"
+  },
+  "repair": {
+    "version": "R3",
+    "changes": [
+      "intervention arm and payloads are shell-local and never exported to the phase-1 child",
+      "payload files are not materialized by the self-contained overlay",
+      "the copied self-contained solve script pathname is removed before phase 1",
+      "the parent Bash script file descriptor is located and closed before phase 1",
+      "sensitive PTB variables are unset before launching the phase-1 agent"
+    ],
+    "tests": "9/9 PASS",
+    "phase1_sensitive_environment_absent": true,
+    "phase1_parent_script_path_absent": true,
+    "phase1_parent_script_fd_absent": true,
+    "frozen_strategy_plaintext_absent_from_rendered_script": true,
+    "module_sha256": "509fe2d0e6ef3edb8983ae95c7d2dc2caf5919ebe58db9fb0f83e814baf2be63",
+    "adapter_sha256": "c810549ca9af4364228dd35b6c1664d90080eee382e98adbf03db9d770f6b9de",
+    "test_sha256": "1dd85b6eb85fe066e12c0fc62b69874b5f3a4408f7edc39602a9e009fbd621ac",
+    "manifest_r3_file_sha256": "5378352b5309bd1826a517f66a15de2491b3e0e14d1a442e2c6034de453f0ae9",
+    "preflight_r3_file_sha256": "9ce057c401f57d10f51e17c2c02687f4a03b94e97957bf66fe5268d69c1694be"
+  },
+  "threat_model": {
+    "claim": "Prevents ordinary phase-1 prompt, environment, pathname, and inherited-script-fd access to the hidden post-boundary arm/payload.",
+    "not_claimed": "Not a cryptographic security boundary against deliberate same-UID process-memory exploitation or kernel-level introspection.",
+    "run_invalidation": "Any explicit attempt in the phase-1 trace to inspect parent process memory/fds or recover hidden treatment metadata invalidates that unit before outcome interpretation."
+  },
+  "provider_calls_executed": 0,
+  "gpu_calls_executed": 0,
+  "scientific_outcome_calls_executed": 0,
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false,
+    "full_experiment": false
+  }
+}

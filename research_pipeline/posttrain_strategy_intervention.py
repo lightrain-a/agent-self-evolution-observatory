@@ -257,6 +257,7 @@ def build_zero_authority_harness_manifest(
             "same_evaluator_within_comparison": True,
             "strategy_payload_frozen_before_outcome": True,
             "phase_boundary_frozen_before_outcome": True,
+            "phase1_blind_to_post_payload_and_arm": True,
             "trajectory_level_strategy_adherence_required": True,
             "final_score_alone_forbidden": True,
             "scientific_run_requires_declared_hardware_match": True,
@@ -301,6 +302,7 @@ def validate_zero_authority_harness_manifest(manifest: dict[str, Any]) -> list[s
         "same_evaluator_within_comparison",
         "strategy_payload_frozen_before_outcome",
         "phase_boundary_frozen_before_outcome",
+        "phase1_blind_to_post_payload_and_arm",
         "trajectory_level_strategy_adherence_required",
         "final_score_alone_forbidden",
         "scientific_run_requires_declared_hardware_match",
@@ -370,22 +372,42 @@ def render_posttrainbench_self_contained_solve_sh(
         "strategy": base64.b64encode(strategy.encode("utf-8")).decode("ascii"),
         "execution": base64.b64encode(execution.encode("utf-8")).decode("ascii"),
         "conflict_free": base64.b64encode(conflict_free.encode("utf-8")).decode("ascii"),
+        "adapter": base64.b64encode(body.encode("utf-8")).decode("ascii"),
     }
+    # Keep future-arm identity and payloads as non-exported shell-local values.  The
+    # copied self-contained solve script removes its pathname before phase 1, then
+    # evaluates the generic adapter from memory.  This prevents ordinary phase-1
+    # environment/file inspection from revealing the post-boundary treatment.
     bootstrap = f'''#!/bin/bash
 set -euo pipefail
-PTB_PAYLOAD_DIR="${{TMPDIR:-/tmp}}/ptb-intervention-payloads-$$"
-mkdir -p "$PTB_PAYLOAD_DIR"
-trap 'rm -rf "$PTB_PAYLOAD_DIR"' EXIT
-printf '%s' '{encoded["strategy"]}' | base64 -d > "$PTB_PAYLOAD_DIR/strategy.txt"
-printf '%s' '{encoded["execution"]}' | base64 -d > "$PTB_PAYLOAD_DIR/execution.txt"
-printf '%s' '{encoded["conflict_free"]}' | base64 -d > "$PTB_PAYLOAD_DIR/conflict-free.txt"
-export PTB_INTERVENTION_ARM='{arm}'
-export PTB_SESSION_BACKEND='{backend}'
-export PTB_STRATEGY_INSTRUCTION_FILE="$PTB_PAYLOAD_DIR/strategy.txt"
-export PTB_EXECUTION_CONTROL_FILE="$PTB_PAYLOAD_DIR/execution.txt"
-export PTB_CONFLICT_FREE_STRATEGY_FILE="$PTB_PAYLOAD_DIR/conflict-free.txt"
+{{
+PTB_INTERVENTION_ARM='{arm}'
+PTB_SESSION_BACKEND='{backend}'
+PTB_STRATEGY_INSTRUCTION_B64='{encoded["strategy"]}'
+PTB_EXECUTION_CONTROL_B64='{encoded["execution"]}'
+PTB_CONFLICT_FREE_STRATEGY_B64='{encoded["conflict_free"]}'
+PTB_ADAPTER_B64='{encoded["adapter"]}'
+PTB_ADAPTER_CODE="$(printf '%s' "$PTB_ADAPTER_B64" | base64 -d)"
+PTB_SCRIPT_REALPATH="$(readlink -f -- "$0" 2>/dev/null || printf '%s' "$0")"
+PTB_SCRIPT_FD=""
+for PTB_FD_PATH in /proc/$$/fd/*; do
+  PTB_FD="${{PTB_FD_PATH##*/}}"
+  case "$PTB_FD" in 0|1|2) continue ;; esac
+  PTB_FD_TARGET="$(readlink -f -- "$PTB_FD_PATH" 2>/dev/null || true)"
+  if [ "$PTB_FD_TARGET" = "$PTB_SCRIPT_REALPATH" ]; then
+    PTB_SCRIPT_FD="$PTB_FD"
+    break
+  fi
+done
+rm -f -- "$0"
+if [[ "$PTB_SCRIPT_FD" =~ ^[0-9]+$ ]] && [ "$PTB_SCRIPT_FD" -gt 2 ]; then
+  eval "exec ${{PTB_SCRIPT_FD}}<&-"
+fi
+unset PTB_ADAPTER_B64 PTB_SCRIPT_REALPATH PTB_SCRIPT_FD PTB_FD_PATH PTB_FD PTB_FD_TARGET
+eval "$PTB_ADAPTER_CODE"
+}}
 '''
-    rendered = bootstrap + body
+    rendered = bootstrap
     # Fail closed if the rendered script does not visibly bind the frozen strategy payload.
     if _sha_text(strategy) != hashlib.sha256(base64.b64decode(encoded["strategy"])).hexdigest():
         raise ValueError("rendered strategy payload digest mismatch")

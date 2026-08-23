@@ -9,9 +9,6 @@ set -euo pipefail
 : "${PROMPT:?PROMPT is required}"
 : "${AGENT_CONFIG:?AGENT_CONFIG is required}"
 : "${PTB_INTERVENTION_ARM:?PTB_INTERVENTION_ARM is required}"
-: "${PTB_STRATEGY_INSTRUCTION_FILE:?PTB_STRATEGY_INSTRUCTION_FILE is required}"
-: "${PTB_EXECUTION_CONTROL_FILE:?PTB_EXECUTION_CONTROL_FILE is required}"
-: "${PTB_CONFLICT_FREE_STRATEGY_FILE:?PTB_CONFLICT_FREE_STRATEGY_FILE is required}"
 
 BOUNDARY_MARKER="PTB_INTERVENTION_BOUNDARY_READY"
 ARM="$(printf '%s' "$PTB_INTERVENTION_ARM" | tr '[:lower:]' '[:upper:]')"
@@ -24,13 +21,39 @@ case "$ARM" in
   *) echo "unsupported PTB_INTERVENTION_ARM=$ARM" >&2; exit 64 ;;
 esac
 
-for f in "$PTB_STRATEGY_INSTRUCTION_FILE" "$PTB_EXECUTION_CONTROL_FILE" "$PTB_CONFLICT_FREE_STRATEGY_FILE"; do
-  [ -s "$f" ] || { echo "required intervention payload missing/empty: $f" >&2; exit 65; }
-done
+load_payload() {
+  local file_name="$1"
+  local b64_name="$2"
+  local file_value=""
+  local b64_value=""
+  if declare -p "$file_name" >/dev/null 2>&1; then
+    file_value="${!file_name}"
+  fi
+  if declare -p "$b64_name" >/dev/null 2>&1; then
+    b64_value="${!b64_name}"
+  fi
+  if [ -n "$b64_value" ]; then
+    printf '%s' "$b64_value" | base64 -d
+    return
+  fi
+  if [ -n "$file_value" ] && [ -s "$file_value" ]; then
+    cat "$file_value"
+    return
+  fi
+  echo "required intervention payload missing/empty: $file_name or $b64_name" >&2
+  return 65
+}
 
-STRATEGY_INSTRUCTION="$(cat "$PTB_STRATEGY_INSTRUCTION_FILE")"
-EXECUTION_CONTROL="$(cat "$PTB_EXECUTION_CONTROL_FILE")"
-CONFLICT_FREE_STRATEGY="$(cat "$PTB_CONFLICT_FREE_STRATEGY_FILE")"
+STRATEGY_INSTRUCTION="$(load_payload PTB_STRATEGY_INSTRUCTION_FILE PTB_STRATEGY_INSTRUCTION_B64)"
+EXECUTION_CONTROL="$(load_payload PTB_EXECUTION_CONTROL_FILE PTB_EXECUTION_CONTROL_B64)"
+CONFLICT_FREE_STRATEGY="$(load_payload PTB_CONFLICT_FREE_STRATEGY_FILE PTB_CONFLICT_FREE_STRATEGY_B64)"
+
+# The phase-1 agent must not inherit future-arm identity or payload locations/content.
+# These values remain only as non-exported parent-shell variables after this point.
+unset PTB_INTERVENTION_ARM PTB_SESSION_BACKEND \
+  PTB_STRATEGY_INSTRUCTION_FILE PTB_EXECUTION_CONTROL_FILE PTB_CONFLICT_FREE_STRATEGY_FILE \
+  PTB_STRATEGY_INSTRUCTION_B64 PTB_EXECUTION_CONTROL_B64 PTB_CONFLICT_FREE_STRATEGY_B64 \
+  PTB_ADAPTER_B64
 
 BOUNDARY_PROTOCOL=$(cat <<'EOF'
 ## Segmented intervention checkpoint protocol

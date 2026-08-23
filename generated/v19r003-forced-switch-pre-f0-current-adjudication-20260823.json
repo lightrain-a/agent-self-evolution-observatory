@@ -1,0 +1,123 @@
+{
+  "schema_version": "1.0-v19r003-pre-f0-current-adjudication",
+  "generated_at": "2026-08-23T13:59:11+00:00",
+  "artifact_kind": "V19R003_PRE_F0_CURRENT_ADJUDICATION",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "candidate_snapshot_sha256": "47ea60fb13e3ec723d2a871b58ab1a3c6e9e565eea01e1cd838c67f9f2b39777",
+  "branch": "research/v19r003-forced-switch-pre-f0-20260823",
+  "branch_commit": "d9a7f8c03a68f500e2931d9f2736093a37053fb4",
+  "canonical_base": "2fedb56c2697503d606a7ccc5f084067b539e4fa",
+  "source_artifacts": {
+    "boundary_repair_r2_sha256": "7a49e7681ffa19e1ed462155341a5a525f2bbf63976270505d4cb5b7309d453f",
+    "independent_jury_r2_sha256": "5aa96abd1fe43c540800e6cf3f38086f994db34af66bea8d065478590b4dd67d",
+    "harness_manifest_r2_file_sha256": "c2b6d76561e0865f768a5458cc5bb83b12f33599c669ef19cdd7bcce3a7d96c4",
+    "substrate_preflight_r2_file_sha256": "28a05344bd205361f070b7043615c08423334a01dbdc87a9f3a1cb5dca013bdf",
+    "primary_ref": "arXiv:2608.19072",
+    "primary_source_tar_sha256": "784fa05bdc7b1e8adfe05759eb821a2b6d4b2a66a9edc2f86271ff581118a8a7",
+    "posttrainbench_commit": "3ed1d32ff1ec1f41282be6f8ebbcec07b19fc3d1"
+  },
+  "family_identity": {
+    "different_from_port017": true,
+    "port017_object": "cross-mechanism convergence at entity-level intervention/modification knowledge",
+    "this_object": "post-lock-in strategy permeability under a binding externally supplied strategy, with trajectory-level enactment rather than spontaneous revision as the endpoint",
+    "separation_axes": {
+      "carrier": "high-level training strategy vs entity-level intervention knowledge",
+      "intervention": "timed binding strategy injection vs acquisition-mechanism comparison",
+      "endpoint": "strategy enactment/adherence after lock-in vs entity modification success",
+      "falsifier": "yoked pre/post timing intervention vs third-mechanism convergence test"
+    }
+  },
+  "closest_work_adjudication": {
+    "actual_closest_work_ref": "arXiv:2608.19072",
+    "actual_closest_work_title": "What is Missing from AI Post-Training AI: An Empirical Analysis",
+    "previous_generator_closest_work_ref": "arXiv:2608.18351",
+    "previous_generator_closest_work_disposition": "SUPERSEDED_BY_SOURCE_FIRST_CLOSEST_WORK",
+    "source_already_claims": [
+      "training strategy is typically locked in at the beginning of a run",
+      "strategy is plastic only in a short pre-training window and hardens once training begins",
+      "human guidance can redirect the initial strategy",
+      "the authors diagnose missing spontaneous initiation of revision rather than absence of strategy-level capability"
+    ],
+    "source_explicit_gap": "The source states that its human-guidance intervention tests initial plan revision only and does not test ongoing human guidance after training begins.",
+    "novelty_boundary": "Do not claim discovery of strategy lock-in, the pre/post timing boundary, or generic strategy-level capability. The only surviving scientific residual is whether the source diagnosis transports across the lock-in boundary under a binding post-lock-in strategy intervention, and whether a distinct permeability failure regime appears after controlling ordinary instruction following, execution perturbation, and strategy conflict."
+  },
+  "paperability_axis_adjudication": {
+    "P": {
+      "status": "NARROWED_CLOSEST_WORK_OCCUPIED",
+      "claimable_now": false,
+      "reason": "The broad principle that strategy plasticity collapses after training begins is already an explicit contribution of the closest work. A new principle claim would require the forced-switch residual to survive exact reduction."
+    },
+    "M": {
+      "status": "PROVISIONAL_OPEN",
+      "claimable_now": false,
+      "reason": "A matched pre/post binding intervention protocol for identifying lock-in permeability is not executed in the closest work, but remains pre-F0 and reduction-limited."
+    },
+    "E": {
+      "status": "PROVISIONAL_OPEN",
+      "claimable_now": false,
+      "reason": "A post-lock-in enactment failure regime is a prospective empirical object only; no scientific outcome has yet been observed."
+    },
+    "B": {
+      "status": "NOT_CLAIMED"
+    },
+    "T": {
+      "status": "NOT_CLAIMED"
+    },
+    "S": {
+      "status": "NOT_CLAIMED"
+    }
+  },
+  "strongest_reduction_now": {
+    "name": "Source-authors missing-spontaneity-not-capability diagnosis",
+    "prediction": "If strategy-level capability remains available after lock-in, a binding post-lock-in strategy instruction should be enactable once initiation is externally supplied; comparable PRE_STRATEGY and POST_STRATEGY enactment reduces the candidate to missing spontaneous initiation / ordinary instruction following.",
+    "candidate_residual": "Only PRE_STRATEGY enactability with systematic POST_STRATEGY reversion, incoherent mixing, or non-enactment—while POST_EXECUTION remains enactable and POST_CONFLICT_FREE rules out ordinary strategy conflict—keeps a lock-in permeability residual alive.",
+    "status": "NEEDS_EXACT_REDUCTION_TEST"
+  },
+  "semantic_gate": {
+    "independent_review_grounded": true,
+    "live_lane_verified": true,
+    "review_verdict": "BLOCK",
+    "review_block_reason": "exact same-information reduction remains unresolved",
+    "problem_gate_pass": false,
+    "pre_f0_eligible": true
+  },
+  "frozen_pre_f0_protocol": {
+    "arms": [
+      "PRE_STRATEGY",
+      "POST_STRATEGY",
+      "POST_EXECUTION",
+      "POST_CONFLICT_FREE"
+    ],
+    "boundary": "immediately after the first verified successful model parameter-update experiment",
+    "same_strategy_payload_pre_vs_post": true,
+    "outcome_interpretation_requires_pre_headroom": true,
+    "final_score_alone_forbidden": true,
+    "trajectory_level_strategy_adherence_required": true
+  },
+  "support_gate": {
+    "tier_a_exact_source_controlled": "HOLD_SOURCE_IMPLEMENTATION_AND_HARDWARE_UNAVAILABLE",
+    "tier_b_public_posttrainbench_equivalent": "HARNESS_INTERFACE_READY_EXECUTION_HOST_REQUIRED",
+    "current_host": "1 x NVIDIA A100-SXM4-80GB; interface/protocol smoke only",
+    "unreachable_execution_targets": [
+      "known 60/52 project hosts not authorized from current credentials",
+      "configured H100 endpoint refused/timed out"
+    ],
+    "scientific_execution_performed": false,
+    "provider_calls_for_harness": 0,
+    "gpu_calls_for_harness": 0
+  },
+  "current_status": "PRE_F0_SUPPORT_HOLD_EXECUTION_HOST_REQUIRED",
+  "next_valid_action": "On an accessible declared-hardware host, execute the frozen four-arm protocol using PostTrainBench@3ed1d32f (Tier B) or the exact source-controlled framework/hardware (Tier A). Verify that the phase boundary follows a successful parameter update before reading scientific outcomes. If Tier B is used, preserve the equivalent-substrate qualifier. After any positive residual, rerun exact same-information reduction before ProblemGate.",
+  "canonical_projection": false,
+  "canonical_researchitem_created": false,
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false,
+    "full_experiment": false
+  }
+}

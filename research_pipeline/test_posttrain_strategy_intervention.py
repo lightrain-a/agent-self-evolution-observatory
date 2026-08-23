@@ -130,6 +130,7 @@ class PostTrainStrategyInterventionTest(unittest.TestCase):
             bin_dir.mkdir()
             phase1_stdin = root / "phase1.stdin"
             phase2_stdin = root / "phase2.stdin"
+            phase1_env = root / "phase1.env"
             fake = bin_dir / "claude"
             fake.write_text(
                 textwrap.dedent(
@@ -141,6 +142,7 @@ class PostTrainStrategyInterventionTest(unittest.TestCase):
                       printf '%s' "$input" > "{phase2_stdin}"
                       printf '{{"type":"assistant","message":{{"content":[{{"type":"text","text":"continued"}}]}}}}\\n'
                     else
+                      env | sort > "{phase1_env}"
                       printf '%s' "$input" > "{phase1_stdin}"
                       printf '{{"type":"assistant","message":{{"content":[{{"type":"text","text":"Command: python train_sft.py --model base\\n{BOUNDARY_MARKER}"}}]}}}}\\n'
                     fi
@@ -185,14 +187,27 @@ class PostTrainStrategyInterventionTest(unittest.TestCase):
             self.assertNotIn(STRATEGY, p1)
             self.assertIn(BOUNDARY_MARKER, p1)
             self.assertIn(STRATEGY, p2)
+            child_env = phase1_env.read_text(encoding="utf-8")
+            for key in (
+                "PTB_INTERVENTION_ARM=",
+                "PTB_SESSION_BACKEND=",
+                "PTB_STRATEGY_INSTRUCTION_FILE=",
+                "PTB_EXECUTION_CONTROL_FILE=",
+                "PTB_CONFLICT_FREE_STRATEGY_FILE=",
+                "PTB_STRATEGY_INSTRUCTION_B64=",
+                "PTB_EXECUTION_CONTROL_B64=",
+                "PTB_CONFLICT_FREE_STRATEGY_B64=",
+            ):
+                self.assertNotIn(key, child_env)
             self.assertIn("PTB_INTERVENTION_BOUNDARY_ACCEPTED", result.stdout)
 
-    def test_corrected_generated_manifest_core_digest_matches(self) -> None:
+    def test_current_generated_manifest_core_digest_matches(self) -> None:
         repo_root = Path(__file__).resolve().parents[1]
-        generated = repo_root / "generated" / "v19r003-forced-switch-pre-f0-harness-manifest-r2-20260823.json"
+        generated = repo_root / "generated" / "v19r003-forced-switch-pre-f0-harness-manifest-r3-20260823.json"
         if not generated.is_file():
-            self.skipTest("corrected V19R-003 harness manifest not present")
+            self.skipTest("current V19R-003 R3 harness manifest not present")
         payload = json.loads(generated.read_text(encoding="utf-8"))
+        self.assertEqual(validate_zero_authority_harness_manifest(payload), [])
         stored = payload.get("manifest_sha256")
         core = {
             key: value
@@ -213,7 +228,8 @@ class PostTrainStrategyInterventionTest(unittest.TestCase):
             backend="claude",
         )
         self.assertNotIn(STRATEGY, rendered)
-        self.assertIn("export PTB_INTERVENTION_ARM='POST_STRATEGY'", rendered)
+        self.assertIn("PTB_INTERVENTION_ARM='POST_STRATEGY'", rendered)
+        self.assertNotIn("export PTB_INTERVENTION_ARM", rendered)
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             copied_solve = root / "agent_solve.sh"
@@ -223,6 +239,8 @@ class PostTrainStrategyInterventionTest(unittest.TestCase):
             bin_dir.mkdir()
             phase1_stdin = root / "phase1.stdin"
             phase2_stdin = root / "phase2.stdin"
+            phase1_env = root / "phase1.env"
+            phase1_fds = root / "phase1.fds"
             fake = bin_dir / "claude"
             fake.write_text(
                 textwrap.dedent(
@@ -234,6 +252,8 @@ class PostTrainStrategyInterventionTest(unittest.TestCase):
                       printf '%s' "$input" > "{phase2_stdin}"
                       printf '{{"type":"assistant","message":{{"content":[{{"type":"text","text":"continued"}}]}}}}\\n'
                     else
+                      env | sort > "{phase1_env}"
+                      ls -l "/proc/$PPID/fd" > "{phase1_fds}" 2>/dev/null || true
                       printf '%s' "$input" > "{phase1_stdin}"
                       printf '{{"type":"assistant","message":{{"content":[{{"type":"text","text":"Command: python train_sft.py --model base\\n{BOUNDARY_MARKER}"}}]}}}}\\n'
                     fi
@@ -257,6 +277,18 @@ class PostTrainStrategyInterventionTest(unittest.TestCase):
             self.assertEqual(result.returncode, 0, msg=result.stderr)
             self.assertNotIn(STRATEGY, phase1_stdin.read_text(encoding="utf-8"))
             self.assertIn(STRATEGY, phase2_stdin.read_text(encoding="utf-8"))
+            self.assertFalse(copied_solve.exists())
+            child_env = phase1_env.read_text(encoding="utf-8")
+            for key in (
+                "PTB_INTERVENTION_ARM=",
+                "PTB_SESSION_BACKEND=",
+                "PTB_STRATEGY_INSTRUCTION_B64=",
+                "PTB_EXECUTION_CONTROL_B64=",
+                "PTB_CONFLICT_FREE_STRATEGY_B64=",
+                "PTB_ADAPTER_B64=",
+            ):
+                self.assertNotIn(key, child_env)
+            self.assertNotIn("agent_solve.sh", phase1_fds.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

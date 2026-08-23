@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0-v19r003-r3-execution-bundle",
+  "generated_at": "2026-08-23T14:06:21+00:00",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "candidate_snapshot_sha256": "47ea60fb13e3ec723d2a871b58ab1a3c6e9e565eea01e1cd838c67f9f2b39777",
+  "harness_manifest_path": "generated/v19r003-forced-switch-pre-f0-harness-manifest-r3-20260823.json",
+  "harness_manifest_file_sha256": "5378352b5309bd1826a517f66a15de2491b3e0e14d1a442e2c6034de453f0ae9",
+  "posttrainbench_commit": "3ed1d32ff1ec1f41282be6f8ebbcec07b19fc3d1",
+  "target_task": "aime2025",
+  "target_base_model": "Qwen/Qwen3-1.7B-Base",
+  "target_agent_model": "claude-opus-4-6",
+  "target_hardware": "1 x NVIDIA H100 80GB for public PostTrainBench-equivalent Tier B; exact source-controlled Tier A used 4 x NVIDIA A800",
+  "integration_mode": "For one arm at a time, start from a clean PostTrainBench checkout at the pinned commit and replace only the run-local copy of agents/claude_non_api/solve.sh with the selected rendered script. Keep evaluator/task files untouched. Provide OAuth/auth material out-of-band; no credential is stored in this bundle.",
+  "run_template": "bash src/run_task.sh aime2025 claude_non_api Qwen/Qwen3-1.7B-Base <cluster_id> 10 claude-opus-4-6 1",
+  "pre_outcome_invariants": [
+    "same pinned PostTrainBench commit, task, base model, agent model, evaluator and time budget across arms",
+    "same frozen strategy payload for PRE_STRATEGY and POST_STRATEGY",
+    "phase-1 child cannot see hidden future arm/payload through ordinary environment, solve-script pathname, or parent script fd",
+    "first successful parameter-update boundary must be independently verified from trace before outcomes are interpreted",
+    "any phase-1 hidden-treatment recovery attempt invalidates the unit before outcome interpretation"
+  ],
+  "scripts": [
+    {
+      "arm": "PRE_STRATEGY",
+      "path": "generated/v19r003-forced-switch-pre-f0-execution-bundle-r3/pre_strategy-solve.sh",
+      "sha256": "4889df1f60cad894dd9105dc7efd22b59dfc68f49bce1787c2a42be475fd241d",
+      "bytes": 9554
+    },
+    {
+      "arm": "POST_STRATEGY",
+      "path": "generated/v19r003-forced-switch-pre-f0-execution-bundle-r3/post_strategy-solve.sh",
+      "sha256": "2728646b486ea9927820031a9f4a9c28d7c3f6804ea5fcb23efbe6d30db114b8",
+      "bytes": 9555
+    },
+    {
+      "arm": "POST_EXECUTION",
+      "path": "generated/v19r003-forced-switch-pre-f0-execution-bundle-r3/post_execution-solve.sh",
+      "sha256": "66ea60fca9f3fe248c5064282d48509095155860cc2b1fb96adab2c5b045ae86",
+      "bytes": 9556
+    },
+    {
+      "arm": "POST_CONFLICT_FREE",
+      "path": "generated/v19r003-forced-switch-pre-f0-execution-bundle-r3/post_conflict_free-solve.sh",
+      "sha256": "0bb5121414d40fbf24349a80fa420cb2800f344fd73c072f4b1e2ab7d4f4fd02",
+      "bytes": 9560
+    }
+  ],
+  "static_probe": {
+    "bash_syntax_passed": true,
+    "plaintext_payload_scan_passed": true
+  },
+  "scientific_execution_performed": false,
+  "provider_calls_executed": 0,
+  "gpu_calls_executed": 0,
+  "canonical_execution_authorized": false,
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false,
+    "full_experiment": false
+  }
+}
