@@ -1,7 +1,7 @@
 {
   "schema_version": "1.6",
-  "generated_at": "2026-08-23T13:50:41+00:00",
-  "source_revision": "2fedb56c2697503d606a7ccc5f084067b539e4fa",
+  "generated_at": "2026-08-23T14:58:03+00:00",
+  "source_revision": "c3b16df11e76de3706780dcb836e92d0fee65867",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -13,6 +13,14 @@
     "primary_next_action_is_internal_only": true,
     "paper_first_discovery_papers_need_not_fake_research_item_parentage": true,
     "paper_downloads_are_zero_authority_public_artifact_links": true,
+    "publication_identity_is_reader_facing_only": true,
+    "publication_codes_are_category_local_append_order": true,
+    "publication_identity_does_not_replace_internal_provenance": true,
+    "historical_discovery_ids_are_preserved_for_exact_provenance": true,
+    "reader_facing_discovery_aliases_do_not_reuse_ag_category_letters": true,
+    "reader_facing_discovery_aliases_do_not_reuse_pf_idea_ids": true,
+    "reader_facing_discovery_aliases_use_di_namespace": true,
+    "historical_discovery_ids_are_hidden_by_default_in_reader_views": true,
     "schema_version": "1.0",
     "scientific_truth_precedes_paper_optimization": true,
     "paper_workflow_never_grants_scientific_authority": true,
@@ -36,15 +44,7 @@
     "blocked_transitions_are_recorded": true,
     "ledger_contract_digest_is_immutable_between_scientific_revisions": true,
     "scientific_contract_revision_requires_evidence_closure_at_paper_evidence": true,
-    "submitted_state_requires_external_human_submission_authority": true,
-    "publication_identity_is_reader_facing_only": true,
-    "publication_codes_are_category_local_append_order": true,
-    "publication_identity_does_not_replace_internal_provenance": true,
-    "historical_discovery_ids_are_preserved_for_exact_provenance": true,
-    "reader_facing_discovery_aliases_do_not_reuse_ag_category_letters": true,
-    "reader_facing_discovery_aliases_do_not_reuse_pf_idea_ids": true,
-    "historical_discovery_ids_are_hidden_by_default_in_reader_views": true,
-    "reader_facing_discovery_aliases_use_di_namespace": true
+    "submitted_state_requires_external_human_submission_authority": true
   },
   "summary": {
     "papers": 5,
@@ -59,9 +59,6 @@
     },
     "scientific_holds": 0,
     "primary_paper": "STRI",
-    "by_stage": {
-      "SUBMISSION_READY": 5
-    },
     "publication_codes": [
       "E1",
       "G1",
@@ -81,7 +78,10 @@
       "DI2-06",
       "DI2-01",
       "DI2-04"
-    ]
+    ],
+    "by_stage": {
+      "SUBMISSION_READY": 5
+    }
   },
   "papers": [
     {
@@ -375,14 +375,14 @@
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
-          "hierarchical-rubric": true,
-          "verification-refinement": true,
-          "citation-integrity": true,
-          "visual-story": true,
-          "reproducibility-bundle": true,
           "agent-native-artifact": true,
+          "citation-integrity": true,
+          "hierarchical-rubric": true,
           "reader-simulation": true,
-          "submission-package": true
+          "reproducibility-bundle": true,
+          "submission-package": true,
+          "verification-refinement": true,
+          "visual-story": true
         },
         "blockers": []
       },
@@ -432,6 +432,21 @@
       "paper_stage": "SUBMISSION_READY",
       "legacy_submission_status": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
       "submission_ready": true,
+      "publication_identity": {
+        "code": "E1",
+        "category": "E",
+        "ordinal": 1,
+        "category_zh": "技能",
+        "category_en": "Skills",
+        "method": "STRI",
+        "idea": {
+          "zh": "技能分类表示不变性",
+          "en": "Skill-taxonomy representation invariance"
+        },
+        "label_zh": "E1 技能 · STRI · 技能分类表示不变性",
+        "label_en": "E1 Skills · STRI · Skill-taxonomy representation invariance",
+        "pdf": "downloads/E1-STRI.pdf"
+      },
       "experiment_refs": [
         "STRI-AUTOSKILL-P19",
         "STRI-P0A",
@@ -462,22 +477,7 @@
           "path": "generated/research-items.json",
           "role": "source_research_item"
         }
-      ],
-      "publication_identity": {
-        "code": "E1",
-        "category": "E",
-        "ordinal": 1,
-        "category_zh": "技能",
-        "category_en": "Skills",
-        "method": "STRI",
-        "idea": {
-          "zh": "技能分类表示不变性",
-          "en": "Skill-taxonomy representation invariance"
-        },
-        "label_zh": "E1 技能 · STRI · 技能分类表示不变性",
-        "label_en": "E1 Skills · STRI · Skill-taxonomy representation invariance",
-        "pdf": "downloads/E1-STRI.pdf"
-      }
+      ]
     },
     {
       "paper_id": "AGENT-SAFETY-R9",
@@ -603,14 +603,14 @@
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
-          "agent-native-artifact": true,
-          "citation-integrity": true,
           "hierarchical-rubric": true,
-          "reader-simulation": true,
-          "reproducibility-bundle": true,
-          "submission-package": true,
           "verification-refinement": true,
-          "visual-story": true
+          "citation-integrity": true,
+          "visual-story": true,
+          "reproducibility-bundle": true,
+          "agent-native-artifact": true,
+          "reader-simulation": true,
+          "submission-package": true
         },
         "blockers": []
       },
@@ -670,6 +670,21 @@
         "source_zip": "downloads/Agent-Safety-R9-source.zip",
         "supplement_zip": "downloads/Agent-Safety-R9-supplement.zip"
       },
+      "publication_identity": {
+        "code": "G1",
+        "category": "G",
+        "ordinal": 1,
+        "category_zh": "安全",
+        "category_en": "Safety",
+        "method": "R9",
+        "idea": {
+          "zh": "静态安全不等于未来安全",
+          "en": "A static safety pass is not future safety"
+        },
+        "label_zh": "G1 安全 · R9 · 静态安全不等于未来安全",
+        "label_en": "G1 Safety · R9 · A static safety pass is not future safety",
+        "pdf": "downloads/G1-Agent-Safety-R9.pdf"
+      },
       "experiment_refs": [],
       "research_authority": {
         "method": false,
@@ -692,22 +707,7 @@
           "path": "generated/research-items.json",
           "role": "source_research_item"
         }
-      ],
-      "publication_identity": {
-        "code": "G1",
-        "category": "G",
-        "ordinal": 1,
-        "category_zh": "安全",
-        "category_en": "Safety",
-        "method": "R9",
-        "idea": {
-          "zh": "静态安全不等于未来安全",
-          "en": "A static safety pass is not future safety"
-        },
-        "label_zh": "G1 安全 · R9 · 静态安全不等于未来安全",
-        "label_en": "G1 Safety · R9 · A static safety pass is not future safety",
-        "pdf": "downloads/G1-Agent-Safety-R9.pdf"
-      }
+      ]
     },
     {
       "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
@@ -848,14 +848,14 @@
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
-          "hierarchical-rubric": true,
-          "verification-refinement": true,
-          "citation-integrity": true,
-          "visual-story": true,
-          "reproducibility-bundle": true,
           "agent-native-artifact": true,
+          "citation-integrity": true,
+          "hierarchical-rubric": true,
           "reader-simulation": true,
-          "submission-package": true
+          "reproducibility-bundle": true,
+          "submission-package": true,
+          "verification-refinement": true,
+          "visual-story": true
         },
         "blockers": []
       },
@@ -905,6 +905,22 @@
         "D2-C02",
         "D2-C05"
       ],
+      "discovery_provenance": {
+        "campaign_alias": "DI2",
+        "campaign_zh": "Paper-first Idea Discovery 第 2 轮",
+        "campaign_en": "Paper-first Idea Discovery Round 2",
+        "candidate_aliases": [
+          "DI2-02",
+          "DI2-05"
+        ],
+        "primary_candidate_alias": "DI2-02",
+        "historical_candidate_ids": [
+          "D2-C02",
+          "D2-C05"
+        ],
+        "historical_ids_hidden_by_default": true,
+        "reader_label": "DI2-02 + DI2-05"
+      },
       "paper_stage": "SUBMISSION_READY",
       "submission_status": "SUBMISSION_READY",
       "submission_ready": true,
@@ -912,6 +928,21 @@
         "pdf": "downloads/C1-Proxy-Reward.pdf",
         "source_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip",
         "supplement_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-supplement.zip"
+      },
+      "publication_identity": {
+        "code": "C1",
+        "category": "C",
+        "ordinal": 1,
+        "category_zh": "评估",
+        "category_en": "Evaluation",
+        "method": "Proxy Reward",
+        "idea": {
+          "zh": "奖励误差写入长期记忆",
+          "en": "Reward errors become persistent memory state"
+        },
+        "label_zh": "C1 评估 · Proxy Reward · 奖励误差写入长期记忆",
+        "label_en": "C1 Evaluation · Proxy Reward · Reward errors become persistent memory state",
+        "pdf": "downloads/C1-Proxy-Reward.pdf"
       },
       "experiment_refs": [],
       "research_authority": {
@@ -936,38 +967,7 @@
           "path": "paper-first-discovery-candidates",
           "role": "D2-C02,D2-C05"
         }
-      ],
-      "publication_identity": {
-        "code": "C1",
-        "category": "C",
-        "ordinal": 1,
-        "category_zh": "评估",
-        "category_en": "Evaluation",
-        "method": "Proxy Reward",
-        "idea": {
-          "zh": "奖励误差写入长期记忆",
-          "en": "Reward errors become persistent memory state"
-        },
-        "label_zh": "C1 评估 · Proxy Reward · 奖励误差写入长期记忆",
-        "label_en": "C1 Evaluation · Proxy Reward · Reward errors become persistent memory state",
-        "pdf": "downloads/C1-Proxy-Reward.pdf"
-      },
-      "discovery_provenance": {
-        "campaign_alias": "DI2",
-        "campaign_zh": "Paper-first Idea Discovery 第 2 轮",
-        "campaign_en": "Paper-first Idea Discovery Round 2",
-        "candidate_aliases": [
-          "DI2-02",
-          "DI2-05"
-        ],
-        "primary_candidate_alias": "DI2-02",
-        "historical_candidate_ids": [
-          "D2-C02",
-          "D2-C05"
-        ],
-        "historical_ids_hidden_by_default": true,
-        "reader_label": "DI2-02 + DI2-05"
-      }
+      ]
     },
     {
       "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
@@ -1306,13 +1306,13 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 76,
+        "events": 101,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
         "mock_reviews": 6,
         "claim_audit_receipts": 1,
-        "manuscript_ci_receipts": 6,
+        "manuscript_ci_receipts": 9,
         "prebuttal_receipts": 1,
         "submission_readiness_receipts": 1,
         "contract_revisions": 0
@@ -1345,10 +1345,10 @@
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "a4abbd4c4227851979e597ffb2a0a4e3a8bd9c0ca3afc50b652b6bf5985f94c1",
+        "claim_audit_sha256": "f11e182e32bbcf42464c8671e0326b913cab466837a6ac623663e63bfd58915c",
         "blockers": [],
-        "checks": 7,
-        "passed": 7
+        "checks": 13,
+        "passed": 13
       },
       "latest_manuscript_ci": {
         "pass": true,
@@ -1365,19 +1365,19 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r6-projection-reseal",
-        "receipt_sha256": "9d802a98ed2a355c68575bc0a56568a05a62abafd89679b6d98103a6cd2f03f2",
+        "protocol_version": "1.0+r8-public-review-token-redaction",
+        "receipt_sha256": "c624dcf3a9fddd49cf7a118c6067cee2a759f66ac323d66423826b7348e7e72e",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
-          "agent-native-artifact": true,
-          "citation-integrity": true,
           "hierarchical-rubric": true,
-          "reader-simulation": true,
-          "reproducibility-bundle": true,
-          "submission-package": true,
           "verification-refinement": true,
-          "visual-story": true
+          "citation-integrity": true,
+          "visual-story": true,
+          "reproducibility-bundle": true,
+          "agent-native-artifact": true,
+          "reader-simulation": true,
+          "submission-package": true
         },
         "blockers": []
       },
@@ -1394,7 +1394,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "d6e457de8291ad18549b883f830c537be0321170cf69ea64b9d0bb183a1339ea",
+        "receipt_sha256": "83b483017b4c931ea2969f94008f89962c34fcafe475652f1f777ac6dd82b233",
         "blockers": []
       },
       "latest_transition": {
@@ -1419,6 +1419,22 @@
         "D2-C01",
         "D2-C04"
       ],
+      "discovery_provenance": {
+        "campaign_alias": "DI2",
+        "campaign_zh": "Paper-first Idea Discovery 第 2 轮",
+        "campaign_en": "Paper-first Idea Discovery Round 2",
+        "candidate_aliases": [
+          "DI2-01",
+          "DI2-04"
+        ],
+        "primary_candidate_alias": "DI2-01",
+        "historical_candidate_ids": [
+          "D2-C01",
+          "D2-C04"
+        ],
+        "historical_ids_hidden_by_default": true,
+        "reader_label": "DI2-01 + DI2-04"
+      },
       "paper_stage": "SUBMISSION_READY",
       "submission_status": "SUBMISSION_READY",
       "submission_ready": true,
@@ -1426,6 +1442,21 @@
         "pdf": "downloads/B1-Failure-Memory.pdf",
         "source_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip",
         "supplement_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-supplement.zip"
+      },
+      "publication_identity": {
+        "code": "B1",
+        "category": "B",
+        "ordinal": 1,
+        "category_zh": "记忆",
+        "category_en": "Memory",
+        "method": "Provenance Ladder",
+        "idea": {
+          "zh": "失败记忆来源的因果识别",
+          "en": "Causal identification of failure-memory provenance"
+        },
+        "label_zh": "B1 记忆 · Provenance Ladder · 失败记忆来源的因果识别",
+        "label_en": "B1 Memory · Provenance Ladder · Causal identification of failure-memory provenance",
+        "pdf": "downloads/B1-Failure-Memory.pdf"
       },
       "experiment_refs": [],
       "research_authority": {
@@ -1450,38 +1481,7 @@
           "path": "paper-first-discovery-candidates",
           "role": "D2-C01,D2-C04"
         }
-      ],
-      "publication_identity": {
-        "code": "B1",
-        "category": "B",
-        "ordinal": 1,
-        "category_zh": "记忆",
-        "category_en": "Memory",
-        "method": "Provenance Ladder",
-        "idea": {
-          "zh": "失败记忆来源的因果识别",
-          "en": "Causal identification of failure-memory provenance"
-        },
-        "label_zh": "B1 记忆 · Provenance Ladder · 失败记忆来源的因果识别",
-        "label_en": "B1 Memory · Provenance Ladder · Causal identification of failure-memory provenance",
-        "pdf": "downloads/B1-Failure-Memory.pdf"
-      },
-      "discovery_provenance": {
-        "campaign_alias": "DI2",
-        "campaign_zh": "Paper-first Idea Discovery 第 2 轮",
-        "campaign_en": "Paper-first Idea Discovery Round 2",
-        "candidate_aliases": [
-          "DI2-01",
-          "DI2-04"
-        ],
-        "primary_candidate_alias": "DI2-01",
-        "historical_candidate_ids": [
-          "D2-C01",
-          "D2-C04"
-        ],
-        "historical_ids_hidden_by_default": true,
-        "reader_label": "DI2-01 + DI2-04"
-      }
+      ]
     }
   ]
 }

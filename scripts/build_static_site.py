@@ -264,6 +264,10 @@ def build() -> Path:
         "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-r2-r10-20260823-source.zip",
         "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-r2-r10-20260823-supplement.zip",
         "D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf", "D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip",
+        "D2-PAPER-FAILURE-MEMORY-PROVENANCE-stanford-round2-r7-20260823.pdf",
+        "D2-PAPER-FAILURE-MEMORY-PROVENANCE-stanford-round2-r7-20260823-source.zip",
+        "D2-PAPER-FAILURE-MEMORY-PROVENANCE-stanford-round2-r7-20260823-supplement.zip",
+        "D2-PAPER-FAILURE-MEMORY-PROVENANCE-public-redaction-r8-20260823-supplement.zip",
         "Agent-Self-Evolution-Observatory-Five-Papers.zip",
     )
     for name in sorted(set(legacy_download_names) | declared_download_names):

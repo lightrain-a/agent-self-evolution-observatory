@@ -40,8 +40,8 @@
   "summary": {
     "papers": 5,
     "objections": 33,
-    "resolved": 10,
-    "existing_evidence_actionable": 6,
+    "resolved": 12,
+    "existing_evidence_actionable": 4,
     "requires_scientific_reopen": 9,
     "permanent_claim_boundary": 8,
     "automatic_actions": 0
@@ -558,12 +558,12 @@
         "verdict": "Weak Reject"
       },
       "read": {
-        "zh": "Round 2 已准确理解 L0–L3 与 causal sign unresolved；弱拒来自 L2=0 calls、terminal n=4、无 L3 transport。",
-        "en": "Round 2 correctly understands L0–L3 and the unresolved causal sign; the weak reject comes from L2=0 calls, terminal n=4, and no L3 transport."
+        "zh": "Round 2 已准确理解 L0–L3 与 causal sign unresolved；r7 已闭合所有现有证据可完成的 power / operational-equivalence 修复，同时进一步确认 L1 仍是 writer-bundle 而非 provenance-only。",
+        "en": "Round 2 correctly understands L0–L3 and the unresolved causal sign; r7 closes the power and operational-equivalence repairs available from existing evidence while further confirming that L1 remains a writer bundle rather than a provenance-only treatment."
       },
       "next": {
-        "zh": "先做 power/resolution 与 style diagnostics；没有新 L2/L3 support 就不要继续靠润色追 acceptance。",
-        "en": "Do power/resolution and style diagnostics first; without new L2/L3 support, do not keep polishing to chase acceptance."
+        "zh": "O3/O4 已由 r7 闭合；剩余 acceptance 风险集中在 O5 的 L2 metadata-only execution 与 O6 的 L3 source-faithful transport，二者都必须 scientific reopen。",
+        "en": "R7 closes O3/O4; the remaining acceptance risk is concentrated in O5 L2 metadata-only execution and O6 source-faithful L3 transport, both of which require scientific reopen."
       },
       "objections": [
         {
@@ -602,12 +602,13 @@
             "zh": "prospective power / interval sensitivity",
             "en": "prospective power / interval sensitivity"
           },
-          "d": "EXISTING_EVIDENCE_ACTIONABLE",
+          "d": "RESOLVED",
           "why": {
-            "zh": "可基于 frozen task deltas 和 preregistered gate 做数学/重采样分析，只用于规划 future reopen。",
-            "en": "Frozen task deltas and the preregistered gate permit mathematical/resampling analysis only to plan a future reopen."
+            "zh": "r7 明确把 |Δ|≥.15 定位为 practical-relevance floor，而非 power 保证；增加前瞻 80% power 规划：task-level SD=.20/.30/.40 时 one-sided 约需 11/25/44 个独立 tasks（two-sided 14/32/56），并冻结 future confirmatory 的 task-unit / stopping / interval contract。",
+            "en": "R7 explicitly treats |Δ|≥.15 as a practical-relevance floor rather than a power guarantee and adds prospective 80% power planning: task-level SD=.20/.30/.40 requires about 11/25/44 independent tasks one-sided (14/32/56 two-sided), with task-unit, stopping, and interval reporting frozen for any future confirmatory run."
           },
-          "action": "OFFLINE_ANALYSIS_ONLY"
+          "action": "NONE",
+          "e": "B1 r7 prospective-power-planning / Claim Audit 13/13"
         },
         {
           "id": "FAILURE-O4",
@@ -616,12 +617,13 @@
             "zh": "style / operational-equivalence diagnostics",
             "en": "style / operational-equivalence diagnostics"
           },
-          "d": "EXISTING_EVIDENCE_ACTIONABLE",
+          "d": "RESOLVED",
           "why": {
-            "zh": "现有 matched texts 可做确定性的 length/tone/modality/prescriptive-strength 与 cosine-threshold sensitivity；新 LLM verifier 不在本类。",
-            "en": "Existing matched texts permit deterministic length/tone/modality/prescriptive-strength and cosine-threshold sensitivity; a new LLM verifier is outside this class."
+            "zh": "r7 零调用 re-threshold 显示 R4 的 4/4 admitted pairs 在 cosine .85/.90 仍保持，但已有 stronger-verifier audit 仅 0/4 与 1/4 fully equivalent；确定性 lexical audit 又显示 failure writer 在 R6 中 23/24 更 caution、20/24 更 verification、20/24 更 directive。结果不是把 L1 变得更强，而是明确把它限制为含 style/strategy asymmetry 的 writer-bundle。",
+            "en": "R7 zero-call re-thresholding keeps all 4/4 R4 admitted pairs at cosine .85/.90, but the archived stronger-verifier audit finds only 0/4 and 1/4 fully equivalent; deterministic lexical diagnostics also find the failure writer more caution-heavy in 23/24 R6 pairs, more verification-heavy in 20/24, and more directive in 20/24. This does not strengthen a provenance-only claim; it explicitly limits L1 to a writer bundle with residual style/strategy asymmetry."
           },
-          "action": "OFFLINE_ANALYSIS_ONLY"
+          "action": "NONE",
+          "e": "B1 r7 operational-equivalence stress / Paper Preparation 8/8"
         },
         {
           "id": "FAILURE-O5",
