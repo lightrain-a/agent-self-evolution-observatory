@@ -1,0 +1,123 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "P15-PATHBENCH-TASK-ORDER-CLOSURE-READJUDICATION",
+  "title": "PATH-Bench strengthens the historical order/path-dependence closure but does not supply a pre-outcome residual that reopens P15",
+  "adjudication_date": "2026-08-24",
+  "status": "KEEP_STOP_PATHBENCH_STRENGTHENS_CLOSURE",
+  "scientific_authority": false,
+  "decision": "KEEP_STOP",
+  "decision_summary": "PATH-Bench substantially strengthens the empirical case that lifelong-agent evaluation is path dependent, including a same-task-set two-path ranking reversal, but its scientific observable remains history-conditioned probe performance and derived transfer/forgetting outcomes. Selective Experience Use introduces a pre-outcome preserve/abstract/ignore control action, not an independently audited order-only uptake/state residual. The paper does not demonstrate a pre-outcome residual that survives a path-integrated continual-learning baseline given the same ordered-history information. Therefore it does not satisfy the requested reopen gate.",
+  "historical_p15_provenance": {
+    "historical_candidate_id": "SHADOW-P15-C01",
+    "historical_title": "Retrieval-Induced Context Contamination",
+    "closure_commit": "c71925f8c9d1c98336864512d7060989292a87f7",
+    "harness_commit": "8757fc3f135678a7e15292e304a0c66521e268a5",
+    "literature_commit": "41d0b05e948bb5483931ad8d89f12b62beeb8850",
+    "historical_receipt_path": "generated/p15-evidence-reduction-search-closure-20260821.json",
+    "closure_commit_is_ancestor_of_current_origin_main": false,
+    "historical_intervention": "Hold the same fixed eight-skill set constant and vary only retrieval/presentation order on held-out tasks.",
+    "historical_result": "Five evaluable held-out tasks were success-invariant under all six deterministic permutations; the remaining exact-order claim reduced to style/postmortem behavior rather than accepted success conversion.",
+    "historical_reopen_contract": "Reopen only if the same fixed skill set is held constant, only presentation/retrieval order changes, and a held-out success residual or independently audited uptake residual remains that static compatibility/negative-transfer baselines cannot express.",
+    "canonicality_note": "This historical closure receipt is recoverable from Git history but is not present as an authoritative path on the current origin/main ancestry. It is used here only to reconstruct the prior scientific closure contract, not to overwrite current canonical state."
+  },
+  "current_canonical_disambiguation": {
+    "origin_main_at_adjudication_start": "809734d8041e5e695626caaf5db01e707b61fcfb",
+    "current_context_id": "SP-15",
+    "current_title": "The explicit-procedure boundary of query-only skill retrieval",
+    "current_decision": "HOLD_SP15_REVISED_PROBLEM_NO_IDENTIFIABILITY_UNIT",
+    "same_object_as_historical_shadow_p15_c01": false,
+    "projection_rule": "Do not modify current SP-15 or promote this readjudication into a ResearchItem. This artifact is a literature/readjudication receipt only."
+  },
+  "source_paper": {
+    "title": "PATH-Bench: Path-Dependent Evaluation of Lifelong Agents",
+    "arxiv_id": "2608.01149",
+    "version": "v1",
+    "submitted_utc": "2026-08-02",
+    "primary_source": "arXiv PDF and abstract",
+    "retrieved_for_adjudication": "2026-08-24"
+  },
+  "requested_reopen_gate": {
+    "default": "KEEP_STOP",
+    "required_for_reopen": "A pre-outcome observable or residual produced under a controlled path/order intervention that remains unexplained after a path-integrated continual-learning baseline is given the same ordered-history information.",
+    "same_task_multiset_path_dependence_alone_is_sufficient": false,
+    "denser_outcome_trajectory_measurement_alone_is_sufficient": false
+  },
+  "protocol_level_comparison": [
+    {
+      "pathbench_object": "Formal path-dependent probe performance",
+      "pathbench_definition": "For ordered history H before probe q, PATH-Bench defines P_q(H) as expected scored performance of the post-history agent on q and calls performance path dependent when P_q(H) varies with the content/order of H.",
+      "timing_class": "OUTCOME",
+      "p15_mapping": "Directly establishes history/order sensitivity of later task performance, but the measured object is the scored probe outcome itself.",
+      "reopen_value": "NONE"
+    },
+    {
+      "pathbench_object": "Probe-centered controlled histories and transitions",
+      "pathbench_definition": "Repeated probes are evaluated after controlled positive/negative history intervals; controlled-transition effects are expressed as differences between successive probe-performance measurements such as p_probe_2 - p_probe_1 and p_probe_3 - p_probe_2.",
+      "timing_class": "OUTCOME_DELTA",
+      "p15_mapping": "Makes path dependence more longitudinal and causally organized than a single endpoint comparison, but still measures downstream performance changes rather than a pre-outcome residual.",
+      "reopen_value": "NONE"
+    },
+    {
+      "pathbench_object": "Same-task-set path sensitivity motivation experiment",
+      "pathbench_definition": "A common set of 50 tasks is evaluated under two different task paths; agent rankings in AP/FWT/BWT/FGT change between the two paths.",
+      "timing_class": "OUTCOME_RANKING_AND_DERIVED_LIFELONG_METRICS",
+      "p15_mapping": "This is strong evidence that order/path matters even when the task set is held fixed. Under the requested gate, this strengthens the old closure/motivation rather than creating a new scientific object.",
+      "reopen_value": "STRENGTHENS_CLOSURE"
+    },
+    {
+      "pathbench_object": "External learning state",
+      "pathbench_definition": "Agents accumulate past interactions as retrievable memories or reusable skills while traversing task histories.",
+      "timing_class": "PRE_OUTCOME_STATE_EXISTS_OPERATIONALLY",
+      "p15_mapping": "The paper treats this state as the mechanism through which history acts, but it does not define an independently audited order-only state observable whose residual is tested after controlling for the complete ordered history.",
+      "reopen_value": "INSUFFICIENT"
+    },
+    {
+      "pathbench_object": "Selective Experience Use (SEU)",
+      "pathbench_definition": "Between native retrieval and inference, each retrieved experience is classified for preserve, abstract, or ignore before the task response is produced.",
+      "timing_class": "PRE_OUTCOME_CONTROL_ACTION",
+      "p15_mapping": "SEU is genuinely pre-outcome, but it is an intervention/control policy, not evidence that holding experience content fixed and changing only order yields an independently audited uptake residual. The reported evidence evaluates whether SEU improves AP/FWT/BWT/FGT, again using downstream outcomes.",
+      "reopen_value": "INSUFFICIENT"
+    },
+    {
+      "pathbench_object": "Task-relation / transfer structure",
+      "pathbench_definition": "Directed task relationships are estimated from in-context transfer gains and used to sample helpful/interfering histories.",
+      "timing_class": "HISTORY_DESIGN_SIGNAL_DERIVED_FROM_TASK_PERFORMANCE",
+      "p15_mapping": "This structures the path intervention but is not a new order-induced pre-outcome agent-state observable.",
+      "reopen_value": "NONE"
+    },
+    {
+      "pathbench_object": "Benchmark baselines and agent comparisons",
+      "pathbench_definition": "Multiple lifelong agents and experience representations are compared across controlled histories and outcome metrics.",
+      "timing_class": "COMPARATIVE_OUTCOME_BASELINES",
+      "p15_mapping": "The paper does not provide the requested same-information residual test in which a path-integrated continual-learning baseline receives the full ordered history and then fails to explain an independently measured pre-outcome signal.",
+      "reopen_value": "NONE"
+    }
+  ],
+  "gate_results": {
+    "same_task_set_or_multiset_path_dependence_demonstrated": true,
+    "path_dependence_measured_more_completely_than_single_endpoint": true,
+    "pre_outcome_action_or_control_exists": true,
+    "new_pre_outcome_residual_observable_demonstrated": false,
+    "independently_audited_order_only_uptake_residual_demonstrated": false,
+    "fixed_content_order_only_control_for_pre_outcome_signal_demonstrated": false,
+    "same_information_path_integrated_continual_learning_baseline_tested": false,
+    "residual_beyond_same_information_path_integrated_baseline_demonstrated": false,
+    "reopen_gate_passed": false
+  },
+  "substrate_boundary": {
+    "historical_p15": "Within-inference ordering of a fixed retrieved skill set with task and selected content held constant.",
+    "pathbench": "Sequential task ordering over an evolving external learning state accumulated across a lifelong trajectory.",
+    "implication": "The execution substrates are not identical. PATH-Bench is broader and longitudinal, so it should not be described as a literal replication of the historical P15 harness. However, under the explicit requested gate, broader task-path dependence is still insufficient to reopen P15 without the required pre-outcome same-information residual."
+  },
+  "strongest_simplification_after_pathbench": "Observed path effects can be represented as history-conditioned variation in downstream task performance/transfer/forgetting, together with an explicit experience-use policy such as SEU. PATH-Bench does not establish an additional pre-outcome path-state variable that carries irreducible predictive or causal information once the same ordered history is made available to a path-integrated baseline.",
+  "reopen_only_if": "A future primary study holds the relevant content/support information fixed, manipulates order/path, measures a pre-outcome uptake/state/decision observable without using the later outcome to define it, and shows a repeatable residual after a strongest path-integrated continual-learning baseline receives the same ordered-history, retrieval/content, task, and lineage information. A same-task-set performance reversal, probe-performance trajectory, or intervention whose benefit is established only through downstream performance is not enough.",
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false,
+    "scientific_authority": false
+  }
+}
