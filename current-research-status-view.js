@@ -39,6 +39,7 @@
     if (d.pdf) links.push(`<a class="link-btn" href="${esc(d.pdf)}" download>${pick("下载 PDF", "Download PDF")}</a>`);
     if (d.tex) links.push(`<a class="link-btn" href="${esc(d.tex)}" download>${pick("下载 TeX", "Download TeX")}</a>`);
     if (d.source_zip) links.push(`<a class="link-btn repo" href="${esc(d.source_zip)}" download>${pick("完整源码 ZIP", "Full source ZIP")}</a>`);
+    if (d.supplement_zip) links.push(`<a class="link-btn repo" href="${esc(d.supplement_zip)}" download>${pick("补充材料 ZIP", "Supplement ZIP")}</a>`);
     return links.length ? `<div class="links current-status-downloads">${links.join("")}</div>` : "";
   };
   const paperAcceptanceState = () => window.RESEARCH_SYSTEM_STATE?.paper_acceptance || {};

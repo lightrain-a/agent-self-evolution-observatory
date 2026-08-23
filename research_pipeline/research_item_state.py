@@ -605,7 +605,7 @@ def build_paper_registry(research_state=None):
         "AGENT-SAFETY-R9": {"pdf": "downloads/Agent-Safety-R9.pdf", "source_zip": "downloads/Agent-Safety-R9-source.zip"},
         "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE": {"pdf": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE.pdf", "source_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip"},
         "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK": {"pdf": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK.pdf", "source_zip": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip"},
-        "D2-PAPER-FAILURE-MEMORY-PROVENANCE": {"pdf": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf", "source_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip"},
+        "D2-PAPER-FAILURE-MEMORY-PROVENANCE": {"pdf": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf", "source_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip", "supplement_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-supplement.zip"},
     }
     stri = {
         **legacy_stri,

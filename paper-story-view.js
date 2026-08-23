@@ -10,6 +10,7 @@
     const d=row?.downloads||{}, links=[];
     if(d.pdf) links.push(`<a class="link-btn paper-story-download-pdf" href="${esc(d.pdf)}" download>${pick("下载论文 PDF","Download paper PDF")}</a>`);
     if(d.source_zip) links.push(`<a class="link-btn repo paper-story-download-zip" href="${esc(d.source_zip)}" download>${pick("下载源码 ZIP","Download source ZIP")}</a>`);
+    if(d.supplement_zip) links.push(`<a class="link-btn repo paper-story-download-supplement" href="${esc(d.supplement_zip)}" download>${pick("下载补充材料 ZIP","Download supplement ZIP")}</a>`);
     return links.length?`<div class="paper-story-downloads" aria-label="${pick("论文下载","Paper downloads")}">${links.join("")}</div>`:"";
   };
   const closestWorkMap=(story)=>{

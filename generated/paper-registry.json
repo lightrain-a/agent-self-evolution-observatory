@@ -1,7 +1,7 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-08-23T06:53:31+00:00",
-  "source_revision": "ad1ba4e1822edd37adfd097ed9626300fb390b8f",
+  "generated_at": "2026-08-23T08:00:26+00:00",
+  "source_revision": "0a05d3448fe75bdef5334101bcf3be08b2257cf7",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -273,13 +273,13 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 34,
+        "events": 41,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
         "mock_reviews": 2,
         "claim_audit_receipts": 1,
-        "manuscript_ci_receipts": 3,
+        "manuscript_ci_receipts": 4,
         "prebuttal_receipts": 1,
         "submission_readiness_receipts": 1,
         "contract_revisions": 0
@@ -321,7 +321,7 @@
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "e7a01b12e997f531585654ab17df69593aab2660f3394ca5e4e1e8b123f5bd44",
+        "claim_audit_sha256": "dad3622d06545ed940e95f2f29c37aca042017e4cbeba45e911ec349128eea88",
         "blockers": [],
         "checks": 20,
         "passed": 20
@@ -341,8 +341,8 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r3-closest-work",
-        "receipt_sha256": "1f802625ca8dfb7b43d0aaf5a3bc985a7e450fa33657a255a05b94b4e39120df",
+        "protocol_version": "1.0+r4-novelty-attack",
+        "receipt_sha256": "e264c51457b29be9c9e9312284f8380fd8e3b855f22663097ef2f208bcff4e4b",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -378,7 +378,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "84ecbe9943bb8cf2906b9131b11c0e6e43f45454f9856a249eb98cc5a5678d1a",
+        "receipt_sha256": "57fc8ef30a6dca1dbc145e90fd1caaa04667f6edd8779044292c95b105e933a3",
         "blockers": []
       },
       "latest_transition": {
@@ -495,13 +495,13 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 27,
+        "events": 35,
         "allowed_transitions": 8,
         "blocked_transitions": 1,
         "story_search_receipts": 1,
         "mock_reviews": 2,
         "claim_audit_receipts": 1,
-        "manuscript_ci_receipts": 2,
+        "manuscript_ci_receipts": 3,
         "prebuttal_receipts": 1,
         "submission_readiness_receipts": 1,
         "contract_revisions": 1
@@ -534,7 +534,7 @@
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "af4a26ed944bcf0e88069c27277250cb02cbdc56619feb8c795c32be40d5dab0",
+        "claim_audit_sha256": "54758d2ffc1b5bc2d5f5215a9aff1fe3fc61c7cbb0ca8449a73d4e0cc6f3f7c1",
         "blockers": [],
         "checks": 3,
         "passed": 3
@@ -554,8 +554,8 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r4-closest-work",
-        "receipt_sha256": "554d562bc630ba3377c0f3a5b973bb22fb8283453c458558cb9eaeea06ae9c13",
+        "protocol_version": "1.0+r5-novelty-attack",
+        "receipt_sha256": "6d664b7fca05b367b939d8095b6c1b4e2ab919b5595cf7ee60a6e30bb1061d1e",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -583,8 +583,21 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "19ef44e10f5bf98caab2a818703f3cd1a22c48234eca26a3dc2fa9cdb6899b1c",
+        "receipt_sha256": "c12c1c4326d06960e2ff5412f4300cb05bb05108e8b7df43e0df367fa26a5252",
         "blockers": []
+      },
+      "measurement_robustness": {
+        "source_retention_status": "EXACT_RUNTIME_JOURNAL_BYTES_NOT_MATERIALIZED_IN_AUDITED_SURFACES",
+        "primary_endpoint_unchanged": true,
+        "secondary_measurement_status": {
+          "posthoc_action_attempt_projection": "NOT_CANONICALIZABLE_SOURCE_BYTES_MISSING",
+          "human_semantic_spotcheck": "BLOCKED_EXACT_JOURNAL_RECOVERY_REQUIRED",
+          "threshold_sweep": "BLOCKED_NO_CONTINUOUS_SCORE_AND_WOULD_REQUIRE_NEW_EVALUATOR_EXECUTION"
+        },
+        "paper_invalidated": false,
+        "new_behavior_execution": false,
+        "new_evaluator_execution": false,
+        "reopen_condition": "Recover an archival or backup object whose bytes exactly match the three bound SHA256 values. After recovery, re-materialize the journals read-only, generate the deterministic blind human-audit packet, and bind any secondary measurement result into a fresh candidate package before Paper Preparation recheck."
       },
       "latest_transition": {
         "from": "PREBUTTAL",
@@ -638,7 +651,7 @@
     },
     {
       "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-      "title": "Noisy Rewards Write Noisy Memories: Reward Error as a Variance Amplifier in Self-Improving Agents",
+      "title": "Reward Errors Become Persistent State: A Controlled Write-Time Memory Intervention in Self-Improving Agents",
       "central_question": "Can an erroneous reward label become persistent agent state by changing the memory written from an otherwise identical trajectory, and does that perturbation reach later behavior?",
       "contract_sha256": "ff6edaa9d93fe289bb84e74937cece3176329925435de8b0c03649f239623ccb",
       "scientific_status": "READY",
@@ -702,13 +715,13 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 38,
+        "events": 46,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
         "mock_reviews": 4,
         "claim_audit_receipts": 1,
-        "manuscript_ci_receipts": 3,
+        "manuscript_ci_receipts": 4,
         "prebuttal_receipts": 1,
         "submission_readiness_receipts": 1,
         "contract_revisions": 0
@@ -750,7 +763,7 @@
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "f105b8f7b9f8408fe2896bdac671960e878ec8c44466cee2e2c403fdadc6c64d",
+        "claim_audit_sha256": "ec9718bb7535a4d60056bdeb3f5cd25efafb38ee693989ae8d0e577d03611c8b",
         "blockers": [],
         "checks": 11,
         "passed": 11
@@ -770,8 +783,8 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r3-closest-work",
-        "receipt_sha256": "b20b216c8eb372e1df894a0227c752b4ab5fb69b7a9403e5afc892e6587f8e28",
+        "protocol_version": "1.0+r4-novelty-attack",
+        "receipt_sha256": "c66db3a7d16e5548b53f7417d8a435fe683e7f72c377003412b5fe665a181891",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -807,7 +820,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "13eb4b34b144b51e98ff5038bf3ad18d062555926ccdf11b5c80698e42939797",
+        "receipt_sha256": "8611374110580f62352abf75ad33726c3e75d566678c9b15938f914302f4b1e2",
         "blockers": []
       },
       "latest_transition": {
@@ -930,13 +943,13 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 49,
+        "events": 56,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
         "mock_reviews": 4,
         "claim_audit_receipts": 2,
-        "manuscript_ci_receipts": 4,
+        "manuscript_ci_receipts": 5,
         "prebuttal_receipts": 2,
         "submission_readiness_receipts": 1,
         "contract_revisions": 0
@@ -978,7 +991,7 @@
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "edfb045547223037109ecf10b43c75cd7f260eda23bfcc9859735ea1d832f028",
+        "claim_audit_sha256": "e7169884b4288d53b39397fade149b536284189e884c46f9e271fd3bb3a851e6",
         "blockers": [],
         "checks": 30,
         "passed": 30
@@ -998,8 +1011,8 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r7-closest-work",
-        "receipt_sha256": "cd1314dadd17163a6b952a43787e56a3dd9675370ea4caab895ae0e2e6e9adde",
+        "protocol_version": "1.0+r8-novelty-attack",
+        "receipt_sha256": "8c2b065e12ed500bf268c2c4181dddfa16e5749b15f7388271eb3d9613f95106",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -1035,7 +1048,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "097aca9ec348866ba1318a2b3521cc5d06e94a5dfc963b1b9244934df8d453c8",
+        "receipt_sha256": "2f4f8f938ab2756992551f5bb9d1f72079cc7a9ae3ea2e8d59663a1c69d3f51b",
         "blockers": []
       },
       "source_native_evidence": {
@@ -1101,7 +1114,7 @@
     },
     {
       "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
-      "title": "Failure Memories Are Not Neutral: Causal Provenance Effects in Self-Evolving Agents",
+      "title": "Does Memory Provenance Matter? Matched Success–Failure Swaps Leave the Causal Sign Unresolved",
       "central_question": "Does failure-derived trajectory provenance causally sustain future error when future task difficulty and actionable memory guidance are matched?",
       "contract_sha256": "582a203818f9f590d601b5ea9d3a3ecdc08acb3e34d3b1d9f190e17a2d1dcc25",
       "scientific_status": "READY",
@@ -1171,13 +1184,13 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 43,
+        "events": 68,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
         "mock_reviews": 6,
         "claim_audit_receipts": 1,
-        "manuscript_ci_receipts": 2,
+        "manuscript_ci_receipts": 5,
         "prebuttal_receipts": 1,
         "submission_readiness_receipts": 1,
         "contract_revisions": 0
@@ -1210,7 +1223,7 @@
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "c408858760b77679464534e75089444284baa7c026f04b5ba9531151b9a27d28",
+        "claim_audit_sha256": "fb1ac64df6d0a0be8b319b2046b7a5334f2ee6ca4e14a18cb74ce1a19ca11573",
         "blockers": [],
         "checks": 5,
         "passed": 5
@@ -1224,14 +1237,14 @@
       },
       "latest_prebuttal": {
         "pass": true,
-        "decision_critical": 6,
+        "decision_critical": 8,
         "blockers": [],
         "unresolved_decision_critical": 0
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r3-closest-work",
-        "receipt_sha256": "eacf098fdcc2ee05aecedbd15222a1582946030313c12fd1dffdfc46b34c7dec",
+        "protocol_version": "1.0+r5-selective-reconciliation",
+        "receipt_sha256": "412ff451e0043fc106dc4eed4c1317e2851b73930071ddc60493614e78da0f05",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -1259,7 +1272,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "e09890eb6340ff55fd0a3d674523f3c261f0d1bb91118e2c4c6548906b63990e",
+        "receipt_sha256": "ba6dfc5a07f9a65bbbb3696d0307a34e8506385e3d8ab23b168f92bc263c3a53",
         "blockers": []
       },
       "latest_transition": {
@@ -1289,7 +1302,8 @@
       "submission_ready": true,
       "downloads": {
         "pdf": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf",
-        "source_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip"
+        "source_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip",
+        "supplement_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-supplement.zip"
       },
       "experiment_refs": [],
       "research_authority": {

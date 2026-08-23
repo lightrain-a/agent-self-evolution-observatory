@@ -338,7 +338,7 @@
     {
       "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
       "source_research_item": "",
-      "title": "Noisy Rewards Write Noisy Memories: Reward Error as a Variance Amplifier in Self-Improving Agents",
+      "title": "Reward Errors Become Persistent State: A Controlled Write-Time Memory Intervention in Self-Improving Agents",
       "paper_stage": "SUBMISSION_READY",
       "scientific_status": "READY",
       "submission_ready": true,
@@ -388,7 +388,7 @@
     {
       "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
       "source_research_item": "",
-      "title": "Failure Memories Are Not Neutral: Causal Provenance Effects in Self-Evolving Agents",
+      "title": "Does Memory Provenance Matter? Matched Success–Failure Swaps Leave the Causal Sign Unresolved",
       "paper_stage": "SUBMISSION_READY",
       "scientific_status": "READY",
       "submission_ready": true,
@@ -415,17 +415,17 @@
     "start_date": "2026-08-17",
     "end_date": "2026-08-23",
     "research_days": 7,
-    "events": 423,
-    "substantive_events": 253,
+    "events": 760,
+    "substantive_events": 258,
     "key_changes": 7,
     "class_counts": {
       "blocker": 18,
       "closure": 87,
       "experiment": 56,
-      "idea": 53,
-      "paper": 37,
+      "idea": 54,
+      "paper": 41,
       "scientific": 2,
-      "system": 170
+      "system": 502
     },
     "attention_activity": {
       "B-3": 1,

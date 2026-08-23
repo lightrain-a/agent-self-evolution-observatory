@@ -750,7 +750,9 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
     latest_claim_audit_event = _latest_versioned(row, "claim-audit")
     latest_claim_audit = _event_payload(latest_claim_audit_event)
     latest_submission_context = _latest_versioned(row, "submission-readiness-context")
+    latest_measurement_audit = _latest_versioned(row, "measurement-robustness-audit")
     latest_final_review = _latest_regex(row, r"mock-pc-final-r[1-9][0-9]*")
+    latest_title_revision = _latest_regex(row, r"manuscript-title-r[1-9][0-9]*")
     latest_finalization = _latest_regex(row, r"source-native-r[1-9][0-9]*-finalization")
 
     preparation_recorded = bool(latest_preparation_event)
@@ -785,7 +787,12 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
     claim_audit_sha = str(latest_claim_audit.get("claim_audit_sha256") or _artifact_digest(latest_claim_audit_event))
     prebuttal_decision_critical = int(latest_prebuttal.get("decision_critical") or latest_prebuttal.get("decision_critical_objections") or 0)
     readiness_sha = str(latest_readiness.get("receipt_sha256") or (_artifact_digest(latest_submission_context) if context_submission_ready else ""))
-    public_title = str(latest_finalization.get("title") or contract.get("title") or "")
+    title_revision_at = str(latest_title_revision.get("recorded_at") or "")
+    finalization_at = str(latest_finalization.get("recorded_at") or "")
+    if latest_title_revision and (not latest_finalization or title_revision_at >= finalization_at):
+        public_title = str(latest_title_revision.get("title") or latest_finalization.get("title") or contract.get("title") or "")
+    else:
+        public_title = str(latest_finalization.get("title") or contract.get("title") or "")
     claim_kind = str(latest_claim_audit_event.get("event_type") or "")
     prebuttal_kind = str(latest_prebuttal_event.get("event_type") or "")
     context_kind = str(latest_submission_context.get("event_type") or "")
@@ -921,6 +928,24 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
         },
         **(
             {
+                "measurement_robustness": {
+                    "source_retention_status": str(latest_measurement_audit.get("source_retention_status") or ""),
+                    "primary_endpoint_unchanged": (latest_measurement_audit.get("primary_endpoint") or {}).get("unchanged") is True,
+                    "secondary_measurement_status": {
+                        str(key): str(value)
+                        for key, value in (latest_measurement_audit.get("secondary_measurement_status") or {}).items()
+                    },
+                    "paper_invalidated": latest_measurement_audit.get("paper_invalidated") is True,
+                    "new_behavior_execution": latest_measurement_audit.get("new_behavior_execution") is True,
+                    "new_evaluator_execution": latest_measurement_audit.get("new_evaluator_execution") is True,
+                    "reopen_condition": str(latest_measurement_audit.get("reopen_condition") or ""),
+                }
+            }
+            if latest_measurement_audit
+            else {}
+        ),
+        **(
+            {
                 "source_native_evidence": {
                     "runtime_valid_rows": int(latest_finalization.get("source_native_runtime_valid_rows") or 0),
                     "distinct_endpoints": int(latest_finalization.get("distinct_endpoints") or 0),
@@ -930,7 +955,10 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
                     "finalization_sha256": _artifact_digest(latest_finalization),
                 }
             }
-            if latest_finalization
+            if latest_finalization and any(
+                key in latest_finalization
+                for key in ("source_native_runtime_valid_rows", "distinct_endpoints", "institutional_systems", "exact_timesage_replication_debt")
+            )
             else {}
         ),
         "latest_transition": {
