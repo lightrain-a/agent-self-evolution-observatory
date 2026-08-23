@@ -13,6 +13,7 @@ from .test_presubmission_freeze import PreSubmissionFreezeTest
 from .venue_form_consistency import (
     AUDIT_STATUS_PASS,
     AUTHOR_VISIBILITY_ANONYMOUS,
+    _openreview_safe_text,
     append_venue_form_audit,
     build_form_contract_template,
     build_venue_form_audit_receipt,
@@ -96,6 +97,18 @@ class VenueFormConsistencyTest(unittest.TestCase):
             },
         }
 
+    def test_openreview_metadata_projection_preserves_math_and_maps_text_macros(self) -> None:
+        source = r"We formulate \emph{Skill-Taxonomy Representation Invariance}; $R^*(A;q)=\min\{t:q\le Aw\le tq\}$ and W$\rightarrow$W differ in 21.0\% of seeds."
+        projected = _openreview_safe_text(source)
+        self.assertEqual(
+            projected,
+            r"We formulate *Skill-Taxonomy Representation Invariance*; $R^*(A;q)=\min\{t:q\le Aw\le tq\}$ and W$\rightarrow$W differ in 21.0% of seeds.",
+        )
+
+    def test_openreview_metadata_projection_rejects_unknown_text_mode_macro(self) -> None:
+        with self.assertRaisesRegex(RuntimeError, "unsupported OpenReview text-mode"):
+            _openreview_safe_text(r"This uses \smallcaps{a source-only macro} outside math.")
+
     def test_template_is_bound_to_current_frozen_source_and_handoff(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             paper, freeze, handoff, policy = self.fixture(Path(td))
@@ -105,11 +118,26 @@ class VenueFormConsistencyTest(unittest.TestCase):
                 handoff_ledger=handoff,
                 venue_policy=policy,
             )
+            self.assertEqual(template["schema_version"], "1.1")
             self.assertEqual(template["expected_fields"]["title"], "Freeze paper")
             self.assertEqual(template["expected_fields"]["abstract"], "Frozen abstract for the venue form.")
             self.assertTrue(template["source_evidence"]["ai_use_statement_present"])
             self.assertEqual(template["expected_fields"]["author_visibility"], AUTHOR_VISIBILITY_ANONYMOUS)
             self.assertEqual(template["human_fill_required"], ["expected_fields.keywords", "expected_fields.ai_use_disclosure"])
+
+    def test_pre_projection_form_contract_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            paper, freeze, handoff, policy = self.fixture(Path(td))
+            contract = self.completed_contract(build_form_contract_template(
+                paper_ledger=paper,
+                freeze_ledger=freeze,
+                handoff_ledger=handoff,
+                venue_policy=policy,
+            ))
+            contract["schema_version"] = "1.0"
+            contract["source_evidence"].pop("openreview_metadata_projection_version", None)
+            with self.assertRaisesRegex(RuntimeError, "venue form contract invalid"):
+                build_venue_form_audit_receipt(form_contract=contract, form_snapshot=self.snapshot(contract))
 
     def test_pass_receipt_is_append_only_and_current(self) -> None:
         with tempfile.TemporaryDirectory() as td:

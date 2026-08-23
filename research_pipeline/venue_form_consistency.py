@@ -13,9 +13,11 @@ from .presubmission_freeze import validate_freeze, verify_current_frozen_artifac
 from .submission_handoff import validate_handoff_ledger, validate_handoff_receipt
 
 AUDIT_SCHEMA_VERSION = "1.0"
+FORM_CONTRACT_SCHEMA_VERSION = "1.1"
 AUDIT_STATUS_PASS = "PASS_VENUE_FORM_CONSISTENCY_AUDIT"
 AUDIT_STATUS_FAIL = "FAIL_VENUE_FORM_CONSISTENCY_AUDIT"
 AUTHOR_VISIBILITY_ANONYMOUS = "ANONYMOUS_TO_REVIEWERS"
+OPENREVIEW_METADATA_PROJECTION_VERSION = "1.0"
 AUTHORITY = {"scientific": False, "experiment": False, "gpu": False, "submission": False}
 
 
@@ -43,6 +45,70 @@ def _normalize_text(value: Any) -> str:
     text = text.replace("~", " ")
     text = re.sub(r"\s+", " ", text).strip()
     return text
+
+
+def _openreview_safe_text(value: Any) -> str:
+    """Project LaTeX source metadata into OpenReview Markdown + math TeX.
+
+    OpenReview's Markdown-enabled abstract supports MathJax math but not LaTeX
+    text-mode macros such as ``\\emph``. Keep math spans byte-for-byte apart
+    from whitespace normalization, translate a deliberately small set of
+    presentation-only text macros, and fail closed on other backslash commands
+    outside math so a source-only macro is never silently copied to the form.
+    """
+    text = str(value or "")
+    pieces: list[str] = []
+    outside: list[str] = []
+
+    def flush_outside() -> None:
+        if not outside:
+            return
+        segment = "".join(outside)
+        outside.clear()
+        replacements = {
+            "emph": ("*", "*"),
+            "textit": ("*", "*"),
+            "textbf": ("**", "**"),
+            "texttt": ("`", "`"),
+        }
+        while True:
+            match = re.search(r"\\(emph|textit|textbf|texttt)\s*\{", segment)
+            if not match:
+                break
+            brace = segment.find("{", match.start())
+            body = _balanced_braced(segment, brace)
+            if not body and brace + 1 < len(segment) and segment[brace + 1] != "}":
+                raise RuntimeError(f"unbalanced OpenReview text macro: {match.group(1)}")
+            close = brace + len(body) + 2
+            opener, closer = replacements[match.group(1)]
+            segment = segment[: match.start()] + opener + body + closer + segment[close:]
+        for escaped, plain in ((r"\%", "%"), (r"\&", "&"), (r"\_", "_"), (r"\#", "#"), (r"\{", "{"), (r"\}", "}")):
+            segment = segment.replace(escaped, plain)
+        unknown = re.search(r"\\[A-Za-z@]+", segment)
+        if unknown:
+            raise RuntimeError(f"unsupported OpenReview text-mode LaTeX command outside math: {unknown.group(0)}")
+        pieces.append(segment)
+
+    i = 0
+    while i < len(text):
+        if text[i] != "$" or (i > 0 and text[i - 1] == "\\"):
+            outside.append(text[i])
+            i += 1
+            continue
+        flush_outside()
+        delimiter = "$$" if text.startswith("$$", i) else "$"
+        end = i + len(delimiter)
+        while True:
+            end = text.find(delimiter, end)
+            if end < 0:
+                raise RuntimeError("unbalanced TeX math delimiters in OpenReview metadata")
+            if end == 0 or text[end - 1] != "\\":
+                break
+            end += len(delimiter)
+        pieces.append(text[i : end + len(delimiter)])
+        i = end + len(delimiter)
+    flush_outside()
+    return _normalize_text("".join(pieces))
 
 
 def _normalize_keyword(value: Any) -> str:
@@ -160,9 +226,18 @@ def _source_text_from_freeze(freeze_receipt: Mapping[str, Any]) -> dict[str, Any
         raise RuntimeError(f"multiple inconsistent frozen source titles: {sorted(normalized_titles)}")
     if len(normalized_abstracts) != 1:
         raise RuntimeError("multiple inconsistent frozen source abstracts")
+    raw_title = next(iter(normalized_titles))
+    raw_abstract = next(iter(normalized_abstracts))
+    openreview_title = _openreview_safe_text(raw_title)
+    openreview_abstract = _openreview_safe_text(raw_abstract)
     return {
-        "title": next(iter(normalized_titles)),
-        "abstract": next(iter(normalized_abstracts)),
+        "source_title": raw_title,
+        "title": openreview_title,
+        "abstract": openreview_abstract,
+        "source_title_sha256": hashlib.sha256(raw_title.encode("utf-8")).hexdigest(),
+        "source_abstract_sha256": hashlib.sha256(raw_abstract.encode("utf-8")).hexdigest(),
+        "openreview_title_sha256": hashlib.sha256(openreview_title.encode("utf-8")).hexdigest(),
+        "openreview_abstract_sha256": hashlib.sha256(openreview_abstract.encode("utf-8")).hexdigest(),
         "ai_use_statement": _normalize_text(ai_sections[0][1]) if ai_sections else "",
         "ai_use_statement_source": ai_sections[0][0] if ai_sections else "",
         "source_labels": list(dict.fromkeys(source_labels)),
@@ -207,9 +282,9 @@ def build_form_contract_template(
     source = _source_text_from_freeze(freeze)
     handoff_title = _normalize_text(handoff.get("title"))
     contract_title = _normalize_text((paper_ledger.get("contract") or {}).get("title"))
-    if not handoff_title or handoff_title != contract_title or source["title"] != contract_title:
+    if not handoff_title or handoff_title != contract_title or source["source_title"] != contract_title:
         raise RuntimeError(
-            f"title mismatch across contract/handoff/frozen source: contract={contract_title!r}, handoff={handoff_title!r}, source={source['title']!r}"
+            f"title mismatch across contract/handoff/frozen source: contract={contract_title!r}, handoff={handoff_title!r}, source={source['source_title']!r}"
         )
     ai_required = bool((venue_policy.get("paper_rules") or {}).get("ai_use_statement_required"))
     if ai_required and not source["ai_use_statement"]:
@@ -227,7 +302,7 @@ def build_form_contract_template(
             "sha256": str(item.get("sha256") or ""),
         })
     template: dict[str, Any] = {
-        "schema_version": AUDIT_SCHEMA_VERSION,
+        "schema_version": FORM_CONTRACT_SCHEMA_VERSION,
         "contract_type": "venue-form-consistency-contract",
         "paper_id": paper_id,
         "venue": str(venue_policy.get("venue") or handoff.get("venue") or ""),
@@ -249,6 +324,11 @@ def build_form_contract_template(
         "source_evidence": {
             "frozen_source_labels": source["source_labels"],
             "tex_files_scanned": source["tex_files_scanned"],
+            "openreview_metadata_projection_version": OPENREVIEW_METADATA_PROJECTION_VERSION,
+            "source_title_sha256": source["source_title_sha256"],
+            "source_abstract_sha256": source["source_abstract_sha256"],
+            "openreview_title_sha256": source["openreview_title_sha256"],
+            "openreview_abstract_sha256": source["openreview_abstract_sha256"],
             "ai_use_statement_present": bool(source["ai_use_statement"]),
             "ai_use_statement_sha256": hashlib.sha256(source["ai_use_statement"].encode("utf-8")).hexdigest() if source["ai_use_statement"] else "",
             "ai_use_statement_source": source["ai_use_statement_source"],
@@ -264,9 +344,18 @@ def build_form_contract_template(
 
 def validate_form_contract(contract: Mapping[str, Any]) -> list[str]:
     errors: list[str] = []
-    if contract.get("schema_version") != AUDIT_SCHEMA_VERSION or contract.get("contract_type") != "venue-form-consistency-contract":
+    if contract.get("schema_version") != FORM_CONTRACT_SCHEMA_VERSION or contract.get("contract_type") != "venue-form-consistency-contract":
         errors.append("venue-form-contract-schema-invalid")
     expected = contract.get("expected_fields") if isinstance(contract.get("expected_fields"), Mapping) else {}
+    source_evidence = contract.get("source_evidence") if isinstance(contract.get("source_evidence"), Mapping) else {}
+    if source_evidence.get("openreview_metadata_projection_version") != OPENREVIEW_METADATA_PROJECTION_VERSION:
+        errors.append("venue-form-contract-openreview-metadata-projection-invalid")
+    title_sha = hashlib.sha256(_normalize_text(expected.get("title")).encode("utf-8")).hexdigest()
+    abstract_sha = hashlib.sha256(_normalize_text(expected.get("abstract")).encode("utf-8")).hexdigest()
+    if source_evidence.get("openreview_title_sha256") != title_sha:
+        errors.append("venue-form-contract-openreview-title-hash-mismatch")
+    if source_evidence.get("openreview_abstract_sha256") != abstract_sha:
+        errors.append("venue-form-contract-openreview-abstract-hash-mismatch")
     for key in ("title", "abstract", "author_visibility"):
         if not _normalize_text(expected.get(key)):
             errors.append(f"venue-form-contract-missing:{key}")
