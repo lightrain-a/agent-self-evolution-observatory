@@ -600,12 +600,16 @@ def build_paper_registry(research_state=None):
     by_code = {row.get("code"): row for row in research_state.get("research_items") or []}
     stri_acceptance = dict(acceptance_by_id.get("STRI-ICLR2027") or {})
     safety_acceptance = dict(acceptance_by_id.get("AGENT-SAFETY-R9") or {})
+    # Publication-facing paper numbers are category-local among public papers.
+    # They intentionally do not replace ResearchItem codes (for example E-7/G-1)
+    # or paper-first D2 provenance. Legacy download aliases remain shipped by the
+    # static-site builder so previously shared URLs keep working.
     public_downloads = {
-        "STRI": {"pdf": "downloads/STRI-ICLR2027.pdf", "source_zip": "downloads/STRI-ICLR2027-source.zip"},
-        "AGENT-SAFETY-R9": {"pdf": "downloads/Agent-Safety-R9.pdf", "source_zip": "downloads/Agent-Safety-R9-source.zip"},
-        "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE": {"pdf": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE.pdf", "source_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip"},
-        "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK": {"pdf": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK.pdf", "source_zip": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip"},
-        "D2-PAPER-FAILURE-MEMORY-PROVENANCE": {"pdf": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf", "source_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip", "supplement_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-supplement.zip"},
+        "STRI": {"pdf": "downloads/E1-STRI.pdf", "source_zip": "downloads/STRI-ICLR2027-source.zip"},
+        "AGENT-SAFETY-R9": {"pdf": "downloads/G1-Agent-Safety-R9.pdf", "source_zip": "downloads/Agent-Safety-R9-source.zip"},
+        "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE": {"pdf": "downloads/C1-Proxy-Reward.pdf", "source_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip"},
+        "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK": {"pdf": "downloads/E2-Temporal-Skill.pdf", "source_zip": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip"},
+        "D2-PAPER-FAILURE-MEMORY-PROVENANCE": {"pdf": "downloads/B1-Failure-Memory.pdf", "source_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip", "supplement_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-supplement.zip"},
     }
     stri = {
         **legacy_stri,

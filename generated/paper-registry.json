@@ -1,7 +1,7 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-08-23T09:06:35+00:00",
-  "source_revision": "ee39c92609b8defb75dc4e8d7743e3218ecde6a4",
+  "generated_at": "2026-08-23T09:28:16+00:00",
+  "source_revision": "4126809d7069e6fc5bc76e65f76dea76da7083a5",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -123,7 +123,7 @@
       "scientific_authority": false,
       "canonical_problem_gate_added": 0,
       "downloads": {
-        "pdf": "downloads/STRI-ICLR2027.pdf",
+        "pdf": "downloads/E1-STRI.pdf",
         "source_zip": "downloads/STRI-ICLR2027-source.zip"
       },
       "deadline_status": "AUTHOR_SUBMISSION_SOURCES_ALIGNED",
@@ -622,7 +622,7 @@
       "submission_status": "SUBMISSION_READY",
       "submission_ready": true,
       "downloads": {
-        "pdf": "downloads/Agent-Safety-R9.pdf",
+        "pdf": "downloads/G1-Agent-Safety-R9.pdf",
         "source_zip": "downloads/Agent-Safety-R9-source.zip"
       },
       "experiment_refs": [],
@@ -849,7 +849,7 @@
       "submission_status": "SUBMISSION_READY",
       "submission_ready": true,
       "downloads": {
-        "pdf": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE.pdf",
+        "pdf": "downloads/C1-Proxy-Reward.pdf",
         "source_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip"
       },
       "experiment_refs": [],
@@ -1084,7 +1084,7 @@
       "submission_status": "SUBMISSION_READY",
       "submission_ready": true,
       "downloads": {
-        "pdf": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK.pdf",
+        "pdf": "downloads/E2-Temporal-Skill.pdf",
         "source_zip": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip"
       },
       "experiment_refs": [],
@@ -1301,7 +1301,7 @@
       "submission_status": "SUBMISSION_READY",
       "submission_ready": true,
       "downloads": {
-        "pdf": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf",
+        "pdf": "downloads/B1-Failure-Memory.pdf",
         "source_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip",
         "supplement_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-supplement.zip"
       },

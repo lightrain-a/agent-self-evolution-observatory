@@ -96,6 +96,7 @@ def main() -> None:
             acceptanceActionTexts: [...document.querySelectorAll('.paper-acceptance-workflow .current-status-rule')].map(x => (x.textContent || '').trim()),
             temporal: papers.find(x => x.paper_id === 'D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK') || {},
             failureMemory: papers.find(x => x.paper_id === 'D2-PAPER-FAILURE-MEMORY-PROVENANCE') || {},
+            paperDisplay: window.PAPER_DISPLAY_DATA || {},
             text: document.body.textContent || ''
           };
         """)
@@ -108,10 +109,12 @@ def main() -> None:
         require(selected["noveltyPortfolio"] == 1 and selected["noveltyDetails"] == 5, "advisor novelty audit must remain preserved for all five papers")
         require(selected["readerPortfolio"] == 1 and selected["readerBriefs"] == 5 and selected["readerFigures"] == 5, f"reader-first paper layer is incomplete: {selected}")
         require(selected["storyBlueprint"] == 1 and selected["storyPhases"] == 5 and selected["storyBlueprintSteps"] == 15 and selected["openFullStoryContracts"] == 0 and selected["storyArchetypes"] == 5 and selected["storyPapers"] == 5 and selected["storyClosestWorkFolds"] == 5 and selected["openStoryClosestWorkFolds"] == 0 and selected["storyClosestWorkGroups"] == 16 and selected["storyClosestWorkCards"] == 37 and len(selected["storyClosestWorkLinks"]) == 37 and all(link.startswith("https://") for link in selected["storyClosestWorkLinks"]) and selected["storyMissingObjects"] == 5 and selected["storyGapCards"] == 15 and selected["storyPredictions"] >= 15 and selected["storyAlternatives"] >= 15 and selected["storyContracts"] == 5 and selected["storyRQs"] >= 16 and selected["storyComponents"] >= 18 and selected["storyStressTests"] >= 15 and selected["storyMechanisms"] >= 14 and selected["storyCoE"] == 5 and selected["storyOutlineRows"] >= 35, f"Paper Story V3 argument-chain / closest-work layer is incomplete: {selected}")
-        expected_download_pdfs = {"downloads/STRI-ICLR2027.pdf", "downloads/Agent-Safety-R9.pdf", "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE.pdf", "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK.pdf", "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf"}
+        expected_download_pdfs = {"downloads/E1-STRI.pdf", "downloads/G1-Agent-Safety-R9.pdf", "downloads/C1-Proxy-Reward.pdf", "downloads/E2-Temporal-Skill.pdf", "downloads/B1-Failure-Memory.pdf"}
         expected_download_zips = {"downloads/STRI-ICLR2027-source.zip", "downloads/Agent-Safety-R9-source.zip", "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip", "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip", "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip"}
         expected_download_supplements = {"downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-supplement.zip"}
-        require(selected["storyDownloadGroups"] == 5 and set(selected["storyDownloadPdfs"]) == expected_download_pdfs and set(selected["storyDownloadZips"]) == expected_download_zips and set(selected["storyDownloadSupplements"]) == expected_download_supplements, f"Every Paper Story must expose the current stable PDF + source ZIP pair, plus supplement when one exists: {selected}")
+        require(selected["storyDownloadGroups"] == 5 and set(selected["storyDownloadPdfs"]) == expected_download_pdfs and set(selected["storyDownloadZips"]) == expected_download_zips and set(selected["storyDownloadSupplements"]) == expected_download_supplements, f"Every Paper Story must expose the publication-numbered stable PDF + source ZIP pair, plus supplement when one exists: {selected}")
+        display_papers = (selected.get("paperDisplay") or {}).get("papers") or {}
+        require({k: (display_papers.get(k) or {}).get("code") for k in ("STRI","AGENT-SAFETY-R9","D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE","D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK","D2-PAPER-FAILURE-MEMORY-PROVENANCE")} == {"STRI":"E1","AGENT-SAFETY-R9":"G1","D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE":"C1","D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK":"E2","D2-PAPER-FAILURE-MEMORY-PROVENANCE":"B1"}, f"Publication-facing paper idea codes drifted: {display_papers}")
         figures=selected["readerFigureText"]
         require(all(marker in figures.get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK","") for marker in ("47.5%","70%","100%","cross-domain grounding")), f"Temporal evidence figure lost the three-arm contrast or negative boundary: {figures.get('D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK','')}")
         require(all(marker in figures.get("D2-PAPER-FAILURE-MEMORY-PROVENANCE","") for marker in ("0.931","0.647","p=.0785","p=.0792","opposite sign")), f"Failure-Memory evidence figure must distinguish association from unresolved causal tests: {figures.get('D2-PAPER-FAILURE-MEMORY-PROVENANCE','')}")
@@ -192,6 +195,11 @@ def main() -> None:
                 "causal sign unresolved",
                 "下载论文 PDF",
                 "下载源码 ZIP",
+                "E1 技能 · STRI · 技能分类表示不变性",
+                "G1 安全 · R9 · 静态安全不等于未来安全",
+                "C1 评估 · Proxy Reward · 奖励误差写入长期记忆",
+                "E2 技能 · Temporal Skill · 可复用技能的因果瓶颈",
+                "B1 记忆 · Provenance Ladder · 失败记忆来源的因果识别",
             )
             require(all(marker in zh_text for marker in zh_markers), f"Chinese paper-story chain is incomplete: {[m for m in zh_markers if m not in zh_text]}")
             print("PASS")
