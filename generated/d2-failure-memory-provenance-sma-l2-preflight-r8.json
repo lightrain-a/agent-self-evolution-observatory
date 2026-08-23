@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_type": "candidate-separate-substrate-l2-preflight",
+  "receipt_id": "D2-C45-SMA-L2-PREFLIGHT-R8",
+  "recorded_date": "2026-08-24",
+  "status": "BEST_NEW_CONSTRUCT_CANDIDATE_SUPPORT_BLOCKED_CODE_COMING_SOON_SCHEMA_UNVERIFIED",
+  "role": "ZERO_CALL_DESIGN_PREFLIGHT_NO_EXECUTION_AUTHORITY",
+  "candidate_substrate": "Spatial Memory Agent (SMA)",
+  "candidate_sources": [
+    "https://aim-uofa.github.io/SMA/",
+    "https://arxiv.org/abs/2608.12743"
+  ],
+  "scientific_relationship_to_b1": "SEPARATE_SUBSTRATE_EXTENSION_NOT_R5_RESCUE_NOT_FINANCIAL_TRANSPORT",
+  "construct_match": {
+    "source_trajectory_outcome_is_explicitly_defined": true,
+    "evidence": "The project page groups memories by whether their source questions were answered successfully or failed during memory writing, and separately groups deployment questions by whether the three retrieved memories came from all-success, mixed, or all-failure source outcomes.",
+    "memory_card_public_description": "task summary + transferable lesson distilled from a verifier-scored rollout",
+    "source_outcome_stored_inside_memory_card_schema": "UNVERIFIED",
+    "source_outcome_executor_visible_at_runtime": "UNVERIFIED",
+    "source_outcome_used_in_native_retrieval_ranking": false,
+    "native_retrieval_ranking": "semantic filter + similarity/TRS combined ranking",
+    "trs_is_source_outcome_metadata": false,
+    "trs_semantics": "Transfer Reliability Score initialized uniformly and calibrated from later retrieval outcomes/visit evidence",
+    "assessment": "SMA is a substantially closer process-provenance construct than trust-label or post-use-valence systems because success/failure refers to the source question at memory-writing time. However, the public description does not establish that source outcome survives as a separate stored/executor-visible field rather than an offline analytic join."
+  },
+  "public_diagnostics": {
+    "source_outcome_groups": {
+      "success": {"mean_trs": 0.522, "deployment_accuracy_percent": 85.7},
+      "failure": {"mean_trs": 0.452, "deployment_accuracy_percent": 61.4}
+    },
+    "retrieved_memory_composition_groups": {
+      "all_success": {"evaluation_questions": 13226, "deployment_accuracy_percent": 93.0, "mean_trs": 0.909},
+      "mixed": {"evaluation_questions": 10264, "deployment_accuracy_percent": 65.1, "mean_trs": 0.653},
+      "all_failure": {"evaluation_questions": 603, "deployment_accuracy_percent": 39.0, "mean_trs": 0.480}
+    },
+    "scientific_boundary": "These are observational/source-quality diagnostics under SMA's native retrieval system. They do not identify a metadata-only effect and the evaluation-question counts are not counts of independent source-memory units for B1 inference."
+  },
+  "support_gate": {
+    "pass": false,
+    "public_code_status": "CODE_COMING_SOON",
+    "requirements_before_any_l2_reopen": [
+      "public code/artifact release is available and pinned by immutable commit/content hash",
+      "memory-card storage schema is inspected to determine whether source-question outcome is a first-class field separate from task-summary/lesson bytes",
+      "runtime serialization is inspected to determine whether source outcome can be shown to the downstream executor without changing retrieval, card IDs/order, TRS, or any other evidence bytes",
+      "the source-memory population is enumerated before outcomes to measure exact-information pair capacity across true success/failure source provenance",
+      "fresh independent task units are separated from repeated deployment questions and repeated retrievals of the same memory card"
+    ]
+  },
+  "exact_information_pair_gate": {
+    "pass": false,
+    "required_pair_object": "Two prospectively selected provenance conditions must supply byte-identical actionable memory content under a deterministic pre-outcome canonicalization or an otherwise justified exact-information construction; arbitrary post-hoc relabeling of one card is not accepted as source-faithful process provenance.",
+    "forbidden": [
+      "treat source-outcome observational groups as an intervention",
+      "count deployment questions as independent source-memory units",
+      "use TRS as a proxy for source success/failure",
+      "change retrieval/ranking/card set between provenance arms",
+      "flip a factually fixed source label after outcomes merely to manufacture an L2 arm",
+      "select exact-information pairs using downstream treatment outcomes"
+    ]
+  },
+  "prospective_execution_contract_if_support_gates_pass": {
+    "status": "DRAFT_ONLY_NOT_FROZEN_NOT_AUTHORIZED",
+    "independent_unit": "fresh downstream task paired under a prospectively frozen exact-information source-memory pair or canonical memory object",
+    "held_fixed": [
+      "future task/query and visual/state evidence",
+      "ordered disclosed memory-card IDs or deterministic canonical memory object",
+      "task-summary and transferable-lesson bytes",
+      "TRS and all retrieval scores/weights",
+      "retrieval/ranking result and prompt position",
+      "executor/model/version/decoding contract"
+    ],
+    "treatment": "only a valid source-question success versus failure provenance field that is separately serialized to the downstream executor",
+    "primary_endpoint": "must be frozen after source/schema qualification and before any model call",
+    "sample_size": "must clear the frozen support/admission floor and separately follow the existing B1 prospective power plan; support floor 10 is not a power guarantee",
+    "no_outcome_driven_selection": true,
+    "no_post_outcome_unit_replacement": true,
+    "no_threshold_rescue": true
+  },
+  "decision": {
+    "execute_now": false,
+    "scientific_reopen_now": false,
+    "priority_among_external_candidates": 1,
+    "preferred_next_action": "WAIT_FOR_AND_PIN_SMA_CODE_RELEASE_THEN_INSPECT_SOURCE_OUTCOME_SCHEMA_AND_EXACT_INFORMATION_CAPACITY",
+    "fallback_if_source_outcome_is_only_offline_join": "Do not execute SMA as B1 exact L2. Retain the source-outcome diagnostics as related observational evidence and continue the canonical financial/ReasoningBank support watch.",
+    "strongest_allowed_current_statement": "SMA is the strongest audited external process-provenance candidate because it explicitly tracks success/failure of the source question at memory-writing time, but its code is not yet public and the public memory-card description does not establish a separately stored or executor-visible source-outcome field."
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "gpu": false,
+    "model_calls": false,
+    "submission": false
+  }
+}

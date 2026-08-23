@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_type": "candidate-separate-substrate-l2-preflight",
+  "receipt_id": "D2-C45-IBM-TRAJECTORY-TIPS-L2-PREFLIGHT-R8",
+  "recorded_date": "2026-08-24",
+  "status": "STRONG_SOURCE_OUTCOME_CONSTRUCT_CODE_BLOCKED_RUNTIME_VISIBILITY_UNVERIFIED",
+  "role": "ZERO_CALL_DESIGN_PREFLIGHT_NO_EXECUTION_AUTHORITY",
+  "candidate_substrate": "Trajectory-Informed Memory Generation for Self-Improving Agent Systems (IBM Research)",
+  "candidate_sources": [
+    "https://arxiv.org/abs/2603.10600",
+    "https://arxiv.org/html/2603.10600v1"
+  ],
+  "scientific_relationship_to_b1": "SEPARATE_SUBSTRATE_EXTENSION_NOT_R5_RESCUE_NOT_FINANCIAL_TRANSPORT",
+  "construct_match": {
+    "trajectory_outcome_is_explicitly_classified": true,
+    "trajectory_outcome_semantics": "ground-truth benchmark success/failure is used when available; otherwise the trajectory intelligence stage infers success/failure/recovered from execution and reflection signals",
+    "generated_memory_entry_has_source_trajectory_id": true,
+    "generated_memory_entry_has_source_outcome_description": true,
+    "conflict_resolution_uses_source_trajectory_success_failure": true,
+    "assessment": "At the generated-entry level this is the cleanest audited external process-provenance schema: the source trajectory and its outcome are explicit attributes of reusable guidance."
+  },
+  "content_channel_confounds": {
+    "outcome_affects_generation": true,
+    "examples": [
+      "strategy tips are generated from clean successful executions",
+      "recovery tips are generated from failure/recovery patterns",
+      "optimization tips are generated from successful but inefficient executions"
+    ],
+    "outcome_affects_consolidation": true,
+    "consolidation_rule": "conflict resolution uses tip category, priority, and source trajectory success/failure status; successful-source tips take precedence over failed-source tips",
+    "implication": "The native pipeline is an L1-like writer/consolidation bundle. A source-outcome field cannot be causally isolated by simply comparing native stored tips because provenance can alter tip content and which tip survives merging."
+  },
+  "storage_and_runtime_visibility": {
+    "generated_entry_source_outcome_description": true,
+    "consolidated_storage_metadata_explicitly_listed": [
+      "tip category",
+      "priority level",
+      "application context",
+      "task category",
+      "source trajectory IDs",
+      "creation timestamp"
+    ],
+    "source_outcome_explicitly_listed_after_consolidation": false,
+    "runtime_prompt_fields_explicitly_highlighted": [
+      "priority level",
+      "category",
+      "actionable content",
+      "purpose",
+      "implementation steps",
+      "trigger condition"
+    ],
+    "source_outcome_explicitly_shown_to_executor": false,
+    "assessment": "The paper proves source-outcome provenance exists during generation and consolidation, but does not establish that it survives as a first-class stored field after consolidation or is visible to the executor."
+  },
+  "support_gate": {
+    "pass": false,
+    "public_code_status": "NO_AUTHOR_RELEASED_EXECUTABLE_CODE_DISCOVERED_IN_BOUNDED_RECHECK",
+    "external_code_finders": "bounded search surfaces show Request Code / paper-only coverage; non-author replications are not source authority",
+    "requirements_before_any_l2_reopen": [
+      "author/first-party code or a source-faithful artifact bundle is released and pinned",
+      "pre-consolidation and post-consolidation memory schemas are inspected",
+      "source outcome must be shown to survive as a separately addressable field, or a prospectively justified pre-consolidation memory object must be selected",
+      "runtime prompt/disclosure path must support exposing source outcome without changing tip bytes, selection, rank/order, or any other evidence",
+      "fresh independent exact-information units must be enumerated before any treatment outcomes"
+    ]
+  },
+  "exact_information_pair_gate": {
+    "pass": false,
+    "required_object": "A prospectively selected pair or deterministic canonical memory object with byte-identical actionable guidance across true success/failure source-provenance conditions. Native outcome-conditioned generation or outcome-aware consolidation cannot be used as proof of information identity.",
+    "preferred_source_level_route_if_code_appears": "Inspect pre-consolidation generated entries first, because post-consolidation conflict resolution explicitly uses source outcome and can change canonical content.",
+    "forbidden": [
+      "compare native success-derived versus failure-derived tips and call it metadata-only",
+      "toggle source outcome after content was selected using that same outcome field without freezing an exact-information object",
+      "allow consolidation or retrieval to choose different tips between metadata arms",
+      "use non-author reimplementations as source-faithful evidence",
+      "select pairs based on downstream treatment outcomes"
+    ]
+  },
+  "prospective_execution_contract_if_support_gates_pass": {
+    "status": "DRAFT_ONLY_NOT_FROZEN_NOT_AUTHORIZED",
+    "independent_unit": "fresh downstream AppWorld-style task under a prospectively frozen exact-information memory pair/object",
+    "held_fixed": [
+      "future query/task and environment state",
+      "ordered disclosed tip IDs",
+      "actionable tip content/purpose/steps/trigger bytes",
+      "retrieval scores/filters/ranking",
+      "prompt position and all non-provenance bytes",
+      "executor/model/version/decoding contract"
+    ],
+    "treatment": "only a separately serialized valid source-trajectory success versus failure provenance field",
+    "sample_size": "must be justified independently using B1 prospective power planning; the R5 10-task support floor is not a power guarantee",
+    "no_outcome_driven_selection": true,
+    "no_post_outcome_unit_replacement": true,
+    "no_threshold_rescue": true
+  },
+  "decision": {
+    "execute_now": false,
+    "scientific_reopen_now": false,
+    "priority_among_external_candidates": 2,
+    "preferred_next_action": "WAIT_FOR_AUTHOR_CODE_OR_SOURCE_FAITHFUL_ARTIFACT_RELEASE_THEN_INSPECT_PRE_CONSOLIDATION_SOURCE_OUTCOME_SCHEMA",
+    "fallback_if_source_outcome_does_not_survive_as_separate_field": "Retain IBM as strong evidence that source-outcome provenance is an explicit memory-generation object, but do not execute it as B1 exact L2.",
+    "strongest_allowed_current_statement": "The IBM framework explicitly attaches source trajectory and source outcome description to generated memory entries, making it a strong construct match, but source outcome also affects consolidation and is not shown in the published runtime prompt fields; without first-party code, no exact-information metadata-only execution is currently justified."
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "gpu": false,
+    "model_calls": false,
+    "submission": false
+  }
+}

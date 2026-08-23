@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_type": "candidate-separate-substrate-l2-preflight",
+  "receipt_id": "D2-C45-MUTMEM-L2-PREFLIGHT-R8",
+  "recorded_date": "2026-08-24",
+  "status": "STOP_CONSTRUCT_MISMATCH_FOR_B1_METADATA_MECHANICS_WITNESS_ONLY",
+  "role": "ZERO_CALL_DESIGN_PREFLIGHT_NO_EXECUTION_AUTHORITY",
+  "candidate_substrate": "MutMem / HOM-AIMOS",
+  "candidate_repository": "https://github.com/wallidsaydi-creator/HOM-AIMOS",
+  "bounded_public_source_urls": [
+    "https://github.com/wallidsaydi-creator/HOM-AIMOS",
+    "https://github.com/wallidsaydi-creator/HOM-AIMOS/blob/main/eval/publication/verified-benchmark-results.json",
+    "https://github.com/wallidsaydi-creator/HOM-AIMOS/blob/main/RELEASE-SOURCE-MANIFEST.json",
+    "https://github.com/wallidsaydi-creator/HOM-AIMOS/blob/main/SECURITY.md",
+    "https://github.com/wallidsaydi-creator/HOM-AIMOS/blob/main/RELEASE.md",
+    "https://github.com/wallidsaydi-creator/HOM-AIMOS/tags"
+  ],
+  "scientific_relationship_to_b1": "SEPARATE_SUBSTRATE_EXTENSION_NOT_R5_RESCUE_NOT_FINANCIAL_TRANSPORT",
+  "why_candidate_is_interesting": [
+    "the public architecture explicitly keeps canonical memory content immutable while maintaining separate signed memory evidence/projections",
+    "save stage 8 binds a signed reversible epistemic label to the live memory content hash",
+    "the system also appends signed positive or negative outcome evidence to a separate valence ledger",
+    "the public PoisonedRAG epistemic ablation supplies 100 completed targets and demonstrates that stored labels can materially change native retrieval while canonical content itself remains unchanged"
+  ],
+  "construct_split": {
+    "M1_signed_epistemic_label": {
+      "native_semantics": "trust/poison epistemic classification",
+      "content_hash_bound": true,
+      "separate_from_canonical_content": true,
+      "native_downstream_path": "verified epistemic projection and selection before active-context disclosure",
+      "relationship_to_b1_success_failure_process_provenance": "NOT_EQUIVALENT",
+      "exact_l2_as_is": false,
+      "reason": "The native label changes retrieval/disclosure and represents epistemic trust rather than source-trajectory success/failure provenance."
+    },
+    "M2_signed_positive_negative_outcome_evidence": {
+      "native_semantics": "signed post-recall/post-use reward evidence applied to a memory after it contributes to an outcome",
+      "separate_from_canonical_content": true,
+      "native_downstream_path": "appendValence records memory_id + reward_sign (+ recall/outcome attribution in v2); cumulative valence feeds a bounded retrieval-weight update",
+      "relationship_to_b1_success_failure_process_provenance": "POST_USE_REWARD_FEEDBACK_NOT_SOURCE_TRAJECTORY_PROVENANCE",
+      "exact_l2_as_is": false,
+      "reason": "Source inspection of services/governance/valence-ledger.js shows reward_sign is a reward signal applied to an already-existing memory and can be bound to recall_event_id/outcome_id. It is post-use utility/adaptation evidence, not the success/failure outcome of the trajectory that generated the memory. Reinterpreting it as SOURCE OUTCOME would create a new artificial treatment rather than expose a native B1 provenance field."
+    },
+    "preferred_construct_for_future_b1_extension": "NONE_NATIVE_CURRENTLY_QUALIFIES; M1 is epistemic trust/poison metadata and M2 is post-use reward feedback, not source-trajectory success/failure provenance."
+  },
+  "public_source_bindings_observed_on_main": {
+    "warning": "These hashes are from the public RELEASE-SOURCE-MANIFEST.json on main. Upstream SECURITY.md states that main is active development and the latest attested 1.x release, not main, is the supported trust anchor. They are preflight hints only until the attested release is pinned.",
+    "eval/run-poisonedrag-epistemic-ablation.mjs": "99edd277e1334878b8bbff24450d07f869721083357451f4141840adc7c5be46",
+    "eval/publication/poisonedrag-epistemic-ablation.json": "93b3c5ba11e488441089b117a23b4ed420d3b8166cb43c232c474304df597c4e",
+    "eval/publication/verified-benchmark-results.json": "02de7a4b41e15daeae6de50d43c1b7123f5782440ebd66e44cb43a95f0f21596",
+    "migrations/023-create-memory-valence-ledger.sql": "8b7e811736682a8f50b6f034c1ec171071824a0497194dd990ff58c11629ffa9",
+    "migrations/062-valence-ledger-atomic-proof.sql": "ee5ca0151559a4fe01e636d406c4f357ee89dbc0c00de6691fd57e1a6065a09b",
+    "migrations/092-signed-memory-epistemic-classification.sql": "67cb60b9a6af25ec59e2f45d2ca52841b4cde1cfe50f6fb796fbdc4c05d4c024"
+  },
+  "native_epistemic_ablation_boundary": {
+    "confirmatory": true,
+    "intended_n": 100,
+    "completed_n": 100,
+    "canonical_memory_mutated": false,
+    "retrieval_weight_mutated": false,
+    "classification_mutated": false,
+    "A0_stored_signed_labels": false,
+    "A1_stored_signed_labels": true,
+    "A0_attacked_poison_retrieval_at_5": "94/100",
+    "A1_attacked_poison_retrieval_at_5": "0/100",
+    "allowed_interpretation": "Stored signed epistemic labels have a large native effect on retrieval selection under the released PoisonedRAG protocol while canonical memory content remains unchanged.",
+    "forbidden_interpretation": "This is already B1 L2 evidence that provenance metadata alone changes downstream behavior under identical disclosed memory information."
+  },
+  "source_pin_gate": {
+    "pass": false,
+    "b1_execution_relevance_after_construct_failure": "NOT_SUFFICIENT_TO_REOPEN_B1_EVEN_IF_RESOLVED",
+    "requirements": [
+      "resolve the latest supported attested 1.x release tag or immutable commit",
+      "verify the release/source-package attestation and source manifest against that release",
+      "pin the exact valence-ledger schema and outcome-evidence writer/reader implementation",
+      "pin the exact recall/disclosure serialization path used for any future forced-disclosure treatment"
+    ],
+    "current_blocker": "69-to-GitHub git transport failed twice with GnuTLS/TLS errors. In addition, upstream SECURITY.md says the latest attested 1.x release is the supported trust anchor and main is active development, while the bounded 2026-08-24 public GitHub Releases/Tags recheck did not expose a downloadable release coordinate. RELEASE.md documents an aimos-backend-1.0.0.tgz verification example, but no exact attested tag/commit/package has yet been resolved into the canonical cache. Public web sources therefore establish the design and main-manifest hashes only, not an experiment-authoritative release pin."
+  },
+  "construct_mapping_gate": {
+    "pass": false,
+    "requirements": [
+      "show that a signed positive/negative outcome-evidence record refers to the outcome provenance of the memory-generating trajectory rather than merely a later utility/adaptation event",
+      "identify a deterministic serialization of that provenance/evidence that can be exposed to the downstream executor",
+      "show that serializing or toggling that field can be done without changing memory content, retrieval weight, candidate admission, rank/order, disclosed memory IDs, or any other evidence bytes"
+    ],
+    "current_blocker": "Source-level inspection resolves the ambiguity negatively: valence-ledger reward_sign records reward feedback applied to a memory after recall/use, with optional recall_event_id/outcome_id attribution. It is not the outcome provenance of the trajectory that generated that memory.",
+    "disposition": "FAILED_FOR_B1_SOURCE_PROVENANCE",
+    "source_level_finding": {
+      "source": "https://github.com/wallidsaydi-creator/HOM-AIMOS/blob/main/services/governance/valence-ledger.js",
+      "observed_semantics": "append-only ledger records every reward signal applied to a memory; v2 evidence binds memory_id, reward_sign, recall_event_id, outcome_id/outcome_event_id; applyRewardSignal mutates retrieval weight in the same restricted transaction",
+      "b1_mapping": "FAIL_POST_USE_REWARD_FEEDBACK_NOT_SOURCE_TRAJECTORY_OUTCOME"
+    }
+  },
+  "prospective_forced_disclosure_contract_if_gates_pass": {
+    "status": "DRAFT_ONLY_NOT_FROZEN_NOT_AUTHORIZED",
+    "independent_unit": "fresh query/task with a prospectively fixed disclosed memory set",
+    "paired_hold_fixed": [
+      "query and future state",
+      "ordered list of disclosed memory IDs",
+      "canonical memory content bytes and content hashes",
+      "retrieval scores/weights used to choose the disclosed set",
+      "all non-provenance prompt bytes",
+      "executor/model/version/decoding contract"
+    ],
+    "candidate_treatment": "visible process-outcome provenance/evidence metadata attached to each already-frozen disclosed memory item",
+    "candidate_arms": [
+      "L_S: same memory bytes with prospectively valid success/positive source-outcome metadata",
+      "L_F: same memory bytes with prospectively valid failure/negative source-outcome metadata"
+    ],
+    "native_retrieval_policy_must_be_bypassed_for_treatment_effect": true,
+    "retrieval_or_disclosure_change_invalidates_l2": true,
+    "fake_or_semantically_unmapped_metadata_forbidden": true,
+    "outcome_endpoint": "must be preregistered after source pin/construct mapping and before any model call",
+    "statistical_rule": "must use independent task units and be sized separately from the R5 10-task support floor using the existing prospective power plan",
+    "no_outcome_driven_selection": true,
+    "no_post_outcome_unit_replacement": true,
+    "no_threshold_rescue": true
+  },
+  "decision": {
+    "execute_now": false,
+    "scientific_reopen_now": false,
+    "preferred_next_action": "STOP_MUTMEM_AS_B1_L2_EXECUTION_CANDIDATE_RETAIN_AS_METADATA_MECHANICS_WITNESS",
+    "fallback_if_M2_mapping_fails": "Triggered: do not execute a MutMem-backed B1 source-provenance claim. Retain MutMem only as related/mechanics evidence that immutable content can coexist with signed metadata and that metadata can alter native retrieval.",
+    "strongest_allowed_current_statement": "MutMem/HOM-AIMOS is useful as a metadata-mechanics witness, not as a B1 source-provenance L2 substrate: its signed epistemic label encodes trust/poison state, while its positive/negative valence ledger records post-use reward feedback rather than the success/failure of the memory-generating trajectory.",
+    "candidate_disposition": "STOP_CONSTRUCT_MISMATCH_FOR_B1"
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "gpu": false,
+    "model_calls": false,
+    "submission": false
+  }
+}
