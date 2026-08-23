@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-22T12:07:36+00:00",
-  "source_generator_run_id": "20260822T120628Z-ingestion-replay",
+  "generated_at": "2026-08-23T07:07:34+00:00",
+  "source_generator_run_id": "20260823T063055Z",
   "source_generator_status": "GENERATED_PRE_F0_EVIDENCE_ACQUISITION",
   "status": "PRE_F0_QUEUE_READY",
   "policy": {
@@ -38,46 +38,47 @@
   },
   "rows": [
     {
-      "candidate_id": "PORT-013",
+      "candidate_id": "PORT-017",
       "candidate_identity_version": "candidate-content-v1",
-      "candidate_snapshot_sha256": "eb5c3da354c9bafae9f6f80f68555444833cd7fbdeb1699d06a190017714781e",
-      "title": "Syntactic Interface Overfitting in Web Agents: Why do learned skills bind to literal text envelopes rather than semantic intents?",
+      "candidate_snapshot_sha256": "4b5cf1325651543149a72c088ddd670d9fcb3d7366988353c996940c4a571566",
+      "title": "The Intervention Knowledge Bottleneck: Convergent Failure at Entity-Level Modification Knowledge",
       "discovery_lane": "CONVERGENT_FAILURE",
-      "source_branch_id": "CONVERGENT_FAILURE-P2-006-R1",
+      "source_branch_id": "CONVERGENT_FAILURE-P1-002",
       "primary_refs": [
-        "arXiv:2607.26809",
-        "arXiv:2608.17684"
+        "arXiv:2608.13120",
+        "arXiv:2608.18933"
       ],
+      "irreducible_object": "The structural constraint that makes entity-level intervention knowledge (how to change specific code entities) a convergent failure point for both repository-grounded skill distillation and interaction-feedback skill evolution, despite their different knowledge acquisition mechanisms.",
       "paperability_axes": {
         "P": {
           "label": "principle_or_problem_formulation",
-          "status": "REDUCED",
-          "rationale": "The general problem of cross-interface transfer and domain adaptation is mature. The specific formulation of 'envelope-agnostic skill representation' risks reducing to standard domain adaptation or robustness to distribution shift unless the syntactic-semantic binding mechanism is isolated."
+          "status": "OPEN",
+          "rationale": "The problem of identifying a convergent failure point across independent method families is formulated, but requires validation that the convergence is not coincidental or reducible to a generic limitation in knowledge acquisition."
         },
         "M": {
           "label": "method_or_method_boundary",
-          "status": "OPEN",
-          "rationale": "A method for envelope-agnostic skill representation could be novel, but requires concrete specification of how skills are represented to avoid syntactic binding while preserving executability."
+          "status": "NOT_CLAIMED",
+          "rationale": "No new method is proposed; the contribution is the identification and characterization of the convergent failure regime."
         },
         "E": {
           "label": "empirical_phenomenon",
           "status": "SUPPORTED",
-          "rationale": "The AWM evidence provides a specific, measurable failure regime: utility collapse from 0.319 to 0.756 when the syntactic envelope is removed, with matched semantic content. This is a strong empirical phenomenon."
+          "rationale": "The empirical evidence from two independent methods (SkillForge and SkillEvo) shows convergent failure at the intervention knowledge level, satisfying the lane contract for convergent failure."
         },
         "B": {
           "label": "benchmark_or_evaluation",
           "status": "NOT_CLAIMED",
-          "rationale": "No benchmark contribution is claimed."
+          "rationale": "No new benchmark is proposed."
         },
         "T": {
           "label": "theory_or_guarantee",
-          "status": "NOT_CLAIMED",
-          "rationale": "No theoretical guarantee is claimed."
+          "status": "OPEN",
+          "rationale": "A theoretical contribution is possible if the structural constraint causing the convergence can be formalized (e.g., as a fundamental limitation in representing actionable modification knowledge), but this requires showing the constraint is not already captured by existing theories of knowledge representation or acquisition."
         },
         "S": {
           "label": "system_or_capability",
           "status": "NOT_CLAIMED",
-          "rationale": "No system capability contribution is claimed."
+          "rationale": "No new system capability is claimed."
         }
       },
       "surviving_paperability_axes": [
@@ -88,13 +89,12 @@
       ],
       "route_reason": "EXACT_REDUCTION_PENDING",
       "reduction_blockers": [
-        "saturation-exact-reduction-pending:model-scaffold-enactability",
         "unresolved-exact-reduction-test:1"
       ],
-      "exact_prediction": "Skills acquired with varied syntactic envelopes (but same semantics) will show higher transfer utility to native function-calling executors than skills acquired with a single envelope, under matched semantic content and task distribution.",
-      "strongest_same_information_baseline": "Domain adaptation with distribution alignment.",
-      "cheapest_problem_falsifier": "Run the AWM skill acquisition with varied syntactic envelopes (e.g., paraphrased WebArena envelopes) and test transfer utility to native function-calling executors. If utility remains low, the syntactic-binding hypothesis is falsified.",
-      "endpoint_headroom_requirement": "Utility must be significantly below 0.756 (the restored utility) when the envelope is mismatched, and significantly above 0.319 (the collapsed utility) when the envelope is varied during acquisition.",
+      "exact_prediction": "Across additional independent self-evolution methods (beyond SkillForge and SkillEvo), failure will consistently occur at the entity-level intervention knowledge level when the acquisition mechanism lacks multi-turn interaction or entity-grounded modification examples, and this failure will not be overcome by simply increasing the quantity of single-turn or non-entity-grounded data.",
+      "strongest_same_information_baseline": "Knowledge representation bottleneck theory (procedural vs declarative knowledge) applied to self-evolving agents.",
+      "cheapest_problem_falsifier": "Identify a third independent self-evolution method (e.g., a different knowledge acquisition approach) and test whether it also fails specifically at entity-level intervention knowledge when lacking multi-turn or entity-grounded data. If the third method does not show this convergent failure, or if the failure is overcome by increasing data quantity without the specific structural characteristics, the convergence claim is falsified.",
+      "endpoint_headroom_requirement": "The convergent failure must be observed in at least one additional independent method with a statistically significant performance drop (e.g., >3%) at the intervention knowledge level, and the failure must persist despite increased data quantity lacking the required structural characteristics.",
       "next_if_positive": "RERUN_EXACT_SAME_INFORMATION_REDUCTION",
       "next_if_support_missing": "SUPPORT_STOP_OR_BOUNDED_SUPPORT_ACQUISITION",
       "next_if_protocol_invalid": "PROTOCOL_STOP_AND_REPAIR",
@@ -107,8 +107,7 @@
         "experiment": false,
         "p0": false,
         "gpu": false
-      },
-      "irreducible_object": "The binding of learned procedural memory to literal syntactic action envelopes (surface text patterns) rather than semantic task intents, causing transfer failure across execution substrates with equivalent semantics but different interface formats."
+      }
     }
   ],
   "scientific_authority": false,

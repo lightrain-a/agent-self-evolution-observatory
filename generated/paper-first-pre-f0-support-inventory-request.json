@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0-pre-f0",
-  "generated_at": "2026-08-22T12:07:36+00:00",
-  "run_id": "20260822T120628Z-ingestion-replay",
+  "generated_at": "2026-08-23T07:07:34+00:00",
+  "run_id": "20260823T063055Z",
   "status": "PROBLEM_FALSIFIER_SUPPORT_INVENTORY_REQUEST_READY",
   "source": "CANONICAL_PRE_F0_QUEUE",
   "policy": {
@@ -41,20 +41,20 @@
   },
   "rows": [
     {
-      "candidate_id": "PORT-013",
+      "candidate_id": "PORT-017",
       "candidate_identity_version": "candidate-content-v1",
-      "candidate_snapshot_sha256": "eb5c3da354c9bafae9f6f80f68555444833cd7fbdeb1699d06a190017714781e",
-      "title": "Syntactic Interface Overfitting in Web Agents: Why do learned skills bind to literal text envelopes rather than semantic intents?",
+      "candidate_snapshot_sha256": "4b5cf1325651543149a72c088ddd670d9fcb3d7366988353c996940c4a571566",
+      "title": "The Intervention Knowledge Bottleneck: Convergent Failure at Entity-Level Modification Knowledge",
       "discovery_lane": "CONVERGENT_FAILURE",
-      "source_branch_id": "CONVERGENT_FAILURE-P2-006-R1",
+      "source_branch_id": "CONVERGENT_FAILURE-P1-002",
       "primary_refs": [
-        "arXiv:2607.26809",
-        "arXiv:2608.17684"
+        "arXiv:2608.13120",
+        "arXiv:2608.18933"
       ],
-      "exact_prediction": "Skills acquired with varied syntactic envelopes (but same semantics) will show higher transfer utility to native function-calling executors than skills acquired with a single envelope, under matched semantic content and task distribution.",
-      "strongest_same_information_baseline": "Domain adaptation with distribution alignment.",
-      "falsifier_expression": "Run the AWM skill acquisition with varied syntactic envelopes (e.g., paraphrased WebArena envelopes) and test transfer utility to native function-calling executors. If utility remains low, the syntactic-binding hypothesis is falsified.",
-      "endpoint_headroom_requirement": "Utility must be significantly below 0.756 (the restored utility) when the envelope is mismatched, and significantly above 0.319 (the collapsed utility) when the envelope is varied during acquisition.",
+      "exact_prediction": "Across additional independent self-evolution methods (beyond SkillForge and SkillEvo), failure will consistently occur at the entity-level intervention knowledge level when the acquisition mechanism lacks multi-turn interaction or entity-grounded modification examples, and this failure will not be overcome by simply increasing the quantity of single-turn or non-entity-grounded data.",
+      "strongest_same_information_baseline": "Knowledge representation bottleneck theory (procedural vs declarative knowledge) applied to self-evolving agents.",
+      "falsifier_expression": "Identify a third independent self-evolution method (e.g., a different knowledge acquisition approach) and test whether it also fails specifically at entity-level intervention knowledge when lacking multi-turn or entity-grounded data. If the third method does not show this convergent failure, or if the failure is overcome by increasing data quantity without the specific structural characteristics, the convergence claim is falsified.",
+      "endpoint_headroom_requirement": "The convergent failure must be observed in at least one additional independent method with a statistically significant performance drop (e.g., >3%) at the intervention knowledge level, and the failure must persist despite increased data quantity lacking the required structural characteristics.",
       "support_inventory_question": "Determine whether primary/author-released artifacts directly expose the observational/interventional units and fields needed for this frozen Pre-F0 falsifier, or whether author-released first-party code / an existing provenance-audited substrate can materialize those units as independent truth under the frozen operationalization. Reconstructed support is admissible only after materialization and provenance hashing, without synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.",
       "required_receipt_dispositions": [
         "HOLD_SUPPORT_UNAVAILABLE",

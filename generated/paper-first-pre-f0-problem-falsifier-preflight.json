@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0-shadow",
-  "generated_at": "2026-08-22T12:39:10+00:00",
-  "run_id": "20260822T120628Z-ingestion-replay",
+  "generated_at": "2026-08-23T07:20:23+00:00",
+  "run_id": "20260823T063055Z",
   "status": "PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE",
-  "support_inventory_origin": "port-013-local-primary-and-provenance-substrate-audit-20260822",
-  "support_inventory_sha256": "7762e3c763d51988413e19913b087b11a3c2e7a494756afdf3be4bfbc5dab0e0",
+  "support_inventory_origin": "PORT-017 canonical-primary and first-party asset audit; no scientific execution",
+  "support_inventory_sha256": "af744103df5b9f41c47e152d40017e55599031e8bff59605e50e15f6f8b1e37d",
   "policy": {
     "problem_falsifier_queue_is_zero_authority": true,
     "support_inventory_precedes_falsifier_execution": true,
@@ -49,19 +49,21 @@
   },
   "rows": [
     {
-      "candidate_id": "PORT-013",
-      "title": "Syntactic Interface Overfitting in Web Agents: Why do learned skills bind to literal text envelopes rather than semantic intents?",
+      "candidate_id": "PORT-017",
+      "title": "The Intervention Knowledge Bottleneck: Convergent Failure at Entity-Level Modification Knowledge",
       "disposition": "HOLD_SUPPORT_UNAVAILABLE",
-      "required_unit": "Matched AWM/WebArena skill-acquisition units in which the same frozen semantic skill is serialized under at least three independently chosen, semantically equivalent syntactic envelopes and then evaluated through a fully native function-calling executor, with per-unit tool name, argument, observation/output, held-out state, memory/null-history control, and independent task truth sufficient to distinguish literal-envelope replication from semantic transfer.",
-      "asset_audit": "The frozen Primary evidence for arXiv:2608.17684 reports LiteralPort/NoEnvelope-style controls and states that its code and audit artifacts will be released upon publication; the current first-party/public evidence therefore exposes paper-level aggregate findings but not the required per-trajectory AWM acquisition records, native function-call tool/argument/output traces, or independent truth manifest. arXiv:2607.26809 (HERO) exposes a separate hierarchical-embedding/WebArena method and does not provide the matched financial-agent native-function execution units required by this falsifier. A bounded scan of both canonical project data roots found zero execution-like files whose paths identify AWM/WebArena financial trajectories, LiteralPort/NoEnvelope rollouts, native function-call records, or matched result manifests. Current Generator/Search-Portfolio text mentions these controls but is search output, not independent support truth. Constructing synthetic trajectories, inventing envelope outcomes, or writing a candidate-specific executor would violate the frozen anti-substitution and independent-truth contract.",
+      "required_unit": "A third independent self-evolution mechanism with first-party, source-native units that directly measure the same entity-level modification/intervention-knowledge endpoint as the frozen candidate, with at least 8 aligned units across at least 3 mutation/operation types, plus a source-native comparison showing that the failure persists under more single-turn or non-entity-grounded data and changes under targeted entity-grounded or multi-turn intervention evidence.",
+      "asset_audit": "Canonical source audit found a more basic comparability gap before third-method execution: SkillForge directly measures project-specific/entity-level intervention-knowledge ablation, whereas SkillEvo directly measures single-turn feedback-gradient saturation versus multi-turn feedback and does not directly label that endpoint as entity-level modification knowledge. Reviewed first-party near-neighbors (MindMemOS, EvoGraph-R1, SciToolAgent-Evo, EvoSOP, DeepSearch-Evolve, Agentic ESOpt, AI4AI-Bench) either measure a different entity/schema/tool/algorithm object, lack the frozen operation headroom, or are benchmarks rather than an independent acquisition mechanism. No >=8-unit / >=3-operation source-native third-mechanism table for the frozen endpoint is currently available.",
       "primary_refs": [
-        "arXiv:2607.26809",
-        "arXiv:2608.17684"
+        "arXiv:2608.13120",
+        "arXiv:2608.18933"
       ],
       "scientific_authority": false,
       "candidate_identity_version": "candidate-content-v1",
-      "candidate_snapshot_sha256": "eb5c3da354c9bafae9f6f80f68555444833cd7fbdeb1699d06a190017714781e",
-      "reopen_only_if": "Reopen when first-party released artifacts or another already provenance-audited substrate materialize the same frozen AWM/WebArena skill content under at least three semantically equivalent envelope realizations and a native function-calling executor with per-unit tool/argument/output records, matched held-out states, null-memory/history controls, and independent task truth. The materialization must freeze the operationalization before outcome readout and may not use synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.",
+      "candidate_snapshot_sha256": "4b5cf1325651543149a72c088ddd670d9fcb3d7366988353c996940c4a571566",
+      "support_audit_artifact": "generated/port-017-third-mechanism-support-audit.json",
+      "support_audit_sha256": "06a0e91b1614164bab96e115fa8e4c072fb552a3e300acef70cba65c6125d99a",
+      "reopen_only_if": "Reopen only after primary or author-released first-party evidence closes both missing conditions: (1) SkillEvo or a reformulated independent source directly exposes a source-defined entity-level modification/intervention-knowledge endpoint comparable to SkillForge, rather than a generator-authored bridge from generic multi-turn gain; and (2) a third independent self-evolution mechanism supplies at least 8 source-native aligned units across at least 3 mutation/operation types plus a matched structural test separating targeted entity-grounded or multi-turn intervention evidence from merely more single-turn/non-entity-grounded data. Synthetic proxies, relabeling unrelated entity/schema/tool units, or candidate-mechanism injection do not reopen this HOLD.",
       "bounded_first_party_evidence_design_allowed": true,
       "next_route": "BOUNDED_EVIDENCE_DESIGN_OR_WAIT_PRIMARY_ASSET"
     }

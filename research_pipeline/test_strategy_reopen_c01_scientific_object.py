@@ -118,7 +118,12 @@ class StrategyReopenC01ScientificObjectTest(unittest.TestCase):
         )
 
         primary = load(ROOT / "generated" / "paper-first-primary-evidence-state.json")
-        self.assertTrue(all(row.get("ref") != "arXiv:2608.19072" for row in primary.get("records", [])))
+        current = [row for row in primary.get("records", []) if row.get("ref") == "arXiv:2608.19072"]
+        self.assertEqual(len(current), 1)
+        self.assertEqual(current[0]["source_sha256"], "52418f03c6c66f6f1797b253f55787bb15df5af16f9b53f0d01e3ff7fa60af0a")
+        self.assertEqual(current[0]["fulltext_sha256"], "b424d69aaf6d5ce5a6d04920bb1025d89036da7a8e714611f4d967c08f67e465")
+        self.assertFalse(fresh["canonical_primary_evidence_presence"]["present_in_generated_paper_first_primary_evidence_state_at_base"])
+        self.assertFalse(any(fresh["authority"].values()))
 
     def test_closest_work_fails_broad_replanning_claim_but_preserves_narrow_gate(self) -> None:
         closest = load(CLOSEST)

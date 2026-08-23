@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0-pre-f0-support-audit",
+  "candidate_id": "PORT-017",
+  "candidate_identity_version": "candidate-content-v1",
+  "candidate_snapshot_sha256": "4b5cf1325651543149a72c088ddd670d9fcb3d7366988353c996940c4a571566",
+  "title": "Third-mechanism and shared-endpoint support audit for The Intervention Knowledge Bottleneck",
+  "status": "HOLD_SHARED_ENDPOINT_AND_THIRD_MECHANISM_SUPPORT_UNAVAILABLE",
+  "recorded_date": "2026-08-23",
+  "append_only": true,
+  "required_unit": "A third independent self-evolution mechanism with first-party, source-native units that directly measure the same entity-level modification/intervention-knowledge endpoint as the frozen candidate, with at least 8 aligned units across at least 3 mutation/operation types, plus a source-native comparison showing that the failure persists under more single-turn or non-entity-grounded data and changes under targeted entity-grounded or multi-turn intervention evidence.",
+  "canonical_source_pair": [
+    {
+      "ref": "arXiv:2608.18933",
+      "title": "SkillForge: Self-Distilling Agents for Project-Specific Issue Resolution",
+      "primary_sha256": "6947bda920074d45ac568bf4f3f165710d8300508c9092f2bd47e815a1ad0c61",
+      "fulltext_sha256": "b32f0a7bcde946f3c7b960deba8c528ded17b4187a598a722ee59bdb9968b7cc",
+      "grounding_fact_sha256": "d9e6da71aca2364485796d1143e4968ad8648d91f5b60a7c26045cac4bdbb3c4",
+      "direct_endpoint": "project-specific intervention knowledge ablation",
+      "entity_level_bridge": "The same ablation section separately states that repository-level diagnostic knowledge and entity-level intervention knowledge are complementary.",
+      "endpoint_support": "DIRECT"
+    },
+    {
+      "ref": "arXiv:2608.13120",
+      "title": "SkillEvo: Self-Renewing Evolution Gradients from Multi-Turn Interaction Feedback",
+      "primary_sha256": "8ca635e35e131422f263aa7f65c19fadde9a6ffe881ecbf998b2627d065ba2c7",
+      "fulltext_sha256": "82d698a58bc95ccd17e5b53d0e49612c439a2f66dfc43c2e034e0932bfcd536f",
+      "grounding_fact_sha256": "9c76be1fc6418e6d5a903727db62c8bce1d988035373940e3220234258d0f78f",
+      "direct_endpoint": "single-turn feedback gradient saturation versus multi-turn feedback",
+      "entity_level_bridge": "No canonical Primary fact directly labels the measured SkillEvo failure as entity-level modification/intervention knowledge.",
+      "endpoint_support": "NOT_DIRECTLY_CO_MEASURED"
+    }
+  ],
+  "shared_endpoint_audit": {
+    "decision": "HOLD_SHARED_CONDITION_NOT_PRIMARY_CLOSED",
+    "reason": "The frozen CONVERGENT_FAILURE candidate relies on a generator-authored bridge from SkillEvo's single-turn plateau to entity-level intervention defects. SkillForge directly measures intervention-knowledge ablation, while SkillEvo directly measures feedback-source/multi-turn saturation. Those are not yet the same source-defined endpoint.",
+    "generator_bridge_is_not_primary_fact": true,
+    "third_method_cannot_repair_missing_two_source_comparability": true
+  },
+  "third_mechanism_shortlist": [
+    {
+      "ref": "arXiv:2608.12428",
+      "title": "MindMemOS: A Portable and Self-Evolving Memory Operating Layer for AI Agents",
+      "primary_sha256": "e02d870b493e85f91d374eb6ddd8727704c72ed2ac854aaebc80d69c006f81a4",
+      "fulltext_sha256": "79a9c92991d928c4d8e4629a4a71ea8c92d2c56f8fe81e3a4a5ba6822f4b3a32",
+      "official_repo": "https://github.com/mindscale-noah/MindMemOS",
+      "observed_repo_main_revision": "c1befcb73646b54f7a96724ea5463edb21c03ee0",
+      "mechanism_independent": true,
+      "operation_types_observed": ["induced entity/property mutation", "random schema injection", "low-frequency pruning", "crossover"],
+      "decision": "REJECT_ENDPOINT_MISMATCH",
+      "reason": "The released mechanism evolves memory schemas/entities/properties; it does not expose the candidate's source-defined entity-level code-modification/intervention-knowledge failure or the matched targeted-entity versus generic/more-data contrast."
+    },
+    {
+      "ref": "arXiv:2607.12764",
+      "title": "EvoGraph-R1: Self-Evolving Multimodal Knowledge Hypergraphs for Agentic Retrieval",
+      "primary_sha256": "2606feee26f4cc35c9976180da6431a078f4210df6ce4e299d056353a03e9125",
+      "fulltext_sha256": "44bc65170598d3510eaa3531e7a310a0c32f16016fb2922b832a7686c6c2d012",
+      "mechanism_independent": true,
+      "operation_types_observed": ["Insert", "Update", "Delete"],
+      "decision": "REJECT_ENDPOINT_AND_RELEASE_UNIT_MISMATCH",
+      "reason": "Graph-edit units modify retrieval knowledge structures rather than measuring acquisition of code-entity intervention knowledge; no source-native aligned unit table for the frozen endpoint was identified."
+    },
+    {
+      "ref": "arXiv:2607.28692",
+      "title": "SciToolAgent-Evo: An Ontology-Aware Self-Evolving Agent for Open-World Scientific Tool Acquisition",
+      "primary_sha256": "2759bf97a70f746b160efe7dfa6629eb461e68a9ea53dc6d2dcc6f70c870d768",
+      "fulltext_sha256": "85d4fd6c468d9d9889d9b591029db58812e5b46eb77d7437fae4ef8c26d2cac7",
+      "mechanism_independent": true,
+      "unit_scale_observed": "OpenSciToolBench reports 900 tasks and atomic computational primitives.",
+      "decision": "REJECT_ENDPOINT_MISMATCH",
+      "reason": "The source measures open-world tool capability acquisition and ontology completion, not the frozen entity-level modification/intervention-knowledge endpoint or its matched data-structure contrast."
+    },
+    {
+      "ref": "arXiv:2607.07321",
+      "title": "From Atomic Actions to Standard Operating Procedures: Iterative Tool Optimization for Self-Evolving LLM Agents",
+      "primary_sha256": "3b28adacb301cdc8f9460dc4d93bee402f7d8eb8eac4a28724d1d8905c3ce15f",
+      "fulltext_sha256": "2552980176df66c92ea8af312f5537d84dd6a808d6fb1d70bc257e07aa5b783c",
+      "mechanism_independent": true,
+      "operation_types_observed": ["construction", "merging", "evaluation", "pruning"],
+      "decision": "REJECT_ENDPOINT_MISMATCH",
+      "reason": "EvoSOP evolves higher-order tools from atomic actions; the released evaluation is not a same entity-level intervention-knowledge measurement."
+    },
+    {
+      "ref": "arXiv:2607.07820",
+      "title": "DeepSearch-World: Self-Distillation for Deep Search Agents in a Verifiable Environment",
+      "primary_sha256": "8a58ee89becc66f109f7e0fd34b08cd37cc95232392584be7b31b7e82475d05a",
+      "fulltext_sha256": "205de33f5cc46d88b5e535e39db1f69536e1708684748974c315d5be3b34fb9c",
+      "mechanism_independent": true,
+      "decision": "REJECT_ENTITY_TOKEN_IS_DATA_CONSTRUCTION_NOT_ENDPOINT",
+      "reason": "Its entity-level random walks construct QA tasks; they do not constitute entity-level modification/intervention units for the self-evolution mechanism."
+    },
+    {
+      "ref": "arXiv:2608.17310",
+      "title": "Agentic ESOpt: Fine-Tuning Long-Horizon LLM Agents with Minimal GPU Requirements",
+      "primary_sha256": "dba9b97fa676d9263964b72d553cfdcecb1073a00ed4594d8ee3614728ec6bf0",
+      "fulltext_sha256": "ff2050d489fac20e6a6b56628093a88a3e95ce193e794d6eb682e7a83702a099",
+      "official_repo": "https://github.com/zz1358m/Agentic-ESOpt",
+      "observed_repo_main_revision": "8c0839364f500c4026a5e1aeaa745675dc307020",
+      "mechanism_independent": true,
+      "operation_types_observed": ["EoH mutation m1", "EoH mutation m2"],
+      "decision": "REJECT_OPERATION_HEADROOM_AND_ENDPOINT_MISMATCH",
+      "reason": "The source exposes only two named mutation operators in the relevant integration, below the frozen >=3 operation-type headroom, and evaluates heuristic/parameter evolution rather than entity-level modification knowledge."
+    },
+    {
+      "ref": "arXiv:2608.20318",
+      "title": "AI4AI-Bench: Benchmarking LLM Agents in Algorithmic Design for Recursive Self-Improvement",
+      "primary_sha256": "b87040912edd6e714dac687a77b0ecd4d2e720c8385e0ebdfacba32367e234ee",
+      "fulltext_sha256": "c02902de7d9a238934f62fe96cf9332b0e0039081d9dcba8110d76d744d3ef85",
+      "decision": "REJECT_BENCHMARK_NOT_THIRD_MECHANISM",
+      "reason": "It supplies multiple frozen algorithm-design tasks but is an evaluation substrate, not an independent self-evolution acquisition mechanism exhibiting the frozen failure endpoint."
+    }
+  ],
+  "network_audit": {
+    "metadata_only": true,
+    "bulk_asset_downloads": 0,
+    "repository_clones": 0,
+    "model_calls": 0,
+    "scientific_executions": 0,
+    "gpu_calls": 0
+  },
+  "decision": {
+    "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+    "support_qualified": false,
+    "falsifier_execution_authorized": false,
+    "problem_gate_authorized": false,
+    "scientific_failure": false
+  },
+  "reopen_only_if": "Reopen only after primary or author-released first-party evidence closes both missing conditions: (1) SkillEvo or a reformulated independent source directly exposes a source-defined entity-level modification/intervention-knowledge endpoint comparable to SkillForge, rather than a generator-authored bridge from generic multi-turn gain; and (2) a third independent self-evolution mechanism supplies at least 8 source-native aligned units across at least 3 mutation/operation types plus a matched structural test separating targeted entity-grounded or multi-turn intervention evidence from merely more single-turn/non-entity-grounded data. Synthetic proxies, relabeling unrelated entity/schema/tool units, or candidate-mechanism injection do not reopen this HOLD.",
+  "authority": {
+    "canonical_generator": false,
+    "canonical_problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  },
+  "scientific_authority": false
+}

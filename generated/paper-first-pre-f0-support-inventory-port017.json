@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0-pre-f0-support-inventory",
+  "generated_at": "2026-08-23T07:20:00+00:00",
+  "inventory_origin": "PORT-017 canonical-primary and first-party asset audit; no scientific execution",
+  "rows": [
+    {
+      "candidate_id": "PORT-017",
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "4b5cf1325651543149a72c088ddd670d9fcb3d7366988353c996940c4a571566",
+      "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+      "required_unit": "A third independent self-evolution mechanism with first-party, source-native units that directly measure the same entity-level modification/intervention-knowledge endpoint as the frozen candidate, with at least 8 aligned units across at least 3 mutation/operation types, plus a source-native comparison showing that the failure persists under more single-turn or non-entity-grounded data and changes under targeted entity-grounded or multi-turn intervention evidence.",
+      "asset_audit": "Canonical source audit found a more basic comparability gap before third-method execution: SkillForge directly measures project-specific/entity-level intervention-knowledge ablation, whereas SkillEvo directly measures single-turn feedback-gradient saturation versus multi-turn feedback and does not directly label that endpoint as entity-level modification knowledge. Reviewed first-party near-neighbors (MindMemOS, EvoGraph-R1, SciToolAgent-Evo, EvoSOP, DeepSearch-Evolve, Agentic ESOpt, AI4AI-Bench) either measure a different entity/schema/tool/algorithm object, lack the frozen operation headroom, or are benchmarks rather than an independent acquisition mechanism. No >=8-unit / >=3-operation source-native third-mechanism table for the frozen endpoint is currently available.",
+      "primary_refs": [
+        "arXiv:2608.13120",
+        "arXiv:2608.18933"
+      ],
+      "support_audit_artifact": "generated/port-017-third-mechanism-support-audit.json",
+      "support_audit_sha256": "06a0e91b1614164bab96e115fa8e4c072fb552a3e300acef70cba65c6125d99a",
+      "bounded_first_party_evidence_design_allowed": true,
+      "reopen_only_if": "Reopen only after primary or author-released first-party evidence closes both missing conditions: (1) SkillEvo or a reformulated independent source directly exposes a source-defined entity-level modification/intervention-knowledge endpoint comparable to SkillForge, rather than a generator-authored bridge from generic multi-turn gain; and (2) a third independent self-evolution mechanism supplies at least 8 source-native aligned units across at least 3 mutation/operation types plus a matched structural test separating targeted entity-grounded or multi-turn intervention evidence from merely more single-turn/non-entity-grounded data. Synthetic proxies, relabeling unrelated entity/schema/tool units, or candidate-mechanism injection do not reopen this HOLD.",
+      "scientific_authority": false
+    }
+  ],
+  "scientific_authority": false
+}
