@@ -372,6 +372,18 @@ def _load_or_build_fresh_phenomenon_portfolio() -> dict[str, Any]:
     return build_fresh_phenomenon_portfolio()
 
 
+def _load_institutional_failure_lessons() -> list[dict[str, Any]]:
+    path = PROJECT_ROOT / "generated" / "institutional-failure-lessons.json"
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return []
+    if not isinstance(payload, dict):
+        return []
+    lessons = payload.get("lessons") or []
+    return [row for row in lessons if isinstance(row, dict)]
+
+
 def _load_ai_consultation_automation_public() -> dict[str, Any]:
     try:
         payload = json.loads(AI_CONSULTATION_AUTOMATION_JSON.read_text(encoding="utf-8"))
@@ -675,7 +687,14 @@ def build_research_system_state() -> dict[str, Any]:
     p0_decision_ledger = build_p0_decision_ledger(p0_admission, p0_offline_qualification, human_terminal_ideas, four_direction_iteration)
     p0_decision_ledger_public = {"summary": p0_decision_ledger["summary"], "policy": p0_decision_ledger["policy"]}
     scientific_meta_trace = build_scientific_meta_trace(pre_experiment_compiler, principle_layer, experiment_iteration, p0_decision_ledger_public)
-    failure_asset_library = build_failure_asset_library(experiment_iteration, p0_economy_public, paper_first_post_c2, paper_first_p0_f0, principle_layer)
+    failure_asset_library = build_failure_asset_library(
+        experiment_iteration,
+        p0_economy_public,
+        paper_first_post_c2,
+        paper_first_p0_f0,
+        principle_layer,
+        institutional_failure_lessons=_load_institutional_failure_lessons(),
+    )
     live_ledger_index = build_paper_ledger_index(experiment_data_root)
     live_ledger_summary = live_ledger_index.get("summary") or {}
     paper_ledger_index = live_ledger_index

@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T01:43:00+08:00",
+  "artifact_kind": "INSTITUTIONAL_FAILURE_LESSON_LEDGER",
+  "policy": {
+    "append_only": true,
+    "failure_assets_are_prechecks_not_scientific_vetoes": true,
+    "support_and_protocol_failures_do_not_update_scientific_principles": true,
+    "source_lessons_remain_authoritative_for_scope_and_reopen_conditions": true
+  },
+  "lessons": [
+    {
+      "lesson_id": "V19R003-ACTION-TURN-PROTOCOL",
+      "signature": "operationalization:paid-agent-action-turn-nonexecution",
+      "idea_id": "V19R-003-BOUNDARY-REPAIR-R2",
+      "diagnosis": "paid-agent-action-turn-nonexecution",
+      "affected_layer": "operationalization",
+      "stop_class": "PROTOCOL_STOP",
+      "reusable_precheck": "Before a bounded paid-agent causal arm, freeze an arm-invariant action-turn contract that limits diagnostic actions, defines handling of prose-only planning, and guarantees that a pre-boundary turn cannot consume the budget indefinitely without a declared tool action.",
+      "evidence_ref": "generated/v19r003-forced-switch-pre-f0-failure-lesson-r1-20260824.json",
+      "does_not_imply": "strategy non-adherence, method failure, or core-principle failure",
+      "reuse_scope": {
+        "agent_experiment": "bounded paid tool-using agent",
+        "failure_mode": "planning/diagnostics consume provider turns without reaching the scientific action endpoint"
+      },
+      "reuse_effectiveness": {
+        "reuse_count": 1,
+        "helped_count": 1,
+        "hurt_count": 0,
+        "status": "helped-r3-action-turn-repair"
+      },
+      "last_revalidated": "2026-08-24",
+      "source_decision": "NO_EVIDENCE_PROTOCOL_NONEXECUTION"
+    },
+    {
+      "lesson_id": "V19R003-SEMANTIC-ACTION-OBSERVABILITY",
+      "signature": "operationalization:semantic-action-observability",
+      "idea_id": "V19R-003-BOUNDARY-REPAIR-R2",
+      "diagnosis": "semantic-action-observability",
+      "affected_layer": "operationalization",
+      "stop_class": "SUPPORT_STOP",
+      "reusable_precheck": "Before authorizing any causal arm whose intervention boundary depends on a training/update action, audit the full accepted action surface so every accepted configuration either produces an independently verifiable persisted semantic update or is rejected before the scientific unit starts; support failures must map to NO_EVIDENCE.",
+      "evidence_ref": "generated/v19r003-forced-switch-failure-lesson-r2-20260824.json",
+      "does_not_imply": "strategy non-adherence, method failure, or core-principle failure",
+      "reuse_scope": {
+        "agent_experiment": "causal intervention with runtime-defined semantic boundary",
+        "failure_mode": "syntactically valid action completes but produces no independently observable state/parameter update"
+      },
+      "reuse_effectiveness": {
+        "reuse_count": 0,
+        "helped_count": 0,
+        "hurt_count": 0,
+        "status": "not-yet-measured"
+      },
+      "last_revalidated": "2026-08-24",
+      "source_decision": "CLOSED_SUPPORT_NONEXECUTABLE_PRE_HEADROOM_UNRESOLVED"
+    }
+  ],
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

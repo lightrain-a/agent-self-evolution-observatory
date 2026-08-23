@@ -47,6 +47,7 @@ def build_failure_asset_library(
     post_c2_adjudication: dict[str, Any] | None = None,
     paper_first_p0_f0: dict[str, Any] | None = None,
     principle_layer: dict[str, Any] | None = None,
+    institutional_failure_lessons: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     assets: list[dict[str, Any]] = []
     for node in experiment_iteration.get("nodes") or []:
@@ -123,6 +124,39 @@ def build_failure_asset_library(
             "authority_status_at_execution": pf0_authority.get("authority_status"),
             "can_authorize_p0": False,
             "can_authorize_method_or_principle": False,
+        })
+
+    for lesson in institutional_failure_lessons or []:
+        if not isinstance(lesson, dict):
+            continue
+        signature = str(lesson.get("signature") or "").strip()
+        layer = str(lesson.get("affected_layer") or "").strip()
+        precheck = str(lesson.get("reusable_precheck") or "").strip()
+        evidence_ref = str(lesson.get("evidence_ref") or "").strip()
+        if not signature or not layer or not precheck or not evidence_ref:
+            continue
+        assets.append({
+            "signature": signature,
+            "idea_id": str(lesson.get("idea_id") or ""),
+            "diagnosis": str(lesson.get("diagnosis") or signature.split(":", 1)[-1]),
+            "affected_layer": layer,
+            "reusable_precheck": precheck,
+            "evidence_ref": evidence_ref,
+            "does_not_imply": str(lesson.get("does_not_imply") or "core-principle failure"),
+            "memory_scope": "institutional-research-memory",
+            "reuse_scope": lesson.get("reuse_scope") or {"affected_layer": layer},
+            "reuse_effectiveness": lesson.get("reuse_effectiveness") or {
+                "reuse_count": 0,
+                "helped_count": 0,
+                "hurt_count": 0,
+                "status": "not-yet-measured",
+            },
+            "superseded_by": str(lesson.get("superseded_by") or ""),
+            "last_revalidated": str(lesson.get("last_revalidated") or ""),
+            "source_decision": str(lesson.get("source_decision") or ""),
+            "stop_class": str(lesson.get("stop_class") or ""),
+            "source_lesson_id": str(lesson.get("lesson_id") or ""),
+            "principle_update_authority": False,
         })
 
     signature_counts = Counter(asset["signature"] for asset in assets)

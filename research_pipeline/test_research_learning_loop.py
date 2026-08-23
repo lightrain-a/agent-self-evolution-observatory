@@ -149,6 +149,31 @@ class ResearchLearningLoopTest(unittest.TestCase):
         self.assertEqual(by_diag["no-label-variation"]["memory_scope"], "institutional-research-memory")
         self.assertEqual(by_diag["no-label-variation"]["reuse_effectiveness"]["status"], "not-yet-measured")
 
+    def test_pre_f0_institutional_failure_lessons_compile_to_reusable_assets(self) -> None:
+        lessons = [
+            {
+                "lesson_id": "L1",
+                "signature": "execution:semantic-action-observability",
+                "idea_id": "V19R-003",
+                "diagnosis": "semantic-action-observability",
+                "affected_layer": "execution",
+                "stop_class": "SUPPORT_STOP",
+                "reusable_precheck": "verify a semantic update or reject the action before the scientific unit starts",
+                "evidence_ref": "generated/v19r003-lesson.json",
+                "does_not_imply": "method or principle failure",
+                "reuse_scope": {"agent_experiment": "causal update"},
+            }
+        ]
+        library = build_failure_asset_library({"nodes": []}, {"summary": {}}, institutional_failure_lessons=lessons)
+        self.assertEqual(library["summary"]["assets"], 1)
+        asset = library["assets"][0]
+        self.assertEqual(asset["signature"], "execution:semantic-action-observability")
+        self.assertEqual(asset["affected_layer"], "execution")
+        self.assertEqual(asset["stop_class"], "SUPPORT_STOP")
+        self.assertEqual(asset["memory_scope"], "institutional-research-memory")
+        self.assertFalse(asset["principle_update_authority"])
+        self.assertIn("semantic update", asset["reusable_precheck"])
+
     def test_scienceworld_scope_lesson_is_institutional_asset_not_parent_evidence(self) -> None:
         state = {"nodes": []}
         post_c2 = {

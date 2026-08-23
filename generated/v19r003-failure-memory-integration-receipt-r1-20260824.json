@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T01:43:00+08:00",
+  "artifact_kind": "V19R003_FAILURE_MEMORY_INTEGRATION_RECEIPT_R1",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "source_closure": "generated/v19r003-forced-switch-closure-r1-20260824.json",
+  "source_lessons": [
+    "generated/v19r003-forced-switch-pre-f0-failure-lesson-r1-20260824.json",
+    "generated/v19r003-forced-switch-failure-lesson-r2-20260824.json"
+  ],
+  "institutional_ledger": "generated/institutional-failure-lessons.json",
+  "compiled_failure_assets": [
+    {
+      "memory_id": "MEM-FAIL-899e4039e09381303a",
+      "signature": "operationalization:paid-agent-action-turn-nonexecution",
+      "stop_class": "PROTOCOL_STOP",
+      "prompt_eligible": true,
+      "scientific_authority": false
+    },
+    {
+      "memory_id": "MEM-FAIL-78733cb49dfe6297da",
+      "signature": "operationalization:semantic-action-observability",
+      "stop_class": "SUPPORT_STOP",
+      "prompt_eligible": true,
+      "scientific_authority": false
+    }
+  ],
+  "experiment_design_query_pack_check": {
+    "context": "paid agent causal intervention training semantic boundary action turn protocol tool execution",
+    "selected_rank_1": "MEM-FAIL-899e4039e09381303a",
+    "selected_rank_2": "MEM-FAIL-78733cb49dfe6297da",
+    "v19_lessons_retrieved_before_other_failure_assets": true
+  },
+  "research_system_validation": {
+    "errors": 0,
+    "problem_gate_authority_leak": false,
+    "paper_design_authority_leak": false,
+    "experiment_authority_leak": false,
+    "principle_update_authority_leak": false
+  },
+  "system_design_compliance": {
+    "append_only_failure_learning": true,
+    "support_failure_not_scientific_negative": true,
+    "protocol_failure_not_scientific_negative": true,
+    "failure_asset_is_precheck_not_veto": true,
+    "pre_f0_remains_zero_scientific_authority": true,
+    "problem_gate_not_bypassed": true,
+    "researchitem_not_created": true,
+    "paper_not_created": true,
+    "explicit_reopen_condition_preserved": true,
+    "selective_projection_instead_of_rewriting_stale_public_state": true
+  },
+  "authority": {
+    "scientific_authority": false,
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  },
+  "interpretation": "V19R-003 closure is a support/protocol-scoped closed discovery object, not a persistent scientific dead end. Its two reusable lessons are now institutional Failure Assets that future experiment design can retrieve as prechecks without gaining any scientific authority."
+}
