@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "STRATEGY-REOPEN-C01",
+  "stage": "S0_PUBLIC_PROVENANCE_RECHECK",
+  "status": "HOLD_AUTHORITATIVE_PAPER_SNAPSHOT_OR_RECONSTRUCTABLE_ANNOTATION_REQUIRED",
+  "recorded_date": "2026-08-23",
+  "parent_receipt": "research_pipeline/strategy_reopen_c01_s0_metadata_inventory.json",
+  "execution_mode": "PUBLIC_METADATA_AND_DOCUMENTATION_ONLY_NO_PAYLOAD_DOWNLOAD_NO_PROVIDER_CALL",
+  "queries": [
+    "paper title + PostTrainBench-Trajectories + strategy annotation",
+    "arXiv:2608.19072 + dataset revision + Hugging Face",
+    "paper title + supplementary strategy-change labels",
+    "aisa-group/PostTrainBench + strategy annotation",
+    "PostTrainBench-Trajectories + strategy labels",
+    "official repository release/tag history"
+  ],
+  "authoritative_sources_checked": [
+    {
+      "source": "arXiv:2608.19072v1",
+      "url": "https://arxiv.org/abs/2608.19072",
+      "result": "The paper defines the strategy state/annotation protocol and reports the analyzed corpus, but the public paper text audited in this recheck does not bind that corpus to an explicit Hugging Face commit/revision or expose an official strategy-label export."
+    },
+    {
+      "source": "aisa-group/PostTrainBench-Trajectories",
+      "url": "https://huggingface.co/datasets/aisa-group/PostTrainBench-Trajectories",
+      "result": "The public dataset exposes source trajectories and a structured agent/benchmark/base-model/job-id tree. The dataset main is mutable; the S0 metadata audit observed main commit 39d3fcd794df51c062c8bd3b7f8523ba707aaeb3. No paper-specific immutable revision binding was found in the audited public documentation."
+    },
+    {
+      "source": "aisa-group/PostTrainBench GitHub repository",
+      "url": "https://github.com/aisa-group/PostTrainBench",
+      "result": "The public benchmark repository documents the benchmark/runtime, but the repository currently exposes no GitHub release that can serve as a paper-v1 snapshot binding."
+    }
+  ],
+  "non_authoritative_consistency_signal": {
+    "source": "third-party PostTrainBench analysis repository",
+    "observed_run_count": 1226,
+    "paper_reported_trajectory_count": 1338,
+    "interpretation": "This discrepancy is not used as scientific evidence or as an authoritative corpus count. It is only a consistency warning that downstream users can obtain a corpus cardinality different from the paper's 1,338 trajectories if they analyze an unpinned or filtered public dataset state."
+  },
+  "recheck_findings": [
+    {
+      "id": "R1_PAPER_TO_DATASET_REVISION_BINDING",
+      "status": "NOT_FOUND",
+      "consequence": "Do not assume current Hugging Face main equals the paper's analyzed 1,338-trajectory corpus."
+    },
+    {
+      "id": "R2_OFFICIAL_STRATEGY_ANNOTATION_EXPORT",
+      "status": "NOT_FOUND",
+      "consequence": "Do not treat locally inferred strategy-family changes as source-authored labels without an independently frozen reconstruction protocol."
+    },
+    {
+      "id": "R3_GITHUB_RELEASE_SNAPSHOT",
+      "status": "NOT_AVAILABLE",
+      "consequence": "There is no official GitHub release shortcut that closes the paper-v1 provenance gap."
+    },
+    {
+      "id": "R4_PUBLIC_TRACE_SUBSTRATE_EXISTENCE",
+      "status": "PASS",
+      "consequence": "The direction remains support-feasible in principle; this is a HOLD rather than a scientific STOP."
+    }
+  ],
+  "only_valid_reopen_paths": [
+    {
+      "id": "AUTHORITATIVE_SNAPSHOT_PATH",
+      "requirement": "Obtain an author/official artifact that binds arXiv:2608.19072v1 to an immutable PostTrainBench-Trajectories commit, manifest, release, or equivalent content-addressed corpus snapshot, plus the strategy annotation export or its exact content-addressed derivation."
+    },
+    {
+      "id": "INDEPENDENT_RECONSTRUCTION_PATH",
+      "requirement": "Freeze Appendix A.2/A.4-compatible strategy definitions and annotation procedure before reading continuation outcomes, pin a source trajectory revision, independently reconstruct labels from the source-visible executed commands/context, audit annotation reliability on a held-out subset, and treat the resulting labels as reconstructed rather than source-authored."
+    }
+  ],
+  "forbidden_reopen_shortcuts": [
+    "use the mutable current Hugging Face main because its directory names look compatible with the paper",
+    "infer that 1,338 paper trajectories equal every currently visible public run",
+    "use a third-party run count as the authoritative paper corpus",
+    "hand-pick trajectories whose apparent strategy labels fit the candidate hypothesis",
+    "download the full 28.9 GB corpus before a valid reopen path is frozen",
+    "advance to S1, provider calls, or ProblemGate while this provenance hold remains unresolved"
+  ],
+  "decision": {
+    "overall": "KEEP_S0_SUPPORT_HOLD",
+    "support_failure_class": "PAPER_CORPUS_AND_ANNOTATION_PROVENANCE",
+    "scientific_failure": false,
+    "next_action": "WAIT_FOR_OR_DISCOVER_AUTHORITATIVE_SNAPSHOT_OR_EXPLICITLY_FREEZE_THE_INDEPENDENT_RECONSTRUCTION_PATH_BEFORE_ANY_PREFIX_MATERIALIZATION",
+    "s1_prefix_materialization_authorized": false,
+    "bulk_download_authorized": false,
+    "provider_calls_authorized": false,
+    "gpu_authorized": false,
+    "problem_gate_authorized": false
+  },
+  "authority": {
+    "scientific": false,
+    "novelty": false,
+    "problem_gate": false,
+    "pre_researchitem_projection": false,
+    "research_item_promotion": false,
+    "support_download": false,
+    "provider_calls": false,
+    "experiment": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}

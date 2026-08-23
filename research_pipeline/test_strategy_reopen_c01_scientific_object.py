@@ -14,6 +14,7 @@ CLOSEST = PIPELINE / "strategy_reopen_c01_closest_work_review.json"
 EXCLUSION = PIPELINE / "strategy_reopen_c01_exclusion_audit.json"
 SAME_SUBSTRATE = PIPELINE / "strategy_reopen_c01_same_substrate_qualification.json"
 S0 = PIPELINE / "strategy_reopen_c01_s0_metadata_inventory.json"
+S0_RECHECK = PIPELINE / "strategy_reopen_c01_s0_public_provenance_recheck.json"
 F0 = PIPELINE / "strategy_reopen_c01_bounded_falsifier_design.json"
 TRANSACTION = PIPELINE / "strategy_reopen_c01_candidate_replenishment_transaction.json"
 
@@ -148,6 +149,13 @@ class StrategyReopenC01ScientificObjectTest(unittest.TestCase):
         self.assertEqual(checks["S0E_SOURCE_STRATEGY_ANNOTATION_PROVENANCE"], "HOLD")
         self.assertEqual(checks["S0F_EXACT_RUNTIME_REPLAY"], "NOT_EVALUATED_AT_S0")
         self.assertEqual(s0["decision"]["overall"], "HOLD_BEFORE_S1_PREFIX_MATERIALIZATION")
+        self.assertEqual(s0["public_provenance_recheck"]["status"], "HOLD_AUTHORITATIVE_PAPER_SNAPSHOT_OR_RECONSTRUCTABLE_ANNOTATION_REQUIRED")
+        recheck = load(S0_RECHECK)
+        self.assertEqual(recheck["status"], "HOLD_AUTHORITATIVE_PAPER_SNAPSHOT_OR_RECONSTRUCTABLE_ANNOTATION_REQUIRED")
+        self.assertEqual(recheck["decision"]["overall"], "KEEP_S0_SUPPORT_HOLD")
+        self.assertFalse(recheck["decision"]["scientific_failure"])
+        self.assertEqual(len(recheck["only_valid_reopen_paths"]), 2)
+        self.assertFalse(any(recheck["authority"].values()))
         self.assertFalse(s0["decision"]["bulk_download_authorized"])
         self.assertFalse(s0["decision"]["prefix_materialization_authorized"])
         self.assertFalse(s0["decision"]["provider_calls_authorized"])

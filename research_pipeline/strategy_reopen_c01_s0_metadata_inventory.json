@@ -5,6 +5,10 @@
   "status": "HOLD_PAPER_CORPUS_REVISION_AND_ANNOTATION_PROVENANCE_NOT_CLOSED",
   "recorded_date": "2026-08-23",
   "parent_gate": "research_pipeline/strategy_reopen_c01_same_substrate_qualification.json",
+  "public_provenance_recheck": {
+    "path": "research_pipeline/strategy_reopen_c01_s0_public_provenance_recheck.json",
+    "status": "HOLD_AUTHORITATIVE_PAPER_SNAPSHOT_OR_RECONSTRUCTABLE_ANNOTATION_REQUIRED"
+  },
   "execution_mode": "PUBLIC_METADATA_ONLY_NO_BULK_DOWNLOAD_NO_PROVIDER_CALL",
   "primary_paper_metadata": {
     "ref": "arXiv:2608.19072",
@@ -130,7 +134,7 @@
   "decision": {
     "overall": "HOLD_BEFORE_S1_PREFIX_MATERIALIZATION",
     "why": "Public metadata establishes a plausible same-substrate route but does not yet bind the analyzed paper corpus to an immutable dataset revision or provenance-bind the source strategy annotations. Selecting/download materializing prefixes now would weaken the frozen substrate contract.",
-    "next_action": "Resolve the exact paper-corpus dataset revision and locate a public/source-authoritative strategy-annotation export or explicitly freeze an independently reconstructed annotation protocol before selecting any payload-bearing prefixes.",
+    "next_action": "Only two reopen paths remain after the public provenance recheck: obtain an author/official immutable paper-corpus snapshot plus annotation provenance, or explicitly freeze and audit an independent Appendix-A.2/A.4-compatible annotation reconstruction on a pinned source revision before selecting any payload-bearing prefixes.",
     "bulk_download_authorized": false,
     "prefix_materialization_authorized": false,
     "provider_calls_authorized": false,
