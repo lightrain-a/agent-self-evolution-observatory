@@ -18,10 +18,13 @@ for (const file of storyFiles) {
   const source = fs.readFileSync(path.join(ROOT, file), "utf8");
   vm.runInThisContext(source, { filename: file });
 }
+const noveltySource = fs.readFileSync(path.join(ROOT, "paper-novelty-audit-data.js"), "utf8");
+vm.runInThisContext(noveltySource, { filename: "paper-novelty-audit-data.js" });
 
 const data = global.window.PAPER_STORY_DATA || {};
 const blueprint = data.blueprint || {};
 const stories = data.papers || {};
+const noveltyPapers = global.window.PAPER_NOVELTY_AUDIT?.papers || {};
 const registry = JSON.parse(fs.readFileSync(path.join(ROOT, "generated", "paper-registry.json"), "utf8"));
 const registryIds = new Set((registry.papers || []).map((row) => String(row.paper_id || "")).filter(Boolean));
 const storyIds = new Set(Object.keys(stories));
@@ -58,6 +61,38 @@ for (const [paperId, story] of Object.entries(stories)) {
     if (!nonempty(story[field])) errors.push(`${paperId}:${field} must contain localized reader-facing text`);
   }
   arrayMin(story, "approaches", 2);
+  const closestWorkUrls = new Set();
+  for (const approach of story.approaches || []) {
+    if (!String(approach.name || "").trim()) errors.push(`${paperId}:approach missing name`);
+    if (!nonempty({ zh: approach.how_zh, en: approach.how_en })) errors.push(`${paperId}:${approach.name || "approach"} missing how-it-works explanation`);
+    if (!nonempty({ zh: approach.problem_zh, en: approach.problem_en })) errors.push(`${paperId}:${approach.name || "approach"} missing why-insufficient explanation`);
+    const works = approach.closest_work;
+    if (!Array.isArray(works) || works.length < 2 || works.length > 4) {
+      errors.push(`${paperId}:${approach.name || "approach"}.closest_work must contain 2-4 representative papers`);
+      continue;
+    }
+    const withinApproach = new Set();
+    for (const work of works) {
+      const title = String(work.title || "").trim();
+      const url = String(work.url || "").trim();
+      if (!title) errors.push(`${paperId}:${approach.name || "approach"} closest work missing title`);
+      if (!/^https:\/\//.test(url)) errors.push(`${paperId}:${approach.name || "approach"}:${title || "closest work"} must use an https source URL`);
+      if (!Number.isInteger(work.year) || work.year < 2000 || work.year > 2100) errors.push(`${paperId}:${approach.name || "approach"}:${title || "closest work"} missing valid publication year`);
+      if (!String(work.venue || "").trim()) errors.push(`${paperId}:${approach.name || "approach"}:${title || "closest work"} missing venue/status`);
+      for (const key of ["what","solves","overlap","missing","boundary"]) {
+        if (!nonempty(work[key])) errors.push(`${paperId}:${approach.name || "approach"}:${title || "closest work"} missing ${key}`);
+      }
+      if (url) {
+        if (withinApproach.has(url)) errors.push(`${paperId}:${approach.name || "approach"} duplicates closest-work URL:${url}`);
+        withinApproach.add(url);
+        closestWorkUrls.add(url);
+      }
+    }
+  }
+  for (const nearest of noveltyPapers[paperId]?.nearest || []) {
+    const url = String(nearest.u || "").trim();
+    if (url && !closestWorkUrls.has(url)) errors.push(`${paperId}:decision-critical novelty work is missing from approaches[].closest_work:${url}`);
+  }
   arrayMin(story, "gaps", 2);
   arrayMin(story, "design_requirements", 2);
   arrayMin(story, "components", 2);

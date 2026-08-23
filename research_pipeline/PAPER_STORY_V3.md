@@ -68,11 +68,30 @@ Every current `PaperRegistry` paper must have these fields in its `paper-story-*
 
 The authoritative machine-readable list is `PAPER_STORY_DATA.blueprint.required_fields` in `paper-story-blueprint.js`. `scripts/validate_paper_story_contract.js` checks the current PaperRegistry↔PaperStory one-to-one mapping and fails closed if required reasoning objects are missing.
 
+### 3.1 `approaches[].closest_work` is a required nested evidence contract
+
+Closest-work evidence lives **inside the existing `approaches` field**. It is not a 24th top-level Paper Story field and does not change the 5-stage / 15-step reader contract. Each approach family must contain **2–4 representative papers** in `closest_work` so that “current paradigm → missing scientific object” is supported at paper level rather than by an uncited category summary.
+
+Each `closest_work` record must contain:
+
+- `title`, `url`, `year`, `venue` — an identifiable primary source and publication/preprint status;
+- `what` — what the work concretely does, stated as an input/mechanism/output or protocol description;
+- `solves` — which problem the work already solves;
+- `overlap` — which part of our method, control, representation, estimator, or evaluation object it already covers;
+- `missing` — what remains absent **relative to this paper's declared `missing_scientific_object`**, not merely “it does not use our method”;
+- `boundary` — the resulting restriction on our novelty/contribution claim.
+
+The comparison must concede overlap. A paper that already contains one of our components weakens any component-level novelty claim even if it does not contain the complete scientific object. Conversely, component overlap is not automatically scientific-object coverage; the residual object must be stated explicitly and falsifiably.
+
+The contract is coupled to `paper-novelty-audit-data.js`: every decision-critical `nearest` work recorded by the novelty audit must appear in at least one `approaches[].closest_work` group. `scripts/validate_paper_story_contract.js` fails closed if that projection is missing, if an approach has fewer than two or more than four representative works, or if any paper-level comparison omits the required argument fields.
+
+If a newly found closest work already defines or identifies the same missing scientific object, do not hide it behind a component distinction. Narrow or replace the Research Question/contribution boundary in the scientific ledger first, then update Paper Story as a read-only projection.
+
 ## 4. Writing rules
 
 **Concrete before abstract.** If a real task, environment, model, agent, or failure artifact exists, name it. Do not replace the scene with a term such as “memory provenance” or “representation invariance.” If the experiment was not run, say that it was not run; never fabricate an example for readability.
 
-**Explain how baselines work.** A closest work or simple baseline needs an input → mechanism → output explanation and a reason it remains insufficient. A paper name alone is not a comparison.
+**Explain how baselines work.** A closest work or simple baseline needs an input → mechanism → output explanation and a reason it remains insufficient. A paper name alone is not a comparison. For closest work, explicitly record what it already solves, which of our components it covers, the residual scientific-object gap, and the claim we must therefore stop making.
 
 **The missing scientific object is mandatory.** “Existing methods perform poorly” is not enough. State what prior work does not define, control, identify, certify, or measure. This object is the bridge from Related Work to the Research Question.
 
@@ -116,11 +135,12 @@ When a new canonical paper is added:
 3. Register that script in `selected-paper.html` before `paper-story-view.js`.
 4. Choose a `paper_archetype` based on the actual contribution, not the desired venue impression.
 5. Fill all V3 required fields from the current manuscript/claim/evidence state. If a field is scientifically absent, write an explicit null/unsupported statement rather than inventing evidence.
-6. Ensure every `components[].solves` reference points to a declared Gap ID.
-7. Add at least one mechanism prediction, one strongest alternative-explanation control, one mechanism-aligned test, one failure regime, and one Chain-of-Evidence row.
-8. Run `node scripts/validate_paper_story_contract.js`.
-9. Run the static/site/browser gates. The public build must fail closed if the PaperRegistry paper set and Paper Story paper set diverge.
-10. Only after the story and canonical PaperState agree should the page be published.
+6. For every `approaches[]` family, add 2–4 `closest_work` records with primary-source URL, year/status, concrete mechanism, solved problem, component overlap, residual missing object, and contribution boundary. Every decision-critical novelty-audit nearest work must be represented.
+7. Ensure every `components[].solves` reference points to a declared Gap ID.
+8. Add at least one mechanism prediction, one strongest alternative-explanation control, one mechanism-aligned test, one failure regime, and one Chain-of-Evidence row.
+9. Run `node scripts/validate_paper_story_contract.js`.
+10. Run the static/site/browser gates. The public build must fail closed if the PaperRegistry paper set and Paper Story paper set diverge.
+11. Only after the story and canonical PaperState agree should the page be published.
 
 ## 7. Authority boundary
 
