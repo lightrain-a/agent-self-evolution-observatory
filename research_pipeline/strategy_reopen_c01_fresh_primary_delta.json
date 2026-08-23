@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "STRATEGY-REOPEN-C01",
+  "title": "Fresh-primary delta for the strategy-reopening gap in autonomous AI R&D",
+  "status": "FRESH_PRIMARY_DELTA_REVIEWED_ZERO_AUTHORITY",
+  "base_revision": "e0cb9c2ded7689ba1b4c415d56af8927972c59c8",
+  "discovery_date": "2026-08-23",
+  "canonical_primary_pool_at_freeze": {
+    "path": "generated/paper-first-primary-evidence-state.json",
+    "sha256": "326bdc0c407841910a0c9fefadcbd77f11b5592f714e543b41fb618ed881b231",
+    "record_count": 32
+  },
+  "search_primitive": "IDENTIFIABILITY_GAP",
+  "canonical_primary_evidence_presence": {
+    "ref": "arXiv:2608.19072",
+    "present_in_generated_paper_first_primary_evidence_state_at_base": false,
+    "interpretation": "This is a fresh-primary search delta only. Absence from the canonical pool does not itself establish novelty or authorize ingestion, promotion, or experimentation."
+  },
+  "primary_source": {
+    "ref": "arXiv:2608.19072",
+    "title": "What is Missing from AI Post-Training AI: An Empirical Analysis",
+    "publication_date": "2026-08-19",
+    "primary_url": "https://arxiv.org/abs/2608.19072",
+    "role": "fresh empirical phenomenon and observational-proxy boundary",
+    "grounded_findings": [
+      {
+        "id": "F1_STRATEGY_CHANGES_RARE",
+        "statement": "Across 3,557 adjacent training-iteration pairs, the source annotates 74 strategy changes (2.1%), while local execution changes are much more common.",
+        "evidence_role": "EMPIRICAL_FACT",
+        "scope": "the source's released post-training trajectories and conservative strategy annotations"
+      },
+      {
+        "id": "F2_STRATEGY_ADVICE_NOT_UPTAKEN",
+        "statement": "The evaluator can expose decision-relevant diagnoses and alternative strategy suggestions, yet the reported main-agent behavior adopts execution-level suggestions while failing to adopt observed strategy-level recommendations in the audited examples.",
+        "evidence_role": "EMPIRICAL_FACT",
+        "scope": "the source's evaluator/journal intervention analysis; not a population causal effect"
+      },
+      {
+        "id": "F3_PRETRAINING_REVISION_CAPACITY_EXISTS",
+        "statement": "A pre-training human review can induce a high-level strategy revision that the agent understands and executes, while later negative training evidence tends to produce within-strategy adjustment rather than spontaneous strategy reopening.",
+        "evidence_role": "EMPIRICAL_FACT",
+        "scope": "the source's human-guidance intervention and subsequent training behavior"
+      },
+      {
+        "id": "F4_OBSERVATIONAL_PROXY_INCOMPLETE",
+        "statement": "The source measures whether strategy changes occur, but the released observational record does not by itself distinguish failure to recognize strategy-disconfirming evidence from failure to expose the current strategy as an in-run decision variable after such evidence is recognized.",
+        "evidence_role": "OPERATIONAL_ASSUMPTION",
+        "scope": "candidate-side interpretation of the source's measurement boundary; requires a new controlled decomposition before it can become a scientific claim"
+      }
+    ],
+    "source_limitations_relevant_to_candidate": [
+      "The cross-agent observational analysis cannot isolate model, prompt, interface, and scaffold contributions.",
+      "A strategy switch is not intrinsically beneficial; a correct decision may be to keep the current strategy.",
+      "The source demonstrates strategy lock-in but does not perform a same-information recognition-versus-reopening intervention."
+    ]
+  },
+  "public_support_artifacts": {
+    "project": "PostTrainBench",
+    "github": "https://github.com/aisa-group/PostTrainBench",
+    "huggingface_dataset": "aisa-group/PostTrainBench-Trajectories",
+    "reported_public_trajectory_count": 1338,
+    "intended_use": "support-feasibility and prefix inventory only until an exact replay/runtime contract is qualified",
+    "bulk_download_authorized": false,
+    "proxy_reproduction_authorized": false
+  },
+  "adjacent_primary_work": [
+    {
+      "ref": "arXiv:2602.07187",
+      "title": "PreFlect",
+      "relevance": "prospective reflection and dynamic replanning after unexpected deviation"
+    },
+    {
+      "ref": "arXiv:2608.14354",
+      "title": "ScienceFlow",
+      "relevance": "recoverable research states with continue/redirect decisions"
+    },
+    {
+      "ref": "arXiv:2608.19047",
+      "title": "Eureka",
+      "relevance": "task-conditioned meta-agent with receding-horizon planning and cost-benefit-gated evolution"
+    },
+    {
+      "ref": "arXiv:2608.01428",
+      "title": "When Replanning Becomes the Bottleneck",
+      "relevance": "learned when/how-to-replan policy under planning cost"
+    },
+    {
+      "ref": "arXiv:2606.18388",
+      "title": "LLMZero",
+      "relevance": "checkpoint diagnostics plus explicit search over adaptive RL training strategies"
+    },
+    {
+      "ref": "arXiv:2606.06473",
+      "title": "MLEvolve",
+      "relevance": "explicit graph/tree search with retrospective memory and decoupled planning/coding"
+    }
+  ],
+  "fresh_delta_decision": "PROCEED_TO_ZERO_AUTHORITY_OBJECT_FREEZE_AND_CLOSEST_WORK_ONLY",
+  "authority": {
+    "scientific": false,
+    "novelty": false,
+    "problem_gate": false,
+    "primary_evidence_ingestion": false,
+    "research_item_promotion": false,
+    "method": false,
+    "experiment": false,
+    "provider_calls": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}

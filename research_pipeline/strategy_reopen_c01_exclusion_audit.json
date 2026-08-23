@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "STRATEGY-REOPEN-C01",
+  "title": "Closed-basin and terminal-stop exclusion audit for strategy reopening",
+  "status": "PASS_DISTINCT_SOURCE_SIDE_OBJECT_ZERO_AUTHORITY",
+  "audited_revision": "e0cb9c2ded7689ba1b4c415d56af8927972c59c8",
+  "audit_date": "2026-08-23",
+  "canonical_exclusion_bindings": {
+    "closed_basin_source": {
+      "path": "generated/paper-first-search-portfolio-design-adjudication.json",
+      "file_sha256": "f8317c632e534457de7876762170cb001bbeac43d6175a0a1ddab2a29af64f0c",
+      "closed_basin_count": 43,
+      "closed_objects_canonical_json_sha256": "51669f95e9ac3db06222d783ffa32650365a609d527bf572d7920467811a389d"
+    },
+    "terminal_stop_source": {
+      "path": "generated/research-items.json",
+      "file_sha256": "6c827291f443ef184d9793723b3f350763c4eedb9b905053c07bc90806c092c7",
+      "terminal_stopped_research_item_count": 72,
+      "terminal_stop_identity_sha256": "3c092dcd29075b9d5e9a95f1f452eae853812d181e2806096714a0815afc5fe9"
+    },
+    "live_pre_researchitem_source": {
+      "path": "generated/pre-researchitem-candidates.json",
+      "file_sha256": "5e7c18999e43e49e7f4fad68c306a005e33705dd7f340f70c7bebe74c2cb90c0",
+      "candidate_count": 1,
+      "candidate_ids": [
+        "MEMENTO-JOINT-BOUNDARY-CONTROL"
+      ]
+    }
+  },
+  "hard_exclusions": [
+    {
+      "id": "MEMENTO-JOINT-BOUNDARY-CONTROL",
+      "decision": "EXCLUDE_EXISTING_LIVE_PRE_RESEARCHITEM",
+      "reason": "MEMENTO is already the sole canonical live pre-ResearchItem and is not eligible to be relabeled as replenishment."
+    },
+    {
+      "id": "RSI-LOCKOUT-C01",
+      "decision": "EXCLUDE_CLOSED_PAPER_FIRST_BASIN",
+      "reason": "RSI-LOCKOUT-C01 is terminal STOPPED/CLOSED_PAPER_FIRST. More repetitions, new models, new substrate, or additional R/V engineering cannot reopen that object."
+    }
+  ],
+  "rsi_distinctness_witness": {
+    "rsi_object": "persistent self-intervention write-edge lockout under SELF versus capability-isomorphic ORDINARY target control",
+    "candidate_object": "recognition-positive high-level strategy reopening under same-prefix decision-surface interventions",
+    "rsi_treatment": "persistent removal/restoration of a W capability edge",
+    "candidate_treatment": "content-free exposure of KEEP-versus-REOPEN versus matched generic reflection/local-decision placebo",
+    "rsi_endpoint": "binary repair-and-activation closure",
+    "candidate_endpoint": "next committed action crossing a frozen source-derived high-level strategy-family boundary",
+    "shared_authority_or_lineage": false,
+    "decision": "DISTINCT_SCIENTIFIC_OBJECT_NOT_RSI_REOPEN"
+  },
+  "closest_local_terminal_neighbors": [
+    {
+      "id": "world-model-error-gated-learning",
+      "title": "Decision-Switch Transition Admission",
+      "decision": "NEAR_NEIGHBOR_NOT_EXACT_COLLISION",
+      "boundary": "F-1 selects which real environment transitions deserve persistent world-model updates based on counterfactual downstream decision switches. STRATEGY-REOPEN-C01 does not select training transitions or update a world model; it conditions on already-recognized strategy-disconfirming evidence and tests whether exposing the high-level strategy as a decision variable changes the next strategy-family decision."
+    },
+    {
+      "id": "PF-9",
+      "title": "Post-Update Decision-Context Validity",
+      "decision": "NEAR_NEIGHBOR_NOT_EXACT_COLLISION",
+      "boundary": "PF-9 is a protocol-validity question about whether an updated policy revisits the same decision context and realizes an intended correction. The candidate holds a frozen pre-decision prefix fixed and varies only the reconsideration surface; no persistent update is the treatment."
+    },
+    {
+      "id": "self-correction-collapse-detector",
+      "title": "Self-Correction Collapse Detector",
+      "decision": "NEAR_NEIGHBOR_NOT_EXACT_COLLISION",
+      "boundary": "The stopped C-4 object audits whether answer-level correction behavior collapses into answer changing or reward/format gaming. The candidate is not an answer-correction detector and measures source-defined high-level post-training strategy-family changes."
+    },
+    {
+      "id": "intervention-validated-self-correction",
+      "title": "Intervention-Validated Self-Correction",
+      "decision": "NEAR_NEIGHBOR_NOT_EXACT_COLLISION",
+      "boundary": "The stopped C-5 object validates critique/correction signals before persistence using causal probes. The candidate neither validates a correction for storage nor performs a persistent update; recognition qualification is an independent read-only fork defining the estimand population."
+    },
+    {
+      "id": "counterfactual-evolution-decision-controller",
+      "title": "Counterfactual Evolution Decision Controller",
+      "decision": "NEAR_NEIGHBOR_NOT_EXACT_COLLISION",
+      "boundary": "A-7 was a learned four-action evolution controller reproduced by a shallow rule. The candidate has no learned controller claim; its strongest reducers explicitly include generic reflection, scheduled/progress triggers, and a matched local-decision placebo."
+    }
+  ],
+  "full_memory_decision": {
+    "closed_basins_checked": 43,
+    "terminal_stops_checked": 72,
+    "exact_collision_found": false,
+    "rsi_reopen_found": false,
+    "existing_live_candidate_collision_found": false,
+    "result": "PASS_TO_SAME_SUBSTRATE_QUALIFICATION_PATH_ONLY",
+    "warning": "This audit grants no novelty, ProblemGate, ResearchItem, provider-call, GPU, or experiment authority. A later change to canonical closed-memory or terminal-stop identity invalidates this receipt until re-audited."
+  },
+  "authority": {
+    "scientific": false,
+    "novelty": false,
+    "problem_gate": false,
+    "research_item_promotion": false,
+    "method": false,
+    "experiment": false,
+    "provider_calls": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}

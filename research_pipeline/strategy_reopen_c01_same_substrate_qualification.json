@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "STRATEGY-REOPEN-C01",
+  "title": "Same-substrate qualification path for PostTrainBench strategy reopening",
+  "status": "HOLD_EXACT_SOURCE_NATIVE_REPLAY_NOT_YET_QUALIFIED",
+  "qualification_date": "2026-08-23",
+  "purpose": "Define a fail-closed path from the source-side scientific object to an exact same-substrate bounded falsifier without proxying the model, agent interface, scaffold, trajectory prefix, or tool semantics.",
+  "source_substrate": {
+    "primary_ref": "arXiv:2608.19072",
+    "benchmark": "PostTrainBench",
+    "public_repository": "https://github.com/aisa-group/PostTrainBench",
+    "public_trajectory_dataset": "https://huggingface.co/datasets/aisa-group/PostTrainBench-Trajectories",
+    "paper_reported_trajectory_count": 1338,
+    "paper_reported_training_trajectory_count": 900,
+    "paper_reported_verified_training_experiments": 5111,
+    "paper_strategy_annotation_dimensions": [
+      "training objective / update family",
+      "data-source type",
+      "stage structure"
+    ],
+    "public_dataset_card_license": "apache-2.0",
+    "public_dataset_card_trace_fields": [
+      "full sanitized agent trace",
+      "evaluation metrics",
+      "judgement artifacts",
+      "system-monitor log",
+      "time-taken metadata"
+    ]
+  },
+  "what_is_verified_now": [
+    "The 2026-08-19 primary paper publicly reports 1,338 trajectories and a conservative high-level strategy-change annotation over training objective/update family, data-source type, and stage structure.",
+    "The public PostTrainBench repository exists and exposes the benchmark implementation.",
+    "The public PostTrainBench-Trajectories dataset exists and documents per-run trace/metrics/judgement/system-monitor artifacts under an Apache-2.0 dataset card.",
+    "The source paper explicitly states that its corpus is observational and does not identify causal effects of model, prompt, interface, or scaffold."
+  ],
+  "what_is_not_verified_now": [
+    "That every candidate prefix needed for the bounded falsifier is available in a byte-stable public artifact with all messages/events required for continuation.",
+    "That the original source-native model/provider versions used by the selected prefixes remain callable under an auditable frozen configuration.",
+    "That Claude Code, Codex CLI, GLM-X, OpenCode, or Qwen3-Max continuation semantics can be reproduced exactly from the public artifact for the chosen units.",
+    "That evaluator/journal state and tool/container state can be reconstructed without hidden or expired external state.",
+    "That an independent recognition-probe fork can be executed and discarded without changing any continuation arm.",
+    "That at least 12 recognition-positive units spanning at least three task families and six adversarial-negative units spanning at least two task families survive all support checks."
+  ],
+  "qualification_path": [
+    {
+      "gate": "S0_METADATA_ONLY_INVENTORY",
+      "allowed_action": "Read repository/dataset metadata, manifests, filenames, licenses, source paper annotations, and small metadata records only; no full-corpus download and no provider continuation.",
+      "pass_rule": "Produce a content-addressed inventory of candidate trajectory IDs, task family, agent/scaffold identity, base model, training stages, experiment boundaries, source strategy annotations, and available trace artifact paths.",
+      "on_fail": "HOLD_PUBLIC_METADATA_INSUFFICIENT"
+    },
+    {
+      "gate": "S1_PREFIX_MATERIALIZATION",
+      "allowed_action": "Materialize only the minimum candidate prefixes selected outcome-blind from S0 metadata after explicit support authorization.",
+      "pass_rule": "Each unit has a byte-stable frozen prefix containing the complete source-visible conversation/history, tool events, relevant evaluator/journal evidence, current strategy-family label inputs, and pre-decision state needed for all matched arms.",
+      "on_fail": "HOLD_PREFIX_PROVENANCE_INSUFFICIENT"
+    },
+    {
+      "gate": "S2_SOURCE_NATIVE_RUNTIME_REPLAY",
+      "allowed_action": "Validate source-native runtime/model/interface/scaffold replay on frozen no-treatment prefixes only; no scientific continuation outcomes may be scored yet.",
+      "pass_rule": "Model/provider identity, agent interface, system prompt/scaffold, tool schema, environment/container behavior, and continuation state are either reproduced exactly or proven exact-equivalent by an audited contract. A different backbone, generic chat wrapper, synthetic text-only harness, or substituted scaffold is a FAIL rather than a proxy PASS.",
+      "on_fail": "HOLD_EXACT_SOURCE_NATIVE_REPLAY_UNAVAILABLE"
+    },
+    {
+      "gate": "S3_FORK_INDEPENDENCE_AND_INFORMATION_PARITY",
+      "allowed_action": "Run deterministic/no-treatment fork checks and the read-only recognition probe contract only after S2 passes.",
+      "pass_rule": "All four positive continuation arms start from the same frozen prefix and receive identical evidence/history/tools/call budget; the recognition probe is an independent fork whose outputs are never inserted into continuation history; no hidden evaluator suggestion or alternative strategy content is added to the treatment arm.",
+      "on_fail": "HOLD_SAME_INFORMATION_PARITY_NOT_PROVEN"
+    },
+    {
+      "gate": "S4_UNIT_FREEZE",
+      "allowed_action": "Freeze candidate unit IDs and hashes before the first scored continuation call.",
+      "pass_rule": "At least 12 independently recognition-positive units spanning at least three task families and six adversarial-negative units spanning at least two task families are frozen outcome-blind; strategy-family annotation rubric and all F0 decision rules are frozen.",
+      "on_fail": "HOLD_INSUFFICIENT_QUALIFIED_UNITS"
+    },
+    {
+      "gate": "S5_BOUNDED_F0_RELEASE",
+      "allowed_action": "Only after S0-S4 PASS may the separately frozen bounded F0 contract be authorized for provider execution by the normal Research OS authority path.",
+      "pass_rule": "Support qualification receipt hashes bind the exact units/runtime to research_pipeline/strategy_reopen_c01_bounded_falsifier_design.json; a support PASS alone grants no ProblemGate, ResearchItem, paper, or full-experiment authority.",
+      "on_fail": "HOLD_NO_F0_EXECUTION"
+    }
+  ],
+  "forbidden_shortcuts": [
+    "bulk-download the trajectory corpus merely to search for a favorable result",
+    "replace the source model/provider with a locally convenient model",
+    "replace the source agent/scaffold with a generic chat or text-only proxy",
+    "choose prefixes using downstream continuation outcomes",
+    "use the recognition-probe answer as additional continuation evidence",
+    "change the strategy-family rubric after observing arm outcomes",
+    "treat support unavailability as evidence against the scientific hypothesis"
+  ],
+  "current_decision": "PATH_DEFINED_REMAIN_SUPPORT_HOLD",
+  "next_action": "S0_METADATA_ONLY_INVENTORY",
+  "execution_authorized": false,
+  "authority": {
+    "scientific": false,
+    "novelty": false,
+    "problem_gate": false,
+    "research_item_promotion": false,
+    "support_download": false,
+    "provider_calls": false,
+    "experiment": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}

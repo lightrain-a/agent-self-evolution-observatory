@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "STRATEGY-REOPEN-C01",
+  "title": "Strategy Reopening Is a Decision-Surface Problem",
+  "subtitle": "Separating evidence recognition from high-level strategy revision in self-improving AI R&D agents",
+  "portfolio_class": "CANONICAL_SCIENTIFIC_OBJECT_ZERO_AUTHORITY_NOT_PROJECTED",
+  "status": "PRE_RESEARCHITEM_PROBLEM_FROZEN_SUBSTRATE_QUALIFICATION_HOLD",
+  "discovery_primitive": "IDENTIFIABILITY_GAP",
+  "exclusion_audit": {
+    "path": "research_pipeline/strategy_reopen_c01_exclusion_audit.json",
+    "status": "PASS_DISTINCT_SOURCE_SIDE_OBJECT_ZERO_AUTHORITY",
+    "closed_basins_checked": 43,
+    "terminal_stops_checked": 72
+  },
+  "same_substrate_qualification": {
+    "path": "research_pipeline/strategy_reopen_c01_same_substrate_qualification.json",
+    "status": "HOLD_EXACT_SOURCE_NATIVE_REPLAY_NOT_YET_QUALIFIED",
+    "execution_authorized": false
+  },
+  "fresh_primary_binding": {
+    "path": "research_pipeline/strategy_reopen_c01_fresh_primary_delta.json",
+    "ref": "arXiv:2608.19072",
+    "fresh_to_canonical_primary_pool_at_base_revision": true
+  },
+  "scientific_object": {
+    "question": "When an autonomous AI-R&D agent already recognizes that available evidence undermines its current high-level strategy, does failure to change strategy arise because the strategy is not reopened as an in-run decision variable rather than because the evidence was not understood?",
+    "principal_difference": "recognition-positive evidence can fail to cross the control boundary that reopens the current high-level strategy for reconsideration",
+    "carrier": "the same agent's persistent/high-level research strategy and its in-run control policy over whether that strategy remains fixed or is reopened",
+    "estimand": "Among frozen trace prefixes independently qualified as recognition-positive, the difference in probability of a source-defined high-level strategy-family change between an explicit content-free STRATEGY_REOPEN decision surface and a matched GENERIC_REFLECTION opportunity with identical evidence, tools, history, and decision-call budget.",
+    "comparator": "same-prefix generic reflection/replanning opportunity that exposes no explicit KEEP-versus-REOPEN strategy decision and adds no evidence or alternative strategy content",
+    "endpoint": "the next committed high-level action crosses the frozen source-derived strategy-family boundary (for example objective/training family, data-source regime, or stage structure), not merely a hyperparameter, formatting, local code, or within-strategy execution edit",
+    "same_information_reducer": "ordinary replanning/reflection salience: once the agent receives the same evidence, history, tools, and one extra matched decision call, any apparent reopening effect should be explained by generic reconsideration rather than by exposing strategy as a distinct decision surface",
+    "reducer_predicted_effect": "conditional on recognition-positive prefixes, STRATEGY_REOPEN and GENERIC_REFLECTION have the same strategy-family-change probability up to replication uncertainty; a local KEEP-versus-RETUNE decision placebo should perform similarly if any residual is only choice-menu salience",
+    "prespecified_stop_rule": "STOP the current scientific object if generic reflection, a source-artifact replanning baseline, or the matched local-decision placebo reproduces the strategy-reopening effect under the same information and call budget; also STOP if recognition cannot be qualified independently or if observed switches collapse to source-defined within-strategy edits.",
+    "registered_claim_boundary": "Only a recognition-to-reopening control gap is in scope. A surviving result may show that, on frozen AI-R&D trace prefixes where strategy-disconfirming evidence is independently recognized, explicitly exposing KEEP-versus-REOPEN changes high-level strategy decisions beyond generic reflection/salience controls. It does not establish that switching is beneficial, improve downstream model performance, solve autonomous science, or define a universal replanning mechanism.",
+    "required_evidence": [
+      "fresh primary evidence that strategy lock-in occurs despite available decision-relevant diagnoses",
+      "independent recognition-positive qualification that is never reused as the continuation conversation",
+      "same-prefix matched continuation arms with identical evidence/history/tools/call budget",
+      "source-derived conservative annotation of high-level strategy-family changes",
+      "adversarial negative prefixes where bad outcomes are plausibly fixable within the current strategy",
+      "leave-one-context-out replication across distinct post-training task families",
+      "exact replay/runtime support provenance sufficient to preserve model/interface/scaffold semantics"
+    ],
+    "forbidden_interpretations": [
+      "strategy switching is always good",
+      "more frequent replanning is always good",
+      "the explicit decision prompt is itself a novel agent architecture",
+      "a downstream performance gain exists before full execution evidence",
+      "human-level scientific reasoning has been demonstrated",
+      "recursive self-improvement has been demonstrated",
+      "the result generalizes beyond the frozen agent/runtime/task families",
+      "support/runtime failure is scientific evidence against the hypothesis"
+    ],
+    "scope_exclusions": [
+      "generic failure recovery without a high-level strategy boundary",
+      "simple plateau detection as the scientific contribution",
+      "external meta-search systems that choose strategies for the agent",
+      "task-level routing between already learned skills",
+      "ordinary within-strategy hyperparameter retuning",
+      "claims based only on observational strategy-change frequency"
+    ]
+  },
+  "required_controls": {
+    "same_information": "GENERIC_REFLECTION from the identical frozen prefix with the same evidence, history, tools, and one decision call",
+    "generic_target_rubric_equivalent": "LOCAL_DECISION_PLACEBO exposing KEEP-versus-RETUNE within the current strategy with matched menu form and length",
+    "direct_existing_artifact": "a PreFlect/BRACE-like progress-stall or scheduled replanning rule evaluated on the same frozen prefixes without privileged evidence",
+    "leave_one_context_out": "hold out at least one post-training benchmark/task family from any qualification thresholds or strategy-boundary rubric refinement",
+    "adversarial_negative": "recognition-negative or within-strategy-fixable bad-outcome prefixes where correct behavior should normally keep the high-level strategy"
+  },
+  "problem_gate_prerequisites": [
+    "content-addressed exclusion audit finds no exact collision across all 43 canonical closed basins, all 72 current STOPPED ResearchItems, RSI-C01, or the existing live MEMENTO candidate",
+    "strict closest-work review finds no same-information recognition-versus-reopening decomposition in autonomous AI R&D",
+    "fresh primary source is provenance-audited and eligible for canonical evidence ingestion",
+    "recognition probe can be qualified without contaminating continuation",
+    "exact/public trace substrate exposes enough frozen prefixes with high-level strategy annotations and distinct contexts",
+    "source-native model/interface/scaffold replay can be audited or the object remains support-HOLD",
+    "bounded F0 decision rules are frozen before any provider call"
+  ],
+  "next_gate": {
+    "name": "EXACT_TRACE_PREFIX_AND_RUNTIME_SUPPORT_QUALIFICATION",
+    "execution_authorized": false,
+    "note": "Inventory public PostTrainBench metadata and replay provenance only. Do not bulk-download the trajectory corpus, call a provider, run GPU work, or substitute another backbone/runtime before support qualification passes."
+  },
+  "projection_policy": {
+    "frontend": false,
+    "pre_researchitem_candidate": false,
+    "research_item": false,
+    "paper_state": false,
+    "reason": "Source-side object freeze is deliberately upstream of Problem-Gate PASS and canonical pre-ResearchItem publication."
+  },
+  "authority": {
+    "scientific": false,
+    "novelty": false,
+    "problem_gate": false,
+    "research_item_promotion": false,
+    "method": false,
+    "support_download": false,
+    "local_validation": false,
+    "experiment": false,
+    "provider_calls": false,
+    "p0": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}

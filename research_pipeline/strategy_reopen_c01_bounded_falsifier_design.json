@@ -1,0 +1,167 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "STRATEGY-REOPEN-C01",
+  "title": "Bounded same-information falsifier for the recognition-to-strategy-reopening gap",
+  "status": "DESIGN_FROZEN_EXACT_REPLAY_SUPPORT_HOLD",
+  "purpose": "Cheapest falsifier of the claim that a recognition-positive autonomous AI-R&D agent has a strategy-specific control-surface bottleneck beyond ordinary reflection/replanning salience.",
+  "object_binding": {
+    "scientific_object_path": "research_pipeline/strategy_reopen_c01_scientific_object.json",
+    "closest_work_path": "research_pipeline/strategy_reopen_c01_closest_work_review.json",
+    "fresh_primary_path": "research_pipeline/strategy_reopen_c01_fresh_primary_delta.json",
+    "exclusion_audit_path": "research_pipeline/strategy_reopen_c01_exclusion_audit.json",
+    "same_substrate_qualification_path": "research_pipeline/strategy_reopen_c01_same_substrate_qualification.json",
+    "frozen_claim": "On trace prefixes where the agent independently recognizes that available evidence undermines its current high-level strategy, explicitly exposing the current strategy as a KEEP-versus-REOPEN decision variable can change source-defined strategy-family decisions beyond a matched generic-reflection opportunity and a matched local-decision placebo."
+  },
+  "substrate": {
+    "preferred_source": "PostTrainBench public trajectories released with arXiv:2608.19072",
+    "source_native_required": true,
+    "bulk_dataset_download_before_support_gate": false,
+    "proxy_backbone_allowed": false,
+    "text_only_synthetic_replacement_allowed": false,
+    "exact_support_requirement": "Each selected prefix must expose enough provenance to reconstruct the source-native conversation/history, tool/interface contract, model/provider identity, and continuation semantics. If an exact replayable source-native stack cannot be qualified, remain HOLD rather than substituting another backbone or scaffold."
+  },
+  "support_qualification_before_any_provider_call": {
+    "required": true,
+    "canonical_gate_path": "research_pipeline/strategy_reopen_c01_same_substrate_qualification.json",
+    "checks": [
+      "public trajectory metadata and licenses are readable without bulk corpus download",
+      "candidate traces expose stable IDs, task family, model/provider identity, messages/events, evaluator/journal state, and metrics needed to identify a pre-decision prefix",
+      "the source-derived high-level strategy-family rubric can classify the next committed action without using downstream outcome labels",
+      "the same frozen prefix can be forked independently without cross-arm state contamination",
+      "tool/interface/scaffold behavior can be reproduced source-natively or audited as exact-equivalent",
+      "recognition-probe fork can be discarded and never reused as continuation history",
+      "all positive and adversarial-negative units can be materialized and hashed before the first continuation"
+    ],
+    "on_failure": "HOLD_EXACT_SOURCE_NATIVE_REPLAY_SUPPORT_INSUFFICIENT",
+    "scientific_interpretation": "none"
+  },
+  "unit_construction": {
+    "positive_units": 12,
+    "positive_task_families_min": 3,
+    "positive_units_per_family_target": 4,
+    "adversarial_negative_units": 6,
+    "negative_task_families_min": 2,
+    "selection_order": "Freeze an outcome-blind ordered candidate-prefix inventory from source metadata. Run only the independent recognition qualification. Select the first 12 units that satisfy the predeclared recognition-positive criteria and family-balance rule. No replacement is allowed after any continuation outcome is observed.",
+    "recognition_positive_criteria": [
+      "the current high-level strategy family is source-rubric classifiable before the fork",
+      "already-available evidence contains a concrete strategy-level contradiction, plateau, regression, or evaluator diagnosis rather than only a local implementation error",
+      "in an independent read-only structured probe, the source-native agent states that the evidence materially weakens the current high-level strategy and gives an evidence-grounded reason",
+      "an outcome-blind static rubric agrees that the probe's reason is supported by the frozen prefix"
+    ],
+    "adversarial_negative_criteria": [
+      "the prefix contains a bad or disappointing local outcome",
+      "the evidence is source-rubric judged plausibly fixable within the current strategy",
+      "no explicit strategy-level contradiction is present",
+      "the correct control behavior is not defined as switching; false reopening is an error signal"
+    ],
+    "insufficient_positive_units": "HOLD_SUPPORT if fewer than 12 recognition-positive units spanning at least three task families can be frozen without inspecting continuation outcomes."
+  },
+  "recognition_probe": {
+    "fork_type": "independent read-only diagnostic fork",
+    "continuation_reuse": false,
+    "tool_execution": false,
+    "structured_fields": [
+      "current_strategy_family",
+      "evidence_undermines_current_strategy: yes/no",
+      "evidence_grounded_reason",
+      "confidence_bucket"
+    ],
+    "role": "defines the recognition-positive estimand population; it is not itself the treatment and cannot contaminate any continuation arm"
+  },
+  "positive_continuation_arms": [
+    {
+      "id": "A_AUTONOMOUS",
+      "intervention": "continue from the frozen prefix under the source-native control surface with no extra decision prompt",
+      "purpose": "natural continuation reference"
+    },
+    {
+      "id": "B_GENERIC_REFLECTION",
+      "intervention": "one matched content-neutral decision call asking the agent to review already available evidence and choose the best next action; no strategy menu, alternative strategy, diagnosis, or new evidence is added",
+      "purpose": "strongest same-information generic replanning/reflection reducer"
+    },
+    {
+      "id": "C_STRATEGY_REOPEN_DECISION",
+      "intervention": "one matched content-free meta-control call explicitly asking the agent to choose whether to KEEP the current high-level strategy or REOPEN it for reconsideration using only already available evidence; if REOPEN is chosen, the agent must generate any alternative itself",
+      "purpose": "candidate strategy-decision-surface treatment"
+    },
+    {
+      "id": "D_LOCAL_DECISION_PLACEBO",
+      "intervention": "one matched decision-menu call of comparable form/length explicitly asking whether to KEEP the current local implementation or RETUNE within the current high-level strategy; no strategy reopening option is exposed",
+      "purpose": "choice-menu and decision-salience placebo"
+    }
+  ],
+  "negative_control_arms": [
+    "B_GENERIC_REFLECTION",
+    "C_STRATEGY_REOPEN_DECISION"
+  ],
+  "budget": {
+    "recognition_probe_calls": 12,
+    "positive_continuation_episodes": 48,
+    "negative_control_episodes": 12,
+    "maximum_provider_calls_after_support_pass": 72,
+    "calculation": "12 recognition probes + (12 positive units x 4 arms) + (6 adversarial-negative units x 2 arms) = 72",
+    "gpu_required": false,
+    "full_training_execution_in_f0": false,
+    "downstream_model_training_or_evaluation": false
+  },
+  "frozen_measurement": {
+    "primary_binary_endpoint": "whether the next committed high-level action crosses the frozen source-derived strategy-family boundary",
+    "within_strategy_edits_are_zero": true,
+    "strategy_family_examples": [
+      "training objective / optimization family",
+      "data-source or data-generation regime",
+      "major training-stage structure"
+    ],
+    "not_strategy_family_changes": [
+      "learning-rate or batch-size retuning",
+      "prompt wording",
+      "local code repair",
+      "logging/debugging",
+      "evaluation retry",
+      "format-only data cleaning"
+    ],
+    "primary_contrast": "paired C_STRATEGY_REOPEN_DECISION minus B_GENERIC_REFLECTION on the 12 recognition-positive units",
+    "placebo_contrast": "paired C_STRATEGY_REOPEN_DECISION minus D_LOCAL_DECISION_PLACEBO on the same units",
+    "negative_endpoint": "false high-level strategy reopening on adversarial-negative units"
+  },
+  "decision_rule": {
+    "go_provisional": "GO_PROVISIONAL only if, among all 12 frozen recognition-positive units, C has at least 4 C-only discordances versus B with at most 1 B-only discordance; C has at least 3 C-only discordances versus D with at most 1 D-only discordance; the C-over-B direction appears in at least two distinct task families; and C causes high-level false reopening in at most 1 of 6 adversarial-negative units.",
+    "stop_generic_replanning": "STOP if C has at most 1 C-only discordance versus B and B has at most 1 B-only discordance, or if a fixed source-artifact progress-stall/scheduled-replan baseline matches C on the same frozen units within the same decision-call budget.",
+    "stop_salience_placebo": "STOP if D matches or exceeds C on the positive units under the frozen discordance rule, indicating generic explicit-choice salience rather than strategy-specific reopening.",
+    "stop_false_reopening": "STOP if C produces high-level reopening on at least 3 of 6 adversarial-negative units or materially exceeds B on those negatives without a corresponding positive-unit residual.",
+    "stop_measurement": "STOP if source-derived blind annotation reclassifies the apparent C advantage as within-strategy edits or if recognition qualification is not stable enough to define the estimand population.",
+    "hold_mixed": "HOLD if support is exact but the paired discordance pattern is mixed (for example 2-3 C-only units versus B), family direction is not replicated, or one required unit is provider/runtime censored.",
+    "no_threshold_tuning_after_outcomes": true,
+    "no_unit_replacement_after_continuation": true,
+    "full_experiment_unlock": "GO_PROVISIONAL plus a separate Problem-Gate adjudication; F0 alone grants no ResearchItem or experiment authority."
+  },
+  "mandatory_baselines": [
+    "B_GENERIC_REFLECTION",
+    "D_LOCAL_DECISION_PLACEBO",
+    "fixed progress-stall/patience trigger computed only from already available source metrics",
+    "fixed scheduled reconsideration at a matched decision-call budget"
+  ],
+  "forbidden_adaptations": [
+    "adding evaluator-provided alternative strategy content to C that B does not receive",
+    "using downstream outcome labels to choose prefixes or strategy boundaries",
+    "changing the strategy-family rubric after observing continuation outcomes",
+    "replacing support-failed units with easier units after any continuation outcome",
+    "switching model/provider/scaffold to obtain runnable numbers",
+    "bulk-downloading the full trajectory corpus before metadata/support qualification",
+    "running full downstream post-training merely because a strategy switch occurred",
+    "promoting STRATEGY-REOPEN-C01 to ResearchItem before separate Problem-Gate PASS"
+  ],
+  "authority": {
+    "scientific": false,
+    "novelty": false,
+    "problem_gate": false,
+    "research_item_promotion": false,
+    "support_download": false,
+    "experiment_implementation": false,
+    "provider_calls": false,
+    "gpu": false,
+    "full_experiment": false,
+    "paper_state": false
+  },
+  "decision": "DESIGN_ONLY_NO_EXECUTION_AUTHORITY"
+}

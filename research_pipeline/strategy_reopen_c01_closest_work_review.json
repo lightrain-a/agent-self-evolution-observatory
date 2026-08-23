@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "STRATEGY-REOPEN-C01",
+  "title": "Closest-work and same-information reduction review for the strategy-reopening gap",
+  "status": "PASS_PROVISIONAL_IDENTIFIABILITY_RESIDUAL_ZERO_AUTHORITY",
+  "review_date": "2026-08-23",
+  "broad_claim": {
+    "claim": "Autonomous research agents should reconsider or replan a high-level strategy after negative evidence.",
+    "decision": "NOVELTY_FAIL",
+    "reason": "Prospective reflection, dynamic replanning, explicit search over training strategies, research-state redirect policies, and critic-triggered plan revision are already established neighboring mechanisms."
+  },
+  "direct_source_boundary": {
+    "work": "What is Missing from AI Post-Training AI: An Empirical Analysis",
+    "ref": "arXiv:2608.19072",
+    "what_it_establishes": "High-level strategy changes are rare in audited post-training trajectories; evaluator/journal evidence can expose strategy-level diagnoses; pre-training intervention can change strategy; later training tends to remain inside the selected strategy.",
+    "what_it_does_not_identify": "Whether an in-run non-switch occurs because the agent failed to recognize the strategy-disconfirming evidence or because recognized evidence did not reopen the high-level strategy as a decision variable.",
+    "candidate_residual": "same-information recognition-versus-reopening decomposition"
+  },
+  "closest_work": [
+    {
+      "work": "PreFlect",
+      "ref": "arXiv:2602.07187",
+      "boundary": "Adds prospective plan reflection and dynamic replanning after unexpected deviation; it is a replanning architecture, not an information-matched causal decomposition of evidence recognition versus strategy reopening in autonomous AI R&D."
+    },
+    {
+      "work": "ScienceFlow",
+      "ref": "arXiv:2608.14354",
+      "boundary": "Maintains recoverable research states and chooses continue/redirect anchors; it externalizes redirect control rather than testing whether a native agent recognizes evidence yet fails to surface strategy as a decision variable."
+    },
+    {
+      "work": "Eureka",
+      "ref": "arXiv:2608.19047",
+      "boundary": "Uses a task-conditioned meta-agent and receding-horizon, cost-benefit-gated evolution; high-level reconsideration is supplied by the architecture rather than isolated as the missing control surface."
+    },
+    {
+      "work": "When Replanning Becomes the Bottleneck",
+      "ref": "arXiv:2608.01428",
+      "boundary": "Studies when/how to replan under planning cost; its strongest reduction is generic replanning timing and salience, which must be matched in this candidate."
+    },
+    {
+      "work": "physics-intern",
+      "ref": "public project/paper, 2026",
+      "boundary": "Uses structured research state and deep-critic strategy critiques to revise plans; an external system supplies the revision trigger and does not isolate recognition-positive prefixes under matched decision surfaces."
+    },
+    {
+      "work": "LLMZero",
+      "ref": "arXiv:2606.18388",
+      "boundary": "Uses checkpoint diagnostics and tree search over adaptive RL training strategies; it demonstrates explicit external strategy search rather than a causal diagnosis of native recognition-to-action failure."
+    },
+    {
+      "work": "MLEvolve",
+      "ref": "arXiv:2606.06473",
+      "boundary": "Decouples planning and coding with graph/tree search and retrospective memory; it is an external search controller, not a matched intervention on whether current strategy becomes reopenable."
+    },
+    {
+      "work": "generic trigger/plateau/patience policies",
+      "ref": "mature sequential decision/control baseline",
+      "boundary": "A scalar progress-stall trigger may decide when to reconsider, but it does not establish the candidate's recognition-positive control gap; nevertheless it is a mandatory same-prefix reducer."
+    }
+  ],
+  "strongest_same_information_reduction": {
+    "name": "generic reflection/replanning salience",
+    "mapping": {
+      "strategy_disconfirming_evidence": "ordinary progress/failure signal available to a replanning controller",
+      "explicit_strategy_reopen_surface": "one extra reconsideration/replan opportunity",
+      "strategy_family_change": "replan output crossing a coarse plan family",
+      "recognition_positive_qualification": "a diagnostic state feature indicating the current plan is believed inadequate"
+    },
+    "null_prediction": "With the same frozen prefix, evidence, history, tools, and decision-call budget, a generic reflection/replanning opportunity should produce the same strategy-family-change probability as an explicit KEEP-versus-REOPEN decision surface. If a matched local decision menu also reproduces the effect, the residual is ordinary salience/choice architecture rather than a strategy-specific control gap.",
+    "stop_priority": true
+  },
+  "direct_existing_artifact_reducers": [
+    {
+      "name": "progress-stall / patience trigger",
+      "prediction": "A fixed threshold on recent validation improvement is enough to predict when strategy reconsideration occurs."
+    },
+    {
+      "name": "scheduled reconsideration",
+      "prediction": "Reconsidering every fixed K experiments produces the same reopening rate under matched decision calls."
+    },
+    {
+      "name": "generic critic/replan prompt",
+      "prediction": "A content-neutral request to review evidence and select the best next action is sufficient; explicit strategy reopening adds no residual."
+    },
+    {
+      "name": "local decision-menu placebo",
+      "prediction": "Explicitly presenting any matched KEEP-versus-RETUNE choice produces the same effect, implying menu salience rather than strategy-specific reopening."
+    }
+  ],
+  "nonreducibility_gate": {
+    "required_observation": "On independently recognition-positive prefixes, the explicit strategy-reopening arm must show a replicated excess rate of source-defined strategy-family change over both generic reflection and local-decision placebo, while adversarial within-strategy-fixable negatives do not show a comparable false-reopening increase.",
+    "why_same_information": "All continuation arms begin from the byte-identical frozen trace prefix and receive identical evidence/history/tool schemas and matched decision-call budget; only whether high-level strategy is explicitly exposed as KEEP-versus-REOPEN differs.",
+    "leave_one_context_out_requirement": "The directional residual must survive holding out at least one distinct post-training task family from qualification/rubric development.",
+    "stop": "STOP if generic reflection, scheduled/progress-trigger baseline, or local decision placebo matches the strategy-reopening arm, if recognition qualification is unstable, or if source annotation reclassifies apparent switches as within-strategy edits.",
+    "hold": "HOLD rather than STOP if exact source-native replay/model/interface/scaffold support is unavailable or public trajectory prefixes are insufficient to construct matched arms."
+  },
+  "collision_audit": {
+    "canonical_exclusion_receipt": "research_pipeline/strategy_reopen_c01_exclusion_audit.json",
+    "closed_basins_checked": 43,
+    "terminal_stops_checked": 72,
+    "known_local_basin_collisions_checked": [
+      "self-correction mode-transition controller / generic replanning",
+      "policy strategy control carrier audit",
+      "world-model error-gated learning",
+      "experience admission and belief-revision basins",
+      "skill routing / encoding-routing interaction",
+      "update-order / commutativity basins"
+    ],
+    "closest_terminal_neighbors_checked": [
+      "world-model-error-gated-learning / Decision-Switch Transition Admission",
+      "PF-9 / Post-Update Decision-Context Validity",
+      "self-correction-collapse-detector",
+      "intervention-validated-self-correction",
+      "counterfactual-evolution-decision-controller"
+    ],
+    "current_result": "NO_EXACT_LOCAL_BASIN_OR_TERMINAL_STOP_MATCH_FOR_RECOGNITION_POSITIVE_STRATEGY_REOPENING_DECOMPOSITION",
+    "interpretation": "This is only a provisional search residual. It does not override canonical search-memory closure rules or grant novelty authority."
+  },
+  "closest_work_decision": "PASS_PROVISIONAL_DIRECT_RESIDUAL_REQUIRES_MATCHED_F0",
+  "next_gate": "EXACT_TRACE_PREFIX_AND_RUNTIME_SUPPORT_QUALIFICATION_THEN_BOUNDED_F0",
+  "authority": {
+    "scientific": false,
+    "novelty": false,
+    "problem_gate": false,
+    "research_item_promotion": false,
+    "method": false,
+    "experiment": false,
+    "provider_calls": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}

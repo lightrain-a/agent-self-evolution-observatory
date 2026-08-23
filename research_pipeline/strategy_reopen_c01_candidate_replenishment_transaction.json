@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0",
+  "transaction_id": "candidate-replenishment-strategy-reopen-c01-20260823",
+  "candidate_id": "STRATEGY-REOPEN-C01",
+  "title": "Strict candidate replenishment transaction: recognition-to-strategy-reopening identifiability gap",
+  "status": "STARTED_SOURCE_OBJECT_FROZEN_SUPPORT_HOLD_ZERO_AUTHORITY",
+  "base_revision": "e0cb9c2ded7689ba1b4c415d56af8927972c59c8",
+  "recorded_date": "2026-08-23",
+  "trigger": {
+    "canonical_active_research_items": 0,
+    "canonical_live_pre_researchitem_candidates": [
+      "MEMENTO-JOINT-BOUNDARY-CONTROL"
+    ],
+    "reason": "The canonical queue has no independent candidate besides MEMENTO; replenishment is allowed only under unchanged strict scientific gates."
+  },
+  "strict_acceptance_contract": {
+    "exclude_existing_live_candidates": true,
+    "exclude_rsi_c01": true,
+    "exclude_all_current_closed_basins": true,
+    "exclude_all_current_terminal_stops": true,
+    "require_canonical_scientific_object": true,
+    "require_strict_closest_work_boundary": true,
+    "require_same_substrate_qualification_path": true,
+    "do_not_lower_problem_gate_to_fill_slot": true
+  },
+  "artifact_bindings": [
+    {
+      "path": "research_pipeline/strategy_reopen_c01_fresh_primary_delta.json",
+      "sha256": "3de56632eab16084088dc896666927d9aa1620925a536cfc7ec3128c1bef274e",
+      "role": "fresh-primary source delta; zero ingestion authority"
+    },
+    {
+      "path": "research_pipeline/strategy_reopen_c01_scientific_object.json",
+      "sha256": "031535a35d6883affc04984e0fed96ddd0edf46d38074f6b1c7225bdea385f1a",
+      "role": "canonical scientific object; zero authority and not projected"
+    },
+    {
+      "path": "research_pipeline/strategy_reopen_c01_closest_work_review.json",
+      "sha256": "3d5edc1ea8e2c586eb7390055a28e3610bc1ce3138d7dadb2aa8859f34def582",
+      "role": "strict closest-work and same-information reduction boundary"
+    },
+    {
+      "path": "research_pipeline/strategy_reopen_c01_exclusion_audit.json",
+      "sha256": "cc3f3c4f321a4b6e5eb1eb7612d281c9474edc140aa6a2d1609eff2c72370c1b",
+      "role": "content-addressed 43-closed-basin / 72-terminal-stop / MEMENTO / RSI exclusion receipt"
+    },
+    {
+      "path": "research_pipeline/strategy_reopen_c01_same_substrate_qualification.json",
+      "sha256": "6f75815b4c8d0ae77ee40193865b1b37cef362ee0312e79ae4b7125d566757eb",
+      "role": "fail-closed exact PostTrainBench source-native qualification path"
+    },
+    {
+      "path": "research_pipeline/strategy_reopen_c01_bounded_falsifier_design.json",
+      "sha256": "b87ed2f80964acf18c9ab7a6789ef93f77331695941925cfe6d6c086525ea423",
+      "role": "bounded same-information F0 design; execution authority false"
+    }
+  ],
+  "gate_results": {
+    "fresh_primary_delta": "PASS_SEARCH_DELTA_ONLY",
+    "canonical_scientific_object": "PASS_FROZEN_ZERO_AUTHORITY_NOT_PROJECTED",
+    "closed_memory_and_terminal_stop_exclusion": "PASS_43_CLOSED_BASINS_72_TERMINAL_STOPS_NO_EXACT_COLLISION",
+    "rsi_distinctness": "PASS_DISTINCT_SCIENTIFIC_OBJECT_NOT_RSI_REOPEN",
+    "closest_work": "PASS_PROVISIONAL_IDENTIFIABILITY_RESIDUAL_REQUIRES_MATCHED_F0",
+    "same_substrate_path": "DEFINED_BUT_HOLD_EXACT_SOURCE_NATIVE_REPLAY_NOT_YET_QUALIFIED",
+    "bounded_f0_design": "FROZEN_BUT_NOT_AUTHORIZED",
+    "problem_gate": "NOT_RUN_NOT_PASSED",
+    "pre_researchitem_projection": "NO",
+    "research_item_promotion": "NO",
+    "paper_state": "NO"
+  },
+  "candidate_disposition": {
+    "decision": "ACCEPT_INTO_SOURCE_SIDE_QUALIFICATION_QUEUE_ONLY",
+    "scientific_state": "SUPPORT_QUALIFICATION_HOLD",
+    "next_gate": "S0_METADATA_ONLY_INVENTORY",
+    "next_gate_path": "research_pipeline/strategy_reopen_c01_same_substrate_qualification.json",
+    "canonical_active_slot_consumed": false,
+    "canonical_pre_researchitem_slot_consumed": false,
+    "memento_status_changed": false,
+    "rsi_status_changed": false
+  },
+  "rejection_conditions": [
+    "exact source-native PostTrainBench replay cannot be qualified",
+    "the recognition-positive estimand population cannot be defined independently of continuation outcomes",
+    "generic reflection/replanning or a local decision-menu placebo exactly reduces the claimed strategy-specific control-surface residual",
+    "a newly discovered closest work performs the same-information recognition-versus-reopening decomposition",
+    "the candidate collides with a newer canonical closed basin or terminal STOP before ProblemGate adjudication"
+  ],
+  "authority": {
+    "scientific": false,
+    "novelty": false,
+    "problem_gate": false,
+    "pre_researchitem_projection": false,
+    "research_item_promotion": false,
+    "method": false,
+    "support_download": false,
+    "provider_calls": false,
+    "experiment": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}
