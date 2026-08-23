@@ -52731,13 +52731,13 @@
           ],
           "reopen_conditions": [],
           "summary": {
-            "events": 68,
+            "events": 76,
             "allowed_transitions": 8,
             "blocked_transitions": 0,
             "story_search_receipts": 1,
             "mock_reviews": 6,
             "claim_audit_receipts": 1,
-            "manuscript_ci_receipts": 5,
+            "manuscript_ci_receipts": 6,
             "prebuttal_receipts": 1,
             "submission_readiness_receipts": 1,
             "contract_revisions": 0
@@ -52770,10 +52770,10 @@
           },
           "latest_claim_audit": {
             "pass": true,
-            "claim_audit_sha256": "fb1ac64df6d0a0be8b319b2046b7a5334f2ee6ca4e14a18cb74ce1a19ca11573",
+            "claim_audit_sha256": "a4abbd4c4227851979e597ffb2a0a4e3a8bd9c0ca3afc50b652b6bf5985f94c1",
             "blockers": [],
-            "checks": 5,
-            "passed": 5
+            "checks": 7,
+            "passed": 7
           },
           "latest_manuscript_ci": {
             "pass": true,
@@ -52790,19 +52790,19 @@
           },
           "latest_paper_preparation": {
             "pass": true,
-            "protocol_version": "1.0+r5-selective-reconciliation",
-            "receipt_sha256": "412ff451e0043fc106dc4eed4c1317e2851b73930071ddc60493614e78da0f05",
+            "protocol_version": "1.0+r6-projection-reseal",
+            "receipt_sha256": "9d802a98ed2a355c68575bc0a56568a05a62abafd89679b6d98103a6cd2f03f2",
             "required_gates": 8,
             "passed_gates": 8,
             "gate_pass": {
-              "hierarchical-rubric": true,
-              "verification-refinement": true,
-              "citation-integrity": true,
-              "visual-story": true,
-              "reproducibility-bundle": true,
               "agent-native-artifact": true,
+              "citation-integrity": true,
+              "hierarchical-rubric": true,
               "reader-simulation": true,
-              "submission-package": true
+              "reproducibility-bundle": true,
+              "submission-package": true,
+              "verification-refinement": true,
+              "visual-story": true
             },
             "blockers": []
           },
@@ -52819,7 +52819,7 @@
           },
           "latest_submission_readiness": {
             "submission_ready": true,
-            "receipt_sha256": "ba6dfc5a07f9a65bbbb3696d0307a34e8506385e3d8ab23b168f92bc263c3a53",
+            "receipt_sha256": "d6e457de8291ad18549b883f830c537be0321170cf69ea64b9d0bb183a1339ea",
             "blockers": []
           },
           "latest_transition": {
