@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_type": "l2-metadata-surface-reconciliation",
+  "receipt_id": "D2-C45-L2-METADATA-SURFACE-RECONCILIATION-R8",
+  "status": "HISTORICAL_EXPLICIT_CUE_SURFACE_RECONCILED_NO_R5_RESCUE",
+  "role": "ZERO_CALL_HISTORICAL_RECONCILIATION_ONLY",
+  "question": "Does the project already contain an executed provenance-metadata-only surface, and if so can it satisfy or be pooled into the frozen R5 exact-information L2 object?",
+  "historical_explicit_cue_bridge": {
+    "archive_commit": "a82901a9c29d59b0e9da2ae680fab30fa5e82d34",
+    "experiment_id": "D2-C01-EXPLICIT-PROVENANCE-CUE-BRIDGE-F0",
+    "contract": {
+      "path": "generated/d2-failure-memory-provenance-bridge-contract.json",
+      "sha256": "d6da08c7e57f13fe9b07951b2326b9fd400202b39e9ab039d18ee2d008c15c01"
+    },
+    "support": {
+      "path": "generated/d2-failure-memory-provenance-bridge-support.json",
+      "sha256": "b7db0c347ad63fd7efc0cb76c26f4014303c0ccef62b2a3303b876c9089dfcb0"
+    },
+    "result": {
+      "path": "generated/d2-failure-memory-provenance-bridge.json",
+      "sha256": "2097d4de2806a6fb576e5613c89c1a6ad3212e2f3ffe30090939a4585ab20394"
+    },
+    "surface": {
+      "actionable_guidance_byte_identical_across_success_failure": true,
+      "guidance_sha256": "e36b0d198c5e70da1e0cdb53581161bdc93c57e8fd3d627bdac71d52063c9c56",
+      "visible_metadata_conditions": [
+        "SOURCE OUTCOME: SUCCESS",
+        "SOURCE OUTCOME: FAILURE",
+        "SOURCE OUTCOME: UNSPECIFIED"
+      ],
+      "metadata_is_executor_visible": true,
+      "future_evidence_fixed_within_task": true,
+      "memory_object_is_naturally_generated_reasoningbank_item": false,
+      "scope": "Cross-domain convenience explicit-provenance cue under fixed generic guidance and released WebArena evidence; not a source-faithful financial AgentDojo or natural ReasoningBank memory intervention."
+    },
+    "independent_task_ids": [
+      "125",
+      "360",
+      "228",
+      "126",
+      "362",
+      "229"
+    ],
+    "independent_tasks": 6,
+    "conditions": 3,
+    "rollouts_per_condition_per_task": 8,
+    "requested_calls": 144,
+    "complete_calls": 144,
+    "provider_failures": 0,
+    "result_summary": {
+      "mean_success_minus_failure_terminal_rate": 0.0,
+      "permutation_p_success_greater": 1.0,
+      "permutation_p_failure_greater": 1.0,
+      "support_gate_pass": false,
+      "counterevidence_gate_pass": false,
+      "decision": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY"
+    },
+    "interpretation": "The historical bridge proves that an executor-visible success/failure label can be serialized while generic guidance is held byte-identical. On these six convenience WebArena tasks, SUCCESS and FAILURE produce exactly the same terminal rates under the frozen bridge endpoint. The bridge contract itself treats the result as inconclusive and grants no negative authority."
+  },
+  "frozen_r5_exact_information_l2": {
+    "experiment_id": "D2-C45-R5-EXACT-INFORMATION-PROVENANCE",
+    "reconstruction_receipt": "generated/d2-failure-memory-provenance-r5-eligibility-manifest-r8.json",
+    "reopen_contract": "generated/d2-failure-memory-provenance-l2-reopen-contract-r8.json",
+    "analysis_gate": "generated/d2-failure-memory-provenance-l2-analysis-gate-r8.json",
+    "target_unique_tasks_support_floor": 10,
+    "eligible_unique_tasks": 5,
+    "eligible_task_ids": [
+      "21",
+      "25",
+      "26",
+      "163",
+      "165"
+    ],
+    "model_requests_executed": 0,
+    "scientific_outcomes_opened": false,
+    "scientific_verdict": "NO_VERDICT_SUPPORT_FAILURE"
+  },
+  "non_pooling_adjudication": {
+    "bridge_plus_r5_task_count_may_be_summed": false,
+    "bridge_effect_may_be_pooled_with_r5": false,
+    "bridge_can_rescue_r5_support_gate": false,
+    "reasons": [
+      "construct mismatch: the historical bridge uses fixed generic guidance plus an injected SOURCE OUTCOME label, not a frozen naturally generated ReasoningBank memory item with its provenance field toggled",
+      "the six bridge task IDs are prior D2 units and are forbidden for reuse by the frozen R5 eligibility contract",
+      "the historical bridge has only six independent tasks, below the frozen R5 support floor of ten",
+      "bridge outcomes are already exposed and cannot be relabeled as fresh confirmatory R5 units",
+      "R5 was frozen as a distinct exact-information scientific object and explicitly forbids post-audit target reduction or task-family widening"
+    ]
+  },
+  "power_and_support_boundary": {
+    "r5_support_floor_unique_tasks": 10,
+    "support_floor_is_not_power_guarantee": true,
+    "prospective_target_absolute_effect": 0.15,
+    "prospective_target_power": 0.8,
+    "one_sided_independent_tasks_by_task_level_sd": {
+      "0.20": 11,
+      "0.30": 25,
+      "0.40": 44
+    },
+    "two_sided_independent_tasks_by_task_level_sd": {
+      "0.20": 14,
+      "0.30": 32,
+      "0.40": 56
+    },
+    "interpretation": "Reaching ten eligible tasks would clear only the frozen R5 support/admission floor. A future confirmatory design should separately satisfy the already-recorded prospective power plan rather than treating ten as automatically adequate."
+  },
+  "stanford_o5_reconciliation": {
+    "disposition": "REQUIRES_SCIENTIFIC_REOPEN",
+    "engineering_fact": "A separate historical six-task explicit-cue metadata surface was executed for 144/144 calls and was exactly null on the SUCCESS-versus-FAILURE terminal contrast, but its frozen decision is INCONCLUSIVE_NO_NEGATIVE_AUTHORITY.",
+    "scientific_fact": "R5 exact-information L2 itself remains unexecuted because its fresh frozen cohort has only 5/10 eligible independent tasks. The historical bridge is auxiliary separate-substrate evidence and cannot be pooled into R5.",
+    "strongest_allowed_claim": "Metadata-only prompt serialization is technically executable on the historical convenience WebArena bridge; the ReasoningBank/financial-agent provenance-only causal sign remains unresolved."
+  },
+  "reopen_condition": {
+    "all_required": true,
+    "conditions": [
+      "a canonical or new substrate exposes a byte-identical actionable memory object with a separately visible provenance field",
+      "the provenance field is executor-visible while all other paired inputs are fixed",
+      "fresh independent units satisfy the frozen R5 support floor without prior-D2 reuse",
+      "confirmatory sample size is justified against the prospective power plan rather than the support floor alone",
+      "runtime, serialization, estimator, stopping rule, and support-failure policy are frozen pre-outcome",
+      "separate scientific and experiment/model-call authority reopen L2"
+    ]
+  },
+  "scientific_values_changed": false,
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "gpu": false,
+    "model_calls": false,
+    "submission": false
+  }
+}
