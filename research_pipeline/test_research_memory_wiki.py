@@ -73,7 +73,17 @@ class ResearchMemoryWikiTest(unittest.TestCase):
         paper_index={"summary":{"papers":1},"entries":[{"paper_id":"PAPER-X","review_learning":{"review_receipts":2,"decision_critical_objections":3,"category_counts":{"novelty":1,"empirical-sufficiency":2},"evidence_state_counts":{"existing-evidence":1,"missing-decisive-evidence":2},"action_class_counts":{"narrative-repair":1,"preserve-limitation":2}}}]}
         wiki=build_research_memory_wiki(search_design_state=s,failure_asset_library=f,scientific_meta_trace=m,candidate_portfolio=p,experiment_iteration=i,generator_state=g,claim_ledger=c,paper_ledger_index=paper_index)
         pack=compile_research_memory_query_pack(wiki,purpose="PAPER_DESIGN",context="closed method matched simplification taxonomy representation skill invariance",max_chars=1200,max_items=16)
-        self.assertGreaterEqual(pack["summary"]["review_lessons_selected"],1);self.assertEqual(pack["selected"][0]["kind"],"REVIEW_LESSON");self.assertTrue(pack["policy"]["paper_design_reserves_review_lesson_when_available"])
+        self.assertGreaterEqual(pack["summary"]["review_lessons_selected"],1);self.assertEqual(pack["selected"][0]["kind"],"PAPER_DEVELOPMENT_GUIDANCE");self.assertEqual(pack["selected"][1]["kind"],"REVIEW_LESSON");self.assertTrue(pack["policy"]["paper_design_reserves_review_lesson_when_available"]);self.assertTrue(pack["policy"]["paper_design_reserves_development_guidance_when_available"])
+
+    def test_senior_paper_development_guidance_is_always_zero_authority_and_reserved_for_paper_design(self):
+        wiki=self.build();rows=[r for r in wiki["entries"] if r["kind"]=="PAPER_DEVELOPMENT_GUIDANCE"]
+        self.assertEqual(len(rows),1);row=rows[0]
+        self.assertTrue(row["prompt_eligible"]);self.assertEqual(row["durability_class"],"recurring-systemic");self.assertFalse(row["scientific_authority"]);self.assertFalse(row["principle_update_allowed"])
+        self.assertEqual(len((row.get("guidance") or {}).get("dimensions") or []),4)
+        backlog=(row.get("guidance") or {}).get("paper_development_backlog") or [];self.assertEqual(len(backlog),5);self.assertTrue(all(x.get("maturity")=="INITIAL_DRAFT_NEEDS_DEEPENING" and x.get("paper_only_work_allowed") is True and x.get("may_execute_new_experiments") is False for x in backlog))
+        pack=compile_research_memory_query_pack(wiki,purpose="PAPER_DESIGN",context="method related work experiment clarity",max_chars=1800,max_items=8)
+        self.assertEqual(pack["selected"][0]["kind"],"PAPER_DEVELOPMENT_GUIDANCE");self.assertIn(row["memory_id"],pack["selected_memory_ids"]);self.assertTrue(pack["policy"]["paper_development_guidance_cannot_authorize_experiments"])
+        self.assertIn("initial drafts",pack["text"].lower())
 
 
 if __name__=="__main__":unittest.main()

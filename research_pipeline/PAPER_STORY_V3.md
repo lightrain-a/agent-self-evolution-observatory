@@ -87,7 +87,20 @@ The contract is coupled to `paper-novelty-audit-data.js`: every decision-critica
 
 If a newly found closest work already defines or identifies the same missing scientific object, do not hide it behind a component distinction. Narrow or replace the Research Question/contribution boundary in the scientific ledger first, then update Paper Story as a read-only projection.
 
-## 4. Writing rules
+## 4. Paper Development Quality: scientific closure is not manuscript maturity
+
+A paper may have a valid scientific object, bounded supported claims, and a content-addressed evidence package while still being only an **initial draft** as a research paper. Human advisor feedback on 2026-08-23 makes this distinction explicit for the current five papers: the problems remain worth pursuing and the current method directions are broadly plausible, but the manuscripts still need substantial development. This is manuscript-development debt, not a scientific STOP.
+
+The next material Paper Design or manuscript revision should cover four independent dimensions:
+
+1. **Problem necessity, challenge, and Related Work.** Explain why the problem must be solved and why it is difficult before claiming novelty. Organize Related Work by how method families actually operate, which challenge they solve, and which residual scientific object remains. A longer bibliography alone does not satisfy this requirement.
+2. **Method intuition, design principles, and load-bearing detail.** Start with the simplest intuition. Then explain why the architecture follows from that intuition, the input/output contract, each step, why every component exists, the assumptions/held-fixed variables, the implementation surface, and expected failure modes. A reader should be able to restate the method without opening the code.
+3. **A complete experiment program.** Design one part of the suite from strong baselines, splits, robustness checks, and protocols used by the closest literature; design another part from the proposed method's own distinctive predictions and components. Cover main effects, component ablations, mechanism tests, negative/failure cases, robustness/generalization, cost/efficiency, and the statistical unit. Planned new execution remains zero-authority until a separate scientific/experiment gate authorizes it.
+4. **Plain, direct writing.** Prefer ordinary verbs and concrete nouns. State a section's point before details and a result paragraph's answer before numbers. Define new terms in plain language on first use, avoid unnecessary jargon, split overloaded sentences, and give one sentence one main logical job. Run a reader simulation without internal project context.
+
+The current five-paper backlog is therefore `INITIAL_DRAFT_NEEDS_DEEPENING`: paper-only development on the frozen scientific base is human-approved, while claim expansion, new model calls, new experiments, and GPU work remain separately gated.
+
+## 5. Writing rules
 
 **Concrete before abstract.** If a real task, environment, model, agent, or failure artifact exists, name it. Do not replace the scene with a term such as “memory provenance” or “representation invariance.” If the experiment was not run, say that it was not run; never fabricate an example for readability.
 
@@ -109,7 +122,7 @@ If a newly found closest work already defines or identifies the same missing sci
 
 **End with Claim → Evidence → Boundary.** The page must distinguish supported claims, active-unrefuted hypotheses, unsupported broader claims, and external/support debt. Reader-friendly prose never overrides the append-only ledger.
 
-## 5. Recommended manuscript argument order
+## 6. Recommended manuscript argument order
 
 The default paper outline is:
 
@@ -126,7 +139,7 @@ The default paper outline is:
 
 A paper may merge or rename sections for venue constraints, but the argument responsibilities must remain covered.
 
-## 6. Adding a new paper to PaperRegistry
+## 7. Adding a new paper to PaperRegistry
 
 When a new canonical paper is added:
 
@@ -142,7 +155,7 @@ When a new canonical paper is added:
 10. Run the static/site/browser gates. The public build must fail closed if the PaperRegistry paper set and Paper Story paper set diverge.
 11. Only after the story and canonical PaperState agree should the page be published.
 
-## 7. Authority boundary
+## 8. Authority boundary
 
 Paper Story is a **read-only explanatory projection**. It has zero scientific, method, experiment, P0, GPU, and submission authority. Updating a story may improve explanation, but it cannot:
 

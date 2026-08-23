@@ -84,6 +84,48 @@ def completed_quality(quality: dict) -> dict:
     return {"evidence": evidence, "visualizations": visualizations, "claims": {"C1": {"status": "SUPPORTED", "evidence_ids": [row["id"] for row in evidence]}}}
 
 
+def development_quality() -> dict:
+    return {
+        "problem_related_work": {
+            "necessity_argument": "important recurring failure with concrete consequences",
+            "challenge_statement": "the problem is hard because the relevant variable is only partially observable",
+            "current_paradigm_map": ["baseline family", "closest method family"],
+            "closest_work_boundaries": ["closest work solves retrieval but not the identified persistent mechanism"],
+            "residual_problem": "identify the residual mechanism under matched information",
+        },
+        "method_exposition": {
+            "core_intuition": "preserve the missing decision variable explicitly",
+            "design_principles": ["match information", "change one load-bearing mechanism"],
+            "input_output_contract": "input state -> mechanism-specific decision object -> output decision",
+            "step_by_step_flow": ["read input", "compute mechanism object", "apply decision rule"],
+            "component_rationales": [{"component": "core", "why": "carries the new variable"}],
+            "assumptions_and_held_fixed": ["same data", "same model", "same budget"],
+            "implementation_surface": "one deterministic module plus a frozen evaluator",
+            "failure_modes": ["no headroom", "variable not identifiable"],
+        },
+        "experiment_program": {
+            "prior_work_inspired_baselines": ["strongest closest-work baseline"],
+            "main_effects": ["held-out matched comparison"],
+            "component_ablations": ["remove the core mechanism"],
+            "method_characteristic_tests": ["disagreement-stratified stress test"],
+            "mechanism_tests": ["mechanism-predicted subgroup"],
+            "robustness_and_generalization": ["seed", "domain"],
+            "negative_and_failure_cases": ["ceiling", "incompatible domain"],
+            "efficiency_and_cost": ["calls", "tokens"],
+            "statistical_plan": "paired interval and preregistered unit",
+        },
+        "writing_clarity": {
+            "plain_language_summary": "A simple explanation of the problem, method, and result.",
+            "term_definitions": {"mechanism object": "the decision-relevant variable preserved by the method"},
+            "topic_sentence_rule": "state the point before details",
+            "one_sentence_one_job": True,
+            "concrete_subject_verb_rule": True,
+            "jargon_justification": "new jargon only when no ordinary term is precise enough",
+            "reader_simulation": "a reader without project context can restate problem, method, experiments, and limits",
+        },
+    }
+
+
 def paper_design_with_quality() -> dict:
     return {
         "schema_version": "2.3",
@@ -161,12 +203,23 @@ class PaperQualityGateTest(unittest.TestCase):
 
     def test_schema_2_3_paper_design_cannot_bypass_quality_v2(self) -> None:
         config = paper_design_with_quality()
-        self.assertTrue(audit_paper_design_contract(config)["passed"])
+        audit_current = audit_paper_design_contract(config)
+        self.assertTrue(audit_current["passed"])
+        self.assertEqual(audit_current["development_quality"]["status"], "INITIAL_DRAFT_GUIDANCE_NOT_YET_BOUND")
         broken = copy.deepcopy(config)
         broken["pre_experiment"]["paper_design"].pop("evidence_quality")
         audit = audit_paper_design_contract(broken)
         self.assertFalse(audit["passed"])
         self.assertIn("paper-quality-schema-version-missing-or-stale", audit["blockers"])
+
+    def test_schema_2_4_requires_development_quality_contract(self) -> None:
+        config = paper_design_with_quality();config["schema_version"]="2.4"
+        audit = audit_paper_design_contract(config)
+        self.assertFalse(audit["passed"]);self.assertTrue(any(x.startswith("paper-development-field-missing:") for x in audit["blockers"]))
+        config["pre_experiment"]["paper_design"]["development_quality"] = development_quality()
+        repaired = audit_paper_design_contract(config)
+        self.assertTrue(repaired["passed"], repaired["blockers"]);self.assertTrue(repaired["development_quality"]["passed"])
+        self.assertEqual(repaired["summary"]["paper_development_dimensions_passed"],4)
 
     def test_manuscript_ready_requires_completed_artifacts(self) -> None:
         quality = method_quality()

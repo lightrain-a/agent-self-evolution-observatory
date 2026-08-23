@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import PROJECT_ROOT
+from .paper_development_guidance import research_memory_entry as paper_development_guidance_memory_entry
 
 SCHEMA_VERSION="1.1"
 DEFAULT_JSON=PROJECT_ROOT/"generated"/"research-memory-wiki.json"
@@ -24,6 +25,9 @@ POLICY={
  "paper_review_patterns_are_prechecks_not_scientific_verdicts":True,"paper_review_memory_never_authorizes_new_experiments":True,
  "paper_design_reserves_at_least_one_review_lesson_when_available":True,
  "reviewer_prose_and_rationale_are_excluded_from_memory_projection":True,
+ "human_advisor_paper_development_guidance_is_structured_not_raw_prose":True,
+ "paper_design_reserves_paper_development_guidance_when_available":True,
+ "paper_development_guidance_cannot_change_scientific_or_experiment_authority":True,
 }
 
 def _now():return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -117,6 +121,12 @@ def lint_research_memory_wiki(wiki:dict)->dict:
    if r.get("affected_layer")!="paper_review" or r.get("principle_update_allowed") is not False:errors.append({"code":"review-lesson-authority-or-layer-invalid","memory_id":mid})
    if not _t(r.get("reusable_precheck"),900):errors.append({"code":"review-lesson-missing-precheck","memory_id":mid})
    if any(key in r for key in ("reviewer_text","reviewer_prose","action_reason","reviewer_rationale")):errors.append({"code":"review-lesson-exposes-reviewer-prose","memory_id":mid})
+  if kind=="PAPER_DEVELOPMENT_GUIDANCE":
+   guidance=r.get("guidance") or {};dims=guidance.get("dimensions") or []
+   if r.get("affected_layer")!="paper_development" or r.get("principle_update_allowed") is not False:errors.append({"code":"paper-development-guidance-authority-or-layer-invalid","memory_id":mid})
+   if not _t(r.get("reusable_precheck"),900):errors.append({"code":"paper-development-guidance-missing-precheck","memory_id":mid})
+   if len(dims)!=4:errors.append({"code":"paper-development-guidance-must-have-four-dimensions","memory_id":mid})
+   if any(key in r for key in ("raw_advisor_text","advisor_prose","reviewer_text","reviewer_prose")):errors.append({"code":"paper-development-guidance-exposes-raw-prose","memory_id":mid})
  return {"schema_version":SCHEMA_VERSION,"status":"PASS" if not errors else "FAIL","errors":errors,"warnings":warnings,"summary":{"errors":len(errors),"warnings":len(warnings),"unconsumed_failure_assets":sum(x.get("code")=="failure-asset-not-yet-effectiveness-validated" for x in warnings),"missing_revalidation_dates":sum(x.get("code")=="durable-failure-memory-missing-revalidation-date" for x in warnings)},"scientific_authority":False}
 
 def build_research_memory_wiki(*,search_design_state:dict,failure_asset_library:dict,scientific_meta_trace:dict,candidate_portfolio:dict,experiment_iteration:dict,generator_state:dict,claim_ledger:list[dict]|None=None,paper_ledger_index:dict|None=None,generated_at:str|None=None)->dict:
@@ -124,17 +134,18 @@ def build_research_memory_wiki(*,search_design_state:dict,failure_asset_library:
  entries += [_closure(r) for r in mem.get("closed_objects") or [] if isinstance(r,dict)]
  entries += [_closure(r,True) for r in mem.get("hold_objects") or [] if isinstance(r,dict)]
  entries += _failures(failure_asset_library)+_successes(experiment_iteration,claim_ledger if claim_ledger is not None else load_default_claim_ledger())+_questions(scientific_meta_trace)+_repeated_block(generator_state)+_review_lessons(paper_ledger_index)
+ entries.append(paper_development_guidance_memory_entry())
  entries=sorted(entries,key=lambda r:(str(r.get("kind") or ""),str(r.get("memory_id") or "")));kc=Counter(r["kind"] for r in entries);dc=Counter(r["durability_class"] for r in entries)
- out={"schema_version":SCHEMA_VERSION,"generated_at":generated_at or _now(),"status":"MEMORY_COMPILED","policy":dict(POLICY),"source_manifest":{"search_memory_closed_objects":len(mem.get("closed_objects") or []),"search_memory_hold_objects":len(mem.get("hold_objects") or []),"failure_assets":int((failure_asset_library.get("summary") or {}).get("assets") or 0),"candidate_portfolio_visible":int((candidate_portfolio.get("summary") or {}).get("visible_candidates") or 0),"unresolved_principles":int((scientific_meta_trace.get("summary") or {}).get("unresolved_principles") or 0),"generator_blocked_attempts":int((((generator_state.get("saturation_memory") or {}).get("blocked_problem_memory") or {}).get("blocked_candidate_attempts") or 0)),"paper_review_ledgers":int(((paper_ledger_index or {}).get("summary") or {}).get("papers") or 0)},"summary":{"entries":len(entries),"search_closures":kc.get("SEARCH_CLOSURE",0),"scientific_closures":kc.get("SCIENTIFIC_CLOSURE",0),"holds":kc.get("HOLD",0),"failure_assets":kc.get("FAILURE_ASSET",0),"success_assets":kc.get("SUCCESS_ASSET",0),"open_questions":kc.get("OPEN_QUESTION",0),"repeated_review_blocks":kc.get("REPEATED_REVIEW_BLOCK",0),"review_lessons":kc.get("REVIEW_LESSON",0),"prompt_eligible":sum(r.get("prompt_eligible") is True for r in entries),"transient":dc.get("transient",0),"recurring_systemic":dc.get("recurring-systemic",0),"scientific":dc.get("scientific",0)},"entries":entries,"scientific_authority":False,"authority":{"problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+ out={"schema_version":SCHEMA_VERSION,"generated_at":generated_at or _now(),"status":"MEMORY_COMPILED","policy":dict(POLICY),"source_manifest":{"search_memory_closed_objects":len(mem.get("closed_objects") or []),"search_memory_hold_objects":len(mem.get("hold_objects") or []),"failure_assets":int((failure_asset_library.get("summary") or {}).get("assets") or 0),"candidate_portfolio_visible":int((candidate_portfolio.get("summary") or {}).get("visible_candidates") or 0),"unresolved_principles":int((scientific_meta_trace.get("summary") or {}).get("unresolved_principles") or 0),"generator_blocked_attempts":int((((generator_state.get("saturation_memory") or {}).get("blocked_problem_memory") or {}).get("blocked_candidate_attempts") or 0)),"paper_review_ledgers":int(((paper_ledger_index or {}).get("summary") or {}).get("papers") or 0)},"summary":{"entries":len(entries),"search_closures":kc.get("SEARCH_CLOSURE",0),"scientific_closures":kc.get("SCIENTIFIC_CLOSURE",0),"holds":kc.get("HOLD",0),"failure_assets":kc.get("FAILURE_ASSET",0),"success_assets":kc.get("SUCCESS_ASSET",0),"open_questions":kc.get("OPEN_QUESTION",0),"repeated_review_blocks":kc.get("REPEATED_REVIEW_BLOCK",0),"review_lessons":kc.get("REVIEW_LESSON",0),"paper_development_guidance":kc.get("PAPER_DEVELOPMENT_GUIDANCE",0),"prompt_eligible":sum(r.get("prompt_eligible") is True for r in entries),"transient":dc.get("transient",0),"recurring_systemic":dc.get("recurring-systemic",0),"scientific":dc.get("scientific",0)},"entries":entries,"scientific_authority":False,"authority":{"problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
  out["wiki_sha256"]=_sha({"schema_version":SCHEMA_VERSION,"policy":out["policy"],"source_manifest":out["source_manifest"],"entries":entries});out["lint"]=lint_research_memory_wiki(out);out["status"]="MEMORY_COMPILED" if out["lint"]["status"]=="PASS" else "MEMORY_INVALID";return out
 
 def _tokens(v:Any)->set[str]:
  text=(v if isinstance(v,str) else json.dumps(v,ensure_ascii=False,sort_keys=True)).lower();return set(re.findall(r"[a-z0-9_\-]{4,}|[\u4e00-\u9fff]{2,}",text))
 def _weight(k,p):
  weights={
-  "IDEA_SEARCH":{"SCIENTIFIC_CLOSURE":120,"SEARCH_CLOSURE":105,"HOLD":95,"REPEATED_REVIEW_BLOCK":90,"OPEN_QUESTION":85,"SUCCESS_ASSET":65,"FAILURE_ASSET":55,"REVIEW_LESSON":50},
-  "EXPERIMENT_DESIGN":{"FAILURE_ASSET":125,"HOLD":105,"SUCCESS_ASSET":90,"SCIENTIFIC_CLOSURE":80,"REVIEW_LESSON":75,"SEARCH_CLOSURE":70,"OPEN_QUESTION":60,"REPEATED_REVIEW_BLOCK":45},
-  "PAPER_DESIGN":{"REVIEW_LESSON":130,"SCIENTIFIC_CLOSURE":105,"SEARCH_CLOSURE":95,"FAILURE_ASSET":90,"SUCCESS_ASSET":85,"HOLD":80,"OPEN_QUESTION":75,"REPEATED_REVIEW_BLOCK":70},
+  "IDEA_SEARCH":{"SCIENTIFIC_CLOSURE":120,"SEARCH_CLOSURE":105,"HOLD":95,"REPEATED_REVIEW_BLOCK":90,"OPEN_QUESTION":85,"SUCCESS_ASSET":65,"FAILURE_ASSET":55,"REVIEW_LESSON":50,"PAPER_DEVELOPMENT_GUIDANCE":35},
+  "EXPERIMENT_DESIGN":{"FAILURE_ASSET":125,"HOLD":105,"SUCCESS_ASSET":90,"SCIENTIFIC_CLOSURE":80,"PAPER_DEVELOPMENT_GUIDANCE":80,"REVIEW_LESSON":75,"SEARCH_CLOSURE":70,"OPEN_QUESTION":60,"REPEATED_REVIEW_BLOCK":45},
+  "PAPER_DESIGN":{"PAPER_DEVELOPMENT_GUIDANCE":160,"REVIEW_LESSON":130,"SCIENTIFIC_CLOSURE":105,"SEARCH_CLOSURE":95,"FAILURE_ASSET":90,"SUCCESS_ASSET":85,"HOLD":80,"OPEN_QUESTION":75,"REPEATED_REVIEW_BLOCK":70},
  }
  return weights.get(p,{}).get(k,0)
 def _render(r):
@@ -159,15 +170,25 @@ def compile_research_memory_query_pack(wiki:dict,*,purpose:str,context:Any=None,
  rank.sort(reverse=True,key=lambda x:(x[0],x[1]));budget=max(1200,min(int(max_chars),16000));cap=max(1,min(int(max_items),64));selected=[];chunks=[];used=0
  ordered=rank
  if purpose=="PAPER_DESIGN":
+  guidance=next((item for item in rank if str(item[2].get("kind") or "")=="PAPER_DEVELOPMENT_GUIDANCE"),None)
   review=next((item for item in rank if str(item[2].get("kind") or "")=="REVIEW_LESSON"),None)
-  if review is not None:ordered=[review]+[item for item in rank if item is not review]
+  reserved=[item for item in (guidance,review) if item is not None]
+  if reserved:ordered=reserved+[item for item in rank if item not in reserved]
+ reserved_kinds={"PAPER_DEVELOPMENT_GUIDANCE","REVIEW_LESSON"} if purpose=="PAPER_DESIGN" else set()
+ reserved_cap=max(320,budget//3) if reserved_kinds else budget
  for score,_,r in ordered:
   if len(selected)>=cap:break
-  text=_render(r);extra=len(text)+(2 if chunks else 0)
-  if chunks and used+extra>budget:continue
+  kind=str(r.get("kind") or "");text=_render(r)
+  if kind in reserved_kinds and len(text)>reserved_cap:text=text[:max(0,reserved_cap-1)].rstrip()+"…"
+  extra=len(text)+(2 if chunks else 0)
+  if chunks and used+extra>budget:
+   if kind not in reserved_kinds:continue
+   allowance=budget-used-(2 if chunks else 0)
+   if allowance<220:continue
+   text=text[:max(0,allowance-1)].rstrip()+"…";extra=len(text)+(2 if chunks else 0)
   if not chunks and extra>budget:text=text[:budget];extra=len(text)
-  chunks.append(text);used+=extra;selected.append({"memory_id":r.get("memory_id"),"kind":r.get("kind"),"durability_class":r.get("durability_class"),"affected_layer":r.get("affected_layer"),"score":score})
- text="\n\n".join(chunks);out={"schema_version":SCHEMA_VERSION,"purpose":purpose,"wiki_sha256":str(wiki.get("wiki_sha256") or ""),"selected_memory_ids":[str(r.get("memory_id") or "") for r in selected],"selected":selected,"text":text,"summary":{"selected":len(selected),"review_lessons_selected":sum(str(r.get("kind") or "")=="REVIEW_LESSON" for r in selected),"available_prompt_eligible":sum(isinstance(r,dict) and r.get("prompt_eligible") is True and r.get("durability_class")!="transient" for r in wiki.get("entries") or []),"characters":len(text),"character_budget":budget,"transient_excluded":sum(isinstance(r,dict) and r.get("durability_class")=="transient" for r in wiki.get("entries") or [])},"policy":{"memory_is_context_not_scientific_verdict":True,"past_failure_is_not_automatic_veto":True,"past_success_is_not_automatic_generalization":True,"paper_review_pattern_is_precheck_not_verdict":True,"paper_review_pattern_cannot_authorize_experiments":True,"paper_design_reserves_review_lesson_when_available":purpose!="PAPER_DESIGN" or any(str(r.get("kind") or "")=="REVIEW_LESSON" for r in selected) or not any(isinstance(r,dict) and r.get("kind")=="REVIEW_LESSON" and r.get("prompt_eligible") is True and r.get("durability_class")!="transient" for r in wiki.get("entries") or []),"reopen_condition_requires_new_evidence":True,"transient_operational_noise_excluded":True,"downstream_scientific_gates_unchanged":True},"scientific_authority":False}
+  chunks.append(text);used+=extra;selected.append({"memory_id":r.get("memory_id"),"kind":kind,"durability_class":r.get("durability_class"),"affected_layer":r.get("affected_layer"),"score":score})
+ text="\n\n".join(chunks);out={"schema_version":SCHEMA_VERSION,"purpose":purpose,"wiki_sha256":str(wiki.get("wiki_sha256") or ""),"selected_memory_ids":[str(r.get("memory_id") or "") for r in selected],"selected":selected,"text":text,"summary":{"selected":len(selected),"review_lessons_selected":sum(str(r.get("kind") or "")=="REVIEW_LESSON" for r in selected),"paper_development_guidance_selected":sum(str(r.get("kind") or "")=="PAPER_DEVELOPMENT_GUIDANCE" for r in selected),"available_prompt_eligible":sum(isinstance(r,dict) and r.get("prompt_eligible") is True and r.get("durability_class")!="transient" for r in wiki.get("entries") or []),"characters":len(text),"character_budget":budget,"transient_excluded":sum(isinstance(r,dict) and r.get("durability_class")=="transient" for r in wiki.get("entries") or [])},"policy":{"memory_is_context_not_scientific_verdict":True,"past_failure_is_not_automatic_veto":True,"past_success_is_not_automatic_generalization":True,"paper_review_pattern_is_precheck_not_verdict":True,"paper_review_pattern_cannot_authorize_experiments":True,"paper_design_reserves_review_lesson_when_available":purpose!="PAPER_DESIGN" or any(str(r.get("kind") or "")=="REVIEW_LESSON" for r in selected) or not any(isinstance(r,dict) and r.get("kind")=="REVIEW_LESSON" and r.get("prompt_eligible") is True and r.get("durability_class")!="transient" for r in wiki.get("entries") or []),"paper_development_guidance_is_precheck_not_scientific_verdict":True,"paper_development_guidance_cannot_authorize_experiments":True,"paper_design_reserves_development_guidance_when_available":purpose!="PAPER_DESIGN" or any(str(r.get("kind") or "")=="PAPER_DEVELOPMENT_GUIDANCE" for r in selected) or not any(isinstance(r,dict) and r.get("kind")=="PAPER_DEVELOPMENT_GUIDANCE" and r.get("prompt_eligible") is True and r.get("durability_class")!="transient" for r in wiki.get("entries") or []),"reopen_condition_requires_new_evidence":True,"transient_operational_noise_excluded":True,"downstream_scientific_gates_unchanged":True},"scientific_authority":False}
  out["query_pack_sha256"]=_sha({k:out[k] for k in ("schema_version","purpose","wiki_sha256","selected_memory_ids","text","policy")});return out
 
 def load_research_memory_wiki(path:Path=DEFAULT_JSON)->dict:

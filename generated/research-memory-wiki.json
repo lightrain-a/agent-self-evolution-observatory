@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-22T18:27:14+00:00",
+  "generated_at": "2026-08-23T15:19:03+00:00",
   "status": "MEMORY_COMPILED",
   "policy": {
     "schema_version": "1.1",
@@ -20,7 +20,10 @@
     "paper_review_patterns_are_prechecks_not_scientific_verdicts": true,
     "paper_review_memory_never_authorizes_new_experiments": true,
     "paper_design_reserves_at_least_one_review_lesson_when_available": true,
-    "reviewer_prose_and_rationale_are_excluded_from_memory_projection": true
+    "reviewer_prose_and_rationale_are_excluded_from_memory_projection": true,
+    "human_advisor_paper_development_guidance_is_structured_not_raw_prose": true,
+    "paper_design_reserves_paper_development_guidance_when_available": true,
+    "paper_development_guidance_cannot_change_scientific_or_experiment_authority": true
   },
   "source_manifest": {
     "search_memory_closed_objects": 43,
@@ -28,11 +31,11 @@
     "failure_assets": 6,
     "candidate_portfolio_visible": 1,
     "unresolved_principles": 2,
-    "generator_blocked_attempts": 14,
+    "generator_blocked_attempts": 15,
     "paper_review_ledgers": 5
   },
   "summary": {
-    "entries": 66,
+    "entries": 67,
     "search_closures": 41,
     "scientific_closures": 2,
     "holds": 9,
@@ -41,9 +44,10 @@
     "open_questions": 2,
     "repeated_review_blocks": 1,
     "review_lessons": 5,
-    "prompt_eligible": 66,
+    "paper_development_guidance": 1,
+    "prompt_eligible": 67,
     "transient": 0,
-    "recurring_systemic": 8,
+    "recurring_systemic": 9,
     "scientific": 58
   },
   "entries": [
@@ -389,12 +393,265 @@
       "scientific_authority": false
     },
     {
+      "memory_id": "MEM-PDEV-SENIOR-20260823",
+      "kind": "PAPER_DEVELOPMENT_GUIDANCE",
+      "title": "Senior paper-development guidance: treat current versions as initial drafts",
+      "summary": "The problems remain worth pursuing and the current method directions are broadly plausible; the main gap is manuscript maturity: related-work/problem motivation, method exposition, experimental coverage, and writing clarity all need substantial deepening.",
+      "candidate_id": "",
+      "scope": "current-five-papers-and-future-paper-design",
+      "affected_layer": "paper_development",
+      "memory_class": "HUMAN_ADVISOR_PAPER_DEVELOPMENT_GUIDANCE",
+      "durability_class": "recurring-systemic",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "Before Paper Design, manuscript revision, or Mock PC, verify four separate dimensions: problem necessity/challenge and related-work map; method intuition/design principles/load-bearing details; experiments inspired by both closest-work protocols and method-specific predictions; and plain, direct, reader-comprehensible writing. Treat missing depth as manuscript-development debt, not a scientific STOP or automatic experiment authorization.",
+      "source_refs": [
+        "human-advisor-guidance:2026-08-23"
+      ],
+      "source_artifact": "SENIOR-PAPER-DEVELOPMENT-GUIDANCE-20260823",
+      "guidance": {
+        "schema_version": "1.0",
+        "guidance_id": "SENIOR-PAPER-DEVELOPMENT-GUIDANCE-20260823",
+        "recorded_at": "2026-08-23",
+        "scope": {
+          "current_papers": [
+            "STRI",
+            "AGENT-SAFETY-R9",
+            "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+            "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+            "D2-PAPER-FAILURE-MEMORY-PROVENANCE"
+          ],
+          "applies_to_future_paper_design": true,
+          "applies_to_manuscript_revision": true,
+          "applies_to_mock_pc": true
+        },
+        "paper_development_backlog": [
+          {
+            "paper_id": "STRI",
+            "maturity": "INITIAL_DRAFT_NEEDS_DEEPENING",
+            "human_approved_action": "DEEPEN_MANUSCRIPT_ON_FROZEN_SCIENTIFIC_BASE",
+            "paper_only_work_allowed": true,
+            "may_expand_related_work_and_problem_motivation": true,
+            "may_expand_method_exposition": true,
+            "may_design_future_experiment_program": true,
+            "may_improve_writing_clarity": true,
+            "may_change_supported_claims": false,
+            "may_execute_new_experiments": false,
+            "may_use_new_model_or_gpu_calls": false,
+            "new_execution_requires_separate_scientific_reopen": true
+          },
+          {
+            "paper_id": "AGENT-SAFETY-R9",
+            "maturity": "INITIAL_DRAFT_NEEDS_DEEPENING",
+            "human_approved_action": "DEEPEN_MANUSCRIPT_ON_FROZEN_SCIENTIFIC_BASE",
+            "paper_only_work_allowed": true,
+            "may_expand_related_work_and_problem_motivation": true,
+            "may_expand_method_exposition": true,
+            "may_design_future_experiment_program": true,
+            "may_improve_writing_clarity": true,
+            "may_change_supported_claims": false,
+            "may_execute_new_experiments": false,
+            "may_use_new_model_or_gpu_calls": false,
+            "new_execution_requires_separate_scientific_reopen": true
+          },
+          {
+            "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+            "maturity": "INITIAL_DRAFT_NEEDS_DEEPENING",
+            "human_approved_action": "DEEPEN_MANUSCRIPT_ON_FROZEN_SCIENTIFIC_BASE",
+            "paper_only_work_allowed": true,
+            "may_expand_related_work_and_problem_motivation": true,
+            "may_expand_method_exposition": true,
+            "may_design_future_experiment_program": true,
+            "may_improve_writing_clarity": true,
+            "may_change_supported_claims": false,
+            "may_execute_new_experiments": false,
+            "may_use_new_model_or_gpu_calls": false,
+            "new_execution_requires_separate_scientific_reopen": true
+          },
+          {
+            "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+            "maturity": "INITIAL_DRAFT_NEEDS_DEEPENING",
+            "human_approved_action": "DEEPEN_MANUSCRIPT_ON_FROZEN_SCIENTIFIC_BASE",
+            "paper_only_work_allowed": true,
+            "may_expand_related_work_and_problem_motivation": true,
+            "may_expand_method_exposition": true,
+            "may_design_future_experiment_program": true,
+            "may_improve_writing_clarity": true,
+            "may_change_supported_claims": false,
+            "may_execute_new_experiments": false,
+            "may_use_new_model_or_gpu_calls": false,
+            "new_execution_requires_separate_scientific_reopen": true
+          },
+          {
+            "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+            "maturity": "INITIAL_DRAFT_NEEDS_DEEPENING",
+            "human_approved_action": "DEEPEN_MANUSCRIPT_ON_FROZEN_SCIENTIFIC_BASE",
+            "paper_only_work_allowed": true,
+            "may_expand_related_work_and_problem_motivation": true,
+            "may_expand_method_exposition": true,
+            "may_design_future_experiment_program": true,
+            "may_improve_writing_clarity": true,
+            "may_change_supported_claims": false,
+            "may_execute_new_experiments": false,
+            "may_use_new_model_or_gpu_calls": false,
+            "new_execution_requires_separate_scientific_reopen": true
+          }
+        ],
+        "advisor_assessment": {
+          "problem_value": "WORTH_PURSUING",
+          "method_direction": "PLAUSIBLE_FOR_THE_STATED_PROBLEM",
+          "current_manuscript_maturity": "INITIAL_DRAFT_NEEDS_DEEPENING",
+          "scientific_stop_implied": false,
+          "immediate_experiment_execution_implied": false,
+          "interpretation_zh": "问题值得继续做，当前方法方向基本合理；主要不足是论文完成度：Related Work/必要性与挑战、方法阐述、实验覆盖和写作清晰度都需要继续深化。",
+          "interpretation_en": "The problems remain worth pursuing and the current method directions are broadly plausible; the main gap is manuscript maturity: related-work/problem motivation, method exposition, experimental coverage, and writing clarity all need substantial deepening."
+        },
+        "dimensions": [
+          {
+            "key": "problem_related_work",
+            "title_zh": "问题必要性、Challenge 与 Related Work",
+            "title_en": "Problem necessity, challenge, and related work",
+            "goal_zh": "先让读者相信这个问题必须解决、为什么难，再说明现有方法分别做到哪里和还缺什么。Related Work 不是引用清单。",
+            "goal_en": "First make the reader believe the problem matters and is genuinely difficult, then explain what existing method families solve and what remains. Related Work is not a citation list.",
+            "required_fields": [
+              "necessity_argument",
+              "challenge_statement",
+              "current_paradigm_map",
+              "closest_work_boundaries",
+              "residual_problem"
+            ],
+            "checks_zh": [
+              "用具体场景和失败后果解释为什么值得做，而不是只说 benchmark 分数低。",
+              "把 challenge 拆成可观察的困难：信息、优化、识别、长期性、组合性或系统约束。",
+              "按方法族解释现有工作怎么做、为什么仍不够，再落到 closest-work novelty boundary。"
+            ],
+            "checks_en": [
+              "Use concrete settings and failure consequences rather than only low benchmark scores.",
+              "Decompose the challenge into observable difficulties such as information, optimization, identification, longitudinal, compositional, or system constraints.",
+              "Explain how method families work and why they remain insufficient before stating the closest-work novelty boundary."
+            ]
+          },
+          {
+            "key": "method_exposition",
+            "title_zh": "方法核心 Intuition、设计理念与全部关键细节",
+            "title_en": "Method intuition, design principles, and load-bearing details",
+            "goal_zh": "方法章节必须先讲最简单的直觉，再讲为什么这样设计，然后逐步写清输入、状态、每个组件、操作顺序、假设、输出和失败边界。",
+            "goal_en": "The method section must start from the simplest intuition, explain why the design follows, then specify inputs, state, each component, operation order, assumptions, outputs, and failure boundaries.",
+            "required_fields": [
+              "core_intuition",
+              "design_principles",
+              "input_output_contract",
+              "step_by_step_flow",
+              "component_rationales",
+              "assumptions_and_held_fixed",
+              "implementation_surface",
+              "failure_modes"
+            ],
+            "checks_zh": [
+              "每个组件都回答：为什么存在、拿掉会怎样、最简单替代是什么。",
+              "区分核心科学机制与工程实现容器，不把 wrapper、prompt 或基础算法本身误卖成贡献。",
+              "读者不看代码也能复述方法从输入到输出发生了什么。"
+            ],
+            "checks_en": [
+              "For every component: why is it present, what should fail without it, and what is the simplest substitute?",
+              "Separate the scientific mechanism from its engineering container; do not sell a wrapper, prompt, or standard primitive as the contribution.",
+              "A reader should be able to restate the full input-to-output method without opening the code."
+            ]
+          },
+          {
+            "key": "experiment_program",
+            "title_zh": "更完整的实验 Program，而不是只有一张主表",
+            "title_en": "A complete experimental program, not a single main table",
+            "goal_zh": "实验一部分借鉴 closest work 的强 baseline / protocol，另一部分专门验证本文方法自己的结构特点；所有新增实验仍须单独过科学与执行门。",
+            "goal_en": "Part of the experiment suite should borrow strong baselines/protocols from closest work, while another part should expose the proposed method's distinctive structure; every new execution still needs separate scientific and execution gates.",
+            "required_fields": [
+              "prior_work_inspired_baselines",
+              "main_effects",
+              "component_ablations",
+              "method_characteristic_tests",
+              "mechanism_tests",
+              "robustness_and_generalization",
+              "negative_and_failure_cases",
+              "efficiency_and_cost",
+              "statistical_plan"
+            ],
+            "checks_zh": [
+              "从相关工作反推 reviewer 会期待哪些 baseline、数据切分和 robustness protocol。",
+              "从方法自身反推独有实验：组件必要性、机制预测、边界条件、失败模式和复杂度/成本。",
+              "不要为了‘实验多’而堆 benchmark；每个实验必须对应一个 claim、替代解释或 reviewer question。"
+            ],
+            "checks_en": [
+              "Infer expected baselines, splits, and robustness protocols from the closest literature.",
+              "Infer method-specific experiments from the proposed structure: component necessity, mechanism predictions, boundaries, failure modes, and cost/complexity.",
+              "Do not add benchmarks for volume; every experiment must answer a claim, alternative explanation, or reviewer question."
+            ]
+          },
+          {
+            "key": "writing_clarity",
+            "title_zh": "讲人话：清晰、直白、易懂的论文写作",
+            "title_en": "Plain, direct, reader-comprehensible writing",
+            "goal_zh": "优先让读者一次读懂，再追求术语精确。能用普通动词和具体名词表达，就不要用抽象、堆叠、AI 味很重的词组。",
+            "goal_en": "Optimize first-pass comprehension before stylistic sophistication. Prefer ordinary verbs and concrete nouns over abstract, stacked, AI-like phrasing whenever precision is preserved.",
+            "required_fields": [
+              "plain_language_summary",
+              "term_definitions",
+              "topic_sentence_rule",
+              "one_sentence_one_job",
+              "concrete_subject_verb_rule",
+              "jargon_justification",
+              "reader_simulation"
+            ],
+            "checks_zh": [
+              "每节第一段先回答‘这一节要说明什么’，每个结果段先给答案再给数字。",
+              "新术语首次出现必须用一句普通话解释；没有必要就不要造新术语。",
+              "长句拆开，一句话只承担一个主要逻辑任务；减少名词堆叠、被动语态和空泛形容词。",
+              "最终至少做一次不看内部项目背景的 reader simulation：读者能否复述问题、方法、实验和边界。"
+            ],
+            "checks_en": [
+              "Open each section by saying what it establishes; open each result paragraph with the answer before the numbers.",
+              "Define every new term in plain language on first use and avoid inventing jargon when ordinary language works.",
+              "Split overloaded sentences; one sentence should carry one main logical job. Reduce noun stacks, passive voice, and vague adjectives.",
+              "Run a reader simulation without internal project context: can a reader restate the problem, method, experiments, and boundaries?"
+            ]
+          }
+        ],
+        "execution_status": "HUMAN_APPROVED_PAPER_DEVELOPMENT_BACKLOG_NO_AUTO_EXPERIMENT",
+        "policy": {
+          "schema_version": "1.0",
+          "human_advisor_guidance_is_development_context_not_scientific_truth": true,
+          "scientific_evidence_closure_does_not_imply_manuscript_maturity": true,
+          "initial_draft_status_does_not_demote_scientific_paper_state": true,
+          "paper_development_guidance_cannot_change_paper_state": true,
+          "paper_development_guidance_cannot_expand_claims": true,
+          "paper_development_guidance_cannot_authorize_experiments": true,
+          "new_experiment_requests_still_require_scientific_and_experiment_authority": true,
+          "related_work_must_establish_problem_necessity_and_challenge_not_only_citations": true,
+          "method_exposition_must_explain_intuition_design_principles_and_stepwise_details": true,
+          "experiment_program_must_use_both_prior_work_protocols_and_method_specific_tests": true,
+          "writing_must_prefer_clear_direct_concrete_language": true
+        },
+        "authority": {
+          "scientific": false,
+          "method": false,
+          "experiment": false,
+          "gpu": false,
+          "submission": false
+        }
+      },
+      "reuse_effectiveness": {},
+      "scientific_authority": false
+    },
+    {
       "memory_id": "MEM-REPE-bf948a9d2b0add0251",
       "kind": "REPEATED_REVIEW_BLOCK",
       "title": "Repeated reviewer-reduction basin: procedural-memory-nonmonotonicity",
       "summary": "8 blocked attempts concentrate in this basin; search outside it before another jury call.",
       "candidate_id": "",
-      "scope": "{\"ASSUMPTION_BREAK\": 9, \"CONTRADICTION\": 1, \"CONVERGENT_FAILURE\": 1, \"UNEXPLAINED_BOUNDARY\": 3}",
+      "scope": "{\"ASSUMPTION_BREAK\": 10, \"CONTRADICTION\": 1, \"CONVERGENT_FAILURE\": 1, \"UNEXPLAINED_BOUNDARY\": 3}",
       "affected_layer": "search_control",
       "memory_class": "REPEATED_REVIEW_BLOCK",
       "durability_class": "recurring-systemic",
@@ -1829,7 +2086,7 @@
     "p0": false,
     "gpu": false
   },
-  "wiki_sha256": "f5b3eabe5a054ecf442100d89b8453384ed62fce956a6b2511f84e75bcaa3a61",
+  "wiki_sha256": "9cd8a2afc1c5e6162fb40ee3589d1c1cd4c4fba23985b440d3e489bba33e077b",
   "lint": {
     "schema_version": "1.1",
     "status": "PASS",

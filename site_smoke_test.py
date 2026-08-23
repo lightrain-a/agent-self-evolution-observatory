@@ -813,6 +813,7 @@ def main() -> None:
     required_system_scripts = [
         "generated/s2-literature.js",
         "generated/research-system-state.js",
+        "generated/research-memory-wiki.js",
         "content-system-overview.js",
         "page-architecture-data.js",
         "system-overview-core.js",
@@ -830,9 +831,18 @@ def main() -> None:
     forbidden_system_scripts = ("generated/iclr-low-resource-ideas.js", "generated/machine-school-inspired-ideas.js", "generated/discussion-ready-ideas.js", "generated/idea-discovery-v5.js")
     if any(f'src="{name}"' in system_page for name in forbidden_system_scripts):
         fail("system overview must not load current idea-bank or discussion-pool artifacts")
+    research_memory = json.loads((ROOT / "generated" / "research-memory-wiki.json").read_text(encoding="utf-8"))
+    guidance_rows = [row for row in research_memory.get("entries", []) if row.get("kind") == "PAPER_DEVELOPMENT_GUIDANCE"]
+    if len(guidance_rows) != 1 or (research_memory.get("summary") or {}).get("paper_development_guidance") != 1 or (research_memory.get("lint") or {}).get("status") != "PASS":
+        fail("Research Memory must expose exactly one lint-clean paper-development guidance entry")
+    guidance = guidance_rows[0].get("guidance") or {}; backlog = guidance.get("paper_development_backlog") or []
+    if len(guidance.get("dimensions") or []) != 4 or len(backlog) != 5 or any(row.get("maturity") != "INITIAL_DRAFT_NEEDS_DEEPENING" or row.get("paper_only_work_allowed") is not True or row.get("may_execute_new_experiments") is not False for row in backlog):
+        fail("Senior paper-development guidance must bind four dimensions and five paper-only initial-draft backlog rows")
+    if any((guidance.get("authority") or {}).get(key) is not False for key in ("scientific","method","experiment","gpu","submission")):
+        fail("Paper-development guidance must remain zero authority")
     system_files = ["system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-methodology.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-reader.js", "system-overview-governance-v2.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js"]
     system_text = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in system_files)
-    for marker in ("READ THIS PAGE IN 10 CHAPTERS", "ONE AUTHORITY MODEL", "DECIDE WHETHER A NEW PROBLEM EXISTS", "DESIGN THE SCIENTIFIC CONTRIBUTION BEFORE CODING", "CHECK THE SMALLEST TEST BEFORE GPU", "RUN SMALL, DIAGNOSE, THEN DECIDE WHETHER TO SCALE", "CHECK THAT EVERY CLAIM HAS EVIDENCE", "SEARCH THE STORY, THEN BUILD THE MANUSCRIPT", "SIMULATE REJECTION RISK AND REPAIR WITHIN THE EVIDENCE BOUNDARY", "CLOSE PREBUTTAL, SUBMISSION AUTHORITY, AND REAL REVIEW IN THE SAME LEDGER", "REMEMBER WHY WE CONTINUED, STOPPED, ACCEPTED, OR WERE REJECTED", "TERMINATION & MEMORY AUTHORITY", "WHO OWNS EACH BACKEND JOB", "CROSS-CUTTING METHODOLOGY CONTROLS", "Are candidate problems too similar?", "Search-Time Contamination", "Can another person rerun the key result from scratch?",  "21 BACKEND STEPS FROM LITERATURE TO SUBMISSION LEARNING", "system-layer-list", "P0 ECONOMY", "PRE-EXPERIMENT COMPILER", "8 / 8", "CAN THE EXPERIMENT DISTINGUISH THE MECHANISM?", "10 / 10", "SHADOW SEARCH LAB", "v2.9 · MACHINE-ENFORCED", "LOCAL VALIDATION SUB-MACHINE · P0-SYSTEM v2", "system-failure-layer", "How long experiments are launched safely and resumed after disconnects", "CURRENT DECISION → CAUSE → NEXT-RUN RULE"):
+    for marker in ("READ THIS PAGE IN 10 CHAPTERS", "ONE AUTHORITY MODEL", "DECIDE WHETHER A NEW PROBLEM EXISTS", "DESIGN THE SCIENTIFIC CONTRIBUTION BEFORE CODING", "CHECK THE SMALLEST TEST BEFORE GPU", "RUN SMALL, DIAGNOSE, THEN DECIDE WHETHER TO SCALE", "CHECK THAT EVERY CLAIM HAS EVIDENCE", "SEARCH THE STORY, THEN BUILD THE MANUSCRIPT", "SIMULATE REJECTION RISK AND REPAIR WITHIN THE EVIDENCE BOUNDARY", "CLOSE PREBUTTAL, SUBMISSION AUTHORITY, AND REAL REVIEW IN THE SAME LEDGER", "REMEMBER WHY WE CONTINUED, STOPPED, ACCEPTED, OR WERE REJECTED", "TERMINATION & MEMORY AUTHORITY", "WHO OWNS EACH BACKEND JOB", "CROSS-CUTTING METHODOLOGY CONTROLS", "Are candidate problems too similar?", "Search-Time Contamination", "Can another person rerun the key result from scratch?",  "21 BACKEND STEPS FROM LITERATURE TO SUBMISSION LEARNING", "system-layer-list", "P0 ECONOMY", "PRE-EXPERIMENT COMPILER", "8 / 8", "CAN THE EXPERIMENT DISTINGUISH THE MECHANISM?", "10 / 10", "SHADOW SEARCH LAB", "v2.9 · MACHINE-ENFORCED", "LOCAL VALIDATION SUB-MACHINE · P0-SYSTEM v2", "system-failure-layer", "How long experiments are launched safely and resumed after disconnects", "CURRENT DECISION → CAUSE → NEXT-RUN RULE", "PAPER DEVELOPMENT QUALITY V1", "Scientific closure is not the same as manuscript maturity", "Writing requirement: make the paper easy to understand"):
         if marker not in system_text:
             fail(f"system overview implementation is missing {marker}")
     shadow_portfolio = json.loads((ROOT / "generated" / "paper-first-problem-search-portfolio-state.json").read_text(encoding="utf-8"))

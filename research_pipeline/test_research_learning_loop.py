@@ -98,9 +98,13 @@ class ResearchLearningLoopTest(unittest.TestCase):
         audit = audit_paper_design_contract(config)
         self.assertTrue(audit["passed"], audit.get("blockers"))
         workflow = build_paper_first_workflow_state({"cards": [{"paper_design_prerequisite": audit}]})
+        self.assertEqual(workflow["schema_version"], "1.1")
         self.assertTrue(workflow["policy"]["local_validation_is_for_falsification_not_method_discovery"])
         self.assertTrue(workflow["policy"]["method_change_after_local_validation_invalidates_full_experiment_authority"])
+        self.assertTrue(workflow["policy"]["paper_development_quality_v1_distinguishes_scientific_closure_from_manuscript_maturity"])
+        self.assertTrue(workflow["policy"]["current_initial_drafts_are_not_retroactively_demoted_by_new_development_guidance"])
         self.assertEqual(workflow["summary"]["paper_design_passed"], 1)
+        self.assertEqual(workflow["summary"]["paper_development_initial_draft_guidance"], 1)
 
     def test_protocol_validity_contract(self) -> None:
         audit = audit_protocol_validity(self.config())

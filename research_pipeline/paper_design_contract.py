@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from .paper_development_guidance import audit_development_quality
 from .paper_quality_gate import audit_paper_evidence_plan
 from .system_architecture import TEMPORAL_FLOW
 
@@ -22,6 +23,10 @@ POLICY: dict[str, Any] = {
     "visual_evidence_is_claim_mapped_not_decorative": True,
     "paper_quality_v2_is_required_for_schema_2_3_plus_or_explicit_v2_contract": True,
     "legacy_contracts_are_not_retroactively_rewritten": True,
+    "paper_development_quality_v1_distinguishes_scientific_closure_from_manuscript_maturity": True,
+    "paper_development_quality_v1_required_for_schema_2_4_plus_or_explicit_contract": True,
+    "current_initial_drafts_are_not_retroactively_demoted_by_new_development_guidance": True,
+    "future_material_paper_revisions_should_bind_development_quality_v1": True,
 }
 
 REQUIRED_NOVELTY_FIELDS = {
@@ -93,6 +98,7 @@ def audit_paper_design_contract(config: dict[str, Any]) -> dict[str, Any]:
     method = contract.get("method") or {}
     blueprint = contract.get("experiment_blueprint") or {}
     evidence_quality = contract.get("evidence_quality") or {}
+    development_quality = contract.get("development_quality") or {}
 
     for field in sorted(REQUIRED_NOVELTY_FIELDS):
         if not _nonempty(novelty.get(field)):
@@ -141,6 +147,7 @@ def audit_paper_design_contract(config: dict[str, Any]) -> dict[str, Any]:
     except ValueError:
         schema_major, schema_minor = 0, 0
     quality_required = bool(evidence_quality) or (schema_major, schema_minor) >= (2, 3)
+    development_required = bool(development_quality) or (schema_major, schema_minor) >= (2, 4)
     if quality_required:
         quality_audit = audit_paper_evidence_plan(evidence_quality, method_components=len(method.get("components") or []))
         if not quality_audit.get("passed"):
@@ -157,6 +164,10 @@ def audit_paper_design_contract(config: dict[str, Any]) -> dict[str, Any]:
             "summary": {"baselines": 0, "ablations": 0, "analyses": 0, "visualizations": 0, "main_visualizations": 0, "main_visual_roles": []},
             "scientific_authority": False,
         }
+
+    development_audit = audit_development_quality(development_quality, required=development_required)
+    if development_required and not development_audit.get("passed"):
+        blockers.extend(str(item) for item in development_audit.get("blockers") or [])
 
     passed = not blockers
     return {
@@ -177,8 +188,12 @@ def audit_paper_design_contract(config: dict[str, Any]) -> dict[str, Any]:
             "visualizations": int((quality_audit.get("summary") or {}).get("visualizations") or 0),
             "main_visualizations": int((quality_audit.get("summary") or {}).get("main_visualizations") or 0),
             "main_visual_roles": list((quality_audit.get("summary") or {}).get("main_visual_roles") or []),
+            "paper_development_quality_required": development_required,
+            "paper_development_quality_passed": development_audit.get("passed") is True,
+            "paper_development_dimensions_passed": sum((row or {}).get("pass") is True for row in (development_audit.get("dimensions") or {}).values()),
         },
         "paper_quality": quality_audit,
+        "development_quality": development_audit,
         "contract": contract,
         "policy": POLICY,
     }
@@ -188,8 +203,9 @@ def build_paper_first_workflow_state(pre_experiment: dict[str, Any]) -> dict[str
     cards = list(pre_experiment.get("cards") or [])
     audits = [card.get("paper_design_prerequisite") or {} for card in cards]
     quality_audits = [audit.get("paper_quality") or {} for audit in audits]
+    development_audits = [audit.get("development_quality") or {} for audit in audits]
     return {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "policy": POLICY,
         "macro_stages": [str(row["key"]) for row in TEMPORAL_FLOW],
         "summary": {
@@ -204,6 +220,9 @@ def build_paper_first_workflow_state(pre_experiment: dict[str, Any]) -> dict[str
             "typed_analyses": sum(int((audit.get("summary") or {}).get("typed_analyses") or 0) for audit in audits),
             "visualizations": sum(int((audit.get("summary") or {}).get("visualizations") or 0) for audit in audits),
             "main_visualizations": sum(int((audit.get("summary") or {}).get("main_visualizations") or 0) for audit in audits),
+            "paper_development_quality_applied": sum(audit.get("required") is True for audit in development_audits),
+            "paper_development_quality_passed": sum(audit.get("required") is True and audit.get("passed") is True for audit in development_audits),
+            "paper_development_initial_draft_guidance": sum(audit.get("status") == "INITIAL_DRAFT_GUIDANCE_NOT_YET_BOUND" for audit in development_audits),
         },
         "rule": "A local pilot tests a frozen paper-motivated method. If the core method changes, return to novelty/method design and invalidate any full-experiment authorization.",
     }
