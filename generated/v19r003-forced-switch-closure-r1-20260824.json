@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0-v19r003-closure-r1",
+  "artifact_kind": "V19R003_CANDIDATE_CLOSURE_R1",
+  "generated_at": "2026-08-23T17:29:03Z",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "title": "Forced Strategy Perturbation: Causal Probing of the Lock-In Boundary via Mid-Execution Strategy Injection",
+  "final_status": "CLOSED_SUPPORT_NONEXECUTABLE_PRE_HEADROOM_UNRESOLVED",
+  "closure_basis": {
+    "prior_paid_pre": "NO_EVIDENCE_PROTOCOL_NONEXECUTION",
+    "r3_action_turn_repair": "SUCCESSFULLY_REACHED_RUN_TRAINING",
+    "r3_training_support": "FAILED_NO_OBSERVABLE_PARAMETER_DELTA",
+    "pre_headroom_established": false,
+    "matched_post_arm_run": false,
+    "controls_run": false,
+    "problem_gate_pass": false
+  },
+  "scientific_adjudication": {
+    "strategy_lock_in_claim_supported": false,
+    "forced_switch_permeability_claim_supported": false,
+    "source_missing_spontaneity_reduction_falsified": false,
+    "reason": "No valid PRE unit established that the supplied strategy is enactable before lock-in under the fixed L1 substrate. Therefore any POST failure would be uninterpretable and later arms are not scientifically authorized."
+  },
+  "cost_stop": {
+    "additional_pre_retry_authorized": false,
+    "post_strategy_authorized": false,
+    "post_execution_authorized": false,
+    "post_conflict_free_authorized": false,
+    "task_hop_authorized": false
+  },
+  "reopen_condition": "Reopen only with a new outcome-independent execution substrate that guarantees semantic observability for every accepted bounded training action before an API call is made—for example FP32 master-weight delta verification or a preregistered numerically effective action surface. The task, model, data, strategy payload, boundary definition, and no-task-hop rule must remain fixed unless a new candidate identity is created. A reopened unit must first re-establish PRE headroom; prior NO_EVIDENCE runs cannot be reused as scientific outcomes.",
+  "canonical_projection": {
+    "research_item_created": false,
+    "paper_created": false,
+    "problem_gate": false,
+    "active_researchitem_count_change": 0
+  },
+  "support_receipt": "generated/v19r003-forced-switch-deepseek-pre-r3-support-failure-r2-20260824.json",
+  "authority": {
+    "scientific_authority": "CLOSURE_ONLY",
+    "problem_gate": false,
+    "paper_design": false,
+    "experiment": false,
+    "p0": false
+  }
+}

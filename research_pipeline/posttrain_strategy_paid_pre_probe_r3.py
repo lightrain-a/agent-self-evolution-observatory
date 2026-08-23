@@ -227,6 +227,7 @@ def main() -> int:
         },
     }
 
+    result: dict[str, Any] | None = None
     try:
         result = run_deepseek_tool_loop(
             client=client,
@@ -312,7 +313,7 @@ def main() -> int:
             "status": "FAILED_CLOSED",
             "provider_post_attempts": client.post_attempts,
             "provider_events": client.events,
-            "action_turn_protocol": result.get("action_turn_protocol"),
+            "action_turn_protocol": result.get("action_turn_protocol") if result is not None else None,
             "error_type": type(error).__name__,
             "error": _safe_error(error),
             "sequential_gate": {

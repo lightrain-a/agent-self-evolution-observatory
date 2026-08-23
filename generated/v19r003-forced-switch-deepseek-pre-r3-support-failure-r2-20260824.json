@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "V19R003_DEEPSEEK_PRE_R3_SUPPORT_FAILURE_R2",
+  "generated_at": "2026-08-23T17:29:03Z",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "run_dir": "/data/wyt/agent-self-evolution-observatory/runs/v19r003-deepseek-pre-r3-20260824-r2",
+  "contract": "generated/v19r003-forced-switch-deepseek-pre-contract-r3-20260824.json",
+  "contract_sha256": "3acdc57a2252d6e35b33d3b76d9e0724166280db886da1379587500ddcbabba6",
+  "authorization": "generated/v19r003-forced-switch-deepseek-pre-authorization-r3-20260824.json",
+  "authorization_sha256": "ed68ed211def11638b53502457a5041022ff861bfa24ea5ca76f81fbeb8e6028",
+  "status": "NO_EVIDENCE_SUPPORT_FAILURE_AFTER_ACTION_TURN_REPAIR",
+  "observed_execution": {
+    "action_turn_protocol_present_in_task_interface": true,
+    "baseline_evaluator_completed": true,
+    "baseline_evaluator_sample_limit": 1,
+    "baseline_accuracy": 0.0,
+    "run_training_was_invoked": true,
+    "training_worker_error": "real training method completed without observable parameter delta",
+    "verified_parameter_update": false,
+    "persistent_checkpoint_created": false,
+    "semantic_boundary_reached": false,
+    "completed_training_receipt_created": false
+  },
+  "provider_audit": {
+    "deepseek_requests_occurred": true,
+    "exact_provider_post_count_recoverable": false,
+    "reason_exact_count_lost": "The R3 exception handler referenced the unassigned result variable while handling the training failure, so the final paid receipt and in-memory provider event list were not persisted.",
+    "scientific_interpretation_of_missing_cost_count": "Bookkeeping loss only; it does not change that no verified parameter update or semantic boundary was observed."
+  },
+  "failure_classification": {
+    "primary": "SUPPORT_NUMERICAL_OBSERVABILITY_FAILURE",
+    "secondary": "RECEIPT_PERSISTENCE_BUG",
+    "scientific_failure": false,
+    "protocol_nonexecution": false,
+    "outcome_authority": false
+  },
+  "interpretation": "The action-turn repair succeeded in forcing an actual training action, eliminating the prior prose-only protocol nonexecution. However, the accepted training action did not yield an independently observable parameter delta, so PRE enactment headroom remains unresolved. Under the pre-registered R3 rule this is NO_EVIDENCE, not strategy non-adherence.",
+  "authority": {
+    "problem_gate": false,
+    "post_strategy_authorized": false,
+    "post_execution_authorized": false,
+    "post_conflict_free_authorized": false,
+    "additional_pre_retry_authorized": false
+  }
+}

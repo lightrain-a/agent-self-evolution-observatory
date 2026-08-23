@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "DISCOVERY_LESSON",
+  "generated_at": "2026-08-23T17:29:03Z",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "lesson_id": "V19R003-SEMANTIC-ACTION-OBSERVABILITY",
+  "failure_class": "support",
+  "lesson": "A tool schema that syntactically accepts a training action is insufficient for a causal agent experiment. Every accepted action that can define an intervention boundary must have outcome-independent semantic observability: the runtime must either produce a verifiable persisted parameter update or reject the configuration before the scientific unit starts. Otherwise an agent can legitimately select a bounded action that numerically produces no detectable update, collapsing scientific non-adherence into support failure.",
+  "additional_engineering_lesson": "Paid provider events must be persisted incrementally before executing a potentially failing tool. Keeping provider receipts only in memory until arm completion can lose exact cost/provenance accounting when a tool raises.",
+  "recommended_system_rule": "Before authorizing a paid causal arm, audit the full accepted action surface for semantic boundary observability and use append-only per-provider-call receipts. Failures of semantic observability map to NO_EVIDENCE and cannot advance ProblemGate.",
+  "scientific_authority": false
+}

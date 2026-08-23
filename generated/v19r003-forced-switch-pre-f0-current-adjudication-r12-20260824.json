@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0-v19r003-current-adjudication-r12",
+  "artifact_kind": "V19R003_PRE_F0_CURRENT_ADJUDICATION_R12",
+  "generated_at": "2026-08-23T17:29:03Z",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "supersedes": "generated/v19r003-forced-switch-pre-f0-current-adjudication-r11-20260824.json",
+  "superseded_r11_sha256": "071aa7732ce648819c9fc2f0bad5c116f61c57070b7b0d5026dd6165664a6df9",
+  "current_status": "CLOSED_SUPPORT_NONEXECUTABLE_PRE_HEADROOM_UNRESOLVED",
+  "r3_result": {
+    "contract": "generated/v19r003-forced-switch-deepseek-pre-contract-r3-20260824.json",
+    "contract_sha256": "3acdc57a2252d6e35b33d3b76d9e0724166280db886da1379587500ddcbabba6",
+    "action_turn_protocol": "V19R003_ACTION_TURN_R1",
+    "protocol_nonexecution_repaired": true,
+    "run_training_invoked": true,
+    "verified_parameter_update": false,
+    "semantic_boundary_reached": false,
+    "pre_headroom_established": false,
+    "result_class": "NO_EVIDENCE_SUPPORT_NUMERICAL_OBSERVABILITY_FAILURE"
+  },
+  "scientific_state": {
+    "closest_work": "arXiv:2608.19072",
+    "strongest_reduction": "source-authors missing-spontaneity-not-capability diagnosis",
+    "reduction_status": "UNRESOLVED_BECAUSE_PRE_HEADROOM_NEVER_ESTABLISHED",
+    "problem_gate_pass": false,
+    "pre_f0_eligible": false,
+    "canonical_projection": false,
+    "canonical_researchitem_created": false,
+    "scientific_arms_with_interpretable_outcome": 0
+  },
+  "paid_expansion": {
+    "additional_pre_retry_authorized": false,
+    "post_strategy_authorized": false,
+    "post_execution_authorized": false,
+    "post_conflict_free_authorized": false,
+    "reason": "R3 preregistration explicitly closes after NO_EVIDENCE following the action-turn repair; without clean PRE headroom, later post-lock-in arms cannot identify the candidate residual."
+  },
+  "closure": {
+    "artifact": "generated/v19r003-forced-switch-closure-r1-20260824.json",
+    "failure_lesson": "generated/v19r003-forced-switch-failure-lesson-r2-20260824.json",
+    "support_receipt": "generated/v19r003-forced-switch-deepseek-pre-r3-support-failure-r2-20260824.json"
+  },
+  "next_valid_action": "None for V19R-003 under the current candidate identity. Do not spend more API, do not task-hop, and do not create a ResearchItem or paper. Reopen only if the closure artifact's outcome-independent semantic-observability condition is satisfied before a fresh PRE unit; otherwise treat V19R-003 as closed discovery memory.",
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "full_experiment": false
+  }
+}
