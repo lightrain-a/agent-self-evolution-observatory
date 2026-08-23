@@ -1,0 +1,152 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "STRATEGY-REOPEN-C01",
+  "stage": "S0_METADATA_ONLY_INVENTORY",
+  "status": "HOLD_PAPER_CORPUS_REVISION_AND_ANNOTATION_PROVENANCE_NOT_CLOSED",
+  "recorded_date": "2026-08-23",
+  "parent_gate": "research_pipeline/strategy_reopen_c01_same_substrate_qualification.json",
+  "execution_mode": "PUBLIC_METADATA_ONLY_NO_BULK_DOWNLOAD_NO_PROVIDER_CALL",
+  "primary_paper_metadata": {
+    "ref": "arXiv:2608.19072",
+    "reported_public_trajectories": 1338,
+    "reported_trajectories_with_model_update": 900,
+    "reported_verified_training_experiments": 5111,
+    "reported_agent_interfaces": [
+      "Claude Code",
+      "Codex CLI",
+      "GLM-X",
+      "OpenCode",
+      "Qwen3-Max"
+    ],
+    "reported_base_models": [
+      "Gemma-3-4B-PT",
+      "Qwen3-1.7B-Base",
+      "Qwen3-4B-Base",
+      "SmolLM3-3B-Base"
+    ],
+    "reported_benchmarks": [
+      "AIME 2025",
+      "ArenaHardWriting",
+      "BFCL",
+      "GPQA Main",
+      "GSM8K",
+      "HealthBench",
+      "HumanEval"
+    ],
+    "strategy_annotation_dimensions": [
+      "training objective/update family",
+      "data-source type",
+      "stage structure"
+    ],
+    "paper_observational_limit": "The paper states that model, prompt, interface, scaffold, and benchmark are not independently randomized; the corpus does not identify their separate causal effects."
+  },
+  "public_dataset_metadata": {
+    "dataset": "aisa-group/PostTrainBench-Trajectories",
+    "dataset_url": "https://huggingface.co/datasets/aisa-group/PostTrainBench-Trajectories",
+    "license": "apache-2.0",
+    "reported_total_file_size": "28.9 GB",
+    "current_main_commit_observed": "39d3fcd794df51c062c8bd3b7f8523ba707aaeb3",
+    "current_main_commit_message": "Remove stale viewer_data files (orphaned by renames + excluded experiments)",
+    "root_path_schema": "{agent}_{model}_{hours}h_{run}/{benchmark}_{org}_{base_model}_{job_id}/...",
+    "documented_job_artifacts": [
+      "solve_out.txt",
+      "metrics.json",
+      "contamination_judgement.txt",
+      "disallowed_model_judgement.txt",
+      "judgement.log or judge_output.json",
+      "system_montior.log",
+      "time_taken.txt"
+    ]
+  },
+  "metadata_probe_example": {
+    "agent_run_path": "claude_claude-opus-4-6_10h_run1",
+    "observed_directory_revision": "5525a0cc630eada59843887f13350cac1c471e54",
+    "visible_job_count": 28,
+    "visible_task_families": [
+      "aime2025",
+      "arenahardwriting",
+      "bfcl",
+      "gpqamain",
+      "gsm8k",
+      "healthbench",
+      "humaneval"
+    ],
+    "visible_base_models": [
+      "HuggingFaceTB_SmolLM3-3B-Base",
+      "Qwen_Qwen3-1.7B-Base",
+      "Qwen_Qwen3-4B-Base",
+      "google_gemma-3-4b-pt"
+    ],
+    "example_job_id": "aime2025_Qwen_Qwen3-1.7B-Base_16829313",
+    "example_job_metadata": {
+      "reported_directory_size": "24.2 MB",
+      "visible_artifacts": [
+        "task/",
+        "contamination_judgement.txt",
+        "disallowed_model_judgement.txt",
+        "error.log",
+        "judgement.log",
+        "metrics.json",
+        "solve_out.txt",
+        "solve_parsed.txt",
+        "time_taken.txt",
+        "trace.txt"
+      ]
+    },
+    "interpretation": "The public tree is sufficient to establish stable-looking task/model/job path identifiers and the existence of trace-like artifacts without downloading trajectory payloads. It is not sufficient to prove that this current tree exactly equals the 1,338-trajectory corpus analyzed by arXiv:2608.19072."
+  },
+  "s0_checks": [
+    {
+      "id": "S0A_PUBLIC_DATASET_EXISTS",
+      "status": "PASS",
+      "evidence": "Public dataset card and file tree are accessible."
+    },
+    {
+      "id": "S0B_PATH_IDENTIFIERS_EXIST",
+      "status": "PASS",
+      "evidence": "Agent/scaffold-like run directories, benchmark/base-model/job-id directories, and per-job artifact names are visible from metadata."
+    },
+    {
+      "id": "S0C_MULTI_CONTEXT_METADATA_HEADROOM",
+      "status": "PASS",
+      "evidence": "A single observed run directory exposes 28 jobs spanning seven task families and four base models, so the metadata layer is not obviously too small for the planned family-balance gate."
+    },
+    {
+      "id": "S0D_EXACT_PAPER_CORPUS_REVISION_PIN",
+      "status": "HOLD",
+      "evidence": "The primary paper reports 1,338 trajectories but does not expose an explicit Hugging Face commit hash in the audited paper text. The current dataset main is mutable and contains ongoing file-history changes."
+    },
+    {
+      "id": "S0E_SOURCE_STRATEGY_ANNOTATION_PROVENANCE",
+      "status": "HOLD",
+      "evidence": "The paper defines and reports a conservative strategy annotation protocol, but no root-level public strategy-annotation sidecar was identified in the metadata-only audit. Per-pair labels cannot therefore be treated as provenance-bound source labels yet."
+    },
+    {
+      "id": "S0F_EXACT_RUNTIME_REPLAY",
+      "status": "NOT_EVALUATED_AT_S0",
+      "evidence": "Model/provider/interface/scaffold continuation replay is intentionally deferred; no provider call or payload download was made."
+    }
+  ],
+  "decision": {
+    "overall": "HOLD_BEFORE_S1_PREFIX_MATERIALIZATION",
+    "why": "Public metadata establishes a plausible same-substrate route but does not yet bind the analyzed paper corpus to an immutable dataset revision or provenance-bind the source strategy annotations. Selecting/download materializing prefixes now would weaken the frozen substrate contract.",
+    "next_action": "Resolve the exact paper-corpus dataset revision and locate a public/source-authoritative strategy-annotation export or explicitly freeze an independently reconstructed annotation protocol before selecting any payload-bearing prefixes.",
+    "bulk_download_authorized": false,
+    "prefix_materialization_authorized": false,
+    "provider_calls_authorized": false,
+    "gpu_authorized": false,
+    "scientific_interpretation": "none"
+  },
+  "authority": {
+    "scientific": false,
+    "novelty": false,
+    "problem_gate": false,
+    "pre_researchitem_projection": false,
+    "research_item_promotion": false,
+    "support_download": false,
+    "provider_calls": false,
+    "experiment": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}

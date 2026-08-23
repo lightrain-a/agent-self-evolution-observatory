@@ -13,6 +13,7 @@ OBJECT = PIPELINE / "strategy_reopen_c01_scientific_object.json"
 CLOSEST = PIPELINE / "strategy_reopen_c01_closest_work_review.json"
 EXCLUSION = PIPELINE / "strategy_reopen_c01_exclusion_audit.json"
 SAME_SUBSTRATE = PIPELINE / "strategy_reopen_c01_same_substrate_qualification.json"
+S0 = PIPELINE / "strategy_reopen_c01_s0_metadata_inventory.json"
 F0 = PIPELINE / "strategy_reopen_c01_bounded_falsifier_design.json"
 TRANSACTION = PIPELINE / "strategy_reopen_c01_candidate_replenishment_transaction.json"
 
@@ -134,6 +135,23 @@ class StrategyReopenC01ScientificObjectTest(unittest.TestCase):
         )
         self.assertTrue(closest["nonreducibility_gate"]["hold"].startswith("HOLD rather than STOP"))
         self.assertEqual(closest["closest_work_decision"], "PASS_PROVISIONAL_DIRECT_RESIDUAL_REQUIRES_MATCHED_F0")
+
+    def test_s0_metadata_inventory_fails_closed_before_payload_or_provider_access(self) -> None:
+        s0 = load(S0)
+        self.assertEqual(s0["stage"], "S0_METADATA_ONLY_INVENTORY")
+        self.assertEqual(s0["status"], "HOLD_PAPER_CORPUS_REVISION_AND_ANNOTATION_PROVENANCE_NOT_CLOSED")
+        checks = {row["id"]: row["status"] for row in s0["s0_checks"]}
+        self.assertEqual(checks["S0A_PUBLIC_DATASET_EXISTS"], "PASS")
+        self.assertEqual(checks["S0B_PATH_IDENTIFIERS_EXIST"], "PASS")
+        self.assertEqual(checks["S0C_MULTI_CONTEXT_METADATA_HEADROOM"], "PASS")
+        self.assertEqual(checks["S0D_EXACT_PAPER_CORPUS_REVISION_PIN"], "HOLD")
+        self.assertEqual(checks["S0E_SOURCE_STRATEGY_ANNOTATION_PROVENANCE"], "HOLD")
+        self.assertEqual(checks["S0F_EXACT_RUNTIME_REPLAY"], "NOT_EVALUATED_AT_S0")
+        self.assertEqual(s0["decision"]["overall"], "HOLD_BEFORE_S1_PREFIX_MATERIALIZATION")
+        self.assertFalse(s0["decision"]["bulk_download_authorized"])
+        self.assertFalse(s0["decision"]["prefix_materialization_authorized"])
+        self.assertFalse(s0["decision"]["provider_calls_authorized"])
+        self.assertFalse(any(s0["authority"].values()))
 
     def test_replenishment_transaction_binds_strict_zero_authority_gate_artifacts(self) -> None:
         tx = load(TRANSACTION)
