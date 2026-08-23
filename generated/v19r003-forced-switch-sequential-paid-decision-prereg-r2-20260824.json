@@ -1,0 +1,147 @@
+{
+  "adherence_rubric": "V19R003_TRAJECTORY_ADHERENCE_V2",
+  "artifact_kind": "V19R003_SEQUENTIAL_PAID_DECISION_PREREG_R2",
+  "authority": {
+    "canonical_projection": false,
+    "paid_probe_authorized": false,
+    "problem_gate": false,
+    "research_item_created": false,
+    "scientific_arms_executed": 0,
+    "scientific_authority": false
+  },
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "cost_policy": {
+    "arm_order": [
+      "PRE_STRATEGY",
+      "POST_STRATEGY",
+      "POST_EXECUTION",
+      "POST_CONFLICT_FREE"
+    ],
+    "deepseek_calls_so_far": 0,
+    "external_llm_api_calls_so_far": 0,
+    "max_output_tokens_per_provider_call": 512,
+    "max_provider_calls_per_purchased_arm": 4,
+    "max_reported_output_tokens_per_purchased_arm": 2048,
+    "parallel_purchase_forbidden": true,
+    "purchase_policy": "STRICTLY_SEQUENTIAL_STOP_AS_SOON_AS_REDUCTION_DOMINATES",
+    "worst_case_provider_call_cap_only_if_all_prior_gates_pass": 16
+  },
+  "frozen_decision_scenarios": {
+    "conflict_reduction": {
+      "decision": "STOP_ORDINARY_STRATEGY_CONFLICT_REDUCTION",
+      "next_arm": null,
+      "problem_gate_pass": false,
+      "rationale": "A conflict-free strategy extension is enactable after lock-in, so failure of the matched strategy is explained by ordinary strategy conflict/rollback semantics rather than a general permeability boundary.",
+      "reopen_exact_reduction_adjudication": false,
+      "stop_paid_expansion": true
+    },
+    "full_residual": {
+      "decision": "REOPEN_EXACT_REDUCTION_ADJUDICATION",
+      "next_arm": null,
+      "problem_gate_pass": false,
+      "rationale": "PRE headroom holds, matched POST strategy enactment fails or reverts, generic execution intervention remains enactable, and even the conflict-free post-lock-in strategy extension fails or reverts. This residual warrants a fresh exact-reduction adjudication but does not itself pass ProblemGate.",
+      "reopen_exact_reduction_adjudication": true,
+      "stop_paid_expansion": true
+    },
+    "generic_control_fail": {
+      "decision": "STOP_GENERIC_POST_BOUNDARY_CONTROL_FAILED",
+      "next_arm": null,
+      "problem_gate_pass": false,
+      "rationale": "The execution-level post-boundary control was not cleanly enacted, so the apparent strategy residual reduces to generic intervention/continuation failure.",
+      "reopen_exact_reduction_adjudication": false,
+      "stop_paid_expansion": true
+    },
+    "generic_control_pass": {
+      "decision": "AUTHORIZE_POST_CONFLICT_FREE_ONLY",
+      "next_arm": "POST_CONFLICT_FREE",
+      "problem_gate_pass": false,
+      "rationale": "Generic post-boundary intervention works; purchase the conflict-free strategy extension as the final reduction control.",
+      "reopen_exact_reduction_adjudication": false,
+      "stop_paid_expansion": false
+    },
+    "initial": {
+      "decision": "AUTHORIZE_PRE_STRATEGY_ONLY",
+      "next_arm": "PRE_STRATEGY",
+      "problem_gate_pass": false,
+      "rationale": "Headroom must be established before any post-lock-in arm is purchased.",
+      "reopen_exact_reduction_adjudication": false,
+      "stop_paid_expansion": false
+    },
+    "post_enactable": {
+      "decision": "STOP_SOURCE_REDUCTION_SUFFICIENT",
+      "next_arm": null,
+      "problem_gate_pass": false,
+      "rationale": "The same strategy remains enactable after lock-in once initiation is externally supplied; the source missing-spontaneity-not-capability reduction is sufficient.",
+      "reopen_exact_reduction_adjudication": false,
+      "stop_paid_expansion": true
+    },
+    "post_residual": {
+      "decision": "AUTHORIZE_POST_EXECUTION_ONLY",
+      "next_arm": "POST_EXECUTION",
+      "problem_gate_pass": false,
+      "rationale": "A PRE-vs-POST strategy residual exists; test generic post-boundary intervention executability before buying the strategy-conflict control.",
+      "reopen_exact_reduction_adjudication": false,
+      "stop_paid_expansion": false
+    },
+    "pre_headroom_fail": {
+      "decision": "STOP_PRE_HEADROOM_NOT_ESTABLISHED",
+      "next_arm": null,
+      "problem_gate_pass": false,
+      "rationale": "PRE_STRATEGY was not cleanly enacted, so post-lock-in failure would be uninterpretable.",
+      "reopen_exact_reduction_adjudication": false,
+      "stop_paid_expansion": true
+    },
+    "pre_headroom_pass": {
+      "decision": "AUTHORIZE_POST_STRATEGY_ONLY",
+      "next_arm": "POST_STRATEGY",
+      "problem_gate_pass": false,
+      "rationale": "PRE headroom passed; purchase only the matched post-lock-in strategy arm next.",
+      "reopen_exact_reduction_adjudication": false,
+      "stop_paid_expansion": false
+    }
+  },
+  "generated_at": "2026-08-23T16:46:33.706330Z",
+  "next_action": "Keep all paid DeepSeek execution disabled. If paid evidence is opened later, authorize PRE_STRATEGY only under DeepSeek contract R2 and apply this V2 table after each completed arm; do not task-hop when POST lacks a switch contrast.",
+  "positive_boundary": {
+    "interpretation": "This is only a residual worthy of fresh closest-work/exact-reduction adjudication; it is not a ProblemGate pass or paper authorization.",
+    "problem_gate_pass": false,
+    "required_path": [
+      "PRE=ADHERED_UNCALIBRATED",
+      "POST in {NOT_ADHERED,PARTIAL_OR_REVERTED}",
+      "POST_EXECUTION=ADHERED",
+      "POST_CONFLICT_FREE in {NOT_ADHERED,PARTIAL_OR_REVERTED}"
+    ],
+    "result": "REOPEN_EXACT_REDUCTION_ADJUDICATION"
+  },
+  "reduction_stops": {
+    "conflict_free_clean": "STOP_ORDINARY_STRATEGY_CONFLICT_REDUCTION",
+    "execution_control_not_clean": "STOP_GENERIC_POST_BOUNDARY_CONTROL_FAILED",
+    "no_evidence": "STOP_UNINTERPRETABLE_NO_POSITIVE_RESIDUAL",
+    "post_clean": "STOP_SOURCE_REDUCTION_SUFFICIENT",
+    "pre_not_clean": "STOP_PRE_HEADROOM_NOT_ESTABLISHED"
+  },
+  "schema_version": "1.0-v19r003-sequential-paid-prereg-r2",
+  "superseded_r1_sha256": "a64c0f9b6c24d6236538b46918cb4993e6cf46dec967faa62fd9381d27cd5123",
+  "supersedes": "generated/v19r003-forced-switch-sequential-paid-decision-prereg-r1-20260824.json",
+  "support": {
+    "decision_module": "research_pipeline/posttrain_strategy_sequential_gate.py",
+    "decision_module_sha256": "10902f0ccceedd817d6c6e56298a8cb2b73cbb9c4aad895887775a6b236287fa",
+    "decision_tests": "research_pipeline/test_posttrain_strategy_sequential_gate.py",
+    "decision_tests_sha256": "7be19466da25a162d06db68254f924bdd73eb450ca38262da11b1fa319431b69",
+    "deepseek_pre_contract": "generated/v19r003-forced-switch-deepseek-pre-contract-r1-20260823.json",
+    "deepseek_pre_contract_sha256": "a3f5957bf29d0bf3ffc028288089be85ec44501c3f4150de55a4db9f72a3d2ef",
+    "zero_api_runtime": "generated/v19r003-forced-switch-l1-zero-api-runtime-r2-20260824.json",
+    "zero_api_runtime_sha256": "c538240c3c292be8f4681f1011436b87903b02f7269f4017cdcf30b19676a007"
+  },
+  "test_receipt": "62/62 distinct posttrain tests PASS",
+  "v2_identifiability_rules": {
+    "already_rl_preboundary": "NO_EVIDENCE_AND_STOP",
+    "checkpoint_chain_continuity_required": true,
+    "llm_judge_used": false,
+    "outcome_score_used": false,
+    "post_strategy_requires_blind_sft_commitment": true,
+    "receipt_backed_enactment_only": true,
+    "semantic_boundary_requires_one_verified_persisted_preupdate": true,
+    "support_or_instrument_failure": "NO_EVIDENCE_AND_STOP"
+  }
+}

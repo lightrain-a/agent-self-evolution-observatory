@@ -48,6 +48,16 @@ class SequentialPaidGateTest(unittest.TestCase):
             self.assertEqual(d.next_arm, ARM_POST_EXECUTION)
             self.assertFalse(d.stop_paid_expansion)
 
+    def test_post_no_evidence_stops_before_any_control_spend(self) -> None:
+        d = adjudicate_sequential_paid_gate(
+            pre_strategy="ADHERED_UNCALIBRATED",
+            post_strategy="NO_EVIDENCE",
+        )
+        self.assertEqual(d.decision, "STOP_POST_STRATEGY_UNINTERPRETABLE")
+        self.assertTrue(d.stop_paid_expansion)
+        self.assertIsNone(d.next_arm)
+        self.assertFalse(d.reopen_exact_reduction_adjudication)
+
     def test_failed_execution_control_stops_before_conflict_free_spend(self) -> None:
         for status in ("NOT_ADHERED", "PARTIAL_OR_REVERTED", "NO_EVIDENCE", "ADHERED_UNCALIBRATED"):
             d = adjudicate_sequential_paid_gate(
@@ -100,6 +110,23 @@ class SequentialPaidGateTest(unittest.TestCase):
         )
         self.assertEqual(d.decision, "STOP_CONFLICT_FREE_CONTROL_UNINTERPRETABLE")
         self.assertFalse(d.reopen_exact_reduction_adjudication)
+
+    def test_problem_gate_is_never_granted_for_any_interpretable_status_combination(self) -> None:
+        statuses = (None, "ADHERED_UNCALIBRATED", "ADHERED", "NOT_ADHERED", "PARTIAL_OR_REVERTED", "NO_EVIDENCE")
+        for pre in statuses:
+            for post in statuses:
+                for execution in statuses:
+                    for conflict_free in statuses:
+                        try:
+                            d = adjudicate_sequential_paid_gate(
+                                pre_strategy=pre,
+                                post_strategy=post,
+                                post_execution=execution,
+                                post_conflict_free=conflict_free,
+                            )
+                        except ValueError:
+                            continue
+                        self.assertFalse(d.problem_gate_pass)
 
 
 if __name__ == "__main__":

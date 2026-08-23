@@ -1,0 +1,71 @@
+{
+  "artifact_kind": "V19R003_PRE_F0_CURRENT_ADJUDICATION_R10",
+  "authority": {
+    "canonical_projection": false,
+    "canonical_researchitem_created": false,
+    "experiment": false,
+    "full_experiment": false,
+    "method": false,
+    "p0": false,
+    "paper_design": false,
+    "problem_gate": false
+  },
+  "branch": "research/v19r003-forced-switch-pre-f0-20260823",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "candidate_snapshot_sha256": "47ea60fb13e3ec723d2a871b58ab1a3c6e9e565eea01e1cd838c67f9f2b39777",
+  "cost": {
+    "deepseek_calls": 0,
+    "external_llm_api_calls": 0,
+    "paid_probe_authorized": false
+  },
+  "current_status": "L1_ZERO_API_COMPLETE_IDENTIFIABILITY_V2_FROZEN_UNAUTHORIZED",
+  "frozen_paid_contract": {
+    "artifact": "generated/v19r003-forced-switch-deepseek-pre-contract-r2-20260824.json",
+    "first_paid_gate": "PRE_STRATEGY only",
+    "sha256": "dc5df317551a7f5773d3e6d5bf11aff34f202b1600a81dd019ba62ce66ff7a12",
+    "status": "FROZEN_UNAUTHORIZED"
+  },
+  "generated_at": "2026-08-23T16:46:33.706330Z",
+  "identifiability_repair": {
+    "from_rubric": "V19R003_TRAJECTORY_ADHERENCE_V1",
+    "gap_1_closed": "A requested RL/SFT tool call no longer counts as enactment without matching verified persisted parameter-update evidence.",
+    "gap_2_closed": "POST strategy arms no longer count an already-RL blind baseline as a forced strategy switch; blind SFT commitment is required.",
+    "support_failures_fail_closed": "Invalid boundary, unverified/unpersisted action, method mismatch, or checkpoint discontinuity maps to NO_EVIDENCE rather than a positive strategy residual.",
+    "to_rubric": "V19R003_TRAJECTORY_ADHERENCE_V2"
+  },
+  "next_valid_action": "Keep DeepSeek disabled under the user cost policy. All presently identified zero-API mechanics and endpoint-identifiability gates are complete. If a paid action is later explicitly opened, run PRE_STRATEGY only under contract R2. Do not buy POST unless PRE is clean V2 ADHERED_UNCALIBRATED; if a later POST blind phase is already RL-congruent, classify NO_EVIDENCE and stop instead of selecting another task. ProblemGate remains blocked.",
+  "official_ptb_policy": {
+    "official_container_required_for_l1": false,
+    "official_container_required_for_source_exact_l2": true,
+    "source_exact_claim_allowed": false
+  },
+  "schema_version": "1.0-v19r003-current-adjudication-r10",
+  "scientific_state": {
+    "canonical_projection": false,
+    "canonical_researchitem_created": false,
+    "closest_work": "arXiv:2608.19072",
+    "pre_f0_eligible": true,
+    "problem_gate_pass": false,
+    "reduction_status": "NEEDS_EXACT_REDUCTION_TEST",
+    "scientific_arms_executed": 0,
+    "scientific_authority": false,
+    "strongest_reduction": "source-authors missing-spontaneity-not-capability diagnosis"
+  },
+  "sequential_gate": {
+    "artifact": "generated/v19r003-forced-switch-sequential-paid-decision-prereg-r2-20260824.json",
+    "problem_gate_auto_pass_possible": false,
+    "sha256": "0ddbf339e62418648d065964e0d9c51564bf6dada894f7d5a961767449d06039",
+    "task_hopping_after_no_switch_contrast_forbidden": true
+  },
+  "superseded_r9_sha256": "ceba714f48ce2c9e51839c4c89fecce7d077355475cd7509e0b946cf5e1b71ed",
+  "supersedes": "generated/v19r003-forced-switch-pre-f0-current-adjudication-r9-20260824.json",
+  "zero_api_state": {
+    "a100_real_parameter_update": true,
+    "adherence_v2_real_receipt_replay": "PASS_INSTRUMENT_ONLY",
+    "official_ptb_aime_evaluator_overlay_reload": true,
+    "persistent_rl_checkpoint": true,
+    "persistent_sft_checkpoint": true,
+    "status": "PASS",
+    "unit_tests": "62/62 distinct posttrain tests PASS"
+  }
+}

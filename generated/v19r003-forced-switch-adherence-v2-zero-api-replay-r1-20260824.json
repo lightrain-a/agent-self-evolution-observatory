@@ -1,0 +1,70 @@
+{
+  "artifact_kind": "V19R003_ADHERENCE_V2_ZERO_API_REPLAY_R1",
+  "assessment": {
+    "assessment": {
+      "arm": "POST_STRATEGY",
+      "rationale": "the supplied strategy was observably enacted without detected reversion or mixing",
+      "scientific_authority": false,
+      "status": "ADHERED"
+    },
+    "details": {
+      "arm": "POST_STRATEGY",
+      "boundary_present": true,
+      "boundary_semantically_valid": true,
+      "checkpoint_chain_continuity": true,
+      "final_benchmark_score_used": false,
+      "llm_judge_used": false,
+      "post_rule": "blind phase must contain one verified SFT commitment; after treatment the first verified strategy-level training action should be RL and later SFT is mixing",
+      "post_training_methods": [
+        "rl"
+      ],
+      "pre_training_methods": [
+        "sft"
+      ],
+      "requested_training_methods": [
+        "sft",
+        "rl"
+      ],
+      "rubric_version": "V19R003_TRAJECTORY_ADHERENCE_V2",
+      "runtime_integrity_ok": true,
+      "signals": {
+        "execution_parameter_change_observed": false,
+        "instruction_delivered": true,
+        "reversion_or_mixing_observed": false,
+        "strategy_change_observed": true
+      },
+      "switch_contrast_established": true,
+      "unverified_or_unpersisted_training_attempts": 0,
+      "verified_training_methods": [
+        "sft",
+        "rl"
+      ]
+    }
+  },
+  "authority": {
+    "canonical_projection": false,
+    "paid_probe_authorized": false,
+    "problem_gate": false,
+    "scientific_arm_executed": false,
+    "scientific_authority": false
+  },
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "cost": {
+    "deepseek_calls": 0,
+    "external_llm_api_calls": 0
+  },
+  "generated_at": "2026-08-23T16:46:33.706330Z",
+  "interpretation_boundary": "This replay validates the V2 deterministic rubric against an existing real SFT-to-RL zero-API execution path. Because the provider was scripted, ADHERED here is instrument validation only and is not evidence about autonomous-agent strategy permeability.",
+  "reconstructed_structure": [
+    "verified persisted SFT from base",
+    "semantic first-update boundary",
+    "verified persisted RL from SFT checkpoint"
+  ],
+  "reconstruction_policy": "Only verified method, parameter-update, persistence, checkpoint-ref and input-checkpoint-ref fields from the existing zero-API receipt are used; no model text or benchmark outcome is used.",
+  "rubric": "V19R003_TRAJECTORY_ADHERENCE_V2",
+  "rubric_code_sha256": "b7d0768293ae701b9aa7f6e47fee490f2af0666833fe01aee882d8af49ebe147",
+  "schema_version": "1.0-v19r003-adherence-v2-replay-r1",
+  "source_provider": "SCRIPTED_REAL_METHOD_ZERO_API_PROVIDER",
+  "source_receipt": "generated/v19r003-forced-switch-l1-real-zero-api-persistent-20260823/receipt.json",
+  "source_receipt_sha256": "f061557a6105125d46e8b3cea58f217847d5e59a3a13f138dab3cfaaba21e225"
+}
