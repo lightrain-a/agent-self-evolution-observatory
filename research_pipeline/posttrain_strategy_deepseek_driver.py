@@ -40,6 +40,35 @@ class AgentLoopBudget:
             raise ValueError("max_reported_output_tokens must cover at least one call")
 
 
+@dataclass(frozen=True)
+class ActionTurnContract:
+    """Arm-invariant execution protocol for paid agent turns.
+
+    This contract constrains *when the agent must act*, not which training method it should choose.
+    It exists to separate protocol nonexecution from scientific strategy non-adherence.
+    """
+
+    max_preboundary_diagnostic_actions: int = 2
+    max_text_only_reprompts: int = 1
+
+    def validate(self) -> None:
+        if self.max_preboundary_diagnostic_actions < 0:
+            raise ValueError("max_preboundary_diagnostic_actions must be >= 0")
+        if self.max_text_only_reprompts < 0:
+            raise ValueError("max_text_only_reprompts must be >= 0")
+
+    def instruction(self) -> str:
+        return (
+            "## Execution-turn protocol (arm-invariant)\n"
+            "Every pre-boundary response must execute at least one declared tool action; prose-only planning is not an action. "
+            f"Before the first verified parameter update you may execute at most {self.max_preboundary_diagnostic_actions} "
+            "diagnostic actions total across inspect_workspace and run_evaluation. Once that diagnostic budget is exhausted, "
+            "the next valid pre-boundary action is run_training. This protocol does not prescribe whether run_training uses "
+            "SFT or RL; choose the method and bounded configuration according to the task and any binding strategy instruction. "
+            "finish remains invalid before the first independently verified parameter update."
+        )
+
+
 TOOLS = [
     {
         "type": "function",
@@ -155,10 +184,24 @@ def _usage_output_tokens(response: dict[str, Any]) -> int:
         return 0
 
 
-def _render_turn_prompt(base: InterventionPrompts, transcript: list[dict[str, Any]], phase2_injected: bool) -> str:
+def _render_turn_prompt(
+    base: InterventionPrompts,
+    transcript: list[dict[str, Any]],
+    phase2_injected: bool,
+    *,
+    action_turn_contract: ActionTurnContract | None = None,
+    diagnostic_actions_used: int = 0,
+) -> str:
+    protocol = []
+    if action_turn_contract is not None:
+        remaining = max(action_turn_contract.max_preboundary_diagnostic_actions - diagnostic_actions_used, 0)
+        protocol = [
+            "\n" + action_turn_contract.instruction(),
+            f"Pre-boundary diagnostic actions remaining: {remaining}.",
+        ]
     if not transcript:
-        return base.phase1_prompt
-    rendered = [base.phase1_prompt, "\n## Tool transcript"]
+        return "\n".join([base.phase1_prompt, *protocol])
+    rendered = [base.phase1_prompt, *protocol, "\n## Tool transcript"]
     for row in transcript:
         rendered.append(json.dumps(row, ensure_ascii=False, sort_keys=True))
     if phase2_injected:
@@ -190,6 +233,7 @@ def run_deepseek_tool_loop(
     conflict_free_strategy_instruction: str,
     budget: AgentLoopBudget | None = None,
     model: str = DEFAULT_MODEL,
+    action_turn_contract: ActionTurnContract | None = None,
 ) -> dict[str, Any]:
     """Run a bounded provider/tool loop suitable for a later DeepSeek L1 probe.
 
@@ -203,6 +247,8 @@ def run_deepseek_tool_loop(
         raise ValueError(f"unsupported intervention arm:{normalized_arm}")
     chosen_budget = budget or AgentLoopBudget()
     chosen_budget.validate()
+    if action_turn_contract is not None:
+        action_turn_contract.validate()
     prompts = compose_segmented_prompts(
         base_prompt=base_prompt,
         arm=normalized_arm,
@@ -219,9 +265,18 @@ def run_deepseek_tool_loop(
     phase2_injected = False
     finished = False
     final_summary = ""
+    diagnostic_actions_used = 0
+    text_only_reprompts_used = 0
+    diagnostic_rejections = 0
 
     while calls < chosen_budget.max_provider_calls and not finished:
-        prompt = _render_turn_prompt(prompts, transcript, phase2_injected)
+        prompt = _render_turn_prompt(
+            prompts,
+            transcript,
+            phase2_injected,
+            action_turn_contract=action_turn_contract,
+            diagnostic_actions_used=diagnostic_actions_used,
+        )
         calls += 1
         try:
             response = client.respond(
@@ -263,8 +318,22 @@ def run_deepseek_tool_loop(
                 finished = True
                 final_summary = text
                 break
+            if action_turn_contract is not None and text_only_reprompts_used < action_turn_contract.max_text_only_reprompts:
+                text_only_reprompts_used += 1
+                transcript.append(
+                    {
+                        "kind": "protocol_notice",
+                        "code": "PREBOUNDARY_TEXT_ONLY_NOT_AN_ACTION",
+                        "notice": (
+                            "Prose-only planning is not executable. On the next response, use a declared tool action. "
+                            "If the diagnostic budget is exhausted, the next valid action is run_training."
+                        ),
+                    }
+                )
+                continue
             raise RuntimeError("provider returned no tool call before the verified parameter-update boundary")
 
+        rejected_for_diagnostic_budget = False
         for raw_call in function_calls:
             if not isinstance(raw_call, dict):
                 raise ValueError("invalid function call payload")
@@ -280,6 +349,28 @@ def run_deepseek_tool_loop(
                 transcript.append({"kind": "finish", "arguments": arguments})
                 finished = True
                 break
+
+            if (
+                action_turn_contract is not None
+                and not boundary_reached
+                and name in {"inspect_workspace", "run_evaluation"}
+            ):
+                if diagnostic_actions_used >= action_turn_contract.max_preboundary_diagnostic_actions:
+                    diagnostic_rejections += 1
+                    transcript.append(
+                        {
+                            "kind": "protocol_notice",
+                            "code": "PREBOUNDARY_DIAGNOSTIC_BUDGET_EXHAUSTED",
+                            "rejected_tool": name,
+                            "notice": (
+                                "This diagnostic action was not executed because the pre-boundary diagnostic budget is exhausted. "
+                                "The next valid pre-boundary action is run_training."
+                            ),
+                        }
+                    )
+                    rejected_for_diagnostic_budget = True
+                    break
+                diagnostic_actions_used += 1
 
             result = executor.execute(name, arguments)
             if not isinstance(result, dict):
@@ -307,6 +398,9 @@ def run_deepseek_tool_loop(
                     # model-selected tool call from the same pre-boundary provider response.
                     break
 
+        if rejected_for_diagnostic_budget:
+            continue
+
     stop_reason = "finished" if finished else "provider_call_budget_exhausted"
     if not finished and calls >= chosen_budget.max_provider_calls:
         raise RuntimeError("DeepSeek tool-loop provider-call budget exhausted")
@@ -323,6 +417,16 @@ def run_deepseek_tool_loop(
         "final_summary": final_summary,
         "transcript": transcript,
         "provider_receipts": provider_receipts,
+        "action_turn_protocol": {
+            "enabled": action_turn_contract is not None,
+            "max_preboundary_diagnostic_actions": (
+                action_turn_contract.max_preboundary_diagnostic_actions if action_turn_contract is not None else None
+            ),
+            "diagnostic_actions_used": diagnostic_actions_used,
+            "diagnostic_rejections": diagnostic_rejections,
+            "max_text_only_reprompts": action_turn_contract.max_text_only_reprompts if action_turn_contract is not None else None,
+            "text_only_reprompts_used": text_only_reprompts_used,
+        },
         "scientific_authority": False,
         "paid_probe_authorized_by_this_function": False,
         "pre_strategy_present_in_initial_prompt": normalized_arm == ARM_PRE_STRATEGY,

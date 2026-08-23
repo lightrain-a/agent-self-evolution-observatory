@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0-v19r003-deepseek-pre-authorization-r3",
+  "artifact_kind": "V19R003_DEEPSEEK_PRE_STRATEGY_AUTHORIZATION_R3",
+  "generated_at": "2026-08-23T17:23:53Z",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "contract": "generated/v19r003-forced-switch-deepseek-pre-contract-r3-20260824.json",
+  "contract_sha256": "3acdc57a2252d6e35b33d3b76d9e0724166280db886da1379587500ddcbabba6",
+  "authorization": {
+    "paid_probe_authorized": true,
+    "authorized_arm": "PRE_STRATEGY",
+    "authorized_provider_model": "deepseek-v4-pro",
+    "authorized_action_turn_contract": "V19R003_ACTION_TURN_R1",
+    "max_provider_posts": 6,
+    "max_output_tokens_per_post": 512,
+    "max_reported_output_tokens_total": 3072,
+    "post_strategy_authorized": false,
+    "post_execution_authorized": false,
+    "post_conflict_free_authorized": false,
+    "fresh_task_selection_authorized": false,
+    "task_hop_authorized": false
+  },
+  "stop_rules": {
+    "clean_pre": "Stop this authorization after PRE is adjudicated; any later arm requires a new append-only authorization.",
+    "nonclean_pre": "Close V19R-003 without buying POST.",
+    "no_evidence_after_action_turn_repair": "Close V19R-003 as support-nonexecutable on the fixed L1 substrate; no additional PRE retry is authorized.",
+    "problem_gate_auto_pass": false
+  },
+  "authority": {
+    "problem_gate": false,
+    "research_item_created": false,
+    "canonical_projection": false
+  }
+}

@@ -4,6 +4,7 @@ import unittest
 
 from .ark_provider import ArkResponseStateError
 from .posttrain_strategy_deepseek_driver import (
+    ActionTurnContract,
     AgentLoopBudget,
     TOOLS,
     run_deepseek_tool_loop,
@@ -82,7 +83,7 @@ class FakeExecutor:
 
 
 class DeepSeekDriverDryTest(unittest.TestCase):
-    def run_loop(self, provider, executor, arm=ARM_POST_STRATEGY, budget=None):
+    def run_loop(self, provider, executor, arm=ARM_POST_STRATEGY, budget=None, action_turn_contract=None):
         return run_deepseek_tool_loop(
             client=provider,
             executor=executor,
@@ -92,6 +93,7 @@ class DeepSeekDriverDryTest(unittest.TestCase):
             execution_control_instruction=EXECUTION,
             conflict_free_strategy_instruction=CONFLICT_FREE,
             budget=budget,
+            action_turn_contract=action_turn_contract,
         )
 
     def test_post_strategy_is_blind_before_boundary_and_injected_after_verified_update(self):
@@ -216,6 +218,49 @@ class DeepSeekDriverDryTest(unittest.TestCase):
         executor = FakeExecutor()
         with self.assertRaisesRegex(ValueError, "raw command/script fields are forbidden"):
             self.run_loop(provider, executor)
+        self.assertEqual([], executor.calls)
+
+    def test_action_turn_contract_recovers_one_text_only_turn_then_executes_training(self):
+        provider = FakeProvider(
+            [
+                response(text="I will inspect and plan first."),
+                response(call("run_training", {"method": "rl", "stage": "main", "config": {"lr": 1e-5}, "rationale": "execute"})),
+                response(call("finish", {"summary": "done"})),
+            ]
+        )
+        executor = FakeExecutor(training_updates=[True])
+        contract = ActionTurnContract(max_preboundary_diagnostic_actions=2, max_text_only_reprompts=1)
+        result = self.run_loop(provider, executor, arm=ARM_PRE_STRATEGY, action_turn_contract=contract)
+        notices = [row for row in result["transcript"] if row.get("kind") == "protocol_notice"]
+        self.assertEqual("PREBOUNDARY_TEXT_ONLY_NOT_AN_ACTION", notices[0]["code"])
+        self.assertEqual(1, result["action_turn_protocol"]["text_only_reprompts_used"])
+        self.assertTrue(result["boundary_reached"])
+
+    def test_action_turn_contract_rejects_third_diagnostic_without_executing_it(self):
+        provider = FakeProvider(
+            [
+                response(call("inspect_workspace", {"path": "task_interface.json"})),
+                response(call("run_evaluation", {"model_ref": "base_model", "limit": 1})),
+                response(call("inspect_workspace", {"path": "."})),
+                response(call("run_training", {"method": "rl", "stage": "main", "config": {"lr": 1e-5}, "rationale": "execute after diagnostics"})),
+                response(call("finish", {"summary": "done"})),
+            ]
+        )
+        executor = FakeExecutor(training_updates=[True])
+        contract = ActionTurnContract(max_preboundary_diagnostic_actions=2, max_text_only_reprompts=1)
+        result = self.run_loop(provider, executor, arm=ARM_PRE_STRATEGY, action_turn_contract=contract)
+        self.assertEqual(3, len(executor.calls))
+        self.assertEqual(["inspect_workspace", "run_evaluation", "run_training"], [name for name, _ in executor.calls])
+        self.assertEqual(1, result["action_turn_protocol"]["diagnostic_rejections"])
+        rejected = [row for row in result["transcript"] if row.get("code") == "PREBOUNDARY_DIAGNOSTIC_BUDGET_EXHAUSTED"]
+        self.assertEqual(1, len(rejected))
+
+    def test_action_turn_contract_exhausted_text_only_reprompt_fails_closed(self):
+        provider = FakeProvider([response(text="plan"), response(text="still planning")])
+        executor = FakeExecutor()
+        contract = ActionTurnContract(max_preboundary_diagnostic_actions=2, max_text_only_reprompts=1)
+        with self.assertRaisesRegex(RuntimeError, "no tool call before"):
+            self.run_loop(provider, executor, arm=ARM_PRE_STRATEGY, action_turn_contract=contract)
         self.assertEqual([], executor.calls)
 
 

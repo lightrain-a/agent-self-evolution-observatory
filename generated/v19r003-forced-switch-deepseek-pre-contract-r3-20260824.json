@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0-v19r003-deepseek-pre-contract-r3",
+  "artifact_kind": "V19R003_DEEPSEEK_PRE_STRATEGY_CONTRACT_R3",
+  "generated_at": "2026-08-23T17:23:53Z",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "branch_head_before_contract": "7b3e12bf5e498735e8a85ba0ce2050b9d0c79160",
+  "supersedes": "generated/v19r003-forced-switch-deepseek-pre-contract-r2-20260824.json",
+  "superseded_r2_sha256": "dc5df317551a7f5773d3e6d5bf11aff34f202b1600a81dd019ba62ce66ff7a12",
+  "reopen_from": {
+    "adjudication": "generated/v19r003-forced-switch-pre-f0-current-adjudication-r11-20260824.json",
+    "adjudication_sha256": "071aa7732ce648819c9fc2f0bad5c116f61c57070b7b0d5026dd6165664a6df9",
+    "prior_paid_pre_result": "generated/v19r003-forced-switch-deepseek-pre-result-r1-20260824.json",
+    "prior_paid_pre_result_sha256": "34fc94c1e33c88434055113e93c55981fc1c3bdbd4d744857a0b3bae6de65871",
+    "reopen_reason": "The prior PRE unit ended before any training action because prose-only planning and unbounded diagnostics were not separated from scientific non-adherence. R3 changes only the arm-invariant action-turn protocol."
+  },
+  "frozen_scientific_substrate": {
+    "task": "AIME 2025 improvement",
+    "base_model": "Qwen/Qwen3-1.7B-Base",
+    "base_model_local_path": "/data/wyt/llmmodels/Qwen3-1.7B-base_instruct_split/base_source/Qwen__Qwen3-1.7B-Base",
+    "training_data": "openai/gsm8k:main:train, 64 rows, selection seed 19003",
+    "training_data_sha256": "fa173edbc9f3083f1eae0468d309afb11d098b6f1077be71e32e57e173c2c097",
+    "aime_contamination_matches": 0,
+    "strategy_payload_sha256": "f4717c51cc24e71d76961e8acc6b76b31fa56d6f4aebb63b29c6d4eb55ee7c7d",
+    "strategy_payload_changed_from_r2": false,
+    "boundary": "immediately after the first independently verified successful persisted model parameter update",
+    "adherence_rubric": "V19R003_TRAJECTORY_ADHERENCE_V2",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "evidence_tier": "L1_A100_EQUIVALENT_SUBSTRATE_NOT_SOURCE_EXACT"
+  },
+  "provider": {
+    "requested_model": "deepseek-v4-pro",
+    "temperature": 0.0,
+    "thinking": "disabled",
+    "provider_retry_posts": 0,
+    "max_provider_posts": 6,
+    "max_output_tokens_per_post": 512,
+    "max_reported_output_tokens_total": 3072,
+    "incomplete_response_policy": "GET/poll an existing response only; never duplicate a paid generation POST implicitly"
+  },
+  "action_turn_contract": {
+    "contract_id": "V19R003_ACTION_TURN_R1",
+    "arm_invariant": true,
+    "driver_sha256": "23b5a1e11616e76b8cee74292877b43daf57dd64894372533428daaadd87559d",
+    "max_preboundary_diagnostic_actions": 2,
+    "diagnostic_tools": ["inspect_workspace", "run_evaluation"],
+    "max_text_only_reprompts": 1,
+    "rule_text_only": "A pre-boundary prose-only response is not an action. At most one deterministic protocol notice is returned, after which a second prose-only response fails closed.",
+    "rule_diagnostic_budget": "After two executed pre-boundary diagnostic actions, further diagnostic actions are not executed and a deterministic notice states that the next valid pre-boundary action is run_training.",
+    "rule_training_choice": "The protocol never specifies SFT versus RL. The agent must choose the training method and bounded config according to the task and binding strategy instruction.",
+    "finish_before_boundary": "forbidden",
+    "task_hop": "forbidden",
+    "outcome_selection": "forbidden"
+  },
+  "compute_bounds": {
+    "training_actions_max": 2,
+    "evaluation_actions_max": 1,
+    "steps_per_training_action": "1..2",
+    "examples_per_training_action": "1..8",
+    "max_sequence_tokens": 512,
+    "learning_rate": "0 < lr <= 0.01",
+    "rl_rollouts": "1..3",
+    "rl_max_new_tokens": "16..64"
+  },
+  "pre_only_decision_rule": {
+    "clean_headroom": "ADHERED_UNCALIBRATED => PRE passes; append a new POST_STRATEGY-only authorization under the same action-turn contract.",
+    "interpretable_nonclean": "Any interpretable non-clean PRE status => close V19R-003 because post-lock-in failure would be uninterpretable without pre-lock-in enactment headroom.",
+    "no_evidence": "NO_EVIDENCE after this action-turn repair => close the current candidate as support-nonexecutable on this fixed substrate; do not buy another PRE retry.",
+    "problem_gate": "Never passed by PRE alone."
+  },
+  "authority": {
+    "paid_probe_authorized_by_contract": false,
+    "problem_gate": false,
+    "research_item_created": false,
+    "canonical_projection": false
+  }
+}
