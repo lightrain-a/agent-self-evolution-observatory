@@ -3,6 +3,7 @@
   "candidate_id": "RSI-LOCKOUT-C01",
   "title": "Intervention-surface lockout breaks recursive self-intervention closure",
   "status": "STOP_MATCHED_SIMPLIFICATION_PRIMARY_INTERACTION_SATURATED",
+  "paper_first_lifecycle": "CLOSED_PAPER_FIRST",
   "matched_simplification_stop_certified": true,
   "closure_layer": "problem_novelty",
   "failure_layer": null,

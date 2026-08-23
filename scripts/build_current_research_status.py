@@ -121,6 +121,7 @@ for row in (shadow_memory.get("closed_objects") or shadow_memory.get("blocked_ob
         "failure_layer": row.get("failure_layer"),
         "memory_class": row.get("memory_class"),
         "source_stop_class": row.get("source_stop_class"),
+        "paper_first_lifecycle": row.get("paper_first_lifecycle"),
         "reason": row.get("reason"),
         "strongest_reduction": row.get("strongest_reduction"),
         "reopen_only_if": row.get("reopen_only_if"),
@@ -154,6 +155,16 @@ for row in pf357.get("rows", []):
         "decision": row.get("decision"),
         "next_action": None,
         "survives_as": row.get("surviving_system_role"),
+    })
+for row in shadow_closed_rows:
+    if row.get("paper_first_lifecycle") != "CLOSED_PAPER_FIRST":
+        continue
+    paper_first_terminal.append({
+        "id": row.get("candidate_id"),
+        "status": "CLOSED_PAPER_FIRST",
+        "decision": row.get("source_stop_class") or row.get("memory_class"),
+        "next_action": "NO_INTERNAL_ACTION",
+        "survives_as": row.get("reopen_only_if") or row.get("strongest_reduction"),
     })
 
 state = {

@@ -75,6 +75,7 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         row=rows[0]
         self.assertEqual(row["source_candidate_id"],"RSI-LOCKOUT-C01")
         self.assertEqual((row["closure_layer"],row["failure_layer"],row["memory_class"]),("problem_novelty",None,"PROBLEM_NOVELTY_STOP"))
+        self.assertEqual(row["paper_first_lifecycle"], "CLOSED_PAPER_FIRST")
         self.assertTrue(row["search_closure_certified"])
         self.assertFalse(row["dead_end_certified"])
         self.assertFalse(row["principle_update_allowed"])

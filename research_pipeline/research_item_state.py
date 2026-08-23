@@ -396,13 +396,13 @@ def build_shadow_closed_items(current_status, search_design=None):
             "title": {"zh": str(row.get("title") or cid), "en": str(row.get("title") or cid)}, "problem": bi(row.get("title") or cid),
             "hypothesis": bi(row.get("title") or ""), "mechanism": bi(row.get("title") or ""), "method_logic": bi(""),
             "novelty_boundary": bi(row.get("strongest_reduction") or row.get("reason") or ""), "strongest_baseline": bi(row.get("strongest_reduction") or ""), "minimum_falsifier": bi(""),
-            "lifecycle_state": "CLOSED", "scientific_state": "STOPPED", "portfolio_disposition": "CONCLUDED",
+            "lifecycle_state": "CLOSED", "paper_first_lifecycle": row.get("paper_first_lifecycle"), "scientific_state": "STOPPED", "portfolio_disposition": "CONCLUDED",
             "decision_code": str(row.get("source_stop_class") or row.get("memory_class") or "CLOSED"), "decision_reason": bi(row.get("reason") or row.get("strongest_reduction") or ""),
             "evidence_state": "TYPED_CLOSURE", "execution_authority": authority(), "experiment_refs": [], "closure_layer": closure_layer, "failure_layer": failure_layer,
             "principle_dead_end_certified": bool(row.get("principle_update_allowed") and failure_layer == "core_principle"),
             "reopen_condition": bi(row.get("reopen_only_if") or ""), "absorbed_children": [], "paper_transition": None,
             "provenance_refs": [source_ref(projection_source, projection_role)],
-            "closure_metadata": {**{k: row.get(k) for k in ("experiment_run_for_this_readjudication", "experiment_alone_authorizes_closure", "broader_core_principle_falsified", "memory_class")}, "closure_layer": closure_layer},
+            "closure_metadata": {**{k: row.get(k) for k in ("experiment_run_for_this_readjudication", "experiment_alone_authorizes_closure", "broader_core_principle_falsified", "memory_class", "paper_first_lifecycle")}, "closure_layer": closure_layer},
         })
     return out
 

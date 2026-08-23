@@ -496,6 +496,8 @@ def _matched_simplification_readjudication_rows(paths: list[Path] | None = None)
         payload = _load_json(path)
         if payload.get("matched_simplification_stop_certified") is not True or payload.get("scientific_authority") is not False:
             continue
+        if payload.get("paper_first_lifecycle") != "CLOSED_PAPER_FIRST":
+            continue
         if payload.get("closure_layer") != PROBLEM_NOVELTY or payload.get("failure_layer") is not None or payload.get("dead_end_certified") is not False:
             continue
         candidate_id = str(payload.get("candidate_id") or "").strip()
@@ -541,6 +543,7 @@ def _matched_simplification_readjudication_rows(paths: list[Path] | None = None)
             "principle_update_allowed": False,
             "broader_core_principle_falsified": False,
             "source_stop_class": "PROBLEM_NOVELTY_STOP",
+            "paper_first_lifecycle": "CLOSED_PAPER_FIRST",
             "failure_layer_reason": str(payload.get("failure_layer_reason") or ""),
             "failure_layer_review_basis": str(payload.get("failure_layer_review_basis") or "matched-simplification-readjudication"),
             "experiment_run_for_this_readjudication": payload.get("experiment_run_for_this_readjudication") is True,

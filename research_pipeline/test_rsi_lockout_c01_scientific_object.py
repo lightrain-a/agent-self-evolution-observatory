@@ -13,6 +13,7 @@ def test_rsi_lockout_has_unique_terminal_zero_authority_identity() -> None:
     state = json.loads(SPEC.read_text(encoding="utf-8"))
     assert state["candidate_id"] == "RSI-LOCKOUT-C01"
     assert state["status"] == "STOP_MATCHED_SIMPLIFICATION_PRIMARY_INTERACTION_SATURATED"
+    assert state["paper_first_lifecycle"] == "CLOSED_PAPER_FIRST"
     assert state["canonical_object_qualification"]["status"] == "PASS_UNIQUE_IDENTITY_FROZEN"
     assert state["lineage"]["conflicting_canonical_id"] == "SHADOW-RSI-C01"
     assert state["lineage"]["identity_relation"] == "DISTINCT_SCIENTIFIC_OBJECT_NO_AUTHORITY_INHERITANCE"
@@ -41,6 +42,7 @@ def test_rsi_lockout_has_unique_terminal_zero_authority_identity() -> None:
     paper_registry = json.loads((ROOT / "generated" / "paper-registry.json").read_text(encoding="utf-8"))
     hits = [row for row in research_items["research_items"] if row.get("id") == state["candidate_id"]]
     assert len(hits) == 1
+    assert hits[0]["paper_first_lifecycle"] == "CLOSED_PAPER_FIRST"
     assert hits[0]["scientific_state"] == "STOPPED"
     assert hits[0]["decision_code"] == "PROBLEM_NOVELTY_STOP"
     assert not any((hits[0].get("execution_authority") or {}).values())
