@@ -44,7 +44,7 @@ TOOLS = [
     {
         "type": "function",
         "name": "inspect_workspace",
-        "description": "Inspect a declared file or small state artifact inside the isolated task workspace.",
+        "description": "Inspect a declared file or small state artifact inside the isolated task workspace; task_interface.json documents the bounded training/evaluation interface.",
         "parameters": {
             "type": "object",
             "properties": {"path": {"type": "string"}},
@@ -62,9 +62,20 @@ TOOLS = [
         "parameters": {
             "type": "object",
             "properties": {
-                "method": {"type": "string"},
+                "method": {"type": "string", "enum": ["sft", "rl"]},
                 "stage": {"type": "string"},
-                "config": {"type": "object"},
+                "config": {
+                    "type": "object",
+                    "properties": {
+                        "lr": {"type": "number", "exclusiveMinimum": 0.0, "maximum": 0.01},
+                        "steps": {"type": "integer", "minimum": 1, "maximum": 2},
+                        "examples": {"type": "integer", "minimum": 1, "maximum": 8},
+                        "max_seq_tokens": {"type": "integer", "minimum": 64, "maximum": 512},
+                        "rl_rollouts": {"type": "integer", "minimum": 1, "maximum": 3},
+                        "rl_max_new_tokens": {"type": "integer", "minimum": 16, "maximum": 64},
+                    },
+                    "additionalProperties": False,
+                },
                 "rationale": {"type": "string"},
             },
             "required": ["method", "stage", "config", "rationale"],
@@ -79,7 +90,7 @@ TOOLS = [
             "type": "object",
             "properties": {
                 "model_ref": {"type": "string"},
-                "limit": {"type": "integer", "minimum": 1},
+                "limit": {"type": "integer", "minimum": 1, "maximum": 1},
             },
             "required": ["model_ref", "limit"],
             "additionalProperties": False,
@@ -229,13 +240,16 @@ def run_deepseek_tool_loop(
 
         used = _usage_output_tokens(response)
         reported_output_tokens += used
+        usage = response.get("usage") if isinstance(response.get("usage"), dict) else {}
         provider_receipts.append(
             {
                 "response_id": response.get("response_id"),
                 "status": response.get("status"),
                 "requested_model": response.get("requested_model") or model,
                 "resolved_model": response.get("resolved_model") or model,
+                "reported_input_tokens": int(usage.get("input_tokens") or 0),
                 "reported_output_tokens": used,
+                "reported_total_tokens": int(usage.get("total_tokens") or 0),
             }
         )
         if reported_output_tokens > chosen_budget.max_reported_output_tokens:
