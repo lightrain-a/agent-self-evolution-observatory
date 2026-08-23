@@ -1,7 +1,7 @@
 {
   "schema_version": "1.6",
-  "generated_at": "2026-08-23T12:49:27+00:00",
-  "source_revision": "06b14a0cce5bcf7c8ff6334bfb24807a82aba146",
+  "generated_at": "2026-08-23T13:50:41+00:00",
+  "source_revision": "2fedb56c2697503d606a7ccc5f084067b539e4fa",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -539,13 +539,13 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 44,
+        "events": 52,
         "allowed_transitions": 8,
         "blocked_transitions": 1,
         "story_search_receipts": 1,
         "mock_reviews": 2,
         "claim_audit_receipts": 1,
-        "manuscript_ci_receipts": 4,
+        "manuscript_ci_receipts": 5,
         "prebuttal_receipts": 1,
         "submission_readiness_receipts": 1,
         "contract_revisions": 1
@@ -578,10 +578,10 @@
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "7b27b3be1b9f3ade710f9755d5217749b80adace28d072228c969fa1fe495ac1",
+        "claim_audit_sha256": "80b82e3c234bdc9c6864f776165fd4437c9e96144ee5977f75abbf552d79c4a2",
         "blockers": [],
-        "checks": 8,
-        "passed": 8
+        "checks": 22,
+        "passed": 22
       },
       "latest_manuscript_ci": {
         "pass": true,
@@ -592,14 +592,14 @@
       },
       "latest_prebuttal": {
         "pass": true,
-        "decision_critical": 12,
+        "decision_critical": 9,
         "blockers": [],
         "unresolved_decision_critical": 0
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r6-measurement-source-recovered",
-        "receipt_sha256": "f6d1c27738ef1fe68a43f8a0aeafa3b48f46524e6d2afa7a9e65a09f2246e988",
+        "protocol_version": "1.0+r7-stanford-round2-paperonly",
+        "receipt_sha256": "d60896e018b13f33ff822a61a5dd7529acf6157ba94a850d529dbf5e2034a42d",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -627,7 +627,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "3aa4a6fa2549b1eeff7d457c795fb2b76f959de0d6f9c2b0bb2ec6b378eb4d49",
+        "receipt_sha256": "060f6ea89de12fcc5bb287d403a35b5864691265bdc65efaca94ae7ca12319c4",
         "blockers": []
       },
       "measurement_robustness": {

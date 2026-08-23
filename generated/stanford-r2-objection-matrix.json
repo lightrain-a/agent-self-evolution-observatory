@@ -40,8 +40,8 @@
   "summary": {
     "papers": 5,
     "objections": 33,
-    "resolved": 7,
-    "existing_evidence_actionable": 9,
+    "resolved": 9,
+    "existing_evidence_actionable": 7,
     "requires_scientific_reopen": 9,
     "permanent_claim_boundary": 8,
     "automatic_actions": 0
@@ -421,12 +421,12 @@
         "verdict": "Borderline-leaning Reject"
       },
       "read": {
-        "zh": "问题不是 story，而是 measurement credibility / small-N / missing controls；r6 已补透明度，但没有伪造 human、second judge 或 NullMemory。",
-        "en": "The issue is measurement credibility, small N, and missing controls rather than story; r6 improves transparency without fabricating human, second-judge, or NullMemory evidence."
+        "zh": "问题仍是 measurement credibility / small-N / missing controls；r7 已完成所有 existing-evidence paper-only 修复，同时没有伪造 human、second judge、NullMemory 或更长 horizon。",
+        "en": "Measurement credibility, small N, and missing controls remain the core boundary; r7 closes the existing-evidence paper-only repairs without fabricating human, second-judge, NullMemory, or longer-horizon evidence."
       },
       "next": {
-        "zh": "现有 journals 可做 qualitative cases 与 paired exact sensitivity；human/second judge/threshold、NullMemory、longer horizon 都必须 reopen。",
-        "en": "Existing journals can support qualitative cases and paired exact sensitivity; human/second-judge/threshold, NullMemory, and longer horizons require reopen."
+        "zh": "O3/O4 已由 r7 离线证据修复闭合；后续只在 human/second judge/threshold、NullMemory、longer horizon/backbone 获得 scientific reopen 时继续。",
+        "en": "R7 closes O3/O4 with offline evidence; further work now requires scientific reopen for human/second-judge/threshold calibration, NullMemory, or longer-horizon/backbone evidence."
       },
       "objections": [
         {
@@ -465,12 +465,13 @@
             "zh": "qualitative violations / selection / decoding 说明",
             "en": "qualitative violations / selection / decoding detail"
           },
-          "d": "EXISTING_EVIDENCE_ACTIONABLE",
+          "d": "RESOLVED",
           "why": {
-            "zh": "exact runtime journal bytes 已恢复，可零新 rollout/judge 做 blinded case analysis 与 provenance 摘要。",
-            "en": "Exact runtime journal bytes are recovered and can support blinded case analysis and provenance summaries with no new rollout/judge calls."
+            "zh": "r7 将 exact-journal 离线分析写入正文：公开结构化 qualitative taxonomy（不暴露有害内容）、四个 pre-existing state/12 branch 的冻结时序、branch seeds、无 outcome-driven replacement，以及 Qwen/HarmBench decoding/randomness 边界。",
+            "en": "R7 writes the exact-journal offline analysis into the manuscript: a structural qualitative taxonomy without unsafe text, frozen timing for the four pre-existing states and 12 branches, branch seeds and no outcome-driven replacement, plus Qwen/HarmBench decoding and randomness boundaries."
           },
-          "action": "OFFLINE_ANALYSIS_ONLY"
+          "action": "NONE",
+          "e": "G1 r7 Stanford-round2 robustness receipt / Claim Audit 22/22"
         },
         {
           "id": "SAFETY-O4",
@@ -479,12 +480,13 @@
             "zh": "4–0 paired discordance 的 exact sensitivity",
             "en": "exact sensitivity for 4–0 paired discordance"
           },
-          "d": "EXISTING_EVIDENCE_ACTIONABLE",
+          "d": "RESOLVED",
           "why": {
-            "zh": "12 个 frozen branch pairs 可离线做 exact McNemar/sign/permutation sensitivity，但仍不升级为 population effect。",
-            "en": "The 12 frozen branch pairs permit exact McNemar/sign/permutation sensitivity without upgrading to a population effect."
+            "zh": "r7 对 primary 4–0 discordance 增加 exact paired calibration：two-sided p=.125、one-sided p=.0625，并明确 branch 嵌套 state、non-IID、只作 small-n sensitivity，不升级 population effect。",
+            "en": "R7 adds exact paired calibration for the primary 4–0 discordance: two-sided p=.125 and one-sided p=.0625, while explicitly retaining state clustering, non-IID scope, and small-n sensitivity rather than a population-effect upgrade."
           },
-          "action": "OFFLINE_ANALYSIS_ONLY"
+          "action": "NONE",
+          "e": "G1 r7 round2 evidence / paper-preparation r7"
         },
         {
           "id": "SAFETY-O5",
