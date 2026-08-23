@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-23T13:49:52+00:00",
+  "generated_at": "2026-08-23T16:06:00+00:00",
   "status": "RECORDED_ZERO_SURVIVOR_FAILURE_MEMORY_AND_NEXT_DISCOVERY_POLICY",
   "strategy_version": "failure-race-debate-v1",
   "policy": {
@@ -968,6 +968,23 @@
       "reusable_precheck": "Compare learned event timing to a learned state-dependent termination baseline, not only fixed or heuristic schedules.",
       "opposite_search_seed": "Search for a persistent state that changes the semantics or authority of event-triggered updates rather than the timing rule itself.",
       "scientific_authority": false
+    },
+    {
+      "lesson_id": "LS-MEMENTO-COMPOSITION-HOLD-ESCAPE",
+      "candidate_id": "TASK-COMPOSITION-RESIDUAL-C01",
+      "lesson_type": "SCIENTIFIC_REDUCTION",
+      "affected_layer": "problem_novelty",
+      "title": "Mixed-sign composition HOLD must escape the mature planning/difficulty basin before becoming a new idea",
+      "summary": "A mixed-sign constituent-matched composition HOLD does not by itself identify a new task-graph, composition-cost, or executor-difficulty object. First verify constituent-reference stability and endpoint alignment. Then give same-information mature reducers the full pre-outcome structure: symbolic positive/negative subgoal interaction and ordering, graph dependencies, resource/horizon/context burden, task-state propagation, grounding ambiguity, shared-state reuse, generic ex-ante task difficulty, and evaluation-budget effects. In the MEMENTO-derived screen, every intuitive executor observable reduced to these existing objects, so the child realization was closed rather than rescued by model swaps, subgrouping, threshold changes, or fresh outcome inspection.",
+      "source_refs": [
+        "repo://research_pipeline/memento_deepseek_aux_postnegative_diagnosis_20260823.json",
+        "repo://research_pipeline/task_composition_residual_c01_novelty_screen.json",
+        "private-data://runs/memento-joint-id-f0-runtime/ark-deepseek-aux-f0-result.json#sha256=4db1eb67d2b1a72e619e2452f245c4b23a5cc85198a23abe6fb11a6ee7025b4b"
+      ],
+      "reopen_condition": "Reopen only if a materially new executor-side pre-outcome observable or intervention is frozen before fresh outcomes, receives the same constituent/task information and resource budget as the strongest mature reducers, and forces a distinct falsifiable held-out prediction that symbolic goal interaction, generic task difficulty, graph dependency, resource/horizon/context burden, task-state management, grounding ambiguity, shared-state reuse, and evaluation-budget models cannot express. The dormant MEMENTO IDs 10012-10035 remain sealed until such an object exists.",
+      "reusable_precheck": "For a failure-derived composition idea: (1) preserve the parent decision and type the failure layer; (2) verify stable constituent references and endpoint semantics; (3) run the strongest same-information planning/difficulty/resource/context/grounding reductions before naming a child; (4) if no irreducible pre-outcome observable survives, STOP the child realization and search a different scientific carrier or estimand; (5) do not consume sealed holdouts, change backbone, tune thresholds, or mine favorable outcome subgroups as rescue.",
+      "opposite_search_seed": "Search outside the composition/difficulty basin for a different scientific carrier or for a pre-outcome executor variable that changes the predicted sign or magnitude of a constituent-matched composition residual while all mature symbolic, difficulty, graph, resource, context, state-management, grounding, reuse, and budget reducers receive identical information. Require an intervention or independent executable truth before ProblemGate.",
+      "scientific_authority": false
     }
   ],
   "debate_contract": {
@@ -1048,7 +1065,7 @@
   "summary": {
     "historical_generation_records": 119,
     "historical_unique_candidate_ids": 119,
-    "failure_lessons": 19,
+    "failure_lessons": 20,
     "independent_transaction_survivors": 0,
     "ouroboros_anchor_survivors": 0,
     "problem_gate_pass": 0,
@@ -1063,7 +1080,7 @@
     "experiment": false,
     "gpu": false
   },
-  "cycle_sha256": "86e2c12ba4cb93f7da2cb67243c9d55aeaf5cc24154a4b9092162fafb994d091",
+  "cycle_sha256": "261fb7a44e7361ef91623d15337d9186d9029c4785cd1075b16ce03e561d7489",
   "lint": {
     "status": "PASS",
     "errors": [],

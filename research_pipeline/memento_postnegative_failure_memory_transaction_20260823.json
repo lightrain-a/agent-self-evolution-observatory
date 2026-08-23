@@ -3,18 +3,21 @@
   "transaction_id": "memento-postnegative-failure-memory-20260823",
   "source_candidate": "MEMENTO-JOINT-BOUNDARY-CONTROL",
   "source_track": "MEMENTO-JOINT-BOUNDARY-CONTROL-ARK-DEEPSEEK-AUX",
-  "base_revision": "01bad1bf5aa5a936121f42d6372e01fe841a8124",
+  "base_revision": "99c31765658b0bf0390b440817c90bb7275f3d73",
   "recorded_date": "2026-08-23",
-  "decision": "PARENT_HOLD_PRESERVED_FAILURE_MEMORY_REGISTERED_CHILD_SEARCH_REALIZATION_CLOSED_BY_MATURE_REDUCTION",
+  "decision": "PARENT_HOLD_PRESERVED_FAILURE_MEMORY_AND_DISCOVERY_LESSON_REGISTERED_CHILD_SEARCH_REALIZATION_CLOSED_BY_MATURE_REDUCTION",
   "bindings": [
     {"path": "research_pipeline/memento_deepseek_aux_postnegative_diagnosis_20260823.json", "sha256": "c23f6cf37f4ae28abcfbd3041ebd81a173fdf37bf3ba1873157facf97f8baa27", "role": "qualified post-negative HOLD diagnosis with completed child novelty screen"},
     {"path": "research_pipeline/memento_composition_hold_failure_asset_20260823.json", "sha256": "3625d31f79952382920cb601be24417542b760aa889f06d65a38022ce1469e18", "role": "durable zero-authority failure-memory source"},
     {"path": "research_pipeline/task_composition_residual_c01_novelty_screen.json", "sha256": "f08b9f802313966e93e1d89c6e3b431d5b3bbb1659e391f6489f303b8541b882", "role": "completed mature-theory/executor-observable novelty screen closing current child realization"},
+    {"path": "research_pipeline/longitudinal_safety_discovery_lessons_20260823.json", "sha256": "a09bc985a4c62295b7434dd7cb82ea1a40323aba0d6624caaf54df5ddae5db6d", "role": "canonical DISCOVERY_LESSON source containing LS-MEMENTO-COMPOSITION-HOLD-ESCAPE"},
+    {"path": "generated/longitudinal-safety-discovery-cycle-20260823.json", "sha256": "360369a97e3ad0ef1dde655c64666417ede66563a0e7ee47dfd360a7f6feb39c", "role": "validated generated discovery-cycle projection with 20 zero-authority failure lessons"},
+    {"path": "generated/research-memory-wiki.json", "sha256": "0e52db959cb5f5d8f3aa2f147eace8c12a7d6425733ffeeb7121c01b9033a25e", "role": "selective Research Memory projection containing MEM-DISC-d9e51c627544b10c97"},
     {"path": "research_pipeline/task_composition_residual_c01_holdout_support_inventory.json", "sha256": "e3762b72df017d50378517b4becc80e22bbaa8a66946d9e9bc5b7cca8238f0ac", "role": "outcome-blind 24-unit dormant future holdout inventory"},
     {"path": "research_pipeline/external_failure_assets.json", "sha256": "8b74d725fcad9693d9b86669fd74ad4c67903ebf4f9aeef9e97a1188a290449f", "role": "generic zero-authority external failure-memory index"},
     {"path": "research_pipeline/failure_asset_library.py", "sha256": "a77f4df19fd1ecb57b8cb1dc814372a02280dea6d5cafd5a2931bba6d634ac9a", "role": "generic additional failure-asset ingestion"},
-    {"path": "research_pipeline/research_system.py", "sha256": "a1820bcfe2aa785d55b6f830546d7c98d8a4c5028ffa03aab4c962114bfe6984", "role": "content-addressed external failure-asset loader binding"},
-    {"path": "research_pipeline/research_memory_wiki.py", "sha256": "dd8af056c59aec02669338597fe2e91334daf402f25495bd4ea11600621d5a3c", "role": "IDEA_SEARCH reserves one context-matched failure lesson without authority while preserving upstream paper-development guidance"}
+    {"path": "research_pipeline/research_system.py", "sha256": "6696a2e34a86dd6b445b05d2ed4f8137e9bcfddd42ddefb5bad1182d0f69fb4e", "role": "content-addressed external failure-asset loader binding plus canonical discovery-cycle loading"},
+    {"path": "research_pipeline/research_memory_wiki.py", "sha256": "cf57f4499569ca4a35775b7b0ac9a1548dd9ec1226239d81112b6f2dd798f9ad", "role": "canonical DISCOVERY_LESSON ingestion and IDEA_SEARCH retrieval plus context-matched failure-memory reserve"}
   ],
   "gate_results": {
     "deepseek_aux_f0": "HOLD",
@@ -30,19 +33,20 @@
   },
   "memory_behavior_verification": {
     "research_system_validate_errors": 0,
-    "targeted_tests": 24,
+    "targeted_tests": 27,
     "targeted_tests_status": "PASS",
-    "idea_search_query": "embodied task composition constituent residual task graph horizon goal interaction MEMENTO",
+    "idea_search_query": "MEMENTO task composition mixed sign constituent reference task graph horizon context grounding shared state difficulty failure derived idea",
     "idea_search_default_budget_chars": 8000,
-    "selected_memory_id": "MEM-FAIL-ff81c1bc68d6be7004",
+    "selected_memory_id": "MEM-DISC-d9e51c627544b10c97",
     "selected": true,
-    "idea_search_query_pack_sha256": "19a2b4353845ece937d14afc4163e4095b2f2eeec585108eb4b4129a0ccdc1a1",
+    "idea_search_query_pack_sha256": "a3a59a86160aeee477bf1b8f4fddb9f77e71e7800f84c8ae05e06c6a08936c5b",
     "downstream_scientific_authority": false
   },
   "projection_policy": {
     "generated_research_system_state_rewritten": false,
-    "generated_research_memory_wiki_rewritten": false,
-    "reason": "After rebasing onto latest origin/main, in-memory comparison still found 44 unrelated top-level state drifts from current runtime/private substrates; selective task work must not project unrelated generated changes. Canonical source sidecars and generic loader are committed so the normal reconciliation/release rebuild can project them together with the current canonical state.",
+    "generated_longitudinal_discovery_cycle_rewritten": true,
+    "generated_research_memory_wiki_rewritten": true,
+    "reason": "After rebasing onto origin/main 99c3176, the formal DISCOVERY_LESSON mechanism became canonical. The longitudinal discovery cycle was rebuilt from its source spec, and Research Memory was selectively rebuilt from checked-in generated research-system-state plus the new discovery cycle. Entry-set audit showed exactly one new memory (MEM-DISC-d9e51c627544b10c97), zero removed memories, and no semantic changes to existing entries. Full generated research-system-state remains untouched because host/private runtime inputs still contain unrelated drift.",
     "canonical_live_pre_researchitem_changed": false,
     "memento_exact_track_changed": false
   },
