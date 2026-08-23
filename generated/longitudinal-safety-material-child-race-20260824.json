@@ -1,0 +1,124 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-23T18:35:19+00:00",
+  "status": "MATERIAL_CHILD_RACE_ZERO_SURVIVOR",
+  "source_post_race_triage_sha256": "1e9ffc851e58d6366b4b36ee6be5aa8936c5be2a7e7ba53d0ceab37e55082a3d",
+  "policy": {
+    "only_material_child_required_parents_are_mutated": true,
+    "child_must_change_scientific_object": true,
+    "same_information_function_class_reduction_precedes_execution": true,
+    "generic_baseline_receives_identical_observables_supervision_action_support_and_budget": true,
+    "representation_or_naming_difference_is_not_mechanism": true,
+    "zero_api_cheapest_falsifier_precedes_debate": true,
+    "stopped_child_does_not_create_discovery_lesson_automatically": true,
+    "zero_survivors_is_valid": true
+  },
+  "summary": {
+    "material_parents": 3,
+    "children_generated": 3,
+    "children_reduced_before_execution": 3,
+    "survivors": 0,
+    "debate_eligible": 0,
+    "problem_gate_eligible": 0,
+    "research_item_eligible": 0,
+    "provider_calls_authorized": 0,
+    "gpu_authorized": 0,
+    "decision_counts": {
+      "STOP_HISTORY_CONDITIONED_POLICY_REDUCTION": 1,
+      "STOP_REDUCTION_EXISTING_WORLD_MODEL_OBJECT": 1,
+      "STOP_SAME_INFORMATION_CONDITIONAL_GENERATOR": 1
+    }
+  },
+  "children": [
+    {
+      "child_id": "goal-queryable-transition-successor-model",
+      "parent_id": "verified-risk-predicate-grammar",
+      "title": "Goal-Queryable Transition Successor Model",
+      "material_change": "Replace verified predicate/rule induction with a persistent learned successor kernel over state-action transitions. Safety or reachability specifications are supplied only after the kernel is frozen, so the stored object is transition semantics rather than a fixed risk rule.",
+      "scientific_object": "frozen goal-queryable state-action successor kernel",
+      "observable": "independent held-out transition oracle plus post-freeze goal/specification queries",
+      "deployment_boundary": "new goal or safety specification arrives after model freezing; no target-spec labels may be used for retraining",
+      "strongest_reduction": {
+        "name": "same-data generic transition model plus planner",
+        "same_information": "identical source transitions, state/action representation, model capacity, uncertainty targets, post-freeze specification, planning budget, and independent transition truth",
+        "exact_reduction": "Once the learned object is a goal-queryable successor kernel, a generic capacity-matched transition model trained on the same transitions exposes exactly the same sufficient object to the same planner. The candidate has escaped verified rule induction only by becoming ordinary model-based dynamics learning.",
+        "canonical_boundary": "F-1 Decision-Conditioned World-Model Residual Adapter / ordinary model-based planning"
+      },
+      "cheapest_falsifier": "Before collecting any agent rollout, give a generic transition learner the identical transition table and post-freeze specifications. If both systems expose the same successor distribution/set to the same planner, there is no distinct self-evolution mechanism to test.",
+      "decision": "STOP_REDUCTION_EXISTING_WORLD_MODEL_OBJECT",
+      "reopen_condition": "Require a persistent transition-derived state that yields a post-freeze decision unavailable to a generic same-capacity transition model/planner with identical transition data, uncertainty, goal specification, and budget.",
+      "parent_tournament_rank": 2,
+      "parent_reopen_condition": "Materialize a different learned object with an independent transition oracle that is never used for generation or acceptance, then give the same oracle labels, state information, capacity, simulator calls, and runtime checks to F-2/direct-shield controls. A held-out decision residual must survive before ProblemGate.",
+      "source_post_race_triage_sha256": "1e9ffc851e58d6366b4b36ee6be5aa8936c5be2a7e7ba53d0ceab37e55082a3d",
+      "problem_gate_eligible": false,
+      "research_item_eligible": false,
+      "provider_calls_authorized": 0,
+      "gpu_authorized": false,
+      "scientific_authority": false
+    },
+    {
+      "child_id": "version-contrastive-repair-transport-operator",
+      "parent_id": "version-differential-active-diagnosis",
+      "title": "Version-Contrastive Repair Transport Operator",
+      "material_change": "Replace learned diagnostic-query ordering with a persistent operator that maps a version delta plus an intervention-response signature to one executable repair patch for a later unseen version. The deployed object therefore changes future behavior rather than only diagnosis order.",
+      "scientific_object": "frozen version-contrastive repair transport operator",
+      "observable": "version delta, matched intervention-response vector, independent post-repair execution truth",
+      "deployment_boundary": "zero target-version candidate search; exactly one transported patch may be emitted after the frozen diagnosis transcript",
+      "strongest_reduction": {
+        "name": "same-input generic conditional patch generator",
+        "same_information": "identical version delta, intervention-response signature, historical fault/repair pairs, repair action space, generator capacity, optimization budget, and zero-search target-version deployment",
+        "exact_reduction": "For a fixed observable input x=(version delta, intervention response, failure context) and executable patch output y, the proposed transport operator is only one parameterization of the same conditional mapping learned by an unrestricted capacity-matched patch generator. Calling x 'version contrast' does not create an identifiable mechanism unless an additional invariant restricts future queries.",
+        "canonical_boundary": "E-1/E-2 direct paired edit-effect reuse plus generic conditional repair"
+      },
+      "cheapest_falsifier": "Compile the proposed operator and a generic conditional generator to their finite observable input/output relation under the same repair grammar. If the generic generator can represent every emitted patch without extra target-version information or search, stop before execution.",
+      "decision": "STOP_SAME_INFORMATION_CONDITIONAL_GENERATOR",
+      "reopen_condition": "Specify a preregistered transport invariant or query family that forces an ex-ante patch/effect prediction outside the same-information conditional generator's representable relation, then test that invariant on unseen versions without target-version optimization.",
+      "parent_tournament_rank": 3,
+      "parent_reopen_condition": "Define and freeze the persistent post-diagnosis repair/rollback representation, then beat query-seeded ProbDD/PMA plus A-5 state-diff, A-6 group testing, and E-2 paired edit-effect reuse using identical historical faults, intervention budget, observable state, and repair action support. The residual must be in the representation's executable future behavior, not query order or diagnostic accuracy.",
+      "source_post_race_triage_sha256": "1e9ffc851e58d6366b4b36ee6be5aa8936c5be2a7e7ba53d0ceab37e55082a3d",
+      "problem_gate_eligible": false,
+      "research_item_eligible": false,
+      "provider_calls_authorized": 0,
+      "gpu_authorized": false,
+      "scientific_authority": false
+    },
+    {
+      "child_id": "interventional-correction-state-machine",
+      "parent_id": "counterfactual-correction-production-grammar",
+      "title": "Interventional Correction-State Machine",
+      "material_change": "Replace independent atomic repairs plus grammar composition with a persistent correction-interaction state updated by multi-action interventions. The state encodes jointly necessary, antagonistic, and order-sensitive correction effects and changes the next admissible correction after each executed repair.",
+      "scientific_object": "frozen intervention-identified correction interaction state machine",
+      "observable": "same-start multi-correction interventions, execution-state transitions, correction history, independent task truth",
+      "deployment_boundary": "no new productions or test-time search; the frozen state machine chooses/suppresses the next correction",
+      "strongest_reduction": {
+        "name": "same-history set/order-aware risk model plus bounded conditional sequence policy",
+        "same_information": "identical correction actions, full executed correction history, multi-action intervention outcomes, typed preconditions/effects, state observations, capacity, and repair budget",
+        "exact_reduction": "On a bounded correction horizon, the state machine's next-action decision is a deterministic/stochastic function of the same correction history and state. A capacity-matched history-conditioned policy can compile the same mapping, while A-4 already gives direct set/order-aware interaction risk the same interventions and equal-budget repair. A named latent correction state therefore adds no identified object.",
+        "canonical_boundary": "A-4 typed update interaction / C-5 correction commitment / generic finite-state control"
+      },
+      "cheapest_falsifier": "Enumerate the bounded correction histories admitted by the frozen action grammar and compile the state machine's next-action table. Give the same table inputs and intervention labels to an unrestricted bounded history policy; if it reproduces every action/support decision, stop without agent execution.",
+      "decision": "STOP_HISTORY_CONDITIONED_POLICY_REDUCTION",
+      "reopen_condition": "Require an independently observed correction-state variable that makes two units with identical full correction history, typed effects, environment state, action support, and budget demand different next corrections, or an executable invariant the same-history policy cannot satisfy by construction.",
+      "parent_tournament_rank": 4,
+      "parent_reopen_condition": "Materialize a preregistered multi-correction interaction state (joint necessity, antagonism, or order dependence) with independent intervention truth, and require a held-out prediction or repair that survives A-4's same-information order-aware risk plus equal-budget repair as well as CausalFlow-derived repairs composed by NSI/SkillGraph under the same intervention budget.",
+      "source_post_race_triage_sha256": "1e9ffc851e58d6366b4b36ee6be5aa8936c5be2a7e7ba53d0ceab37e55082a3d",
+      "problem_gate_eligible": false,
+      "research_item_eligible": false,
+      "provider_calls_authorized": 0,
+      "gpu_authorized": false,
+      "scientific_authority": false
+    }
+  ],
+  "next_action": "Do not rename or add modules to these three children. Their requested object changes were attempted and still reduce under same-information comparators. Return to fresh-source or cross-failure mutation search; a future child must name a pre-outcome observable, invariant, intervention, or deployment query that forces a different ex-ante prediction from these generic comparators before debate.",
+  "scientific_authority": false,
+  "authority": {
+    "debate": false,
+    "problem_gate": false,
+    "research_item": false,
+    "method": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false
+  },
+  "race_sha256": "6aafd2d9a75acea31c55615fc195bba51ee540e2381f02c86b4087a1f6204683"
+}

@@ -64,6 +64,21 @@ class ResearchSystemTest(unittest.TestCase):
         broken["longitudinal_safety_post_race_triage"]["summary"]["problem_gate_eligible"]=1
         self.assertTrue(any("post-race triage" in error for error in validate_state(broken)))
 
+    def test_material_child_race_is_embedded_and_cannot_reach_debate(self) -> None:
+        race=self.state["longitudinal_safety_material_child_race"]
+        summary=race["summary"]
+        self.assertEqual(summary["children_generated"],3)
+        self.assertEqual(summary["children_reduced_before_execution"],3)
+        self.assertEqual(summary["survivors"],0)
+        self.assertEqual(summary["debate_eligible"],0)
+        self.assertEqual(summary["problem_gate_eligible"],0)
+        self.assertEqual(summary["provider_calls_authorized"],0)
+        self.assertEqual(summary["gpu_authorized"],0)
+        self.assertFalse(race["scientific_authority"])
+        broken=copy.deepcopy(self.state)
+        broken["longitudinal_safety_material_child_race"]["summary"]["debate_eligible"]=1
+        self.assertTrue(any("material-child race" in error for error in validate_state(broken)))
+
     def test_failure_memory_projection_drift_is_detected(self) -> None:
         broken=copy.deepcopy(self.state)
         library=broken["failure_asset_library"]
