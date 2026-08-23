@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "asset": {
+    "signature": "experiment_identifiability:composition-constituent-reference-instability",
+    "idea_id": "MEMENTO-JOINT-BOUNDARY-CONTROL-ARK-DEEPSEEK-AUX",
+    "diagnosis": "composition-constituent-reference-instability",
+    "affected_layer": "experiment_identifiability",
+    "reusable_precheck": "Before interpreting an average composition penalty, verify constituent-reference stability and endpoint alignment; preserve every frozen unit; audit proposition-weighted versus equal-weight constituent semantics before outcomes; compare against classical positive/negative subgoal interaction, resource/horizon complexity, shared-state reuse, and generic ex-ante task-difficulty reducers. A mixed-sign HOLD is not evidence of model incapability or core-principle failure.",
+    "evidence_ref": "private-data://runs/memento-joint-id-f0-runtime/ark-deepseek-aux-f0-result.json#sha256=4db1eb67d2b1a72e619e2452f245c4b23a5cc85198a23abe6fb11a6ee7025b4b",
+    "does_not_imply": "DeepSeek incapability, absence of all composition effects, memory-coordination failure, or core-principle failure",
+    "memory_scope": "institutional-research-memory",
+    "reuse_scope": {
+      "environment_family": "embodied-agent task composition",
+      "measurement": "constituent-matched composition residual",
+      "diagnosis": "composition-constituent-reference-instability",
+      "affected_layer": "experiment_identifiability"
+    },
+    "reuse_effectiveness": {
+      "reuse_count": 0,
+      "helped_count": 0,
+      "hurt_count": 0,
+      "status": "not-yet-measured"
+    },
+    "superseded_by": "",
+    "last_revalidated": "2026-08-23",
+    "source_decision": "HOLD",
+    "source_postnegative_artifact": "research_pipeline/memento_deepseek_aux_postnegative_diagnosis_20260823.json",
+    "can_authorize_problem_gate": false,
+    "can_authorize_experiment": false,
+    "scientific_authority": false
+  }
+}

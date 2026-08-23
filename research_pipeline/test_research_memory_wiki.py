@@ -63,6 +63,16 @@ class ResearchMemoryWikiTest(unittest.TestCase):
         pack=compile_research_memory_query_pack(wiki,purpose="IDEA_SEARCH",context="failure guided mutation same information reduction")
         self.assertIn(lesson["memory_id"],pack["selected_memory_ids"]);self.assertIn("run the matched simplification first",pack["text"]);self.assertTrue(pack["policy"]["downstream_scientific_gates_unchanged"])
 
+    def test_idea_search_reserves_one_context_matched_failure_lesson(self):
+        s,f,m,p,i,g,c=base_inputs()
+        f={"summary":{"assets":1},"assets":[{"signature":"experiment_identifiability:composition-reference-instability","idea_id":"AUX","affected_layer":"experiment_identifiability","reusable_precheck":"composition constituent residual horizon interaction needs a stable reference","reuse_effectiveness":{"reuse_count":0},"does_not_imply":"core principle failure","last_revalidated":"2026-08-23"}],"reusable_prechecks":[{"signature":"experiment_identifiability:composition-reference-instability","affected_layer":"experiment_identifiability","reusable_precheck":"composition constituent residual horizon interaction needs a stable reference","occurrences":1}]}
+        for index in range(8):
+            row=copy.deepcopy(s["shadow_search_memory"]["closed_objects"][0]);row["source_candidate_id"]=f"CLOSED-{index}";row["title"]="composition task residual interaction closure "*20;s["shadow_search_memory"]["closed_objects"].append(row)
+        wiki=build_research_memory_wiki(search_design_state=s,failure_asset_library=f,scientific_meta_trace=m,candidate_portfolio=p,experiment_iteration=i,generator_state=g,claim_ledger=c)
+        failure=next(r for r in wiki["entries"] if r["kind"]=="FAILURE_ASSET")
+        pack=compile_research_memory_query_pack(wiki,purpose="IDEA_SEARCH",context="composition constituent residual horizon interaction",max_chars=1800,max_items=16)
+        self.assertIn(failure["memory_id"],pack["selected_memory_ids"]);self.assertEqual(pack["selected"][0]["kind"],"FAILURE_ASSET");self.assertTrue(pack["policy"]["idea_search_reserves_context_matched_failure_lesson"]);self.assertFalse(pack["scientific_authority"])
+
     def test_structured_mock_pc_patterns_become_zero_authority_paper_design_prechecks(self):
         s,f,m,p,i,g,c=base_inputs()
         paper_index={"summary":{"papers":1},"entries":[{"paper_id":"PAPER-X","review_learning":{"review_receipts":2,"decision_critical_objections":4,"category_counts":{"artifact-provenance":2,"empirical-sufficiency":2},"evidence_state_counts":{"existing-evidence":2,"missing-decisive-evidence":2},"action_class_counts":{"narrative-repair":2,"targeted-experiment":2},"targeted_experiment_proposals":2,"claim_expansion_requests_preserved_as_limitations":1}}]}

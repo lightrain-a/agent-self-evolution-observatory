@@ -153,6 +153,27 @@ class ResearchLearningLoopTest(unittest.TestCase):
         self.assertEqual(by_diag["no-label-variation"]["memory_scope"], "institutional-research-memory")
         self.assertEqual(by_diag["no-label-variation"]["reuse_effectiveness"]["status"], "not-yet-measured")
 
+    def test_additional_failure_asset_is_zero_authority_and_scope_bound(self) -> None:
+        external = {
+            "signature": "experiment_identifiability:reference-instability",
+            "idea_id": "aux-negative",
+            "diagnosis": "reference-instability",
+            "affected_layer": "experiment_identifiability",
+            "reusable_precheck": "freeze a stable matched reference before interpreting the endpoint",
+            "evidence_ref": "private-data://runs/aux/result.json#sha256=abc",
+            "does_not_imply": "core-principle failure",
+            "reuse_scope": {"measurement": "matched residual"},
+            "last_revalidated": "2026-08-23",
+            "scientific_authority": False,
+        }
+        library = build_failure_asset_library({"nodes": []}, {"summary": {}}, additional_assets=[external])
+        self.assertEqual(library["summary"]["assets"], 1)
+        asset = library["assets"][0]
+        self.assertTrue(asset["external_memory_input"])
+        self.assertFalse(asset["scientific_authority"])
+        self.assertEqual(asset["affected_layer"], "experiment_identifiability")
+        self.assertEqual(asset["reuse_scope"]["measurement"], "matched residual")
+
     def test_scienceworld_scope_lesson_is_institutional_asset_not_parent_evidence(self) -> None:
         state = {"nodes": []}
         post_c2 = {

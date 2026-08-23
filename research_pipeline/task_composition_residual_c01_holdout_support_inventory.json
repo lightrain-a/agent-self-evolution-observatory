@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "screen_id": "TASK-COMPOSITION-RESIDUAL-C01",
+  "artifact_kind": "outcome-blind-future-holdout-support-inventory",
+  "status": "DORMANT_FRESH_HOLDOUT_POOL_CURRENT_SCREEN_CLOSED_NO_EXPERIMENT_AUTHORITY",
+  "recorded_date": "2026-08-23",
+  "source": {
+    "substrate": "MEMENTO official joint-memory dataset",
+    "dataset_ref": "private-data://cache/substrates/MEMENTO-official/resource/datasets/joint_memory_utilization_stage.json.gz",
+    "dataset_sha256": "12c05328b1b00e5031d851bc90e871fd045779f16671b29afcbf54de7316dfb0",
+    "total_joint_ids": 36
+  },
+  "discovery_outcome_ids": ["10000", "10001", "10002", "10003", "10004", "10005", "10006", "10007", "10008", "10009", "10010", "10011"],
+  "fresh_to_auxiliary_outcomes_ids": ["10012", "10013", "10014", "10015", "10016", "10017", "10018", "10019", "10020", "10021", "10022", "10023", "10024", "10025", "10026", "10027", "10028", "10029", "10030", "10031", "10032", "10033", "10034", "10035"],
+  "fresh_count": 24,
+  "outcome_access": {
+    "fresh_outcomes_read_for_this_screen": false,
+    "fresh_deepseek_runs_executed": false,
+    "provider_calls": 0,
+    "gpu_runs": 0
+  },
+  "use_policy": "The 24 IDs remain unread dormant support after the current novelty screen closed. They may not be inspected for continuation outcomes, filtered, or executed unless a materially new executor-side observable creates a new realization, its mature-reducer set and unit-selection rules are frozen before outcome access, and a separate ProblemGate/support authority permits execution.",
+  "does_not_authorize": ["candidate projection", "ProblemGate PASS", "provider calls", "GPU execution", "method work", "paper state"],
+  "authority": {
+    "scientific": false,
+    "novelty": false,
+    "problem_gate": false,
+    "pre_researchitem_projection": false,
+    "research_item_promotion": false,
+    "support_download": false,
+    "provider_calls": false,
+    "experiment": false,
+    "gpu": false,
+    "paper_state": false
+  }
+}
