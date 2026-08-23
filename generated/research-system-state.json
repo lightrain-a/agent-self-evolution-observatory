@@ -52901,7 +52901,7 @@
           ],
           "reopen_conditions": [],
           "summary": {
-            "events": 46,
+            "events": 50,
             "allowed_transitions": 8,
             "blocked_transitions": 0,
             "story_search_receipts": 1,
@@ -52969,8 +52969,8 @@
           },
           "latest_paper_preparation": {
             "pass": true,
-            "protocol_version": "1.0+r4-novelty-attack",
-            "receipt_sha256": "c66db3a7d16e5548b53f7417d8a435fe683e7f72c377003412b5fe665a181891",
+            "protocol_version": "1.0+r5-supplement-projection",
+            "receipt_sha256": "408a4ce7fbb3a0ecf236bb1e0924e3941990050c39fd045091011506951550a2",
             "required_gates": 8,
             "passed_gates": 8,
             "gate_pass": {
@@ -53006,7 +53006,7 @@
           },
           "latest_submission_readiness": {
             "submission_ready": true,
-            "receipt_sha256": "8611374110580f62352abf75ad33726c3e75d566678c9b15938f914302f4b1e2",
+            "receipt_sha256": "da0ca50065cd8cccf55553eea101f78ba99128f10813fca7fa696ac8798be2a3",
             "blockers": []
           },
           "latest_transition": {
@@ -53276,7 +53276,7 @@
           ],
           "reopen_conditions": [],
           "summary": {
-            "events": 41,
+            "events": 45,
             "allowed_transitions": 8,
             "blocked_transitions": 0,
             "story_search_receipts": 1,
@@ -53344,8 +53344,8 @@
           },
           "latest_paper_preparation": {
             "pass": true,
-            "protocol_version": "1.0+r4-novelty-attack",
-            "receipt_sha256": "e264c51457b29be9c9e9312284f8380fd8e3b855f22663097ef2f208bcff4e4b",
+            "protocol_version": "1.0+r5-supplement-projection",
+            "receipt_sha256": "fea4424178d6060e572e9bddef25376347f10482b20b81b6ead554058ac72bcb",
             "required_gates": 8,
             "passed_gates": 8,
             "gate_pass": {
@@ -53381,7 +53381,7 @@
           },
           "latest_submission_readiness": {
             "submission_ready": true,
-            "receipt_sha256": "57fc8ef30a6dca1dbc145e90fd1caaa04667f6edd8779044292c95b105e933a3",
+            "receipt_sha256": "ed94c6ed3f030f1310e8a00836ea2cb91aff40a4ad22c4fbb75319569bdf9e90",
             "blockers": []
           },
           "latest_transition": {

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.4",
-  "generated_at": "2026-08-23T09:49:27+00:00",
-  "source_revision": "2285b4002e1a458225a5866e50b5072fc3d3e74f",
+  "generated_at": "2026-08-23T12:20:49+00:00",
+  "source_revision": "ea654fe7b151cb8112f9ad39fca3cce4b1e85cc8",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -140,7 +140,8 @@
       "canonical_problem_gate_added": 0,
       "downloads": {
         "pdf": "downloads/E1-STRI.pdf",
-        "source_zip": "downloads/STRI-ICLR2027-source.zip"
+        "source_zip": "downloads/STRI-ICLR2027-source.zip",
+        "supplement_zip": "downloads/STRI-ICLR2027-supplement.zip"
       },
       "deadline_status": "AUTHOR_SUBMISSION_SOURCES_ALIGNED",
       "official_source_conflict": false,
@@ -289,7 +290,7 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 41,
+        "events": 45,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
@@ -357,8 +358,8 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r4-novelty-attack",
-        "receipt_sha256": "e264c51457b29be9c9e9312284f8380fd8e3b855f22663097ef2f208bcff4e4b",
+        "protocol_version": "1.0+r5-supplement-projection",
+        "receipt_sha256": "fea4424178d6060e572e9bddef25376347f10482b20b81b6ead554058ac72bcb",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -394,7 +395,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "57fc8ef30a6dca1dbc145e90fd1caaa04667f6edd8779044292c95b105e933a3",
+        "receipt_sha256": "ed94c6ed3f030f1310e8a00836ea2cb91aff40a4ad22c4fbb75319569bdf9e90",
         "blockers": []
       },
       "latest_transition": {
@@ -762,7 +763,7 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 46,
+        "events": 50,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
@@ -830,8 +831,8 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r4-novelty-attack",
-        "receipt_sha256": "c66db3a7d16e5548b53f7417d8a435fe683e7f72c377003412b5fe665a181891",
+        "protocol_version": "1.0+r5-supplement-projection",
+        "receipt_sha256": "408a4ce7fbb3a0ecf236bb1e0924e3941990050c39fd045091011506951550a2",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -867,7 +868,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "8611374110580f62352abf75ad33726c3e75d566678c9b15938f914302f4b1e2",
+        "receipt_sha256": "da0ca50065cd8cccf55553eea101f78ba99128f10813fca7fa696ac8798be2a3",
         "blockers": []
       },
       "latest_transition": {
@@ -897,7 +898,8 @@
       "submission_ready": true,
       "downloads": {
         "pdf": "downloads/C1-Proxy-Reward.pdf",
-        "source_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip"
+        "source_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip",
+        "supplement_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-supplement.zip"
       },
       "experiment_refs": [],
       "research_authority": {

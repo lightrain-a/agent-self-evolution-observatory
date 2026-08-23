@@ -660,9 +660,9 @@ def build_paper_registry(research_state=None):
     # public PDF alias is derived from publication_identity. Legacy PDF names
     # remain shipped by the static builder for backwards-compatible links.
     public_downloads = {
-        "STRI": {"pdf": publication_identities["STRI"]["pdf"], "source_zip": "downloads/STRI-ICLR2027-source.zip"},
+        "STRI": {"pdf": publication_identities["STRI"]["pdf"], "source_zip": "downloads/STRI-ICLR2027-source.zip", "supplement_zip": "downloads/STRI-ICLR2027-supplement.zip"},
         "AGENT-SAFETY-R9": {"pdf": publication_identities["AGENT-SAFETY-R9"]["pdf"], "source_zip": "downloads/Agent-Safety-R9-source.zip", "supplement_zip": "downloads/Agent-Safety-R9-supplement.zip"},
-        "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE": {"pdf": publication_identities["D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE"]["pdf"], "source_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip"},
+        "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE": {"pdf": publication_identities["D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE"]["pdf"], "source_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip", "supplement_zip": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-supplement.zip"},
         "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK": {"pdf": publication_identities["D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK"]["pdf"], "source_zip": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip"},
         "D2-PAPER-FAILURE-MEMORY-PROVENANCE": {"pdf": publication_identities["D2-PAPER-FAILURE-MEMORY-PROVENANCE"]["pdf"], "source_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip", "supplement_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-supplement.zip"},
     }
