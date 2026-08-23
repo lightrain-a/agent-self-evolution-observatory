@@ -375,7 +375,7 @@ def main() -> None:
         fail("Stanford Round-2 objection matrix JSON/JS projections are not byte-consistent")
     objection_rows = [row for paper in objection_matrix.get("papers", {}).values() for row in paper.get("objections", [])]
     disposition_counts = Counter(row.get("d") for row in objection_rows)
-    expected_dispositions = {"RESOLVED":9,"EXISTING_EVIDENCE_ACTIONABLE":7,"REQUIRES_SCIENTIFIC_REOPEN":9,"PERMANENT_CLAIM_BOUNDARY":8}
+    expected_dispositions = {"RESOLVED":10,"EXISTING_EVIDENCE_ACTIONABLE":6,"REQUIRES_SCIENTIFIC_REOPEN":9,"PERMANENT_CLAIM_BOUNDARY":8}
     if len(objection_matrix.get("papers", {})) != 5 or len(objection_rows) != 33 or disposition_counts != Counter(expected_dispositions):
         fail(f"Stanford Round-2 objection matrix contract drifted: papers={len(objection_matrix.get('papers', {}))} objections={len(objection_rows)} counts={dict(disposition_counts)}")
     if any(objection_matrix.get("policy", {}).get(key) is not False for key in ("scientific_authority","experiment_authority","gpu_authority","submission_authority")):
@@ -385,6 +385,9 @@ def main() -> None:
     safety_objections = {row.get("id"): row for row in (objection_matrix.get("papers", {}).get("AGENT-SAFETY-R9", {}).get("objections") or [])}
     if any((safety_objections.get(oid) or {}).get("d") != "RESOLVED" for oid in ("SAFETY-O3", "SAFETY-O4")) or any((safety_objections.get(oid) or {}).get("d") != "REQUIRES_SCIENTIFIC_REOPEN" for oid in ("SAFETY-O5", "SAFETY-O6", "SAFETY-O7")):
         fail(f"G1 Stanford R2 objection dispositions must reflect r7 paper-only closure without auto-authorizing new evidence: {safety_objections}")
+    temporal_objections = {row.get("id"): row for row in (objection_matrix.get("papers", {}).get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK", {}).get("objections") or [])}
+    if (temporal_objections.get("TEMP-O3") or {}).get("d") != "RESOLVED" or "88/88" not in json.dumps(temporal_objections.get("TEMP-O3"), ensure_ascii=False) or any((temporal_objections.get(oid) or {}).get("d") != "REQUIRES_SCIENTIFIC_REOPEN" for oid in ("TEMP-O4", "TEMP-O5")):
+        fail(f"E2 Stanford R2 objection dispositions must reflect r10 ISO-date closure while preserving missing-baseline reopen debt: {temporal_objections}")
     if any(row.get("action") != "OFFLINE_ANALYSIS_ONLY" for row in objection_rows if row.get("d") == "EXISTING_EVIDENCE_ACTIONABLE"):
         fail("Existing-evidence Stanford objections must be limited to offline analysis/manuscript absorption")
     if any(row.get("action") != "SCIENTIFIC_REOPEN_REQUIRED" or not row.get("reopen") for row in objection_rows if row.get("d") == "REQUIRES_SCIENTIFIC_REOPEN"):

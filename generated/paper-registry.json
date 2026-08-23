@@ -1035,13 +1035,13 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 64,
+        "events": 72,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
         "mock_reviews": 4,
         "claim_audit_receipts": 2,
-        "manuscript_ci_receipts": 6,
+        "manuscript_ci_receipts": 7,
         "prebuttal_receipts": 2,
         "submission_readiness_receipts": 1,
         "contract_revisions": 0
@@ -1083,10 +1083,10 @@
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "acf07aba12fdef54e8706602933889e6ab749637a79394aced14add6ea7b5b5d",
+        "claim_audit_sha256": "0dacf3bb271aee32e9bf5513ae0318b8d3355ccf4a0f007076c8f81e9d359120",
         "blockers": [],
-        "checks": 31,
-        "passed": 31
+        "checks": 33,
+        "passed": 33
       },
       "latest_manuscript_ci": {
         "pass": true,
@@ -1103,8 +1103,8 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r9-zero-call-design-robustness",
-        "receipt_sha256": "0bc09fe07b9f944823c8acb580f47cef422384a964b914cdd3fbed428cd6a503",
+        "protocol_version": "1.0+r10-stanford-round2-zero-call-targeted-repair",
+        "receipt_sha256": "c6f96e9509a87ed0b542524b7da0c1a00190547f1a6a0ba7478c038249acdfa3",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -1140,7 +1140,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "14c6ba3e785439e63ad00e53f30d62d6e7784b06f95faea62004cfe6b60e616f",
+        "receipt_sha256": "c7718b8f8010e2686cdc59c7fb931b5e9259448d53247019e652671f52d08040",
         "blockers": []
       },
       "source_native_evidence": {
@@ -1149,7 +1149,7 @@
         "institutional_systems": 3,
         "exact_timesage_replication_debt": "ACTIVE_EXTERNAL_REPLICATION_DEBT_NOT_SUBSTITUTED",
         "recommended_immediate_action": "READY_FOR_HUMAN_SUBMISSION",
-        "finalization_sha256": "801abf245aa5280813a4f23fb45d50ac6b65ab2bc9e9eeb3446bf250cbb88b9b"
+        "finalization_sha256": "6835cf1cb01a9e5253b344324f52c164458e4357334336ef540b8fc105b4a0a4"
       },
       "latest_transition": {
         "from": "PREBUTTAL",
@@ -1172,6 +1172,20 @@
       "source_candidates": [
         "D2-C06"
       ],
+      "discovery_provenance": {
+        "campaign_alias": "DI2",
+        "campaign_zh": "Paper-first Idea Discovery 第 2 轮",
+        "campaign_en": "Paper-first Idea Discovery Round 2",
+        "candidate_aliases": [
+          "DI2-06"
+        ],
+        "primary_candidate_alias": "DI2-06",
+        "historical_candidate_ids": [
+          "D2-C06"
+        ],
+        "historical_ids_hidden_by_default": true,
+        "reader_label": "DI2-06"
+      },
       "paper_stage": "SUBMISSION_READY",
       "submission_status": "SUBMISSION_READY",
       "submission_ready": true,
@@ -1179,6 +1193,21 @@
         "pdf": "downloads/E2-Temporal-Skill.pdf",
         "source_zip": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip",
         "supplement_zip": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-supplement.zip"
+      },
+      "publication_identity": {
+        "code": "E2",
+        "category": "E",
+        "ordinal": 2,
+        "category_zh": "技能",
+        "category_en": "Skills",
+        "method": "Temporal Skill",
+        "idea": {
+          "zh": "可复用技能的因果瓶颈",
+          "en": "Reusable skills as causal bottlenecks"
+        },
+        "label_zh": "E2 技能 · Temporal Skill · 可复用技能的因果瓶颈",
+        "label_en": "E2 Skills · Temporal Skill · Reusable skills as causal bottlenecks",
+        "pdf": "downloads/E2-Temporal-Skill.pdf"
       },
       "experiment_refs": [],
       "research_authority": {
@@ -1203,36 +1232,7 @@
           "path": "paper-first-discovery-candidates",
           "role": "D2-C06"
         }
-      ],
-      "publication_identity": {
-        "code": "E2",
-        "category": "E",
-        "ordinal": 2,
-        "category_zh": "技能",
-        "category_en": "Skills",
-        "method": "Temporal Skill",
-        "idea": {
-          "zh": "可复用技能的因果瓶颈",
-          "en": "Reusable skills as causal bottlenecks"
-        },
-        "label_zh": "E2 技能 · Temporal Skill · 可复用技能的因果瓶颈",
-        "label_en": "E2 Skills · Temporal Skill · Reusable skills as causal bottlenecks",
-        "pdf": "downloads/E2-Temporal-Skill.pdf"
-      },
-      "discovery_provenance": {
-        "campaign_alias": "DI2",
-        "campaign_zh": "Paper-first Idea Discovery 第 2 轮",
-        "campaign_en": "Paper-first Idea Discovery Round 2",
-        "candidate_aliases": [
-          "DI2-06"
-        ],
-        "primary_candidate_alias": "DI2-06",
-        "historical_candidate_ids": [
-          "D2-C06"
-        ],
-        "historical_ids_hidden_by_default": true,
-        "reader_label": "DI2-06"
-      }
+      ]
     },
     {
       "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",

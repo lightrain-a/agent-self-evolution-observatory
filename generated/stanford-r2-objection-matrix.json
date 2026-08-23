@@ -40,8 +40,8 @@
   "summary": {
     "papers": 5,
     "objections": 33,
-    "resolved": 9,
-    "existing_evidence_actionable": 7,
+    "resolved": 10,
+    "existing_evidence_actionable": 6,
     "requires_scientific_reopen": 9,
     "permanent_claim_boundary": 8,
     "automatic_actions": 0
@@ -285,12 +285,12 @@
         "verdict": "Weak Accept"
       },
       "read": {
-        "zh": "数字下降但文字从 borderline reject 反转为 weak accept；真正剩余压力是 behavior-neutral generic 与 equivalent retrieval-side baseline。",
-        "en": "The numeric score fell while the text verdict flipped to weak accept; the real remaining burden is a behavior-neutral generic and equivalent retrieval-side baseline."
+        "zh": "Round 2 的文字 verdict 已由 borderline reject 反转为 weak accept。r9+r10 已清掉可用现有证据回答的 harness/order/date 实现质疑；剩余负担是两个尚未执行的新 treatment，不能靠现有结果推断。",
+        "en": "The Round-2 textual verdict flips from borderline reject to weak accept. r9+r10 close the harness/order/date implementation concerns answerable from existing evidence; the remaining burden is two unexecuted new treatments that cannot be inferred from current outcomes."
       },
       "next": {
-        "zh": "r9 零调用诊断回答 invocation/order/prompt-length，但绝不冒充缺失 baseline；未来 reopen 先做 retrieval equivalent + 第二 generic。",
-        "en": "The r9 zero-call audit answers invocation/order/prompt-length concerns but is not the missing baseline; if reopened, do retrieval equivalent plus a second generic first."
+        "zh": "r9 已关闭 invocation/order/prompt-length，r10 又关闭 ISO-date serialization；当前只剩两个真正需要 scientific reopen 的识别缺口：behavior-neutral 第二 generic 与等价 retrieval-side temporal baseline。",
+        "en": "r9 closes invocation/order/prompt-length concerns and r10 closes ISO-date serialization. The only remaining identification gaps that require scientific reopen are a behavior-neutral second generic and an equivalent retrieval-side temporal baseline."
       },
       "objections": [
         {
@@ -331,12 +331,14 @@
             "zh": "ISO date normalization",
             "en": "ISO date normalization"
           },
-          "d": "EXISTING_EVIDENCE_ACTIONABLE",
+          "d": "RESOLVED",
           "why": {
-            "zh": "可静态扫描 frozen endpoint/date fields 与 parser，不需要新 outcome。",
-            "en": "Frozen endpoint/date fields and parsers can be statically audited with no new outcomes."
+            "zh": "canonical r10 零调用静态审计覆盖 35 个 frozen endpoint：55 个 cutoff_date 与 176 个 release_date 均为合法 YYYY-MM-DD；88/88 个实际 T1 release≤cutoff 比较与 parsed-calendar 顺序一致，0 mismatch。",
+            "en": "Canonical r10 zero-call static audit covers all 35 frozen endpoints: all 55 cutoff_date and 176 release_date fields are valid YYYY-MM-DD values, and all 88 observed T1 release<=cutoff comparisons agree with parsed-calendar ordering with zero mismatches."
           },
-          "action": "OFFLINE_ANALYSIS_ONLY"
+          "action": "NONE",
+          "e": "temporal r10 ISO-date zero-call audit sha256:452051e3a3f7e309c1682f00dbe28f5b3766a4899df5bd2bfc9f6cc669485bcd",
+          "canon": "CURRENT_CANONICAL"
         },
         {
           "id": "TEMP-O4",

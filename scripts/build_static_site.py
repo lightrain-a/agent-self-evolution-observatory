@@ -260,6 +260,9 @@ def build() -> Path:
         "Agent-Safety-R9-stanford-round2-r7-20260823-supplement.zip",
         "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE.pdf", "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip",
         "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK.pdf", "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip",
+        "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-r2-r10-20260823.pdf",
+        "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-r2-r10-20260823-source.zip",
+        "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-r2-r10-20260823-supplement.zip",
         "D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf", "D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip",
         "Agent-Self-Evolution-Observatory-Five-Papers.zip",
     )
