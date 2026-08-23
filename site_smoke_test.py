@@ -225,6 +225,14 @@ def main() -> None:
         fail("research memory wiki must remain zero-authority with zero hard lint errors")
     if any(row.get("durability_class") == "transient" and row.get("prompt_eligible") is True for row in research_memory.get("entries") or [] if isinstance(row, dict)):
         fail("transient operational memory cannot enter research query packs")
+    discovery_lessons = [row for row in research_memory.get("entries") or [] if isinstance(row, dict) and row.get("kind") == "DISCOVERY_LESSON"]
+    if int((research_memory.get("summary") or {}).get("discovery_lessons") or 0) != 19 or len(discovery_lessons) != 19:
+        fail(f"Research Memory must expose all 19 longitudinal discovery lessons: summary={(research_memory.get('summary') or {}).get('discovery_lessons')} rows={len(discovery_lessons)}")
+    if any(row.get("scientific_authority") is not False or row.get("principle_update_allowed") is not False for row in discovery_lessons):
+        fail("Discovery Lessons must remain retrieval/precheck memory with zero scientific or principle-update authority")
+    system_reader_source = (ROOT / "system-overview-reader.js").read_text(encoding="utf-8")
+    if "data-discovery-lesson-section" not in system_reader_source or "data-discovery-lesson" not in system_reader_source:
+        fail("System Overview must visibly render Discovery Lessons from the embedded Research Memory projection")
     durable_shadow_admission = json.loads((ROOT / "generated" / "paper-first-shadow-search-admission.json").read_text(encoding="utf-8"))
     embedded_shadow_admission = research_system.get("paper_first_shadow_search_admission") or {}
     durable_summary = durable_shadow_admission.get("summary") or {}

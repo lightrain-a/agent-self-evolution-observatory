@@ -1,0 +1,402 @@
+{
+  "schema_version": "1.0",
+  "status": "DEBATE_COMPLETE_IDENTITY_LOCKED_ZERO_AUTHORITY",
+  "run_id": "failure-derived-new-object-debate-20260823",
+  "candidate_ids": [
+    "CAND-EVAL-ENV-DISJOINT",
+    "CAND-FROZEN-DESIGNER-MEMORY",
+    "CAND-PERSISTENT-AUTONOMY-THRESHOLD",
+    "CAND-CONFIDENCE-DIVERGENCE-TRIGGER"
+  ],
+  "fresh_refs": [
+    "arXiv:2608.20318",
+    "arXiv:2608.19197",
+    "arXiv:2608.19047",
+    "arXiv:2608.13900",
+    "arXiv:2608.13120",
+    "arXiv:2608.18575"
+  ],
+  "policy": {
+    "historical_or_generated_candidate_is_not_promoted_by_debate": true,
+    "candidate_identity_lock_required": true,
+    "unmapped_candidate_alias_forces_protocol_fail": true,
+    "explicit_parent_child_mapping_required_for_material_mutation": true,
+    "superseded_protocol_invalid_rounds_have_zero_scientific_effect": true,
+    "same_information_baselines_receive_identical_observables_supervision_and_budget": true,
+    "judge_cannot_grant_problem_gate": true
+  },
+  "protocol_audit": {
+    "initial_round3_round4": "SUPERSEDED_PROTOCOL_INVALID_IDENTITY_DRIFT",
+    "identity_locked_round3_audit": {
+      "schema_version": "1.0",
+      "status": "PASS",
+      "expected_candidate_ids": [
+        "CAND-EVAL-ENV-DISJOINT",
+        "CAND-FROZEN-DESIGNER-MEMORY",
+        "CAND-PERSISTENT-AUTONOMY-THRESHOLD",
+        "CAND-CONFIDENCE-DIVERGENCE-TRIGGER"
+      ],
+      "returned_candidate_ids": [
+        "CAND-EVAL-ENV-DISJOINT",
+        "CAND-FROZEN-DESIGNER-MEMORY",
+        "CAND-PERSISTENT-AUTONOMY-THRESHOLD",
+        "CAND-CONFIDENCE-DIVERGENCE-TRIGGER"
+      ],
+      "old_round3_status": "SUPERSEDED_PROTOCOL_INVALID_IDENTITY_DRIFT",
+      "scientific_authority": false
+    },
+    "identity_locked_round4_audit": {
+      "schema_version": "1.0",
+      "status": "PASS",
+      "expected_candidate_ids": [
+        "CAND-EVAL-ENV-DISJOINT",
+        "CAND-FROZEN-DESIGNER-MEMORY",
+        "CAND-PERSISTENT-AUTONOMY-THRESHOLD",
+        "CAND-CONFIDENCE-DIVERGENCE-TRIGGER"
+      ],
+      "returned_candidate_ids": [
+        "CAND-EVAL-ENV-DISJOINT",
+        "CAND-FROZEN-DESIGNER-MEMORY",
+        "CAND-PERSISTENT-AUTONOMY-THRESHOLD",
+        "CAND-CONFIDENCE-DIVERGENCE-TRIGGER"
+      ],
+      "scientific_authority": false
+    }
+  },
+  "rounds": [
+    {
+      "artifact": "round1-proposer.json",
+      "role": "proposer",
+      "transcript_status": "ACTIVE",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "raw_sha256": "4c0bf8cd34057a2a5d6f158a16f21c13543bdd4340f3e2404bede158103e32c0",
+      "transport_fallback_used": false,
+      "payload": {
+        "role": "proposer",
+        "candidates": [
+          {
+            "candidate_id": "CAND-EVAL-ENV-DISJOINT",
+            "title": "Environment-Blind Evaluator as an Independently Observable Decision Variable in Self-Improvement",
+            "source_anchor": "arXiv:2608.20318 (AI4AI-Bench)",
+            "observed_problem": "The evaluator EE is fixed in advance and has no access to the agent's execution environment (typed_evidence.operational_assumptions). Meanwhile, 124 of 290 cells fall below 0.1 (worse than baseline), and the mean score is 0.166 on a scale where the repository's existing algorithm is 0.1. The evaluator's blindness to execution environment creates a measurable gap: agents optimize for the evaluator's proxy without the evaluator observing the environmental constraints that determine real-world success.",
+            "changed_scientific_object": "The evaluator's information set (specifically its disjointness from the agent's execution environment) is treated as an independently observable, manipulable scientific variable, not as a fixed benchmark property. This is distinct from evaluator co-adaptation (excluded) because the evaluator remains static; the variable is the *structural information gap* between evaluator and environment.",
+            "independently_observable_variable": "Evaluator-Environment Information Disjointness (EEID): a binary or graded measure of whether the evaluator's input features include execution-environment observables (e.g., resource constraints, state dependencies, failure traces) available to the agent during self-modification. Measured by feature-set intersection between agent's observation space and evaluator's scoring function inputs.",
+            "exact_ex_ante_prediction": "For self-improvement tasks where the agent modifies repository code, cells with high EEID (evaluator blind to environment) will show a significantly higher rate of 'worse-than-baseline' outcomes (score < 0.1) compared to cells with low EEID (evaluator partially observes environment), even when the agent's capability, task, and compute budget are matched. Specifically, the 124/290 failure rate will concentrate in high-EEID configurations.",
+            "strongest_same_information_baseline": "A baseline that receives all pre-outcome observables (agent's code changes, execution traces, resource usage) and uses the same fixed evaluator EE, but is given access to the execution environment's state during scoring. This baseline sees the same information as the agent but scores with environmental context.",
+            "baseline_prediction": "The baseline will predict that score improvements are driven by agent capability and task difficulty, with no systematic effect of EEID on failure rates. It will treat the 124 failures as random or capability-limited, not structurally induced by evaluator blindness.",
+            "prediction_disagreement": "The candidate predicts that EEID is a causal driver of failure rates, while the baseline predicts no such effect. The candidate expects a significant interaction: high-EEID cells fail more often, and this effect disappears when the evaluator is given environment access (low EEID).",
+            "same_substrate_unit": "A single cell in AI4AI-Bench: one configuration (system, task, effort level) evaluated on one repository task.",
+            "cheapest_falsifier": "Rerun a subset of AI4AI-Bench tasks with a modified evaluator that receives execution-environment features (e.g., runtime memory usage, dependency conflicts). If the failure rate (score < 0.1) drops significantly for the same agent configurations, the candidate is supported; if not, falsified.",
+            "stop_rule": "Stop if the modified evaluator (with environment access) does not reduce the failure rate by at least 20% relative to the original high-EEID evaluator, or if the effect is fully explained by agent capability differences.",
+            "why_not_in_exclusions": "This is not evaluator co-adaptation/calibration (excluded) because the evaluator remains fixed; the variable is the structural information gap, not a dynamic adaptation process. It is also not a method or representation choice, but an independently observable property of the evaluation setup."
+          },
+          {
+            "candidate_id": "CAND-FROZEN-DESIGNER-MEMORY",
+            "title": "Frozen Environment Designer with Memory as a Distinct Failure Mode in Self-Play",
+            "source_anchor": "arXiv:2608.19197 (SPADE)",
+            "observed_problem": "Freezing the self-play Environment Designer and dropping its memory makes the model worse than no training at all (eight-benchmark average 40.5, 9.7 points below untrained base). This is a boundary observation: the combination of frozen designer + no memory is uniquely harmful, not just additive. The paper treats this as an ablation, but the specific interaction (frozen + memoryless) is not predicted by standard component ablation logic.",
+            "changed_scientific_object": "The interaction between 'frozen designer' and 'memory state' is treated as an independently observable scientific object, not as a simple sum of two ablations. This is distinct from 'stateful task-order/environment contamination' (excluded) because it concerns the designer's internal memory, not task ordering.",
+            "independently_observable_variable": "Designer-Memory-Freeze Interaction (DMFI): a ternary variable capturing (a) designer trainable/frozen, (b) memory present/absent, (c) their interaction. Measured by the performance delta when both are manipulated together versus separately.",
+            "exact_ex_ante_prediction": "The DMFI interaction will be non-additive: the performance drop from freezing the designer *and* removing memory will be significantly larger than the sum of the drops from freezing alone and removing memory alone. Specifically, the 9.7-point drop below base will exceed the additive prediction by at least 5 points.",
+            "strongest_same_information_baseline": "A baseline that models the two ablations as independent additive effects (freezing designer = -X points, removing memory = -Y points, combined = -X-Y). This baseline receives all pre-outcome observables (training trajectories, benchmark scores, designer parameters).",
+            "baseline_prediction": "The baseline predicts an additive effect: combined drop = sum of individual drops. It will not predict the observed 9.7-point below-base collapse unless the individual drops are already large.",
+            "prediction_disagreement": "The candidate predicts a super-additive interaction (drop > sum of parts), while the baseline predicts additivity. The candidate expects the interaction term to be statistically significant and negative.",
+            "same_substrate_unit": "A single training run in SPADE: one Environment Designer configuration (frozen/trainable) × one memory setting (present/absent) evaluated on the eight-benchmark suite.",
+            "cheapest_falsifier": "Run the four conditions (trainable+memory, trainable+no-memory, frozen+memory, frozen+no-memory) and test for interaction in a 2x2 ANOVA. If the interaction term is not significant, falsified.",
+            "stop_rule": "Stop if the interaction term is not significant at p < 0.05 or if the effect size is less than 2 points.",
+            "why_not_in_exclusions": "This is not 'stateful task-order/environment contamination' (excluded) because it concerns the designer's internal memory state, not task ordering or environment state. It is also not a method, but an independently observable interaction effect."
+          },
+          {
+            "candidate_id": "CAND-PERSISTENT-AUTONOMY-THRESHOLD",
+            "title": "Persistent Local Autonomy as a Threshold Variable for Specialized Agent Value",
+            "source_anchor": "arXiv:2608.19047 (Eureka)",
+            "observed_problem": "The result indicates that a specialized agent has stable value only when persistent local autonomy can continue reducing future coordination and state-reload cost (boundary_observations). This suggests a threshold effect: below a certain level of persistence, specialization is worthless or harmful. The paper does not quantify this threshold or treat it as a manipulable variable.",
+            "changed_scientific_object": "The threshold of 'persistent local autonomy' is treated as an independently observable, manipulable scientific variable that determines when specialization pays off. This is distinct from 'compositional update compatibility' (excluded) because it concerns the temporal persistence of autonomy, not update compatibility.",
+            "independently_observable_variable": "Persistent Autonomy Threshold (PAT): the minimum number of consecutive tasks or time steps during which a specialized agent must retain local autonomy (no state reload, no coordination overhead) for its specialization to yield net positive value. Measured by the break-even point where future service count NS_S exceeds one-time promotion cost FS_S.",
+            "exact_ex_ante_prediction": "For a given task distribution, there exists a critical PAT value T* such that specialized agents with autonomy duration < T* will underperform generalist agents, while those with autonomy duration ≥ T* will outperform. The threshold T* will be predictable from the ratio FS_S / (Gk - Mk) (promotion cost over per-service cost savings).",
+            "strongest_same_information_baseline": "A baseline that models agent value as a linear function of autonomy duration, without a threshold. It receives all pre-outcome observables (promotion costs, service counts, per-service costs) and predicts value based on total service volume.",
+            "baseline_prediction": "The baseline predicts a smooth, monotonic relationship between autonomy duration and value, with no sharp threshold. It will not predict a discontinuity at T*.",
+            "prediction_disagreement": "The candidate predicts a discontinuous jump at T*, while the baseline predicts smooth monotonicity. The candidate expects a significant positive coefficient for an indicator variable (autonomy ≥ T*) in a regression of value on autonomy duration.",
+            "same_substrate_unit": "A single specialized agent deployment in Eureka: one promotion decision with associated FS_S, NS_S, Gk, Mk values.",
+            "cheapest_falsifier": "Plot agent value against autonomy duration across multiple deployments. If no discontinuity is observed at the predicted T*, falsified.",
+            "stop_rule": "Stop if the data do not show a significant breakpoint at T* (tested via Chow test or similar), or if the breakpoint location is not predicted by FS_S / (Gk - Mk).",
+            "why_not_in_exclusions": "This is not 'compositional update compatibility/restoration clauses' (excluded) because it concerns the temporal persistence of autonomy, not the compatibility of updates. It is also not a method, but a threshold variable."
+          },
+          {
+            "candidate_id": "CAND-CONFIDENCE-DIVERGENCE-TRIGGER",
+            "title": "Confidence Divergence as an Independently Observable Retry Trigger in Agentic Transactions",
+            "source_anchor": "arXiv:2608.13900 (Agentic Transaction)",
+            "observed_problem": "Retries are triggered when decision confidence divergence is below 0.25 or maximum code-span confidence divergence is below 0.50 (boundary_observations). This is a specific, quantitative trigger rule. The paper does not explore whether this trigger rule itself is a scientific object that can be manipulated to reveal new phenomena, or whether it interacts with failure propagation (the 11.7% score drop from propagating failed states).",
+            "changed_scientific_object": "The confidence-divergence retry trigger is treated as an independently observable, manipulable scientific variable, not just a heuristic. This is distinct from 'permission reauthorization/least-privilege triage' (excluded) because it concerns confidence-based retry logic, not permission management.",
+            "independently_observable_variable": "Confidence-Divergence Trigger Threshold (CDTT): the specific values (0.25, 0.50) that determine when retries are triggered. Measured as a manipulable parameter in the agent's decision logic.",
+            "exact_ex_ante_prediction": "The CDTT values will interact with failure propagation: lower CDTT (more retries) will reduce the 11.7% score drop from failed-state propagation, but only up to a point. Beyond an optimal CDTT, excessive retries will increase cost without further reducing failure propagation. The optimal CDTT will be predictable from the base failure rate and the cost of retries.",
+            "strongest_same_information_baseline": "A baseline that treats CDTT as a fixed hyperparameter and models failure propagation as independent of retry logic. It receives all pre-outcome observables (confidence scores, failure states, retry counts) but does not manipulate CDTT.",
+            "baseline_prediction": "The baseline predicts that failure propagation is determined by the base failure rate and task difficulty, not by CDTT. It will not predict an optimal CDTT or an interaction with failure propagation.",
+            "prediction_disagreement": "The candidate predicts a U-shaped relationship between CDTT and failure propagation (with an optimum), while the baseline predicts no relationship. The candidate expects a significant quadratic term in a regression of failure propagation on CDTT.",
+            "same_substrate_unit": "A single agentic transaction: one task execution with associated confidence scores, retry decisions, and failure propagation outcomes.",
+            "cheapest_falsifier": "Vary CDTT systematically across a range (e.g., 0.1 to 0.5) and measure failure propagation. If no U-shaped relationship is observed, falsified.",
+            "stop_rule": "Stop if the relationship between CDTT and failure propagation is monotonic or flat, or if the optimum is not predictable from base failure rate and retry cost.",
+            "why_not_in_exclusions": "This is not 'permission reauthorization/least-privilege triage' (excluded) because it concerns confidence-based retry logic, not permission management. It is also not a method, but a manipulable trigger variable."
+          }
+        ],
+        "scientific_authority": false
+      },
+      "scientific_authority": false
+    },
+    {
+      "artifact": "round2-critic.json",
+      "role": "critic",
+      "transcript_status": "ACTIVE",
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-260425",
+      "raw_sha256": "cebc426e9da3b354138e94efc30c5ff81e5f0a011064f935b64a0c42d3b0c0f0",
+      "transport_fallback_used": false,
+      "payload": {
+        "role": "critic",
+        "reviews": [
+          {
+            "candidate_id": "CAND-EVAL-ENV-DISJOINT",
+            "verdict": "STOP_REDUCTION",
+            "reduction_path": "The proposed Evaluator-Environment Information Disjointness (EEID) reduces to ordinary distribution shift between the agent's optimization objective and the true target objective. The evaluator EE is a fixed scoring function; its blindness to execution-environment features means the agent optimizes a proxy that is misaligned with the environment-conditioned success criterion. This is exactly the setting of dataset shift / covariate shift in optimization: the agent's training distribution (evaluator-visible features) differs from the deployment distribution (environment-conditioned features). The 124/290 failure rate is predicted by standard proxy-reward optimization under distribution mismatch, where agents overfit to the proxy and fail under environment conditions not represented in the evaluator's feature set. The proposed 'structural information gap' is the feature-set difference between training and deployment distributions, a standard object in domain adaptation and distribution-shift literature. The same-information baseline that receives environment-state access during scoring is simply a baseline with a less-shifted evaluation distribution. The prediction that failure rates concentrate in high-EEID configurations is the prediction that proxy-reward optimization fails more when the proxy is less informative about the true objective—a direct consequence of ordinary reward-misspecification and distribution-shift theory.",
+            "baseline_name": "Proxy-reward optimization under distribution shift / domain adaptation",
+            "real_disagreement_under_equal_information": false,
+            "explanation": "The baseline, given identical pre-outcome observables (agent code changes, execution traces, resource usage) and the same fixed evaluator EE, would model the EEID as a feature-alignment or domain-shift variable. It would predict that agents optimizing for a proxy evaluator will perform worse when the proxy's feature set excludes environment variables that determine true success, because the optimization gradient is blind to those variables. The 124 failures are not structurally distinct from ordinary overfitting to a misspecified reward function. The candidate's ex-ante prediction that high-EEID cells fail more often is fully captured by a model that conditions failure probability on the mutual information between evaluator-visible features and environment-conditioned success. No new scientific object is required beyond the information-theoretic gap between proxy and true objective."
+          },
+          {
+            "candidate_id": "CAND-FROZEN-DESIGNER-MEMORY",
+            "verdict": "STOP_REDUCTION",
+            "reduction_path": "The proposed Designer-Memory-Freeze Interaction (DMFI) reduces to ordinary negative transfer in multi-component learning systems, specifically the well-known phenomenon where freezing one component while removing another's state creates a distributional mismatch that is worse than either ablation alone. In SPADE, the Environment Designer and the agent are co-adapted during self-play. Freezing the designer creates a stationary environment distribution; removing the designer's memory removes its ability to condition on history, making it a stationary but impoverished environment generator. The combination produces environments that are both non-adaptive (frozen) and context-impoverished (no memory), which is a worse training distribution than either the base model's pretraining distribution or the individual ablations. This is predicted by standard transfer-learning theory: when a source component (designer) is frozen and its state (memory) is removed, the resulting training signal can be actively misleading relative to the target task, producing negative transfer below the no-training baseline. The super-additive interaction is the expected consequence of compounding distributional pathologies, not a new interaction primitive. A 2x2 ANOVA showing non-additivity is evidence of negative transfer, not a new scientific object.",
+            "baseline_name": "Negative transfer under compound distributional mismatch",
+            "real_disagreement_under_equal_information": false,
+            "explanation": "The baseline, given all pre-outcome observables (training trajectories, benchmark scores, designer parameters), would model the four conditions as points in a distribution-shift space. It would predict that frozen+no-memory produces the largest shift from the target distribution, and that the combined effect can exceed the sum of individual effects when the two ablations create compounding mismatches (e.g., frozen designer generates stale tasks, no memory removes the minimal context needed to make those stale tasks useful). The 9.7-point below-base collapse is a boundary case of negative transfer, not evidence of a new interaction variable. The candidate's prediction of super-additivity is the prediction that two distributional pathologies compound, which is expressible in standard transfer-learning and domain-generalization frameworks."
+          },
+          {
+            "candidate_id": "CAND-PERSISTENT-AUTONOMY-THRESHOLD",
+            "verdict": "STOP_REDUCTION",
+            "reduction_path": "The proposed Persistent Autonomy Threshold (PAT) reduces to ordinary cost-benefit analysis with a fixed promotion cost and per-service savings, which produces a deterministic break-even point. The candidate defines PAT as the minimum number of consecutive tasks for specialization to yield net positive value, and predicts it from FS_S / (Gk - Mk). This is exactly the break-even calculation in any investment decision with a one-time fixed cost and recurring per-unit savings: the investment pays off when cumulative savings exceed the fixed cost. The 'threshold' is the point where NS_S * (Gk - Mk) > FS_S, which is a linear inequality, not a discontinuous jump in an underlying causal mechanism. The candidate's prediction of a 'discontinuous jump at T*' is an artifact of binarizing a continuous cumulative-savings function: value is negative when cumulative savings < FS_S and positive when cumulative savings > FS_S. This is not a phase transition or threshold effect in the scientific sense; it is the crossing of a linear break-even point. The same-information baseline that models value as a linear function of autonomy duration would indeed miss the break-even structure, but only because it misspecifies the cost structure (ignoring the fixed promotion cost). A baseline that correctly incorporates the fixed cost FS_S and per-service savings (Gk - Mk) would predict exactly the same break-even point without invoking a new threshold variable.",
+            "baseline_name": "Fixed-cost investment break-even analysis / dynamic treatment regime with one-time cost",
+            "real_disagreement_under_equal_information": false,
+            "explanation": "The baseline, given all pre-outcome observables (promotion costs, service counts, per-service costs), would compute net value as NS_S * (Gk - Mk) - FS_S. This function crosses zero at exactly T* = FS_S / (Gk - Mk). The 'discontinuity' the candidate predicts is the sign change of this linear function, not a structural break in the data-generating process. A Chow test for a breakpoint at T* would be significant only because the relationship between cumulative savings and net value is piecewise linear with a kink at zero, which is fully determined by the cost parameters. No new scientific object is needed beyond the cost structure already defined in the Eureka paper."
+          },
+          {
+            "candidate_id": "CAND-CONFIDENCE-DIVERGENCE-TRIGGER",
+            "verdict": "STOP_REDUCTION",
+            "reduction_path": "The proposed Confidence-Divergence Trigger Threshold (CDTT) reduces to ordinary decision-theoretic threshold optimization under a precision-recall or cost-sensitive trade-off. The agent's retry logic is a binary decision rule: retry if confidence divergence < CDTT. Lowering CDTT increases retry frequency, which reduces false-negative propagation (failed states continuing) at the cost of increased retry computation. This is exactly the trade-off in any threshold-based classifier or decision system: varying the threshold traces a precision-recall or cost-benefit curve. The candidate's prediction of a U-shaped relationship between CDTT and failure propagation is the prediction that there exists an optimal operating point on this curve, which is a standard result in decision theory when both false positives (unnecessary retries) and false negatives (propagated failures) have costs. The optimal CDTT is the point where marginal benefit of reduced failure propagation equals marginal cost of additional retries. This is not a new scientific object; it is the optimal threshold in a cost-sensitive decision rule. The same-information baseline that treats CDTT as fixed is simply a baseline that does not explore the threshold space, but a baseline that models the cost structure would predict the same U-shape and optimum.",
+            "baseline_name": "Cost-sensitive threshold optimization / decision-theoretic operating point",
+            "real_disagreement_under_equal_information": false,
+            "explanation": "The baseline, given all pre-outcome observables (confidence scores, failure states, retry counts), would model the expected cost as a function of CDTT: E[cost] = P(retry | CDTT) * cost_retry + P(failure_propagation | CDTT) * cost_failure. Both P(retry) and P(failure_propagation) are monotonic in CDTT (one increasing, one decreasing), producing a convex expected-cost function with a unique minimum. The candidate's U-shaped relationship and optimal CDTT are direct consequences of this cost structure. No new scientific object is needed beyond the cost parameters and the conditional probability functions, which are estimable from the same pre-outcome observables available to the baseline."
+          }
+        ],
+        "scientific_authority": false
+      },
+      "scientific_authority": false
+    },
+    {
+      "artifact": "round3-rebuttal.json",
+      "role": "rebuttal",
+      "transcript_status": "SUPERSEDED_PROTOCOL_INVALID_IDENTITY_DRIFT",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "raw_sha256": "25bf6886af0dd395cf76036121641f80a175c1cebd8c74d92e5c57511276e09f",
+      "transport_fallback_used": false,
+      "payload": {
+        "role": "rebuttal",
+        "candidates": [
+          {
+            "candidate_id": "CAND-EVAL-ENV-DISJOINT",
+            "decision": "CONCEDE",
+            "concession_reason": "The critic correctly identifies that EEID reduces to ordinary distribution shift between the agent's optimization objective and the true target objective. The 'structural information gap' is the feature-set difference between training and deployment distributions, a standard object in domain adaptation and distribution-shift literature. The prediction that failure rates concentrate in high-EEID configurations is fully captured by a model that conditions failure probability on the mutual information between evaluator-visible features and environment-conditioned success. No new scientific object is required beyond the information-theoretic gap between proxy and true objective."
+          },
+          {
+            "candidate_id": "CAND-FROZEN-DESIGNER-MEMORY",
+            "decision": "CONCEDE",
+            "concession_reason": "The critic correctly identifies that DMFI reduces to ordinary negative transfer under compound distributional mismatch. The super-additive interaction is the expected consequence of compounding distributional pathologies (frozen designer generating stale tasks + no memory removing minimal context), which is expressible in standard transfer-learning and domain-generalization frameworks. The 9.7-point below-base collapse is a boundary case of negative transfer, not evidence of a new interaction primitive."
+          },
+          {
+            "candidate_id": "CAND-PERSISTENT-AUTONOMY-THRESHOLD",
+            "decision": "CONCEDE",
+            "concession_reason": "The critic correctly identifies that PAT reduces to ordinary fixed-cost investment break-even analysis. The 'threshold' is the point where NS_S * (Gk - Mk) > FS_S, which is a linear inequality, not a discontinuous jump in an underlying causal mechanism. The 'discontinuity' is an artifact of binarizing a continuous cumulative-savings function. A baseline that correctly incorporates the fixed cost FS_S and per-service savings (Gk - Mk) would predict exactly the same break-even point without invoking a new threshold variable."
+          },
+          {
+            "candidate_id": "CAND-CONFIDENCE-DIVERGENCE-TRIGGER",
+            "decision": "CONCEDE",
+            "concession_reason": "The critic correctly identifies that CDTT reduces to ordinary cost-sensitive threshold optimization. The U-shaped relationship and optimal CDTT are direct consequences of the cost structure: E[cost] = P(retry | CDTT) * cost_retry + P(failure_propagation | CDTT) * cost_failure. Both P(retry) and P(failure_propagation) are monotonic in CDTT, producing a convex expected-cost function with a unique minimum. No new scientific object is needed beyond the cost parameters and conditional probability functions estimable from the same pre-outcome observables."
+          }
+        ],
+        "scientific_authority": false
+      },
+      "scientific_authority": false
+    },
+    {
+      "artifact": "round4-judge.json",
+      "role": "judge",
+      "transcript_status": "SUPERSEDED_PROTOCOL_INVALID_IDENTITY_DRIFT",
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-260425",
+      "raw_sha256": "741ebed24ac97eb3ad8d388f43d315f5efbc22f48b90169fd071d5426ce640ab",
+      "transport_fallback_used": false,
+      "payload": {
+        "role": "judge",
+        "verdict": "STOP_REDUCTION",
+        "selected_child_id": "none",
+        "reason": "All four candidates have been conceded by the proposer after critic review. Each candidate reduces to a known scientific object: CAND-EVAL-ENV-DISJOINT to distribution shift/domain adaptation; CAND-FROZEN-DESIGNER-MEMORY to negative transfer under compound distributional mismatch; CAND-PERSISTENT-AUTONOMY-THRESHOLD to fixed-cost investment break-even analysis; CAND-CONFIDENCE-DIVERGENCE-TRIGGER to cost-sensitive threshold optimization. No candidate presents an independently observable new scientific object that is not already captured by existing frameworks. The proposer's concessions are well-founded and the critic's reduction paths are sound.",
+        "scientific_object": "none",
+        "exact_prediction": "none",
+        "strongest_same_information_baseline": "none",
+        "same_substrate_unit": "none",
+        "cheapest_falsifier": "none",
+        "next_condition": "REVISE_DEBATE",
+        "problem_gate_authorized": false,
+        "scientific_authority": false
+      },
+      "scientific_authority": false
+    },
+    {
+      "artifact": "round3b-rebuttal-identity-locked.json",
+      "role": "rebuttal",
+      "transcript_status": "ACTIVE_IDENTITY_LOCKED",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "raw_sha256": "b52df4c1c5c464655a16c1c60cfe89efbc7aeeae3c8dd0ca6f0ba643ba921d2c",
+      "transport_fallback_used": false,
+      "payload": {
+        "role": "rebuttal",
+        "candidate_ids": [
+          "CAND-EVAL-ENV-DISJOINT",
+          "CAND-FROZEN-DESIGNER-MEMORY",
+          "CAND-PERSISTENT-AUTONOMY-THRESHOLD",
+          "CAND-CONFIDENCE-DIVERGENCE-TRIGGER"
+        ],
+        "responses": [
+          {
+            "candidate_id": "CAND-EVAL-ENV-DISJOINT",
+            "action": "CONCEDE",
+            "reason": "The critic correctly reduces EEID to ordinary proxy-reward optimization under distribution shift. The evaluator's blindness to execution-environment features is a feature-set mismatch between training and deployment distributions, which is standard covariate shift. The 124/290 failure rate is predicted by existing theory on reward misspecification: agents overfit to a proxy that lacks environment-relevant features. The candidate's prediction that high-EEID cells fail more often is fully captured by a model conditioning failure probability on the mutual information between evaluator-visible features and environment-conditioned success. No new scientific object is required beyond the information-theoretic gap between proxy and true objective, which is well-studied in domain adaptation and distribution-shift literature."
+          },
+          {
+            "candidate_id": "CAND-FROZEN-DESIGNER-MEMORY",
+            "action": "CONCEDE",
+            "reason": "The critic correctly reduces DMFI to negative transfer under compound distributional mismatch. Freezing the designer creates a stationary environment distribution; removing memory creates an impoverished generator. The combination produces a training distribution that is both non-adaptive and context-poor, which is a worse training signal than either ablation alone. This is predicted by standard transfer-learning theory: compounding distributional pathologies can produce super-additive negative transfer. The 9.7-point below-base collapse is a boundary case of negative transfer, not evidence of a new interaction primitive. A 2x2 ANOVA showing non-additivity is evidence of compounding distributional mismatch, not a new scientific object. The candidate's prediction of super-additivity is expressible in standard domain-generalization frameworks."
+          },
+          {
+            "candidate_id": "CAND-PERSISTENT-AUTONOMY-THRESHOLD",
+            "action": "CONCEDE",
+            "reason": "The critic correctly reduces PAT to ordinary fixed-cost investment break-even analysis. The candidate defines PAT as the minimum number of consecutive tasks for specialization to yield net positive value, predicted from FS_S / (Gk - Mk). This is exactly the break-even calculation in any investment decision with a one-time fixed cost and recurring per-unit savings. The 'threshold' is the point where NS_S * (Gk - Mk) > FS_S, a linear inequality, not a discontinuous jump in an underlying causal mechanism. The candidate's prediction of a 'discontinuous jump at T*' is an artifact of binarizing a continuous cumulative-savings function. A baseline that correctly incorporates the fixed cost FS_S and per-service savings would predict exactly the same break-even point without invoking a new threshold variable. No new scientific object is needed beyond the cost structure already defined in the Eureka paper."
+          },
+          {
+            "candidate_id": "CAND-CONFIDENCE-DIVERGENCE-TRIGGER",
+            "action": "CONCEDE",
+            "reason": "The critic correctly reduces CDTT to ordinary cost-sensitive threshold optimization. The agent's retry logic is a binary decision rule: retry if confidence divergence < CDTT. Lowering CDTT increases retry frequency, reducing false-negative propagation at the cost of increased computation. This is the standard precision-recall or cost-benefit trade-off in threshold-based decision systems. The candidate's prediction of a U-shaped relationship between CDTT and failure propagation is the prediction that there exists an optimal operating point on this curve, a standard result in decision theory when both false positives and false negatives have costs. The optimal CDTT is the point where marginal benefit equals marginal cost, not a new scientific object. A baseline that models the cost structure would predict the same U-shape and optimum from the same pre-outcome observables."
+          }
+        ],
+        "scientific_authority": false
+      },
+      "scientific_authority": false
+    },
+    {
+      "artifact": "round4b-judge-identity-locked.json",
+      "role": "judge",
+      "transcript_status": "ACTIVE_IDENTITY_LOCKED",
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-260425",
+      "raw_sha256": "80ce9b17d2a832a9051ed6a699265022dfee8b4b3a50c9591524e56f4169061b",
+      "transport_fallback_used": false,
+      "payload": {
+        "role": "judge",
+        "candidate_ids": [
+          "CAND-EVAL-ENV-DISJOINT",
+          "CAND-FROZEN-DESIGNER-MEMORY",
+          "CAND-PERSISTENT-AUTONOMY-THRESHOLD",
+          "CAND-CONFIDENCE-DIVERGENCE-TRIGGER"
+        ],
+        "verdict": "ALL_STOP_REDUCTION",
+        "selected_child_id": "none",
+        "per_candidate": [
+          {
+            "candidate_id": "CAND-EVAL-ENV-DISJOINT",
+            "verdict": "STOP_REDUCTION",
+            "reason": "The rebuttal concedes. The critic correctly identifies that Evaluator-Environment Information Disjointness reduces to ordinary proxy-reward optimization under distribution shift (covariate shift/domain adaptation). The evaluator's blindness to execution-environment features is a feature-set mismatch between training and deployment distributions, a standard object in distribution-shift literature. The 124/290 failure rate is predicted by existing theory on reward misspecification. No new independently observable scientific object is established."
+          },
+          {
+            "candidate_id": "CAND-FROZEN-DESIGNER-MEMORY",
+            "verdict": "STOP_REDUCTION",
+            "reason": "The rebuttal concedes. The critic correctly identifies that the Designer-Memory-Freeze Interaction reduces to ordinary negative transfer under compound distributional mismatch. Freezing the designer and removing memory creates compounding distributional pathologies that produce super-additive negative transfer, which is predicted by standard transfer-learning theory. The 9.7-point below-base collapse is a boundary case of negative transfer, not a new interaction primitive."
+          },
+          {
+            "candidate_id": "CAND-PERSISTENT-AUTONOMY-THRESHOLD",
+            "verdict": "STOP_REDUCTION",
+            "reason": "The rebuttal concedes. The critic correctly identifies that the Persistent Autonomy Threshold reduces to ordinary fixed-cost investment break-even analysis. The threshold T* = FS_S / (Gk - Mk) is the deterministic break-even point of a linear cumulative-savings function, not a discontinuous jump in an underlying causal mechanism. A baseline incorporating the fixed cost and per-service savings predicts the same break-even point without invoking a new threshold variable."
+          },
+          {
+            "candidate_id": "CAND-CONFIDENCE-DIVERGENCE-TRIGGER",
+            "verdict": "STOP_REDUCTION",
+            "reason": "The rebuttal concedes. The critic correctly identifies that the Confidence-Divergence Trigger Threshold reduces to ordinary cost-sensitive threshold optimization in a decision-theoretic framework. The retry logic is a binary decision rule, and varying CDTT traces a standard precision-recall/cost-benefit curve. The predicted U-shaped relationship and optimal CDTT are direct consequences of the cost structure, not a new scientific object."
+          }
+        ],
+        "reason": "All four candidates have been conceded by the rebuttal. Each candidate's proposed scientific object reduces to an existing, well-characterized phenomenon: distribution shift, negative transfer, break-even analysis, and cost-sensitive threshold optimization, respectively. No candidate establishes an independently observable new scientific object that is not already captured by mature baselines under equal information. Therefore, no candidate is eligible for selection, and ProblemGate cannot be authorized.",
+        "next_condition": "TERMINATE",
+        "problem_gate_authorized": false,
+        "scientific_authority": false
+      },
+      "scientific_authority": false
+    }
+  ],
+  "judge": {
+    "role": "judge",
+    "candidate_ids": [
+      "CAND-EVAL-ENV-DISJOINT",
+      "CAND-FROZEN-DESIGNER-MEMORY",
+      "CAND-PERSISTENT-AUTONOMY-THRESHOLD",
+      "CAND-CONFIDENCE-DIVERGENCE-TRIGGER"
+    ],
+    "verdict": "ALL_STOP_REDUCTION",
+    "selected_child_id": "none",
+    "per_candidate": [
+      {
+        "candidate_id": "CAND-EVAL-ENV-DISJOINT",
+        "verdict": "STOP_REDUCTION",
+        "reason": "The rebuttal concedes. The critic correctly identifies that Evaluator-Environment Information Disjointness reduces to ordinary proxy-reward optimization under distribution shift (covariate shift/domain adaptation). The evaluator's blindness to execution-environment features is a feature-set mismatch between training and deployment distributions, a standard object in distribution-shift literature. The 124/290 failure rate is predicted by existing theory on reward misspecification. No new independently observable scientific object is established."
+      },
+      {
+        "candidate_id": "CAND-FROZEN-DESIGNER-MEMORY",
+        "verdict": "STOP_REDUCTION",
+        "reason": "The rebuttal concedes. The critic correctly identifies that the Designer-Memory-Freeze Interaction reduces to ordinary negative transfer under compound distributional mismatch. Freezing the designer and removing memory creates compounding distributional pathologies that produce super-additive negative transfer, which is predicted by standard transfer-learning theory. The 9.7-point below-base collapse is a boundary case of negative transfer, not a new interaction primitive."
+      },
+      {
+        "candidate_id": "CAND-PERSISTENT-AUTONOMY-THRESHOLD",
+        "verdict": "STOP_REDUCTION",
+        "reason": "The rebuttal concedes. The critic correctly identifies that the Persistent Autonomy Threshold reduces to ordinary fixed-cost investment break-even analysis. The threshold T* = FS_S / (Gk - Mk) is the deterministic break-even point of a linear cumulative-savings function, not a discontinuous jump in an underlying causal mechanism. A baseline incorporating the fixed cost and per-service savings predicts the same break-even point without invoking a new threshold variable."
+      },
+      {
+        "candidate_id": "CAND-CONFIDENCE-DIVERGENCE-TRIGGER",
+        "verdict": "STOP_REDUCTION",
+        "reason": "The rebuttal concedes. The critic correctly identifies that the Confidence-Divergence Trigger Threshold reduces to ordinary cost-sensitive threshold optimization in a decision-theoretic framework. The retry logic is a binary decision rule, and varying CDTT traces a standard precision-recall/cost-benefit curve. The predicted U-shaped relationship and optimal CDTT are direct consequences of the cost structure, not a new scientific object."
+      }
+    ],
+    "reason": "All four candidates have been conceded by the rebuttal. Each candidate's proposed scientific object reduces to an existing, well-characterized phenomenon: distribution shift, negative transfer, break-even analysis, and cost-sensitive threshold optimization, respectively. No candidate establishes an independently observable new scientific object that is not already captured by mature baselines under equal information. Therefore, no candidate is eligible for selection, and ProblemGate cannot be authorized.",
+    "next_condition": "TERMINATE",
+    "problem_gate_authorized": false,
+    "scientific_authority": false
+  },
+  "summary": {
+    "active_rounds": 4,
+    "superseded_rounds": 2,
+    "candidate_count": 4,
+    "stop_reduction": 4,
+    "survivors": 0,
+    "selected_child_id": "none",
+    "problem_gate_authorized": false,
+    "active_researchitem_created": 0
+  },
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "researchitem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  },
+  "debate_sha256": "8b5506faee9c8acf9e65deab1423e999268c536eb333fe90dbf5e6a34ed22439"
+}

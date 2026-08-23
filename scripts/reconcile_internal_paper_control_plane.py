@@ -17,6 +17,7 @@ from research_pipeline.paper_first_fresh_phenomenon_portfolio import DEFAULT_JSO
 from research_pipeline.paper_first_search_portfolio_design_adjudication import DEFAULT_JSON as SEARCH_DESIGN_JSON, validate_search_portfolio_design_adjudication
 from research_pipeline.paper_first_paper_design_backlog import DEFAULT_JSON as PAPER_DESIGN_BACKLOG_JSON, validate_paper_design_backlog
 from research_pipeline.research_memory_wiki import build_research_memory_wiki, write_research_memory_wiki
+from research_pipeline.longitudinal_safety_discovery_cycle import load_discovery_cycle
 
 GEN = ROOT / "generated"
 SYSTEM_JSON = GEN / "research-system-state.json"
@@ -99,6 +100,7 @@ def main() -> None:
             ledger_index_source = "generated/paper-registry.json"
     ledger_summary = ledger_index.get("summary") or {}
 
+    discovery_cycle = load_discovery_cycle()
     memory = build_research_memory_wiki(
         search_design_state=search_design,
         failure_asset_library=state.get("failure_asset_library") or {},
@@ -107,6 +109,7 @@ def main() -> None:
         experiment_iteration=state.get("experiment_iteration") or {},
         generator_state=state.get("paper_first_problem_generator") or {},
         paper_ledger_index=ledger_index,
+        discovery_cycle=discovery_cycle,
     )
     if (memory.get("lint") or {}).get("status") != "PASS":
         raise RuntimeError("refusing to publish invalid Research Memory")

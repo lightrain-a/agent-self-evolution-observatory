@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.0",
+  "status": "DEBATE_COMPLETE_ZERO_AUTHORITY",
+  "run_id": "longitudinal-failure-debate-20260823",
+  "parents": [
+    "nonadditive-message-effect-field",
+    "typed-interaction-signature-quotient-transfer"
+  ],
+  "policy": {
+    "historical_idea_cannot_be_promoted_by_debate": true,
+    "material_scientific_change_required_for_rebuttal": true,
+    "same_information_baseline_receives_identical_observables_and_supervision": true,
+    "debate_judge_cannot_grant_problem_gate": true,
+    "support_failure_is_not_scientific_failure": true
+  },
+  "fresh_collision": {
+    "title": "E2-Explainer: Discovering Efficient and Explainable Communication Topologies for LLM-based Multi-Agent Systems via Causal Inference",
+    "date": "2026-08-13",
+    "fact": "Uses communication-channel masking to obtain edge-level causal task-preservation evidence, identifies compact critical communication subgraphs, distills an amortized explainer, and executes the subgraphs for communication pruning.",
+    "effect": "New collision pressure on intervention-derived communication-edge attribution and topology pruning; pair/triple nonadditive residuals are not directly established by this fact."
+  },
+  "rounds": [
+    {
+      "round": "round1-proposer",
+      "role": "proposer",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "raw_sha256": "8c08a03489308787fdca87e050ad670be329d48b78803c7d6791de7daf925e34",
+      "transport_fallback_used": false,
+      "payload": {
+        "role": "proposer",
+        "proposals": [
+          {
+            "parent_id": "nonadditive-message-effect-field",
+            "action": "CONCEDE",
+            "parent_failure": "The external finding is decisive: the proposed additive-plus-residual decomposition is not the unique scientific object. A capacity-matched unrestricted second-order utility predictor can consume the same singleton/joint executions and represent arbitrary local pair interactions without the proposed q-factorization. Beating an additive baseline only establishes that nonadditivity exists, not that this particular effect-field factorization is necessary or transferable. The fresh collision (E2-Explainer) further absorbs the intervention-derived edge-attribution and topology-pruning territory. No material child survives that would not be method ornamentation."
+          },
+          {
+            "parent_id": "typed-interaction-signature-quotient-transfer",
+            "action": "CONCEDE",
+            "parent_failure": "Two material boundaries are fatal. First, the supervision asymmetry: the proposal trains a residual-regression-plus-uncertainty model before thresholding, while the stated baseline directly learns a binary merge veto. A same-capacity residual-regression model with identical supervision can make direct merge or clustering decisions without quotient algebra, absorbing the claimed advantage. Second, thresholded similarity of pair/triple interaction signatures is not transitive, so the merge relation may fail to define a genuine quotient and may produce order-dependent classes. Fixing transitivity requires enforcing an equivalence closure, which is either (a) a trivial post-hoc clustering that any same-information baseline can also perform, or (b) an additional algorithmic step that does not change the scientific object. The core object—predicting interaction residuals from identity-free type features to compress unseen memories—is fully reducible to a same-information direct residual-to-clustering baseline. No material child survives."
+          }
+        ],
+        "preferred_parent": "none",
+        "scientific_authority": false
+      },
+      "scientific_authority": false
+    },
+    {
+      "round": "round2-critic",
+      "role": "critic",
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-260425",
+      "raw_sha256": "11f7212123617837238b9e5aeb009a72044e03004a30bb28e677fbbce3081168",
+      "transport_fallback_used": false,
+      "payload": {
+        "role": "critic",
+        "reviews": [
+          {
+            "parent_id": "nonadditive-message-effect-field",
+            "child_id": null,
+            "verdict": "STOP_REDUCTION",
+            "attack": {
+              "simplest_same_information_equivalent": "A capacity-matched unrestricted second-order utility predictor that receives identical singleton/joint executions, descriptors, task motifs, and budgets, and models arbitrary local pair interactions via a generic nonlinear function (e.g., a GNN or pairwise MLP) without the proposed additive-plus-q decomposition.",
+              "current_collision": "E2-Explainer (2026-08-13) absorbs the intervention-derived communication-edge attribution and topology-pruning territory using causal masking and amortized explainers, further narrowing the space where the proposed q-factorization could claim unique scientific contribution.",
+              "independent_observability": "The proposed q_theta residual is not independently observable from the unrestricted second-order predictor's learned pair interactions. Both consume identical joint-mask evidence and predict edge-pair effects; the difference is purely representational (factorized vs. unfactorized).",
+              "plausible_same_substrate_units": "Both the proposed additive-plus-q model and the unrestricted predictor operate on the same graph edges, use the same intervention data, and output scalar utility contributions per edge/pair. The q-factorization is a parameterization choice, not a new substrate unit.",
+              "material_change_assessment": "The change is representation/baseline repair. The proposer concedes that beating an additive baseline only establishes nonadditivity, not the necessity of this particular effect-field factorization. The unrestricted second-order predictor is the simplest same-information functional equivalent, and no material child survives that would not be method ornamentation."
+            }
+          },
+          {
+            "parent_id": "typed-interaction-signature-quotient-transfer",
+            "child_id": null,
+            "verdict": "STOP_REDUCTION",
+            "attack": {
+              "simplest_same_information_equivalent": "A same-capacity direct residual-to-clustering baseline that receives identical singleton/pair/triple intervention residuals, identity-free type features phi(m), context descriptors, and supervision budget, and learns to predict residual magnitudes with uncertainty, then makes direct merge or clustering decisions (e.g., via thresholded distance in predicted residual space) without quotient algebra.",
+              "current_collision": "No direct collision identified beyond the internal reduction; the core object is absorbed by the same-information baseline before external collision pressure applies.",
+              "independent_observability": "The proposed quotient-class merge relation (thresholded similarity of predicted pair/triple interaction signatures) is not independently observable from the baseline's direct clustering on the same predicted residual space. Both use identical intervention targets and residual supervision; the quotient algebra is a post-hoc grouping rule applied to the same learned representations.",
+              "plausible_same_substrate_units": "Both operate on the same memory units defined by identity-free type features phi(m), use the same intervention-derived residual ground truth, and produce compression classes. The quotient algebra is a mathematical wrapper around the same underlying residual predictions.",
+              "material_change_assessment": "The change is representation/baseline repair. The proposer concedes two fatal boundaries: (1) supervision asymmetry where the baseline can absorb the residual-regression-plus-uncertainty model and make direct merge decisions without quotient algebra; (2) thresholded similarity is not transitive, so the merge relation fails to define a genuine quotient without enforcing equivalence closure—a trivial post-hoc clustering any same-information baseline can perform. The core object (predicting interaction residuals from identity-free type features to compress unseen memories) is fully reducible to the same-information direct residual-to-clustering baseline."
+            }
+          }
+        ],
+        "scientific_authority": false
+      },
+      "scientific_authority": false
+    },
+    {
+      "round": "round3-rebuttal",
+      "role": "rebuttal",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "raw_sha256": "5094afa1950ce892c22ba34d60d6cd958613668d83e0dbdf4d4af8c2f4a2cb65",
+      "transport_fallback_used": false,
+      "payload": {
+        "role": "rebuttal",
+        "rebuttals": [
+          {
+            "parent_id": "nonadditive-message-effect-field",
+            "action": "CONCEDE",
+            "rebuttal": "The critic's reduction is decisive. The unrestricted second-order utility predictor receives identical singleton/joint executions, descriptors, task motifs, and budgets, and can represent arbitrary local pair interactions without the proposed q-factorization. The q_theta residual is not independently observable from the baseline's learned pair interactions—both consume identical joint-mask evidence and output scalar edge-pair contributions. The difference is purely representational parameterization, not a material scientific object change. The E2-Explainer collision further absorbs the intervention-derived edge-attribution territory. No ex-ante prediction exists where a revised child and this baseline would disagree, because any child retaining the q-factorization is method ornamentation, and any child abandoning it collapses into the baseline.",
+            "baseline_information": "Identical singleton/joint executions, memory descriptors, task motifs, intervention budgets, and graph structure.",
+            "disagreement_prediction": null
+          },
+          {
+            "parent_id": "typed-interaction-signature-quotient-transfer",
+            "action": "CONCEDE",
+            "rebuttal": "The critic's reduction is decisive on both material boundaries. First, the supervision asymmetry is fatal: a same-capacity residual-regression model with identical supervision can make direct merge or clustering decisions without quotient algebra, absorbing the claimed advantage. Second, thresholded similarity of interaction signatures is not transitive, so the merge relation fails to define a genuine quotient; enforcing equivalence closure is either trivial post-hoc clustering any baseline can perform, or an algorithmic step that does not change the scientific object. The quotient-class merge relation is not independently observable from the baseline's direct clustering on the same predicted residual space. No ex-ante prediction exists where a revised child and this baseline would disagree, because any child retaining quotient algebra is a mathematical wrapper around identical residual predictions, and any child abandoning it collapses into the baseline.",
+            "baseline_information": "Identical singleton/pair/triple intervention residuals, identity-free type features phi(m), context descriptors, and supervision budget.",
+            "disagreement_prediction": null
+          }
+        ],
+        "scientific_authority": false
+      },
+      "scientific_authority": false
+    },
+    {
+      "round": "round4-judge",
+      "role": "judge",
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-260425",
+      "raw_sha256": "3d831a64dff52f5a0ba1ff684671397b1e7a81f713a21f851ccd8d290747d204",
+      "transport_fallback_used": false,
+      "payload": {
+        "role": "judge",
+        "verdict": "STOP_REDUCTION",
+        "selected_child_id": "none",
+        "reason": "Both parents receive decisive STOP_REDUCTION verdicts from the critic, and the proposer fully concedes on both with no surviving material child. For nonadditive-message-effect-field, the unrestricted second-order utility predictor is the simplest same-information functional equivalent that absorbs the claimed q-factorization advantage; the difference is purely representational parameterization. For typed-interaction-signature-quotient-transfer, the direct residual-to-clustering baseline with identical supervision absorbs the quotient algebra, and the non-transitivity of thresholded similarity means the merge relation fails to define a genuine quotient without trivial post-hoc closure. In both cases, no ex-ante prediction exists where a revised child and the matched baseline would disagree, because any child retaining the proposed structure is method ornamentation and any child abandoning it collapses into the baseline. No child is proposed, and none can be selected.",
+        "strongest_reduction": "Both parents are reduced to same-information baselines that consume identical intervention data, supervision, and budgets but differ only in representational parameterization (factorized vs. unfactorized pair interactions; quotient algebra vs. direct clustering on predicted residuals). The proposed scientific objects are not independently observable from their simplest functional equivalents.",
+        "reopen_or_next_condition": "No reopen condition. Both directions are closed by decisive reduction. A genuinely new direction would require a scientific object that is independently observable from its simplest same-information functional equivalent and makes a falsifiable prediction on which that equivalent disagrees.",
+        "problem_gate_authorized": false,
+        "scientific_authority": false
+      },
+      "scientific_authority": false
+    }
+  ],
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "researchitem": false,
+    "method": false,
+    "experiment": false,
+    "gpu": false
+  },
+  "summary": {
+    "rounds": 4,
+    "proposer_concessions": 2,
+    "critic_stop_reduction": 2,
+    "judge_verdict": "STOP_REDUCTION",
+    "selected_child_id": "none",
+    "problem_gate_authorized": false,
+    "active_researchitem_created": 0
+  },
+  "debate_sha256": "9f44e242b697967e28cfbc438786a2a0db33bbe6cf675703eaa83aaba44330a0"
+}

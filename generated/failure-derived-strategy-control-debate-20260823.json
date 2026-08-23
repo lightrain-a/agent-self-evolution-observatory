@@ -1,0 +1,383 @@
+{
+  "schema_version": "1.0",
+  "status": "DEBATE_COMPLETE_ZERO_AUTHORITY",
+  "run_id": "failure-derived-strategy-control-debate-20260823",
+  "candidate_ids": [
+    "FDSC-STRATEGY-LOCK-001",
+    "FDSC-HARNESS-COMMIT-001",
+    "FDSC-WEAK-JUDGE-001",
+    "FDSC-EVENT-TRIGGER-001"
+  ],
+  "fresh_refs": [
+    "arXiv:2608.19072",
+    "arXiv:2608.19013",
+    "arXiv:2608.13331",
+    "arXiv:2608.13103"
+  ],
+  "policy": {
+    "candidate_identity_lock_required": true,
+    "unmapped_candidate_alias_forces_protocol_fail": true,
+    "explicit_parent_child_mapping_required_for_material_mutation": true,
+    "superseded_protocol_rounds_have_zero_scientific_effect": true,
+    "same_information_baseline_required": true,
+    "judge_cannot_grant_problem_gate": true
+  },
+  "protocol_audit": {
+    "old_judge_top_level_ids": [
+      "FDSC-STRATEGY-LOCK-001",
+      "FDSC-HARNESS-COMMIT-001",
+      "FDSC-WEAK-JUDGE-001",
+      "FDSC-EVENT-TRIGGER-001"
+    ],
+    "old_judge_per_candidate_ids": [
+      "FDSC-STRATEGY-LOCK-001",
+      "FDSC-HARNESS-COMMIT-001",
+      "FDSC-WEAK-JUDGE-001",
+      "FDSC-EVENT-TRIGGER-001"
+    ],
+    "expected_ids": [
+      "FDSC-STRATEGY-LOCK-001",
+      "FDSC-HARNESS-COMMIT-001",
+      "FDSC-WEAK-JUDGE-001",
+      "FDSC-EVENT-TRIGGER-001"
+    ],
+    "old_judge_status": "PASS_IDENTITY_CONTINUITY",
+    "identity_locked_judge_status": "PASS_REDUNDANT_CONFIRMATION",
+    "exact_ids_match": true,
+    "original_and_recheck_same_outcome": true
+  },
+  "rounds": [
+    {
+      "artifact": "round1-proposer.json",
+      "role": "proposer",
+      "transcript_status": "ACTIVE",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "raw_sha256": "605bb9b97f78d22cfd31b0ad3fee5445c320b64fd761277419b4fa9a9bc45752",
+      "payload": {
+        "role": "proposer",
+        "candidates": [
+          {
+            "candidate_id": "FDSC-STRATEGY-LOCK-001",
+            "title": "Strategy Lock-In Point as a Decision Object",
+            "source_refs": [
+              "arXiv:2608.19072"
+            ],
+            "observed_source_fact": "The agent's training strategy is locked in at the very beginning, and the entire remaining budget is spent on local adjustments within the selected strategy. Human guidance redirects the initial strategy, yet the agent falls back into local adjustment loops once training starts.",
+            "new_scientific_object": "Strategy Lock-In Point (SLIP): the earliest timestep t* after which the high-level training strategy (e.g., algorithmic approach, data mix, or model architecture choice) remains unchanged despite accumulating experimental evidence, while local parameter adjustments continue.",
+            "observable_unit": "Trajectory-level decision point (timestep t*) and subsequent strategy stability indicator",
+            "exact_prediction": "Given identical initial strategies and identical intermediate experimental results (loss curves, evaluation scores) up to timestep t, agents exhibiting SLIP at t* < t will show zero probability of strategy revision at t+1 even when presented with evidence of strategy-level failure (e.g., plateaued performance), whereas non-locked agents will revise with probability >0.3.",
+            "strongest_same_information_baseline": "Generic local/global search with action-support limits: an agent that continues local optimization within the current strategy until convergence criteria are met, then triggers global search. Baseline receives identical loss curves, evaluation metrics, and compute budget.",
+            "baseline_prediction": "The baseline predicts strategy revision probability increases monotonically with accumulated evidence of local optimality (e.g., gradient norm approaching zero, validation loss plateau), regardless of an early lock-in point.",
+            "prediction_disagreement": "SLIP predicts a sharp discontinuity: once locked (t > t*), revision probability drops to near zero despite mounting evidence of local optimality, whereas the baseline predicts revision probability approaching 1 as evidence accumulates.",
+            "cheapest_falsifier": "Run the agent on a task where the initial strategy is suboptimal. Provide intermediate results showing clear plateau. Measure if the agent revises strategy after t*. If revision probability remains high (>0.5) after t*, SLIP is falsified.",
+            "same_substrate_support": "The paper demonstrates that agents can understand and extend strategies provided by humans, indicating the capability exists but is not spontaneously exercised after lock-in.",
+            "stop_rule": "If agents revise strategy with probability >0.5 after the identified lock-in point t* when presented with evidence of local optimality, reject SLIP."
+          },
+          {
+            "candidate_id": "FDSC-HARNESS-COMMIT-001",
+            "title": "Harness Commitment Decision under Retention Risk",
+            "source_refs": [
+              "arXiv:2608.19013"
+            ],
+            "observed_source_fact": "The Continual Evaluator commits candidate harnesses only after checking current improvement, historical retention, and validity. Removing Memory updates increases forgetting to 0.83, indicating that evolving memory supports both acquisition and retention.",
+            "new_scientific_object": "Harness Commitment Decision (HCD): the binary decision to commit a candidate harness update, conditional on the tuple (current_task_gain, historical_retention_risk, validity_score), where historical_retention_risk is estimated from harness component interactions.",
+            "observable_unit": "Commitment decision event (accept/reject) with associated risk scores",
+            "exact_prediction": "Given two candidate harnesses with identical current task improvement (>5%) and identical validity scores, but different historical retention risk scores (high vs low), the HCD mechanism will reject the high-risk candidate with probability >0.8, while a baseline using only current improvement will accept both.",
+            "strongest_same_information_baseline": "Continual-learning stability/plasticity trade-off controller: a baseline that accepts updates if current improvement exceeds threshold θ and rejects otherwise, using a fixed stability weight. Baseline receives identical current improvement scores and validity checks.",
+            "baseline_prediction": "The baseline predicts acceptance probability depends only on current improvement magnitude, not on estimated historical retention risk, treating retention as a separate post-hoc evaluation rather than a commitment criterion.",
+            "prediction_disagreement": "HCD predicts rejection based on prospective retention risk even when current improvement is high, whereas the baseline predicts acceptance whenever improvement exceeds threshold, regardless of retention risk.",
+            "cheapest_falsifier": "Generate candidate harnesses with high current improvement but high retention risk (e.g., updates that overwrite memory components). Measure acceptance rate. If acceptance rate equals that of low-risk candidates with same improvement, HCD is falsified.",
+            "same_substrate_support": "The paper shows that guarded harness evolution separates update generation from state commitment, and that the Evaluator explicitly checks historical retention, supporting the existence of HCD.",
+            "stop_rule": "If acceptance decisions show no dependence on historical retention risk scores (e.g., acceptance rate difference <0.1 between high and low risk candidates with matched improvement), reject HCD."
+          },
+          {
+            "candidate_id": "FDSC-WEAK-JUDGE-001",
+            "title": "Weak Judge Oversight of Stronger Agent",
+            "source_refs": [
+              "arXiv:2608.13331"
+            ],
+            "observed_source_fact": "Successful oversight of a more powerful model by a less powerful one (4; 16; 58). Faraday exceeds the performance of Claude on average and in five out of the eight tasks.",
+            "new_scientific_object": "Weak Judge Oversight Efficacy (WJOE): the decision object representing the acceptance/rejection of a strong agent's output by a weaker judge, where the judge's decision boundary is learned from rubric-based feedback rather than capability matching.",
+            "observable_unit": "Judge's binary oversight decision (accept/reject) on agent outputs",
+            "exact_prediction": "Given identical replication outputs from a strong agent (e.g., Claude Opus 4.8), a weak judge (e.g., 4B parameter model) trained with rubric-based feedback will reject scientifically unfaithful outputs (e.g., performative figure reproduction) with probability >0.7, while a baseline judge using capability-matched confidence will reject with probability <0.3.",
+            "strongest_same_information_baseline": "Scalable oversight / judge calibration: a baseline where the judge uses the strong agent's own confidence scores or a capability-matched judge to accept/reject outputs. Baseline receives identical outputs and confidence scores.",
+            "baseline_prediction": "The baseline predicts that oversight efficacy is limited by the judge's capability; a weak judge will accept most outputs from a strong agent due to inability to verify correctness, rejecting only low-confidence outputs.",
+            "prediction_disagreement": "WJOE predicts high rejection rates for unfaithful outputs regardless of the strong agent's confidence, because the weak judge uses rubric-based criteria rather than capability-based verification.",
+            "cheapest_falsifier": "Present the weak judge with outputs that are scientifically unfaithful but high-confidence from the strong agent. Measure rejection rate. If rejection rate is low (<0.3), WJOE is falsified.",
+            "same_substrate_support": "The paper demonstrates that Faraday, trained with rubric-based judges, exhibits greater scientific rigor than frontier agents, and that oversight by less powerful models is successful.",
+            "stop_rule": "If the weak judge's rejection rate for unfaithful outputs is not significantly higher than the baseline's (difference <0.2), reject WJOE."
+          },
+          {
+            "candidate_id": "FDSC-EVENT-TRIGGER-001",
+            "title": "Event-Triggered Manager Update in Hierarchical Control",
+            "source_refs": [
+              "arXiv:2608.13103"
+            ],
+            "observed_source_fact": "Replacing event-aligned updates with a fixed K=15 schedule reduces SR to 80.7±28.3% and substantially increases variation across seeds. S2-HWM achieves 98.7±2.3% SR, compared with 76.0±12.0% for GAS DreamerV3.",
+            "new_scientific_object": "Event-Triggered Manager Update (ETMU): the decision to update the manager's goal based on learned event evidence (e.g., interaction transitions) rather than fixed timesteps, where the event evidence is derived from primitive latent trajectories.",
+            "observable_unit": "Manager goal update event (triggered by event evidence vs fixed schedule)",
+            "exact_prediction": "Given identical primitive latent trajectories and identical task rewards, ETMU will trigger manager updates at irregular intervals aligned with interaction transitions, achieving success rate >95% with variance <5%, whereas a fixed K=15 schedule will achieve success rate <85% with variance >20%.",
+            "strongest_same_information_baseline": "Event-triggered control / semi-Markov hierarchy: a baseline that uses fixed-duration segments or heuristic event detection (e.g., reward threshold crossing) to trigger manager updates. Baseline receives identical latent trajectories and rewards.",
+            "baseline_prediction": "The baseline predicts that fixed or heuristic triggers suffice for long-horizon tasks, achieving comparable success rates with similar variance, as long as the average update frequency matches.",
+            "prediction_disagreement": "ETMU predicts that learned event evidence significantly outperforms fixed schedules in both success rate and variance, because it captures state-dependent interaction transitions that fixed schedules miss.",
+            "cheapest_falsifier": "Replace the learned event evidence with a fixed K=15 schedule in the S2-HWM architecture. Measure success rate and variance. If success rate remains >95% and variance <5%, ETMU is falsified.",
+            "same_substrate_support": "The paper shows that removing ETM continuation reduces SR by 7.4 points, and that event-aligned updates are critical for performance, supporting the importance of ETMU.",
+            "stop_rule": "If fixed K=15 schedule achieves success rate >95% and variance <5% on the same task, reject ETMU."
+          }
+        ],
+        "scientific_authority": false
+      },
+      "scientific_authority": false
+    },
+    {
+      "artifact": "round2-critic.json",
+      "role": "critic",
+      "transcript_status": "ACTIVE",
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-260425",
+      "raw_sha256": "cc987cb1006848690f2d2419fb10a6815677d23595fa44ba4fd4a144aca042a7",
+      "payload": {
+        "role": "critic",
+        "candidate_ids": [
+          "FDSC-STRATEGY-LOCK-001",
+          "FDSC-HARNESS-COMMIT-001",
+          "FDSC-WEAK-JUDGE-001",
+          "FDSC-EVENT-TRIGGER-001"
+        ],
+        "reviews": [
+          {
+            "candidate_id": "FDSC-STRATEGY-LOCK-001",
+            "verdict": "STOP_REDUCTION",
+            "baseline_information": "Identical initial strategies, identical intermediate experimental results (loss curves, evaluation scores) up to timestep t, identical compute budget.",
+            "candidate_prediction": "Agents exhibiting SLIP at t* < t will show zero probability of strategy revision at t+1 even when presented with evidence of strategy-level failure (e.g., plateaued performance).",
+            "baseline_prediction": "Strategy revision probability increases monotonically with accumulated evidence of local optimality (e.g., gradient norm approaching zero, validation loss plateau), regardless of an early lock-in point.",
+            "genuine_disagreement_under_information_parity": "SLIP predicts a sharp discontinuity: once locked (t > t*), revision probability drops to near zero despite mounting evidence of local optimality, whereas the baseline predicts revision probability approaching 1 as evidence accumulates.",
+            "same_substrate_support": "The paper demonstrates that agents can understand and extend strategies provided by humans, indicating the capability exists but is not spontaneously exercised after lock-in.",
+            "reduction_detail": "The proposed SLIP object reduces to an ordinary local/global search with a fixed budget allocation schedule. The proposer's own description states 'the agent's training strategy is locked in at the very beginning, and the entire remaining budget is spent on local adjustments within the selected strategy.' This is a standard early-commitment metaheuristic (e.g., greedy initialization followed by local refinement) where the global search phase is front-loaded and the remaining budget is allocated to local optimization. The 'lock-in point' t* is simply the transition from global to local search, which is a design choice in any anytime algorithm or phased optimization procedure. The baseline 'generic local/global search with action-support limits' already captures this: an agent that continues local optimization until convergence criteria are met, then triggers global search. The only difference is the ordering of phases (global-then-local vs. local-then-global), which is a trivial permutation of the same search primitives. The predicted discontinuity in revision probability is fully explained by the budget allocation schedule: if the global search budget is exhausted at t*, the probability of strategy revision is zero by construction, not because of a new scientific object. The proposer's falsifier confirms this: 'Run the agent on a task where the initial strategy is suboptimal. Provide intermediate results showing clear plateau. Measure if the agent revises strategy after t*.' This tests whether the agent has any remaining global search budget, not whether SLIP is a distinct decision object. The same-information baseline, if given the same budget allocation schedule (global search only before t*, local only after), would make identical predictions. No new causal primitive is identified beyond phased budget allocation."
+          },
+          {
+            "candidate_id": "FDSC-HARNESS-COMMIT-001",
+            "verdict": "STOP_REDUCTION",
+            "baseline_information": "Identical current improvement scores, validity checks, and harness component interaction history.",
+            "candidate_prediction": "Given two candidate harnesses with identical current task improvement (>5%) and identical validity scores, but different historical retention risk scores (high vs low), the HCD mechanism will reject the high-risk candidate with probability >0.8.",
+            "baseline_prediction": "Acceptance probability depends only on current improvement magnitude, not on estimated historical retention risk, treating retention as a separate post-hoc evaluation rather than a commitment criterion.",
+            "genuine_disagreement_under_information_parity": "HCD predicts rejection based on prospective retention risk even when current improvement is high, whereas the baseline predicts acceptance whenever improvement exceeds threshold, regardless of retention risk.",
+            "same_substrate_support": "The paper shows that guarded harness evolution separates update generation from state commitment, and that the Evaluator explicitly checks historical retention.",
+            "reduction_detail": "The proposed HCD object reduces to an ordinary multi-objective acceptance criterion with a stability/plasticity trade-off. The proposer's baseline is artificially impoverished: 'a baseline that accepts updates if current improvement exceeds threshold θ and rejects otherwise, using a fixed stability weight.' A mature continual-learning stability/plasticity controller would incorporate both current improvement and estimated forgetting risk into its acceptance decision, as this is the defining characteristic of the stability-plasticity dilemma. The proposer's own source fact states 'the Continual Evaluator commits candidate harnesses only after checking current improvement, historical retention, and validity,' which is precisely a multi-criteria decision rule. The strongest same-information baseline, properly specified, would use both current improvement and historical retention risk as inputs to its acceptance function (e.g., a Pareto-optimality check, a weighted sum, or a constrained optimization where retention risk must be below a threshold). The predicted disagreement vanishes when the baseline is allowed to condition on the same retention risk information. The proposer's falsifier confirms this: 'Generate candidate harnesses with high current improvement but high retention risk. Measure acceptance rate. If acceptance rate equals that of low-risk candidates with same improvement, HCD is falsified.' This tests whether the agent uses retention risk information at all, not whether HCD is a distinct decision object beyond multi-criteria acceptance. A properly specified baseline using both improvement and retention risk would make identical predictions. No new scientific object is identified beyond a standard multi-objective commitment rule."
+          },
+          {
+            "candidate_id": "FDSC-WEAK-JUDGE-001",
+            "verdict": "STOP_REDUCTION",
+            "baseline_information": "Identical outputs from the strong agent, identical confidence scores, identical rubric-based feedback training data.",
+            "candidate_prediction": "A weak judge trained with rubric-based feedback will reject scientifically unfaithful outputs with probability >0.7.",
+            "baseline_prediction": "Oversight efficacy is limited by the judge's capability; a weak judge will accept most outputs from a strong agent due to inability to verify correctness, rejecting only low-confidence outputs.",
+            "genuine_disagreement_under_information_parity": "WJOE predicts high rejection rates for unfaithful outputs regardless of the strong agent's confidence, because the weak judge uses rubric-based criteria rather than capability-based verification.",
+            "same_substrate_support": "The paper demonstrates that Faraday, trained with rubric-based judges, exhibits greater scientific rigor than frontier agents, and that oversight by less powerful models is successful.",
+            "reduction_detail": "The proposed WJOE object reduces to ordinary supervised learning of a detection criterion from labeled examples. The proposer's baseline is artificially impoverished: 'a baseline where the judge uses the strong agent's own confidence scores or a capability-matched judge to accept/reject outputs.' The mature scalable oversight baseline would train the weak judge on the same rubric-based feedback that the candidate receives, because rubric-based feedback is the supervision signal, not a property unique to the candidate. The proposer's own source fact states 'the judge's decision boundary is learned from rubric-based feedback rather than capability matching.' This is standard supervised learning: a classifier (the weak judge) is trained on labeled examples (rubric-based feedback) to detect a target class (scientifically unfaithful outputs). The capability of the judge is determined by the quality and quantity of training data, the model architecture, and the training procedure, not by a new scientific object. The predicted disagreement arises only because the baseline is denied access to the rubric-based training data. When the baseline receives identical rubric-based feedback, it learns the same decision boundary and makes identical predictions. The proposer's falsifier confirms this: 'Present the weak judge with outputs that are scientifically unfaithful but high-confidence from the strong agent. Measure rejection rate.' This tests whether the judge has learned to detect unfaithfulness from rubric feedback, not whether WJOE is a distinct decision object. A capability-matched judge trained on the same rubric feedback would achieve comparable rejection rates. No new scientific object is identified beyond supervised detection with task-specific labels."
+          },
+          {
+            "candidate_id": "FDSC-EVENT-TRIGGER-001",
+            "verdict": "STOP_REDUCTION",
+            "baseline_information": "Identical primitive latent trajectories, identical task rewards, identical average update frequency.",
+            "candidate_prediction": "ETMU will trigger manager updates at irregular intervals aligned with interaction transitions, achieving success rate >95% with variance <5%.",
+            "baseline_prediction": "Fixed or heuristic triggers suffice for long-horizon tasks, achieving comparable success rates with similar variance, as long as the average update frequency matches.",
+            "genuine_disagreement_under_information_parity": "ETMU predicts that learned event evidence significantly outperforms fixed schedules in both success rate and variance, because it captures state-dependent interaction transitions that fixed schedules miss.",
+            "same_substrate_support": "The paper shows that removing ETM continuation reduces SR by 7.4 points, and that event-aligned updates are critical for performance.",
+            "reduction_detail": "The proposed ETMU object reduces to ordinary state-dependent triggering in a hierarchical reinforcement learning framework. The proposer's baseline is artificially impoverished: 'a baseline that uses fixed-duration segments or heuristic event detection (e.g., reward threshold crossing) to trigger manager updates.' The mature event-triggered control baseline would learn the triggering condition from the same primitive latent trajectories and rewards, because the whole point of event-triggered control is to condition updates on state-dependent events rather than fixed schedules. The proposer's own source fact states 'the decision to update the manager's goal based on learned event evidence (e.g., interaction transitions) rather than fixed timesteps, where the event evidence is derived from primitive latent trajectories.' This is standard learned termination/option framework in hierarchical RL: the manager updates when a learned termination condition is met, which is a function of the latent state. The predicted disagreement arises only because the baseline is restricted to fixed or heuristic triggers. When the baseline is allowed to learn the triggering condition from the same data (which is the standard approach in semi-Markov decision processes and options frameworks), it learns the same state-dependent events and makes identical predictions. The proposer's falsifier confirms this: 'Replace the learned event evidence with a fixed K=15 schedule in the S2-HWM architecture. Measure success rate and variance.' This tests whether learned triggers outperform fixed triggers, not whether ETMU is a distinct decision object beyond learned termination. A properly specified event-triggered control baseline that learns termination conditions from latent trajectories would achieve comparable performance. No new scientific object is identified beyond learned option termination in hierarchical RL."
+          }
+        ],
+        "scientific_authority": false
+      },
+      "scientific_authority": false
+    },
+    {
+      "artifact": "round3-rebuttal.json",
+      "role": "rebuttal",
+      "transcript_status": "ACTIVE",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "raw_sha256": "20d5d179c247ea0e37d5bf32bd534743053791c7034d3384794c049533ca635f",
+      "payload": {
+        "role": "rebuttal",
+        "candidate_ids": [
+          "FDSC-STRATEGY-LOCK-001",
+          "FDSC-HARNESS-COMMIT-001",
+          "FDSC-WEAK-JUDGE-001",
+          "FDSC-EVENT-TRIGGER-001"
+        ],
+        "responses": [
+          {
+            "candidate_id": "FDSC-STRATEGY-LOCK-001",
+            "verdict": "CONCEDE",
+            "concession_rationale": "The critic correctly identifies that SLIP reduces to a phased budget allocation schedule in local/global search. Under information parity, a baseline receiving the same budget schedule (global search permitted only before t*, local only after) would make identical predictions regarding the discontinuity in revision probability. The 'lock-in point' is not a distinct causal primitive but a design choice in anytime algorithms. The predicted behavior is fully explained by the exhaustion of global search budget, not by a new scientific object. No novel observable or structural condition beyond standard phased optimization is identified."
+          },
+          {
+            "candidate_id": "FDSC-HARNESS-COMMIT-001",
+            "verdict": "CONCEDE",
+            "concession_rationale": "The critic correctly identifies that HCD reduces to a standard multi-objective acceptance criterion under the stability-plasticity trade-off. Under information parity, a mature continual-learning baseline would receive identical historical retention risk scores and incorporate them into its acceptance function (e.g., via weighted sum or constrained optimization). The proposed baseline was artificially impoverished by denying it access to retention risk information. When the baseline is allowed to condition on the same retention risk estimates, the predicted disagreement vanishes. HCD is not a distinct decision object beyond multi-criteria commitment rules."
+          },
+          {
+            "candidate_id": "FDSC-WEAK-JUDGE-001",
+            "verdict": "CONCEDE",
+            "concession_rationale": "The critic correctly identifies that WJOE reduces to ordinary supervised learning of a detection criterion from rubric-based feedback. Under information parity, a baseline judge receiving the same rubric-based training data would learn the same decision boundary and make identical predictions. The proposed baseline was artificially impoverished by restricting it to capability-matched confidence scores while denying it access to the rubric feedback. When the baseline receives identical supervision signals, the capability gap disappears. WJOE is not a distinct decision object beyond supervised classification with task-specific labels."
+          },
+          {
+            "candidate_id": "FDSC-EVENT-TRIGGER-001",
+            "verdict": "CONCEDE",
+            "concession_rationale": "The critic correctly identifies that ETMU reduces to learned termination conditions in the options framework of hierarchical reinforcement learning. Under information parity, a mature event-triggered control baseline would learn the triggering condition from the same primitive latent trajectories and rewards, rather than using fixed schedules. The proposed baseline was artificially impoverished by restricting it to fixed or heuristic triggers. When the baseline is allowed to learn state-dependent termination from the same data, it captures the same interaction transitions and makes identical predictions. ETMU is not a distinct decision object beyond learned option termination."
+          }
+        ],
+        "scientific_authority": false
+      },
+      "scientific_authority": false
+    },
+    {
+      "artifact": "round4-judge.json",
+      "role": "judge",
+      "transcript_status": "ACTIVE_IDENTITY_CONTINUITY_PASS",
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-260425",
+      "raw_sha256": "96a4660457303d92d4966ff32f59ab64663b61447b8fe413664d7ab4ea326e9c",
+      "payload": {
+        "role": "judge",
+        "candidate_ids": [
+          "FDSC-STRATEGY-LOCK-001",
+          "FDSC-HARNESS-COMMIT-001",
+          "FDSC-WEAK-JUDGE-001",
+          "FDSC-EVENT-TRIGGER-001"
+        ],
+        "per_candidate": [
+          {
+            "candidate_id": "FDSC-STRATEGY-LOCK-001",
+            "verdict": "REJECT",
+            "reason": "The proposer has conceded that the candidate reduces to a phased budget allocation schedule. The critic demonstrated that under information parity, a baseline receiving the same budget schedule makes identical predictions. The lock-in point is not a distinct causal primitive but a design choice in anytime algorithms. No independently observable decision object beyond standard phased optimization is identified."
+          },
+          {
+            "candidate_id": "FDSC-HARNESS-COMMIT-001",
+            "verdict": "REJECT",
+            "reason": "The proposer has conceded that the candidate reduces to a standard multi-objective acceptance criterion. The critic demonstrated that the baseline was artificially impoverished by denying it access to retention risk information. Under information parity, a mature continual-learning baseline incorporating both improvement and retention risk makes identical predictions. No distinct decision object beyond multi-criteria commitment rules is identified."
+          },
+          {
+            "candidate_id": "FDSC-WEAK-JUDGE-001",
+            "verdict": "REJECT",
+            "reason": "The proposer has conceded that the candidate reduces to ordinary supervised learning from rubric-based feedback. The critic demonstrated that the baseline was artificially impoverished by restricting it to capability-matched confidence scores while denying it access to rubric feedback. Under information parity, a baseline trained on the same rubric data learns the same decision boundary. No distinct decision object beyond supervised classification is identified."
+          },
+          {
+            "candidate_id": "FDSC-EVENT-TRIGGER-001",
+            "verdict": "REJECT",
+            "reason": "The proposer has conceded that the candidate reduces to learned termination conditions in the options framework. The critic demonstrated that the baseline was artificially impoverished by restricting it to fixed or heuristic triggers. Under information parity, a baseline that learns state-dependent termination from the same latent trajectories makes identical predictions. No distinct decision object beyond learned option termination is identified."
+          }
+        ],
+        "verdict": "ALL_REJECT",
+        "selected_child_id": "none",
+        "reason": "All four candidates have been conceded by the proposer following critic review. Each candidate was shown to reduce to an existing scientific primitive under information parity with a properly specified mature baseline. FDSC-STRATEGY-LOCK-001 reduces to phased budget allocation, FDSC-HARNESS-COMMIT-001 reduces to multi-objective acceptance criteria, FDSC-WEAK-JUDGE-001 reduces to supervised learning from rubric feedback, and FDSC-EVENT-TRIGGER-001 reduces to learned option termination. None identifies an independently observable decision object or structural state that is not already captured by existing frameworks when baselines receive identical information. No candidate survives to be eligible for ProblemGate.",
+        "next_condition": "TERMINATE",
+        "problem_gate_authorized": false,
+        "scientific_authority": false
+      },
+      "scientific_authority": false
+    },
+    {
+      "artifact": "round4b-judge-identity-locked.json",
+      "role": "judge",
+      "transcript_status": "REDUNDANT_IDENTITY_LOCKED_CONFIRMATION",
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-260425",
+      "raw_sha256": "f04d8e605fec3119b238f54d39799d140205c9b5a44c34728d7da5252b29a15f",
+      "payload": {
+        "role": "judge",
+        "candidate_ids": [
+          "FDSC-STRATEGY-LOCK-001",
+          "FDSC-HARNESS-COMMIT-001",
+          "FDSC-WEAK-JUDGE-001",
+          "FDSC-EVENT-TRIGGER-001"
+        ],
+        "per_candidate": [
+          {
+            "candidate_id": "FDSC-STRATEGY-LOCK-001",
+            "verdict": "STOP_REDUCTION",
+            "reason": "Proposer concedes SLIP reduces to phased budget allocation in local/global search. Under information parity with identical budget schedule, baseline makes identical predictions. No distinct causal primitive identified."
+          },
+          {
+            "candidate_id": "FDSC-HARNESS-COMMIT-001",
+            "verdict": "STOP_REDUCTION",
+            "reason": "Proposer concedes HCD reduces to standard multi-objective acceptance criterion under stability-plasticity trade-off. When baseline receives identical retention risk information, predicted disagreement vanishes."
+          },
+          {
+            "candidate_id": "FDSC-WEAK-JUDGE-001",
+            "verdict": "STOP_REDUCTION",
+            "reason": "Proposer concedes WJOE reduces to supervised learning of detection criterion from rubric-based feedback. When baseline receives identical rubric training data, it learns same decision boundary."
+          },
+          {
+            "candidate_id": "FDSC-EVENT-TRIGGER-001",
+            "verdict": "STOP_REDUCTION",
+            "reason": "Proposer concedes ETMU reduces to learned termination conditions in hierarchical RL options framework. When baseline learns state-dependent termination from same data, predictions are identical."
+          }
+        ],
+        "verdict": "STOP_REDUCTION",
+        "selected_child_id": "none",
+        "reason": "All four candidates conceded to STOP_REDUCTION after critic demonstrated that each proposed object reduces to existing primitives under information parity. No candidate meets ELIGIBLE_FOR_PROBLEMGATE criteria.",
+        "next_condition": "REVISE_DEBATE",
+        "problem_gate_authorized": false,
+        "scientific_authority": false
+      },
+      "scientific_authority": false
+    }
+  ],
+  "judge": {
+    "role": "judge",
+    "candidate_ids": [
+      "FDSC-STRATEGY-LOCK-001",
+      "FDSC-HARNESS-COMMIT-001",
+      "FDSC-WEAK-JUDGE-001",
+      "FDSC-EVENT-TRIGGER-001"
+    ],
+    "per_candidate": [
+      {
+        "candidate_id": "FDSC-STRATEGY-LOCK-001",
+        "verdict": "STOP_REDUCTION",
+        "reason": "Proposer concedes SLIP reduces to phased budget allocation in local/global search. Under information parity with identical budget schedule, baseline makes identical predictions. No distinct causal primitive identified."
+      },
+      {
+        "candidate_id": "FDSC-HARNESS-COMMIT-001",
+        "verdict": "STOP_REDUCTION",
+        "reason": "Proposer concedes HCD reduces to standard multi-objective acceptance criterion under stability-plasticity trade-off. When baseline receives identical retention risk information, predicted disagreement vanishes."
+      },
+      {
+        "candidate_id": "FDSC-WEAK-JUDGE-001",
+        "verdict": "STOP_REDUCTION",
+        "reason": "Proposer concedes WJOE reduces to supervised learning of detection criterion from rubric-based feedback. When baseline receives identical rubric training data, it learns same decision boundary."
+      },
+      {
+        "candidate_id": "FDSC-EVENT-TRIGGER-001",
+        "verdict": "STOP_REDUCTION",
+        "reason": "Proposer concedes ETMU reduces to learned termination conditions in hierarchical RL options framework. When baseline learns state-dependent termination from same data, predictions are identical."
+      }
+    ],
+    "verdict": "STOP_REDUCTION",
+    "selected_child_id": "none",
+    "reason": "All four candidates conceded to STOP_REDUCTION after critic demonstrated that each proposed object reduces to existing primitives under information parity. No candidate meets ELIGIBLE_FOR_PROBLEMGATE criteria.",
+    "next_condition": "REVISE_DEBATE",
+    "problem_gate_authorized": false,
+    "scientific_authority": false
+  },
+  "summary": {
+    "candidate_count": 4,
+    "stop_reduction": 4,
+    "survivors": 0,
+    "selected_child_id": "none",
+    "problem_gate_authorized": false,
+    "active_researchitem_created": 0
+  },
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "researchitem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  },
+  "debate_sha256": "efc149cc20a03a49bdc7ca95bf42f7073322f5edb9b555968d55f37244735ac5"
+}

@@ -55,6 +55,14 @@ class ResearchMemoryWikiTest(unittest.TestCase):
         wiki=self.build();idea=compile_research_memory_query_pack(wiki,purpose="IDEA_SEARCH",context="closed method",max_chars=1800);exp=compile_research_memory_query_pack(wiki,purpose="EXPERIMENT_DESIGN",context="supported effect",max_chars=1800)
         self.assertLessEqual(idea["summary"]["characters"],1800);self.assertLessEqual(exp["summary"]["characters"],1800);self.assertNotEqual(idea["query_pack_sha256"],exp["query_pack_sha256"]);self.assertFalse(idea["scientific_authority"])
 
+    def test_discovery_failure_lessons_guide_idea_search_without_authority(self):
+        s,f,m,p,i,g,c=base_inputs();cycle={"lessons":[{"lesson_id":"LS-X","candidate_id":"OLD-X","lesson_type":"SCIENTIFIC_REDUCTION","affected_layer":"problem_novelty","title":"failure-guided mutation","summary":"same-information reduction absorbs the old formulation","source_refs":["receipt:x"],"reopen_condition":"new structural observable forces opposite prediction","reusable_precheck":"run the matched simplification first","opposite_search_seed":"search outside the old reduction basin","scientific_authority":False}]}
+        wiki=build_research_memory_wiki(search_design_state=s,failure_asset_library=f,scientific_meta_trace=m,candidate_portfolio=p,experiment_iteration=i,generator_state=g,claim_ledger=c,discovery_cycle=cycle)
+        lesson=next(r for r in wiki["entries"] if r["kind"]=="DISCOVERY_LESSON")
+        self.assertTrue(lesson["prompt_eligible"]);self.assertFalse(lesson["scientific_authority"]);self.assertFalse(lesson["principle_update_allowed"]);self.assertEqual(wiki["summary"]["discovery_lessons"],1)
+        pack=compile_research_memory_query_pack(wiki,purpose="IDEA_SEARCH",context="failure guided mutation same information reduction")
+        self.assertIn(lesson["memory_id"],pack["selected_memory_ids"]);self.assertIn("run the matched simplification first",pack["text"]);self.assertTrue(pack["policy"]["downstream_scientific_gates_unchanged"])
+
     def test_structured_mock_pc_patterns_become_zero_authority_paper_design_prechecks(self):
         s,f,m,p,i,g,c=base_inputs()
         paper_index={"summary":{"papers":1},"entries":[{"paper_id":"PAPER-X","review_learning":{"review_receipts":2,"decision_critical_objections":4,"category_counts":{"artifact-provenance":2,"empirical-sufficiency":2},"evidence_state_counts":{"existing-evidence":2,"missing-decisive-evidence":2},"action_class_counts":{"narrative-repair":2,"targeted-experiment":2},"targeted_experiment_proposals":2,"claim_expansion_requests_preserved_as_limitations":1}}]}

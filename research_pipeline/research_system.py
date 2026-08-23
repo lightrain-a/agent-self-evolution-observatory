@@ -94,6 +94,7 @@ from .research_capability_registry import build_research_capability_registry
 from .research_candidate_portfolio import build_research_candidate_portfolio
 from .research_harness_assurance import build_research_harness_assurance
 from .research_memory_wiki import build_research_memory_wiki, write_research_memory_wiki
+from .longitudinal_safety_discovery_cycle import load_discovery_cycle
 from .search_funnel_telemetry import build_search_funnel_telemetry
 from .premium_model_policy import policy_summary as premium_model_policy_summary
 from .public_state_redaction import redact_private_paths
@@ -693,6 +694,7 @@ def build_research_system_state() -> dict[str, Any]:
                 paper_ledger_source = "generated/paper-registry.json"
         except (OSError, json.JSONDecodeError, TypeError, ValueError):
             pass
+    longitudinal_safety_discovery_cycle = load_discovery_cycle()
     research_memory_wiki = build_research_memory_wiki(
         search_design_state=paper_first_search_portfolio_design,
         failure_asset_library=failure_asset_library,
@@ -701,6 +703,7 @@ def build_research_system_state() -> dict[str, Any]:
         experiment_iteration=experiment_iteration,
         generator_state=paper_first_problem_generator,
         paper_ledger_index=paper_ledger_index,
+        discovery_cycle=longitudinal_safety_discovery_cycle,
     )
     scientific_research_graph = build_scientific_research_graph(
         evidence_graph=evidence_graph,
