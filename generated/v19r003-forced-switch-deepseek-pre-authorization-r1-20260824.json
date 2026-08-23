@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0-v19r003-deepseek-pre-authorization-r1",
+  "artifact_kind": "V19R003_DEEPSEEK_PRE_STRATEGY_PAID_AUTHORIZATION_R1",
+  "generated_at": "2026-08-23T16:53:52Z",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "branch": "research/v19r003-forced-switch-pre-f0-20260823",
+  "branch_head_before_authorization": "4faf6db8195162682d947e260c97500eee2c4a27",
+  "contract": {
+    "path": "generated/v19r003-forced-switch-deepseek-pre-contract-r2-20260824.json",
+    "sha256": "dc5df317551a7f5773d3e6d5bf11aff34f202b1600a81dd019ba62ce66ff7a12",
+    "rubric": "V19R003_TRAJECTORY_ADHERENCE_V2"
+  },
+  "sequential_preregistration": {
+    "path": "generated/v19r003-forced-switch-sequential-paid-decision-prereg-r2-20260824.json",
+    "sha256": "0ddbf339e62418648d065964e0d9c51564bf6dada894f7d5a961767449d06039"
+  },
+  "authorization": {
+    "paid_probe_authorized": true,
+    "user_explicitly_authorized_api_testing": true,
+    "authorized_arm": "PRE_STRATEGY",
+    "authorized_provider_model": "deepseek-v4-pro",
+    "max_provider_calls": 4,
+    "max_output_tokens_per_call": 512,
+    "max_reported_output_tokens_total": 2048,
+    "temperature": 0.0,
+    "thinking": "disabled",
+    "thinking_compatibility_repost": false,
+    "post_strategy_authorized": false,
+    "post_execution_authorized": false,
+    "post_conflict_free_authorized": false,
+    "automatic_paid_expansion_forbidden": true
+  },
+  "execution_scope": {
+    "host": "69",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "evidence_tier": "L1_A100_EQUIVALENT_SUBSTRATE_NOT_SOURCE_EXACT",
+    "base_model": "Qwen/Qwen3-1.7B-Base",
+    "task_family": "AIME2025 with contamination-screened GSM8K training data",
+    "primary_endpoint": "trajectory-level PRE strategy enactment under V2; final benchmark score is not primary",
+    "source_exact_claim_allowed": false
+  },
+  "stop_rule": "After PRE_STRATEGY completes, run the deterministic V2 adherence rubric and sequential gate. Any result other than clean ADHERED_UNCALIBRATED stops all further paid expansion. Even clean PRE only permits a later separately authorized POST_STRATEGY; it does not authorize it here.",
+  "authority": {
+    "problem_gate": false,
+    "research_item_created": false,
+    "canonical_projection": false,
+    "paper_design": false,
+    "full_experiment": false
+  },
+  "secret_policy": "Credential is loaded at runtime from the canonical ignored server .env and is never copied into tracked artifacts or logs."
+}
