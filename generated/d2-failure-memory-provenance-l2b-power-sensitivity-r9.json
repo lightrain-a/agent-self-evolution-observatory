@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "plan_id": "D2-C45-L2B-STATUS-POWER-SENSITIVITY-R9",
+  "recorded_date": "2026-08-24",
+  "status": "FULL_36_COHORT_SENSITIVITY_FROZEN_NO_POWER_GUARANTEE_NO_EXECUTION_AUTHORITY",
+  "analysis_type": "prospective-L2B-design-sensitivity-not-retrospective-power",
+  "preflight_sha256": "43ae91a183f865d46a50f63512ec01a8eb1517bc4ae4834ca930c523e6d7a085",
+  "candidate_census_sha256": "f81762dd18505e67e14f781e631ffef7a2ead08fb1413cb3e679bbb6c153a816",
+  "independent_unit": "one downstream task per intent_template_id",
+  "maximum_frozen_independent_tasks": 36,
+  "primary_hypothesis": "two-sided metadata effect; no justified a-priori sign for success versus failure provenance metadata",
+  "target_absolute_effect": 0.15,
+  "alpha": 0.05,
+  "target_power": 0.8,
+  "approximation": "normal approximation for a paired task-level mean used only as a pre-outcome sensitivity envelope; confirmatory inference remains the frozen task-level randomization test",
+  "planning_scenarios": [
+    {
+      "task_level_sd": 0.2,
+      "independent_tasks": 36,
+      "approx_one_sided_power": 0.997849,
+      "approx_two_sided_power": 0.994458,
+      "two_sided_target_0_80_met": true
+    },
+    {
+      "task_level_sd": 0.3,
+      "independent_tasks": 36,
+      "approx_one_sided_power": 0.912315,
+      "approx_two_sided_power": 0.850839,
+      "two_sided_target_0_80_met": true
+    },
+    {
+      "task_level_sd": 0.4,
+      "independent_tasks": 36,
+      "approx_one_sided_power": 0.727459,
+      "approx_two_sided_power": 0.614118,
+      "two_sided_target_0_80_met": false
+    }
+  ],
+  "planning_decision": {
+    "use_full_36_unit_cohort_if_executed": true,
+    "outcome_adaptive_early_stop": false,
+    "post_outcome_task_replacement": false,
+    "post_outcome_sample_extension": false,
+    "claim_80_percent_power_unconditionally": false,
+    "reason": "36 exceeds the two-sided n=32 reference under SD=.30 but not n=56 under SD=.40; L2-specific variance and rollout/noise assumptions must be frozen before any claim of adequate power."
+  },
+  "execution_bindings_still_required": [
+    "paired rollout/seed count per arm",
+    "executor/model/version and decoding randomness",
+    "pre-outcome L2-specific variance/noise source or exact simulation assumptions",
+    "missingness/provider/browser retry policy",
+    "final randomization enumeration/simulation implementation"
+  ],
+  "primary_decision_rule_draft": {
+    "estimand": "mean across 36 task units of terminal WebArena score(status=S) - terminal WebArena score(status=F)",
+    "support_if": "abs(mean_delta) >= 0.15 AND two-sided task-level randomization p < 0.05",
+    "otherwise": "INCONCLUSIVE_NO_NO_EFFECT_AUTHORITY",
+    "directional_p_values": "secondary descriptive only"
+  },
+  "scientific_verdict": "NO_VERDICT_PLANNING_ONLY",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "model_calls": false,
+  "gpu_authority": false
+}

@@ -555,12 +555,12 @@
         "verdict": "Weak Reject"
       },
       "read": {
-        "zh": "Round 2 已准确理解 L0–L3 与 causal sign unresolved；r7 闭合 power / operational-equivalence 的现有证据修复，r8 又把 R5 的 5/10 support stop 独立复算，并与历史 6-task explicit-cue bridge 正式对账。历史 bridge 证明 metadata-only cue 技术上可执行，但其 144/144 calls 在 SUCCESS-vs-FAILURE 上 Δ=0、p=1，且属于 separate-substrate auxiliary evidence，不能替代 frozen ReasoningBank L2。",
-        "en": "Round 2 correctly understands L0–L3 and the unresolved causal sign. R7 closes the existing-evidence power and operational-equivalence repairs; R8 independently reconstructs the R5 5-of-10 support stop and reconciles it with the historical six-task explicit-cue bridge. That bridge shows metadata-only cue serialization is technically executable, but its 144/144 calls give SUCCESS-vs-FAILURE delta=0 with p=1 and remain separate-substrate auxiliary evidence rather than the frozen ReasoningBank L2."
+        "zh": "Round 2 已准确理解 L0–L3 与 causal sign unresolved。r7/r8 已闭合 paper-only、power/operational-equivalence 与 R5 provenance repair；r9 又在 pinned first-party ReasoningBank WebArena commit 中确认 source outcome 原生以 status=success/fail 独立于 memory_items 保存，只是默认 recall serialization 不把 status 暴露给 agent。",
+        "en": "Round 2 correctly understands L0–L3 and the unresolved causal sign. R7/r8 close the paper-only, power/operational-equivalence, and R5 provenance repairs; R9 additionally verifies at a pinned first-party ReasoningBank WebArena commit that source outcome is natively stored as status=success/fail separately from memory_items, but default recall serialization does not expose status to the agent."
       },
       "next": {
-        "zh": "O3/O4 已由 r7 闭合。O5 的工程事实现在完整：历史 auxiliary bridge 已执行但 inconclusive；R5 exact-information L2 仍因 fresh support 只有 5/10 而 0 calls，二者禁止拼接。剩余 acceptance 风险仍是用 fresh independent units 执行真正 ReasoningBank-style metadata-only L2，以及恢复 O6 source-faithful L3；两者都必须 scientific reopen。",
-        "en": "R7 closes O3/O4. The engineering record for O5 is now complete: a historical auxiliary bridge was executed but inconclusive, while R5 exact-information L2 remains at zero calls because fresh support is only 5/10; the two may not be combined. The remaining acceptance risk is still a true ReasoningBank-style metadata-only L2 on fresh independent units and O6 source-faithful L3, both requiring scientific reopen."
+        "zh": "O5 的最佳路线已切到 first-party ReasoningBank status adapter：36 个 template-independent fresh downstream units、two-sided |Δ|≥.15 / task-level randomization sensitivity 与 fail-closed adapter skeleton 都已 pre-outcome 冻结。当前剩余门是 exact BrowserGym 0.14.1/Python>=3.13 runtime、L2-specific variance/noise source与paired rollout假设、source-memory generation/fixed-selection binding、executor/model/request budget，以及 scientific/experiment authority。O6 financial L3 仍独立 support-blocked。",
+        "en": "The best O5 path is now a first-party ReasoningBank status adapter: 36 template-independent fresh downstream units, the two-sided |Δ|≥.15 task-level randomization sensitivity, and a fail-closed adapter skeleton are frozen pre-outcome. Remaining gates are the exact BrowserGym 0.14.1/Python>=3.13 runtime, an L2-specific variance/noise source and paired-rollout assumptions, source-memory generation/fixed-selection binding, executor/model/request budget, and scientific/experiment authority. O6 financial L3 remains independently support-blocked."
       },
       "objections": [
         {
@@ -631,20 +631,54 @@
           },
           "d": "REQUIRES_SCIENTIFIC_REOPEN",
           "why": {
-            "zh": "r8 先从 frozen shopping parquet（SHA256 fc9b…387e）与 prior-D2 receipts 独立复算 R5：11 个 review-family tasks → 8 个 reference-contract pass → 排除 prior D2 的 23/164/167 → 仅 5 个 fresh eligible tasks（21/25/26/163/165），对 frozen support floor 10 仍失败，因此 R5 exact-information L2 自身保持 0 model calls、无 scientific outcomes。历史上另有一个 6-task explicit-cue bridge：generic guidance byte-identical，只切 SOURCE OUTCOME: SUCCESS/FAILURE/UNSPECIFIED，144/144 calls complete，SUCCESS−FAILURE terminal Δ=0、两侧 permutation p=1，冻结裁决 INCONCLUSIVE_NO_NEGATIVE_AUTHORITY。该 bridge 使用 convenience generic guidance 而非自然 ReasoningBank memory，且六个 task 已是 prior-D2 units；因此只能作为 separate-substrate auxiliary evidence，不能与 R5 的 5 个 fresh tasks 拼成 11，也不能把 R5 support failure 变成 negative verdict。",
-            "en": "R8 first independently reconstructs R5 from the frozen shopping parquet (SHA256 fc9b…387e) and prior-D2 receipts: 11 review-family tasks -> 8 reference-contract passes -> exclude prior-D2 tasks 23/164/167 -> only 5 fresh eligible tasks (21/25/26/163/165), still below the frozen support floor of 10, so R5 exact-information L2 itself remains at zero model calls with no scientific outcomes. Separately, a historical six-task explicit-cue bridge held generic guidance byte-identical and changed only SOURCE OUTCOME: SUCCESS/FAILURE/UNSPECIFIED; all 144/144 calls completed, SUCCESS-minus-FAILURE terminal delta was 0 with permutation p=1 in both directions, and the frozen decision was INCONCLUSIVE_NO_NEGATIVE_AUTHORITY. Because that bridge uses convenience generic guidance rather than a natural ReasoningBank memory object and its six tasks are already prior-D2 units, it is separate-substrate auxiliary evidence: it cannot be combined with R5's five fresh tasks to make 11 and cannot turn R5 support failure into a negative verdict."
+            "zh": "历史事实保持不变：R5 exact-information L2 仍是 frozen 5/10 support stop、0 model calls；6-task/144-call generic explicit-cue bridge 仍是 Δ=0、p=1 的 INCONCLUSIVE auxiliary evidence，二者禁止拼接。r9 新增的是独立 reopen object：在 first-party ReasoningBank commit ed806117… 上，writer 将 source trajectory reward 映射为 status=success/fail，并把 status 与 memory_items 分字段保存；select_memory 返回完整 record，而默认 run.py 只序列化 memory_items，因此 status 是 source-native 但 executor-hidden 的 process-provenance field。对 frozen 187-task shopping asset 排除全部 prior-D2 downstream IDs，并限制每个 intent template 只取一个 fresh downstream unit 后，得到 36 个 template-independent official-evaluator units；selection 不读取 downstream/source outcome，source assignment 固定后才读取 native status，最终 source provenance 自然为 15 success / 21 fail。这个结果解除“support capacity dead-end”，但没有产生任何 scientific outcome。",
+            "en": "Historical facts remain unchanged: R5 exact-information L2 is still a frozen 5-of-10 support stop with zero model calls; the six-task/144-call generic explicit-cue bridge remains INCONCLUSIVE with delta=0 and p=1, and the two cannot be pooled. R9 adds a separate prospective reopen object: at first-party ReasoningBank commit ed806117…, the writer maps source-trajectory reward to status=success/fail and stores status separately from memory_items; select_memory returns the full record, while default run.py serializes only memory_items, making status a source-native but executor-hidden process-provenance field. On the frozen 187-task shopping asset, after excluding every prior-D2 downstream ID and allowing at most one fresh downstream unit per intent template, a deterministic zero-call census yields 36 template-independent units with official evaluators. Selection reads neither downstream nor source outcomes; native source status is read only after source assignment, yielding an incidental 15 success / 21 fail provenance split. This removes the support-capacity dead end but produces no scientific outcome."
           },
           "reopen": {
-            "zh": "找到满足同一 R5 规则的 ≥10 fresh 独立 tasks，或新的 canonical substrate 暴露 byte-identical actionable memory + 独立可见 provenance field；随后按既有 prospective power plan 确认 confirmatory 样本量，并重新通过 scientific/experiment gate。",
-            "en": "Find at least 10 fresh independent tasks under the same R5 rules, or a new canonical substrate exposing byte-identical actionable memory plus a separately visible provenance field; then size any confirmatory run against the existing prospective power plan and pass scientific/experiment gates."
+            "zh": "保持 R5 永久冻结，不做 5/10 rescue。新的 L2B/R9 已冻结 36-unit cohort、native status channel、two-sided primary direction 和 full-cohort/no-replacement 规则。下一步只允许：1) 物化 exact Python>=3.13 + BrowserGym/WebArena 0.14.1 runtime；2) 在任何 outcome 前冻结 L2-specific variance/noise source、paired rollout/seed 数、source-memory generation/fixed selection、executor/model/request budget、missingness/retry 与最终 randomization implementation；3) 获得独立 scientific + experiment/model-call authority。只有全部通过后才执行。",
+            "en": "Keep historical R5 frozen; do not rescue 5/10. The new L2B/R9 object already freezes the 36-unit cohort, native status channel, two-sided primary direction, and full-cohort/no-replacement rules. The only allowed next steps are: (1) materialize the exact Python>=3.13 + BrowserGym/WebArena 0.14.1 runtime; (2) before any outcome, freeze an L2-specific variance/noise source, paired rollout/seed count, source-memory generation/fixed selection, executor/model/request budget, missingness/retry policy, and final randomization implementation; and (3) obtain separate scientific and experiment/model-call authority. Execute only after all gates pass."
           },
           "action": "SCIENTIFIC_REOPEN_REQUIRED",
-          "e": "B1 r8 L2/R5 eligibility manifest + metadata-surface reconciliation; historical explicit-cue bridge 144/144, delta=0, p=1; R5 remains 5/10 and 0 calls",
-          "engineering_reproducibility": "RESOLVED_R8",
-          "scientific_gap": "OPEN_SUPPORT_FAILURE_NO_VERDICT",
-          "historical_auxiliary_bridge": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY_6_TASKS_144_CALLS_DELTA_0",
-          "r5_execution": "UNEXECUTED_SUPPORT_FAILURE_5_OF_10",
-          "pooling": "FORBIDDEN_CONSTRUCT_AND_UNIT_MISMATCH"
+          "e": "B1 r9 first-party ReasoningBank status preflight: pinned ed806117, 36 template-independent fresh units, 0 calls; plus r8 R5/bridge reconciliation",
+          "engineering_reproducibility": "RESOLVED_R9_NATIVE_FIELD_AND_FRESH_COHORT",
+          "scientific_gap": "OPEN_RUNTIME_SOURCE_MEMORY_EXECUTOR_VARIANCE_AND_AUTHORITY_NO_VERDICT",
+          "historical_auxiliary_bridge": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY_6_TASKS_144_CALLS_DELTA_0_UNCHANGED",
+          "r5_execution": "UNEXECUTED_SUPPORT_FAILURE_5_OF_10_UNCHANGED",
+          "pooling": "FORBIDDEN_R5_BRIDGE_R9_ARE_SEPARATE_OBJECTS",
+          "reopen_candidate_census": {
+            "status": "FIRST_PARTY_NATIVE_SOURCE_OUTCOME_FIELD_FOUND_ADAPTER_REQUIRED_EXECUTION_BLOCKED",
+            "priority_1": "ReasoningBank WebArena native status adapter — pinned source semantics + 36 fresh template-independent units; adapter/runtime/power/authority remain blocked",
+            "external_fallback_1": "Spatial Memory Agent — code/schema release still pending",
+            "external_fallback_2": "IBM Trajectory-Informed Memory — strong paper-level source-outcome semantics, runtime/code unavailable",
+            "stopped_candidate": "MutMem/HOM-AIMOS — native labels are trust/poison or post-use reward feedback, not source-generation success/failure provenance",
+            "scientific_authority": false,
+            "experiment_authority": false
+          },
+          "candidate_census_receipt": "generated/d2-failure-memory-provenance-l2-reopen-substrate-census-r9.json",
+          "reasoningbank_native_status_preflight": {
+            "status": "NATIVE_STATUS_FIELD_AND_36_UNIT_COHORT_VERIFIED_EXECUTION_BLOCKED",
+            "commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+            "native_field": "status ∈ {success, fail}",
+            "fresh_template_independent_units": 36,
+            "source_native_status_counts": {
+              "success": 15,
+              "fail": 21
+            },
+            "default_executor_exposes_status": false,
+            "adapter_required": true,
+            "exact_runtime_materialized": false,
+            "scientific_authority": false,
+            "experiment_authority": false,
+            "model_calls": false,
+            "receipt": "generated/d2-failure-memory-provenance-reasoningbank-status-l2-preflight-r9.json",
+            "power_sensitivity_status": "FULL_36_COHORT_SENSITIVITY_FROZEN_NO_POWER_GUARANTEE_NO_EXECUTION_AUTHORITY",
+            "power_sensitivity_receipt": "generated/d2-failure-memory-provenance-l2b-power-sensitivity-r9.json",
+            "adapter_contract_status": "IDENTIFICATION_COHORT_AND_STATISTICAL_DIRECTION_FROZEN_RUNTIME_EXECUTOR_BUDGET_UNBOUND",
+            "adapter_contract_receipt": "generated/d2-failure-memory-provenance-l2b-adapter-contract-r9.json",
+            "primary_test": "two-sided task-level paired randomization/sign-flip test",
+            "full_36_cohort_required": true,
+            "unconditional_80pct_power_claim": false
+          }
         },
         {
           "id": "FAILURE-O6",

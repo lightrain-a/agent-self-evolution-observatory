@@ -1,0 +1,422 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_type": "l2-reopen-substrate-census",
+  "receipt_id": "D2-C45-L2-REOPEN-SUBSTRATE-CENSUS-R9",
+  "recorded_date": "2026-08-24",
+  "status": "FIRST_PARTY_NATIVE_SOURCE_OUTCOME_FIELD_FOUND_ADAPTER_REQUIRED_EXECUTION_BLOCKED",
+  "role": "ZERO_CALL_SUPPORT_AND_DESIGN_PREFLIGHT_ONLY_R9",
+  "question": "Does the pinned first-party ReasoningBank/WebArena implementation expose a native source-outcome field that can support an exact-information L2 adapter on a fresh independent cohort, and how does that change the external-substrate search priority?",
+  "bounded_public_source_evidence": [
+    {
+      "candidate": "ReasoningBank WebArena native status field",
+      "urls": [
+        "https://github.com/google-research/reasoning-bank"
+      ],
+      "pinned_commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+      "source_file_sha256": {
+        "WebArena/induce_memory.py": "97d7da3fe5bd3e37d05e4aa07c050b1154334951cc2cad20619774ae77e0912c",
+        "WebArena/memory_management.py": "35b8b800180024f3446c4a295fe9d7c19d4aa2cddd0b2f2a44b6680e4d6bc4f9",
+        "WebArena/run.py": "f9edcac62cc612f48db9859c60f71b7479aa126beda802437dd82d81030817b3"
+      },
+      "observed": "induce_memory.py derives status=success/fail from the source trajectory reward and stores status separately from memory_items; select_memory maps retrieval IDs back to the full record without a status-dependent ranking path; run.py writes only memory_items to the default downstream memory file, so status is native but hidden by serialization."
+    },
+    {
+      "candidate": "MutMem / HOM-AIMOS",
+      "urls": [
+        "https://github.com/wallidsaydi-creator/HOM-AIMOS",
+        "https://github.com/wallidsaydi-creator/HOM-AIMOS/blob/main/eval/publication/verified-benchmark-results.json",
+        "https://github.com/wallidsaydi-creator/HOM-AIMOS/blob/main/RELEASE-SOURCE-MANIFEST.json",
+        "https://github.com/wallidsaydi-creator/HOM-AIMOS/blob/main/SECURITY.md",
+        "https://github.com/wallidsaydi-creator/HOM-AIMOS/blob/main/RELEASE.md",
+        "https://github.com/wallidsaydi-creator/HOM-AIMOS/tags"
+      ],
+      "observed": "Canonical content is documented as immutable; signed epistemic labels are separate and consumed before active-context disclosure; signed positive/negative outcome evidence feeds retrieval-weight adaptation; the released N=100 epistemic ablation changes attacked poison retrieval@5 from 94/100 with stored labels bypassed to 0/100 with stored labels enabled while canonical memory is not mutated. SECURITY.md rejects main as a stable trust anchor, and the bounded public Releases/Tags view did not expose a downloadable release coordinate."
+    },
+    {
+      "candidate": "TierMem",
+      "urls": [
+        "https://github.com/FreedomIntelligence/Tiermem"
+      ],
+      "observed": "The public architecture uses summary-index and raw-page retrieval paths selected by a trained router, so native provenance-aware operation can change returned evidence."
+    },
+    {
+      "candidate": "MemORAI",
+      "urls": [
+        "https://aclanthology.org/2026.findings-acl.1408/"
+      ],
+      "observed": "The published architecture uses a provenance-enriched multi-relational graph together with query-adaptive subgraph retrieval and query-conditioned edge weighting."
+    },
+    {
+      "candidate": "Eywa",
+      "urls": [
+        "https://github.com/getagentseal"
+      ],
+      "observed": "The AgentSeal organization describes Eywa as provenance-grounded long-term memory but labels the repository as coming soon in the bounded recheck."
+    }
+  ],
+  "exact_l2_qualification_contract": {
+    "all_required": true,
+    "criteria": [
+      "the actionable memory record or disclosed memory content is byte-identical across treatment arms",
+      "a provenance/outcome/trust field can be varied independently of the memory content",
+      "the varied field is visible to the downstream decision maker rather than only to a retrieval gate",
+      "retrieval admission, ranking, disclosed evidence set, query, future state, and all other paired inputs are held fixed",
+      "fresh independent units are available and are not prior-D2 outcome-exposed units",
+      "the runtime and source version can be content-addressed or otherwise pinned before outcomes"
+    ],
+    "native_retrieval_policy_change_counts_as_exact_l2": false,
+    "writer_mode_change_counts_as_exact_l2": false,
+    "convenience_prompt_label_on_generic_guidance_counts_as_reasoningbank_l2": false
+  },
+  "candidates": [
+    {
+      "candidate": "ReasoningBank WebArena native status adapter",
+      "source_kind": "first_party_canonical_memory_substrate_adapter_extension",
+      "construct_fidelity": "HIGHEST_AVAILABLE_FOR_B1_L2_OUTSIDE_FINANCIAL_L3",
+      "public_or_archived_evidence": [
+        "pinned first-party ReasoningBank commit ed80611788292ea739f1effd31f16c53823b8a0d",
+        "generated/d2-failure-memory-provenance-reasoningbank-status-l2-preflight-r9.json",
+        "frozen WebArena Shopping parquet SHA256 fc9b0011...b1387e"
+      ],
+      "memory_bytes_can_be_fixed": true,
+      "native_source_outcome_metadata_field": "status ∈ {success, fail}",
+      "native_status_semantics": "terminal outcome of the trajectory from which the ReasoningBank memory record was written",
+      "independent_metadata_field_available_in_first_party_record": true,
+      "used_by_default_retrieval_selection": false,
+      "executor_visible_metadata_toggle_as_is": false,
+      "adapter_exposure_required": true,
+      "fresh_template_independent_downstream_units": 36,
+      "downstream_selection_uses_outcome": false,
+      "source_selection_uses_outcome": false,
+      "source_status_distribution_after_selection": {
+        "success": 15,
+        "fail": 21
+      },
+      "source_version_pinned": "ed80611788292ea739f1effd31f16c53823b8a0d",
+      "qualification": "NATIVE_SOURCE_OUTCOME_FIELD_AND_FRESH_COHORT_VERIFIED_ADAPTER_RUNTIME_AND_AUTHORITY_BLOCKED",
+      "blockers": [
+        "default ReasoningBank downstream serialization omits status, so an adapter-level exposure treatment must be frozen before outcomes",
+        "exact first-party runtime requires Python >=3.13 and BrowserGym/WebArena 0.14.1; no exact 69 environment is currently materialized",
+        "L2-specific prospective power/sensitivity plan is still required; the existing r7 L1 power table is only a reference",
+        "source-memory generation/fixed selection, exact renderer, executor/model/request budget, reset protocol, evaluator, and task-level randomization gate must be frozen",
+        "scientific and experiment/model-call authority remain false"
+      ],
+      "can_reopen_o5_as_is": false,
+      "can_support_new_l2b_after_adapter_runtime_and_authority": true,
+      "can_rescue_historical_r5": false,
+      "can_substitute_for_financial_l3": false,
+      "priority": 1,
+      "priority_reason": "First-party native source-outcome semantics plus 36 fresh template-independent downstream units remove R5’s capacity dead-end without changing memory bytes; this is now the highest-value O5 reopen route."
+    },
+    {
+      "candidate": "Spatial Memory Agent (SMA)",
+      "source_kind": "public_external_memory_substrate_paper_and_project_page",
+      "construct_fidelity": "HIGH_AT_SOURCE_OUTCOME_ANALYSIS_LEVEL_SCHEMA_UNVERIFIED",
+      "public_sources": [
+        "https://aim-uofa.github.io/SMA/",
+        "https://arxiv.org/abs/2608.12743"
+      ],
+      "public_code_status": "CODE_COMING_SOON",
+      "memory_generation": "verifier-scored rollout -> compact memory card with task summary + transferable lesson; source rollout has predicted answer and reward",
+      "native_source_outcome_evidence": {
+        "explicit": true,
+        "paper_diagnostic": "memories are grouped by whether source questions were answered successfully or failed during memory writing",
+        "success_group": {
+          "mean_trs": 0.522,
+          "deployment_accuracy_percent": 85.7
+        },
+        "failure_group": {
+          "mean_trs": 0.452,
+          "deployment_accuracy_percent": 61.4
+        },
+        "retrieved_composition": {
+          "all_success": {
+            "n": 13226,
+            "accuracy_percent": 93.0,
+            "mean_trs": 0.909
+          },
+          "mixed": {
+            "n": 10264,
+            "accuracy_percent": 65.1,
+            "mean_trs": 0.653
+          },
+          "all_failure": {
+            "n": 603,
+            "accuracy_percent": 39.0,
+            "mean_trs": 0.48
+          }
+        }
+      },
+      "memory_bytes_can_be_fixed": "PLAUSIBLE_BUT_SCHEMA_NOT_PUBLIC",
+      "source_outcome_stored_as_separate_memory_field": "UNVERIFIED",
+      "executor_visible_metadata_toggle_as_is": false,
+      "native_retrieval_channel": "semantic filtering + similarity/TRS ranking; source outcome is used for post-hoc grouping in the public report, not shown as a runtime prompt field",
+      "qualification": "BEST_NEW_CONSTRUCT_CANDIDATE_SUPPORT_BLOCKED_CODE_COMING_SOON_SCHEMA_UNVERIFIED",
+      "blockers": [
+        "public project page states Code Coming Soon",
+        "published memory-card description exposes task summary + transferable lesson but does not establish a separate stored source_outcome field",
+        "source-outcome grouping could be an offline analytic join rather than an executor-visible memory field",
+        "TRS/ranking is a separate reliability channel and cannot be substituted for a source-outcome metadata toggle",
+        "no source-pinned interface yet proves same retrieved cards/order/bytes can be held fixed while only source outcome metadata is exposed or toggled"
+      ],
+      "can_reopen_o5_as_is": false,
+      "can_support_new_separate_substrate_l2_after_code_release": true,
+      "priority": 2,
+      "priority_reason": "Best audited external construct match because the paper explicitly tracks success/failure of the source question at memory-writing time and reports large source-outcome-conditioned downstream groups. Code/schema release is the gating dependency.",
+      "preflight_receipt": "generated/d2-failure-memory-provenance-sma-l2-preflight-r8.json"
+    },
+    {
+      "candidate": "Trajectory-Informed Memory Generation (IBM Research)",
+      "source_kind": "public_external_paper_source_code_not_released",
+      "construct_fidelity": "HIGH_AT_GENERATED_ENTRY_PROVENANCE_LEVEL_RUNTIME_VISIBILITY_UNVERIFIED",
+      "public_sources": [
+        "https://arxiv.org/html/2603.10600v1",
+        "https://arxiv.org/abs/2603.10600"
+      ],
+      "public_code_status": "NO_AUTHOR_CODE_LINK_DISCOVERED_REQUEST_CODE_ONLY_IN_BOUNDED_RECHECK",
+      "native_source_outcome_evidence": {
+        "explicit": true,
+        "generated_memory_entry_fields": [
+          "source trajectory ID",
+          "source outcome description"
+        ],
+        "conflict_resolution": "uses outcome metadata including source trajectory success/failure status",
+        "trajectory_outcome_classification": "uses benchmark success/failure labels when available, otherwise infers success/failure/recovered from trajectory signals"
+      },
+      "storage_runtime_boundary": {
+        "consolidated_structured_metadata_listed": [
+          "tip category",
+          "priority level",
+          "application context",
+          "task category",
+          "source trajectory IDs",
+          "creation timestamp"
+        ],
+        "source_outcome_description_explicitly_listed_in_consolidated_storage_metadata": false,
+        "runtime_prompt_integration_highlights": [
+          "priority level",
+          "category",
+          "actionable content",
+          "purpose",
+          "implementation steps",
+          "trigger condition"
+        ],
+        "source_outcome_explicitly_shown_to_executor": false
+      },
+      "memory_bytes_can_be_fixed": "PLAUSIBLE_AT_PRE_CONSOLIDATION_ENTRY_LEVEL_NOT_EXECUTION_VERIFIED",
+      "source_outcome_stored_as_separate_memory_field": "YES_FOR_GENERATED_ENTRY_DESCRIPTION_UNCLEAR_AFTER_CONSOLIDATION",
+      "executor_visible_metadata_toggle_as_is": false,
+      "qualification": "STRONG_CONSTRUCT_PAPER_ONLY_CODE_AND_RUNTIME_SURFACE_UNAVAILABLE",
+      "blockers": [
+        "no author-released executable code was discovered in the bounded recheck",
+        "paper explicitly gives source outcome description on generated entries, but the consolidated storage metadata list omits that field",
+        "runtime prompt integration does not show source outcome metadata to the executor",
+        "conflict resolution uses outcome metadata before/within consolidation, so changing it can alter canonical tip content rather than isolate a metadata-only effect"
+      ],
+      "can_reopen_o5_as_is": false,
+      "can_support_new_separate_substrate_l2_after_code_release": true,
+      "priority": 3,
+      "priority_reason": "Very strong process-provenance semantics in the paper, including explicit source trajectory outcome description, but exact L2 requires source code proving the field survives consolidation and can be exposed without changing content/retrieval.",
+      "preflight_receipt": "generated/d2-failure-memory-provenance-ibm-tips-l2-preflight-r8.json"
+    },
+    {
+      "candidate": "Eywa",
+      "source_kind": "public_external_architecture",
+      "construct_fidelity": "PROMISING_CONCEPTUAL_SEPARATION",
+      "public_status": "AgentSeal organization currently labels Eywa as coming soon and describes provenance-grounded long-term memory with deterministic recall and source receipts.",
+      "memory_bytes_can_be_fixed": "PLAUSIBLE_FROM_ARCHITECTURE_NOT_EXECUTION_VERIFIED",
+      "separate_provenance_exists": true,
+      "executor_visible_metadata_toggle_as_is": "NOT_VERIFIED",
+      "source_version_pinned": false,
+      "qualification": "SUPPORT_BLOCKED_PUBLIC_CODE_NOT_PINNED",
+      "blockers": [
+        "public executable Eywa repository/source release was not available in this bounded recheck",
+        "no source-pinned exact metadata-only intervention surface has been verified"
+      ],
+      "can_reopen_o5_as_is": false,
+      "priority": 5,
+      "priority_reason": "Architecturally close to evidence/content separation, but current public support is insufficient for an executable preflight."
+    },
+    {
+      "candidate": "MutMem / HOM-AIMOS signed epistemic memory",
+      "source_kind": "public_external_memory_substrate",
+      "construct_fidelity": "LOW_FOR_B1_SOURCE_PROVENANCE_MEDIUM_FOR_METADATA_MECHANICS",
+      "public_repository": "https://github.com/wallidsaydi-creator/HOM-AIMOS",
+      "public_release_claim": "Repository README states that it contains the HOM-AIMOS 1.0 source release; SECURITY.md says the latest attested 1.x release is the supported trust anchor and main is active development.",
+      "release_pin_status": "EXACT_ATTESTED_1X_TAG_OR_COMMIT_NOT_RESOLVED_PUBLIC_RELEASE_VIEW_EXPOSES_NO_DOWNLOADABLE_RELEASE_COORDINATE",
+      "source_manifest_evidence": {
+        "eval/run-poisonedrag-epistemic-ablation.mjs": "99edd277e1334878b8bbff24450d07f869721083357451f4141840adc7c5be46",
+        "eval/publication/poisonedrag-epistemic-ablation.json": "93b3c5ba11e488441089b117a23b4ed420d3b8166cb43c232c474304df597c4e",
+        "eval/publication/verified-benchmark-results.json": "02de7a4b41e15daeae6de50d43c1b7123f5782440ebd66e44cb43a95f0f21596",
+        "migrations/092-signed-memory-epistemic-classification.sql": "67cb60b9a6af25ec59e2f45d2ca52841b4cde1cfe50f6fb796fbdc4c05d4c024"
+      },
+      "memory_bytes_can_be_fixed": true,
+      "canonical_content_immutable_under_classification": true,
+      "separate_signed_metadata_exists": true,
+      "native_label_is_consumed_before_active_context_disclosure": true,
+      "executor_visible_metadata_toggle_as_is": false,
+      "native_intervention_channel": "stored signed epistemic label changes retrieval projection/selection before downstream disclosure",
+      "public_native_ablation": {
+        "confirmatory": true,
+        "completed_n": 100,
+        "canonical_memory_mutated": false,
+        "retrieval_weight_mutated": false,
+        "classification_mutated": false,
+        "a0_stored_signed_labels": false,
+        "a1_stored_signed_labels": true,
+        "a0_attacked_poison_retrieval_at_5": "94/100",
+        "a1_attacked_poison_retrieval_at_5": "0/100"
+      },
+      "qualification": "METADATA_MECHANICS_WITNESS_CONSTRUCT_MISMATCH_FOR_B1",
+      "blockers": [
+        "native signed epistemic label is trust/poison classification rather than source-trajectory success/failure provenance",
+        "source-level valence-ledger inspection shows reward_sign is post-recall/post-use reward feedback applied to an existing memory, not the outcome of the trajectory that generated it",
+        "both native channels affect retrieval/projection before disclosure",
+        "repurposing either channel as SOURCE OUTCOME would be a new artificial treatment and would not improve construct fidelity over the historical convenience-label bridge"
+      ],
+      "can_reopen_o5_as_is": false,
+      "can_support_new_separate_substrate_l2_after_adaptation": false,
+      "priority": 6,
+      "priority_reason": "Source inspection resolves both native channels away from B1: epistemic labels encode trust/poison state, while valence reward_sign is post-use reward feedback. Repurposing either as source trajectory outcome would create a synthetic treatment.",
+      "preflight_receipt": "generated/d2-failure-memory-provenance-mutmem-l2-preflight-r8.json"
+    },
+    {
+      "candidate": "TierMem",
+      "source_kind": "public_external_memory_substrate",
+      "construct_fidelity": "LOW_FOR_EXACT_L2",
+      "public_repository": "https://github.com/FreedomIntelligence/Tiermem",
+      "memory_bytes_can_be_fixed": "NOT_NATIVE_TO_PROVENANCE_TOGGLE",
+      "separate_provenance_exists": true,
+      "executor_visible_metadata_toggle_as_is": false,
+      "native_intervention_channel": "router selects summary-index versus raw-page retrieval paths",
+      "qualification": "RETRIEVAL_CHANNEL_NOT_EXACT_L2",
+      "blockers": [
+        "changing route changes available evidence/content rather than only metadata",
+        "native provenance functionality is tied to source verification/lineage and retrieval routing"
+      ],
+      "can_reopen_o5_as_is": false,
+      "priority": 7,
+      "priority_reason": "Useful related-work boundary, but native treatment changes evidence path."
+    },
+    {
+      "candidate": "MemORAI",
+      "source_kind": "published_external_memory_substrate",
+      "construct_fidelity": "LOW_FOR_EXACT_L2",
+      "publication": "ACL Findings 2026, DOI 10.18653/v1/2026.findings-acl.1408",
+      "memory_bytes_can_be_fixed": "NOT_NATIVE_TO_PROVENANCE_TOGGLE",
+      "separate_provenance_exists": true,
+      "executor_visible_metadata_toggle_as_is": false,
+      "native_intervention_channel": "provenance-enriched graph plus query-adaptive subgraph retrieval with query-conditioned edge weighting",
+      "qualification": "RETRIEVAL_GRAPH_CHANNEL_NOT_EXACT_L2",
+      "blockers": [
+        "provenance participates in graph representation/retrieval, so toggling it can change the returned memory set",
+        "no native same-disclosed-content metadata-only arm is established by the published description"
+      ],
+      "can_reopen_o5_as_is": false,
+      "priority": 8,
+      "priority_reason": "Relevant provenance-aware system, but the causal channel is retrieval/graph selection rather than isolated metadata."
+    },
+    {
+      "candidate": "Historical D2 explicit-provenance cue bridge",
+      "source_kind": "archived_internal_auxiliary_bridge",
+      "construct_fidelity": "LOW_TO_MEDIUM",
+      "archive_commit": "a82901a9c29d59b0e9da2ae680fab30fa5e82d34",
+      "memory_bytes_can_be_fixed": true,
+      "independent_metadata_field_available_as_current_executable_source_surface": true,
+      "executor_visible_metadata_toggle_as_is": true,
+      "fresh_independent_units_currently_qualified": 0,
+      "historical_independent_units": 6,
+      "historical_calls_complete": 144,
+      "historical_success_minus_failure_terminal_delta": 0.0,
+      "historical_permutation_p_success_greater": 1.0,
+      "historical_permutation_p_failure_greater": 1.0,
+      "historical_decision": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY",
+      "native_intervention_channel": "fixed generic guidance plus injected SOURCE OUTCOME label",
+      "qualification": "AUXILIARY_ALREADY_EXPOSED_NOT_R5",
+      "blockers": [
+        "generic convenience guidance is not a naturally generated or source-native ReasoningBank memory object",
+        "all six tasks are prior-D2 units and cannot be reused as fresh R5 units",
+        "historical outcomes are already exposed",
+        "the bridge result is explicitly inconclusive and cannot provide negative authority"
+      ],
+      "can_reopen_o5_as_is": false,
+      "can_rescue_r5_by_pooling_existing_units": false,
+      "priority": 9,
+      "priority_reason": "Useful only as proof that an executor-visible label can be serialized while guidance is fixed; not a fresh scientific object."
+    }
+  ],
+  "census_adjudication": {
+    "qualified_exact_l2_surfaces_as_is": 0,
+    "canonical_target_support_blocked": [
+      "ReasoningBank / motivating financial AgentDojo object"
+    ],
+    "best_new_construct_candidates_support_blocked": [
+      "Spatial Memory Agent (SMA)",
+      "Trajectory-Informed Memory Generation (IBM Research)"
+    ],
+    "construct_mismatch_metadata_mechanics_only": [
+      "MutMem / HOM-AIMOS signed epistemic memory"
+    ],
+    "auxiliary_already_exposed_not_fresh": [
+      "Historical D2 explicit-provenance cue bridge"
+    ],
+    "support_blocked_public_candidates": [
+      "Eywa"
+    ],
+    "retrieval_channel_not_exact_l2": [
+      "TierMem",
+      "MemORAI"
+    ],
+    "scientific_verdict": "NO_VERDICT_R9_PREFLIGHT_ONLY",
+    "o5_disposition": "REQUIRES_SCIENTIFIC_REOPEN",
+    "scientific_values_changed": false,
+    "first_party_native_metadata_fields_requiring_exposure_adapter": 1,
+    "first_party_adapter_candidate": "ReasoningBank WebArena status field at ed80611788292ea739f1effd31f16c53823b8a0d",
+    "fresh_template_independent_units_for_adapter_candidate": 36,
+    "historical_r5_support_failure_remains": true
+  },
+  "preferred_next_support_actions": [
+    {
+      "rank": 1,
+      "action": "Freeze a new ReasoningBank-status L2B/R9 adapter contract on the pinned first-party commit: same selected record ID/order and memory_items bytes, only status serialization changes."
+    },
+    {
+      "rank": 2,
+      "action": "Materialize or otherwise obtain an exact Python>=3.13 + BrowserGym/WebArena 0.14.1 runtime without substituting the existing 0.4.0 Agent-Safety environment."
+    },
+    {
+      "rank": 3,
+      "action": "Freeze an L2-specific power/sensitivity plan, source-memory generation/fixed selection, executor/model/request budget, environment-reset/evaluator contract, and task-level randomization gate before any model/browser outcome."
+    },
+    {
+      "rank": 4,
+      "action": "Obtain separate scientific and experiment/model-call authority; only then execute the 36-unit cohort."
+    },
+    {
+      "rank": 5,
+      "action": "Keep SMA/IBM as secondary external fallback substrates and continue L3 financial first-party support monitoring independently."
+    }
+  ],
+  "forbidden_shortcuts": [
+    "count native MutMem A0/A1 retrieval differences as B1 exact-L2 evidence",
+    "combine the historical six-task explicit-cue bridge with the five fresh R5 tasks",
+    "treat a retrieval-routing or graph-routing intervention as metadata-only",
+    "treat a mutable main branch as the source trust anchor when the upstream project requires an attested release",
+    "run a new forced-disclosure or executor-label treatment without a fresh preregistration and scientific/experiment authority",
+    "treat SMA post-hoc source-outcome grouping as proof that source outcome is stored or executor-visible",
+    "treat IBM generated-entry source outcome description as proof that the field survives consolidation or reaches runtime prompt integration",
+    "repurpose MutMem post-use reward_sign as memory-generation source outcome provenance",
+    "treat the existence of a hidden native status field as already-executed L2 evidence",
+    "change retrieval or selected memory IDs separately by status arm",
+    "reuse the historical R5 5/10 stop as if it were the new 36-unit cohort",
+    "substitute the installed BrowserGym 0.4.0 environment for the pinned ReasoningBank 0.14.1 runtime"
+  ],
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "gpu": false,
+    "model_calls": false,
+    "submission": false
+  }
+}

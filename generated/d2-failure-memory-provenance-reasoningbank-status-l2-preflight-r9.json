@@ -1,0 +1,797 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "preflight_id": "D2-C45-REASONINGBANK-STATUS-L2-PREFLIGHT-R9",
+  "recorded_date": "2026-08-24",
+  "status": "NATIVE_STATUS_FIELD_AND_36_UNIT_COHORT_VERIFIED_EXECUTION_BLOCKED",
+  "role": "ZERO_CALL_SUPPORT_AND_DESIGN_PREFLIGHT_NO_SCIENTIFIC_AUTHORITY",
+  "scientific_relationship": "NEW_L2B_R9_EXTENSION_NOT_R5_RESCUE_NOT_L3_TRANSPORT",
+  "first_party_reasoningbank_binding": {
+    "repository": "https://github.com/google-research/reasoning-bank.git",
+    "commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "file_sha256": {
+      "WebArena/induce_memory.py": "97d7da3fe5bd3e37d05e4aa07c050b1154334951cc2cad20619774ae77e0912c",
+      "WebArena/memory_management.py": "35b8b800180024f3446c4a295fe9d7c19d4aa2cddd0b2f2a44b6680e4d6bc4f9",
+      "WebArena/run.py": "f9edcac62cc612f48db9859c60f71b7479aa126beda802437dd82d81030817b3"
+    },
+    "contract_checks": {
+      "status_is_derived_from_reward": true,
+      "status_is_stored_separately": true,
+      "selection_maps_id_back_to_full_record": true,
+      "default_recall_serializes_memory_items": true,
+      "default_recall_does_not_serialize_status": true
+    },
+    "interpretation": "The first-party WebArena writer stores source outcome in a separate status field; select_memory returns the full record; the default run path exposes only memory_items to the agent and therefore drops status."
+  },
+  "frozen_downstream_asset": {
+    "path_role": "content-addressed WebArena Shopping trajectory/task universe",
+    "sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e",
+    "rows": 187,
+    "config_sha256": "d25e83078ec728adc82bd43871338a24a3907e101b5a5fdb1ae81bb7f72f36a6"
+  },
+  "native_metadata_fact": {
+    "field": "status",
+    "native_values": [
+      "success",
+      "fail"
+    ],
+    "meaning": "terminal outcome of the trajectory from which the ReasoningBank memory record was written",
+    "stored_separately_from_actionable_memory": true,
+    "used_by_default_retrieval_selection": false,
+    "visible_to_default_downstream_agent": false,
+    "adapter_required": true
+  },
+  "candidate_intervention": {
+    "estimand": "Delta_L(status; m, x') with actionable memory m held byte-identical",
+    "treatment": "Expose the already-native source-outcome status field as success versus fail while holding the selected record and memory_items bytes fixed.",
+    "paired_hold_fixed": [
+      "downstream task/query and WebArena initial state",
+      "source memory record ID",
+      "ordered memory_items bytes",
+      "retrieval/admission result and order",
+      "all non-status prompt bytes",
+      "executor/model/version/decoding settings",
+      "WebArena evaluator and reset protocol"
+    ],
+    "forbidden_changes": [
+      "re-run retrieval separately by arm",
+      "change memory text or source memory ID by arm",
+      "let status alter ranking/admission",
+      "use downstream outcomes to replace tasks",
+      "pool with R5 or the historical six-task explicit-cue bridge"
+    ],
+    "draft_renderer": {
+      "L_S": "status: success\\n<memory_items bytes unchanged>",
+      "L_F": "status: fail\\n<memory_items bytes unchanged>",
+      "note": "Renderer is a preflight proposal, not yet a frozen execution contract."
+    }
+  },
+  "cohort_contract": {
+    "independent_unit": "one fresh downstream task per intent_template_id",
+    "prior_d2_downstream_ids_excluded": [
+      "21",
+      "23",
+      "25",
+      "26",
+      "48",
+      "49",
+      "117",
+      "125",
+      "126",
+      "145",
+      "148",
+      "149",
+      "150",
+      "159",
+      "162",
+      "163",
+      "164",
+      "165",
+      "167",
+      "190",
+      "191",
+      "225",
+      "226",
+      "227",
+      "228",
+      "229",
+      "230",
+      "231",
+      "233",
+      "234",
+      "235",
+      "298",
+      "299",
+      "301",
+      "302",
+      "313",
+      "360",
+      "362",
+      "385",
+      "387",
+      "388"
+    ],
+    "source_assignment": "within template: prefer smallest prior-D2 source task, else smallest other task; source assignment ignores source outcome",
+    "downstream_assignment": "smallest fresh task ID with a non-empty official WebArena evaluator",
+    "downstream_selection_uses_outcome": false,
+    "source_selection_uses_outcome": false,
+    "source_outcome_read_after_assignment_only": true,
+    "state_mutating_tasks_allowed": true,
+    "state_mutation_reason": "The planned endpoint is the source-native WebArena runtime/evaluator with environment reset; read-only was a static-evidence bridge restriction, not a WebArena scientific requirement."
+  },
+  "cohort_summary": {
+    "template_independent_units": 36,
+    "downstream_task_ids": [
+      "166",
+      "351",
+      "238",
+      "269",
+      "431",
+      "329",
+      "653",
+      "528",
+      "146",
+      "436",
+      "124",
+      "319",
+      "141",
+      "689",
+      "571",
+      "334",
+      "158",
+      "506",
+      "300",
+      "465",
+      "511",
+      "794",
+      "585",
+      "516",
+      "47",
+      "279",
+      "358",
+      "284",
+      "324",
+      "260",
+      "274",
+      "232",
+      "188",
+      "509",
+      "22",
+      "384"
+    ],
+    "source_task_ids": [
+      "163",
+      "352",
+      "239",
+      "270",
+      "432",
+      "330",
+      "654",
+      "529",
+      "148",
+      "437",
+      "125",
+      "320",
+      "145",
+      "690",
+      "572",
+      "335",
+      "159",
+      "507",
+      "298",
+      "466",
+      "512",
+      "795",
+      "586",
+      "517",
+      "48",
+      "280",
+      "360",
+      "285",
+      "325",
+      "261",
+      "275",
+      "231",
+      "190",
+      "510",
+      "21",
+      "385"
+    ],
+    "official_evaluator_counts": {
+      "program_html": 10,
+      "string_match": 15,
+      "url_match": 9,
+      "url_match+program_html": 2
+    },
+    "source_native_status_counts": {
+      "fail": 21,
+      "success": 15
+    },
+    "sources_reusing_prior_d2_as_upstream_only": 12,
+    "sources_from_other_noninference_tasks": 24,
+    "historical_r5_support_floor": 10,
+    "r7_l1_power_reference_one_sided_sd_0_30": 25,
+    "r7_l1_power_reference_two_sided_sd_0_30": 32,
+    "l2_power_claim_from_l1_reference_allowed": false
+  },
+  "cohort": [
+    {
+      "template_id": "136",
+      "downstream_task_id": "166",
+      "downstream_task_prompt": "What are the main criticisms of this product? Please extract the relevant sentences.",
+      "downstream_eval_types": [
+        "string_match"
+      ],
+      "source_task_id": "163",
+      "source_task_was_prior_d2": true,
+      "source_native_status": "fail",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 1,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "137",
+      "downstream_task_id": "351",
+      "downstream_task_prompt": "List products from PS4 accessories category by ascending price",
+      "downstream_eval_types": [
+        "url_match"
+      ],
+      "source_task_id": "352",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "138",
+      "downstream_task_id": "238",
+      "downstream_task_prompt": "I am doing a market survey for one stop market, show me the most expensive product from PS4 accessories category",
+      "downstream_eval_types": [
+        "url_match"
+      ],
+      "source_task_id": "239",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "139",
+      "downstream_task_id": "269",
+      "downstream_task_prompt": "Show me products under $25 in \"women shoes\" category",
+      "downstream_eval_types": [
+        "url_match"
+      ],
+      "source_task_id": "270",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "145",
+      "downstream_task_id": "431",
+      "downstream_task_prompt": "Add the product with the lowest per unit price from my open tabs to the shopping cart",
+      "downstream_eval_types": [
+        "program_html"
+      ],
+      "source_task_id": "432",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "success",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "147",
+      "downstream_task_id": "329",
+      "downstream_task_prompt": "How much I spend on 4/19/2023 on shopping at One Stop Market?",
+      "downstream_eval_types": [
+        "string_match"
+      ],
+      "source_task_id": "330",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "153",
+      "downstream_task_id": "653",
+      "downstream_task_prompt": "Fill the \"contact us\" form in the site for a refund on the phone screen protector I bought, stating that it broke after just three days of use. Also, ensure to include the order number #000000180 and the product SKU. Don't submit yet, I will check.",
+      "downstream_eval_types": [
+        "url_match",
+        "program_html"
+      ],
+      "source_task_id": "654",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "154",
+      "downstream_task_id": "528",
+      "downstream_task_prompt": "Draft a refund message via their \"contact us\" form for the phone screen protector I bought March 2023. It broke after three days of use. The shop requires the order id, the reason and the amount to refund in the message. Don't submit yet",
+      "downstream_eval_types": [
+        "program_html"
+      ],
+      "source_task_id": "529",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "155",
+      "downstream_task_id": "146",
+      "downstream_task_prompt": "What is the size configuration of the picture frame I bought Sep 2022",
+      "downstream_eval_types": [
+        "string_match"
+      ],
+      "source_task_id": "148",
+      "source_task_was_prior_d2": true,
+      "source_native_status": "success",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 2,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "156",
+      "downstream_task_id": "436",
+      "downstream_task_prompt": "I previously ordered some a mattress foundation around Feb or March 2023 and later cancelled. Can you reorder it for me?",
+      "downstream_eval_types": [
+        "program_html"
+      ],
+      "source_task_id": "437",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "159",
+      "downstream_task_id": "124",
+      "downstream_task_prompt": "What is the price range of wireless earphone in the One Stop Market?",
+      "downstream_eval_types": [
+        "string_match"
+      ],
+      "source_task_id": "125",
+      "source_task_was_prior_d2": true,
+      "source_native_status": "fail",
+      "template_task_count": 3,
+      "fresh_downstream_candidates_in_template": 1,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "160",
+      "downstream_task_id": "319",
+      "downstream_task_prompt": "How much refund I should expect from my order canlled in April 2022, including shipping fee",
+      "downstream_eval_types": [
+        "string_match"
+      ],
+      "source_task_id": "320",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "162",
+      "downstream_task_id": "141",
+      "downstream_task_prompt": "How much I spent on food-related shopping during March 2023",
+      "downstream_eval_types": [
+        "string_match"
+      ],
+      "source_task_id": "145",
+      "source_task_was_prior_d2": true,
+      "source_native_status": "success",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 4,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "163",
+      "downstream_task_id": "689",
+      "downstream_task_prompt": "Draft an email to the shop owner via their contact us function for a coupon as I am a loyal customer",
+      "downstream_eval_types": [
+        "url_match",
+        "program_html"
+      ],
+      "source_task_id": "690",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "165",
+      "downstream_task_id": "571",
+      "downstream_task_prompt": "I recently moved, my address is 231 Willow Way, Suite 100, Chicago, IL, 60601, update my information on OneStopShopping accordingly",
+      "downstream_eval_types": [
+        "program_html"
+      ],
+      "source_task_id": "572",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "success",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "169",
+      "downstream_task_id": "334",
+      "downstream_task_prompt": "Tell me when I last ordered my muffin cornbread mix?",
+      "downstream_eval_types": [
+        "string_match"
+      ],
+      "source_task_id": "335",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "171",
+      "downstream_task_id": "158",
+      "downstream_task_prompt": "I have a lot of Nintendo Switch game cards now, help me find the best storage option to fit all 11 cards",
+      "downstream_eval_types": [
+        "url_match"
+      ],
+      "source_task_id": "159",
+      "source_task_was_prior_d2": true,
+      "source_native_status": "success",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 3,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "172",
+      "downstream_task_id": "506",
+      "downstream_task_prompt": "Buy the highest rated product from the meat substitute category within a budget between 100 and 200.",
+      "downstream_eval_types": [
+        "program_html"
+      ],
+      "source_task_id": "507",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "180",
+      "downstream_task_id": "300",
+      "downstream_task_prompt": "Show the most recent pending order",
+      "downstream_eval_types": [
+        "url_match"
+      ],
+      "source_task_id": "298",
+      "source_task_was_prior_d2": true,
+      "source_native_status": "success",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 1,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "186",
+      "downstream_task_id": "465",
+      "downstream_task_prompt": "Add Tide PODS Spring Meadow Scent HE Turbo Laundry Detergent Pacs, 81 Count to my wish list",
+      "downstream_eval_types": [
+        "program_html"
+      ],
+      "source_task_id": "466",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "success",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "189",
+      "downstream_task_id": "511",
+      "downstream_task_prompt": "Add a laundry detergent to my wish list.",
+      "downstream_eval_types": [
+        "program_html"
+      ],
+      "source_task_id": "512",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "success",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "191",
+      "downstream_task_id": "794",
+      "downstream_task_prompt": "Change the delivery address for my most recent order to 4000 Forbes Ave, Pittsburgh, PA.",
+      "downstream_eval_types": [
+        "string_match"
+      ],
+      "source_task_id": "795",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "success",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "194",
+      "downstream_task_id": "585",
+      "downstream_task_prompt": "Rate my recent purchase of floor lamp with 5 stars, using my nickname Emma Lopez?",
+      "downstream_eval_types": [
+        "program_html"
+      ],
+      "source_task_id": "586",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "success",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "196",
+      "downstream_task_id": "516",
+      "downstream_task_prompt": "Add this product to my wishlist",
+      "downstream_eval_types": [
+        "program_html"
+      ],
+      "source_task_id": "517",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "197",
+      "downstream_task_id": "47",
+      "downstream_task_prompt": "Today is 6/12/2023. Tell me how many fulfilled orders I have over the past month, and the total amount of money I spent.",
+      "downstream_eval_types": [
+        "string_match"
+      ],
+      "source_task_id": "48",
+      "source_task_was_prior_d2": true,
+      "source_native_status": "success",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 3,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "204",
+      "downstream_task_id": "279",
+      "downstream_task_prompt": "Provide me with the complete names of Bluetooth headphones from Sony, and also share the price range for the available models",
+      "downstream_eval_types": [
+        "string_match"
+      ],
+      "source_task_id": "280",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 4,
+      "fresh_downstream_candidates_in_template": 4,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "206",
+      "downstream_task_id": "358",
+      "downstream_task_prompt": "Show me the shipping method for order number 187.",
+      "downstream_eval_types": [
+        "string_match"
+      ],
+      "source_task_id": "360",
+      "source_task_was_prior_d2": true,
+      "source_native_status": "success",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 3,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "207",
+      "downstream_task_id": "284",
+      "downstream_task_prompt": "Show the least expensive shoe storage with a minimum storage capacity of 12 pairs.",
+      "downstream_eval_types": [
+        "url_match"
+      ],
+      "source_task_id": "285",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 3,
+      "fresh_downstream_candidates_in_template": 3,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "208",
+      "downstream_task_id": "324",
+      "downstream_task_prompt": "Show me the \"chairs\" listings by ascending price.",
+      "downstream_eval_types": [
+        "url_match"
+      ],
+      "source_task_id": "325",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "211",
+      "downstream_task_id": "260",
+      "downstream_task_prompt": "I want to browse the products in the Video Game category",
+      "downstream_eval_types": [
+        "url_match"
+      ],
+      "source_task_id": "261",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "212",
+      "downstream_task_id": "274",
+      "downstream_task_prompt": "Search for \"usb wifi\"",
+      "downstream_eval_types": [
+        "url_match"
+      ],
+      "source_task_id": "275",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "success",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 5,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "213",
+      "downstream_task_id": "232",
+      "downstream_task_prompt": "Get the order number of my most recent pending order",
+      "downstream_eval_types": [
+        "string_match"
+      ],
+      "source_task_id": "231",
+      "source_task_was_prior_d2": true,
+      "source_native_status": "success",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 1,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "214",
+      "downstream_task_id": "188",
+      "downstream_task_prompt": "Tell me the total cost of my latest cancelled order?",
+      "downstream_eval_types": [
+        "string_match"
+      ],
+      "source_task_id": "190",
+      "source_task_was_prior_d2": true,
+      "source_native_status": "success",
+      "template_task_count": 5,
+      "fresh_downstream_candidates_in_template": 3,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "216",
+      "downstream_task_id": "509",
+      "downstream_task_prompt": "Buy the best rating product from \"Men's shoe\" category with at least 5 reviews and the product is least expensive",
+      "downstream_eval_types": [
+        "program_html"
+      ],
+      "source_task_id": "510",
+      "source_task_was_prior_d2": false,
+      "source_native_status": "fail",
+      "template_task_count": 2,
+      "fresh_downstream_candidates_in_template": 2,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "222",
+      "downstream_task_id": "22",
+      "downstream_task_prompt": "List out reviewers, if exist, who mention about under water photo",
+      "downstream_eval_types": [
+        "string_match"
+      ],
+      "source_task_id": "21",
+      "source_task_was_prior_d2": true,
+      "source_native_status": "fail",
+      "template_task_count": 6,
+      "fresh_downstream_candidates_in_template": 2,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    },
+    {
+      "template_id": "666",
+      "downstream_task_id": "384",
+      "downstream_task_prompt": "List the customer names who complain about the quality of EYZUTAK phone cases",
+      "downstream_eval_types": [
+        "string_match"
+      ],
+      "source_task_id": "385",
+      "source_task_was_prior_d2": true,
+      "source_native_status": "fail",
+      "template_task_count": 2,
+      "fresh_downstream_candidates_in_template": 1,
+      "selection_uses_downstream_outcome": false,
+      "selection_uses_source_outcome": false
+    }
+  ],
+  "runtime_materialization": {
+    "required_first_party_versions": {
+      "python": ">=3.13",
+      "browsergym-core": "0.14.1",
+      "browsergym-experiments": "0.14.1",
+      "browsergym-webarena": "0.14.1",
+      "browsergym": "0.14.1"
+    },
+    "current_69_exact_runtime_found": false,
+    "current_69_exact_runtime_cached": false,
+    "current_69_nearby_runtime": "Agent-Safety runtime-r9 has browsergym-core 0.4.0 / Python 3.12.3; version-mismatched and forbidden as a source-faithful substitute.",
+    "support_engineering_materialization_requires_scientific_authority": false,
+    "materialization_attempted": false,
+    "dependency_download_deferred": true,
+    "reason": "No Python 3.13 or BrowserGym/WebArena 0.14.1 package cache was found on 69. Import-only runtime materialization is support engineering, but a new dependency download was deferred in this zero-call preflight; no browser task was started."
+  },
+  "analysis_gate_before_execution": {
+    "support_capacity_dead_end": false,
+    "cohort_frozen_pre_outcome": true,
+    "l2_specific_power_plan_still_required": true,
+    "runtime_0_14_1_materialization_still_required": true,
+    "memory_generation_and_embedding_or_fixed_source_selection_binding_still_required": true,
+    "exact_executor_and_request_budget_still_required": true,
+    "terminal_randomization_test_and_effect_gate_still_required": true,
+    "scientific_reopen_still_required": true,
+    "experiment_model_call_authority_still_required": true
+  },
+  "strongest_allowed_current_statement": "At the pinned first-party ReasoningBank commit, source trajectory outcome is a native metadata field separate from memory_items and omitted only by the default downstream serialization. A deterministic zero-call census identifies 36 fresh template-independent WebArena Shopping downstream units for a new adapter-level L2 experiment. This removes the historical R5 support-capacity dead-end but does not itself establish a provenance-metadata effect or authorize execution.",
+  "scientific_verdict": "NO_VERDICT_PREFLIGHT_ONLY",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "model_calls": false,
+    "gpu": false,
+    "submission": false
+  }
+}
