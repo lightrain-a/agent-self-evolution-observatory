@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0-v19r003-runtime-resource-release",
+  "generated_at": "2026-08-23T14:51:59.987862+00:00",
+  "host": "69 / 222.20.126.69",
+  "released_service": {
+    "project": "agent-safety-discovery-20260818",
+    "api_pid": 1057396,
+    "engine_pid": 1060292,
+    "port": 18002,
+    "service": "Gemma4 vLLM experiment-scoped server",
+    "pre_release_last_request_at": "2026-08-23T16:38:16+08:00",
+    "pre_release_checked_at": "2026-08-23T22:27:48+08:00",
+    "pre_release_established_clients": 0,
+    "pre_release_gpu_utilization_percent": 0,
+    "pre_release_gpu_memory_mib": 75423,
+    "action": "SIGTERM_API_PARENT_ONLY",
+    "post_release_api_alive": false,
+    "post_release_engine_alive": false,
+    "post_release_port_listening": false,
+    "post_release_gpu_memory_mib": 17
+  },
+  "safety_basis": "more than five hours without requests, no established client, 0% GPU utilization, no dependent live client process; released only the experiment-scoped API parent and its engine",
+  "scientific_execution_performed": false,
+  "canonical_projection": false
+}

@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0-v19r003-r5-execution-bundle",
+  "generated_at": "2026-08-23T14:54:00.260117+00:00",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "candidate_snapshot_sha256": "47ea60fb13e3ec723d2a871b58ab1a3c6e9e565eea01e1cd838c67f9f2b39777",
+  "supersedes": "generated/v19r003-forced-switch-pre-f0-execution-bundle-r4/bundle-manifest.json",
+  "supersession_reason": "R4 corrected hardware eligibility but inherited the public PTB prompt sentence claiming H100. R5 applies the same run-layer A100 hardware truth correction to every arm; intervention payloads and boundary semantics are unchanged.",
+  "harness_manifest_path": "generated/v19r003-forced-switch-pre-f0-harness-manifest-r5-20260823.json",
+  "harness_manifest_file_sha256": "1d84dffe040e6dd14bf5304f73a1462c8565ed999aaa165d6f497758907fb4ac",
+  "harness_manifest_core_sha256": "972d39dcce2f0ed35bb39bdd7ed092da11233e432c82598be6d409a93562d33a",
+  "posttrainbench_commit": "3ed1d32ff1ec1f41282be6f8ebbcec07b19fc3d1",
+  "target_task": "aime2025",
+  "target_base_model": "Qwen/Qwen3-1.7B-Base",
+  "target_agent_model": "claude-opus-4-6",
+  "target_hardware": "1 x NVIDIA A100-SXM4-80GB equivalent-substrate within-arm comparison; never source-exact; Tier A exact source remains 4 x NVIDIA A800",
+  "hardware_prompt_truth_patch": {
+    "source_sentence": "The machine is equipped with an Nvidia H100 GPU.",
+    "replacement_sentence": "The machine is equipped with an Nvidia A100-SXM4-80GB GPU.",
+    "applied_identically_across_all_arms": true,
+    "scientific_role": "substrate truth correction only; not an intervention payload"
+  },
+  "auth_mode": "runtime file-backed ANTHROPIC_AUTH_TOKEN via localhost:28647 proxy; credential value excluded from bundle",
+  "auth_health_at_generation": "BLOCKED_EXISTING_PROXY_CREDENTIAL_EXPIRED_403",
+  "execution_status": "NOT_RUN_RUNTIME_BLOCKED",
+  "scripts": [
+    {
+      "arm": "PRE_STRATEGY",
+      "path": "generated/v19r003-forced-switch-pre-f0-execution-bundle-r5/pre_strategy-solve.sh",
+      "sha256": "8c05c3efe0069e13a9173f9cf9fddb3243bf77f75ab57c2732dcbf0b556d8898",
+      "bytes": 10011
+    },
+    {
+      "arm": "POST_STRATEGY",
+      "path": "generated/v19r003-forced-switch-pre-f0-execution-bundle-r5/post_strategy-solve.sh",
+      "sha256": "d23f5480dd90a483262e30e3fdef947e1b33090c62ddfe923b1a9293e1cecd18",
+      "bytes": 10012
+    },
+    {
+      "arm": "POST_EXECUTION",
+      "path": "generated/v19r003-forced-switch-pre-f0-execution-bundle-r5/post_execution-solve.sh",
+      "sha256": "0da8c6e5b49805f5b8c6b362962ee936acea3299187235d147d860cb78a07ca7",
+      "bytes": 10013
+    },
+    {
+      "arm": "POST_CONFLICT_FREE",
+      "path": "generated/v19r003-forced-switch-pre-f0-execution-bundle-r5/post_conflict_free-solve.sh",
+      "sha256": "ec433ce00d8464f9fcfb189c85e6032f5d83db53ce45fc5fcfe53fcd70b17dd5",
+      "bytes": 10017
+    }
+  ],
+  "static_probe": {
+    "bash_syntax_passed": true,
+    "plaintext_payload_scan_passed": true,
+    "credential_plaintext_in_bundle": false,
+    "a100_truth_patch_present_all_arms": true
+  },
+  "scientific_execution_performed": false,
+  "scientific_provider_calls_executed": 0,
+  "gpu_scientific_calls_executed": 0,
+  "canonical_execution_authorized": false,
+  "scientific_authority": false,
+  "authority": {
+    "scientific_claim": false,
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false,
+    "full_experiment": false
+  }
+}

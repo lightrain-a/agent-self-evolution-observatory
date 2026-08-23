@@ -203,9 +203,13 @@ class PostTrainStrategyInterventionTest(unittest.TestCase):
 
     def test_current_generated_manifest_core_digest_matches(self) -> None:
         repo_root = Path(__file__).resolve().parents[1]
-        generated = repo_root / "generated" / "v19r003-forced-switch-pre-f0-harness-manifest-r3-20260823.json"
+        generated = repo_root / "generated" / "v19r003-forced-switch-pre-f0-harness-manifest-r5-20260823.json"
         if not generated.is_file():
-            self.skipTest("current V19R-003 R3 harness manifest not present")
+            generated = repo_root / "generated" / "v19r003-forced-switch-pre-f0-harness-manifest-r4-20260823.json"
+        if not generated.is_file():
+            generated = repo_root / "generated" / "v19r003-forced-switch-pre-f0-harness-manifest-r3-20260823.json"
+        if not generated.is_file():
+            self.skipTest("current V19R-003 harness manifest not present")
         payload = json.loads(generated.read_text(encoding="utf-8"))
         self.assertEqual(validate_zero_authority_harness_manifest(payload), [])
         stored = payload.get("manifest_sha256")
@@ -215,6 +219,55 @@ class PostTrainStrategyInterventionTest(unittest.TestCase):
             if key not in {"artifact_kind", "canonical_projection", "frozen_payloads", "manifest_sha256"}
         }
         self.assertEqual(stored, manifest_sha256(core))
+
+    def test_proxy_auth_render_is_file_backed_and_secret_free(self) -> None:
+        repo_root = Path(__file__).resolve().parents[1]
+        adapter = repo_root / "research_pipeline" / "adapters" / "posttrainbench_segmented_strategy_resume.sh"
+        rendered = render_posttrainbench_self_contained_solve_sh(
+            adapter_text=adapter.read_text(encoding="utf-8"),
+            arm=ARM_POST_STRATEGY,
+            strategy_instruction=STRATEGY,
+            execution_control_instruction=EXECUTION,
+            conflict_free_strategy_instruction=CONFLICT_FREE,
+            backend="claude",
+            claude_auth_mode="anthropic_proxy_token_file",
+            anthropic_base_url="http://127.0.0.1:28647/",
+        )
+        self.assertIn('export ANTHROPIC_AUTH_TOKEN="$(cat /home/ben/oauth_token)"', rendered)
+        self.assertIn("export ANTHROPIC_BASE_URL=http://127.0.0.1:28647/", rendered)
+        self.assertIn("unset CLAUDE_CODE_OAUTH_TOKEN", rendered)
+        self.assertNotIn("ANTHROPIC_AUTH_TOKEN='", rendered)
+        self.assertNotIn('ANTHROPIC_AUTH_TOKEN="sk-', rendered)
+
+    def test_runtime_hardware_truth_patch_is_common_runtime_only(self) -> None:
+        repo_root = Path(__file__).resolve().parents[1]
+        adapter = repo_root / "research_pipeline" / "adapters" / "posttrainbench_segmented_strategy_resume.sh"
+        rendered = render_posttrainbench_self_contained_solve_sh(
+            adapter_text=adapter.read_text(encoding="utf-8"),
+            arm=ARM_POST_EXECUTION,
+            strategy_instruction=STRATEGY,
+            execution_control_instruction=EXECUTION,
+            conflict_free_strategy_instruction=CONFLICT_FREE,
+            backend="claude",
+            declared_runtime_hardware="A100-SXM4-80GB",
+        )
+        self.assertIn("The machine is equipped with an Nvidia H100 GPU.", rendered)
+        self.assertIn("The machine is equipped with an Nvidia A100-SXM4-80GB GPU.", rendered)
+        self.assertNotIn(STRATEGY, rendered)
+
+    def test_proxy_auth_render_requires_base_url(self) -> None:
+        repo_root = Path(__file__).resolve().parents[1]
+        adapter = repo_root / "research_pipeline" / "adapters" / "posttrainbench_segmented_strategy_resume.sh"
+        with self.assertRaisesRegex(ValueError, "requires anthropic_base_url"):
+            render_posttrainbench_self_contained_solve_sh(
+                adapter_text=adapter.read_text(encoding="utf-8"),
+                arm=ARM_POST_STRATEGY,
+                strategy_instruction=STRATEGY,
+                execution_control_instruction=EXECUTION,
+                conflict_free_strategy_instruction=CONFLICT_FREE,
+                backend="claude",
+                claude_auth_mode="anthropic_proxy_token_file",
+            )
 
     def test_self_contained_solve_sh_survives_official_single_file_copy_surface(self) -> None:
         repo_root = Path(__file__).resolve().parents[1]

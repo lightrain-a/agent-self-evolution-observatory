@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0-v19r003-r4-substrate-preflight",
+  "generated_at": "2026-08-23T14:51:59.987973+00:00",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "posttrainbench_commit": "3ed1d32ff1ec1f41282be6f8ebbcec07b19fc3d1",
+  "host": "69 / 222.20.126.69",
+  "hardware": {
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_count": 1,
+    "memory_mib_total": 81920,
+    "a100_equivalent_substrate_scientifically_acceptable": true,
+    "source_exact": false,
+    "source_exact_requirement": "4 x NVIDIA A800",
+    "current_gpu_released_and_available": true
+  },
+  "tier_a": {
+    "status": "HOLD_SOURCE_EXACT_HARDWARE_UNAVAILABLE",
+    "requires": "4 x NVIDIA A800 plus source-controlled execution stack"
+  },
+  "a100_equivalent_tier": {
+    "hardware_status": "PASS",
+    "scientific_label": "EQUIVALENT_SUBSTRATE_NOT_SOURCE_EXACT",
+    "execution_stack_status": "BLOCKED",
+    "container_runtime": {
+      "apptainer": false,
+      "singularity": false,
+      "standard_sif_present": false,
+      "docker_socket_authorized": false
+    },
+    "native_runtime": {
+      "bare_cuda_smoke": true,
+      "landlock_file_denial_smoke": true,
+      "landlock_cuda_compatible": false,
+      "landlock_gpu_use_forbidden": true
+    },
+    "agent_auth": {
+      "target_model": "claude-opus-4-6",
+      "configured_proxy": "http://127.0.0.1:28647/",
+      "secret_value_recorded": false,
+      "current_health": "BLOCKED_403_API_KEY_EXPIRED",
+      "first_party_without_user_proxy_settings": "BLOCKED_NOT_LOGGED_IN",
+      "distinct_existing_proxy_credentials_found": 1,
+      "healthy_existing_credential_found": false
+    }
+  },
+  "tier_b_status": "HARDWARE_PASS_RUNTIME_BLOCKED",
+  "blocking_reasons": [
+    "healthy claude-opus-4-6 credential unavailable on host",
+    "official PostTrainBench Apptainer/SIF execution stack unavailable to wyt; native fallback would be lower evidence tier and requires a separately frozen runtime contract"
+  ],
+  "not_blocking": [
+    "A100 model or memory capacity as such"
+  ],
+  "scientific_execution_performed": false,
+  "problem_gate": false,
+  "researchitem_created": false,
+  "canonical_projection": false
+}

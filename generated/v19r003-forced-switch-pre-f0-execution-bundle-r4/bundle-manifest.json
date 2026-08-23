@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0-v19r003-r4-execution-bundle",
+  "generated_at": "2026-08-23T14:51:59.987646+00:00",
+  "candidate_id": "V19R-003-BOUNDARY-REPAIR-R2",
+  "candidate_snapshot_sha256": "47ea60fb13e3ec723d2a871b58ab1a3c6e9e565eea01e1cd838c67f9f2b39777",
+  "harness_manifest_path": "generated/v19r003-forced-switch-pre-f0-harness-manifest-r4-20260823.json",
+  "harness_manifest_file_sha256": "13ac26ea6c2a90037c502da83c80b558641f4f21f1a4b0e5548d38beb8866d9b",
+  "harness_manifest_core_sha256": "c7d47bbe3b15ec8c5e52ed99378ea94e10491dc2a584772a24eb63f7b1ff820c",
+  "posttrainbench_commit": "3ed1d32ff1ec1f41282be6f8ebbcec07b19fc3d1",
+  "target_task": "aime2025",
+  "target_base_model": "Qwen/Qwen3-1.7B-Base",
+  "target_agent_model": "claude-opus-4-6",
+  "target_hardware": "1 x NVIDIA A100-SXM4-80GB equivalent-substrate within-arm comparison; never source-exact; Tier A exact source remains 4 x NVIDIA A800",
+  "auth_mode": "runtime file-backed ANTHROPIC_AUTH_TOKEN via localhost:28647 proxy; credential value excluded from bundle",
+  "auth_health_at_generation": "BLOCKED_EXISTING_PROXY_CREDENTIAL_EXPIRED_403",
+  "integration_mode": "Use a clean pinned PostTrainBench run-local checkout and replace only agents/claude_non_api/solve.sh with one selected script. Keep task/evaluator frozen. Secret material must be supplied only at runtime. Current host lacks the official Apptainer/SIF stack, so no scientific run is authorized from this bundle until an execution stack and healthy claude-opus-4-6 credential are both verified.",
+  "run_template": "bash src/run_task.sh aime2025 claude_non_api Qwen/Qwen3-1.7B-Base <cluster_id> 10 claude-opus-4-6 1",
+  "pre_outcome_invariants": [
+    "same pinned PostTrainBench commit, task, base model, agent model, evaluator and time budget across arms",
+    "same frozen strategy payload for PRE_STRATEGY and POST_STRATEGY",
+    "phase-1 child cannot see hidden future arm/payload through ordinary environment, solve-script pathname, or parent script fd",
+    "first successful parameter-update boundary must be independently verified from trace before outcomes are interpreted",
+    "A100 results are equivalent-substrate evidence only and must never be labeled exact source reproduction",
+    "auth and execution-stack health must pass before any scientific agent call"
+  ],
+  "scripts": [
+    {
+      "arm": "PRE_STRATEGY",
+      "path": "generated/v19r003-forced-switch-pre-f0-execution-bundle-r4/pre_strategy-solve.sh",
+      "sha256": "5b3a74b2fa16a924033296698ac8d429661163597bfa00c12dd4cb5558ef6c85",
+      "bytes": 9832
+    },
+    {
+      "arm": "POST_STRATEGY",
+      "path": "generated/v19r003-forced-switch-pre-f0-execution-bundle-r4/post_strategy-solve.sh",
+      "sha256": "fc578cd3127c0d84d354e731b038723d105fb21dbd0e4f4a36073120acf341fb",
+      "bytes": 9833
+    },
+    {
+      "arm": "POST_EXECUTION",
+      "path": "generated/v19r003-forced-switch-pre-f0-execution-bundle-r4/post_execution-solve.sh",
+      "sha256": "be3a02d29dbd2642bebbc7dc8edaa2255eb7b14ec2f8d8590d6dbca2d8122b6e",
+      "bytes": 9834
+    },
+    {
+      "arm": "POST_CONFLICT_FREE",
+      "path": "generated/v19r003-forced-switch-pre-f0-execution-bundle-r4/post_conflict_free-solve.sh",
+      "sha256": "7166b3b6e5bae012713638e8e489cef57d6d17d02bac842a616897cd99fcae8a",
+      "bytes": 9838
+    }
+  ],
+  "static_probe": {
+    "bash_syntax_passed": true,
+    "plaintext_payload_scan_passed": true,
+    "credential_plaintext_in_bundle": false
+  },
+  "scientific_execution_performed": false,
+  "provider_calls_executed": 0,
+  "gpu_scientific_calls_executed": 0,
+  "canonical_execution_authorized": false,
+  "scientific_authority": false,
+  "authority": {
+    "scientific_claim": false,
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false,
+    "full_experiment": false
+  }
+}

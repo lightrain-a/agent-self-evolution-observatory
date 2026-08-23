@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0-v19r003-r4-r5-supersession",
+  "generated_at": "2026-08-23T14:54:00.260117+00:00",
+  "superseded_bundle": "generated/v19r003-forced-switch-pre-f0-execution-bundle-r4/bundle-manifest.json",
+  "current_bundle": "generated/v19r003-forced-switch-pre-f0-execution-bundle-r5/bundle-manifest.json",
+  "reason": "R4 did not correct the public PostTrainBench H100 informational sentence for the A100 host. R5 corrects that sentence identically across arms before the phase-1 prompt is delivered.",
+  "intervention_payload_hashes_changed": false,
+  "boundary_semantics_changed": false,
+  "scientific_outcomes_under_r4": 0,
+  "canonical_projection": false
+}

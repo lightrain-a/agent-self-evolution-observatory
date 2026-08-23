@@ -4,6 +4,7 @@ import base64
 import hashlib
 import json
 import re
+import shlex
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -346,6 +347,9 @@ def render_posttrainbench_self_contained_solve_sh(
     execution_control_instruction: str,
     conflict_free_strategy_instruction: str,
     backend: str = "claude",
+    claude_auth_mode: str = "none",
+    anthropic_base_url: str = "",
+    declared_runtime_hardware: str = "",
 ) -> str:
     """Render one self-contained solve.sh compatible with the official runner copy surface."""
 
@@ -355,6 +359,15 @@ def render_posttrainbench_self_contained_solve_sh(
         raise ValueError(f"unsupported intervention arm:{arm}")
     if backend not in {"claude", "codex"}:
         raise ValueError(f"unsupported session backend:{backend}")
+    auth_mode = str(claude_auth_mode or "").strip().lower()
+    if backend == "claude" and auth_mode not in {"none", "oauth_token_file", "anthropic_proxy_token_file"}:
+        raise ValueError(f"unsupported claude auth mode:{auth_mode}")
+    proxy_base_url = str(anthropic_base_url or "").strip()
+    if backend == "claude" and auth_mode == "anthropic_proxy_token_file" and not proxy_base_url:
+        raise ValueError("anthropic proxy auth mode requires anthropic_base_url")
+    runtime_hardware = str(declared_runtime_hardware or "").strip()
+    if runtime_hardware and not re.fullmatch(r"[A-Za-z0-9 ._+xX-]+", runtime_hardware):
+        raise ValueError("declared_runtime_hardware contains unsupported characters")
     strategy = _clean(strategy_instruction)
     execution = _clean(execution_control_instruction)
     conflict_free = _clean(conflict_free_strategy_instruction)
@@ -378,9 +391,38 @@ def render_posttrainbench_self_contained_solve_sh(
     # copied self-contained solve script removes its pathname before phase 1, then
     # evaluates the generic adapter from memory.  This prevents ordinary phase-1
     # environment/file inspection from revealing the post-boundary treatment.
+    claude_auth_bootstrap = ""
+    if backend == "claude" and auth_mode != "none":
+        if auth_mode == "oauth_token_file":
+            claude_auth_bootstrap = '''if [ ! -s /home/ben/oauth_token ]; then
+  echo "ERROR: missing /home/ben/oauth_token for Claude OAuth" >&2
+  exit 67
+fi
+export CLAUDE_CODE_OAUTH_TOKEN="$(cat /home/ben/oauth_token)"
+unset ANTHROPIC_AUTH_TOKEN ANTHROPIC_BASE_URL
+'''
+        else:
+            quoted_base_url = shlex.quote(proxy_base_url)
+            claude_auth_bootstrap = f'''if [ ! -s /home/ben/oauth_token ]; then
+  echo "ERROR: missing /home/ben/oauth_token for Anthropic-compatible proxy auth" >&2
+  exit 67
+fi
+export ANTHROPIC_AUTH_TOKEN="$(cat /home/ben/oauth_token)"
+export ANTHROPIC_BASE_URL={quoted_base_url}
+unset CLAUDE_CODE_OAUTH_TOKEN
+'''
+
+    hardware_truth_bootstrap = ""
+    if runtime_hardware:
+        hardware_truth_bootstrap = f'''if [ -n "${{PROMPT:-}}" ]; then
+  PROMPT="${{PROMPT//The machine is equipped with an Nvidia H100 GPU./The machine is equipped with an Nvidia {runtime_hardware} GPU.}}"
+  export PROMPT
+fi
+'''
+
     bootstrap = f'''#!/bin/bash
 set -euo pipefail
-{{
+{claude_auth_bootstrap}{hardware_truth_bootstrap}{{
 PTB_INTERVENTION_ARM='{arm}'
 PTB_SESSION_BACKEND='{backend}'
 PTB_STRATEGY_INSTRUCTION_B64='{encoded["strategy"]}'

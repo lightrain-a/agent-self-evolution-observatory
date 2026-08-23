@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0-v19r003-native-isolation-audit",
+  "generated_at": "2026-08-23T14:54:00.260117+00:00",
+  "host": "69 / 222.20.126.69",
+  "source_path": "research_pipeline/adapters/posttrainbench_landlock_exec.c",
+  "source_sha256": "4d708c2b464277638457fb6f3f2f7731e61177d5ab21b6603aafbdd1893dd3ed",
+  "kernel_landlock_enabled": true,
+  "file_isolation_smoke": {
+    "run_dir_write": true,
+    "worktree_manifest_read_denied": true
+  },
+  "bare_cuda_smoke": {
+    "passed": true,
+    "device": "NVIDIA A100-SXM4-80GB"
+  },
+  "landlock_cuda_smoke": {
+    "passed": false,
+    "error": "CUDA cudaGetDeviceCount error 304 OS call failed or operation not supported",
+    "repeated_after_runtime-path adjustments": true
+  },
+  "diagnosis": "NVIDIA userspace performs filesystem probe mutations whose native DAC EEXIST/EACCES behavior is altered by Landlock mediation; retaining Landlock for a GPU scientific process would change runtime semantics.",
+  "disposition": "AUDIT_ONLY_DO_NOT_USE_LANDLOCK_FOR_GPU_SCIENTIFIC_ARMS",
+  "scientific_execution_performed": false,
+  "canonical_projection": false
+}
