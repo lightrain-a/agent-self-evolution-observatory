@@ -555,12 +555,12 @@
         "verdict": "Weak Reject"
       },
       "read": {
-        "zh": "Round 2 对 L0–L3 与 causal sign unresolved 的判断仍成立。R19 已获得 bounded execution authority，benchmark 前 support/synthetic gates 均通过；当前在完整 task boundary 停于 8/140 episodes、2/35 independent tasks，未计算任何 interim effect、p-value 或区间。",
-        "en": "Round 2 remains correct about L0–L3 and the unresolved causal sign. R19 now has bounded execution authority and passes the prebenchmark support/synthetic gates; execution is checkpointed at a complete task boundary with 8/140 episodes and 2/35 independent tasks, with no interim effect, p-value, or interval computed."
+        "zh": "Round 2 对 L0–L3 与 causal sign unresolved 的判断仍成立。R19 已获得 bounded execution authority，benchmark 前 support/synthetic gates 均通过；当前在完整 task boundary 停于 12/140 episodes、3/35 independent tasks，未计算任何 interim effect、p-value 或区间。",
+        "en": "Round 2 remains correct about L0–L3 and the unresolved causal sign. R19 has bounded execution authority and passed the prebenchmark support/synthetic gates. It is checkpointed at a complete task boundary: 12/140 episodes and 3/35 independent tasks, with no interim effect, p-value, or interval computed."
       },
       "next": {
-        "zh": "R19 只允许从 frozen sequence 8 继续；保持 cohort、R17 memory bytes、model manifest、endpoint、预算和统计判据不变。140/140 完整前禁止 effect/p-value/claim 更新；STARTED 后 unresolved support failure 直接 NO_VERDICT 且不 retry。O6 financial L3 仍独立 support-blocked。",
-        "en": "R19 may resume only from frozen sequence 8 with the cohort, R17 memory bytes, model manifest, endpoint, budgets, and statistical rule unchanged. No effect, p-value, or claim update is allowed before 140/140 completion; any unresolved support failure after STARTED yields NO_VERDICT with no retry. O6 financial L3 remains independently support-blocked."
+        "zh": "R19 只允许从 frozen sequence 12 继续；保持 cohort、R17 memory bytes、model manifest、endpoint、预算和统计判据不变。140/140 完整前禁止 effect/p-value/claim 更新；STARTED 后 unresolved support failure 直接 NO_VERDICT 且不 retry。O6 financial L3 仍独立 support-blocked。",
+        "en": "R19 may resume only from frozen sequence 12 with the cohort, R17 memory bytes, model manifest, endpoint, budgets, and statistical rule unchanged. No effect, p-value, or claim update is allowed before 140/140 completion; any unresolved support failure after STARTED yields NO_VERDICT with no retry. O6 financial L3 remains independently support-blocked."
       },
       "objections": [
         {
@@ -635,13 +635,13 @@
             "en": "Historical R5 (5/10 support stop) and the six-task generic explicit-cue bridge retain their original adjudications and cannot be pooled with later objects. R9–R15 close the native-status, cohort, runtime, live-Shopping, writer/executor, and analysis contracts; R17 uniformly realizes and freezes exact memory bytes for 36/36 sources before downstream outcomes. R18a/R18b are zero-scientific-exposure support failures. R18c fails after an agent action but before a valid native terminal evaluator score because the evaluator hard-coded model alias is absent. Under the R15/R16 post-exposure no-retry and single-attempt rules, R18 must STOP. This is not scientific negative evidence, and cum_reward=0 is not a terminal score."
           },
           "reopen": {
-            "zh": "R19 已作为新的 scientific object 获得 bounded execution authority；不得 retry R18。继续时只能从 frozen sequence 4 恢复，复用 R17 exact memory bytes，不改 task/model/endpoint/threshold/statistics。只有 140/140 valid terminal episodes 完整后才执行冻结的 task-level two-sided sign-flip；完整但不过联合 gate 仍是 INCONCLUSIVE_NO_NO_EFFECT_AUTHORITY；STARTED 后 support failure 则 NO_VERDICT 且禁止 retry。",
-            "en": "R19 now has bounded execution authority as a new scientific object; R18 remains non-retriable. Execution may resume only from frozen sequence 4, reusing the exact R17 memory bytes with no task/model/endpoint/threshold/statistical change. The frozen task-level two-sided sign-flip analysis runs only after 140/140 valid terminal episodes. A complete run that misses the joint gate remains INCONCLUSIVE_NO_NO_EFFECT_AUTHORITY; a support failure after STARTED yields NO_VERDICT with no retry."
+            "zh": "R19 已作为新的 scientific object 获得 bounded execution authority；不得 retry R18。继续时只能从 frozen sequence 12 恢复，复用 R17 exact memory bytes，不改 task/model/endpoint/threshold/statistics。只有 140/140 valid terminal episodes 完整后才执行冻结的 task-level two-sided sign-flip；完整但不过联合 gate 仍是 INCONCLUSIVE_NO_NO_EFFECT_AUTHORITY；STARTED 后 support failure 则 NO_VERDICT 且禁止 retry。",
+            "en": "R19 has bounded execution authority as a new scientific object; R18 remains non-retriable. Execution may resume only from frozen sequence 12, reusing the exact R17 memory bytes with no task/model/endpoint/threshold/statistical change. The frozen task-level two-sided sign-flip analysis runs only after 140/140 valid terminal episodes. A complete run that misses the joint gate remains INCONCLUSIVE_NO_NO_EFFECT_AUTHORITY; a support failure after STARTED yields NO_VERDICT with no retry."
           },
           "action": "SCIENTIFIC_REOPEN_REQUIRED",
-          "e": "B1 R22/R23 public execution status: R19 bounded authority valid; support gates PASS; 8/140 at complete task boundary; no interim inference",
+          "e": "B1 R22/R24 public execution status: R19 bounded authority valid; support gates PASS; 12/140 at complete task boundary; no interim inference",
           "engineering_reproducibility": "R19_AUTHORIZED_CONFIRMATORY_EXECUTION_IN_PROGRESS_NO_INTERIM_INFERENCE",
-          "scientific_gap": "R19_INCOMPLETE_8_OF_140_NO_INTERIM_VERDICT",
+          "scientific_gap": "R19_INCOMPLETE_12_OF_140_NO_INTERIM_VERDICT",
           "historical_auxiliary_bridge": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY_6_TASKS_144_CALLS_DELTA_0_UNCHANGED",
           "r5_execution": "UNEXECUTED_SUPPORT_FAILURE_5_OF_10_UNCHANGED",
           "pooling": "FORBIDDEN_R5_BRIDGE_R18_R19_ARE_SEPARATE_OBJECTS",
@@ -698,21 +698,21 @@
             "prebenchmark_zero_completion_support_gate_pass": true,
             "two_synthetic_transport_smokes_pass": true,
             "execution_in_progress": true,
-            "episodes_complete": 8,
-            "complete_independent_tasks": 2,
-            "next_sequence_index": 8,
-            "agent_completions": 213,
+            "episodes_complete": 12,
+            "complete_independent_tasks": 3,
+            "next_sequence_index": 12,
+            "agent_completions": 308,
             "fuzzy_evaluator_completions": 0,
             "interim_inference": false
           },
           "execution_status": {
             "status": "R19_AUTHORIZED_CONFIRMATORY_EXECUTION_IN_PROGRESS_NO_INTERIM_INFERENCE",
-            "episodes_complete": 8,
+            "episodes_complete": 12,
             "episodes_expected": 140,
-            "complete_independent_tasks": 2,
+            "complete_independent_tasks": 3,
             "independent_tasks_expected": 35,
-            "next_sequence_index": 8,
-            "agent_completions": 213,
+            "next_sequence_index": 12,
+            "agent_completions": 308,
             "agent_completion_budget": 4200,
             "fuzzy_evaluator_completions": 0,
             "fuzzy_evaluator_completion_budget": 600,
@@ -720,7 +720,8 @@
             "interim_inference": false,
             "claim_update_allowed": false,
             "public_execution_status_receipt": "generated/d2-failure-memory-provenance-l2b-public-execution-status-r22.json",
-            "csv_durability_receipt": "generated/d2-failure-memory-provenance-l2b-r19-csv-durability-r23.json"
+            "csv_durability_receipt": "generated/d2-failure-memory-provenance-l2b-r19-csv-durability-r24.json",
+            "partial_checkpoint_receipt": "generated/d2-failure-memory-provenance-l2b-r19-partial-checkpoint-r24.json"
           }
         },
         {
