@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-24T14:03:18+00:00",
+  "generated_at": "2026-08-24T15:39:38+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -491,7 +491,14 @@
     "mem_xfer_second_model_status": "second_model_hold",
     "architecture_temporal_stages": 21,
     "architecture_reader_chapters": 10,
-    "architecture_functional_layers": 6
+    "architecture_functional_layers": 6,
+    "paper_first_pre_f0_falsifier_adjudicated": 1,
+    "paper_first_pre_f0_current_formulation_stopped": 0,
+    "paper_first_pre_f0_persistent_dead_end_created": 0,
+    "paper_first_pre_f0_execution_control_status": "PRE_F0_FALSIFIER_EXECUTION_CONTROL_LOCKED",
+    "paper_first_pre_f0_execution_control_requests": 1,
+    "paper_first_pre_f0_falsifier_execution_authorized": 0,
+    "paper_first_pre_f0_authorization_request_status": "AWAITING_EXPLICIT_EXTERNAL_HUMAN_EXECUTION_AUTHORITY"
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -87092,5 +87099,370 @@
         }
       }
     ]
+  },
+  "paper_first_pre_f0_falsifier_adjudication": {
+    "schema_version": "1.0",
+    "generated_at": "2026-08-24T15:08:53+00:00",
+    "status": "PRE_F0_FALSIFIER_ADJUDICATION_COMPLETE",
+    "policy": {
+      "support_qualified_is_required_but_does_not_itself_authorize_execution": true,
+      "executed_falsifier_must_bind_exact_candidate_snapshot": true,
+      "adjudication_binds_sealed_discovery_transaction": true,
+      "run_local_candidate_id_requires_snapshot_bound_execution_lineage": true,
+      "human_reformulation_must_transitively_bind_parent_snapshot": true,
+      "pre_f0_reduction_stop_closes_current_formulation_only": true,
+      "pre_f0_stop_cannot_enter_persistent_dead_end_memory": true,
+      "reduction_supported_requires_explicit_reopen_condition": true,
+      "residual_survives_returns_to_semantic_and_current_source_review": true,
+      "inconclusive_requires_stop_or_human_reformulation": true,
+      "adjudication_cannot_mutate_generator_queue_or_preflight": true,
+      "adjudication_cannot_authorize_problem_gate_or_downstream_execution": true,
+      "public_evidence_refs_are_logical_uris_plus_sha256_only": true
+    },
+    "discovery_transaction_id": "3552144aa57495c88a2262a5c4e5673da7a49e201abaec3e730a15c70e7be802",
+    "source_generator_run_id": "20260824T061140Z",
+    "source_pre_f0_queue_status": "PRE_F0_QUEUE_READY",
+    "source_preflight_status": "PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE",
+    "summary": {
+      "adjudicated": 1,
+      "reduction_supported": 0,
+      "residual_survives": 0,
+      "inconclusive": 1,
+      "current_formulation_stopped": 0,
+      "persistent_dead_end_created": 0,
+      "problem_gate_authorized": 0,
+      "paper_design_authorized": 0,
+      "method_authorized": 0,
+      "experiment_authorized": 0,
+      "p0_authorized": 0,
+      "gpu_authorized": 0
+    },
+    "entries": [
+      {
+        "candidate_id": "PORT-006",
+        "candidate_identity_version": "candidate-content-v1",
+        "candidate_snapshot_sha256": "9b57dbc5728b0f2247917c2f27e3e65b6876f57b3b18ff1026b945e73fb96d3c",
+        "title": "Reset-semantic substrate corruption as a convergent failure regime in repeated bounded self-improvement",
+        "discovery_lane": "CONVERGENT_FAILURE",
+        "primary_refs": [
+          "arXiv:2608.19197",
+          "arXiv:2608.20318"
+        ],
+        "preflight_disposition": "SUPPORT_QUALIFIED",
+        "preflight_support_scope": "Secondary AI4AI public trajectory-level semantic-edit audit of reset/init/seed/checkpoint state-establishment changes versus official normalized below-0.1 outcomes. Does not qualify the primary repeated-round SPADE reset-only vs step-only intervention.",
+        "outcome": "INCONCLUSIVE",
+        "status": "HOLD_PREF0_FALSIFIER_INCONCLUSIVE",
+        "portfolio_state": "SEARCH_HOLD",
+        "current_formulation": "The current PORT-006 Pre-F0 formulation requires a reset/initialization-specific causal bridge: successful-looking reset-semantic changes should be more damaging than matched step-dynamics/state-timing changes and thereby motivate a recurring reset-corruption failure regime.",
+        "current_formulation_open": true,
+        "strongest_same_information_reduction": "The frozen R2 contract/result pair would satisfy its environment-level REDUCTION_SUPPORTED rule, but the archived R2 directory contains no contemporaneous single-use bounded-evidence execution-authority artifact. Because support qualification and human reformulation do not themselves authorize execution, that result is preserved as informative evidence but is not admissible for a canonical terminal scientific reduction. The older exact audit-strata result remains diagnostic only.",
+        "scope_limit": "This is a protocol/control-plane HOLD, not a scientific negative. R2 was frozen before intervention outcome readout and used zero provider/GPU/LLM-judge calls, but execution authority is unproven; R1 had explicit bounded-evidence execution authority but was scientifically inconclusive because it lacked headroom. The current reset-specific formulation therefore remains open and no persistent scientific dead end is created.",
+        "reopen_only_if": "Resolve the protocol hold only by locating a contemporaneous pre-outcome single-use authority artifact that cryptographically binds the archived R2 contract, or by using a fresh disjoint preregistered learner-training/repeated-round matched reset-only versus step-only study under explicit bounded-evidence execution authority. Do not retroactively authorize the already-observed R2 run, and do not reuse its selected units as a fresh confirmatory panel.",
+        "next_action": "STOP_OR_HUMAN_REFORMULATION",
+        "persistent_dead_end_memory_authorized": false,
+        "principle_dead_end_certified": false,
+        "problem_gate_passed": false,
+        "evidence_receipts": [
+          {
+            "role": "same_information_observational_exact_strata",
+            "artifact_uri": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/experiments/port-006-spade-full-audit-exact-strata-r1/result.json",
+            "sha256": "0b12671315c7cd7e1c2134d711805a42a0a4e3132e42a22757d7cd7697e74ca8",
+            "status": "COMPLETE_EXACT_CONDITIONAL_ZERO_PROVIDER",
+            "protocol_valid": true,
+            "provider_calls_executed": 0,
+            "gpu_calls_executed": 0,
+            "metrics": {
+              "units": 62,
+              "exact_two_sided_p": 0.4444444444444444,
+              "cmh_two_sided_p": 0.202004281637933
+            },
+            "interpretation": "Exact first-party audit-signature conditioning does not retain a significant reset-specific residual; this is diagnostic, not learner-training causality.",
+            "scientific_authority": false
+          },
+          {
+            "role": "conflicting_observational_adjusted_signal",
+            "artifact_uri": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/experiments/port-006-spade-audit-adjusted-residual-r1/result.json",
+            "sha256": "a08ca06c8fe9466893f248f740969b9c00309cbd9579ce13006aaee0cc86ac8a",
+            "status": "COMPLETE_ZERO_PROVIDER_OFFLINE",
+            "protocol_valid": true,
+            "provider_calls_executed": 0,
+            "gpu_calls_executed": 0,
+            "metrics": {
+              "reset_odds_ratio": 2.4756741753530864,
+              "nested_lr_p": 0.017116703211725526,
+              "cmh_two_sided_p": 0.006613735984601466
+            },
+            "interpretation": "An adjusted observational residual exists, but its frozen decision boundary forbids learner-training or longitudinal causal interpretation, so it cannot override matched prospective evidence.",
+            "scientific_authority": false
+          },
+          {
+            "role": "bounded_training_intervention_parent",
+            "artifact_uri": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/evidence-receipt-port006-prospective-r1.json",
+            "sha256": "2e53d79311fd4ea704637cc0c2121c6cf343f909992a755ad9d174375907f2df",
+            "status": "INCONCLUSIVE",
+            "protocol_valid": true,
+            "provider_calls_executed": 0,
+            "gpu_calls_executed": 0,
+            "metrics": {
+              "qualified_units": 16,
+              "headroom_qualified_units": 0
+            },
+            "interpretation": "The preregistered learner-training parent was protocol-valid but had zero primary headroom and was correctly adjudicated INCONCLUSIVE.",
+            "scientific_authority": false
+          },
+          {
+            "role": "decisive_human_reformulated_reset_timing_intervention",
+            "artifact_uri": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/experiments/port-006-spade-prospective-reference-state-swap-r2/result.json",
+            "sha256": "72599c2f939822bec15543fa0bcbf79a91648ac47231ec8e6c97da09be0ae174",
+            "status": "REDUCTION_SUPPORTED",
+            "protocol_valid": true,
+            "provider_calls_executed": 0,
+            "gpu_calls_executed": 0,
+            "metrics": {
+              "selected_units": 256,
+              "trace_evaluable": 231,
+              "competence_qualified": 71,
+              "reset_failures": 0,
+              "step_failures": 0,
+              "paired_reset_minus_step_failure_rate": 0.0,
+              "exact_two_sided_p": 1.0
+            },
+            "interpretation": "On an independent non-reused population, sufficient competence-qualified units show reset-boundary whole-state mismatch no more harmful than the same mismatch after the first step, satisfying the preregistered environment-level reduction rule.",
+            "scientific_authority": false
+          },
+          {
+            "role": "decisive_intervention_manipulation_audit",
+            "artifact_uri": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/experiments/port-006-spade-prospective-reference-state-swap-r2/manipulation-audit.json",
+            "sha256": "95ade8e43715711e7c198d6f34052edd0d0985bff9d0d01c00e163df970abab0",
+            "status": "POST_EXECUTION_MANIPULATION_VALIDITY_ONLY",
+            "protocol_valid": true,
+            "provider_calls_executed": 0,
+            "gpu_calls_executed": 0,
+            "metrics": {
+              "qualified_audit_ok": 71,
+              "state_fp_different_qualified": 71,
+              "obs_different_qualified": 0
+            },
+            "interpretation": "The audit binds the exact R2 result and verifies a distinct swapped latent-state fingerprint on every competence-qualified unit.",
+            "scientific_authority": false
+          }
+        ],
+        "execution_lineage": {
+          "r1_execution_ready_plan_uri": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/evidence-plan-port006-prospective-execution-ready-r1.json",
+          "r1_execution_ready_plan_sha256": "f2b254cdb6c0b7455b118391bb2c5e643db17419a7c5460e5f18f025231d16cc",
+          "r1_execution_ready_candidate_snapshot_sha256": "9b57dbc5728b0f2247917c2f27e3e65b6876f57b3b18ff1026b945e73fb96d3c",
+          "r1_execution_was_authorized": true,
+          "r1_contract_sha256": "c75746a7a9b4d2634c681a3a4b3fd120c56fbf6f2e17e79e73ebc612d6e46082",
+          "r1_adjudicated_plan_uri": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/evidence-plan-port006-prospective-adjudicated-r1.json",
+          "r1_adjudicated_plan_sha256": "e552ccfd12cebf56074d9453604705815b220ab4ad6a021ed0a651c45faa5fcc",
+          "r1_adjudicated_candidate_snapshot_sha256": "9b57dbc5728b0f2247917c2f27e3e65b6876f57b3b18ff1026b945e73fb96d3c",
+          "r1_status": "HOLD_INCONCLUSIVE_TREE_BUDGET_EXHAUSTED",
+          "r1_next_action": "stop-or-human-reformulation",
+          "r2_identity_binding": "TRANSITIVE_VIA_R1_ADJUDICATED_PLAN_SHA256",
+          "r2_candidate_id_is_run_local_alias": true,
+          "r2_branch_relation": "HUMAN_REFORMULATION_AFTER_PARENT_INCONCLUSIVE; not an automatic single-variable repair and does not reuse parent selected units",
+          "r2_contract_uri": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/experiments/port-006-spade-prospective-reference-state-swap-r2/experiment-contract.json",
+          "r2_contract_sha256": "5fff595b557231c4aed066eb0620a1a5377fb7ed217bc4e00e4e14715625f0e0",
+          "r2_reuses_parent_selected_units": false,
+          "r2_frozen_scientific_decision": "REDUCTION_SUPPORTED",
+          "r2_execution_authority_artifact_present": false,
+          "r2_evidence_admitted_for_terminal_adjudication": false,
+          "r2_protocol_hold": "MISSING_CONTEMPORANEOUS_SINGLE_USE_EXECUTION_AUTHORITY",
+          "provider_calls_executed_in_r2": 0,
+          "gpu_calls_executed_in_r2": 0,
+          "scientific_authority": false,
+          "discovery_transaction_id": "3552144aa57495c88a2262a5c4e5673da7a49e201abaec3e730a15c70e7be802",
+          "source_generator_run_id": "20260824T061140Z",
+          "candidate_snapshot_sha256": "9b57dbc5728b0f2247917c2f27e3e65b6876f57b3b18ff1026b945e73fb96d3c",
+          "candidate_id_is_run_local_alias": true
+        },
+        "conflict_resolution": {
+          "observational_adjusted_signal_present": true,
+          "why_not_decisive": "The adjusted association is observational/diagnostic and its own artifact forbids learner-training or longitudinal causal interpretation. R2 is scientifically stronger but cannot be terminally admitted until its execution-authority provenance is proven.",
+          "decision_rule": "Prefer preregistered same-information prospective intervention over observational association only when the prospective execution also satisfies the control-plane authority contract; otherwise HOLD without scientific closure.",
+          "scientific_authority": false
+        },
+        "scientific_authority": false,
+        "authority": {
+          "problem_gate": false,
+          "paper_design": false,
+          "method": false,
+          "experiment": false,
+          "p0": false,
+          "gpu": false
+        }
+      }
+    ],
+    "scientific_authority": false,
+    "authority": {
+      "problem_gate": false,
+      "paper_design": false,
+      "method": false,
+      "experiment": false,
+      "p0": false,
+      "gpu": false
+    }
+  },
+  "paper_first_pre_f0_falsifier_execution_control": {
+    "schema_version": "1.0",
+    "generated_at": "2026-08-24T15:32:28+00:00",
+    "status": "PRE_F0_FALSIFIER_EXECUTION_CONTROL_LOCKED",
+    "control_snapshot_sha256": "0a280ea7a6cd75eb294c07c5bf0b28383de3e426c992186c9d1efc9cd70f3da9",
+    "discovery_transaction_id": "3552144aa57495c88a2262a5c4e5673da7a49e201abaec3e730a15c70e7be802",
+    "source_generator_run_id": "20260824T061140Z",
+    "queue_sha256": "f986e15889e0285fd05ee563bda95218979dee61c3e8ae45da6f274afee6f903",
+    "support_preflight_sha256": "95867b76083fcbc05fcd072f9e928bf291d413e8dc3cf1ae20d8b800391c944c",
+    "support_inventory_sha256": "c8b92c0f5a3bc9891a66013cda8571078ede1402696b06a3ff1e9a0bf59e222c",
+    "transaction_queue_sha256": "942eb6b1e0c0c5d74c0f3a8cae5170d093489dda0927764190ea2b018f33d9c8",
+    "candidate_bindings": [
+      {
+        "candidate_snapshot_sha256": "9b57dbc5728b0f2247917c2f27e3e65b6876f57b3b18ff1026b945e73fb96d3c",
+        "support_mode": "RELEASED_UNITS",
+        "qualified_units_cap": 290,
+        "unit_manifest_sha256": "0aa414ad49241a51b169bd8d08c70176f33d204fb85accda41d9e593d7cc8449",
+        "support_scope_sha256": "09a7c6b557142211c91e19be8f4ae53a568f77efb7c9b16db6485b3499c6541f",
+        "exact_prediction_sha256": "4df1ed48018d33eee7e37f7d6120bb614d001bd2579236dfea1dd471b63a6e44",
+        "same_information_baseline_sha256": "60da020ca6a09d9742de4a4122513c9c63312d3be567d81062facd84aa8bec5e",
+        "falsifier_expression_sha256": "81f791576ef5b3bde6c90b5b1dd04ab04a611b8f7ec24e30c1f47a378db9ca06",
+        "next_if_positive": "RERUN_EXACT_SAME_INFORMATION_REDUCTION",
+        "execution_authorized": false,
+        "terminal_hold_resolution_authorized": false,
+        "retroactive_historical_execution_authorized": false,
+        "fresh_out_of_scope_intervention_authorized": false,
+        "scientific_authority": false
+      }
+    ],
+    "policy": {
+      "scientific_authority": false,
+      "support_qualified_is_eligibility_not_execution_authority": true,
+      "support_qualified_rows_only": true,
+      "candidate_id_is_run_local_ordinal_not_execution_identity": true,
+      "candidate_snapshot_sha256_is_execution_identity": true,
+      "control_binds_current_queue_support_and_discovery_transaction": true,
+      "support_scope_is_hard_execution_ceiling": true,
+      "explicit_single_use_execution_authority_artifact_required": true,
+      "authority_artifact_must_bind_control_snapshot": true,
+      "cpu_only_secondary_audit_route": true,
+      "provider_calls_default_and_authorized_zero": true,
+      "gpu_calls_default_and_authorized_zero": true,
+      "positive_f0_requires_exact_same_information_reduction_recheck": true,
+      "problem_gate_before_exact_reduction_forbidden": true,
+      "public_control_excludes_candidate_id_title_scope_text_and_private_paths": true,
+      "current_support_scope_is_not_terminal_hold_resolution_authority": true,
+      "historical_execution_cannot_be_retroactively_authorized": true,
+      "out_of_scope_fresh_intervention_requires_new_support_control": true,
+      "human_execution_authority_must_be_explicit_external_content_addressed_artifact": true,
+      "authorization_request_is_zero_authority": true
+    },
+    "summary": {
+      "support_qualified_candidates": 1,
+      "execution_control_requests": 1,
+      "qualified_units_cap_total": 290,
+      "execution_authority_artifacts_present": 0,
+      "falsifier_execution_authorized": 0,
+      "falsifier_executed": 0,
+      "provider_calls_authorized": 0,
+      "provider_calls_executed": 0,
+      "gpu_authorized": 0,
+      "gpu_calls_executed": 0,
+      "problem_gate_authorized": 0,
+      "paper_design_authorized": 0,
+      "method_authorized": 0,
+      "experiment_authorized": 0,
+      "p0_authorized": 0,
+      "terminal_hold_resolution_authorized": 0,
+      "retroactive_historical_execution_authorized": 0,
+      "fresh_out_of_scope_intervention_authorized": 0
+    },
+    "execution_authority_artifact_present": false,
+    "execution_authorized": false,
+    "terminal_hold_resolution_authorized": false,
+    "retroactive_historical_execution_authorized": false,
+    "fresh_out_of_scope_intervention_authorized": false,
+    "next_action": "REQUIRE_EXPLICIT_SINGLE_USE_EXECUTION_AUTHORITY_FOR_EXACT_SUPPORT_SCOPE",
+    "scientific_authority": false,
+    "authority": {
+      "falsifier_execution": false,
+      "live_problem_gate": false,
+      "paper_design": false,
+      "method": false,
+      "experiment": false,
+      "p0": false,
+      "gpu": false
+    }
+  },
+  "paper_first_pre_f0_falsifier_authorization_request": {
+    "schema_version": "1.0",
+    "request_type": "paper-first-pre-f0-falsifier-single-use-execution-authority",
+    "control_snapshot_sha256": "0a280ea7a6cd75eb294c07c5bf0b28383de3e426c992186c9d1efc9cd70f3da9",
+    "discovery_transaction_id": "3552144aa57495c88a2262a5c4e5673da7a49e201abaec3e730a15c70e7be802",
+    "source_generator_run_id": "20260824T061140Z",
+    "request_entries": [
+      {
+        "candidate_snapshot_sha256": "9b57dbc5728b0f2247917c2f27e3e65b6876f57b3b18ff1026b945e73fb96d3c",
+        "unit_manifest_sha256": "0aa414ad49241a51b169bd8d08c70176f33d204fb85accda41d9e593d7cc8449",
+        "support_scope_sha256": "09a7c6b557142211c91e19be8f4ae53a568f77efb7c9b16db6485b3499c6541f",
+        "qualified_units_cap": 290,
+        "requested_execution_route": "EXACT_SUPPORT_QUALIFIED_CPU_SECONDARY_AUDIT_ONLY",
+        "bounded_falsifier_execution_authorized": false,
+        "terminal_hold_resolution_authorized": false,
+        "retroactive_historical_execution_authorized": false,
+        "fresh_out_of_scope_intervention_authorized": false,
+        "scientific_authority": false
+      }
+    ],
+    "required_external_authority_type": "human-paper-first-pre-f0-falsifier-execution",
+    "required_external_authority_env": "PAPER_FIRST_PRE_F0_FALSIFIER_HUMAN_AUTHORITY",
+    "generated_at": "2026-08-24T15:32:28+00:00",
+    "status": "AWAITING_EXPLICIT_EXTERNAL_HUMAN_EXECUTION_AUTHORITY",
+    "authorization_request_sha256": "1e6dc57962fc1264cf5b19e2ad83cf8d8819580d77f9cfbc41d5a17f10019b08",
+    "required_authority_contract": {
+      "authority_type": "human-paper-first-pre-f0-falsifier-execution",
+      "decision": "approve",
+      "reviewed_by": "user-or-human-user",
+      "reviewed_at_required": true,
+      "source_message_ref_required": true,
+      "source_message_sha256_required": true,
+      "control_snapshot_sha256": "0a280ea7a6cd75eb294c07c5bf0b28383de3e426c992186c9d1efc9cd70f3da9",
+      "discovery_transaction_id": "3552144aa57495c88a2262a5c4e5673da7a49e201abaec3e730a15c70e7be802",
+      "source_generator_run_id": "20260824T061140Z",
+      "candidate_snapshot_sha256_must_match_one_request_entry": true,
+      "unit_manifest_sha256_must_match_selected_request_entry": true,
+      "support_scope_sha256_must_match_selected_request_entry": true,
+      "bounded_falsifier_execution_authorized": true,
+      "cpu_execution_authorized": true,
+      "provider_calls_authorized": false,
+      "gpu_calls_authorized": false,
+      "single_attempt": true,
+      "terminal_hold_resolution_authorized": false,
+      "retroactive_historical_execution_authorized": false,
+      "fresh_out_of_scope_intervention_authorized": false,
+      "problem_gate_authorized": false,
+      "paper_design_authorized": false,
+      "method_authorized": false,
+      "experiment_authorized": false,
+      "p0_authorized": false,
+      "scientific_authority": false
+    },
+    "summary": {
+      "requests": 1,
+      "execution_authority_artifacts_present": 0,
+      "bounded_falsifier_execution_authorized": 0,
+      "provider_calls_authorized": 0,
+      "gpu_calls_authorized": 0,
+      "terminal_hold_resolution_authorized": 0,
+      "retroactive_historical_execution_authorized": 0,
+      "fresh_out_of_scope_intervention_authorized": 0
+    },
+    "scientific_authority": false,
+    "authority": {
+      "falsifier_execution": false,
+      "live_problem_gate": false,
+      "paper_design": false,
+      "method": false,
+      "experiment": false,
+      "p0": false,
+      "gpu": false
+    }
   }
 }

@@ -71,6 +71,7 @@ from .paper_first_problem_gate_queue import load_problem_gate_queue_state
 from .paper_first_pre_f0_queue import load_pre_f0_queue
 from .paper_first_problem_falsifier_preflight import load_pre_f0_problem_falsifier_preflight
 from .paper_first_pre_f0_falsifier_adjudication import load_adjudication as load_pre_f0_falsifier_adjudication, validate_adjudication as validate_pre_f0_falsifier_adjudication
+from .paper_first_pre_f0_falsifier_execution_control import load_public as load_pre_f0_falsifier_execution_control, load_authorization_request as load_pre_f0_falsifier_authorization_request, validate_public_state as validate_pre_f0_falsifier_execution_control, validate_authorization_request as validate_pre_f0_falsifier_authorization_request
 from .paper_first_pre_f0_evidence_control import load_public as load_pre_f0_evidence_acquisition_public, validate_public_state as validate_pre_f0_evidence_acquisition_public
 from .paper_first_shadow_search_admission import DEFAULT_JSON as SHADOW_SEARCH_ADMISSION_JSON, build_shadow_search_admission, public_shadow_search_admission_summary, validate_shadow_search_admission, write_shadow_search_admission
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier, validate_shadow_continuation_frontier
@@ -601,6 +602,8 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_pre_f0_queue = load_pre_f0_queue()
     paper_first_pre_f0_problem_falsifier_preflight = load_pre_f0_problem_falsifier_preflight()
     paper_first_pre_f0_falsifier_adjudication = load_pre_f0_falsifier_adjudication()
+    paper_first_pre_f0_falsifier_execution_control = load_pre_f0_falsifier_execution_control()
+    paper_first_pre_f0_falsifier_authorization_request = load_pre_f0_falsifier_authorization_request()
     paper_first_pre_f0_evidence_acquisition = load_pre_f0_evidence_acquisition_public()
     paper_first_problem_memory = ((paper_first_problem_generator.get("saturation_memory") or {}).get("blocked_problem_memory") or {})
     paper_first_lane_search = paper_first_problem_generator.get("search_diagnostics") or {}
@@ -957,6 +960,10 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_pre_f0_falsifier_adjudicated":int((paper_first_pre_f0_falsifier_adjudication.get("summary") or {}).get("adjudicated") or 0),
             "paper_first_pre_f0_current_formulation_stopped":int((paper_first_pre_f0_falsifier_adjudication.get("summary") or {}).get("current_formulation_stopped") or 0),
             "paper_first_pre_f0_persistent_dead_end_created":int((paper_first_pre_f0_falsifier_adjudication.get("summary") or {}).get("persistent_dead_end_created") or 0),
+            "paper_first_pre_f0_execution_control_status":paper_first_pre_f0_falsifier_execution_control.get("status","NOT_RUN"),
+            "paper_first_pre_f0_execution_control_requests":int((paper_first_pre_f0_falsifier_execution_control.get("summary") or {}).get("execution_control_requests") or 0),
+            "paper_first_pre_f0_falsifier_execution_authorized":int((paper_first_pre_f0_falsifier_execution_control.get("summary") or {}).get("falsifier_execution_authorized") or 0),
+            "paper_first_pre_f0_authorization_request_status":paper_first_pre_f0_falsifier_authorization_request.get("status","NO_EXECUTION_AUTHORITY_REQUEST"),
             "paper_first_pre_f0_evidence_status":paper_first_pre_f0_evidence_acquisition.get("status","NOT_RUN"),
             "paper_first_pre_f0_evidence_candidates":int((paper_first_pre_f0_evidence_acquisition.get("summary") or {}).get("provisional_problem_candidates") or 0),
             "paper_first_pre_f0_evidence_execution_ready":int((paper_first_pre_f0_evidence_acquisition.get("summary") or {}).get("execution_ready") or 0),
@@ -1362,6 +1369,8 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_pre_f0_queue":paper_first_pre_f0_queue,
         "paper_first_pre_f0_problem_falsifier_preflight":paper_first_pre_f0_problem_falsifier_preflight,
         "paper_first_pre_f0_falsifier_adjudication":paper_first_pre_f0_falsifier_adjudication,
+        "paper_first_pre_f0_falsifier_execution_control":paper_first_pre_f0_falsifier_execution_control,
+        "paper_first_pre_f0_falsifier_authorization_request":paper_first_pre_f0_falsifier_authorization_request,
         "paper_first_pre_f0_evidence_acquisition":paper_first_pre_f0_evidence_acquisition,
         "paper_first_problem_gate_queue":paper_first_problem_gate_queue,
         "paper_first_search_portfolio_design_adjudication":paper_first_search_portfolio_design,
@@ -2101,6 +2110,24 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         adj_summary=pre_f0_adjudication.get("summary") or {}
         if int(adj_summary.get("persistent_dead_end_created") or 0)!=0 or int(adj_summary.get("current_formulation_stopped") or 0)>int(pre_f0_support_summary.get("support_qualified") or 0):
             errors.append("canonical Pre-F0 falsifier adjudication cannot create dead-end memory or stop more formulations than support-qualified snapshots")
+    pre_f0_execution_control=state.get("paper_first_pre_f0_falsifier_execution_control") or {}
+    pre_f0_authority_request=state.get("paper_first_pre_f0_falsifier_authorization_request") or {}
+    if pre_f0_execution_control and str(pre_f0_execution_control.get("status") or "NOT_RUN")!="NOT_RUN":
+        errors.extend(f"Canonical Pre-F0 falsifier execution control: {error}" for error in validate_pre_f0_falsifier_execution_control(pre_f0_execution_control))
+        errors.extend(f"Canonical Pre-F0 falsifier authority request: {error}" for error in validate_pre_f0_falsifier_authorization_request(pre_f0_authority_request,control=pre_f0_execution_control))
+        if str(pre_f0_execution_control.get("discovery_transaction_id") or "")!=str((state.get("paper_first_problem_gate_queue") or {}).get("discovery_transaction_id") or ""):
+            errors.append("canonical Pre-F0 falsifier execution control transaction binding is stale")
+        if str(pre_f0_execution_control.get("source_generator_run_id") or "")!=str(pre_f0.get("source_generator_run_id") or ""):
+            errors.append("canonical Pre-F0 falsifier execution control generator binding is stale")
+        qualified_snapshots={str(row.get("candidate_snapshot_sha256") or "").strip().lower() for row in (pre_f0_support.get("rows") or []) if isinstance(row,dict) and str(row.get("disposition") or "")=="SUPPORT_QUALIFIED"}
+        control_snapshots={str(row.get("candidate_snapshot_sha256") or "").strip().lower() for row in (pre_f0_execution_control.get("candidate_bindings") or []) if isinstance(row,dict)}
+        if control_snapshots!=qualified_snapshots:
+            errors.append("canonical Pre-F0 falsifier execution control must bind exactly current SUPPORT_QUALIFIED snapshots")
+        ctl_summary=pre_f0_execution_control.get("summary") or {}
+        if any(int(ctl_summary.get(key) or 0)!=0 for key in ("falsifier_execution_authorized","provider_calls_authorized","gpu_authorized","terminal_hold_resolution_authorized","retroactive_historical_execution_authorized","fresh_out_of_scope_intervention_authorized")):
+            errors.append("canonical Pre-F0 falsifier execution control must remain locked before external human authority")
+        if pre_f0_execution_control.get("execution_authority_artifact_present") is not False or pre_f0_execution_control.get("execution_authorized") is not False:
+            errors.append("canonical Pre-F0 falsifier execution control cannot self-record external authority")
     generated_discovery_statuses={"GENERATED_ZERO_CANDIDATES","GENERATED_PRE_F0_EVIDENCE_ACQUISITION","GENERATED_AWAIT_PROBLEM_GATE"}
     expected_lane_statuses={"EXPANDED","EMPTY"} if generator_double_funnel else {"NO_PAIR","REDUCIBLE","CANDIDATE"}
     if generator_schema >= "2.4" and generator.get("status") in generated_discovery_statuses:

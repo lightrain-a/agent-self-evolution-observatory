@@ -1201,6 +1201,26 @@ class ResearchSystemTest(unittest.TestCase):
         broken["paper_first_pre_f0_evidence_acquisition"]["candidate_snapshot_sha256s"]=["f"*64]
         self.assertTrue(any("stale versus current queue/support candidate snapshots" in error for error in validate_state(broken)))
 
+    def test_pre_f0_falsifier_execution_control_stays_locked_and_snapshot_bound(self) -> None:
+        state=copy.deepcopy(self.state)
+        control=state.get("paper_first_pre_f0_falsifier_execution_control") or {}
+        request=state.get("paper_first_pre_f0_falsifier_authorization_request") or {}
+        if str(control.get("status") or "NOT_RUN")=="NOT_RUN":
+            self.skipTest("current durable state has no Pre-F0 falsifier execution control")
+        self.assertEqual(validate_state(state),[])
+        self.assertEqual(control.get("status"),"PRE_F0_FALSIFIER_EXECUTION_CONTROL_LOCKED")
+        self.assertEqual(request.get("status"),"AWAITING_EXPLICIT_EXTERNAL_HUMAN_EXECUTION_AUTHORITY")
+        self.assertEqual(int((control.get("summary") or {}).get("falsifier_execution_authorized") or 0),0)
+        broken=copy.deepcopy(state)
+        broken["paper_first_pre_f0_falsifier_execution_control"]["candidate_bindings"][0]["candidate_snapshot_sha256"]="f"*64
+        self.assertTrue(any("exactly current SUPPORT_QUALIFIED snapshots" in error or "candidate snapshot invalid" in error for error in validate_state(broken)))
+        self_authorized=copy.deepcopy(state)
+        self_authorized["paper_first_pre_f0_falsifier_execution_control"]["execution_authorized"]=True
+        self.assertTrue(any("cannot self-record external authority" in error or "requires a separate authority artifact" in error for error in validate_state(self_authorized)))
+        widened=copy.deepcopy(state)
+        widened["paper_first_pre_f0_falsifier_execution_control"]["terminal_hold_resolution_authorized"]=True
+        self.assertTrue(any("cannot expand current support scope" in error for error in validate_state(widened)))
+
     def test_v17_double_funnel_pre_f0_receipt_uses_full_search_vocabulary(self) -> None:
         state=copy.deepcopy(self.state);generator=state["paper_first_problem_generator"]
         if (generator.get("policy") or {}).get("search_portfolio_enabled") is not True:
