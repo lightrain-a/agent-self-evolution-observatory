@@ -11,6 +11,8 @@ POLICY: dict[str, Any] = {
     "post_outcome_protocol_changes_require_a_new_registered_contract": True,
     "search_or_tool_access_must_not_leak_hidden_evaluation_answers": True,
     "reproducibility_requires_reexecution_not_only_trace_presence": True,
+    "mechanism_analysis_requires_explicit_closure_or_analysis_boundary": True,
+    "decorative_method_complexity_cannot_satisfy_paper_closure": True,
 }
 
 
@@ -159,8 +161,10 @@ def build_methodology_controls_state() -> dict[str, Any]:
                 "do_not_add_a_solution_only_to_make_the_story_look_closed": True,
             },
             "design_sources": [
-                "Scaling LLM Test-Time Compute Optimally Can Be More Effective than Scaling Parameters for Reasoning",
-                "GSM-Symbolic: Understanding the Limitations of Mathematical Reasoning in Large Language Models",
+                "The Reversal Curse: LLMs Trained on A is B Fail to Learn B is A — strong phenomenon archetype",
+                "Function Vectors in Large Language Models — causal mechanism archetype",
+                "PINE: mechanical diagnosis to targeted inference intervention",
+                "Fixing the Broken Compass / CRISP — diagnosis to algorithmic repair",
                 "Paper Story V3 / strongest-same-information baseline contract",
             ],
         },

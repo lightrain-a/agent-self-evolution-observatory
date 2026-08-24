@@ -696,7 +696,7 @@ def main() -> None:
         fail(f"research-system state is missing current backend responsibilities: count={len(components)}, missing={sorted(required_component_sources-component_sources)}")
     architecture = research_state.get("system_architecture", {})
     architecture_summary = architecture.get("summary", {})
-    if (architecture_summary.get("temporal_stages"), architecture_summary.get("reader_chapters"), architecture_summary.get("reader_stage_coverage"), architecture_summary.get("functional_layers"), architecture_summary.get("assigned_components"), architecture_summary.get("unassigned_components"), architecture_summary.get("duplicate_component_keys"), architecture_summary.get("cross_cutting_controls"), architecture_summary.get("orphan_cross_cutting_controls")) != (21,10,21,6,32,0,0,3,0):
+    if (architecture_summary.get("temporal_stages"), architecture_summary.get("reader_chapters"), architecture_summary.get("reader_stage_coverage"), architecture_summary.get("functional_layers"), architecture_summary.get("assigned_components"), architecture_summary.get("unassigned_components"), architecture_summary.get("duplicate_component_keys"), architecture_summary.get("cross_cutting_controls"), architecture_summary.get("orphan_cross_cutting_controls")) != (21,10,21,6,32,0,0,4,0):
         fail(f"backend architecture manifest is incomplete or stale: {architecture_summary}")
     if len({str(item.get("key") or "") for item in components}) != len(components) or any(not item.get("primary_layer") for item in components):
         fail("backend components must expose unique architecture keys and one primary layer each")

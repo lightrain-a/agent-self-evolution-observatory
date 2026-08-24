@@ -57,6 +57,25 @@ A planned baseline or ablation does not count as manuscript evidence. Each plann
 
 For theory/certificate papers, an analytical simplification and assumption-boundary stress test may replace a conventional component ablation only when the non-applicability is explicit. Mechanical manuscript QA, venue-format QA, compilation, and supplement reproduction can never substitute for this scientific evidence review.
 
+## Mechanism-to-intervention closure reviewer
+
+After a paper has established a phenomenon, ruled out its strongest simple explanations, and localized a mechanism or bottleneck, the reviewer must run an explicit archetype/closure decision before declaring the scientific story complete.
+
+The reviewer must ask:
+
+- Is the phenomenon or mechanism itself already a complete top-tier contribution because it has unusually strong breadth, causal identification, explanatory depth, theory, or a measurement object that changes scientific conclusions?
+- If not, what **actionable variable** is uniquely exposed by the diagnosis?
+- Does changing that variable naturally imply a preregistrable intervention whose success and failure would both change the paper conclusion?
+- What is the strongest same-information, same-budget simple intervention that could make the proposed method unnecessary?
+- Can the intervention be tested on support chosen independently of the already observed positive/negative cells?
+- If the intervention fails, will the original mechanism/measurement contribution remain valid without retroactively changing its claims?
+
+A paper may remain analysis-only. Examples such as a strong new empirical phenomenon, a causal mechanism study, or a theory paper show that a new engineering method is not mandatory. However, an analysis-only decision must be explicit and must identify the changed measurement, evaluation, or engineering decision that follows from the result. If the mechanism naturally exposes an actionable variable but the paper stops before testing it, mark the development state `ANALYSIS_INCOMPLETE_FOR_TOP_TIER` rather than declaring manuscript maturity.
+
+The reviewer must reject decorative closure. Additional equations, validators, routers, modules, datasets, model families, or rollout volume do **not** increase scientific completeness unless each is required by a diagnosed failure mode and survives a strongest-simple-baseline test. A method added only because top-tier papers appear more complex is a paper-design failure.
+
+For a mechanism-derived method extension, require a zero/low-cost identifiability D0 before expensive execution. D0 must establish that the target variable can be measured or manipulated on outcome-independent support, that the proposed gate/representation is non-degenerate, and that a simple control does not already absorb the mechanism. Only then may a fresh method experiment receive authority.
+
 ## Visual evidence reviewer
 
 The visual evidence reviewer treats a figure as a scientific argument, not decoration. The design pattern follows strong autonomous-research papers: combine workflow/overview diagrams with quantitative comparison, ablation, mechanism/boundary, failure/sensitivity, and—when the scientific object is a research system—scaling/progression evidence. Multi-panel figures are preferred when several panels answer one reviewer question.

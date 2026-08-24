@@ -45,6 +45,8 @@ class MethodologyControlsTest(unittest.TestCase):
         self.assertTrue(row["rules"]["analysis_only_archetype_is_allowed_when_intervention_is_not_scientifically_justified"])
         self.assertTrue(row["rules"]["do_not_add_a_solution_only_to_make_the_story_look_closed"])
         self.assertIn("decisive intervention or explicit analysis-only boundary", row["required_chain"])
+        self.assertTrue(self.state["policy"]["mechanism_analysis_requires_explicit_closure_or_analysis_boundary"])
+        self.assertTrue(self.state["policy"]["decorative_method_complexity_cannot_satisfy_paper_closure"])
 
 
 if __name__ == "__main__":
