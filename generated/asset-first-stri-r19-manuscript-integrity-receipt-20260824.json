@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "audit_scope": "R19 submission-critical claim surface: N1/N2/N3, held-out AutoSkill STOP, main baseline/boundary table cells, and associated primary citations. This is deliberately scoped and does not claim token-level enumeration of every non-critical numeral in the full manuscript.",
+  "manifest_ref": "generated/asset-first-stri-r19-manuscript-integrity-manifest-20260824.json",
+  "manifest_sha256": "fa11a2f6c3f68b36f03fcc25339ef90276f84813700ae853f35ed77c5458ab1c",
+  "audit": {
+    "schema_version": "1.0",
+    "status": "PASS_POST_DRAFT_INTEGRITY",
+    "policy": {
+      "post_draft_integrity_precedes_independent_model_review": true,
+      "deterministic_checks_precede_agentic_review": true,
+      "every_publishable_number_requires_content_addressed_source_binding": true,
+      "every_table_cell_requires_source_field_provenance": true,
+      "citation_existence_metadata_passage_direction_numeric_and_scope_are_distinct_checks": true,
+      "content_inventory_requires_complete_versioned_extraction_receipt": true,
+      "claim_evidence_binding_is_checked_again_after_manuscript_drafting": true,
+      "machine_like_prose_lint_is_editorial_not_ai_detector_evasion": true,
+      "reader_comprehension_requires_first_use_definition_and_component_io_explanation": true,
+      "integrity_audit_cannot_create_evidence_or_authorize_new_experiments": true,
+      "independent_reviewer_cannot_self_resolve_integrity_findings": true,
+      "all_outputs_have_zero_scientific_experiment_gpu_and_submission_authority": true
+    },
+    "manuscript_ref": "paper_drafts/stri-20260816-narrow-body.tex",
+    "manuscript_sha256": "9a9d6f95ad5ee240eaf092e5a6106259ffc2ec404a3f037cdc986d6f6cc0e7fa",
+    "integrity_pass": true,
+    "editorial_pass": true,
+    "pass": true,
+    "hard_blockers": [],
+    "editorial_blockers": [],
+    "prose_lint": {
+      "schema_version": "1.0",
+      "warnings": [],
+      "warning_count": 0,
+      "ai_detector_evasion_goal": false,
+      "scientific_authority": false
+    },
+    "summary": {
+      "facts": 4,
+      "citations": 7,
+      "numbers": 18,
+      "tables": 2,
+      "claims": 4,
+      "hard_blockers": 0,
+      "editorial_blockers": 0,
+      "prose_warnings": 0
+    },
+    "scientific_authority": false,
+    "experiment_authority": false,
+    "gpu_authority": false,
+    "submission_authority": false
+  },
+  "receipt": {
+    "schema_version": "1.0",
+    "receipt_type": "post-draft-integrity",
+    "manuscript_ref": "paper_drafts/stri-20260816-narrow-body.tex",
+    "manuscript_sha256": "9a9d6f95ad5ee240eaf092e5a6106259ffc2ec404a3f037cdc986d6f6cc0e7fa",
+    "integrity_pass": true,
+    "editorial_pass": true,
+    "pass": true,
+    "hard_blockers": [],
+    "editorial_blockers": [],
+    "summary": {
+      "facts": 4,
+      "citations": 7,
+      "numbers": 18,
+      "tables": 2,
+      "claims": 4,
+      "hard_blockers": 0,
+      "editorial_blockers": 0,
+      "prose_warnings": 0
+    },
+    "receipt_sha256": "ffb3c5d757e04f01e5be39bce0888c3f63083ec5ef9d64099fc8344f5080b0aa",
+    "prose_lint": {
+      "schema_version": "1.0",
+      "warnings": [],
+      "warning_count": 0,
+      "ai_detector_evasion_goal": false,
+      "scientific_authority": false
+    },
+    "scientific_authority": false,
+    "experiment_authority": false,
+    "gpu_authority": false,
+    "submission_authority": false
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

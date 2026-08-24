@@ -1,0 +1,447 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "audit_scope": "R19 submission-critical claim surface: N1/N2/N3, held-out AutoSkill STOP, main baseline/boundary table cells, and associated primary citations. This is deliberately scoped and does not claim token-level enumeration of every non-critical numeral in the full manuscript.",
+  "manuscript_ref": "paper_drafts/stri-20260816-narrow-body.tex",
+  "manuscript_sha256": "9a9d6f95ad5ee240eaf092e5a6106259ffc2ec404a3f037cdc986d6f6cc0e7fa",
+  "manuscript_text": "% Template-independent main body for the narrow STRI paper.\n% Venue-specific preamble, author block, and bibliography style are intentionally external.\n\\begin{abstract}\nSelf-evolving language-model agents increasingly treat skill identities as control objects: a sampled skill can determine the next training task, a fresh ID can receive retrieval priority, and feedback can be written back to the selected package. We ask whether such control should change when semantic capabilities are merely split or cloned across package identities. We formulate \\emph{Skill-Taxonomy Representation Invariance} (STRI). For exact refinements, we prove that invariance is equivalent to factoring aggregate semantic-class mass through the quotient; any strictly positive identity-local score followed by normalization is therefore clone-sensitive. Released Skill-SP instantiates this failure mode at initialization: 15 packages receive probability $1/15$ each, double-supported Level-1 rows receive twice the additive eligibility opportunity of singleton rows, and a counterfactual same-state sampler-input clone changes its prompt-mixture by TV $=0.0583$; quotient-conserved mass restores it exactly. For partial overlap, define $R^*(A;q)=\\min\\{t:q\\le Aw\\le tq,\\,w,t\\ge0\\}$ for support matrix $A$ and representation-independent target $q>0$. It equals one iff $q$ lies in the package support cone. Skill-SP Level-1 has neutral $R^*=2$ on full, calibration, and tool-disjoint heldout matrices. Uniform routing already attains this exact worst-case optimum, while inverse-support and NNLS target fitting worsen worst-case distortion to 98.3 and 5.51 despite the latter lowering average dispersion; calibration-fitted exact weights transfer to heldout at $R=2$ without refitting. Level-3, the 127/128-overlap logical domain, and a 75-query expert SkillRouter relevance-graph analogue are equalizable. Across these regimes, target non-realizability---not overlap prevalence or poor scalar tuning---is the audited discriminator. In one archived AutoSkill P19 substrate, splitting one skill into four exact-semantic IDs deterministically crowds out a post-checkout skill and removes a mechanically defined destructive behavior (6/6 original versus 0/6 split), while ID-placebo and quotient controls restore it (3/3 each; Fisher $p=0.00108$). Under the split representation, adding that post-checkout skill back restores the behavior in 3/3 fresh runs while a matched cleanup add-back yields 0/3 (exact one-sided Fisher $=1/20$), isolating the mediator within this substrate. Thus representation can alter executed behavior on this bounded substrate without semantic change. A semantic-first construction marks the action-basis escape when package-only control cannot realize $q$; it is constructive, not a validated repair.\n\\end{abstract}\n\n\\section{Introduction}\nMany self-evolving agents adapt through external state---memories, skills, workflows, tools, prompts, retrieval policies, or harness code---rather than only through foundation-model weights. Skills are especially attractive because a skill can package reusable procedure, metadata, examples, applicability information, and verification logic. Recent systems make the skill identity itself a control variable: Skill-SP~\\citep{huang2026skill} samples a skill before generating a training task, while SkillRL~\\citep{xia2026skillrl} gives dynamically created skill IDs priority in a fixed retrieval budget.\n\nThis architecture makes the \\emph{representation} of the skill library consequential. Consider two taxonomies that expose the same executable semantic capability. One stores a primitive once; another stores an exact clone under a fresh ID. One represents generic and specific capabilities separately; another groups unchanged primitives behind a macro package. If no new primitive behavior or support region is added, should the future curriculum, retrieval exposure, or credit allocation change solely because package bookkeeping changed?\n\nPrior work establishes that skill availability, representation, retrieval, composition, and exposure matter~\\citep{xu2026skillavailability,jiang2026demystifying,gao2026compositional,singh2018fairness,biega2018equity}; Sec.~\\ref{sec:related} separates our support-fixed estimand from those objects. The challenge is that overlap and skill count themselves change under refactoring. We therefore work asset-first: freeze independent support truth, quotient exact-clone nuisance, overgrant the strongest same-information package baseline, and ask whether the remaining support geometry can realize a representation-independent target.\n\n\\paragraph{Released Skill-SP.} On API-Bank Level-1, 314 released tasks are covered by at least one released validator and 183 have multiple memberships. The release's name+description Jaccard duplicate filter at threshold 0.33 misses all five observed specific--generic support-overlap pairs. Minimum-cardinality whole-package pruning can reduce the active library from 10 to 7 while preserving exact support, but 71 overlapping tasks remain. The residual is therefore not merely an exact-clone artifact.\n\n\\paragraph{Released SkillRL.} In released template-mode retrieval, dynamic general skills are included before the remaining fixed \\texttt{top\\_k=6} budget is filled with static skills. Adding one exact-content fresh-ID copy at a time admits all 12 tested clones. Across 223 released ALFWorld task descriptions, 11/12 clone targets change the unique semantic retrieval set and 5/12 reduce the number of unique general-skill contents returned.\n\nThese systems establish representation sensitivity, but not its boundary. The logical domain provides a direct counterexample to overlap-as-sufficient-explanation: 127/128 tasks overlap while the neutral target remains exactly realizable. Thus overlap count alone cannot determine the STRI residual.\n\n\\paragraph{Contributions.}\n\\begin{enumerate}[leftmargin=*]\n\\item \\textbf{A support-fixed systems invariant.} We ask whether a skill-indexed self-evolution controller changes under package refactorings that preserve semantic support. The novelty claim is this invariant and audit object, not skill representation or exposure allocation in general.\n\\item \\textbf{An exact certificate.} Quotient factorization characterizes exact-refinement invariance and $R^*(A;q)$ decides package-first target realizability; semantic-first selection marks the action-basis escape. We reuse classical convex feasibility/duality rather than claim a new LP or cone theorem.\n\\item \\textbf{Released-system evidence with explicit boundaries.} Skill-SP/SkillRL expose identity sensitivity; practical package-weight baselines and no-refit heldout transfer separate worst-case invariance from average fitting; positive/negative support geometries plus an external expert relevance analogue separate overlap from realizability; one frozen AutoSkill P19 intervention traces a bounded representation-to-behavior path. Structured support, target, witness, and retrieval-budget stresses quantify robustness without expanding to general utility or safety.\n\\end{enumerate}\n\n\\begin{figure}[t]\n\\centering\n\\includegraphics[width=0.98\\linewidth]{figures/stri-overview.pdf}\n\\caption{STRI separates semantic capability from package representation. The conceptual identity-split example leaves the primitive basis and support predicates unchanged, yet a package-indexed controller can change primitive mass solely because one primitive has two package identities. Exact clones motivate the nuisance channel; the decisive released residual in Sec.~\\ref{sec:evidence} survives clone reasoning and is characterized by non-equalizable partial-overlap support geometry.}\n\\label{fig:stri-overview}\n\\end{figure}\n\n\\section{Relation to Existing Work}\n\\label{sec:related}\n\n\\paragraph{Controlled skill representation changes a different variable.}\nSkillsBench varies skill availability and presentation granularity~\\citep{xu2026skillavailability}; Demystifying Agent Skills isolates representation, annotation, retrieval difficulty, and cross-framework robustness~\\citep{jiang2026demystifying}; SkillRouter evaluates large-pool retrieval over 75 expert-verified SkillsBench-derived queries~\\citep{zheng2026skillrouter}; AgentSkillOS evaluates retrieval/orchestration over 30 multi-format tasks with author-specified skill sets~\\citep{li2026agentskillos}; composition work maps task decompositions to multiple skills~\\citep{gao2026compositional}. They establish that presentation, retrieval, and composition matter, but do not hold executable semantic support fixed while perturbing only package bookkeeping. We use external relevance/oracle-set graphs only as analogues, never as executable support truth.\n\n\\paragraph{Self-evolving controllers are the closest substrate.}\nSkill-SP~\\citep{huang2026skill} is closest: it samples a skill before task generation and releases independent validators. STRI then overgrants its package controller, allowing any nonnegative mass under the full frozen support matrix. SkillRL~\\citep{xia2026skillrl} supplies an identity-sensitive fixed-budget retrieval phenotype but no independent $A$; AutoSkill~\\citep{yang2026autoskill} supplies one bounded behavioral seam. Work on redundancy, failures, routing, and skill/harness co-evolution motivates the setting but not this support-fixed audit~\\citep{zhu2026skillclone,liu2026skillsvote,mao2026practiceunsafe,dong2026agentskills,chen2026erskill,wang2026shaper}.\n\n\\paragraph{Optimization boundary.}\nFair-exposure methods allocate attention~\\citep{singh2018fairness,biega2018equity}; our covering/cone/duality machinery is classical~\\citep{lovasz1975fractional,sinkhorn1967nonnegative,radunovic2007fairness,beck1981integer,boyd2004convex}. We claim the systems invariant, information boundary, and audit mapping---not a new LP, cone theorem, or fairness objective.\n\n\\section{Method: From Package Identity to Semantic Exposure}\n\\label{sec:formalism}\n\n\\subsection{Protocol at a glance}\n\\paragraph{Design intuition.} Package $j$ contributes support column $A_{:j}$, so package mass $w$ induces semantic exposure $Aw$. In Fig.~\\ref{fig:stri-overview}, an exact clone is therefore a duplicated support column: it may perturb identity-indexed package mass, but should not create a new semantic degree of freedom. STRI-Cert separates two questions: exact identity refinements should vanish after quotienting clones; afterward, a target $q$ is package-realizable exactly when it lies in the nonnegative cone of the remaining columns.\n\nThe five-step order isolates those questions: \\textbf{freeze support/target provenance} $\\rightarrow$ \\textbf{quotient exact clones} $\\rightarrow$ \\textbf{overgrant arbitrary $w\\ge0$ with full frozen $A$} $\\rightarrow$ \\textbf{solve primal/dual} ($R^*=1$ constructive weighting; $R^*>1$ tight residual plus witness) $\\rightarrow$ \\textbf{separate diagnosis from repair}. Semantic-first control can escape cone infeasibility only by changing the action basis, so it is a constructive boundary witness rather than validated downstream repair.\n\n\\subsection{Frozen support matrix}\nLet $X=\\{x_1,\\ldots,x_n\\}$ be a finite set of semantic contexts or tasks with independently defined first-party support truth, and let $S=\\{s_1,\\ldots,s_m\\}$ be the current skill packages. Define the binary incidence matrix\n\\[\nA_{ij}=\\mathbf{1}\\{s_j\\text{ supports }x_i\\}.\n\\]\nSupport is frozen before STRI: released Skill-SP validators define the tool-call matrix, while released compiler specifications plus fixed CSP/contract checks define the logical matrix. Certificates cover only rows with at least one supported package; zero-support rows are reported separately rather than misclassified as representation distortion.\n\nAt a frozen pre-task state, package-only control assigns $w\\in\\mathbb{R}^m_{\\ge0}$ and induces eligibility exposure $e=Aw$. Exposure is control opportunity, not task probability or utility. The target $q\\in\\mathbb{R}^n_{>0}$ is a \\emph{representation-independent semantic target}: it cannot change because packages are renamed, cloned, split, or regrouped. Without an externally justified preference we use neutral $q=\\mathbf1$.\n\n\\subsection{Same-information pre-task controllers reduce to package mass}\nIn released Skill-SP, skill selection occurs before task generation. At this decision point the action is one current package identity. For any fixed pre-task state $z$, every randomized same-information rule---including a bandit, MLP, or neural router---induces a categorical distribution over packages, hence one nonnegative mass vector $w(z)$. The strongest same-information baseline is therefore arbitrary nonnegative package mass with access to the complete frozen support matrix.\n\nThis is an intentional overgrant: the baseline may ignore the released scoring rule and choose any $w(z)$ using complete frozen $A$ and the same pre-task information. If this class has $R^*(A;q)>1$, deduplication, retuning, bandits, or neural package routers cannot remove the residual without new information or a different action basis. The reduction is pointwise in $z$; it neither collapses a longitudinal controller to one static vector nor permits conditioning on the future task.\n\n\\subsection{Exact-refinement STRI factors through a quotient}\nLet $\\mathcal R$ be a package representation and let $Q(\\mathcal R)$ collapse exact semantic clones---packages with identical semantics, support, and controller-relevant state---into classes. Let $G_{\\mathcal R}$ sum a package-mass vector over these classes. For a fixed pre-context state $z$, define \\emph{exact-refinement STRI} by\n\\[\nG_{\\mathcal R}p_{\\mathcal R}(z)=G_{\\mathcal R'}p_{\\mathcal R'}(z)\n\\quad\\text{whenever }Q(\\mathcal R)=Q(\\mathcal R').\n\\]\n\\paragraph{Proposition 1 (quotient-factorization characterization).}\nA controller family satisfies exact-refinement STRI iff there exists a quotient-level map $\\bar p$ such that $G_{\\mathcal R}p_{\\mathcal R}(z)=\\bar p(Q(\\mathcal R),z)$ for every representation and state.\n\\paragraph{Proof.}\nThe forward direction defines $\\bar p$ using any representative of a quotient class; STRI makes this definition representative-independent. The reverse direction is immediate because equal quotients give equal $\\bar p$. \\hfill$\\square$\n\n\\paragraph{Corollary 1 (identity-local normalization is clone-sensitive).}\nSuppose $p_j=g(h_j,z)/\\sum_k g(h_k,z)$ with $g>0$ and an exact clone receives the same local state $h_j$. Writing its score as $a>0$ and all other scores as $B>0$, the semantic-class mass changes from $a/(a+B)$ to $2a/(2a+B)$, an increase of $aB/((a+B)(2a+B))>0$. Repeated clones drive class mass toward one, so exact-refinement invariance requires class-aware conservation or another quotient-factorized rule.\n\n\\paragraph{Proposition 2 (semantic-first construction handles arbitrary overlap).}\nNormalize a target ray $q>0$ to $\\pi=q/(\\mathbf1^\\top q)$. If every target-positive semantic unit $i$ has at least one supporting package, choose any row-stochastic kernel $K$ with $K_{ij}=0$ whenever $A_{ij}=0$, then sample $i\\sim\\pi$ before sampling implementation $j\\sim K_i$. The semantic marginal is exactly $\\pi$ for arbitrary overlap, and any clone/split can redistribute $K_i$ within the corresponding implementation class without changing that marginal.\n\\paragraph{Proof.}\nThe joint mass is $J_{ij}=\\pi_iK_{ij}$, so $\\sum_jJ_{ij}=\\pi_i\\sum_jK_{ij}=\\pi_i$; support-constrained row-stochastic $K$ exists exactly when every positive-target row is covered. \\hfill$\\square$ This changes the action interface: it requires representation-independent semantic intent and conditional implementation. It is a constructive action-basis witness for escaping package-first infeasibility, not a same-information baseline or validated downstream method.\n\n\\section{Target Realizability and STRI-Cert}\n\\label{sec:certificate}\n\n\\subsection{Target-conditioned finite-support criterion}\nDefine the multiplicative distortion from the target ray $q$ to the package support cone by\n\\begin{equation}\n\\label{eq:rstar}\nR^*(A;q)=\\min_{w\\ge0,\\,t\\ge0}t\n\\quad\\text{s.t.}\\quad\nq\\le Aw\\le tq.\n\\end{equation}\nWe write $R^*(A)\\equiv R^*(A;\\mathbf1)$ for the neutral audit used in our released-system tables.\n\n\\paragraph{Theorem 1 (target realizability in the support cone).}\nFor any $q>0$, $R^*(A;q)=1$ if and only if $q\\in\\operatorname{cone}(A)=\\{Aw:w\\ge0\\}$. Otherwise $R^*(A;q)>1$ is the tight minimum componentwise multiplicative distortion from $q$ achievable by package-only mass.\n\n\\paragraph{Proof.}\nThe constraints force $t\\ge1$. At $t=1$ they reduce exactly to $Aw=q$, which is equivalent to $q\\in\\operatorname{cone}(A)$. For any feasible $w$, the smallest admissible $t$ is $\\max_i (Aw)_i/q_i$ after scaling $w$ so that $\\min_i(Aw)_i/q_i=1$; minimizing over $w$ gives the tight distortion. \\hfill$\\square$\n\nThis separates STRI from a uniformity assumption: $q=\\mathbf1$ is the neutral target, not the definition of representation invariance. It also makes exact clone/split invariance immediate: duplicating a support column does not change $\\operatorname{cone}(A)$, so it cannot change $R^*(A;q)$ for any fixed $q$. The cone-membership statement itself is classical convex feasibility; STRI contributes the system invariant that makes this feasibility question the relevant audit object for a self-evolving skill controller, not a new theorem about convex cones.\n\n\\paragraph{Proposition 3 (dual certificate).}\nThe dual of Eq.~\\eqref{eq:rstar} is\n\\begin{equation}\n\\label{eq:dual}\nD^*(A;q)=\\max_{\\alpha,\\beta\\ge0}q^\\top\\alpha\n\\quad\\text{s.t.}\\quad\nA^\\top(\\beta-\\alpha)\\ge0,\\quad q^\\top\\beta\\le1.\n\\end{equation}\nStrong duality gives $D^*(A;q)=R^*(A;q)$. Thus every dual-feasible pair is a certified lower bound, while an optimum is complete even when no local witness template is available. On every audited neutral-target regime the numerical primal--dual gap is below $10^{-8}$.\n\n\\subsection{Human-readable factor-2 witness}\n\\paragraph{Theorem 2 (global-singleton overlap lower bound).}\nSuppose packages $a,b$ each have a context supported by exactly that one package over the full frozen support universe, and another context is supported by both $a$ and $b$, possibly with additional packages. If both singleton contexts retain positive exposure, then every nonnegative package mass has max/min exposure ratio at least two on the focal rows, and therefore $R^*(A)\\ge2$ for the full support matrix.\n\n\\paragraph{Proof.}\nLet $r>0$ be the minimum exposure among the two singleton contexts and the shared context. Since the first singleton support signature is exactly $\\{a\\}$, its exposure is $w_a\\ge r$; likewise $w_b\\ge r$. The shared context contains both $a$ and $b$, and additional packages have nonnegative weight, so its exposure is at least $w_a+w_b\\ge2r$. Thus every $w$ has focal max/min ratio at least two. For the same $w$, the full-matrix maximum is no smaller than the focal maximum and the full-matrix minimum is no larger than the focal minimum, so the full-matrix ratio is also at least two. Minimizing over $w$ gives $R^*(A)\\ge2$. \\hfill$\\square$\n\nFor the neutral target $q=\\mathbf1$, Theorem~2 is also a sparse dual certificate: put $\\alpha=1$ on the two singleton rows, $\\beta=1$ on their shared row, and zero elsewhere. Dual feasibility follows from the support pattern and the objective is two. In released Skill-SP Level-1, the LP dual recovers such a sparse optimum and the primal attains $R^*=2$.\n\n\\begin{figure}[t]\n\\centering\n\\includegraphics[width=0.96\\linewidth]{figures/stri-factor2-witnesses.pdf}\n\\caption{Two released global-singleton overlap witnesses. In each case, retaining positive exposure on the two singleton regions forces at least twice that minimum exposure on the shared region.}\n\\label{fig:factor2-witnesses}\n\\end{figure}\n\n\\subsection{STRI-Cert and deployable variants}\nSTRI-Cert is a diagnostic protocol, not a learned predictor or a new LP solver. Its output has three operational meanings: \\textbf{realizable} ($R^*=1$) means package-only retuning is sufficient \\emph{in principle} to hit the declared target; \\textbf{residual} ($R^*>1$) means no same-information package router can hit that target without changing information, assumptions, or the action basis; and \\textbf{fail-closed} means support/target provenance or optimization is not valid enough to make either statement. The dual may expose a sparse obstruction, while the primal gives a constructive weighting in the realizable case. HiGHS solves both programs with paper-level tolerance $10^{-8}$; audited primal--dual gaps are at most $10^{-8}$. The certificate concerns feasibility, not downstream utility or a unique weight vector.\n\nTwo variants make deployment assumptions explicit. With independently justified graded support $0\\le L\\le A\\le U$, the box-robust audit uses $Lw\\ge q$ and $Uw\\le tq$; estimating valid bounds remains an identification problem. Adding $w_j\\le\\rho\\sum_k w_k$ audits package-mass concentration via $R^*_{\\rho}(A;q)\\ge R^*(A;q)$. Both remain linear programs.\n\n\\begin{figure}[t]\n\\centering\n\\includegraphics[width=0.99\\linewidth]{figures/stri-rstar-boundary.pdf}\n\\caption{Boundary breadth. \\textbf{A:} support geometry separates residual/equalizable regimes; SkillRouter$^\\dagger$ is an expert relevance analogue, not executable support. \\textbf{B:} SkillRL exact clones change semantic retrieval only under fresh-identity priority plus finite budget; placebo/quotient controls stay at zero and capacity closes the semantic-set effect.}\n\\label{fig:rstar-boundary}\n\\end{figure}\n\n\\section{Experimental Setup}\n\\label{sec:setup}\n\n\\paragraph{Evidence, estimands, and controls.}\nPredictions are direct: clone/split refactoring leaves the support cone and $R^*$ unchanged; overlap alone need not imply residual; a factor-2 witness rules out all same-information package weights for neutral $q$. Skill-SP tests positive/transfer regimes; Level-3/logical compiler test negative boundaries.\n\n\\paragraph{Six evidence roles.}\nStructural audits use neutral $R^*(A)$ with primal/dual tolerance $10^{-8}$. E1 is the released-system result; E2 practical package-weight/quotient baselines with frozen-weight transfer, eight-fold tool holdout, and exact active-package sparsity frontiers; E3 negative regimes, the expert-relevance analogue, SkillRL budget/placebo/quotient sweeps, and AutoSkill's bounded P19 intervention; E4 support/target sensitivity; E5 witness redundancy and the P19 mediator trace; E6 conditional solver cost. A separate SkillsBench qualification rejects task-local availability as exact support (79/87 rows disagree with \\texttt{required\\_skills}); it contributes no $R^*$ result. New breadth analyses use frozen public artifacts only---zero new annotations, model calls, or GPU runs.\n\n\\input{stri-20260816-tables.tex}\n\n\\section{Experiments and Results}\n\\label{sec:evidence}\n\n\\subsection{Skill-SP tool-call support and released-controller consequence}\nAPI-Bank Level-1 has 314 covered rows, 183 with multiple memberships, and neutral $R^*=2$. The released pre-task sampler initializes all 15 tool-call packages at probability $1/15$, so a double-supported row receives $2/15$ eligibility versus $1/15$ for a singleton. The source paper reports a $-1.9$ point accuracy change when dynamic routing is replaced by uniform routing~\\citep{huang2026skill}; we use this only to establish that allocation is operational, not to attribute utility to STRI.\n\nFor a same-state sampler-input reparameterization, we copy one active package with identical content, support, statistics, and sampler state under a fresh ID and rerun the author's weighting function. This is not a claim that the induction path would admit a literal duplicate. The cloned semantic class moves from $1/15$ to $2/16=1/8$, yielding prompt-mixture TV $=7/120=0.0583$ because package ID is absent from the questioner message. Quotient-conserved mass instead splits the original $1/15$ class mass and restores prompt TV exactly to zero. These are input-mixture statements, not generated-task or utility claims.\n\nA frozen tool-disjoint test gives the same structural answer: calibration has 47 covered rows/33 multi-memberships and $R^*=2$; heldout has 52/38 and $R^*=2$. In the 4-tool$\\to$4-tool split, calibration-fitted uniform, exact min-cover, max--min, and exact-$R^*$ weights retain heldout ratio 2, while inverse-support and NNLS transfer at 2.89 and 3.98. A stricter eight-fold leave-one-tool-out audit refits on seven tools and freezes weights for the eighth: uniform/exact-min-cover/exact-$R^*$ remain 2.0 on every fold, whereas NNLS has median 2.62 and worst 6.10. Thus the residual is not a single-split refitting artifact.\n\n\\subsection{Level-3: disjoint-support negative control}\nLevel-3 provides a natural released negative regime. Thirty-four rows are covered, every covered row has exactly one skill membership, and $R^*=1$. Equal weights on the active packages equalize every covered task. STRI-Cert therefore does not mechanically label every released taxonomy problematic.\n\n\\subsection{Logical compiler domain: high overlap but no residual}\nThe first-party logical release gives a stronger negative control: 128/128 programmatically generated units pass the author's compiler/uniqueness contracts and are cross-checked against all eight released support specifications, with no language model. Although 127/128 units have multiple memberships across 38 support patterns, $R^*=1$ because \\texttt{skill\\_008} supports every unit. This equalizer is concentrated: the max-share audit gives $R^*_{0.75}=4/3$, $R^*_{0.5}=2$, and $R^*_{0.25}=4$. High overlap is therefore not sufficient; realizability depends on support geometry and the declared feasible package-mass set.\n\n\\subsection{External graph analogues and SkillRL budget boundary}\nSkillRouter's 75-query expert relevance graph (24 single, 51 multi) has uniform spread 7$\\times$ but analogue $R^*=1$; including degraded relevant variants raises spread to 21$\\times$ while remaining equalizable~\\citep{zheng2026skillrouter}. AgentSkillOS supplies a complementary author-oracle-set graph: 20/30 tasks are multi-skill, the full graph has spread 4$\\times$ and analogue $R^*=2.5$, yet category $R^*$ is 2 for data/document and 1 for motion/visual/web~\\citep{li2026agentskillos}. These are relevance/oracle-set analogues, not executable support; omitted skills are not proven unsupported. Together they show that multi-membership and naive exposure spread alone do not determine realizability.\n\nSkillRL supplies a complementary identity-sensitive retrieval seam. Across 223 ALFWorld descriptions and all 12 exact-clone targets, fresh-\\texttt{dyn\\_} priority changes semantic retrieval for 11/12 targets for every $k\\in\\{1,2,3,4,6,8,12\\}$; unique-content crowd-out grows from 0 to 11 targets. A same-content non-dynamic-ID duplicate and exact-semantic quotient cause zero semantic-set changes at every tested budget. At $k=13$, where all 12 static contents plus the clone fit, the semantic-set effect vanishes; one extra slot at $k=12$ also restores it. This is a provenance-priority$\\times$finite-budget phenotype, not an $R^*$ or utility claim; the separate qualified endpoint bridge is not a population-level no-effect theorem.\n\n\\subsection{AutoSkill: dynamic behavioral propagation}\nAutoSkill~\\citep{yang2026autoskill} exposes a first-party \\texttt{sdk.search} seam. In one frozen five-skill P19 library at \\texttt{top\\_k=5}, a four-way exact-semantic split crowds out a post-checkout skill; ID renaming preserves, and exact-semantic quotienting restores, the original semantic set. The mechanical post-checkout behavior occurs in 6/6 original, 0/6 split, 3/3 placebo, and 3/3 quotient runs (one-sided Fisher $p=0.00108$). Under the split, adding the crowded-out skill back restores behavior in 3/3 fresh runs versus 0/3 for a matched cleanup add-back ($p=1/20$). This isolates one mediator on one substrate.\n\nAn outcome-blind preflight qualified 9/9 held-out units; SHA-256 selected two cross-scenario/position units before behavior. Across 8/8 valid A/B/C/D runs, neither met the frozen five-dimensional split-specific gate (A=B=C=D in one; A=B=C$\\ne$D in the other), so repeat-2 and the remaining seven units were stopped. Retrieval sensitivity is not sufficient for task-general behavioral propagation; P19 remains bounded.\n\n\\subsection{Matched baselines, representation ablations, and failure analysis}\nOn frozen support, Level-1 uniform attains optimum 2; inverse-support reaches 98.33 (10.87 tempered), while NNLS lowers CV 0.312$\\to$0.215 but worsens ratio to 5.51. Exact enumeration shows budgets 1--2 cannot cover Level-1; \\texttt{skill\\_003/004/015} attain unrestricted $R^*=2$ at budget 3, unchanged through 6. Level-3 needs four packages for $R^*=1$; universal \\texttt{skill\\_008} alone gives logical $R^*=1$. Thus average fit and controller sparsity do not explain the residual.\n\n\\paragraph{E4--E5: structural robustness.} Across 49 tools, all 4 closed-form-witness subsets are residual and all 10 overlap-without-witness subsets equalizable. Level-1 stays residual under 1,387 additions, 366 valid deletions, 184 tool-block$\\times$package biases, 49/56 signature relabels, and 200 degree-preserving bipartite rewirings; logical breaks under 127/595 valid deletions. Exact neutral-target MILPs require at least 22 added cells or 71 deletions to reach $R^*=1$; 7/7 frozen target rays and all max-share tests remain residual. Peeling gives 22 pairwise-disjoint three-row witnesses over 66 rows/19 tools (21.0\\% of Level-1) before $R^*=1$; package-wide overstatement is a boundary (3/9 residual). These are finite-snapshot controls, not randomization significance or witness uniqueness. \\textbf{E6: conditional solver cost.} Dense SciPy/HiGHS is 0.00234 s at $128\\times8$ and 0.685 s at $16{,}384\\times96$ (max 0.765 s; 32,768 inequalities; 24.25 MiB), host-load-dependent with no asymptotic/solver-novelty claim.\n\n\\begin{figure}[t]\n\\centering\n\\includegraphics[width=0.99\\linewidth]{figures/stri-ablation-robustness.pdf}\n\\caption{Structural robustness. \\textbf{A:} clone perturbation and quotient recovery. \\textbf{B:} exact edit radii are 22 additions/71 deletions; 200/200 degree-preserving rewirings retain $R^*=2$. \\textbf{C:} the residual survives 22 disjoint three-row witnesses spanning 19 tools. \\textbf{D:} 7/7 frozen target rays remain residual and max-share $\\rho\\in[1/6,1]$ leaves $R^*=2$.}\n\\label{fig:ablation-robustness}\n\\end{figure}\n\n\\section{Discussion, Limitations, and Takeaway}\n\\label{sec:limitations}\nSupport geometry---not overlap/average fit---separates regimes: $R^*=1$ permits retuning; $R^*>1$ excludes same-information control; invalid provenance redirects to identification. AutoSkill keeps one bounded P19 proof, but its preregistered held-out pilot stops task-general propagation. The AutoSkill path and SkillRL phenotype neither supports population utility, safety, or regret; semantic-first remains constructive, not a validated repair.\n",
+  "content_inventory": {
+    "facts": 4,
+    "citations": 7,
+    "numbers": 18,
+    "tables": 2,
+    "claims": 4,
+    "extraction_complete": true,
+    "extractor_version": "stri-r19-submission-critical-integrity-v1",
+    "extractor_sha256": "b67b4c31577dabda1ae5c717586b98830b6daf7e63c5f326b4cd22def5c2f214",
+    "scope_is_submission_critical_not_full_token_inventory": true
+  },
+  "facts": [
+    {
+      "fact_id": "F1-support-fixed",
+      "source_ref": "artifact:generated/asset-first-stri-practical-baselines-20260824.json",
+      "source_verified": true,
+      "passage_support_verified": true
+    },
+    {
+      "fact_id": "F2-external-analogue-boundary",
+      "source_ref": "artifact:generated/asset-first-stri-second-substrate-qualification-20260824.json",
+      "source_verified": true,
+      "passage_support_verified": true
+    },
+    {
+      "fact_id": "F3-p19-bounded",
+      "source_ref": "artifact:generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+      "source_verified": true,
+      "passage_support_verified": true
+    },
+    {
+      "fact_id": "F4-r19-stop",
+      "source_ref": "artifact:generated/asset-first-stri-autoskill-multitask-pilot-stage1-20260824.json",
+      "source_verified": true,
+      "passage_support_verified": true
+    }
+  ],
+  "citations": [
+    {
+      "citation_id": "huang2026skill",
+      "source_ref": "https://arxiv.org/abs/2607.22529",
+      "existence_verified": true,
+      "metadata_identity_verified": true,
+      "passage_support_verified": true,
+      "directionality_verified": true,
+      "scope_verified": true,
+      "contains_numeric_claim": false
+    },
+    {
+      "citation_id": "xia2026skillrl",
+      "source_ref": "https://arxiv.org/abs/2602.08234",
+      "existence_verified": true,
+      "metadata_identity_verified": true,
+      "passage_support_verified": true,
+      "directionality_verified": true,
+      "scope_verified": true,
+      "contains_numeric_claim": false
+    },
+    {
+      "citation_id": "yang2026autoskill",
+      "source_ref": "https://arxiv.org/abs/2603.01145",
+      "existence_verified": true,
+      "metadata_identity_verified": true,
+      "passage_support_verified": true,
+      "directionality_verified": true,
+      "scope_verified": true,
+      "contains_numeric_claim": false
+    },
+    {
+      "citation_id": "zheng2026skillrouter",
+      "source_ref": "https://arxiv.org/abs/2603.22455",
+      "existence_verified": true,
+      "metadata_identity_verified": true,
+      "passage_support_verified": true,
+      "directionality_verified": true,
+      "scope_verified": true,
+      "contains_numeric_claim": false
+    },
+    {
+      "citation_id": "li2026agentskillos",
+      "source_ref": "https://arxiv.org/abs/2603.02176",
+      "existence_verified": true,
+      "metadata_identity_verified": true,
+      "passage_support_verified": true,
+      "directionality_verified": true,
+      "scope_verified": true,
+      "contains_numeric_claim": false
+    },
+    {
+      "citation_id": "xu2026skillavailability",
+      "source_ref": "https://arxiv.org/abs/2605.31408",
+      "existence_verified": true,
+      "metadata_identity_verified": true,
+      "passage_support_verified": true,
+      "directionality_verified": true,
+      "scope_verified": true,
+      "contains_numeric_claim": false
+    },
+    {
+      "citation_id": "jiang2026demystifying",
+      "source_ref": "https://arxiv.org/abs/2608.14036",
+      "existence_verified": true,
+      "metadata_identity_verified": true,
+      "passage_support_verified": true,
+      "directionality_verified": true,
+      "scope_verified": true,
+      "contains_numeric_claim": false
+    }
+  ],
+  "numbers": [
+    {
+      "number_id": "N-L1-RSTAR",
+      "observed_value": 2.0,
+      "source_value": 2.0,
+      "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+      "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+      "source_field": "headline.level1_exact_R_star"
+    },
+    {
+      "number_id": "N-L1-UNIFORM",
+      "observed_value": 2.0,
+      "source_value": 2.0,
+      "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+      "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+      "source_field": "headline.level1_uniform_ratio"
+    },
+    {
+      "number_id": "N-L1-NNLS",
+      "observed_value": 5.51,
+      "source_value": 5.51,
+      "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+      "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+      "source_field": "headline.level1_nnls_ratio rounded(2)"
+    },
+    {
+      "number_id": "N-LOO-EXACT-MAX",
+      "observed_value": 2.0,
+      "source_value": 2.0,
+      "source_artifact": "generated/asset-first-stri-crossval-sparsity-20260824.json",
+      "source_artifact_sha256": "ceada8d1b84fbdba0943db7b251b94ed4698ca0584314ac6d7d6fcb0f6151918",
+      "source_field": "headline.exact_rstar_heldout_ratio_max"
+    },
+    {
+      "number_id": "N-LOO-NNLS-MAX",
+      "observed_value": 6.1,
+      "source_value": 6.1,
+      "source_artifact": "generated/asset-first-stri-crossval-sparsity-20260824.json",
+      "source_artifact_sha256": "ceada8d1b84fbdba0943db7b251b94ed4698ca0584314ac6d7d6fcb0f6151918",
+      "source_field": "headline.nnls_heldout_ratio_max rounded(2)"
+    },
+    {
+      "number_id": "N-SPARSE-MIN",
+      "observed_value": 3,
+      "source_value": 3,
+      "source_artifact": "generated/asset-first-stri-crossval-sparsity-20260824.json",
+      "source_artifact_sha256": "ceada8d1b84fbdba0943db7b251b94ed4698ca0584314ac6d7d6fcb0f6151918",
+      "source_field": "headline.l1_minimum_feasible_active_packages"
+    },
+    {
+      "number_id": "N-SKILLROUTER-R",
+      "observed_value": 1.0,
+      "source_value": 1.0,
+      "source_artifact": "generated/asset-first-stri-skillrouter-relevance-analogue-20260824.json",
+      "source_artifact_sha256": "9133e925b0cf98d2f7042047adabf4dee4b9bbf8a2fb08f44f9591dc1e052898",
+      "source_field": "headline.core_R_star"
+    },
+    {
+      "number_id": "N-AGENTSKILLOS-TASKS",
+      "observed_value": 30,
+      "source_value": 30,
+      "source_artifact": "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json",
+      "source_artifact_sha256": "0063490d02519e509407f2307e882aa3fe83c0af4a2e5a3ed6d2defc6a9e2564",
+      "source_field": "headline.tasks"
+    },
+    {
+      "number_id": "N-AGENTSKILLOS-R",
+      "observed_value": 2.5,
+      "source_value": 2.5,
+      "source_artifact": "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json",
+      "source_artifact_sha256": "0063490d02519e509407f2307e882aa3fe83c0af4a2e5a3ed6d2defc6a9e2564",
+      "source_field": "headline.full_oracle_set_R_star_analogue"
+    },
+    {
+      "number_id": "N-P19-A",
+      "observed_value": 6,
+      "source_value": 6,
+      "source_artifact": "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+      "source_artifact_sha256": "7398ccc8c399396f7a32df55fdc3babfc7a0b00dccc0e7ab6d809416c01cc0bd",
+      "source_field": "groups.A_original.destructive_signature_positive"
+    },
+    {
+      "number_id": "N-P19-B",
+      "observed_value": 0,
+      "source_value": 0,
+      "source_artifact": "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+      "source_artifact_sha256": "7398ccc8c399396f7a32df55fdc3babfc7a0b00dccc0e7ab6d809416c01cc0bd",
+      "source_field": "groups.B_split4.destructive_signature_positive"
+    },
+    {
+      "number_id": "N-P19-FISHER",
+      "observed_value": 0.00108,
+      "source_value": 0.00108,
+      "source_artifact": "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+      "source_artifact_sha256": "7398ccc8c399396f7a32df55fdc3babfc7a0b00dccc0e7ab6d809416c01cc0bd",
+      "source_field": "statistics.fisher_exact_p rounded(5)"
+    },
+    {
+      "number_id": "N-MEDIATOR-P",
+      "observed_value": 0.05,
+      "source_value": 0.05,
+      "source_artifact": "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json",
+      "source_artifact_sha256": "472c7270881f38c1e1fd7d571aacf5256095f018c783366206d20cfcfe70c807",
+      "source_field": "statistics.exact_decimal"
+    },
+    {
+      "number_id": "N-MULTITASK-QUAL",
+      "observed_value": 9,
+      "source_value": 9,
+      "source_artifact": "generated/asset-first-stri-autoskill-multitask-qualification-20260824.json",
+      "source_artifact_sha256": "ec152d0406716d78fe5f2784c1e153d2a1a8891985dc789a8f21b652002e46fb",
+      "source_field": "summary.qualified_units"
+    },
+    {
+      "number_id": "N-MULTITASK-RUNS",
+      "observed_value": 8,
+      "source_value": 8,
+      "source_artifact": "generated/asset-first-stri-autoskill-multitask-pilot-stage1-20260824.json",
+      "source_artifact_sha256": "a84c97bd6fc340814087741aa39d46a5864e0527c885c275896b53ec21a5364a",
+      "source_field": "runs_completed"
+    },
+    {
+      "number_id": "N-EDIT-ADD",
+      "observed_value": 22,
+      "source_value": 22,
+      "source_artifact": "generated/asset-first-stri-support-edit-radius-20260824.json",
+      "source_artifact_sha256": "1152977257c4c298686d91b78ead93e6786fa13819be203732322a1149fbca1a",
+      "source_field": "support_edit_radius.minimum_additions_to_equalizable"
+    },
+    {
+      "number_id": "N-EDIT-DEL",
+      "observed_value": 71,
+      "source_value": 71,
+      "source_artifact": "generated/asset-first-stri-support-edit-radius-20260824.json",
+      "source_artifact_sha256": "1152977257c4c298686d91b78ead93e6786fa13819be203732322a1149fbca1a",
+      "source_field": "support_edit_radius.minimum_deletions_to_equalizable"
+    },
+    {
+      "number_id": "N-WITNESSES",
+      "observed_value": 22,
+      "source_value": 22,
+      "source_artifact": "generated/asset-first-stri-witness-peeling-20260824.json",
+      "source_artifact_sha256": "08ab180e233c967c64e8a59733518468f65e171543d1648db0fc0a74421b99f3",
+      "source_field": "witness_peeling.summary.peeling_rounds_before_equalizable"
+    }
+  ],
+  "tables": [
+    {
+      "table_id": "T2-practical-baselines-critical-cells",
+      "generation_script": {
+        "source_artifact": "research_pipeline/asset_first_stri_manuscript_integrity_20260824.py",
+        "source_artifact_sha256": "b67b4c31577dabda1ae5c717586b98830b6daf7e63c5f326b4cd22def5c2f214"
+      },
+      "cells": [
+        {
+          "cell_id": "uniform-l1",
+          "observed_value": 2.0,
+          "source_value": 2.0,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "headline.level1_uniform_ratio"
+        },
+        {
+          "cell_id": "uniform-loo-max",
+          "observed_value": 2.0,
+          "source_value": 2.0,
+          "source_artifact": "generated/asset-first-stri-crossval-sparsity-20260824.json",
+          "source_artifact_sha256": "ceada8d1b84fbdba0943db7b251b94ed4698ca0584314ac6d7d6fcb0f6151918",
+          "source_field": "headline.uniform_heldout_ratio_max"
+        },
+        {
+          "cell_id": "nnls-l1",
+          "observed_value": 5.51,
+          "source_value": 5.51,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "headline.level1_nnls_ratio rounded(2)"
+        },
+        {
+          "cell_id": "nnls-loo-max",
+          "observed_value": 6.1,
+          "source_value": 6.1,
+          "source_artifact": "generated/asset-first-stri-crossval-sparsity-20260824.json",
+          "source_artifact_sha256": "ceada8d1b84fbdba0943db7b251b94ed4698ca0584314ac6d7d6fcb0f6151918",
+          "source_field": "headline.nnls_heldout_ratio_max rounded(2)"
+        },
+        {
+          "cell_id": "exact-l1",
+          "observed_value": 2.0,
+          "source_value": 2.0,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "headline.level1_exact_R_star"
+        }
+      ]
+    },
+    {
+      "table_id": "T3-boundary-critical-cells",
+      "generation_script": {
+        "source_artifact": "research_pipeline/asset_first_stri_manuscript_integrity_20260824.py",
+        "source_artifact_sha256": "b67b4c31577dabda1ae5c717586b98830b6daf7e63c5f326b4cd22def5c2f214"
+      },
+      "cells": [
+        {
+          "cell_id": "l1-covered",
+          "observed_value": 314.0,
+          "source_value": 314,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "regimes.skillsp_l1_full.covered_rows"
+        },
+        {
+          "cell_id": "l1-rstar",
+          "observed_value": 2.0,
+          "source_value": 2.0,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "headline.level1_exact_R_star"
+        },
+        {
+          "cell_id": "skillrouter-core-r",
+          "observed_value": 1.0,
+          "source_value": 1.0,
+          "source_artifact": "generated/asset-first-stri-skillrouter-relevance-analogue-20260824.json",
+          "source_artifact_sha256": "9133e925b0cf98d2f7042047adabf4dee4b9bbf8a2fb08f44f9591dc1e052898",
+          "source_field": "headline.core_R_star"
+        },
+        {
+          "cell_id": "agentskillos-tasks",
+          "observed_value": 30.0,
+          "source_value": 30,
+          "source_artifact": "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json",
+          "source_artifact_sha256": "0063490d02519e509407f2307e882aa3fe83c0af4a2e5a3ed6d2defc6a9e2564",
+          "source_field": "headline.tasks"
+        },
+        {
+          "cell_id": "agentskillos-r",
+          "observed_value": 2.5,
+          "source_value": 2.5,
+          "source_artifact": "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json",
+          "source_artifact_sha256": "0063490d02519e509407f2307e882aa3fe83c0af4a2e5a3ed6d2defc6a9e2564",
+          "source_field": "headline.full_oracle_set_R_star_analogue"
+        }
+      ]
+    }
+  ],
+  "expected_claim_ids": [
+    "N1",
+    "N2",
+    "N3",
+    "R19-BOUNDARY"
+  ],
+  "claims": [
+    {
+      "claim_id": "N1",
+      "statement_ref": "sec:introduction+sec:evidence",
+      "evidence_refs": [
+        "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+        "generated/asset-first-stri-autoskill-multitask-pilot-stage1-20260824.json",
+        "generated/asset-first-stri-released-controller-clone-audit-20260819.json"
+      ],
+      "supported": true
+    },
+    {
+      "claim_id": "N2",
+      "statement_ref": "sec:certificate",
+      "evidence_refs": [
+        "research_pipeline/asset_first_stri_certificate.py",
+        "generated/asset-first-stri-practical-baselines-20260824.json"
+      ],
+      "supported": true
+    },
+    {
+      "claim_id": "N3",
+      "statement_ref": "sec:related+sec:evidence",
+      "evidence_refs": [
+        "generated/asset-first-stri-practical-baselines-20260824.json",
+        "generated/asset-first-stri-skillrouter-relevance-analogue-20260824.json",
+        "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json",
+        "generated/asset-first-stri-second-substrate-qualification-20260824.json"
+      ],
+      "supported": true
+    },
+    {
+      "claim_id": "R19-BOUNDARY",
+      "statement_ref": "sec:evidence:AutoSkill+sec:limitations",
+      "evidence_refs": [
+        "generated/asset-first-stri-autoskill-multitask-qualification-20260824.json",
+        "generated/asset-first-stri-autoskill-multitask-pilot-stage1-20260824.json",
+        "generated/asset-first-stri-autoskill-multitask-pilot-failure-lesson-20260824.json"
+      ],
+      "supported": true
+    }
+  ],
+  "reader_comprehension": {
+    "terms": [
+      {
+        "term": "STRI",
+        "first_use_defined": true
+      },
+      {
+        "term": "support matrix A",
+        "first_use_defined": true
+      },
+      {
+        "term": "representation-independent target q",
+        "first_use_defined": true
+      },
+      {
+        "term": "quotient",
+        "first_use_defined": true
+      }
+    ],
+    "components": [
+      {
+        "component": "STRI-Cert",
+        "input_explained": true,
+        "output_explained": true
+      },
+      {
+        "component": "held-out AutoSkill pilot",
+        "input_explained": true,
+        "output_explained": true
+      }
+    ]
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

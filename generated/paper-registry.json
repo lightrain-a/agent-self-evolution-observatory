@@ -1,7 +1,7 @@
 {
   "schema_version": "1.6",
-  "generated_at": "2026-08-24T10:15:30+00:00",
-  "source_revision": "9e1c60845d4245c5ad7645d1cee06eb82f278871",
+  "generated_at": "2026-08-24T10:33:57+00:00",
+  "source_revision": "1225af76516355de4910a41fc970d3af9b9b5db6",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -304,13 +304,14 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 66,
+        "events": 67,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
         "mock_reviews": 2,
         "claim_audit_receipts": 1,
         "manuscript_ci_receipts": 4,
+        "post_draft_integrity_receipts": 1,
         "prebuttal_receipts": 1,
         "submission_readiness_receipts": 1,
         "contract_revisions": 0,
