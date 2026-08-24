@@ -258,12 +258,13 @@ class ResearchLearningLoopTest(unittest.TestCase):
         self.assertTrue(state["policy"]["every_candidate_design_requires_local_gap_test"])
         self.assertGreaterEqual(state["summary"]["systems_reviewed"], 10)
         self.assertGreaterEqual(state["summary"]["adopted"], 15)
-        self.assertEqual(state["summary"]["next_backlog"], 4)
+        self.assertEqual(state["summary"]["next_backlog"], 3)
         backlog={row["system"]:row for row in state["next_backlog"]}
-        self.assertEqual(set(backlog),{"Replica / Faraday","AHOIS","Notes2Skills","SAGE-MHFA"})
+        self.assertEqual(set(backlog),{"Replica / Faraday","AHOIS","SAGE-MHFA"})
         self.assertEqual(backlog["Replica / Faraday"]["local_gap_test"]["verdict"],"gap-confirmed-open")
         self.assertEqual(backlog["AHOIS"]["local_gap_test"]["verdict"],"gap-confirmed-open")
-        self.assertEqual(backlog["Notes2Skills"]["local_gap_test"]["verdict"],"gap-confirmed-open")
+        notes=next(row for row in state["designs"] if row["system"]=="Notes2Skills")
+        self.assertEqual(notes["status"],"adopted");self.assertEqual(notes["local_gap_test"]["verdict"],"gap-confirmed-and-closed");self.assertIn("30/30",notes["local_gap_test"]["after"])
         mhfa=backlog["SAGE-MHFA"]["local_gap_test"]
         self.assertEqual(mhfa["verdict"],"support-insufficient")
         self.assertLess(mhfa["available_individual_failure_assets"],mhfa["minimum_replay_cases"])

@@ -420,7 +420,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertIn("ARIS + local double-funnel", sources)
         self.assertIn("ARIS portfolio persistence + local scientific gates", sources)
         self.assertIn("ARIS meta-optimization pattern + local typed failure semantics", sources)
-        self.assertIn("ARIS research wiki pattern + local typed closure", sources)
+        self.assertIn("ARIS research wiki pattern + Notes2Skills + local typed closure", sources)
         self.assertIn("ARIS / ResearchArena / AI-Scientist-v2 / reviewer-decision workflow", sources)
         self.assertIn("ScienceFlow / AutoResearchEval / EurekAgent / TeLLAgent / Claw AI Lab", sources)
         self.assertEqual(len(self.state["components"]), 33)

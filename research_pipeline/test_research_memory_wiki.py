@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy, tempfile, unittest
 from pathlib import Path
 
-from .research_memory_wiki import build_research_memory_wiki, compile_research_memory_query_pack, lint_research_memory_wiki, load_research_memory_wiki
+from .research_memory_wiki import audit_certainty_typing, build_research_memory_wiki, compile_research_memory_query_pack, lint_research_memory_wiki, load_research_memory_wiki
 
 
 def base_inputs():
@@ -20,6 +20,30 @@ def base_inputs():
 class ResearchMemoryWikiTest(unittest.TestCase):
     def build(self):
         s,f,m,p,i,g,c=base_inputs();return build_research_memory_wiki(search_design_state=s,failure_asset_library=f,scientific_meta_trace=m,candidate_portfolio=p,experiment_iteration=i,generator_state=g,claim_ledger=c,generated_at="2026-08-19T00:00:00+00:00")
+
+    def test_certainty_is_typed_scope_bound_and_never_auto_promoted(self):
+        wiki=self.build();self.assertEqual(wiki["schema_version"],"1.2");self.assertEqual(wiki["certainty_audit"]["status"],"PASS")
+        self.assertEqual(wiki["certainty_audit"]["typed"],wiki["certainty_audit"]["sampled"]);self.assertEqual(wiki["certainty_audit"]["automatic_skill_promotions"],0)
+        self.assertTrue(all(r.get("certainty") in {"CONFIRMED","SUPPORTED","TENTATIVE","SPECULATIVE","REFUTED","NOT_APPLICABLE"} for r in wiki["entries"]))
+        self.assertTrue(all(r.get("certainty_scope_bound") is True and r.get("automatic_skill_promotion") is False for r in wiki["entries"]))
+        supported=next(r for r in wiki["entries"] if r["kind"]=="SEARCH_CLOSURE");self.assertEqual(supported["certainty"],"SUPPORTED")
+        open_q=next(r for r in wiki["entries"] if r["kind"]=="OPEN_QUESTION");self.assertEqual(open_q["certainty"],"NOT_APPLICABLE");self.assertFalse(open_q["skill_candidate_eligible"])
+
+    def test_uncertain_memory_cannot_be_skill_candidate_and_legacy_v11_remains_readable(self):
+        wiki=self.build();bad=copy.deepcopy(wiki);row=next(r for r in bad["entries"] if r["kind"]=="DISCOVERY_LESSON") if any(r["kind"]=="DISCOVERY_LESSON" for r in bad["entries"]) else bad["entries"][0]
+        row["certainty"]="SPECULATIVE";row["skill_candidate_eligible"]=True
+        lint=lint_research_memory_wiki(bad);self.assertEqual(lint["status"],"FAIL");self.assertIn("uncertain-memory-cannot-be-skill-candidate",{x["code"] for x in lint["errors"]})
+        legacy=copy.deepcopy(wiki);legacy["schema_version"]="1.1";legacy.pop("certainty_audit",None)
+        for item in legacy["entries"]:
+            for key in ("certainty","certainty_basis","certainty_scope_bound","skill_candidate_eligible","automatic_skill_promotion"):item.pop(key,None)
+        self.assertEqual(lint_research_memory_wiki(legacy)["status"],"PASS")
+
+    def test_thirty_item_certainty_replay_is_stratified_and_zero_authority(self):
+        s,f,m,p,i,g,c=base_inputs();cycle={"lessons":[]}
+        for index in range(35):
+            cycle["lessons"].append({"lesson_id":f"LS-{index}","candidate_id":f"C-{index}","lesson_type":"SCIENTIFIC_REDUCTION" if index%2==0 else "SEARCH_CONTROL","affected_layer":"problem_novelty","title":f"lesson {index}","summary":"same information reduction or control lesson","source_refs":[f"receipt:{index}"],"reopen_condition":"new identifiable residual survives","reusable_precheck":"run the strongest simplification first","opposite_search_seed":"search for opposite prediction","scientific_authority":False})
+        wiki=build_research_memory_wiki(search_design_state=s,failure_asset_library=f,scientific_meta_trace=m,candidate_portfolio=p,experiment_iteration=i,generator_state=g,claim_ledger=c,discovery_cycle=cycle)
+        audit=audit_certainty_typing(wiki,30);self.assertEqual(audit["status"],"PASS");self.assertEqual(audit["sampled"],30);self.assertEqual(audit["typed"],30);self.assertEqual(audit["unsafe_skill_candidates"],[]);self.assertFalse(audit["scientific_authority"]);self.assertGreaterEqual(len(audit["sampled_kinds"]),4)
 
     def test_transient_operational_noise_is_archived_but_not_prompt_eligible(self):
         wiki=self.build();row=next(r for r in wiki["entries"] if r["kind"]=="FAILURE_ASSET")
