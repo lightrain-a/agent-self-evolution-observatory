@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-24T03:40:18Z",
+  "generated_at": "2026-08-24T03:47:04Z",
   "receipts": [
     {
       "run_id": "external-fresh-intake-20260818-r1",
@@ -142,6 +142,33 @@
       "review_artifact_sha256": "45df8d49a816b3dc72a28aec55238631c8e584b3192f0fb544f1cbc9dad2bd12",
       "review_complete": true,
       "identity_verified_count": 11,
+      "provider_model_calls": 0,
+      "scientific_authority": false,
+      "authority": {
+        "candidate_generation": false,
+        "problem": false,
+        "method": false,
+        "experiment": false,
+        "p0": false,
+        "gpu": false
+      }
+    },
+    {
+      "run_id": "external-fresh-tail-reconciliation-20260824-r1",
+      "status": "EXTERNAL_FRESH_INTAKE_REVIEWED",
+      "source_refs": [
+        "arXiv:2608.17684",
+        "arXiv:2608.18066",
+        "arXiv:2608.19013",
+        "arXiv:2608.19880",
+        "arXiv:2608.19902",
+        "arXiv:2608.20139",
+        "arXiv:2608.20318"
+      ],
+      "review_artifact": "generated/paper-first-external-fresh-tail-reconciliation-20260824-r1.json",
+      "review_artifact_sha256": "08ab984b7bdce34c1030cb63bde79e5004a7a643a583c9a116890b2bdcdece52",
+      "review_complete": true,
+      "identity_verified_count": 7,
       "provider_model_calls": 0,
       "scientific_authority": false,
       "authority": {

@@ -1,0 +1,263 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T03:47:04Z",
+  "run_id": "external-fresh-tail-reconciliation-20260824-r1",
+  "status": "EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+  "source_window": {
+    "selection_rule": "Close the seven zero-portable-source-review-exposure refs remaining from the cached private 32-source pool after the priority-five and reconstructed-eleven receipts. For sources already adjudicated elsewhere, this artifact reconciles review exposure without changing scientific authority; for newly reviewed sources it applies the same durable-reopen/same-information reducer gate.",
+    "cached_pool": "fresh-candidate-replenishment-20260823b primary-evidence-pool",
+    "tail_of_cached_private_32": true,
+    "global_source_coverage_exhausted_claim": false,
+    "publication_dates": [
+      "2026-08-18",
+      "2026-08-19",
+      "2026-08-20"
+    ]
+  },
+  "summary": {
+    "sources_discovered": 7,
+    "exact_prior_exposure_zero": 7,
+    "identity_verified": 7,
+    "formal_generator_run": false,
+    "provider_model_calls": 0,
+    "paper_problem_emissions": 0,
+    "contradictory_evidence_sufficient": 0,
+    "scientific_reopens": 0,
+    "prior_adjudication_reconciled": 3,
+    "closure_support_only": 1,
+    "stop_reduction": 1,
+    "support_component_only": 1,
+    "scope_excluded": 1,
+    "watch_reopen_seeds": 0,
+    "cached_private_32_portable_coverage_after_receipt": 32,
+    "global_source_coverage_exhausted": false,
+    "old_primary_tranche_mutated": false
+  },
+  "policy": {
+    "identity_before_asset": true,
+    "first_party_asset_ownership_required": true,
+    "review_exposure_is_retrieval_metadata_only": true,
+    "review_exposure_cannot_authorize_or_skip_scientific_gates": true,
+    "review_artifact_must_bind_exact_source_refs": true,
+    "portable_receipt_must_bind_review_artifact_sha256": true,
+    "no_emit_is_not_automatically_a_scientific_dead_end": true,
+    "support_component_is_not_problem_gate_authority": true,
+    "contradiction_requires_exact_existing_reopen_contract": true,
+    "same_information_reducer_gets_candidate_pre_outcome_observables": true,
+    "prior_scientific_adjudication_is_not_rewritten_by_exposure_reconciliation": true,
+    "cached_pool_coverage_is_not_global_coverage": true
+  },
+  "sources": [
+    {
+      "ref": "arXiv:2608.17684",
+      "title": "Auditing Self-Evolution in Financial Agents: Capability Gains, Security Drift, and Execution-Interface Mismatch",
+      "published": "2026-08-18",
+      "source_sha256": "2a98c74f711e939885663e5eec469c3a711954598ea9df1f760aa7fc5a2c1797",
+      "fulltext_sha256": "2d24607853cec7142861ffd0b601bc100a9e1d20b38a1640fe8c839299370b5f",
+      "disposition": "PRIOR_ADJUDICATION_RECONCILED_NO_REOPEN",
+      "reduction": [
+        "scope/granularity-effect-heterogeneity",
+        "retrieval-provenance-and-failure-derived-memory",
+        "executor-interface-compatibility"
+      ],
+      "note": "This source already contributed to canonical scientific adjudication. Aggregate capability/security behavior separates by scope and memory method, while the strongest literal-envelope AWM discrepancy changes executor compatibility and therefore does not isolate a new self-evolution causal primitive. The unresolved PORT-013 executable-envelope object remains evidence-blocked rather than scientifically promoted: released provenance lacks the exact per-trajectory native-call units required by the frozen support contract. This receipt records source-review exposure only and does not supersede those existing adjudications.",
+      "prior_scientific_artifacts": [
+        "generated/longitudinal-safety-discovery-cycle-20260823.json",
+        "generated/paper-first-pre-f0-support-inventory-20260822-port013.json",
+        "generated/research-memory-wiki.json"
+      ],
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-DISC-4e7d22a39f858b12d5",
+          "result": "NOT_SATISFIED",
+          "boundary": "Scope/granularity remains an observable effect-heterogeneity variable; no matched same-information residual forces a different prediction."
+        },
+        {
+          "artifact": "generated/paper-first-pre-f0-support-inventory-20260822-port013.json",
+          "result": "SUPPORT_UNAVAILABLE",
+          "boundary": "No released provenance-audited per-trajectory native function-call units satisfy the frozen PORT-013 join/identity contract; synthetic substitution is forbidden."
+        }
+      ],
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.18066",
+      "title": "On the Fragility of Self-Improving Agents: Variance, Task Order, and Underspecification",
+      "published": "2026-08-18",
+      "source_sha256": "d6c188120b6e2268a4bc44f601282a1b9569e4199743c6ffa09729b1c5c5e2b3",
+      "fulltext_sha256": "12c8bc7ab1f80a19fc296c67748814390c474469b482854923a3768591723650",
+      "disposition": "CLOSURE_SUPPORT_ONLY_P15",
+      "reduction": [
+        "history-conditioned-performance",
+        "implicit-curriculum-and-task-order",
+        "underspecification-and-missing-feedback"
+      ],
+      "note": "The paper strongly establishes that memory-based self-improving agents are order-sensitive: default easy-to-hard ordering can yield apparent improvement whereas shuffled orders can degrade performance, and adding rubrics/environment feedback during memory construction recovers only part of that degradation. This is high-quality motivation for path dependence, but its decisive observables are downstream success and memory content shaped by the ordered history. It does not measure an outcome-independent order-only uptake/state/decision residual after a strongest path-integrated baseline receives the same ordered history, task/content, feedback and lineage information. It therefore strengthens the existing P15 closure rather than reopening it.",
+      "prior_scientific_artifacts": [
+        "generated/p15-pathbench-task-order-closure-readjudication-20260824.json"
+      ],
+      "reopen_contracts_checked": [
+        {
+          "artifact": "generated/p15-pathbench-task-order-closure-readjudication-20260824.json",
+          "result": "NOT_SATISFIED",
+          "boundary": "A same-task-set/order performance reversal remains closure support unless a pre-outcome uptake/state/decision observable has repeatable residual beyond a same-information path-integrated continual-learning baseline."
+        }
+      ],
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.19013",
+      "title": "Harness Continual Learning: Continual Adaptation Beyond Model Parameters",
+      "published": "2026-08-19",
+      "source_sha256": "8e470e65566a33a8c7bb43ac686b4f38ed480c79ff2023133fafad2888c89ded",
+      "fulltext_sha256": "9c77e8e9678a0507784547ed84e2d5f44940ad86390a5d9ac46d483b0bd6c35e",
+      "disposition": "PRIOR_ADJUDICATION_RECONCILED_NO_REOPEN",
+      "reduction": [
+        "continual-learning-stability-plasticity",
+        "multi-criteria-commit-rule",
+        "stateful-harness-components"
+      ],
+      "note": "HCL is already represented in durable memory. Its Continual Evaluator commits a candidate harness after checking current improvement, historical retention and validity, and its retention sweeps expose harness-level forgetting. Once the strongest baseline receives the same current-gain, retention-risk, validity, interaction and budget information, this is a constrained stability-plasticity/Pareto commitment decision. The source does not provide matched candidate updates for which a harness-specific hidden structural state forces a different commit decision.",
+      "prior_scientific_artifacts": [
+        "generated/failure-derived-strategy-control-debate-20260823.json",
+        "generated/longitudinal-safety-discovery-cycle-20260823.json",
+        "generated/research-memory-wiki.json"
+      ],
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-DISC-96d9445f9dc2dfe39f",
+          "result": "NOT_SATISFIED",
+          "boundary": "No pair matched on current gain, historical retention risk, validity, component interactions and budget is separated by an irreducible harness-specific state."
+        }
+      ],
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.19880",
+      "title": "EnvHarness: Awakening Static Worlds for Agent Learning",
+      "published": "2026-08-20",
+      "source_sha256": "bb323c896b3690ed9124c9bdde387c6c696e03ae7d549ebe55b2a446058076a8",
+      "fulltext_sha256": "",
+      "fulltext_available_in_cached_pool": false,
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "adaptive-curriculum-and-environment-design",
+        "feedback-guided-program-synthesis",
+        "policy-conditioned-distribution-shaping"
+      ],
+      "note": "EnvHarness wraps a frozen environment with executable Setup/Rule/Link-style components while preserving the original verifier; EnvRigger observes the current black-box policy, diagnoses weaknesses, writes candidate components and validates them on fresh rollouts, with accepted wrappers persisting as the policy improves. This is genuine policy-conditioned environment co-adaptation, but the current evidence does not isolate a new co-evolution primitive beyond adaptive curriculum/environment design plus verifier-guided program synthesis and distribution shaping. There is no matched factorial that equalizes generated-task/environment distribution, designer state, learner state, harness information and training budget while a distinct persistent co-evolution state forces an opposite future-learning prediction.",
+      "source_review_basis": [
+        "cached first-party arXiv abstract",
+        "official google-research/envharness repository reviewed 2026-08-24"
+      ],
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-DISC-087393b9919c0ee1df",
+          "result": "NOT_SATISFIED",
+          "boundary": "Generated-task/environment distribution, designer adaptation state, memory/harness information, learner state and training budget are not jointly matched while varying an independent persistent co-evolution variable."
+        },
+        {
+          "memory_id": "MEM-SEAR-4674f46501819d1414",
+          "result": "NOT_SATISFIED",
+          "boundary": "No preregistered matched factorial demonstrates a repeatable non-additive held-out interaction beyond curriculum allocation, environment/expert-set quality and contextual adaptation."
+        }
+      ],
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.19902",
+      "title": "Bringing analytic rigor to agentic AI for science: The Brain Researcher platform for neuroimaging data analysis",
+      "published": "2026-08-20",
+      "source_sha256": "5aec01de1ef88c8bed8880e9eaf11e1591925e1bae077e11b58f76d6f5eb9964",
+      "fulltext_sha256": "f28374e677a0543db1140a1b54f3b61c50e758c161b8b35d849cafbc7e2fcf6c",
+      "disposition": "SUPPORT_COMPONENT_ONLY_RESEARCH_GOVERNANCE",
+      "reduction": [
+        "adaptive-scientific-search",
+        "precommitment-and-frozen-successor-design",
+        "multiverse-analysis-and-claim-adjudication",
+        "provenance-linked-workflow-governance"
+      ],
+      "note": "Brain Researcher is strong component evidence for governed automatic research: commitment cards freeze admissible analyses and criteria; claim cards bind evidence, provenance and claim state; multiverse analyses expose sensitivity; and two extended episodes turn intermediate evidence into researcher-approved frozen successor analyses. However, the paper explicitly says the separately initiated sessions without Brain Researcher were not matched controls and cannot establish that the harness caused transition to a frozen follow-up. Its HCP search is also an adaptive selection process followed by selector audit and frozen evaluation. Therefore this source supports Research-OS control-plane design but does not identify a new irreducible scientific self-evolution object.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-d4864e777593419255",
+          "result": "NOT_SATISFIED",
+          "boundary": "Adaptive search and selected-successor gains are not shown to leave a residual after matching candidate count, search depth, verification/selection rule and evaluation sample size."
+        }
+      ],
+      "system_component_support": [
+        "pre-analysis commitment card",
+        "condition-tagged claim card",
+        "multiverse sensitivity analysis",
+        "frozen successor-analysis boundary",
+        "provenance-linked audit bundle",
+        "explicit researcher authority for non-formalizable judgments"
+      ],
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.20139",
+      "title": "Reinforcement Learning to Harness Approximation Errors for Long-Time Quantum Simulation",
+      "published": "2026-08-20",
+      "source_sha256": "450e059953fc74225b89dedbaca5bb0aa1c9f34082641065a12105145e11a088",
+      "fulltext_sha256": "f1425184eaa2ac3f00763945a95803cfb1620620d696e12c0e78c55fe6de0dc6",
+      "disposition": "SCOPE_EXCLUDED_STANDARD_RL_CONTROL",
+      "reduction": [
+        "markov-decision-process",
+        "ddpg-off-policy-control",
+        "long-horizon-error-compensation"
+      ],
+      "note": "RL-Trotter formulates adaptive step-size choice as an MDP and trains a DDPG policy on low-dimensional conserved-quantity observations. The apparent self-correction is long-horizon within-episode control: later Trotter errors compensate earlier ones under a learned policy. The agent artifact is pretrained and then deployed or optionally fine-tuned; the paper does not study autonomous persistent self-modification across tasks. It is therefore standard sequential RL/control evidence outside the current self-evolution scientific scope.",
+      "reopen_contracts_checked": [],
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.20318",
+      "title": "AI4AI-Bench: Benchmarking LLM Agents in Algorithmic Design for Recursive Self-Improvement",
+      "published": "2026-08-20",
+      "source_sha256": "b87040912edd6e714dac687a77b0ecd4d2e720c8385e0ebdfacba32367e234ee",
+      "fulltext_sha256": "c02902de7d9a238934f62fe96cf9332b0e0039081d9dcba8110d76d744d3ef85",
+      "disposition": "PRIOR_ADJUDICATION_RECONCILED_NO_REOPEN",
+      "reduction": [
+        "strategy-family-endpoint-support",
+        "recognition-versus-search-compute-confounding"
+      ],
+      "note": "The existing contradiction screen already gives AI4AI-Bench maximal admissible reuse: recognized training-algorithm modifications show a strong endpoint association, but the released traces do not expose a recognition-positive prefix where the agent has already selected a qualifying algorithmic strategy and later fails before execution. Higher reasoning effort simultaneously changes search/exploration, compute and the frequency of making algorithmic modifications. Thus the source supports the strategy-family endpoint without satisfying the V19 state/recognition opposite-prediction gate.",
+      "prior_scientific_artifacts": [
+        "generated/ai4ai-strategy-reopen-contradiction-screen-20260824.json",
+        "generated/port-017-third-mechanism-support-audit.json"
+      ],
+      "reopen_contracts_checked": [
+        {
+          "artifact": "generated/ai4ai-strategy-reopen-contradiction-screen-20260824.json",
+          "result": "NOT_SATISFIED",
+          "boundary": "No recognition-positive prefix with a same-information state residual; reasoning effort is inseparable from broader search/exploration and compute in the released aggregate comparison."
+        }
+      ],
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "watch_reopen_seed": false
+    }
+  ],
+  "authority": {
+    "scientific_authority": false,
+    "candidate_generation": false,
+    "problem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
