@@ -1,8 +1,8 @@
 {
   "schema_version": "1.6",
-  "generated_at": "2026-08-24T10:33:57+00:00",
-  "source_revision": "1225af76516355de4910a41fc970d3af9b9b5db6",
-  "projection_source": "canonical-append-only-paper-ledgers",
+  "generated_at": "2026-08-24T19:07:18+00:00",
+  "source_revision": "37206ef50044eb8cef58e8023933ea7efdfb6f09",
+  "projection_source": "generated/research-system-state.json",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
     "paper_registry_cannot_grant_research_or_experiment_authority": true,
@@ -44,7 +44,12 @@
     "blocked_transitions_are_recorded": true,
     "ledger_contract_digest_is_immutable_between_scientific_revisions": true,
     "scientific_contract_revision_requires_evidence_closure_at_paper_evidence": true,
-    "submitted_state_requires_external_human_submission_authority": true
+    "submitted_state_requires_external_human_submission_authority": true,
+    "post_draft_integrity_audit_precedes_independent_model_review_for_new_workflows": true,
+    "post_draft_integrity_is_receipt_backed_not_reviewer_self_attestation": true,
+    "legacy_paper_ledgers_are_not_retroactively_invalidated_by_new_post_draft_integrity_contract": true,
+    "deterministic_integrity_findings_feed_reviewer_issue_graph_before_targeted_repair": true,
+    "machine_like_prose_lint_is_editorial_quality_not_ai_detector_evasion": true
   },
   "summary": {
     "papers": 5,

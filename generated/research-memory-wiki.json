@@ -1,6 +1,6 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-08-24T17:09:27+00:00",
+  "generated_at": "2026-08-24T19:07:12+00:00",
   "status": "MEMORY_COMPILED",
   "policy": {
     "schema_version": "1.2",
@@ -61,11 +61,11 @@
     "result_analysis_lessons": 3
   },
   "summary": {
-    "entries": 96,
+    "entries": 93,
     "search_closures": 41,
     "scientific_closures": 2,
     "holds": 9,
-    "failure_assets": 10,
+    "failure_assets": 7,
     "success_assets": 3,
     "open_questions": 2,
     "repeated_review_blocks": 0,
@@ -73,17 +73,17 @@
     "review_lessons": 5,
     "paper_development_guidance": 1,
     "contribution_aware_lesson_templates": 2,
-    "prompt_eligible": 96,
-    "skill_candidates": 33,
-    "certainty_confirmed": 15,
-    "certainty_supported": 69,
+    "prompt_eligible": 93,
+    "skill_candidates": 30,
+    "certainty_confirmed": 11,
+    "certainty_supported": 70,
     "certainty_tentative": 0,
     "certainty_speculative": 0,
     "certainty_refuted": 0,
     "certainty_not_applicable": 12,
     "transient": 0,
-    "recurring_systemic": 15,
-    "scientific": 81
+    "recurring_systemic": 16,
+    "scientific": 77
   },
   "entries": [
     {
@@ -792,7 +792,7 @@
       "opposite_search_seed": "",
       "reusable_precheck": "require an external content-addressed human authority artifact before paper-first P0 lifecycle or local-validation transitions; a basis string or AI output has zero authority",
       "source_refs": [
-        "private-data://external/paper-first-p0-20260812"
+        "private-data://runs/paper-first-p0-20260812"
       ],
       "source_artifact": "failure_asset_library",
       "occurrences": 1,
@@ -800,111 +800,6 @@
       "reuse_effectiveness": {
         "reuse_count": 1,
         "helped_count": 1,
-        "hurt_count": 0
-      },
-      "scientific_authority": false,
-      "certainty": "CONFIRMED",
-      "certainty_basis": "failure-receipt-backed",
-      "certainty_scope_bound": true,
-      "skill_candidate_eligible": true,
-      "automatic_skill_promotion": false
-    },
-    {
-      "memory_id": "MEM-FAIL-3e2becf9494c7fbbcc",
-      "kind": "FAILURE_ASSET",
-      "title": "operationalization:representation-signal-mismatch",
-      "summary": "core-principle failure",
-      "candidate_id": "",
-      "scope": "{\"ideas\": [\"update-trust-region\"], \"reuse_scope\": {\"affected_layer\": \"operationalization\", \"diagnosis\": \"representation-signal-mismatch\"}}",
-      "affected_layer": "operationalization",
-      "memory_class": "FAILURE_ASSET",
-      "durability_class": "scientific",
-      "prompt_eligible": true,
-      "search_closure_certified": false,
-      "scientific_dead_end_certified": false,
-      "principle_update_allowed": false,
-      "reopen_condition": "",
-      "opposite_search_seed": "",
-      "reusable_precheck": "require synthetic realizability and tiny-real fit for the representation",
-      "source_refs": [
-        "private-data://external/a12"
-      ],
-      "source_artifact": "failure_asset_library",
-      "occurrences": 1,
-      "last_revalidated": "",
-      "reuse_effectiveness": {
-        "reuse_count": 0,
-        "helped_count": 0,
-        "hurt_count": 0
-      },
-      "scientific_authority": false,
-      "certainty": "CONFIRMED",
-      "certainty_basis": "failure-receipt-backed",
-      "certainty_scope_bound": true,
-      "skill_candidate_eligible": true,
-      "automatic_skill_promotion": false
-    },
-    {
-      "memory_id": "MEM-FAIL-4337a94cdc97204076",
-      "kind": "FAILURE_ASSET",
-      "title": "method-realization:matched-simplification-tie",
-      "summary": "core-principle failure",
-      "candidate_id": "",
-      "scope": "{\"ideas\": [\"outcome-equivalent-trajectory-contrast\"], \"reuse_scope\": {\"affected_layer\": \"method-realization\", \"diagnosis\": \"matched-simplification-tie\"}}",
-      "affected_layer": "method-realization",
-      "memory_class": "FAILURE_ASSET",
-      "durability_class": "scientific",
-      "prompt_eligible": true,
-      "search_closure_certified": false,
-      "scientific_dead_end_certified": false,
-      "principle_update_allowed": false,
-      "reopen_condition": "",
-      "opposite_search_seed": "",
-      "reusable_precheck": "run matched simplification/disagreement mining before scale-up",
-      "source_refs": [
-        "private-data://external/b1"
-      ],
-      "source_artifact": "failure_asset_library",
-      "occurrences": 1,
-      "last_revalidated": "",
-      "reuse_effectiveness": {
-        "reuse_count": 0,
-        "helped_count": 0,
-        "hurt_count": 0
-      },
-      "scientific_authority": false,
-      "certainty": "CONFIRMED",
-      "certainty_basis": "failure-receipt-backed",
-      "certainty_scope_bound": true,
-      "skill_candidate_eligible": true,
-      "automatic_skill_promotion": false
-    },
-    {
-      "memory_id": "MEM-FAIL-73354f681194c97537",
-      "kind": "FAILURE_ASSET",
-      "title": "operationalization:objective-claim-mismatch",
-      "summary": "core-principle failure",
-      "candidate_id": "",
-      "scope": "{\"ideas\": [\"workflow-generalization-certificate\"], \"reuse_scope\": {\"affected_layer\": \"operationalization\", \"diagnosis\": \"objective-claim-mismatch\"}}",
-      "affected_layer": "operationalization",
-      "memory_class": "FAILURE_ASSET",
-      "durability_class": "scientific",
-      "prompt_eligible": true,
-      "search_closure_certified": false,
-      "scientific_dead_end_certified": false,
-      "principle_update_allowed": false,
-      "reopen_condition": "",
-      "opposite_search_seed": "",
-      "reusable_precheck": "freeze claim-objective-primary-metric alignment before training",
-      "source_refs": [
-        "private-data://external/e1"
-      ],
-      "source_artifact": "failure_asset_library",
-      "occurrences": 1,
-      "last_revalidated": "",
-      "reuse_effectiveness": {
-        "reuse_count": 0,
-        "helped_count": 0,
         "hurt_count": 0
       },
       "scientific_authority": false,
@@ -985,41 +880,6 @@
       "automatic_skill_promotion": false
     },
     {
-      "memory_id": "MEM-FAIL-aadf8af8677f08727d",
-      "kind": "FAILURE_ASSET",
-      "title": "experiment:no-label-variation",
-      "summary": "core-principle failure",
-      "candidate_id": "",
-      "scope": "{\"ideas\": [\"budgeted-evolution-controller\"], \"reuse_scope\": {\"affected_layer\": \"experiment\", \"diagnosis\": \"no-label-variation\"}}",
-      "affected_layer": "experiment",
-      "memory_class": "FAILURE_ASSET",
-      "durability_class": "scientific",
-      "prompt_eligible": true,
-      "search_closure_certified": false,
-      "scientific_dead_end_certified": false,
-      "principle_update_allowed": false,
-      "reopen_condition": "",
-      "opposite_search_seed": "",
-      "reusable_precheck": "measure target entropy/variance before fitting",
-      "source_refs": [
-        "private-data://external/a12"
-      ],
-      "source_artifact": "failure_asset_library",
-      "occurrences": 1,
-      "last_revalidated": "",
-      "reuse_effectiveness": {
-        "reuse_count": 0,
-        "helped_count": 0,
-        "hurt_count": 0
-      },
-      "scientific_authority": false,
-      "certainty": "CONFIRMED",
-      "certainty_basis": "failure-receipt-backed",
-      "certainty_scope_bound": true,
-      "skill_candidate_eligible": true,
-      "automatic_skill_promotion": false
-    },
-    {
       "memory_id": "MEM-FAIL-bc94aa353b90c69c53",
       "kind": "FAILURE_ASSET",
       "title": "operationalization:decision-context-support-mismatch",
@@ -1050,6 +910,39 @@
       "scientific_authority": false,
       "certainty": "CONFIRMED",
       "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
+      "memory_id": "MEM-FAIL-d2bcf0c820af363095",
+      "kind": "FAILURE_ASSET",
+      "title": "execution:infrastructure-error",
+      "summary": "core-principle failure",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"budgeted-evolution-controller\", \"outcome-equivalent-trajectory-contrast\", \"update-trust-region\", \"workflow-generalization-certificate\"], \"reuse_scope\": {\"affected_layer\": \"execution\", \"diagnosis\": \"infrastructure-error\"}}",
+      "affected_layer": "execution",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "recurring-systemic",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "check runtime/provenance/trace readiness before scientific interpretation",
+      "source_refs": [],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 4,
+      "last_revalidated": "",
+      "reuse_effectiveness": {
+        "reuse_count": 0,
+        "helped_count": 0,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "SUPPORTED",
+      "certainty_basis": "structured-failure-asset",
       "certainty_scope_bound": true,
       "skill_candidate_eligible": true,
       "automatic_skill_promotion": false
@@ -1379,10 +1272,10 @@
       "automatic_skill_promotion": false
     },
     {
-      "memory_id": "MEM-OPEN-23f03920f522ace484",
+      "memory_id": "MEM-OPEN-29a589216cf210fa68",
       "kind": "OPEN_QUESTION",
       "title": "Unresolved principle: persistent-update-drift-governance-v1",
-      "summary": "execution-cap-censoring-policy-invalid",
+      "summary": "competence-evidence-file-missing",
       "candidate_id": "update-trust-region",
       "scope": "persistent-update-drift-governance-v1",
       "affected_layer": "core_principle",
@@ -1393,7 +1286,7 @@
       "scientific_dead_end_certified": false,
       "principle_update_allowed": false,
       "reopen_condition": "Resolve the named uncertainty with new identifiable evidence.",
-      "opposite_search_seed": "execution-cap-censoring-policy-invalid",
+      "opposite_search_seed": "competence-evidence-file-missing",
       "reusable_precheck": "",
       "source_refs": [],
       "source_artifact": "scientific_meta_trace.unresolved_questions",
@@ -1406,10 +1299,10 @@
       "automatic_skill_promotion": false
     },
     {
-      "memory_id": "MEM-OPEN-52c7d1436ae0e29ed0",
+      "memory_id": "MEM-OPEN-8b30172b29af989aba",
       "kind": "OPEN_QUESTION",
       "title": "Unresolved principle: adaptive-update-stopping-v1",
-      "summary": "execution-cap-censoring-policy-invalid",
+      "summary": "competence-evidence-file-missing",
       "candidate_id": "budgeted-evolution-controller",
       "scope": "adaptive-update-stopping-v1",
       "affected_layer": "core_principle",
@@ -1420,7 +1313,7 @@
       "scientific_dead_end_certified": false,
       "principle_update_allowed": false,
       "reopen_condition": "Resolve the named uncertainty with new identifiable evidence.",
-      "opposite_search_seed": "execution-cap-censoring-policy-invalid",
+      "opposite_search_seed": "competence-evidence-file-missing",
       "reusable_precheck": "",
       "source_refs": [],
       "source_artifact": "scientific_meta_trace.unresolved_questions",
@@ -3396,7 +3289,7 @@
     "p0": false,
     "gpu": false
   },
-  "wiki_sha256": "0b2859c1ee331ce15c1fcbc11cfacc4fc57bd4fa4ac50820e5bb0b1345254a25",
+  "wiki_sha256": "0162891e251e937e3f51b0523556c620da13ffe1ee3231a0929f8a8f929530e7",
   "lint": {
     "schema_version": "1.2",
     "status": "PASS",
@@ -3404,48 +3297,18 @@
     "warnings": [
       {
         "code": "failure-asset-not-yet-effectiveness-validated",
-        "memory_id": "MEM-FAIL-3e2becf9494c7fbbcc",
-        "detail": "operationalization:representation-signal-mismatch"
-      },
-      {
-        "code": "durable-failure-memory-missing-revalidation-date",
-        "memory_id": "MEM-FAIL-3e2becf9494c7fbbcc",
-        "detail": "operationalization:representation-signal-mismatch"
-      },
-      {
-        "code": "failure-asset-not-yet-effectiveness-validated",
-        "memory_id": "MEM-FAIL-4337a94cdc97204076",
-        "detail": "method-realization:matched-simplification-tie"
-      },
-      {
-        "code": "durable-failure-memory-missing-revalidation-date",
-        "memory_id": "MEM-FAIL-4337a94cdc97204076",
-        "detail": "method-realization:matched-simplification-tie"
-      },
-      {
-        "code": "failure-asset-not-yet-effectiveness-validated",
-        "memory_id": "MEM-FAIL-73354f681194c97537",
-        "detail": "operationalization:objective-claim-mismatch"
-      },
-      {
-        "code": "durable-failure-memory-missing-revalidation-date",
-        "memory_id": "MEM-FAIL-73354f681194c97537",
-        "detail": "operationalization:objective-claim-mismatch"
-      },
-      {
-        "code": "failure-asset-not-yet-effectiveness-validated",
         "memory_id": "MEM-FAIL-78733cb49dfe6297da",
         "detail": "operationalization:semantic-action-observability"
       },
       {
         "code": "failure-asset-not-yet-effectiveness-validated",
-        "memory_id": "MEM-FAIL-aadf8af8677f08727d",
-        "detail": "experiment:no-label-variation"
+        "memory_id": "MEM-FAIL-d2bcf0c820af363095",
+        "detail": "execution:infrastructure-error"
       },
       {
         "code": "durable-failure-memory-missing-revalidation-date",
-        "memory_id": "MEM-FAIL-aadf8af8677f08727d",
-        "detail": "experiment:no-label-variation"
+        "memory_id": "MEM-FAIL-d2bcf0c820af363095",
+        "detail": "execution:infrastructure-error"
       },
       {
         "code": "failure-asset-not-yet-effectiveness-validated",
@@ -3476,9 +3339,9 @@
     ],
     "summary": {
       "errors": 0,
-      "warnings": 15,
-      "unconsumed_failure_assets": 7,
-      "missing_revalidation_dates": 4
+      "warnings": 9,
+      "unconsumed_failure_assets": 4,
+      "missing_revalidation_dates": 1
     },
     "scientific_authority": false
   },
@@ -3501,41 +3364,41 @@
       "SUCCESS_ASSET": 3
     },
     "sampled_certainty": {
-      "SUPPORTED": 13,
-      "CONFIRMED": 10,
+      "SUPPORTED": 14,
+      "CONFIRMED": 9,
       "NOT_APPLICABLE": 7
     },
     "sampled_memory_ids": [
       "MEM-DISC-087393b9919c0ee1df",
       "MEM-FAIL-1f7691f41a1dcfa103",
       "MEM-HOLD-25b692734789d6e35c",
-      "MEM-OPEN-23f03920f522ace484",
+      "MEM-OPEN-29a589216cf210fa68",
       "MEM-PDEV-SENIOR-20260823",
       "MEM-REVI-51e50f3662a5951f52",
       "MEM-SCIE-63da8f6c3c1c818d32",
       "MEM-SEAR-16b145b18dd60e1811",
       "MEM-SUCC-714ad00d4b0ab118be",
       "MEM-DISC-0dbca121608f22c542",
-      "MEM-FAIL-3e2becf9494c7fbbcc",
+      "MEM-FAIL-78733cb49dfe6297da",
       "MEM-HOLD-2fc3f1e767a7e59794",
-      "MEM-OPEN-52c7d1436ae0e29ed0",
+      "MEM-OPEN-8b30172b29af989aba",
       "MEM-REVI-62370210b4e3a77558",
       "MEM-SCIE-77c61f9dd2885367c0",
       "MEM-SEAR-1ba2b6e8d305dafaad",
       "MEM-SUCC-d4a91b62325176bd03",
       "MEM-DISC-1ed76bd4a2e36f2461",
-      "MEM-FAIL-4337a94cdc97204076",
+      "MEM-FAIL-899e4039e09381303a",
       "MEM-HOLD-3d2ca52b06eb1115f3",
       "MEM-REVI-b85c3d5a3b7be3dae9",
       "MEM-SEAR-1f73ec187b29d80d4b",
       "MEM-SUCC-ff21703f69998ff65c",
       "MEM-DISC-3e95edd7bafe36fb61",
-      "MEM-FAIL-73354f681194c97537",
+      "MEM-FAIL-bc94aa353b90c69c53",
       "MEM-HOLD-452d1a58eea1476812",
       "MEM-REVI-ccb86700ca3f850cdb",
       "MEM-SEAR-2a5a804540732de3fd",
       "MEM-DISC-4925551d12663512f9",
-      "MEM-FAIL-78733cb49dfe6297da"
+      "MEM-FAIL-d2bcf0c820af363095"
     ],
     "automatic_skill_promotions": 0,
     "scientific_authority": false

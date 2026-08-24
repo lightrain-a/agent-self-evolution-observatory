@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-23T07:51:52+00:00",
+  "generated_at": "2026-08-24T19:02:50+00:00",
   "status": "NO_ACTIVE_F0",
   "policy": {
     "portfolio_is_outside_canonical_problem_queue": true,
@@ -36,7 +36,7 @@
     "stop_reduction": 6,
     "archived": 0,
     "primary_verified": 32,
-    "primary_empirical_fact_candidates": 118,
+    "primary_empirical_fact_candidates": 115,
     "canonical_problem_gate_added": 0,
     "method_authorized": 0,
     "experiment_authorized": 0,
@@ -405,11 +405,11 @@
     },
     "primary_state": {
       "path": "generated/paper-first-primary-evidence-state.json",
-      "sha256": "c372f9154109c0e58d2ca9764c01006367201f1ae31f1f76f706dd8f2eeb433d"
+      "sha256": "0bf392acae7dab5637d0ed8f3fe2768e728d972ac81cb7f99513f92308c0da51"
     },
     "dead_end_memory": {
       "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-      "sha256": "f8317c632e534457de7876762170cb001bbeac43d6175a0a1ddab2a29af64f0c"
+      "sha256": "a4926f75eaf250593815775ee67178e565fbd8545eef888ce8b05ec47164861b"
     },
     "defense_principle_reduction": {
       "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
@@ -418,7 +418,7 @@
     },
     "skill_validation_transfer_scout": {
       "path": "generated/paper-first-skill-validation-transfer-scout-20260817.json",
-      "sha256": "748a8d9ea070a96ea8accd7c98665e2a622595734e3ddbc46942a39f90377bb7",
+      "sha256": "92532d4a8e4c6e1285cfe4472908c17cc73cd3ed2dc8d249f7924c73cad1b24a",
       "status": "DESIGN_READY_EXECUTION_ENV_HOLD",
       "plan_sha256": "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c"
     },

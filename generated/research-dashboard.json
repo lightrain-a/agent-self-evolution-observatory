@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "as_of_date": "2026-08-24",
+  "as_of_date": "2026-08-25",
   "projection_policy": {
     "read_only": true,
     "scientific_authority": false,
@@ -363,7 +363,7 @@
     {
       "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
       "source_research_item": "",
-      "title": "When Reusable Temporal Skills Become Causal Bottlenecks in Evolving Time-Series Agents",
+      "title": "Do Temporal Skills Really Repair Agents? An Intervention Audit of Repair and Attribution",
       "paper_stage": "SUBMISSION_READY",
       "scientific_status": "READY",
       "submission_ready": true,
@@ -413,65 +413,77 @@
   ],
   "week": {
     "start_date": "2026-08-24",
-    "end_date": "2026-08-24",
-    "research_days": 1,
-    "events": 32,
-    "substantive_events": 17,
-    "key_changes": 0,
+    "end_date": "2026-08-25",
+    "research_days": 2,
+    "events": 255,
+    "substantive_events": 118,
+    "key_changes": 2,
     "class_counts": {
-      "blocker": 1,
-      "closure": 6,
-      "experiment": 2,
-      "idea": 4,
-      "paper": 4,
-      "system": 15
+      "blocker": 8,
+      "closure": 32,
+      "experiment": 26,
+      "idea": 16,
+      "paper": 36,
+      "system": 137
     },
-    "attention_activity": {},
+    "attention_activity": {
+      "B-3": 1,
+      "E-7": 47,
+      "G-1": 1
+    },
     "highlights": [
       {
         "date": "2026-08-24",
         "event_class": "paper",
-        "title_zh": "论文 / 评审相关提交：Review priority first-party reducer tranche",
-        "title_en": "Review priority first-party reducer tranche",
-        "research_items": [],
-        "papers": [],
-        "href": "research-timeline.html"
-      },
-      {
-        "date": "2026-08-24",
-        "event_class": "closure",
-        "title_zh": "停止 / 关闭裁决 · longitudinal-cross-failure-orthogonal-screen-20260824",
-        "title_en": "longitudinal-cross-failure-orthogonal-screen-20260824",
-        "research_items": [],
-        "papers": [],
-        "href": "research-timeline.html"
-      },
-      {
-        "date": "2026-08-24",
-        "event_class": "experiment",
-        "title_zh": "实验 / 证据相关提交：Screen AI4AI evidence for strategy reopen",
-        "title_en": "Screen AI4AI evidence for strategy reopen",
-        "research_items": [],
-        "papers": [],
-        "href": "research-timeline.html"
+        "title_zh": "STRI 当前投稿状态快照",
+        "title_en": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
+        "research_items": [
+          "E-7"
+        ],
+        "papers": [
+          "STRI"
+        ],
+        "href": "research-timeline.html?paper=STRI"
       },
       {
         "date": "2026-08-24",
         "event_class": "idea",
-        "title_zh": "Idea / 研究问题相关提交：Fix MEMENTO discovery projection consistency",
-        "title_en": "Fix MEMENTO discovery projection consistency",
+        "title_zh": "Canonical 双漏斗 Idea 发现状态快照",
+        "title_en": "Canonical double-funnel discovery snapshot",
         "research_items": [],
         "papers": [],
         "href": "research-timeline.html"
       },
       {
-        "date": "2026-08-24",
-        "event_class": "blocker",
-        "title_zh": "暂缓 / 阻断记录 · AI4AI-STRATEGY-REOPEN-CONTRADICTION-20260824",
-        "title_en": "AI4AI-Bench as contradictory evidence for strategy reopening",
+        "date": "2026-08-25",
+        "event_class": "closure",
+        "title_zh": "停止 / 关闭裁决 · repair-surface-identifiability-under-persistent-agent-updates",
+        "title_en": "paper-first-pf2-method-adjudication",
+        "research_items": [
+          "E-5"
+        ],
+        "papers": [],
+        "href": "research-timeline.html?research=E-5"
+      },
+      {
+        "date": "2026-08-25",
+        "event_class": "closure",
+        "title_zh": "停止 / 关闭裁决 · SCG-001",
+        "title_en": "Semantic Commit Gap: persisted self-update versus future enactment",
         "research_items": [],
         "papers": [],
         "href": "research-timeline.html"
+      },
+      {
+        "date": "2026-08-25",
+        "event_class": "closure",
+        "title_zh": "停止 / 关闭裁决 · evolvability-debt-under-persistent-agent-updates",
+        "title_en": "paper-first-pf1-problem-adjudication",
+        "research_items": [
+          "A-8"
+        ],
+        "papers": [],
+        "href": "research-timeline.html?research=A-8"
       }
     ],
     "timeline_href": "research-timeline.html"
