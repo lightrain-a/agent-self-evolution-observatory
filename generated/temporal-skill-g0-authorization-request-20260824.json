@@ -1,0 +1,70 @@
+{
+  "analysis_contract": {
+    "neutrality_confidence_interval": "90% endpoint-stratified bootstrap by failure_family",
+    "neutrality_go": "90% CI strictly inside [-0.10,+0.10] and no family non-neutrality guardrail fires",
+    "neutrality_margin": [
+      -0.1,
+      0.1
+    ],
+    "nonneutral_stop": "global |point estimate| >= 0.10 with 90% CI excluding 0, or a family has |mean delta| >= 0.20 with a one-sided exact sign p <= 0.05 in that direction",
+    "operation_specificity_only_after_neutrality_go": true
+  },
+  "authorization_semantics": {
+    "any_scope_or_budget_change_requires_new_plan_hash_and_new_authorization": true,
+    "generic_continue_instruction_is_not_interpreted_as_new_scientific_execution_authority": true,
+    "required_human_directive": "Explicitly authorize reopening TEMP-O4 Stage A on the DeepSeek primary track and executing the bound 210-call fresh N/G0/T plan through Ark Plan.",
+    "required_runtime_confirmation": {
+      "ark_plan_base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+      "ark_plan_target_confirmed_and_propagated": true,
+      "ark_plan_target_model": "deepseek-v4-pro"
+    }
+  },
+  "bound_analyzer_sha256": "7125f288bb622d67a720341dc92058106e89e03b23b3eb8c4f3f67807aad33f9",
+  "bound_plan_body_sha256": "d0e0635ce314628894fa4a4eccce9345274289ca2966fc64796c2cf5f31aecd9",
+  "bound_preflight_receipt_body_sha256": "a9e1b6c39e219038e5021dc94d9036a9439ce1b24c804355848df8a24ea7f741",
+  "bound_runner_sha256": "4682f369aac5caf1d583a40477b437eb7d25780c87cf98f8af7edcac26137d39",
+  "budget": {
+    "arms": [
+      "N_FRESH",
+      "G0_NOOP",
+      "T_FROZEN"
+    ],
+    "independent_endpoints": 35,
+    "model_calls_upper_bound": 210,
+    "outcome_driven_replacement_allowed": false,
+    "repeats_per_arm": 2,
+    "reruns_allowed": false,
+    "rough_total_tokens_upper_planning_estimate": 382309.19999999995
+  },
+  "execution_authorized": false,
+  "experiment_authority": false,
+  "explicitly_not_requested": [
+    "TEMP-O4_STAGE_B_KIMI",
+    "TEMP-O5_RETRIEVAL_BASELINE",
+    "NEW_CLAIM",
+    "NEW_MODEL",
+    "GPU_EXECUTION"
+  ],
+  "model_identity": {
+    "ark_code_latest_counts_as_same_model_evidence_only_if_provider_resolves_exact_required_model": true,
+    "direct_extra_billed_model_route_forbidden": true,
+    "plan_only_billing_route_required": true,
+    "requested_model": "ark-code-latest",
+    "required_plan_base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "required_plan_target_model": "deepseek-v4-pro",
+    "required_resolved_model": "deepseek-v4-pro-260425"
+  },
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "provider_spend_authority": false,
+  "request_body_sha256": "0f5bf5024100c56ea4f8843cd99aee8ee7a196c608f13ab28308c9785d65edd9",
+  "request_id": "TEMP-O4-G0-STAGE-A-DEEPSEEK-EXECUTION-AUTH-REQUEST-20260824",
+  "request_type": "explicit-external-human-scientific-reopen-and-experiment-authorization",
+  "requested_scope": [
+    "TEMP-O4_STAGE_A_DEEPSEEK_PRIMARY",
+    "G0_NOOP_BEHAVIOR_NEUTRALITY",
+    "FRESH_N_T_REPLICATION_FOR_SAME_UNITS"
+  ],
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "AWAIT_EXPLICIT_HUMAN_AUTHORIZATION"
+}

@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "temporal-skill-g0-stage-a-preflight-verification",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "display_code": "E2",
+  "date": "2026-08-24",
+  "branch": "codex/e2-temporal-g0-preflight-20260824",
+  "parent_revision_commit": "5e28143",
+  "status": "PREFLIGHT_READY_EXECUTION_HELD",
+  "bindings": {
+    "preflight_file_sha256": "74ac36da115bbc3b9b4ecc0fcf210270bdafdd2b886c54896c9bc64c3443b2c8",
+    "preflight_receipt_body_sha256": "a9e1b6c39e219038e5021dc94d9036a9439ce1b24c804355848df8a24ea7f741",
+    "plan_file_sha256": "41dfc444e69212ff804327a19add1f3e82282e9729aed8395e94f4ddd52570fd",
+    "plan_body_sha256": "d0e0635ce314628894fa4a4eccce9345274289ca2966fc64796c2cf5f31aecd9",
+    "authorization_request_file_sha256": "6483b42489f7a27757d5c07c3e48a91d87e588e34e82e304ebb357474e364bc6",
+    "authorization_request_body_sha256": "0f5bf5024100c56ea4f8843cd99aee8ee7a196c608f13ab28308c9785d65edd9",
+    "preflight_code_sha256": "e0cff01f7f752b4d3f6ef598686d890e9d6b5b9348495676eb9018c1c25134f2",
+    "runner_code_sha256": "4682f369aac5caf1d583a40477b437eb7d25780c87cf98f8af7edcac26137d39",
+    "analyzer_code_sha256": "7125f288bb622d67a720341dc92058106e89e03b23b3eb8c4f3f67807aad33f9"
+  },
+  "stage_a": {
+    "scope": "DeepSeek primary track only",
+    "independent_endpoints": 35,
+    "family_endpoint_counts": {
+      "temporal_cutoff": 20,
+      "exogenous_grounding": 10,
+      "release_alignment": 5
+    },
+    "arms": [
+      "N_FRESH",
+      "G0_NOOP",
+      "T_FROZEN"
+    ],
+    "repeats_per_arm": 2,
+    "planned_model_calls": 210,
+    "condition_position_balance": {
+      "N_FRESH": [24, 23, 23],
+      "G0_NOOP": [23, 24, 23],
+      "T_FROZEN": [23, 23, 24]
+    },
+    "rough_total_tokens_millions": 0.3823092,
+    "neutrality_margin": [-0.1, 0.1],
+    "zero_call_null_simulation_90_interval": [-0.05714285714285714, 0.05714285714285714]
+  },
+  "model_and_cost_contract": {
+    "requested_model": "ark-code-latest",
+    "required_plan_base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "required_plan_target_model": "deepseek-v4-pro",
+    "required_resolved_model": "deepseek-v4-pro-260425",
+    "plan_only_billing_route_required": true,
+    "direct_extra_billed_model_route_forbidden": true,
+    "stop_on_resolved_model_drift": true
+  },
+  "checks": {
+    "unit_tests": "17/17 PASS",
+    "support_inventory_complete": true,
+    "every_endpoint_has_five_frozen_historical_N0_repeats": true,
+    "g0_reads_package": false,
+    "g0_reads_context": false,
+    "g0_output_is_empty_object": true,
+    "plan_position_balance_max_difference": 1,
+    "runner_bound_before_authorization": true,
+    "analyzer_bound_before_authorization": true,
+    "runner_generation_post_attempts_per_unit": 1,
+    "runner_provider_retries": 0,
+    "thinking_compatibility_repost_disabled": true,
+    "existing_response_recovery_get_only": true,
+    "analysis_missing_unit_fail_closed": true,
+    "analysis_model_drift_fail_closed": true,
+    "canonical_registry_modified": false,
+    "canonical_acceptance_ledger_modified": false,
+    "new_model_calls": 0,
+    "new_provider_calls": 0,
+    "new_gpu_execution": 0,
+    "execution_result_file_absent": true,
+    "runtime_TEMP_O4_authority_file_absent": true
+  },
+  "runtime_readiness": {
+    "credential_ready_in_isolated_worktree": false,
+    "authorization_present": false,
+    "execution_authorized": false,
+    "scientific_reopen_authorized": false,
+    "provider_spend_authorized": false
+  },
+  "deferred": {
+    "TEMP_O4_stage_b_kimi": {
+      "fresh_authorization_required": true,
+      "estimated_calls_if_same_design": 138,
+      "rough_historical_token_estimate_millions": 0.308
+    },
+    "TEMP_O5_retrieval_side_baseline": "DEFERRED_NOT_PART_OF_STAGE_A"
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}
