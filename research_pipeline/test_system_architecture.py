@@ -68,6 +68,10 @@ class SystemArchitectureTest(unittest.TestCase):
         self.assertEqual(architecture["summary"]["cross_cutting_controls"], 3)
         self.assertEqual(architecture["summary"]["orphan_cross_cutting_controls"], 0)
         self.assertEqual(architecture["summary"]["functional_layers"], 6)
+        self.assertIn(
+            "Experimental volume and substrate scarcity are non-compensatory: neither more trials nor limited remaining units may weaken construct, independence, support, power, preregistration, or authority gates.",
+            architecture["invariants"],
+        )
 
 
 if __name__ == "__main__":

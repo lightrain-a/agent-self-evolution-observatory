@@ -559,8 +559,8 @@
         "en": "Round 2 remains correct about L0-L3 and the unresolved causal sign. After the complete 28/140 task boundary, R19 entered its eighth task and completed sequence 28. The first Shopping reset for sequence 29 and the single exact pre-exposure retry both timed out before STARTED, each with zero scientific exposure. Under the frozen contract the retry is exhausted, so the current R19 confirmatory attempt must fail closed and STOP. The durable partial prefix is 29/140 (seven complete tasks plus one episode of an incomplete task), with no interim effect, p-value, interval, or claim update permitted. PSMG remains a pre-outcome method design with no new treatment execution authority."
       },
       "next": {
-        "zh": "当前 R19 不得继续或再 retry。R33 已证明同一 frozen WebArena asset 只剩 27 个 fully-unexposed templates，低于原 35-task ambition，且 n=27 在 task-SD=.30 下近似 two-sided power 仅 0.738；因此不建议降规格榨干同一 asset。R34 的 fresh release-surface recheck 进一步确认：SMA 仍是最强外部 process-provenance 候选（priority-1），但官方页仍是 Code Coming Soon，source-outcome 存储/执行可见性未验证；IBM Trajectory Tips priority-2，construct 很强但 writer/consolidation 与 outcome 耦合且 paper-specific first-party artifact 未发布；MutMem 继续因 post-use reward≠source-trajectory provenance 而 STOP。下一步首选等待并 pin SMA first-party code release，再做 schema/exact-information/fresh-capacity 资格审计；任何新 confirmatory execution 都需新的完整 contract 与 explicit scientific+execution authority。PSMG 保持闭环方法设计，不得用 R19 partial outcomes rescue 或调参。",
-        "en": "The current R19 attempt may not continue or retry. R33 shows that the same frozen WebArena asset retains only 27 fully unexposed templates, below the original 35-task ambition; at task-level SD=0.30, n=27 has approximate two-sided power only 0.738, so draining the same asset under a weaker design is not preferred. R34 fresh release-surface recheck further confirms that SMA remains the strongest external process-provenance candidate (priority 1), but its official page still says Code Coming Soon and source-outcome storage/runtime visibility is unverified. IBM Trajectory Tips remains priority 2: construct match is strong but outcome is entangled with writing/consolidation and no paper-specific first-party artifact is released. MutMem remains STOP because post-use reward is not source-trajectory provenance. The preferred next step is to wait for and pin SMA first-party code, then audit schema, exact-information intervention capacity, and fresh independent units. Any new confirmatory execution requires a new complete contract and explicit scientific plus execution authority. PSMG remains a paper-closure method design and may not use R19 partial outcomes for rescue or tuning."
+        "zh": "当前 R19 永久停止且不得再 retry。R33 的剩余 27 条仅是同资产 inventory，不是 fresh confirmatory cohort；不得因为想补实验量或样本稀缺而降低 construct、independence、support、power、preregistration 或 authority 门禁。R35 将下一次 O5 confirmatory reopen 固定为六级全通过：first-party/source-faithful release → native/auditable memory-generating source-outcome provenance → exact-information intervention → fresh independent capacity → prebenchmark support + 完整 preregistration → 新 explicit scientific/execution authority。当前六级均未通过，所以唯一合法动作是 bounded wait/recheck。SMA 仍 priority-1、IBM priority-2；PSMG 已完成“现象→因果识别→provenance-separated governance”的设计闭环，但 PSMG efficacy 与 provenance-only effect 仍必须由新的 fresh confirmatory experiment 验证，不能用 R19 partial outcomes 或 27 条 fallback 升级 claim。",
+        "en": "The current R19 attempt is permanently stopped and may not retry. R33's remaining 27 units are same-asset inventory, not a fresh confirmatory cohort; experimental-volume pressure or sample scarcity may not weaken construct, independence, support, power, preregistration, or authority gates. R35 freezes the next O5 confirmatory reopen as six jointly required stages: first-party/source-faithful release -> native/auditable memory-generating source-outcome provenance -> exact-information intervention -> fresh independent capacity -> prebenchmark support plus complete preregistration -> new explicit scientific/execution authority. None currently passes, so the only legal action is bounded waiting/rechecking. SMA remains priority 1 and IBM priority 2. PSMG closes the design loop from phenomenon to causal identification to provenance-separated governance, but PSMG efficacy and a provenance-only effect still require a new fresh confirmatory experiment and cannot be upgraded from R19 partial outcomes or the 27-unit fallback."
       },
       "objections": [
         {
@@ -787,6 +787,27 @@
             "absence_of_public_release_is_scientific_negative": false,
             "same_asset_R33_27_unit_fallback_automatically_authorized": false,
             "receipt": "generated/d2-failure-memory-provenance-r34-external-substrate-release-recheck.json"
+          },
+          "fresh_confirmatory_reopen_gate": {
+            "status": "WAIT_FOR_NEW_PROVENANCE_BEARING_SUBSTRATE_NO_CONFIRMATORY_EXECUTION_AUTHORITY",
+            "closed_design_loop": "phenomenon -> causal identification -> PSMG provenance-separated governance",
+            "PSMG_design_frozen": true,
+            "PSMG_effect_validated": false,
+            "same_asset_27_fresh_confirmatory_eligible": false,
+            "experiment_volume_can_relax_gate": false,
+            "required_stages": [
+              "G1_RELEASE",
+              "G2_PROVENANCE_SCHEMA",
+              "G3_EXACT_INFORMATION",
+              "G4_FRESH_CAPACITY",
+              "G5_SUPPORT_AND_PREREGISTRATION",
+              "G6_AUTHORITY"
+            ],
+            "all_required": true,
+            "passed_now": false,
+            "qualified_substrate_now": null,
+            "current_action": "WAIT_AND_BOUNDEDLY_RECHECK_EXTERNAL_FIRST_PARTY_RELEASES_ONLY",
+            "receipt": "generated/d2-failure-memory-provenance-r35-fresh-confirmatory-reopen-gate.json"
           }
         },
         {

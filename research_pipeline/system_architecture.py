@@ -269,6 +269,7 @@ def build_system_architecture(components: list[dict[str, Any]], methodology_cont
             "Fan-out may increase search breadth, but only an independent jury may adjudicate its outputs and jury CLEAR is still not scientific PASS.",
             "Execution loops may establish artifact completeness but cannot self-acquit scientific quality or status.",
             "Search effort and scientific assurance are orthogonal: more firepower never relaxes evidence or authority gates.",
+            "Experimental volume and substrate scarcity are non-compensatory: neither more trials nor limited remaining units may weaken construct, independence, support, power, preregistration, or authority gates.",
             "The P0 seven-stage state machine is nested inside scientific validation; it is not a second paper lifecycle.",
             "Cross-cutting methodology controls attach to an existing owner component and never create an implicit seventh functional layer.",
             "Paper optimization begins only after Paper Evidence closure; it may change framing and presentation but cannot expand the frozen scientific claim.",
