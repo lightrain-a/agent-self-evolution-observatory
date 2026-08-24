@@ -1,0 +1,667 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R19-EVALUATOR-PREFLIGHT",
+  "recorded_date": "2026-08-24",
+  "status": "R19_35_OF_35_NATIVE_EVALUATORS_CONSTRUCTED_ZERO_CALL",
+  "role": "ZERO_MODEL_ZERO_ACTION_PRE_OUTCOME_EVALUATOR_TRANSPORT_AUDIT",
+  "installed_webarena_config": {
+    "path": "/data/wyt/agent-self-evolution-observatory/runtimes/b1-reasoningbank-l2b-r10-py312-bg0141/lib/python3.12/site-packages/webarena/test.raw.json",
+    "sha256": "7b50386fd69163dbc05d615d834df4c6ed2c35596e97a1b10d17451c02537652",
+    "tasks_total": 812
+  },
+  "walt_frozen_config": {
+    "sha256": "d25e83078ec728adc82bd43871338a24a3907e101b5a5fdb1ae81bb7f72f36a6",
+    "semantic_comparison_fields": [
+      "task_id",
+      "intent_template_id",
+      "intent",
+      "sites",
+      "start_url",
+      "geolocation",
+      "eval"
+    ],
+    "normalization": "Only reference_answers.fuzzy_match scalar-versus-singleton-list is normalized. No answer string, note, URL, program, task intent, site, or evaluator type may differ.",
+    "schema_normalized_task_ids": [
+      "796",
+      "24"
+    ]
+  },
+  "import_only_environment": {
+    "purpose": "Satisfy libwebarena import-time non-empty URL assertions only; evaluator construction sends no network request.",
+    "loopback_placeholders": {
+      "REDDIT": "http://127.0.0.1:9999",
+      "SHOPPING": "http://127.0.0.1:7770",
+      "SHOPPING_ADMIN": "http://127.0.0.1:7780/admin",
+      "GITLAB": "http://127.0.0.1:8023",
+      "WIKIPEDIA": "http://127.0.0.1:8888",
+      "MAP": "http://127.0.0.1:3000",
+      "HOMEPAGE": "http://127.0.0.1:4399"
+    },
+    "network_requests_executed": false
+  },
+  "summary": {
+    "R19_tasks": 35,
+    "shopping_only": true,
+    "native_evaluators_constructed": 35,
+    "native_evaluators_called": 0,
+    "semantic_config_matches": 35,
+    "potential_llm_fuzzy_evaluator_tasks": 5,
+    "potential_llm_fuzzy_evaluator_task_ids": [
+      "336",
+      "796",
+      "50",
+      "359",
+      "24"
+    ],
+    "deterministic_or_non_fuzzy_evaluator_tasks": 30,
+    "maximum_fuzzy_evaluator_model_calls_under_4_episodes_x_30_steps": 600
+  },
+  "tasks": [
+    {
+      "task_id": "353",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "url_match"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "240",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "url_match"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "271",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "url_match"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "433",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "program_html"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "331",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "string_match"
+      ],
+      "reference_answer_keys": [
+        "must_include"
+      ],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "655",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "url_match",
+        "program_html"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "530",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "program_html"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "147",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "string_match"
+      ],
+      "reference_answer_keys": [
+        "must_include"
+      ],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "438",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "program_html"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "124",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "string_match"
+      ],
+      "reference_answer_keys": [
+        "must_include"
+      ],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "321",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "string_match"
+      ],
+      "reference_answer_keys": [
+        "must_include"
+      ],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "142",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "string_match"
+      ],
+      "reference_answer_keys": [
+        "must_include"
+      ],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "691",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "url_match",
+        "program_html"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "573",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "program_html"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "336",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "string_match"
+      ],
+      "reference_answer_keys": [
+        "fuzzy_match"
+      ],
+      "potential_llm_fuzzy_evaluator": true,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "160",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "url_match"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "508",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "program_html"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "300",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "url_match"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "467",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "program_html"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "513",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "program_html"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "796",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "string_match"
+      ],
+      "reference_answer_keys": [
+        "fuzzy_match"
+      ],
+      "potential_llm_fuzzy_evaluator": true,
+      "walt_vs_installed_raw_equal": false,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "587",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "program_html"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "518",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "program_html"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "50",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "string_match"
+      ],
+      "reference_answer_keys": [
+        "fuzzy_match"
+      ],
+      "potential_llm_fuzzy_evaluator": true,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "281",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "string_match"
+      ],
+      "reference_answer_keys": [
+        "must_include"
+      ],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "359",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "string_match"
+      ],
+      "reference_answer_keys": [
+        "fuzzy_match"
+      ],
+      "potential_llm_fuzzy_evaluator": true,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "286",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "url_match"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "326",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "url_match"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "262",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "url_match"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "276",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "url_match"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "232",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "string_match"
+      ],
+      "reference_answer_keys": [
+        "must_include"
+      ],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "189",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "string_match"
+      ],
+      "reference_answer_keys": [
+        "must_include"
+      ],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "509",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "program_html"
+      ],
+      "reference_answer_keys": [],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "24",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "string_match"
+      ],
+      "reference_answer_keys": [
+        "fuzzy_match"
+      ],
+      "potential_llm_fuzzy_evaluator": true,
+      "walt_vs_installed_raw_equal": false,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    },
+    {
+      "task_id": "384",
+      "sites": [
+        "shopping"
+      ],
+      "eval_types": [
+        "string_match"
+      ],
+      "reference_answer_keys": [
+        "must_include"
+      ],
+      "potential_llm_fuzzy_evaluator": false,
+      "walt_vs_installed_raw_equal": true,
+      "walt_vs_installed_semantic_equal_after_fuzzy_scalar_list_normalization": true,
+      "native_evaluator_constructed": true,
+      "native_evaluator_class": "EvaluatorComb",
+      "native_evaluator_called": false
+    }
+  ],
+  "support_rule": {
+    "gpt_4_1106_preview_alias_must_be_manifest_identical_to_executor_before_future_execution": true,
+    "fuzzy_evaluator_calls_are_evaluator_calls_not_independent_samples": true,
+    "fuzzy_evaluator_call_budget_must_be_separate_from_agent_completion_budget": true,
+    "no_native_evaluator_was_called_in_this_preflight": true
+  },
+  "scientific_verdict": "NO_VERDICT_EVALUATOR_PREFLIGHT_ONLY",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "model_calls": false,
+    "browser_actions": false,
+    "evaluator_calls": false,
+    "submission": false
+  }
+}

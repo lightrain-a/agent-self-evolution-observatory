@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R19-ALIAS-TOKENIZER-PREFLIGHT",
+  "recorded_date": "2026-08-24",
+  "status": "R19_AGENT_EVALUATOR_ALIASES_AND_TOKENIZERS_PREFLIGHT_PASS_ZERO_COMPLETION",
+  "role": "ZERO_COMPLETION_TRANSPORT_PREFLIGHT",
+  "ollama_registry": {
+    "base": "http://127.0.0.1:11444",
+    "aliases": {
+      "gpt-4-1106-preview:latest": "5bce411d829007ce344871ae10ea7f02f91d86c932617a7f982e2380bbb1c216",
+      "gpt-4:latest": "5bce411d829007ce344871ae10ea7f02f91d86c932617a7f982e2380bbb1c216",
+      "b1-qwen25-32b-l2b-executor:latest": "5bce411d829007ce344871ae10ea7f02f91d86c932617a7f982e2380bbb1c216"
+    },
+    "all_required_aliases_present": true,
+    "all_required_aliases_manifest_identical": true,
+    "executor_manifest_digest": "sha256:5bce411d829007ce344871ae10ea7f02f91d86c932617a7f982e2380bbb1c216",
+    "openai_v1_models_checked": true,
+    "completion_endpoint_called": false,
+    "generation_endpoint_called": false
+  },
+  "tokenizer": {
+    "rows": [
+      {
+        "model_name": "gpt-4",
+        "encoding": "cl100k_base",
+        "lookup_pass": true
+      },
+      {
+        "model_name": "gpt-4-1106-preview",
+        "encoding": "cl100k_base",
+        "lookup_pass": true
+      }
+    ],
+    "all_lookup_pass": true,
+    "tokenizer_only_no_model_call": true
+  },
+  "installed_webarena_evaluator_source": {
+    "helper_functions_py": "/data/wyt/agent-self-evolution-observatory/runtimes/b1-reasoningbank-l2b-r10-py312-bg0141/lib/python3.12/site-packages/webarena/evaluation_harness/helper_functions.py",
+    "sha256": "7ac7b1b7095aab758d93c3aa8a14769bb1fa5c8a94a3454066be624747834398",
+    "gpt_4_1106_preview_literal_count": 2,
+    "hardcoded_evaluator_alias_preflighted": true
+  },
+  "future_execution_precondition": {
+    "repeat_registry_and_tokenizer_preflight_immediately_before_any_new_benchmark_episode": true,
+    "after_new_execution_authority_but_before_benchmark_outcome_run_two_fixed_synthetic_nonbenchmark_completion_smokes": [
+      "agent alias gpt-4",
+      "evaluator alias gpt-4-1106-preview"
+    ],
+    "synthetic_completion_smokes_executed_now": false,
+    "reason": "R18c demonstrated that registry/tokenizer checks alone do not prove every downstream model-name transport path. A new experiment should consume two explicitly authorized nonbenchmark support completions before scientific exposure."
+  },
+  "scientific_verdict": "NO_VERDICT_TRANSPORT_PREFLIGHT_ONLY",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "model_completions": false,
+    "browser_actions": false,
+    "evaluator_calls": false,
+    "submission": false
+  }
+}

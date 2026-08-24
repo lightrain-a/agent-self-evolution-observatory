@@ -1,0 +1,947 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R19-HYBRID-FRESH-COHORT-CANDIDATE",
+  "recorded_date": "2026-08-24",
+  "status": "R19_35_TEMPLATE_HYBRID_FRESH_COHORT_AVAILABLE_NEW_AUTHORITY_REQUIRED",
+  "role": "ZERO_OUTCOME_POST_STOP_REOPEN_CAPACITY_CENSUS",
+  "scientific_relationship": "NEW_EXPERIMENT_CANDIDATE_NOT_R18_RETRY_NOT_R5_RESCUE",
+  "parent_state": {
+    "R18c_status": "POST_EXPOSURE_EVALUATOR_SUPPORT_FAILURE_CONFIRMATORY_ATTEMPT_STOPPED",
+    "R18c_scientific_verdict": "NO_VERDICT_POST_EXPOSURE_SUPPORT_FAILURE",
+    "prior_single_confirmatory_attempt_consumed": true,
+    "prior_exposed_template_id": "136",
+    "prior_exposed_downstream_task_id": "166"
+  },
+  "selection_contract": {
+    "one_downstream_per_intent_template": true,
+    "exclude_entire_R18c_exposed_template": true,
+    "exclude_all_PRIOR_D2_IDS_from_new_alternatives": true,
+    "exclude_all_R9_downstream_ids_from_new_alternatives": true,
+    "exclude_frozen_source_task_id_from_its_downstream_candidate": true,
+    "for_each_remaining_template_choose_smallest_legal_new_task_id": true,
+    "if_no_legal_new_candidate_retain_original_R9_downstream_only_if_never_exposed_and_source_distinct": true,
+    "outcome_blind": true,
+    "R18c_step_action_or_reward_read_for_selection": false,
+    "threshold_or_effect_used_for_selection": false
+  },
+  "capacity": {
+    "R9_templates": 36,
+    "R18c_exposed_templates_excluded": 1,
+    "R19_independent_template_units": 35,
+    "new_downstream_ids_relative_to_R9": 30,
+    "retained_unexposed_R9_downstream_ids": 5,
+    "all_source_distinct_from_downstream": true,
+    "all_downstream_ids_unique": true,
+    "all_downstream_ids_have_official_evaluator": true,
+    "all_downstream_tasks_shopping_only": true,
+    "official_evaluator_counts": {
+      "program_html": 10,
+      "string_match": 14,
+      "url_match": 9,
+      "url_match+program_html": 2
+    },
+    "source_native_status_counts": {
+      "fail": 20,
+      "success": 15
+    }
+  },
+  "excluded_templates": [
+    {
+      "template_id": "136",
+      "source_task_id": "163",
+      "old_downstream_task_id": "166",
+      "reason": "R18c scientific exposure occurred in this template; exclude the entire template from any R19 candidate."
+    }
+  ],
+  "retained_original_downstreams": [
+    {
+      "template_id": "159",
+      "source_task_id": "125",
+      "downstream_task_id": "124"
+    },
+    {
+      "template_id": "180",
+      "source_task_id": "298",
+      "downstream_task_id": "300"
+    },
+    {
+      "template_id": "213",
+      "source_task_id": "231",
+      "downstream_task_id": "232"
+    },
+    {
+      "template_id": "216",
+      "source_task_id": "510",
+      "downstream_task_id": "509"
+    },
+    {
+      "template_id": "666",
+      "source_task_id": "385",
+      "downstream_task_id": "384"
+    }
+  ],
+  "cohort": [
+    {
+      "template_id": "137",
+      "source_task_id": "352",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "68a3022dacafee1994486e5ae703091f605f9876eb245c5a9f521541dbee95f0",
+      "source_memory_joined_bytes_sha256": "242822f755dce75086c32f9ec723c3e1837f09492fe853a7fd5efec507cb134e",
+      "r9_downstream_task_id": "351",
+      "r19_downstream_task_id": "353",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "url_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "138",
+      "source_task_id": "239",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "44bbf510619523d7d6e6ee4a9f84c36c18cde0902cce582cacadd9641a6fcfc9",
+      "source_memory_joined_bytes_sha256": "9ada75d119aaee64a27b875389c351bca766f2e1a079a5293d0b08b48baa011f",
+      "r9_downstream_task_id": "238",
+      "r19_downstream_task_id": "240",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "url_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "139",
+      "source_task_id": "270",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "547e9eb7c8987b95575e5a0cfbf0db6b01d727c8877a695036f17c9c59a7b784",
+      "source_memory_joined_bytes_sha256": "6417586780957f99500defcac919a2ac6d6ae5e0fb51f774e39d9d50f76ec461",
+      "r9_downstream_task_id": "269",
+      "r19_downstream_task_id": "271",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "url_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "145",
+      "source_task_id": "432",
+      "source_native_status": "success",
+      "source_memory_record_sha256": "fc7aa6431bb9eb71f7e2b3b1689ed9f378825902150af9cdf8ed9670f12807ed",
+      "source_memory_joined_bytes_sha256": "a2907edbb29fbdd02cdbdd3c21dedbacfb477ce95f006661ec783aa0af5dedd6",
+      "r9_downstream_task_id": "431",
+      "r19_downstream_task_id": "433",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "program_html"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "147",
+      "source_task_id": "330",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "1acaad739f707915b7bfde0bf192701bbfafae5b0d7aae856b85de9d63ccca12",
+      "source_memory_joined_bytes_sha256": "211b06f7e565c5eb9ed22f506d099e08274d345e0100bdc7f6f951d174aae3c5",
+      "r9_downstream_task_id": "329",
+      "r19_downstream_task_id": "331",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "string_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "153",
+      "source_task_id": "654",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "af1780e7dd05a9cd74e88ca57bb28503da32b436115b324792172c134000d32b",
+      "source_memory_joined_bytes_sha256": "399ac273dada7447b6356576a443c8d35bdf21436dbc8a895b34ed7647656570",
+      "r9_downstream_task_id": "653",
+      "r19_downstream_task_id": "655",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "url_match",
+        "program_html"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "154",
+      "source_task_id": "529",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "686ce00d55eb5ca8bd61309290c61875e8ba6badd26acfd1ddec917299247535",
+      "source_memory_joined_bytes_sha256": "c92e1c5021657a812055707a438d45db6c3914422e9f615ef9f8fa0526241a90",
+      "r9_downstream_task_id": "528",
+      "r19_downstream_task_id": "530",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "program_html"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "155",
+      "source_task_id": "148",
+      "source_native_status": "success",
+      "source_memory_record_sha256": "585e6ea3b9532b3b5af27c08e4b0c38de0912f8b4e277b6f01421a5e379347b6",
+      "source_memory_joined_bytes_sha256": "c9c7a3cecf246eda23351a00532d723be40952ecebe0aae85e3aafbd188f0fd3",
+      "r9_downstream_task_id": "146",
+      "r19_downstream_task_id": "147",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "string_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 1,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "156",
+      "source_task_id": "437",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "75b45fb519e24f4d968b19dfc06c88a189ff990ab1cf5ffac8c578604b5ef5f6",
+      "source_memory_joined_bytes_sha256": "a90e41eca3f84544add3051df07bc695ec3408bc2d485d24cf69fc2d0c84fb22",
+      "r9_downstream_task_id": "436",
+      "r19_downstream_task_id": "438",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "program_html"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "159",
+      "source_task_id": "125",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "61824ddc12233af688f133ce45533a073f16c16e5aa52aad6ae496254e22fa04",
+      "source_memory_joined_bytes_sha256": "9a14668931a71ad8a35eb8350d8d776b4f090f9a32a832c0895f44f07e3f2188",
+      "r9_downstream_task_id": "124",
+      "r19_downstream_task_id": "124",
+      "downstream_changed_from_r9": false,
+      "selection_rule": "RETAIN_UNEXPOSED_R9_DOWNSTREAM_NO_LEGAL_SECOND_CANDIDATE",
+      "official_eval_types": [
+        "string_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 0,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "160",
+      "source_task_id": "320",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "b8bed626cb454fc783f0f4a44f82ce65e5f40820d3f4c099656f268aac5ebc6a",
+      "source_memory_joined_bytes_sha256": "efa25143b01f381429e68f25bac21de9410de54b4110e694154b39f17dabc6e6",
+      "r9_downstream_task_id": "319",
+      "r19_downstream_task_id": "321",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "string_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "162",
+      "source_task_id": "145",
+      "source_native_status": "success",
+      "source_memory_record_sha256": "dfa7236d2f586a1c79509a16cc758b77810b4e950c064e8e8c9a6a5bf6bb1b74",
+      "source_memory_joined_bytes_sha256": "96e338056d91590daf72d50253a0fe589742b6fcdb490e86b536103abbe23eec",
+      "r9_downstream_task_id": "141",
+      "r19_downstream_task_id": "142",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "string_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "163",
+      "source_task_id": "690",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "4afbb5c5825a3d00259809670dde3388cfd7d68c1c9ef41c65d1f56c8992c8df",
+      "source_memory_joined_bytes_sha256": "3ff534cb18f515c56c8a3f4c45892aafeeaddbf81e9c51d5cc510da943001a3b",
+      "r9_downstream_task_id": "689",
+      "r19_downstream_task_id": "691",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "url_match",
+        "program_html"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "165",
+      "source_task_id": "572",
+      "source_native_status": "success",
+      "source_memory_record_sha256": "0df5d40117574966eb3f35091eaee7b75fe5120b1003f46dca9f6634fdb743cb",
+      "source_memory_joined_bytes_sha256": "2a2ef9a440f17d3ea1613cc49ec99fcec1d4be958f0fd14b35b75b5d5cf04dff",
+      "r9_downstream_task_id": "571",
+      "r19_downstream_task_id": "573",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "program_html"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "169",
+      "source_task_id": "335",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "2624ae06207488c2a047f4e9ab6f25ca9073076c356c469be796919f37b796db",
+      "source_memory_joined_bytes_sha256": "081528aa7c265ad66fde4507877dc350f446cf9252c46b178dd8f4b83b1db0dc",
+      "r9_downstream_task_id": "334",
+      "r19_downstream_task_id": "336",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "string_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "171",
+      "source_task_id": "159",
+      "source_native_status": "success",
+      "source_memory_record_sha256": "02508f75f0c43433790b235d2e54e427a3457a602f47112fb9f43870d7d4ff80",
+      "source_memory_joined_bytes_sha256": "649b4e9f766b03bd92b15fa64eb776da84b3d6a3032ff590a79b8c04b34bb68d",
+      "r9_downstream_task_id": "158",
+      "r19_downstream_task_id": "160",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "url_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 2,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "172",
+      "source_task_id": "507",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "589e2b598a280c9dbf1c6ad128673dda3d97a863e7b74e70cd97fb0383cae8e0",
+      "source_memory_joined_bytes_sha256": "d705abee10afbbf0c0816f48dbb71ef60ac5d1faa839da749d6e1077ae597003",
+      "r9_downstream_task_id": "506",
+      "r19_downstream_task_id": "508",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "program_html"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "180",
+      "source_task_id": "298",
+      "source_native_status": "success",
+      "source_memory_record_sha256": "c9186fcbd08de91b1049d7f5c1aec6346fbefc60c2371253187d66422890d0b7",
+      "source_memory_joined_bytes_sha256": "f7653c6b759a677a0dda23cefb4f29a5cce99d6f50df5cdf5b3251c12416d015",
+      "r9_downstream_task_id": "300",
+      "r19_downstream_task_id": "300",
+      "downstream_changed_from_r9": false,
+      "selection_rule": "RETAIN_UNEXPOSED_R9_DOWNSTREAM_NO_LEGAL_SECOND_CANDIDATE",
+      "official_eval_types": [
+        "url_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 0,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "186",
+      "source_task_id": "466",
+      "source_native_status": "success",
+      "source_memory_record_sha256": "65a16147069039b76775dd7bd2ba9e0ea0925833ae5f63cbce389d938194d434",
+      "source_memory_joined_bytes_sha256": "296036372fcda464f07c2040353ec95c43ff692b9888c8ce836d5909770b602e",
+      "r9_downstream_task_id": "465",
+      "r19_downstream_task_id": "467",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "program_html"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "189",
+      "source_task_id": "512",
+      "source_native_status": "success",
+      "source_memory_record_sha256": "96e280a6d27c688aa971b0436a4db4b768c41de0624f2522bcb1163c271be3da",
+      "source_memory_joined_bytes_sha256": "7959b3d27d4980ed0fae019ded8d5d1a1dc06b95a9d3bcce803eb1b9239a21ee",
+      "r9_downstream_task_id": "511",
+      "r19_downstream_task_id": "513",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "program_html"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "191",
+      "source_task_id": "795",
+      "source_native_status": "success",
+      "source_memory_record_sha256": "a4c8b9173c025582d97a35fde6c05c0cce5b51276a7b86cde7e0eef1d28f2bbb",
+      "source_memory_joined_bytes_sha256": "8a4af68b10b98ca438d2bf9563b73e004b0856177dc406495be2dc8d717ed7a5",
+      "r9_downstream_task_id": "794",
+      "r19_downstream_task_id": "796",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "string_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "194",
+      "source_task_id": "586",
+      "source_native_status": "success",
+      "source_memory_record_sha256": "de9d754ee2396ba65d2f57c80d8f142751863990ad18eae5ce271a57e1386bb1",
+      "source_memory_joined_bytes_sha256": "6122838d231290963d38e9d9d2c09a4b885ce21cb9198079d31a08a6b9eb8ea3",
+      "r9_downstream_task_id": "585",
+      "r19_downstream_task_id": "587",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "program_html"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "196",
+      "source_task_id": "517",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "3ba90c9670f1f99c0482af062d21c628dd0b4cee3b591436e26a6cc75f3f5d8f",
+      "source_memory_joined_bytes_sha256": "89b8809fe0a0b39c6386464c9e24264d9586fb296dbb6cca1180a0abc48edbd8",
+      "r9_downstream_task_id": "516",
+      "r19_downstream_task_id": "518",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "program_html"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "197",
+      "source_task_id": "48",
+      "source_native_status": "success",
+      "source_memory_record_sha256": "63214ffd3242710990ac65eeb6aa1bf1a94ceb3b95fc9f01e2e703de64944350",
+      "source_memory_joined_bytes_sha256": "fb3448c61293292b8aa709b28f07f8312811ba564a9d6c708e591a5f5fcfa4b2",
+      "r9_downstream_task_id": "47",
+      "r19_downstream_task_id": "50",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "string_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 2,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "204",
+      "source_task_id": "280",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "1807307587256ad1ebda3299bfaaddba88ea2bd921ff003e0966ce297fd74f5f",
+      "source_memory_joined_bytes_sha256": "8c1c2fc09b5045f3addebf8143a9acaad965c6976d8efd144e471209973c8643",
+      "r9_downstream_task_id": "279",
+      "r19_downstream_task_id": "281",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "string_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 2,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "206",
+      "source_task_id": "360",
+      "source_native_status": "success",
+      "source_memory_record_sha256": "19d1c490b52e08ddd413220f332a777c4889740a5cc51b482cf32f787a494c91",
+      "source_memory_joined_bytes_sha256": "e6fcdf79a7898db7b934a3ba37b0b131c765bc433971f0fb124087642f74c999",
+      "r9_downstream_task_id": "358",
+      "r19_downstream_task_id": "359",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "string_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 2,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "207",
+      "source_task_id": "285",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "63df21033bee9aa5936ba501dccde119b42b04d2f0e803db945b57db22fdfb11",
+      "source_memory_joined_bytes_sha256": "ce6d7cd8ade8b075bb72d3e1d7174952eae9996c76de277183b41f87e16bce59",
+      "r9_downstream_task_id": "284",
+      "r19_downstream_task_id": "286",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "url_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 1,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "208",
+      "source_task_id": "325",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "41c692b6bfefa1b391e3cf841db5494d82a2510dd29a2fceeb36df150a2d8cab",
+      "source_memory_joined_bytes_sha256": "3e5076ce65cfc962f05953c9f2cdcdfeee4bacb440ff5b8d89f4dcf60e83f8f8",
+      "r9_downstream_task_id": "324",
+      "r19_downstream_task_id": "326",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "url_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "211",
+      "source_task_id": "261",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "c17d2ada813b461ce3a5a3e80251dbb847cbc39b990ad211466fbee6a846bfbe",
+      "source_memory_joined_bytes_sha256": "7873a8e113792937f66f9002ccc80e3544b065b8399c76a9bd8eb9ade881ba90",
+      "r9_downstream_task_id": "260",
+      "r19_downstream_task_id": "262",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "url_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "212",
+      "source_task_id": "275",
+      "source_native_status": "success",
+      "source_memory_record_sha256": "e6ed34050bf4988d08c378b3dec4fdeb36cb8ef85e88afc5625013e2f3715af2",
+      "source_memory_joined_bytes_sha256": "c31af290c16d8a7f396aaa3d7581c18e68bbe89334b49544e209b0eceaeb5ad5",
+      "r9_downstream_task_id": "274",
+      "r19_downstream_task_id": "276",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "url_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 3,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "213",
+      "source_task_id": "231",
+      "source_native_status": "success",
+      "source_memory_record_sha256": "b46e78d3fca3f3f285d7d46dbdb59d55567fa0033cd6ad558ca85a2fb34c63dc",
+      "source_memory_joined_bytes_sha256": "172bc21a433a89a1ea85cb484199c6552c4708c03f3855ac6f40c7e7e2b98fd2",
+      "r9_downstream_task_id": "232",
+      "r19_downstream_task_id": "232",
+      "downstream_changed_from_r9": false,
+      "selection_rule": "RETAIN_UNEXPOSED_R9_DOWNSTREAM_NO_LEGAL_SECOND_CANDIDATE",
+      "official_eval_types": [
+        "string_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 0,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "214",
+      "source_task_id": "190",
+      "source_native_status": "success",
+      "source_memory_record_sha256": "fba38bc3155317f4cfd67fd4009715f66f8629ed0e972f6af4f18e5c063c3b1b",
+      "source_memory_joined_bytes_sha256": "9d2463fcee8e603a94f7dc59e80134424c83822b585716541645ffd6c817ccd0",
+      "r9_downstream_task_id": "188",
+      "r19_downstream_task_id": "189",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "string_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 2,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "216",
+      "source_task_id": "510",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "6afbf5445e296bfcfdb052cdc73d479caef82ee40a2788907ca87894744ed821",
+      "source_memory_joined_bytes_sha256": "014b1648c8fbe92e44f435fa21770e7d99f2b44b3b783c9f2708da5ec60b3105",
+      "r9_downstream_task_id": "509",
+      "r19_downstream_task_id": "509",
+      "downstream_changed_from_r9": false,
+      "selection_rule": "RETAIN_UNEXPOSED_R9_DOWNSTREAM_NO_LEGAL_SECOND_CANDIDATE",
+      "official_eval_types": [
+        "program_html"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 0,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "222",
+      "source_task_id": "21",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "cde8f0db7b66d6d4c4840fb489a1c2f269d912d4626623a45b5b72eb7b11d87a",
+      "source_memory_joined_bytes_sha256": "7c23d35b0124d91bf419893b4173d0e6d98701d4d0370e5dcadbdb90a8adea67",
+      "r9_downstream_task_id": "22",
+      "r19_downstream_task_id": "24",
+      "downstream_changed_from_r9": true,
+      "selection_rule": "SECOND_FRESH_CANDIDATE_SOURCE_AND_R9_DOWNSTREAM_EXCLUDED",
+      "official_eval_types": [
+        "string_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 1,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    },
+    {
+      "template_id": "666",
+      "source_task_id": "385",
+      "source_native_status": "fail",
+      "source_memory_record_sha256": "c2b452aa7ab4d71767702d6e6ab56ff7546f58027e2a1783abd590b595db33d7",
+      "source_memory_joined_bytes_sha256": "2640728e0ce726d6d3edc7f0c68e6e4336b41fcf760b274b455c93fc269eaf36",
+      "r9_downstream_task_id": "384",
+      "r19_downstream_task_id": "384",
+      "downstream_changed_from_r9": false,
+      "selection_rule": "RETAIN_UNEXPOSED_R9_DOWNSTREAM_NO_LEGAL_SECOND_CANDIDATE",
+      "official_eval_types": [
+        "string_match"
+      ],
+      "sites": [
+        "shopping"
+      ],
+      "legal_alternative_count_after_exclusions": 0,
+      "downstream_equals_source": false,
+      "downstream_was_r18c_exposed": false,
+      "downstream_was_prior_d2": false,
+      "selection_uses_r18c_action_or_outcome": false,
+      "selection_uses_any_downstream_outcome": false
+    }
+  ],
+  "source_memory_policy": {
+    "reuse_R17_exact_frozen_memory_bytes": true,
+    "reason": "R17 memories were generated and frozen before any downstream L2 outcome; R19 changes only downstream inference units and does not regenerate or select memory content from R18c results.",
+    "memory_regeneration_for_R19": false,
+    "memory_edit_for_R19": false,
+    "R17_sha256": "58de4f998b16aace4ddfeef0693d88a347b293c032d997e0da471e6b92c69235"
+  },
+  "power_sensitivity_only": {
+    "target_absolute_effect": 0.15,
+    "alpha": 0.05,
+    "approximation": "normal approximation for the paired task-level mean; confirmatory inference would require a newly frozen randomization contract",
+    "scenarios": [
+      {
+        "task_level_sd": 0.2,
+        "independent_tasks": 35,
+        "approx_two_sided_power": 0.993377
+      },
+      {
+        "task_level_sd": 0.3,
+        "independent_tasks": 35,
+        "approx_two_sided_power": 0.840879
+      },
+      {
+        "task_level_sd": 0.4,
+        "independent_tasks": 35,
+        "approx_two_sided_power": 0.60203
+      }
+    ],
+    "unconditional_80pct_power_claim": false
+  },
+  "support_preflight": {
+    "executor_evaluator_aliases_prepared": true,
+    "required_executor_manifest_digest": "sha256:5bce411d829007ce344871ae10ea7f02f91d86c932617a7f982e2380bbb1c216",
+    "required_aliases": [
+      "b1-qwen25-32b-l2b-executor:latest",
+      "gpt-4:latest",
+      "gpt-4-1106-preview:latest"
+    ],
+    "must_reverify_alias_manifest_equality_immediately_before_any_future_execution": true
+  },
+  "reopen_gate": {
+    "new_pre_outcome_execution_contract_required": true,
+    "new_explicit_scientific_and_experiment_authority_required": true,
+    "current_R16_authority_reusable": false,
+    "current_R18_schedule_reusable_as_authority": false,
+    "R18_R18b_R18c_failure_chain_must_be_disclosed": true,
+    "R18c_exposed_artifacts_must_not_enter_R19_selection_analysis_or_thresholds": true,
+    "execution_permitted_now": false
+  },
+  "strongest_allowed_current_statement": "After the R18 confirmatory attempt was stopped by a post-exposure evaluator support failure, a zero-outcome census identifies a 35-template candidate for a genuinely new L2B experiment: 30 downstream tasks are new relative to R9/R18, five retained tasks were never scientifically executed, the exposed template is excluded, and every downstream task is distinct from its frozen R17 source-memory task. This is capacity evidence only and does not authorize or establish a provenance effect.",
+  "scientific_verdict": "NO_VERDICT_REOPEN_CAPACITY_ONLY",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "submission_authority": false
+}
