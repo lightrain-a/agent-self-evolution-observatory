@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "paper_label": "E1.STRI",
+  "stage": "READER_SIMULATION_LAYOUT_AND_TRANSITION_CLOSURE",
+  "analysis_date": "2026-08-24",
+  "branch": "paper/e1-stri-stanford-template-20260824",
+  "base_head": "83ff810f38bde376dc362f115af4f6a440daebf2",
+  "purpose": "Run a first-reader/reviewer simulation over the 9-page manuscript, repair high-value logical and PDF-layout transitions, and preserve all frozen scientific claim boundaries without reopening experiments.",
+  "reader_attack_surfaces": [
+    {
+      "transition": "Figure 1 -> Method",
+      "pre_repair_risk": "The identity-split visual introduced the nuisance channel, but a first reader still had to infer how the picture maps to the formal A,w,q objects.",
+      "repair": "Protocol-at-a-glance now maps an exact clone in Figure 1 to a duplicated support column and explains why it can perturb identity-indexed package mass without adding a semantic degree of freedom.",
+      "status": "PASS"
+    },
+    {
+      "transition": "Theorem/Certificate -> Experimental Setup",
+      "pre_repair_risk": "Theorems were correct but the experiment section did not explicitly state which observable patterns would support or falsify the proposed mechanism.",
+      "repair": "Experimental Setup now states three theorem-derived predictions before the evidence map: clone/split refactoring leaves cone/R* unchanged; overlap alone need not imply residual; a factor-2 witness rules out all same-information package weights for neutral q.",
+      "status": "PASS"
+    },
+    {
+      "transition": "Experiments -> Takeaway",
+      "pre_repair_risk": "The discussion jumped directly to decision triage without explicitly separating controller identity sensitivity, the structural support-geometry diagnosis, and the bounded behavioral existence proof.",
+      "repair": "Discussion now separates those three nested claims and identifies the support-geometry statement as the general structural diagnosis while keeping AutoSkill bounded to one existence proof.",
+      "status": "PASS"
+    },
+    {
+      "transition": "Experimental Setup paragraph -> Tables 1-2",
+      "pre_repair_risk": "PDF pagination initially split the setup paragraph across pages and inserted both floating tables between the first and second halves of one sentence-level argument.",
+      "repair": "The prediction map was compacted so it completes on page 6; Tables 1-2 begin page 7; structural-estimand and cross-system role details resume as a new paragraph after the tables rather than as a continuation of the interrupted paragraph.",
+      "status": "PASS"
+    }
+  ],
+  "guardrail_events": [
+    {
+      "event": "Initial reader-bridge draft expanded main text to 10 pages.",
+      "response": "Removed duplicated exposition and compressed setup/E6 rather than deleting the new logical bridges.",
+      "final_status": "9/9 main-text pages"
+    },
+    {
+      "event": "Paper QA detected loss of the frozen exact boundary phrase 'neither supports population utility, safety, or regret'.",
+      "response": "Restored the exact boundary wording while retaining the compact discussion.",
+      "final_status": "97/97 PASS"
+    },
+    {
+      "event": "Paper Quality v2.1 temporarily held O-SENSITIVITY after compacting E6 removed evidence-binding markers '32,768 inequalities' and 'host-load-dependent'.",
+      "response": "Restored both markers without restoring redundant solver prose.",
+      "final_status": "PASS_MANUSCRIPT_EVIDENCE; evidence debt 0"
+    }
+  ],
+  "qa": {
+    "paper_qa": {"status": "PASS", "checks_passed": 97, "checks_total": 97},
+    "official_iclr_qa": {"status": "PASS", "checks_passed": 64, "checks_total": 64, "main_text_pages": 9, "main_text_page_limit": 9, "total_pdf_pages": 11},
+    "paper_quality": {"status": "PASS_MANUSCRIPT_EVIDENCE", "passed": true, "evidence_debt": 0},
+    "citation_count": 19,
+    "undefined_citations_or_references": 0
+  },
+  "release_candidate": {
+    "directory": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r13-reader-simulation-20260824",
+    "manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r13-reader-simulation-20260824/R13-MANIFEST.json",
+    "manifest_sha256": "551ce3d9356f1a1469a96a4919f693aa31eb7bb4ef1cddd4abe7b142110df614",
+    "pdf_sha256": "48cb4d88104aecb3e26d01d1468ab4232f6a1a45d0ae737ac776da0ce1298dee",
+    "source_zip_sha256": "d7ea33498a0b064704b53408b5ec09100f31b92440e1bdb4d40f540d9a353f6c",
+    "source_files": 12,
+    "source_isolated_compile": "PASS",
+    "source_anonymity_scan": "PASS",
+    "pdf_anonymity_scan": "PASS",
+    "supplement_sha256": "4a28ddc2db92d3f38141ea0496ce6989796ed93e7566b9831c77c2e77c075586",
+    "supplement_byte_identical_to_r12": true,
+    "supplement_full_reproduction_inherited_from_identical_bytes": "PASS",
+    "supplement_unit_tests_inherited_from_identical_bytes": "29/29 PASS",
+    "canonical_release_overwritten": false
+  },
+  "sha256": {
+    "manuscript_body": "a70f4db5f13b5b7e12b0517587b248e93e634892485c4fc2b9f558144c3e9d71",
+    "compiled_pdf": "48cb4d88104aecb3e26d01d1468ab4232f6a1a45d0ae737ac776da0ce1298dee"
+  },
+  "scientific_boundary": {
+    "claim_expansion": false,
+    "new_outcome_data": false,
+    "new_support_annotations": false,
+    "new_model_calls": 0,
+    "new_gpu_runs": 0,
+    "new_reviewer_calls": 0,
+    "utility_claim_added": false,
+    "safety_claim_added": false,
+    "longitudinal_regret_claim_added": false,
+    "validated_repair_claim_added": false,
+    "lp_novelty_claim_added": false
+  },
+  "scientific_authority": false,
+  "disposition": "READY_NARROW_ICLR_READER_SIMULATION_CLOSURE_COMPLETE"
+}

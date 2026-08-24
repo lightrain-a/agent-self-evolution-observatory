@@ -47,7 +47,7 @@ Fair-exposure methods allocate attention~\citep{singh2018fairness,biega2018equit
 \label{sec:formalism}
 
 \subsection{Protocol at a glance}
-\paragraph{Design intuition.} Package $j$ contributes support column $A_{:j}$, so package mass $w$ induces semantic exposure $Aw$. STRI-Cert separates two questions: exact identity refinements should vanish after quotienting clones; afterward, a target $q$ is package-realizable exactly when it lies in the nonnegative cone of the remaining columns.
+\paragraph{Design intuition.} Package $j$ contributes support column $A_{:j}$, so package mass $w$ induces semantic exposure $Aw$. In Fig.~\ref{fig:stri-overview}, an exact clone is therefore a duplicated support column: it may perturb identity-indexed package mass, but should not create a new semantic degree of freedom. STRI-Cert separates two questions: exact identity refinements should vanish after quotienting clones; afterward, a target $q$ is package-realizable exactly when it lies in the nonnegative cone of the remaining columns.
 
 The five-step order isolates those questions: \textbf{freeze support/target provenance} $\rightarrow$ \textbf{quotient exact clones} $\rightarrow$ \textbf{overgrant arbitrary $w\ge0$ with full frozen $A$} $\rightarrow$ \textbf{solve primal/dual} ($R^*=1$ constructive weighting; $R^*>1$ tight residual plus witness) $\rightarrow$ \textbf{separate diagnosis from repair}. Semantic-first control can escape cone infeasibility only by changing the action basis, so it is a constructive boundary witness rather than validated downstream repair.
 
@@ -147,10 +147,10 @@ Two variants make deployment assumptions explicit. With independently justified 
 \label{sec:setup}
 
 \paragraph{Evidence, estimands, and controls.}
-Skill-SP Level-1 is the primary positive support regime; a frozen tool-disjoint split tests transfer and Level-3 is a disjoint negative control. A first-party logical compiler supplies a high-overlap programmatic negative regime. SkillRL is restricted to its released retrieval seam because it lacks independent support labels; AutoSkill contributes one frozen P19 representation intervention with mechanical behavior and matched placebo/quotient/add-back controls. The structural estimand is neutral $R^*(A;\mathbf1)$ with primal/dual tolerance $10^{-8}$, and the strongest same-information baseline is arbitrary nonnegative reweighting with the complete frozen $A$.
+Predictions are direct: clone/split refactoring leaves the support cone and $R^*$ unchanged; overlap alone need not imply residual; a factor-2 witness rules out all same-information package weights for neutral $q$. Skill-SP tests positive/transfer regimes; Level-3/logical compiler test negative boundaries.
 
 \paragraph{Six evidence roles.}
-E1 is the released-system main result; E2 quotient/baseline ablations; E3 tool-disjoint, negative-regime, and bounded cross-system evidence; E4 diagnostic/support and target sensitivity; E5 sparse-witness redundancy and the P19 mediator trace; E6 conditional solver cost. The added offline completion steps use only frozen released support or deterministic synthetic matrices---zero new support annotations, task outcomes, model calls, or GPU runs.
+Structural audits use neutral $R^*(A)$ with primal/dual tolerance $10^{-8}$. E1 is the released-system result; E2 quotient/baseline ablations; E3 transfer/negative regimes plus SkillRL's phenotype-only boundary and AutoSkill's bounded P19 intervention; E4 support/target sensitivity; E5 witness redundancy and the P19 mediator trace; E6 conditional solver cost. Offline completion uses only frozen support or deterministic synthetic matrices---zero new annotations, task outcomes, model calls, or GPU runs.
 
 \input{stri-20260816-tables.tex}
 
@@ -195,8 +195,8 @@ Iteratively peeling all positive-mass rows of one tight sparse dual optimum leav
 \end{figure}
 
 \subsection{E6: conditional solver cost}
-On deterministic covered synthetic matrices (three seeds/size), the unchanged dense SciPy/HiGHS Eq.~\eqref{eq:rstar} solver grows from 0.00234 s median at $128\times8$ to 0.685 s at $16{,}384\times96$ (largest-case max 0.765 s; 97 variables, 32,768 inequalities, 24.25 MiB dense coefficients). This host-load-dependent profile conditions on materialized support and makes no support-acquisition, asymptotic, or solver-novelty claim.
+On deterministic covered synthetic matrices, dense SciPy/HiGHS grows from 0.00234 s median at $128\times8$ to 0.685 s at $16{,}384\times96$ (largest max 0.765 s; 32,768 inequalities; 24.25 MiB). This host-load-dependent profile makes no asymptotic or solver-novelty claim.
 
 \section{Discussion, Limitations, and Takeaway}
 \label{sec:limitations}
-STRI-Cert is conditional on $A,q$: support truth remains load-bearing, with the exact 22-addition boundary motivating calibrated or box-bounded support. Its practical role is triage, not automatic taxonomy correction: $R^*=1$ leaves package-only retuning viable, $R^*>1$ rules out that entire same-information action class for the declared target, and invalid support/target provenance redirects effort to identification. AutoSkill gives one bounded P19 path and SkillRL lacks independent $A$; neither supports population utility, safety, or regret. Semantic-first remains constructive rather than validated. Takeaway: quotient representation nuisance, audit realizability, then repair only the assumption or interface the certificate identifies.
+Evidence separates three claims: Skill-SP/SkillRL show identity sensitivity; with independent support, Skill-SP/Level-3/logical regimes show realizability geometry---not overlap count---separates residual from equalizable cases; AutoSkill provides one bounded representation-to-behavior existence proof. STRI-Cert is conditional on $A,q$ and triages action rather than automatically correcting taxonomies: $R^*=1$ keeps package retuning viable, $R^*>1$ rules out that same-information class for the declared target, and invalid provenance redirects effort to identification. The bounded AutoSkill path and SkillRL phenotype neither supports population utility, safety, or regret; semantic-first remains constructive, not a validated repair. Takeaway: quotient representation nuisance, audit realizability, then repair the identified assumption or interface.
