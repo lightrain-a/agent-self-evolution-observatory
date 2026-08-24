@@ -1,0 +1,87 @@
+{
+  "artifact_type": "baseline-aligned-followup-evidence",
+  "claim_boundary_delta": {
+    "cross_policy_terminal_transfer_status_unchanged": "SUPPORT_STOP_ZERO_SCIENTIFIC_UNITS",
+    "endpoint_resolution_explains_away_native_branch_nonpass": false,
+    "external_trajectory_retrieval_method_replication_claimed": false,
+    "live_browser_transport_supported": false,
+    "partial_reference_metric_replaces_binary_gate": false,
+    "population_effect_supported": false,
+    "raw_trajectory_practically_large_rewrite_effect_supported": false
+  },
+  "claim_expansion_authority": false,
+  "execution_accounting": {
+    "baseline_program_provider_posts_total": 642,
+    "baseline_program_scientifically_usable_completions_total": 608,
+    "baseline_program_scientifically_usable_terminal_rollouts_total": 576,
+    "baseline_program_scientifically_usable_writer_calls_total": 32,
+    "followup_new_provider_posts": 144,
+    "followup_new_scientifically_usable_provider_completions": 144,
+    "followup_zero_provider_diagnostics": 2,
+    "full_paper_observable_provider_posts_lower_bound_after_followup": 1483,
+    "gpu_runs": 0,
+    "prior_expansion_provider_posts": 498,
+    "prior_expansion_scientifically_usable_completions": 464,
+    "prior_full_paper_observable_provider_posts_lower_bound_before_baseline_program": 841,
+    "training_runs": 0
+  },
+  "experiment_authority": true,
+  "experiments": {
+    "B8_raw_writer_input_trajectory_baseline": {
+      "all_four_equal_tasks": 31,
+      "baseline_alignment": "Trajectory Retrieval / long-context controls motivate the raw-experience comparator, but B8 is a C1-internal writer-input trajectory baseline rather than a byte-exact reproduction of an external method.",
+      "complete_calls": 144,
+      "external_baseline_replication_claim": false,
+      "future_tasks": 36,
+      "gate_pass": false,
+      "interpretation": "Relative to the common compact trajectory projection supplied to the memory writer, reward-conditioned rewriting produces a statistically detectable but practically small terminal difference on the same native-retrieval support; the preregistered 0.15 effect floor is missed.",
+      "mean_absolute_raw_vs_no_memory": 0.0625,
+      "mean_absolute_rewrite_vs_raw_effect": 0.045139,
+      "permutation_p": 0.00775,
+      "practical_floor": 0.15,
+      "provider_calls": 144,
+      "provider_failures": 0,
+      "rollouts_per_task": 4,
+      "runner_tie_biased_secondary_excluded": true,
+      "selected_sources": 11,
+      "tie_aware_closest_arm_counts": {
+        "failure_memory": 1,
+        "failure_memory+no_memory": 1,
+        "failure_memory+no_memory+success_memory": 34
+      }
+    },
+    "B9_partial_reference_endpoint_headroom": {
+      "binary_joint_floor_cells": 18,
+      "binary_same_but_partial_branch_diff_cells": 3,
+      "confirmatory_gate": null,
+      "future_tasks": 36,
+      "interpretation": "The binary endpoint does compress some partial correctness, but a post-hoc fractional-reference diagnostic does not uncover a hidden large success/failure branch separation; it is diagnostic only and cannot replace the preregistered B4/B5 endpoint.",
+      "mean_absolute_memory_presence_partial_difference_all": 0.045635,
+      "mean_absolute_success_failure_partial_difference_all": 0.019511,
+      "mean_absolute_success_failure_partial_difference_multi_reference": 0.028274,
+      "multi_reference_tasks": 16,
+      "partial_joint_floor_cells": 10,
+      "provider_calls": 0,
+      "rollouts_reused": 432
+    }
+  },
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "relationship_to_prior_expansion": "append-only follow-up; prior expansion artifact and its SHA remain unchanged",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "scientific_synthesis_delta": {
+    "endpoint_headroom": "Binary floor compression exists, but continuous partial-reference coverage leaves the reward-branch contrast small, strengthening the interpretation that B4 is not merely a scoring-resolution artifact.",
+    "raw_trajectory_baseline": "The small native effect is not unique to literal no-memory omission: a stronger raw writer-input trajectory comparator also misses the 0.15 practical-effect floor.",
+    "transport_boundary": "The combined native controls now distinguish four representational states—success memory, failure memory, raw trajectory evidence, and omission—without establishing a practically large broad terminal effect."
+  },
+  "source_bindings": {
+    "b8_contract": "3327b5d6316b86b8579ca73c60a3cae7e8e8e7578390b5a8f51f8b450cd90cb3",
+    "b8_result": "24c855b7f358a27cdfd1bd03ce79a83e12a5bb7d5ca9a253bde7b842a1c379c0",
+    "b8_tie_geometry": "d507028a34f2aab329c6430b981c2125f9c7532494df39680c87b784cae9f6f4",
+    "b9_contract": "636425bab815f0782397de2a61696a889aa7c983d983eed72696436c9594d393",
+    "b9_result": "087e83f9502d8bf97818bce49b256b177a5f1a164e3fe0523648530385b239a6",
+    "prior_expansion": "707d9c089585c1c1895fa7c260a191ba1824eb99d30efe30fd12ba23b563f885"
+  },
+  "status": "BASELINE_FOLLOWUP_COMPLETE_RAW_TRAJECTORY_AND_ENDPOINT_DIAGNOSTIC",
+  "submission_authority": false
+}

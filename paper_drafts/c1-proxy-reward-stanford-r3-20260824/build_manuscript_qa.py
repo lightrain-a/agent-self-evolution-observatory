@@ -15,6 +15,7 @@ O6 = json.loads((HERE / "o6-final-evidence.json").read_text())
 O6_REDUCTION = json.loads((HERE / "o6-full-bank-corruption-reduction.json").read_text())
 CHRONOLOGY = json.loads((HERE / "f2r1-chronology-receipt.json").read_text())
 EXPANSION = json.loads((HERE / "baseline-aligned-expansion-evidence.json").read_text())
+FOLLOWUP = json.loads((HERE / "baseline-aligned-followup-evidence.json").read_text())
 
 
 def sha(path: Path) -> str:
@@ -45,6 +46,9 @@ def main() -> None:
     e = EXPANSION["experiments"]
     acct = EXPANSION["execution_accounting"]
     cb = EXPANSION["claim_boundary"]
+    fe = FOLLOWUP["experiments"]
+    facct = FOLLOWUP["execution_accounting"]
+    fcb = FOLLOWUP["claim_boundary_delta"]
     checks: dict[str, bool] = {}
 
     checks["abstract_150_220"] = 150 <= approx_words(abstract) <= 220
@@ -118,7 +122,30 @@ def main() -> None:
         and e["B5_native_support_no_memory"]["geometry_counts"] == {"CLOSER_TO_FAILURE": 1, "CLOSER_TO_SUCCESS": 1, "EQUIDISTANT": 34}
         and all(x in all_text for x in ["0.04514", "0.00147", "0.15 practical", "34/36"])
     )
-    checks["experiment_ladder_present"] = all(x in downstream for x in ["Experimental ladder", "Write breadth", "Native branch transport", "DeepSeek policy transfer"])
+    checks["raw_writer_input_baseline_bound"] = (
+        FOLLOWUP["status"] == "BASELINE_FOLLOWUP_COMPLETE_RAW_TRAJECTORY_AND_ENDPOINT_DIAGNOSTIC"
+        and fe["B8_raw_writer_input_trajectory_baseline"]["complete_calls"] == 144
+        and fe["B8_raw_writer_input_trajectory_baseline"]["provider_failures"] == 0
+        and abs(fe["B8_raw_writer_input_trajectory_baseline"]["mean_absolute_rewrite_vs_raw_effect"] - 0.045139) < 1e-9
+        and abs(fe["B8_raw_writer_input_trajectory_baseline"]["permutation_p"] - 0.00775) < 1e-9
+        and fe["B8_raw_writer_input_trajectory_baseline"]["gate_pass"] is False
+        and fe["B8_raw_writer_input_trajectory_baseline"]["all_four_equal_tasks"] == 31
+        and fe["B8_raw_writer_input_trajectory_baseline"]["runner_tie_biased_secondary_excluded"] is True
+        and all(x in all_text for x in ["raw writer-input", "0.00775", "31/36"])
+    )
+    checks["posthoc_endpoint_headroom_bound"] = (
+        fe["B9_partial_reference_endpoint_headroom"]["provider_calls"] == 0
+        and fe["B9_partial_reference_endpoint_headroom"]["rollouts_reused"] == 432
+        and fe["B9_partial_reference_endpoint_headroom"]["multi_reference_tasks"] == 16
+        and abs(fe["B9_partial_reference_endpoint_headroom"]["mean_absolute_success_failure_partial_difference_all"] - 0.019511) < 1e-9
+        and abs(fe["B9_partial_reference_endpoint_headroom"]["mean_absolute_success_failure_partial_difference_multi_reference"] - 0.028274) < 1e-9
+        and fe["B9_partial_reference_endpoint_headroom"]["binary_joint_floor_cells"] == 18
+        and fe["B9_partial_reference_endpoint_headroom"]["partial_joint_floor_cells"] == 10
+        and fe["B9_partial_reference_endpoint_headroom"]["binary_same_but_partial_branch_diff_cells"] == 3
+        and fe["B9_partial_reference_endpoint_headroom"]["confirmatory_gate"] is None
+        and all(x in all_text for x in ["post-hoc", "0.01951", "0.02827"])
+    )
+    checks["experiment_ladder_present"] = all(x in downstream for x in ["Experimental ladder", "Write breadth", "Native branch transport", "Native controls", "DeepSeek policy transfer"])
 
     checks["o5_original_branch_location_preserved"] = (
         O5["status"] == "O5_FRESH_NO_MEMORY_CONTROL_COMPLETE"
@@ -151,7 +178,7 @@ def main() -> None:
         and O6_REDUCTION["released_mechanism_facts"]["reward_conditioned_memory_document_used_in_retrieval_embedding"] is False
         and all(x in all_text for x in ["all-MiniLM-L6-v2", "top-$1$", "threshold 0.3"])
     )
-    checks["live_transport_boundary_preserved"] = all(x in limits for x in ["unavailable live endpoints", "live end-to-end or population transport"])
+    checks["live_transport_boundary_preserved"] = all(x in limits for x in ["frozen browser-state packets rather than live endpoints", "do not claim live end-to-end or population transport"])
     checks["semantic_diagnostics_bounded"] = all(x in limits for x in ["Token Jaccard", "operation slots", "bounded diagnostics"])
     checks["corruption_decomposition_demoted"] = all(x in appendix for x in ["Bounded corruption-rate consequence", "not an empirical corruption sweep"])
 
@@ -162,12 +189,22 @@ def main() -> None:
         and acct["new_scientifically_usable_terminal_rollouts"] == 432
         and acct["cross_policy_support_failure_posts"] == 2
         and acct["updated_full_paper_observable_provider_posts_lower_bound"] == 1339
-        and all(x in appendix for x in ["498 observable POSTs", "464 are scientifically usable", "432 terminal rollouts", "at least 1,339"])
+        and "original expansion adds 498 observable POSTs" in appendix
+    )
+    checks["execution_accounting_followup"] = (
+        facct["followup_new_provider_posts"] == 144
+        and facct["followup_new_scientifically_usable_provider_completions"] == 144
+        and facct["baseline_program_provider_posts_total"] == 642
+        and facct["baseline_program_scientifically_usable_completions_total"] == 608
+        and facct["baseline_program_scientifically_usable_terminal_rollouts_total"] == 576
+        and facct["full_paper_observable_provider_posts_lower_bound_after_followup"] == 1483
+        and all(x in appendix for x in ["642 observable POSTs", "608 are scientifically usable", "576 terminal rollouts", "at least 1,483"])
     )
     checks["inference_only_accounting"] = (
         "inference-only" in setup
         and "no training or local GPU fine-tuning" in setup
         and acct["training_runs"] == 0 and acct["gpu_runs"] == 0
+        and facct["training_runs"] == 0 and facct["gpu_runs"] == 0
     )
     checks["claim_boundary_matrix"] = (
         cb["write_channel_breadth_supported"] is True
@@ -176,13 +213,17 @@ def main() -> None:
         and cb["native_memory_presence_practical_effect_supported"] is False
         and cb["cross_policy_terminal_transfer_supported"] is None
         and cb["live_browser_transport_supported"] is False
-        and all(x in limits for x in ["writer-invariant effects are not established", "not a scientific null", "local to the released ReasoningBank mechanism"])
+        and fcb["raw_trajectory_practically_large_rewrite_effect_supported"] is False
+        and fcb["partial_reference_metric_replaces_binary_gate"] is False
+        and fcb["endpoint_resolution_explains_away_native_branch_nonpass"] is False
+        and fcb["external_trajectory_retrieval_method_replication_claimed"] is False
+        and all(x in limits for x in ["writer-invariant effects are not established", "not a scientific null", "Claims are local to the released ReasoningBank"])
     )
 
     story_text = (REPO / "paper-story-reward-memory.js").read_text()
     reader_text = (REPO / "paper-reader-data.js").read_text()
-    checks["paper_story_expansion_current"] = all(x in story_text for x in ["20/20", "72.7", "0.02083", "0.04514", "support stop"])
-    checks["paper_reader_expansion_current"] = all(x in reader_text for x in ["20/20", "125/172", "0.02083", "0.04514"])
+    checks["paper_story_expansion_current"] = all(x in story_text for x in ["20/20", "72.7", "0.02083", "0.04514", "0.00775", "0.01951", "support stop"])
+    checks["paper_reader_expansion_current"] = all(x in reader_text for x in ["20/20", "125/172", "0.02083", "0.04514", "0.00775", "0.01951"])
 
     pdf = HERE / "paper.pdf"
     pdfinfo = subprocess.check_output(["pdfinfo", str(pdf)], text=True)
@@ -207,7 +248,7 @@ def main() -> None:
     payload = {
         "schema_version": "1.1",
         "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-        "revision": "ICLR-BASELINE-ALIGNED-EXPERIMENT-EXPANSION-20260824",
+        "revision": "ICLR-BASELINE-ALIGNED-FOLLOWUP-RAW-TRAJECTORY-ENDPOINT-20260824",
         "status": "PASS" if all(checks.values()) else "FAIL",
         "abstract_words_approx": approx_words(abstract),
         "pdf_pages_total": pages,
@@ -221,6 +262,7 @@ def main() -> None:
         "o6_full_bank_reduction_sha256": sha(HERE / "o6-full-bank-corruption-reduction.json"),
         "f2r1_chronology_receipt_sha256": sha(HERE / "f2r1-chronology-receipt.json"),
         "baseline_aligned_expansion_evidence_sha256": sha(HERE / "baseline-aligned-expansion-evidence.json"),
+        "baseline_aligned_followup_evidence_sha256": sha(HERE / "baseline-aligned-followup-evidence.json"),
         "paper_story_reward_memory_sha256": sha(REPO / "paper-story-reward-memory.js"),
         "paper_reader_data_sha256": sha(REPO / "paper-reader-data.js"),
         "paper_pdf_sha256": sha(pdf),
@@ -228,13 +270,16 @@ def main() -> None:
         "scientific_authority": False,
         "experiment_authority": False,
         "claim_expansion": False,
-        "new_provider_calls_exact": acct["new_provider_posts"],
-        "new_scientifically_usable_provider_calls": acct["new_scientifically_usable_provider_completions"],
-        "new_scientifically_usable_writer_calls": acct["new_scientifically_usable_writer_calls"],
-        "new_terminal_rollouts": acct["new_scientifically_usable_terminal_rollouts"],
+        "new_provider_calls_exact": facct["followup_new_provider_posts"],
+        "new_scientifically_usable_provider_calls": facct["followup_new_scientifically_usable_provider_completions"],
+        "new_scientifically_usable_writer_calls": 0,
+        "new_terminal_rollouts": facct["followup_new_scientifically_usable_provider_completions"],
         "cross_policy_support_failure_posts": acct["cross_policy_support_failure_posts"],
-        "prior_full_paper_observable_provider_posts_lower_bound": acct["prior_full_paper_observable_provider_posts_lower_bound"],
-        "updated_full_paper_observable_provider_posts_lower_bound": acct["updated_full_paper_observable_provider_posts_lower_bound"],
+        "prior_full_paper_observable_provider_posts_lower_bound": acct["updated_full_paper_observable_provider_posts_lower_bound"],
+        "updated_full_paper_observable_provider_posts_lower_bound": facct["full_paper_observable_provider_posts_lower_bound_after_followup"],
+        "baseline_program_provider_posts_total": facct["baseline_program_provider_posts_total"],
+        "baseline_program_scientifically_usable_completions_total": facct["baseline_program_scientifically_usable_completions_total"],
+        "baseline_program_terminal_rollouts_total": facct["baseline_program_scientifically_usable_terminal_rollouts_total"],
         "training_runs": 0,
         "gpu_runs": 0,
     }

@@ -295,6 +295,34 @@ Task & Src & S & F & N & P & Task & Src & S & F & N & P \\
 \end{tabular}
 \end{table}
 
+\subsection{Raw writer-input trajectory baseline}
+A stronger native-support comparator replaces the rewritten memory with the compact action/result trace that the C1 writer itself receives before counterfactual reward-label conditioning. Source identity is still selected by the exact released top-$1$/0.3 retriever. No counterfactual success/failure label and no rewritten memory item are supplied. Future evidence, Doubao Seed 2.0 Mini, temperature, evaluator, and four-rollout depth are identical to B4/B5. All 144 calls complete with zero provider failures. The preregistered statistic $\frac12(|S-R|+|F-R|)$ averages 0.045139; a 100,000-repetition three-arm permutation test gives $p=0.00775$, but the unchanged 0.15 practical floor is missed. This is therefore a statistical deviation without a practically large rewrite-versus-raw effect on the frozen support.
+
+Thirty-one of 36 tasks have identical success-memory, failure-memory, raw-trajectory, and no-memory point estimates, and raw equals no-memory on 32/36. Table~\ref{tab:raw-nontrivial} lists the only five tasks where raw differs from at least one other arm. A derived tie-aware audit is used for geometry only: 34/36 tasks place raw equally close to success memory, failure memory, and no-memory; task 144 is uniquely closest to failure memory, and task 228 ties failure memory with no-memory. We exclude the runner's single-label ``closest arm'' secondary field because its deterministic lexical tie-break collapses these ties; this reporting correction does not affect the primary B8 statistic, permutation test, or verdict.
+
+\begin{table}[h]
+\centering
+\small
+\caption{The five native-support tasks where the raw writer-input trajectory rate R differs from at least one other point estimate. S/F are reward-conditioned memories and N is omission.}
+\label{tab:raw-nontrivial}
+\begin{tabular}{rrrrrr}
+\toprule
+Task & Src & S & F & R & N \\
+\midrule
+144 & 141 & .75 & 1 & 1 & 0 \\
+228 & 226 & .5 & 0 & 0 & 0 \\
+230 & 226 & 1 & 1 & .5 & 1 \\
+319 & 188 & 1 & 1 & .75 & .5 \\
+331 & 141 & 1 & 1 & .5 & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Post-hoc endpoint-headroom diagnostic}
+Sixteen of the 36 native-support tasks require more than one reference substring. The released binary evaluator multiplies these checks, so missing any required item maps the rollout to zero. After observing B4/B5 saturation, we therefore re-score the already archived 432 success/failure/no-memory outputs with fractional reference coverage. This introduces zero provider calls and is explicitly diagnostic-only: it has no confirmatory gate, does not alter the released evaluator, and cannot retroactively rescue B4/B5.
+
+The diagnostic confirms some endpoint compression but not a hidden large reward-branch effect. Joint success/failure floors fall from 18 under the binary score to 10 under fractional coverage. Nevertheless, mean absolute S/F separation is 0.019511 over all 36 tasks and 0.028274 over the frozen 16-task multi-reference subset. Mean absolute memory-presence separation under fractional coverage is 0.045635 over all 36 tasks. Only three tasks have identical binary S/F means but different fractional-coverage S/F means. We therefore retain endpoint headroom as one transport gate without using score resolution to explain away the native branch non-pass.
+
 \subsection{Cross-policy support stop}
 The downstream-policy transfer is frozen on the identical 36-task support before any DeepSeek-V4-Flash outcome. At the Doubao-matched 900-token cap, the first frozen unit ends with provider status incomplete, reason \texttt{length}, and no assistant text. One execution-only repair raises the cap uniformly to 2,200, requires all 288 units to be fresh, and forbids a second repair; the same first unit again length-censors without assistant text. The cross-policy line therefore stops after two provider POSTs with zero scientific units. The preregistered no-memory continuation is not triggered because its condition is complete paired execution, regardless of paired scientific outcome.
 
@@ -303,6 +331,6 @@ For completeness, the earlier forced-swap matrix implies a descriptive between-m
 
 \section{Execution Accounting and Reliability}
 \label{sec:execution-accounting}
-All scientific evidence is inference-only; there are no training runs or local GPU fine-tuning runs. Before the baseline-aligned expansion, the observable provider-POST lower bound was at least 841, excluding the unresolved low-level request count of the early 12-unit aligned action witness. The expansion adds 498 observable POSTs: 32 breadth-parent writer calls, 32 fresh breadth-repair writer calls, 288 native retrieval-matched branch rollouts, 144 matched no-memory rollouts, and two DeepSeek cross-policy support-failure calls. Of these, 464 are scientifically usable completions: 32 breadth writer calls plus 432 terminal rollouts. The updated full-paper observable POST lower bound is therefore at least 1,339.
+All scientific evidence is inference-only; there are no training runs or local GPU fine-tuning runs. Before the baseline-aligned expansion, the observable provider-POST lower bound was at least 841, excluding the unresolved low-level request count of the early 12-unit aligned action witness. The original expansion adds 498 observable POSTs: 32 breadth-parent writer calls, 32 fresh breadth-repair writer calls, 288 native retrieval-matched branch rollouts, 144 matched no-memory rollouts, and two DeepSeek cross-policy support-failure calls. The raw writer-input trajectory follow-up adds 144 further terminal POSTs. Across expansion plus follow-up this is 642 observable POSTs, of which 608 are scientifically usable completions: 32 breadth writer calls plus 576 terminal rollouts. The updated full-paper observable POST lower bound is therefore at least 1,483. The endpoint-headroom and tie-aware geometry audits use zero provider calls.
 
-The 32-call breadth parent completes 29 units but length-censors three failure-branch writes; only the fresh uniform 4,096-token repair has breadth authority. B4 and B5 complete 288/288 and 144/144 provider calls, respectively, with zero provider failures. The DeepSeek policy-transfer parent and sole output-cap repair each fail on their first unit with no assistant text and contribute zero scientific units. Earlier execution failures---the two original F0 failure-arm incompletions, the execution-invalid first no-memory attempt, and the failed parent GLM writer attempt---remain recorded separately and are never imputed as scientific outcomes. Provider outputs are content-addressed or response-first archived where the frozen runner supports it.
+The 32-call breadth parent completes 29 units but length-censors three failure-branch writes; only the fresh uniform 4,096-token repair has breadth authority. B4, B5, and B8 complete 288/288, 144/144, and 144/144 provider calls, respectively, with zero provider failures. The DeepSeek policy-transfer parent and sole output-cap repair each fail on their first unit with no assistant text and contribute zero scientific units. Earlier execution failures---the two original F0 failure-arm incompletions, the execution-invalid first no-memory attempt, and the failed parent GLM writer attempt---remain recorded separately and are never imputed as scientific outcomes. Provider outputs are content-addressed or response-first archived where the frozen runner supports it.
