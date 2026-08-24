@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "temporal-r14-internal-review-closure",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "r14",
+  "review_kind": "INTERNAL_ICLR_PANEL_ZERO_AUTHORITY",
+  "final_paper_pdf_sha256": "0fef51f15bb188fc669411be8d6dedaeae7d83389cec3f5d917f9a120fe2906e",
+  "review_rounds": [
+    {
+      "round": "v1",
+      "summary_sha256": "baf97ca00eeeed4dd5798efc9c915008efadd79a44550f912190867d028e33e2",
+      "reviewed_pdf_sha256": "f8ab23b281018b98f93847b0f415972a41e9b531a9388ac92371a7837c16e07e",
+      "scores": [4, 6, 4],
+      "recommendations": ["weak_reject", "weak_accept", "weak_reject"],
+      "role": "initial R14 adversarial review before final attribution reframe"
+    },
+    {
+      "round": "v2",
+      "summary_sha256": "399a48f032f97831a3bcbf292e53f79921c8aeaf86fa29e3042b361f5ae3815e",
+      "reviewed_pdf_sha256": "cd41a64e8179465a7601b26926b300d99f724b09346a6e7c851fcd3ceaf1ac9a",
+      "scores": [6, 6, 5],
+      "recommendations": ["weak_accept", "weak_accept", "borderline"],
+      "role": "post-decomposition and TOST review"
+    },
+    {
+      "round": "v3",
+      "summary_sha256": "789fc413a949bae25e5a60accd3977169ccf32b7ec0bb272940cf0e5af6712c2",
+      "reviewed_pdf_sha256": "dcd2978c680b59cba1842f36d31a619ee3f0bf087b8bf9783f589580a0ba7d07",
+      "scores": [6, 6, 5],
+      "recommendations": ["weak_accept", "weak_accept", "borderline"],
+      "role": "final scientific-stop review after paper-only scope tightening"
+    }
+  ],
+  "post_v3_finalization": {
+    "final_paper_pdf_sha256": "0fef51f15bb188fc669411be8d6dedaeae7d83389cec3f5d917f9a120fe2906e",
+    "change_class": "PAPER_ONLY_SCOPE_TIGHTENING",
+    "changes": [
+      "TOST language downgraded to a low-sensitivity frozen-margin check.",
+      "EIA relabeled as a post-hoc compatibility probe rather than confirmation.",
+      "DeepSeek grounding retained only as directional low-resolution evidence.",
+      "DeepSeek C3 cutoff endpoint-level W/T/L added from existing rows.",
+      "Stress-helper and forced-one-answer surface boundaries made explicit."
+    ],
+    "new_scientific_execution": false,
+    "new_model_calls": 0,
+    "reason_no_v4_review": "The v3 panel unanimously classified all remaining decision-critical repairs as paper-only or analysis-only and all three reviewers set would_new_experiment_change_verdict=false. The final edit only implements those requested downgrades; another reviewer loop would optimize to the panel rather than test a new scientific claim."
+  },
+  "final_reviewer_decision": {
+    "reviewers": 3,
+    "would_new_experiment_change_verdict_false": 3,
+    "decision_critical_repair_classes": {
+      "paper-only": 6,
+      "analysis-only": 1,
+      "new-experiment": 0
+    },
+    "scientific_stop": "STOP_NEW_EXPERIMENTS_FOR_CURRENT_NARROW_R14_CLAIM",
+    "reason": "All three final reviewers judged that remaining decision-critical repairs for the current narrow claim are paper-only or analysis-only. Requests for additional institutions, larger non-ceiling samples, or independent temporal retrievers would support broader claims that R14 explicitly does not make."
+  },
+  "final_claim_boundary": [
+    "T-N is the net-repair contrast.",
+    "T-G0 is a same-surface operation-output contrast, not a pure operation effect when G0-N is nonzero.",
+    "G0-N is a placebo/surface perturbation diagnostic.",
+    "R_surf is an exact-output integration-surface test under a forced one-answer harness, not an independent temporal-retrieval baseline.",
+    "The R_surf TOST is treated as a low-sensitivity frozen-margin check rather than a general surface-equivalence result.",
+    "EIA is a post-hoc compatibility probe, not prospective cross-domain confirmation.",
+    "Fresh DeepSeek grounding is directional and low-resolution; Kimi grounding is downgraded; broader cross-model/general-transfer claims are not made."
+  ],
+  "new_scientific_execution": false,
+  "new_model_calls_after_v3_stop": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

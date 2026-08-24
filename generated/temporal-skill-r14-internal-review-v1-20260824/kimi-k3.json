@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "r14",
+  "review_kind": "INTERNAL_ICLR_PANEL_ZERO_AUTHORITY",
+  "requested_model": "kimi-k3",
+  "paper_pdf_sha256": "f8ab23b281018b98f93847b0f415972a41e9b531a9388ac92371a7837c16e07e",
+  "prompt_sha256": "d75987020e7984d67717a88e7e80f1161087fabc02c87ea85df33a0c34e1a278",
+  "created_at": "2026-08-24T04:30:21+00:00",
+  "scientific_authority": false,
+  "submission_authority": false,
+  "status": "completed",
+  "resolved_model": "kimi-k3",
+  "usage": {
+    "input_tokens": 14726,
+    "output_tokens": 1675,
+    "total_tokens": 16401,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "response_id_sha256": "fec276c29c812f29c0e8b7a75fa02fa3894cb7cb90037d34266f04c5b0709942",
+  "raw_text": "{\"reviewer_model\":\"kimi-k3\",\"overall_score_1_to_10\":6,\"recommendation\":\"weak_accept\",\"confidence_1_to_5\":4,\"dimensions\":{\"originality\":7,\"importance\":6,\"claim_support\":7,\"experimental_soundness\":7,\"clarity\":8,\"community_value\":6,\"prior_work_context\":6},\"one_sentence_verdict\":\"The revised audit logic is now internally consistent and statistically honest, but the paper remains a methodological critique with modest empirical scale rather than a demonstration of broadly generalizable skill-repair phenomena.\",\"decision_critical_concerns\":[{\"id\":\"C1\",\"severity\":\"major\",\"claim_or_section\":\"Section 2 / 6.2: Joint T-N and T-G0 decision rule\",\"problem\":\"When G0-N is non-zero (e.g., EIA where G0-N=-25), the joint rule T-N>0 and T-G0>0 does not cleanly isolate 'operation-level repair' because the surface perturbation (G0-N) and the operation effect (T-G0) are conflated in the net contrast T-N. The paper acknowledges this but does not provide a formal decomposition or sensitivity analysis showing how much of T-N is attributable to the operation versus the surface perturbation when G0!=N.\",\"why_it_matters\":\"If G0 substantially harms N (as in EIA), then T-N could be positive primarily because T recovers from the G0-induced deficit rather than because the operation provides value over the original agent. The current logic preserves the claim only by verbal caveat, not by quantitative separation.\",\"cheapest_decisive_repair\":\"analysis-only\",\"acceptance_effect_if_repaired\":\"Would strengthen the causal claim to a proper mediation or interaction analysis, potentially raising the score to 7.\"},{\"id\":\"C2\",\"severity\":\"major\",\"claim_or_section\":\"Section 6.5 / A.7: Non-ceiling R_surf evidence\",\"problem\":\"The claim that T-Rsurf parity is 'not solely a ceiling artifact' rests on only four strictly non-ceiling fresh endpoints with a 90% CI of [-25, 25]. While the paper correctly avoids fine-grained equivalence claims, the portfolio-level ±10-point materiality claim is statistically fragile: with 18 endpoints, the bootstrap CI [-5.6, 5.6] has width ~11 points, meaning the study is only powered to detect effects larger than ~10 points, yet the threshold is set at 10 points.\",\"why_it_matters\":\"The null result (no callable-surface advantage) is the paper's most surprising and decision-relevant finding for the community. If the study is underpowered to detect effects just below the materiality threshold, the 'no material advantage' claim is weaker than presented.\",\"cheapest_decisive_repair\":\"analysis-only\",\"acceptance_effect_if_repaired\":\"A formal power analysis or equivalence test (TOST) with justifications for the 10-point margin would solidify the null result claim.\"},{\"id\":\"C3\",\"severity\":\"major\",\"claim_or_section\":\"Section 5.1 / 6.4: EIA compatibility selection\",\"problem\":\"EIA was selected post-review because it is 'structurally compatible' with the cutoff mechanism. While the endpoint construction was frozen before outcomes, the domain selection itself is post-hoc and non-random. This creates a selection effect: the positive T-N=+37.5 result may simply reflect that EIA was chosen because it was likely to show the effect, not because the repair generalizes.\",\"why_it_matters\":\"The EIA result is currently the strongest evidence for net repair (T-N>0) in a held-out setting. If this evidence is discounted due to selection bias, the paper is left with only the DeepSeek grounding cells (n=5 endpoints each) as positive repair evidence, which are described as 'directional' and 'low-resolution.'\",\"cheapest_decisive_repair\":\"paper-only\",\"acceptance_effect_if_repaired\":\"Explicitly framing EIA as a 'proof-of-existence' rather than 'validation' and downweighting it in the abstract/contribution claims would align the evidence with the conclusions.\"},{\"id\":\"C4\",\"severity\":\"major\",\"claim_or_section\":\"Section 8 / Abstract: Novelty boundary\",\"problem\":\"The paper explicitly disclaims novelty in skill learning, temporal retrieval, and causal attribution, positioning itself as an 'audit contract.' However, the contribution is essentially a negative result (callable container provides no material advantage) plus a methodological caution (use N and G0 controls). For a top-tier venue, this may be seen as a rigorous but incremental evaluation note rather than a significant advance.\",\"why_it_matters\":\"ICLR typically requires either significant new capability, new understanding, or new benchmarks. This paper provides a cautionary tale and a measurement protocol, but does not enable new capabilities or provide a new benchmark resource.\",\"cheapest_decisive_repair\":\"paper-only\",\"acceptance_effect_if_repaired\":\"Sharpening the articulation of why this audit protocol is a necessary precondition for valid skill learning research (with concrete examples of how it changes SOTA interpretations) could elevate the perceived importance.\"}],\"noncritical_repairs\":[\"Add a formal power analysis for the R_surf portfolio showing the minimum detectable effect size given n=18 endpoints and the observed variance.\",\"Include a table or figure decomposing T-N into (T-G0) + (G0-N) for all cells to visually demonstrate when the operation effect dominates the surface perturbation.\",\"Clarify in the abstract that the EIA validation is 'compatibility-selected' and 'post-review' to avoid giving the impression of pre-registered cross-domain validation.\",\"Report the exact number of non-ceiling endpoints in the 18-endpoint R_surf portfolio and their individual T-Rsurf residuals in the supplement.\",\"Discuss the threat to validity that G0's empty return might be trivially detectable by the model, making G0 a weak placebo compared to a plausible-but-wrong operation.\"],\"claims_to_downgrade_or_delete\":[\"Downgrade 'held-out EIA cutoff remains a net repair' to 'held-out EIA cutoff shows a net repair in a compatibility-selected domain' in the abstract.\",\"Delete or soften 'Fresh three-arm runs preserve operation-level gains' to 'Fresh runs show directional operation-level gains' given the 5-endpoint resolution and bootstrap intervals including zero.\",\"Downgrade 'no material >10-point mean callable-surface advantage' to 'no detectable >10-point mean callable-surface advantage at the current resolution' to reflect the power limitations.\"],\"evidence_that_is_now_convincing\":[\"The T>G but T=N false positive on DeepSeek C3 cutoff is a crisp, decision-reversal demonstration that two-arm comparisons are insufficient.\",\"The joint T-N/T-G0 logic is now clearly stated and the G0-N diagnostic is honestly reported as non-neutral in specific strata.\",\"The R_surf zero-call parity audit (byte-identical output, context-only insertion) is methodologically sound and clearly isolates the integration surface.\",\"The distinction between endpoints (independent units) and repeats (robustness) is rigorously maintained throughout.\",\"The Kimi grounding downgrade (T-G0=-25) is reported transparently, strengthening the credibility of the audit.\"],\"novelty_boundary\":\"The paper's novelty is strictly methodological: it provides an audit protocol for separating net repair, operation contribution, and integration surface effects. It explicitly disclaims novelty in temporal retrieval algorithms, skill learning methods, and causal inference techniques. The empirical contribution is the demonstration that applying this audit reverses or narrows specific claims about temporal skills, not the discovery of new repair phenomena.\",\"would_new_experiment_change_verdict\":false,\"single_highest_value_next_action\":\"Conduct a formal equivalence test (TOST) or power analysis for the R_surf portfolio to statistically justify the 'no material advantage' claim, and add a quantitative decomposition of T-N into operation and surface components for cells where G0!=N.\"}",
+  "raw_text_sha256": "ead4107735975bd3ae7d311cf87ea57e6c3756414cbbc408ec3a51c4a1f30aca",
+  "review": {
+    "reviewer_model": "kimi-k3",
+    "overall_score_1_to_10": 6,
+    "recommendation": "weak_accept",
+    "confidence_1_to_5": 4,
+    "dimensions": {
+      "originality": 7,
+      "importance": 6,
+      "claim_support": 7,
+      "experimental_soundness": 7,
+      "clarity": 8,
+      "community_value": 6,
+      "prior_work_context": 6
+    },
+    "one_sentence_verdict": "The revised audit logic is now internally consistent and statistically honest, but the paper remains a methodological critique with modest empirical scale rather than a demonstration of broadly generalizable skill-repair phenomena.",
+    "decision_critical_concerns": [
+      {
+        "id": "C1",
+        "severity": "major",
+        "claim_or_section": "Section 2 / 6.2: Joint T-N and T-G0 decision rule",
+        "problem": "When G0-N is non-zero (e.g., EIA where G0-N=-25), the joint rule T-N>0 and T-G0>0 does not cleanly isolate 'operation-level repair' because the surface perturbation (G0-N) and the operation effect (T-G0) are conflated in the net contrast T-N. The paper acknowledges this but does not provide a formal decomposition or sensitivity analysis showing how much of T-N is attributable to the operation versus the surface perturbation when G0!=N.",
+        "why_it_matters": "If G0 substantially harms N (as in EIA), then T-N could be positive primarily because T recovers from the G0-induced deficit rather than because the operation provides value over the original agent. The current logic preserves the claim only by verbal caveat, not by quantitative separation.",
+        "cheapest_decisive_repair": "analysis-only",
+        "acceptance_effect_if_repaired": "Would strengthen the causal claim to a proper mediation or interaction analysis, potentially raising the score to 7."
+      },
+      {
+        "id": "C2",
+        "severity": "major",
+        "claim_or_section": "Section 6.5 / A.7: Non-ceiling R_surf evidence",
+        "problem": "The claim that T-Rsurf parity is 'not solely a ceiling artifact' rests on only four strictly non-ceiling fresh endpoints with a 90% CI of [-25, 25]. While the paper correctly avoids fine-grained equivalence claims, the portfolio-level ±10-point materiality claim is statistically fragile: with 18 endpoints, the bootstrap CI [-5.6, 5.6] has width ~11 points, meaning the study is only powered to detect effects larger than ~10 points, yet the threshold is set at 10 points.",
+        "why_it_matters": "The null result (no callable-surface advantage) is the paper's most surprising and decision-relevant finding for the community. If the study is underpowered to detect effects just below the materiality threshold, the 'no material advantage' claim is weaker than presented.",
+        "cheapest_decisive_repair": "analysis-only",
+        "acceptance_effect_if_repaired": "A formal power analysis or equivalence test (TOST) with justifications for the 10-point margin would solidify the null result claim."
+      },
+      {
+        "id": "C3",
+        "severity": "major",
+        "claim_or_section": "Section 5.1 / 6.4: EIA compatibility selection",
+        "problem": "EIA was selected post-review because it is 'structurally compatible' with the cutoff mechanism. While the endpoint construction was frozen before outcomes, the domain selection itself is post-hoc and non-random. This creates a selection effect: the positive T-N=+37.5 result may simply reflect that EIA was chosen because it was likely to show the effect, not because the repair generalizes.",
+        "why_it_matters": "The EIA result is currently the strongest evidence for net repair (T-N>0) in a held-out setting. If this evidence is discounted due to selection bias, the paper is left with only the DeepSeek grounding cells (n=5 endpoints each) as positive repair evidence, which are described as 'directional' and 'low-resolution.'",
+        "cheapest_decisive_repair": "paper-only",
+        "acceptance_effect_if_repaired": "Explicitly framing EIA as a 'proof-of-existence' rather than 'validation' and downweighting it in the abstract/contribution claims would align the evidence with the conclusions."
+      },
+      {
+        "id": "C4",
+        "severity": "major",
+        "claim_or_section": "Section 8 / Abstract: Novelty boundary",
+        "problem": "The paper explicitly disclaims novelty in skill learning, temporal retrieval, and causal attribution, positioning itself as an 'audit contract.' However, the contribution is essentially a negative result (callable container provides no material advantage) plus a methodological caution (use N and G0 controls). For a top-tier venue, this may be seen as a rigorous but incremental evaluation note rather than a significant advance.",
+        "why_it_matters": "ICLR typically requires either significant new capability, new understanding, or new benchmarks. This paper provides a cautionary tale and a measurement protocol, but does not enable new capabilities or provide a new benchmark resource.",
+        "cheapest_decisive_repair": "paper-only",
+        "acceptance_effect_if_repaired": "Sharpening the articulation of why this audit protocol is a necessary precondition for valid skill learning research (with concrete examples of how it changes SOTA interpretations) could elevate the perceived importance."
+      }
+    ],
+    "noncritical_repairs": [
+      "Add a formal power analysis for the R_surf portfolio showing the minimum detectable effect size given n=18 endpoints and the observed variance.",
+      "Include a table or figure decomposing T-N into (T-G0) + (G0-N) for all cells to visually demonstrate when the operation effect dominates the surface perturbation.",
+      "Clarify in the abstract that the EIA validation is 'compatibility-selected' and 'post-review' to avoid giving the impression of pre-registered cross-domain validation.",
+      "Report the exact number of non-ceiling endpoints in the 18-endpoint R_surf portfolio and their individual T-Rsurf residuals in the supplement.",
+      "Discuss the threat to validity that G0's empty return might be trivially detectable by the model, making G0 a weak placebo compared to a plausible-but-wrong operation."
+    ],
+    "claims_to_downgrade_or_delete": [
+      "Downgrade 'held-out EIA cutoff remains a net repair' to 'held-out EIA cutoff shows a net repair in a compatibility-selected domain' in the abstract.",
+      "Delete or soften 'Fresh three-arm runs preserve operation-level gains' to 'Fresh runs show directional operation-level gains' given the 5-endpoint resolution and bootstrap intervals including zero.",
+      "Downgrade 'no material >10-point mean callable-surface advantage' to 'no detectable >10-point mean callable-surface advantage at the current resolution' to reflect the power limitations."
+    ],
+    "evidence_that_is_now_convincing": [
+      "The T>G but T=N false positive on DeepSeek C3 cutoff is a crisp, decision-reversal demonstration that two-arm comparisons are insufficient.",
+      "The joint T-N/T-G0 logic is now clearly stated and the G0-N diagnostic is honestly reported as non-neutral in specific strata.",
+      "The R_surf zero-call parity audit (byte-identical output, context-only insertion) is methodologically sound and clearly isolates the integration surface.",
+      "The distinction between endpoints (independent units) and repeats (robustness) is rigorously maintained throughout.",
+      "The Kimi grounding downgrade (T-G0=-25) is reported transparently, strengthening the credibility of the audit."
+    ],
+    "novelty_boundary": "The paper's novelty is strictly methodological: it provides an audit protocol for separating net repair, operation contribution, and integration surface effects. It explicitly disclaims novelty in temporal retrieval algorithms, skill learning methods, and causal inference techniques. The empirical contribution is the demonstration that applying this audit reverses or narrows specific claims about temporal skills, not the discovery of new repair phenomena.",
+    "would_new_experiment_change_verdict": false,
+    "single_highest_value_next_action": "Conduct a formal equivalence test (TOST) or power analysis for the R_surf portfolio to statistically justify the 'no material advantage' claim, and add a quantitative decomposition of T-N into operation and surface components for cells where G0!=N."
+  },
+  "parse_valid": true
+}

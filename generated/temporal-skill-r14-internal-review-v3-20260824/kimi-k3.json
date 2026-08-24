@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "r14",
+  "review_kind": "INTERNAL_ICLR_PANEL_ZERO_AUTHORITY",
+  "requested_model": "kimi-k3",
+  "paper_pdf_sha256": "dcd2978c680b59cba1842f36d31a619ee3f0bf087b8bf9783f589580a0ba7d07",
+  "prompt_sha256": "9bc3f398551a837579bcea522d52b61f369fa7363806032eb706fa3638040d86",
+  "created_at": "2026-08-24T04:55:56+00:00",
+  "scientific_authority": false,
+  "submission_authority": false,
+  "status": "completed",
+  "resolved_model": "kimi-k3",
+  "usage": {
+    "input_tokens": 15260,
+    "output_tokens": 754,
+    "total_tokens": 16014,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "response_id_sha256": "5d8858a3e21cab57956c75eb1bea81b364d01085fd6148175e09b58486edc907",
+  "raw_text": "{\"reviewer_model\":\"kimi-k3\",\"overall_score_1_to_10\":6,\"recommendation\":\"weak_accept\",\"confidence_1_to_5\":4,\"dimensions\":{\"originality\":6,\"importance\":6,\"claim_support\":6,\"experimental_soundness\":6,\"clarity\":7,\"community_value\":6,\"prior_work_context\":6},\"one_sentence_verdict\":\"The revision successfully narrows the claims to a defensible methodological audit with appropriate statistical caveats, though the modest endpoint scale and ceiling-heavy portfolio limit the strength of the surface-equivalence conclusion.\",\"decision_critical_concerns\":[{\"id\":\"C1\",\"severity\":\"major\",\"claim_or_section\":\"Section 6.5 / Abstract (Rsurf equivalence)\",\"problem\":\"The TOST passing at ±10pp is driven by a ceiling-heavy portfolio (16/18 ties, 1 win, 1 loss), with the four strictly non-ceiling endpoints showing a wide 90% interval [−25, 25] and only ~53% sensitivity.\",\"why_it_matters\":\"While the manuscript correctly disclaims non-ceiling equivalence, the abstract's emphasis on 'portfolio-average equivalence' risks over-interpreting a null result from low-resolution data; the claim is only as strong as the least informative stratum.\",\"cheapest_decisive_repair\":\"paper-only\",\"acceptance_effect_if_repaired\":\"Explicitly state in the abstract that the portfolio is ceiling-dominated and that the TOST result reflects average behavior across mostly tied endpoints, not uniform equivalence across difficulty strata.\"}],\"noncritical_repairs\":[\"Clarify in Section 6.2 whether the '+30 and +20 point T–N and T–G0 directions' in fresh DeepSeek grounding runs are statistically significant or directional only (the text notes bootstrap intervals include zero).\",\"Ensure consistent terminology: verify that 'same-surface operation-output contrast' is used uniformly for T–G0 and never shortened to 'operation effect' without the 'same-surface' qualifier.\",\"Consider adding a power analysis or minimum detectable effect calculation for the n=5 grounding cells to contextualize the width of the bootstrap intervals.\"],\"claims_to_downgrade_or_delete\":[],\"evidence_that_is_now_convincing\":[\"The algebraic decomposition T–N=(T–G0)+(G0–N) is correctly applied to the EIA cell (+37.5 = +62.5 − 25), properly classifying it as net repair with surface interaction rather than pure operation effect.\",\"The TOST statistics (both one-sided p=0.0121, paired-t 95% CI [−8.5, 8.5]) are internally consistent with the reported 53% sensitivity estimate and the frozen ±10pp margin.\",\"The explicit scoping of Rsurf to integration-surface placement under a forced one-answer harness, with no claim to independent temporal retrieval or adaptive callable use, resolves prior attribution concerns.\",\"The T>G but T=N cutoff cell (100% vs 72% vs 100%) provides a clean, unambiguous demonstration of the verdict-reversal phenomenon.\"],\"novelty_boundary\":\"The contribution is strictly methodological: an audit contract for causal attribution in skill evaluation (separating net repair, same-surface output contrast, placebo perturbation, and integration-surface effect). It does not claim novelty in temporal retrieval algorithms, skill learning, or adaptive tool use.\",\"would_new_experiment_change_verdict\":false,\"single_highest_value_next_action\":\"Accept with minor revisions: strengthen the abstract's caveat regarding ceiling-dominated portfolio composition to prevent over-interpretation of the TOST result.\"}",
+  "raw_text_sha256": "4052a1c6b998c0055fa559affd464acfc9c98273efd104d40f182741077f58a2",
+  "review": {
+    "reviewer_model": "kimi-k3",
+    "overall_score_1_to_10": 6,
+    "recommendation": "weak_accept",
+    "confidence_1_to_5": 4,
+    "dimensions": {
+      "originality": 6,
+      "importance": 6,
+      "claim_support": 6,
+      "experimental_soundness": 6,
+      "clarity": 7,
+      "community_value": 6,
+      "prior_work_context": 6
+    },
+    "one_sentence_verdict": "The revision successfully narrows the claims to a defensible methodological audit with appropriate statistical caveats, though the modest endpoint scale and ceiling-heavy portfolio limit the strength of the surface-equivalence conclusion.",
+    "decision_critical_concerns": [
+      {
+        "id": "C1",
+        "severity": "major",
+        "claim_or_section": "Section 6.5 / Abstract (Rsurf equivalence)",
+        "problem": "The TOST passing at ±10pp is driven by a ceiling-heavy portfolio (16/18 ties, 1 win, 1 loss), with the four strictly non-ceiling endpoints showing a wide 90% interval [−25, 25] and only ~53% sensitivity.",
+        "why_it_matters": "While the manuscript correctly disclaims non-ceiling equivalence, the abstract's emphasis on 'portfolio-average equivalence' risks over-interpreting a null result from low-resolution data; the claim is only as strong as the least informative stratum.",
+        "cheapest_decisive_repair": "paper-only",
+        "acceptance_effect_if_repaired": "Explicitly state in the abstract that the portfolio is ceiling-dominated and that the TOST result reflects average behavior across mostly tied endpoints, not uniform equivalence across difficulty strata."
+      }
+    ],
+    "noncritical_repairs": [
+      "Clarify in Section 6.2 whether the '+30 and +20 point T–N and T–G0 directions' in fresh DeepSeek grounding runs are statistically significant or directional only (the text notes bootstrap intervals include zero).",
+      "Ensure consistent terminology: verify that 'same-surface operation-output contrast' is used uniformly for T–G0 and never shortened to 'operation effect' without the 'same-surface' qualifier.",
+      "Consider adding a power analysis or minimum detectable effect calculation for the n=5 grounding cells to contextualize the width of the bootstrap intervals."
+    ],
+    "claims_to_downgrade_or_delete": [],
+    "evidence_that_is_now_convincing": [
+      "The algebraic decomposition T–N=(T–G0)+(G0–N) is correctly applied to the EIA cell (+37.5 = +62.5 − 25), properly classifying it as net repair with surface interaction rather than pure operation effect.",
+      "The TOST statistics (both one-sided p=0.0121, paired-t 95% CI [−8.5, 8.5]) are internally consistent with the reported 53% sensitivity estimate and the frozen ±10pp margin.",
+      "The explicit scoping of Rsurf to integration-surface placement under a forced one-answer harness, with no claim to independent temporal retrieval or adaptive callable use, resolves prior attribution concerns.",
+      "The T>G but T=N cutoff cell (100% vs 72% vs 100%) provides a clean, unambiguous demonstration of the verdict-reversal phenomenon."
+    ],
+    "novelty_boundary": "The contribution is strictly methodological: an audit contract for causal attribution in skill evaluation (separating net repair, same-surface output contrast, placebo perturbation, and integration-surface effect). It does not claim novelty in temporal retrieval algorithms, skill learning, or adaptive tool use.",
+    "would_new_experiment_change_verdict": false,
+    "single_highest_value_next_action": "Accept with minor revisions: strengthen the abstract's caveat regarding ceiling-dominated portfolio composition to prevent over-interpretation of the TOST result."
+  },
+  "parse_valid": true
+}

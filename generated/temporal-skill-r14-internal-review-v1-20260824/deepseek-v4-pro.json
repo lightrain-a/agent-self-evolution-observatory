@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "r14",
+  "review_kind": "INTERNAL_ICLR_PANEL_ZERO_AUTHORITY",
+  "requested_model": "deepseek-v4-pro",
+  "paper_pdf_sha256": "f8ab23b281018b98f93847b0f415972a41e9b531a9388ac92371a7837c16e07e",
+  "prompt_sha256": "c798f55375a2ab441c06a53e43cef35a10f6d015141255344e592fa5d26a24ac",
+  "created_at": "2026-08-24T04:29:45+00:00",
+  "scientific_authority": false,
+  "submission_authority": false,
+  "status": "completed",
+  "resolved_model": "deepseek-v4-pro-260425",
+  "usage": {
+    "input_tokens": 14887,
+    "output_tokens": 1624,
+    "total_tokens": 16511,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "response_id_sha256": "21462bfab4ee81e7fe23d68255052c9be2b996c74474c1130c241ca0d1322ced",
+  "raw_text": "```json\n{\n  \"reviewer_model\": \"deepseek-v4-pro\",\n  \"overall_score_1_to_10\": 6,\n  \"recommendation\": \"weak_accept\",\n  \"confidence_1_to_5\": 4,\n  \"dimensions\": {\n    \"originality\": 6,\n    \"importance\": 7,\n    \"claim_support\": 6,\n    \"experimental_soundness\": 5,\n    \"clarity\": 7,\n    \"community_value\": 7,\n    \"prior_work_context\": 7\n  },\n  \"one_sentence_verdict\": \"The revised audit logic is valid and the narrowed claims are largely supported, but the evidence remains statistically coarse and the contribution, while important for evaluation hygiene, is a methodological correction rather than a novel discovery.\",\n  \"decision_critical_concerns\": [\n    {\n      \"id\": \"C1\",\n      \"severity\": \"major\",\n      \"claim_or_section\": \"Section 6.2, 6.4 (EIA validation)\",\n      \"problem\": \"The EIA validation is explicitly compatibility-selected post-review. While endpoint construction was outcome-independent, the domain choice itself was not. This makes the EIA evidence a confirmation of mechanism transfer, not a prospective test of generalization. The paper correctly labels this, but the strength of the 'verdict reversal' contribution still leans heavily on this non-prospective evidence.\",\n      \"why_it_matters\": \"The paper's narrative of 'verdict reversal' and 'preserving operation-level repairs' is empirically anchored by the EIA result. If EIA is downgraded to a purely illustrative case study, the remaining prospective evidence (BEA/NOAA) is limited to small, directionally positive but non-significant grounding cells and a null cutoff cell. The paper's empirical weight would be significantly reduced.\",\n      \"cheapest_decisive_repair\": \"paper-only\",\n      \"acceptance_effect_if_repaired\": \"The paper would need to explicitly state that the EIA result is a post-hoc compatibility check, not a confirmatory validation, and that the core prospective evidence is limited to the BEA/NOAA grounding direction and the cutoff false positive. This would weaken the empirical contribution but align the claims with the evidence.\"\n    },\n    {\n      \"id\": \"C2\",\n      \"severity\": \"major\",\n      \"claim_or_section\": \"Section 6.2 (Operation-level repair logic)\",\n      \"problem\": \"The joint rule T>N AND T>G0 is claimed to identify 'operation-level repair' even when G0 != N. However, if G0 harms N (as in EIA), T>G0 can be satisfied simply by T restoring the performance lost by G0's harmful surface effect, without the operation output itself being beneficial relative to the original agent's own process. The paper correctly credits net repair to T>N, but the interpretation of T>G0 as 'operation contribution' is confounded when G0 is not neutral. The operation output's value is conditional on the harmful surface; it is not an isolated operation effect.\",\n      \"why_it_matters\": \"The paper's core methodological contribution is separating these effects. If the T>G0 contrast is confounded by a harmful G0, the decomposition is not as clean as claimed. The 'operation contribution' is not separable from the surface perturbation it counteracts.\",\n      \"cheapest_decisive_repair\": \"paper-only\",\n      \"acceptance_effect_if_repaired\": \"The claim for T>G0 must be downgraded from 'operation contribution' to 'operation output value conditional on the G0 surface, which may be harmful.' The paper already acknowledges G0 is not neutral, but the interpretation of the contrast needs to be explicitly limited. This is a clarification, not a new experiment.\"\n    },\n    {\n      \"id\": \"C3\",\n      \"severity\": \"major\",\n      \"claim_or_section\": \"Section 6.5 (Rsurf non-ceiling evidence)\",\n      \"problem\": \"The claim that the Rsurf parity result is 'not solely a ceiling artifact' rests on 5 C3 and 5 C4 grounding endpoints. The C3 cell has 5 ties, and the C4 cell has 1 win, 3 ties, 1 loss. With n=5 endpoints, the statistical resolution to exclude a moderate surface effect is very low. The 90% CI for the four strictly non-ceiling endpoints is [-25, 25], which the paper acknowledges is wide. The evidence for non-ceiling parity is therefore extremely weak and essentially anecdotal.\",\n      \"why_it_matters\": \"The paper's claim that the callable surface adds no material value is the most novel and potentially impactful finding. If this finding is only robustly supported at the ceiling, its practical importance is minimal. The non-ceiling evidence is insufficient to support even the narrow claim of 'no material >10-point advantage' for non-ceiling endpoints.\",\n      \"cheapest_decisive_repair\": \"paper-only\",\n      \"acceptance_effect_if_repaired\": \"The paper must explicitly state that the non-ceiling Rsurf evidence is underpowered and cannot rule out a moderate surface effect. The claim of 'no material advantage' must be strictly limited to the full portfolio (which is ceiling-driven) and the non-ceiling result presented only as a suggestive observation. This weakens the surface-effect claim.\"\n    }\n  ],\n  \"noncritical_repairs\": [\n    \"Clarify that the 'operation contribution' (T-G0) is conditional on the G0 surface, which may be harmful, and is not a pure isolation of the operation's value.\",\n    \"Explicitly state the statistical power for the non-ceiling Rsurf endpoints to detect a 10-point effect, making the underpowered nature of this key evidence transparent.\",\n    \"Move the Kimi grounding downgrade from a main contribution to a secondary robustness check, as it is based on only 2 endpoints and is purely descriptive.\"\n  ],\n  \"evidence_that_is_now_convincing\": [\n    \"The DeepSeek C3 cutoff false positive (T>G, T=N) is a clean, convincing demonstration of the necessity of the N anchor.\",\n    \"The portfolio-level Rsurf parity at the ceiling is well-executed and convincingly shows no large callable-interface advantage when the operation is already perfect.\",\n    \"The methodological decomposition into T-N, T-G0, and T-Rsurf is logically sound and a valuable framework for agent evaluation.\"\n  ],\n  \"claims_to_downgrade_or_delete\": [\n    \"The claim that non-ceiling Rsurf evidence supports 'no material callable-interface advantage' should be downgraded to 'suggestive but underpowered.'\",\n    \"The interpretation of T-G0 as a clean 'operation contribution' should be downgraded to 'operation output value conditional on the G0 surface.'\"\n  ],\n  \"novelty_boundary\": \"The paper's novelty is strictly methodological: an audit framework for reusable skills. It does not provide a new skill-learning algorithm, a new temporal retriever, or a new benchmark. The contribution is a correction to evaluation practice, which is valuable but inherently limited in novelty.\",\n  \"would_new_experiment_change_verdict\": false,\n  \"single_highest_value_next_action\": \"The authors should reframe the paper as a methodological critique with an empirical demonstration, rather than an empirical discovery. The claims about non-ceiling surface effects and operation isolation should be explicitly limited, and the EIA evidence should be presented as a post-hoc compatibility check, not a validation. This would align the strong logical framework with the limited statistical resolution of the evidence.\"\n}\n```",
+  "raw_text_sha256": "3dbc6e21b922bf3fb9eb6daa29ae192d855c44e4b1e65458533d1936c46c0522",
+  "review": {
+    "reviewer_model": "deepseek-v4-pro",
+    "overall_score_1_to_10": 6,
+    "recommendation": "weak_accept",
+    "confidence_1_to_5": 4,
+    "dimensions": {
+      "originality": 6,
+      "importance": 7,
+      "claim_support": 6,
+      "experimental_soundness": 5,
+      "clarity": 7,
+      "community_value": 7,
+      "prior_work_context": 7
+    },
+    "one_sentence_verdict": "The revised audit logic is valid and the narrowed claims are largely supported, but the evidence remains statistically coarse and the contribution, while important for evaluation hygiene, is a methodological correction rather than a novel discovery.",
+    "decision_critical_concerns": [
+      {
+        "id": "C1",
+        "severity": "major",
+        "claim_or_section": "Section 6.2, 6.4 (EIA validation)",
+        "problem": "The EIA validation is explicitly compatibility-selected post-review. While endpoint construction was outcome-independent, the domain choice itself was not. This makes the EIA evidence a confirmation of mechanism transfer, not a prospective test of generalization. The paper correctly labels this, but the strength of the 'verdict reversal' contribution still leans heavily on this non-prospective evidence.",
+        "why_it_matters": "The paper's narrative of 'verdict reversal' and 'preserving operation-level repairs' is empirically anchored by the EIA result. If EIA is downgraded to a purely illustrative case study, the remaining prospective evidence (BEA/NOAA) is limited to small, directionally positive but non-significant grounding cells and a null cutoff cell. The paper's empirical weight would be significantly reduced.",
+        "cheapest_decisive_repair": "paper-only",
+        "acceptance_effect_if_repaired": "The paper would need to explicitly state that the EIA result is a post-hoc compatibility check, not a confirmatory validation, and that the core prospective evidence is limited to the BEA/NOAA grounding direction and the cutoff false positive. This would weaken the empirical contribution but align the claims with the evidence."
+      },
+      {
+        "id": "C2",
+        "severity": "major",
+        "claim_or_section": "Section 6.2 (Operation-level repair logic)",
+        "problem": "The joint rule T>N AND T>G0 is claimed to identify 'operation-level repair' even when G0 != N. However, if G0 harms N (as in EIA), T>G0 can be satisfied simply by T restoring the performance lost by G0's harmful surface effect, without the operation output itself being beneficial relative to the original agent's own process. The paper correctly credits net repair to T>N, but the interpretation of T>G0 as 'operation contribution' is confounded when G0 is not neutral. The operation output's value is conditional on the harmful surface; it is not an isolated operation effect.",
+        "why_it_matters": "The paper's core methodological contribution is separating these effects. If the T>G0 contrast is confounded by a harmful G0, the decomposition is not as clean as claimed. The 'operation contribution' is not separable from the surface perturbation it counteracts.",
+        "cheapest_decisive_repair": "paper-only",
+        "acceptance_effect_if_repaired": "The claim for T>G0 must be downgraded from 'operation contribution' to 'operation output value conditional on the G0 surface, which may be harmful.' The paper already acknowledges G0 is not neutral, but the interpretation of the contrast needs to be explicitly limited. This is a clarification, not a new experiment."
+      },
+      {
+        "id": "C3",
+        "severity": "major",
+        "claim_or_section": "Section 6.5 (Rsurf non-ceiling evidence)",
+        "problem": "The claim that the Rsurf parity result is 'not solely a ceiling artifact' rests on 5 C3 and 5 C4 grounding endpoints. The C3 cell has 5 ties, and the C4 cell has 1 win, 3 ties, 1 loss. With n=5 endpoints, the statistical resolution to exclude a moderate surface effect is very low. The 90% CI for the four strictly non-ceiling endpoints is [-25, 25], which the paper acknowledges is wide. The evidence for non-ceiling parity is therefore extremely weak and essentially anecdotal.",
+        "why_it_matters": "The paper's claim that the callable surface adds no material value is the most novel and potentially impactful finding. If this finding is only robustly supported at the ceiling, its practical importance is minimal. The non-ceiling evidence is insufficient to support even the narrow claim of 'no material >10-point advantage' for non-ceiling endpoints.",
+        "cheapest_decisive_repair": "paper-only",
+        "acceptance_effect_if_repaired": "The paper must explicitly state that the non-ceiling Rsurf evidence is underpowered and cannot rule out a moderate surface effect. The claim of 'no material advantage' must be strictly limited to the full portfolio (which is ceiling-driven) and the non-ceiling result presented only as a suggestive observation. This weakens the surface-effect claim."
+      }
+    ],
+    "noncritical_repairs": [
+      "Clarify that the 'operation contribution' (T-G0) is conditional on the G0 surface, which may be harmful, and is not a pure isolation of the operation's value.",
+      "Explicitly state the statistical power for the non-ceiling Rsurf endpoints to detect a 10-point effect, making the underpowered nature of this key evidence transparent.",
+      "Move the Kimi grounding downgrade from a main contribution to a secondary robustness check, as it is based on only 2 endpoints and is purely descriptive."
+    ],
+    "evidence_that_is_now_convincing": [
+      "The DeepSeek C3 cutoff false positive (T>G, T=N) is a clean, convincing demonstration of the necessity of the N anchor.",
+      "The portfolio-level Rsurf parity at the ceiling is well-executed and convincingly shows no large callable-interface advantage when the operation is already perfect.",
+      "The methodological decomposition into T-N, T-G0, and T-Rsurf is logically sound and a valuable framework for agent evaluation."
+    ],
+    "claims_to_downgrade_or_delete": [
+      "The claim that non-ceiling Rsurf evidence supports 'no material callable-interface advantage' should be downgraded to 'suggestive but underpowered.'",
+      "The interpretation of T-G0 as a clean 'operation contribution' should be downgraded to 'operation output value conditional on the G0 surface.'"
+    ],
+    "novelty_boundary": "The paper's novelty is strictly methodological: an audit framework for reusable skills. It does not provide a new skill-learning algorithm, a new temporal retriever, or a new benchmark. The contribution is a correction to evaluation practice, which is valuable but inherently limited in novelty.",
+    "would_new_experiment_change_verdict": false,
+    "single_highest_value_next_action": "The authors should reframe the paper as a methodological critique with an empirical demonstration, rather than an empirical discovery. The claims about non-ceiling surface effects and operation isolation should be explicitly limited, and the EIA evidence should be presented as a post-hoc compatibility check, not a validation. This would align the strong logical framework with the limited statistical resolution of the evidence."
+  },
+  "parse_valid": true
+}

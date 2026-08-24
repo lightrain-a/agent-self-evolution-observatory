@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "r14",
+  "review_kind": "INTERNAL_ICLR_PANEL_ZERO_AUTHORITY",
+  "requested_model": "kimi-k3",
+  "paper_pdf_sha256": "cd41a64e8179465a7601b26926b300d99f724b09346a6e7c851fcd3ceaf1ac9a",
+  "prompt_sha256": "545bb1cf3b29a06ee12ae8ab6cba848ada36707fd266f6b55e44e2954e0a320b",
+  "created_at": "2026-08-24T04:41:32+00:00",
+  "scientific_authority": false,
+  "submission_authority": false,
+  "status": "completed",
+  "resolved_model": "kimi-k3",
+  "usage": {
+    "input_tokens": 15254,
+    "output_tokens": 991,
+    "total_tokens": 16245,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "response_id_sha256": "e1ea127266b1dc81c72691a47715a62a741c8dbc61f21484919baa163801c1a2",
+  "raw_text": "{\"reviewer_model\":\"kimi-k3\",\"overall_score_1_to_10\":6,\"recommendation\":\"weak_accept\",\"confidence_1_to_5\":4,\"dimensions\":{\"originality\":6,\"importance\":6,\"claim_support\":7,\"experimental_soundness\":6,\"clarity\":7,\"community_value\":6,\"prior_work_context\":7},\"one_sentence_verdict\":\"The revised audit contract successfully repairs prior attribution errors by decomposing net repair from surface perturbations and honestly downgrading EIA to a compatibility-selected mechanism replication, though the modest endpoint scale and 53% equivalence sensitivity temper enthusiasm for broad generalization.\",\"decision_critical_concerns\":[{\"id\":\"c1\",\"severity\":\"major\",\"claim_or_section\":\"Section 6.5 / Limitations\",\"problem\":\"The TOST at ±10pp passes with p=0.0121, but the parametric sensitivity analysis reveals only ~53% probability of declaring equivalence when the true mean is zero, and the strictly non-ceiling subset (n=4) has a wide 90% interval [-25, 25].\",\"why_it_matters\":\"While the paper explicitly disclaims high power and non-ceiling equivalence, the proximity of the bootstrap CI upper bound (8.3pp) to the 10pp margin suggests fragility; a single endpoint flip could alter the equivalence verdict, potentially undermining confidence in the portfolio-level claim if readers perceive the margin as arbitrary or the result as marginal.\",\"cheapest_decisive_repair\":\"analysis-only\",\"acceptance_effect_if_repaired\":\"Explicitly framing the 53% sensitivity as a design limitation rather than a result weakness, and providing a post-hoc power curve or sensitivity analysis showing what effect sizes the current n=18 could reliably detect, would solidify the portfolio-level claim without new experiments.\"},{\"id\":\"c2\",\"severity\":\"major\",\"claim_or_section\":\"Section 6.2 / 6.4\",\"problem\":\"The EIA mechanism replication relies on 8 compatibility-selected endpoints with a surface interaction (G0-N=-25) and a one-sided exact p=0.03125, but the institution was selected post-review and the mini-model is at ceiling, limiting generalizability.\",\"why_it_matters\":\"The net repair claim (+37.5 points) is statistically fragile (minimum possible p-value with 5 wins, 3 ties) and the surface interaction complicates the causal story; however, the paper correctly downgrades this to a proof-of-existence mechanism replication rather than prospective confirmation.\",\"cheapest_decisive_repair\":\"paper-only\",\"acceptance_effect_if_repaired\":\"Already mitigated by explicit classification as compatibility-selected and surface-interacting; further emphasis that this is a proof-of-existence case rather than evidence of broad cross-domain repair would align claims with evidence.\"}],\"noncritical_repairs\":[\"Clarify in the abstract that the 53% sensitivity estimate refers to the probability of declaring equivalence under the null, not the probability that the null is true\",\"Add a table or figure visualizing the TOST sensitivity across a range of true effect sizes to demonstrate robustness of the portfolio-level conclusion\",\"Consider moving the EIA surface interaction decomposition (+37.5 = +62.5 - 25) to the main text earlier to immediately signal the attribution complexity\"],\"claims_to_downgrade_or_delete\":[],\"evidence_that_is_now_convincing\":[\"The explicit algebraic decomposition T-N=(T-G0)+(G0-N) with refusal to call T-G0 a pure operation effect when G0-N is nonzero removes the prior operation-attribution error\",\"The TOST at the prospectively frozen ±10pp margin with paired-t and bootstrap CIs provides valid support for portfolio-level surface equivalence without overclaiming temporal-retrieval equivalence\",\"The honest downgrading of EIA to a compatibility-selected mechanism replication with explicit surface interaction classification (net repair with G0-N=-25) demonstrates appropriate statistical caution\",\"The Rsurf control design—materializing byte-identical operation output in context—validly isolates the callable interface question without pretending to compare against independent temporal retrieval algorithms\"],\"novelty_boundary\":\"The contribution is strictly methodological: an audit contract for causal attribution of reusable skills that distinguishes net repair, same-surface operation-output contrast, placebo perturbation, and integration-surface effects. It does not claim novelty in skill learning, temporal retrieval algorithms, or cross-domain generalization, and explicitly disclaims equivalence to independently designed temporal retrievers.\",\"would_new_experiment_change_verdict\":false,\"single_highest_value_next_action\":\"Add a formal sensitivity analysis or power curve visualization showing the probability of declaring equivalence across a range of true effect sizes given the observed variance and n=18, to preempt concerns about the 53% sensitivity estimate being interpreted as a weakness rather than a design characteristic.\"}",
+  "raw_text_sha256": "71ab60d47b539a3096046edf70baed0e4a1f1466cec4fec40535f91187b57b7e",
+  "review": {
+    "reviewer_model": "kimi-k3",
+    "overall_score_1_to_10": 6,
+    "recommendation": "weak_accept",
+    "confidence_1_to_5": 4,
+    "dimensions": {
+      "originality": 6,
+      "importance": 6,
+      "claim_support": 7,
+      "experimental_soundness": 6,
+      "clarity": 7,
+      "community_value": 6,
+      "prior_work_context": 7
+    },
+    "one_sentence_verdict": "The revised audit contract successfully repairs prior attribution errors by decomposing net repair from surface perturbations and honestly downgrading EIA to a compatibility-selected mechanism replication, though the modest endpoint scale and 53% equivalence sensitivity temper enthusiasm for broad generalization.",
+    "decision_critical_concerns": [
+      {
+        "id": "c1",
+        "severity": "major",
+        "claim_or_section": "Section 6.5 / Limitations",
+        "problem": "The TOST at ±10pp passes with p=0.0121, but the parametric sensitivity analysis reveals only ~53% probability of declaring equivalence when the true mean is zero, and the strictly non-ceiling subset (n=4) has a wide 90% interval [-25, 25].",
+        "why_it_matters": "While the paper explicitly disclaims high power and non-ceiling equivalence, the proximity of the bootstrap CI upper bound (8.3pp) to the 10pp margin suggests fragility; a single endpoint flip could alter the equivalence verdict, potentially undermining confidence in the portfolio-level claim if readers perceive the margin as arbitrary or the result as marginal.",
+        "cheapest_decisive_repair": "analysis-only",
+        "acceptance_effect_if_repaired": "Explicitly framing the 53% sensitivity as a design limitation rather than a result weakness, and providing a post-hoc power curve or sensitivity analysis showing what effect sizes the current n=18 could reliably detect, would solidify the portfolio-level claim without new experiments."
+      },
+      {
+        "id": "c2",
+        "severity": "major",
+        "claim_or_section": "Section 6.2 / 6.4",
+        "problem": "The EIA mechanism replication relies on 8 compatibility-selected endpoints with a surface interaction (G0-N=-25) and a one-sided exact p=0.03125, but the institution was selected post-review and the mini-model is at ceiling, limiting generalizability.",
+        "why_it_matters": "The net repair claim (+37.5 points) is statistically fragile (minimum possible p-value with 5 wins, 3 ties) and the surface interaction complicates the causal story; however, the paper correctly downgrades this to a proof-of-existence mechanism replication rather than prospective confirmation.",
+        "cheapest_decisive_repair": "paper-only",
+        "acceptance_effect_if_repaired": "Already mitigated by explicit classification as compatibility-selected and surface-interacting; further emphasis that this is a proof-of-existence case rather than evidence of broad cross-domain repair would align claims with evidence."
+      }
+    ],
+    "noncritical_repairs": [
+      "Clarify in the abstract that the 53% sensitivity estimate refers to the probability of declaring equivalence under the null, not the probability that the null is true",
+      "Add a table or figure visualizing the TOST sensitivity across a range of true effect sizes to demonstrate robustness of the portfolio-level conclusion",
+      "Consider moving the EIA surface interaction decomposition (+37.5 = +62.5 - 25) to the main text earlier to immediately signal the attribution complexity"
+    ],
+    "claims_to_downgrade_or_delete": [],
+    "evidence_that_is_now_convincing": [
+      "The explicit algebraic decomposition T-N=(T-G0)+(G0-N) with refusal to call T-G0 a pure operation effect when G0-N is nonzero removes the prior operation-attribution error",
+      "The TOST at the prospectively frozen ±10pp margin with paired-t and bootstrap CIs provides valid support for portfolio-level surface equivalence without overclaiming temporal-retrieval equivalence",
+      "The honest downgrading of EIA to a compatibility-selected mechanism replication with explicit surface interaction classification (net repair with G0-N=-25) demonstrates appropriate statistical caution",
+      "The Rsurf control design—materializing byte-identical operation output in context—validly isolates the callable interface question without pretending to compare against independent temporal retrieval algorithms"
+    ],
+    "novelty_boundary": "The contribution is strictly methodological: an audit contract for causal attribution of reusable skills that distinguishes net repair, same-surface operation-output contrast, placebo perturbation, and integration-surface effects. It does not claim novelty in skill learning, temporal retrieval algorithms, or cross-domain generalization, and explicitly disclaims equivalence to independently designed temporal retrievers.",
+    "would_new_experiment_change_verdict": false,
+    "single_highest_value_next_action": "Add a formal sensitivity analysis or power curve visualization showing the probability of declaring equivalence across a range of true effect sizes given the observed variance and n=18, to preempt concerns about the 53% sensitivity estimate being interpreted as a weakness rather than a design characteristic."
+  },
+  "parse_valid": true
+}

@@ -1,0 +1,4 @@
+stratum,endpoint_count,T_minus_N,T_minus_G0,G0_minus_N,identity_error,classification
+C3_grounding,5,0.3,0.3,0.0,0.0,net_repair_with_zero_observed_placebo_shift
+C4_grounding,5,0.2,0.2,0.0,0.0,net_repair_with_zero_observed_placebo_shift
+EIA_mechanism_replication,8,0.375,0.625,-0.25,0.0,net_repair_with_surface_interaction

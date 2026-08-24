@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "temporal-r14-claim-audit",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "r14",
+  "title": "Do Temporal Skills Really Repair Agents? An Intervention Audit of Repair and Attribution",
+  "final_pdf_sha256": "0fef51f15bb188fc669411be8d6dedaeae7d83389cec3f5d917f9a120fe2906e",
+  "claim_set": {
+    "C1": {
+      "claim": "A targeted-versus-stress-helper comparison can produce a positive apparent skill effect even when the targeted intervention does not improve the original agent.",
+      "evidence": "DeepSeek C3 cutoff: T=100%, G=72%, N=100%; endpoint means T-G=4 wins/1 tie/0 losses while T-N=0 wins/5 ties/0 losses.",
+      "status": "SUPPORTED"
+    },
+    "C2": {
+      "claim": "Net repair, same-surface operation-output contrast, and placebo/surface perturbation must be kept separate; T-G0 is not a pure operation effect when G0-N is nonzero.",
+      "evidence": "Fresh C3 grounding: T-N=+30pp, T-G0=+30pp, G0-N=0; C4 grounding: +20/+20/0; EIA post-hoc compatibility probe: +37.5=+62.5-25pp.",
+      "status": "SUPPORTED_AS_IDENTIFICATION_ACCOUNTING_RULE"
+    },
+    "C3": {
+      "claim": "Stronger controls preserve only bounded, low-resolution positive repair evidence and can downgrade prior support cells.",
+      "evidence": "Fresh DeepSeek C3/C4 grounding is directional on five endpoints per cell with intervals including zero; Kimi same-domain grounding is downgraded with T-N=0 and T-G0=-25pp; EIA is retained only as a post-hoc compatibility probe illustrating net repair with surface interaction.",
+      "status": "SUPPORTED_WITH_LOW_RESOLUTION_BOUNDARY"
+    },
+    "C4": {
+      "claim": "Under the frozen forced one-answer harness, the exact-output R_surf comparison yields a passing but low-sensitivity +/-10pp portfolio-margin check; this does not establish fine-grained non-ceiling, multi-turn callable-state, or temporal-retrieval equivalence.",
+      "evidence": "18 pre-frozen DeepSeek endpoints: mean T-R_surf=0pp, 1 win/16 ties/1 loss; TOST p=0.0121 on each side at +/-10pp, paired-t 95% CI [-8.5,8.5]pp, bootstrap 95% sensitivity CI [-8.3,8.3]pp, observed-variance equivalence sensitivity about 53%; four strictly non-ceiling endpoints remain unresolved with 90% interval [-25,25]pp.",
+      "status": "SUPPORTED_AS_LOW_SENSITIVITY_FROZEN_MARGIN_CHECK"
+    }
+  },
+  "forbidden_or_downgraded_claims": [
+    "G0 is behaviorally neutral in every load-bearing stratum.",
+    "T-G0 is a pure operation effect when G0-N is nonzero.",
+    "EIA is prospective or independently sampled cross-domain confirmation.",
+    "Fresh five-endpoint DeepSeek grounding cells are high-resolution confirmatory evidence.",
+    "R_surf is an independent temporal-retrieval algorithm or temporal-RAG baseline.",
+    "Callable skill state and retrieval/context construction are generally equivalent.",
+    "The R_surf experiment resolves adaptive multi-turn callable-interface value.",
+    "The TimeSage-EV evaluated snapshot has been exactly replicated."
+  ],
+  "permanent_boundaries": [
+    "Exact TimeSage-EV replication remains external replication debt because the evaluated snapshot is unavailable.",
+    "EIA remains a post-hoc mechanism-compatibility probe.",
+    "Non-ceiling R_surf resolution remains insufficient for fine-grained equivalence.",
+    "Kimi grounding does not support cross-model grounding transfer.",
+    "Cross-domain grounding remains null.",
+    "The paper is an evaluation/identification audit, not a new skill-learning or temporal-retrieval algorithm."
+  ],
+  "review_stop": {
+    "final_internal_panel_scores": [6, 6, 5],
+    "final_internal_panel_recommendations": ["weak_accept", "weak_accept", "borderline"],
+    "reviewers_requiring_new_experiment_for_current_narrow_claim": 0,
+    "decision": "STOP_NEW_EXPERIMENTS_FOR_CURRENT_NARROW_R14_CLAIM"
+  },
+  "checks": {
+    "main_text_conclusion_page_9": true,
+    "references_start_page_10": true,
+    "no_internal_research_os_terms_in_manuscript": true,
+    "no_private_path_in_pdf": true,
+    "EIA_post_hoc_boundary_explicit": true,
+    "G0_stratum_neutrality_not_claimed": true,
+    "T_G0_not_called_pure_operation_effect_when_G0_N_nonzero": true,
+    "R_surf_forced_one_answer_boundary_explicit": true,
+    "R_surf_not_presented_as_independent_temporal_retriever": true,
+    "TOST_low_sensitivity_boundary_explicit": true,
+    "directional_small_n_grounding_boundary_explicit": true,
+    "Kimi_grounding_downgrade_preserved": true,
+    "no_new_experiment_required_by_final_panel": true
+  },
+  "pass": true,
+  "new_scientific_execution": false,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

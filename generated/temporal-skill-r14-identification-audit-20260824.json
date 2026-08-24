@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "temporal-r14-identification-statistical-audit",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "data_bindings": {
+    "A1_csv_sha256": "a2877207b2f350d57e933b93797a8f87461e5201fb3e338fee30132ba877a51b",
+    "O5_csv_sha256": "a9fb9f0df705c32e712478d99d9cffc7f62404822627676a2aab3fb518c22601"
+  },
+  "contrast_decomposition": [
+    {
+      "stratum": "C3_grounding",
+      "endpoint_count": 5,
+      "T_minus_N": 0.3,
+      "T_minus_G0": 0.3,
+      "G0_minus_N": 0.0,
+      "identity_error": 0.0,
+      "classification": "net_repair_with_zero_observed_placebo_shift"
+    },
+    {
+      "stratum": "C4_grounding",
+      "endpoint_count": 5,
+      "T_minus_N": 0.2,
+      "T_minus_G0": 0.2,
+      "G0_minus_N": 0.0,
+      "identity_error": 0.0,
+      "classification": "net_repair_with_zero_observed_placebo_shift"
+    },
+    {
+      "stratum": "EIA_mechanism_replication",
+      "endpoint_count": 8,
+      "T_minus_N": 0.375,
+      "T_minus_G0": 0.625,
+      "G0_minus_N": -0.25,
+      "identity_error": 0.0,
+      "classification": "net_repair_with_surface_interaction"
+    }
+  ],
+  "interpretation": {
+    "T_minus_N": "net targeted-intervention repair relative to the original agent",
+    "T_minus_G0": "same-surface operation-output contrast conditional on the G0 exposure surface; not a pure operation effect when G0-N is nonzero",
+    "G0_minus_N": "surface/placebo perturbation diagnostic",
+    "rule": "Do not collapse the three contrasts into a pure operation attribution unless the placebo shift is itself negligible at the relevant resolution."
+  },
+  "surface_equivalence": {
+    "endpoint_count": 18,
+    "mean_T_minus_Rsurf": 0.0,
+    "endpoint_sd": 0.17149858514250885,
+    "standard_error": 0.04042260417272217,
+    "df": 17,
+    "frozen_material_margin": [
+      -0.1,
+      0.1
+    ],
+    "TOST_alpha": 0.05,
+    "TOST_lower_t": 2.473863375370596,
+    "TOST_lower_p": 0.012103443503288513,
+    "TOST_upper_t": -2.473863375370596,
+    "TOST_upper_p": 0.012103443503288458,
+    "TOST_equivalence_pass": true,
+    "paired_t_90_ci": [
+      -0.07031943410433761,
+      0.07031943410433761
+    ],
+    "paired_t_95_ci": [
+      -0.08528423998019911,
+      0.08528423998019911
+    ],
+    "smallest_symmetric_margin_supported_by_90_t_ci": 0.07031943410433761,
+    "smallest_symmetric_margin_supported_by_95_t_ci": 0.08528423998019911,
+    "parametric_equivalence_power_if_true_mean_zero_observed_sd": 0.53442,
+    "power_simulation_draws": 100000,
+    "boundary": "The TOST supports portfolio-average equivalence at the prospectively frozen +/-10pp margin. It does not establish +/-10pp equivalence on the four strictly non-ceiling endpoints, whose bootstrap interval remains wide."
+  },
+  "EIA_classification": {
+    "label": "compatibility-selected mechanism replication",
+    "not": "prospective cross-domain confirmation",
+    "reason": "The 12 endpoint construction and 4/8 time split were frozen before EIA outcomes, but EIA was selected post-review for structural compatibility with the already frozen cutoff mechanism."
+  },
+  "new_model_calls": 0,
+  "new_provider_calls": 0,
+  "scientific_authority": false,
+  "submission_authority": false,
+  "receipt_sha256": "76abc3e04ffdf28f70fb7cf801dc99e1271a71f1ccd494135b049e357b1632ff"
+}

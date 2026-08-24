@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "r14",
+  "review_kind": "INTERNAL_ICLR_PANEL_ZERO_AUTHORITY",
+  "requested_model": "deepseek-v4-pro",
+  "paper_pdf_sha256": "dcd2978c680b59cba1842f36d31a619ee3f0bf087b8bf9783f589580a0ba7d07",
+  "prompt_sha256": "d262a2d794e33d0a4549f8a1f5c2a3e6ff6b0e0fc8e868f0838f299e22ef2328",
+  "created_at": "2026-08-24T04:55:22+00:00",
+  "scientific_authority": false,
+  "submission_authority": false,
+  "status": "completed",
+  "resolved_model": "deepseek-v4-pro-260425",
+  "usage": {
+    "input_tokens": 15417,
+    "output_tokens": 1478,
+    "total_tokens": 16895,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "response_id_sha256": "6b5b0c4040660e9d6e31eb89b66f3f2dc5b001143ea1e40e6690d249e899d605",
+  "raw_text": "```json\n{\n  \"reviewer_model\": \"deepseek-v4-pro\",\n  \"overall_score_1_to_10\": 6,\n  \"recommendation\": \"weak_accept\",\n  \"confidence_1_to_5\": 4,\n  \"dimensions\": {\n    \"originality\": 6,\n    \"importance\": 7,\n    \"claim_support\": 6,\n    \"experimental_soundness\": 5,\n    \"clarity\": 7,\n    \"community_value\": 7,\n    \"prior_work_context\": 7\n  },\n  \"one_sentence_verdict\": \"The manuscript provides a rigorous, narrowly-scoped methodological audit that correctly identifies and corrects attribution errors, though its empirical resolution is modest and the ceiling-heavy portfolio limits the strength of its positive equivalence claim.\",\n  \"decision_critical_concerns\": [\n    {\n      \"id\": \"C1\",\n      \"severity\": \"major\",\n      \"claim_or_section\": \"Section 6.5 / Rsurf TOST claim\",\n      \"problem\": \"The TOST result is presented as 'consistent with portfolio-average equivalence,' but the manuscript acknowledges ~53% sensitivity and a ceiling-heavy portfolio. The claim, while hedged, still risks being interpreted as positive evidence for surface equivalence when the data are equally consistent with a moderate effect masked by low power and ceiling endpoints.\",\n      \"why_it_matters\": \"The Rsurf control is the paper's strongest methodological lever for removing 'skill-container credit.' If the evidence for equivalence is weak, the central methodological contribution is undermined, leaving only the (valuable but less novel) decomposition of T-N, T-G0, and G0-N.\",\n      \"cheapest_decisive_repair\": \"paper-only\",\n      \"acceptance_effect_if_repaired\": \"The claim would be appropriately circumscribed to 'we cannot reject equivalence at the frozen margin, but the design has low sensitivity, so a moderate surface effect cannot be ruled out.' This aligns the text with the statistics and preserves the methodological value of the control without overclaiming.\"\n    },\n    {\n      \"id\": \"C2\",\n      \"severity\": \"major\",\n      \"claim_or_section\": \"Section 6.2 / G0-N stratum-level interpretation\",\n      \"problem\": \"The manuscript correctly states that pooled G0 neutrality does not transport to small strata, but the fresh C3/C4 grounding results (G0-N=0) are implicitly used to bolster the T-G0 contrast as a 'same-surface operation-output contrast' without a perturbed surface. With only 5 endpoints per cell, a zero point estimate with a wide interval does not establish stratum-level neutrality; it is merely an underpowered null.\",\n      \"why_it_matters\": \"The decomposition T-N = (T-G0) + (G0-N) is central to the paper's logic. If G0-N is not convincingly zero in the grounding cells, then T-G0 cannot be cleanly interpreted even as a 'same-surface operation-output contrast' and the paper's own attribution framework is violated.\",\n      \"cheapest_decisive_repair\": \"paper-only\",\n      \"acceptance_effect_if_repaired\": \"Explicitly state that for the 5-endpoint grounding cells, G0-N is not statistically distinguishable from a non-zero perturbation, and therefore T-G0 remains conditional on an uncertain surface state. This would make the attribution logic perfectly consistent.\"\n    },\n    {\n      \"id\": \"C3\",\n      \"severity\": \"major\",\n      \"claim_or_section\": \"Section 6.4 / EIA as 'mechanism replication'\",\n      \"problem\": \"The EIA cell is described as a 'compatibility-selected mechanism replication' and used to show net repair with surface interaction. However, the institution was selected post-review, and the endpoint construction, while frozen before outcomes, was done with knowledge of the mechanism. This is a form of researcher degrees of freedom that weakens the 'replication' label, even with the disclaimers.\",\n      \"why_it_matters\": \"The EIA result is the only cell with a statistically significant net repair (p=0.03125) and a clear surface interaction. If its evidentiary weight is further discounted due to post-hoc selection, the paper's positive evidence for 'bounded net repair' becomes even thinner, resting primarily on the underpowered 5-endpoint grounding cells.\",\n      \"cheapest_decisive_repair\": \"paper-only\",\n      \"acceptance_effect_if_repaired\": \"Downgrade the language from 'mechanism replication' to 'post-hoc mechanism-compatibility probe' and explicitly state that it provides no confirmatory evidence, only an existence proof that the decomposition can reveal surface interactions. This aligns the claim with the pre-registration status.\"\n    }\n  ],\n  \"noncritical_repairs\": [\n    \"Clarify that the 'zero-call parity audit' for Rsurf verifies output identity but does not control for prompt-length differences introduced by materializing the output in context versus a callable surface.\",\n    \"Report the exact TOST confidence interval for the equivalence test, not just the p-values, to allow readers to assess the precision of the equivalence claim.\",\n    \"In the limitations, explicitly state that the forced one-answer harness prevents any generalization to agentic, multi-turn, or tool-use scenarios where callable state might have an interactive advantage.\"\n  ],\n  \"claims_to_downgrade_or_delete\": [\n    \"Delete any implication that the TOST result provides positive evidence for the absence of a surface effect; replace with 'we fail to reject equivalence at a coarse margin with low sensitivity.'\",\n    \"Downgrade 'EIA is a compatibility-selected mechanism replication' to 'EIA is a post-hoc mechanism-compatibility probe.'\"\n  ],\n  \"evidence_that_is_now_convincing\": [\n    \"The DeepSeek C3 cutoff false positive (T>G, T=N) is a clean, convincing demonstration of the necessity of the N anchor.\",\n    \"The EIA cell's decomposition (T-N = +37.5, G0-N = -25) is a valid and striking illustration of why T-G0 cannot be interpreted in isolation, even if the cell's provenance is downgraded.\",\n    \"The overall audit framework (N, G, G0, Rsurf) is logically coherent and provides a valuable template for evaluating reusable skills.\"\n  ],\n  \"novelty_boundary\": \"The methodological contribution is the specific decomposition and the Rsurf control. The paper does not claim novelty in skill learning, temporal retrieval, or causal attribution. Its residual novelty is the audit contract and the empirical verdict changes it forces, which is sufficient for a methodological/evaluation paper at ICLR.\",\n  \"would_new_experiment_change_verdict\": false,\n  \"single_highest_value_next_action\": \"Revise the text to strictly align the TOST and G0-N interpretations with the low statistical power, removing any residual language that implies positive evidence for equivalence or stratum-level neutrality.\"\n}\n```",
+  "raw_text_sha256": "82b8c03eca6ac3fd7b9f6b72ced83e07aee36e3045cfe0504c534a467b0c1c47",
+  "review": {
+    "reviewer_model": "deepseek-v4-pro",
+    "overall_score_1_to_10": 6,
+    "recommendation": "weak_accept",
+    "confidence_1_to_5": 4,
+    "dimensions": {
+      "originality": 6,
+      "importance": 7,
+      "claim_support": 6,
+      "experimental_soundness": 5,
+      "clarity": 7,
+      "community_value": 7,
+      "prior_work_context": 7
+    },
+    "one_sentence_verdict": "The manuscript provides a rigorous, narrowly-scoped methodological audit that correctly identifies and corrects attribution errors, though its empirical resolution is modest and the ceiling-heavy portfolio limits the strength of its positive equivalence claim.",
+    "decision_critical_concerns": [
+      {
+        "id": "C1",
+        "severity": "major",
+        "claim_or_section": "Section 6.5 / Rsurf TOST claim",
+        "problem": "The TOST result is presented as 'consistent with portfolio-average equivalence,' but the manuscript acknowledges ~53% sensitivity and a ceiling-heavy portfolio. The claim, while hedged, still risks being interpreted as positive evidence for surface equivalence when the data are equally consistent with a moderate effect masked by low power and ceiling endpoints.",
+        "why_it_matters": "The Rsurf control is the paper's strongest methodological lever for removing 'skill-container credit.' If the evidence for equivalence is weak, the central methodological contribution is undermined, leaving only the (valuable but less novel) decomposition of T-N, T-G0, and G0-N.",
+        "cheapest_decisive_repair": "paper-only",
+        "acceptance_effect_if_repaired": "The claim would be appropriately circumscribed to 'we cannot reject equivalence at the frozen margin, but the design has low sensitivity, so a moderate surface effect cannot be ruled out.' This aligns the text with the statistics and preserves the methodological value of the control without overclaiming."
+      },
+      {
+        "id": "C2",
+        "severity": "major",
+        "claim_or_section": "Section 6.2 / G0-N stratum-level interpretation",
+        "problem": "The manuscript correctly states that pooled G0 neutrality does not transport to small strata, but the fresh C3/C4 grounding results (G0-N=0) are implicitly used to bolster the T-G0 contrast as a 'same-surface operation-output contrast' without a perturbed surface. With only 5 endpoints per cell, a zero point estimate with a wide interval does not establish stratum-level neutrality; it is merely an underpowered null.",
+        "why_it_matters": "The decomposition T-N = (T-G0) + (G0-N) is central to the paper's logic. If G0-N is not convincingly zero in the grounding cells, then T-G0 cannot be cleanly interpreted even as a 'same-surface operation-output contrast' and the paper's own attribution framework is violated.",
+        "cheapest_decisive_repair": "paper-only",
+        "acceptance_effect_if_repaired": "Explicitly state that for the 5-endpoint grounding cells, G0-N is not statistically distinguishable from a non-zero perturbation, and therefore T-G0 remains conditional on an uncertain surface state. This would make the attribution logic perfectly consistent."
+      },
+      {
+        "id": "C3",
+        "severity": "major",
+        "claim_or_section": "Section 6.4 / EIA as 'mechanism replication'",
+        "problem": "The EIA cell is described as a 'compatibility-selected mechanism replication' and used to show net repair with surface interaction. However, the institution was selected post-review, and the endpoint construction, while frozen before outcomes, was done with knowledge of the mechanism. This is a form of researcher degrees of freedom that weakens the 'replication' label, even with the disclaimers.",
+        "why_it_matters": "The EIA result is the only cell with a statistically significant net repair (p=0.03125) and a clear surface interaction. If its evidentiary weight is further discounted due to post-hoc selection, the paper's positive evidence for 'bounded net repair' becomes even thinner, resting primarily on the underpowered 5-endpoint grounding cells.",
+        "cheapest_decisive_repair": "paper-only",
+        "acceptance_effect_if_repaired": "Downgrade the language from 'mechanism replication' to 'post-hoc mechanism-compatibility probe' and explicitly state that it provides no confirmatory evidence, only an existence proof that the decomposition can reveal surface interactions. This aligns the claim with the pre-registration status."
+      }
+    ],
+    "noncritical_repairs": [
+      "Clarify that the 'zero-call parity audit' for Rsurf verifies output identity but does not control for prompt-length differences introduced by materializing the output in context versus a callable surface.",
+      "Report the exact TOST confidence interval for the equivalence test, not just the p-values, to allow readers to assess the precision of the equivalence claim.",
+      "In the limitations, explicitly state that the forced one-answer harness prevents any generalization to agentic, multi-turn, or tool-use scenarios where callable state might have an interactive advantage."
+    ],
+    "claims_to_downgrade_or_delete": [
+      "Delete any implication that the TOST result provides positive evidence for the absence of a surface effect; replace with 'we fail to reject equivalence at a coarse margin with low sensitivity.'",
+      "Downgrade 'EIA is a compatibility-selected mechanism replication' to 'EIA is a post-hoc mechanism-compatibility probe.'"
+    ],
+    "evidence_that_is_now_convincing": [
+      "The DeepSeek C3 cutoff false positive (T>G, T=N) is a clean, convincing demonstration of the necessity of the N anchor.",
+      "The EIA cell's decomposition (T-N = +37.5, G0-N = -25) is a valid and striking illustration of why T-G0 cannot be interpreted in isolation, even if the cell's provenance is downgraded.",
+      "The overall audit framework (N, G, G0, Rsurf) is logically coherent and provides a valuable template for evaluating reusable skills."
+    ],
+    "novelty_boundary": "The methodological contribution is the specific decomposition and the Rsurf control. The paper does not claim novelty in skill learning, temporal retrieval, or causal attribution. Its residual novelty is the audit contract and the empirical verdict changes it forces, which is sufficient for a methodological/evaluation paper at ICLR.",
+    "would_new_experiment_change_verdict": false,
+    "single_highest_value_next_action": "Revise the text to strictly align the TOST and G0-N interpretations with the low statistical power, removing any residual language that implies positive evidence for equivalence or stratum-level neutrality."
+  },
+  "parse_valid": true
+}

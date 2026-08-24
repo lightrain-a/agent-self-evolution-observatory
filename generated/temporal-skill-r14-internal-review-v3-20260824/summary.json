@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "r14",
+  "review_kind": "INTERNAL_ICLR_PANEL_ZERO_AUTHORITY",
+  "paper_pdf_sha256": "dcd2978c680b59cba1842f36d31a619ee3f0bf087b8bf9783f589580a0ba7d07",
+  "reviews": [
+    {
+      "model": "deepseek-v4-pro",
+      "status": "completed",
+      "resolved_model": "deepseek-v4-pro-260425",
+      "parse_valid": true,
+      "score": 6,
+      "recommendation": "weak_accept",
+      "file": "generated/temporal-skill-r14-internal-review-v3-20260824/deepseek-v4-pro.json",
+      "file_sha256": "001708b91fd1858543d423ec23a9e33d4d6e9674124f31bc9ad9093cfd16f29b"
+    },
+    {
+      "model": "kimi-k3",
+      "status": "completed",
+      "resolved_model": "kimi-k3",
+      "parse_valid": true,
+      "score": 6,
+      "recommendation": "weak_accept",
+      "file": "generated/temporal-skill-r14-internal-review-v3-20260824/kimi-k3.json",
+      "file_sha256": "79a6ced90b01ef3cb02d71bf9b6d6743d7b431049f87f2d4543dd9dffda26a90"
+    },
+    {
+      "model": "minimax-m3",
+      "status": "completed",
+      "resolved_model": "minimax-m3",
+      "parse_valid": true,
+      "score": 5,
+      "recommendation": "borderline",
+      "file": "generated/temporal-skill-r14-internal-review-v3-20260824/minimax-m3.json",
+      "file_sha256": "69d72e9851f82288356acbd5c10ff8e247182d2c5d78e95a4b048936e53280a9"
+    }
+  ],
+  "scientific_authority": false,
+  "submission_authority": false
+}
