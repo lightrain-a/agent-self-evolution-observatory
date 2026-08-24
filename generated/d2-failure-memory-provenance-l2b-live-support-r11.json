@@ -1,0 +1,140 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-C45-REASONINGBANK-L2B-LIVE-SUPPORT-R11",
+  "recorded_date": "2026-08-24",
+  "status": "SHOPPING_ONLY_LIVE_SUPPORT_VERIFIED_NO_SCIENTIFIC_EXECUTION",
+  "role": "ZERO_MODEL_ZERO_ACTION_LIVE_SUPPORT_AUDIT",
+  "parent_bindings": {
+    "r9_status": "NATIVE_STATUS_FIELD_AND_36_UNIT_COHORT_VERIFIED_EXECUTION_BLOCKED",
+    "r10_status": "PY312_BG0141_COMPATIBILITY_RUNTIME_SELECTED_PREOUTCOME_LIVE_DEPLOYMENT_BLOCKED",
+    "reasoningbank_commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "runtime_label": "PY312_BG0141_EXPLICIT_COMPATIBILITY_DEVIATION"
+  },
+  "cohort": {
+    "independent_units": 36,
+    "downstream_task_ids": [
+      "166",
+      "351",
+      "238",
+      "269",
+      "431",
+      "329",
+      "653",
+      "528",
+      "146",
+      "436",
+      "124",
+      "319",
+      "141",
+      "689",
+      "571",
+      "334",
+      "158",
+      "506",
+      "300",
+      "465",
+      "511",
+      "794",
+      "585",
+      "516",
+      "47",
+      "279",
+      "358",
+      "284",
+      "324",
+      "260",
+      "274",
+      "232",
+      "188",
+      "509",
+      "22",
+      "384"
+    ],
+    "all_units_shopping_only": true,
+    "unique_site_sets": [
+      [
+        "shopping"
+      ]
+    ],
+    "site_map_verified_against_raw_config": true,
+    "raw_config_sha256": "d25e83078ec728adc82bd43871338a24a3907e101b5a5fdb1ae81bb7f72f36a6",
+    "selection_uses_outcome": false
+  },
+  "local_live_substrate": {
+    "vm_name": "wyt-webarena-f2-20260821",
+    "state": "running",
+    "private_endpoint_redacted": true,
+    "shopping_image": {
+      "repo_tag": "shopping_final_0712:latest",
+      "image_id": "sha256:ccff8c1772be884313edad94136d2a4048020300a0fc169781c50a02aa8bd206",
+      "image_size": 67575805572
+    },
+    "shopping_container_live": true,
+    "shopping_port_7770_live": true,
+    "reset_port_4399_ready": true,
+    "successful_shopping_reset_log_entries_minimum": 1,
+    "reset_script_sha256": "f1ce0bcaafae38aaf30079bf4bfcc3d62965ecedddc4c2204ba5e274f8e7cd5d",
+    "reset_server_sha256": "658f385102173b1572bc706ddd23a29f5bfea43b77772952a27d574a73930a2d",
+    "shopping_tar_size": 67575898112,
+    "shopping_tar_has_docker_manifest_and_repositories": true,
+    "playwright_chromium_revision": "1117",
+    "playwright_chromium_installed": true,
+    "browsergym_webarena_registered_tasks": 812
+  },
+  "browsergym_support_smoke": {
+    "reset_smoke_sha256": "bc90ec04ff2840dee684b6f2582c8fa0964c9e079d93335979c33be6bb182695",
+    "evaluator_smoke_sha256": "0299d70a43e119b825e5f8012a2816b8225ecbd5c42d58824483eca7b56bfcd5",
+    "task": "browsergym/webarena.166",
+    "reset_pass": true,
+    "env_closed": true,
+    "native_evaluator_constructed": true,
+    "native_evaluator_class": "EvaluatorComb",
+    "native_eval_types": [
+      "string_match"
+    ],
+    "native_evaluator_called": false,
+    "benchmark_action_executed": false,
+    "scientific_outcome_opened": false
+  },
+  "execution_gate": {
+    "native_status_field_pinned": true,
+    "cohort_frozen": true,
+    "shopping_only_live_substrate_ready": true,
+    "exact_chromium_revision_ready": true,
+    "reset_roundtrip_ready": true,
+    "source_native_reset_evaluator_smoke_pass": true,
+    "source_memory_generation_and_fixed_selection_bound": false,
+    "executor_model_version_request_budget_bound": false,
+    "l2_variance_noise_paired_rollouts_and_retry_policy_bound": false,
+    "scientific_authority": false,
+    "experiment_model_call_authority": false,
+    "execution_permitted": false
+  },
+  "claim_boundary": {
+    "strongest_allowed_current_statement": "The frozen ReasoningBank/WebArena Shopping compatibility substrate is live and can reset a frozen cohort task and construct its native evaluator without any benchmark action, evaluator call, model call, or scientific outcome.",
+    "forbidden_claims": [
+      "L2 metadata effect has been executed or identified",
+      "exact-as-declared Python>=3.13 ReasoningBank runtime replication",
+      "source-faithful financial AgentDojo transport",
+      "historical R5 support failure is rescued"
+    ],
+    "o6_l3_unblocked": false
+  },
+  "scientific_verdict": "NO_VERDICT_LIVE_SUPPORT_ONLY",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "model_calls": false,
+    "browser_actions": false,
+    "evaluator_calls": false,
+    "gpu": false,
+    "submission": false
+  },
+  "next_required_before_any_l2_outcome": [
+    "freeze source-memory generation or fixed source-memory selection and bind exact memory bytes/content hashes",
+    "freeze executor/model/version/decoding, paired rollout count, seed schedule, and maximum request budget",
+    "freeze an L2-specific variance/noise source, missingness/retry policy, and final paired randomization implementation",
+    "obtain separate scientific and experiment/model-call authority"
+  ]
+}
