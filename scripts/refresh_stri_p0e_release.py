@@ -46,6 +46,14 @@ TARGET_NULL_ANALYSIS = GEN / "asset-first-stri-target-null-analysis-20260824.jso
 WITNESS_PEELING = GEN / "asset-first-stri-witness-peeling-20260824.json"
 SUPPORT_EDIT_RADIUS = GEN / "asset-first-stri-support-edit-radius-20260824.json"
 STANFORD_EXPERIMENT_ENRICHMENT = GEN / "asset-first-stri-stanford-experiment-enrichment-20260824.json"
+PRACTICAL_BASELINES = GEN / "asset-first-stri-practical-baselines-20260824.json"
+PRACTICAL_BASELINES_CSV = GEN / "asset-first-stri-practical-baselines-20260824.csv"
+SKILLRL_BUDGET_BASELINES = GEN / "asset-first-stri-skillrl-budget-baselines-20260824.json"
+SKILLRL_BUDGET_BASELINES_CSV = GEN / "asset-first-stri-skillrl-budget-baselines-20260824.csv"
+SKILLROUTER_RELEVANCE = GEN / "asset-first-stri-skillrouter-relevance-analogue-20260824.json"
+SKILLROUTER_RELEVANCE_CSV = GEN / "asset-first-stri-skillrouter-relevance-analogue-20260824.csv"
+SKILLSBENCH_SUPPORT_QUAL = GEN / "asset-first-stri-skillsbench-support-qualification-20260824.json"
+SKILLSBENCH_SUPPORT_QUAL_CSV = GEN / "asset-first-stri-skillsbench-support-qualification-20260824.csv"
 
 DOWNLOAD_PDF = DOWNLOADS / "STRI-ICLR2027.pdf"
 DOWNLOAD_TEX = DOWNLOADS / "STRI-ICLR2027.tex"
@@ -263,10 +271,15 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         (GEN / "asset-first-stri-skillrl-final-policy-p0e-contract-20260816.json", "asset-first-stri-skillrl-final-policy-p0e-contract-20260816.json"),
         (GEN / "asset-first-stri-skillrl-final-policy-p0e-panel-20260816.json", "asset-first-stri-skillrl-final-policy-p0e-panel-20260816.json"),
         (GEN / "asset-first-stri-reviewer-extensions-20260819.json", "asset-first-stri-reviewer-extensions-20260819.json"),
+        (PAPER_QUALITY_PATH, "asset-first-stri-paper-quality-v2-20260816.json"),
         (TARGET_NULL_ANALYSIS, "asset-first-stri-target-null-analysis-20260824.json"),
         (WITNESS_PEELING, "asset-first-stri-witness-peeling-20260824.json"),
         (SUPPORT_EDIT_RADIUS, "asset-first-stri-support-edit-radius-20260824.json"),
         (STANFORD_EXPERIMENT_ENRICHMENT, "asset-first-stri-stanford-experiment-enrichment-20260824.json"),
+        (PRACTICAL_BASELINES_CSV, "asset-first-stri-practical-baselines-20260824.csv"),
+        (SKILLRL_BUDGET_BASELINES_CSV, "asset-first-stri-skillrl-budget-baselines-20260824.csv"),
+        (SKILLROUTER_RELEVANCE_CSV, "asset-first-stri-skillrouter-relevance-analogue-20260824.csv"),
+        (SKILLSBENCH_SUPPORT_QUAL_CSV, "asset-first-stri-skillsbench-support-qualification-20260824.csv"),
         (GEN / "asset-first-stri-released-controller-clone-audit-20260819.json", "asset-first-stri-released-controller-clone-audit-20260819.json"),
         (AUTOSKILL_QUALIFICATION, "asset-first-stri-autoskill-p19-substrate-qualification-20260819.json"),
         (AUTOSKILL_CONTRACT, "asset-first-stri-autoskill-p19-dynamic-f0-contract-v2-20260819.json"),
@@ -278,6 +291,21 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         (MEDIATOR_V2_RESULT, "asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json"),
     ]:
         shutil.copy2(source, tree / "artifacts" / name)
+    practical_packaged = load(PRACTICAL_BASELINES)
+    practical_packaged["input_supplement"] = "packaged data/skillsp-*.jsonl"
+    practical_packaged["input_split"] = "artifacts/asset-first-stri-tool-disjoint-split-20260816.json"
+    dump(tree / "artifacts" / "asset-first-stri-practical-baselines-20260824.json", practical_packaged)
+    skillrl_budget_packaged = load(SKILLRL_BUDGET_BASELINES)
+    skillrl_budget_packaged.pop("author_repo", None)
+    skillrl_budget_packaged["rerun_requires_author_release_at_recorded_commit"] = True
+    dump(tree / "artifacts" / "asset-first-stri-skillrl-budget-baselines-20260824.json", skillrl_budget_packaged)
+    skillrouter_packaged = load(SKILLROUTER_RELEVANCE)
+    (skillrouter_packaged.get("source") or {})["repo"] = "https://github.com/zhengyanzhao1997/SkillRouter"
+    skillrouter_packaged["rerun_requires_author_release_at_recorded_commit"] = True
+    dump(tree / "artifacts" / "asset-first-stri-skillrouter-relevance-analogue-20260824.json", skillrouter_packaged)
+    skillsbench_packaged = load(SKILLSBENCH_SUPPORT_QUAL)
+    skillsbench_packaged["rerun_requires_author_release_at_recorded_commit"] = True
+    dump(tree / "artifacts" / "asset-first-stri-skillsbench-support-qualification-20260824.json", skillsbench_packaged)
     packaged_autoskill_result = tree / "artifacts" / "asset-first-stri-autoskill-p19-stage3-result-20260819.json"
     sanitized_autoskill = load(AUTOSKILL_RESULT)
     sanitized_autoskill.pop("execution_root", None)
@@ -293,9 +321,16 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         (ROOT / "research_pipeline" / "asset_first_stri_witness_peeling_20260824.py", "asset_first_stri_witness_peeling_20260824.py"),
         (ROOT / "research_pipeline" / "asset_first_stri_support_edit_radius_20260824.py", "asset_first_stri_support_edit_radius_20260824.py"),
         (ROOT / "research_pipeline" / "test_asset_first_stri_target_null_analysis_20260824.py", "test_asset_first_stri_target_null_analysis_20260824.py"),
+        (ROOT / "research_pipeline" / "asset_first_stri_practical_baselines_20260824.py", "asset_first_stri_practical_baselines_20260824.py"),
+        (ROOT / "research_pipeline" / "asset_first_stri_skillrl_budget_baselines_20260824.py", "asset_first_stri_skillrl_budget_baselines_20260824.py"),
+        (ROOT / "research_pipeline" / "asset_first_stri_skillrouter_relevance_analogue_20260824.py", "asset_first_stri_skillrouter_relevance_analogue_20260824.py"),
+        (ROOT / "research_pipeline" / "asset_first_stri_skillsbench_support_qualification_20260824.py", "asset_first_stri_skillsbench_support_qualification_20260824.py"),
     ]:
         shutil.copy2(source, tree / "research_pipeline" / name)
     shutil.copy2(PAPER / "stri-20260816-plot-ablation-robustness.py", tree / "paper_drafts" / "stri-20260816-plot-ablation-robustness.py")
+    shutil.copy2(PAPER / "stri-20260816-plot-boundary.py", tree / "paper_drafts" / "stri-20260816-plot-boundary.py")
+    for name in ("stri-rstar-boundary.pdf", "stri-rstar-boundary.png"):
+        shutil.copy2(PAPER / "figures" / name, tree / "paper_drafts" / "figures" / name)
 
     meta_path = tree / "PACKAGE-METADATA.json"
     meta = load(meta_path)
@@ -349,6 +384,59 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         "enrichment_receipt": "artifacts/asset-first-stri-stanford-experiment-enrichment-20260824.json",
         "enrichment_receipt_sha256": sha(STANFORD_EXPERIMENT_ENRICHMENT),
         "headline": {"target_rays_residual": "7/7", "degree_preserving_rewires_residual": "200/200", "disjoint_three_row_witnesses": 22, "witness_tools_spanned": 19, "minimum_additions_to_equalizable": 22, "minimum_deletions_to_equalizable": 71, "max_share_constraints_preserving_R_star_2": "9/9"},
+        "new_model_calls": 0,
+        "new_gpu_runs": 0,
+        "claim_expansion": False,
+    }
+    practical = load(PRACTICAL_BASELINES)
+    ph = practical.get("headline") or {}
+    skillrl_budget = load(SKILLRL_BUDGET_BASELINES)
+    sh = skillrl_budget.get("headline") or {}
+    skillrouter_relevance = load(SKILLROUTER_RELEVANCE)
+    rh = skillrouter_relevance.get("headline") or {}
+    skillsbench_support = load(SKILLSBENCH_SUPPORT_QUAL)
+    sb = skillsbench_support.get("summary") or {}
+    if not (
+        abs(float(ph.get("level1_uniform_ratio") or -99.0) - 2.0) < 1e-12
+        and float(ph.get("level1_inverse_support_ratio") or 0.0) > 90.0
+        and float(ph.get("level1_nnls_ratio") or 0.0) > 5.0
+        and int(sh.get("top_k_6_official_targets_changed") or 0) == 11
+        and int(sh.get("top_k_6_official_targets_reduced") or 0) == 5
+        and int(sh.get("top_k_6_non_dynamic_placebo_semantic_changes", -1)) == 0
+        and int(sh.get("top_k_6_quotient_semantic_changes", -1)) == 0
+        and int(sh.get("top_k_13_official_semantic_changes", -1)) == 0
+        and (int(rh.get("core_single") or 0), int(rh.get("core_multi") or 0)) == (24, 51)
+        and abs(float(rh.get("core_uniform_ratio") or -99.0) - 7.0) < 1e-12
+        and abs(float(rh.get("core_R_star") or -99.0) - 1.0) < 1e-12
+        and abs(float(rh.get("graded_ge_1_uniform_ratio") or -99.0) - 21.0) < 1e-12
+        and abs(float(rh.get("graded_ge_1_R_star") or -99.0) - 1.0) < 1e-12
+        and skillsbench_support.get("decision") == "STOP_AS_EXACT_SUPPORT_SUBSTRATE"
+        and int(sb.get("tasks") or 0) == 87
+        and int(sb.get("required_skills_empty_tasks") or 0) == 75
+        and int(sb.get("required_vs_task_local_mismatch_tasks") or 0) == 79
+        and int(sb.get("task_local_skill_files") or 0) == 232
+    ):
+        raise RuntimeError("STRI experimental-breadth artifacts failed frozen checks")
+    meta["experimental_breadth"] = {
+        "practical_baselines_artifact": "artifacts/asset-first-stri-practical-baselines-20260824.json",
+        "practical_baselines_sha256": sha(PRACTICAL_BASELINES),
+        "skillrl_budget_artifact": "artifacts/asset-first-stri-skillrl-budget-baselines-20260824.json",
+        "skillrl_budget_sha256": sha(SKILLRL_BUDGET_BASELINES),
+        "skillrouter_relevance_artifact": "artifacts/asset-first-stri-skillrouter-relevance-analogue-20260824.json",
+        "skillrouter_relevance_sha256": sha(SKILLROUTER_RELEVANCE),
+        "skillsbench_support_qualification_artifact": "artifacts/asset-first-stri-skillsbench-support-qualification-20260824.json",
+        "skillsbench_support_qualification_sha256": sha(SKILLSBENCH_SUPPORT_QUAL),
+        "headline": {
+            "level1_uniform_is_exact_worst_case_optimum": 2.0,
+            "level1_inverse_support_ratio": ph.get("level1_inverse_support_ratio"),
+            "level1_nnls_ratio": ph.get("level1_nnls_ratio"),
+            "skillrl_top_k_6_targets_changed": 11,
+            "skillrl_top_k_13_semantic_changes": 0,
+            "skillrouter_core": "24 single / 51 multi / R*=1",
+            "skillrouter_graded_uniform_spread": 21.0,
+            "skillsbench_support_qualification": "STOP: 79/87 required-vs-local mismatches",
+        },
+        "external_repo_policy": "SkillRL and SkillRouter first-party repositories are not redistributed; packaged receipts bind exact commits/file hashes and rerun requirements.",
         "new_model_calls": 0,
         "new_gpu_runs": 0,
         "claim_expansion": False,
@@ -424,6 +512,9 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
     structural_marker = "## Structural robustness enrichment"
     if structural_marker not in readme:
         readme += """\n\n## Structural robustness enrichment\n\nThe revised main-paper robustness panel is reproduced from the packaged frozen Skill-SP Level-1 membership matrix without model calls or GPU execution. `artifacts/asset-first-stri-target-null-analysis-20260824.json` records seven representation-independent tool-frequency target rays, nine feasible max-share constraints, and 200 degree-preserving bipartite rewires; all tested cases remain residual and every rewire has neutral `R*=2`. `artifacts/asset-first-stri-witness-peeling-20260824.json` records 22 successive pairwise-disjoint three-row dual witnesses spanning 19 tools before the peeled remainder becomes equalizable. `artifacts/asset-first-stri-support-edit-radius-20260824.json` solves exact addition-only and deletion-only MILPs: at least 22 support additions or 71 deletions are required to make the frozen neutral target equalizable, with MIP gap zero and independent `R*` verification. `reproduce.py` recomputes these results from the packaged membership data; the stored artifacts are provenance receipts, not substitutes for reproduction. These controls do not validate learned support, mixed-edit robustness, downstream utility, or a broader dynamic STRI claim.\n"""
+    breadth_marker = "## Experimental breadth and practical baselines"
+    if breadth_marker not in readme:
+        readme += """\n\n## Experimental breadth and practical baselines\n\n`artifacts/asset-first-stri-practical-baselines-20260824.json` evaluates uniform, inverse-coverage, NNLS, cover, max--min, and exact package weighting across five frozen regimes and freezes calibration weights before tool-disjoint heldout evaluation. `reproduce.py` recomputes this suite from packaged Skill-SP/logical data. The SkillRL budget artifact sweeps eight `top_k` values with fresh-dynamic-ID, non-dynamic-ID placebo, exact quotient, and capacity controls on the pinned first-party release. The SkillRouter artifact audits the released 75-query expert relevance graph as an external relevance analogue only; relevance is not executable semantic support. The SkillsBench qualification artifact records why task-local skill availability is not promoted to an exact support matrix: 79/87 tasks disagree with `required_skills` metadata and 75/87 `required_skills` lists are empty despite non-empty local skill directories. SkillRL, SkillRouter, and SkillsBench repositories are intentionally not redistributed and their receipts bind exact author commits/file hashes. No new model or GPU calls are used by these breadth analyses.\n"""
     controller_marker = "## Released Skill-SP controller audit"
     if controller_marker not in readme:
         readme += """\n\n## Released Skill-SP controller audit\n\n`artifacts/asset-first-stri-released-controller-clone-audit-20260819.json` is the content-addressed receipt for the sampler/prompt-mixture audit. The audit code and unit tests are packaged under `research_pipeline/`. The third-party Skill-SP repository is intentionally not copied into this supplement. To rerun the first-party audit end-to-end, obtain the author release at the exact commit recorded in the receipt and run the packaged audit against the packaged `data/skillsp-toolcall-membership.jsonl`. The receipt records that a same-content clone yields the identical author questioner message string while the released ID-normalized sampler changes message-class mixture TV to 7/120; quotient-conserved class mass restores prompt-mixture and exposure TV to zero. This is a controller-input-distribution result, not downstream utility evidence.\n"""
@@ -450,6 +541,12 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
             "from research_pipeline.asset_first_stri_reviewer_extensions import evaluate as evaluate_reviewer_extensions\nfrom research_pipeline.asset_first_stri_target_null_analysis_20260824 import build as build_target_null\nfrom research_pipeline.asset_first_stri_witness_peeling_20260824 import build as build_witness_peeling\nfrom research_pipeline.asset_first_stri_support_edit_radius_20260824 import build as build_support_edit_radius\n",
             1,
         )
+    if "from research_pipeline.asset_first_stri_practical_baselines_20260824 import build_from_rows as build_practical_baselines" not in reproduce:
+        reproduce = reproduce.replace(
+            "from research_pipeline.asset_first_stri_support_edit_radius_20260824 import build as build_support_edit_radius\n",
+            "from research_pipeline.asset_first_stri_support_edit_radius_20260824 import build as build_support_edit_radius\nfrom research_pipeline.asset_first_stri_practical_baselines_20260824 import build_from_rows as build_practical_baselines\n",
+            1,
+        )
     if marker_code not in reproduce:
         check_code = f'''\n    {marker_code}\n    p0e = json.loads((ROOT / "artifacts/{artifact_name}").read_text())\n    assert p0e["competence_calibration"]["pristine_success"] == 18\n    assert p0e["paired_causal_result"]["paired_units"] == 24\n    assert set(p0e["paired_causal_result"]["success_rate"].values()) == {{0.75}}\n    assert set(p0e["paired_causal_result"]["paired_disagreement"].values()) == {{0.0}}\n    assert p0e["trajectory_boundary"]["B_vs_A_action_sequence_disagreement"] == 11\n    assert p0e["trajectory_boundary"]["C_vs_A_action_sequence_disagreement"] == 15\n    assert p0e["trajectory_boundary"]["D_vs_A_exact_trajectory_units"] == 24\n    assert p0e["trajectory_boundary"]["any_simple_B_over_C_dominance_supported"] is False\n    assert p0e["statistical_resolution"]["two_sided_exact_mcnemar_p_at_effect_floor"] == 0.25\n    assert p0e["statistical_resolution"]["minimum_unidirectional_discordances_for_p_lt_0_05"] == 6\n    assert p0e["final_disposition"]["experimental_stop_valid"] is True\n    assert p0e["final_disposition"]["persistent_principle_dead_end_certified"] is False\n    assert p0e["final_disposition"]["broader_STRI_N1_N2_N3_unchanged"] is True\n    p0e_summary = {{"experimental_realization": p0e["final_disposition"]["experimental_realization"], "principle_disposition": p0e["final_disposition"]["principle_disposition"], "paired_units": 24, "terminal_success_per_arm": "18/24", "endpoint_disagreement": 0, "B_action_diff": 11, "C_action_diff": 15, "persistent_principle_dead_end_certified": False}}\n'''
         reproduce = reproduce.replace("\n    out = {", check_code + "\n    out = {", 1)
@@ -464,6 +561,11 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         structural_code = '''\n    # STRUCTURAL ROBUSTNESS ENRICHMENT CHECK\n    structural_membership = ROOT / "data/skillsp-toolcall-membership.jsonl"\n    target_null = build_target_null(structural_membership)\n    target_summary = target_null["target_ray_sensitivity"]["summary"]\n    share_summary = target_null["max_share_sensitivity"]["summary"]\n    null_summary = target_null["degree_preserving_null_ensemble"]["summary"]\n    assert target_summary["targets"] == 7\n    assert target_summary["all_tested_targets_residual"] is True\n    assert abs(target_summary["neutral_R_star"] - 2.0) < 1e-12\n    assert share_summary["valid_constraints"] == 9\n    assert share_summary["all_valid_constraints_residual"] is True\n    assert null_summary["residual_draws"] == 200 and null_summary["equalizable_draws"] == 0\n    assert abs(null_summary["minimum_R_star"] - 2.0) < 1e-12 and abs(null_summary["maximum_R_star"] - 2.0) < 1e-12\n    witness = build_witness_peeling(structural_membership)\n    witness_summary = witness["witness_peeling"]["summary"]\n    assert witness_summary["peeling_rounds_before_equalizable"] == 22\n    assert witness_summary["pairwise_disjoint_witness_rows_removed"] == 66\n    assert witness_summary["unique_tools_spanned"] == 19\n    assert abs(witness_summary["final_R_star"] - 1.0) < 1e-12\n    edit = build_support_edit_radius(structural_membership)\n    edit_radius = edit["support_edit_radius"]\n    assert edit_radius["minimum_additions_to_equalizable"] == 22\n    assert edit_radius["minimum_deletions_to_equalizable"] == 71\n    assert abs(edit_radius["addition_solution"]["mip_gap"]) < 1e-12\n    assert abs(edit_radius["deletion_solution"]["mip_gap"]) < 1e-12\n    assert abs(edit_radius["addition_solution"]["verified_R_star"] - 1.0) < 1e-12\n    assert abs(edit_radius["deletion_solution"]["verified_R_star"] - 1.0) < 1e-12\n    structural_summary = {\n        "target_rays_residual": "7/7",\n        "degree_preserving_rewires_residual": "200/200",\n        "max_share_constraints_preserving_R_star_2": "9/9",\n        "disjoint_three_row_witnesses": 22,\n        "witness_rows_removed": 66,\n        "witness_tools_spanned": 19,\n        "minimum_additions_to_equalizable": 22,\n        "minimum_deletions_to_equalizable": 71,\n        "new_model_calls": 0,\n        "new_gpu_runs": 0,\n    }\n'''
         reproduce = reproduce.replace("\n    out = {", structural_code + "\n    out = {", 1)
         reproduce = reproduce.replace('        "reviewer_extensions": reviewer_summary,', '        "reviewer_extensions": reviewer_summary,\n        "structural_enrichment": structural_summary,', 1)
+    breadth_code_marker = "# EXPERIMENTAL BREADTH CHECK"
+    if breadth_code_marker not in reproduce:
+        breadth_code = '''\n    # EXPERIMENTAL BREADTH CHECK\n    split = json.loads((ROOT / "artifacts/asset-first-stri-tool-disjoint-split-20260816.json").read_text())\n    practical = build_practical_baselines(tool_rows, logical_rows, split, input_label="packaged-data")\n    ph = practical["headline"]\n    assert abs(ph["level1_uniform_ratio"] - 2.0) < 1e-12\n    assert ph["level1_inverse_support_ratio"] > 90.0\n    assert ph["level1_nnls_ratio"] > 5.0\n    assert ph["level1_nnls_cv"] < ph["level1_uniform_cv"]\n    transfer = {row["baseline"]: row for row in practical["calibration_to_heldout"]["results"]}\n    assert practical["calibration_to_heldout"]["no_heldout_refit"] is True\n    assert abs(transfer["exact_rstar"]["heldout_metrics"]["distortion_ratio"] - 2.0) < 1e-12\n    skillrl_budget = json.loads((ROOT / "artifacts/asset-first-stri-skillrl-budget-baselines-20260824.json").read_text())\n    sh = skillrl_budget["headline"]\n    assert sh["top_k_6_official_targets_changed"] == 11\n    assert sh["top_k_6_official_targets_reduced"] == 5\n    assert sh["top_k_6_non_dynamic_placebo_semantic_changes"] == 0\n    assert sh["top_k_6_quotient_semantic_changes"] == 0\n    assert sh["top_k_13_official_semantic_changes"] == 0\n    assert skillrl_budget["rerun_requires_author_release_at_recorded_commit"] is True\n    skillrouter = json.loads((ROOT / "artifacts/asset-first-stri-skillrouter-relevance-analogue-20260824.json").read_text())\n    rh = skillrouter["headline"]\n    assert (rh["core_single"], rh["core_multi"]) == (24, 51)\n    assert abs(rh["core_uniform_ratio"] - 7.0) < 1e-12 and abs(rh["core_R_star"] - 1.0) < 1e-12\n    assert abs(rh["graded_ge_1_uniform_ratio"] - 21.0) < 1e-12 and abs(rh["graded_ge_1_R_star"] - 1.0) < 1e-12\n    assert "retrieval acceptability" in skillrouter["scientific_boundary"]\n    assert skillrouter["rerun_requires_author_release_at_recorded_commit"] is True\n    skillsbench = json.loads((ROOT / "artifacts/asset-first-stri-skillsbench-support-qualification-20260824.json").read_text())\n    sb = skillsbench["summary"]\n    assert skillsbench["decision"] == "STOP_AS_EXACT_SUPPORT_SUBSTRATE"\n    assert sb["tasks"] == 87 and sb["required_skills_empty_tasks"] == 75\n    assert sb["required_vs_task_local_mismatch_tasks"] == 79 and sb["task_local_skill_files"] == 232\n    assert skillsbench["rerun_requires_author_release_at_recorded_commit"] is True\n    breadth_summary = {\n        "practical_level1_uniform_R": ph["level1_uniform_ratio"],\n        "practical_level1_inverse_support_R": ph["level1_inverse_support_ratio"],\n        "practical_level1_nnls_R": ph["level1_nnls_ratio"],\n        "calibration_to_heldout_exact_R": transfer["exact_rstar"]["heldout_metrics"]["distortion_ratio"],\n        "skillrl_top_k_6_targets_changed": 11,\n        "skillrl_top_k_13_semantic_changes": 0,\n        "skillrouter_core_uniform_R": 7.0,\n        "skillrouter_core_exact_R": 1.0,\n        "skillrouter_graded_uniform_R": 21.0,\n        "skillrouter_graded_exact_R": 1.0,\n        "skillsbench_support_qualification": "STOP_79_OF_87_METADATA_AVAILABILITY_MISMATCH",\n        "new_model_calls": 0,\n        "new_gpu_runs": 0,\n    }\n'''
+        reproduce = reproduce.replace("\n    out = {", breadth_code + "\n    out = {", 1)
+        reproduce = reproduce.replace('        "structural_enrichment": structural_summary,', '        "structural_enrichment": structural_summary,\n        "experimental_breadth": breadth_summary,', 1)
     controller_code_marker = "# RELEASED CONTROLLER AUDIT RECEIPT CHECK"
     if controller_code_marker not in reproduce:
         controller_code = '''\n    # RELEASED CONTROLLER AUDIT RECEIPT CHECK\n    controller = json.loads((ROOT / "artifacts/asset-first-stri-released-controller-clone-audit-20260819.json").read_text())\n    assert controller["all_checks_pass"] is True\n    cc = controller["checks"]\n    assert cc["clone_weights_recomputed_by_author_sampling_function"] is True\n    assert cc["author_duplicate_filter_would_reject_literal_exact_text_clone"] is True\n    assert cc["same_content_clone_has_identical_author_questioner_messages"] is True\n    assert cc["released_sampler_clone_changes_author_questioner_prompt_mixture"] is True\n    assert cc["quotient_conservation_exactly_restores_author_questioner_prompt_mixture"] is True\n    assert cc["quotient_conserved_allocation_exactly_restores_base_exposure"] is True\n    ch = controller["headline"]\n    assert abs(ch["base_package_probability"] - (1.0 / 15.0)) < 1e-12\n    assert abs(ch["exact_clone_family_probability"] - (1.0 / 8.0)) < 1e-12\n    assert len(ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"]) == 1\n    assert abs(ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"][0] - (7.0 / 120.0)) < 1e-12\n    assert len(ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"]) == 1\n    assert abs(ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"][0]) < 1e-12\n    assert len(ch["quotient_conserved_exposure_profile_tv_all_targets"]) == 1\n    assert abs(ch["quotient_conserved_exposure_profile_tv_all_targets"][0]) < 1e-12\n    controller_summary = {\n        "author_repo_commit": controller["author_release"]["commit"],\n        "all_checks_pass": True,\n        "base_package_probability": ch["base_package_probability"],\n        "clone_family_probability": ch["exact_clone_family_probability"],\n        "released_prompt_mixture_tv": ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"],\n        "quotient_prompt_mixture_tv": ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"],\n        "quotient_exposure_profile_tv": ch["quotient_conserved_exposure_profile_tv_all_targets"],\n        "third_party_author_repo_packaged": False,\n    }\n'''
@@ -530,8 +632,8 @@ def build_and_verify_supplement() -> dict:
         repro_python = find_repro_python()
         repro = run([repro_python, "reproduce.py"], cwd=tree)
         reproduced = json.loads((tree / "outputs" / "reproduction-summary.json").read_text(encoding="utf-8"))
-        if reproduced.get("status") != "PASS" or "skillrl_p0e" not in reproduced or "structural_enrichment" not in reproduced or "autoskill_p19_dynamic" not in reproduced or "autoskill_p19_mediator_isolation" not in reproduced:
-            raise RuntimeError("supplement reproduction did not retain STRI structural enrichment, SkillRL P0-E, AutoSkill P19 Stage-3, and mediator-isolation receipts")
+        if reproduced.get("status") != "PASS" or "skillrl_p0e" not in reproduced or "structural_enrichment" not in reproduced or "experimental_breadth" not in reproduced or "autoskill_p19_dynamic" not in reproduced or "autoskill_p19_mediator_isolation" not in reproduced:
+            raise RuntimeError("supplement reproduction did not retain STRI structural enrichment, experimental breadth, SkillRL P0-E, AutoSkill P19 Stage-3, and mediator-isolation receipts")
         tests = run([repro_python, "-m", "unittest", "discover", "-s", "research_pipeline", "-t", ".", "-p", "test_asset_first_stri_*.py"], cwd=tree)
         test_line = next((line.strip() for line in tests.stdout.splitlines() if line.startswith("Ran ")), "")
         if "OK" not in tests.stdout:
@@ -567,6 +669,7 @@ def build_and_verify_supplement() -> dict:
         state["isolated_verification"]["unit_tests"] = f"{unit_test_count}/{unit_test_count} PASS"
         state["reproduced_results"]["skillrl_p0e"] = p0e_summary(receipt)
         state["reproduced_results"]["structural_enrichment"] = reproduced.get("structural_enrichment") or {}
+        state["reproduced_results"]["experimental_breadth"] = reproduced.get("experimental_breadth") or {}
         state["reproduced_results"]["released_controller_audit"] = reproduced.get("released_controller_audit") or {}
         state["reproduced_results"]["autoskill_p19_dynamic"] = reproduced.get("autoskill_p19_dynamic") or {}
         state["reproduced_results"]["autoskill_p19_mediator_isolation"] = reproduced.get("autoskill_p19_mediator_isolation") or {}

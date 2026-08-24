@@ -1,0 +1,4488 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "analysis": "skillrl-retrieval-budget-baselines",
+  "author_repo": "/data/wyt/agent2-asset-first-external/SkillRL",
+  "author_commit": "8e66726ed866a4e0a7f053586a41022798192e6c",
+  "preflight": {
+    "commit": true,
+    "skills_only_memory_sha": true,
+    "skill_updater_sha": true,
+    "skillbank_sha": true,
+    "released_memories_sha": true
+  },
+  "tasks": 223,
+  "general_skill_targets": 12,
+  "top_k_values": [
+    1,
+    2,
+    3,
+    4,
+    6,
+    8,
+    12,
+    13
+  ],
+  "new_model_calls": 0,
+  "new_gpu_runs": 0,
+  "claim_expansion": false,
+  "budgets": [
+    {
+      "top_k": 1,
+      "baseline_general_count": 1,
+      "controls": {
+        "official_dynamic_priority": {
+          "comparisons": 2676,
+          "prompt_changed": 2453,
+          "prompt_changed_fraction": 0.9166666666666666,
+          "semantic_set_changed": 2453,
+          "semantic_set_changed_fraction": 0.9166666666666666,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 11,
+          "targets_with_unique_count_reduction": 0
+        },
+        "non_dynamic_clone_placebo": {
+          "comparisons": 2676,
+          "prompt_changed": 0,
+          "prompt_changed_fraction": 0.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "exact_semantic_quotient": {
+          "comparisons": 2676,
+          "prompt_changed": 0,
+          "prompt_changed_fraction": 0.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "capacity_plus_one": {
+          "comparisons": 2676,
+          "prompt_changed": 2676,
+          "prompt_changed_fraction": 1.0,
+          "semantic_set_changed": 2453,
+          "semantic_set_changed_fraction": 0.9166666666666666,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 11,
+          "targets_with_unique_count_reduction": 0
+        }
+      },
+      "target_results": [
+        {
+          "target_skill_id": "gen_001",
+          "target_title": "Systematic Exploration",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_002",
+          "target_title": "Immediate Acquisition",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_003",
+          "target_title": "Destination First Policy",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_004",
+          "target_title": "Track Counts & Progress",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_005",
+          "target_title": "Use State-Changing Tools Early",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_006",
+          "target_title": "Establish Spatial Relations",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_007",
+          "target_title": "Open Before Judging Empty",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_008",
+          "target_title": "Avoid Redundant Rechecks",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_009",
+          "target_title": "Plan with Landmarks",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_010",
+          "target_title": "Progressive Goal Decomposition",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_011",
+          "target_title": "Efficient Relation Search",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_012",
+          "target_title": "Terminate Only On Success",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "top_k": 2,
+      "baseline_general_count": 2,
+      "controls": {
+        "official_dynamic_priority": {
+          "comparisons": 2676,
+          "prompt_changed": 2676,
+          "prompt_changed_fraction": 1.0,
+          "semantic_set_changed": 2453,
+          "semantic_set_changed_fraction": 0.9166666666666666,
+          "unique_count_reduced": 223,
+          "unique_count_reduced_fraction": 0.08333333333333333,
+          "targets_with_semantic_set_change": 11,
+          "targets_with_unique_count_reduction": 1
+        },
+        "non_dynamic_clone_placebo": {
+          "comparisons": 2676,
+          "prompt_changed": 0,
+          "prompt_changed_fraction": 0.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "exact_semantic_quotient": {
+          "comparisons": 2676,
+          "prompt_changed": 0,
+          "prompt_changed_fraction": 0.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "capacity_plus_one": {
+          "comparisons": 2676,
+          "prompt_changed": 2676,
+          "prompt_changed_fraction": 1.0,
+          "semantic_set_changed": 2230,
+          "semantic_set_changed_fraction": 0.8333333333333334,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 10,
+          "targets_with_unique_count_reduction": 0
+        }
+      },
+      "target_results": [
+        {
+          "target_skill_id": "gen_001",
+          "target_title": "Systematic Exploration",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_002",
+          "target_title": "Immediate Acquisition",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_003",
+          "target_title": "Destination First Policy",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_004",
+          "target_title": "Track Counts & Progress",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_005",
+          "target_title": "Use State-Changing Tools Early",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_006",
+          "target_title": "Establish Spatial Relations",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_007",
+          "target_title": "Open Before Judging Empty",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_008",
+          "target_title": "Avoid Redundant Rechecks",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_009",
+          "target_title": "Plan with Landmarks",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_010",
+          "target_title": "Progressive Goal Decomposition",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_011",
+          "target_title": "Efficient Relation Search",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_012",
+          "target_title": "Terminate Only On Success",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "top_k": 3,
+      "baseline_general_count": 3,
+      "controls": {
+        "official_dynamic_priority": {
+          "comparisons": 2676,
+          "prompt_changed": 2676,
+          "prompt_changed_fraction": 1.0,
+          "semantic_set_changed": 2453,
+          "semantic_set_changed_fraction": 0.9166666666666666,
+          "unique_count_reduced": 446,
+          "unique_count_reduced_fraction": 0.16666666666666666,
+          "targets_with_semantic_set_change": 11,
+          "targets_with_unique_count_reduction": 2
+        },
+        "non_dynamic_clone_placebo": {
+          "comparisons": 2676,
+          "prompt_changed": 0,
+          "prompt_changed_fraction": 0.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "exact_semantic_quotient": {
+          "comparisons": 2676,
+          "prompt_changed": 0,
+          "prompt_changed_fraction": 0.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "capacity_plus_one": {
+          "comparisons": 2676,
+          "prompt_changed": 2676,
+          "prompt_changed_fraction": 1.0,
+          "semantic_set_changed": 2007,
+          "semantic_set_changed_fraction": 0.75,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 9,
+          "targets_with_unique_count_reduction": 0
+        }
+      },
+      "target_results": [
+        {
+          "target_skill_id": "gen_001",
+          "target_title": "Systematic Exploration",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_002",
+          "target_title": "Immediate Acquisition",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_003",
+          "target_title": "Destination First Policy",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_004",
+          "target_title": "Track Counts & Progress",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_005",
+          "target_title": "Use State-Changing Tools Early",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_006",
+          "target_title": "Establish Spatial Relations",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_007",
+          "target_title": "Open Before Judging Empty",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_008",
+          "target_title": "Avoid Redundant Rechecks",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_009",
+          "target_title": "Plan with Landmarks",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_010",
+          "target_title": "Progressive Goal Decomposition",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_011",
+          "target_title": "Efficient Relation Search",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_012",
+          "target_title": "Terminate Only On Success",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "top_k": 4,
+      "baseline_general_count": 4,
+      "controls": {
+        "official_dynamic_priority": {
+          "comparisons": 2676,
+          "prompt_changed": 2676,
+          "prompt_changed_fraction": 1.0,
+          "semantic_set_changed": 2453,
+          "semantic_set_changed_fraction": 0.9166666666666666,
+          "unique_count_reduced": 669,
+          "unique_count_reduced_fraction": 0.25,
+          "targets_with_semantic_set_change": 11,
+          "targets_with_unique_count_reduction": 3
+        },
+        "non_dynamic_clone_placebo": {
+          "comparisons": 2676,
+          "prompt_changed": 0,
+          "prompt_changed_fraction": 0.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "exact_semantic_quotient": {
+          "comparisons": 2676,
+          "prompt_changed": 0,
+          "prompt_changed_fraction": 0.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "capacity_plus_one": {
+          "comparisons": 2676,
+          "prompt_changed": 2676,
+          "prompt_changed_fraction": 1.0,
+          "semantic_set_changed": 1784,
+          "semantic_set_changed_fraction": 0.6666666666666666,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 8,
+          "targets_with_unique_count_reduction": 0
+        }
+      },
+      "target_results": [
+        {
+          "target_skill_id": "gen_001",
+          "target_title": "Systematic Exploration",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_002",
+          "target_title": "Immediate Acquisition",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_003",
+          "target_title": "Destination First Policy",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_004",
+          "target_title": "Track Counts & Progress",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_005",
+          "target_title": "Use State-Changing Tools Early",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_006",
+          "target_title": "Establish Spatial Relations",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_007",
+          "target_title": "Open Before Judging Empty",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_008",
+          "target_title": "Avoid Redundant Rechecks",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_009",
+          "target_title": "Plan with Landmarks",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_010",
+          "target_title": "Progressive Goal Decomposition",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_011",
+          "target_title": "Efficient Relation Search",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_012",
+          "target_title": "Terminate Only On Success",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "top_k": 6,
+      "baseline_general_count": 6,
+      "controls": {
+        "official_dynamic_priority": {
+          "comparisons": 2676,
+          "prompt_changed": 2676,
+          "prompt_changed_fraction": 1.0,
+          "semantic_set_changed": 2453,
+          "semantic_set_changed_fraction": 0.9166666666666666,
+          "unique_count_reduced": 1115,
+          "unique_count_reduced_fraction": 0.4166666666666667,
+          "targets_with_semantic_set_change": 11,
+          "targets_with_unique_count_reduction": 5
+        },
+        "non_dynamic_clone_placebo": {
+          "comparisons": 2676,
+          "prompt_changed": 0,
+          "prompt_changed_fraction": 0.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "exact_semantic_quotient": {
+          "comparisons": 2676,
+          "prompt_changed": 0,
+          "prompt_changed_fraction": 0.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "capacity_plus_one": {
+          "comparisons": 2676,
+          "prompt_changed": 2676,
+          "prompt_changed_fraction": 1.0,
+          "semantic_set_changed": 1338,
+          "semantic_set_changed_fraction": 0.5,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 6,
+          "targets_with_unique_count_reduction": 0
+        }
+      },
+      "target_results": [
+        {
+          "target_skill_id": "gen_001",
+          "target_title": "Systematic Exploration",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_002",
+          "target_title": "Immediate Acquisition",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_003",
+          "target_title": "Destination First Policy",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_004",
+          "target_title": "Track Counts & Progress",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_005",
+          "target_title": "Use State-Changing Tools Early",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_006",
+          "target_title": "Establish Spatial Relations",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_007",
+          "target_title": "Open Before Judging Empty",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_008",
+          "target_title": "Avoid Redundant Rechecks",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_009",
+          "target_title": "Plan with Landmarks",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_010",
+          "target_title": "Progressive Goal Decomposition",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_011",
+          "target_title": "Efficient Relation Search",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_012",
+          "target_title": "Terminate Only On Success",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "top_k": 8,
+      "baseline_general_count": 8,
+      "controls": {
+        "official_dynamic_priority": {
+          "comparisons": 2676,
+          "prompt_changed": 2676,
+          "prompt_changed_fraction": 1.0,
+          "semantic_set_changed": 2453,
+          "semantic_set_changed_fraction": 0.9166666666666666,
+          "unique_count_reduced": 1561,
+          "unique_count_reduced_fraction": 0.5833333333333334,
+          "targets_with_semantic_set_change": 11,
+          "targets_with_unique_count_reduction": 7
+        },
+        "non_dynamic_clone_placebo": {
+          "comparisons": 2676,
+          "prompt_changed": 0,
+          "prompt_changed_fraction": 0.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "exact_semantic_quotient": {
+          "comparisons": 2676,
+          "prompt_changed": 0,
+          "prompt_changed_fraction": 0.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "capacity_plus_one": {
+          "comparisons": 2676,
+          "prompt_changed": 2676,
+          "prompt_changed_fraction": 1.0,
+          "semantic_set_changed": 892,
+          "semantic_set_changed_fraction": 0.3333333333333333,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 4,
+          "targets_with_unique_count_reduction": 0
+        }
+      },
+      "target_results": [
+        {
+          "target_skill_id": "gen_001",
+          "target_title": "Systematic Exploration",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_002",
+          "target_title": "Immediate Acquisition",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_003",
+          "target_title": "Destination First Policy",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_004",
+          "target_title": "Track Counts & Progress",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_005",
+          "target_title": "Use State-Changing Tools Early",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_006",
+          "target_title": "Establish Spatial Relations",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_007",
+          "target_title": "Open Before Judging Empty",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_008",
+          "target_title": "Avoid Redundant Rechecks",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_009",
+          "target_title": "Plan with Landmarks",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_010",
+          "target_title": "Progressive Goal Decomposition",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_011",
+          "target_title": "Efficient Relation Search",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_012",
+          "target_title": "Terminate Only On Success",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "top_k": 12,
+      "baseline_general_count": 12,
+      "controls": {
+        "official_dynamic_priority": {
+          "comparisons": 2676,
+          "prompt_changed": 2676,
+          "prompt_changed_fraction": 1.0,
+          "semantic_set_changed": 2453,
+          "semantic_set_changed_fraction": 0.9166666666666666,
+          "unique_count_reduced": 2453,
+          "unique_count_reduced_fraction": 0.9166666666666666,
+          "targets_with_semantic_set_change": 11,
+          "targets_with_unique_count_reduction": 11
+        },
+        "non_dynamic_clone_placebo": {
+          "comparisons": 2676,
+          "prompt_changed": 0,
+          "prompt_changed_fraction": 0.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "exact_semantic_quotient": {
+          "comparisons": 2676,
+          "prompt_changed": 0,
+          "prompt_changed_fraction": 0.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "capacity_plus_one": {
+          "comparisons": 2676,
+          "prompt_changed": 2676,
+          "prompt_changed_fraction": 1.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        }
+      },
+      "target_results": [
+        {
+          "target_skill_id": "gen_001",
+          "target_title": "Systematic Exploration",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_002",
+          "target_title": "Immediate Acquisition",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_003",
+          "target_title": "Destination First Policy",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_004",
+          "target_title": "Track Counts & Progress",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_005",
+          "target_title": "Use State-Changing Tools Early",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_006",
+          "target_title": "Establish Spatial Relations",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_007",
+          "target_title": "Open Before Judging Empty",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_008",
+          "target_title": "Avoid Redundant Rechecks",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_009",
+          "target_title": "Plan with Landmarks",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_010",
+          "target_title": "Progressive Goal Decomposition",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_011",
+          "target_title": "Efficient Relation Search",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 223,
+            "semantic_set_changed_fraction": 1.0,
+            "unique_semantic_count_reduced_rows": 223,
+            "unique_semantic_count_reduced_fraction": 1.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_012",
+          "target_title": "Terminate Only On Success",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "top_k": 13,
+      "baseline_general_count": 12,
+      "controls": {
+        "official_dynamic_priority": {
+          "comparisons": 2676,
+          "prompt_changed": 2676,
+          "prompt_changed_fraction": 1.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "non_dynamic_clone_placebo": {
+          "comparisons": 2676,
+          "prompt_changed": 2676,
+          "prompt_changed_fraction": 1.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "exact_semantic_quotient": {
+          "comparisons": 2676,
+          "prompt_changed": 0,
+          "prompt_changed_fraction": 0.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        },
+        "capacity_plus_one": {
+          "comparisons": 2676,
+          "prompt_changed": 2676,
+          "prompt_changed_fraction": 1.0,
+          "semantic_set_changed": 0,
+          "semantic_set_changed_fraction": 0.0,
+          "unique_count_reduced": 0,
+          "unique_count_reduced_fraction": 0.0,
+          "targets_with_semantic_set_change": 0,
+          "targets_with_unique_count_reduction": 0
+        }
+      },
+      "target_results": [
+        {
+          "target_skill_id": "gen_001",
+          "target_title": "Systematic Exploration",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_002",
+          "target_title": "Immediate Acquisition",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_003",
+          "target_title": "Destination First Policy",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_004",
+          "target_title": "Track Counts & Progress",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_005",
+          "target_title": "Use State-Changing Tools Early",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_006",
+          "target_title": "Establish Spatial Relations",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_007",
+          "target_title": "Open Before Judging Empty",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_008",
+          "target_title": "Avoid Redundant Rechecks",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_009",
+          "target_title": "Plan with Landmarks",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_010",
+          "target_title": "Progressive Goal Decomposition",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_011",
+          "target_title": "Efficient Relation Search",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        },
+        {
+          "target_skill_id": "gen_012",
+          "target_title": "Terminate Only On Success",
+          "dynamic_clone_admitted": true,
+          "non_dynamic_clone_admitted": true,
+          "official_dynamic_priority": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "non_dynamic_clone_placebo": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "exact_semantic_quotient": {
+            "rows": 223,
+            "prompt_changed_rows": 0,
+            "prompt_changed_fraction": 0.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          },
+          "capacity_plus_one": {
+            "rows": 223,
+            "prompt_changed_rows": 223,
+            "prompt_changed_fraction": 1.0,
+            "semantic_set_changed_rows": 0,
+            "semantic_set_changed_fraction": 0.0,
+            "unique_semantic_count_reduced_rows": 0,
+            "unique_semantic_count_reduced_fraction": 0.0
+          }
+        }
+      ]
+    }
+  ],
+  "headline": {
+    "top_k_6_official_targets_changed": 11,
+    "top_k_6_official_targets_reduced": 5,
+    "top_k_6_non_dynamic_placebo_semantic_changes": 0,
+    "top_k_6_quotient_semantic_changes": 0,
+    "top_k_13_official_semantic_changes": 0,
+    "interpretation": "The released SkillRL phenotype is a fixed-budget provenance-priority effect: a fresh dynamic identity changes semantic retrieval under constrained top-k, while an equally duplicated non-dynamic ID and exact semantic quotient do not. The semantic-set effect closes when the budget can hold all 12 static contents plus the clone."
+  },
+  "scientific_boundary": "SkillRL exposes no independent semantic support matrix, so this is a retrieval phenotype/budget-boundary experiment only; it is not an R* certificate, task-utility result, or prevalence estimate."
+}

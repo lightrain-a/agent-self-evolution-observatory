@@ -1,0 +1,1633 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "analysis": "practical-baseline-suite",
+  "input_supplement": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r15-canonical-final-20260824/E1-STRI-R15-canonical-final-supplement.zip",
+  "input_split": "/data/wyt/agent-self-evolution-observatory/worktrees/e1-stri-baseline-suite-20260824/generated/asset-first-stri-tool-disjoint-split-20260816.json",
+  "new_model_calls": 0,
+  "new_gpu_runs": 0,
+  "claim_expansion": false,
+  "regimes": {
+    "skillsp_l1_full": {
+      "covered_rows": 314,
+      "packages": 6,
+      "skills": [
+        "skill_001",
+        "skill_002",
+        "skill_003",
+        "skill_004",
+        "skill_005",
+        "skill_015"
+      ],
+      "multi_membership_rows": 183,
+      "exact_R_star": 2.0,
+      "baselines": [
+        {
+          "baseline": "released_uniform",
+          "description": "released-style package-uniform routing",
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.31153353561466485,
+            "best_scale_rmse": 0.2974342459403841,
+            "best_scale_max_abs_error": 0.4241019698725377,
+            "active_packages": 6,
+            "max_package_share": 0.16666666666666666,
+            "effective_package_count": 5.999999999999999,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 1.0,
+            "skill_002": 1.0,
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_005": 1.0,
+            "skill_015": 1.0
+          }
+        },
+        {
+          "baseline": "inverse_support_size",
+          "description": "inverse column coverage heuristic",
+          "metrics": {
+            "distortion_ratio": 98.33333333333334,
+            "minimum_relative_exposure": 0.003424657534246575,
+            "maximum_relative_exposure": 0.3367579908675799,
+            "coefficient_of_variation": 1.7229962209832934,
+            "best_scale_rmse": 0.8648868920391365,
+            "best_scale_max_abs_error": 3.4406473752595064,
+            "active_packages": 6,
+            "max_package_share": 0.7864604311533738,
+            "effective_package_count": 1.5872234713728313,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 0.013157894736842105,
+            "skill_002": 0.030303030303030304,
+            "skill_003": 0.019230769230769232,
+            "skill_004": 0.024390243902439025,
+            "skill_005": 0.3333333333333333,
+            "skill_015": 0.003424657534246575
+          }
+        },
+        {
+          "baseline": "inverse_sqrt_support",
+          "description": "tempered inverse column coverage heuristic",
+          "metrics": {
+            "distortion_ratio": 10.865765724632494,
+            "minimum_relative_exposure": 0.058520573598065284,
+            "maximum_relative_exposure": 0.635870842787691,
+            "coefficient_of_variation": 0.5498245473013299,
+            "best_scale_rmse": 0.4818007063703964,
+            "best_scale_max_abs_error": 2.2692143269358658,
+            "active_packages": 6,
+            "max_package_share": 0.4734299454046785,
+            "effective_package_count": 3.5088550509573273,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 0.11470786693528089,
+            "skill_002": 0.17407765595569785,
+            "skill_003": 0.1386750490563073,
+            "skill_004": 0.15617376188860607,
+            "skill_005": 0.5773502691896257,
+            "skill_015": 0.058520573598065284
+          }
+        },
+        {
+          "baseline": "fractional_load_inverse",
+          "description": "inverse fractional responsibility heuristic",
+          "metrics": {
+            "distortion_ratio": 134.66666666666666,
+            "minimum_relative_exposure": 0.004987531172069825,
+            "maximum_relative_exposure": 0.6716541978387365,
+            "coefficient_of_variation": 1.9183561961083833,
+            "best_scale_rmse": 0.8867518920141149,
+            "best_scale_max_abs_error": 3.193393704287092,
+            "active_packages": 6,
+            "max_package_share": 0.8022078531061043,
+            "effective_package_count": 1.5294065779675479,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 0.02631578947368421,
+            "skill_002": 0.06060606060606061,
+            "skill_003": 0.028985507246376812,
+            "skill_004": 0.043478260869565216,
+            "skill_005": 0.6666666666666666,
+            "skill_015": 0.004987531172069825
+          }
+        },
+        {
+          "baseline": "nnls_l2",
+          "description": "nonnegative least-squares fit to neutral target",
+          "metrics": {
+            "distortion_ratio": 5.5095579354215305,
+            "minimum_relative_exposure": 0.23331442119462104,
+            "maximum_relative_exposure": 1.2854593207411056,
+            "coefficient_of_variation": 0.21460367892942614,
+            "best_scale_rmse": 0.20982631671123567,
+            "best_scale_max_abs_error": 0.766685578805379,
+            "active_packages": 6,
+            "max_package_share": 0.45974091747184825,
+            "effective_package_count": 3.484881925452336,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 0.12683031302720726,
+            "skill_002": 0.1268303130272074,
+            "skill_003": 0.41228963376831257,
+            "skill_004": 0.23331442119462104,
+            "skill_005": 0.12683031302720726,
+            "skill_015": 0.873169686972793
+          }
+        },
+        {
+          "baseline": "chebyshev_linf",
+          "description": "minimum absolute L-infinity target fit",
+          "metrics": {
+            "distortion_ratio": 2.0000000000000004,
+            "minimum_relative_exposure": 0.6666666666666666,
+            "maximum_relative_exposure": 1.3333333333333335,
+            "coefficient_of_variation": 0.3411705861660722,
+            "best_scale_rmse": 0.32289563900147333,
+            "best_scale_max_abs_error": 0.46110056925996123,
+            "active_packages": 3,
+            "max_package_share": 0.33333333333333337,
+            "effective_package_count": 2.9999999999999996,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": -0.0,
+            "skill_002": 0.0,
+            "skill_003": 0.6666666666666667,
+            "skill_004": 0.6666666666666666,
+            "skill_005": -0.0,
+            "skill_015": 0.6666666666666667
+          }
+        },
+        {
+          "baseline": "greedy_cover_uniform",
+          "description": "greedy set-cover then uniform routing",
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.34117058616607215,
+            "best_scale_rmse": 0.32289563900147333,
+            "best_scale_max_abs_error": 0.4611005692599621,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 0.0,
+            "skill_002": 0.0,
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_005": 0.0,
+            "skill_015": 1.0
+          }
+        },
+        {
+          "baseline": "exact_min_cover_uniform",
+          "description": "exact minimum set-cover then uniform routing",
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.34117058616607215,
+            "best_scale_rmse": 0.32289563900147333,
+            "best_scale_max_abs_error": 0.4611005692599621,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 0.0,
+            "skill_002": 0.0,
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_005": 0.0,
+            "skill_015": 1.0
+          }
+        },
+        {
+          "baseline": "maxmin_fair",
+          "description": "max-min exposure under unit package mass",
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 0.3333333333333333,
+            "maximum_relative_exposure": 0.6666666666666666,
+            "coefficient_of_variation": 0.3411705861660722,
+            "best_scale_rmse": 0.3228956390014733,
+            "best_scale_max_abs_error": 0.461100569259961,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": -0.0,
+            "skill_002": 0.0,
+            "skill_003": 0.3333333333333333,
+            "skill_004": 0.3333333333333333,
+            "skill_005": 0.0,
+            "skill_015": 0.3333333333333333
+          }
+        },
+        {
+          "baseline": "exact_rstar",
+          "description": "STRI exact worst-case multiplicative optimum",
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.34117058616607215,
+            "best_scale_rmse": 0.32289563900147333,
+            "best_scale_max_abs_error": 0.4611005692599621,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 0.0,
+            "skill_002": 0.0,
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_005": 0.0,
+            "skill_015": 1.0
+          }
+        },
+        {
+          "baseline": "semantic_first_upper_bound",
+          "description": "interface-changing semantic-first construction; not a package-only baseline",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "maximum_semantic_marginal_error": 0.0,
+            "support_violation_mass": 0.0
+          },
+          "weights": {}
+        }
+      ]
+    },
+    "skillsp_l1_calibration": {
+      "covered_rows": 47,
+      "packages": 3,
+      "skills": [
+        "skill_003",
+        "skill_004",
+        "skill_015"
+      ],
+      "multi_membership_rows": 33,
+      "exact_R_star": 2.0,
+      "baselines": [
+        {
+          "baseline": "released_uniform",
+          "description": "released-style package-uniform routing",
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.26867731575255843,
+            "best_scale_rmse": 0.2594750658969167,
+            "best_scale_max_abs_error": 0.452054794520548,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          }
+        },
+        {
+          "baseline": "inverse_support_size",
+          "description": "inverse column coverage heuristic",
+          "metrics": {
+            "distortion_ratio": 2.8947368421052633,
+            "minimum_relative_exposure": 0.027777777777777776,
+            "maximum_relative_exposure": 0.0804093567251462,
+            "coefficient_of_variation": 0.26533537080334807,
+            "best_scale_rmse": 0.2564611100502797,
+            "best_scale_max_abs_error": 0.5934379457917262,
+            "active_packages": 3,
+            "max_package_share": 0.43710539096648854,
+            "effective_package_count": 2.8197769043971963,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 0.04,
+            "skill_004": 0.05263157894736842,
+            "skill_015": 0.027777777777777776
+          }
+        },
+        {
+          "baseline": "inverse_sqrt_support",
+          "description": "tempered inverse column coverage heuristic",
+          "metrics": {
+            "distortion_ratio": 2.376494403223371,
+            "minimum_relative_exposure": 0.16666666666666666,
+            "maximum_relative_exposure": 0.39608240053722843,
+            "coefficient_of_variation": 0.25943862389862116,
+            "best_scale_rmse": 0.25112483734949675,
+            "best_scale_max_abs_error": 0.522144490771688,
+            "active_packages": 3,
+            "max_package_share": 0.38487251706105957,
+            "effective_package_count": 2.9508855282840427,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 0.2,
+            "skill_004": 0.22941573387056177,
+            "skill_015": 0.16666666666666666
+          }
+        },
+        {
+          "baseline": "fractional_load_inverse",
+          "description": "inverse fractional responsibility heuristic",
+          "metrics": {
+            "distortion_ratio": 2.772727272727273,
+            "minimum_relative_exposure": 0.05128205128205128,
+            "maximum_relative_exposure": 0.1421911421911422,
+            "coefficient_of_variation": 0.2934892950679991,
+            "best_scale_rmse": 0.28161135843105944,
+            "best_scale_max_abs_error": 0.5639034932396236,
+            "active_packages": 3,
+            "max_package_share": 0.44827586206896547,
+            "effective_package_count": 2.823200298396121,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 0.06060606060606061,
+            "skill_004": 0.09090909090909091,
+            "skill_015": 0.05128205128205128
+          }
+        },
+        {
+          "baseline": "nnls_l2",
+          "description": "nonnegative least-squares fit to neutral target",
+          "metrics": {
+            "distortion_ratio": 3.9754385964912275,
+            "minimum_relative_exposure": 0.27356498368208876,
+            "maximum_relative_exposure": 1.0875407947782685,
+            "coefficient_of_variation": 0.2205056488032623,
+            "best_scale_rmse": 0.215332748394039,
+            "best_scale_max_abs_error": 0.7264350163179113,
+            "active_packages": 3,
+            "max_package_share": 0.4382881951622907,
+            "effective_package_count": 2.5938326576276824,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 0.8139758110961797,
+            "skill_004": 0.7696294874256093,
+            "skill_015": 0.27356498368208876
+          }
+        },
+        {
+          "baseline": "chebyshev_linf",
+          "description": "minimum absolute L-infinity target fit",
+          "metrics": {
+            "distortion_ratio": 2.0000000000000004,
+            "minimum_relative_exposure": 0.6666666666666666,
+            "maximum_relative_exposure": 1.3333333333333335,
+            "coefficient_of_variation": 0.2686773157525585,
+            "best_scale_rmse": 0.25947506589691677,
+            "best_scale_max_abs_error": 0.45205479452054786,
+            "active_packages": 3,
+            "max_package_share": 0.33333333333333337,
+            "effective_package_count": 2.9999999999999996,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 0.6666666666666666,
+            "skill_004": 0.6666666666666667,
+            "skill_015": 0.6666666666666667
+          }
+        },
+        {
+          "baseline": "greedy_cover_uniform",
+          "description": "greedy set-cover then uniform routing",
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.26867731575255843,
+            "best_scale_rmse": 0.2594750658969167,
+            "best_scale_max_abs_error": 0.452054794520548,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          }
+        },
+        {
+          "baseline": "exact_min_cover_uniform",
+          "description": "exact minimum set-cover then uniform routing",
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.26867731575255843,
+            "best_scale_rmse": 0.2594750658969167,
+            "best_scale_max_abs_error": 0.452054794520548,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          }
+        },
+        {
+          "baseline": "maxmin_fair",
+          "description": "max-min exposure under unit package mass",
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 0.3333333333333333,
+            "maximum_relative_exposure": 0.6666666666666666,
+            "coefficient_of_variation": 0.2686773157525585,
+            "best_scale_rmse": 0.2594750658969167,
+            "best_scale_max_abs_error": 0.45205479452054775,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 0.3333333333333333,
+            "skill_004": 0.3333333333333333,
+            "skill_015": 0.3333333333333333
+          }
+        },
+        {
+          "baseline": "exact_rstar",
+          "description": "STRI exact worst-case multiplicative optimum",
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.26867731575255843,
+            "best_scale_rmse": 0.2594750658969167,
+            "best_scale_max_abs_error": 0.452054794520548,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          }
+        },
+        {
+          "baseline": "semantic_first_upper_bound",
+          "description": "interface-changing semantic-first construction; not a package-only baseline",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "maximum_semantic_marginal_error": 0.0,
+            "support_violation_mass": 0.0
+          },
+          "weights": {}
+        }
+      ]
+    },
+    "skillsp_l1_heldout": {
+      "covered_rows": 52,
+      "packages": 3,
+      "skills": [
+        "skill_003",
+        "skill_004",
+        "skill_015"
+      ],
+      "multi_membership_rows": 38,
+      "exact_R_star": 2.0,
+      "baselines": [
+        {
+          "baseline": "released_uniform",
+          "description": "released-style package-uniform routing",
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.2562791687704621,
+            "best_scale_rmse": 0.24825619819934597,
+            "best_scale_max_abs_error": 0.45783132530120485,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          }
+        },
+        {
+          "baseline": "inverse_support_size",
+          "description": "inverse column coverage heuristic",
+          "metrics": {
+            "distortion_ratio": 2.8636363636363638,
+            "minimum_relative_exposure": 0.024390243902439025,
+            "maximum_relative_exposure": 0.06984478935698449,
+            "coefficient_of_variation": 0.2483050496843713,
+            "best_scale_rmse": 0.2409870834456145,
+            "best_scale_max_abs_error": 0.6017877094972067,
+            "active_packages": 3,
+            "max_package_share": 0.425278524779101,
+            "effective_package_count": 2.8327439107751244,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 0.037037037037037035,
+            "skill_004": 0.045454545454545456,
+            "skill_015": 0.024390243902439025
+          }
+        },
+        {
+          "baseline": "inverse_sqrt_support",
+          "description": "tempered inverse column coverage heuristic",
+          "metrics": {
+            "distortion_ratio": 2.365150674334655,
+            "minimum_relative_exposure": 0.15617376188860607,
+            "maximum_relative_exposure": 0.36937447824421654,
+            "coefficient_of_variation": 0.24682862797928995,
+            "best_scale_rmse": 0.23963669212161187,
+            "best_scale_max_abs_error": 0.5300906299073365,
+            "active_packages": 3,
+            "max_package_share": 0.379479162195417,
+            "effective_package_count": 2.9532321427184245,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 0.19245008972987526,
+            "skill_004": 0.21320071635561044,
+            "skill_015": 0.15617376188860607
+          }
+        },
+        {
+          "baseline": "fractional_load_inverse",
+          "description": "inverse fractional responsibility heuristic",
+          "metrics": {
+            "distortion_ratio": 2.833333333333333,
+            "minimum_relative_exposure": 0.045454545454545456,
+            "maximum_relative_exposure": 0.12878787878787878,
+            "coefficient_of_variation": 0.2905668716831563,
+            "best_scale_rmse": 0.2790265406386545,
+            "best_scale_max_abs_error": 0.5805991440798859,
+            "active_packages": 3,
+            "max_package_share": 0.45205479452054786,
+            "effective_package_count": 2.8091723774380615,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 0.05555555555555555,
+            "skill_004": 0.08333333333333333,
+            "skill_015": 0.045454545454545456
+          }
+        },
+        {
+          "baseline": "nnls_l2",
+          "description": "nonnegative least-squares fit to neutral target",
+          "metrics": {
+            "distortion_ratio": 3.9393939393939355,
+            "minimum_relative_exposure": 0.2773109243697482,
+            "maximum_relative_exposure": 1.092436974789916,
+            "coefficient_of_variation": 0.20858472746796117,
+            "best_scale_rmse": 0.20419010876418558,
+            "best_scale_max_abs_error": 0.7226890756302518,
+            "active_packages": 3,
+            "max_package_share": 0.4429223744292236,
+            "effective_package_count": 2.6038872902980623,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 0.8151260504201678,
+            "skill_004": 0.7478991596638654,
+            "skill_015": 0.2773109243697482
+          }
+        },
+        {
+          "baseline": "chebyshev_linf",
+          "description": "minimum absolute L-infinity target fit",
+          "metrics": {
+            "distortion_ratio": 2.0000000000000004,
+            "minimum_relative_exposure": 0.6666666666666666,
+            "maximum_relative_exposure": 1.3333333333333335,
+            "coefficient_of_variation": 0.25627916877046214,
+            "best_scale_rmse": 0.248256198199346,
+            "best_scale_max_abs_error": 0.45783132530120474,
+            "active_packages": 3,
+            "max_package_share": 0.33333333333333337,
+            "effective_package_count": 2.9999999999999996,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 0.6666666666666666,
+            "skill_004": 0.6666666666666667,
+            "skill_015": 0.6666666666666667
+          }
+        },
+        {
+          "baseline": "greedy_cover_uniform",
+          "description": "greedy set-cover then uniform routing",
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.2562791687704621,
+            "best_scale_rmse": 0.24825619819934597,
+            "best_scale_max_abs_error": 0.45783132530120485,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          }
+        },
+        {
+          "baseline": "exact_min_cover_uniform",
+          "description": "exact minimum set-cover then uniform routing",
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.2562791687704621,
+            "best_scale_rmse": 0.24825619819934597,
+            "best_scale_max_abs_error": 0.45783132530120485,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          }
+        },
+        {
+          "baseline": "maxmin_fair",
+          "description": "max-min exposure under unit package mass",
+          "metrics": {
+            "distortion_ratio": 2.0000000000000004,
+            "minimum_relative_exposure": 0.3333333333333333,
+            "maximum_relative_exposure": 0.6666666666666667,
+            "coefficient_of_variation": 0.25627916877046214,
+            "best_scale_rmse": 0.248256198199346,
+            "best_scale_max_abs_error": 0.45783132530120474,
+            "active_packages": 3,
+            "max_package_share": 0.33333333333333337,
+            "effective_package_count": 2.9999999999999996,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 0.3333333333333333,
+            "skill_004": 0.33333333333333337,
+            "skill_015": 0.33333333333333337
+          }
+        },
+        {
+          "baseline": "exact_rstar",
+          "description": "STRI exact worst-case multiplicative optimum",
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.2562791687704621,
+            "best_scale_rmse": 0.24825619819934597,
+            "best_scale_max_abs_error": 0.45783132530120485,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          }
+        },
+        {
+          "baseline": "semantic_first_upper_bound",
+          "description": "interface-changing semantic-first construction; not a package-only baseline",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "maximum_semantic_marginal_error": 0.0,
+            "support_violation_mass": 0.0
+          },
+          "weights": {}
+        }
+      ]
+    },
+    "skillsp_l3": {
+      "covered_rows": 34,
+      "packages": 4,
+      "skills": [
+        "skill_006",
+        "skill_008",
+        "skill_009",
+        "skill_010"
+      ],
+      "multi_membership_rows": 0,
+      "exact_R_star": 1.0,
+      "baselines": [
+        {
+          "baseline": "released_uniform",
+          "description": "released-style package-uniform routing",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 4,
+            "max_package_share": 0.25,
+            "effective_package_count": 4.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_006": 1.0,
+            "skill_008": 1.0,
+            "skill_009": 1.0,
+            "skill_010": 1.0
+          }
+        },
+        {
+          "baseline": "inverse_support_size",
+          "description": "inverse column coverage heuristic",
+          "metrics": {
+            "distortion_ratio": 3.0,
+            "minimum_relative_exposure": 0.06666666666666667,
+            "maximum_relative_exposure": 0.2,
+            "coefficient_of_variation": 0.43180821360105387,
+            "best_scale_rmse": 0.39642830306780835,
+            "best_scale_max_abs_error": 0.5223880597014925,
+            "active_packages": 4,
+            "max_package_share": 0.35820895522388063,
+            "effective_package_count": 3.5486166007905138,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_006": 0.125,
+            "skill_008": 0.16666666666666666,
+            "skill_009": 0.06666666666666667,
+            "skill_010": 0.2
+          }
+        },
+        {
+          "baseline": "inverse_sqrt_support",
+          "description": "tempered inverse column coverage heuristic",
+          "metrics": {
+            "distortion_ratio": 1.732050807568877,
+            "minimum_relative_exposure": 0.25819888974716115,
+            "maximum_relative_exposure": 0.4472135954999579,
+            "coefficient_of_variation": 0.2210712252197257,
+            "best_scale_rmse": 0.21585935323871336,
+            "best_scale_max_abs_error": 0.27310174666164055,
+            "active_packages": 4,
+            "max_package_share": 0.30480457847979864,
+            "effective_package_count": 3.8556132712905535,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_006": 0.3535533905932738,
+            "skill_008": 0.408248290463863,
+            "skill_009": 0.25819888974716115,
+            "skill_010": 0.4472135954999579
+          }
+        },
+        {
+          "baseline": "fractional_load_inverse",
+          "description": "inverse fractional responsibility heuristic",
+          "metrics": {
+            "distortion_ratio": 3.0,
+            "minimum_relative_exposure": 0.06666666666666667,
+            "maximum_relative_exposure": 0.2,
+            "coefficient_of_variation": 0.43180821360105387,
+            "best_scale_rmse": 0.39642830306780835,
+            "best_scale_max_abs_error": 0.5223880597014925,
+            "active_packages": 4,
+            "max_package_share": 0.35820895522388063,
+            "effective_package_count": 3.5486166007905138,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_006": 0.125,
+            "skill_008": 0.16666666666666666,
+            "skill_009": 0.06666666666666667,
+            "skill_010": 0.2
+          }
+        },
+        {
+          "baseline": "nnls_l2",
+          "description": "nonnegative least-squares fit to neutral target",
+          "metrics": {
+            "distortion_ratio": 1.0000000000000007,
+            "minimum_relative_exposure": 0.9999999999999999,
+            "maximum_relative_exposure": 1.0000000000000004,
+            "coefficient_of_variation": 2.0770370905276122e-16,
+            "best_scale_rmse": 2.0770370905276122e-16,
+            "best_scale_max_abs_error": 4.440892098500626e-16,
+            "active_packages": 4,
+            "max_package_share": 0.2500000000000001,
+            "effective_package_count": 3.999999999999999,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_006": 0.9999999999999999,
+            "skill_008": 1.0000000000000004,
+            "skill_009": 0.9999999999999999,
+            "skill_010": 1.0
+          }
+        },
+        {
+          "baseline": "chebyshev_linf",
+          "description": "minimum absolute L-infinity target fit",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 4,
+            "max_package_share": 0.25,
+            "effective_package_count": 4.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_006": 1.0,
+            "skill_008": 1.0,
+            "skill_009": 1.0,
+            "skill_010": 1.0
+          }
+        },
+        {
+          "baseline": "greedy_cover_uniform",
+          "description": "greedy set-cover then uniform routing",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 4,
+            "max_package_share": 0.25,
+            "effective_package_count": 4.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_006": 1.0,
+            "skill_008": 1.0,
+            "skill_009": 1.0,
+            "skill_010": 1.0
+          }
+        },
+        {
+          "baseline": "exact_min_cover_uniform",
+          "description": "exact minimum set-cover then uniform routing",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 4,
+            "max_package_share": 0.25,
+            "effective_package_count": 4.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_006": 1.0,
+            "skill_008": 1.0,
+            "skill_009": 1.0,
+            "skill_010": 1.0
+          }
+        },
+        {
+          "baseline": "maxmin_fair",
+          "description": "max-min exposure under unit package mass",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 0.25,
+            "maximum_relative_exposure": 0.25,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 4,
+            "max_package_share": 0.25,
+            "effective_package_count": 4.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_006": 0.25,
+            "skill_008": 0.25,
+            "skill_009": 0.25,
+            "skill_010": 0.25
+          }
+        },
+        {
+          "baseline": "exact_rstar",
+          "description": "STRI exact worst-case multiplicative optimum",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 4,
+            "max_package_share": 0.25,
+            "effective_package_count": 4.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_006": 1.0,
+            "skill_008": 1.0,
+            "skill_009": 1.0,
+            "skill_010": 1.0
+          }
+        },
+        {
+          "baseline": "semantic_first_upper_bound",
+          "description": "interface-changing semantic-first construction; not a package-only baseline",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "maximum_semantic_marginal_error": 0.0,
+            "support_violation_mass": 0.0
+          },
+          "weights": {}
+        }
+      ]
+    },
+    "logical_compiler": {
+      "covered_rows": 128,
+      "packages": 8,
+      "skills": [
+        "skill_001",
+        "skill_002",
+        "skill_003",
+        "skill_004",
+        "skill_005",
+        "skill_006",
+        "skill_007",
+        "skill_008"
+      ],
+      "multi_membership_rows": 127,
+      "exact_R_star": 1.0,
+      "baselines": [
+        {
+          "baseline": "released_uniform",
+          "description": "released-style package-uniform routing",
+          "metrics": {
+            "distortion_ratio": 8.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 8.0,
+            "coefficient_of_variation": 0.2994672686889007,
+            "best_scale_rmse": 0.2868796504850664,
+            "best_scale_max_abs_error": 0.8029100529100529,
+            "active_packages": 8,
+            "max_package_share": 0.125,
+            "effective_package_count": 8.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 1.0,
+            "skill_002": 1.0,
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_005": 1.0,
+            "skill_006": 1.0,
+            "skill_007": 1.0,
+            "skill_008": 1.0
+          }
+        },
+        {
+          "baseline": "inverse_support_size",
+          "description": "inverse column coverage heuristic",
+          "metrics": {
+            "distortion_ratio": 15.671829770974083,
+            "minimum_relative_exposure": 0.0078125,
+            "maximum_relative_exposure": 0.12243617008573503,
+            "coefficient_of_variation": 0.35661774114580413,
+            "best_scale_rmse": 0.3358977054568354,
+            "best_scale_max_abs_error": 0.8891034085663959,
+            "active_packages": 8,
+            "max_package_share": 0.22074381294434114,
+            "effective_package_count": 7.081229165704128,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 0.015625,
+            "skill_002": 0.017543859649122806,
+            "skill_003": 0.009174311926605505,
+            "skill_004": 0.01639344262295082,
+            "skill_005": 0.012987012987012988,
+            "skill_006": 0.02702702702702703,
+            "skill_007": 0.015873015873015872,
+            "skill_008": 0.0078125
+          }
+        },
+        {
+          "baseline": "inverse_sqrt_support",
+          "description": "tempered inverse column coverage heuristic",
+          "metrics": {
+            "distortion_ratio": 11.019651788491169,
+            "minimum_relative_exposure": 0.08838834764831845,
+            "maximum_relative_exposure": 0.9740088132445716,
+            "coefficient_of_variation": 0.32647085007438115,
+            "best_scale_rmse": 0.3103504437335426,
+            "best_scale_max_abs_error": 0.8494457362697764,
+            "active_packages": 8,
+            "max_package_share": 0.16878593403864514,
+            "effective_package_count": 7.748471449358334,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 0.125,
+            "skill_002": 0.13245323570650439,
+            "skill_003": 0.09578262852211514,
+            "skill_004": 0.12803687993289598,
+            "skill_005": 0.11396057645963795,
+            "skill_006": 0.1643989873053573,
+            "skill_007": 0.12598815766974242,
+            "skill_008": 0.08838834764831845
+          }
+        },
+        {
+          "baseline": "fractional_load_inverse",
+          "description": "inverse fractional responsibility heuristic",
+          "metrics": {
+            "distortion_ratio": 18.458312959591687,
+            "minimum_relative_exposure": 0.03182662069488124,
+            "maximum_relative_exposure": 0.5874657252323354,
+            "coefficient_of_variation": 0.36416867989181456,
+            "best_scale_rmse": 0.342184791691976,
+            "best_scale_max_abs_error": 0.9054668139371788,
+            "active_packages": 8,
+            "max_package_share": 0.2164830662739479,
+            "effective_package_count": 7.033146471002605,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 0.07366482504604056,
+            "skill_002": 0.08782017773131212,
+            "skill_003": 0.04378877130792893,
+            "skill_004": 0.07902907140841103,
+            "skill_005": 0.062328411367515074,
+            "skill_006": 0.12717638152914454,
+            "skill_007": 0.08183146614710188,
+            "skill_008": 0.03182662069488124
+          }
+        },
+        {
+          "baseline": "nnls_l2",
+          "description": "nonnegative least-squares fit to neutral target",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 0.9999999999999996,
+            "maximum_relative_exposure": 0.9999999999999996,
+            "coefficient_of_variation": 3.33066907387547e-16,
+            "best_scale_rmse": 2.220446049250313e-16,
+            "best_scale_max_abs_error": 2.220446049250313e-16,
+            "active_packages": 1,
+            "max_package_share": 1.0,
+            "effective_package_count": 1.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 2.257098182670068e-17,
+            "skill_002": 0.0,
+            "skill_003": 8.944537689838038e-18,
+            "skill_004": 0.0,
+            "skill_005": 0.0,
+            "skill_006": 0.0,
+            "skill_007": 0.0,
+            "skill_008": 0.9999999999999996
+          }
+        },
+        {
+          "baseline": "chebyshev_linf",
+          "description": "minimum absolute L-infinity target fit",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 1,
+            "max_package_share": 1.0,
+            "effective_package_count": 1.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 0.0,
+            "skill_002": 0.0,
+            "skill_003": 0.0,
+            "skill_004": 0.0,
+            "skill_005": 0.0,
+            "skill_006": 0.0,
+            "skill_007": 0.0,
+            "skill_008": 1.0
+          }
+        },
+        {
+          "baseline": "greedy_cover_uniform",
+          "description": "greedy set-cover then uniform routing",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 1,
+            "max_package_share": 1.0,
+            "effective_package_count": 1.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 0.0,
+            "skill_002": 0.0,
+            "skill_003": 0.0,
+            "skill_004": 0.0,
+            "skill_005": 0.0,
+            "skill_006": 0.0,
+            "skill_007": 0.0,
+            "skill_008": 1.0
+          }
+        },
+        {
+          "baseline": "exact_min_cover_uniform",
+          "description": "exact minimum set-cover then uniform routing",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 1,
+            "max_package_share": 1.0,
+            "effective_package_count": 1.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 0.0,
+            "skill_002": 0.0,
+            "skill_003": 0.0,
+            "skill_004": 0.0,
+            "skill_005": 0.0,
+            "skill_006": 0.0,
+            "skill_007": 0.0,
+            "skill_008": 1.0
+          }
+        },
+        {
+          "baseline": "maxmin_fair",
+          "description": "max-min exposure under unit package mass",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 1,
+            "max_package_share": 1.0,
+            "effective_package_count": 1.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 0.0,
+            "skill_002": 0.0,
+            "skill_003": 0.0,
+            "skill_004": 0.0,
+            "skill_005": 0.0,
+            "skill_006": 0.0,
+            "skill_007": -0.0,
+            "skill_008": 1.0
+          }
+        },
+        {
+          "baseline": "exact_rstar",
+          "description": "STRI exact worst-case multiplicative optimum",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 1,
+            "max_package_share": 1.0,
+            "effective_package_count": 1.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_001": 0.0,
+            "skill_002": 0.0,
+            "skill_003": 0.0,
+            "skill_004": 0.0,
+            "skill_005": 0.0,
+            "skill_006": 0.0,
+            "skill_007": 0.0,
+            "skill_008": 1.0
+          }
+        },
+        {
+          "baseline": "semantic_first_upper_bound",
+          "description": "interface-changing semantic-first construction; not a package-only baseline",
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "maximum_semantic_marginal_error": 0.0,
+            "support_violation_mass": 0.0
+          },
+          "weights": {}
+        }
+      ]
+    }
+  },
+  "calibration_to_heldout": {
+    "train_regime": "skillsp_l1_calibration",
+    "test_regime": "skillsp_l1_heldout",
+    "train_rows": 47,
+    "test_rows": 52,
+    "train_skills": [
+      "skill_003",
+      "skill_004",
+      "skill_015"
+    ],
+    "test_skills": [
+      "skill_003",
+      "skill_004",
+      "skill_015"
+    ],
+    "no_heldout_refit": true,
+    "results": [
+      {
+        "baseline": "released_uniform",
+        "calibration_metrics": {
+          "distortion_ratio": 2.0,
+          "minimum_relative_exposure": 1.0,
+          "maximum_relative_exposure": 2.0,
+          "coefficient_of_variation": 0.26867731575255843,
+          "best_scale_rmse": 0.2594750658969167,
+          "best_scale_max_abs_error": 0.452054794520548,
+          "active_packages": 3,
+          "max_package_share": 0.3333333333333333,
+          "effective_package_count": 3.0,
+          "zero_exposure_rows": 0
+        },
+        "heldout_metrics": {
+          "distortion_ratio": 2.0,
+          "minimum_relative_exposure": 1.0,
+          "maximum_relative_exposure": 2.0,
+          "coefficient_of_variation": 0.2562791687704621,
+          "best_scale_rmse": 0.24825619819934597,
+          "best_scale_max_abs_error": 0.45783132530120485,
+          "active_packages": 3,
+          "max_package_share": 0.3333333333333333,
+          "effective_package_count": 3.0,
+          "zero_exposure_rows": 0
+        },
+        "weights_frozen_from_calibration": {
+          "skill_003": 1.0,
+          "skill_004": 1.0,
+          "skill_015": 1.0
+        }
+      },
+      {
+        "baseline": "inverse_support_size",
+        "calibration_metrics": {
+          "distortion_ratio": 2.8947368421052633,
+          "minimum_relative_exposure": 0.027777777777777776,
+          "maximum_relative_exposure": 0.0804093567251462,
+          "coefficient_of_variation": 0.26533537080334807,
+          "best_scale_rmse": 0.2564611100502797,
+          "best_scale_max_abs_error": 0.5934379457917262,
+          "active_packages": 3,
+          "max_package_share": 0.43710539096648854,
+          "effective_package_count": 2.8197769043971963,
+          "zero_exposure_rows": 0
+        },
+        "heldout_metrics": {
+          "distortion_ratio": 2.8947368421052633,
+          "minimum_relative_exposure": 0.027777777777777776,
+          "maximum_relative_exposure": 0.0804093567251462,
+          "coefficient_of_variation": 0.26132634653825215,
+          "best_scale_rmse": 0.2528356551979594,
+          "best_scale_max_abs_error": 0.599587291150836,
+          "active_packages": 3,
+          "max_package_share": 0.43710539096648854,
+          "effective_package_count": 2.8197769043971963,
+          "zero_exposure_rows": 0
+        },
+        "weights_frozen_from_calibration": {
+          "skill_003": 0.04,
+          "skill_004": 0.05263157894736842,
+          "skill_015": 0.027777777777777776
+        }
+      },
+      {
+        "baseline": "inverse_sqrt_support",
+        "calibration_metrics": {
+          "distortion_ratio": 2.376494403223371,
+          "minimum_relative_exposure": 0.16666666666666666,
+          "maximum_relative_exposure": 0.39608240053722843,
+          "coefficient_of_variation": 0.25943862389862116,
+          "best_scale_rmse": 0.25112483734949675,
+          "best_scale_max_abs_error": 0.522144490771688,
+          "active_packages": 3,
+          "max_package_share": 0.38487251706105957,
+          "effective_package_count": 2.9508855282840427,
+          "zero_exposure_rows": 0
+        },
+        "heldout_metrics": {
+          "distortion_ratio": 2.376494403223371,
+          "minimum_relative_exposure": 0.16666666666666666,
+          "maximum_relative_exposure": 0.39608240053722843,
+          "coefficient_of_variation": 0.25163642118388285,
+          "best_scale_rmse": 0.24402893648678142,
+          "best_scale_max_abs_error": 0.5283368369006984,
+          "active_packages": 3,
+          "max_package_share": 0.38487251706105957,
+          "effective_package_count": 2.9508855282840427,
+          "zero_exposure_rows": 0
+        },
+        "weights_frozen_from_calibration": {
+          "skill_003": 0.2,
+          "skill_004": 0.22941573387056177,
+          "skill_015": 0.16666666666666666
+        }
+      },
+      {
+        "baseline": "fractional_load_inverse",
+        "calibration_metrics": {
+          "distortion_ratio": 2.772727272727273,
+          "minimum_relative_exposure": 0.05128205128205128,
+          "maximum_relative_exposure": 0.1421911421911422,
+          "coefficient_of_variation": 0.2934892950679991,
+          "best_scale_rmse": 0.28161135843105944,
+          "best_scale_max_abs_error": 0.5639034932396236,
+          "active_packages": 3,
+          "max_package_share": 0.44827586206896547,
+          "effective_package_count": 2.823200298396121,
+          "zero_exposure_rows": 0
+        },
+        "heldout_metrics": {
+          "distortion_ratio": 2.772727272727273,
+          "minimum_relative_exposure": 0.05128205128205128,
+          "maximum_relative_exposure": 0.1421911421911422,
+          "coefficient_of_variation": 0.29148343533017773,
+          "best_scale_rmse": 0.2798378766652005,
+          "best_scale_max_abs_error": 0.5717245196489287,
+          "active_packages": 3,
+          "max_package_share": 0.44827586206896547,
+          "effective_package_count": 2.823200298396121,
+          "zero_exposure_rows": 0
+        },
+        "weights_frozen_from_calibration": {
+          "skill_003": 0.06060606060606061,
+          "skill_004": 0.09090909090909091,
+          "skill_015": 0.05128205128205128
+        }
+      },
+      {
+        "baseline": "nnls_l2",
+        "calibration_metrics": {
+          "distortion_ratio": 3.9754385964912275,
+          "minimum_relative_exposure": 0.27356498368208876,
+          "maximum_relative_exposure": 1.0875407947782685,
+          "coefficient_of_variation": 0.2205056488032623,
+          "best_scale_rmse": 0.215332748394039,
+          "best_scale_max_abs_error": 0.7264350163179113,
+          "active_packages": 3,
+          "max_package_share": 0.4382881951622907,
+          "effective_package_count": 2.5938326576276824,
+          "zero_exposure_rows": 0
+        },
+        "heldout_metrics": {
+          "distortion_ratio": 3.9754385964912275,
+          "minimum_relative_exposure": 0.27356498368208876,
+          "maximum_relative_exposure": 1.0875407947782685,
+          "coefficient_of_variation": 0.2088906456425103,
+          "best_scale_rmse": 0.20447706919066425,
+          "best_scale_max_abs_error": 0.7280697104292864,
+          "active_packages": 3,
+          "max_package_share": 0.4382881951622907,
+          "effective_package_count": 2.5938326576276824,
+          "zero_exposure_rows": 0
+        },
+        "weights_frozen_from_calibration": {
+          "skill_003": 0.8139758110961797,
+          "skill_004": 0.7696294874256093,
+          "skill_015": 0.27356498368208876
+        }
+      },
+      {
+        "baseline": "chebyshev_linf",
+        "calibration_metrics": {
+          "distortion_ratio": 2.0000000000000004,
+          "minimum_relative_exposure": 0.6666666666666666,
+          "maximum_relative_exposure": 1.3333333333333335,
+          "coefficient_of_variation": 0.2686773157525585,
+          "best_scale_rmse": 0.25947506589691677,
+          "best_scale_max_abs_error": 0.45205479452054786,
+          "active_packages": 3,
+          "max_package_share": 0.33333333333333337,
+          "effective_package_count": 2.9999999999999996,
+          "zero_exposure_rows": 0
+        },
+        "heldout_metrics": {
+          "distortion_ratio": 2.0000000000000004,
+          "minimum_relative_exposure": 0.6666666666666666,
+          "maximum_relative_exposure": 1.3333333333333335,
+          "coefficient_of_variation": 0.25627916877046214,
+          "best_scale_rmse": 0.248256198199346,
+          "best_scale_max_abs_error": 0.45783132530120474,
+          "active_packages": 3,
+          "max_package_share": 0.33333333333333337,
+          "effective_package_count": 2.9999999999999996,
+          "zero_exposure_rows": 0
+        },
+        "weights_frozen_from_calibration": {
+          "skill_003": 0.6666666666666666,
+          "skill_004": 0.6666666666666667,
+          "skill_015": 0.6666666666666667
+        }
+      },
+      {
+        "baseline": "greedy_cover_uniform",
+        "calibration_metrics": {
+          "distortion_ratio": 2.0,
+          "minimum_relative_exposure": 1.0,
+          "maximum_relative_exposure": 2.0,
+          "coefficient_of_variation": 0.26867731575255843,
+          "best_scale_rmse": 0.2594750658969167,
+          "best_scale_max_abs_error": 0.452054794520548,
+          "active_packages": 3,
+          "max_package_share": 0.3333333333333333,
+          "effective_package_count": 3.0,
+          "zero_exposure_rows": 0
+        },
+        "heldout_metrics": {
+          "distortion_ratio": 2.0,
+          "minimum_relative_exposure": 1.0,
+          "maximum_relative_exposure": 2.0,
+          "coefficient_of_variation": 0.2562791687704621,
+          "best_scale_rmse": 0.24825619819934597,
+          "best_scale_max_abs_error": 0.45783132530120485,
+          "active_packages": 3,
+          "max_package_share": 0.3333333333333333,
+          "effective_package_count": 3.0,
+          "zero_exposure_rows": 0
+        },
+        "weights_frozen_from_calibration": {
+          "skill_003": 1.0,
+          "skill_004": 1.0,
+          "skill_015": 1.0
+        }
+      },
+      {
+        "baseline": "exact_min_cover_uniform",
+        "calibration_metrics": {
+          "distortion_ratio": 2.0,
+          "minimum_relative_exposure": 1.0,
+          "maximum_relative_exposure": 2.0,
+          "coefficient_of_variation": 0.26867731575255843,
+          "best_scale_rmse": 0.2594750658969167,
+          "best_scale_max_abs_error": 0.452054794520548,
+          "active_packages": 3,
+          "max_package_share": 0.3333333333333333,
+          "effective_package_count": 3.0,
+          "zero_exposure_rows": 0
+        },
+        "heldout_metrics": {
+          "distortion_ratio": 2.0,
+          "minimum_relative_exposure": 1.0,
+          "maximum_relative_exposure": 2.0,
+          "coefficient_of_variation": 0.2562791687704621,
+          "best_scale_rmse": 0.24825619819934597,
+          "best_scale_max_abs_error": 0.45783132530120485,
+          "active_packages": 3,
+          "max_package_share": 0.3333333333333333,
+          "effective_package_count": 3.0,
+          "zero_exposure_rows": 0
+        },
+        "weights_frozen_from_calibration": {
+          "skill_003": 1.0,
+          "skill_004": 1.0,
+          "skill_015": 1.0
+        }
+      },
+      {
+        "baseline": "maxmin_fair",
+        "calibration_metrics": {
+          "distortion_ratio": 2.0,
+          "minimum_relative_exposure": 0.3333333333333333,
+          "maximum_relative_exposure": 0.6666666666666666,
+          "coefficient_of_variation": 0.2686773157525585,
+          "best_scale_rmse": 0.2594750658969167,
+          "best_scale_max_abs_error": 0.45205479452054775,
+          "active_packages": 3,
+          "max_package_share": 0.3333333333333333,
+          "effective_package_count": 3.0,
+          "zero_exposure_rows": 0
+        },
+        "heldout_metrics": {
+          "distortion_ratio": 2.0,
+          "minimum_relative_exposure": 0.3333333333333333,
+          "maximum_relative_exposure": 0.6666666666666666,
+          "coefficient_of_variation": 0.25627916877046214,
+          "best_scale_rmse": 0.24825619819934597,
+          "best_scale_max_abs_error": 0.45783132530120474,
+          "active_packages": 3,
+          "max_package_share": 0.3333333333333333,
+          "effective_package_count": 3.0,
+          "zero_exposure_rows": 0
+        },
+        "weights_frozen_from_calibration": {
+          "skill_003": 0.3333333333333333,
+          "skill_004": 0.3333333333333333,
+          "skill_015": 0.3333333333333333
+        }
+      },
+      {
+        "baseline": "exact_rstar",
+        "calibration_metrics": {
+          "distortion_ratio": 2.0,
+          "minimum_relative_exposure": 1.0,
+          "maximum_relative_exposure": 2.0,
+          "coefficient_of_variation": 0.26867731575255843,
+          "best_scale_rmse": 0.2594750658969167,
+          "best_scale_max_abs_error": 0.452054794520548,
+          "active_packages": 3,
+          "max_package_share": 0.3333333333333333,
+          "effective_package_count": 3.0,
+          "zero_exposure_rows": 0
+        },
+        "heldout_metrics": {
+          "distortion_ratio": 2.0,
+          "minimum_relative_exposure": 1.0,
+          "maximum_relative_exposure": 2.0,
+          "coefficient_of_variation": 0.2562791687704621,
+          "best_scale_rmse": 0.24825619819934597,
+          "best_scale_max_abs_error": 0.45783132530120485,
+          "active_packages": 3,
+          "max_package_share": 0.3333333333333333,
+          "effective_package_count": 3.0,
+          "zero_exposure_rows": 0
+        },
+        "weights_frozen_from_calibration": {
+          "skill_003": 1.0,
+          "skill_004": 1.0,
+          "skill_015": 1.0
+        }
+      },
+      {
+        "baseline": "semantic_first_upper_bound",
+        "heldout_metrics": {
+          "distortion_ratio": 1.0
+        },
+        "note": "interface-changing upper bound"
+      }
+    ]
+  },
+  "headline": {
+    "level1_exact_R_star": 2.0,
+    "level1_uniform_ratio": 2.0,
+    "level1_inverse_support_ratio": 98.33333333333334,
+    "level1_inverse_sqrt_ratio": 10.865765724632494,
+    "level1_nnls_ratio": 5.5095579354215305,
+    "level1_nnls_cv": 0.21460367892942614,
+    "level1_uniform_cv": 0.31153353561466485,
+    "interpretation": "Uniform routing already attains the exact Level-1 worst-case optimum R*=2, so the residual is not poor tuning. Mean-error and inverse-coverage heuristics can improve a different objective or intuitively debias broad packages while substantially worsening worst-case representation distortion."
+  },
+  "scientific_boundary": "All rows are frozen released/programmatic support data. Semantic-first is an interface-changing upper bound, not a validated repair. Calibration-to-heldout freezes weights before opening heldout evaluation and does not claim downstream task utility."
+}

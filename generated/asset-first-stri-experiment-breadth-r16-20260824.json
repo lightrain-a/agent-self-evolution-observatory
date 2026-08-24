@@ -1,0 +1,152 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "paper_label": "E1.STRI",
+  "revision": "R16-experiment-breadth",
+  "stage": "TARGETED_EXPERIMENT_BREADTH_FROM_BASELINE_COMPARISON",
+  "analysis_date": "2026-08-24",
+  "branch": "paper/e1-stri-baseline-suite-20260824",
+  "base_head": "622709f4f2a5c58740fc97dbd080c72aa632a988",
+  "purpose": "Increase ICLR-level experimental breadth without broadening the frozen STRI scientific claim scope, using first-party released artifacts, stronger practical baselines, heldout transfer, retrieval-budget interventions, and an independently labeled external relevance analogue.",
+  "baseline_paper_design_reference": [
+    {
+      "paper": "Skill Availability and Presentation Granularity in Large-Language-Model Agents: A Controlled SkillsBench Study",
+      "arxiv": "2605.31408",
+      "lesson_used": "multi-domain controlled conditions and explicit skill-presentation interventions"
+    },
+    {
+      "paper": "Demystifying Agent Skills: Why They Work—Until They Don't",
+      "arxiv": "2608.14036",
+      "lesson_used": "representation, retrieval, cross-framework, and failure-boundary controls rather than one aggregate result"
+    },
+    {
+      "paper": "SkillRL: Evolving Agents via Recursive Skill-Augmented Reinforcement Learning",
+      "arxiv": "2602.08234",
+      "lesson_used": "multiple agent environments and retrieval/evolution controls"
+    },
+    {
+      "paper": "SkillRouter: Retrieve-and-Rerank Skill Selection for LLM Agents at Scale",
+      "arxiv": "2603.22455",
+      "lesson_used": "expert task-skill relevance graph, single-versus-multi-skill stratification, top-K/reranking controls"
+    }
+  ],
+  "experiments": {
+    "practical_package_weight_baselines": {
+      "artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+      "csv": "generated/asset-first-stri-practical-baselines-20260824.csv",
+      "regimes": 5,
+      "package_weight_baselines": 10,
+      "plus_interface_upper_bound": true,
+      "headline": {
+        "skillsp_level1_uniform_R": 2.0,
+        "skillsp_level1_exact_R_star": 2.0,
+        "skillsp_level1_inverse_support_R": 98.33333333333334,
+        "skillsp_level1_inverse_sqrt_R": 10.865765724632494,
+        "skillsp_level1_nnls_R": 5.5095579354215305,
+        "skillsp_level1_uniform_cv": 0.31153353561466485,
+        "skillsp_level1_nnls_cv": 0.21460367892942614,
+        "calibration_to_heldout_exact_R_without_refit": 2.0
+      },
+      "interpretation": "Released uniform package routing already attains the exact Level-1 worst-case optimum. Average-fit or inverse-coverage heuristics can improve a different objective or intuitive balancing criterion while substantially worsening worst-case representation distortion; the Level-1 residual is not a scalar-tuning failure."
+    },
+    "skillrl_retrieval_budget_baselines": {
+      "artifact": "generated/asset-first-stri-skillrl-budget-baselines-20260824.json",
+      "csv": "generated/asset-first-stri-skillrl-budget-baselines-20260824.csv",
+      "author_commit": "8e66726ed866a4e0a7f053586a41022798192e6c",
+      "tasks": 223,
+      "clone_targets": 12,
+      "top_k_values": [1, 2, 3, 4, 6, 8, 12, 13],
+      "controls": ["official fresh dyn_ identity priority", "same-content non-dynamic-ID placebo", "exact-semantic quotient", "capacity +1"],
+      "headline": {
+        "top_k_6_targets_with_semantic_set_change": 11,
+        "top_k_6_targets_with_unique_content_reduction": 5,
+        "non_dynamic_placebo_semantic_set_changes_all_tested_k": 0,
+        "quotient_semantic_set_changes_all_tested_k": 0,
+        "top_k_13_official_semantic_set_changes": 0,
+        "top_k_12_plus_one_slot_semantic_set_changes": 0
+      },
+      "interpretation": "The released SkillRL identity phenotype is specifically a provenance-priority by finite-budget interaction."
+    },
+    "skillrouter_external_relevance_analogue": {
+      "artifact": "generated/asset-first-stri-skillrouter-relevance-analogue-20260824.json",
+      "csv": "generated/asset-first-stri-skillrouter-relevance-analogue-20260824.csv",
+      "author_commit": "2f0c69fe6786bfee6312a1ab5d5f69abdc6bd245",
+      "role": "external retrieval-relevance analogue; NOT executable semantic support",
+      "headline": {
+        "core_queries": 75,
+        "core_single": 24,
+        "core_multi": 51,
+        "core_uniform_exposure_ratio": 7.0,
+        "core_exact_R_star_analogue": 1.0,
+        "all_gold_uniform_exposure_ratio": 7.0,
+        "all_gold_exact_R_star_analogue": 1.0,
+        "graded_relevance_uniform_exposure_ratio": 21.0,
+        "graded_relevance_exact_R_star_analogue": 1.0
+      },
+      "interpretation": "An independent expert relevance graph provides a strong equalizable negative analogue even when naive package-uniform exposure is highly nonuniform."
+    },
+    "skillsbench_support_qualification": {
+      "artifact": "generated/asset-first-stri-skillsbench-support-qualification-20260824.json",
+      "csv": "generated/asset-first-stri-skillsbench-support-qualification-20260824.csv",
+      "author_commit": "9a1f4dd5f7659f75707435da3ce854b6e48321d1",
+      "decision": "STOP_AS_EXACT_SUPPORT_SUBSTRATE",
+      "headline": {
+        "tasks": 87,
+        "required_skills_empty_tasks": 75,
+        "task_local_skill_files": 232,
+        "required_vs_task_local_mismatch_tasks": 79,
+        "exact_match_tasks": 8
+      },
+      "reason": "Task-local availability is not independent complete semantic support. Absent local skills cannot be labeled unsupported without a separate support contract, so no SkillsBench R* certificate is reported."
+    }
+  },
+  "manuscript_integration": {
+    "quantitative_baseline_table": "Table 2 now compares seven package-weight controllers plus semantic-first upper bound across L1 full, no-refit heldout, Level-3, and logical regimes.",
+    "external_boundary_table": "Table 3 adds the SkillRouter core relevance analogue with an explicit relevance-not-support footnote.",
+    "figure_3": "Two-panel boundary figure: support/relevance geometry on the left and SkillRL retrieval-budget sweep with capacity recovery on the right.",
+    "skillsbench_fail_closed": "Experimental Setup explicitly records the 79/87 support-qualification mismatch and reports no R* from SkillsBench.",
+    "citation_count": 20
+  },
+  "qa": {
+    "paper_qa": "97/97 PASS",
+    "official_iclr_qa": "64/64 PASS",
+    "main_text_pages": 9,
+    "total_pdf_pages": 11,
+    "paper_quality": "PASS_MANUSCRIPT_EVIDENCE",
+    "paper_quality_content_addressed_files": 58,
+    "paper_quality_evidence_debt": 0,
+    "new_experiment_unit_tests": "17/17 PASS",
+    "anonymous_supplement_reproduction": "PASS",
+    "anonymous_supplement_unit_tests": "29/29 PASS",
+    "source_isolated_compile": "PASS"
+  },
+  "release_candidate": {
+    "directory": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824",
+    "pdf_sha256": "227c0e47bbb4cddd26bb5823f39d56b9978e2a134185a71ba1b3eb66338721c9",
+    "source_zip_sha256": "4ec82b977f391840fe5e5a7a88d14e94d79c3d8841d1955017da161a1ad24aae",
+    "supplement_zip_sha256": "cdd6272374d7acc37b3620c516fdc1800806ff26233797723fefdbf55a17c5c4",
+    "supplement_manifest_sha256": "07cc0b11420c2a7e518fdb23c493da0989203dd419801af54afcff4fbff22e25",
+    "supplement_package_metadata_sha256": "f5b50473426063a7b5f258ecd981d2192c8e5ca116dfb9fece90298792e9e7bf",
+    "release_manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/R16-MANIFEST.json",
+    "release_manifest_canonical_sha256": "6a37bbf3a6884411435c6b2c895ba4f6306dda74a66e8590a09865d01afe6908",
+    "release_manifest_file_sha256": "82dc75096c1f6a59f35bd549d19d8373880dfc392558d8e17742c121572628f4",
+    "canonical_release_overwritten": false
+  },
+  "scientific_boundary": {
+    "claim_expansion": false,
+    "new_model_calls": 0,
+    "new_gpu_runs": 0,
+    "new_support_annotations": 0,
+    "skillrouter_relevance_is_executable_support": false,
+    "skillsbench_task_local_availability_is_executable_support": false,
+    "task_utility_claim_added": false,
+    "safety_claim_added": false,
+    "longitudinal_regret_claim_added": false,
+    "validated_repair_claim_added": false,
+    "lp_novelty_claim_added": false,
+    "dynamic_qwen3_pilot_reopened": false
+  },
+  "scientific_authority": false,
+  "submission_authority": false,
+  "disposition": "R16_EXPERIMENT_BREADTH_RELEASE_CANDIDATE_VERIFIED"
+}

@@ -25,6 +25,22 @@ WITNESS_PEELING_CODE = "research_pipeline/asset_first_stri_witness_peeling_20260
 SUPPORT_EDIT_RADIUS = "generated/asset-first-stri-support-edit-radius-20260824.json"
 SUPPORT_EDIT_RADIUS_CODE = "research_pipeline/asset_first_stri_support_edit_radius_20260824.py"
 STRUCTURAL_ENRICHMENT_TEST = "research_pipeline/test_asset_first_stri_target_null_analysis_20260824.py"
+PRACTICAL_BASELINES = "generated/asset-first-stri-practical-baselines-20260824.json"
+PRACTICAL_BASELINES_CSV = "generated/asset-first-stri-practical-baselines-20260824.csv"
+PRACTICAL_BASELINES_CODE = "research_pipeline/asset_first_stri_practical_baselines_20260824.py"
+PRACTICAL_BASELINES_TEST = "research_pipeline/test_asset_first_stri_practical_baselines_20260824.py"
+SKILLRL_BUDGET_BASELINES = "generated/asset-first-stri-skillrl-budget-baselines-20260824.json"
+SKILLRL_BUDGET_BASELINES_CSV = "generated/asset-first-stri-skillrl-budget-baselines-20260824.csv"
+SKILLRL_BUDGET_BASELINES_CODE = "research_pipeline/asset_first_stri_skillrl_budget_baselines_20260824.py"
+SKILLRL_BUDGET_BASELINES_TEST = "research_pipeline/test_asset_first_stri_skillrl_budget_baselines_20260824.py"
+SKILLROUTER_RELEVANCE = "generated/asset-first-stri-skillrouter-relevance-analogue-20260824.json"
+SKILLROUTER_RELEVANCE_CSV = "generated/asset-first-stri-skillrouter-relevance-analogue-20260824.csv"
+SKILLROUTER_RELEVANCE_CODE = "research_pipeline/asset_first_stri_skillrouter_relevance_analogue_20260824.py"
+SKILLROUTER_RELEVANCE_TEST = "research_pipeline/test_asset_first_stri_skillrouter_relevance_analogue_20260824.py"
+SKILLSBENCH_SUPPORT_QUAL = "generated/asset-first-stri-skillsbench-support-qualification-20260824.json"
+SKILLSBENCH_SUPPORT_QUAL_CSV = "generated/asset-first-stri-skillsbench-support-qualification-20260824.csv"
+SKILLSBENCH_SUPPORT_QUAL_CODE = "research_pipeline/asset_first_stri_skillsbench_support_qualification_20260824.py"
+SKILLSBENCH_SUPPORT_QUAL_TEST = "research_pipeline/test_asset_first_stri_skillsbench_support_qualification_20260824.py"
 CONTROLLER_AUDIT = "generated/asset-first-stri-released-controller-clone-audit-20260819.json"
 CONTROLLER_AUDIT_CODE = "research_pipeline/asset_first_stri_released_controller_clone_audit.py"
 CONTROLLER_AUDIT_TEST = "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py"
@@ -119,7 +135,7 @@ def build_stri_quality_contract() -> dict[str, Any]:
             {"id": "AN-MECHANISM", "analysis_type": "mechanism", "target_claim_ids": ["N3"], "purpose": "Separate clone-multiplicity nuisance from support-cone target-realizability boundaries and enumerate where overlap count gives the wrong qualitative conclusion.", "decision_rule": "No causal claim from aggregate overlap trends; positive and negative boundary cases must be explicitly enumerated."},
             {"id": "AN-RULEOUT", "analysis_type": "alternative_explanation", "target_claim_ids": ["N1", "N2", "N3"], "purpose": "Rule out simple deduplication, arbitrary weighting, and one-system idiosyncrasy as sufficient explanations.", "decision_rule": "If a simpler matched-information reduction reproduces all certified conclusions, STRI must merge into that baseline."},
             {"id": "AN-FAILURE", "analysis_type": "failure", "target_claim_ids": ["N1", "N3"], "purpose": "Catalogue invariant, clone-sensitive, underidentified, and unsupported regimes instead of presenting only positive examples.", "decision_rule": "Every released-system case is assigned a preregistered regime; inconclusive cells remain visible."},
-            {"id": "AN-SENSITIVITY", "analysis_type": "sensitivity", "target_claim_ids": ["N1", "N2", "N3"], "purpose": "Stress support misspecification, exact support-edit radius, degree-preserving rewiring, representation-independent target rays, package-mass constraints, singleton witnesses, and taxonomy edits.", "decision_rule": "Report the region over which each conclusion is stable; narrow any claim that depends on one arbitrary setting or one cherry-picked sparse witness."},
+            {"id": "AN-SENSITIVITY", "analysis_type": "sensitivity", "target_claim_ids": ["N1", "N2", "N3"], "purpose": "Stress practical package-weight baselines, calibration-to-heldout transfer, retrieval-budget controls, an external expert relevance analogue, support misspecification, exact edit radius, rewiring, target rays, package-mass constraints, and sparse witnesses.", "decision_rule": "Require the Level-1 residual to survive strongest same-information package weighting and no-refit heldout transfer; require SkillRL identity effects to vanish under placebo/quotient or sufficient capacity; keep external relevance labels explicitly separate from executable support."},
             {"id": "AN-UNCERTAINTY", "analysis_type": "uncertainty", "target_claim_ids": ["N1", "N3"], "purpose": "Attach sampling/bootstrap or exact finite-population uncertainty to released-system comparative summaries where stochastic sampling is present.", "decision_rule": "Do not present point-estimate gaps as robust evidence when their uncertainty overlaps the matched baseline."},
             {"id": "AN-DYNAMIC-CONSEQUENCE", "analysis_type": "mechanism", "target_claim_ids": ["N1"], "purpose": "Test whether a semantics-preserving identity split propagates through a released retrieval budget into fresh executed behavior and whether the crowded-out post-checkout skill specifically mediates that behavior under a frozen task and executor.", "decision_rule": "Support only if Stage-3 gives original>=5/6, split<=1/6, ID-placebo=3/3, quotient-control=3/3 with all runs valid and Fisher<=0.05, and fresh mediator isolation gives post-checkout add-back=3/3 versus matched cleanup add-back=0/3 with exact one-sided Fisher<=0.05; otherwise retain only the strongest passed substrate-local subclaim."},
         ],
@@ -151,7 +167,8 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     certificate_refs = [CERTIFICATE_CODE, CERTIFICATE_TEST]
     offline_refs = [OFFLINE_COMPLETION_ANALYSIS, OFFLINE_COMPLETION_ANALYSIS_CODE, OFFLINE_COMPLETION_ANALYSIS_TEST]
     structural_refs = [TARGET_NULL_ANALYSIS, TARGET_NULL_ANALYSIS_CODE, WITNESS_PEELING, WITNESS_PEELING_CODE, SUPPORT_EDIT_RADIUS, SUPPORT_EDIT_RADIUS_CODE, STRUCTURAL_ENRICHMENT_TEST]
-    analysis_refs = [PAPER_ANALYSIS, REVIEWER_EXTENSIONS, PRUNING_BASELINE, *offline_refs, *structural_refs, *controller_refs, *dynamic_refs, *certificate_refs]
+    breadth_refs = [PRACTICAL_BASELINES, PRACTICAL_BASELINES_CSV, PRACTICAL_BASELINES_CODE, PRACTICAL_BASELINES_TEST, SKILLRL_BUDGET_BASELINES, SKILLRL_BUDGET_BASELINES_CSV, SKILLRL_BUDGET_BASELINES_CODE, SKILLRL_BUDGET_BASELINES_TEST, SKILLROUTER_RELEVANCE, SKILLROUTER_RELEVANCE_CSV, SKILLROUTER_RELEVANCE_CODE, SKILLROUTER_RELEVANCE_TEST, SKILLSBENCH_SUPPORT_QUAL, SKILLSBENCH_SUPPORT_QUAL_CSV, SKILLSBENCH_SUPPORT_QUAL_CODE, SKILLSBENCH_SUPPORT_QUAL_TEST]
+    analysis_refs = [PAPER_ANALYSIS, REVIEWER_EXTENSIONS, PRUNING_BASELINE, *offline_refs, *structural_refs, *breadth_refs, *controller_refs, *dynamic_refs, *certificate_refs]
     offline_path = project_root / OFFLINE_COMPLETION_ANALYSIS
     offline = json.loads(offline_path.read_text(encoding="utf-8")) if offline_path.exists() else {}
     support_stress = offline.get("support_misspecification_sensitivity") if isinstance(offline.get("support_misspecification_sensitivity"), dict) else {}
@@ -207,6 +224,50 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
         and abs(float((edit_radius.get("addition_solution") or {}).get("verified_R_star") or -99.0) - 1.0) <= 1e-12
         and abs(float((edit_radius.get("deletion_solution") or {}).get("verified_R_star") or -99.0) - 1.0) <= 1e-12
     )
+    practical_path = project_root / PRACTICAL_BASELINES
+    practical = json.loads(practical_path.read_text(encoding="utf-8")) if practical_path.exists() else {}
+    practical_head = practical.get("headline") if isinstance(practical.get("headline"), dict) else {}
+    transfer = practical.get("calibration_to_heldout") if isinstance(practical.get("calibration_to_heldout"), dict) else {}
+    transfer_rows = {str(row.get("baseline")): row for row in (transfer.get("results") or []) if isinstance(row, dict)}
+    skillrl_budget_path = project_root / SKILLRL_BUDGET_BASELINES
+    skillrl_budget = json.loads(skillrl_budget_path.read_text(encoding="utf-8")) if skillrl_budget_path.exists() else {}
+    skillrl_head = skillrl_budget.get("headline") if isinstance(skillrl_budget.get("headline"), dict) else {}
+    router_path = project_root / SKILLROUTER_RELEVANCE
+    router = json.loads(router_path.read_text(encoding="utf-8")) if router_path.exists() else {}
+    router_head = router.get("headline") if isinstance(router.get("headline"), dict) else {}
+    skillsbench_path = project_root / SKILLSBENCH_SUPPORT_QUAL
+    skillsbench = json.loads(skillsbench_path.read_text(encoding="utf-8")) if skillsbench_path.exists() else {}
+    skillsbench_summary = skillsbench.get("summary") if isinstance(skillsbench.get("summary"), dict) else {}
+    experimental_breadth_pass = (
+        practical.get("new_model_calls") == 0 and practical.get("new_gpu_runs") == 0 and practical.get("claim_expansion") is False
+        and abs(float(practical_head.get("level1_exact_R_star") or -99.0) - 2.0) <= 1e-12
+        and abs(float(practical_head.get("level1_uniform_ratio") or -99.0) - 2.0) <= 1e-12
+        and float(practical_head.get("level1_inverse_support_ratio") or 0.0) > 90.0
+        and float(practical_head.get("level1_nnls_ratio") or 0.0) > 5.0
+        and float(practical_head.get("level1_nnls_cv") or 99.0) < float(practical_head.get("level1_uniform_cv") or -99.0)
+        and transfer.get("no_heldout_refit") is True
+        and abs(float(((transfer_rows.get("exact_rstar") or {}).get("heldout_metrics") or {}).get("distortion_ratio") or -99.0) - 2.0) <= 1e-12
+        and skillrl_budget.get("new_model_calls") == 0 and skillrl_budget.get("new_gpu_runs") == 0 and skillrl_budget.get("claim_expansion") is False
+        and int(skillrl_head.get("top_k_6_official_targets_changed") or 0) == 11
+        and int(skillrl_head.get("top_k_6_official_targets_reduced") or 0) == 5
+        and int(skillrl_head.get("top_k_6_non_dynamic_placebo_semantic_changes", -1)) == 0
+        and int(skillrl_head.get("top_k_6_quotient_semantic_changes", -1)) == 0
+        and int(skillrl_head.get("top_k_13_official_semantic_changes", -1)) == 0
+        and router.get("new_model_calls") == 0 and router.get("new_gpu_runs") == 0 and router.get("claim_expansion") is False
+        and int(router_head.get("core_rows") or 0) == 75
+        and (int(router_head.get("core_single") or 0), int(router_head.get("core_multi") or 0)) == (24, 51)
+        and abs(float(router_head.get("core_uniform_ratio") or -99.0) - 7.0) <= 1e-12
+        and abs(float(router_head.get("core_R_star") or -99.0) - 1.0) <= 1e-12
+        and abs(float(router_head.get("graded_ge_1_uniform_ratio") or -99.0) - 21.0) <= 1e-12
+        and abs(float(router_head.get("graded_ge_1_R_star") or -99.0) - 1.0) <= 1e-12
+        and "retrieval acceptability" in str(router.get("scientific_boundary") or "")
+        and skillsbench.get("decision") == "STOP_AS_EXACT_SUPPORT_SUBSTRATE"
+        and int(skillsbench_summary.get("tasks") or 0) == 87
+        and int(skillsbench_summary.get("required_skills_empty_tasks") or 0) == 75
+        and int(skillsbench_summary.get("required_vs_task_local_mismatch_tasks") or 0) == 79
+        and int(skillsbench_summary.get("task_local_skill_files") or 0) == 232
+        and skillsbench.get("new_model_calls") == 0 and skillsbench.get("new_gpu_runs") == 0 and skillsbench.get("claim_expansion") is False
+    )
     dynamic_path = project_root / DYNAMIC_RESULT
     dynamic = json.loads(dynamic_path.read_text(encoding="utf-8")) if dynamic_path.exists() else {}
     mediator_path = project_root / MEDIATOR_V2_RESULT
@@ -233,16 +294,17 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     body = body_path.read_text(encoding="utf-8") if body_path.exists() else ""
     tables = tables_path.read_text(encoding="utf-8") if tables_path.exists() else ""
     manuscript_ablation = "\\label{fig:ablation-robustness}" in body and "representation ablations" in body.lower()
-    manuscript_failure = "Across 49 Level-1 tools" in body and "overlap-without-witness" in body and "exact LP" in body
-    manuscript_sensitivity = all(marker in body for marker in ("1,387", "366 non-uncovering deletions", "127/595", "500 fixed-seed tool bootstraps", "184 tool-block", "49/56", "Exact neutral-target MILPs require at least 22 added cells", "71 deletions", "200 degree-preserving bipartite rewirings", "seven frozen representation-independent tool-frequency target rays", "max-share", "22 pairwise-disjoint three-row witnesses", "19 tools"))
+    manuscript_failure = all(marker in body for marker in ("Across 49 tools", "overlap-without-witness", "equalizable", "Package-wide support overstatement"))
+    manuscript_sensitivity = all(marker in body for marker in ("1,387", "366 valid deletions", "127/595", "184 tool-block", "49/56", "Exact neutral-target MILPs require at least 22 added cells", "71 deletions", "200 degree-preserving bipartite rewirings", "7/7 frozen target rays", "max-share", "22 pairwise-disjoint three-row witnesses", "19 tools"))
+    manuscript_breadth = all(marker in (body + tables) for marker in ("98.33", "NNLS", "Heldout", "without refitting", "SkillRouter", "75 scored queries", "11/12 targets", "k=13", "non-dynamic-ID duplicate", "retrieval-relevance analogue", "79/87 rows disagree"))
     manuscript_dynamic = all(marker in body for marker in ("AutoSkill: dynamic behavioral propagation", "6/6 original", "0/6 split", "3/3 placebo", "3/3 quotient", "0.00108", "matched cleanup add-back", "1/20"))
     manuscript_scale = all(marker in body for marker in ("E6: conditional solver cost", "16{,}384\\times96", "0.765", "32,768 inequalities", "24.25 MiB", "host-load-dependent"))
-    manuscript_refs = [PAPER_BODY, PAPER_TABLES, PAPER_ANALYSIS, REVIEWER_EXTENSIONS, *offline_refs, *structural_refs]
+    manuscript_refs = [PAPER_BODY, PAPER_TABLES, PAPER_ANALYSIS, REVIEWER_EXTENSIONS, *offline_refs, *structural_refs, *breadth_refs]
     visual_review = {"caption_claim_aligned": True, "legible_labels": True, "legend_or_direct_labels": True, "non_deceptive_scale": True, "source_data_versioned": True}
     visualizations = [
         {"id": "V-OVERVIEW", "status": "PASS", "artifact_refs": [FIG_OVERVIEW], "script_refs": [PLOT_OVERVIEW], "caption_ref": "fig:stri-overview", "visual_review": dict(visual_review)},
         {"id": "V-WITNESS", "status": "PASS", "artifact_refs": [FIG_WITNESS], "data_refs": [REDUCTION], "script_refs": [PLOT_WITNESS], "caption_ref": "fig:factor2-witnesses", "visual_review": dict(visual_review)},
-        {"id": "V-BOUNDARY", "status": "PASS", "artifact_refs": [FIG_BOUNDARY], "data_refs": [COHERENCE, REDUCTION], "script_refs": [PLOT_BOUNDARY], "caption_ref": "fig:rstar-boundary", "visual_review": {**visual_review, "negative_or_failure_visible": True}},
+        {"id": "V-BOUNDARY", "status": "PASS", "artifact_refs": [FIG_BOUNDARY], "data_refs": [COHERENCE, REDUCTION, SKILLRL_BUDGET_BASELINES, SKILLROUTER_RELEVANCE], "script_refs": [PLOT_BOUNDARY], "caption_ref": "fig:rstar-boundary", "visual_review": {**visual_review, "negative_or_failure_visible": True, "budget_boundary_visible": True, "external_analogue_visible": True}},
         {"id": "V-ABLATION-ROBUSTNESS", "status": "PASS", "artifact_refs": [FIG_ABLATION], "data_refs": [PAPER_ANALYSIS, TARGET_NULL_ANALYSIS, WITNESS_PEELING, SUPPORT_EDIT_RADIUS], "script_refs": [PLOT_ABLATION], "caption_ref": "fig:ablation-robustness", "visual_review": {**visual_review, "uncertainty_visible": True, "negative_or_failure_visible": True}},
     ]
     def completed(evidence_id: str, *, allow_scoped: bool = False) -> dict[str, Any]:
@@ -259,14 +321,14 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
             {"id": "AN-MECHANISM", "status": "PASS", "artifact_refs": existing_coherence + existing_reduction + controller_refs},
             completed("AN-RULEOUT"),
             completed("AN-FAILURE"),
-            {"id": "AN-SENSITIVITY", "status": "PASS" if completed("AN-SENSITIVITY")["status"] == "PASS" and offline_completion_pass and structural_enrichment_pass and manuscript_sensitivity else "PLANNED", "artifact_refs": analysis_refs if completed("AN-SENSITIVITY")["status"] == "PASS" and offline_completion_pass and structural_enrichment_pass and manuscript_sensitivity else []},
+            {"id": "AN-SENSITIVITY", "status": "PASS" if completed("AN-SENSITIVITY")["status"] == "PASS" and offline_completion_pass and structural_enrichment_pass and experimental_breadth_pass and manuscript_sensitivity and manuscript_breadth else "PLANNED", "artifact_refs": analysis_refs if completed("AN-SENSITIVITY")["status"] == "PASS" and offline_completion_pass and structural_enrichment_pass and experimental_breadth_pass and manuscript_sensitivity and manuscript_breadth else []},
             completed("AN-UNCERTAINTY", allow_scoped=True),
             {"id": "AN-DYNAMIC-CONSEQUENCE", "status": "PASS" if dynamic_pass else "PLANNED", "artifact_refs": dynamic_refs if dynamic_pass else []},
             {"id": "O-MAIN", "status": "PASS", "artifact_refs": existing_reduction + controller_refs},
             {"id": "O-ABLATION", "status": "PASS" if manuscript_ablation else "PLANNED", "artifact_refs": manuscript_refs if manuscript_ablation else []},
             {"id": "O-MECHANISM", "status": "PASS", "artifact_refs": existing_coherence + existing_reduction + controller_refs},
             {"id": "O-FAILURE", "status": "PASS" if manuscript_failure else "PLANNED", "artifact_refs": manuscript_refs if manuscript_failure else []},
-            {"id": "O-SENSITIVITY", "status": "PASS" if manuscript_sensitivity and offline_completion_pass and structural_enrichment_pass and manuscript_scale else "PLANNED", "artifact_refs": manuscript_refs if manuscript_sensitivity and offline_completion_pass and structural_enrichment_pass and manuscript_scale else []},
+            {"id": "O-SENSITIVITY", "status": "PASS" if manuscript_sensitivity and manuscript_breadth and offline_completion_pass and structural_enrichment_pass and experimental_breadth_pass and manuscript_scale else "PLANNED", "artifact_refs": manuscript_refs if manuscript_sensitivity and manuscript_breadth and offline_completion_pass and structural_enrichment_pass and experimental_breadth_pass and manuscript_scale else []},
             {"id": "O-DYNAMIC", "status": "PASS" if dynamic_pass and manuscript_dynamic else "PLANNED", "artifact_refs": [PAPER_BODY, *dynamic_refs] if dynamic_pass and manuscript_dynamic else []},
         ],
         "visualizations": visualizations,
@@ -281,7 +343,7 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
 def build_asset_first_stri_paper_quality(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     quality = build_stri_quality_contract()
     completion = build_stri_completion(project_root)
-    source_artifacts = [REDUCTION, COHERENCE, FINAL_REVIEW, PAPER_ANALYSIS, REVIEWER_EXTENSIONS, OFFLINE_COMPLETION_ANALYSIS, OFFLINE_COMPLETION_ANALYSIS_CODE, OFFLINE_COMPLETION_ANALYSIS_TEST, TARGET_NULL_ANALYSIS, TARGET_NULL_ANALYSIS_CODE, WITNESS_PEELING, WITNESS_PEELING_CODE, SUPPORT_EDIT_RADIUS, SUPPORT_EDIT_RADIUS_CODE, STRUCTURAL_ENRICHMENT_TEST, CONTROLLER_AUDIT, CONTROLLER_AUDIT_CODE, CONTROLLER_AUDIT_TEST, DYNAMIC_QUALIFICATION, DYNAMIC_CONTRACT, DYNAMIC_PLAN, DYNAMIC_RESULT, DYNAMIC_RUN_MANIFEST, MEDIATOR_V1_CONTRACT, MEDIATOR_V1_DIAGNOSIS, MEDIATOR_V2_CONTRACT, MEDIATOR_V2_RESULT, CERTIFICATE_CODE, CERTIFICATE_TEST, PRUNING_BASELINE, P0E_DIAGNOSIS, P0E_PRINCIPLE, PAPER_BODY, PAPER_TABLES, FIG_OVERVIEW, FIG_WITNESS, FIG_BOUNDARY, FIG_ABLATION, PLOT_OVERVIEW, PLOT_WITNESS, PLOT_BOUNDARY, PLOT_ABLATION]
+    source_artifacts = [REDUCTION, COHERENCE, FINAL_REVIEW, PAPER_ANALYSIS, REVIEWER_EXTENSIONS, OFFLINE_COMPLETION_ANALYSIS, OFFLINE_COMPLETION_ANALYSIS_CODE, OFFLINE_COMPLETION_ANALYSIS_TEST, TARGET_NULL_ANALYSIS, TARGET_NULL_ANALYSIS_CODE, WITNESS_PEELING, WITNESS_PEELING_CODE, SUPPORT_EDIT_RADIUS, SUPPORT_EDIT_RADIUS_CODE, STRUCTURAL_ENRICHMENT_TEST, PRACTICAL_BASELINES, PRACTICAL_BASELINES_CSV, PRACTICAL_BASELINES_CODE, PRACTICAL_BASELINES_TEST, SKILLRL_BUDGET_BASELINES, SKILLRL_BUDGET_BASELINES_CSV, SKILLRL_BUDGET_BASELINES_CODE, SKILLRL_BUDGET_BASELINES_TEST, SKILLROUTER_RELEVANCE, SKILLROUTER_RELEVANCE_CSV, SKILLROUTER_RELEVANCE_CODE, SKILLROUTER_RELEVANCE_TEST, SKILLSBENCH_SUPPORT_QUAL, SKILLSBENCH_SUPPORT_QUAL_CSV, SKILLSBENCH_SUPPORT_QUAL_CODE, SKILLSBENCH_SUPPORT_QUAL_TEST, CONTROLLER_AUDIT, CONTROLLER_AUDIT_CODE, CONTROLLER_AUDIT_TEST, DYNAMIC_QUALIFICATION, DYNAMIC_CONTRACT, DYNAMIC_PLAN, DYNAMIC_RESULT, DYNAMIC_RUN_MANIFEST, MEDIATOR_V1_CONTRACT, MEDIATOR_V1_DIAGNOSIS, MEDIATOR_V2_CONTRACT, MEDIATOR_V2_RESULT, CERTIFICATE_CODE, CERTIFICATE_TEST, PRUNING_BASELINE, P0E_DIAGNOSIS, P0E_PRINCIPLE, PAPER_BODY, PAPER_TABLES, FIG_OVERVIEW, FIG_WITNESS, FIG_BOUNDARY, FIG_ABLATION, PLOT_OVERVIEW, PLOT_WITNESS, PLOT_BOUNDARY, PLOT_ABLATION]
     source_sha256 = {rel: _sha256(project_root / rel) for rel in source_artifacts}
     audit = audit_manuscript_evidence_completion(
         quality,

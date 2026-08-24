@@ -12,33 +12,36 @@
 System & Identity perturbation & Independent $A$? & Audit role \\
 \midrule
 Skill-SP & Pristine sampler gives 2$\times$ eligibility; sampler-input clone changes class mass $1/15\to1/8$, while quotient conservation restores it exactly & Yes: released validators & Controller violation + exact clone repair + geometry certificate \\
-SkillRL & Fresh-ID exact clones: 11/12 change semantic retrieval over 223 tasks & No explicit support contract & Phenotype + qualified downstream bridge; no $R^*$ \\
+SkillRL & Fresh-ID exact clones change semantic retrieval for 11/12 targets across $k=1$--12; effect vanishes at $k=13$ & No explicit support contract & Budget-bound phenotype + placebo/quotient controls; no $R^*$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[t]
 \centering
-\caption{Matched baseline ladder on the Skill-SP tool-call support matrix. Every baseline uses the same frozen released support information; the ladder deliberately strengthens from name-level duplicate removal to the exact best context-independent package reweighting.}
+\caption{Practical package-weight baselines. Entries are neutral-target worst-case exposure ratios (lower is better). ``Heldout'' freezes weights fitted on calibration tools; no heldout refit is allowed. Semantic-first changes the action basis and is shown only as an upper-bound construction.}
 \label{tab:reductions}
 \small
-\setlength{\tabcolsep}{3.5pt}
-\begin{tabular}{p{0.31\linewidth}p{0.20\linewidth}p{0.41\linewidth}}
+\setlength{\tabcolsep}{2.7pt}
+\begin{tabular}{lrrrr}
 \toprule
-Baseline / reduction & Outcome & Evidence \\
+Baseline & L1 full & Heldout & L3 & Logical \\
 \midrule
-Released name+description Jaccard duplicate filter & Does not absorb & Misses all 5/5 observed specific--generic support-overlap pairs; similarity 0.1429--0.20 is below the released 0.33 threshold. \\
-Exact semantic-clone deduplication & Does not absorb partial overlap & The positive regime uses distinct specific/generic packages with different unique support regions. \\
-Minimum-cardinality whole-package pruning preserving exact support & Partial reduction only & Active packages drop from 10 to 7, but 71 overlap rows remain while exact support is preserved. \\
-Arbitrary nonnegative global package weights & Exact neutral-target residual & The exact optimum is $R^*(A;\mathbf1)=2$. \\
-Global-singleton overlap witness & Sparse dual lower bound & Two independent released witnesses imply $R^*(A;\mathbf1)\ge 2$, and the exact LP attains 2. \\
+Released uniform & 2.00 & 2.00 & 1.00 & 8.00 \\
+Inverse support size & 98.33 & 2.89 & 3.00 & 15.67 \\
+Inverse $\sqrt{\text{support}}$ & 10.87 & 2.38 & 1.73 & 11.02 \\
+NNLS target fit & 5.51 & 3.98 & 1.00 & 1.00 \\
+Exact min-cover + uniform & 2.00 & 2.00 & 1.00 & 1.00 \\
+Max--min fair & 2.00 & 2.00 & 1.00 & 1.00 \\
+Exact $R^*$ & \textbf{2.00} & \textbf{2.00} & \textbf{1.00} & \textbf{1.00} \\
+Semantic-first$^\dagger$ & 1.00 & 1.00 & 1.00 & 1.00 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[t]
 \centering
-\caption{Neutral-target ($q=\mathbf1$) mechanism boundary across real first-party support regimes. High overlap is neither necessary nor sufficient; the discriminator is target realizability in the support cone.}
+\caption{Neutral-target boundary across first-party support regimes and one external expert relevance analogue. High multi-membership is neither necessary nor sufficient; $^\dagger$SkillRouter labels retrieval acceptability, not executable support.}
 \label{tab:support-boundary}
 \small
 \setlength{\tabcolsep}{3.2pt}
@@ -51,6 +54,7 @@ Level-1 calibration tools & 47 & 33 & 70.2\% & 2.0 & Residual \\
 Level-1 tool-disjoint heldout & 52 & 38 & 73.1\% & 2.0 & Residual \\
 API-Bank Level-3 & 34 & 0 & 0.0\% & 1.0 & Equalizable \\
 Logical compiler validation & 128 & 127 & 99.2\% & 1.0 & Equalizable \\
+SkillRouter core relevance$^\dagger$ & 75 & 51 & 68.0\% & 1.0 & Equalizable analogue \\
 \bottomrule
 \end{tabular}
 \end{table}

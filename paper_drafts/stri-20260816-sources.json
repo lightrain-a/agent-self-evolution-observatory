@@ -125,6 +125,16 @@
       "paper_role": "adjacent controlled evidence: skill availability versus presentation granularity"
     },
     {
+      "key": "zheng2026skillrouter",
+      "title": "SkillRouter: Retrieve-and-Rerank Skill Selection for LLM Agents at Scale",
+      "authors": ["YanZhao Zheng", "ZhenTao Zhang", "Chao Ma", "YuanQiang Yu", "JiHuan Zhu", "Baohua Dong", "Hangcheng Zhu"],
+      "year": 2026,
+      "arxiv_id": "2603.22455",
+      "url": "https://arxiv.org/abs/2603.22455",
+      "metadata_provenance": ["arXiv primary metadata rechecked 2026-08-24", "first-party SkillRouter eval_core release commit 2f0c69fe6786bfee6312a1ab5d5f69abdc6bd245"],
+      "paper_role": "external expert relevance-graph analogue and large-pool routing baseline context; relevance labels are not treated as executable support"
+    },
+    {
       "key": "biega2018equity",
       "title": "Equity of Attention: Amortizing Individual Fairness in Rankings",
       "authors": ["Asia J. Biega", "Krishna P. Gummadi", "Gerhard Weikum"],
