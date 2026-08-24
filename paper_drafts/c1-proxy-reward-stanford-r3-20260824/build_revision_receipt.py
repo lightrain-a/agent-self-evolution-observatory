@@ -20,7 +20,9 @@ def main() -> None:
     diag = json.loads((HERE / "existing-evidence-diagnostics.json").read_text())
     original = {row["id"]: row for row in paper["objections"]}
     interaction = diag["terminal_heterogeneity"]["two_way_centered_effect_decomposition"]
+    write_terminal = diag["terminal_heterogeneity"]["write_to_terminal_magnitude_diagnostic"]
     structural = diag["strategy_prompt_control"]
+    accounting = diag["execution_accounting"]
 
     receipt = {
         "schema_version": "1.0",
@@ -69,8 +71,11 @@ def main() -> None:
                     "zero_effect_cells": diag["terminal_heterogeneity"]["zero_effect_cells"],
                     "top_two_squared_effect_mass_share": diag["terminal_heterogeneity"]["top_two_share_of_squared_effect_mass"],
                     "future_task_164_joint_ceiling": next(row["all_cells_joint_ceiling"] for row in diag["terminal_heterogeneity"]["future_task_breakdown"] if row["task_id"] == "164"),
+                    "write_token_distance_vs_source_mean_effect_pearson_descriptive": write_terminal["pearson_token_distance_vs_source_mean_absolute_effect"],
+                    "write_slot_distance_vs_source_mean_effect_pearson_descriptive": write_terminal["pearson_slot_distance_vs_source_mean_absolute_effect"],
+                    "near_matched_write_divergence_sources": ["23", "25"],
                 },
-                "boundary": "Finite 4x4 descriptive decomposition only; no general predictor of transfer-effect magnitude.",
+                "boundary": "Finite 4x4 descriptive decomposition plus a four-source non-monotonic magnitude check only; no general predictor of transfer-effect magnitude.",
             },
             "PROXY-O5": {
                 "original_disposition": original["PROXY-O5"]["d"],
@@ -85,14 +90,47 @@ def main() -> None:
         },
         "system_paper_requirements": {
             "abstract_words_approx": qa["abstract_words_approx"],
-            "main_text_pages": 8,
+            "main_text_pages": qa["main_text_pages"],
             "related_work_moved_before_method_results": True,
             "experimental_setup_section_added": True,
             "execution_accounting_added": True,
             "strongest_simple_control_explicit": True,
             "mechanism_diagnostic_added": True,
             "heterogeneity_diagnostic_added": True,
+            "write_to_terminal_nonmonotonic_diagnostic_added": True,
             "failure_and_scope_boundaries_preserved": True,
+            "experiment_program_E1_E6": {
+                "E1_main_comparison": {
+                    "status": "PASS",
+                    "evidence": "F2R1 fully crossed 4x4 terminal confirmation: mean absolute success-rate difference 0.15625, within-cell permutation p=0.00074.",
+                },
+                "E2_component_or_simplification": {
+                    "status": "PASS",
+                    "evidence": "F0C stronger same-mode semantic-preserving prompt rewording: paired excess 0.105, exact p=0.0078.",
+                },
+                "E3_mechanism_aligned": {
+                    "status": "PASS",
+                    "evidence": "Identical-trajectory write intervention changes all four complete paired memories; deterministic operation-slot audit and 7/12 aligned next-action witness expose intermediate state/behavior changes.",
+                },
+                "E4_robustness_transfer_boundary": {
+                    "status": "PASS_FINITE_BOUNDARY",
+                    "evidence": "All 16 frozen source-future cells are exposed: 84.1% of centered signed-effect variation is source-by-future interaction, future task 164 is a joint ceiling, and write divergence magnitude is not a monotonic downstream-effect proxy.",
+                },
+                "E5_negative_failure_cases": {
+                    "status": "PASS_VISIBLE_NEGATIVES",
+                    "evidence": "Two F0 failure-arm provider incompletions remain selection debt; F1D p=0.311 and initial terminal p=0.160 remain visible non-passing tests; no-memory confirmatory evidence is explicitly absent.",
+                },
+                "E6_efficiency_cost_scale": {
+                    "status": "PASS_ACCOUNTED",
+                    "evidence": {
+                        "inference_only": True,
+                        "known_directly_countable_requests": accounting["known_requests_excluding_unresolved_low_level_call_count_for_f1_action_existence"],
+                        "f1_action_existence_aligned_paired_units": accounting["f1_action_existence_aligned_paired_units"],
+                        "training_runs": accounting["training_runs"],
+                        "local_gpu_finetuning_runs": accounting["local_gpu_finetuning_runs"],
+                    },
+                },
+            },
             "manuscript_qa_status": qa["status"],
         },
         "artifact_bindings": {

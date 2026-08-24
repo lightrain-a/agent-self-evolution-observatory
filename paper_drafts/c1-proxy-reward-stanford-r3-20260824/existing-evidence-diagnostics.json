@@ -1,6 +1,6 @@
 {
   "analysis_id": "D2-PROXY-REWARD-STANFORD-R3-EXISTING-EVIDENCE-DIAGNOSTICS",
-  "analysis_scope": "Post-ready diagnostic analysis over already frozen F0, F0C, and F2R1 artifacts plus released WebArena task metadata. No provider calls, no new rollouts, no new cells, no claim expansion.",
+  "analysis_scope": "Post-ready diagnostic analysis over already frozen F0, F0C, F1D, F2, and F2R1 artifacts plus released WebArena task metadata. No provider calls, no new rollouts, no new cells, no claim expansion.",
   "claim_boundary": {
     "cross_model_claim_supported": false,
     "large_effect_predictor_claim_supported": false,
@@ -8,6 +8,23 @@
     "no_memory_claim_supported": false,
     "provider_missingness_resolved": false,
     "semantic_embedding_claim_supported": false
+  },
+  "execution_accounting": {
+    "f0_writer_complete": 10,
+    "f0_writer_provider_failures": 2,
+    "f0_writer_requests": 12,
+    "f0c_writer_complete": 32,
+    "f0c_writer_requests": 32,
+    "f1_action_existence_aligned_paired_units": 12,
+    "f1d_policy_calls": 96,
+    "f2_initial_no_memory_calls": 12,
+    "f2_initial_primary_calls": 96,
+    "f2_initial_total_calls": 108,
+    "f2r1_confirmatory_policy_calls": 256,
+    "known_requests_excluding_unresolved_low_level_call_count_for_f1_action_existence": 504,
+    "local_gpu_finetuning_runs": 0,
+    "note": "The earlier F1 action-existence receipt exposes 12 aligned paired units but not a trustworthy low-level request count in the current acceptance artifact bundle; it is therefore reported as units rather than folded into the known request total.",
+    "training_runs": 0
   },
   "experiment_authority": false,
   "gpu_authority": false,
@@ -17,6 +34,8 @@
   "source_bindings": {
     "f0_write_channel_sha256": "f2e4f3424faf1e3a9ec7aba7958e538eac457e89308552ef7a9c3d69c6a914f9",
     "f0c_prompt_control_sha256": "760a6b9e9d7135e2c44a3aa011616f4ad06bb1088462a484fbf38321a43c2402",
+    "f1d_distributional_audit_sha256": "3fdaf8ad14bfe11c5d541b03217ef057d4b212df20df1c8386d41663fea93e40",
+    "f2_initial_terminal_sha256": "f4bd5428887db58f7e2651248ba13458b686786bd80f71cf669bcd440655aeb6",
     "f2r1_confirmatory_sha256": "04db52a9c2a1eac28df4213e5041e2f20e8e4b3591d5941f9e6d889a8b8dc2e9",
     "f2r1_heterogeneity_sha256": "28c28638abf73ab444ecb06b16310439f266964a926e2195b8c34709c34c47fb",
     "webarena_test_raw_sha256": "7b50386fd69163dbc05d615d834df4c6ed2c35596e97a1b10d17451c02537652"
@@ -198,7 +217,7 @@
         "22"
       ]
     },
-    "interpretation": "Effect magnitude and sign are primarily source-by-future-cell specific in this frozen matrix. Source-only and future-only additive summaries leave most centered signed-effect variation in the interaction residual. Future task 164 is a joint 1.0/1.0 ceiling in all four cells; all observed squared-effect mass lies in the three non-ceiling future tasks. These are descriptive attributes, not a learned predictor of transfer.",
+    "interpretation": "Effect magnitude and sign are primarily source-by-future-cell specific in this frozen matrix. Source-only and future-only additive summaries leave most centered signed-effect variation in the interaction residual. Future task 164 is a joint 1.0/1.0 ceiling in all four cells; all observed squared-effect mass lies in the three non-ceiling future tasks. Write-stage token or operation-slot divergence magnitude also does not supply a monotonic explanation across the four completed sources. These are descriptive attributes, not a learned predictor of transfer.",
     "mean_absolute_effect": 0.15625,
     "mean_squared_effect": 0.076172,
     "negative_failure_minus_success_cells": 2,
@@ -216,7 +235,9 @@
           "388": -0.375
         },
         "source_memory_task": "21",
-        "squared_effect_mass": 0.21875
+        "squared_effect_mass": 0.21875,
+        "write_slot_jaccard_distance": 0.571429,
+        "write_token_jaccard_distance": 0.691489
       },
       {
         "contains_both_nonzero_signs": true,
@@ -230,7 +251,9 @@
           "388": 0.75
         },
         "source_memory_task": "22",
-        "squared_effect_mass": 0.59375
+        "squared_effect_mass": 0.59375,
+        "write_slot_jaccard_distance": 0.4,
+        "write_token_jaccard_distance": 0.708108
       },
       {
         "contains_both_nonzero_signs": false,
@@ -244,7 +267,9 @@
           "388": 0.0
         },
         "source_memory_task": "23",
-        "squared_effect_mass": 0.015625
+        "squared_effect_mass": 0.015625,
+        "write_slot_jaccard_distance": 0.5,
+        "write_token_jaccard_distance": 0.769953
       },
       {
         "contains_both_nonzero_signs": false,
@@ -258,7 +283,9 @@
           "388": 0.0
         },
         "source_memory_task": "25",
-        "squared_effect_mass": 0.390625
+        "squared_effect_mass": 0.390625,
+        "write_slot_jaccard_distance": 0.5,
+        "write_token_jaccard_distance": 0.769608
       }
     ],
     "top_two_share_of_squared_effect_mass": 0.782051,
@@ -272,6 +299,51 @@
       "ss_source_future_interaction": 0.90625,
       "ss_source_main": 0.101562,
       "ss_total": 1.078125
+    },
+    "write_to_terminal_magnitude_diagnostic": {
+      "interpretation": "Across only four completed sources, write-stage divergence magnitude is not a monotonic proxy for downstream effect magnitude. Sources 23 and 25 have nearly identical token distance and identical slot distance but substantially different mean absolute terminal effects. The correlations are descriptive only and are not a learned or inferential predictor.",
+      "near_matched_write_divergence_example": {
+        "source_23": {
+          "mean_absolute_terminal_effect": 0.03125,
+          "source_memory_task": "23",
+          "write_slot_jaccard_distance": 0.5,
+          "write_token_jaccard_distance": 0.769953
+        },
+        "source_25": {
+          "mean_absolute_terminal_effect": 0.15625,
+          "source_memory_task": "25",
+          "write_slot_jaccard_distance": 0.5,
+          "write_token_jaccard_distance": 0.769608
+        }
+      },
+      "pearson_slot_distance_vs_source_mean_absolute_effect": -0.367257,
+      "pearson_token_distance_vs_source_mean_absolute_effect": -0.729606,
+      "rows": [
+        {
+          "mean_absolute_terminal_effect": 0.1875,
+          "source_memory_task": "21",
+          "write_slot_jaccard_distance": 0.571429,
+          "write_token_jaccard_distance": 0.691489
+        },
+        {
+          "mean_absolute_terminal_effect": 0.25,
+          "source_memory_task": "22",
+          "write_slot_jaccard_distance": 0.4,
+          "write_token_jaccard_distance": 0.708108
+        },
+        {
+          "mean_absolute_terminal_effect": 0.03125,
+          "source_memory_task": "23",
+          "write_slot_jaccard_distance": 0.5,
+          "write_token_jaccard_distance": 0.769953
+        },
+        {
+          "mean_absolute_terminal_effect": 0.15625,
+          "source_memory_task": "25",
+          "write_slot_jaccard_distance": 0.5,
+          "write_token_jaccard_distance": 0.769608
+        }
+      ]
     },
     "zero_effect_cells": 8
   },

@@ -139,3 +139,22 @@ Task & Start & Ref. items & Mean $|\Delta|$ & Squared-mass share \\
 \end{tabular}
 \end{table}
 Future task 164 is at a joint 1.0/1.0 terminal ceiling for every source pair, so it has no observable binary-outcome headroom and contributes zero effect mass. The other three tasks contain all observed squared-effect mass. With only four future tasks, start context, task identity, and outcome headroom are confounded; these rows characterize where the frozen effect occurred but do not define a general transfer predictor.
+
+A second descriptive check asks whether sources whose paired memories differ more at write time simply create larger downstream effects. Table~\ref{tab:write-terminal-magnitude} shows that this reduction is not supported by the four completed sources.
+\begin{table}[h]
+\centering
+\small
+\caption{Write-stage divergence versus source-averaged terminal sensitivity. The final column averages $|\Delta|$ over the four frozen future tasks.}
+\label{tab:write-terminal-magnitude}
+\begin{tabular}{lrrr}
+\toprule
+Source & Token distance & Slot distance & Mean terminal $|\Delta|$ \\
+\midrule
+21 & 0.691 & 0.571 & 0.188 \\
+22 & 0.708 & 0.400 & 0.250 \\
+23 & 0.770 & 0.500 & 0.031 \\
+25 & 0.770 & 0.500 & 0.156 \\
+\bottomrule
+\end{tabular}
+\end{table}
+Sources 23 and 25 are effectively matched on both reported write-divergence magnitudes but differ fivefold in source-averaged terminal sensitivity. Across the four points, the descriptive Pearson correlations are $-0.730$ for token distance and $-0.367$ for slot distance versus mean terminal $|\Delta|$. With $n=4$ these correlations have no inferential status; they are included only to reject the simple monotonic reading that a larger textual or operation-slot perturbation necessarily produces a larger downstream effect.

@@ -44,6 +44,8 @@ def main() -> None:
     checks["writer_jaccard_bound"] = "0.735" in all_text and abs(DIAG["writer_structure"]["mean_token_jaccard_distance"] - 0.734789) < 1e-9
     checks["controlled_structural_diagnostic_bound"] = all(x in all_text for x in ["0.556", "0.247", "0.309"])
     checks["interaction_diagnostic_bound"] = "84.1\\%" in all_text and abs(DIAG["terminal_heterogeneity"]["two_way_centered_effect_decomposition"]["source_future_interaction_share"] - 0.84058) < 1e-9
+    wt = DIAG["terminal_heterogeneity"]["write_to_terminal_magnitude_diagnostic"]
+    checks["write_terminal_nonmonotonic_diagnostic"] = all(x in all_text for x in ["0.031", "0.156", "not a monotonic proxy"]) and abs(wt["pearson_token_distance_vs_source_mean_absolute_effect"] + 0.729606) < 1e-6
     checks["terminal_effect_bound"] = "0.15625" in all_text and "0.00074" in all_text
     checks["provider_missingness_explicit"] = all(x in all_text for x in ["two", "failure-arm", "selection limitation"]) and "ArkResponseStateError" in all_text
     checks["no_memory_boundary_explicit"] = "not memory versus omission" in all_text and "no no-memory arm" in all_text
@@ -52,12 +54,46 @@ def main() -> None:
     checks["single_writer_domain_boundary"] = "Replication across writer families and task domains" in limits
     checks["live_loop_boundary_preserved"] = "live browser navigation" in limits and "remains unexecuted" in limits
     checks["inference_only_accounting"] = "inference-only" in setup and "no parameter training" in setup
+    accounting = DIAG["execution_accounting"]
+    checks["execution_accounting_complete"] = (
+        accounting["f0_writer_requests"] == 12
+        and accounting["f0c_writer_requests"] == 32
+        and accounting["f1_action_existence_aligned_paired_units"] == 12
+        and accounting["f1d_policy_calls"] == 96
+        and accounting["f2_initial_total_calls"] == 108
+        and accounting["f2r1_confirmatory_policy_calls"] == 256
+        and accounting["known_requests_excluding_unresolved_low_level_call_count_for_f1_action_existence"] == 504
+        and all(x in setup for x in ["96 policy calls", "96 primary memory-conditioned calls plus 12 no-memory calls", "504 directly countable"])
+    )
     checks["diagnostic_zero_new_calls"] = "No provider calls" in DIAG["analysis_scope"]
+    checks["system_E1_main_comparison"] = checks["terminal_effect_bound"]
+    checks["system_E2_simplification_control"] = "0.105" in all_text and "0.0078" in all_text
+    checks["system_E3_mechanism_analysis"] = "7 of 12" in all_text and checks["writer_jaccard_bound"] and checks["controlled_structural_diagnostic_bound"]
+    checks["system_E4_robustness_boundary"] = checks["interaction_diagnostic_bound"] and checks["write_terminal_nonmonotonic_diagnostic"] and checks["no_memory_boundary_explicit"]
+    checks["system_E5_negative_failure"] = all(x in all_text for x in ["0.311", "0.160", "ArkResponseStateError"])
+    checks["system_E6_efficiency_cost_scale"] = checks["execution_accounting_complete"] and checks["inference_only_accounting"]
 
     pdf = HERE / "paper.pdf"
     pdfinfo = subprocess.check_output(["pdfinfo", str(pdf)], text=True)
     pages = int(re.search(r"^Pages:\s+(\d+)", pdfinfo, re.M).group(1))
     checks["compiled_pdf_present"] = pdf.exists() and pages >= 1
+    page_text = {
+        page: subprocess.check_output(["pdftotext", "-f", str(page), "-l", str(page), str(pdf), "-"], text=True)
+        for page in range(1, pages + 1)
+    }
+    def heading_page(label: str) -> int | None:
+        target = re.sub(r"[^a-z]", "", label.lower())
+        for page, text in page_text.items():
+            for line in text.splitlines():
+                normalized = re.sub(r"[^a-z]", "", line.lower())
+                if normalized == target:
+                    return page
+        return None
+
+    conclusion_page = heading_page("Conclusion")
+    references_page = heading_page("References")
+    checks["main_text_within_nine_pages"] = conclusion_page is not None and conclusion_page <= 9
+    checks["references_not_before_conclusion"] = references_page is not None and conclusion_page is not None and references_page >= conclusion_page
 
     payload = {
         "schema_version": "1.0",
@@ -66,7 +102,9 @@ def main() -> None:
         "status": "PASS" if all(checks.values()) else "FAIL",
         "abstract_words_approx": approx_words(abstract),
         "pdf_pages_total": pages,
-        "main_text_page_boundary": "Conclusion ends on PDF page 8; references/appendix occupy subsequent pages in the compiled candidate.",
+        "main_text_pages": conclusion_page,
+        "references_begin_page": references_page,
+        "main_text_page_boundary": f"Conclusion appears on PDF page {conclusion_page}; references begin on PDF page {references_page}.",
         "checks": checks,
         "diagnostic_sha256": sha(HERE / "existing-evidence-diagnostics.json"),
         "paper_pdf_sha256": sha(pdf),

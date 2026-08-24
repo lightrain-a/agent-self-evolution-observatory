@@ -43,6 +43,17 @@ def jaccard_distance(a: set[str], b: set[str]) -> float:
     return 1.0 - (len(a & b) / len(union) if union else 1.0)
 
 
+def pearson(x: list[float], y: list[float]) -> float | None:
+    if len(x) != len(y) or len(x) < 2:
+        return None
+    mx, my = sum(x) / len(x), sum(y) / len(y)
+    sx = sum((v - mx) ** 2 for v in x)
+    sy = sum((v - my) ** 2 for v in y)
+    if sx == 0 or sy == 0:
+        return None
+    return sum((a - mx) * (b - my) for a, b in zip(x, y)) / (sx * sy) ** 0.5
+
+
 def task_metadata(benchmark_rows: list[dict], task_id: str) -> dict:
     row = next(item for item in benchmark_rows if str(item.get("task_id")) == str(task_id))
     ref = row.get("eval", {}).get("reference_answers", {})
@@ -71,9 +82,11 @@ def main() -> None:
 
     f0_path = args.artifact_root / "f0-write-channel.json"
     f0c_path = args.artifact_root / "f0c-prompt-control.json"
+    f1d_path = args.artifact_root / "f1d-distributional-audit.json"
+    f2_initial_path = args.artifact_root / "f2-initial-terminal.json"
     f2_path = args.artifact_root / "f2r1-confirmatory.json"
     hetero_path = args.artifact_root / "f2r1-heterogeneity-bootstrap.json"
-    f0, f0c, f2, hetero = map(load, [f0_path, f0c_path, f2_path, hetero_path])
+    f0, f0c, f1d, f2_initial, f2, hetero = map(load, [f0_path, f0c_path, f1d_path, f2_initial_path, f2_path, hetero_path])
     benchmark = load(args.webarena_test_raw)
 
     complete_pairs = [pair for pair in f0["pairs"] if pair.get("failure_titles")]
@@ -168,12 +181,16 @@ def main() -> None:
         })
 
     source_rows = []
+    f0_by_task = {pair["task_id"]: pair for pair in complete_pairs}
+    f0_struct_by_task = {row["task_id"]: row for row in f0_rows}
     for source in sources:
         rows = [row for row in cell_rows if row["source_memory_task"] == source]
         sq_mass = sum(row["signed_failure_minus_success"] ** 2 for row in rows)
         signs = {0 if row["signed_failure_minus_success"] == 0 else (1 if row["signed_failure_minus_success"] > 0 else -1) for row in rows}
         source_rows.append({
             "source_memory_task": source,
+            "write_token_jaccard_distance": f0_by_task[source]["token_jaccard_distance"],
+            "write_slot_jaccard_distance": f0_struct_by_task[source]["slot_jaccard_distance"],
             "mean_signed_effect": round(source_mean[source], 6),
             "mean_absolute_effect": round(sum(row["absolute_rate_difference"] for row in rows) / len(rows), 6),
             "squared_effect_mass": round(sq_mass, 6),
@@ -182,19 +199,64 @@ def main() -> None:
             "signed_effects_by_future": {row["future_task"]: row["signed_failure_minus_success"] for row in rows},
         })
 
+    write_terminal_rows = [{
+        "source_memory_task": row["source_memory_task"],
+        "write_token_jaccard_distance": row["write_token_jaccard_distance"],
+        "write_slot_jaccard_distance": row["write_slot_jaccard_distance"],
+        "mean_absolute_terminal_effect": row["mean_absolute_effect"],
+    } for row in source_rows]
+    token_corr = pearson(
+        [row["write_token_jaccard_distance"] for row in write_terminal_rows],
+        [row["mean_absolute_terminal_effect"] for row in write_terminal_rows],
+    )
+    slot_corr = pearson(
+        [row["write_slot_jaccard_distance"] for row in write_terminal_rows],
+        [row["mean_absolute_terminal_effect"] for row in write_terminal_rows],
+    )
+
+    f1d_calls = sum(
+        sum(row.get(key, {}).values())
+        for row in f1d["task_results"]
+        for key in ("success_counts", "failure_counts", "no_memory_counts")
+    )
+    f0_writer_requests = 2 * int(f0["summary"]["paired_trajectories_requested"])
+    f0c_writer_requests = 4 * int(f0c["summary"]["tasks_requested"])
+    f2_initial_total = int(f2_initial["summary"]["requested_primary_calls"]) + int(f2_initial["summary"]["requested_no_memory_calls"])
+    known_requests = f0_writer_requests + f0c_writer_requests + f1d_calls + f2_initial_total + int(f2["summary"]["requested_primary_calls"])
+    execution_accounting = {
+        "f0_writer_requests": f0_writer_requests,
+        "f0_writer_complete": f0_writer_requests - int(f0["summary"]["provider_failures"]),
+        "f0_writer_provider_failures": int(f0["summary"]["provider_failures"]),
+        "f0c_writer_requests": f0c_writer_requests,
+        "f0c_writer_complete": f0c_writer_requests,
+        "f1_action_existence_aligned_paired_units": 12,
+        "f1d_policy_calls": f1d_calls,
+        "f2_initial_primary_calls": int(f2_initial["summary"]["requested_primary_calls"]),
+        "f2_initial_no_memory_calls": int(f2_initial["summary"]["requested_no_memory_calls"]),
+        "f2_initial_total_calls": f2_initial_total,
+        "f2r1_confirmatory_policy_calls": int(f2["summary"]["requested_primary_calls"]),
+        "known_requests_excluding_unresolved_low_level_call_count_for_f1_action_existence": known_requests,
+        "training_runs": 0,
+        "local_gpu_finetuning_runs": 0,
+        "note": "The earlier F1 action-existence receipt exposes 12 aligned paired units but not a trustworthy low-level request count in the current acceptance artifact bundle; it is therefore reported as units rather than folded into the known request total.",
+    }
+
     payload = {
         "schema_version": "1.0",
         "analysis_id": "D2-PROXY-REWARD-STANFORD-R3-EXISTING-EVIDENCE-DIAGNOSTICS",
         "paper_id": PAPER_ID,
         "status": "EXISTING_EVIDENCE_DIAGNOSTICS_COMPLETE",
-        "analysis_scope": "Post-ready diagnostic analysis over already frozen F0, F0C, and F2R1 artifacts plus released WebArena task metadata. No provider calls, no new rollouts, no new cells, no claim expansion.",
+        "analysis_scope": "Post-ready diagnostic analysis over already frozen F0, F0C, F1D, F2, and F2R1 artifacts plus released WebArena task metadata. No provider calls, no new rollouts, no new cells, no claim expansion.",
         "source_bindings": {
             "f0_write_channel_sha256": sha256(f0_path),
             "f0c_prompt_control_sha256": sha256(f0c_path),
+            "f1d_distributional_audit_sha256": sha256(f1d_path),
+            "f2_initial_terminal_sha256": sha256(f2_initial_path),
             "f2r1_confirmatory_sha256": sha256(f2_path),
             "f2r1_heterogeneity_sha256": sha256(hetero_path),
             "webarena_test_raw_sha256": sha256(args.webarena_test_raw),
         },
+        "execution_accounting": execution_accounting,
         "writer_structure": {
             "complete_pairs": len(complete_pairs),
             "mean_token_jaccard_distance": f0["summary"]["mean_token_jaccard_distance"],
@@ -247,12 +309,22 @@ def main() -> None:
             },
             "future_task_breakdown": future_rows,
             "source_memory_breakdown": source_rows,
+            "write_to_terminal_magnitude_diagnostic": {
+                "rows": write_terminal_rows,
+                "pearson_token_distance_vs_source_mean_absolute_effect": None if token_corr is None else round(token_corr, 6),
+                "pearson_slot_distance_vs_source_mean_absolute_effect": None if slot_corr is None else round(slot_corr, 6),
+                "near_matched_write_divergence_example": {
+                    "source_23": next(row for row in write_terminal_rows if row["source_memory_task"] == "23"),
+                    "source_25": next(row for row in write_terminal_rows if row["source_memory_task"] == "25"),
+                },
+                "interpretation": "Across only four completed sources, write-stage divergence magnitude is not a monotonic proxy for downstream effect magnitude. Sources 23 and 25 have nearly identical token distance and identical slot distance but substantially different mean absolute terminal effects. The correlations are descriptive only and are not a learned or inferential predictor.",
+            },
             "interaction_examples": {
                 "same_source_opposite_signs": [row["source_memory_task"] for row in source_rows if row["contains_both_nonzero_signs"]],
                 "future_387_signed_effects": next(row["signed_effects_by_source"] for row in future_rows if row["task_id"] == "387"),
                 "future_388_signed_effects": next(row["signed_effects_by_source"] for row in future_rows if row["task_id"] == "388"),
             },
-            "interpretation": "Effect magnitude and sign are primarily source-by-future-cell specific in this frozen matrix. Source-only and future-only additive summaries leave most centered signed-effect variation in the interaction residual. Future task 164 is a joint 1.0/1.0 ceiling in all four cells; all observed squared-effect mass lies in the three non-ceiling future tasks. These are descriptive attributes, not a learned predictor of transfer.",
+            "interpretation": "Effect magnitude and sign are primarily source-by-future-cell specific in this frozen matrix. Source-only and future-only additive summaries leave most centered signed-effect variation in the interaction residual. Future task 164 is a joint 1.0/1.0 ceiling in all four cells; all observed squared-effect mass lies in the three non-ceiling future tasks. Write-stage token or operation-slot divergence magnitude also does not supply a monotonic explanation across the four completed sources. These are descriptive attributes, not a learned predictor of transfer.",
         },
         "claim_boundary": {
             "semantic_embedding_claim_supported": False,

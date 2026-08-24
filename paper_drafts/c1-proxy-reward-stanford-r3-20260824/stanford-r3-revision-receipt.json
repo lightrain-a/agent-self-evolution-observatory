@@ -1,8 +1,8 @@
 {
   "artifact_bindings": {
-    "diagnostic_sha256": "66e0bbb386c3050ea1f3260a9f48de27a6b8e1509425916e2e09055dbd3f5d22",
-    "manuscript_qa_sha256": "4c98789abc38a093443f7c25768e4641aeaf7a2f540cd76960e3f8fe70066e48",
-    "paper_pdf_sha256": "6814438ddbe5037c8e4baddaa81c320b93b1aab429d236862ed862ecf4a905af"
+    "diagnostic_sha256": "c86e515ce3f453ac5a96456c51ae31cfdacf76d9bca6f026543e5a8dc8a429b4",
+    "manuscript_qa_sha256": "e5f7d08f36fa6406ef630fc754568f3302f7a36f0f74ee2e6d42d72c2c10168a",
+    "paper_pdf_sha256": "5dc6e180ad91b48e830a4e41cba4e948a8ed2a10e9fe1b63ea077d6a658a7c14"
   },
   "base_review": "STANFORD-R2-OBJECTION-MATRIX-20260823",
   "claim_expansion": false,
@@ -35,13 +35,19 @@
       "revision_status": "PRESERVED_PERMANENT_CLAIM_BOUNDARY"
     },
     "PROXY-O4": {
-      "boundary": "Finite 4x4 descriptive decomposition only; no general predictor of transfer-effect magnitude.",
+      "boundary": "Finite 4x4 descriptive decomposition plus a four-source non-monotonic magnitude check only; no general predictor of transfer-effect magnitude.",
       "evidence": {
         "future_main_share": 0.065217,
         "future_task_164_joint_ceiling": true,
+        "near_matched_write_divergence_sources": [
+          "23",
+          "25"
+        ],
         "source_future_interaction_share": 0.84058,
         "source_main_share": 0.094203,
         "top_two_squared_effect_mass_share": 0.782051,
+        "write_slot_distance_vs_source_mean_effect_pearson_descriptive": -0.367257,
+        "write_token_distance_vs_source_mean_effect_pearson_descriptive": -0.729606,
         "zero_effect_cells": 8
       },
       "original_disposition": "EXISTING_EVIDENCE_ACTIONABLE",
@@ -71,13 +77,46 @@
   "system_paper_requirements": {
     "abstract_words_approx": 198,
     "execution_accounting_added": true,
+    "experiment_program_E1_E6": {
+      "E1_main_comparison": {
+        "evidence": "F2R1 fully crossed 4x4 terminal confirmation: mean absolute success-rate difference 0.15625, within-cell permutation p=0.00074.",
+        "status": "PASS"
+      },
+      "E2_component_or_simplification": {
+        "evidence": "F0C stronger same-mode semantic-preserving prompt rewording: paired excess 0.105, exact p=0.0078.",
+        "status": "PASS"
+      },
+      "E3_mechanism_aligned": {
+        "evidence": "Identical-trajectory write intervention changes all four complete paired memories; deterministic operation-slot audit and 7/12 aligned next-action witness expose intermediate state/behavior changes.",
+        "status": "PASS"
+      },
+      "E4_robustness_transfer_boundary": {
+        "evidence": "All 16 frozen source-future cells are exposed: 84.1% of centered signed-effect variation is source-by-future interaction, future task 164 is a joint ceiling, and write divergence magnitude is not a monotonic downstream-effect proxy.",
+        "status": "PASS_FINITE_BOUNDARY"
+      },
+      "E5_negative_failure_cases": {
+        "evidence": "Two F0 failure-arm provider incompletions remain selection debt; F1D p=0.311 and initial terminal p=0.160 remain visible non-passing tests; no-memory confirmatory evidence is explicitly absent.",
+        "status": "PASS_VISIBLE_NEGATIVES"
+      },
+      "E6_efficiency_cost_scale": {
+        "evidence": {
+          "f1_action_existence_aligned_paired_units": 12,
+          "inference_only": true,
+          "known_directly_countable_requests": 504,
+          "local_gpu_finetuning_runs": 0,
+          "training_runs": 0
+        },
+        "status": "PASS_ACCOUNTED"
+      }
+    },
     "experimental_setup_section_added": true,
     "failure_and_scope_boundaries_preserved": true,
     "heterogeneity_diagnostic_added": true,
-    "main_text_pages": 8,
+    "main_text_pages": 9,
     "manuscript_qa_status": "PASS",
     "mechanism_diagnostic_added": true,
     "related_work_moved_before_method_results": true,
-    "strongest_simple_control_explicit": true
+    "strongest_simple_control_explicit": true,
+    "write_to_terminal_nonmonotonic_diagnostic_added": true
   }
 }
