@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "E1.STRI",
+  "experiment_id": "STRI-R2-SKILLSP-SELECTION-CREDIT-2X2-P2-20260825",
+  "stage": "MECHANISM_REDESIGN_DETERMINISTIC_P2_DECOMPOSITION",
+  "novelty_gate": "generated/asset-first-stri-r2-credit-fragmentation-novelty-reduction-20260825.json",
+  "required_novelty_gate_decision": "GO_ZERO_MODEL_2X2_CONTROLLER_DECOMPOSITION",
+  "scientific_question": "Are exact-refinement failures in the released Skill-SP controller decomposable into two distinct representation channels—pre-feedback selection duplication and post-selection evidence/credit fragmentation—such that quotienting only one channel leaves the other defect intact and quotienting both restores the canonical semantic reference?",
+  "first_party_release": {
+    "repo": "https://github.com/Qwen-Applications/skill-self-play",
+    "commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "selection_function": "skill_library.library.sampling_weights",
+    "credit_function": "skill_library.library.update_skill_stats_from_records",
+    "lifecycle_function": "skill_library.library.prune_easy_skills",
+    "default_min_attempts_M": 8
+  },
+  "reference_state": {
+    "semantic_classes": ["focal", "background"],
+    "canonical_package_ids": ["focal", "background"],
+    "split_package_ids": ["focal_a", "focal_b", "background"],
+    "focal_a_and_focal_b_exact_semantics": true,
+    "initial_per_id_stats": "empty/default",
+    "semantic_feedback_multiset": "eight identical focal-class records with p_hat=0.90 and consistency=true",
+    "feedback_is_exogenous_and_frozen": true,
+    "no_task_generation_or_agent_execution": true
+  },
+  "factor_selection": {
+    "native": "Run the released sampling_weights over the split three-ID library; semantic focal probability is the sum of focal_a and focal_b identity probabilities.",
+    "quotient": "Run the same released sampling_weights on the two semantic-class representatives (focal/background), then conserve that class probability when represented by focal_a/focal_b. Exact identity multiplicity may not change semantic-class selection mass."
+  },
+  "factor_credit": {
+    "native": "Partition the same eight focal semantic feedback records deterministically 4/4 across focal_a/focal_b, run released per-ID stats update, then released per-ID prune gate; semantic class retires only if all exact member IDs retire.",
+    "quotient": "Merge the same eight focal semantic feedback records at one semantic-class representative, run the same released stats update/prune gate once at class level, then project the class lifecycle decision to focal_a/focal_b."
+  },
+  "cells": {
+    "S_native__C_native": "both released identity-native channels",
+    "S_quotient__C_native": "selection duplication repaired; per-ID credit/lifecycle unchanged",
+    "S_native__C_quotient": "selection unchanged; credit/lifecycle fragmentation repaired",
+    "S_quotient__C_quotient": "both channels quotient-corrected"
+  },
+  "canonical_reference_prediction": {
+    "initial_focal_semantic_selection_probability": 0.5,
+    "focal_semantic_class_active_after_eight_feedback_records": false
+  },
+  "frozen_cell_predictions": {
+    "S_native__C_native": {"initial_selection_matches_canonical": false, "post_credit_lifecycle_matches_canonical": false},
+    "S_quotient__C_native": {"initial_selection_matches_canonical": true, "post_credit_lifecycle_matches_canonical": false},
+    "S_native__C_quotient": {"initial_selection_matches_canonical": false, "post_credit_lifecycle_matches_canonical": true},
+    "S_quotient__C_quotient": {"initial_selection_matches_canonical": true, "post_credit_lifecycle_matches_canonical": true}
+  },
+  "expected_selection_values": {
+    "canonical_focal_semantic_probability": 0.5,
+    "split_native_focal_semantic_probability": "2/3 under equal default per-ID released weights",
+    "split_quotient_focal_semantic_probability": 0.5
+  },
+  "expected_credit_values": {
+    "canonical_attempts": 8,
+    "native_split_attempts": [4, 4],
+    "quotient_credit_attempts": 8,
+    "canonical_retired": true,
+    "native_split_semantic_class_retired": false,
+    "quotient_credit_semantic_class_retired": true
+  },
+  "primary_endpoint": "2x2 restoration pattern over two orthogonal invariance indicators: immediate semantic selection mass and post-feedback persistent semantic-class lifecycle decision",
+  "pass_gate": "Canonical reference must be selection probability 0.5 and retired after eight frozen records. The four split cells must match the frozen restoration pattern exactly: native/native fails both; quotient-selection/native-credit fixes only selection; native-selection/quotient-credit fixes only lifecycle; quotient/quotient fixes both. Released source commit/functions/defaults must match and semantic feedback must be identical across credit cells.",
+  "stop_gate": "Any mismatch in the 2x2 restoration pattern stops the two-channel mechanism decomposition. Retain R19 and do not rewrite the main paper around credit fragmentation.",
+  "after_pass": "A PASS permits a paper-design-only R2 mechanism story draft and a natural-prevalence qualification plan. It still does not authorize LLM/agent/GPU experiments, task-utility claims, cross-system prevalence claims, or replacement of canonical R19.",
+  "claim_boundary": "Deterministic controller decomposition on one released Skill-SP mechanism. It separates two representation channels but does not measure endogenous frequency, utility, or task-general behavior.",
+  "new_model_calls_authorized": 0,
+  "new_agent_runs_authorized": 0,
+  "new_gpu_runs_authorized": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}
