@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "r13",
+  "review_kind": "INTERNAL_ICLR_PANEL_ZERO_AUTHORITY",
+  "requested_model": "deepseek-v4-pro",
+  "paper_pdf_sha256": "80580931de3e85b5fc68756772a8b5186cbf50c1d29d77dd6935e8fa3b9290de",
+  "prompt_sha256": "99c7b2ede48f12a2cf7990f8284d18add2dafaf1985b1f12eec72fbaa9584fe3",
+  "created_at": "2026-08-24T04:11:10+00:00",
+  "scientific_authority": false,
+  "submission_authority": false,
+  "status": "completed",
+  "resolved_model": "deepseek-v4-pro-260425",
+  "usage": {
+    "input_tokens": 14932,
+    "output_tokens": 1804,
+    "total_tokens": 16736,
+    "input_tokens_details": {
+      "cached_tokens": 8192
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "response_id_sha256": "d8230973752158446ddb6c1f21659c87fc2d5bc186b4c24459a5807e4a92274f",
+  "raw_text": "```json\n{\n  \"reviewer_model\": \"deepseek-v4-pro\",\n  \"overall_score_1_to_10\": 4,\n  \"recommendation\": \"weak_reject\",\n  \"confidence_1_to_5\": 4,\n  \"dimensions\": {\n    \"originality\": 4,\n    \"importance\": 5,\n    \"claim_support\": 3,\n    \"experimental_soundness\": 4,\n    \"clarity\": 5,\n    \"community_value\": 4,\n    \"prior_work_context\": 5\n  },\n  \"one_sentence_verdict\": \"The paper's identification ladder is a genuine methodological contribution, but the empirical evidence is too sparse and the novelty boundary too narrow to support the current claims at an ICLR threshold.\",\n  \"decision_critical_concerns\": [\n    {\n      \"id\": \"C1\",\n      \"severity\": \"critical\",\n      \"claim_or_section\": \"Section 6.2 / Abstract (T≈R claim)\",\n      \"problem\": \"The central T≈R result is based on only 18 DeepSeek endpoints and 3 Kimi endpoints. The 90% CI of [-5.6, 5.6] on DeepSeek is wide and does not rule out a practically meaningful container advantage (e.g., 5 points). The claim that 'retrieval/context construction is as effective as callable skill state' is an overstatement of a null result from a low-power test.\",\n      \"why_it_matters\": \"This is the paper's strongest and most novel claim. If the evidence is insufficient to support it, the paper's contribution collapses to a methodological critique with a few small-scale demonstrations, which is below the bar for acceptance.\",\n      \"cheapest_decisive_repair\": \"new-experiment\",\n      \"acceptance_effect_if_repaired\": \"A larger-scale, prospectively powered non-inferiority test for T vs. R would transform this from a suggestive null to a robust finding, potentially justifying acceptance.\"\n    },\n    {\n      \"id\": \"C2\",\n      \"severity\": \"critical\",\n      \"claim_or_section\": \"Section 6.4 (EIA cutoff sign test) / Abstract\",\n      \"problem\": \"The strong claim of a binding repair on EIA cutoff (p=0.0156) rests on only 8 held-out endpoints. The sign test is exact but underpowered for any effect size less than 100% endpoint agreement. The bootstrap interval [30, 72.5] is extremely wide, indicating high uncertainty about the true effect magnitude. This is descriptive, not confirmatory.\",\n      \"why_it_matters\": \"This is the only non-ceiling, held-out positive result for the cutoff operation. Its fragility undermines the paper's core narrative that temporal operations are 'binding repairs' in specific regimes.\",\n      \"cheapest_decisive_repair\": \"new-experiment\",\n      \"acceptance_effect_if_repaired\": \"A replication with a larger, pre-registered set of held-out endpoints (e.g., 20+) would provide the necessary statistical resolution to support the claim.\"\n    },\n    {\n      \"id\": \"C3\",\n      \"severity\": \"major\",\n      \"claim_or_section\": \"Section 6.3 / Abstract (Kimi grounding downgrade)\",\n      \"problem\": \"The Kimi grounding result is downgraded from a positive to a null based on the G0 control. However, the G0 neutrality gate itself is validated on only 35 endpoints with a 90% CI of [-9.3, 5.0] for DeepSeek. This is barely within the pre-declared ±10-point margin. The stability of this gate and its validity for making a binary 'downgrade' decision on a separate, small set of endpoints is questionable.\",\n      \"why_it_matters\": \"The G0 control is the linchpin for separating operation value from generic-helper degradation. If its own validation is borderline, the entire identification ladder becomes unstable, and the selective downgrading of results appears post-hoc.\",\n      \"cheapest_decisive_repair\": \"analysis-only\",\n      \"acceptance_effect_if_repaired\": \"A sensitivity analysis showing how the Kimi grounding verdict changes under different G0 equivalence margins would clarify the robustness of this decision. A more convincing repair would be a larger G0 validation set.\"\n    },\n    {\n      \"id\": \"C4\",\n      \"severity\": \"major\",\n      \"claim_or_section\": \"Section 1 / Abstract (Novelty claim)\",\n      \"problem\": \"The paper concedes that temporal retrieval and reusable-skill prior work exist. The residual novelty is the 'identification contract' (the three-arm test). However, the paper then uses its own contract to conclude that the callable skill container is not superior (T≈R). This leaves the contribution as a methodological critique that mostly dismantles the motivation for its own object of study (callable skills). The positive results are too small-scale to stand as a robust empirical contribution on their own.\",\n      \"why_it_matters\": \"The paper's intellectual narrative is self-defeating. It introduces a rigorous framework to identify 'binding repairs' but then provides its strongest evidence that the repair mechanism (callable skills) is unnecessary. The remaining positive findings are too fragile to constitute a significant contribution to the field's understanding of agent repair.\",\n      \"cheapest_decisive_repair\": \"paper-only\",\n      \"acceptance_effect_if_repaired\": \"A major reframing is needed. The paper could be repositioned as a cautionary methodological piece with a small pilot study, but this would require a significant reduction in its empirical claims and likely a different venue.\"\n    }\n  ],\n  \"noncritical_repairs\": [\n    \"The abstract claims 'G0 is behaviorally neutral relative to fresh N on independent DeepSeek and Kimi tracks (90% equivalence intervals contained in ±10 points).' This is technically true but obscures the borderline DeepSeek result. Report the exact intervals and the margin explicitly.\",\n    \"The paper should explicitly state the number of endpoints used for every statistical test in the main text, not just the appendix, to avoid overstating the evidence at first glance.\",\n    \"The 'zero-call audit' for R is described as verifying content hashes. Clarify whether this audit was automated and prospectively defined, or a manual post-hoc check.\",\n    \"The term 'binding repair' is used throughout but is defined by the intervention itself. This is circular. A term like 'intervention-defined bottleneck' is more precise and should be used consistently.\",\n    \"The exact replication debt to TimeSage-EV is mentioned but the implications are not fully explored. A sentence on how a successful exact replication would (or would not) change the interpretation of these results would strengthen the context.\"\n  ],\n  \"claims_to_downgrade_or_delete\": [\n    \"Delete the claim that 'retrieval/context construction is as effective as callable skill state' and replace it with 'we found no statistically significant or practically meaningful difference at the tested resolution, which was limited in scale.'\",\n    \"Downgrade the EIA cutoff result from a confirmed 'binding repair' to an 'exploratory held-out validation consistent with a repair effect.'\",\n    \"Delete any implication that the Kimi grounding downgrade is a definitive falsification; it is a single null result in a small sample.\"\n  ],\n  \"evidence_that_is_now_convincing\": [\n    \"The demonstration of a two-arm false positive (T>G but T=N) is a clear, valuable, and well-executed methodological point.\",\n    \"The G0 control is a clever and necessary addition to the agent evaluation toolkit, even if its validation here is borderline.\",\n    \"The operation-matched R control is the correct strongest baseline and its execution is a model of rigorous experimental design.\"\n  ],\n  \"novelty_boundary\": \"The three-arm identification contract (T, G, N) and the operation-matched retrieval control (R) are novel methodological contributions. The empirical findings that some temporal operations can be binding repairs are not novel in concept, and the specific demonstrations are too small-scale to be a primary contribution.\",\n  \"would_new_experiment_change_verdict\": true,\n  \"single_highest_value_next_action\": \"Conduct a prospectively powered non-inferiority study for T vs. R on a large set of held-out endpoints (N >= 50) to definitively test the paper's central and most interesting claim.\"\n}\n```",
+  "raw_text_sha256": "d6ec1ecf4adc3d5b2cd643eeaba790b9671c1d1d946a69bfd359ff41ed68702f",
+  "review": {
+    "reviewer_model": "deepseek-v4-pro",
+    "overall_score_1_to_10": 4,
+    "recommendation": "weak_reject",
+    "confidence_1_to_5": 4,
+    "dimensions": {
+      "originality": 4,
+      "importance": 5,
+      "claim_support": 3,
+      "experimental_soundness": 4,
+      "clarity": 5,
+      "community_value": 4,
+      "prior_work_context": 5
+    },
+    "one_sentence_verdict": "The paper's identification ladder is a genuine methodological contribution, but the empirical evidence is too sparse and the novelty boundary too narrow to support the current claims at an ICLR threshold.",
+    "decision_critical_concerns": [
+      {
+        "id": "C1",
+        "severity": "critical",
+        "claim_or_section": "Section 6.2 / Abstract (T≈R claim)",
+        "problem": "The central T≈R result is based on only 18 DeepSeek endpoints and 3 Kimi endpoints. The 90% CI of [-5.6, 5.6] on DeepSeek is wide and does not rule out a practically meaningful container advantage (e.g., 5 points). The claim that 'retrieval/context construction is as effective as callable skill state' is an overstatement of a null result from a low-power test.",
+        "why_it_matters": "This is the paper's strongest and most novel claim. If the evidence is insufficient to support it, the paper's contribution collapses to a methodological critique with a few small-scale demonstrations, which is below the bar for acceptance.",
+        "cheapest_decisive_repair": "new-experiment",
+        "acceptance_effect_if_repaired": "A larger-scale, prospectively powered non-inferiority test for T vs. R would transform this from a suggestive null to a robust finding, potentially justifying acceptance."
+      },
+      {
+        "id": "C2",
+        "severity": "critical",
+        "claim_or_section": "Section 6.4 (EIA cutoff sign test) / Abstract",
+        "problem": "The strong claim of a binding repair on EIA cutoff (p=0.0156) rests on only 8 held-out endpoints. The sign test is exact but underpowered for any effect size less than 100% endpoint agreement. The bootstrap interval [30, 72.5] is extremely wide, indicating high uncertainty about the true effect magnitude. This is descriptive, not confirmatory.",
+        "why_it_matters": "This is the only non-ceiling, held-out positive result for the cutoff operation. Its fragility undermines the paper's core narrative that temporal operations are 'binding repairs' in specific regimes.",
+        "cheapest_decisive_repair": "new-experiment",
+        "acceptance_effect_if_repaired": "A replication with a larger, pre-registered set of held-out endpoints (e.g., 20+) would provide the necessary statistical resolution to support the claim."
+      },
+      {
+        "id": "C3",
+        "severity": "major",
+        "claim_or_section": "Section 6.3 / Abstract (Kimi grounding downgrade)",
+        "problem": "The Kimi grounding result is downgraded from a positive to a null based on the G0 control. However, the G0 neutrality gate itself is validated on only 35 endpoints with a 90% CI of [-9.3, 5.0] for DeepSeek. This is barely within the pre-declared ±10-point margin. The stability of this gate and its validity for making a binary 'downgrade' decision on a separate, small set of endpoints is questionable.",
+        "why_it_matters": "The G0 control is the linchpin for separating operation value from generic-helper degradation. If its own validation is borderline, the entire identification ladder becomes unstable, and the selective downgrading of results appears post-hoc.",
+        "cheapest_decisive_repair": "analysis-only",
+        "acceptance_effect_if_repaired": "A sensitivity analysis showing how the Kimi grounding verdict changes under different G0 equivalence margins would clarify the robustness of this decision. A more convincing repair would be a larger G0 validation set."
+      },
+      {
+        "id": "C4",
+        "severity": "major",
+        "claim_or_section": "Section 1 / Abstract (Novelty claim)",
+        "problem": "The paper concedes that temporal retrieval and reusable-skill prior work exist. The residual novelty is the 'identification contract' (the three-arm test). However, the paper then uses its own contract to conclude that the callable skill container is not superior (T≈R). This leaves the contribution as a methodological critique that mostly dismantles the motivation for its own object of study (callable skills). The positive results are too small-scale to stand as a robust empirical contribution on their own.",
+        "why_it_matters": "The paper's intellectual narrative is self-defeating. It introduces a rigorous framework to identify 'binding repairs' but then provides its strongest evidence that the repair mechanism (callable skills) is unnecessary. The remaining positive findings are too fragile to constitute a significant contribution to the field's understanding of agent repair.",
+        "cheapest_decisive_repair": "paper-only",
+        "acceptance_effect_if_repaired": "A major reframing is needed. The paper could be repositioned as a cautionary methodological piece with a small pilot study, but this would require a significant reduction in its empirical claims and likely a different venue."
+      }
+    ],
+    "noncritical_repairs": [
+      "The abstract claims 'G0 is behaviorally neutral relative to fresh N on independent DeepSeek and Kimi tracks (90% equivalence intervals contained in ±10 points).' This is technically true but obscures the borderline DeepSeek result. Report the exact intervals and the margin explicitly.",
+      "The paper should explicitly state the number of endpoints used for every statistical test in the main text, not just the appendix, to avoid overstating the evidence at first glance.",
+      "The 'zero-call audit' for R is described as verifying content hashes. Clarify whether this audit was automated and prospectively defined, or a manual post-hoc check.",
+      "The term 'binding repair' is used throughout but is defined by the intervention itself. This is circular. A term like 'intervention-defined bottleneck' is more precise and should be used consistently.",
+      "The exact replication debt to TimeSage-EV is mentioned but the implications are not fully explored. A sentence on how a successful exact replication would (or would not) change the interpretation of these results would strengthen the context."
+    ],
+    "claims_to_downgrade_or_delete": [
+      "Delete the claim that 'retrieval/context construction is as effective as callable skill state' and replace it with 'we found no statistically significant or practically meaningful difference at the tested resolution, which was limited in scale.'",
+      "Downgrade the EIA cutoff result from a confirmed 'binding repair' to an 'exploratory held-out validation consistent with a repair effect.'",
+      "Delete any implication that the Kimi grounding downgrade is a definitive falsification; it is a single null result in a small sample."
+    ],
+    "evidence_that_is_now_convincing": [
+      "The demonstration of a two-arm false positive (T>G but T=N) is a clear, valuable, and well-executed methodological point.",
+      "The G0 control is a clever and necessary addition to the agent evaluation toolkit, even if its validation here is borderline.",
+      "The operation-matched R control is the correct strongest baseline and its execution is a model of rigorous experimental design."
+    ],
+    "novelty_boundary": "The three-arm identification contract (T, G, N) and the operation-matched retrieval control (R) are novel methodological contributions. The empirical findings that some temporal operations can be binding repairs are not novel in concept, and the specific demonstrations are too small-scale to be a primary contribution.",
+    "would_new_experiment_change_verdict": true,
+    "single_highest_value_next_action": "Conduct a prospectively powered non-inferiority study for T vs. R on a large set of held-out endpoints (N >= 50) to definitively test the paper's central and most interesting claim."
+  },
+  "parse_valid": true
+}

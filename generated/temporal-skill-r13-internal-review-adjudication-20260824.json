@@ -1,0 +1,575 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "temporal-r13-internal-review-existing-evidence-adjudication",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "source_review_kind": "INTERNAL_ICLR_PANEL_ZERO_AUTHORITY",
+  "source_review_dir": "generated/temporal-skill-r13-internal-review-20260824",
+  "data_bindings": {
+    "A1_csv_sha256": "a2877207b2f350d57e933b93797a8f87461e5201fb3e338fee30132ba877a51b",
+    "A2_csv_sha256": "187509aacef1baf56385bad4797089f508f29c8e6e00198b954df100fe870b77",
+    "O5_csv_sha256": "a9fb9f0df705c32e712478d99d9cffc7f62404822627676a2aab3fb518c22601"
+  },
+  "exact_stratum_audit": {
+    "C3_grounding": {
+      "endpoint_count": 5,
+      "endpoint_ids": [
+        "composite-ground::doc_1dfccd3a55dd",
+        "composite-ground::doc_70e1e3d18499",
+        "composite-ground::doc_cc293f199ada",
+        "composite-ground::doc_65c03428faa4",
+        "composite-ground::doc_128dc1bd848f"
+      ],
+      "A1": {
+        "T_minus_N": {
+          "point": 0.3,
+          "bootstrap_90_ci": [
+            0.0,
+            0.6
+          ],
+          "bootstrap_95_ci": [
+            0.0,
+            0.7
+          ],
+          "wins": 2,
+          "ties": 3,
+          "losses": 0,
+          "one_sided_p_positive": 0.25,
+          "endpoint_deltas": {
+            "composite-ground::doc_1dfccd3a55dd": 0.0,
+            "composite-ground::doc_70e1e3d18499": 0.0,
+            "composite-ground::doc_cc293f199ada": 0.0,
+            "composite-ground::doc_65c03428faa4": 0.5,
+            "composite-ground::doc_128dc1bd848f": 1.0
+          }
+        },
+        "T_minus_G0": {
+          "point": 0.3,
+          "bootstrap_90_ci": [
+            0.0,
+            0.6
+          ],
+          "bootstrap_95_ci": [
+            0.0,
+            0.7
+          ],
+          "wins": 2,
+          "ties": 3,
+          "losses": 0,
+          "one_sided_p_positive": 0.25,
+          "endpoint_deltas": {
+            "composite-ground::doc_1dfccd3a55dd": 0.0,
+            "composite-ground::doc_70e1e3d18499": 0.0,
+            "composite-ground::doc_cc293f199ada": 0.0,
+            "composite-ground::doc_65c03428faa4": 0.5,
+            "composite-ground::doc_128dc1bd848f": 1.0
+          }
+        },
+        "G0_minus_N": {
+          "point": 0.0,
+          "bootstrap_90_ci": [
+            0.0,
+            0.0
+          ],
+          "bootstrap_95_ci": [
+            0.0,
+            0.0
+          ],
+          "wins": 0,
+          "ties": 5,
+          "losses": 0,
+          "one_sided_p_positive": 1.0,
+          "endpoint_deltas": {
+            "composite-ground::doc_1dfccd3a55dd": 0.0,
+            "composite-ground::doc_70e1e3d18499": 0.0,
+            "composite-ground::doc_cc293f199ada": 0.0,
+            "composite-ground::doc_65c03428faa4": 0.0,
+            "composite-ground::doc_128dc1bd848f": 0.0
+          }
+        }
+      },
+      "A2_G0_minus_N": {
+        "point": 0.05,
+        "bootstrap_90_ci": [
+          0.0,
+          0.15
+        ],
+        "bootstrap_95_ci": [
+          0.0,
+          0.15
+        ],
+        "wins": 1,
+        "ties": 4,
+        "losses": 0,
+        "one_sided_p_positive": 0.5,
+        "equivalence_10pp": false,
+        "endpoint_deltas": {
+          "composite-ground::doc_1dfccd3a55dd": 0.0,
+          "composite-ground::doc_70e1e3d18499": 0.0,
+          "composite-ground::doc_cc293f199ada": 0.0,
+          "composite-ground::doc_65c03428faa4": 0.25,
+          "composite-ground::doc_128dc1bd848f": 0.0
+        }
+      }
+    },
+    "C4_grounding": {
+      "endpoint_count": 5,
+      "endpoint_ids": [
+        "composite-ground::doc_5c43ed3f16d2",
+        "composite-ground::doc_187e543fe980",
+        "composite-ground::doc_15ffceb07aa2",
+        "composite-ground::doc_950378981b9f",
+        "composite-ground::doc_71b83aedc0f9"
+      ],
+      "A1": {
+        "T_minus_N": {
+          "point": 0.2,
+          "bootstrap_90_ci": [
+            0.0,
+            0.6
+          ],
+          "bootstrap_95_ci": [
+            0.0,
+            0.6
+          ],
+          "wins": 1,
+          "ties": 4,
+          "losses": 0,
+          "one_sided_p_positive": 0.5,
+          "endpoint_deltas": {
+            "composite-ground::doc_5c43ed3f16d2": 0.0,
+            "composite-ground::doc_187e543fe980": 0.0,
+            "composite-ground::doc_15ffceb07aa2": 0.0,
+            "composite-ground::doc_950378981b9f": 0.0,
+            "composite-ground::doc_71b83aedc0f9": 1.0
+          }
+        },
+        "T_minus_G0": {
+          "point": 0.2,
+          "bootstrap_90_ci": [
+            0.0,
+            0.6
+          ],
+          "bootstrap_95_ci": [
+            0.0,
+            0.6
+          ],
+          "wins": 1,
+          "ties": 4,
+          "losses": 0,
+          "one_sided_p_positive": 0.5,
+          "endpoint_deltas": {
+            "composite-ground::doc_5c43ed3f16d2": 0.0,
+            "composite-ground::doc_187e543fe980": 0.0,
+            "composite-ground::doc_15ffceb07aa2": 0.0,
+            "composite-ground::doc_950378981b9f": 0.0,
+            "composite-ground::doc_71b83aedc0f9": 1.0
+          }
+        },
+        "G0_minus_N": {
+          "point": 0.0,
+          "bootstrap_90_ci": [
+            0.0,
+            0.0
+          ],
+          "bootstrap_95_ci": [
+            0.0,
+            0.0
+          ],
+          "wins": 0,
+          "ties": 5,
+          "losses": 0,
+          "one_sided_p_positive": 1.0,
+          "endpoint_deltas": {
+            "composite-ground::doc_5c43ed3f16d2": 0.0,
+            "composite-ground::doc_187e543fe980": 0.0,
+            "composite-ground::doc_15ffceb07aa2": 0.0,
+            "composite-ground::doc_950378981b9f": 0.0,
+            "composite-ground::doc_71b83aedc0f9": 0.0
+          }
+        }
+      },
+      "A2_G0_minus_N": {
+        "point": 0.05,
+        "bootstrap_90_ci": [
+          0.0,
+          0.15
+        ],
+        "bootstrap_95_ci": [
+          0.0,
+          0.15
+        ],
+        "wins": 1,
+        "ties": 4,
+        "losses": 0,
+        "one_sided_p_positive": 0.5,
+        "equivalence_10pp": false,
+        "endpoint_deltas": {
+          "composite-ground::doc_5c43ed3f16d2": 0.0,
+          "composite-ground::doc_187e543fe980": 0.25,
+          "composite-ground::doc_15ffceb07aa2": 0.0,
+          "composite-ground::doc_950378981b9f": 0.0,
+          "composite-ground::doc_71b83aedc0f9": 0.0
+        }
+      }
+    },
+    "EIA_heldout_cutoff": {
+      "endpoint_count": 8,
+      "endpoint_ids": [
+        "eia-cutoff::doc_4054808c7b19",
+        "eia-cutoff::doc_d6a5cf917d12",
+        "eia-cutoff::doc_62014739d975",
+        "eia-cutoff::doc_b246cd0161c9",
+        "eia-cutoff::doc_9bf3bfa4a0cb",
+        "eia-cutoff::doc_229defbde6bb",
+        "eia-cutoff::doc_a4f03bdc5762",
+        "eia-cutoff::doc_c07997777e83"
+      ],
+      "A1": {
+        "T_minus_N": {
+          "point": 0.375,
+          "bootstrap_90_ci": [
+            0.1875,
+            0.5625
+          ],
+          "bootstrap_95_ci": [
+            0.1875,
+            0.625
+          ],
+          "wins": 5,
+          "ties": 3,
+          "losses": 0,
+          "one_sided_p_positive": 0.03125,
+          "endpoint_deltas": {
+            "eia-cutoff::doc_4054808c7b19": 0.0,
+            "eia-cutoff::doc_d6a5cf917d12": 0.0,
+            "eia-cutoff::doc_62014739d975": 0.0,
+            "eia-cutoff::doc_b246cd0161c9": 0.5,
+            "eia-cutoff::doc_9bf3bfa4a0cb": 1.0,
+            "eia-cutoff::doc_229defbde6bb": 0.5,
+            "eia-cutoff::doc_a4f03bdc5762": 0.5,
+            "eia-cutoff::doc_c07997777e83": 0.5
+          }
+        },
+        "T_minus_G0": {
+          "point": 0.625,
+          "bootstrap_90_ci": [
+            0.375,
+            0.875
+          ],
+          "bootstrap_95_ci": [
+            0.25,
+            0.875
+          ],
+          "wins": 5,
+          "ties": 3,
+          "losses": 0,
+          "one_sided_p_positive": 0.03125,
+          "endpoint_deltas": {
+            "eia-cutoff::doc_4054808c7b19": 1.0,
+            "eia-cutoff::doc_d6a5cf917d12": 0.0,
+            "eia-cutoff::doc_62014739d975": 0.0,
+            "eia-cutoff::doc_b246cd0161c9": 1.0,
+            "eia-cutoff::doc_9bf3bfa4a0cb": 1.0,
+            "eia-cutoff::doc_229defbde6bb": 1.0,
+            "eia-cutoff::doc_a4f03bdc5762": 0.0,
+            "eia-cutoff::doc_c07997777e83": 1.0
+          }
+        },
+        "G0_minus_N": {
+          "point": -0.25,
+          "bootstrap_90_ci": [
+            -0.5,
+            0.0
+          ],
+          "bootstrap_95_ci": [
+            -0.5625,
+            0.0625
+          ],
+          "wins": 1,
+          "ties": 3,
+          "losses": 4,
+          "one_sided_p_positive": 0.96875,
+          "endpoint_deltas": {
+            "eia-cutoff::doc_4054808c7b19": -1.0,
+            "eia-cutoff::doc_d6a5cf917d12": 0.0,
+            "eia-cutoff::doc_62014739d975": 0.0,
+            "eia-cutoff::doc_b246cd0161c9": -0.5,
+            "eia-cutoff::doc_9bf3bfa4a0cb": 0.0,
+            "eia-cutoff::doc_229defbde6bb": -0.5,
+            "eia-cutoff::doc_a4f03bdc5762": 0.5,
+            "eia-cutoff::doc_c07997777e83": -0.5
+          }
+        }
+      },
+      "A2_G0_minus_N": {
+        "point": -0.1875,
+        "bootstrap_90_ci": [
+          -0.46875,
+          0.0625
+        ],
+        "bootstrap_95_ci": [
+          -0.5,
+          0.125
+        ],
+        "wins": 2,
+        "ties": 2,
+        "losses": 4,
+        "one_sided_p_positive": 0.890625,
+        "equivalence_10pp": false,
+        "endpoint_deltas": {
+          "eia-cutoff::doc_4054808c7b19": -1.0,
+          "eia-cutoff::doc_d6a5cf917d12": 0.0,
+          "eia-cutoff::doc_62014739d975": 0.5,
+          "eia-cutoff::doc_b246cd0161c9": 0.25,
+          "eia-cutoff::doc_9bf3bfa4a0cb": 0.0,
+          "eia-cutoff::doc_229defbde6bb": -0.5,
+          "eia-cutoff::doc_a4f03bdc5762": -0.5,
+          "eia-cutoff::doc_c07997777e83": -0.25
+        }
+      }
+    }
+  },
+  "surface_control_audit": {
+    "all_prefrozen": {
+      "endpoint_count": 18,
+      "T_mean": 0.8055555555555556,
+      "R_mean": 0.8055555555555556,
+      "T_minus_R": 0.0,
+      "bootstrap_90_ci": [
+        -0.05555555555555555,
+        0.05555555555555555
+      ],
+      "bootstrap_95_ci": [
+        -0.08333333333333333,
+        0.08333333333333333
+      ],
+      "wins": 1,
+      "ties": 16,
+      "losses": 1,
+      "one_sided_p_positive": 0.75,
+      "endpoint_ids": [
+        "composite-ground::doc_128dc1bd848f",
+        "composite-ground::doc_15ffceb07aa2",
+        "eia-cutoff::doc_229defbde6bb",
+        "composite-ground::doc_187e543fe980",
+        "composite-ground::doc_1dfccd3a55dd",
+        "eia-cutoff::doc_4054808c7b19",
+        "composite-ground::doc_71b83aedc0f9",
+        "eia-cutoff::doc_c07997777e83",
+        "composite-ground::doc_950378981b9f",
+        "eia-cutoff::doc_a4f03bdc5762",
+        "eia-cutoff::doc_b246cd0161c9",
+        "composite-ground::doc_70e1e3d18499",
+        "eia-cutoff::doc_62014739d975",
+        "composite-ground::doc_cc293f199ada",
+        "composite-ground::doc_5c43ed3f16d2",
+        "eia-cutoff::doc_9bf3bfa4a0cb",
+        "eia-cutoff::doc_d6a5cf917d12",
+        "composite-ground::doc_65c03428faa4"
+      ],
+      "endpoint_deltas": {
+        "composite-ground::doc_128dc1bd848f": 0.0,
+        "composite-ground::doc_15ffceb07aa2": 0.5,
+        "eia-cutoff::doc_229defbde6bb": 0.0,
+        "composite-ground::doc_187e543fe980": -0.5,
+        "composite-ground::doc_1dfccd3a55dd": 0.0,
+        "eia-cutoff::doc_4054808c7b19": 0.0,
+        "composite-ground::doc_71b83aedc0f9": 0.0,
+        "eia-cutoff::doc_c07997777e83": 0.0,
+        "composite-ground::doc_950378981b9f": 0.0,
+        "eia-cutoff::doc_a4f03bdc5762": 0.0,
+        "eia-cutoff::doc_b246cd0161c9": 0.0,
+        "composite-ground::doc_70e1e3d18499": 0.0,
+        "eia-cutoff::doc_62014739d975": 0.0,
+        "composite-ground::doc_cc293f199ada": 0.0,
+        "composite-ground::doc_5c43ed3f16d2": 0.0,
+        "eia-cutoff::doc_9bf3bfa4a0cb": 0.0,
+        "eia-cutoff::doc_d6a5cf917d12": 0.0,
+        "composite-ground::doc_65c03428faa4": 0.0
+      }
+    },
+    "T_non_ceiling": {
+      "endpoint_count": 4,
+      "T_mean": 0.125,
+      "R_mean": 0.125,
+      "T_minus_R": 0.0,
+      "bootstrap_90_ci": [
+        -0.25,
+        0.25
+      ],
+      "bootstrap_95_ci": [
+        -0.375,
+        0.375
+      ],
+      "wins": 1,
+      "ties": 2,
+      "losses": 1,
+      "one_sided_p_positive": 0.75,
+      "endpoint_ids": [
+        "composite-ground::doc_15ffceb07aa2",
+        "composite-ground::doc_187e543fe980",
+        "composite-ground::doc_1dfccd3a55dd",
+        "composite-ground::doc_70e1e3d18499"
+      ],
+      "endpoint_deltas": {
+        "composite-ground::doc_15ffceb07aa2": 0.5,
+        "composite-ground::doc_187e543fe980": -0.5,
+        "composite-ground::doc_1dfccd3a55dd": 0.0,
+        "composite-ground::doc_70e1e3d18499": 0.0
+      }
+    },
+    "C3_grounding": {
+      "endpoint_count": 5,
+      "T_mean": 0.6,
+      "R_mean": 0.6,
+      "T_minus_R": 0.0,
+      "bootstrap_90_ci": [
+        0.0,
+        0.0
+      ],
+      "bootstrap_95_ci": [
+        0.0,
+        0.0
+      ],
+      "wins": 0,
+      "ties": 5,
+      "losses": 0,
+      "one_sided_p_positive": 1.0,
+      "endpoint_ids": [
+        "composite-ground::doc_128dc1bd848f",
+        "composite-ground::doc_1dfccd3a55dd",
+        "composite-ground::doc_70e1e3d18499",
+        "composite-ground::doc_cc293f199ada",
+        "composite-ground::doc_65c03428faa4"
+      ],
+      "endpoint_deltas": {
+        "composite-ground::doc_128dc1bd848f": 0.0,
+        "composite-ground::doc_1dfccd3a55dd": 0.0,
+        "composite-ground::doc_70e1e3d18499": 0.0,
+        "composite-ground::doc_cc293f199ada": 0.0,
+        "composite-ground::doc_65c03428faa4": 0.0
+      }
+    },
+    "C4_grounding": {
+      "endpoint_count": 5,
+      "T_mean": 0.7,
+      "R_mean": 0.7,
+      "T_minus_R": 0.0,
+      "bootstrap_90_ci": [
+        -0.2,
+        0.2
+      ],
+      "bootstrap_95_ci": [
+        -0.3,
+        0.3
+      ],
+      "wins": 1,
+      "ties": 3,
+      "losses": 1,
+      "one_sided_p_positive": 0.75,
+      "endpoint_ids": [
+        "composite-ground::doc_15ffceb07aa2",
+        "composite-ground::doc_187e543fe980",
+        "composite-ground::doc_71b83aedc0f9",
+        "composite-ground::doc_950378981b9f",
+        "composite-ground::doc_5c43ed3f16d2"
+      ],
+      "endpoint_deltas": {
+        "composite-ground::doc_15ffceb07aa2": 0.5,
+        "composite-ground::doc_187e543fe980": -0.5,
+        "composite-ground::doc_71b83aedc0f9": 0.0,
+        "composite-ground::doc_950378981b9f": 0.0,
+        "composite-ground::doc_5c43ed3f16d2": 0.0
+      }
+    },
+    "EIA_heldout_cutoff": {
+      "endpoint_count": 8,
+      "T_mean": 1.0,
+      "R_mean": 1.0,
+      "T_minus_R": 0.0,
+      "bootstrap_90_ci": [
+        0.0,
+        0.0
+      ],
+      "bootstrap_95_ci": [
+        0.0,
+        0.0
+      ],
+      "wins": 0,
+      "ties": 8,
+      "losses": 0,
+      "one_sided_p_positive": 1.0,
+      "endpoint_ids": [
+        "eia-cutoff::doc_229defbde6bb",
+        "eia-cutoff::doc_4054808c7b19",
+        "eia-cutoff::doc_c07997777e83",
+        "eia-cutoff::doc_a4f03bdc5762",
+        "eia-cutoff::doc_b246cd0161c9",
+        "eia-cutoff::doc_62014739d975",
+        "eia-cutoff::doc_9bf3bfa4a0cb",
+        "eia-cutoff::doc_d6a5cf917d12"
+      ],
+      "endpoint_deltas": {
+        "eia-cutoff::doc_229defbde6bb": 0.0,
+        "eia-cutoff::doc_4054808c7b19": 0.0,
+        "eia-cutoff::doc_c07997777e83": 0.0,
+        "eia-cutoff::doc_a4f03bdc5762": 0.0,
+        "eia-cutoff::doc_b246cd0161c9": 0.0,
+        "eia-cutoff::doc_62014739d975": 0.0,
+        "eia-cutoff::doc_9bf3bfa4a0cb": 0.0,
+        "eia-cutoff::doc_d6a5cf917d12": 0.0
+      }
+    }
+  },
+  "surface_control_semantics": {
+    "R_rows": 36,
+    "candidate_evidence_preserved": 36,
+    "operation_output_content_equal": 36,
+    "only_added_field": 36,
+    "interpretation": "R is a controlled integration-surface/context-materialization intervention using the exact frozen operation output. It is intentionally not an independently learned or heuristic temporal retriever and must not support a broad temporal-retrieval equivalence claim."
+  },
+  "EIA_design_audit": {
+    "source_manifest_sha256": "a1c1ff2c845d4399b7edb01b936704282e2fb6f6dd6508718687a268f40c2f1d",
+    "endpoints_sha256": "c18fd185dcb34bdf00b6d1efd11a75be850e0b49cd4c306cb6b326b1692418b0",
+    "execution_plan_sha256": "371aa1b973eb5a539f3330936a05f620197d22da427aad965391849dde83843a",
+    "harness_sha256": "df08508d67151d1780499b4fc5620e3fc465992ca8f93ec61e934e8f262a3144",
+    "scorer_sha256": "e3988a7cade38b5f56a17ee7a863c70dc62564ce815f48de483e6de8f3749724",
+    "selection": "16 fixed EIA weekly releases; targets are deterministic source indices 3..14; phase is release-date split before 2026-04-01 vs >=2026-04-01; 12 endpoints and the condition order were frozen before R4 model outcomes.",
+    "boundary": "The EIA institution/domain was selected post-review because its recurring dated releases are structurally compatible with the cutoff mechanism. Therefore it is a compatibility-selected validation, not an independently sampled cross-domain generalization test."
+  },
+  "adjudication": {
+    "G0_stratum_neutrality": {
+      "verdict": "PAPER_ONLY_REFRAME",
+      "reason": "Pooled A2 G0 equivalence does not imply +/-10pp equivalence within all load-bearing strata. Remove stratum-level behavior-neutral language. Treat G0 as a same-surface no-operation placebo. Net repair is T-N; within-surface operation contribution is T-G0. G0-N remains a perturbation diagnostic, not a causal admission gate."
+    },
+    "A1_A2_sequential_selection": {
+      "verdict": "RESOLVED_BY_IDENTIFICATION_REFRAME",
+      "reason": "R14 no longer conditions T-G0 admissibility on A2 equivalence. A1 and A2 remain unpooled robustness studies; their only role is to characterize wrapper/no-op perturbation."
+    },
+    "R_ceiling_attack": {
+      "verdict": "RESOLVED_EXISTING_ANALYSIS_WITH_BOUNDARY",
+      "reason": "Parity is not confined to ceiling: C3 grounding has T=R=0.60 across five endpoints and C4 grounding T=R=0.70 across five. The T<1 non-ceiling subset has mean T-R=0 but only four endpoints and wide CI; report this low-resolution boundary."
+    },
+    "R_is_independent_temporal_retriever": {
+      "verdict": "VALID_CRITIQUE_PAPER_ONLY_REFRAME",
+      "reason": "R intentionally reuses the exact operation output to isolate integration surface. Rename it context-materialization/surface control; delete any wording that implies an independent temporal-RAG algorithm or broad retrieval equivalence. A new independent retriever is required only for such a broader claim, which R14 will not make."
+    },
+    "T_R_material_advantage": {
+      "verdict": "SUPPORTED_AT_PREFROZEN_PORTFOLIO_MARGIN",
+      "reason": "Across 18 pre-frozen endpoints T-R=0; 90% CI [-5.56,+5.56] and post-hoc 95% sensitivity CI [-8.33,+8.33], both within the predeclared +/-10pp material margin. Scope is the forced one-answer integration surface, not persistent multi-turn container value in general."
+    },
+    "EIA_postreview_selection": {
+      "verdict": "PERMANENT_BOUNDARY",
+      "reason": "Endpoint construction/order were outcome-independent and frozen, but EIA was chosen post-review for cutoff-compatible release structure. Keep it as compatibility-selected held-out validation; do not use it for generic cross-domain transfer."
+    },
+    "need_new_experiment_now": {
+      "verdict": "NO_FOR_R14_NARROW_CLAIM",
+      "reason": "Existing data can support the narrower operation-repair and integration-surface claims after the above reframe. New independent temporal retriever or new domain would be required only to broaden claims, not to retain the bounded R14 thesis."
+    }
+  },
+  "new_model_calls": 0,
+  "new_provider_calls": 0,
+  "scientific_authority": false,
+  "submission_authority": false,
+  "receipt_sha256": "8180a12104f84132cb7674d4a703770692aa5f31609fe833a5bb6eb700e258fa"
+}

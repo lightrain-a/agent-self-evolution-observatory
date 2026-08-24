@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "r13",
+  "review_kind": "INTERNAL_ICLR_PANEL_ZERO_AUTHORITY",
+  "requested_model": "kimi-k3",
+  "paper_pdf_sha256": "80580931de3e85b5fc68756772a8b5186cbf50c1d29d77dd6935e8fa3b9290de",
+  "prompt_sha256": "fb87236f367b2e5fd2ef4564ed087cfc3b308a412dd2f817768082f7ee22a129",
+  "created_at": "2026-08-24T04:11:51+00:00",
+  "scientific_authority": false,
+  "submission_authority": false,
+  "status": "completed",
+  "resolved_model": "kimi-k3",
+  "usage": {
+    "input_tokens": 14760,
+    "output_tokens": 1714,
+    "total_tokens": 16474,
+    "input_tokens_details": {
+      "cached_tokens": 14592
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "response_id_sha256": "c5c86caf0be9b15fb380e178c51a83a25957e1635d721d77d7cc62e2f955b803",
+  "raw_text": "{\n \"reviewer_model\":\"kimi-k3\",\n \"overall_score_1_to_10\":6,\n \"recommendation\":\"weak_accept\",\n \"confidence_1_to_5\":4,\n \"dimensions\":{\"originality\":6,\"importance\":7,\"claim_support\":7,\"experimental_soundness\":7,\"clarity\":8,\"community_value\":7,\"prior_work_context\":7},\n \"one_sentence_verdict\":\"A methodologically rigorous identification study that successfully debunks naive skill-effect claims, but whose positive findings are now so narrowly bounded (operation-level effects in specific non-ceiling regimes, with no callable-container advantage) that the contribution is primarily a cautionary framework rather than a demonstration of reusable skill value.\",\n \"decision_critical_concerns\":[\n  {\"id\":\"c1\",\"severity\":\"major\",\"claim_or_section\":\"Section 6.2, A.7 (G0 neutrality)\",\"problem\":\"G0 neutrality is established on a broad 35-endpoint pool (A2 replication), but the load-bearing claims rest on specific subsets (e.g., 3 grounding endpoints, 8 EIA cutoff endpoints). The ±10-point equivalence margin at the pooled level does not guarantee neutrality within these specific endpoint strata, and the A1 failure ([-14.3, 2.9]) demonstrates sensitivity to repeat count.\",\"why_it_matters\":\"If G0 is not behaviorally neutral within the specific regimes where T-G0 is claimed to show operation-specific value, the identification of 'value beyond neutral extra computation' is compromised.\",\"cheapest_decisive_repair\":\"analysis-only\",\"acceptance_effect_if_repaired\":\"Report stratum-specific G0-N equivalence intervals for the exact endpoint subsets used in load-bearing claims, or explicitly bound the potential bias.\"},\n  {\"id\":\"c2\",\"severity\":\"major\",\"claim_or_section\":\"Section 6.2, A.7 (R parity and ceiling)\",\"problem\":\"The T-R comparison is conducted on 'load-bearing endpoints' where T and R both achieve 100% success (or near-ceiling). At ceiling, the zero-call parity audit (verifying identical operation output) guarantees T≈R regardless of the integration mechanism, because both arms saturate the binary success metric.\",\"why_it_matters\":\"Claiming that 'retrieval/context construction is as effective as callable skill state' based on ceiling cells is weak evidence; the result may simply reflect that both arms have headroom to spare. The manuscript does not report T-R on non-ceiling cells where the operation is partially effective.\",\"cheapest_decisive_repair\":\"analysis-only\",\"acceptance_effect_if_repaired\":\"Either provide T-R comparisons on non-ceiling endpoints where T<100%, or explicitly downgrade the container-parity claim to 'at ceiling in the tested regimes'.\"},\n  {\"id\":\"c3\",\"severity\":\"major\",\"claim_or_section\":\"Abstract, Section 6.4 (EIA endpoint counts and inference)\",\"problem\":\"The EIA validation uses 8 held-out endpoints with 5 repeats each (40 rows per arm). The manuscript reports 'T–N is positive on seven of eight endpoint means' and a bootstrap interval [30, 72.5], but the abstract and text sometimes conflate repeat-level percentages (47.5% N) with endpoint-level inference. The exact sign test p=0.0156 for 7/8 is correct, but the 95% bootstrap interval over only 8 endpoints has wide uncertainty.\",\"why_it_matters\":\"With only 8 independent endpoints, the EIA result is fragile to endpoint selection; the strong claim of '100% vs 47.5%' relies on repeat-level averaging that may overstate precision.\",\"cheapest_decisive_repair\":\"analysis-only\",\"acceptance_effect_if_repaired\":\"Clarify that the interval is over 8 endpoints (not 40 rows), and report the exact endpoint-level win/tie/loss counts alongside the repeat-level percentages.\"},\n  {\"id\":\"c4\",\"severity\":\"major\",\"claim_or_section\":\"Section 6.2, A.7 (Kimi grounding downgrade)\",\"problem\":\"The Kimi same-domain grounding downgrade (T-G0 = -25, T-N=0) is based on fresh controls, but the historical Kimi grounding data (Table 2: C3 ΔT-G=10, C4 ΔT-G=20) suggested a positive effect. The manuscript does not clearly state whether the downgrade applies to all Kimi grounding claims or only the same-domain subset, and the cross-domain grounding null is mentioned but not integrated into the main results table.\",\"why_it_matters\":\"Inconsistent treatment of the Kimi grounding downgrade across sections could mislead readers about the robustness of grounding repairs across models.\",\"cheapest_decisive_repair\":\"paper-only\",\"acceptance_effect_if_repaired\":\"Explicitly state in the abstract and Section 6.3 that Kimi grounding (both same-domain and cross-domain) is null after G0 control, and update Table 2 to include the fresh G0 and R results for Kimi.\"}\n ],\n \"noncritical_repairs\":[\n  \"Clarify in Section 4.2 that the 'strongest same-information baseline' R is operation-matched but not necessarily computation-matched (R may have different latency/cost characteristics than T, which is acknowledged but could be emphasized).\",\n  \"Report the exact number of endpoints (not just rows) for the 18 DeepSeek load-bearing endpoints in the T-R comparison to confirm they match the pre-frozen C3/C4 cells.\",\n  \"Add a small table in Appendix A showing the per-endpoint T-R residuals for the 18 DeepSeek endpoints to demonstrate that the 0.0 mean is not hiding heterogeneity.\",\n  \"Explicitly state in the Limitations that the G0 neutrality gate uses a ±10-point margin, which is relatively wide for small endpoint samples, and that tighter margins might change the verdict.\",\n  \"Correct the minor inconsistency in Section 6.2 where 'Kimi alignment retains +50 points' is stated without specifying the exact endpoint count (3) and repeat count (5) in the same sentence.\"\n ],\n \"claims_to_downgrade_or_delete\":[\n  \"Delete or soften 'retrieval/context construction can implement the same repair at the tested resolution' to '...in the tested ceiling regimes' unless non-ceiling T-R data is provided.\",\n  \"Downgrade 'G0 is behaviorally neutral relative to fresh N' to 'G0 is neutral within ±10 points on the pooled endpoint set' to reflect the stratum-specific uncertainty.\",\n  \"Soften 'binding repair' language for EIA to 'binding in 7 of 8 endpoints' rather than implying uniform repair across the cell.\"\n ],\n \"evidence_that_is_now_convincing\":[\n  \"The three-arm identification contract (T vs G vs N) successfully unmasks the generic-helper degradation false positive (T=100, G=72, N=100).\",\n  \"The prospective G0 control with predeclared ±10-point equivalence margins and the A1/A2 staging (rejecting the first tranche) demonstrates rigorous sequential testing.\",\n  \"The operation-matched retrieval control R with zero-call parity audits provides strong evidence that the temporal operation itself, not the callable skill packaging, drives the effect in the tested regimes.\",\n  \"The EIA byte-identical transfer with 8 held-out endpoints provides the strongest evidence for operation-level generalization, albeit with limited statistical resolution.\"\n ],\n \"novelty_boundary\":\"The paper does not claim novelty in temporal retrieval, reusable skills, or paired skill causality. Its contribution is the identification contract: the requirement that a binding repair must beat both the original agent (N) and a behaviorally neutral no-op control (G0), and the demonstration that operation-matched retrieval (R) can achieve parity with callable skills. This stricter diagnosis is novel relative to the cited prior work, but the positive results are now confined to operation-level effects in specific non-ceiling regimes.\",\n \"would_new_experiment_change_verdict\":true,\n \"single_highest_value_next_action\":\"Provide T-R comparisons on non-ceiling endpoints (where T<100%) to test whether callable skill state adds value when the operation is not already saturating the success metric.\"\n}",
+  "raw_text_sha256": "4731e0e4340801dd54b5b3a2c757a509e81872960ea88c7edfa821c8f8e28fea",
+  "review": {
+    "reviewer_model": "kimi-k3",
+    "overall_score_1_to_10": 6,
+    "recommendation": "weak_accept",
+    "confidence_1_to_5": 4,
+    "dimensions": {
+      "originality": 6,
+      "importance": 7,
+      "claim_support": 7,
+      "experimental_soundness": 7,
+      "clarity": 8,
+      "community_value": 7,
+      "prior_work_context": 7
+    },
+    "one_sentence_verdict": "A methodologically rigorous identification study that successfully debunks naive skill-effect claims, but whose positive findings are now so narrowly bounded (operation-level effects in specific non-ceiling regimes, with no callable-container advantage) that the contribution is primarily a cautionary framework rather than a demonstration of reusable skill value.",
+    "decision_critical_concerns": [
+      {
+        "id": "c1",
+        "severity": "major",
+        "claim_or_section": "Section 6.2, A.7 (G0 neutrality)",
+        "problem": "G0 neutrality is established on a broad 35-endpoint pool (A2 replication), but the load-bearing claims rest on specific subsets (e.g., 3 grounding endpoints, 8 EIA cutoff endpoints). The ±10-point equivalence margin at the pooled level does not guarantee neutrality within these specific endpoint strata, and the A1 failure ([-14.3, 2.9]) demonstrates sensitivity to repeat count.",
+        "why_it_matters": "If G0 is not behaviorally neutral within the specific regimes where T-G0 is claimed to show operation-specific value, the identification of 'value beyond neutral extra computation' is compromised.",
+        "cheapest_decisive_repair": "analysis-only",
+        "acceptance_effect_if_repaired": "Report stratum-specific G0-N equivalence intervals for the exact endpoint subsets used in load-bearing claims, or explicitly bound the potential bias."
+      },
+      {
+        "id": "c2",
+        "severity": "major",
+        "claim_or_section": "Section 6.2, A.7 (R parity and ceiling)",
+        "problem": "The T-R comparison is conducted on 'load-bearing endpoints' where T and R both achieve 100% success (or near-ceiling). At ceiling, the zero-call parity audit (verifying identical operation output) guarantees T≈R regardless of the integration mechanism, because both arms saturate the binary success metric.",
+        "why_it_matters": "Claiming that 'retrieval/context construction is as effective as callable skill state' based on ceiling cells is weak evidence; the result may simply reflect that both arms have headroom to spare. The manuscript does not report T-R on non-ceiling cells where the operation is partially effective.",
+        "cheapest_decisive_repair": "analysis-only",
+        "acceptance_effect_if_repaired": "Either provide T-R comparisons on non-ceiling endpoints where T<100%, or explicitly downgrade the container-parity claim to 'at ceiling in the tested regimes'."
+      },
+      {
+        "id": "c3",
+        "severity": "major",
+        "claim_or_section": "Abstract, Section 6.4 (EIA endpoint counts and inference)",
+        "problem": "The EIA validation uses 8 held-out endpoints with 5 repeats each (40 rows per arm). The manuscript reports 'T–N is positive on seven of eight endpoint means' and a bootstrap interval [30, 72.5], but the abstract and text sometimes conflate repeat-level percentages (47.5% N) with endpoint-level inference. The exact sign test p=0.0156 for 7/8 is correct, but the 95% bootstrap interval over only 8 endpoints has wide uncertainty.",
+        "why_it_matters": "With only 8 independent endpoints, the EIA result is fragile to endpoint selection; the strong claim of '100% vs 47.5%' relies on repeat-level averaging that may overstate precision.",
+        "cheapest_decisive_repair": "analysis-only",
+        "acceptance_effect_if_repaired": "Clarify that the interval is over 8 endpoints (not 40 rows), and report the exact endpoint-level win/tie/loss counts alongside the repeat-level percentages."
+      },
+      {
+        "id": "c4",
+        "severity": "major",
+        "claim_or_section": "Section 6.2, A.7 (Kimi grounding downgrade)",
+        "problem": "The Kimi same-domain grounding downgrade (T-G0 = -25, T-N=0) is based on fresh controls, but the historical Kimi grounding data (Table 2: C3 ΔT-G=10, C4 ΔT-G=20) suggested a positive effect. The manuscript does not clearly state whether the downgrade applies to all Kimi grounding claims or only the same-domain subset, and the cross-domain grounding null is mentioned but not integrated into the main results table.",
+        "why_it_matters": "Inconsistent treatment of the Kimi grounding downgrade across sections could mislead readers about the robustness of grounding repairs across models.",
+        "cheapest_decisive_repair": "paper-only",
+        "acceptance_effect_if_repaired": "Explicitly state in the abstract and Section 6.3 that Kimi grounding (both same-domain and cross-domain) is null after G0 control, and update Table 2 to include the fresh G0 and R results for Kimi."
+      }
+    ],
+    "noncritical_repairs": [
+      "Clarify in Section 4.2 that the 'strongest same-information baseline' R is operation-matched but not necessarily computation-matched (R may have different latency/cost characteristics than T, which is acknowledged but could be emphasized).",
+      "Report the exact number of endpoints (not just rows) for the 18 DeepSeek load-bearing endpoints in the T-R comparison to confirm they match the pre-frozen C3/C4 cells.",
+      "Add a small table in Appendix A showing the per-endpoint T-R residuals for the 18 DeepSeek endpoints to demonstrate that the 0.0 mean is not hiding heterogeneity.",
+      "Explicitly state in the Limitations that the G0 neutrality gate uses a ±10-point margin, which is relatively wide for small endpoint samples, and that tighter margins might change the verdict.",
+      "Correct the minor inconsistency in Section 6.2 where 'Kimi alignment retains +50 points' is stated without specifying the exact endpoint count (3) and repeat count (5) in the same sentence."
+    ],
+    "claims_to_downgrade_or_delete": [
+      "Delete or soften 'retrieval/context construction can implement the same repair at the tested resolution' to '...in the tested ceiling regimes' unless non-ceiling T-R data is provided.",
+      "Downgrade 'G0 is behaviorally neutral relative to fresh N' to 'G0 is neutral within ±10 points on the pooled endpoint set' to reflect the stratum-specific uncertainty.",
+      "Soften 'binding repair' language for EIA to 'binding in 7 of 8 endpoints' rather than implying uniform repair across the cell."
+    ],
+    "evidence_that_is_now_convincing": [
+      "The three-arm identification contract (T vs G vs N) successfully unmasks the generic-helper degradation false positive (T=100, G=72, N=100).",
+      "The prospective G0 control with predeclared ±10-point equivalence margins and the A1/A2 staging (rejecting the first tranche) demonstrates rigorous sequential testing.",
+      "The operation-matched retrieval control R with zero-call parity audits provides strong evidence that the temporal operation itself, not the callable skill packaging, drives the effect in the tested regimes.",
+      "The EIA byte-identical transfer with 8 held-out endpoints provides the strongest evidence for operation-level generalization, albeit with limited statistical resolution."
+    ],
+    "novelty_boundary": "The paper does not claim novelty in temporal retrieval, reusable skills, or paired skill causality. Its contribution is the identification contract: the requirement that a binding repair must beat both the original agent (N) and a behaviorally neutral no-op control (G0), and the demonstration that operation-matched retrieval (R) can achieve parity with callable skills. This stricter diagnosis is novel relative to the cited prior work, but the positive results are now confined to operation-level effects in specific non-ceiling regimes.",
+    "would_new_experiment_change_verdict": true,
+    "single_highest_value_next_action": "Provide T-R comparisons on non-ceiling endpoints (where T<100%) to test whether callable skill state adds value when the operation is not already saturating the success metric."
+  },
+  "parse_valid": true
+}
