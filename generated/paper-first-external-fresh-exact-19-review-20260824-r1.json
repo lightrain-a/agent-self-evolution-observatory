@@ -1,0 +1,624 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T04:08:35Z",
+  "run_id": "external-fresh-exact-19-review-20260824-r1",
+  "status": "EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+  "selection_projection": {
+    "staging_refresh_root": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r1",
+    "preview_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r1/preview-public.json",
+    "preview_artifact_sha256": "e1b7c28ab988f012ffc2610ad18c5cba321bc0f50439bc7619ce660851f25aef",
+    "private_pool_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r1/data/paper-first-problem-discovery/primary-evidence-pool.json",
+    "private_pool_artifact_sha256": "bb459d665d0e245b5a514118b35660bfa76aa292efacefc56d26ade54c272eae",
+    "corpus_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r1/data/corpora/semantic-scholar-corpus.json",
+    "corpus_artifact_sha256": "2d27a6a0e8439be73da947b74cdbe61f1ae1c57ea89f0d559bae28f1d1585b86",
+    "refresh_generated_at": "2026-08-24T03:58:55+00:00",
+    "refresh_status": "READY",
+    "discovery_mode": "arxiv-primary-fallback",
+    "source_retrieval_complete": true,
+    "selected": 32,
+    "verified": 32,
+    "selected_previously_reviewed": 13,
+    "selected_unreviewed": 19,
+    "fulltext_verified": 31,
+    "fetch_errors": 0,
+    "fulltext_fetch_errors": 1,
+    "undercovered_lanes": [],
+    "source_coverage_exhausted": false,
+    "global_source_coverage_exhausted_claim": false,
+    "exact_unreviewed_refs_in_scheduler_order": [
+      "arXiv:2608.21156",
+      "arXiv:2608.20920",
+      "arXiv:2608.21075",
+      "arXiv:2608.08677",
+      "arXiv:2608.08037",
+      "arXiv:2608.08311",
+      "arXiv:2608.06950",
+      "arXiv:2608.06706",
+      "arXiv:2608.06137",
+      "arXiv:2608.06153",
+      "arXiv:2608.05738",
+      "arXiv:2608.05906",
+      "arXiv:2608.04436",
+      "arXiv:2608.05126",
+      "arXiv:2608.05245",
+      "arXiv:2608.04505",
+      "arXiv:2608.04761",
+      "arXiv:2608.05026",
+      "arXiv:2608.03391"
+    ]
+  },
+  "summary": {
+    "sources_discovered": 19,
+    "sources_reviewed": 19,
+    "exact_prior_exposure_zero": 19,
+    "identity_verified": 19,
+    "deep_review": 9,
+    "triage_review": 10,
+    "formal_generator_run": false,
+    "provider_model_calls": 0,
+    "paper_problem_emissions": 0,
+    "contradictory_evidence_sufficient": 0,
+    "scientific_reopens": 0,
+    "fresh_scientific_survivors": 0,
+    "stop_reduction": 8,
+    "support_component_only": 2,
+    "scope_excluded": 9,
+    "watch_reopen_seeds": 1,
+    "source_retrieval_complete": true,
+    "global_source_coverage_exhausted": false,
+    "old_primary_tranche_mutated": false
+  },
+  "policy": {
+    "exact_tranche_identity_requires_content_addressed_refresh_projection": true,
+    "identity_before_asset": true,
+    "first_party_asset_ownership_required": true,
+    "deep_review_routes_collision_reopen_or_decisive_baseline_cases": true,
+    "triage_is_allowed_only_for_clear_scope_or_component_cases": true,
+    "same_information_reducer_gets_candidate_pre_outcome_observables": true,
+    "contradiction_requires_exact_existing_reopen_contract": true,
+    "review_exposure_is_retrieval_metadata_only": true,
+    "review_exposure_cannot_authorize_or_skip_scientific_gates": true,
+    "review_artifact_must_bind_exact_source_refs": true,
+    "portable_receipt_must_bind_review_artifact_sha256": true,
+    "support_component_is_not_problem_gate_authority": true,
+    "no_emit_is_not_a_scientific_dead_end": true,
+    "global_source_exhaustion_must_not_be_inferred_from_bounded_tranche_completion": true
+  },
+  "sources": [
+    {
+      "ref": "arXiv:2608.21156",
+      "title": "Graph Engineering in the Era of LLM Agents: From Individual Intelligence to System Intelligence",
+      "published": "2026-08-21",
+      "lane_keys": [
+        "skill_harness"
+      ],
+      "source_sha256": "46b610b1a891b5949e7e638c970256aea1a24e193a61efd85855eb370ed10e96",
+      "fulltext_sha256": "d93e1b0fe6fda213df186ecbe41a4d70ea8fe27b4dc065b51685f963deb59e18",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_SYSTEM_GRAPH",
+      "reduction": [
+        "graph-structured-workflow-orchestration",
+        "persistent-execution-state",
+        "system-level-coordination"
+      ],
+      "note": "Graph Engineering formalizes explicit multi-agent work structure, dependencies, coordination, and persistent execution state, while itself warning that system-level gains must be separated from stronger models, larger contexts, extra tools, retries, or compute. It is useful Research-OS architecture evidence but not a controlled longitudinal self-evolution intervention.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.20920",
+      "title": "ForeDreamer: A Self-Evolving Dual-Agent Memory Architecture for Future Event Prediction",
+      "published": "2026-08-21",
+      "lane_keys": [
+        "memory_continual"
+      ],
+      "source_sha256": "624e74b67e8f1a3f2fed7380d690f079c22a7acdc135e099080cb0956748767c",
+      "fulltext_sha256": "0fcf1124a7ebc0367f45007dee2e901162c2f215fad3fb925e79111c93f52bc7",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "structured-evidence-retrieval",
+        "persistent-procedural-memory",
+        "experience-guided-corrective-adaptation"
+      ],
+      "note": "ForeDreamer separately evolves textual forecasting experience and evidence-processing procedures; removing either track degrades both forecasting benchmarks. However each treatment changes stored experience or the information-processing procedure. The strongest same-information retriever/procedural-memory baseline is not given identical distilled evidence, experience, procedure library, and tool/search budget while a distinct evolution state is varied.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "No matched residual survives after equalizing prior episodes, distilled evidence, procedure library, search/tool budget, update count, and held-out evaluation."
+        },
+        {
+          "memory_id": "MEM-SEAR-eca0cdefae1ce14d2a",
+          "result": "NOT_SATISFIED",
+          "boundary": "The two tracks do not form an independently varied same-information factorial proving a non-additive self-evolution interaction."
+        }
+      ],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.21075",
+      "title": "AudioWorldSim: Realistic Binaural Audio Datasets For World Models",
+      "published": "2026-08-21",
+      "lane_keys": [
+        "world_model",
+        "embodied"
+      ],
+      "source_sha256": "6c593d602db8a2a820ea8528c7416571d13e88539d81a5b3512c8400150ffb6b",
+      "fulltext_sha256": "68d1c04903216b01de8b7a2695269712759b45f83ae207bcf9b5e5614695e61c",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_DATASET_SIMULATOR",
+      "reduction": [
+        "audio-dataset-generation",
+        "simulator-pipeline-correction",
+        "random-navigation-rollout"
+      ],
+      "note": "AudioWorldSim is a binaural-audio dataset generation and simulator pipeline with random navigation rollouts, not an autonomous persistent agent update mechanism.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.08677",
+      "title": "Branch2Skill: Efficient Skill Evolution Through Reasoning Trees",
+      "published": "2026-08-09",
+      "lane_keys": [
+        "skill_harness"
+      ],
+      "source_sha256": "6636d285033fabdfc7789cda21aeeb55fc46ab9e4519e4b5ab02d26d04674c13",
+      "fulltext_sha256": "71859c7983198fa1c82cecb62e3e7d92fa4ea5576ed2f813b100c03831ea67ca",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "mcts-search-capacity",
+        "matched-prefix-outcome-contrast",
+        "corrective-skill-distillation-and-validation"
+      ],
+      "note": "Branch2Skill uses MCTS to obtain diverse branches, compares elite steps with sibling alternatives sharing a prefix, distills downstream outcome evidence into a skill edit, and validates/reverts the edit. Performance increases with tree/search budget and the method mainly provides denser search-derived corrective supervision; richer search changes evidence and compute rather than isolating a persistent evolution state.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "Tree evidence, downstream outcomes, optimizer capability, edit budget, and validation budget are not matched while varying an independent self-evolution state."
+        },
+        {
+          "memory_id": "MEM-SEAR-7e451ba3cb785c6ad1",
+          "result": "NOT_SATISFIED",
+          "boundary": "Tree search changes the sampled trajectory/evidence distribution; no residual beyond evidence-distribution shift is isolated."
+        }
+      ],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.08037",
+      "title": "SkillSmith: Enhancing Locally Deployed Agents via Automatic Skill Construction and Evolution",
+      "published": "2026-08-08",
+      "lane_keys": [
+        "skill_harness",
+        "runtime_deployment"
+      ],
+      "source_sha256": "288ae544edc0dc64e89712ab6dc8113183661a68eadad08048adc64dbc679de0",
+      "fulltext_sha256": "8b7c293f6874720e4a48fa508ba4cc8f5a474fce8044f88ecc29b2ae5c6f8fd7",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "cloud-teacher-skill-construction",
+        "local-feedback-corrective-skill-editing",
+        "environment-knowledge-patching"
+      ],
+      "note": "SkillSmith constructs skills with a cloud teacher and evolves them from local execution feedback. The paper reports that creation accounts for most gains, further evolution adds only a small average increment and is statistically insignificant in one analysis, and repeated updates can oscillate. This is corrective environment-knowledge patching after a strong initial skill artifact.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "No residual remains after equalizing initial teacher skill, local evidence, supervision, edit budget, update count, and held-out evaluation."
+        }
+      ],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.08311",
+      "title": "Ouroboros: A Self-Developing Frontier Coding Agent with Reviewed Core Evolution",
+      "published": "2026-08-08",
+      "lane_keys": [
+        "skill_harness",
+        "runtime_deployment"
+      ],
+      "source_sha256": "e444187c43aa95b30610dbd1d37a658904e63012589584a26c6c0b5583d39eb6",
+      "fulltext_sha256": "fc8b047b0713f8560e201c980d94ea850e1eb795b47508f88f6a9b0a0422abdb",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_WATCH",
+      "reduction": [
+        "versioned-harness-program-repair",
+        "feedback-guided-software-maintenance",
+        "human-reviewed-commit-gating"
+      ],
+      "note": "Ouroboros is strong component evidence for persistent versioned harness evolution: accepted code/prompt/tool/context changes become later runtime, with git rollback and recursive improvement cycles. But core changes require human review; benchmark campaigns use frozen snapshots separate from live Hope; and model/API upgrades are independently changing components. Endpoint gains therefore do not identify the causal effect of persistent core evolution. Preserve as a watch seed for a frozen-backbone same-information commit-sequence experiment.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SCIE-63da8f6c3c1c818d32",
+          "result": "NOT_SATISFIED",
+          "boundary": "No matched program-repair baseline receives the same failure transcript, repository state, candidate commits, tests, reviewer decisions, and budget while a distinct persistent evolution state forces a different prediction."
+        },
+        {
+          "memory_id": "MEM-DISC-96d9445f9dc2dfe39f",
+          "result": "NOT_SATISFIED",
+          "boundary": "Reviewed commit/rollback is compatible with constrained harness maintenance after matching candidate quality, retention risk, and validity evidence."
+        }
+      ],
+      "watch_reopen_seed": true
+    },
+    {
+      "ref": "arXiv:2608.06950",
+      "title": "MIRA: Evidence-Verified Repair Memory for Text-to-SQL Correction",
+      "published": "2026-08-07",
+      "lane_keys": [
+        "memory_continual"
+      ],
+      "source_sha256": "56ca6510990b66ef9e87ddd5ae7697efd04fe9532f2e0c4a4b263f3fc5e6bfca",
+      "fulltext_sha256": "c77466667941544bf47e1aec6f13b968e4dfc144ac76c28f053178f405138ce6",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "evidence-verified-selective-memory",
+        "repair-item-decomposition",
+        "corrective-retrieval-and-adaptation"
+      ],
+      "note": "MIRA decomposes historical SQL repairs into items, retrieves them, verifies each against database evidence, and adapts supported items. Reusing complete SQL-pair experiences creates more regressions and lower accuracy than itemized evidence-verified reuse. This strengthens selective retrieval/negative-transfer and corrective-memory reducers.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-1ba2b6e8d305dafaad",
+          "result": "NOT_SATISFIED",
+          "boundary": "The result is explained by compatibility filtering and reduced irrelevant context after matching item content, database evidence, retrieval budget, and repair model."
+        },
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "Historical correction reuse remains ordinary corrective adaptation once evidence and edit budget are matched."
+        }
+      ],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.06706",
+      "title": "Dueling World Models: Advantage-Style Action Channels for Common-Mode Distractor Rejection",
+      "published": "2026-08-07",
+      "lane_keys": [
+        "world_model"
+      ],
+      "source_sha256": "06ffc5d500243e36b8d97a98724bf79dfc9217ffe2a3b5249b227cc03a4c72ae",
+      "fulltext_sha256": "6bcad0092b5efee9db4130b182846c639fef6a10f05f9f604a710ad0f65b8044",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_WORLD_MODEL_READOUT",
+      "reduction": [
+        "dueling-style-common-mode-subtraction",
+        "static-latent-readout",
+        "action-channel-identification"
+      ],
+      "note": "Dueling World Models algebraically removes action-shared latent variation, including post-hoc use on frozen world models. This is a static representation/readout construction, not persistent autonomous self-modification.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.06137",
+      "title": "SkillTFM: Gated Skill Evolution for Training-Free Adaptation of Tabular Foundation Models",
+      "published": "2026-08-06",
+      "lane_keys": [
+        "skill_harness",
+        "parametric_model_state",
+        "runtime_deployment",
+        "safety_reliability"
+      ],
+      "source_sha256": "78d8baf27163b7b5652b0d2c13d8be75f976a4f0f8c07498a64a0b6825a60db5",
+      "fulltext_sha256": "854b011e7234d5303df2520d3fdda7d923083683802ff2c0793481804ee89958",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "boundary-evidence-conditioned-repair",
+        "validation-gated-skill-promotion",
+        "safe-fallback-and-regression-guard"
+      ],
+      "note": "SkillTFM retrieves candidate repairs from observable boundary evidence, certifies runtime use, and promotes edits only after validation. Ablations show evidence conditioning controls useful repair, certification controls harm, and gated evolution can add a missing nonlinear repair (AUC 0.699 to 0.898). This is feedback-guided corrective skill/program synthesis plus abstaining deployment, not an irreducible evolution state.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "No pair equalizes initial skill, boundary evidence, candidate repairs, validation/harm data, edit budget, and evaluation while a self-evolution-specific state changes promotion/outcome prediction."
+        },
+        {
+          "memory_id": "MEM-SCIE-63da8f6c3c1c818d32",
+          "result": "NOT_SATISFIED",
+          "boundary": "Candidate generation plus validation/fallback is expressible as feedback-guided program synthesis/repair with the same evidence."
+        }
+      ],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.06153",
+      "title": "Learning Globally Reusable Skills for Coding Agents",
+      "published": "2026-08-06",
+      "lane_keys": [
+        "skill_harness",
+        "runtime_deployment"
+      ],
+      "source_sha256": "eff98ff2d86fcf0c876328a73d71c1c10e50a795d6b2c76df965d9c1bd21957e",
+      "fulltext_sha256": "2154763440ac58e584ad227ecd9f817d296c3a934800432f69fd39ef98cd2a95",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "dependency-graph-aware-skill-maintenance",
+        "cluster-based-consolidation",
+        "replay-driven-regression-validation"
+      ],
+      "note": "GSE makes skill dependencies explicit with a Skill Relation Graph, propagates affected edits, consolidates clusters, and replay-validates changes. Removing the graph or generalization lowers F1, but the added state is observable dependency/compatibility structure plus replay evidence and is expressible by dependency-aware program/configuration maintenance.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-16b145b18dd60e1811",
+          "result": "NOT_SATISFIED",
+          "boundary": "Skill/relation semantics are observable; no residual remains after a dependency-aware versioned baseline receives the same graph, traces, and edit semantics."
+        },
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "Replay-validated failure-driven edits remain corrective adaptation after matching evidence and update budget."
+        }
+      ],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.05738",
+      "title": "In-Context VLA: Endowing Vision-Language-Action Models with Language via In-Context Post-Training and Agentic Tool Use",
+      "published": "2026-08-06",
+      "lane_keys": [
+        "parametric_model_state",
+        "embodied"
+      ],
+      "source_sha256": "a3171a79c5767eb0e848a0a49ac8007ff6a52ea4f2cc14b1ceaa65c0f63fc43a",
+      "fulltext_sha256": "f683969ad183607263939b72f608b11a2356aa45f513aaa29929e01fdca14205",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING_AND_INFERENCE",
+      "reduction": [
+        "in-context-grounded-evidence-injection",
+        "agentic-tool-use",
+        "static-posttraining"
+      ],
+      "note": "In-Context VLA post-trains a policy to consume grounded tool-derived language and compares against generative CoT under matched evidence. The deployed policy does not persistently modify itself across tasks.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.05906",
+      "title": "Causal Episodic Memory for Feedback-Driven Agent Repair",
+      "published": "2026-08-06",
+      "lane_keys": [
+        "memory_continual",
+        "safety_reliability"
+      ],
+      "source_sha256": "57330c9f54e862aa8f68dc2d985ed9d1687cf390a172f2a670e13f400e4eae0d",
+      "fulltext_sha256": "85bd922ccf9a3b72412ea7fcc4e71ad0074bc8fc6296319f1bc717006a0c5964",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "dual-polarity-episodic-memory",
+        "failure-type-conditioned-retrieval",
+        "corrective-repair-memory"
+      ],
+      "note": "MERIT stores verified successful corrections and unsuccessful directions and retrieves them with type-conditioned hybrid ranking. The paper explicitly reports that MERIT is not reliably separated from untyped Dynamic RAG and that some gains are dataset dependent, so the source is selective corrective retrieval rather than a new causal memory state.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-1ba2b6e8d305dafaad",
+          "result": "NOT_SATISFIED",
+          "boundary": "No stable residual beyond relevance/type-conditioned retrieval and context budget is established against untyped dynamic retrieval."
+        },
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "Finalized repair outcomes provide ordinary corrective supervision; no matched structural sign-flip is isolated."
+        }
+      ],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.04436",
+      "title": "ToolArtist: Tool-Using Unified Multimodal Models for Agentic Image Generation",
+      "published": "2026-08-05",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "6ef182961ef510a6e254863fc4a4badd0b55fa91d5a339e70c92c3de004e0fed",
+      "fulltext_sha256": "d3d84b19b81e1040b9cdaa03e40ab5fc25e2c79949cd5a4677bc0417f0b0a6dc",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "sft-trajectory-distillation",
+        "agentic-grpo",
+        "unified-reason-act-draw-policy"
+      ],
+      "note": "ToolArtist post-trains a unified multimodal policy with teacher trajectories and agentic RL. The evaluated deployed model is fixed; no persistent deployment-time self-evolution transition is studied.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.05126",
+      "title": "Spoken Function Calling: A New Perspective on Spoken Language Understanding for Large Audio Language Models",
+      "published": "2026-08-05",
+      "lane_keys": [
+        "parametric_model_state",
+        "collective"
+      ],
+      "source_sha256": "b2e0f07a847f6e5dd185985ff4291982e5624697db2d5bcc79c17ac5dfb119e4",
+      "fulltext_sha256": "bc7a18d9f82bde85ca5dc1fb69e0a1cbdb56508d1de25e51e5f8fda57072a372",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_DATASET_AND_POSTTRAINING",
+      "reduction": [
+        "structured-semantic-interface",
+        "synthetic-benchmark-construction",
+        "audio-model-posttraining"
+      ],
+      "note": "Spoken Function Calling is a structured interface, benchmark/data pipeline, and post-training result rather than a longitudinal autonomous update mechanism.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.05245",
+      "title": "Search2Skill: Skill Distillation Beyond Knowledge Boundaries Via Rubric-Based Reinforcement Learning",
+      "published": "2026-08-05",
+      "lane_keys": [
+        "skill_harness"
+      ],
+      "source_sha256": "f3e80038c063052e2507be891d3f831099183b2431cce2ffca1962afe7c8d351",
+      "fulltext_sha256": "053054d4dc063515c0af9ff084a61c04eb512acce8462fde0256a972143c388c",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "external-search-and-evidence-acquisition",
+        "procedural-skill-abstraction",
+        "rubric-trained-search-policy-and-persistent-library"
+      ],
+      "note": "Search2Skill is a strong near-boundary source: on held-out tasks, caching the same retrieved evidence yields +1.8 points while abstracted skills from that evidence yield +6.3, a +4.5 abstraction margin. It also compares an RL-trained search agent without skill learning. This proves value from procedural representation beyond raw evidence, but skill abstraction is itself a learned representation/compression and the trained policy changes information selection/encoding; a strongest same-information representation/procedural-memory baseline can express the gain.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "No matched procedural-representation baseline receives the same evidence, supervision, library capacity, and update budget while a distinct self-evolution state forces an opposite held-out prediction."
+        },
+        {
+          "memory_id": "MEM-SEAR-1ba2b6e8d305dafaad",
+          "result": "NOT_SATISFIED",
+          "boundary": "Streaming gains also change when/how search is invoked and what is stored; retrieval/search policy is not held fixed."
+        }
+      ],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.04505",
+      "title": "K-EXAONE 2.0 Technical Report",
+      "published": "2026-08-05",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "7bca8f6c6b43b3ea82d249cf658bff4e5c59d37a7d3291259083eb3b82c05664",
+      "fulltext_sha256": "0c3f5ff1044d48c1873ea0b1119aba96d227ab92279d2fea5eb80f0afd42bce4",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_FOUNDATION_MODEL_TRAINING",
+      "reduction": [
+        "continual-pretraining",
+        "difficulty-focused-midtraining",
+        "posttraining-and-moe-upcycling"
+      ],
+      "note": "K-EXAONE 2.0 is a foundation-model training/upcycling pipeline. Offline continual pre-training/post-training does not constitute autonomous deployment-time self-evolution.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.04761",
+      "title": "InsightEmb: Learning Action-Intent Embeddings for Agentic Insight Retrieval",
+      "published": "2026-08-05",
+      "lane_keys": [
+        "skill_harness"
+      ],
+      "source_sha256": "c1c2af1bd8c0f782c39dab8766dda82cf0c8f67976f882a61d847baaa55a15c4",
+      "fulltext_sha256": "6863186166d2b45d42c76114ff6b14ed0fea1dbba0a265253c558d69c5dc07f0",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_RETRIEVAL_REPRESENTATION",
+      "reduction": [
+        "contrastive-action-intent-embedding",
+        "progress-oriented-retrieval-geometry",
+        "memory-negative-transfer"
+      ],
+      "note": "InsightEmb learns a static retrieval embedding and shows that poor memory retrieval can underperform no-insight while improved geometry recovers performance. This is retrieval/negative-transfer evidence, not persistent autonomous updating.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.05026",
+      "title": "ArtAnno: Annotating Implicit Semantics in Artworks through LLM Agent-Driven Bidirectional Human-AI Augmentation",
+      "published": "2026-08-05",
+      "lane_keys": [
+        "skill_harness",
+        "collective"
+      ],
+      "source_sha256": "bdb4ce46d10bd87c584dcae50fd716c84e6f8184bdc11a7ed63854ab30da56dd",
+      "fulltext_sha256": "b89789f854db1df8a0a5c05d826f5e9c0c9bdd1e8969e6776c6b633b4ba55b79",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_HUMAN_SIMULATED_EVOLUTION",
+      "reduction": [
+        "human-ai-annotation-workflow",
+        "trajectory-distillation-concept",
+        "wizard-of-oz-simulated-updates"
+      ],
+      "note": "ArtAnno proposes bidirectional human-AI accumulation, but the reported evolving behavior in the user study is explicitly simulated by a Wizard-of-Oz operator, so it is not execution-backed autonomous self-evolution evidence.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.03391",
+      "title": "TimeRLM: Recursive Language Models Enable Precise Anomaly Localization in Long-Context Time-Series",
+      "published": "2026-08-04",
+      "lane_keys": [
+        "parametric_model_state",
+        "runtime_deployment",
+        "safety_reliability"
+      ],
+      "source_sha256": "7767ce5ee88e863ec3804f60579bfafd04b105ee620401b7f8b5ac3aad33d61e",
+      "fulltext_sha256": "b916561195e5a894204d28267b6b9673dc082b376af29546827bcf14ccc3065c",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_RECURSIVE_INFERENCE",
+      "reduction": [
+        "recursive-context-externalization",
+        "code-and-vision-querying",
+        "offline-rl-posttraining"
+      ],
+      "note": "TimeRLM recursively queries/manipulates external long time-series context and can be post-trained with RL. The recursion is within-episode inference and the policy is trained offline, with no persistent artifact evolution across tasks.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    }
+  ],
+  "next_action": "Record these 19 exact refs as zero-authority source-review exposure. Because no source satisfies an exact durable reopen contract, do not trigger candidate generator/provider/GPU work from this tranche. Refresh the source-coverage scheduler and review the next exact unreviewed tranche if retrieval remains complete.",
+  "authority": {
+    "scientific_authority": false,
+    "candidate_generation": false,
+    "problem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
